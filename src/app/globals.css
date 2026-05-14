@@ -4,8 +4,8 @@
 
 @layer base {
   :root {
-    --background: #F7FAFC;
-    --foreground: #0A2540;
+    --background: #FAFAF7;
+    --foreground: #1A1A1A;
   }
 
   html {
@@ -16,19 +16,47 @@
   body {
     font-feature-settings: "ss01" on, "cv11" on;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Friendly serif for editorial moments (headlines on cell pages, blog) */
+  .font-serif {
+    font-feature-settings: "kern" on, "liga" on, "calt" on;
   }
 }
 
 @layer components {
+  /* Brand name treatment — burnt amber gradient, used sparingly */
   .gradient-name {
-    background: linear-gradient(90deg, #35BFD0 0%, #7EE3EB 50%, #B7F6F8 100%);
+    background: linear-gradient(90deg, #F59E0B 0%, #D97706 50%, #C2410C 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     white-space: nowrap;
   }
 
+  /* Card surface — paper-feel, warm shadow */
   .card {
-    @apply bg-white rounded-2xl shadow-sm border border-slate-200/60 p-6;
+    @apply bg-white rounded-2xl border border-ink-200 p-6;
+    box-shadow:
+      0 1px 2px rgba(26, 26, 26, 0.03),
+      0 0 0 1px rgba(26, 26, 26, 0.02);
+  }
+
+  .card:hover {
+    box-shadow:
+      0 4px 12px rgba(26, 26, 26, 0.06),
+      0 0 0 1px rgba(217, 119, 6, 0.15);
+    transition: box-shadow 0.18s ease;
+  }
+
+  /* Subtle pill — for category labels, badges, tier ratings */
+  .pill {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  /* Default link tone */
+  a.atlas-link {
+    @apply text-atlas-600 hover:text-atlas-700 transition-colors;
   }
 }
