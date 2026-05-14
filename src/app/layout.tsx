@@ -31,11 +31,12 @@ export default function RootLayout({
               <span className="text-ink-900">Margin Atlas</span>
             </a>
             <div className="flex items-center gap-2">
-              <nav className="text-sm text-ink-800 hidden sm:flex">
-                <a href="/browse" className="hover:text-atlas-600 mx-3 transition-colors">Browse</a>
-                <a href="/blog" className="hover:text-atlas-600 mx-3 transition-colors">Blog</a>
-                <a href="/pricing" className="hover:text-atlas-600 mx-3 transition-colors">Pricing</a>
-                <a href="/methodology" className="hover:text-atlas-600 mx-3 transition-colors">Methodology</a>
+              <nav className="text-sm text-ink-800 hidden md:flex">
+                <a href="/browse" className="hover:text-atlas-600 mx-2 transition-colors">Browse</a>
+                <a href="/compare" className="hover:text-atlas-600 mx-2 transition-colors">Compare</a>
+                <a href="/ask" className="hover:text-atlas-600 mx-2 transition-colors">Ask</a>
+                <a href="/blog" className="hover:text-atlas-600 mx-2 transition-colors">Blog</a>
+                <a href="/pricing" className="hover:text-atlas-600 mx-2 transition-colors">Pricing</a>
               </nav>
               <GlobalSearch />
             </div>
