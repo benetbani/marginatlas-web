@@ -23,6 +23,7 @@ import { TimeSeriesChart } from "@/components/TimeSeriesChart";
 import { TypicalFirmCard } from "@/components/TypicalFirmCard";
 import { AcrossStatesStrip } from "@/components/AcrossStatesStrip";
 import { CellPageNav } from "@/components/CellPageNav";
+import { CellActions } from "@/components/CellActions";
 import { AtlasScore } from "@/components/AtlasScore";
 import { CellDataset, Breadcrumbs } from "@/components/StructuredData";
 
@@ -139,6 +140,15 @@ export default async function CellPage({
           { name: cell.geo_name || geo, url: `https://marginatlas.com/${country}/${geo}` },
           { name: cell.industry_name || industry, url },
         ]}
+      />
+
+      {/* Actions: save / copy link / CSV / embed */}
+      <CellActions
+        country={country}
+        geo={geo}
+        industry={industry}
+        industryName={cell.industry_name || industry.replace(/-/g, " ")}
+        geoName={cell.geo_name || geo}
       />
 
       {/* Breadcrumb */}
