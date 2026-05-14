@@ -8,13 +8,16 @@ import {
   slugify,
   distinctSizeBands,
   distinctYears,
+  buildTimeSeries,
   listUsStates,
 } from "@/lib/cells";
 import { INDUSTRIES, industryToSlug } from "@/lib/taxonomy";
 import { DistributionBars } from "@/components/DistributionBars";
+import { DistributionHistogram } from "@/components/DistributionHistogram";
 import { QualityBadge } from "@/components/QualityBadge";
 import { Tooltip } from "@/components/Tooltip";
 import { DimensionSwitcher } from "@/components/DimensionSwitcher";
+import { TimeSeriesChart } from "@/components/TimeSeriesChart";
 import { CellDataset, Breadcrumbs } from "@/components/StructuredData";
 
 // ISR: regenerate every 7 days (604800 seconds)
@@ -90,6 +93,11 @@ export default async function CellPage({
   const variants = await getCellVariants(country, geo, industry);
   const availableSizes = distinctSizeBands(variants);
   const availableYears = distinctYears(variants);
+  const timeSeries = buildTimeSeries(variants);
+
+  // YoY change for headline stats — compares current year to prior year on the
+  // same series.
+  const yoy = computeYoY(timeSeries, cell.year);
 
   const comparables = await getComparableCells(cell.geo_name || "", cell.naics_6 || undefined, 6);
 
@@ -173,22 +181,40 @@ export default async function CellPage({
 
       {/* Headline grid */}
       <section className="grid grid-cols-2 md:grid-cols-4 gap-4 py-6">
-        <Stat label="How many firms" value={cell.n_enterprises?.toLocaleString() || "—"} />
-        <Stat label="People working" value={cell.n_employees?.toLocaleString() || "—"} />
+        <Stat
+          label="How many firms"
+          value={cell.n_enterprises?.toLocaleString() || "—"}
+          yoy={yoy.n_enterprises}
+        />
+        <Stat
+          label="People working"
+          value={cell.n_employees?.toLocaleString() || "—"}
+          yoy={yoy.n_employees}
+        />
         <Stat
           label="Typical yearly revenue"
           value={formatMoney(cell.revenue_per_firm)}
           tooltip="The middle firm — half make more, half make less. Often called the median."
+          yoy={yoy.revenue_per_firm}
         />
         <Stat
           label="Wage per employee"
           value={formatMoney(cell.payroll_per_employee)}
           tooltip="Average annual pay across all employees in this industry."
+          yoy={yoy.payroll_per_employee}
         />
       </section>
 
-      {/* Distribution bars */}
-      <section className="py-6">
+      {/* Distribution — histogram + 5-bar tier view side by side */}
+      <section className="py-6 grid lg:grid-cols-2 gap-4">
+        <DistributionHistogram
+          p10={cell.rev_p10}
+          p25={cell.rev_p25}
+          p50={cell.rev_p50}
+          p75={cell.rev_p75}
+          p90={cell.rev_p90}
+          currencySymbol="$"
+        />
         <DistributionBars
           p10={cell.rev_p10}
           p25={cell.rev_p25}
@@ -198,6 +224,23 @@ export default async function CellPage({
           currencySymbol="$"
         />
       </section>
+
+      {/* Time series */}
+      {timeSeries.length >= 2 && (
+        <section className="py-6 grid md:grid-cols-2 gap-4">
+          <TimeSeriesChart
+            data={timeSeries}
+            metric="revenue_per_firm"
+            label="Typical revenue per firm"
+            currencySymbol="$"
+          />
+          <TimeSeriesChart
+            data={timeSeries}
+            metric="n_enterprises"
+            label="Number of firms"
+          />
+        </section>
+      )}
 
       {/* Quality */}
       <section className="py-6">
@@ -250,10 +293,12 @@ function Stat({
   label,
   value,
   tooltip,
+  yoy,
 }: {
   label: string;
   value: string;
   tooltip?: string;
+  yoy?: number | null;
 }) {
   return (
     <div className="card">
@@ -262,8 +307,53 @@ function Stat({
         {tooltip && <Tooltip text={tooltip} />}
       </div>
       <div className="mt-2 text-2xl font-semibold text-ink-900">{value}</div>
+      {yoy != null && isFinite(yoy) && (
+        <div
+          className={`mt-1 text-xs font-medium ${
+            yoy >= 0 ? "text-emerald-700" : "text-rose-700"
+          }`}
+          title="Year-over-year change"
+        >
+          {yoy >= 0 ? "▲" : "▼"} {yoy >= 0 ? "+" : ""}
+          {(yoy * 100).toFixed(1)}% YoY
+        </div>
+      )}
     </div>
   );
+}
+
+type YoYResult = {
+  n_enterprises: number | null;
+  n_employees: number | null;
+  revenue_per_firm: number | null;
+  payroll_per_employee: number | null;
+};
+
+function computeYoY(
+  series: { year: number; revenue_per_firm: number | null; n_enterprises: number | null; n_employees: number | null; payroll_per_employee: number | null }[],
+  currentYear: number
+): YoYResult {
+  const out: YoYResult = {
+    n_enterprises: null,
+    n_employees: null,
+    revenue_per_firm: null,
+    payroll_per_employee: null,
+  };
+  const curr = series.find((p) => p.year === currentYear);
+  if (!curr) return out;
+  // Find most recent prior year
+  const priors = series.filter((p) => p.year < currentYear).sort((a, b) => b.year - a.year);
+  const prev = priors[0];
+  if (!prev) return out;
+  function ratio(a: number | null, b: number | null): number | null {
+    if (a == null || b == null || b === 0) return null;
+    return (a - b) / b;
+  }
+  out.n_enterprises = ratio(curr.n_enterprises, prev.n_enterprises);
+  out.n_employees = ratio(curr.n_employees, prev.n_employees);
+  out.revenue_per_firm = ratio(curr.revenue_per_firm, prev.revenue_per_firm);
+  out.payroll_per_employee = ratio(curr.payroll_per_employee, prev.payroll_per_employee);
+  return out;
 }
 
 function formatMoney(v: number | null | undefined): string {
