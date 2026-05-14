@@ -22,6 +22,7 @@ import { DimensionSwitcher } from "@/components/DimensionSwitcher";
 import { TimeSeriesChart } from "@/components/TimeSeriesChart";
 import { TypicalFirmCard } from "@/components/TypicalFirmCard";
 import { AcrossStatesStrip } from "@/components/AcrossStatesStrip";
+import { CellPageNav } from "@/components/CellPageNav";
 import { CellDataset, Breadcrumbs } from "@/components/StructuredData";
 
 // ISR: regenerate every 7 days (604800 seconds)
@@ -120,7 +121,8 @@ export default async function CellPage({
 
   const url = `https://marginatlas.com/${country}/${geo}/${industry}`;
   return (
-    <div>
+    <div className="xl:flex xl:gap-6">
+      <div className="xl:flex-1 xl:min-w-0">
       <CellDataset
         url={url}
         industryName={cell.industry_name || industry}
@@ -167,7 +169,7 @@ export default async function CellPage({
       />
 
       {/* Hero */}
-      <header className="py-8">
+      <header id="headline" className="py-8">
         <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
           {cell.sector_name && <>{cell.sector_name} · </>}
           {cell.geo_name} · {cell.year}
@@ -196,7 +198,7 @@ export default async function CellPage({
       </header>
 
       {/* Headline grid */}
-      <section className="grid grid-cols-2 md:grid-cols-4 gap-4 py-6">
+      <section id="stats" className="grid grid-cols-2 md:grid-cols-4 gap-4 py-6">
         <Stat
           label="How many firms"
           value={cell.n_enterprises?.toLocaleString() || "—"}
@@ -222,12 +224,12 @@ export default async function CellPage({
       </section>
 
       {/* Typical-firm biography card */}
-      <section className="py-6">
+      <section id="typical-firm" className="py-6">
         <TypicalFirmCard cell={cell} currencySymbol="$" />
       </section>
 
       {/* Distribution — histogram + 5-bar tier view side by side */}
-      <section className="py-6 grid lg:grid-cols-2 gap-4">
+      <section id="distribution" className="py-6 grid lg:grid-cols-2 gap-4">
         <DistributionHistogram
           p10={cell.rev_p10}
           p25={cell.rev_p25}
@@ -248,7 +250,7 @@ export default async function CellPage({
 
       {/* Time series */}
       {timeSeries.length >= 2 && (
-        <section className="py-6 grid md:grid-cols-2 gap-4">
+        <section id="timeseries" className="py-6 grid md:grid-cols-2 gap-4">
           <TimeSeriesChart
             data={timeSeries}
             metric="revenue_per_firm"
@@ -264,7 +266,7 @@ export default async function CellPage({
       )}
 
       {/* Quality */}
-      <section className="py-6">
+      <section id="quality" className="py-6">
         <QualityBadge
           qualityScore={cell.quality_score}
           coverageTier={cell.coverage_tier}
@@ -273,6 +275,7 @@ export default async function CellPage({
       </section>
 
       {/* Same industry, other states */}
+      <div id="across-states" />
       <AcrossStatesStrip
         industryName={cell.industry_name || industry.replace(/-/g, " ")}
         currentGeoName={cell.geo_name || geo}
@@ -281,7 +284,7 @@ export default async function CellPage({
 
       {/* Comparable cells */}
       {comparables.length > 0 && (
-        <section className="py-8">
+        <section id="comparable" className="py-8">
           <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
             Other industries in {cell.geo_name}
           </h2>
@@ -313,6 +316,8 @@ export default async function CellPage({
           About how to read these numbers →
         </a>
       </section>
+      </div>
+      <CellPageNav />
     </div>
   );
 }
