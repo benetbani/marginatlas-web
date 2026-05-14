@@ -1,9 +1,20 @@
 import { notFound } from "next/navigation";
-import { getCellBySlug, getComparableCells, getTopCells, cellUrl, slugify } from "@/lib/cells";
-import { industryToSlug } from "@/lib/taxonomy";
+import {
+  getCellBySlug,
+  getCellVariants,
+  getComparableCells,
+  getTopCells,
+  cellUrl,
+  slugify,
+  distinctSizeBands,
+  distinctYears,
+  listUsStates,
+} from "@/lib/cells";
+import { INDUSTRIES, industryToSlug } from "@/lib/taxonomy";
 import { DistributionBars } from "@/components/DistributionBars";
 import { QualityBadge } from "@/components/QualityBadge";
 import { Tooltip } from "@/components/Tooltip";
+import { DimensionSwitcher } from "@/components/DimensionSwitcher";
 import { CellDataset, Breadcrumbs } from "@/components/StructuredData";
 
 // ISR: regenerate every 7 days (604800 seconds)
@@ -11,6 +22,7 @@ export const revalidate = 604800;
 export const dynamicParams = true;
 
 type Params = { country: string; geo: string; industry: string };
+type SearchParams = { size?: string; year?: string };
 
 /** Pre-render the top 100 highest-traffic US cells at build time. */
 export async function generateStaticParams(): Promise<Params[]> {
@@ -34,9 +46,19 @@ export async function generateStaticParams(): Promise<Params[]> {
   }
 }
 
-export async function generateMetadata({ params }: { params: Promise<Params> }) {
+export async function generateMetadata({
+  params,
+  searchParams,
+}: {
+  params: Promise<Params>;
+  searchParams: Promise<SearchParams>;
+}) {
   const { country, geo, industry } = await params;
-  const cell = await getCellBySlug(country, geo, industry);
+  const sp = await searchParams;
+  const cell = await getCellBySlug(country, geo, industry, {
+    sizeBand: sp.size || null,
+    year: sp.year ? Number(sp.year) : null,
+  });
   if (!cell) return { title: "Page not found" };
   const ind = cell.industry_name || cell.industry_description || industry;
   const geoName = cell.geo_name || geo;
@@ -46,12 +68,38 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   return { title, description: desc, openGraph: { title, description: desc } };
 }
 
-export default async function CellPage({ params }: { params: Promise<Params> }) {
+export default async function CellPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<Params>;
+  searchParams: Promise<SearchParams>;
+}) {
   const { country, geo, industry } = await params;
-  const cell = await getCellBySlug(country, geo, industry);
+  const sp = await searchParams;
+  const currentSize = sp.size || null;
+  const currentYear = sp.year ? Number(sp.year) : null;
+
+  const cell = await getCellBySlug(country, geo, industry, {
+    sizeBand: currentSize,
+    year: currentYear,
+  });
   if (!cell) notFound();
 
+  // Fetch siblings for the dimension switcher (one round-trip, capped at 200 rows).
+  const variants = await getCellVariants(country, geo, industry);
+  const availableSizes = distinctSizeBands(variants);
+  const availableYears = distinctYears(variants);
+
   const comparables = await getComparableCells(cell.geo_name || "", cell.naics_6 || undefined, 6);
+
+  // Build region + industry option lists for switcher
+  const regions = listUsStates();
+  const industryOpts = INDUSTRIES.map((i) => ({
+    id: i.id,
+    name: i.name,
+    slug: industryToSlug(i.id),
+  })).sort((a, b) => a.name.localeCompare(b.name));
 
   const url = `https://marginatlas.com/${country}/${geo}/${industry}`;
   return (
@@ -85,6 +133,21 @@ export default async function CellPage({ params }: { params: Promise<Params> }) 
           {cell.industry_name || industry.replace(/-/g, " ")}
         </span>
       </nav>
+
+      {/* In-page dimension switcher — region/industry/size/year */}
+      <DimensionSwitcher
+        country={country}
+        geoSlug={geo}
+        industrySlug={industry}
+        industryName={cell.industry_name || industry.replace(/-/g, " ")}
+        geoName={cell.geo_name || geo}
+        regions={regions}
+        industries={industryOpts}
+        sizeBands={availableSizes}
+        years={availableYears}
+        currentSize={currentSize}
+        currentYear={currentYear}
+      />
 
       {/* Hero */}
       <header className="py-8">

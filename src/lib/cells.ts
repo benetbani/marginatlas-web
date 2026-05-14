@@ -165,11 +165,17 @@ function normalizeRow(r: Record<string, unknown>): Cell {
   return applyTaxonomy(cell);
 }
 
+export type CellSelector = {
+  sizeBand?: string | null;
+  year?: number | null;
+};
+
 /** Resolve a (country / geo / industry) URL slug to a single best-fit cell. */
 export async function getCellBySlug(
   countrySlug: string,
   geoSlug: string,
-  industrySlug: string
+  industrySlug: string,
+  selector: CellSelector = {}
 ): Promise<Cell | null> {
   const country = countrySlug.toUpperCase();
   if (country !== "US") return null; // For now, only US data is in Supabase
@@ -190,6 +196,8 @@ export async function getCellBySlug(
       .order("year", { ascending: false, nullsFirst: false })
       .order("n", { ascending: false, nullsFirst: false })
       .limit(1);
+    if (selector.sizeBand) q = q.eq("size_band", selector.sizeBand);
+    if (selector.year) q = q.eq("year", selector.year);
     const orClauses = naics3Prefixes.map((p) => `naics_6.like.${p}`).join(",");
     q = q.or(orClauses);
     const { data, error } = await q;
@@ -200,7 +208,7 @@ export async function getCellBySlug(
 
   // Fallback: fuzzy industry_description search
   const fuzzy = industrySlug.replace(/-/g, "%");
-  const { data, error } = await supabaseAdmin
+  let q2 = supabaseAdmin
     .from("cells_master")
     .select("*")
     .eq("country", "US")
@@ -209,8 +217,59 @@ export async function getCellBySlug(
     .order("year", { ascending: false, nullsFirst: false })
     .order("n", { ascending: false, nullsFirst: false })
     .limit(1);
+  if (selector.sizeBand) q2 = q2.eq("size_band", selector.sizeBand);
+  if (selector.year) q2 = q2.eq("year", selector.year);
+  const { data, error } = await q2;
   if (error || !data || data.length === 0) return null;
   return normalizeRow(data[0] as Record<string, unknown>);
+}
+
+/** All matching cells (same geo + same industry-group) across size_bands and years. */
+export async function getCellVariants(
+  countrySlug: string,
+  geoSlug: string,
+  industrySlug: string
+): Promise<Cell[]> {
+  const country = countrySlug.toUpperCase();
+  if (country !== "US") return [];
+  const geoId = SLUG_TO_GEO_ID[geoSlug.toLowerCase()];
+  if (!geoId) return [];
+
+  const ind = slugToIndustry(industrySlug);
+  if (!ind || !(ind.naics_3 || []).length) return [];
+
+  const naics3Prefixes = (ind.naics_3 || []).map((n) => `${n}%`);
+  const orClauses = naics3Prefixes.map((p) => `naics_6.like.${p}`).join(",");
+  const { data, error } = await supabaseAdmin
+    .from("cells_master")
+    .select("*")
+    .eq("country", "US")
+    .eq("geo_id", geoId)
+    .or(orClauses)
+    .order("year", { ascending: false, nullsFirst: false })
+    .order("n", { ascending: false, nullsFirst: false })
+    .limit(200);
+  if (error || !data) return [];
+  return data.map((r) => normalizeRow(r as Record<string, unknown>));
+}
+
+/** Distinct size bands present for a given (geo, industry). */
+export function distinctSizeBands(cells: Cell[]): string[] {
+  const seen = new Set<string>();
+  for (const c of cells) if (c.size_band) seen.add(c.size_band);
+  return Array.from(seen);
+}
+
+/** Distinct years present for a given (geo, industry). */
+export function distinctYears(cells: Cell[]): number[] {
+  const seen = new Set<number>();
+  for (const c of cells) if (c.year) seen.add(c.year);
+  return Array.from(seen).sort((a, b) => b - a);
+}
+
+/** All US states (for region switcher). */
+export function listUsStates(): { name: string; slug: string }[] {
+  return Object.values(US_STATES).sort((a, b) => a.name.localeCompare(b.name));
 }
 
 /** Top N cells globally (for sitemap + homepage features). */
