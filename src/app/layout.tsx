@@ -6,7 +6,7 @@ import { GlobalSearch } from "@/components/GlobalSearch";
 export const metadata: Metadata = {
   title: "Margin Atlas — Global Small-Business Benchmarking",
   description:
-    "The unified database of small-business revenue, employment, and wage data across 40+ countries. Built from US Census, Eurostat, OECD, and national statistical agencies.",
+    "The unified database of small-business revenue, employment, and wage benchmarks across 40+ countries. Compiled from official business statistics, standardized for cross-country comparison.",
   metadataBase: new URL("https://marginatlas.com"),
 };
 
@@ -72,7 +72,7 @@ export default function RootLayout({
               <div className="font-semibold text-ink-900 mb-3 text-xs uppercase tracking-wide">Resources</div>
               <ul className="space-y-2 text-xs">
                 <li><a href="/blog" className="hover:text-atlas-600">Blog</a></li>
-                <li><a href="/methodology" className="hover:text-atlas-600">Methodology</a></li>
+                <li><a href="/about-data" className="hover:text-atlas-600">About the data</a></li>
                 <li><a href="/pricing" className="hover:text-atlas-600">Pricing</a></li>
               </ul>
             </div>

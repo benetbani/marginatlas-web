@@ -4,7 +4,7 @@ export const revalidate = 86400;
 
 export const metadata = {
   title: "Blog | Margin Atlas",
-  description: "Notes, deep-dives, and methodology pieces on small-business benchmarking.",
+  description: "Notes and deep-dives on small-business benchmarking.",
 };
 
 export default function BlogIndex() {

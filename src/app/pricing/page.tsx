@@ -6,7 +6,7 @@ export default function PricingPage() {
       name: "Free",
       monthly: 0,
       annual: 0,
-      blurb: "Preview cells, evaluate methodology, build a watch-list.",
+      blurb: "Preview cells, get a feel for the data, build a watch-list.",
       features: [
         "50 cell previews per month",
         "Median (p50) values only",

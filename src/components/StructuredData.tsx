@@ -1,6 +1,9 @@
 /**
- * StructuredData — emits JSON-LD schema.org markup.
- * Used on cell pages, blog posts, country/sector pages.
+ * StructuredData — emits minimal JSON-LD schema.org markup.
+ *
+ * PRIVACY POLICY: never reveal specific government datasets, table codes, or
+ * derivation techniques. Schema.org is a public surface that scrapers and
+ * AI crawlers can read. Keep it generic.
  */
 
 type CellDatasetProps = {
@@ -8,7 +11,7 @@ type CellDatasetProps = {
   industryName: string;
   geoName: string;
   year: number;
-  source: string;
+  source?: string; // ignored intentionally
   medianRevenue?: number | null;
   nEnterprises?: number | null;
 };
@@ -18,17 +21,25 @@ export function CellDataset({
   industryName,
   geoName,
   year,
-  source,
-  medianRevenue,
   nEnterprises,
 }: CellDatasetProps) {
   const data = {
     "@context": "https://schema.org",
     "@type": "Dataset",
     name: `${industryName} business benchmarks in ${geoName}, ${year}`,
-    description: `Revenue, employment, and wage distributions for ${industryName.toLowerCase()} businesses in ${geoName}. ${nEnterprises ? `Based on ${nEnterprises.toLocaleString()} firms.` : ""} Source: ${source}.`,
+    description: `Revenue, employment, and wage benchmarks for ${industryName.toLowerCase()} firms in ${geoName}${
+      nEnterprises ? `, covering ${nEnterprises.toLocaleString()} businesses` : ""
+    }.`,
     url,
-    keywords: [industryName, geoName, "small business", "benchmark", "revenue", "employment", "wages"],
+    keywords: [
+      industryName,
+      geoName,
+      "small business",
+      "benchmark",
+      "revenue",
+      "employment",
+      "wages",
+    ],
     creator: {
       "@type": "Organization",
       name: "Margin Atlas",
@@ -38,17 +49,16 @@ export function CellDataset({
       "@type": "Organization",
       name: "Tesseract Research",
     },
-    license: "https://creativecommons.org/licenses/by/4.0/",
     isAccessibleForFree: true,
     datePublished: `${year}-01-01`,
     spatialCoverage: { "@type": "Place", name: geoName },
-    variableMeasured: ["typical revenue per firm", "employees per firm", "wages per employee"],
-    ...(medianRevenue
-      ? {
-          measurementTechnique:
-            "Aggregated from statistical agency surveys, normalized to industry × geography × size × year cells",
-        }
-      : {}),
+    variableMeasured: [
+      "typical revenue per firm",
+      "employees per firm",
+      "wages per employee",
+    ],
+    // NOTE: deliberately no `measurementTechnique` field — would leak method.
+    // NOTE: deliberately no `license` field — keep redistribution implicit.
   };
   return (
     <script
@@ -89,7 +99,13 @@ type ArticleProps = {
   author?: string;
 };
 
-export function Article({ title, description, datePublished, url, author = "Margin Atlas team" }: ArticleProps) {
+export function Article({
+  title,
+  description,
+  datePublished,
+  url,
+  author = "Margin Atlas",
+}: ArticleProps) {
   const data = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -102,10 +118,6 @@ export function Article({ title, description, datePublished, url, author = "Marg
     publisher: {
       "@type": "Organization",
       name: "Margin Atlas",
-      logo: {
-        "@type": "ImageObject",
-        url: "https://marginatlas.com/icon.png",
-      },
     },
   };
   return (
@@ -122,12 +134,10 @@ export function Organization() {
     "@type": "Organization",
     name: "Margin Atlas",
     url: "https://marginatlas.com",
-    logo: "https://marginatlas.com/icon.png",
-    description: "The unified database of small-business margins across 40+ countries.",
-    sameAs: [
-      "https://huggingface.co/datasets/tesseract-research/atlas-global",
-      "https://github.com/benetbani/atlas-data",
-    ],
+    description:
+      "Small-business benchmarks across 40+ countries — revenue, employment, and wage distributions.",
+    // NOTE: no `sameAs` linking to data mirrors. We don't broadcast where the
+    // raw data lives publicly.
   };
   return (
     <script

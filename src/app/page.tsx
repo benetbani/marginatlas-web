@@ -13,9 +13,10 @@ export default function HomePage() {
           <span className="gradient-name">small business</span> earn?
         </h1>
         <p className="mt-6 text-lg md:text-xl text-ink-800/80 max-w-3xl leading-relaxed">
-          Revenue, employment, and wages for 80 industries across 40+ countries,
-          drawn from US Census, Eurostat, OECD, and national statistical
-          agencies. Pick what you want to know below.
+          Revenue, employment, and wages for 80 industries across 40+ countries.
+          Compiled from official business statistics, standardized so a bakery in
+          Paris compares directly to a bakery in California. Pick what you want
+          to know below.
         </p>
 
         {/* Navigator — the centerpiece */}
@@ -73,15 +74,15 @@ export default function HomePage() {
           </div>
           <div className="card">
             <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
-              Sources you can trust
+              Quality you can trust
             </div>
             <div className="mt-2 font-semibold text-lg text-ink-900">
-              Government statistics, standardized
+              Every cell rated, every number traceable
             </div>
             <p className="mt-3 text-sm text-ink-700/80">
-              Every number traces back to a primary statistical agency — US
-              Census, Eurostat, Destatis, INSEE, e-Stat — with quality rating
-              shown on every cell.
+              Each cell carries a 5-star quality rating so you know whether
+              you're looking at a direct measurement, a modeled estimate, or
+              something in between. No black boxes.
             </p>
           </div>
         </div>

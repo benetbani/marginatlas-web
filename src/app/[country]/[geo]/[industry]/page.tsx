@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   const geoName = cell.geo_name || geo;
   const title = `How much do ${ind.toLowerCase()} earn in ${geoName}? | Margin Atlas`;
   const median = cell.revenue_per_firm ? `~${formatMoney(cell.revenue_per_firm)} typical revenue` : "Revenue and employment numbers";
-  const desc = `${median} for ${ind.toLowerCase()} in ${geoName}, ${cell.year}. Bottom-10%, typical, and top-10% spread. Source: ${cell.coverage_source}.`;
+  const desc = `${median} for ${ind.toLowerCase()} in ${geoName}, ${cell.year}. Bottom-10%, typical, and top-10% spread across ${cell.n_enterprises?.toLocaleString() || "thousands of"} firms.`;
   return { title, description: desc, openGraph: { title, description: desc } };
 }
 
@@ -61,7 +61,6 @@ export default async function CellPage({ params }: { params: Promise<Params> }) 
         industryName={cell.industry_name || industry}
         geoName={cell.geo_name || geo}
         year={cell.year}
-        source={cell.coverage_source || "U.S. Census Bureau"}
         medianRevenue={cell.revenue_per_firm}
         nEnterprises={cell.n_enterprises}
       />
@@ -174,10 +173,10 @@ export default async function CellPage({ params }: { params: Promise<Params> }) 
         </section>
       )}
 
-      {/* Methodology link */}
+      {/* About the data link */}
       <section className="py-6 text-sm text-ink-700/70">
-        <a href="/methodology" className="hover:text-atlas-600 underline">
-          How we compute these numbers →
+        <a href="/about-data" className="hover:text-atlas-600 underline">
+          About how to read these numbers →
         </a>
       </section>
     </div>
