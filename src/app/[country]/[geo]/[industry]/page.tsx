@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import { getCellBySlug, getComparableCells } from "@/lib/cells";
 
-// ISR: regenerate every 7 days
-export const revalidate = 86400 * 7;
+// ISR: regenerate every 7 days (604800 seconds = 86400 * 7)
+export const revalidate = 604800;
 
 // Don't pre-render at build time; let pages generate on-demand.
 // Top cells can be pre-rendered later via generateStaticParams.
