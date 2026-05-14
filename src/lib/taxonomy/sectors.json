@@ -1,0 +1,136 @@
+{
+  "version": "1.0.0",
+  "anchor": "ISIC Rev.4 sections (UN Statistics Division)",
+  "sectors": [
+    {
+      "id": "agriculture",
+      "name": "Farming, fishing & forestry",
+      "isic_sections": ["A"],
+      "examples": ["crop farming", "livestock", "fishing", "logging"],
+      "icon": "wheat",
+      "order": 1
+    },
+    {
+      "id": "mining_energy",
+      "name": "Mining & energy",
+      "isic_sections": ["B", "D", "E"],
+      "examples": ["oil & gas", "mining", "electricity", "water utilities"],
+      "icon": "zap",
+      "order": 2
+    },
+    {
+      "id": "manufacturing",
+      "name": "Manufacturing",
+      "isic_sections": ["C"],
+      "examples": ["food", "machinery", "electronics", "vehicles"],
+      "icon": "factory",
+      "order": 3
+    },
+    {
+      "id": "construction",
+      "name": "Construction",
+      "isic_sections": ["F"],
+      "examples": ["homes", "roads", "plumbing", "electrical"],
+      "icon": "hard-hat",
+      "order": 4
+    },
+    {
+      "id": "wholesale",
+      "name": "Wholesale & distribution",
+      "isic_sections": ["G"],
+      "isic_divisions": ["45", "46"],
+      "examples": ["food wholesale", "machinery distribution"],
+      "icon": "truck",
+      "order": 5
+    },
+    {
+      "id": "retail",
+      "name": "Retail & e-commerce",
+      "isic_sections": ["G"],
+      "isic_divisions": ["47"],
+      "examples": ["grocery", "clothing stores", "online retail"],
+      "icon": "shopping-cart",
+      "order": 6
+    },
+    {
+      "id": "transport_logistics",
+      "name": "Transport & logistics",
+      "isic_sections": ["H"],
+      "examples": ["trucking", "taxis", "warehousing", "courier"],
+      "icon": "package",
+      "order": 7
+    },
+    {
+      "id": "hotels_food",
+      "name": "Hotels, restaurants & food",
+      "isic_sections": ["I"],
+      "examples": ["restaurants", "cafés", "hotels", "catering"],
+      "icon": "utensils",
+      "order": 8
+    },
+    {
+      "id": "information_media",
+      "name": "Information, software & media",
+      "isic_sections": ["J"],
+      "examples": ["software", "IT services", "broadcasting", "publishing"],
+      "icon": "code",
+      "order": 9
+    },
+    {
+      "id": "finance_real_estate",
+      "name": "Finance, insurance & real estate",
+      "isic_sections": ["K", "L"],
+      "examples": ["banking", "insurance", "real estate agencies"],
+      "icon": "banknote",
+      "order": 10
+    },
+    {
+      "id": "professional_services",
+      "name": "Professional services",
+      "isic_sections": ["M"],
+      "examples": ["legal", "accounting", "consulting", "engineering"],
+      "icon": "briefcase",
+      "order": 11
+    },
+    {
+      "id": "admin_support",
+      "name": "Administrative & support services",
+      "isic_sections": ["N"],
+      "examples": ["staffing", "call centers", "cleaning", "security"],
+      "icon": "users",
+      "order": 12
+    },
+    {
+      "id": "education",
+      "name": "Education",
+      "isic_sections": ["P"],
+      "examples": ["schools", "universities", "vocational training"],
+      "icon": "graduation-cap",
+      "order": 13
+    },
+    {
+      "id": "healthcare",
+      "name": "Healthcare & social work",
+      "isic_sections": ["Q"],
+      "examples": ["doctors", "dentists", "hospitals", "childcare"],
+      "icon": "stethoscope",
+      "order": 14
+    },
+    {
+      "id": "arts_entertainment",
+      "name": "Arts, sports & entertainment",
+      "isic_sections": ["R"],
+      "examples": ["theatre", "gyms", "museums", "casinos"],
+      "icon": "drama",
+      "order": 15
+    },
+    {
+      "id": "personal_services",
+      "name": "Personal services",
+      "isic_sections": ["S"],
+      "examples": ["hairdressers", "auto repair", "dry cleaning", "funeral homes"],
+      "icon": "scissors",
+      "order": 16
+    }
+  ]
+}

@@ -1,30 +1,38 @@
 /**
- * Cell data-access layer.
+ * Cell data-access layer (v1.16 with friendly taxonomy).
  *
- * Queries the existing `cells_master` table in Supabase (already loaded from
- * the v1.5 build — ~722k US state cells). Falls back to alternative names
- * if the primary schema doesn't match.
- *
- * Production schema (cells_master columns):
- *   country, geo_id, geo_level, naics_6, naics_4, naics_3, naics_2, nace_4,
- *   isic_4, industry_description, size_band, year, coverage_tier,
- *   coverage_source, n, rev_p10..p90, emp_per_firm_mean,
- *   payroll_per_firm_mean_usd, mean_wage_per_employee_usd, total_employment,
- *   total_payroll_usd, quality_score, fit_method, currency, commentary
+ * Queries the existing `cells_master` table in Supabase (~722k US state cells
+ * from v1.5). Applies the friendly sector + industry taxonomy at query time
+ * via the local taxonomy.ts module — no DB migration required.
  */
 import { supabaseAdmin } from "./supabase";
+import {
+  INDUSTRY_BY_ID,
+  SECTOR_BY_ID,
+  naics6ToIndustry,
+  slugToIndustry,
+  industryToSlug,
+} from "./taxonomy";
 
 export type Cell = {
+  // identity
   country: string;
   geo_id: string;
   geo_level: string;
   geo_name: string | null;
+  // industry (raw + friendly)
   naics_6?: string | null;
   naics_4?: string | null;
-  naics_2digit?: string | null;
-  industry_description?: string | null;
+  industry_id?: string | null;
+  industry_name?: string | null;
+  industry_examples?: string[] | null;
+  sector_id?: string | null;
+  sector_name?: string | null;
+  industry_description?: string | null; // raw native description
+  // size + year
   size_band: string | null;
   year: number;
+  // metrics
   n_enterprises?: number | null;
   n_employees?: number | null;
   total_revenue?: number | null;
@@ -36,6 +44,7 @@ export type Cell = {
   rev_p75?: number | null;
   rev_p90?: number | null;
   payroll_per_employee?: number | null;
+  // quality
   quality_score?: number | null;
   coverage_tier?: string | null;
   coverage_source?: string | null;
@@ -97,71 +106,100 @@ const US_STATES: Record<string, { name: string; slug: string }> = {
   "56": { name: "Wyoming", slug: "wyoming" },
 };
 
-// Slug → geo_id reverse lookup
 const SLUG_TO_GEO_ID: Record<string, string> = Object.fromEntries(
   Object.entries(US_STATES).map(([fips, v]) => [v.slug, `US-${fips}`])
 );
-
 const GEO_ID_TO_NAME: Record<string, string> = Object.fromEntries(
   Object.entries(US_STATES).map(([fips, v]) => [`US-${fips}`, v.name])
 );
 
-/** Slugify a name for URL use. */
 export function slugify(s: string | null | undefined): string {
   if (!s) return "";
-  return s
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+  return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 }
 
-/** Normalize a raw cells_master row into our Cell type. */
-function normalizeRow(r: any): Cell {
-  return {
-    country: r.country || "US",
-    geo_id: r.geo_id,
-    geo_level: r.geo_level || "state",
-    geo_name: GEO_ID_TO_NAME[r.geo_id] || r.geo_name || null,
-    naics_6: r.naics_6,
-    naics_4: r.naics_4,
-    naics_2digit: r.naics_2,
-    industry_description: r.industry_description,
-    size_band: r.size_band,
-    year: r.year,
-    n_enterprises: r.n,
-    n_employees: r.total_employment,
-    total_revenue: r.rev_p50 && r.n ? r.rev_p50 * r.n : null,
-    total_revenue_usd: r.rev_p50 && r.n ? r.rev_p50 * r.n : null,
-    revenue_per_firm: r.rev_p50,
-    rev_p10: r.rev_p10,
-    rev_p25: r.rev_p25,
-    rev_p50: r.rev_p50,
-    rev_p75: r.rev_p75,
-    rev_p90: r.rev_p90,
-    payroll_per_employee: r.mean_wage_per_employee_usd,
-    quality_score: r.quality_score,
-    coverage_tier: r.coverage_tier,
-    coverage_source: r.coverage_source,
-    currency: r.currency || "USD",
+/** Add industry_id / industry_name / sector via taxonomy. */
+function applyTaxonomy(c: Cell): Cell {
+  const industryId = c.industry_id ?? naics6ToIndustry(c.naics_6);
+  if (industryId) {
+    const ind = INDUSTRY_BY_ID[industryId];
+    if (ind) {
+      c.industry_id = ind.id;
+      c.industry_name = ind.name;
+      c.industry_examples = ind.examples;
+      c.sector_id = ind.sector_id;
+      const sec = SECTOR_BY_ID[ind.sector_id];
+      if (sec) c.sector_name = sec.name;
+    }
+  }
+  return c;
+}
+
+function normalizeRow(r: Record<string, unknown>): Cell {
+  const cell: Cell = {
+    country: (r.country as string) || "US",
+    geo_id: r.geo_id as string,
+    geo_level: (r.geo_level as string) || "state",
+    geo_name: GEO_ID_TO_NAME[r.geo_id as string] || (r.geo_name as string) || null,
+    naics_6: r.naics_6 as string | null,
+    naics_4: r.naics_4 as string | null,
+    industry_description: r.industry_description as string | null,
+    size_band: (r.size_band as string) || null,
+    year: r.year as number,
+    n_enterprises: r.n as number | null,
+    n_employees: r.total_employment as number | null,
+    total_revenue: r.rev_p50 && r.n ? (r.rev_p50 as number) * (r.n as number) : null,
+    total_revenue_usd: r.rev_p50 && r.n ? (r.rev_p50 as number) * (r.n as number) : null,
+    revenue_per_firm: r.rev_p50 as number | null,
+    rev_p10: r.rev_p10 as number | null,
+    rev_p25: r.rev_p25 as number | null,
+    rev_p50: r.rev_p50 as number | null,
+    rev_p75: r.rev_p75 as number | null,
+    rev_p90: r.rev_p90 as number | null,
+    payroll_per_employee: r.mean_wage_per_employee_usd as number | null,
+    quality_score: r.quality_score as number | null,
+    coverage_tier: r.coverage_tier as string | null,
+    coverage_source: r.coverage_source as string | null,
+    currency: (r.currency as string) || "USD",
   };
+  return applyTaxonomy(cell);
 }
 
-/** Resolve a (country-slug, geo-slug, industry-slug) URL to a cells_master row. */
+/** Resolve a (country / geo / industry) URL slug to a single best-fit cell. */
 export async function getCellBySlug(
   countrySlug: string,
   geoSlug: string,
   industrySlug: string
 ): Promise<Cell | null> {
   const country = countrySlug.toUpperCase();
-  if (country !== "US") return null; // For now, only US works on free tier
+  if (country !== "US") return null; // For now, only US data is in Supabase
 
   const geoId = SLUG_TO_GEO_ID[geoSlug.toLowerCase()];
   if (!geoId) return null;
 
-  // Industry slug must fuzzy-match `industry_description`. We turn "restaurants"
-  // into a wildcard search.
-  const fuzzy = industrySlug.replace(/-/g, "%");
+  // First try friendly industry slug → industry_id → matching NAICS-3 prefix
+  const ind = slugToIndustry(industrySlug);
+  if (ind && (ind.naics_3 || []).length) {
+    // Build OR-list of NAICS-3 prefixes
+    const naics3Prefixes = (ind.naics_3 || []).map((n) => `${n}%`);
+    let q = supabaseAdmin
+      .from("cells_master")
+      .select("*")
+      .eq("country", "US")
+      .eq("geo_id", geoId)
+      .order("year", { ascending: false, nullsFirst: false })
+      .order("n", { ascending: false, nullsFirst: false })
+      .limit(1);
+    const orClauses = naics3Prefixes.map((p) => `naics_6.like.${p}`).join(",");
+    q = q.or(orClauses);
+    const { data, error } = await q;
+    if (!error && data && data.length > 0) {
+      return normalizeRow(data[0] as Record<string, unknown>);
+    }
+  }
 
+  // Fallback: fuzzy industry_description search
+  const fuzzy = industrySlug.replace(/-/g, "%");
   const { data, error } = await supabaseAdmin
     .from("cells_master")
     .select("*")
@@ -171,13 +209,8 @@ export async function getCellBySlug(
     .order("year", { ascending: false, nullsFirst: false })
     .order("n", { ascending: false, nullsFirst: false })
     .limit(1);
-
-  if (error) {
-    console.error("[cells] getCellBySlug error:", error.message);
-    return null;
-  }
-  if (!data || data.length === 0) return null;
-  return normalizeRow(data[0]);
+  if (error || !data || data.length === 0) return null;
+  return normalizeRow(data[0] as Record<string, unknown>);
 }
 
 /** Top N cells globally (for sitemap + homepage features). */
@@ -189,12 +222,8 @@ export async function getTopCells(limit = 100): Promise<Cell[]> {
     .not("industry_description", "is", null)
     .order("total_employment", { ascending: false, nullsFirst: false })
     .limit(limit);
-  if (error) {
-    console.error("[cells] getTopCells error:", error.message);
-    return [];
-  }
-  if (!data) return [];
-  return data.map(normalizeRow);
+  if (error || !data) return [];
+  return data.map((r) => normalizeRow(r as Record<string, unknown>));
 }
 
 /** Comparable cells: same state, different industries. */
@@ -204,23 +233,31 @@ export async function getComparableCells(
   limit = 8
 ): Promise<Cell[]> {
   if (!state) return [];
-  // Resolve state name back to geo_id
-  const stateGeoId = Object.entries(GEO_ID_TO_NAME).find(
-    ([_, name]) => name === state
-  )?.[0];
-  if (!stateGeoId) return [];
+  const fipsEntry = Object.entries(US_STATES).find(([, v]) => v.name === state);
+  if (!fipsEntry) return [];
+  const geoId = `US-${fipsEntry[0]}`;
 
   let q = supabaseAdmin
     .from("cells_master")
     .select("*")
     .eq("country", "US")
-    .eq("geo_id", stateGeoId)
+    .eq("geo_id", geoId)
     .not("industry_description", "is", null)
     .order("total_employment", { ascending: false, nullsFirst: false })
     .limit(limit);
   if (excludeNaics6) q = q.neq("naics_6", excludeNaics6);
+
   const { data, error } = await q;
-  if (error) return [];
-  if (!data) return [];
-  return data.map(normalizeRow);
+  if (error || !data) return [];
+  return data.map((r) => normalizeRow(r as Record<string, unknown>));
+}
+
+/** Build URL from a Cell. */
+export function cellUrl(c: Cell): string {
+  const country = c.country.toLowerCase();
+  const geoSlug = c.geo_name ? slugify(c.geo_name) : "";
+  const industrySlug = c.industry_id
+    ? industryToSlug(c.industry_id)
+    : slugify(c.industry_description || c.naics_6 || "");
+  return `/${country}/${geoSlug}/${industrySlug}`;
 }

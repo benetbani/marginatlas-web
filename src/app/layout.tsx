@@ -22,9 +22,10 @@ export default function RootLayout({
               <span className="gradient-name">Margin Atlas</span>
             </a>
             <nav className="text-sm text-ink-800">
+              <a href="/browse" className="hover:text-atlas-600 mx-3">Browse</a>
+              <a href="/blog" className="hover:text-atlas-600 mx-3">Blog</a>
               <a href="/pricing" className="hover:text-atlas-600 mx-3">Pricing</a>
               <a href="/methodology" className="hover:text-atlas-600 mx-3">Methodology</a>
-              <a href="/sign-in" className="hover:text-atlas-600 mx-3">Sign in</a>
             </nav>
           </div>
         </header>
