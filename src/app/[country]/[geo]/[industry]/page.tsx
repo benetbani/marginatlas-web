@@ -23,6 +23,7 @@ import { TimeSeriesChart } from "@/components/TimeSeriesChart";
 import { TypicalFirmCard } from "@/components/TypicalFirmCard";
 import { AcrossStatesStrip } from "@/components/AcrossStatesStrip";
 import { CellPageNav } from "@/components/CellPageNav";
+import { AtlasScore } from "@/components/AtlasScore";
 import { CellDataset, Breadcrumbs } from "@/components/StructuredData";
 
 // ISR: regenerate every 7 days (604800 seconds)
@@ -223,8 +224,9 @@ export default async function CellPage({
         />
       </section>
 
-      {/* Typical-firm biography card */}
-      <section id="typical-firm" className="py-6">
+      {/* Atlas Score + Typical-firm biography card */}
+      <section id="typical-firm" className="py-6 grid md:grid-cols-[1fr_2fr] gap-4">
+        <AtlasScore cell={cell} />
         <TypicalFirmCard cell={cell} currencySymbol="$" />
       </section>
 
