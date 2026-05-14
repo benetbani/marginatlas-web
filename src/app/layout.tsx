@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Organization } from "@/components/StructuredData";
+import { GlobalSearch } from "@/components/GlobalSearch";
 
 export const metadata: Metadata = {
   title: "Margin Atlas — Global Small-Business Benchmarking",
@@ -29,12 +30,15 @@ export default function RootLayout({
               </svg>
               <span className="text-ink-900">Margin Atlas</span>
             </a>
-            <nav className="text-sm text-ink-800">
-              <a href="/browse" className="hover:text-atlas-600 mx-3 transition-colors">Browse</a>
-              <a href="/blog" className="hover:text-atlas-600 mx-3 transition-colors">Blog</a>
-              <a href="/pricing" className="hover:text-atlas-600 mx-3 transition-colors">Pricing</a>
-              <a href="/methodology" className="hover:text-atlas-600 mx-3 transition-colors">Methodology</a>
-            </nav>
+            <div className="flex items-center gap-2">
+              <nav className="text-sm text-ink-800 hidden sm:flex">
+                <a href="/browse" className="hover:text-atlas-600 mx-3 transition-colors">Browse</a>
+                <a href="/blog" className="hover:text-atlas-600 mx-3 transition-colors">Blog</a>
+                <a href="/pricing" className="hover:text-atlas-600 mx-3 transition-colors">Pricing</a>
+                <a href="/methodology" className="hover:text-atlas-600 mx-3 transition-colors">Methodology</a>
+              </nav>
+              <GlobalSearch />
+            </div>
           </div>
         </header>
         <main className="max-w-7xl mx-auto px-6 py-10">{children}</main>
