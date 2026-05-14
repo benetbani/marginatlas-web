@@ -4,6 +4,7 @@ import { industryToSlug } from "@/lib/taxonomy";
 import { DistributionBars } from "@/components/DistributionBars";
 import { QualityBadge } from "@/components/QualityBadge";
 import { Tooltip } from "@/components/Tooltip";
+import { CellDataset, Breadcrumbs } from "@/components/StructuredData";
 
 // ISR: regenerate every 7 days (604800 seconds)
 export const revalidate = 604800;
@@ -52,8 +53,27 @@ export default async function CellPage({ params }: { params: Promise<Params> }) 
 
   const comparables = await getComparableCells(cell.geo_name || "", cell.naics_6 || undefined, 6);
 
+  const url = `https://marginatlas.com/${country}/${geo}/${industry}`;
   return (
     <div>
+      <CellDataset
+        url={url}
+        industryName={cell.industry_name || industry}
+        geoName={cell.geo_name || geo}
+        year={cell.year}
+        source={cell.coverage_source || "U.S. Census Bureau"}
+        medianRevenue={cell.revenue_per_firm}
+        nEnterprises={cell.n_enterprises}
+      />
+      <Breadcrumbs
+        items={[
+          { name: "Home", url: "https://marginatlas.com/" },
+          { name: country.toUpperCase(), url: `https://marginatlas.com/${country}` },
+          { name: cell.geo_name || geo, url: `https://marginatlas.com/${country}/${geo}` },
+          { name: cell.industry_name || industry, url },
+        ]}
+      />
+
       {/* Breadcrumb */}
       <nav className="text-sm text-ink-700/70 mb-4">
         <a href="/" className="hover:text-atlas-600">Home</a>

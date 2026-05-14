@@ -1,4 +1,5 @@
 import { NavigatorForm } from "@/components/NavigatorForm";
+import { NewsletterSignup } from "@/components/NewsletterSignup";
 
 export const revalidate = 86400; // 1 day
 
@@ -106,12 +107,17 @@ export default function HomePage() {
             <a
               key={href}
               href={href}
-              className="block px-4 py-3 rounded-xl border border-slate-200/60 bg-white hover:border-atlas-500 transition text-sm text-ink-900"
+              className="block px-4 py-3 rounded-xl border border-ink-200 bg-white hover:border-atlas-500 transition text-sm text-ink-900"
             >
               {label} →
             </a>
           ))}
         </div>
+      </section>
+
+      {/* Newsletter signup */}
+      <section className="py-12">
+        <NewsletterSignup />
       </section>
     </div>
   );

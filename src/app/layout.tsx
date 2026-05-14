@@ -1,5 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import { Organization } from "@/components/StructuredData";
 
 export const metadata: Metadata = {
   title: "Margin Atlas — Global Small-Business Benchmarking",
@@ -16,6 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen bg-ink-50 text-ink-900 font-sans">
+        <Organization />
         <header className="border-b border-ink-200 bg-ink-50/85 backdrop-blur sticky top-0 z-10">
           <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
             <a href="/" className="flex items-center gap-2 font-semibold text-lg tracking-tight">
