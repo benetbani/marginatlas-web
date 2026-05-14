@@ -305,6 +305,81 @@ export function listUsStates(): { name: string; slug: string }[] {
   return Object.values(US_STATES).sort((a, b) => a.name.localeCompare(b.name));
 }
 
+/**
+ * Same industry, different states — for the "How this industry compares
+ * across the country" strip. Returns up to N highest-employment cells
+ * matching the same NAICS-3 prefixes as the focus industry.
+ */
+export async function getSameIndustryAcrossStates(
+  industrySlug: string,
+  excludeGeoId: string,
+  limit = 10
+): Promise<Cell[]> {
+  const ind = slugToIndustry(industrySlug);
+  if (!ind || !(ind.naics_3 || []).length) return [];
+  const naics3Prefixes = (ind.naics_3 || []).map((n) => `${n}%`);
+  const orClauses = naics3Prefixes.map((p) => `naics_6.like.${p}`).join(",");
+
+  // Pull a bunch (Supabase can't dedupe by state in one call), then collapse client-side.
+  const { data, error } = await supabaseAdmin
+    .from("cells_master")
+    .select("*")
+    .eq("country", "US")
+    .neq("geo_id", excludeGeoId)
+    .or(orClauses)
+    .order("year", { ascending: false, nullsFirst: false })
+    .order("n", { ascending: false, nullsFirst: false })
+    .limit(800);
+  if (error || !data) return [];
+
+  const rows = data.map((r) => normalizeRow(r as Record<string, unknown>));
+  // Collapse to one row per state, keep highest-n
+  const byState = new Map<string, Cell>();
+  for (const c of rows) {
+    if (!c.geo_id) continue;
+    const prev = byState.get(c.geo_id);
+    if (!prev || (c.n_enterprises ?? 0) > (prev.n_enterprises ?? 0)) {
+      byState.set(c.geo_id, c);
+    }
+  }
+  return Array.from(byState.values())
+    .sort((a, b) => (b.n_enterprises ?? 0) - (a.n_enterprises ?? 0))
+    .slice(0, limit);
+}
+
+/**
+ * Sector-level rank: how does this industry compare to other industries
+ * in the same state by firm count? Returns { rank, total, totalEnterprises }.
+ */
+export async function getIndustryRankInState(
+  geoId: string,
+  currentNaics6: string | null
+): Promise<{ rank: number; total: number } | null> {
+  if (!geoId || !currentNaics6) return null;
+  const { data, error } = await supabaseAdmin
+    .from("cells_master")
+    .select("naics_6, n")
+    .eq("country", "US")
+    .eq("geo_id", geoId)
+    .not("naics_6", "is", null)
+    .order("n", { ascending: false, nullsFirst: false })
+    .limit(2000);
+  if (error || !data) return null;
+  // Collapse to one row per NAICS-6 (largest n)
+  const byNaics = new Map<string, number>();
+  for (const r of data) {
+    const code = (r.naics_6 as string) || "";
+    const n = (r.n as number) || 0;
+    if (!byNaics.has(code) || (byNaics.get(code) || 0) < n) {
+      byNaics.set(code, n);
+    }
+  }
+  const sorted = Array.from(byNaics.entries()).sort((a, b) => b[1] - a[1]);
+  const idx = sorted.findIndex(([code]) => code === currentNaics6);
+  if (idx < 0) return null;
+  return { rank: idx + 1, total: sorted.length };
+}
+
 /** Top N cells globally (for sitemap + homepage features). */
 export async function getTopCells(limit = 100): Promise<Cell[]> {
   const { data, error } = await supabaseAdmin

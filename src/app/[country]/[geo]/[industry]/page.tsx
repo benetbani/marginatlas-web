@@ -4,6 +4,8 @@ import {
   getCellVariants,
   getComparableCells,
   getTopCells,
+  getSameIndustryAcrossStates,
+  getIndustryRankInState,
   cellUrl,
   slugify,
   distinctSizeBands,
@@ -18,6 +20,8 @@ import { QualityBadge } from "@/components/QualityBadge";
 import { Tooltip } from "@/components/Tooltip";
 import { DimensionSwitcher } from "@/components/DimensionSwitcher";
 import { TimeSeriesChart } from "@/components/TimeSeriesChart";
+import { TypicalFirmCard } from "@/components/TypicalFirmCard";
+import { AcrossStatesStrip } from "@/components/AcrossStatesStrip";
 import { CellDataset, Breadcrumbs } from "@/components/StructuredData";
 
 // ISR: regenerate every 7 days (604800 seconds)
@@ -99,7 +103,12 @@ export default async function CellPage({
   // same series.
   const yoy = computeYoY(timeSeries, cell.year);
 
-  const comparables = await getComparableCells(cell.geo_name || "", cell.naics_6 || undefined, 6);
+  // Fan out the remaining three data fetches concurrently. None block the others.
+  const [comparables, acrossStates, rank] = await Promise.all([
+    getComparableCells(cell.geo_name || "", cell.naics_6 || undefined, 6),
+    getSameIndustryAcrossStates(industry, cell.geo_id, 10),
+    getIndustryRankInState(cell.geo_id, cell.naics_6 || null),
+  ]);
 
   // Build region + industry option lists for switcher
   const regions = listUsStates();
@@ -177,6 +186,13 @@ export default async function CellPage({
           <strong>{cell.n_enterprises?.toLocaleString() || "—"}</strong> of them in {cell.geo_name}, employing roughly{" "}
           <strong>{cell.n_employees?.toLocaleString() || "—"}</strong> people.
         </p>
+        {rank && (
+          <p className="mt-3 text-sm text-ink-700/70">
+            Ranks <strong className="text-ink-900">#{rank.rank}</strong> out of{" "}
+            <strong className="text-ink-900">{rank.total}</strong> industries
+            in {cell.geo_name} by firm count.
+          </p>
+        )}
       </header>
 
       {/* Headline grid */}
@@ -203,6 +219,11 @@ export default async function CellPage({
           tooltip="Average annual pay across all employees in this industry."
           yoy={yoy.payroll_per_employee}
         />
+      </section>
+
+      {/* Typical-firm biography card */}
+      <section className="py-6">
+        <TypicalFirmCard cell={cell} currencySymbol="$" />
       </section>
 
       {/* Distribution — histogram + 5-bar tier view side by side */}
@@ -250,6 +271,13 @@ export default async function CellPage({
           coverageSource={cell.coverage_source}
         />
       </section>
+
+      {/* Same industry, other states */}
+      <AcrossStatesStrip
+        industryName={cell.industry_name || industry.replace(/-/g, " ")}
+        currentGeoName={cell.geo_name || geo}
+        cells={acrossStates}
+      />
 
       {/* Comparable cells */}
       {comparables.length > 0 && (
