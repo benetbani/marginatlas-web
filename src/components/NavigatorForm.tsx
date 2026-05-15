@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { ComboField, type ComboOption } from "./ComboField";
 import {
   COUNTRIES,
@@ -15,6 +15,21 @@ import {
   visibleIndustries,
 } from "@/lib/taxonomy";
 import { flagFromIso2 } from "@/lib/countries";
+
+/** Client-side gate read — matches lib/audience.ts on the server. */
+function readClientGate(): { revealMixed: boolean; revealCorp: boolean } {
+  if (typeof window === "undefined") return { revealMixed: false, revealCorp: false };
+  const params = new URLSearchParams(window.location.search);
+  const cookie = document.cookie || "";
+  const cookiePro = /(?:^|;\s*)atlas_pro=1(?:;|$)/.test(cookie);
+  const showLarge = params.get("show_large") === "1" || params.get("show_large") === "true";
+  const showMixed = params.get("show_mixed") === "1" || params.get("show_mixed") === "true";
+  const pro = params.get("pro") === "1" || params.get("pro") === "true" || cookiePro;
+  return {
+    revealCorp: pro || showLarge,
+    revealMixed: pro || showMixed || showLarge,
+  };
+}
 
 const US_STATES = [
   { value: "alabama", label: "Alabama" },
@@ -78,6 +93,13 @@ export function NavigatorForm() {
   const [sector, setSector] = useState("");
   const [industry, setIndustry] = useState("");
   const [size, setSize] = useState("");
+  const [gate, setGate] = useState({ revealMixed: false, revealCorp: false });
+
+  // Client-side gate (Plan v3.0 §P) — re-runs at mount so ?pro=1 + cookies
+  // can unhide corp_only / mixed_caution industries in the dropdown.
+  useEffect(() => {
+    setGate(readClientGate());
+  }, []);
 
   // Country options — alphabetical, flag prefixed
   const countryOptions: ComboOption[] = useMemo(
@@ -120,7 +142,7 @@ export function NavigatorForm() {
 
   // Industry options — filtered by selected sector, audience-gated, alphabetical
   const industryOptions: ComboOption[] = useMemo(() => {
-    const allowed = visibleIndustries();
+    const allowed = visibleIndustries(gate);
     const pool = sector ? allowed.filter((i) => i.sector_id === sector) : allowed;
     return [...pool]
       .sort((a, b) => a.name.localeCompare(b.name))
@@ -130,7 +152,7 @@ export function NavigatorForm() {
         examples: i.examples,
         keywords: i.keywords,
       }));
-  }, [sector]);
+  }, [sector, gate]);
 
   // Size band options
   const sizeOptions: ComboOption[] = useMemo(

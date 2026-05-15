@@ -5,6 +5,20 @@ import { useRouter } from "next/navigation";
 import { COUNTRIES, SECTORS, industryToSlug, visibleIndustries } from "@/lib/taxonomy";
 import { flagFromIso2 } from "@/lib/countries";
 
+function readClientGate(): { revealMixed: boolean; revealCorp: boolean } {
+  if (typeof window === "undefined") return { revealMixed: false, revealCorp: false };
+  const params = new URLSearchParams(window.location.search);
+  const cookie = document.cookie || "";
+  const cookiePro = /(?:^|;\s*)atlas_pro=1(?:;|$)/.test(cookie);
+  const showLarge = params.get("show_large") === "1" || params.get("show_large") === "true";
+  const showMixed = params.get("show_mixed") === "1" || params.get("show_mixed") === "true";
+  const pro = params.get("pro") === "1" || params.get("pro") === "true" || cookiePro;
+  return {
+    revealCorp: pro || showLarge,
+    revealMixed: pro || showMixed || showLarge,
+  };
+}
+
 type SearchResult = {
   kind: "industry" | "country" | "sector";
   id: string;
@@ -23,7 +37,13 @@ export function GlobalSearch() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [focusIdx, setFocusIdx] = useState(0);
+  const [gate, setGate] = useState({ revealMixed: false, revealCorp: false });
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Read the client-side gate on mount (Plan v3.0 §P).
+  useEffect(() => {
+    setGate(readClientGate());
+  }, []);
 
   // Keyboard shortcut: Ctrl+K / Cmd+K
   useEffect(() => {
@@ -40,7 +60,7 @@ export function GlobalSearch() {
   }, []);
 
   const q = query.trim().toLowerCase();
-  const visible = visibleIndustries();
+  const visible = visibleIndustries(gate);
   const results: SearchResult[] = !q
     ? []
     : [
