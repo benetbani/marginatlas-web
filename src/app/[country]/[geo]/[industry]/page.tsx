@@ -7,6 +7,7 @@ import {
   getSameIndustryAcrossStates,
   getSameIndustryAcrossCountries,
   getIndustryRankInState,
+  getNudgeNeighbor,
   cellUrl,
   slugify,
   distinctSizeBands,
@@ -114,11 +115,12 @@ export default async function CellPage({
 
   // Fan out the remaining data fetches concurrently. None block the others.
   const isUsCell = country.toLowerCase() === "us";
-  const [comparables, acrossStates, acrossCountries, rank] = await Promise.all([
+  const [comparables, acrossStates, acrossCountries, rank, nudge] = await Promise.all([
     getComparableCells(cell.geo_name || "", cell.naics_6 || undefined, 6),
     isUsCell ? getSameIndustryAcrossStates(industry, cell.geo_id, 10) : Promise.resolve([]),
     isUsCell ? Promise.resolve([]) : getSameIndustryAcrossCountries(industry, country, 10),
     getIndustryRankInState(cell.geo_id, cell.naics_6 || null),
+    getNudgeNeighbor(cell),
   ]);
 
   // Build region + industry option lists for switcher
@@ -168,6 +170,24 @@ export default async function CellPage({
           { name: cell.industry_name || industry, url },
         ]}
       />
+
+      {/* Nudge bar — appears when coverage is weak and a stronger neighbor exists */}
+      {nudge && (
+        <div className="mb-4 rounded-xl border border-atlas-300 bg-atlas-100/60 px-4 py-2.5 text-sm flex items-center gap-2 flex-wrap">
+          <span aria-hidden>🧭</span>
+          <span className="text-cocoa-900">
+            Stronger data for{" "}
+            <strong>{cell.industry_name || industry.replace(/-/g, " ")}</strong> exists in{" "}
+            <strong>{nudge.geo_name}</strong>.
+          </span>
+          <a
+            href={nudge.url}
+            className="ml-auto text-atlas-700 hover:text-atlas-900 font-medium"
+          >
+            See {nudge.geo_name} →
+          </a>
+        </div>
+      )}
 
       {/* Audience caveat (sub-niche borrowing, mixed-bimodal, or corp_only) */}
       {(usingParentData ||

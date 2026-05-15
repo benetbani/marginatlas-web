@@ -315,6 +315,136 @@ export function listUsStates(): { name: string; slug: string }[] {
 }
 
 /**
+ * Top industries for a country — used by the country landing page.
+ * For US: queries cells_master, groups by NAICS-3 prefix → industry_id.
+ * For non-US: queries extrapolated_cells, groups by industry_id.
+ * Returns up to `limit` industries ordered by relevant size signal.
+ */
+export type TopIndustryRow = {
+  industry_id: string;
+  industry_name: string;
+  revenue_per_firm: number | null;
+  n_enterprises: number | null;
+};
+
+export async function getTopIndustriesForCountry(
+  iso2: string,
+  limit = 12
+): Promise<TopIndustryRow[]> {
+  const country = iso2.toUpperCase();
+  if (country === "US") {
+    const { data, error } = await supabaseAdmin
+      .from("cells_master")
+      .select("naics_6, n, rev_p50")
+      .eq("country", "US")
+      .not("naics_6", "is", null)
+      .order("n", { ascending: false, nullsFirst: false })
+      .limit(1500);
+    if (error || !data) return [];
+    const byIndustry = new Map<string, { n: number; rev: number; count: number }>();
+    for (const r of data) {
+      const naics = (r.naics_6 as string) || "";
+      const indId = naics6ToIndustry(naics);
+      if (!indId) continue;
+      const cur = byIndustry.get(indId) || { n: 0, rev: 0, count: 0 };
+      cur.n += (r.n as number) || 0;
+      cur.rev += (r.rev_p50 as number) || 0;
+      cur.count += 1;
+      byIndustry.set(indId, cur);
+    }
+    const rows: TopIndustryRow[] = [];
+    for (const [indId, v] of byIndustry.entries()) {
+      const ind = INDUSTRY_BY_ID[indId];
+      if (!ind) continue;
+      const a = ind.audience || "smb_friendly";
+      if (a !== "smb_core" && a !== "smb_friendly") continue;
+      rows.push({
+        industry_id: indId,
+        industry_name: ind.name,
+        revenue_per_firm: v.count > 0 ? v.rev / v.count : null,
+        n_enterprises: v.n,
+      });
+    }
+    rows.sort((a, b) => (b.n_enterprises ?? 0) - (a.n_enterprises ?? 0));
+    return rows.slice(0, limit);
+  }
+
+  // Non-US: query extrapolated_cells
+  const iso3 = iso2ToIso3(country);
+  if (!iso3) return [];
+  const { data, error } = await supabaseAdmin
+    .from("extrapolated_cells")
+    .select("industry_id, predicted_rev_per_firm")
+    .eq("country_iso3", iso3)
+    .order("predicted_rev_per_firm", { ascending: false, nullsFirst: false })
+    .limit(200);
+  if (error || !data) return [];
+  const seen = new Map<string, number>();
+  for (const r of data) {
+    const id = r.industry_id as string;
+    const rev = (r.predicted_rev_per_firm as number) || 0;
+    if (!seen.has(id) || (seen.get(id) || 0) < rev) seen.set(id, rev);
+  }
+  const rows: TopIndustryRow[] = [];
+  for (const [id, rev] of seen.entries()) {
+    const ind = INDUSTRY_BY_ID[id];
+    if (!ind) continue;
+    const a = ind.audience || "smb_friendly";
+    if (a !== "smb_core" && a !== "smb_friendly") continue;
+    rows.push({
+      industry_id: id,
+      industry_name: ind.name,
+      revenue_per_firm: rev,
+      n_enterprises: null,
+    });
+  }
+  return rows.slice(0, limit);
+}
+
+/**
+ * Pick a stronger-coverage neighbor cell for the nudge bar.
+ * Returns a "go here instead" target when the current cell has poor data,
+ * or null when the current cell is fine.
+ */
+export async function getNudgeNeighbor(
+  current: Cell
+): Promise<{ url: string; geo_name: string; country: string } | null> {
+  // Only nudge when quality is low or n_enterprises is missing/very small.
+  const qual = current.quality_score ?? 50;
+  const tiny = (current.n_enterprises ?? 0) < 100;
+  if (qual >= 50 && !tiny) return null;
+  if (!current.industry_id) return null;
+  const indSlug = industryToSlug(current.industry_id);
+
+  // Find the cell for the same industry with the largest n_enterprises across
+  // covered geos (US states first, then countries via extrapolated_cells).
+  const ind = INDUSTRY_BY_ID[current.industry_id];
+  if (!ind) return null;
+  const naics3 = ind.naics_3 || [];
+  if (naics3.length === 0) return null;
+  const orClauses = naics3.map((p) => `naics_6.like.${p}%`).join(",");
+  const { data, error } = await supabaseAdmin
+    .from("cells_master")
+    .select("geo_id, n, rev_p50")
+    .eq("country", "US")
+    .or(orClauses)
+    .order("n", { ascending: false, nullsFirst: false })
+    .limit(5);
+  if (error || !data || data.length === 0) return null;
+  const top = data[0];
+  const geoId = (top.geo_id as string) || "";
+  if (!geoId.startsWith("US-") || geoId === current.geo_id) return null;
+  const fips = geoId.slice(3);
+  const stateRow = US_STATES[fips];
+  if (!stateRow) return null;
+  return {
+    url: `/us/${stateRow.slug}/${indSlug}`,
+    geo_name: stateRow.name,
+    country: "US",
+  };
+}
+
+/**
  * Same industry across other countries — for non-US cell pages and country
  * landing pages. Returns top N highest-revenue cells matching the same
  * industry across all covered countries (extrapolated_cells table).
