@@ -26,7 +26,8 @@ import { CellPageNav } from "@/components/CellPageNav";
 import { CellActions } from "@/components/CellActions";
 import { AtlasScore } from "@/components/AtlasScore";
 import { SmartImage } from "@/components/SmartImage";
-import { SECTOR_BY_ID } from "@/lib/taxonomy";
+import { AudienceCaveat } from "@/components/AudienceCaveat";
+import { SECTOR_BY_ID, INDUSTRY_BY_ID, slugToIndustry, resolveToMeasuredIndustry } from "@/lib/taxonomy";
 import { CellDataset, Breadcrumbs } from "@/components/StructuredData";
 
 // ISR: regenerate every 7 days (604800 seconds)
@@ -117,11 +118,30 @@ export default async function CellPage({
 
   // Build region + industry option lists for switcher
   const regions = listUsStates();
-  const industryOpts = INDUSTRIES.map((i) => ({
-    id: i.id,
-    name: i.name,
-    slug: industryToSlug(i.id),
-  })).sort((a, b) => a.name.localeCompare(b.name));
+  // Audience filter: switcher only shows SMB-relevant industries by default.
+  const industryOpts = INDUSTRIES
+    .filter((i) => {
+      const a = i.audience || "smb_friendly";
+      return a === "smb_core" || a === "smb_friendly";
+    })
+    .map((i) => ({
+      id: i.id,
+      name: i.name,
+      slug: industryToSlug(i.id),
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  // Caveat resolution: which industry record did the URL hit, and are we
+  // displaying parent-fallback numbers?
+  const requestedIndustry = slugToIndustry(industry);
+  const measuredIndustry = resolveToMeasuredIndustry(requestedIndustry);
+  const usingParentData = !!(
+    requestedIndustry &&
+    measuredIndustry &&
+    requestedIndustry.id !== measuredIndustry.id
+  );
+  // Silence eslint unused — INDUSTRY_BY_ID may not be used directly here
+  void INDUSTRY_BY_ID;
 
   const url = `https://marginatlas.com/${country}/${geo}/${industry}`;
   return (
@@ -143,6 +163,15 @@ export default async function CellPage({
           { name: cell.industry_name || industry, url },
         ]}
       />
+
+      {/* Audience caveat (sub-niche borrowing, mixed-bimodal, or corp_only) */}
+      {(usingParentData ||
+        requestedIndustry?.audience === "mixed_caution" ||
+        requestedIndustry?.audience === "corp_only") && (
+        <div className="mb-4">
+          <AudienceCaveat industry={requestedIndustry} usingParentData={usingParentData} />
+        </div>
+      )}
 
       {/* Actions: save / copy link / CSV / embed */}
       <CellActions

@@ -16,6 +16,12 @@ export type Sector = {
   order: number;
 };
 
+export type AudienceTag =
+  | "smb_core"
+  | "smb_friendly"
+  | "mixed_caution"
+  | "corp_only";
+
 export type Industry = {
   id: string;
   name: string;
@@ -25,6 +31,10 @@ export type Industry = {
   isic_divisions?: string[];
   naics_3?: string[];
   nace_divisions?: string[];
+  /** Audience tag (Plan v3.0 §L). Falls back to "smb_friendly" if absent. */
+  audience?: AudienceTag;
+  /** For SMB sub-niches: parent industry ID with actual measurements. */
+  parent_id?: string;
 };
 
 export const SECTORS = (sectorsJson as { sectors: Sector[] }).sectors;
@@ -78,6 +88,58 @@ export function industryToSlug(industryId: string): string {
 
 /** Sectors grouped — for the navigator dropdown. */
 export const SECTORS_ORDERED = [...SECTORS].sort((a, b) => a.order - b.order);
+
+/** Audience helpers — Plan v3.0 §L + §P. */
+
+/** Default-visible audiences (what the founder/SMB user actually wants). */
+const DEFAULT_VISIBLE: AudienceTag[] = ["smb_core", "smb_friendly"];
+
+export function isDefaultVisible(ind: Industry): boolean {
+  const tag = ind.audience || "smb_friendly";
+  return DEFAULT_VISIBLE.includes(tag);
+}
+
+export function audienceLabel(tag: AudienceTag | undefined): string {
+  switch (tag) {
+    case "smb_core": return "Small-business core";
+    case "smb_friendly": return "SMB-friendly";
+    case "mixed_caution": return "Mixed — read with caution";
+    case "corp_only": return "Large-firm dominated";
+    default: return "";
+  }
+}
+
+/**
+ * Industries filtered by audience visibility.
+ * - When `revealMixed` is true, `mixed_caution` is included.
+ * - When `revealCorp` is true (Pro), `corp_only` is included.
+ */
+export function visibleIndustries(opts: { revealMixed?: boolean; revealCorp?: boolean } = {}): Industry[] {
+  return INDUSTRIES.filter((i) => {
+    const tag = i.audience || "smb_friendly";
+    if (DEFAULT_VISIBLE.includes(tag)) return true;
+    if (tag === "mixed_caution" && opts.revealMixed) return true;
+    if (tag === "corp_only" && opts.revealCorp) return true;
+    return false;
+  });
+}
+
+/** Resolve an industry's parent (returns the industry itself if no parent). */
+export function resolveToMeasuredIndustry(ind: Industry | null | undefined): Industry | null {
+  if (!ind) return null;
+  if (ind.parent_id) {
+    const parent = INDUSTRY_BY_ID[ind.parent_id];
+    if (parent) return parent;
+  }
+  return ind;
+}
+
+/** Alphabetical sort helpers. */
+export function industriesAlpha(list: Industry[] = INDUSTRIES): Industry[] {
+  return [...list].sort((a, b) => a.name.localeCompare(b.name));
+}
+
+export const SECTORS_ALPHA = [...SECTORS].sort((a, b) => a.name.localeCompare(b.name));
 
 /** Industries grouped by sector — for cascading dropdowns. */
 export const INDUSTRIES_BY_SECTOR: Record<string, Industry[]> = (() => {

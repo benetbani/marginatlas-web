@@ -12,6 +12,7 @@ import {
   naics6ToIndustry,
   slugToIndustry,
   industryToSlug,
+  resolveToMeasuredIndustry,
 } from "./taxonomy";
 import { iso2ToIso3, iso2ToName } from "./countries";
 
@@ -188,8 +189,11 @@ export async function getCellBySlug(
   const geoId = SLUG_TO_GEO_ID[geoSlug.toLowerCase()];
   if (!geoId) return null;
 
-  // First try friendly industry slug → industry_id → matching NAICS-3 prefix
-  const ind = slugToIndustry(industrySlug);
+  // First try friendly industry slug → industry_id → matching NAICS-3 prefix.
+  // Sub-niche industries (parent_id set) resolve up to the parent's NAICS-3,
+  // since the sub-niche itself isn't in the raw US cell data.
+  const rawInd = slugToIndustry(industrySlug);
+  const ind = resolveToMeasuredIndustry(rawInd);
   if (ind && (ind.naics_3 || []).length) {
     // Build OR-list of NAICS-3 prefixes
     const naics3Prefixes = (ind.naics_3 || []).map((n) => `${n}%`);
@@ -372,7 +376,9 @@ export async function getExtrapolatedCell(
 ): Promise<Cell | null> {
   const iso3 = iso2ToIso3(iso2);
   if (!iso3) return null;
-  const ind = slugToIndustry(industrySlug);
+  // Same parent-fallback policy as US: sub-niches resolve up to their parent.
+  const rawInd = slugToIndustry(industrySlug);
+  const ind = resolveToMeasuredIndustry(rawInd);
   if (!ind) return null;
 
   let q = supabaseAdmin
