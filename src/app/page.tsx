@@ -1,5 +1,6 @@
 import { NavigatorForm } from "@/components/NavigatorForm";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
+import { SmartImage } from "@/components/SmartImage";
 
 export const revalidate = 86400; // 1 day
 
@@ -7,21 +8,34 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero */}
-      <section className="py-10 md:py-14">
-        <h1 className="text-4xl md:text-6xl font-semibold tracking-tight text-ink-900 max-w-4xl">
-          How much does a typical{" "}
-          <span className="gradient-name">small business</span> earn?
-        </h1>
-        <p className="mt-6 text-lg md:text-xl text-ink-800/80 max-w-3xl leading-relaxed">
-          Revenue, employment, and wages for 80 industries across 40+ countries.
-          Compiled from official business statistics, standardized so a bakery in
-          Paris compares directly to a bakery in California. Pick what you want
-          to know below.
-        </p>
+      <section className="py-10 md:py-14 lg:grid lg:grid-cols-[1.4fr_1fr] lg:gap-10 lg:items-center">
+        <div>
+          <h1 className="text-4xl md:text-6xl font-semibold tracking-tight text-ink-900 max-w-4xl">
+            How much does a typical{" "}
+            <span className="gradient-name">small business</span> earn?
+          </h1>
+          <p className="mt-6 text-lg md:text-xl text-ink-800/80 max-w-3xl leading-relaxed">
+            Revenue, employment, and wages for 80 industries across 40+ countries.
+            Compiled from official business statistics, standardized so a bakery in
+            Paris compares directly to a bakery in California. Pick what you want
+            to know below.
+          </p>
 
-        {/* Navigator — the centerpiece */}
-        <div className="mt-10">
-          <NavigatorForm />
+          {/* Navigator — the centerpiece */}
+          <div className="mt-10">
+            <NavigatorForm />
+          </div>
+        </div>
+        <div className="hidden lg:block">
+          {/* Image placeholder HOME-1: stylized world map illustration */}
+          <SmartImage
+            alt="Stylized world atlas of small-business benchmarks"
+            glyph="🗺️"
+            caption="Atlas"
+            aspectRatio={1.5}
+            intent="hero"
+            rounded="3xl"
+          />
         </div>
       </section>
 

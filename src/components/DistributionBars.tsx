@@ -24,11 +24,11 @@ function formatMoney(v: number | null | undefined, currency = "$"): string {
  */
 export function DistributionBars({ p10, p25, p50, p75, p90, currencySymbol = "$" }: Props) {
   const values = [
-    { label: "Smallest 10%", v: p10, tone: "atlas-100" },
-    { label: "Quarter mark", v: p25, tone: "atlas-200" },
-    { label: "Typical (middle)", v: p50, tone: "atlas-400" },
-    { label: "Three-quarter mark", v: p75, tone: "atlas-500" },
-    { label: "Biggest 10%", v: p90, tone: "atlas-600" },
+    { label: "Smallest 10%",       v: p10, tone: "bg-atlas-200" },
+    { label: "Quarter mark",       v: p25, tone: "bg-atlas-300" },
+    { label: "Typical (middle)",   v: p50, tone: "bg-atlas-500" },
+    { label: "Three-quarter mark", v: p75, tone: "bg-atlas-700" },
+    { label: "Biggest 10%",        v: p90, tone: "bg-atlas-800" },
   ];
   const max = Math.max(...values.map((d) => d.v || 0));
   return (
@@ -43,9 +43,9 @@ export function DistributionBars({ p10, p25, p50, p75, p90, currencySymbol = "$"
           return (
             <div key={d.label} className="flex items-center gap-3">
               <div className="w-32 text-xs text-ink-700/80 shrink-0">{d.label}</div>
-              <div className="flex-1 h-7 bg-slate-100/70 rounded overflow-hidden">
+              <div className="flex-1 h-7 bg-cream-200 rounded overflow-hidden">
                 <div
-                  className={`h-full bg-${d.tone}`}
+                  className={`h-full ${d.tone}`}
                   style={{ width: `${pct}%`, transition: "width 0.4s ease" }}
                 />
               </div>

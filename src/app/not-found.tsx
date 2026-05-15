@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SmartImage } from "@/components/SmartImage";
 
 export const metadata = {
   title: "Not found | Margin Atlas",
@@ -6,7 +7,16 @@ export const metadata = {
 
 export default function NotFound() {
   return (
-    <div className="py-16 max-w-2xl">
+    <div className="py-16 max-w-3xl">
+      <div className="mb-6 max-w-sm">
+        {/* Image placeholder 404-1: lost-on-the-map illustration */}
+        <SmartImage
+          alt="Off the map illustration"
+          glyph="🧭"
+          aspectRatio={1.6}
+          rounded="2xl"
+        />
+      </div>
       <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
         404
       </div>

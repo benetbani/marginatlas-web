@@ -25,6 +25,8 @@ import { AcrossStatesStrip } from "@/components/AcrossStatesStrip";
 import { CellPageNav } from "@/components/CellPageNav";
 import { CellActions } from "@/components/CellActions";
 import { AtlasScore } from "@/components/AtlasScore";
+import { SmartImage } from "@/components/SmartImage";
+import { SECTOR_BY_ID } from "@/lib/taxonomy";
 import { CellDataset, Breadcrumbs } from "@/components/StructuredData";
 
 // ISR: regenerate every 7 days (604800 seconds)
@@ -180,32 +182,44 @@ export default async function CellPage({
       />
 
       {/* Hero */}
-      <header id="headline" className="py-8">
-        <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
-          {cell.sector_name && <>{cell.sector_name} · </>}
-          {cell.geo_name} · {cell.year}
+      <header id="headline" className="py-8 lg:grid lg:grid-cols-[1.5fr_1fr] lg:gap-8 lg:items-start">
+        <div>
+          <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
+            {cell.sector_name && <>{cell.sector_name} · </>}
+            {cell.geo_name} · {cell.year}
+          </div>
+          <h1 className="mt-2 text-3xl md:text-5xl font-semibold tracking-tight text-ink-900">
+            How much do <span className="text-atlas-600">{(cell.industry_name || "businesses").toLowerCase()}</span> earn in {cell.geo_name}?
+          </h1>
+          {cell.industry_examples && cell.industry_examples.length > 0 && (
+            <p className="mt-2 text-sm text-ink-700/60">
+              Includes: {cell.industry_examples.slice(0, 5).join(" · ")}
+            </p>
+          )}
+          <p className="mt-4 text-lg text-ink-800/80 max-w-3xl leading-relaxed">
+            A typical {(cell.industry_name || "firm").toLowerCase().replace(/s$/, "")} here brings in about{" "}
+            <strong>{formatMoney(cell.revenue_per_firm)}</strong> per year. There are{" "}
+            <strong>{cell.n_enterprises?.toLocaleString() || "—"}</strong> of them in {cell.geo_name}, employing roughly{" "}
+            <strong>{cell.n_employees?.toLocaleString() || "—"}</strong> people.
+          </p>
+          {rank && (
+            <p className="mt-3 text-sm text-ink-700/70">
+              Ranks <strong className="text-ink-900">#{rank.rank}</strong> out of{" "}
+              <strong className="text-ink-900">{rank.total}</strong> industries
+              in {cell.geo_name} by firm count.
+            </p>
+          )}
         </div>
-        <h1 className="mt-2 text-3xl md:text-5xl font-semibold tracking-tight text-ink-900">
-          How much do <span className="text-atlas-600">{(cell.industry_name || "businesses").toLowerCase()}</span> earn in {cell.geo_name}?
-        </h1>
-        {cell.industry_examples && cell.industry_examples.length > 0 && (
-          <p className="mt-2 text-sm text-ink-700/60">
-            Includes: {cell.industry_examples.slice(0, 5).join(" · ")}
-          </p>
-        )}
-        <p className="mt-4 text-lg text-ink-800/80 max-w-3xl leading-relaxed">
-          A typical {(cell.industry_name || "firm").toLowerCase().replace(/s$/, "")} here brings in about{" "}
-          <strong>{formatMoney(cell.revenue_per_firm)}</strong> per year. There are{" "}
-          <strong>{cell.n_enterprises?.toLocaleString() || "—"}</strong> of them in {cell.geo_name}, employing roughly{" "}
-          <strong>{cell.n_employees?.toLocaleString() || "—"}</strong> people.
-        </p>
-        {rank && (
-          <p className="mt-3 text-sm text-ink-700/70">
-            Ranks <strong className="text-ink-900">#{rank.rank}</strong> out of{" "}
-            <strong className="text-ink-900">{rank.total}</strong> industries
-            in {cell.geo_name} by firm count.
-          </p>
-        )}
+        <div className="hidden lg:block">
+          {/* Image placeholder CELL-1: industry- or sector-themed photo. Falls back to sector emoji. */}
+          <SmartImage
+            alt={`${cell.industry_name || "Industry"} in ${cell.geo_name}`}
+            glyph={(cell.sector_id && SECTOR_BY_ID[cell.sector_id]?.icon) || "🏢"}
+            caption={cell.sector_name || "Industry"}
+            aspectRatio={1.5}
+            intent="hero"
+          />
+        </div>
       </header>
 
       {/* Headline grid */}
@@ -353,15 +367,20 @@ function Stat({
       </div>
       <div className="mt-2 text-2xl font-semibold text-ink-900">{value}</div>
       {yoy != null && isFinite(yoy) && (
-        <div
-          className={`mt-1 text-xs font-medium ${
-            yoy >= 0 ? "text-emerald-700" : "text-rose-700"
+        <span
+          className={`mt-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium ${
+            yoy >= 0
+              ? "bg-moss-100 text-moss-700"
+              : "bg-clay-100 text-clay-700"
           }`}
           title="Year-over-year change"
         >
-          {yoy >= 0 ? "▲" : "▼"} {yoy >= 0 ? "+" : ""}
-          {(yoy * 100).toFixed(1)}% YoY
-        </div>
+          <span>{yoy >= 0 ? "▲" : "▼"}</span>
+          <span>
+            {yoy >= 0 ? "+" : ""}
+            {(yoy * 100).toFixed(1)}% YoY
+          </span>
+        </span>
       )}
     </div>
   );

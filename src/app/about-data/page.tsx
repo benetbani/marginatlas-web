@@ -1,3 +1,5 @@
+import { SmartImage } from "@/components/SmartImage";
+
 export const revalidate = 86400;
 
 export const metadata = {
@@ -8,6 +10,16 @@ export const metadata = {
 export default function AboutDataPage() {
   return (
     <article className="max-w-2xl">
+      <div className="mb-8 hidden md:block">
+        {/* Image placeholder ABOUT-1: distribution shapes infographic */}
+        <SmartImage
+          alt="Distribution shapes illustration"
+          glyph="📈"
+          caption="The spread"
+          aspectRatio={3}
+          rounded="xl"
+        />
+      </div>
       <h1 className="text-4xl font-semibold tracking-tight text-ink-900">
         About the data
       </h1>

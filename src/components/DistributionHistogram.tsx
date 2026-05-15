@@ -115,8 +115,9 @@ export function DistributionHistogram({
       >
         <defs>
           <linearGradient id="hist-fill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#D97706" stopOpacity="0.95" />
-            <stop offset="100%" stopColor="#FDBA74" stopOpacity="0.75" />
+            <stop offset="0%" stopColor="#C2410C" stopOpacity="0.95" />
+            <stop offset="55%" stopColor="#D97706" stopOpacity="0.85" />
+            <stop offset="100%" stopColor="#FBBF24" stopOpacity="0.65" />
           </linearGradient>
         </defs>
 
@@ -144,7 +145,7 @@ export function DistributionHistogram({
           y1={padT + innerH}
           x2={padL + innerW}
           y2={padT + innerH}
-          stroke="#E5E7EB"
+          stroke="#E8DDC7"
           strokeWidth="1"
         />
 
@@ -176,7 +177,7 @@ export function DistributionHistogram({
               x={xAt(m.v)}
               y={SVG_H - 4}
               fontSize="10"
-              fill="#64748B"
+              fill="#78350F"
               textAnchor="middle"
               fontFamily="ui-sans-serif, system-ui, sans-serif"
             >

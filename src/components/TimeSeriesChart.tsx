@@ -80,10 +80,16 @@ export function TimeSeriesChart({
         <div className="text-xs uppercase tracking-wide text-ink-700/60 font-medium">
           {label || (metric === "revenue_per_firm" ? "Typical revenue over time" : "Number of firms over time")}
         </div>
-        <div className={`text-xs font-medium ${pctChange >= 0 ? "text-emerald-700" : "text-rose-700"}`}>
+        <span
+          className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium ${
+            pctChange >= 0
+              ? "bg-moss-100 text-moss-700"
+              : "bg-clay-100 text-clay-700"
+          }`}
+        >
           {pctChange >= 0 ? "+" : ""}
-          {pctChange.toFixed(1)}% {yearMin}–{yearMax}
-        </div>
+          {pctChange.toFixed(1)}% · {yearMin}–{yearMax}
+        </span>
       </div>
 
       <svg
@@ -96,8 +102,9 @@ export function TimeSeriesChart({
       >
         <defs>
           <linearGradient id="ts-fill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#D97706" stopOpacity="0.18" />
-            <stop offset="100%" stopColor="#D97706" stopOpacity="0.02" />
+            <stop offset="0%" stopColor="#FBBF24" stopOpacity="0.55" />
+            <stop offset="50%" stopColor="#D97706" stopOpacity="0.22" />
+            <stop offset="100%" stopColor="#EEE6D2" stopOpacity="0.08" />
           </linearGradient>
         </defs>
 
@@ -109,7 +116,7 @@ export function TimeSeriesChart({
               x2={W - padR}
               y1={y(v)}
               y2={y(v)}
-              stroke="#E5E7EB"
+              stroke="#E8DDC7"
               strokeWidth="1"
               strokeDasharray="2,3"
             />
@@ -117,7 +124,7 @@ export function TimeSeriesChart({
               x={padL - 8}
               y={y(v) + 4}
               fontSize="10"
-              fill="#64748B"
+              fill="#78350F"
               textAnchor="end"
               fontFamily="ui-sans-serif, system-ui, sans-serif"
             >
@@ -161,7 +168,7 @@ export function TimeSeriesChart({
             x={x(p.year)}
             y={H - 8}
             fontSize="10"
-            fill="#64748B"
+            fill="#78350F"
             textAnchor="middle"
             fontFamily="ui-sans-serif, system-ui, sans-serif"
           >

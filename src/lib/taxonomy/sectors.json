@@ -7,7 +7,7 @@
       "name": "Farming, fishing & forestry",
       "isic_sections": ["A"],
       "examples": ["crop farming", "livestock", "fishing", "logging"],
-      "icon": "wheat",
+      "icon": "🌾",
       "order": 1
     },
     {
@@ -15,7 +15,7 @@
       "name": "Mining & energy",
       "isic_sections": ["B", "D", "E"],
       "examples": ["oil & gas", "mining", "electricity", "water utilities"],
-      "icon": "zap",
+      "icon": "⛏️",
       "order": 2
     },
     {
@@ -23,7 +23,7 @@
       "name": "Manufacturing",
       "isic_sections": ["C"],
       "examples": ["food", "machinery", "electronics", "vehicles"],
-      "icon": "factory",
+      "icon": "🏭",
       "order": 3
     },
     {
@@ -31,7 +31,7 @@
       "name": "Construction",
       "isic_sections": ["F"],
       "examples": ["homes", "roads", "plumbing", "electrical"],
-      "icon": "hard-hat",
+      "icon": "🏗️",
       "order": 4
     },
     {
@@ -40,7 +40,7 @@
       "isic_sections": ["G"],
       "isic_divisions": ["45", "46"],
       "examples": ["food wholesale", "machinery distribution"],
-      "icon": "truck",
+      "icon": "🚛",
       "order": 5
     },
     {
@@ -49,7 +49,7 @@
       "isic_sections": ["G"],
       "isic_divisions": ["47"],
       "examples": ["grocery", "clothing stores", "online retail"],
-      "icon": "shopping-cart",
+      "icon": "🛍️",
       "order": 6
     },
     {
@@ -57,7 +57,7 @@
       "name": "Transport & logistics",
       "isic_sections": ["H"],
       "examples": ["trucking", "taxis", "warehousing", "courier"],
-      "icon": "package",
+      "icon": "🚚",
       "order": 7
     },
     {
@@ -65,7 +65,7 @@
       "name": "Hotels, restaurants & food",
       "isic_sections": ["I"],
       "examples": ["restaurants", "cafés", "hotels", "catering"],
-      "icon": "utensils",
+      "icon": "🍽️",
       "order": 8
     },
     {
@@ -73,7 +73,7 @@
       "name": "Information, software & media",
       "isic_sections": ["J"],
       "examples": ["software", "IT services", "broadcasting", "publishing"],
-      "icon": "code",
+      "icon": "💻",
       "order": 9
     },
     {
@@ -81,7 +81,7 @@
       "name": "Finance, insurance & real estate",
       "isic_sections": ["K", "L"],
       "examples": ["banking", "insurance", "real estate agencies"],
-      "icon": "banknote",
+      "icon": "🏘️",
       "order": 10
     },
     {
@@ -89,7 +89,7 @@
       "name": "Professional services",
       "isic_sections": ["M"],
       "examples": ["legal", "accounting", "consulting", "engineering"],
-      "icon": "briefcase",
+      "icon": "💼",
       "order": 11
     },
     {
@@ -97,7 +97,7 @@
       "name": "Administrative & support services",
       "isic_sections": ["N"],
       "examples": ["staffing", "call centers", "cleaning", "security"],
-      "icon": "users",
+      "icon": "🧑‍💼",
       "order": 12
     },
     {
@@ -105,7 +105,7 @@
       "name": "Education",
       "isic_sections": ["P"],
       "examples": ["schools", "universities", "vocational training"],
-      "icon": "graduation-cap",
+      "icon": "🎓",
       "order": 13
     },
     {
@@ -113,7 +113,7 @@
       "name": "Healthcare & social work",
       "isic_sections": ["Q"],
       "examples": ["doctors", "dentists", "hospitals", "childcare"],
-      "icon": "stethoscope",
+      "icon": "🩺",
       "order": 14
     },
     {
@@ -121,7 +121,7 @@
       "name": "Arts, sports & entertainment",
       "isic_sections": ["R"],
       "examples": ["theatre", "gyms", "museums", "casinos"],
-      "icon": "drama",
+      "icon": "🎨",
       "order": 15
     },
     {
@@ -129,7 +129,7 @@
       "name": "Personal services",
       "isic_sections": ["S"],
       "examples": ["hairdressers", "auto repair", "dry cleaning", "funeral homes"],
-      "icon": "scissors",
+      "icon": "💇",
       "order": 16
     }
   ]

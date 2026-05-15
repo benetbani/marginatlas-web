@@ -80,18 +80,18 @@ export function QualityBadge({ qualityScore, coverageTier, coverageSource }: Pro
 
   return (
     <div className="card">
-      <div className="text-xs uppercase tracking-wide text-ink-700/70 font-medium mb-2 flex items-center">
+      <div className="text-xs uppercase tracking-wide text-cocoa-700 font-medium mb-2 flex items-center">
         Data quality
         <Tooltip text="Higher rating means more direct measurement; lower rating means estimated from related data." />
       </div>
       <div className="flex items-center gap-3">
-        <div className="text-2xl text-atlas-500">
-          {"★".repeat(stars)}
-          <span className="text-ink-300">{"★".repeat(5 - stars)}</span>
+        <div className="text-2xl">
+          <span className="text-atlas-500">{"★".repeat(stars)}</span>
+          <span className="text-cream-300">{"★".repeat(5 - stars)}</span>
         </div>
         <div className="text-sm font-medium text-ink-900">{label}</div>
       </div>
-      <div className="mt-3 text-xs text-ink-700/70">
+      <div className="mt-3 inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-parchment text-cocoa-900">
         {genericSource}
       </div>
     </div>

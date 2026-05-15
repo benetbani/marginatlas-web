@@ -44,10 +44,10 @@ export function computeAtlasScore(cell: CellLike): number {
 }
 
 function scoreTier(score: number): { label: string; tone: string } {
-  if (score >= 70) return { label: "Strong", tone: "bg-emerald-100 text-emerald-800 border-emerald-200" };
-  if (score >= 55) return { label: "Solid", tone: "bg-atlas-100 text-atlas-800 border-atlas-200" };
-  if (score >= 40) return { label: "Mixed", tone: "bg-amber-100 text-amber-800 border-amber-200" };
-  return { label: "Tough", tone: "bg-rose-100 text-rose-800 border-rose-200" };
+  if (score >= 70) return { label: "Strong", tone: "bg-moss-100 text-moss-700 border-moss-300" };
+  if (score >= 55) return { label: "Solid",  tone: "bg-atlas-100 text-atlas-800 border-atlas-300" };
+  if (score >= 40) return { label: "Mixed",  tone: "bg-cream-200 text-cocoa-700 border-cream-300" };
+  return { label: "Tough", tone: "bg-clay-100 text-clay-700 border-clay-300" };
 }
 
 export function AtlasScore({ cell }: { cell: CellLike }) {
@@ -65,7 +65,7 @@ export function AtlasScore({ cell }: { cell: CellLike }) {
           {tier.label}
         </div>
       </div>
-      <div className="mt-3 h-2 bg-slate-100/70 rounded overflow-hidden">
+      <div className="mt-3 h-2 bg-cream-200 rounded overflow-hidden">
         <div
           className="h-full bg-gradient-to-r from-atlas-300 via-atlas-500 to-atlas-700"
           style={{ width: `${score}%` }}
