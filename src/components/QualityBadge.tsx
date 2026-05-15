@@ -67,7 +67,7 @@ export function QualityBadge({ qualityScore, coverageTier, coverageSource }: Pro
     if (s.includes("oecd")) return "Cross-country economic indicators";
     if (s.includes("world bank") || s.includes("worldbank")) return "International economic indicators";
     // Extrapolation
-    if (s.includes("extrapolated") || s.includes("regression")) {
+    if (s.includes("extrapolated") || s.includes("regression") || s.includes("estimated from regional")) {
       return "Estimated from regional patterns";
     }
     // Shape-transfer

@@ -191,7 +191,7 @@ export function CompareClient() {
                 {slots.map((s, i) => (
                   <th key={i} className="py-2 px-3 font-medium text-ink-900 align-top">
                     <div>
-                      {s.country} {s.country === "US" && s.region ? `· ${s.region.replace(/-/g, " ")}` : ""}
+                      {cells[i]?.region || s.country}
                     </div>
                     <div className="text-xs text-ink-700/70 font-normal">
                       {s.industry && INDUSTRY_BY_ID[s.industry] ? INDUSTRY_BY_ID[s.industry].name : "—"}

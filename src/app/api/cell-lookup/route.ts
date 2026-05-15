@@ -41,17 +41,11 @@ export async function GET(req: NextRequest) {
   }
   const industrySlug = industryToSlug(industryId);
 
-  // Only US has state-level cell data in cells_master right now.
-  // For other countries, return null until Phase F (extrapolated_cells) is live.
-  if (country !== "US") {
-    return NextResponse.json({ cell: null, reason: "country_pending" });
-  }
-
+  // US: state-level data from cells_master. Default to california.
+  // Non-US: country-level extrapolated cells (Phase F is live).
   let regionSlug = region;
-  if (!regionSlug) {
-    // Pick a sensible default: California is the most common opener.
-    regionSlug = "california";
-  }
+  if (country === "US" && !regionSlug) regionSlug = "california";
+  if (country !== "US") regionSlug = country.toLowerCase(); // not used for non-US lookup, just passed through
 
   const cell = await getCellBySlug(country.toLowerCase(), regionSlug, industrySlug);
   if (!cell) {

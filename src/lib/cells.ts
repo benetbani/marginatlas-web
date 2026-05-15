@@ -13,6 +13,7 @@ import {
   slugToIndustry,
   industryToSlug,
 } from "./taxonomy";
+import { iso2ToIso3, iso2ToName } from "./countries";
 
 export type Cell = {
   // identity
@@ -178,7 +179,11 @@ export async function getCellBySlug(
   selector: CellSelector = {}
 ): Promise<Cell | null> {
   const country = countrySlug.toUpperCase();
-  if (country !== "US") return null; // For now, only US data is in Supabase
+
+  // Non-US: fall through to extrapolated_cells (Phase F data).
+  if (country !== "US") {
+    return getExtrapolatedCell(country, industrySlug, selector);
+  }
 
   const geoId = SLUG_TO_GEO_ID[geoSlug.toLowerCase()];
   if (!geoId) return null;
@@ -231,7 +236,7 @@ export async function getCellVariants(
   industrySlug: string
 ): Promise<Cell[]> {
   const country = countrySlug.toUpperCase();
-  if (country !== "US") return [];
+  if (country !== "US") return getExtrapolatedVariants(country, industrySlug);
   const geoId = SLUG_TO_GEO_ID[geoSlug.toLowerCase()];
   if (!geoId) return [];
 
@@ -305,6 +310,124 @@ export function listUsStates(): { name: string; slug: string }[] {
   return Object.values(US_STATES).sort((a, b) => a.name.localeCompare(b.name));
 }
 
+/** Extrapolated variants — all size bands / years for a (country, industry). */
+export async function getExtrapolatedVariants(
+  iso2: string,
+  industrySlug: string
+): Promise<Cell[]> {
+  const iso3 = iso2ToIso3(iso2);
+  if (!iso3) return [];
+  const ind = slugToIndustry(industrySlug);
+  if (!ind) return [];
+  const { data, error } = await supabaseAdmin
+    .from("extrapolated_cells")
+    .select("*")
+    .eq("country_iso3", iso3)
+    .eq("industry_id", ind.id)
+    .order("year", { ascending: false, nullsFirst: false })
+    .limit(50);
+  if (error || !data) return [];
+  return data.map((r) => {
+    const predRev = (r.predicted_rev_per_firm as number) ?? null;
+    const cell: Cell = {
+      country: iso2.toUpperCase(),
+      geo_id: iso3,
+      geo_level: "country",
+      geo_name: (r.country_name as string) || iso2ToName(iso2),
+      naics_6: null,
+      naics_4: null,
+      industry_id: ind.id,
+      industry_description: ind.name,
+      size_band: (r.size_band as string) || null,
+      year: (r.year as number) || 2024,
+      n_enterprises: null,
+      n_employees: null,
+      revenue_per_firm: predRev,
+      rev_p50: predRev,
+      quality_score: (r.quality_score as number) || 40,
+      coverage_tier: (r.coverage_tier as string) || "X",
+      coverage_source: (r.coverage_source as string) || "Estimated from regional patterns",
+      currency: "USD",
+    };
+    return applyTaxonomy(cell);
+  });
+}
+
+/**
+ * Read a country-level extrapolated cell. Maps the friendly industry slug
+ * to industry_id, the iso2 country code to iso3, and pulls the row from
+ * extrapolated_cells. Returns a Cell-shaped object so the rest of the
+ * cell page can render it without special-casing.
+ *
+ * Note: extrapolated_cells holds a single point estimate (predicted_rev_per_firm),
+ * not a distribution. We synthesize a coarse spread (±50%) around the point
+ * estimate so the histogram + DistributionBars still render meaningfully.
+ * The synthesized spread is clearly marked "estimated" via coverage_tier=X
+ * and quality_score=40, so the UI shows a 2-star quality badge.
+ */
+export async function getExtrapolatedCell(
+  iso2: string,
+  industrySlug: string,
+  selector: CellSelector = {}
+): Promise<Cell | null> {
+  const iso3 = iso2ToIso3(iso2);
+  if (!iso3) return null;
+  const ind = slugToIndustry(industrySlug);
+  if (!ind) return null;
+
+  let q = supabaseAdmin
+    .from("extrapolated_cells")
+    .select("*")
+    .eq("country_iso3", iso3)
+    .eq("industry_id", ind.id)
+    .order("year", { ascending: false, nullsFirst: false })
+    .limit(1);
+  if (selector.sizeBand) q = q.eq("size_band", selector.sizeBand);
+  if (selector.year) q = q.eq("year", selector.year);
+
+  const { data, error } = await q;
+  if (error || !data || data.length === 0) return null;
+  const r = data[0] as Record<string, unknown>;
+
+  const predRev = (r.predicted_rev_per_firm as number) ?? null;
+  // Coarse spread synthesis: ±50% wedge so DistributionBars/Histogram render
+  // something rather than five identical bars. Clearly flagged via quality.
+  const p10 = predRev != null ? predRev * 0.4 : null;
+  const p25 = predRev != null ? predRev * 0.65 : null;
+  const p50 = predRev;
+  const p75 = predRev != null ? predRev * 1.45 : null;
+  const p90 = predRev != null ? predRev * 2.1 : null;
+
+  const cell: Cell = {
+    country: iso2.toUpperCase(),
+    geo_id: iso3,
+    geo_level: "country",
+    geo_name: (r.country_name as string) || iso2ToName(iso2),
+    naics_6: null,
+    naics_4: null,
+    industry_id: ind.id,
+    industry_description: ind.name,
+    size_band: (r.size_band as string) || null,
+    year: (r.year as number) || 2024,
+    n_enterprises: null,
+    n_employees: null,
+    total_revenue: null,
+    total_revenue_usd: null,
+    revenue_per_firm: predRev,
+    rev_p10: p10,
+    rev_p25: p25,
+    rev_p50: p50,
+    rev_p75: p75,
+    rev_p90: p90,
+    payroll_per_employee: null,
+    quality_score: (r.quality_score as number) || 40,
+    coverage_tier: (r.coverage_tier as string) || "X",
+    coverage_source: (r.coverage_source as string) || "Estimated from regional patterns",
+    currency: "USD",
+  };
+  return applyTaxonomy(cell);
+}
+
 /**
  * Same industry, different states — for the "How this industry compares
  * across the country" strip. Returns up to N highest-employment cells
@@ -315,6 +438,10 @@ export async function getSameIndustryAcrossStates(
   excludeGeoId: string,
   limit = 10
 ): Promise<Cell[]> {
+  // Only meaningful when the caller is on a US-state cell. The excludeGeoId
+  // for US cells is "US-XX" (XX = FIPS); for extrapolated non-US cells it's
+  // the iso3 (e.g. "DEU"). Short-circuit anything else.
+  if (!excludeGeoId.startsWith("US-")) return [];
   const ind = slugToIndustry(industrySlug);
   if (!ind || !(ind.naics_3 || []).length) return [];
   const naics3Prefixes = (ind.naics_3 || []).map((n) => `${n}%`);
