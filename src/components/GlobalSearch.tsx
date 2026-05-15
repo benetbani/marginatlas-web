@@ -2,12 +2,15 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { INDUSTRIES, COUNTRIES, SECTORS, industryToSlug } from "@/lib/taxonomy";
+import { COUNTRIES, SECTORS, industryToSlug, visibleIndustries } from "@/lib/taxonomy";
+import { flagFromIso2 } from "@/lib/countries";
 
 type SearchResult = {
   kind: "industry" | "country" | "sector";
   id: string;
   label: string;
+  flag?: string;
+  icon?: string;
   examples?: string[];
 };
 
@@ -37,16 +40,19 @@ export function GlobalSearch() {
   }, []);
 
   const q = query.trim().toLowerCase();
+  const visible = visibleIndustries();
   const results: SearchResult[] = !q
     ? []
     : [
-        // Industries (highest priority)
-        ...INDUSTRIES.filter(
-          (i) =>
-            i.name.toLowerCase().includes(q) ||
-            i.keywords.some((k) => k.includes(q)) ||
-            i.examples.some((e) => e.toLowerCase().includes(q))
-        )
+        // Industries (highest priority, audience-gated, alphabetical tie-break)
+        ...visible
+          .filter(
+            (i) =>
+              i.name.toLowerCase().includes(q) ||
+              i.keywords.some((k) => k.includes(q)) ||
+              i.examples.some((e) => e.toLowerCase().includes(q))
+          )
+          .sort((a, b) => a.name.localeCompare(b.name))
           .slice(0, 8)
           .map((i) => ({
             kind: "industry" as const,
@@ -54,26 +60,33 @@ export function GlobalSearch() {
             label: i.name,
             examples: i.examples,
           })),
-        // Countries
-        ...COUNTRIES.filter((c) =>
-          c.name.toLowerCase().includes(q) || c.code.toLowerCase() === q
-        )
+        // Countries (alphabetical, flag-prefixed)
+        ...[...COUNTRIES]
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .filter(
+            (c) => c.name.toLowerCase().includes(q) || c.code.toLowerCase() === q
+          )
           .slice(0, 4)
           .map((c) => ({
             kind: "country" as const,
             id: c.code,
             label: c.name,
+            flag: flagFromIso2(c.code),
           })),
         // Sectors
-        ...SECTORS.filter((s) =>
-          s.name.toLowerCase().includes(q) ||
-          s.examples.some((e) => e.toLowerCase().includes(q))
-        )
+        ...[...SECTORS]
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .filter(
+            (s) =>
+              s.name.toLowerCase().includes(q) ||
+              s.examples.some((e) => e.toLowerCase().includes(q))
+          )
           .slice(0, 4)
           .map((s) => ({
             kind: "sector" as const,
             id: s.id,
             label: s.name,
+            icon: s.icon,
             examples: s.examples,
           })),
       ];
@@ -165,7 +178,13 @@ export function GlobalSearch() {
                       focusIdx === i ? "bg-atlas-50" : "hover:bg-ink-100/40"
                     }`}
                   >
-                    <span className="pill bg-ink-100 text-ink-700">{r.kind}</span>
+                    <span className="pill bg-cream-200 text-cocoa-700">{r.kind}</span>
+                    {r.flag && (
+                      <span className="flag text-lg" aria-hidden>{r.flag}</span>
+                    )}
+                    {r.icon && (
+                      <span className="text-lg" aria-hidden>{r.icon}</span>
+                    )}
                     <div className="flex-1">
                       <div className="text-sm font-medium text-ink-900">{r.label}</div>
                       {r.examples && r.examples.length > 0 && (

@@ -14,7 +14,7 @@ import {
   industryToSlug,
   resolveToMeasuredIndustry,
 } from "./taxonomy";
-import { iso2ToIso3, iso2ToName } from "./countries";
+import { iso2ToIso3, iso3ToIso2, iso2ToName } from "./countries";
 
 export type Cell = {
   // identity
@@ -312,6 +312,57 @@ export function buildTimeSeries(cells: Cell[]): TimePoint[] {
 /** All US states (for region switcher). */
 export function listUsStates(): { name: string; slug: string }[] {
   return Object.values(US_STATES).sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/**
+ * Same industry across other countries — for non-US cell pages and country
+ * landing pages. Returns top N highest-revenue cells matching the same
+ * industry across all covered countries (extrapolated_cells table).
+ */
+export async function getSameIndustryAcrossCountries(
+  industrySlug: string,
+  excludeIso2: string,
+  limit = 10
+): Promise<Cell[]> {
+  const rawInd = slugToIndustry(industrySlug);
+  const ind = resolveToMeasuredIndustry(rawInd);
+  if (!ind) return [];
+  const excludeIso3 = iso2ToIso3(excludeIso2) || "";
+  let q = supabaseAdmin
+    .from("extrapolated_cells")
+    .select("*")
+    .eq("industry_id", ind.id)
+    .order("predicted_rev_per_firm", { ascending: false, nullsFirst: false })
+    .limit(limit + 1);
+  if (excludeIso3) q = q.neq("country_iso3", excludeIso3);
+  const { data, error } = await q;
+  if (error || !data) return [];
+
+  return data.slice(0, limit).map((r) => {
+    const iso3 = (r.country_iso3 as string) || "";
+    const iso2 = iso3ToIso2(iso3) || iso3.slice(0, 2);
+    const predRev = (r.predicted_rev_per_firm as number) ?? null;
+    const cell: Cell = {
+      country: iso2,
+      geo_id: iso3,
+      geo_level: "country",
+      geo_name: (r.country_name as string) || iso2,
+      naics_6: null,
+      industry_id: ind.id,
+      industry_name: ind.name,
+      industry_description: ind.name,
+      size_band: (r.size_band as string) || null,
+      year: (r.year as number) || 2024,
+      n_enterprises: null,
+      revenue_per_firm: predRev,
+      rev_p50: predRev,
+      quality_score: (r.quality_score as number) || 40,
+      coverage_tier: (r.coverage_tier as string) || "X",
+      coverage_source: (r.coverage_source as string) || "Estimated from regional patterns",
+      currency: "USD",
+    };
+    return applyTaxonomy(cell);
+  });
 }
 
 /** Extrapolated variants — all size bands / years for a (country, industry). */

@@ -5,6 +5,7 @@ import {
   getComparableCells,
   getTopCells,
   getSameIndustryAcrossStates,
+  getSameIndustryAcrossCountries,
   getIndustryRankInState,
   cellUrl,
   slugify,
@@ -14,6 +15,7 @@ import {
   listUsStates,
 } from "@/lib/cells";
 import { INDUSTRIES, industryToSlug } from "@/lib/taxonomy";
+import { flagFromIso2, iso2ToName } from "@/lib/countries";
 import { DistributionBars } from "@/components/DistributionBars";
 import { DistributionHistogram } from "@/components/DistributionHistogram";
 import { QualityBadge } from "@/components/QualityBadge";
@@ -27,6 +29,7 @@ import { CellActions } from "@/components/CellActions";
 import { AtlasScore } from "@/components/AtlasScore";
 import { SmartImage } from "@/components/SmartImage";
 import { AudienceCaveat } from "@/components/AudienceCaveat";
+import { AcrossCountriesStrip } from "@/components/AcrossCountriesStrip";
 import { SECTOR_BY_ID, INDUSTRY_BY_ID, slugToIndustry, resolveToMeasuredIndustry } from "@/lib/taxonomy";
 import { CellDataset, Breadcrumbs } from "@/components/StructuredData";
 
@@ -109,10 +112,12 @@ export default async function CellPage({
   // same series.
   const yoy = computeYoY(timeSeries, cell.year);
 
-  // Fan out the remaining three data fetches concurrently. None block the others.
-  const [comparables, acrossStates, rank] = await Promise.all([
+  // Fan out the remaining data fetches concurrently. None block the others.
+  const isUsCell = country.toLowerCase() === "us";
+  const [comparables, acrossStates, acrossCountries, rank] = await Promise.all([
     getComparableCells(cell.geo_name || "", cell.naics_6 || undefined, 6),
-    getSameIndustryAcrossStates(industry, cell.geo_id, 10),
+    isUsCell ? getSameIndustryAcrossStates(industry, cell.geo_id, 10) : Promise.resolve([]),
+    isUsCell ? Promise.resolve([]) : getSameIndustryAcrossCountries(industry, country, 10),
     getIndustryRankInState(cell.geo_id, cell.naics_6 || null),
   ]);
 
@@ -186,7 +191,10 @@ export default async function CellPage({
       <nav className="text-sm text-ink-700/70 mb-4">
         <a href="/" className="hover:text-atlas-600">Home</a>
         <span className="mx-2">/</span>
-        <a href={`/${country}`} className="hover:text-atlas-600">{country.toUpperCase()}</a>
+        <a href={`/${country}`} className="hover:text-atlas-600 inline-flex items-center gap-1">
+          <span className="flag" aria-hidden>{flagFromIso2(country)}</span>
+          <span>{iso2ToName(country)}</span>
+        </a>
         <span className="mx-2">/</span>
         <a href={`/${country}/${geo}`} className="hover:text-atlas-600 capitalize">{geo.replace(/-/g, " ")}</a>
         <span className="mx-2">/</span>
@@ -213,9 +221,10 @@ export default async function CellPage({
       {/* Hero */}
       <header id="headline" className="py-8 lg:grid lg:grid-cols-[1.5fr_1fr] lg:gap-8 lg:items-start">
         <div>
-          <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
+          <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium flex items-center gap-2">
             {cell.sector_name && <>{cell.sector_name} · </>}
-            {cell.geo_name} · {cell.year}
+            <span className="flag text-base" aria-hidden>{flagFromIso2(country)}</span>
+            <span>{cell.geo_name || iso2ToName(country)} · {cell.year}</span>
           </div>
           <h1 className="mt-2 text-3xl md:text-5xl font-semibold tracking-tight text-ink-900">
             How much do <span className="text-atlas-600">{(cell.industry_name || "businesses").toLowerCase()}</span> earn in {cell.geo_name}?
@@ -329,13 +338,22 @@ export default async function CellPage({
         />
       </section>
 
-      {/* Same industry, other states */}
+      {/* Same industry across states (US) or countries (non-US) */}
       <div id="across-states" />
-      <AcrossStatesStrip
-        industryName={cell.industry_name || industry.replace(/-/g, " ")}
-        currentGeoName={cell.geo_name || geo}
-        cells={acrossStates}
-      />
+      {isUsCell && (
+        <AcrossStatesStrip
+          industryName={cell.industry_name || industry.replace(/-/g, " ")}
+          currentGeoName={cell.geo_name || geo}
+          cells={acrossStates}
+        />
+      )}
+      {!isUsCell && (
+        <AcrossCountriesStrip
+          industryName={cell.industry_name || industry.replace(/-/g, " ")}
+          currentCountryName={cell.geo_name || geo}
+          cells={acrossCountries}
+        />
+      )}
 
       {/* Comparable cells */}
       {comparables.length > 0 && (

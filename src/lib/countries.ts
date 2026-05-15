@@ -56,6 +56,20 @@ export function iso2ToIso3(iso2: string): string | null {
   return ISO2_TO_ISO3[iso2.toUpperCase()] || null;
 }
 
+/**
+ * Country flag from ISO-2 — built from unicode regional indicator pairs.
+ * Returns the flag emoji + render hint suitable for `className="flag"`.
+ * The .flag class in globals.css provides Twemoji/Segoe fallback on Windows.
+ */
+export function flagFromIso2(iso2: string): string {
+  const code = (iso2 || "").toUpperCase();
+  if (code.length !== 2) return "";
+  const a = code.charCodeAt(0);
+  const b = code.charCodeAt(1);
+  if (a < 65 || a > 90 || b < 65 || b > 90) return "";
+  return String.fromCodePoint(0x1f1e6 + a - 65, 0x1f1e6 + b - 65);
+}
+
 export function iso3ToIso2(iso3: string): string | null {
   return ISO3_TO_ISO2[iso3.toUpperCase()] || null;
 }

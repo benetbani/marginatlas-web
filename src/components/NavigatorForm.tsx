@@ -6,12 +6,15 @@ import { ComboField, type ComboOption } from "./ComboField";
 import {
   COUNTRIES,
   SECTORS,
+  SECTORS_ALPHA,
   INDUSTRIES,
   SIZE_BANDS,
   INDUSTRY_BY_ID,
   SECTOR_BY_ID,
   industryToSlug,
+  visibleIndustries,
 } from "@/lib/taxonomy";
+import { flagFromIso2 } from "@/lib/countries";
 
 const US_STATES = [
   { value: "alabama", label: "Alabama" },
@@ -76,14 +79,16 @@ export function NavigatorForm() {
   const [industry, setIndustry] = useState("");
   const [size, setSize] = useState("");
 
-  // Country options
+  // Country options — alphabetical, flag prefixed
   const countryOptions: ComboOption[] = useMemo(
     () =>
-      COUNTRIES.map((c) => ({
-        value: c.code,
-        label: c.name,
-        keywords: [c.code.toLowerCase(), c.name.toLowerCase()],
-      })),
+      [...COUNTRIES]
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map((c) => ({
+          value: c.code,
+          label: `${flagFromIso2(c.code)}  ${c.name}`,
+          keywords: [c.code.toLowerCase(), c.name.toLowerCase()],
+        })),
     []
   );
 
@@ -99,13 +104,13 @@ export function NavigatorForm() {
     []
   );
 
-  // Sector options
+  // Sector options — alphabetical, icon prefixed
   const sectorOptions: ComboOption[] = useMemo(
     () =>
       [{ value: "", label: "Any sector" } as ComboOption].concat(
-        SECTORS.map((s) => ({
+        SECTORS_ALPHA.map((s) => ({
           value: s.id,
-          label: s.name,
+          label: `${s.icon || ""}  ${s.name}`.trim(),
           examples: s.examples,
           keywords: [s.id, ...s.examples.map((e) => e.toLowerCase())],
         }))
@@ -113,17 +118,18 @@ export function NavigatorForm() {
     []
   );
 
-  // Industry options — filtered by selected sector
+  // Industry options — filtered by selected sector, audience-gated, alphabetical
   const industryOptions: ComboOption[] = useMemo(() => {
-    const pool = sector
-      ? INDUSTRIES.filter((i) => i.sector_id === sector)
-      : INDUSTRIES;
-    return pool.map((i) => ({
-      value: i.id,
-      label: i.name,
-      examples: i.examples,
-      keywords: i.keywords,
-    }));
+    const allowed = visibleIndustries();
+    const pool = sector ? allowed.filter((i) => i.sector_id === sector) : allowed;
+    return [...pool]
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .map((i) => ({
+        value: i.id,
+        label: i.name,
+        examples: i.examples,
+        keywords: i.keywords,
+      }));
   }, [sector]);
 
   // Size band options
