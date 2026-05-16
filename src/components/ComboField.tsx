@@ -98,13 +98,16 @@ export function ComboField({
 
   return (
     <div ref={wrapRef} className="relative">
-      <label htmlFor={id} className="block text-xs font-medium text-ink-700/80 mb-1">
+      <label
+        htmlFor={id}
+        className="block text-[11px] font-semibold uppercase tracking-wider text-cocoa-700 mb-1.5"
+      >
         {label}
         {required && <span className="text-atlas-600 ml-0.5">*</span>}
         {tooltip && (
           <span
             title={tooltip}
-            className="ml-1 inline-flex items-center justify-center w-4 h-4 rounded-full bg-slate-200/70 text-ink-700/70 text-[10px] cursor-help"
+            className="ml-1.5 inline-flex items-center justify-center w-4 h-4 rounded-full bg-cream-200 text-cocoa-700 text-[10px] cursor-help normal-case font-normal"
             aria-label={tooltip}
           >
             ?
@@ -112,8 +115,10 @@ export function ComboField({
         )}
       </label>
       <div
-        className={`flex items-center px-3 py-2 rounded-lg border ${
-          open ? "border-atlas-500 ring-2 ring-atlas-100" : "border-slate-200/80"
+        className={`flex items-center px-3.5 py-2.5 rounded-xl border transition-all ${
+          open
+            ? "border-atlas-500 ring-2 ring-atlas-500/30 shadow-sm"
+            : "border-parchment hover:border-atlas-300"
         } bg-white ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-text"}`}
         onClick={() => !disabled && setOpen(true)}
       >
@@ -129,14 +134,14 @@ export function ComboField({
           onKeyDown={onKey}
           placeholder={placeholder}
           disabled={disabled}
-          className="flex-1 bg-transparent outline-none text-sm text-ink-900 placeholder:text-ink-700/40"
+          className="flex-1 bg-transparent outline-none text-sm font-medium text-ink-900 placeholder:text-cocoa-700/40 placeholder:font-normal"
         />
-        <span className="text-ink-700/40 ml-2 text-xs">▼</span>
+        <span className="text-atlas-600 ml-2 text-xs leading-none">▾</span>
       </div>
       {open && filtered.length > 0 && (
         <ul
           ref={listRef}
-          className="absolute z-20 mt-1 w-full max-h-72 overflow-auto rounded-lg border border-slate-200/80 bg-white shadow-lg"
+          className="absolute z-20 mt-1.5 w-full max-h-80 overflow-auto rounded-xl border border-parchment bg-white shadow-[0_10px_30px_rgba(120,53,15,0.12),inset_0_1px_0_rgba(255,255,255,0.5)]"
         >
           {filtered.slice(0, 50).map((o, i) => (
             <li
@@ -149,20 +154,22 @@ export function ComboField({
                 setFocusIdx(-1);
               }}
               onMouseEnter={() => setFocusIdx(i)}
-              className={`px-3 py-2 cursor-pointer text-sm ${
-                focusIdx === i ? "bg-atlas-50" : "hover:bg-slate-50"
+              className={`px-3.5 py-2 cursor-pointer text-sm border-l-2 transition-colors ${
+                focusIdx === i
+                  ? "bg-atlas-50 border-atlas-500"
+                  : "border-transparent hover:bg-cream-100"
               }`}
             >
-              <span className="font-medium text-ink-900">{o.label}</span>
+              <span className="font-medium text-cocoa-900">{o.label}</span>
               {o.examples && o.examples.length > 0 && (
-                <span className="text-ink-700/50 ml-1.5">
-                  ({o.examples.slice(0, 3).join(", ")})
+                <span className="text-cocoa-700/60 ml-1.5">
+                  · {o.examples.slice(0, 3).join(", ")}
                 </span>
               )}
             </li>
           ))}
           {filtered.length > 50 && (
-            <li className="px-3 py-2 text-xs text-ink-700/50 italic">
+            <li className="px-3.5 py-2 text-xs text-cocoa-700/50 italic">
               {filtered.length - 50} more — keep typing to narrow
             </li>
           )}

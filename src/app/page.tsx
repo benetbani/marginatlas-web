@@ -1,80 +1,59 @@
 import { NavigatorForm } from "@/components/NavigatorForm";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
-import { SmartImage } from "@/components/SmartImage";
 import { FeaturedCellTile, type FeaturedTileSpec } from "@/components/FeaturedCellTile";
+import { SectorMasterMenu } from "@/components/SectorMasterMenu";
 
 export const revalidate = 86400; // 1 day
 
 /**
- * 12 hand-curated stereotypical featured cells (Plan v3.0 §N).
- *
- * City-level URLs degrade gracefully — Italy/Spain/India/Canada/Australia
- * point at country-level pages until sub-national data lands. The titles
- * still say "Milan", "Paris", etc., because that's the recognizable name
- * users come for; URLs auto-upgrade later without breaking anything.
+ * Plan v4.0 Step 16: featured tiles use only measured parent industries
+ * (no sub-niches) so every tile resolves to live data. Tiles that don't
+ * resolve are filtered out at render time — no "Coming soon" ever ships.
  */
 const FEATURED: FeaturedTileSpec[] = [
-  { iso2: "IT", geo: "italy",                   industry: "boutique-clothing",       title: "Clothing boutiques",                  region: "Milan, Italy",          glyph: "👗" },
-  { iso2: "US", geo: "new-york",                industry: "real-estate-agencies",    title: "Real estate agencies",                 region: "New York, USA",         glyph: "🏘️" },
-  { iso2: "FR", geo: "france",                  industry: "cosmetics-shops",         title: "Cosmetics shops",                       region: "Paris, France",         glyph: "💄" },
-  { iso2: "US", geo: "california",              industry: "software-development",    title: "Software development",                  region: "California, USA",       glyph: "💻" },
-  { iso2: "IN", geo: "india",                   industry: "custom-software-contract", title: "Custom software & IT services",        region: "Bangalore, India",      glyph: "⚙️" },
-  { iso2: "CA", geo: "canada",                  industry: "residential-construction", title: "Residential construction",              region: "Toronto, Canada",       glyph: "🏗️" },
-  { iso2: "ES", geo: "spain",                   industry: "independent-hotels",      title: "Hotels & inns",                         region: "Barcelona, Spain",      glyph: "🏨" },
-  { iso2: "DE", geo: "germany",                 industry: "machinery-manufacturing", title: "Industrial machinery",                  region: "Germany",               glyph: "⚙️" },
-  { iso2: "US", geo: "district-of-columbia",    industry: "management-consulting",   title: "Management consulting",                 region: "Washington, D.C.",      glyph: "📋" },
-  { iso2: "BR", geo: "brazil",                  industry: "craft-breweries-taprooms", title: "Craft beer & beverages",               region: "Brazil",                glyph: "🍺" },
-  { iso2: "AU", geo: "australia",               industry: "cafes-coffee-shops",      title: "Cafés & coffee shops",                  region: "Melbourne, Australia",  glyph: "☕" },
-  { iso2: "US", geo: "california",              industry: "restaurants",             title: "Restaurants",                            region: "California, USA",       glyph: "🍽️" },
+  { iso2: "US", geo: "california",              industry: "restaurants",                title: "Restaurants",                  region: "California",            glyph: "🍽️" },
+  { iso2: "US", geo: "new-york",                industry: "real-estate-agencies",       title: "Real estate agencies",         region: "New York",              glyph: "🏘️" },
+  { iso2: "US", geo: "california",              industry: "software-development",       title: "Software development",         region: "California",            glyph: "💻" },
+  { iso2: "US", geo: "district-of-columbia",    industry: "management-consulting",      title: "Management consulting",        region: "Washington, D.C.",      glyph: "💼" },
+  { iso2: "US", geo: "florida",                 industry: "hairdressers-beauty",        title: "Hairdressers & beauty",        region: "Florida",               glyph: "💇" },
+  { iso2: "US", geo: "texas",                   industry: "residential-construction",   title: "Residential construction",     region: "Texas",                 glyph: "🏗️" },
+  { iso2: "US", geo: "texas",                   industry: "auto-repair-shops",          title: "Auto repair shops",            region: "Texas",                 glyph: "🔧" },
+  { iso2: "DE", geo: "germany",                 industry: "metal-products-manufacturing", title: "Metal products mfg",         region: "Germany",               glyph: "⚙️" },
+  { iso2: "FR", geo: "france",                  industry: "hotels-lodging",             title: "Hotels & lodging",             region: "France",                glyph: "🏨" },
+  { iso2: "IT", geo: "italy",                   industry: "restaurants",                title: "Restaurants",                  region: "Italy",                 glyph: "🍝" },
+  { iso2: "JP", geo: "japan",                   industry: "restaurants",                title: "Restaurants",                  region: "Japan",                 glyph: "🍱" },
+  { iso2: "IN", geo: "india",                   industry: "software-development",       title: "Software development",         region: "India",                 glyph: "💻" },
 ];
 
 export default function HomePage() {
   return (
     <div>
-      {/* Hero */}
-      <section className="py-10 md:py-14 lg:grid lg:grid-cols-[1.4fr_1fr] lg:gap-10 lg:items-center">
-        <div>
-          <h1 className="text-4xl md:text-6xl font-semibold tracking-tight text-ink-900 max-w-4xl">
+      {/* Hero — image OFF the right (Plan v4.0 Step 11). Navigator dominates full width (Step 12). */}
+      <section className="py-8 md:py-12">
+        <div className="max-w-4xl">
+          <h1 className="text-4xl md:text-6xl font-semibold tracking-tight text-ink-900 leading-[1.05]">
             How much does a typical{" "}
             <span className="gradient-name">small business</span> earn?
           </h1>
-          <p className="mt-6 text-lg md:text-xl text-ink-800/80 max-w-3xl leading-relaxed">
-            Revenue, employment, and wages for small businesses across 219
-            countries. Compiled from official business statistics, standardized
-            so a bakery in Paris compares directly to a bakery in California.
-            Pick what you want to know below.
+          <p className="mt-5 text-lg md:text-xl text-cocoa-900/80 max-w-3xl leading-relaxed">
+            Revenue, employment, and wages for small businesses across 219 countries.
+            Compiled from official statistics, standardized so a bakery in Paris
+            compares directly to a bakery in California.
           </p>
-
-          {/* Navigator — the centerpiece */}
-          <div className="mt-10">
-            <NavigatorForm />
-          </div>
         </div>
-        <div className="hidden lg:block">
-          {/* Image placeholder HOME-1: stylized world map illustration */}
-          <SmartImage
-            alt="Stylized world atlas of small-business benchmarks"
-            glyph="🗺️"
-            caption="Atlas"
-            aspectRatio={1.5}
-            intent="hero"
-            rounded="3xl"
-          />
+
+        {/* Navigator — full width, dominant */}
+        <div className="mt-8 md:mt-10">
+          <NavigatorForm />
         </div>
       </section>
 
-      {/* Featured cells — above the fold (Plan v3.0 §N) */}
-      <section className="py-10">
-        <div className="flex items-baseline justify-between gap-4 flex-wrap">
-          <div>
-            <h2 className="text-2xl md:text-3xl font-semibold text-ink-900">
-              Start with something familiar
-            </h2>
-            <p className="mt-1 text-sm md:text-base text-ink-700/80 max-w-2xl">
-              Twelve cells most people recognize on sight. Click any tile to see the
-              full numbers — distribution, spread, time series.
-            </p>
-          </div>
+      {/* Featured cells — above the fold (Plan v4.0 Step 15 + Step 16 + Step 19) */}
+      <section className="py-6">
+        <div className="flex items-baseline justify-between gap-4 flex-wrap mb-4">
+          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-ink-900">
+            Start with something familiar
+          </h2>
           <a
             href="/browse"
             className="text-sm text-atlas-700 hover:text-atlas-900 font-medium"
@@ -82,68 +61,75 @@ export default function HomePage() {
             Browse everything →
           </a>
         </div>
-        <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <p className="text-sm text-cocoa-700/80 max-w-2xl mb-6">
+          Twelve cells most people recognize on sight. Click any tile for the full
+          numbers: distribution, spread, time series, comparable industries.
+        </p>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 auto-rows-fr">
           {FEATURED.map((spec) => (
             <FeaturedCellTile key={`${spec.iso2}-${spec.geo}-${spec.industry}`} spec={spec} />
           ))}
         </div>
       </section>
 
+      {/* Sector master menu — Plan v4.0 Step 13 */}
+      <SectorMasterMenu />
+
       {/* Stats strip */}
-      <section className="py-8 grid grid-cols-2 md:grid-cols-4 gap-6">
+      <section className="py-8 grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
           ["219", "countries"],
-          ["150+", "industries"],
+          ["180+", "SMB industries"],
           ["780k", "data cells"],
           ["Free", "to browse"],
         ].map(([n, label]) => (
-          <div key={label} className="card">
-            <div className="text-3xl font-semibold text-ink-900">{n}</div>
-            <div className="text-sm text-ink-700/70 mt-1">{label}</div>
+          <div key={label} className="rounded-2xl bg-cream-100 border border-parchment p-5">
+            <div className="text-3xl font-semibold text-ink-900 tabular-nums">{n}</div>
+            <div className="text-sm text-cocoa-700/80 mt-1">{label}</div>
           </div>
         ))}
       </section>
 
       {/* What's inside */}
-      <section className="py-12">
-        <h2 className="text-2xl md:text-3xl font-semibold text-ink-900">
-          What you&apos;ll see
+      <section className="py-10">
+        <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-ink-900">
+          What you&apos;ll see on every cell
         </h2>
-        <div className="mt-8 grid md:grid-cols-3 gap-6">
+        <div className="mt-6 grid md:grid-cols-3 gap-4">
           <div className="card">
-            <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
+            <div className="text-xs uppercase tracking-wider text-atlas-700 font-semibold">
               The full distribution
             </div>
             <div className="mt-2 font-semibold text-lg text-ink-900">
               Bottom 10% · Typical · Top 10%
             </div>
-            <p className="mt-3 text-sm text-ink-700/80">
-              Not just an average. Every cell shows the spread — what the
-              smallest businesses make, what the typical one does, and what the
-              biggest 10% bring in.
+            <p className="mt-3 text-sm text-cocoa-900/80">
+              Not just an average. Every cell shows the spread — what the smallest
+              businesses make, what the typical one does, and what the biggest 10%
+              bring in.
             </p>
           </div>
           <div className="card">
-            <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
+            <div className="text-xs uppercase tracking-wider text-atlas-700 font-semibold">
               Side-by-side comparisons
             </div>
             <div className="mt-2 font-semibold text-lg text-ink-900">
               Across countries and industries
             </div>
-            <p className="mt-3 text-sm text-ink-700/80">
-              Friendly industry names map across every country, so you can
-              compare bakeries in Paris to bakeries in California without
-              wrestling with classification codes.
+            <p className="mt-3 text-sm text-cocoa-900/80">
+              Friendly industry names map across every country, so you can compare
+              bakeries in Paris to bakeries in California without wrestling with
+              classification codes.
             </p>
           </div>
           <div className="card">
-            <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
+            <div className="text-xs uppercase tracking-wider text-atlas-700 font-semibold">
               Quality you can trust
             </div>
             <div className="mt-2 font-semibold text-lg text-ink-900">
               Every cell rated, every number traceable
             </div>
-            <p className="mt-3 text-sm text-ink-700/80">
+            <p className="mt-3 text-sm text-cocoa-900/80">
               Each cell carries a 5-star quality rating so you know whether
               you&apos;re looking at a direct measurement, a modeled estimate, or
               something in between. No black boxes.
@@ -153,7 +139,7 @@ export default function HomePage() {
       </section>
 
       {/* Newsletter signup */}
-      <section className="py-12">
+      <section className="py-10">
         <NewsletterSignup />
       </section>
     </div>

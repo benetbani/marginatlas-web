@@ -1,6 +1,6 @@
 {
-  "version": "3.0.0",
-  "anchor": "ISIC Rev.4 + curated SMB-first grouping",
+  "version": "4.0.0",
+  "anchor": "Curated SMB-first taxonomy (Plan v4.0). Sectors per sectors.json v4 master menu.",
   "convention": "Each industry has friendly `name`, bracket `examples`, lowercase `keywords`, parent `sector_id`, classification anchors, and an `audience` tag controlling default UI visibility. Sub-niches use `parent_id` pointing to the measured parent industry — when no direct measurement exists for a sub-niche, queries fall back to the parent.",
   "audience_legend": {
     "smb_core": "SMBs dominate by count and economic relevance — always visible",
@@ -9,224 +9,4411 @@
     "corp_only": "Large corporations dominate; SMB participation is negligible — Pro-tier toggle only"
   },
   "industries": [
-    {"id": "crop_farming", "name": "Crop farming", "audience": "smb_friendly", "examples": ["wheat", "corn", "vegetables", "fruits"], "keywords": ["farm", "farming", "crop", "wheat", "corn", "vegetables", "fruit", "grain", "rice", "harvest", "cultivation", "agriculture"], "sector_id": "agriculture", "isic_divisions": ["01"], "naics_3": ["111"], "nace_divisions": ["01"]},
-    {"id": "livestock_farming", "name": "Livestock farming", "audience": "smb_friendly", "examples": ["dairy", "beef", "poultry", "eggs"], "keywords": ["livestock", "cattle", "dairy", "beef", "poultry", "chicken", "eggs", "pig", "sheep", "ranch", "milk"], "sector_id": "agriculture", "isic_divisions": ["01"], "naics_3": ["112"], "nace_divisions": ["01"]},
-    {"id": "fishing_aquaculture", "name": "Fishing & aquaculture", "audience": "smb_friendly", "examples": ["commercial fishing", "fish farming", "shellfish"], "keywords": ["fish", "fishing", "aquaculture", "shellfish", "seafood", "fishery", "salmon", "shrimp", "marine"], "sector_id": "agriculture", "isic_divisions": ["03"], "naics_3": ["114"], "nace_divisions": ["03"]},
-    {"id": "forestry_logging", "name": "Forestry & logging", "audience": "smb_friendly", "examples": ["timber", "pulpwood", "tree nurseries"], "keywords": ["forestry", "logging", "timber", "wood", "pulpwood", "lumberjack", "trees", "forest"], "sector_id": "agriculture", "isic_divisions": ["02"], "naics_3": ["113"], "nace_divisions": ["02"]},
-
-    {"id": "oil_gas_extraction", "name": "Oil & gas extraction", "audience": "corp_only", "examples": ["crude petroleum", "natural gas", "drilling"], "keywords": ["oil", "gas", "petroleum", "drilling", "extraction", "fracking", "wells", "energy"], "sector_id": "mining_energy", "isic_divisions": ["06"], "naics_3": ["211"], "nace_divisions": ["06"]},
-    {"id": "mining_quarrying", "name": "Mining & quarrying", "audience": "corp_only", "examples": ["coal", "metals", "stone", "gravel"], "keywords": ["mining", "coal", "quarry", "metal", "stone", "gravel", "ore", "minerals", "iron"], "sector_id": "mining_energy", "isic_divisions": ["05", "07", "08"], "naics_3": ["212", "213"], "nace_divisions": ["05", "07", "08"]},
-    {"id": "electricity_gas_utilities", "name": "Electricity & gas utilities", "audience": "corp_only", "examples": ["power generation", "transmission", "natural gas supply"], "keywords": ["electricity", "power", "utility", "energy", "gas", "grid", "transmission"], "sector_id": "mining_energy", "isic_divisions": ["35"], "naics_3": ["221"], "nace_divisions": ["35"]},
-    {"id": "water_waste", "name": "Water & waste management", "audience": "mixed_caution", "examples": ["water supply", "sewerage", "recycling", "waste collection"], "keywords": ["water", "sewer", "waste", "recycling", "garbage", "trash", "treatment", "sanitation"], "sector_id": "mining_energy", "isic_divisions": ["36", "37", "38", "39"], "naics_3": ["562"], "nace_divisions": ["36", "37", "38", "39"]},
-
-    {"id": "food_beverage_mfg", "name": "Food & beverage manufacturing", "audience": "smb_friendly", "examples": ["dairy products", "baked goods", "drinks", "meat processing"], "keywords": ["food", "beverage", "dairy", "bakery", "drink", "brewing", "manufacturing", "processing", "meat", "snacks"], "sector_id": "manufacturing", "isic_divisions": ["10", "11"], "naics_3": ["311", "312"], "nace_divisions": ["10", "11"]},
-    {"id": "craft_beer_mfg", "name": "Craft breweries & taprooms", "audience": "smb_core", "parent_id": "food_beverage_mfg", "examples": ["microbreweries", "brewpubs", "small-batch beer"], "keywords": ["brewery", "craft beer", "microbrewery", "brewpub", "ale", "lager", "taproom"], "sector_id": "manufacturing"},
-    {"id": "coffee_roasters", "name": "Coffee roasters", "audience": "smb_core", "parent_id": "food_beverage_mfg", "examples": ["specialty coffee", "wholesale roasters"], "keywords": ["coffee", "roaster", "roasting", "espresso", "beans"], "sector_id": "manufacturing"},
-    {"id": "specialty_food_production", "name": "Specialty food production", "audience": "smb_core", "parent_id": "food_beverage_mfg", "examples": ["sauces", "preserves", "snacks", "spices"], "keywords": ["specialty food", "artisan food", "sauce", "preserves", "snack maker", "spice"], "sector_id": "manufacturing"},
-    {"id": "artisan_bakery_wholesale", "name": "Artisan bakery (wholesale)", "audience": "smb_core", "parent_id": "food_beverage_mfg", "examples": ["bread", "pastries", "wholesale baking"], "keywords": ["artisan bread", "wholesale bakery", "sourdough", "patisserie"], "sector_id": "manufacturing"},
-
-    {"id": "textile_apparel_mfg", "name": "Textile & apparel manufacturing", "audience": "smb_friendly", "examples": ["clothing", "fabrics", "leather goods", "shoes"], "keywords": ["textile", "apparel", "clothing", "fabric", "leather", "shoes", "garment", "fashion", "weaving"], "sector_id": "manufacturing", "isic_divisions": ["13", "14", "15"], "naics_3": ["313", "314", "315", "316"], "nace_divisions": ["13", "14", "15"]},
-    {"id": "custom_apparel_mfg", "name": "Custom apparel & uniforms", "audience": "smb_core", "parent_id": "textile_apparel_mfg", "examples": ["uniforms", "custom t-shirts", "embroidery"], "keywords": ["custom apparel", "uniform", "embroidery", "screen printing", "custom shirts"], "sector_id": "manufacturing"},
-    {"id": "small_leather_goods", "name": "Small leather goods", "audience": "smb_core", "parent_id": "textile_apparel_mfg", "examples": ["wallets", "bags", "belts", "small workshops"], "keywords": ["leather", "leather goods", "wallet", "bag maker", "belt"], "sector_id": "manufacturing"},
-
-    {"id": "wood_paper_mfg", "name": "Wood & paper products", "audience": "smb_friendly", "examples": ["furniture", "packaging", "paper", "printing"], "keywords": ["wood", "paper", "furniture", "packaging", "printing", "cardboard", "lumber", "manufacturing"], "sector_id": "manufacturing", "isic_divisions": ["16", "17", "18"], "naics_3": ["321", "322", "323"], "nace_divisions": ["16", "17", "18"]},
-    {"id": "custom_furniture_makers", "name": "Custom furniture makers", "audience": "smb_core", "parent_id": "wood_paper_mfg", "examples": ["bespoke furniture", "cabinetry", "joinery"], "keywords": ["custom furniture", "cabinetmaker", "carpenter", "woodworking", "joinery"], "sector_id": "manufacturing"},
-    {"id": "print_shops", "name": "Print shops (offset & digital)", "audience": "smb_core", "parent_id": "wood_paper_mfg", "examples": ["business cards", "flyers", "short-run printing"], "keywords": ["print shop", "printing", "offset", "digital print", "flyers", "business cards"], "sector_id": "manufacturing"},
-    {"id": "sign_shops", "name": "Sign shops & graphics fab", "audience": "smb_core", "parent_id": "wood_paper_mfg", "examples": ["business signs", "vehicle wraps", "signage"], "keywords": ["sign shop", "signs", "signage", "vehicle wrap", "graphics fabrication"], "sector_id": "manufacturing"},
-
-    {"id": "chemical_pharma_mfg", "name": "Chemical & pharmaceutical manufacturing", "audience": "corp_only", "examples": ["drugs", "cosmetics", "cleaning products", "paints"], "keywords": ["chemical", "pharmaceutical", "pharma", "drug", "cosmetic", "cleaning", "paint", "soap", "fertilizer"], "sector_id": "manufacturing", "isic_divisions": ["20", "21"], "naics_3": ["325"], "nace_divisions": ["20", "21"]},
-    {"id": "soap_candle_makers", "name": "Soap & candle makers", "audience": "smb_core", "parent_id": "chemical_pharma_mfg", "examples": ["artisan soap", "candles", "small-batch cosmetics"], "keywords": ["soap maker", "candle maker", "artisan", "small batch cosmetics"], "sector_id": "manufacturing"},
-
-    {"id": "plastics_rubber_mfg", "name": "Plastics & rubber products", "audience": "mixed_caution", "examples": ["plastic packaging", "tires", "rubber goods"], "keywords": ["plastic", "rubber", "polymer", "tire", "packaging", "molding"], "sector_id": "manufacturing", "isic_divisions": ["22"], "naics_3": ["326"], "nace_divisions": ["22"]},
-    {"id": "metal_products_mfg", "name": "Metal products manufacturing", "audience": "smb_friendly", "examples": ["steel parts", "structural metals", "hardware", "tools"], "keywords": ["metal", "steel", "iron", "aluminum", "hardware", "tools", "fabrication", "manufacturing"], "sector_id": "manufacturing", "isic_divisions": ["24", "25"], "naics_3": ["331", "332"], "nace_divisions": ["24", "25"]},
-    {"id": "metal_fab_machine_shops", "name": "Metal fabrication & machine shops", "audience": "smb_core", "parent_id": "metal_products_mfg", "examples": ["custom fabrication", "welding shops", "machining"], "keywords": ["machine shop", "welding", "fabrication", "metal shop", "cnc"], "sector_id": "manufacturing"},
-    {"id": "custom_jewelers", "name": "Custom jewelers (mfg)", "audience": "smb_core", "parent_id": "metal_products_mfg", "examples": ["bespoke jewelry", "goldsmiths", "engravers"], "keywords": ["jewelry maker", "goldsmith", "silversmith", "bespoke jewelry", "engraving"], "sector_id": "manufacturing"},
-
-    {"id": "machinery_mfg", "name": "Machinery manufacturing", "audience": "mixed_caution", "examples": ["industrial equipment", "agricultural machinery", "engines"], "keywords": ["machinery", "machine", "equipment", "industrial", "engine", "pump", "turbine"], "sector_id": "manufacturing", "isic_divisions": ["28"], "naics_3": ["333"], "nace_divisions": ["28"]},
-    {"id": "electronics_mfg", "name": "Electronics & semiconductors", "audience": "corp_only", "examples": ["computers", "components", "chips", "phones"], "keywords": ["electronics", "computer", "semiconductor", "chip", "circuit", "component", "phone", "tablet"], "sector_id": "manufacturing", "isic_divisions": ["26"], "naics_3": ["334"], "nace_divisions": ["26"]},
-    {"id": "electrical_equipment_mfg", "name": "Electrical equipment", "audience": "mixed_caution", "examples": ["motors", "batteries", "wiring", "lighting"], "keywords": ["electrical", "motor", "battery", "wire", "lighting", "lamp", "appliance"], "sector_id": "manufacturing", "isic_divisions": ["27"], "naics_3": ["335"], "nace_divisions": ["27"]},
-    {"id": "motor_vehicles_mfg", "name": "Motor vehicles & parts", "audience": "corp_only", "examples": ["cars", "trucks", "auto parts", "trailers"], "keywords": ["car", "auto", "vehicle", "truck", "automotive", "parts", "trailer", "motor"], "sector_id": "manufacturing", "isic_divisions": ["29"], "naics_3": ["336"], "nace_divisions": ["29"]},
-    {"id": "other_transport_mfg", "name": "Aerospace & other transport mfg", "audience": "corp_only", "examples": ["aircraft", "ships", "trains", "motorcycles"], "keywords": ["aircraft", "ship", "shipbuilding", "boat", "train", "motorcycle", "aerospace"], "sector_id": "manufacturing", "isic_divisions": ["30"], "naics_3": ["336"], "nace_divisions": ["30"]},
-    {"id": "furniture_other_mfg", "name": "Furniture & other manufacturing", "audience": "smb_core", "examples": ["furniture", "toys", "jewelry", "sporting goods"], "keywords": ["furniture", "toy", "jewelry", "sporting", "instruments", "musical", "manufacturing"], "sector_id": "manufacturing", "isic_divisions": ["31", "32"], "naics_3": ["337", "339"], "nace_divisions": ["31", "32"]},
-
-    {"id": "residential_construction", "name": "Residential construction", "audience": "smb_core", "examples": ["homes", "apartments", "renovations"], "keywords": ["home", "house", "residential", "apartment", "building", "renovation", "construction"], "sector_id": "construction", "isic_divisions": ["41"], "naics_3": ["236"], "nace_divisions": ["41"]},
-    {"id": "commercial_construction", "name": "Commercial construction", "audience": "smb_friendly", "examples": ["offices", "retail buildings", "industrial buildings"], "keywords": ["commercial", "office", "retail", "industrial", "construction", "building"], "sector_id": "construction", "isic_divisions": ["41"], "naics_3": ["236"], "nace_divisions": ["41"]},
-    {"id": "civil_engineering", "name": "Civil engineering", "audience": "mixed_caution", "examples": ["roads", "bridges", "utilities infrastructure"], "keywords": ["civil", "road", "bridge", "highway", "infrastructure", "engineering", "tunnel", "dam"], "sector_id": "construction", "isic_divisions": ["42"], "naics_3": ["237"], "nace_divisions": ["42"]},
-    {"id": "specialty_trades", "name": "Specialty trades (mixed)", "audience": "smb_core", "examples": ["plumbing", "electrical", "painting", "roofing", "HVAC"], "keywords": ["plumber", "plumbing", "electrician", "electrical", "paint", "painting", "roof", "roofing", "hvac", "drywall", "carpenter", "tile", "flooring"], "sector_id": "construction", "isic_divisions": ["43"], "naics_3": ["238"], "nace_divisions": ["43"]},
-    {"id": "plumbers", "name": "Plumbers", "audience": "smb_core", "parent_id": "specialty_trades", "examples": ["residential plumbing", "drain cleaning", "water heaters"], "keywords": ["plumber", "plumbing", "drain", "water heater", "pipe"], "sector_id": "construction"},
-    {"id": "electricians", "name": "Electricians", "audience": "smb_core", "parent_id": "specialty_trades", "examples": ["residential wiring", "commercial wiring", "panel upgrades"], "keywords": ["electrician", "electrical", "wiring", "panel", "circuit"], "sector_id": "construction"},
-    {"id": "hvac_services", "name": "HVAC services", "audience": "smb_core", "parent_id": "specialty_trades", "examples": ["heating", "cooling", "AC installation", "furnace repair"], "keywords": ["hvac", "heating", "cooling", "air conditioning", "furnace", "ac"], "sector_id": "construction"},
-    {"id": "painters_residential", "name": "Painters (residential)", "audience": "smb_core", "parent_id": "specialty_trades", "examples": ["interior painting", "exterior painting", "house painters"], "keywords": ["painter", "painting", "house painter", "interior painting", "exterior painting"], "sector_id": "construction"},
-    {"id": "roofers", "name": "Roofers", "audience": "smb_core", "parent_id": "specialty_trades", "examples": ["roof installation", "roof repair", "gutters"], "keywords": ["roofer", "roofing", "roof repair", "gutters", "shingles"], "sector_id": "construction"},
-    {"id": "carpenters_finish", "name": "Carpenters & finish work", "audience": "smb_core", "parent_id": "specialty_trades", "examples": ["framing", "trim", "cabinetry installation"], "keywords": ["carpenter", "carpentry", "framing", "trim", "finish work"], "sector_id": "construction"},
-    {"id": "flooring_installers", "name": "Flooring installers", "audience": "smb_core", "parent_id": "specialty_trades", "examples": ["hardwood", "tile", "carpet"], "keywords": ["flooring", "floor installer", "hardwood", "tile", "carpet install"], "sector_id": "construction"},
-
-    {"id": "wholesale_food", "name": "Wholesale food & beverages", "audience": "smb_friendly", "examples": ["groceries wholesale", "restaurant supply", "drinks distribution"], "keywords": ["wholesale", "food", "beverage", "grocery", "restaurant supply", "distribution"], "sector_id": "wholesale", "isic_divisions": ["46"], "naics_3": ["424"], "nace_divisions": ["46"]},
-    {"id": "wholesale_durables", "name": "Wholesale durable goods", "audience": "smb_friendly", "examples": ["machinery", "vehicles", "electronics wholesale"], "keywords": ["wholesale", "machinery", "vehicle", "electronics", "durable", "equipment"], "sector_id": "wholesale", "isic_divisions": ["46"], "naics_3": ["423"], "nace_divisions": ["46"]},
-    {"id": "wholesale_chemicals_pharma", "name": "Wholesale chemicals & pharma", "audience": "mixed_caution", "examples": ["industrial chemicals", "drug distributors"], "keywords": ["wholesale", "chemical", "pharmaceutical", "pharma", "drug", "industrial"], "sector_id": "wholesale", "isic_divisions": ["46"], "naics_3": ["424"], "nace_divisions": ["46"]},
-    {"id": "wholesale_general", "name": "General wholesale", "audience": "smb_friendly", "examples": ["mixed merchandise", "import-export", "brokers"], "keywords": ["wholesale", "merchandise", "broker", "import", "export", "trading"], "sector_id": "wholesale", "isic_divisions": ["46"], "naics_3": ["425"], "nace_divisions": ["46"]},
-
-    {"id": "grocery_stores", "name": "Grocery stores", "audience": "smb_friendly", "examples": ["supermarkets", "convenience stores", "farmers markets"], "keywords": ["grocery", "supermarket", "convenience", "store", "food", "market"], "sector_id": "retail", "isic_divisions": ["47"], "naics_3": ["445"], "nace_divisions": ["47"]},
-    {"id": "specialty_grocery", "name": "Specialty grocers & delis", "audience": "smb_core", "parent_id": "grocery_stores", "examples": ["delis", "ethnic grocers", "butchers", "fishmongers"], "keywords": ["deli", "specialty grocer", "butcher", "fishmonger", "ethnic grocer"], "sector_id": "retail"},
-    {"id": "wine_liquor_stores", "name": "Wine & liquor stores", "audience": "smb_core", "parent_id": "grocery_stores", "examples": ["wine shops", "liquor stores", "bottle shops"], "keywords": ["wine shop", "liquor store", "bottle shop", "spirits"], "sector_id": "retail"},
-
-    {"id": "clothing_stores", "name": "Clothing & shoe stores", "audience": "smb_core", "examples": ["apparel shops", "shoe stores", "accessories"], "keywords": ["clothing", "apparel", "shoe", "fashion", "boutique", "accessories", "retail"], "sector_id": "retail", "isic_divisions": ["47"], "naics_3": ["448"], "nace_divisions": ["47"]},
-    {"id": "boutique_clothing", "name": "Clothing boutiques", "audience": "smb_core", "parent_id": "clothing_stores", "examples": ["independent boutiques", "designer-curated shops"], "keywords": ["boutique", "clothing boutique", "fashion boutique", "indie clothing"], "sector_id": "retail"},
-    {"id": "streetwear_casual", "name": "Streetwear & casual apparel", "audience": "smb_core", "parent_id": "clothing_stores", "examples": ["streetwear shops", "sneaker boutiques"], "keywords": ["streetwear", "sneaker shop", "casual apparel", "athleisure"], "sector_id": "retail"},
-    {"id": "designer_fashion", "name": "Designer fashion", "audience": "smb_core", "parent_id": "clothing_stores", "examples": ["designer-label shops", "high-end fashion"], "keywords": ["designer fashion", "luxury clothing", "high fashion"], "sector_id": "retail"},
-    {"id": "childrens_clothing", "name": "Children's & maternity clothing", "audience": "smb_core", "parent_id": "clothing_stores", "examples": ["kids' boutiques", "maternity stores"], "keywords": ["children clothing", "kids", "maternity", "baby clothes"], "sector_id": "retail"},
-    {"id": "jewelry_stores", "name": "Jewelry stores", "audience": "smb_core", "parent_id": "clothing_stores", "examples": ["jewelers", "fine jewelry", "fashion jewelry"], "keywords": ["jewelry", "jeweler", "fine jewelry", "ring", "necklace"], "sector_id": "retail"},
-    {"id": "watch_shops", "name": "Watch shops", "audience": "smb_core", "parent_id": "clothing_stores", "examples": ["watch retailers", "horology"], "keywords": ["watch shop", "horology", "wristwatch", "timepiece"], "sector_id": "retail"},
-    {"id": "eyewear_optical", "name": "Eyewear & optical retail", "audience": "smb_core", "parent_id": "clothing_stores", "examples": ["opticians", "sunglasses shops"], "keywords": ["eyewear", "optical", "optician", "sunglasses", "glasses"], "sector_id": "retail"},
-    {"id": "shoe_stores", "name": "Shoe stores", "audience": "smb_core", "parent_id": "clothing_stores", "examples": ["family shoe stores", "athletic shoe shops"], "keywords": ["shoe store", "footwear", "sneaker", "boot shop"], "sector_id": "retail"},
-    {"id": "bags_leather_retail", "name": "Bags & leather goods", "audience": "smb_core", "parent_id": "clothing_stores", "examples": ["handbag boutiques", "leather goods"], "keywords": ["bag shop", "handbag", "leather goods retail", "luggage"], "sector_id": "retail"},
-    {"id": "lingerie_intimates", "name": "Lingerie & intimates", "audience": "smb_core", "parent_id": "clothing_stores", "examples": ["lingerie boutiques", "intimates shops"], "keywords": ["lingerie", "intimates", "underwear shop", "swimwear"], "sector_id": "retail"},
-    {"id": "vintage_consignment", "name": "Vintage & consignment", "audience": "smb_core", "parent_id": "clothing_stores", "examples": ["thrift shops", "consignment stores", "vintage"], "keywords": ["vintage", "consignment", "thrift", "secondhand"], "sector_id": "retail"},
-
-    {"id": "electronics_appliance_stores", "name": "Electronics & appliance stores", "audience": "smb_friendly", "examples": ["phone shops", "computer stores", "appliances"], "keywords": ["electronics", "phone", "computer", "appliance", "tv", "store"], "sector_id": "retail", "isic_divisions": ["47"], "naics_3": ["443"], "nace_divisions": ["47"]},
-    {"id": "furniture_home_stores", "name": "Furniture & home goods stores", "audience": "smb_core", "examples": ["furniture", "home decor", "DIY stores", "garden centers"], "keywords": ["furniture", "home", "decor", "diy", "garden", "improvement", "store"], "sector_id": "retail", "isic_divisions": ["47"], "naics_3": ["442", "444"], "nace_divisions": ["47"]},
-    {"id": "hardware_stores", "name": "Hardware stores (local)", "audience": "smb_core", "parent_id": "furniture_home_stores", "examples": ["neighborhood hardware", "small DIY"], "keywords": ["hardware store", "hardware", "tools shop"], "sector_id": "retail"},
-    {"id": "garden_centers", "name": "Garden centers & nurseries", "audience": "smb_core", "parent_id": "furniture_home_stores", "examples": ["plant nurseries", "garden supply"], "keywords": ["garden center", "nursery", "plants", "landscaping supply"], "sector_id": "retail"},
-    {"id": "home_decor_gift", "name": "Home decor & gift shops", "audience": "smb_core", "parent_id": "furniture_home_stores", "examples": ["decor boutiques", "gift shops"], "keywords": ["home decor", "gift shop", "decor", "interior shop"], "sector_id": "retail"},
-
-    {"id": "health_beauty_stores", "name": "Pharmacies & health stores", "audience": "smb_friendly", "examples": ["pharmacies", "drugstores", "cosmetics stores", "optical shops"], "keywords": ["pharmacy", "drugstore", "cosmetics", "beauty", "optical", "health", "store"], "sector_id": "retail", "isic_divisions": ["47"], "naics_3": ["446"], "nace_divisions": ["47"]},
-    {"id": "cosmetics_shops", "name": "Cosmetics & beauty shops", "audience": "smb_core", "parent_id": "health_beauty_stores", "examples": ["beauty stores", "perfumeries", "skincare shops"], "keywords": ["cosmetics", "beauty shop", "perfumery", "skincare", "makeup"], "sector_id": "retail"},
-    {"id": "independent_pharmacy", "name": "Independent pharmacies", "audience": "smb_core", "parent_id": "health_beauty_stores", "examples": ["neighborhood pharmacy", "compounding pharmacy"], "keywords": ["independent pharmacy", "compounding pharmacy", "local pharmacy"], "sector_id": "retail"},
-
-    {"id": "auto_dealers_gas", "name": "Auto dealers & gas stations", "audience": "smb_friendly", "examples": ["car dealers", "used car lots", "gas stations"], "keywords": ["car", "auto", "dealer", "vehicle", "gas station", "petrol", "fuel"], "sector_id": "retail", "isic_divisions": ["45", "47"], "naics_3": ["441", "447"], "nace_divisions": ["45", "47"]},
-    {"id": "ecommerce_mail_order", "name": "E-commerce & mail-order", "audience": "smb_friendly", "examples": ["online retail", "catalog sales", "marketplace sellers"], "keywords": ["ecommerce", "online", "internet", "mail", "catalog", "shopify", "amazon"], "sector_id": "retail", "isic_divisions": ["47"], "naics_3": ["454"], "nace_divisions": ["47"]},
-    {"id": "general_merchandise", "name": "General merchandise stores", "audience": "mixed_caution", "examples": ["department stores", "dollar stores", "warehouse clubs"], "keywords": ["department", "dollar", "warehouse", "general", "merchandise", "store"], "sector_id": "retail", "isic_divisions": ["47"], "naics_3": ["452"], "nace_divisions": ["47"]},
-    {"id": "bookstores_indie", "name": "Indie bookstores", "audience": "smb_core", "parent_id": "general_merchandise", "examples": ["independent bookshops", "used books"], "keywords": ["bookstore", "indie bookstore", "bookshop", "used books"], "sector_id": "retail"},
-    {"id": "toy_game_stores", "name": "Toy & game stores", "audience": "smb_core", "parent_id": "general_merchandise", "examples": ["toy shops", "hobby shops", "game stores"], "keywords": ["toy store", "game store", "hobby shop", "board games"], "sector_id": "retail"},
-    {"id": "pet_stores", "name": "Pet stores", "audience": "smb_core", "parent_id": "general_merchandise", "examples": ["pet supply shops", "aquarium stores"], "keywords": ["pet store", "pet supplies", "aquarium store"], "sector_id": "retail"},
-    {"id": "sporting_goods_specialty", "name": "Sporting goods (specialty)", "audience": "smb_core", "parent_id": "general_merchandise", "examples": ["bike shops", "ski shops", "running stores"], "keywords": ["sporting goods", "bike shop", "ski shop", "running store", "outdoor"], "sector_id": "retail"},
-    {"id": "art_craft_supplies", "name": "Art & craft supply shops", "audience": "smb_core", "parent_id": "general_merchandise", "examples": ["art supplies", "craft stores", "yarn shops"], "keywords": ["art supplies", "craft store", "yarn shop", "fabric store"], "sector_id": "retail"},
-    {"id": "music_instrument_shops", "name": "Music instrument shops", "audience": "smb_core", "parent_id": "general_merchandise", "examples": ["guitar shops", "piano shops", "drum shops"], "keywords": ["music store", "instrument shop", "guitar shop", "piano shop"], "sector_id": "retail"},
-    {"id": "stationery_paper", "name": "Stationery & paper goods", "audience": "smb_core", "parent_id": "general_merchandise", "examples": ["stationers", "card shops"], "keywords": ["stationery", "paper goods", "card shop", "stationer"], "sector_id": "retail"},
-    {"id": "florist_shops", "name": "Florist shops", "audience": "smb_core", "parent_id": "general_merchandise", "examples": ["flower shops", "wedding florists"], "keywords": ["florist", "flower shop", "flowers"], "sector_id": "retail"},
-
-    {"id": "trucking_freight", "name": "Trucking & freight", "audience": "smb_core", "examples": ["long-haul trucking", "local delivery", "freight forwarding"], "keywords": ["trucking", "truck", "freight", "delivery", "haul", "logistics", "transport"], "sector_id": "transport_logistics", "isic_divisions": ["49"], "naics_3": ["484"], "nace_divisions": ["49"]},
-    {"id": "junk_removal_moving", "name": "Junk removal & small moving", "audience": "smb_core", "parent_id": "trucking_freight", "examples": ["residential movers", "junk haulers"], "keywords": ["moving company", "movers", "junk removal", "hauling"], "sector_id": "transport_logistics"},
-    {"id": "passenger_transport", "name": "Passenger transport", "audience": "smb_core", "examples": ["taxis", "ride-share", "buses", "limousines"], "keywords": ["taxi", "uber", "lyft", "rideshare", "bus", "passenger", "transport", "limo"], "sector_id": "transport_logistics", "isic_divisions": ["49"], "naics_3": ["485"], "nace_divisions": ["49"]},
-    {"id": "warehousing_storage", "name": "Warehousing & storage", "audience": "smb_friendly", "examples": ["storage facilities", "cold storage", "self-storage"], "keywords": ["warehouse", "storage", "logistics", "cold storage", "self-storage", "depot"], "sector_id": "transport_logistics", "isic_divisions": ["52"], "naics_3": ["493"], "nace_divisions": ["52"]},
-    {"id": "postal_courier", "name": "Postal & courier", "audience": "mixed_caution", "examples": ["mail", "parcels", "express delivery", "courier services"], "keywords": ["postal", "post", "mail", "courier", "parcel", "express", "delivery", "fedex", "ups"], "sector_id": "transport_logistics", "isic_divisions": ["53"], "naics_3": ["491", "492"], "nace_divisions": ["53"]},
-
-    {"id": "restaurants", "name": "Restaurants", "audience": "smb_core", "examples": ["cafés", "bistros", "fast food", "fine dining", "takeaway"], "keywords": ["restaurant", "cafe", "café", "bistro", "fast food", "dining", "eatery", "diner", "takeaway", "takeout"], "sector_id": "hotels_food", "isic_divisions": ["56"], "naics_3": ["722"], "nace_divisions": ["56"]},
-    {"id": "sit_down_restaurants", "name": "Sit-down restaurants", "audience": "smb_core", "parent_id": "restaurants", "examples": ["full-service restaurants", "casual dining"], "keywords": ["sit down restaurant", "casual dining", "full service"], "sector_id": "hotels_food"},
-    {"id": "fast_casual", "name": "Fast-casual restaurants", "audience": "smb_core", "parent_id": "restaurants", "examples": ["fast-casual chains", "fast-casual independents"], "keywords": ["fast casual", "quick casual", "counter service"], "sector_id": "hotels_food"},
-    {"id": "cafes_coffee", "name": "Cafés & coffee shops", "audience": "smb_core", "parent_id": "restaurants", "examples": ["espresso bars", "neighborhood cafés"], "keywords": ["cafe", "café", "coffee shop", "espresso", "barista"], "sector_id": "hotels_food"},
-    {"id": "bakeries_retail", "name": "Bakeries (retail)", "audience": "smb_core", "parent_id": "restaurants", "examples": ["bread bakeries", "pastry shops", "patisseries"], "keywords": ["bakery", "bread", "pastry", "patisserie"], "sector_id": "hotels_food"},
-    {"id": "pastry_dessert", "name": "Pastry & dessert shops", "audience": "smb_core", "parent_id": "restaurants", "examples": ["cake shops", "macaron shops", "dessert bars"], "keywords": ["pastry", "dessert shop", "cake shop", "patisserie"], "sector_id": "hotels_food"},
-    {"id": "ice_cream_shops", "name": "Ice cream & frozen dessert shops", "audience": "smb_core", "parent_id": "restaurants", "examples": ["gelato", "frozen yogurt", "ice cream parlors"], "keywords": ["ice cream", "gelato", "frozen yogurt", "froyo"], "sector_id": "hotels_food"},
-    {"id": "pizzerias", "name": "Pizzerias", "audience": "smb_core", "parent_id": "restaurants", "examples": ["wood-fired pizza", "neighborhood pizza"], "keywords": ["pizzeria", "pizza", "wood-fired"], "sector_id": "hotels_food"},
-    {"id": "food_trucks", "name": "Food trucks", "audience": "smb_core", "parent_id": "restaurants", "examples": ["mobile food", "street food trucks"], "keywords": ["food truck", "mobile food", "street food"], "sector_id": "hotels_food"},
-    {"id": "tea_houses", "name": "Tea houses & matcha bars", "audience": "smb_core", "parent_id": "restaurants", "examples": ["tea shops", "bubble tea", "matcha bars"], "keywords": ["tea house", "matcha", "bubble tea", "boba"], "sector_id": "hotels_food"},
-    {"id": "bars_nightclubs", "name": "Bars & nightclubs", "audience": "smb_core", "examples": ["pubs", "taverns", "lounges", "wine bars"], "keywords": ["bar", "pub", "tavern", "nightclub", "lounge", "wine bar", "cocktail"], "sector_id": "hotels_food", "isic_divisions": ["56"], "naics_3": ["722"], "nace_divisions": ["56"]},
-    {"id": "wine_bars", "name": "Wine bars", "audience": "smb_core", "parent_id": "bars_nightclubs", "examples": ["natural wine bars", "wine lounges"], "keywords": ["wine bar", "natural wine", "wine lounge"], "sector_id": "hotels_food"},
-    {"id": "pubs_taverns", "name": "Pubs & taverns", "audience": "smb_core", "parent_id": "bars_nightclubs", "examples": ["neighborhood pubs", "sports bars"], "keywords": ["pub", "tavern", "sports bar", "neighborhood pub"], "sector_id": "hotels_food"},
-    {"id": "breweries_taprooms", "name": "Breweries & taprooms (retail)", "audience": "smb_core", "parent_id": "bars_nightclubs", "examples": ["taprooms", "brewpubs"], "keywords": ["brewery", "taproom", "brewpub", "craft beer bar"], "sector_id": "hotels_food"},
-    {"id": "catering", "name": "Catering & food service contractors", "audience": "smb_core", "examples": ["corporate dining", "event catering", "institutional food"], "keywords": ["catering", "caterer", "event", "corporate dining", "institutional", "food service"], "sector_id": "hotels_food", "isic_divisions": ["56"], "naics_3": ["722"], "nace_divisions": ["56"]},
-    {"id": "hotels_lodging", "name": "Hotels & lodging", "audience": "smb_core", "examples": ["hotels", "motels", "resorts", "bed & breakfast"], "keywords": ["hotel", "motel", "resort", "lodging", "inn", "bnb", "bed and breakfast", "accommodation"], "sector_id": "hotels_food", "isic_divisions": ["55"], "naics_3": ["721"], "nace_divisions": ["55"]},
-    {"id": "independent_hotels", "name": "Independent hotels & inns", "audience": "smb_core", "parent_id": "hotels_lodging", "examples": ["boutique hotels", "country inns"], "keywords": ["independent hotel", "boutique hotel", "inn", "small hotel"], "sector_id": "hotels_food"},
-    {"id": "bnbs", "name": "Bed & breakfasts", "audience": "smb_core", "parent_id": "hotels_lodging", "examples": ["B&Bs", "guest houses"], "keywords": ["bed and breakfast", "bnb", "b&b", "guest house"], "sector_id": "hotels_food"},
-    {"id": "hostels", "name": "Hostels", "audience": "smb_core", "parent_id": "hotels_lodging", "examples": ["youth hostels", "backpacker hostels"], "keywords": ["hostel", "backpacker", "dormitory"], "sector_id": "hotels_food"},
-    {"id": "str_management", "name": "Short-term rental management", "audience": "smb_core", "parent_id": "hotels_lodging", "examples": ["Airbnb management", "vacation rental managers"], "keywords": ["short term rental", "airbnb management", "vacation rental", "vrbo"], "sector_id": "hotels_food"},
-
-    {"id": "software_development", "name": "Software development", "audience": "smb_core", "examples": ["web apps", "mobile apps", "custom software", "SaaS"], "keywords": ["software", "saas", "app", "developer", "programming", "code", "web app", "mobile app"], "sector_id": "information_media", "isic_divisions": ["62"], "naics_3": ["511", "541"], "nace_divisions": ["62"]},
-    {"id": "web_mobile_dev_shops", "name": "Web & mobile dev shops", "audience": "smb_core", "parent_id": "software_development", "examples": ["web agencies", "mobile app studios"], "keywords": ["web development", "mobile app dev", "dev shop", "web agency"], "sector_id": "information_media"},
-    {"id": "custom_software_contract", "name": "Custom software / contract dev", "audience": "smb_core", "parent_id": "software_development", "examples": ["bespoke software", "contract programming"], "keywords": ["custom software", "contract dev", "bespoke software", "consulting dev"], "sector_id": "information_media"},
-    {"id": "game_dev_studios", "name": "Game development studios", "audience": "smb_friendly", "parent_id": "software_development", "examples": ["indie game studios", "mobile games"], "keywords": ["game dev", "indie game", "video game studio"], "sector_id": "information_media"},
-
-    {"id": "it_services_hosting", "name": "IT services & hosting", "audience": "smb_friendly", "examples": ["cloud hosting", "web hosting", "IT consulting", "managed services"], "keywords": ["it", "hosting", "cloud", "managed services", "it consulting", "datacenter", "support"], "sector_id": "information_media", "isic_divisions": ["63"], "naics_3": ["518"], "nace_divisions": ["63"]},
-    {"id": "it_services_msp", "name": "IT services & MSPs (small)", "audience": "smb_core", "parent_id": "it_services_hosting", "examples": ["managed service providers", "IT support shops"], "keywords": ["msp", "managed services", "it support", "it shop"], "sector_id": "information_media"},
-    {"id": "media_publishing", "name": "Media & publishing", "audience": "smb_friendly", "examples": ["newspapers", "books", "magazines", "online media"], "keywords": ["media", "publishing", "newspaper", "book", "magazine", "publisher", "blog"], "sector_id": "information_media", "isic_divisions": ["58", "59"], "naics_3": ["511", "512"], "nace_divisions": ["58", "59"]},
-    {"id": "broadcasting_telecom", "name": "Broadcasting & telecom", "audience": "corp_only", "examples": ["TV", "radio", "internet providers", "mobile networks"], "keywords": ["broadcasting", "tv", "television", "radio", "telecom", "internet", "mobile network", "cable"], "sector_id": "information_media", "isic_divisions": ["60", "61"], "naics_3": ["515", "517"], "nace_divisions": ["60", "61"]},
-
-    {"id": "banking", "name": "Banking", "audience": "corp_only", "examples": ["commercial banks", "credit unions", "savings banks"], "keywords": ["bank", "banking", "credit union", "savings", "loans", "finance"], "sector_id": "finance_real_estate", "isic_divisions": ["64"], "naics_3": ["522"], "nace_divisions": ["64"]},
-    {"id": "investment_securities", "name": "Investment & securities", "audience": "corp_only", "examples": ["asset management", "brokerage", "private equity", "hedge funds"], "keywords": ["investment", "asset management", "broker", "securities", "fund", "private equity", "hedge fund"], "sector_id": "finance_real_estate", "isic_divisions": ["64", "66"], "naics_3": ["523"], "nace_divisions": ["64", "66"]},
-    {"id": "insurance", "name": "Insurance", "audience": "mixed_caution", "examples": ["life insurance", "property insurance", "health insurance", "brokers"], "keywords": ["insurance", "insurer", "life insurance", "property insurance", "health insurance", "broker"], "sector_id": "finance_real_estate", "isic_divisions": ["65"], "naics_3": ["524"], "nace_divisions": ["65"]},
-    {"id": "insurance_brokers", "name": "Independent insurance brokers", "audience": "smb_core", "parent_id": "insurance", "examples": ["local insurance agencies", "independent brokers"], "keywords": ["insurance broker", "insurance agent", "local insurance"], "sector_id": "finance_real_estate"},
-    {"id": "real_estate_agencies", "name": "Real estate agencies", "audience": "smb_core", "examples": ["realtors", "property managers", "agents"], "keywords": ["real estate", "realtor", "agent", "property manager", "brokerage"], "sector_id": "finance_real_estate", "isic_divisions": ["68"], "naics_3": ["531"], "nace_divisions": ["68"]},
-    {"id": "property_leasing", "name": "Property leasing & rental", "audience": "smb_core", "examples": ["landlords", "equipment rental", "car rental"], "keywords": ["landlord", "leasing", "rental", "lease", "rent", "equipment rental", "car rental"], "sector_id": "finance_real_estate", "isic_divisions": ["68", "77"], "naics_3": ["531", "532"], "nace_divisions": ["68", "77"]},
-
-    {"id": "legal_services", "name": "Legal services", "audience": "smb_core", "examples": ["law firms", "attorneys", "paralegals", "notaries"], "keywords": ["legal", "lawyer", "attorney", "law firm", "paralegal", "notary"], "sector_id": "professional_services", "isic_divisions": ["69"], "naics_3": ["541"], "nace_divisions": ["69"]},
-    {"id": "sole_law_firms", "name": "Sole-practitioner law firms", "audience": "smb_core", "parent_id": "legal_services", "examples": ["solo attorneys", "small boutique law"], "keywords": ["solo lawyer", "sole practitioner law", "small law firm", "boutique law"], "sector_id": "professional_services"},
-    {"id": "accounting_tax", "name": "Accounting & tax", "audience": "smb_core", "examples": ["CPAs", "bookkeeping", "tax preparation", "audit"], "keywords": ["accounting", "accountant", "cpa", "bookkeeping", "tax", "audit", "tax prep"], "sector_id": "professional_services", "isic_divisions": ["69"], "naics_3": ["541"], "nace_divisions": ["69"]},
-    {"id": "sole_accounting", "name": "Sole-practitioner accountants", "audience": "smb_core", "parent_id": "accounting_tax", "examples": ["solo CPAs", "neighborhood tax prep"], "keywords": ["solo accountant", "sole cpa", "small accounting"], "sector_id": "professional_services"},
-    {"id": "management_consulting", "name": "Management consulting", "audience": "smb_core", "examples": ["strategy", "operations", "HR consulting"], "keywords": ["consulting", "consultant", "strategy", "operations", "hr consulting", "management"], "sector_id": "professional_services", "isic_divisions": ["70"], "naics_3": ["541"], "nace_divisions": ["70"]},
-    {"id": "engineering_architecture", "name": "Engineering & architecture", "audience": "smb_core", "examples": ["architects", "civil engineers", "surveyors"], "keywords": ["architect", "architecture", "engineer", "engineering", "surveyor", "design"], "sector_id": "professional_services", "isic_divisions": ["71"], "naics_3": ["541"], "nace_divisions": ["71"]},
-    {"id": "marketing_design", "name": "Marketing & design agencies", "audience": "smb_core", "examples": ["advertising", "PR", "graphic design", "branding"], "keywords": ["advertising", "marketing", "pr", "public relations", "graphic design", "branding", "agency"], "sector_id": "professional_services", "isic_divisions": ["73", "74"], "naics_3": ["541"], "nace_divisions": ["73", "74"]},
-    {"id": "photography_studios", "name": "Photography studios", "audience": "smb_core", "parent_id": "marketing_design", "examples": ["portrait studios", "wedding photographers", "commercial photography"], "keywords": ["photography", "photographer", "portrait studio", "wedding photographer"], "sector_id": "professional_services"},
-    {"id": "videography_services", "name": "Videography services", "audience": "smb_core", "parent_id": "marketing_design", "examples": ["wedding video", "commercial video", "music video"], "keywords": ["videography", "video production", "videographer"], "sector_id": "professional_services"},
-    {"id": "wedding_planning", "name": "Wedding planning & coordination", "audience": "smb_core", "parent_id": "marketing_design", "examples": ["wedding planners", "destination wedding"], "keywords": ["wedding planning", "wedding planner", "event coordinator"], "sector_id": "professional_services"},
-    {"id": "event_production", "name": "Event production (small)", "audience": "smb_core", "parent_id": "marketing_design", "examples": ["event producers", "AV companies", "small event shops"], "keywords": ["event production", "event planning", "event company"], "sector_id": "professional_services"},
-
-    {"id": "employment_services", "name": "Employment services", "audience": "smb_friendly", "examples": ["staffing", "temp agencies", "executive search", "recruiting"], "keywords": ["staffing", "temp", "recruiting", "recruitment", "headhunter", "employment", "agency", "executive search"], "sector_id": "admin_support", "isic_divisions": ["78"], "naics_3": ["561"], "nace_divisions": ["78"]},
-    {"id": "office_support", "name": "Office & business support", "audience": "smb_friendly", "examples": ["call centers", "secretarial", "BPO", "answering services"], "keywords": ["call center", "bpo", "secretarial", "office support", "back office", "answering service"], "sector_id": "admin_support", "isic_divisions": ["82"], "naics_3": ["561"], "nace_divisions": ["82"]},
-    {"id": "travel_agencies", "name": "Travel agencies", "audience": "smb_core", "examples": ["tour operators", "travel booking", "destination management"], "keywords": ["travel", "tour", "tour operator", "travel agency", "trip", "vacation booking"], "sector_id": "admin_support", "isic_divisions": ["79"], "naics_3": ["561"], "nace_divisions": ["79"]},
-    {"id": "security_services", "name": "Security services", "audience": "smb_friendly", "examples": ["guards", "alarm monitoring", "private investigation"], "keywords": ["security", "guard", "alarm", "investigation", "investigator", "monitoring"], "sector_id": "admin_support", "isic_divisions": ["80"], "naics_3": ["561"], "nace_divisions": ["80"]},
-    {"id": "cleaning_services", "name": "Cleaning services", "audience": "smb_core", "examples": ["janitorial", "commercial cleaning", "carpet cleaning"], "keywords": ["cleaning", "janitor", "janitorial", "commercial cleaning", "carpet cleaning", "maid"], "sector_id": "admin_support", "isic_divisions": ["81"], "naics_3": ["561"], "nace_divisions": ["81"]},
-    {"id": "residential_cleaning", "name": "Residential cleaning services", "audience": "smb_core", "parent_id": "cleaning_services", "examples": ["house cleaning", "maid services"], "keywords": ["house cleaning", "residential cleaning", "maid"], "sector_id": "admin_support"},
-    {"id": "landscaping_lawn", "name": "Landscaping & lawn care", "audience": "smb_core", "parent_id": "cleaning_services", "examples": ["lawn mowing", "tree services", "landscape design"], "keywords": ["landscaping", "lawn care", "lawn mowing", "tree service", "landscaper"], "sector_id": "admin_support"},
-    {"id": "pool_service", "name": "Pool service & maintenance", "audience": "smb_core", "parent_id": "cleaning_services", "examples": ["pool cleaners", "pool maintenance"], "keywords": ["pool service", "pool cleaning", "pool maintenance"], "sector_id": "admin_support"},
-    {"id": "pest_control_local", "name": "Pest control (local)", "audience": "smb_core", "parent_id": "cleaning_services", "examples": ["exterminators", "termite control"], "keywords": ["pest control", "exterminator", "termite", "rodent"], "sector_id": "admin_support"},
-    {"id": "window_washing", "name": "Window washing", "audience": "smb_core", "parent_id": "cleaning_services", "examples": ["window cleaners", "high-rise window service"], "keywords": ["window washing", "window cleaning"], "sector_id": "admin_support"},
-
-    {"id": "primary_secondary_schools", "name": "Primary & secondary schools", "audience": "smb_friendly", "examples": ["K-12", "kindergartens", "high schools"], "keywords": ["school", "k-12", "kindergarten", "primary", "secondary", "high school", "education"], "sector_id": "education", "isic_divisions": ["85"], "naics_3": ["611"], "nace_divisions": ["85"]},
-    {"id": "private_k12", "name": "Private K-12 schools (small)", "audience": "smb_friendly", "parent_id": "primary_secondary_schools", "examples": ["small private schools", "religious schools"], "keywords": ["private school", "k12 private", "small private school"], "sector_id": "education"},
-    {"id": "higher_education", "name": "Higher education", "audience": "mixed_caution", "examples": ["colleges", "universities", "professional schools"], "keywords": ["college", "university", "higher education", "graduate", "professional school"], "sector_id": "education", "isic_divisions": ["85"], "naics_3": ["611"], "nace_divisions": ["85"]},
-    {"id": "vocational_training", "name": "Vocational & other training", "audience": "smb_core", "examples": ["driving schools", "language schools", "tutoring", "test prep"], "keywords": ["vocational", "training", "driving school", "language school", "tutor", "tutoring", "test prep"], "sector_id": "education", "isic_divisions": ["85"], "naics_3": ["611"], "nace_divisions": ["85"]},
-    {"id": "tutoring_centers", "name": "Tutoring centers", "audience": "smb_core", "parent_id": "vocational_training", "examples": ["academic tutoring", "after-school programs"], "keywords": ["tutoring", "tutor", "after school tutoring"], "sector_id": "education"},
-    {"id": "test_prep", "name": "Test-prep services", "audience": "smb_core", "parent_id": "vocational_training", "examples": ["SAT prep", "GMAT prep", "test preparation"], "keywords": ["test prep", "sat prep", "gmat", "lsat", "exam prep"], "sector_id": "education"},
-    {"id": "language_schools", "name": "Language schools", "audience": "smb_core", "parent_id": "vocational_training", "examples": ["ESL schools", "foreign language instruction"], "keywords": ["language school", "esl", "english school", "foreign language"], "sector_id": "education"},
-    {"id": "music_schools", "name": "Music schools & private lessons", "audience": "smb_core", "parent_id": "vocational_training", "examples": ["music academies", "private music instruction"], "keywords": ["music school", "music lessons", "piano lessons", "guitar lessons"], "sector_id": "education"},
-    {"id": "dance_studios", "name": "Dance studios", "audience": "smb_core", "parent_id": "vocational_training", "examples": ["ballet schools", "dance academies"], "keywords": ["dance studio", "ballet", "dance school", "dance academy"], "sector_id": "education"},
-    {"id": "driving_schools", "name": "Driving schools", "audience": "smb_core", "parent_id": "vocational_training", "examples": ["driver education", "driving instructors"], "keywords": ["driving school", "driver education", "driving instructor"], "sector_id": "education"},
-    {"id": "martial_arts", "name": "Martial arts dojos", "audience": "smb_core", "parent_id": "vocational_training", "examples": ["karate", "BJJ", "taekwondo", "MMA gyms"], "keywords": ["martial arts", "karate", "bjj", "taekwondo", "judo", "dojo"], "sector_id": "education"},
-    {"id": "coding_schools", "name": "Coding bootcamps & schools", "audience": "smb_core", "parent_id": "vocational_training", "examples": ["coding bootcamps", "kids coding"], "keywords": ["coding bootcamp", "coding school", "programming school"], "sector_id": "education"},
-    {"id": "art_classes", "name": "Art classes & studios", "audience": "smb_core", "parent_id": "vocational_training", "examples": ["painting classes", "pottery studios", "art instruction"], "keywords": ["art class", "art studio", "pottery", "painting class"], "sector_id": "education"},
-
-    {"id": "doctors_clinics", "name": "Doctors & clinics", "audience": "smb_core", "examples": ["general practice", "specialty clinics", "outpatient care"], "keywords": ["doctor", "physician", "clinic", "general practice", "outpatient", "medical"], "sector_id": "healthcare", "isic_divisions": ["86"], "naics_3": ["621"], "nace_divisions": ["86"]},
-    {"id": "chiropractic", "name": "Chiropractic clinics", "audience": "smb_core", "parent_id": "doctors_clinics", "examples": ["chiropractors", "spinal care"], "keywords": ["chiropractor", "chiropractic", "spinal"], "sector_id": "healthcare"},
-    {"id": "physical_therapy", "name": "Physical therapy clinics", "audience": "smb_core", "parent_id": "doctors_clinics", "examples": ["PT clinics", "rehab"], "keywords": ["physical therapy", "pt clinic", "rehab", "rehabilitation"], "sector_id": "healthcare"},
-    {"id": "optometry", "name": "Optometry / vision centers", "audience": "smb_core", "parent_id": "doctors_clinics", "examples": ["optometrists", "vision care"], "keywords": ["optometrist", "optometry", "vision center", "eye doctor"], "sector_id": "healthcare"},
-    {"id": "mental_health_practice", "name": "Mental health practices (small)", "audience": "smb_core", "parent_id": "doctors_clinics", "examples": ["therapists", "psychologists", "counseling"], "keywords": ["therapist", "psychologist", "counselor", "mental health", "therapy"], "sector_id": "healthcare"},
-    {"id": "nutritionist", "name": "Nutritionist / dietician practices", "audience": "smb_core", "parent_id": "doctors_clinics", "examples": ["nutritionists", "dieticians", "nutrition coaching"], "keywords": ["nutritionist", "dietician", "nutrition", "diet"], "sector_id": "healthcare"},
-    {"id": "dental_practices", "name": "Dental practices", "audience": "smb_core", "examples": ["general dentistry", "orthodontics", "oral surgery"], "keywords": ["dentist", "dental", "orthodontics", "oral surgery", "teeth"], "sector_id": "healthcare", "isic_divisions": ["86"], "naics_3": ["621"], "nace_divisions": ["86"]},
-    {"id": "hospitals", "name": "Hospitals", "audience": "corp_only", "examples": ["general hospitals", "specialty hospitals", "psychiatric"], "keywords": ["hospital", "specialty hospital", "psychiatric", "medical center"], "sector_id": "healthcare", "isic_divisions": ["86"], "naics_3": ["622"], "nace_divisions": ["86"]},
-    {"id": "nursing_elderly", "name": "Nursing & elderly care", "audience": "smb_friendly", "examples": ["nursing homes", "home care", "assisted living"], "keywords": ["nursing home", "elderly", "senior care", "home care", "assisted living", "long-term care"], "sector_id": "healthcare", "isic_divisions": ["87"], "naics_3": ["623"], "nace_divisions": ["87"]},
-    {"id": "childcare_social", "name": "Childcare & social services", "audience": "smb_core", "examples": ["daycares", "family services", "youth services"], "keywords": ["daycare", "childcare", "family services", "social services", "youth"], "sector_id": "healthcare", "isic_divisions": ["88"], "naics_3": ["624"], "nace_divisions": ["88"]},
-    {"id": "daycare_preschool", "name": "Daycare & preschool", "audience": "smb_core", "parent_id": "childcare_social", "examples": ["preschools", "daycares", "early learning"], "keywords": ["daycare", "preschool", "nursery school", "early learning"], "sector_id": "healthcare"},
-    {"id": "veterinary_pet_care", "name": "Veterinary & pet care", "audience": "smb_core", "examples": ["vets", "pet grooming", "kennels", "pet hospitals"], "keywords": ["vet", "veterinary", "pet", "pet grooming", "kennel", "animal hospital"], "sector_id": "healthcare", "isic_divisions": ["75"], "naics_3": ["541"], "nace_divisions": ["75"]},
-
-    {"id": "performing_arts", "name": "Performing arts", "audience": "smb_core", "examples": ["theatre", "music", "dance", "live performance"], "keywords": ["theatre", "music", "dance", "performing arts", "live performance", "band", "orchestra"], "sector_id": "arts_entertainment", "isic_divisions": ["90"], "naics_3": ["711"], "nace_divisions": ["90"]},
-    {"id": "sports_fitness", "name": "Sports & fitness", "audience": "smb_core", "examples": ["gyms", "sports clubs", "yoga studios", "personal trainers"], "keywords": ["gym", "fitness", "sports", "yoga", "trainer", "personal training", "athletic"], "sector_id": "arts_entertainment", "isic_divisions": ["93"], "naics_3": ["713"], "nace_divisions": ["93"]},
-    {"id": "yoga_pilates", "name": "Yoga & pilates studios", "audience": "smb_core", "parent_id": "sports_fitness", "examples": ["yoga studios", "pilates studios", "barre"], "keywords": ["yoga studio", "pilates", "barre", "yoga"], "sector_id": "arts_entertainment"},
-    {"id": "personal_training", "name": "Personal training", "audience": "smb_core", "parent_id": "sports_fitness", "examples": ["personal trainers", "small group training"], "keywords": ["personal trainer", "personal training", "fitness trainer", "small group fitness"], "sector_id": "arts_entertainment"},
-    {"id": "museums_cultural", "name": "Museums & cultural", "audience": "smb_friendly", "examples": ["museums", "libraries", "galleries", "historical sites"], "keywords": ["museum", "library", "gallery", "cultural", "art gallery", "historical"], "sector_id": "arts_entertainment", "isic_divisions": ["91"], "naics_3": ["712"], "nace_divisions": ["91"]},
-    {"id": "gambling_amusement", "name": "Gambling & amusement", "audience": "mixed_caution", "examples": ["casinos", "arcades", "amusement parks", "bowling"], "keywords": ["casino", "gambling", "lottery", "arcade", "amusement", "amusement park", "bowling", "entertainment"], "sector_id": "arts_entertainment", "isic_divisions": ["92", "93"], "naics_3": ["713"], "nace_divisions": ["92", "93"]},
-
-    {"id": "hairdressers_beauty", "name": "Hairdressers & beauty", "audience": "smb_core", "examples": ["barbers", "salons", "beauty parlors", "spas", "nail salons"], "keywords": ["hairdresser", "barber", "salon", "beauty", "spa", "nail", "hair"], "sector_id": "personal_services", "isic_divisions": ["96"], "naics_3": ["812"], "nace_divisions": ["96"]},
-    {"id": "hair_salons_full", "name": "Hair salons (full service)", "audience": "smb_core", "parent_id": "hairdressers_beauty", "examples": ["women's salons", "color salons", "cut and color"], "keywords": ["hair salon", "beauty salon", "women salon", "hair stylist"], "sector_id": "personal_services"},
-    {"id": "barbershops", "name": "Barbershops", "audience": "smb_core", "parent_id": "hairdressers_beauty", "examples": ["men's barbershops", "traditional barbers"], "keywords": ["barbershop", "barber", "men haircut"], "sector_id": "personal_services"},
-    {"id": "nail_salons", "name": "Nail salons", "audience": "smb_core", "parent_id": "hairdressers_beauty", "examples": ["manicure", "pedicure", "nail art"], "keywords": ["nail salon", "manicure", "pedicure", "nails"], "sector_id": "personal_services"},
-    {"id": "day_spas", "name": "Day spas", "audience": "smb_core", "parent_id": "hairdressers_beauty", "examples": ["spa services", "facials", "skin treatments"], "keywords": ["day spa", "spa", "facial", "skincare"], "sector_id": "personal_services"},
-    {"id": "massage_therapy", "name": "Massage therapy clinics", "audience": "smb_core", "parent_id": "hairdressers_beauty", "examples": ["massage therapists", "deep tissue", "sports massage"], "keywords": ["massage therapy", "massage therapist", "deep tissue", "sports massage"], "sector_id": "personal_services"},
-    {"id": "tanning_salons", "name": "Tanning salons", "audience": "smb_core", "parent_id": "hairdressers_beauty", "examples": ["tanning beds", "spray tan"], "keywords": ["tanning salon", "tanning", "spray tan"], "sector_id": "personal_services"},
-    {"id": "brow_lash_studios", "name": "Brow & lash studios", "audience": "smb_core", "parent_id": "hairdressers_beauty", "examples": ["microblading", "lash extensions", "brow shaping"], "keywords": ["brow studio", "lash studio", "microblading", "lash extensions"], "sector_id": "personal_services"},
-    {"id": "med_spas", "name": "Med spas (small)", "audience": "smb_core", "parent_id": "hairdressers_beauty", "examples": ["botox", "fillers", "laser hair removal"], "keywords": ["med spa", "medspa", "botox", "laser hair removal"], "sector_id": "personal_services"},
-    {"id": "tattoo_piercing", "name": "Tattoo & piercing studios", "audience": "smb_core", "parent_id": "hairdressers_beauty", "examples": ["tattoo parlors", "piercing studios"], "keywords": ["tattoo", "piercing", "tattoo studio", "tattoo parlor"], "sector_id": "personal_services"},
-
-    {"id": "auto_repair_shops", "name": "Auto repair shops", "audience": "smb_core", "examples": ["mechanics", "body shops", "tire shops", "car wash"], "keywords": ["auto repair", "mechanic", "body shop", "tire shop", "car wash", "garage"], "sector_id": "personal_services", "isic_divisions": ["45"], "naics_3": ["811"], "nace_divisions": ["45"]},
-    {"id": "auto_body_shops", "name": "Auto body shops", "audience": "smb_core", "parent_id": "auto_repair_shops", "examples": ["collision repair", "paint and body"], "keywords": ["auto body", "body shop", "collision repair", "paint shop"], "sector_id": "personal_services"},
-    {"id": "bike_repair", "name": "Bike repair shops", "audience": "smb_core", "parent_id": "auto_repair_shops", "examples": ["bicycle repair", "bike tune-up"], "keywords": ["bike repair", "bicycle repair", "bike shop repair"], "sector_id": "personal_services"},
-    {"id": "electronics_repair", "name": "Electronics & phone repair", "audience": "smb_core", "parent_id": "auto_repair_shops", "examples": ["phone repair", "computer repair", "electronics fix"], "keywords": ["phone repair", "electronics repair", "computer repair", "screen repair"], "sector_id": "personal_services"},
-    {"id": "locksmiths", "name": "Locksmiths", "audience": "smb_core", "parent_id": "auto_repair_shops", "examples": ["residential locksmith", "auto locksmith"], "keywords": ["locksmith", "locks", "key cutting"], "sector_id": "personal_services"},
-    {"id": "appliance_repair", "name": "Appliance repair", "audience": "smb_core", "parent_id": "auto_repair_shops", "examples": ["refrigerator repair", "washer/dryer repair"], "keywords": ["appliance repair", "fridge repair", "washer repair"], "sector_id": "personal_services"},
-    {"id": "dry_cleaning_laundry", "name": "Dry cleaning & laundry", "audience": "smb_core", "examples": ["laundromats", "dry cleaners", "linen services"], "keywords": ["dry cleaning", "laundry", "laundromat", "linen"], "sector_id": "personal_services", "isic_divisions": ["96"], "naics_3": ["812"], "nace_divisions": ["96"]},
-    {"id": "tailoring_alterations", "name": "Tailoring & alterations", "audience": "smb_core", "parent_id": "dry_cleaning_laundry", "examples": ["tailors", "alterations shops"], "keywords": ["tailor", "alterations", "tailoring", "seamstress"], "sector_id": "personal_services"},
-    {"id": "shoe_repair", "name": "Shoe repair", "audience": "smb_core", "parent_id": "dry_cleaning_laundry", "examples": ["cobblers", "shoe repair shops"], "keywords": ["shoe repair", "cobbler", "shoe resoling"], "sector_id": "personal_services"},
-    {"id": "watch_jewelry_repair", "name": "Watch & jewelry repair", "audience": "smb_core", "parent_id": "dry_cleaning_laundry", "examples": ["watch repair", "jewelry repair"], "keywords": ["watch repair", "jewelry repair"], "sector_id": "personal_services"},
-    {"id": "funeral_services", "name": "Funeral services", "audience": "smb_core", "examples": ["funeral homes", "cemeteries", "crematoria"], "keywords": ["funeral", "cemetery", "crematorium", "mortuary", "funeral home"], "sector_id": "personal_services", "isic_divisions": ["96"], "naics_3": ["812"], "nace_divisions": ["96"]}
+    {
+      "id": "crop_farming",
+      "name": "Crop farming",
+      "audience": "smb_friendly",
+      "examples": [
+        "wheat",
+        "corn",
+        "vegetables",
+        "fruits"
+      ],
+      "keywords": [
+        "farm",
+        "farming",
+        "crop",
+        "wheat",
+        "corn",
+        "vegetables",
+        "fruit",
+        "grain",
+        "rice",
+        "harvest",
+        "cultivation",
+        "agriculture"
+      ],
+      "sector_id": "farming_food_production",
+      "isic_divisions": [
+        "01"
+      ],
+      "naics_3": [
+        "111"
+      ],
+      "nace_divisions": [
+        "01"
+      ]
+    },
+    {
+      "id": "livestock_farming",
+      "name": "Livestock farming",
+      "audience": "smb_friendly",
+      "examples": [
+        "dairy",
+        "beef",
+        "poultry",
+        "eggs"
+      ],
+      "keywords": [
+        "livestock",
+        "cattle",
+        "dairy",
+        "beef",
+        "poultry",
+        "chicken",
+        "eggs",
+        "pig",
+        "sheep",
+        "ranch",
+        "milk"
+      ],
+      "sector_id": "farming_food_production",
+      "isic_divisions": [
+        "01"
+      ],
+      "naics_3": [
+        "112"
+      ],
+      "nace_divisions": [
+        "01"
+      ]
+    },
+    {
+      "id": "fishing_aquaculture",
+      "name": "Fishing & aquaculture",
+      "audience": "smb_friendly",
+      "examples": [
+        "commercial fishing",
+        "fish farming",
+        "shellfish"
+      ],
+      "keywords": [
+        "fish",
+        "fishing",
+        "aquaculture",
+        "shellfish",
+        "seafood",
+        "fishery",
+        "salmon",
+        "shrimp",
+        "marine"
+      ],
+      "sector_id": "farming_food_production",
+      "isic_divisions": [
+        "03"
+      ],
+      "naics_3": [
+        "114"
+      ],
+      "nace_divisions": [
+        "03"
+      ]
+    },
+    {
+      "id": "forestry_logging",
+      "name": "Forestry & logging",
+      "audience": "smb_friendly",
+      "examples": [
+        "timber",
+        "pulpwood",
+        "tree nurseries"
+      ],
+      "keywords": [
+        "forestry",
+        "logging",
+        "timber",
+        "wood",
+        "pulpwood",
+        "lumberjack",
+        "trees",
+        "forest"
+      ],
+      "sector_id": "farming_food_production",
+      "isic_divisions": [
+        "02"
+      ],
+      "naics_3": [
+        "113"
+      ],
+      "nace_divisions": [
+        "02"
+      ]
+    },
+    {
+      "id": "oil_gas_extraction",
+      "name": "Oil & gas extraction",
+      "audience": "corp_only",
+      "examples": [
+        "crude petroleum",
+        "natural gas",
+        "drilling"
+      ],
+      "keywords": [
+        "oil",
+        "gas",
+        "petroleum",
+        "drilling",
+        "extraction",
+        "fracking",
+        "wells",
+        "energy"
+      ],
+      "sector_id": "mining_energy",
+      "isic_divisions": [
+        "06"
+      ],
+      "naics_3": [
+        "211"
+      ],
+      "nace_divisions": [
+        "06"
+      ]
+    },
+    {
+      "id": "mining_quarrying",
+      "name": "Mining & quarrying",
+      "audience": "corp_only",
+      "examples": [
+        "coal",
+        "metals",
+        "stone",
+        "gravel"
+      ],
+      "keywords": [
+        "mining",
+        "coal",
+        "quarry",
+        "metal",
+        "stone",
+        "gravel",
+        "ore",
+        "minerals",
+        "iron"
+      ],
+      "sector_id": "mining_energy",
+      "isic_divisions": [
+        "05",
+        "07",
+        "08"
+      ],
+      "naics_3": [
+        "212",
+        "213"
+      ],
+      "nace_divisions": [
+        "05",
+        "07",
+        "08"
+      ]
+    },
+    {
+      "id": "electricity_gas_utilities",
+      "name": "Electricity & gas utilities",
+      "audience": "corp_only",
+      "examples": [
+        "power generation",
+        "transmission",
+        "natural gas supply"
+      ],
+      "keywords": [
+        "electricity",
+        "power",
+        "utility",
+        "energy",
+        "gas",
+        "grid",
+        "transmission"
+      ],
+      "sector_id": "mining_energy",
+      "isic_divisions": [
+        "35"
+      ],
+      "naics_3": [
+        "221"
+      ],
+      "nace_divisions": [
+        "35"
+      ]
+    },
+    {
+      "id": "water_waste",
+      "name": "Water & waste management",
+      "audience": "mixed_caution",
+      "examples": [
+        "water supply",
+        "sewerage",
+        "recycling",
+        "waste collection"
+      ],
+      "keywords": [
+        "water",
+        "sewer",
+        "waste",
+        "recycling",
+        "garbage",
+        "trash",
+        "treatment",
+        "sanitation"
+      ],
+      "sector_id": "trades_home",
+      "isic_divisions": [
+        "36",
+        "37",
+        "38",
+        "39"
+      ],
+      "naics_3": [
+        "562"
+      ],
+      "nace_divisions": [
+        "36",
+        "37",
+        "38",
+        "39"
+      ]
+    },
+    {
+      "id": "food_beverage_mfg",
+      "name": "Food & beverage manufacturing",
+      "audience": "smb_friendly",
+      "examples": [
+        "dairy products",
+        "baked goods",
+        "drinks",
+        "meat processing"
+      ],
+      "keywords": [
+        "food",
+        "beverage",
+        "dairy",
+        "bakery",
+        "drink",
+        "brewing",
+        "manufacturing",
+        "processing",
+        "meat",
+        "snacks"
+      ],
+      "sector_id": "farming_food_production",
+      "isic_divisions": [
+        "10",
+        "11"
+      ],
+      "naics_3": [
+        "311",
+        "312"
+      ],
+      "nace_divisions": [
+        "10",
+        "11"
+      ]
+    },
+    {
+      "id": "craft_beer_mfg",
+      "name": "Craft breweries & taprooms",
+      "audience": "smb_core",
+      "parent_id": "food_beverage_mfg",
+      "examples": [
+        "microbreweries",
+        "brewpubs",
+        "small-batch beer"
+      ],
+      "keywords": [
+        "brewery",
+        "craft beer",
+        "microbrewery",
+        "brewpub",
+        "ale",
+        "lager",
+        "taproom"
+      ],
+      "sector_id": "farming_food_production"
+    },
+    {
+      "id": "coffee_roasters",
+      "name": "Coffee roasters",
+      "audience": "smb_core",
+      "parent_id": "food_beverage_mfg",
+      "examples": [
+        "specialty coffee",
+        "wholesale roasters"
+      ],
+      "keywords": [
+        "coffee",
+        "roaster",
+        "roasting",
+        "espresso",
+        "beans"
+      ],
+      "sector_id": "farming_food_production"
+    },
+    {
+      "id": "specialty_food_production",
+      "name": "Specialty food production",
+      "audience": "smb_core",
+      "parent_id": "food_beverage_mfg",
+      "examples": [
+        "sauces",
+        "preserves",
+        "snacks",
+        "spices"
+      ],
+      "keywords": [
+        "specialty food",
+        "artisan food",
+        "sauce",
+        "preserves",
+        "snack maker",
+        "spice"
+      ],
+      "sector_id": "farming_food_production"
+    },
+    {
+      "id": "artisan_bakery_wholesale",
+      "name": "Artisan bakery (wholesale)",
+      "audience": "smb_core",
+      "parent_id": "food_beverage_mfg",
+      "examples": [
+        "bread",
+        "pastries",
+        "wholesale baking"
+      ],
+      "keywords": [
+        "artisan bread",
+        "wholesale bakery",
+        "sourdough",
+        "patisserie"
+      ],
+      "sector_id": "farming_food_production"
+    },
+    {
+      "id": "textile_apparel_mfg",
+      "name": "Textile & apparel manufacturing",
+      "audience": "smb_friendly",
+      "examples": [
+        "clothing",
+        "fabrics",
+        "leather goods",
+        "shoes"
+      ],
+      "keywords": [
+        "textile",
+        "apparel",
+        "clothing",
+        "fabric",
+        "leather",
+        "shoes",
+        "garment",
+        "fashion",
+        "weaving"
+      ],
+      "sector_id": "manufacturing_artisan",
+      "isic_divisions": [
+        "13",
+        "14",
+        "15"
+      ],
+      "naics_3": [
+        "313",
+        "314",
+        "315",
+        "316"
+      ],
+      "nace_divisions": [
+        "13",
+        "14",
+        "15"
+      ]
+    },
+    {
+      "id": "custom_apparel_mfg",
+      "name": "Custom apparel & uniforms",
+      "audience": "smb_core",
+      "parent_id": "textile_apparel_mfg",
+      "examples": [
+        "uniforms",
+        "custom t-shirts",
+        "embroidery"
+      ],
+      "keywords": [
+        "custom apparel",
+        "uniform",
+        "embroidery",
+        "screen printing",
+        "custom shirts"
+      ],
+      "sector_id": "manufacturing_artisan"
+    },
+    {
+      "id": "small_leather_goods",
+      "name": "Small leather goods",
+      "audience": "smb_core",
+      "parent_id": "textile_apparel_mfg",
+      "examples": [
+        "wallets",
+        "bags",
+        "belts",
+        "small workshops"
+      ],
+      "keywords": [
+        "leather",
+        "leather goods",
+        "wallet",
+        "bag maker",
+        "belt"
+      ],
+      "sector_id": "manufacturing_artisan"
+    },
+    {
+      "id": "wood_paper_mfg",
+      "name": "Wood & paper products",
+      "audience": "smb_friendly",
+      "examples": [
+        "furniture",
+        "packaging",
+        "paper",
+        "printing"
+      ],
+      "keywords": [
+        "wood",
+        "paper",
+        "furniture",
+        "packaging",
+        "printing",
+        "cardboard",
+        "lumber",
+        "manufacturing"
+      ],
+      "sector_id": "manufacturing_artisan",
+      "isic_divisions": [
+        "16",
+        "17",
+        "18"
+      ],
+      "naics_3": [
+        "321",
+        "322",
+        "323"
+      ],
+      "nace_divisions": [
+        "16",
+        "17",
+        "18"
+      ]
+    },
+    {
+      "id": "custom_furniture_makers",
+      "name": "Custom furniture makers",
+      "audience": "smb_core",
+      "parent_id": "wood_paper_mfg",
+      "examples": [
+        "bespoke furniture",
+        "cabinetry",
+        "joinery"
+      ],
+      "keywords": [
+        "custom furniture",
+        "cabinetmaker",
+        "carpenter",
+        "woodworking",
+        "joinery"
+      ],
+      "sector_id": "manufacturing_artisan"
+    },
+    {
+      "id": "print_shops",
+      "name": "Print shops (offset & digital)",
+      "audience": "smb_core",
+      "parent_id": "wood_paper_mfg",
+      "examples": [
+        "business cards",
+        "flyers",
+        "short-run printing"
+      ],
+      "keywords": [
+        "print shop",
+        "printing",
+        "offset",
+        "digital print",
+        "flyers",
+        "business cards"
+      ],
+      "sector_id": "manufacturing_artisan"
+    },
+    {
+      "id": "sign_shops",
+      "name": "Sign shops & graphics fab",
+      "audience": "smb_core",
+      "parent_id": "wood_paper_mfg",
+      "examples": [
+        "business signs",
+        "vehicle wraps",
+        "signage"
+      ],
+      "keywords": [
+        "sign shop",
+        "signs",
+        "signage",
+        "vehicle wrap",
+        "graphics fabrication"
+      ],
+      "sector_id": "manufacturing_artisan"
+    },
+    {
+      "id": "chemical_pharma_mfg",
+      "name": "Chemical & pharmaceutical manufacturing",
+      "audience": "corp_only",
+      "examples": [
+        "drugs",
+        "cosmetics",
+        "cleaning products",
+        "paints"
+      ],
+      "keywords": [
+        "chemical",
+        "pharmaceutical",
+        "pharma",
+        "drug",
+        "cosmetic",
+        "cleaning",
+        "paint",
+        "soap",
+        "fertilizer"
+      ],
+      "sector_id": "heavy_industry",
+      "isic_divisions": [
+        "20",
+        "21"
+      ],
+      "naics_3": [
+        "325"
+      ],
+      "nace_divisions": [
+        "20",
+        "21"
+      ]
+    },
+    {
+      "id": "soap_candle_makers",
+      "name": "Soap & candle makers",
+      "audience": "smb_core",
+      "parent_id": "chemical_pharma_mfg",
+      "examples": [
+        "artisan soap",
+        "candles",
+        "small-batch cosmetics"
+      ],
+      "keywords": [
+        "soap maker",
+        "candle maker",
+        "artisan",
+        "small batch cosmetics"
+      ],
+      "sector_id": "manufacturing_artisan"
+    },
+    {
+      "id": "plastics_rubber_mfg",
+      "name": "Plastics & rubber products",
+      "audience": "mixed_caution",
+      "examples": [
+        "plastic packaging",
+        "tires",
+        "rubber goods"
+      ],
+      "keywords": [
+        "plastic",
+        "rubber",
+        "polymer",
+        "tire",
+        "packaging",
+        "molding"
+      ],
+      "sector_id": "manufacturing_artisan",
+      "isic_divisions": [
+        "22"
+      ],
+      "naics_3": [
+        "326"
+      ],
+      "nace_divisions": [
+        "22"
+      ]
+    },
+    {
+      "id": "metal_products_mfg",
+      "name": "Metal products manufacturing",
+      "audience": "smb_friendly",
+      "examples": [
+        "steel parts",
+        "structural metals",
+        "hardware",
+        "tools"
+      ],
+      "keywords": [
+        "metal",
+        "steel",
+        "iron",
+        "aluminum",
+        "hardware",
+        "tools",
+        "fabrication",
+        "manufacturing"
+      ],
+      "sector_id": "manufacturing_artisan",
+      "isic_divisions": [
+        "24",
+        "25"
+      ],
+      "naics_3": [
+        "331",
+        "332"
+      ],
+      "nace_divisions": [
+        "24",
+        "25"
+      ]
+    },
+    {
+      "id": "metal_fab_machine_shops",
+      "name": "Metal fabrication & machine shops",
+      "audience": "smb_core",
+      "parent_id": "metal_products_mfg",
+      "examples": [
+        "custom fabrication",
+        "welding shops",
+        "machining"
+      ],
+      "keywords": [
+        "machine shop",
+        "welding",
+        "fabrication",
+        "metal shop",
+        "cnc"
+      ],
+      "sector_id": "manufacturing_artisan"
+    },
+    {
+      "id": "custom_jewelers",
+      "name": "Custom jewelers (mfg)",
+      "audience": "smb_core",
+      "parent_id": "metal_products_mfg",
+      "examples": [
+        "bespoke jewelry",
+        "goldsmiths",
+        "engravers"
+      ],
+      "keywords": [
+        "jewelry maker",
+        "goldsmith",
+        "silversmith",
+        "bespoke jewelry",
+        "engraving"
+      ],
+      "sector_id": "manufacturing_artisan"
+    },
+    {
+      "id": "machinery_mfg",
+      "name": "Machinery manufacturing",
+      "audience": "mixed_caution",
+      "examples": [
+        "industrial equipment",
+        "agricultural machinery",
+        "engines"
+      ],
+      "keywords": [
+        "machinery",
+        "machine",
+        "equipment",
+        "industrial",
+        "engine",
+        "pump",
+        "turbine"
+      ],
+      "sector_id": "heavy_industry",
+      "isic_divisions": [
+        "28"
+      ],
+      "naics_3": [
+        "333"
+      ],
+      "nace_divisions": [
+        "28"
+      ]
+    },
+    {
+      "id": "electronics_mfg",
+      "name": "Electronics & semiconductors",
+      "audience": "corp_only",
+      "examples": [
+        "computers",
+        "components",
+        "chips",
+        "phones"
+      ],
+      "keywords": [
+        "electronics",
+        "computer",
+        "semiconductor",
+        "chip",
+        "circuit",
+        "component",
+        "phone",
+        "tablet"
+      ],
+      "sector_id": "heavy_industry",
+      "isic_divisions": [
+        "26"
+      ],
+      "naics_3": [
+        "334"
+      ],
+      "nace_divisions": [
+        "26"
+      ]
+    },
+    {
+      "id": "electrical_equipment_mfg",
+      "name": "Electrical equipment",
+      "audience": "mixed_caution",
+      "examples": [
+        "motors",
+        "batteries",
+        "wiring",
+        "lighting"
+      ],
+      "keywords": [
+        "electrical",
+        "motor",
+        "battery",
+        "wire",
+        "lighting",
+        "lamp",
+        "appliance"
+      ],
+      "sector_id": "manufacturing_artisan",
+      "isic_divisions": [
+        "27"
+      ],
+      "naics_3": [
+        "335"
+      ],
+      "nace_divisions": [
+        "27"
+      ]
+    },
+    {
+      "id": "motor_vehicles_mfg",
+      "name": "Motor vehicles & parts",
+      "audience": "corp_only",
+      "examples": [
+        "cars",
+        "trucks",
+        "auto parts",
+        "trailers"
+      ],
+      "keywords": [
+        "car",
+        "auto",
+        "vehicle",
+        "truck",
+        "automotive",
+        "parts",
+        "trailer",
+        "motor"
+      ],
+      "sector_id": "heavy_industry",
+      "isic_divisions": [
+        "29"
+      ],
+      "naics_3": [
+        "336"
+      ],
+      "nace_divisions": [
+        "29"
+      ]
+    },
+    {
+      "id": "other_transport_mfg",
+      "name": "Aerospace & other transport mfg",
+      "audience": "corp_only",
+      "examples": [
+        "aircraft",
+        "ships",
+        "trains",
+        "motorcycles"
+      ],
+      "keywords": [
+        "aircraft",
+        "ship",
+        "shipbuilding",
+        "boat",
+        "train",
+        "motorcycle",
+        "aerospace"
+      ],
+      "sector_id": "heavy_industry",
+      "isic_divisions": [
+        "30"
+      ],
+      "naics_3": [
+        "336"
+      ],
+      "nace_divisions": [
+        "30"
+      ]
+    },
+    {
+      "id": "furniture_other_mfg",
+      "name": "Furniture & other manufacturing",
+      "audience": "smb_core",
+      "examples": [
+        "furniture",
+        "toys",
+        "jewelry",
+        "sporting goods"
+      ],
+      "keywords": [
+        "furniture",
+        "toy",
+        "jewelry",
+        "sporting",
+        "instruments",
+        "musical",
+        "manufacturing"
+      ],
+      "sector_id": "manufacturing_artisan",
+      "isic_divisions": [
+        "31",
+        "32"
+      ],
+      "naics_3": [
+        "337",
+        "339"
+      ],
+      "nace_divisions": [
+        "31",
+        "32"
+      ]
+    },
+    {
+      "id": "residential_construction",
+      "name": "Residential construction",
+      "audience": "smb_core",
+      "examples": [
+        "homes",
+        "apartments",
+        "renovations"
+      ],
+      "keywords": [
+        "home",
+        "house",
+        "residential",
+        "apartment",
+        "building",
+        "renovation",
+        "construction"
+      ],
+      "sector_id": "construction",
+      "isic_divisions": [
+        "41"
+      ],
+      "naics_3": [
+        "236"
+      ],
+      "nace_divisions": [
+        "41"
+      ]
+    },
+    {
+      "id": "commercial_construction",
+      "name": "Commercial construction",
+      "audience": "smb_friendly",
+      "examples": [
+        "offices",
+        "retail buildings",
+        "industrial buildings"
+      ],
+      "keywords": [
+        "commercial",
+        "office",
+        "retail",
+        "industrial",
+        "construction",
+        "building"
+      ],
+      "sector_id": "construction",
+      "isic_divisions": [
+        "41"
+      ],
+      "naics_3": [
+        "236"
+      ],
+      "nace_divisions": [
+        "41"
+      ]
+    },
+    {
+      "id": "civil_engineering",
+      "name": "Civil engineering",
+      "audience": "mixed_caution",
+      "examples": [
+        "roads",
+        "bridges",
+        "utilities infrastructure"
+      ],
+      "keywords": [
+        "civil",
+        "road",
+        "bridge",
+        "highway",
+        "infrastructure",
+        "engineering",
+        "tunnel",
+        "dam"
+      ],
+      "sector_id": "construction",
+      "isic_divisions": [
+        "42"
+      ],
+      "naics_3": [
+        "237"
+      ],
+      "nace_divisions": [
+        "42"
+      ]
+    },
+    {
+      "id": "specialty_trades",
+      "name": "Specialty trades (mixed)",
+      "audience": "smb_core",
+      "examples": [
+        "plumbing",
+        "electrical",
+        "painting",
+        "roofing",
+        "HVAC"
+      ],
+      "keywords": [
+        "plumber",
+        "plumbing",
+        "electrician",
+        "electrical",
+        "paint",
+        "painting",
+        "roof",
+        "roofing",
+        "hvac",
+        "drywall",
+        "carpenter",
+        "tile",
+        "flooring"
+      ],
+      "sector_id": "trades_home",
+      "isic_divisions": [
+        "43"
+      ],
+      "naics_3": [
+        "238"
+      ],
+      "nace_divisions": [
+        "43"
+      ]
+    },
+    {
+      "id": "plumbers",
+      "name": "Plumbers",
+      "audience": "smb_core",
+      "parent_id": "specialty_trades",
+      "examples": [
+        "residential plumbing",
+        "drain cleaning",
+        "water heaters"
+      ],
+      "keywords": [
+        "plumber",
+        "plumbing",
+        "drain",
+        "water heater",
+        "pipe"
+      ],
+      "sector_id": "trades_home"
+    },
+    {
+      "id": "electricians",
+      "name": "Electricians",
+      "audience": "smb_core",
+      "parent_id": "specialty_trades",
+      "examples": [
+        "residential wiring",
+        "commercial wiring",
+        "panel upgrades"
+      ],
+      "keywords": [
+        "electrician",
+        "electrical",
+        "wiring",
+        "panel",
+        "circuit"
+      ],
+      "sector_id": "trades_home"
+    },
+    {
+      "id": "hvac_services",
+      "name": "HVAC services",
+      "audience": "smb_core",
+      "parent_id": "specialty_trades",
+      "examples": [
+        "heating",
+        "cooling",
+        "AC installation",
+        "furnace repair"
+      ],
+      "keywords": [
+        "hvac",
+        "heating",
+        "cooling",
+        "air conditioning",
+        "furnace",
+        "ac"
+      ],
+      "sector_id": "trades_home"
+    },
+    {
+      "id": "painters_residential",
+      "name": "Painters (residential)",
+      "audience": "smb_core",
+      "parent_id": "specialty_trades",
+      "examples": [
+        "interior painting",
+        "exterior painting",
+        "house painters"
+      ],
+      "keywords": [
+        "painter",
+        "painting",
+        "house painter",
+        "interior painting",
+        "exterior painting"
+      ],
+      "sector_id": "trades_home"
+    },
+    {
+      "id": "roofers",
+      "name": "Roofers",
+      "audience": "smb_core",
+      "parent_id": "specialty_trades",
+      "examples": [
+        "roof installation",
+        "roof repair",
+        "gutters"
+      ],
+      "keywords": [
+        "roofer",
+        "roofing",
+        "roof repair",
+        "gutters",
+        "shingles"
+      ],
+      "sector_id": "trades_home"
+    },
+    {
+      "id": "carpenters_finish",
+      "name": "Carpenters & finish work",
+      "audience": "smb_core",
+      "parent_id": "specialty_trades",
+      "examples": [
+        "framing",
+        "trim",
+        "cabinetry installation"
+      ],
+      "keywords": [
+        "carpenter",
+        "carpentry",
+        "framing",
+        "trim",
+        "finish work"
+      ],
+      "sector_id": "trades_home"
+    },
+    {
+      "id": "flooring_installers",
+      "name": "Flooring installers",
+      "audience": "smb_core",
+      "parent_id": "specialty_trades",
+      "examples": [
+        "hardwood",
+        "tile",
+        "carpet"
+      ],
+      "keywords": [
+        "flooring",
+        "floor installer",
+        "hardwood",
+        "tile",
+        "carpet install"
+      ],
+      "sector_id": "trades_home"
+    },
+    {
+      "id": "wholesale_food",
+      "name": "Wholesale food & beverages",
+      "audience": "smb_friendly",
+      "examples": [
+        "groceries wholesale",
+        "restaurant supply",
+        "drinks distribution"
+      ],
+      "keywords": [
+        "wholesale",
+        "food",
+        "beverage",
+        "grocery",
+        "restaurant supply",
+        "distribution"
+      ],
+      "sector_id": "other_local",
+      "isic_divisions": [
+        "46"
+      ],
+      "naics_3": [
+        "424"
+      ],
+      "nace_divisions": [
+        "46"
+      ]
+    },
+    {
+      "id": "wholesale_durables",
+      "name": "Wholesale durable goods",
+      "audience": "smb_friendly",
+      "examples": [
+        "machinery",
+        "vehicles",
+        "electronics wholesale"
+      ],
+      "keywords": [
+        "wholesale",
+        "machinery",
+        "vehicle",
+        "electronics",
+        "durable",
+        "equipment"
+      ],
+      "sector_id": "other_local",
+      "isic_divisions": [
+        "46"
+      ],
+      "naics_3": [
+        "423"
+      ],
+      "nace_divisions": [
+        "46"
+      ]
+    },
+    {
+      "id": "wholesale_chemicals_pharma",
+      "name": "Wholesale chemicals & pharma",
+      "audience": "mixed_caution",
+      "examples": [
+        "industrial chemicals",
+        "drug distributors"
+      ],
+      "keywords": [
+        "wholesale",
+        "chemical",
+        "pharmaceutical",
+        "pharma",
+        "drug",
+        "industrial"
+      ],
+      "sector_id": "heavy_industry",
+      "isic_divisions": [
+        "46"
+      ],
+      "naics_3": [
+        "424"
+      ],
+      "nace_divisions": [
+        "46"
+      ]
+    },
+    {
+      "id": "wholesale_general",
+      "name": "General wholesale",
+      "audience": "smb_friendly",
+      "examples": [
+        "mixed merchandise",
+        "import-export",
+        "brokers"
+      ],
+      "keywords": [
+        "wholesale",
+        "merchandise",
+        "broker",
+        "import",
+        "export",
+        "trading"
+      ],
+      "sector_id": "other_local",
+      "isic_divisions": [
+        "46"
+      ],
+      "naics_3": [
+        "425"
+      ],
+      "nace_divisions": [
+        "46"
+      ]
+    },
+    {
+      "id": "grocery_stores",
+      "name": "Grocery stores",
+      "audience": "smb_friendly",
+      "examples": [
+        "supermarkets",
+        "convenience stores",
+        "farmers markets"
+      ],
+      "keywords": [
+        "grocery",
+        "supermarket",
+        "convenience",
+        "store",
+        "food",
+        "market"
+      ],
+      "sector_id": "food_drink",
+      "isic_divisions": [
+        "47"
+      ],
+      "naics_3": [
+        "445"
+      ],
+      "nace_divisions": [
+        "47"
+      ]
+    },
+    {
+      "id": "specialty_grocery",
+      "name": "Specialty grocers & delis",
+      "audience": "smb_core",
+      "parent_id": "grocery_stores",
+      "examples": [
+        "delis",
+        "ethnic grocers",
+        "butchers",
+        "fishmongers"
+      ],
+      "keywords": [
+        "deli",
+        "specialty grocer",
+        "butcher",
+        "fishmonger",
+        "ethnic grocer"
+      ],
+      "sector_id": "food_drink"
+    },
+    {
+      "id": "wine_liquor_stores",
+      "name": "Wine & liquor stores",
+      "audience": "smb_core",
+      "parent_id": "grocery_stores",
+      "examples": [
+        "wine shops",
+        "liquor stores",
+        "bottle shops"
+      ],
+      "keywords": [
+        "wine shop",
+        "liquor store",
+        "bottle shop",
+        "spirits"
+      ],
+      "sector_id": "food_drink"
+    },
+    {
+      "id": "clothing_stores",
+      "name": "Clothing & shoe stores",
+      "audience": "smb_core",
+      "examples": [
+        "apparel shops",
+        "shoe stores",
+        "accessories"
+      ],
+      "keywords": [
+        "clothing",
+        "apparel",
+        "shoe",
+        "fashion",
+        "boutique",
+        "accessories",
+        "retail"
+      ],
+      "sector_id": "retail_shops",
+      "isic_divisions": [
+        "47"
+      ],
+      "naics_3": [
+        "448"
+      ],
+      "nace_divisions": [
+        "47"
+      ]
+    },
+    {
+      "id": "boutique_clothing",
+      "name": "Clothing boutiques",
+      "audience": "smb_core",
+      "parent_id": "clothing_stores",
+      "examples": [
+        "independent boutiques",
+        "designer-curated shops"
+      ],
+      "keywords": [
+        "boutique",
+        "clothing boutique",
+        "fashion boutique",
+        "indie clothing"
+      ],
+      "sector_id": "retail_shops"
+    },
+    {
+      "id": "streetwear_casual",
+      "name": "Streetwear & casual apparel",
+      "audience": "smb_core",
+      "parent_id": "clothing_stores",
+      "examples": [
+        "streetwear shops",
+        "sneaker boutiques"
+      ],
+      "keywords": [
+        "streetwear",
+        "sneaker shop",
+        "casual apparel",
+        "athleisure"
+      ],
+      "sector_id": "retail_shops"
+    },
+    {
+      "id": "designer_fashion",
+      "name": "Designer fashion",
+      "audience": "smb_core",
+      "parent_id": "clothing_stores",
+      "examples": [
+        "designer-label shops",
+        "high-end fashion"
+      ],
+      "keywords": [
+        "designer fashion",
+        "luxury clothing",
+        "high fashion"
+      ],
+      "sector_id": "retail_shops"
+    },
+    {
+      "id": "childrens_clothing",
+      "name": "Children's & maternity clothing",
+      "audience": "smb_core",
+      "parent_id": "clothing_stores",
+      "examples": [
+        "kids' boutiques",
+        "maternity stores"
+      ],
+      "keywords": [
+        "children clothing",
+        "kids",
+        "maternity",
+        "baby clothes"
+      ],
+      "sector_id": "retail_shops"
+    },
+    {
+      "id": "jewelry_stores",
+      "name": "Jewelry stores",
+      "audience": "smb_core",
+      "parent_id": "clothing_stores",
+      "examples": [
+        "jewelers",
+        "fine jewelry",
+        "fashion jewelry"
+      ],
+      "keywords": [
+        "jewelry",
+        "jeweler",
+        "fine jewelry",
+        "ring",
+        "necklace"
+      ],
+      "sector_id": "retail_shops"
+    },
+    {
+      "id": "watch_shops",
+      "name": "Watch shops",
+      "audience": "smb_core",
+      "parent_id": "clothing_stores",
+      "examples": [
+        "watch retailers",
+        "horology"
+      ],
+      "keywords": [
+        "watch shop",
+        "horology",
+        "wristwatch",
+        "timepiece"
+      ],
+      "sector_id": "retail_shops"
+    },
+    {
+      "id": "eyewear_optical",
+      "name": "Eyewear & optical retail",
+      "audience": "smb_core",
+      "parent_id": "clothing_stores",
+      "examples": [
+        "opticians",
+        "sunglasses shops"
+      ],
+      "keywords": [
+        "eyewear",
+        "optical",
+        "optician",
+        "sunglasses",
+        "glasses"
+      ],
+      "sector_id": "retail_shops"
+    },
+    {
+      "id": "shoe_stores",
+      "name": "Shoe stores",
+      "audience": "smb_core",
+      "parent_id": "clothing_stores",
+      "examples": [
+        "family shoe stores",
+        "athletic shoe shops"
+      ],
+      "keywords": [
+        "shoe store",
+        "footwear",
+        "sneaker",
+        "boot shop"
+      ],
+      "sector_id": "retail_shops"
+    },
+    {
+      "id": "bags_leather_retail",
+      "name": "Bags & leather goods",
+      "audience": "smb_core",
+      "parent_id": "clothing_stores",
+      "examples": [
+        "handbag boutiques",
+        "leather goods"
+      ],
+      "keywords": [
+        "bag shop",
+        "handbag",
+        "leather goods retail",
+        "luggage"
+      ],
+      "sector_id": "retail_shops"
+    },
+    {
+      "id": "lingerie_intimates",
+      "name": "Lingerie & intimates",
+      "audience": "smb_core",
+      "parent_id": "clothing_stores",
+      "examples": [
+        "lingerie boutiques",
+        "intimates shops"
+      ],
+      "keywords": [
+        "lingerie",
+        "intimates",
+        "underwear shop",
+        "swimwear"
+      ],
+      "sector_id": "retail_shops"
+    },
+    {
+      "id": "vintage_consignment",
+      "name": "Vintage & consignment",
+      "audience": "smb_core",
+      "parent_id": "clothing_stores",
+      "examples": [
+        "thrift shops",
+        "consignment stores",
+        "vintage"
+      ],
+      "keywords": [
+        "vintage",
+        "consignment",
+        "thrift",
+        "secondhand"
+      ],
+      "sector_id": "retail_shops"
+    },
+    {
+      "id": "electronics_appliance_stores",
+      "name": "Electronics & appliance stores",
+      "audience": "smb_friendly",
+      "examples": [
+        "phone shops",
+        "computer stores",
+        "appliances"
+      ],
+      "keywords": [
+        "electronics",
+        "phone",
+        "computer",
+        "appliance",
+        "tv",
+        "store"
+      ],
+      "sector_id": "retail_shops",
+      "isic_divisions": [
+        "47"
+      ],
+      "naics_3": [
+        "443"
+      ],
+      "nace_divisions": [
+        "47"
+      ]
+    },
+    {
+      "id": "furniture_home_stores",
+      "name": "Furniture & home goods stores",
+      "audience": "smb_core",
+      "examples": [
+        "furniture",
+        "home decor",
+        "DIY stores",
+        "garden centers"
+      ],
+      "keywords": [
+        "furniture",
+        "home",
+        "decor",
+        "diy",
+        "garden",
+        "improvement",
+        "store"
+      ],
+      "sector_id": "retail_shops",
+      "isic_divisions": [
+        "47"
+      ],
+      "naics_3": [
+        "442",
+        "444"
+      ],
+      "nace_divisions": [
+        "47"
+      ]
+    },
+    {
+      "id": "hardware_stores",
+      "name": "Hardware stores (local)",
+      "audience": "smb_core",
+      "parent_id": "furniture_home_stores",
+      "examples": [
+        "neighborhood hardware",
+        "small DIY"
+      ],
+      "keywords": [
+        "hardware store",
+        "hardware",
+        "tools shop"
+      ],
+      "sector_id": "retail_shops"
+    },
+    {
+      "id": "garden_centers",
+      "name": "Garden centers & nurseries",
+      "audience": "smb_core",
+      "parent_id": "furniture_home_stores",
+      "examples": [
+        "plant nurseries",
+        "garden supply"
+      ],
+      "keywords": [
+        "garden center",
+        "nursery",
+        "plants",
+        "landscaping supply"
+      ],
+      "sector_id": "retail_shops"
+    },
+    {
+      "id": "home_decor_gift",
+      "name": "Home decor & gift shops",
+      "audience": "smb_core",
+      "parent_id": "furniture_home_stores",
+      "examples": [
+        "decor boutiques",
+        "gift shops"
+      ],
+      "keywords": [
+        "home decor",
+        "gift shop",
+        "decor",
+        "interior shop"
+      ],
+      "sector_id": "retail_shops"
+    },
+    {
+      "id": "health_beauty_stores",
+      "name": "Pharmacies & health stores",
+      "audience": "smb_friendly",
+      "examples": [
+        "pharmacies",
+        "drugstores",
+        "cosmetics stores",
+        "optical shops"
+      ],
+      "keywords": [
+        "pharmacy",
+        "drugstore",
+        "cosmetics",
+        "beauty",
+        "optical",
+        "health",
+        "store"
+      ],
+      "sector_id": "retail_shops",
+      "isic_divisions": [
+        "47"
+      ],
+      "naics_3": [
+        "446"
+      ],
+      "nace_divisions": [
+        "47"
+      ]
+    },
+    {
+      "id": "cosmetics_shops",
+      "name": "Cosmetics & beauty shops",
+      "audience": "smb_core",
+      "parent_id": "health_beauty_stores",
+      "examples": [
+        "beauty stores",
+        "perfumeries",
+        "skincare shops"
+      ],
+      "keywords": [
+        "cosmetics",
+        "beauty shop",
+        "perfumery",
+        "skincare",
+        "makeup"
+      ],
+      "sector_id": "retail_shops"
+    },
+    {
+      "id": "independent_pharmacy",
+      "name": "Independent pharmacies",
+      "audience": "smb_core",
+      "parent_id": "health_beauty_stores",
+      "examples": [
+        "neighborhood pharmacy",
+        "compounding pharmacy"
+      ],
+      "keywords": [
+        "independent pharmacy",
+        "compounding pharmacy",
+        "local pharmacy"
+      ],
+      "sector_id": "retail_shops"
+    },
+    {
+      "id": "auto_dealers_gas",
+      "name": "Auto dealers & gas stations",
+      "audience": "smb_friendly",
+      "examples": [
+        "car dealers",
+        "used car lots",
+        "gas stations"
+      ],
+      "keywords": [
+        "car",
+        "auto",
+        "dealer",
+        "vehicle",
+        "gas station",
+        "petrol",
+        "fuel"
+      ],
+      "sector_id": "retail_shops",
+      "isic_divisions": [
+        "45",
+        "47"
+      ],
+      "naics_3": [
+        "441",
+        "447"
+      ],
+      "nace_divisions": [
+        "45",
+        "47"
+      ]
+    },
+    {
+      "id": "ecommerce_mail_order",
+      "name": "E-commerce & mail-order",
+      "audience": "smb_friendly",
+      "examples": [
+        "online retail",
+        "catalog sales",
+        "marketplace sellers"
+      ],
+      "keywords": [
+        "ecommerce",
+        "online",
+        "internet",
+        "mail",
+        "catalog",
+        "shopify",
+        "amazon"
+      ],
+      "sector_id": "retail_shops",
+      "isic_divisions": [
+        "47"
+      ],
+      "naics_3": [
+        "454"
+      ],
+      "nace_divisions": [
+        "47"
+      ]
+    },
+    {
+      "id": "general_merchandise",
+      "name": "General merchandise stores",
+      "audience": "mixed_caution",
+      "examples": [
+        "department stores",
+        "dollar stores",
+        "warehouse clubs"
+      ],
+      "keywords": [
+        "department",
+        "dollar",
+        "warehouse",
+        "general",
+        "merchandise",
+        "store"
+      ],
+      "sector_id": "retail_shops",
+      "isic_divisions": [
+        "47"
+      ],
+      "naics_3": [
+        "452"
+      ],
+      "nace_divisions": [
+        "47"
+      ]
+    },
+    {
+      "id": "bookstores_indie",
+      "name": "Indie bookstores",
+      "audience": "smb_core",
+      "parent_id": "general_merchandise",
+      "examples": [
+        "independent bookshops",
+        "used books"
+      ],
+      "keywords": [
+        "bookstore",
+        "indie bookstore",
+        "bookshop",
+        "used books"
+      ],
+      "sector_id": "retail_shops"
+    },
+    {
+      "id": "toy_game_stores",
+      "name": "Toy & game stores",
+      "audience": "smb_core",
+      "parent_id": "general_merchandise",
+      "examples": [
+        "toy shops",
+        "hobby shops",
+        "game stores"
+      ],
+      "keywords": [
+        "toy store",
+        "game store",
+        "hobby shop",
+        "board games"
+      ],
+      "sector_id": "retail_shops"
+    },
+    {
+      "id": "pet_stores",
+      "name": "Pet stores",
+      "audience": "smb_core",
+      "parent_id": "general_merchandise",
+      "examples": [
+        "pet supply shops",
+        "aquarium stores"
+      ],
+      "keywords": [
+        "pet store",
+        "pet supplies",
+        "aquarium store"
+      ],
+      "sector_id": "pet_services"
+    },
+    {
+      "id": "sporting_goods_specialty",
+      "name": "Sporting goods (specialty)",
+      "audience": "smb_core",
+      "parent_id": "general_merchandise",
+      "examples": [
+        "bike shops",
+        "ski shops",
+        "running stores"
+      ],
+      "keywords": [
+        "sporting goods",
+        "bike shop",
+        "ski shop",
+        "running store",
+        "outdoor"
+      ],
+      "sector_id": "retail_shops"
+    },
+    {
+      "id": "art_craft_supplies",
+      "name": "Art & craft supply shops",
+      "audience": "smb_core",
+      "parent_id": "general_merchandise",
+      "examples": [
+        "art supplies",
+        "craft stores",
+        "yarn shops"
+      ],
+      "keywords": [
+        "art supplies",
+        "craft store",
+        "yarn shop",
+        "fabric store"
+      ],
+      "sector_id": "retail_shops"
+    },
+    {
+      "id": "music_instrument_shops",
+      "name": "Music instrument shops",
+      "audience": "smb_core",
+      "parent_id": "general_merchandise",
+      "examples": [
+        "guitar shops",
+        "piano shops",
+        "drum shops"
+      ],
+      "keywords": [
+        "music store",
+        "instrument shop",
+        "guitar shop",
+        "piano shop"
+      ],
+      "sector_id": "retail_shops"
+    },
+    {
+      "id": "stationery_paper",
+      "name": "Stationery & paper goods",
+      "audience": "smb_core",
+      "parent_id": "general_merchandise",
+      "examples": [
+        "stationers",
+        "card shops"
+      ],
+      "keywords": [
+        "stationery",
+        "paper goods",
+        "card shop",
+        "stationer"
+      ],
+      "sector_id": "retail_shops"
+    },
+    {
+      "id": "florist_shops",
+      "name": "Florist shops",
+      "audience": "smb_core",
+      "parent_id": "general_merchandise",
+      "examples": [
+        "flower shops",
+        "wedding florists"
+      ],
+      "keywords": [
+        "florist",
+        "flower shop",
+        "flowers"
+      ],
+      "sector_id": "retail_shops"
+    },
+    {
+      "id": "trucking_freight",
+      "name": "Trucking & freight",
+      "audience": "smb_core",
+      "examples": [
+        "long-haul trucking",
+        "local delivery",
+        "freight forwarding"
+      ],
+      "keywords": [
+        "trucking",
+        "truck",
+        "freight",
+        "delivery",
+        "haul",
+        "logistics",
+        "transport"
+      ],
+      "sector_id": "transport_small",
+      "isic_divisions": [
+        "49"
+      ],
+      "naics_3": [
+        "484"
+      ],
+      "nace_divisions": [
+        "49"
+      ]
+    },
+    {
+      "id": "junk_removal_moving",
+      "name": "Junk removal & small moving",
+      "audience": "smb_core",
+      "parent_id": "trucking_freight",
+      "examples": [
+        "residential movers",
+        "junk haulers"
+      ],
+      "keywords": [
+        "moving company",
+        "movers",
+        "junk removal",
+        "hauling"
+      ],
+      "sector_id": "trades_home"
+    },
+    {
+      "id": "passenger_transport",
+      "name": "Passenger transport",
+      "audience": "smb_core",
+      "examples": [
+        "taxis",
+        "ride-share",
+        "buses",
+        "limousines"
+      ],
+      "keywords": [
+        "taxi",
+        "uber",
+        "lyft",
+        "rideshare",
+        "bus",
+        "passenger",
+        "transport",
+        "limo"
+      ],
+      "sector_id": "transport_small",
+      "isic_divisions": [
+        "49"
+      ],
+      "naics_3": [
+        "485"
+      ],
+      "nace_divisions": [
+        "49"
+      ]
+    },
+    {
+      "id": "warehousing_storage",
+      "name": "Warehousing & storage",
+      "audience": "smb_friendly",
+      "examples": [
+        "storage facilities",
+        "cold storage",
+        "self-storage"
+      ],
+      "keywords": [
+        "warehouse",
+        "storage",
+        "logistics",
+        "cold storage",
+        "self-storage",
+        "depot"
+      ],
+      "sector_id": "transport_small",
+      "isic_divisions": [
+        "52"
+      ],
+      "naics_3": [
+        "493"
+      ],
+      "nace_divisions": [
+        "52"
+      ]
+    },
+    {
+      "id": "postal_courier",
+      "name": "Postal & courier",
+      "audience": "mixed_caution",
+      "examples": [
+        "mail",
+        "parcels",
+        "express delivery",
+        "courier services"
+      ],
+      "keywords": [
+        "postal",
+        "post",
+        "mail",
+        "courier",
+        "parcel",
+        "express",
+        "delivery",
+        "fedex",
+        "ups"
+      ],
+      "sector_id": "transport_small",
+      "isic_divisions": [
+        "53"
+      ],
+      "naics_3": [
+        "491",
+        "492"
+      ],
+      "nace_divisions": [
+        "53"
+      ]
+    },
+    {
+      "id": "restaurants",
+      "name": "Restaurants",
+      "audience": "smb_core",
+      "examples": [
+        "cafés",
+        "bistros",
+        "fast food",
+        "fine dining",
+        "takeaway"
+      ],
+      "keywords": [
+        "restaurant",
+        "cafe",
+        "café",
+        "bistro",
+        "fast food",
+        "dining",
+        "eatery",
+        "diner",
+        "takeaway",
+        "takeout"
+      ],
+      "sector_id": "food_drink",
+      "isic_divisions": [
+        "56"
+      ],
+      "naics_3": [
+        "722"
+      ],
+      "nace_divisions": [
+        "56"
+      ]
+    },
+    {
+      "id": "sit_down_restaurants",
+      "name": "Sit-down restaurants",
+      "audience": "smb_core",
+      "parent_id": "restaurants",
+      "examples": [
+        "full-service restaurants",
+        "casual dining"
+      ],
+      "keywords": [
+        "sit down restaurant",
+        "casual dining",
+        "full service"
+      ],
+      "sector_id": "food_drink"
+    },
+    {
+      "id": "fast_casual",
+      "name": "Fast-casual restaurants",
+      "audience": "smb_core",
+      "parent_id": "restaurants",
+      "examples": [
+        "fast-casual chains",
+        "fast-casual independents"
+      ],
+      "keywords": [
+        "fast casual",
+        "quick casual",
+        "counter service"
+      ],
+      "sector_id": "food_drink"
+    },
+    {
+      "id": "cafes_coffee",
+      "name": "Cafés & coffee shops",
+      "audience": "smb_core",
+      "parent_id": "restaurants",
+      "examples": [
+        "espresso bars",
+        "neighborhood cafés"
+      ],
+      "keywords": [
+        "cafe",
+        "café",
+        "coffee shop",
+        "espresso",
+        "barista"
+      ],
+      "sector_id": "food_drink"
+    },
+    {
+      "id": "bakeries_retail",
+      "name": "Bakeries (retail)",
+      "audience": "smb_core",
+      "parent_id": "restaurants",
+      "examples": [
+        "bread bakeries",
+        "pastry shops",
+        "patisseries"
+      ],
+      "keywords": [
+        "bakery",
+        "bread",
+        "pastry",
+        "patisserie"
+      ],
+      "sector_id": "food_drink"
+    },
+    {
+      "id": "pastry_dessert",
+      "name": "Pastry & dessert shops",
+      "audience": "smb_core",
+      "parent_id": "restaurants",
+      "examples": [
+        "cake shops",
+        "macaron shops",
+        "dessert bars"
+      ],
+      "keywords": [
+        "pastry",
+        "dessert shop",
+        "cake shop",
+        "patisserie"
+      ],
+      "sector_id": "food_drink"
+    },
+    {
+      "id": "ice_cream_shops",
+      "name": "Ice cream & frozen dessert shops",
+      "audience": "smb_core",
+      "parent_id": "restaurants",
+      "examples": [
+        "gelato",
+        "frozen yogurt",
+        "ice cream parlors"
+      ],
+      "keywords": [
+        "ice cream",
+        "gelato",
+        "frozen yogurt",
+        "froyo"
+      ],
+      "sector_id": "food_drink"
+    },
+    {
+      "id": "pizzerias",
+      "name": "Pizzerias",
+      "audience": "smb_core",
+      "parent_id": "restaurants",
+      "examples": [
+        "wood-fired pizza",
+        "neighborhood pizza"
+      ],
+      "keywords": [
+        "pizzeria",
+        "pizza",
+        "wood-fired"
+      ],
+      "sector_id": "food_drink"
+    },
+    {
+      "id": "food_trucks",
+      "name": "Food trucks",
+      "audience": "smb_core",
+      "parent_id": "restaurants",
+      "examples": [
+        "mobile food",
+        "street food trucks"
+      ],
+      "keywords": [
+        "food truck",
+        "mobile food",
+        "street food"
+      ],
+      "sector_id": "food_drink"
+    },
+    {
+      "id": "tea_houses",
+      "name": "Tea houses & matcha bars",
+      "audience": "smb_core",
+      "parent_id": "restaurants",
+      "examples": [
+        "tea shops",
+        "bubble tea",
+        "matcha bars"
+      ],
+      "keywords": [
+        "tea house",
+        "matcha",
+        "bubble tea",
+        "boba"
+      ],
+      "sector_id": "food_drink"
+    },
+    {
+      "id": "bars_nightclubs",
+      "name": "Bars & nightclubs",
+      "audience": "smb_core",
+      "examples": [
+        "pubs",
+        "taverns",
+        "lounges",
+        "wine bars"
+      ],
+      "keywords": [
+        "bar",
+        "pub",
+        "tavern",
+        "nightclub",
+        "lounge",
+        "wine bar",
+        "cocktail"
+      ],
+      "sector_id": "food_drink",
+      "isic_divisions": [
+        "56"
+      ],
+      "naics_3": [
+        "722"
+      ],
+      "nace_divisions": [
+        "56"
+      ]
+    },
+    {
+      "id": "wine_bars",
+      "name": "Wine bars",
+      "audience": "smb_core",
+      "parent_id": "bars_nightclubs",
+      "examples": [
+        "natural wine bars",
+        "wine lounges"
+      ],
+      "keywords": [
+        "wine bar",
+        "natural wine",
+        "wine lounge"
+      ],
+      "sector_id": "food_drink"
+    },
+    {
+      "id": "pubs_taverns",
+      "name": "Pubs & taverns",
+      "audience": "smb_core",
+      "parent_id": "bars_nightclubs",
+      "examples": [
+        "neighborhood pubs",
+        "sports bars"
+      ],
+      "keywords": [
+        "pub",
+        "tavern",
+        "sports bar",
+        "neighborhood pub"
+      ],
+      "sector_id": "food_drink"
+    },
+    {
+      "id": "breweries_taprooms",
+      "name": "Breweries & taprooms (retail)",
+      "audience": "smb_core",
+      "parent_id": "bars_nightclubs",
+      "examples": [
+        "taprooms",
+        "brewpubs"
+      ],
+      "keywords": [
+        "brewery",
+        "taproom",
+        "brewpub",
+        "craft beer bar"
+      ],
+      "sector_id": "food_drink"
+    },
+    {
+      "id": "catering",
+      "name": "Catering & food service contractors",
+      "audience": "smb_core",
+      "examples": [
+        "corporate dining",
+        "event catering",
+        "institutional food"
+      ],
+      "keywords": [
+        "catering",
+        "caterer",
+        "event",
+        "corporate dining",
+        "institutional",
+        "food service"
+      ],
+      "sector_id": "food_drink",
+      "isic_divisions": [
+        "56"
+      ],
+      "naics_3": [
+        "722"
+      ],
+      "nace_divisions": [
+        "56"
+      ]
+    },
+    {
+      "id": "hotels_lodging",
+      "name": "Hotels & lodging",
+      "audience": "smb_core",
+      "examples": [
+        "hotels",
+        "motels",
+        "resorts",
+        "bed & breakfast"
+      ],
+      "keywords": [
+        "hotel",
+        "motel",
+        "resort",
+        "lodging",
+        "inn",
+        "bnb",
+        "bed and breakfast",
+        "accommodation"
+      ],
+      "sector_id": "hospitality",
+      "isic_divisions": [
+        "55"
+      ],
+      "naics_3": [
+        "721"
+      ],
+      "nace_divisions": [
+        "55"
+      ]
+    },
+    {
+      "id": "independent_hotels",
+      "name": "Independent hotels & inns",
+      "audience": "smb_core",
+      "parent_id": "hotels_lodging",
+      "examples": [
+        "boutique hotels",
+        "country inns"
+      ],
+      "keywords": [
+        "independent hotel",
+        "boutique hotel",
+        "inn",
+        "small hotel"
+      ],
+      "sector_id": "food_drink"
+    },
+    {
+      "id": "bnbs",
+      "name": "Bed & breakfasts",
+      "audience": "smb_core",
+      "parent_id": "hotels_lodging",
+      "examples": [
+        "B&Bs",
+        "guest houses"
+      ],
+      "keywords": [
+        "bed and breakfast",
+        "bnb",
+        "b&b",
+        "guest house"
+      ],
+      "sector_id": "food_drink"
+    },
+    {
+      "id": "hostels",
+      "name": "Hostels",
+      "audience": "smb_core",
+      "parent_id": "hotels_lodging",
+      "examples": [
+        "youth hostels",
+        "backpacker hostels"
+      ],
+      "keywords": [
+        "hostel",
+        "backpacker",
+        "dormitory"
+      ],
+      "sector_id": "hospitality"
+    },
+    {
+      "id": "str_management",
+      "name": "Short-term rental management",
+      "audience": "smb_core",
+      "parent_id": "hotels_lodging",
+      "examples": [
+        "Airbnb management",
+        "vacation rental managers"
+      ],
+      "keywords": [
+        "short term rental",
+        "airbnb management",
+        "vacation rental",
+        "vrbo"
+      ],
+      "sector_id": "food_drink"
+    },
+    {
+      "id": "software_development",
+      "name": "Software development",
+      "audience": "smb_core",
+      "examples": [
+        "web apps",
+        "mobile apps",
+        "custom software",
+        "SaaS"
+      ],
+      "keywords": [
+        "software",
+        "saas",
+        "app",
+        "developer",
+        "programming",
+        "code",
+        "web app",
+        "mobile app"
+      ],
+      "sector_id": "creative_media",
+      "isic_divisions": [
+        "62"
+      ],
+      "naics_3": [
+        "511",
+        "541"
+      ],
+      "nace_divisions": [
+        "62"
+      ]
+    },
+    {
+      "id": "web_mobile_dev_shops",
+      "name": "Web & mobile dev shops",
+      "audience": "smb_core",
+      "parent_id": "software_development",
+      "examples": [
+        "web agencies",
+        "mobile app studios"
+      ],
+      "keywords": [
+        "web development",
+        "mobile app dev",
+        "dev shop",
+        "web agency"
+      ],
+      "sector_id": "software_tech"
+    },
+    {
+      "id": "custom_software_contract",
+      "name": "Custom software / contract dev",
+      "audience": "smb_core",
+      "parent_id": "software_development",
+      "examples": [
+        "bespoke software",
+        "contract programming"
+      ],
+      "keywords": [
+        "custom software",
+        "contract dev",
+        "bespoke software",
+        "consulting dev"
+      ],
+      "sector_id": "software_tech"
+    },
+    {
+      "id": "game_dev_studios",
+      "name": "Game development studios",
+      "audience": "smb_friendly",
+      "parent_id": "software_development",
+      "examples": [
+        "indie game studios",
+        "mobile games"
+      ],
+      "keywords": [
+        "game dev",
+        "indie game",
+        "video game studio"
+      ],
+      "sector_id": "software_tech"
+    },
+    {
+      "id": "it_services_hosting",
+      "name": "IT services & hosting",
+      "audience": "smb_friendly",
+      "examples": [
+        "cloud hosting",
+        "web hosting",
+        "IT consulting",
+        "managed services"
+      ],
+      "keywords": [
+        "it",
+        "hosting",
+        "cloud",
+        "managed services",
+        "it consulting",
+        "datacenter",
+        "support"
+      ],
+      "sector_id": "creative_media",
+      "isic_divisions": [
+        "63"
+      ],
+      "naics_3": [
+        "518"
+      ],
+      "nace_divisions": [
+        "63"
+      ]
+    },
+    {
+      "id": "it_services_msp",
+      "name": "IT services & MSPs (small)",
+      "audience": "smb_core",
+      "parent_id": "it_services_hosting",
+      "examples": [
+        "managed service providers",
+        "IT support shops"
+      ],
+      "keywords": [
+        "msp",
+        "managed services",
+        "it support",
+        "it shop"
+      ],
+      "sector_id": "creative_media"
+    },
+    {
+      "id": "media_publishing",
+      "name": "Media & publishing",
+      "audience": "smb_friendly",
+      "examples": [
+        "newspapers",
+        "books",
+        "magazines",
+        "online media"
+      ],
+      "keywords": [
+        "media",
+        "publishing",
+        "newspaper",
+        "book",
+        "magazine",
+        "publisher",
+        "blog"
+      ],
+      "sector_id": "creative_media",
+      "isic_divisions": [
+        "58",
+        "59"
+      ],
+      "naics_3": [
+        "511",
+        "512"
+      ],
+      "nace_divisions": [
+        "58",
+        "59"
+      ]
+    },
+    {
+      "id": "broadcasting_telecom",
+      "name": "Broadcasting & telecom",
+      "audience": "corp_only",
+      "examples": [
+        "TV",
+        "radio",
+        "internet providers",
+        "mobile networks"
+      ],
+      "keywords": [
+        "broadcasting",
+        "tv",
+        "television",
+        "radio",
+        "telecom",
+        "internet",
+        "mobile network",
+        "cable"
+      ],
+      "sector_id": "creative_media",
+      "isic_divisions": [
+        "60",
+        "61"
+      ],
+      "naics_3": [
+        "515",
+        "517"
+      ],
+      "nace_divisions": [
+        "60",
+        "61"
+      ]
+    },
+    {
+      "id": "banking",
+      "name": "Banking",
+      "audience": "corp_only",
+      "examples": [
+        "commercial banks",
+        "credit unions",
+        "savings banks"
+      ],
+      "keywords": [
+        "bank",
+        "banking",
+        "credit union",
+        "savings",
+        "loans",
+        "finance"
+      ],
+      "sector_id": "finance_corp",
+      "isic_divisions": [
+        "64"
+      ],
+      "naics_3": [
+        "522"
+      ],
+      "nace_divisions": [
+        "64"
+      ]
+    },
+    {
+      "id": "investment_securities",
+      "name": "Investment & securities",
+      "audience": "corp_only",
+      "examples": [
+        "asset management",
+        "brokerage",
+        "private equity",
+        "hedge funds"
+      ],
+      "keywords": [
+        "investment",
+        "asset management",
+        "broker",
+        "securities",
+        "fund",
+        "private equity",
+        "hedge fund"
+      ],
+      "sector_id": "finance_corp",
+      "isic_divisions": [
+        "64",
+        "66"
+      ],
+      "naics_3": [
+        "523"
+      ],
+      "nace_divisions": [
+        "64",
+        "66"
+      ]
+    },
+    {
+      "id": "insurance",
+      "name": "Insurance",
+      "audience": "mixed_caution",
+      "examples": [
+        "life insurance",
+        "property insurance",
+        "health insurance",
+        "brokers"
+      ],
+      "keywords": [
+        "insurance",
+        "insurer",
+        "life insurance",
+        "property insurance",
+        "health insurance",
+        "broker"
+      ],
+      "sector_id": "finance_corp",
+      "isic_divisions": [
+        "65"
+      ],
+      "naics_3": [
+        "524"
+      ],
+      "nace_divisions": [
+        "65"
+      ]
+    },
+    {
+      "id": "insurance_brokers",
+      "name": "Independent insurance brokers",
+      "audience": "smb_core",
+      "parent_id": "insurance",
+      "examples": [
+        "local insurance agencies",
+        "independent brokers"
+      ],
+      "keywords": [
+        "insurance broker",
+        "insurance agent",
+        "local insurance"
+      ],
+      "sector_id": "real_estate"
+    },
+    {
+      "id": "real_estate_agencies",
+      "name": "Real estate agencies",
+      "audience": "smb_core",
+      "examples": [
+        "realtors",
+        "property managers",
+        "agents"
+      ],
+      "keywords": [
+        "real estate",
+        "realtor",
+        "agent",
+        "property manager",
+        "brokerage"
+      ],
+      "sector_id": "real_estate",
+      "isic_divisions": [
+        "68"
+      ],
+      "naics_3": [
+        "531"
+      ],
+      "nace_divisions": [
+        "68"
+      ]
+    },
+    {
+      "id": "property_leasing",
+      "name": "Property leasing & rental",
+      "audience": "smb_core",
+      "examples": [
+        "landlords",
+        "equipment rental",
+        "car rental"
+      ],
+      "keywords": [
+        "landlord",
+        "leasing",
+        "rental",
+        "lease",
+        "rent",
+        "equipment rental",
+        "car rental"
+      ],
+      "sector_id": "real_estate",
+      "isic_divisions": [
+        "68",
+        "77"
+      ],
+      "naics_3": [
+        "531",
+        "532"
+      ],
+      "nace_divisions": [
+        "68",
+        "77"
+      ]
+    },
+    {
+      "id": "legal_services",
+      "name": "Legal services",
+      "audience": "smb_core",
+      "examples": [
+        "law firms",
+        "attorneys",
+        "paralegals",
+        "notaries"
+      ],
+      "keywords": [
+        "legal",
+        "lawyer",
+        "attorney",
+        "law firm",
+        "paralegal",
+        "notary"
+      ],
+      "sector_id": "professional_services",
+      "isic_divisions": [
+        "69"
+      ],
+      "naics_3": [
+        "541"
+      ],
+      "nace_divisions": [
+        "69"
+      ]
+    },
+    {
+      "id": "sole_law_firms",
+      "name": "Sole-practitioner law firms",
+      "audience": "smb_core",
+      "parent_id": "legal_services",
+      "examples": [
+        "solo attorneys",
+        "small boutique law"
+      ],
+      "keywords": [
+        "solo lawyer",
+        "sole practitioner law",
+        "small law firm",
+        "boutique law"
+      ],
+      "sector_id": "professional_services"
+    },
+    {
+      "id": "accounting_tax",
+      "name": "Accounting & tax",
+      "audience": "smb_core",
+      "examples": [
+        "CPAs",
+        "bookkeeping",
+        "tax preparation",
+        "audit"
+      ],
+      "keywords": [
+        "accounting",
+        "accountant",
+        "cpa",
+        "bookkeeping",
+        "tax",
+        "audit",
+        "tax prep"
+      ],
+      "sector_id": "professional_services",
+      "isic_divisions": [
+        "69"
+      ],
+      "naics_3": [
+        "541"
+      ],
+      "nace_divisions": [
+        "69"
+      ]
+    },
+    {
+      "id": "sole_accounting",
+      "name": "Sole-practitioner accountants",
+      "audience": "smb_core",
+      "parent_id": "accounting_tax",
+      "examples": [
+        "solo CPAs",
+        "neighborhood tax prep"
+      ],
+      "keywords": [
+        "solo accountant",
+        "sole cpa",
+        "small accounting"
+      ],
+      "sector_id": "professional_services"
+    },
+    {
+      "id": "management_consulting",
+      "name": "Management consulting",
+      "audience": "smb_core",
+      "examples": [
+        "strategy",
+        "operations",
+        "HR consulting"
+      ],
+      "keywords": [
+        "consulting",
+        "consultant",
+        "strategy",
+        "operations",
+        "hr consulting",
+        "management"
+      ],
+      "sector_id": "professional_services",
+      "isic_divisions": [
+        "70"
+      ],
+      "naics_3": [
+        "541"
+      ],
+      "nace_divisions": [
+        "70"
+      ]
+    },
+    {
+      "id": "engineering_architecture",
+      "name": "Engineering & architecture",
+      "audience": "smb_core",
+      "examples": [
+        "architects",
+        "civil engineers",
+        "surveyors"
+      ],
+      "keywords": [
+        "architect",
+        "architecture",
+        "engineer",
+        "engineering",
+        "surveyor",
+        "design"
+      ],
+      "sector_id": "professional_services",
+      "isic_divisions": [
+        "71"
+      ],
+      "naics_3": [
+        "541"
+      ],
+      "nace_divisions": [
+        "71"
+      ]
+    },
+    {
+      "id": "marketing_design",
+      "name": "Marketing & design agencies",
+      "audience": "smb_core",
+      "examples": [
+        "advertising",
+        "PR",
+        "graphic design",
+        "branding"
+      ],
+      "keywords": [
+        "advertising",
+        "marketing",
+        "pr",
+        "public relations",
+        "graphic design",
+        "branding",
+        "agency"
+      ],
+      "sector_id": "professional_services",
+      "isic_divisions": [
+        "73",
+        "74"
+      ],
+      "naics_3": [
+        "541"
+      ],
+      "nace_divisions": [
+        "73",
+        "74"
+      ]
+    },
+    {
+      "id": "photography_studios",
+      "name": "Photography studios",
+      "audience": "smb_core",
+      "parent_id": "marketing_design",
+      "examples": [
+        "portrait studios",
+        "wedding photographers",
+        "commercial photography"
+      ],
+      "keywords": [
+        "photography",
+        "photographer",
+        "portrait studio",
+        "wedding photographer"
+      ],
+      "sector_id": "creative_media"
+    },
+    {
+      "id": "videography_services",
+      "name": "Videography services",
+      "audience": "smb_core",
+      "parent_id": "marketing_design",
+      "examples": [
+        "wedding video",
+        "commercial video",
+        "music video"
+      ],
+      "keywords": [
+        "videography",
+        "video production",
+        "videographer"
+      ],
+      "sector_id": "creative_media"
+    },
+    {
+      "id": "wedding_planning",
+      "name": "Wedding planning & coordination",
+      "audience": "smb_core",
+      "parent_id": "marketing_design",
+      "examples": [
+        "wedding planners",
+        "destination wedding"
+      ],
+      "keywords": [
+        "wedding planning",
+        "wedding planner",
+        "event coordinator"
+      ],
+      "sector_id": "events_entertainment"
+    },
+    {
+      "id": "event_production",
+      "name": "Event production (small)",
+      "audience": "smb_core",
+      "parent_id": "marketing_design",
+      "examples": [
+        "event producers",
+        "AV companies",
+        "small event shops"
+      ],
+      "keywords": [
+        "event production",
+        "event planning",
+        "event company"
+      ],
+      "sector_id": "professional_services"
+    },
+    {
+      "id": "employment_services",
+      "name": "Employment services",
+      "audience": "smb_friendly",
+      "examples": [
+        "staffing",
+        "temp agencies",
+        "executive search",
+        "recruiting"
+      ],
+      "keywords": [
+        "staffing",
+        "temp",
+        "recruiting",
+        "recruitment",
+        "headhunter",
+        "employment",
+        "agency",
+        "executive search"
+      ],
+      "sector_id": "trades_home",
+      "isic_divisions": [
+        "78"
+      ],
+      "naics_3": [
+        "561"
+      ],
+      "nace_divisions": [
+        "78"
+      ]
+    },
+    {
+      "id": "office_support",
+      "name": "Office & business support",
+      "audience": "smb_friendly",
+      "examples": [
+        "call centers",
+        "secretarial",
+        "BPO",
+        "answering services"
+      ],
+      "keywords": [
+        "call center",
+        "bpo",
+        "secretarial",
+        "office support",
+        "back office",
+        "answering service"
+      ],
+      "sector_id": "trades_home",
+      "isic_divisions": [
+        "82"
+      ],
+      "naics_3": [
+        "561"
+      ],
+      "nace_divisions": [
+        "82"
+      ]
+    },
+    {
+      "id": "travel_agencies",
+      "name": "Travel agencies",
+      "audience": "smb_core",
+      "examples": [
+        "tour operators",
+        "travel booking",
+        "destination management"
+      ],
+      "keywords": [
+        "travel",
+        "tour",
+        "tour operator",
+        "travel agency",
+        "trip",
+        "vacation booking"
+      ],
+      "sector_id": "trades_home",
+      "isic_divisions": [
+        "79"
+      ],
+      "naics_3": [
+        "561"
+      ],
+      "nace_divisions": [
+        "79"
+      ]
+    },
+    {
+      "id": "security_services",
+      "name": "Security services",
+      "audience": "smb_friendly",
+      "examples": [
+        "guards",
+        "alarm monitoring",
+        "private investigation"
+      ],
+      "keywords": [
+        "security",
+        "guard",
+        "alarm",
+        "investigation",
+        "investigator",
+        "monitoring"
+      ],
+      "sector_id": "trades_home",
+      "isic_divisions": [
+        "80"
+      ],
+      "naics_3": [
+        "561"
+      ],
+      "nace_divisions": [
+        "80"
+      ]
+    },
+    {
+      "id": "cleaning_services",
+      "name": "Cleaning services",
+      "audience": "smb_core",
+      "examples": [
+        "janitorial",
+        "commercial cleaning",
+        "carpet cleaning"
+      ],
+      "keywords": [
+        "cleaning",
+        "janitor",
+        "janitorial",
+        "commercial cleaning",
+        "carpet cleaning",
+        "maid"
+      ],
+      "sector_id": "trades_home",
+      "isic_divisions": [
+        "81"
+      ],
+      "naics_3": [
+        "561"
+      ],
+      "nace_divisions": [
+        "81"
+      ]
+    },
+    {
+      "id": "residential_cleaning",
+      "name": "Residential cleaning services",
+      "audience": "smb_core",
+      "parent_id": "cleaning_services",
+      "examples": [
+        "house cleaning",
+        "maid services"
+      ],
+      "keywords": [
+        "house cleaning",
+        "residential cleaning",
+        "maid"
+      ],
+      "sector_id": "trades_home"
+    },
+    {
+      "id": "landscaping_lawn",
+      "name": "Landscaping & lawn care",
+      "audience": "smb_core",
+      "parent_id": "cleaning_services",
+      "examples": [
+        "lawn mowing",
+        "tree services",
+        "landscape design"
+      ],
+      "keywords": [
+        "landscaping",
+        "lawn care",
+        "lawn mowing",
+        "tree service",
+        "landscaper"
+      ],
+      "sector_id": "trades_home"
+    },
+    {
+      "id": "pool_service",
+      "name": "Pool service & maintenance",
+      "audience": "smb_core",
+      "parent_id": "cleaning_services",
+      "examples": [
+        "pool cleaners",
+        "pool maintenance"
+      ],
+      "keywords": [
+        "pool service",
+        "pool cleaning",
+        "pool maintenance"
+      ],
+      "sector_id": "trades_home"
+    },
+    {
+      "id": "pest_control_local",
+      "name": "Pest control (local)",
+      "audience": "smb_core",
+      "parent_id": "cleaning_services",
+      "examples": [
+        "exterminators",
+        "termite control"
+      ],
+      "keywords": [
+        "pest control",
+        "exterminator",
+        "termite",
+        "rodent"
+      ],
+      "sector_id": "trades_home"
+    },
+    {
+      "id": "window_washing",
+      "name": "Window washing",
+      "audience": "smb_core",
+      "parent_id": "cleaning_services",
+      "examples": [
+        "window cleaners",
+        "high-rise window service"
+      ],
+      "keywords": [
+        "window washing",
+        "window cleaning"
+      ],
+      "sector_id": "trades_home"
+    },
+    {
+      "id": "primary_secondary_schools",
+      "name": "Primary & secondary schools",
+      "audience": "smb_friendly",
+      "examples": [
+        "K-12",
+        "kindergartens",
+        "high schools"
+      ],
+      "keywords": [
+        "school",
+        "k-12",
+        "kindergarten",
+        "primary",
+        "secondary",
+        "high school",
+        "education"
+      ],
+      "sector_id": "education_instruction",
+      "isic_divisions": [
+        "85"
+      ],
+      "naics_3": [
+        "611"
+      ],
+      "nace_divisions": [
+        "85"
+      ]
+    },
+    {
+      "id": "private_k12",
+      "name": "Private K-12 schools (small)",
+      "audience": "smb_friendly",
+      "parent_id": "primary_secondary_schools",
+      "examples": [
+        "small private schools",
+        "religious schools"
+      ],
+      "keywords": [
+        "private school",
+        "k12 private",
+        "small private school"
+      ],
+      "sector_id": "education_instruction"
+    },
+    {
+      "id": "higher_education",
+      "name": "Higher education",
+      "audience": "mixed_caution",
+      "examples": [
+        "colleges",
+        "universities",
+        "professional schools"
+      ],
+      "keywords": [
+        "college",
+        "university",
+        "higher education",
+        "graduate",
+        "professional school"
+      ],
+      "sector_id": "higher_ed_hospitals",
+      "isic_divisions": [
+        "85"
+      ],
+      "naics_3": [
+        "611"
+      ],
+      "nace_divisions": [
+        "85"
+      ]
+    },
+    {
+      "id": "vocational_training",
+      "name": "Vocational & other training",
+      "audience": "smb_core",
+      "examples": [
+        "driving schools",
+        "language schools",
+        "tutoring",
+        "test prep"
+      ],
+      "keywords": [
+        "vocational",
+        "training",
+        "driving school",
+        "language school",
+        "tutor",
+        "tutoring",
+        "test prep"
+      ],
+      "sector_id": "education_instruction",
+      "isic_divisions": [
+        "85"
+      ],
+      "naics_3": [
+        "611"
+      ],
+      "nace_divisions": [
+        "85"
+      ]
+    },
+    {
+      "id": "tutoring_centers",
+      "name": "Tutoring centers",
+      "audience": "smb_core",
+      "parent_id": "vocational_training",
+      "examples": [
+        "academic tutoring",
+        "after-school programs"
+      ],
+      "keywords": [
+        "tutoring",
+        "tutor",
+        "after school tutoring"
+      ],
+      "sector_id": "education_instruction"
+    },
+    {
+      "id": "test_prep",
+      "name": "Test-prep services",
+      "audience": "smb_core",
+      "parent_id": "vocational_training",
+      "examples": [
+        "SAT prep",
+        "GMAT prep",
+        "test preparation"
+      ],
+      "keywords": [
+        "test prep",
+        "sat prep",
+        "gmat",
+        "lsat",
+        "exam prep"
+      ],
+      "sector_id": "education_instruction"
+    },
+    {
+      "id": "language_schools",
+      "name": "Language schools",
+      "audience": "smb_core",
+      "parent_id": "vocational_training",
+      "examples": [
+        "ESL schools",
+        "foreign language instruction"
+      ],
+      "keywords": [
+        "language school",
+        "esl",
+        "english school",
+        "foreign language"
+      ],
+      "sector_id": "education_instruction"
+    },
+    {
+      "id": "music_schools",
+      "name": "Music schools & private lessons",
+      "audience": "smb_core",
+      "parent_id": "vocational_training",
+      "examples": [
+        "music academies",
+        "private music instruction"
+      ],
+      "keywords": [
+        "music school",
+        "music lessons",
+        "piano lessons",
+        "guitar lessons"
+      ],
+      "sector_id": "education_instruction"
+    },
+    {
+      "id": "dance_studios",
+      "name": "Dance studios",
+      "audience": "smb_core",
+      "parent_id": "vocational_training",
+      "examples": [
+        "ballet schools",
+        "dance academies"
+      ],
+      "keywords": [
+        "dance studio",
+        "ballet",
+        "dance school",
+        "dance academy"
+      ],
+      "sector_id": "beauty_wellness"
+    },
+    {
+      "id": "driving_schools",
+      "name": "Driving schools",
+      "audience": "smb_core",
+      "parent_id": "vocational_training",
+      "examples": [
+        "driver education",
+        "driving instructors"
+      ],
+      "keywords": [
+        "driving school",
+        "driver education",
+        "driving instructor"
+      ],
+      "sector_id": "education_instruction"
+    },
+    {
+      "id": "martial_arts",
+      "name": "Martial arts dojos",
+      "audience": "smb_core",
+      "parent_id": "vocational_training",
+      "examples": [
+        "karate",
+        "BJJ",
+        "taekwondo",
+        "MMA gyms"
+      ],
+      "keywords": [
+        "martial arts",
+        "karate",
+        "bjj",
+        "taekwondo",
+        "judo",
+        "dojo"
+      ],
+      "sector_id": "education_instruction"
+    },
+    {
+      "id": "coding_schools",
+      "name": "Coding bootcamps & schools",
+      "audience": "smb_core",
+      "parent_id": "vocational_training",
+      "examples": [
+        "coding bootcamps",
+        "kids coding"
+      ],
+      "keywords": [
+        "coding bootcamp",
+        "coding school",
+        "programming school"
+      ],
+      "sector_id": "education_instruction"
+    },
+    {
+      "id": "art_classes",
+      "name": "Art classes & studios",
+      "audience": "smb_core",
+      "parent_id": "vocational_training",
+      "examples": [
+        "painting classes",
+        "pottery studios",
+        "art instruction"
+      ],
+      "keywords": [
+        "art class",
+        "art studio",
+        "pottery",
+        "painting class"
+      ],
+      "sector_id": "education_instruction"
+    },
+    {
+      "id": "doctors_clinics",
+      "name": "Doctors & clinics",
+      "audience": "smb_core",
+      "examples": [
+        "general practice",
+        "specialty clinics",
+        "outpatient care"
+      ],
+      "keywords": [
+        "doctor",
+        "physician",
+        "clinic",
+        "general practice",
+        "outpatient",
+        "medical"
+      ],
+      "sector_id": "health_clinics",
+      "isic_divisions": [
+        "86"
+      ],
+      "naics_3": [
+        "621"
+      ],
+      "nace_divisions": [
+        "86"
+      ]
+    },
+    {
+      "id": "chiropractic",
+      "name": "Chiropractic clinics",
+      "audience": "smb_core",
+      "parent_id": "doctors_clinics",
+      "examples": [
+        "chiropractors",
+        "spinal care"
+      ],
+      "keywords": [
+        "chiropractor",
+        "chiropractic",
+        "spinal"
+      ],
+      "sector_id": "health_clinics"
+    },
+    {
+      "id": "physical_therapy",
+      "name": "Physical therapy clinics",
+      "audience": "smb_core",
+      "parent_id": "doctors_clinics",
+      "examples": [
+        "PT clinics",
+        "rehab"
+      ],
+      "keywords": [
+        "physical therapy",
+        "pt clinic",
+        "rehab",
+        "rehabilitation"
+      ],
+      "sector_id": "health_clinics"
+    },
+    {
+      "id": "optometry",
+      "name": "Optometry / vision centers",
+      "audience": "smb_core",
+      "parent_id": "doctors_clinics",
+      "examples": [
+        "optometrists",
+        "vision care"
+      ],
+      "keywords": [
+        "optometrist",
+        "optometry",
+        "vision center",
+        "eye doctor"
+      ],
+      "sector_id": "health_clinics"
+    },
+    {
+      "id": "mental_health_practice",
+      "name": "Mental health practices (small)",
+      "audience": "smb_core",
+      "parent_id": "doctors_clinics",
+      "examples": [
+        "therapists",
+        "psychologists",
+        "counseling"
+      ],
+      "keywords": [
+        "therapist",
+        "psychologist",
+        "counselor",
+        "mental health",
+        "therapy"
+      ],
+      "sector_id": "health_clinics"
+    },
+    {
+      "id": "nutritionist",
+      "name": "Nutritionist / dietician practices",
+      "audience": "smb_core",
+      "parent_id": "doctors_clinics",
+      "examples": [
+        "nutritionists",
+        "dieticians",
+        "nutrition coaching"
+      ],
+      "keywords": [
+        "nutritionist",
+        "dietician",
+        "nutrition",
+        "diet"
+      ],
+      "sector_id": "health_clinics"
+    },
+    {
+      "id": "dental_practices",
+      "name": "Dental practices",
+      "audience": "smb_core",
+      "examples": [
+        "general dentistry",
+        "orthodontics",
+        "oral surgery"
+      ],
+      "keywords": [
+        "dentist",
+        "dental",
+        "orthodontics",
+        "oral surgery",
+        "teeth"
+      ],
+      "sector_id": "health_clinics",
+      "isic_divisions": [
+        "86"
+      ],
+      "naics_3": [
+        "621"
+      ],
+      "nace_divisions": [
+        "86"
+      ]
+    },
+    {
+      "id": "hospitals",
+      "name": "Hospitals",
+      "audience": "corp_only",
+      "examples": [
+        "general hospitals",
+        "specialty hospitals",
+        "psychiatric"
+      ],
+      "keywords": [
+        "hospital",
+        "specialty hospital",
+        "psychiatric",
+        "medical center"
+      ],
+      "sector_id": "higher_ed_hospitals",
+      "isic_divisions": [
+        "86"
+      ],
+      "naics_3": [
+        "622"
+      ],
+      "nace_divisions": [
+        "86"
+      ]
+    },
+    {
+      "id": "nursing_elderly",
+      "name": "Nursing & elderly care",
+      "audience": "smb_friendly",
+      "examples": [
+        "nursing homes",
+        "home care",
+        "assisted living"
+      ],
+      "keywords": [
+        "nursing home",
+        "elderly",
+        "senior care",
+        "home care",
+        "assisted living",
+        "long-term care"
+      ],
+      "sector_id": "health_clinics",
+      "isic_divisions": [
+        "87"
+      ],
+      "naics_3": [
+        "623"
+      ],
+      "nace_divisions": [
+        "87"
+      ]
+    },
+    {
+      "id": "childcare_social",
+      "name": "Childcare & social services",
+      "audience": "smb_core",
+      "examples": [
+        "daycares",
+        "family services",
+        "youth services"
+      ],
+      "keywords": [
+        "daycare",
+        "childcare",
+        "family services",
+        "social services",
+        "youth"
+      ],
+      "sector_id": "health_clinics",
+      "isic_divisions": [
+        "88"
+      ],
+      "naics_3": [
+        "624"
+      ],
+      "nace_divisions": [
+        "88"
+      ]
+    },
+    {
+      "id": "daycare_preschool",
+      "name": "Daycare & preschool",
+      "audience": "smb_core",
+      "parent_id": "childcare_social",
+      "examples": [
+        "preschools",
+        "daycares",
+        "early learning"
+      ],
+      "keywords": [
+        "daycare",
+        "preschool",
+        "nursery school",
+        "early learning"
+      ],
+      "sector_id": "education_instruction"
+    },
+    {
+      "id": "veterinary_pet_care",
+      "name": "Veterinary & pet care",
+      "audience": "smb_core",
+      "examples": [
+        "vets",
+        "pet grooming",
+        "kennels",
+        "pet hospitals"
+      ],
+      "keywords": [
+        "vet",
+        "veterinary",
+        "pet",
+        "pet grooming",
+        "kennel",
+        "animal hospital"
+      ],
+      "sector_id": "health_clinics",
+      "isic_divisions": [
+        "75"
+      ],
+      "naics_3": [
+        "541"
+      ],
+      "nace_divisions": [
+        "75"
+      ]
+    },
+    {
+      "id": "performing_arts",
+      "name": "Performing arts",
+      "audience": "smb_core",
+      "examples": [
+        "theatre",
+        "music",
+        "dance",
+        "live performance"
+      ],
+      "keywords": [
+        "theatre",
+        "music",
+        "dance",
+        "performing arts",
+        "live performance",
+        "band",
+        "orchestra"
+      ],
+      "sector_id": "events_entertainment",
+      "isic_divisions": [
+        "90"
+      ],
+      "naics_3": [
+        "711"
+      ],
+      "nace_divisions": [
+        "90"
+      ]
+    },
+    {
+      "id": "sports_fitness",
+      "name": "Sports & fitness",
+      "audience": "smb_core",
+      "examples": [
+        "gyms",
+        "sports clubs",
+        "yoga studios",
+        "personal trainers"
+      ],
+      "keywords": [
+        "gym",
+        "fitness",
+        "sports",
+        "yoga",
+        "trainer",
+        "personal training",
+        "athletic"
+      ],
+      "sector_id": "events_entertainment",
+      "isic_divisions": [
+        "93"
+      ],
+      "naics_3": [
+        "713"
+      ],
+      "nace_divisions": [
+        "93"
+      ]
+    },
+    {
+      "id": "yoga_pilates",
+      "name": "Yoga & pilates studios",
+      "audience": "smb_core",
+      "parent_id": "sports_fitness",
+      "examples": [
+        "yoga studios",
+        "pilates studios",
+        "barre"
+      ],
+      "keywords": [
+        "yoga studio",
+        "pilates",
+        "barre",
+        "yoga"
+      ],
+      "sector_id": "events_entertainment"
+    },
+    {
+      "id": "personal_training",
+      "name": "Personal training",
+      "audience": "smb_core",
+      "parent_id": "sports_fitness",
+      "examples": [
+        "personal trainers",
+        "small group training"
+      ],
+      "keywords": [
+        "personal trainer",
+        "personal training",
+        "fitness trainer",
+        "small group fitness"
+      ],
+      "sector_id": "beauty_wellness"
+    },
+    {
+      "id": "museums_cultural",
+      "name": "Museums & cultural",
+      "audience": "smb_friendly",
+      "examples": [
+        "museums",
+        "libraries",
+        "galleries",
+        "historical sites"
+      ],
+      "keywords": [
+        "museum",
+        "library",
+        "gallery",
+        "cultural",
+        "art gallery",
+        "historical"
+      ],
+      "sector_id": "cultural",
+      "isic_divisions": [
+        "91"
+      ],
+      "naics_3": [
+        "712"
+      ],
+      "nace_divisions": [
+        "91"
+      ]
+    },
+    {
+      "id": "gambling_amusement",
+      "name": "Gambling & amusement",
+      "audience": "mixed_caution",
+      "examples": [
+        "casinos",
+        "arcades",
+        "amusement parks",
+        "bowling"
+      ],
+      "keywords": [
+        "casino",
+        "gambling",
+        "lottery",
+        "arcade",
+        "amusement",
+        "amusement park",
+        "bowling",
+        "entertainment"
+      ],
+      "sector_id": "events_entertainment",
+      "isic_divisions": [
+        "92",
+        "93"
+      ],
+      "naics_3": [
+        "713"
+      ],
+      "nace_divisions": [
+        "92",
+        "93"
+      ]
+    },
+    {
+      "id": "hairdressers_beauty",
+      "name": "Hairdressers & beauty",
+      "audience": "smb_core",
+      "examples": [
+        "barbers",
+        "salons",
+        "beauty parlors",
+        "spas",
+        "nail salons"
+      ],
+      "keywords": [
+        "hairdresser",
+        "barber",
+        "salon",
+        "beauty",
+        "spa",
+        "nail",
+        "hair"
+      ],
+      "sector_id": "beauty_wellness",
+      "isic_divisions": [
+        "96"
+      ],
+      "naics_3": [
+        "812"
+      ],
+      "nace_divisions": [
+        "96"
+      ]
+    },
+    {
+      "id": "hair_salons_full",
+      "name": "Hair salons (full service)",
+      "audience": "smb_core",
+      "parent_id": "hairdressers_beauty",
+      "examples": [
+        "women's salons",
+        "color salons",
+        "cut and color"
+      ],
+      "keywords": [
+        "hair salon",
+        "beauty salon",
+        "women salon",
+        "hair stylist"
+      ],
+      "sector_id": "other_local"
+    },
+    {
+      "id": "barbershops",
+      "name": "Barbershops",
+      "audience": "smb_core",
+      "parent_id": "hairdressers_beauty",
+      "examples": [
+        "men's barbershops",
+        "traditional barbers"
+      ],
+      "keywords": [
+        "barbershop",
+        "barber",
+        "men haircut"
+      ],
+      "sector_id": "beauty_wellness"
+    },
+    {
+      "id": "nail_salons",
+      "name": "Nail salons",
+      "audience": "smb_core",
+      "parent_id": "hairdressers_beauty",
+      "examples": [
+        "manicure",
+        "pedicure",
+        "nail art"
+      ],
+      "keywords": [
+        "nail salon",
+        "manicure",
+        "pedicure",
+        "nails"
+      ],
+      "sector_id": "beauty_wellness"
+    },
+    {
+      "id": "day_spas",
+      "name": "Day spas",
+      "audience": "smb_core",
+      "parent_id": "hairdressers_beauty",
+      "examples": [
+        "spa services",
+        "facials",
+        "skin treatments"
+      ],
+      "keywords": [
+        "day spa",
+        "spa",
+        "facial",
+        "skincare"
+      ],
+      "sector_id": "beauty_wellness"
+    },
+    {
+      "id": "massage_therapy",
+      "name": "Massage therapy clinics",
+      "audience": "smb_core",
+      "parent_id": "hairdressers_beauty",
+      "examples": [
+        "massage therapists",
+        "deep tissue",
+        "sports massage"
+      ],
+      "keywords": [
+        "massage therapy",
+        "massage therapist",
+        "deep tissue",
+        "sports massage"
+      ],
+      "sector_id": "beauty_wellness"
+    },
+    {
+      "id": "tanning_salons",
+      "name": "Tanning salons",
+      "audience": "smb_core",
+      "parent_id": "hairdressers_beauty",
+      "examples": [
+        "tanning beds",
+        "spray tan"
+      ],
+      "keywords": [
+        "tanning salon",
+        "tanning",
+        "spray tan"
+      ],
+      "sector_id": "beauty_wellness"
+    },
+    {
+      "id": "brow_lash_studios",
+      "name": "Brow & lash studios",
+      "audience": "smb_core",
+      "parent_id": "hairdressers_beauty",
+      "examples": [
+        "microblading",
+        "lash extensions",
+        "brow shaping"
+      ],
+      "keywords": [
+        "brow studio",
+        "lash studio",
+        "microblading",
+        "lash extensions"
+      ],
+      "sector_id": "beauty_wellness"
+    },
+    {
+      "id": "med_spas",
+      "name": "Med spas (small)",
+      "audience": "smb_core",
+      "parent_id": "hairdressers_beauty",
+      "examples": [
+        "botox",
+        "fillers",
+        "laser hair removal"
+      ],
+      "keywords": [
+        "med spa",
+        "medspa",
+        "botox",
+        "laser hair removal"
+      ],
+      "sector_id": "other_local"
+    },
+    {
+      "id": "tattoo_piercing",
+      "name": "Tattoo & piercing studios",
+      "audience": "smb_core",
+      "parent_id": "hairdressers_beauty",
+      "examples": [
+        "tattoo parlors",
+        "piercing studios"
+      ],
+      "keywords": [
+        "tattoo",
+        "piercing",
+        "tattoo studio",
+        "tattoo parlor"
+      ],
+      "sector_id": "beauty_wellness"
+    },
+    {
+      "id": "auto_repair_shops",
+      "name": "Auto repair shops",
+      "audience": "smb_core",
+      "examples": [
+        "mechanics",
+        "body shops",
+        "tire shops",
+        "car wash"
+      ],
+      "keywords": [
+        "auto repair",
+        "mechanic",
+        "body shop",
+        "tire shop",
+        "car wash",
+        "garage"
+      ],
+      "sector_id": "repair",
+      "isic_divisions": [
+        "45"
+      ],
+      "naics_3": [
+        "811"
+      ],
+      "nace_divisions": [
+        "45"
+      ]
+    },
+    {
+      "id": "auto_body_shops",
+      "name": "Auto body shops",
+      "audience": "smb_core",
+      "parent_id": "auto_repair_shops",
+      "examples": [
+        "collision repair",
+        "paint and body"
+      ],
+      "keywords": [
+        "auto body",
+        "body shop",
+        "collision repair",
+        "paint shop"
+      ],
+      "sector_id": "repair"
+    },
+    {
+      "id": "bike_repair",
+      "name": "Bike repair shops",
+      "audience": "smb_core",
+      "parent_id": "auto_repair_shops",
+      "examples": [
+        "bicycle repair",
+        "bike tune-up"
+      ],
+      "keywords": [
+        "bike repair",
+        "bicycle repair",
+        "bike shop repair"
+      ],
+      "sector_id": "repair"
+    },
+    {
+      "id": "electronics_repair",
+      "name": "Electronics & phone repair",
+      "audience": "smb_core",
+      "parent_id": "auto_repair_shops",
+      "examples": [
+        "phone repair",
+        "computer repair",
+        "electronics fix"
+      ],
+      "keywords": [
+        "phone repair",
+        "electronics repair",
+        "computer repair",
+        "screen repair"
+      ],
+      "sector_id": "repair"
+    },
+    {
+      "id": "locksmiths",
+      "name": "Locksmiths",
+      "audience": "smb_core",
+      "parent_id": "auto_repair_shops",
+      "examples": [
+        "residential locksmith",
+        "auto locksmith"
+      ],
+      "keywords": [
+        "locksmith",
+        "locks",
+        "key cutting"
+      ],
+      "sector_id": "repair"
+    },
+    {
+      "id": "appliance_repair",
+      "name": "Appliance repair",
+      "audience": "smb_core",
+      "parent_id": "auto_repair_shops",
+      "examples": [
+        "refrigerator repair",
+        "washer/dryer repair"
+      ],
+      "keywords": [
+        "appliance repair",
+        "fridge repair",
+        "washer repair"
+      ],
+      "sector_id": "repair"
+    },
+    {
+      "id": "dry_cleaning_laundry",
+      "name": "Dry cleaning & laundry",
+      "audience": "smb_core",
+      "examples": [
+        "laundromats",
+        "dry cleaners",
+        "linen services"
+      ],
+      "keywords": [
+        "dry cleaning",
+        "laundry",
+        "laundromat",
+        "linen"
+      ],
+      "sector_id": "other_local",
+      "isic_divisions": [
+        "96"
+      ],
+      "naics_3": [
+        "812"
+      ],
+      "nace_divisions": [
+        "96"
+      ]
+    },
+    {
+      "id": "tailoring_alterations",
+      "name": "Tailoring & alterations",
+      "audience": "smb_core",
+      "parent_id": "dry_cleaning_laundry",
+      "examples": [
+        "tailors",
+        "alterations shops"
+      ],
+      "keywords": [
+        "tailor",
+        "alterations",
+        "tailoring",
+        "seamstress"
+      ],
+      "sector_id": "repair"
+    },
+    {
+      "id": "shoe_repair",
+      "name": "Shoe repair",
+      "audience": "smb_core",
+      "parent_id": "dry_cleaning_laundry",
+      "examples": [
+        "cobblers",
+        "shoe repair shops"
+      ],
+      "keywords": [
+        "shoe repair",
+        "cobbler",
+        "shoe resoling"
+      ],
+      "sector_id": "repair"
+    },
+    {
+      "id": "watch_jewelry_repair",
+      "name": "Watch & jewelry repair",
+      "audience": "smb_core",
+      "parent_id": "dry_cleaning_laundry",
+      "examples": [
+        "watch repair",
+        "jewelry repair"
+      ],
+      "keywords": [
+        "watch repair",
+        "jewelry repair"
+      ],
+      "sector_id": "repair"
+    },
+    {
+      "id": "funeral_services",
+      "name": "Funeral services",
+      "audience": "smb_core",
+      "examples": [
+        "funeral homes",
+        "cemeteries",
+        "crematoria"
+      ],
+      "keywords": [
+        "funeral",
+        "cemetery",
+        "crematorium",
+        "mortuary",
+        "funeral home"
+      ],
+      "sector_id": "other_local",
+      "isic_divisions": [
+        "96"
+      ],
+      "naics_3": [
+        "812"
+      ],
+      "nace_divisions": [
+        "96"
+      ]
+    },
+    {"id": "pet_daycare", "name": "Pet daycare & boarding", "audience": "smb_core", "examples": ["dog daycare", "cat boarding", "pet hotels"], "keywords": ["pet daycare", "dog daycare", "boarding", "pet hotel", "kennel"], "sector_id": "pet_services"},
+    {"id": "pet_walking_sitting", "name": "Pet walking & sitting", "audience": "smb_core", "examples": ["dog walkers", "pet sitters", "home visits"], "keywords": ["dog walker", "pet sitter", "pet sitting", "dog walking"], "sector_id": "pet_services"},
+    {"id": "pet_training", "name": "Pet training", "audience": "smb_core", "examples": ["dog training", "puppy classes", "obedience"], "keywords": ["dog training", "pet training", "obedience", "puppy class"], "sector_id": "pet_services"},
+    {"id": "art_galleries_small", "name": "Independent art galleries", "audience": "smb_core", "examples": ["contemporary art", "local artists", "exhibition spaces"], "keywords": ["art gallery", "exhibition", "contemporary art", "fine art"], "sector_id": "cultural"},
+    {"id": "small_museums", "name": "Small museums", "audience": "smb_core", "examples": ["local history museums", "themed museums", "private collections"], "keywords": ["museum", "small museum", "history museum", "themed museum"], "sector_id": "cultural"},
+    {"id": "private_libraries_archives", "name": "Private libraries & archives", "audience": "smb_core", "examples": ["specialty libraries", "research archives", "rare books"], "keywords": ["library", "archive", "rare books", "research library"], "sector_id": "cultural"},
+    {"id": "guest_houses", "name": "Guest houses & pensions", "audience": "smb_core", "examples": ["guest houses", "pensions", "small lodges"], "keywords": ["guest house", "pension", "lodge", "small lodging"], "sector_id": "hospitality"},
+    {"id": "campgrounds_rv_parks", "name": "Campgrounds & RV parks", "audience": "smb_core", "examples": ["RV parks", "campgrounds", "glamping sites"], "keywords": ["campground", "rv park", "camping", "glamping", "tent site"], "sector_id": "hospitality"},
+    {"id": "specialty_construction", "name": "Specialty construction services", "audience": "smb_core", "examples": ["foundation", "demolition", "scaffolding", "site preparation"], "keywords": ["foundation", "demolition", "scaffolding", "site prep", "excavation"], "sector_id": "construction"}
   ]
 }

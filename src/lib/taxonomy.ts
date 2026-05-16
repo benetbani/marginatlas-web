@@ -10,10 +10,19 @@ import industriesJson from "./taxonomy/industries.json";
 export type Sector = {
   id: string;
   name: string;
-  isic_sections: string[];
+  /** v4 fields */
+  tagline?: string;
+  display_order?: number;
+  audience_default?: "visible" | "hidden";
+  header_color?: string;
+  legacy_aliases?: string[];
+  /** Existing fields */
+  isic_sections?: string[];
+  isic_divisions?: string[];
   examples: string[];
   icon: string;
-  order: number;
+  /** Deprecated — kept for back-compat. Use display_order. */
+  order?: number;
 };
 
 export type AudienceTag =
@@ -86,8 +95,35 @@ export function industryToSlug(industryId: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
-/** Sectors grouped — for the navigator dropdown. */
-export const SECTORS_ORDERED = [...SECTORS].sort((a, b) => a.order - b.order);
+/**
+ * Sectors in curated display order (Plan v4.0 master menu).
+ * Falls back to `order` for any sector still on the v3 schema.
+ */
+export const SECTORS_ORDERED = [...SECTORS].sort((a, b) => {
+  const oa = a.display_order ?? a.order ?? 99;
+  const ob = b.display_order ?? b.order ?? 99;
+  return oa - ob;
+});
+
+/** Legacy sector ID → canonical sector ID map (for URL stability). */
+export const LEGACY_SECTOR_ALIAS: Record<string, string> = (() => {
+  const m: Record<string, string> = {};
+  for (const s of SECTORS) {
+    for (const alias of s.legacy_aliases || []) {
+      if (!(alias in m)) m[alias] = s.id;
+    }
+  }
+  return m;
+})();
+
+/** Resolve a sector slug (possibly legacy) to its canonical Sector. */
+export function resolveSector(slug: string): Sector | null {
+  if (!slug) return null;
+  if (SECTOR_BY_ID[slug]) return SECTOR_BY_ID[slug];
+  const aliased = LEGACY_SECTOR_ALIAS[slug];
+  if (aliased && SECTOR_BY_ID[aliased]) return SECTOR_BY_ID[aliased];
+  return null;
+}
 
 /** Audience helpers — Plan v3.0 §L + §P. */
 
@@ -152,47 +188,100 @@ export const INDUSTRIES_BY_SECTOR: Record<string, Industry[]> = (() => {
   return out;
 })();
 
-/** Country list — what we expose in the navigator. Quality-ranked. */
-export const COUNTRIES: { code: string; name: string; quality: "A" | "B" | "C" | "D" }[] = [
-  { code: "US", name: "United States", quality: "A" },
-  { code: "CA", name: "Canada", quality: "B" },
-  { code: "AU", name: "Australia", quality: "B" },
-  { code: "DE", name: "Germany", quality: "B" },
-  { code: "FR", name: "France", quality: "B" },
-  { code: "IT", name: "Italy", quality: "B" },
-  { code: "ES", name: "Spain", quality: "B" },
-  { code: "NL", name: "Netherlands", quality: "B" },
-  { code: "PL", name: "Poland", quality: "B" },
-  { code: "SE", name: "Sweden", quality: "B" },
-  { code: "BE", name: "Belgium", quality: "B" },
-  { code: "AT", name: "Austria", quality: "B" },
-  { code: "PT", name: "Portugal", quality: "B" },
-  { code: "IE", name: "Ireland", quality: "B" },
-  { code: "CH", name: "Switzerland", quality: "B" },
-  { code: "NO", name: "Norway", quality: "B" },
-  { code: "FI", name: "Finland", quality: "B" },
-  { code: "DK", name: "Denmark", quality: "B" },
-  { code: "GR", name: "Greece", quality: "C" },
-  { code: "CZ", name: "Czechia", quality: "C" },
-  { code: "HU", name: "Hungary", quality: "C" },
-  { code: "RO", name: "Romania", quality: "C" },
-  { code: "BG", name: "Bulgaria", quality: "C" },
-  { code: "HR", name: "Croatia", quality: "C" },
-  { code: "SK", name: "Slovakia", quality: "C" },
-  { code: "SI", name: "Slovenia", quality: "C" },
-  { code: "LT", name: "Lithuania", quality: "C" },
-  { code: "LV", name: "Latvia", quality: "C" },
-  { code: "EE", name: "Estonia", quality: "C" },
-  { code: "LU", name: "Luxembourg", quality: "C" },
-  { code: "CY", name: "Cyprus", quality: "C" },
-  { code: "MT", name: "Malta", quality: "C" },
-  { code: "IS", name: "Iceland", quality: "C" },
-  { code: "JP", name: "Japan", quality: "C" },
-  { code: "BR", name: "Brazil", quality: "C" },
-  { code: "SG", name: "Singapore", quality: "B" },
+/** Plan v4.0 §2 — sector-level visibility gate. */
+export type Gate = { revealMixed?: boolean; revealCorp?: boolean };
+
+/**
+ * Does this sector have ANY industries visible under the given gate?
+ * Used to hide whole sectors when all their children are corp_only.
+ */
+export function sectorHasVisibleIndustries(sectorId: string, gate: Gate = {}): boolean {
+  const list = INDUSTRIES_BY_SECTOR[sectorId] || [];
+  for (const ind of list) {
+    const tag = ind.audience || "smb_friendly";
+    if (DEFAULT_VISIBLE.includes(tag)) return true;
+    if (tag === "mixed_caution" && gate.revealMixed) return true;
+    if (tag === "corp_only" && gate.revealCorp) return true;
+  }
+  return false;
+}
+
+/**
+ * Sectors visible to the user under the given gate, in display_order.
+ * A sector renders when BOTH:
+ *   - its own `audience_default` allows it (or gate overrides)
+ *   - it has at least one visible child industry
+ */
+export function visibleSectors(gate: Gate = {}): Sector[] {
+  return SECTORS_ORDERED.filter((s) => {
+    const sectorVisible =
+      s.audience_default !== "hidden" ||
+      gate.revealCorp === true;
+    if (!sectorVisible) return false;
+    return sectorHasVisibleIndustries(s.id, gate);
+  });
+}
+
+/** Visible industries inside a specific sector, alphabetical within the sector. */
+export function visibleIndustriesInSector(sectorId: string, gate: Gate = {}): Industry[] {
+  const list = INDUSTRIES_BY_SECTOR[sectorId] || [];
+  return list
+    .filter((i) => {
+      const tag = i.audience || "smb_friendly";
+      if (DEFAULT_VISIBLE.includes(tag)) return true;
+      if (tag === "mixed_caution" && gate.revealMixed) return true;
+      if (tag === "corp_only" && gate.revealCorp) return true;
+      return false;
+    })
+    .sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/**
+ * Country list — what we expose in the navigator. Stored alphabetically
+ * (Plan v4.0 Step 4.10). Quality remains a field, used only on the
+ * country landing page for the coverage badge — not for sort order.
+ */
+const COUNTRIES_RAW: { code: string; name: string; quality: "A" | "B" | "C" | "D" }[] = [
   { code: "AR", name: "Argentina", quality: "D" },
+  { code: "AT", name: "Austria", quality: "B" },
+  { code: "AU", name: "Australia", quality: "B" },
+  { code: "BE", name: "Belgium", quality: "B" },
+  { code: "BG", name: "Bulgaria", quality: "C" },
+  { code: "BR", name: "Brazil", quality: "C" },
+  { code: "CA", name: "Canada", quality: "B" },
+  { code: "CH", name: "Switzerland", quality: "B" },
+  { code: "CY", name: "Cyprus", quality: "C" },
+  { code: "CZ", name: "Czechia", quality: "C" },
+  { code: "DE", name: "Germany", quality: "B" },
+  { code: "DK", name: "Denmark", quality: "B" },
+  { code: "EE", name: "Estonia", quality: "C" },
+  { code: "ES", name: "Spain", quality: "B" },
+  { code: "FI", name: "Finland", quality: "B" },
+  { code: "FR", name: "France", quality: "B" },
   { code: "GB", name: "United Kingdom", quality: "C" },
+  { code: "GR", name: "Greece", quality: "C" },
+  { code: "HR", name: "Croatia", quality: "C" },
+  { code: "HU", name: "Hungary", quality: "C" },
+  { code: "IE", name: "Ireland", quality: "B" },
+  { code: "IS", name: "Iceland", quality: "C" },
+  { code: "IT", name: "Italy", quality: "B" },
+  { code: "JP", name: "Japan", quality: "C" },
+  { code: "LT", name: "Lithuania", quality: "C" },
+  { code: "LU", name: "Luxembourg", quality: "C" },
+  { code: "LV", name: "Latvia", quality: "C" },
+  { code: "MT", name: "Malta", quality: "C" },
+  { code: "NL", name: "Netherlands", quality: "B" },
+  { code: "NO", name: "Norway", quality: "B" },
+  { code: "PL", name: "Poland", quality: "B" },
+  { code: "PT", name: "Portugal", quality: "B" },
+  { code: "RO", name: "Romania", quality: "C" },
+  { code: "SE", name: "Sweden", quality: "B" },
+  { code: "SG", name: "Singapore", quality: "B" },
+  { code: "SI", name: "Slovenia", quality: "C" },
+  { code: "SK", name: "Slovakia", quality: "C" },
+  { code: "US", name: "United States", quality: "A" },
 ];
+export const COUNTRIES = [...COUNTRIES_RAW].sort((a, b) => a.name.localeCompare(b.name));
 
 /** Search countries by a query string (case-insensitive). */
 export function searchCountries(query: string): typeof COUNTRIES {

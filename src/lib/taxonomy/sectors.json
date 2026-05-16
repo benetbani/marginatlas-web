@@ -1,136 +1,288 @@
 {
-  "version": "1.0.0",
-  "anchor": "ISIC Rev.4 sections (UN Statistics Division)",
+  "version": "4.0.0",
+  "anchor": "Curated SMB-first master menu (Plan v4.0 Appendix A)",
+  "convention": "Sectors render in display_order, NOT alphabetically. Each sector has an audience_default: 'visible' or 'hidden'. Hidden sectors only render with the Pro gate. legacy_aliases is a list of older sector IDs that should redirect / resolve here for URL stability.",
+  "audience_default_legend": {
+    "visible": "Renders in default navigator + sectors index",
+    "hidden": "Hidden by default; renders only with Pro gate or ?show_large=1"
+  },
   "sectors": [
     {
-      "id": "agriculture",
-      "name": "Farming, fishing & forestry",
-      "isic_sections": ["A"],
-      "examples": ["crop farming", "livestock", "fishing", "logging"],
-      "icon": "🌾",
-      "order": 1
+      "id": "food_drink",
+      "name": "Food & drink",
+      "tagline": "Restaurants, cafés, bars, bakeries, food trucks, catering",
+      "icon": "🍽️",
+      "display_order": 1,
+      "audience_default": "visible",
+      "header_color": "#FDE9CC",
+      "examples": ["restaurants", "cafés", "bakeries", "bars", "food trucks", "catering"],
+      "isic_sections": ["I"],
+      "legacy_aliases": ["hotels_food"]
     },
     {
-      "id": "mining_energy",
-      "name": "Mining & energy",
-      "isic_sections": ["B", "D", "E"],
-      "examples": ["oil & gas", "mining", "electricity", "water utilities"],
-      "icon": "⛏️",
-      "order": 2
-    },
-    {
-      "id": "manufacturing",
-      "name": "Manufacturing",
-      "isic_sections": ["C"],
-      "examples": ["food", "machinery", "electronics", "vehicles"],
-      "icon": "🏭",
-      "order": 3
-    },
-    {
-      "id": "construction",
-      "name": "Construction",
-      "isic_sections": ["F"],
-      "examples": ["homes", "roads", "plumbing", "electrical"],
-      "icon": "🏗️",
-      "order": 4
-    },
-    {
-      "id": "wholesale",
-      "name": "Wholesale & distribution",
-      "isic_sections": ["G"],
-      "isic_divisions": ["45", "46"],
-      "examples": ["food wholesale", "machinery distribution"],
-      "icon": "🚛",
-      "order": 5
-    },
-    {
-      "id": "retail",
-      "name": "Retail & e-commerce",
+      "id": "retail_shops",
+      "name": "Retail & shops",
+      "tagline": "Clothing, jewelry, books, home goods, specialty retail",
+      "icon": "🛍️",
+      "display_order": 2,
+      "audience_default": "visible",
+      "header_color": "#FEF7ED",
+      "examples": ["boutiques", "jewelry", "bookstores", "hardware", "toys", "wine shops"],
       "isic_sections": ["G"],
       "isic_divisions": ["47"],
-      "examples": ["grocery", "clothing stores", "online retail"],
-      "icon": "🛍️",
-      "order": 6
+      "legacy_aliases": ["retail"]
     },
     {
-      "id": "transport_logistics",
-      "name": "Transport & logistics",
-      "isic_sections": ["H"],
-      "examples": ["trucking", "taxis", "warehousing", "courier"],
-      "icon": "🚚",
-      "order": 7
+      "id": "beauty_wellness",
+      "name": "Beauty & wellness",
+      "tagline": "Salons, spas, gyms, fitness studios, yoga, massage",
+      "icon": "💇",
+      "display_order": 3,
+      "audience_default": "visible",
+      "header_color": "#FEE2E2",
+      "examples": ["hair salons", "barbers", "nail salons", "spas", "gyms", "yoga"],
+      "legacy_aliases": ["personal_services", "arts_entertainment"]
     },
     {
-      "id": "hotels_food",
-      "name": "Hotels, restaurants & food",
-      "isic_sections": ["I"],
-      "examples": ["restaurants", "cafés", "hotels", "catering"],
-      "icon": "🍽️",
-      "order": 8
+      "id": "trades_home",
+      "name": "Trades & home services",
+      "tagline": "Plumbers, electricians, HVAC, painters, landscapers, cleaners",
+      "icon": "🛠️",
+      "display_order": 4,
+      "audience_default": "visible",
+      "header_color": "#F8F2E4",
+      "examples": ["plumbing", "electrical", "HVAC", "painting", "landscaping", "cleaning"]
     },
     {
-      "id": "information_media",
-      "name": "Information, software & media",
-      "isic_sections": ["J"],
-      "examples": ["software", "IT services", "broadcasting", "publishing"],
-      "icon": "💻",
-      "order": 9
-    },
-    {
-      "id": "finance_real_estate",
-      "name": "Finance, insurance & real estate",
-      "isic_sections": ["K", "L"],
-      "examples": ["banking", "insurance", "real estate agencies"],
-      "icon": "🏘️",
-      "order": 10
+      "id": "hospitality",
+      "name": "Hospitality",
+      "tagline": "Hotels, B&Bs, hostels, short-term rentals",
+      "icon": "🏨",
+      "display_order": 5,
+      "audience_default": "visible",
+      "header_color": "#FDE9CC",
+      "examples": ["hotels", "B&Bs", "hostels", "vacation rentals"],
+      "legacy_aliases": ["hotels_food"]
     },
     {
       "id": "professional_services",
       "name": "Professional services",
-      "isic_sections": ["M"],
-      "examples": ["legal", "accounting", "consulting", "engineering"],
+      "tagline": "Lawyers, accountants, consultants, marketers",
       "icon": "💼",
-      "order": 11
+      "display_order": 6,
+      "audience_default": "visible",
+      "header_color": "#F8F2E4",
+      "examples": ["lawyers", "accountants", "consultants", "marketers", "engineers"],
+      "isic_sections": ["M"],
+      "legacy_aliases": ["professional_services"]
     },
     {
-      "id": "admin_support",
-      "name": "Administrative & support services",
-      "isic_sections": ["N"],
-      "examples": ["staffing", "call centers", "cleaning", "security"],
-      "icon": "🧑‍💼",
-      "order": 12
+      "id": "software_tech",
+      "name": "Software & tech",
+      "tagline": "Web dev, custom software, IT services, MSPs, indie SaaS",
+      "icon": "💻",
+      "display_order": 7,
+      "audience_default": "visible",
+      "header_color": "#FEF7ED",
+      "examples": ["web development", "mobile apps", "IT services", "indie SaaS"],
+      "legacy_aliases": ["information_media"]
     },
     {
-      "id": "education",
-      "name": "Education",
-      "isic_sections": ["P"],
-      "examples": ["schools", "universities", "vocational training"],
-      "icon": "🎓",
-      "order": 13
+      "id": "real_estate",
+      "name": "Real estate",
+      "tagline": "Agencies, property leasing, independent insurance brokers",
+      "icon": "🏘️",
+      "display_order": 8,
+      "audience_default": "visible",
+      "header_color": "#EEE6D2",
+      "examples": ["real estate agencies", "property managers", "insurance brokers"],
+      "legacy_aliases": ["finance_real_estate"]
     },
     {
-      "id": "healthcare",
-      "name": "Healthcare & social work",
-      "isic_sections": ["Q"],
-      "examples": ["doctors", "dentists", "hospitals", "childcare"],
+      "id": "transport_small",
+      "name": "Transport (small)",
+      "tagline": "Trucking, taxis, delivery, courier, ride-share",
+      "icon": "🚚",
+      "display_order": 9,
+      "audience_default": "visible",
+      "header_color": "#F8F2E4",
+      "examples": ["trucking", "taxis", "delivery", "couriers"],
+      "isic_sections": ["H"],
+      "legacy_aliases": ["transport_logistics"]
+    },
+    {
+      "id": "manufacturing_artisan",
+      "name": "Manufacturing & artisan",
+      "tagline": "Custom fab, craft goods, small-batch production, print shops",
+      "icon": "🏭",
+      "display_order": 10,
+      "audience_default": "visible",
+      "header_color": "#EEE6D2",
+      "examples": ["metal fab", "custom furniture", "print shops", "sign shops"],
+      "legacy_aliases": ["manufacturing"]
+    },
+    {
+      "id": "construction",
+      "name": "Construction",
+      "tagline": "Residential, light commercial, specialty trades",
+      "icon": "🏗️",
+      "display_order": 11,
+      "audience_default": "visible",
+      "header_color": "#F8F2E4",
+      "examples": ["residential", "commercial", "specialty trades"],
+      "isic_sections": ["F"],
+      "legacy_aliases": ["construction"]
+    },
+    {
+      "id": "farming_food_production",
+      "name": "Farming & food production",
+      "tagline": "Farms, ranches, fisheries, craft food producers",
+      "icon": "🌾",
+      "display_order": 12,
+      "audience_default": "visible",
+      "header_color": "#ECFCCB",
+      "examples": ["crop farming", "livestock", "craft food", "breweries", "roasters"],
+      "isic_sections": ["A"],
+      "legacy_aliases": ["agriculture"]
+    },
+    {
+      "id": "health_clinics",
+      "name": "Health & clinics",
+      "tagline": "Doctors, dentists, vets, small clinics, mental health",
       "icon": "🩺",
-      "order": 14
+      "display_order": 13,
+      "audience_default": "visible",
+      "header_color": "#FEE2E2",
+      "examples": ["dentists", "vets", "PT", "mental health", "chiropractors"],
+      "legacy_aliases": ["healthcare"]
     },
     {
-      "id": "arts_entertainment",
-      "name": "Arts, sports & entertainment",
-      "isic_sections": ["R"],
-      "examples": ["theatre", "gyms", "museums", "casinos"],
+      "id": "education_instruction",
+      "name": "Education & instruction",
+      "tagline": "Tutoring, music, language, dance, driving, daycare",
+      "icon": "🎓",
+      "display_order": 14,
+      "audience_default": "visible",
+      "header_color": "#FDE9CC",
+      "examples": ["tutoring", "music schools", "language", "dance", "daycare"],
+      "legacy_aliases": ["education"]
+    },
+    {
+      "id": "creative_media",
+      "name": "Creative & media",
+      "tagline": "Photo, video, design, florists, indie publishing",
       "icon": "🎨",
-      "order": 15
+      "display_order": 15,
+      "audience_default": "visible",
+      "header_color": "#F8F2E4",
+      "examples": ["photography", "videography", "design studios", "florists"],
+      "legacy_aliases": ["information_media"]
     },
     {
-      "id": "personal_services",
-      "name": "Personal services",
-      "isic_sections": ["S"],
-      "examples": ["hairdressers", "auto repair", "dry cleaning", "funeral homes"],
-      "icon": "💇",
-      "order": 16
+      "id": "repair",
+      "name": "Repair services",
+      "tagline": "Cars, bikes, electronics, locks, alterations",
+      "icon": "🔧",
+      "display_order": 16,
+      "audience_default": "visible",
+      "header_color": "#EEE6D2",
+      "examples": ["auto repair", "electronics", "watch repair", "locksmiths"],
+      "legacy_aliases": ["personal_services"]
+    },
+    {
+      "id": "pet_services",
+      "name": "Pet services",
+      "tagline": "Vets, grooming, pet retail, doggy daycare",
+      "icon": "🐕",
+      "display_order": 17,
+      "audience_default": "visible",
+      "header_color": "#FDE9CC",
+      "examples": ["vets", "pet grooming", "pet store", "boarding"]
+    },
+    {
+      "id": "events_entertainment",
+      "name": "Events & entertainment",
+      "tagline": "Theaters, music venues, event producers, wedding services",
+      "icon": "🎉",
+      "display_order": 18,
+      "audience_default": "visible",
+      "header_color": "#FEE2E2",
+      "examples": ["theaters", "concerts", "event production", "weddings"],
+      "legacy_aliases": ["arts_entertainment"]
+    },
+    {
+      "id": "cultural",
+      "name": "Cultural",
+      "tagline": "Museums, libraries, galleries (small)",
+      "icon": "🏛️",
+      "display_order": 19,
+      "audience_default": "visible",
+      "header_color": "#EEE6D2",
+      "examples": ["museums", "galleries", "libraries", "archives"]
+    },
+    {
+      "id": "other_local",
+      "name": "Other local services",
+      "tagline": "Funeral, dry cleaning, niche services",
+      "icon": "✨",
+      "display_order": 20,
+      "audience_default": "visible",
+      "header_color": "#F8F2E4",
+      "examples": ["funeral", "dry cleaning", "wholesale", "translation"],
+      "legacy_aliases": ["admin_support", "wholesale"]
+    },
+    {
+      "id": "mining_energy",
+      "name": "Mining & energy",
+      "tagline": "Oil & gas, utilities, mining (large firms)",
+      "icon": "⛏️",
+      "display_order": 21,
+      "audience_default": "hidden",
+      "header_color": "#FBF7F2",
+      "examples": ["oil & gas", "utilities", "mining"],
+      "isic_sections": ["B", "D", "E"],
+      "legacy_aliases": ["mining_energy"]
+    },
+    {
+      "id": "heavy_industry",
+      "name": "Heavy industry",
+      "tagline": "Pharma, chemicals, semiconductors, aerospace, automotive",
+      "icon": "🏢",
+      "display_order": 22,
+      "audience_default": "hidden",
+      "header_color": "#FBF7F2",
+      "examples": ["pharma", "chemicals", "semiconductors", "aerospace"]
+    },
+    {
+      "id": "finance_corp",
+      "name": "Finance (corp)",
+      "tagline": "Banking, asset management, large insurance",
+      "icon": "🏦",
+      "display_order": 23,
+      "audience_default": "hidden",
+      "header_color": "#FBF7F2",
+      "examples": ["banking", "asset management", "insurance carriers"],
+      "isic_sections": ["K"]
+    },
+    {
+      "id": "telecom_broadcasting",
+      "name": "Telecom & broadcasting",
+      "tagline": "Carriers, TV, radio, satellite (large operators)",
+      "icon": "📡",
+      "display_order": 24,
+      "audience_default": "hidden",
+      "header_color": "#FBF7F2",
+      "examples": ["telecom carriers", "TV networks", "radio"]
+    },
+    {
+      "id": "higher_ed_hospitals",
+      "name": "Higher ed & hospitals",
+      "tagline": "Universities, hospitals, large institutions",
+      "icon": "🏛️",
+      "display_order": 25,
+      "audience_default": "hidden",
+      "header_color": "#FBF7F2",
+      "examples": ["universities", "hospitals", "research institutions"]
     }
   ]
 }

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { COUNTRIES, SECTORS, industryToSlug, visibleIndustries } from "@/lib/taxonomy";
+import { COUNTRIES, industryToSlug, visibleIndustries, visibleSectors } from "@/lib/taxonomy";
 import { flagFromIso2 } from "@/lib/countries";
 
 function readClientGate(): { revealMixed: boolean; revealCorp: boolean } {
@@ -93,13 +93,13 @@ export function GlobalSearch() {
             label: c.name,
             flag: flagFromIso2(c.code),
           })),
-        // Sectors
-        ...[...SECTORS]
-          .sort((a, b) => a.name.localeCompare(b.name))
+        // Sectors — only visible ones, in curated display order
+        ...visibleSectors(gate)
           .filter(
             (s) =>
               s.name.toLowerCase().includes(q) ||
-              s.examples.some((e) => e.toLowerCase().includes(q))
+              (s.examples || []).some((e) => e.toLowerCase().includes(q)) ||
+              (s.tagline || "").toLowerCase().includes(q)
           )
           .slice(0, 4)
           .map((s) => ({

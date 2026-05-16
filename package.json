@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "verify:taxonomy": "npx tsx scripts/verify_taxonomy.ts",
+    "prebuild": "npx tsx scripts/verify_taxonomy.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.0",
