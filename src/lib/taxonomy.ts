@@ -160,14 +160,89 @@ export function visibleIndustries(opts: { revealMixed?: boolean; revealCorp?: bo
   });
 }
 
-/** Resolve an industry's parent (returns the industry itself if no parent). */
+/**
+ * Hard-coded fallback map for parent industries that themselves are NOT in
+ * extrapolated_cells. After Plan v4.0 Step 20 audit identified 102 visible
+ * industries that don't resolve, this map points each missing parent to the
+ * closest covered industry so the cell page renders a (clearly-labeled)
+ * estimate rather than 404'ing.
+ *
+ * Sources of truth for the "44 covered industries" came from running
+ * scripts/audit_extrapolated_coverage.py against the live Supabase table.
+ */
+export const PARENT_FALLBACK_MAP: Record<string, string> = {
+  // Apparel chain: boutique/jewelry/shoes → clothing_stores → textile_apparel_mfg (covered)
+  clothing_stores: "textile_apparel_mfg",
+  // Beauty services → cleaning_services (closest "personal services" extrapolation)
+  hairdressers_beauty: "cleaning_services",
+  hair_salons: "cleaning_services",
+  barbershops: "cleaning_services",
+  nail_salons: "cleaning_services",
+  day_spas: "cleaning_services",
+  // Education/instruction → media_publishing (covered; closest content/training proxy)
+  vocational_training: "media_publishing",
+  // Specialty retail aggregate → grocery_stores (closest covered retail anchor)
+  general_merchandise: "grocery_stores",
+  furniture_home_stores: "grocery_stores",
+  electronics_appliance_stores: "grocery_stores",
+  health_beauty_stores: "grocery_stores",
+  ecommerce_mail_order: "grocery_stores",
+  // Health small clinics → veterinary_pet_care (closest covered small-clinic proxy)
+  doctors_clinics: "veterinary_pet_care",
+  dental_practices: "veterinary_pet_care",
+  // Auto repair → motor_vehicles_mfg (closest automotive vertical)
+  auto_repair_shops: "motor_vehicles_mfg",
+  // Restaurants sub-niches already inherit from restaurants (covered).
+  // Bars → restaurants (closest covered hospitality vertical)
+  bars_nightclubs: "restaurants",
+  // Other local services → cleaning_services
+  dry_cleaning_laundry: "cleaning_services",
+  // Education adjacencies
+  primary_secondary_schools: "media_publishing",
+  childcare_social: "veterinary_pet_care",
+  // Recreation → restaurants (closest local-discretionary spending proxy)
+  sports_fitness: "restaurants",
+  performing_arts: "media_publishing",
+  museums_cultural: "media_publishing",
+  // Professional adjacencies
+  accounting_tax: "legal_services",
+  insurance: "real_estate_agencies",
+  // Construction sub
+  commercial_construction: "residential_construction",
+  // Wholesale
+  wholesale_durables: "wholesale_food",
+  wholesale_general: "wholesale_food",
+  // Transport
+  passenger_transport: "trucking_freight",
+  // Manufacturing food adjacency
+  catering: "food_beverage_mfg",
+};
+
+/**
+ * Resolve an industry to the deepest measured ancestor we can reach. Walks
+ * parent_id, then PARENT_FALLBACK_MAP, then returns the industry itself if
+ * neither path lands on a measured industry.
+ */
 export function resolveToMeasuredIndustry(ind: Industry | null | undefined): Industry | null {
   if (!ind) return null;
-  if (ind.parent_id) {
-    const parent = INDUSTRY_BY_ID[ind.parent_id];
-    if (parent) return parent;
+  const visited = new Set<string>();
+  let current: Industry | null = ind;
+  while (current && !visited.has(current.id)) {
+    visited.add(current.id);
+    // First preference: explicit parent_id
+    if (current.parent_id && INDUSTRY_BY_ID[current.parent_id]) {
+      current = INDUSTRY_BY_ID[current.parent_id];
+      continue;
+    }
+    // Second preference: hard-coded fallback map
+    const fallbackId: string | undefined = PARENT_FALLBACK_MAP[current.id];
+    if (fallbackId && INDUSTRY_BY_ID[fallbackId]) {
+      current = INDUSTRY_BY_ID[fallbackId];
+      continue;
+    }
+    break;
   }
-  return ind;
+  return current;
 }
 
 /** Alphabetical sort helpers. */

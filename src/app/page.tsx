@@ -2,6 +2,7 @@ import { NavigatorForm } from "@/components/NavigatorForm";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { FeaturedCellTile, type FeaturedTileSpec } from "@/components/FeaturedCellTile";
 import { SectorMasterMenu } from "@/components/SectorMasterMenu";
+import { FirstFrameStrip } from "@/components/FirstFrameStrip";
 
 export const revalidate = 86400; // 1 day
 
@@ -46,6 +47,9 @@ export default function HomePage() {
         <div className="mt-8 md:mt-10">
           <NavigatorForm />
         </div>
+
+        {/* First-frame data preview — Plan v4.0 Step 15 */}
+        <FirstFrameStrip />
       </section>
 
       {/* Featured cells — above the fold (Plan v4.0 Step 15 + Step 16 + Step 19) */}
