@@ -28,11 +28,20 @@ export function AskClient() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question }),
       });
-      if (r.ok) {
+      if (r.status === 429) {
+        const j = await r.json().catch(() => ({}));
+        setResponse(
+          j.error ||
+            "You've hit the free-tier limit (10 questions per hour). Sign in or upgrade for unlimited."
+        );
+      } else if (r.ok) {
         const j = await r.json();
         setResponse(j.answer || "No answer yet — this feature isn't fully wired.");
       } else {
-        setResponse("Ask Atlas is still in preview. Join the waitlist below to get notified when it's live.");
+        const j = await r.json().catch(() => ({}));
+        setResponse(
+          j.error || "Ask Atlas is still in preview. Join the waitlist below to get notified when it's live."
+        );
       }
     } catch {
       setResponse("Network error.");

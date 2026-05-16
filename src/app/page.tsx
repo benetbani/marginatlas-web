@@ -3,6 +3,7 @@ import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { FeaturedCellTile, type FeaturedTileSpec } from "@/components/FeaturedCellTile";
 import { SectorMasterMenu } from "@/components/SectorMasterMenu";
 import { FirstFrameStrip } from "@/components/FirstFrameStrip";
+import { CellOfTheWeek } from "@/components/CellOfTheWeek";
 
 export const revalidate = 86400; // 1 day
 
@@ -78,6 +79,9 @@ export default function HomePage() {
 
       {/* Sector master menu — Plan v4.0 Step 13 */}
       <SectorMasterMenu />
+
+      {/* Cell of the week — Plan v4.0 Step 19 */}
+      <CellOfTheWeek />
 
       {/* Stats strip */}
       <section className="py-8 grid grid-cols-2 md:grid-cols-4 gap-4">

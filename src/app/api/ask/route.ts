@@ -133,12 +133,67 @@ async function callClaude(messages: { role: "user" | "assistant"; content: Block
   return r.json();
 }
 
+/**
+ * Per-IP usage cap (Plan v4.0 Step 27.8).
+ * In-memory buckets per Edge runtime instance — sufficient for the volume
+ * we expect at launch, keeps the free-tier serverless cost at zero, and
+ * works without an external store.
+ */
+const ASK_BUCKETS = new Map<string, { count: number; windowStart: number }>();
+const ASK_WINDOW_MS = 60 * 60 * 1000; // 1 hour
+const ASK_FREE_LIMIT = 10;
+
+function clientIpFromHeaders(req: NextRequest): string {
+  return (
+    req.headers.get("x-real-ip") ||
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    "unknown"
+  );
+}
+
+function checkAskQuota(ip: string): { allowed: boolean; remaining: number } {
+  const now = Date.now();
+  const b = ASK_BUCKETS.get(ip);
+  if (!b || now - b.windowStart > ASK_WINDOW_MS) {
+    ASK_BUCKETS.set(ip, { count: 1, windowStart: now });
+    return { allowed: true, remaining: ASK_FREE_LIMIT - 1 };
+  }
+  b.count++;
+  return { allowed: b.count <= ASK_FREE_LIMIT, remaining: Math.max(0, ASK_FREE_LIMIT - b.count) };
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json().catch(() => null);
     const question = body?.question?.trim?.();
     if (!question) {
       return NextResponse.json({ error: "missing question" }, { status: 400 });
+    }
+
+    // Free-tier per-IP cap (Plan v4.0 Step 27.8).
+    if (process.env.ANTHROPIC_API_KEY) {
+      const ip = clientIpFromHeaders(request);
+      const { allowed, remaining } = checkAskQuota(ip);
+      if (!allowed) {
+        return NextResponse.json(
+          {
+            error:
+              `You've hit the free-tier limit of ${ASK_FREE_LIMIT} questions per hour. ` +
+              `Sign in or upgrade to Pro for unlimited questions.`,
+          },
+          {
+            status: 429,
+            headers: {
+              "X-RateLimit-Limit": String(ASK_FREE_LIMIT),
+              "X-RateLimit-Remaining": "0",
+              "Retry-After": "3600",
+            },
+          }
+        );
+      }
+      // Stash the remaining count to send back as a response header on success.
+      // We'll use it via NextResponse below.
+      void remaining;
     }
 
     if (!process.env.ANTHROPIC_API_KEY) {
