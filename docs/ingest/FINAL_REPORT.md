@@ -94,14 +94,37 @@ All under `E:\atlas\scripts\ingest\`. Reusable for future phase execution:
 - `pagination.py` — generic API paginator with backoff
 - `dedup.py` — PK-stable client-side dedup before upload
 
-### Per-phase scripts (scaffolded, ready to execute once gated unblocks)
-- `eu_eurostat/fetch_nuts.py` — **WORKING** (Phase 1 executed)
-- `ca_statcan/fetch.py` — partial (table ID needs change)
-- `gb_ons/fetch.py` — scaffold (needs NOMIS code lookup)
-- `oecd/fetch_region_gva.py` — scaffold (SDMX endpoint URL migrated)
-- `wb/fetch_enterprise.py` — **WORKING** (wrote follow-up audit)
-- `city_overlay/fetch.py` — **WORKING** (Phase 18 executed)
-- Empty subfolders for: `de_destatis`, `es_ine`, `it_istat`, `jp_estat`, `kr_kosis`, `us_census`, `fr_insee`, `eu_lau`, `in_mca`, `cn_nbs`, `sea_cluster`, `latam_cluster`, `mena_africa`, `nz_stats`, `au_abs`
+### Per-phase scripts
+
+Tier A — WORKING and EXECUTED:
+- `eu_eurostat/fetch_nuts.py` — 43,903 rows. Strategy: pull all geos per (indic, year) call, merge in-memory before upload. Peak RAM 195 MB.
+- `jp_estat/fetch.py` — 6,951 rows. Table 0004040099 Economic Census 2024. 29 pages × 100k obs each, paginated via START_POSITION.
+- `us_census/fetch_cbp.py` — 87,573 rows. 51 states × 73 NAICS-3 codes = 3,723 calls. Per-state save for resume. ~1h50m wall-time.
+- `city_overlay/fetch.py` — 41,448 rows. Pure compute from extrapolated_cells × population-share × productivity-premium for 38 countries.
+- `city_overlay/fetch_br_cities.py` — 834 rows. Brazil-specific (BR not in extrapolated_cells, used regional_cells state data as parent).
+- `latam_cluster/br_ibge.py` — 1,483 rows. IBGE SIDRA table 6449, variable 2585 (Number of companies). 27 UFs × 74 CNAE divisions.
+- `wb/fetch_enterprise.py` — 0 new rows (audit only). Wrote `delivery/regional/wb_followup.csv` listing 158 countries that need ingest.
+
+Tier B — WORKING but BLOCKED:
+- `de_destatis/fetch.py` — Auth works (POST + HTTP header `username: TOKEN`). Free-tier catalogue only Germany + Länder; Kreis tables paid-only.
+
+Tier C — PARTIAL or NEEDS WORK:
+- `ca_statcan/fetch.py` — 65 rows from wrong source table (33-10-0270 was business-dynamics, not business-counts). Correct table: 33-10-0418-01. ~1 hour retry.
+- `gb_ons/fetch.py` — NOMIS API requires numeric IDs for `geography` (TYPE434 = LAD) and `industry` (146800640... = SIC sections). Per-dataset schema lookup needed.
+- `oecd/fetch_region_gva.py` — Endpoint migrated from `stats.oecd.org/SDMX-JSON/` to `sdmx.oecd.org/public/rest/data/` with new dataflow names. Likely `OECD.CFE.EDS,DSD_REG_ECO@DF_GVA_AGG,1.0` but needs verification.
+
+Tier D — EMPTY SCAFFOLD (folders exist, scripts to write):
+- `de_destatis/` (paid subscription required for Kreis, may stay empty)
+- `es_ine/` (INE DIRCE — per-table probe needed)
+- `it_istat/` (ISTAT SDMX — per-dataflow probe needed)
+- `kr_kosis/` (IMPOSSIBLE — needs Korean phone)
+- `fr_insee/` (Sirene 6 GB CSV — needs founder-side download first)
+- `eu_lau/` (per-country LAU bulk downloads)
+- `in_mca/` (India — manual download heavy)
+- `cn_nbs/` (China — PDF parsing required)
+- `sea_cluster/` (SG, MY, ID, TH, VN, PH — partial APIs)
+- `mena_africa/` (UAE, SA, IL, TR, EG, ZA, NG, KE, MA)
+- `nz_stats/`, `au_abs/` (SDMX per-dataset syntax)
 
 ---
 
