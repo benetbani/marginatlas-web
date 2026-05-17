@@ -1,11 +1,15 @@
 import type { MetadataRoute } from "next";
-import { getTopCells, slugify } from "@/lib/cells";
+import { getTopCells, getTopRegionalCells, slugify, regionalCellUrl } from "@/lib/cells";
 
 const BASE_URL = "https://marginatlas.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const top = await getTopCells(5000);
-  const cellUrls = top
+  const [topUs, topRegional] = await Promise.all([
+    getTopCells(5000),
+    getTopRegionalCells(10000),
+  ]);
+
+  const usUrls = topUs
     .filter((c) => c.geo_name && (c.industry_description || c.naics_6))
     .map((c) => ({
       url: `${BASE_URL}/${c.country.toLowerCase()}/${slugify(c.geo_name)}/${slugify(c.industry_description || c.naics_6)}`,
@@ -13,6 +17,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly" as const,
       priority: 0.7,
     }));
+
+  const regionalUrls = topRegional
+    .map((c) => regionalCellUrl(c))
+    .filter((u) => u.length > 0)
+    .map((path) => ({
+      url: `${BASE_URL}${path}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.6,
+    }));
+
   return [
     {
       url: `${BASE_URL}/`,
@@ -56,6 +71,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly",
       priority: 0.6,
     },
-    ...cellUrls,
+    ...usUrls,
+    ...regionalUrls,
   ];
 }

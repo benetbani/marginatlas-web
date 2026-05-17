@@ -120,6 +120,121 @@ export function slugify(s: string | null | undefined): string {
   return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 }
 
+/**
+ * Convert a URL slug to a regional_cells geo_id. Handles the four observed
+ * patterns:
+ *   - EU NUTS (no prefix):     'de212'             → 'DE212'
+ *   - JP / BR / CA prefixed:   'jp-13000'          → 'JP-13000'
+ *   - US county (FIPS):        'us-06-037'         → 'US-06-037'
+ *   - City overlay:            'us-city-new-york'  → 'US-CITY-new-york'
+ *
+ * The city-overlay case is special because the city name part stays
+ * lowercase in the geo_id; everything else uppercases cleanly.
+ */
+export function regionalSlugToGeoId(country: string, geoSlug: string): string {
+  const c = country.toUpperCase();
+  const slug = geoSlug.toLowerCase();
+  const cityPrefix = `${c.toLowerCase()}-city-`;
+  if (slug.startsWith(cityPrefix)) {
+    return `${c}-CITY-${slug.slice(cityPrefix.length)}`;
+  }
+  return slug.toUpperCase();
+}
+
+/** Normalise a regional_cells row to the unified Cell shape. */
+function normalizeRegionalRow(r: Record<string, unknown>): Cell {
+  const revP50 = r.rev_p50 as number | null;
+  const revPerFirm = (r.revenue_per_firm as number | null) ?? revP50;
+  const nEnt = r.n_enterprises as number | null;
+  const cell: Cell = {
+    country: ((r.country as string) || "").toUpperCase(),
+    geo_id: r.geo_id as string,
+    geo_level: (r.geo_level as string) || "region",
+    geo_name: (r.geo_name as string) || null,
+    naics_6: null,
+    naics_4: null,
+    industry_id: (r.industry_id as string) || null,
+    industry_description: null,
+    size_band: (r.size_band as string) || null,
+    year: (r.year as number) || 2024,
+    n_enterprises: nEnt,
+    n_employees: r.n_employees as number | null,
+    total_revenue: revPerFirm && nEnt ? revPerFirm * nEnt : null,
+    total_revenue_usd: revPerFirm && nEnt ? revPerFirm * nEnt : null,
+    revenue_per_firm: revPerFirm,
+    rev_p10: r.rev_p10 as number | null,
+    rev_p25: r.rev_p25 as number | null,
+    rev_p50: revP50,
+    rev_p75: r.rev_p75 as number | null,
+    rev_p90: r.rev_p90 as number | null,
+    payroll_per_employee: r.payroll_per_employee as number | null,
+    quality_score: r.quality_score as number | null,
+    coverage_tier: (r.coverage_tier as string) || "P",
+    coverage_source: (r.coverage_source as string) || "National business statistics",
+    currency: (r.currency as string) || "USD",
+  };
+  return applyTaxonomy(cell);
+}
+
+/**
+ * Resolve a (country, geoSlug, industrySlug) to a single best-fit row in
+ * regional_cells. Walks parent_id + PARENT_FALLBACK_MAP for the industry.
+ * Returns null on miss; callers fall through to extrapolated_cells.
+ */
+export async function getRegionalCell(
+  country: string,
+  geoSlug: string,
+  industrySlug: string,
+  selector: CellSelector = {}
+): Promise<Cell | null> {
+  const c = country.toUpperCase();
+  const geoId = regionalSlugToGeoId(c, geoSlug);
+  const rawInd = slugToIndustry(industrySlug);
+  const ind = resolveToMeasuredIndustry(rawInd);
+  if (!ind) return null;
+
+  let q = supabaseAdmin
+    .from("regional_cells")
+    .select("*")
+    .eq("country", c)
+    .eq("geo_id", geoId)
+    .eq("industry_id", ind.id)
+    .order("year", { ascending: false, nullsFirst: false })
+    .order("n_enterprises", { ascending: false, nullsFirst: false })
+    .limit(1);
+  if (selector.sizeBand) q = q.eq("size_band", selector.sizeBand);
+  if (selector.year) q = q.eq("year", selector.year);
+
+  const { data, error } = await q;
+  if (error || !data || data.length === 0) return null;
+  return normalizeRegionalRow(data[0] as Record<string, unknown>);
+}
+
+/** Regional variants — all years / size_bands for a (country, geo, industry). */
+export async function getRegionalCellVariants(
+  country: string,
+  geoSlug: string,
+  industrySlug: string
+): Promise<Cell[]> {
+  const c = country.toUpperCase();
+  const geoId = regionalSlugToGeoId(c, geoSlug);
+  const rawInd = slugToIndustry(industrySlug);
+  const ind = resolveToMeasuredIndustry(rawInd);
+  if (!ind) return [];
+
+  const { data, error } = await supabaseAdmin
+    .from("regional_cells")
+    .select("*")
+    .eq("country", c)
+    .eq("geo_id", geoId)
+    .eq("industry_id", ind.id)
+    .order("year", { ascending: false, nullsFirst: false })
+    .order("n_enterprises", { ascending: false, nullsFirst: false })
+    .limit(50);
+  if (error || !data) return [];
+  return data.map((r) => normalizeRegionalRow(r as Record<string, unknown>));
+}
+
 /** Add industry_id / industry_name / sector via taxonomy. */
 function applyTaxonomy(c: Cell): Cell {
   const industryId = c.industry_id ?? naics6ToIndustry(c.naics_6);
@@ -181,13 +296,22 @@ export async function getCellBySlug(
 ): Promise<Cell | null> {
   const country = countrySlug.toUpperCase();
 
-  // Non-US: fall through to extrapolated_cells (Phase F data).
+  // Non-US: regional_cells (sub-national) first, then extrapolated_cells.
   if (country !== "US") {
+    const regional = await getRegionalCell(country, geoSlug, industrySlug, selector);
+    if (regional) return regional;
     return getExtrapolatedCell(country, industrySlug, selector);
   }
 
+  // US: try state-level cells_master first; if the geoSlug isn't a state slug,
+  // it's likely a county or city geo_id (e.g. "us-06-037", "us-city-new-york")
+  // and lives in regional_cells.
   const geoId = SLUG_TO_GEO_ID[geoSlug.toLowerCase()];
-  if (!geoId) return null;
+  if (!geoId) {
+    const regional = await getRegionalCell("US", geoSlug, industrySlug, selector);
+    if (regional) return regional;
+    return null;
+  }
 
   // First try friendly industry slug → industry_id → matching NAICS-3 prefix.
   // Sub-niche industries (parent_id set) resolve up to the parent's NAICS-3,
@@ -240,9 +364,16 @@ export async function getCellVariants(
   industrySlug: string
 ): Promise<Cell[]> {
   const country = countrySlug.toUpperCase();
-  if (country !== "US") return getExtrapolatedVariants(country, industrySlug);
+  if (country !== "US") {
+    const regional = await getRegionalCellVariants(country, geoSlug, industrySlug);
+    if (regional.length) return regional;
+    return getExtrapolatedVariants(country, industrySlug);
+  }
   const geoId = SLUG_TO_GEO_ID[geoSlug.toLowerCase()];
-  if (!geoId) return [];
+  if (!geoId) {
+    const regional = await getRegionalCellVariants("US", geoSlug, industrySlug);
+    return regional;
+  }
 
   const ind = slugToIndustry(industrySlug);
   if (!ind || !(ind.naics_3 || []).length) return [];
@@ -705,6 +836,35 @@ export async function getTopCells(limit = 100): Promise<Cell[]> {
     .limit(limit);
   if (error || !data) return [];
   return data.map((r) => normalizeRow(r as Record<string, unknown>));
+}
+
+/**
+ * Top N regional_cells rows for the sitemap. Ranked by n_enterprises (proxy
+ * for "interesting"), filtered to cells that have a measurable footprint.
+ */
+export async function getTopRegionalCells(limit = 5000): Promise<Cell[]> {
+  const { data, error } = await supabaseAdmin
+    .from("regional_cells")
+    .select("country, geo_id, geo_level, geo_name, industry_id, year, size_band, n_enterprises, quality_score, coverage_tier, coverage_source")
+    .gte("n_enterprises", 5)
+    .order("quality_score", { ascending: false, nullsFirst: false })
+    .order("n_enterprises", { ascending: false, nullsFirst: false })
+    .limit(limit);
+  if (error || !data) return [];
+  return data.map((r) => normalizeRegionalRow(r as Record<string, unknown>));
+}
+
+/**
+ * Build a sitemap-friendly URL path from a regional_cells row. Uses the
+ * geo_id lowercased (preserving city-overlay case-insensitivity) and the
+ * industry slug.
+ */
+export function regionalCellUrl(c: Cell): string {
+  const country = c.country.toLowerCase();
+  const geoSlug = (c.geo_id || "").toLowerCase();
+  const industrySlug = c.industry_id ? industryToSlug(c.industry_id) : "";
+  if (!geoSlug || !industrySlug) return "";
+  return `/${country}/${geoSlug}/${industrySlug}`;
 }
 
 /** Comparable cells: same state, different industries. */
