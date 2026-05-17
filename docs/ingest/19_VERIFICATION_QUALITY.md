@@ -15,9 +15,9 @@
 | 05 IT comuni | DEFERRED | 0 / 30,000 target | — | ISTAT SDMX needs per-dataflow probe |
 | 06 ES municipios | DEFERRED | 0 / 30,000 target | — | INE DIRCE needs per-table probe |
 | 07 UK LAD/MSOA | PARTIAL | 0 / 37,000 target | — | NOMIS API needs numeric ID lookups |
-| 08 JP municipalities | DEFERRED | 0 / 7,500 target | — | needs ESTAT_APP_ID env var |
+| 08 JP municipalities | DONE | 6,951 / 7,500 target | spot-checks pending | ESTAT_APP_ID received; Table 0004040099 (Economic Census 2024) → 47 prefectures + 100+ municipalities × ~55 industries. JSIC 2-digit divisions mapped via ISIC bridge (broadly correct; some niche divisions may need a dedicated JSIC table — flagged for follow-up). |
 | 09 KR sigungu | DEFERRED | 0 / 7,000 target | — | needs KOSIS API key |
-| 10 US counties+MSA+ZIP | IN PROGRESS | ~9,000+ live and growing / 175,000 target | spot-checks pending | CENSUS_API_KEY received. Running in background: 51 states × 73 NAICS-3 codes. As of last check 8/51 states done; flush batches arriving every 5,000 rows. Expected total 50,000-80,000 cells. |
+| 10 US counties+MSA+ZIP | IN PROGRESS | 30,985 live (and growing) / 175,000 target | spot-checks pending | CENSUS_API_KEY received. Running in background: 51 states × 73 NAICS-3 codes. As of last check 21/51 states done (41%). Flush batches every 5,000 rows. Expected total 50,000-80,000 cells. |
 | 11 CA CSD | PARTIAL | 65 / 30,000 target | 1/1 spot-check renders | StatCan table 33-10-0270 was wrong; correct table is 33-10-0418 |
 | 12 AU+NZ | DEFERRED | 0 / 22,500 target | — | ABS/Stats NZ SDMX per-dataset key syntax needed |
 | 13 IN+CN | DEFERRED | 0 / 20,000 target | — | source data is PDF + manual download heavy |
@@ -26,7 +26,7 @@
 | 16 MENA+AF | DEFERRED | 0 / 22,000 target | — | scaffolded |
 | 17 OECD+WB | PARTIAL | 0 / 8,000 target | — | OECD SDMX endpoint URL migrated; wrote wb_followup.csv with 158 countries needing follow-up |
 | 18 City overlay | DONE | 41,448 / 5,000 target | spot-checks pending | 38 countries × 4–12 cities each × ~30 industries; tier 'X'; quality ~37 |
-| **TOTAL** | | **85,416 / ~940,000** | | regional_cells in Supabase: 85,736 rows |
+| **TOTAL** | | **122,821 live / ~940,000 target** | | regional_cells in Supabase: 122,821 rows (US still flushing — expected to climb to ~160k) |
 
 ## Quality gates (per phase)
 
