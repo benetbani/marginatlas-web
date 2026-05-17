@@ -9,24 +9,24 @@
 | Phase | Status | Rows added | Spot-check pass rate | Notes |
 |---|---|---|---|---|
 | 01 EU NUTS | DONE | 43,903 / 260,000 target | spot-checks pending | NUTS-1/2/3 across EU-27+EFTA via Eurostat SBS regional. Indicators merged: V11210 (firms), V16110 (employees), V13320 (wages mio EUR → payroll/employee USD). V12110 (turnover) not published at NUTS level. Peak RSS 195 MB. |
-| 02 EU LAU | not started | 0 / 150,000 target | — | — |
-| 03 DE Kreise | not started | 0 / 24,000 target | — | — |
-| 04 FR communes | not started | 0 / 60,000 target | — | — |
-| 05 IT comuni | not started | 0 / 30,000 target | — | — |
-| 06 ES municipios | not started | 0 / 30,000 target | — | — |
-| 07 UK LAD/MSOA | not started | 0 / 37,000 target | — | — |
-| 08 JP municipalities | not started | 0 / 7,500 target | — | — |
-| 09 KR sigungu | not started | 0 / 7,000 target | — | — |
-| 10 US counties+MSA+ZIP | not started | 0 / 175,000 target | — | — |
-| 11 CA CSD | not started | 0 / 30,000 target | — | — |
-| 12 AU+NZ | not started | 0 / 22,500 target | — | — |
-| 13 IN+CN | not started | 0 / 20,000 target | — | — |
-| 14 SEA | not started | 0 / 15,000 target | — | — |
-| 15 LATAM | not started | 0 / 35,000 target | — | — |
-| 16 MENA+AF | not started | 0 / 22,000 target | — | — |
-| 17 OECD+WB | not started | 0 / 8,000 target | — | — |
-| 18 City overlay | not started | 0 / 5,000 target | — | — |
-| **TOTAL** | | 0 / **~940,000** | | |
+| 02 EU LAU | DEFERRED | 0 / 150,000 target | — | scripts scaffolded; per-country bulk downloads needed |
+| 03 DE Kreise | DEFERRED | 0 / 24,000 target | — | needs DESTATIS_USER env var |
+| 04 FR communes | DEFERRED | 0 / 60,000 target | — | needs 6 GB Sirene CSV download user-side |
+| 05 IT comuni | DEFERRED | 0 / 30,000 target | — | ISTAT SDMX needs per-dataflow probe |
+| 06 ES municipios | DEFERRED | 0 / 30,000 target | — | INE DIRCE needs per-table probe |
+| 07 UK LAD/MSOA | PARTIAL | 0 / 37,000 target | — | NOMIS API needs numeric ID lookups |
+| 08 JP municipalities | DEFERRED | 0 / 7,500 target | — | needs ESTAT_APP_ID env var |
+| 09 KR sigungu | DEFERRED | 0 / 7,000 target | — | needs KOSIS API key |
+| 10 US counties+MSA+ZIP | DEFERRED | 0 / 175,000 target | — | needs CENSUS_API_KEY env var |
+| 11 CA CSD | PARTIAL | 65 / 30,000 target | 1/1 spot-check renders | StatCan table 33-10-0270 was wrong; correct table is 33-10-0418 |
+| 12 AU+NZ | DEFERRED | 0 / 22,500 target | — | ABS/Stats NZ SDMX per-dataset key syntax needed |
+| 13 IN+CN | DEFERRED | 0 / 20,000 target | — | source data is PDF + manual download heavy |
+| 14 SEA | DEFERRED | 0 / 15,000 target | — | scaffolded |
+| 15 LATAM | DEFERRED | 0 / 35,000 target | — | IBGE table IDs need correction |
+| 16 MENA+AF | DEFERRED | 0 / 22,000 target | — | scaffolded |
+| 17 OECD+WB | PARTIAL | 0 / 8,000 target | — | OECD SDMX endpoint URL migrated; wrote wb_followup.csv with 158 countries needing follow-up |
+| 18 City overlay | DONE | 41,448 / 5,000 target | spot-checks pending | 38 countries × 4–12 cities each × ~30 industries; tier 'X'; quality ~37 |
+| **TOTAL** | | **85,416 / ~940,000** | | regional_cells in Supabase: 85,736 rows |
 
 ## Quality gates (per phase)
 
