@@ -38,7 +38,8 @@
         "01"
       ],
       "naics_3": [
-        "111"
+        "111",
+        "115"
       ],
       "nace_divisions": [
         "01"
@@ -586,7 +587,8 @@
         "21"
       ],
       "naics_3": [
-        "325"
+        "325",
+        "324"
       ],
       "nace_divisions": [
         "20",
@@ -666,7 +668,8 @@
       ],
       "naics_3": [
         "331",
-        "332"
+        "332",
+        "327"
       ],
       "nace_divisions": [
         "24",
@@ -1657,7 +1660,10 @@
         "decor",
         "interior shop"
       ],
-      "sector_id": "retail_shops"
+      "sector_id": "retail_shops",
+      "naics_3": [
+        "453"
+      ]
     },
     {
       "id": "health_beauty_stores",
@@ -1828,7 +1834,10 @@
         "bookshop",
         "used books"
       ],
-      "sector_id": "retail_shops"
+      "sector_id": "retail_shops",
+      "naics_3": [
+        "451"
+      ]
     },
     {
       "id": "toy_game_stores",
@@ -1846,7 +1855,10 @@
         "hobby shop",
         "board games"
       ],
-      "sector_id": "retail_shops"
+      "sector_id": "retail_shops",
+      "naics_3": [
+        "451"
+      ]
     },
     {
       "id": "pet_stores",
@@ -1862,7 +1874,10 @@
         "pet supplies",
         "aquarium store"
       ],
-      "sector_id": "pet_services"
+      "sector_id": "pet_services",
+      "naics_3": [
+        "453"
+      ]
     },
     {
       "id": "sporting_goods_specialty",
@@ -1881,7 +1896,10 @@
         "running store",
         "outdoor"
       ],
-      "sector_id": "retail_shops"
+      "sector_id": "retail_shops",
+      "naics_3": [
+        "451"
+      ]
     },
     {
       "id": "art_craft_supplies",
@@ -1899,7 +1917,10 @@
         "yarn shop",
         "fabric store"
       ],
-      "sector_id": "retail_shops"
+      "sector_id": "retail_shops",
+      "naics_3": [
+        "453"
+      ]
     },
     {
       "id": "music_instrument_shops",
@@ -1917,7 +1938,10 @@
         "guitar shop",
         "piano shop"
       ],
-      "sector_id": "retail_shops"
+      "sector_id": "retail_shops",
+      "naics_3": [
+        "451"
+      ]
     },
     {
       "id": "stationery_paper",
@@ -1934,7 +1958,10 @@
         "card shop",
         "stationer"
       ],
-      "sector_id": "retail_shops"
+      "sector_id": "retail_shops",
+      "naics_3": [
+        "453"
+      ]
     },
     {
       "id": "florist_shops",
@@ -1950,7 +1977,10 @@
         "flower shop",
         "flowers"
       ],
-      "sector_id": "retail_shops"
+      "sector_id": "retail_shops",
+      "naics_3": [
+        "453"
+      ]
     },
     {
       "id": "trucking_freight",
@@ -2023,7 +2053,9 @@
         "49"
       ],
       "naics_3": [
-        "485"
+        "485",
+        "487",
+        "488"
       ],
       "nace_divisions": [
         "49"
@@ -2639,7 +2671,8 @@
       ],
       "naics_3": [
         "511",
-        "512"
+        "512",
+        "519"
       ],
       "nace_divisions": [
         "58",
@@ -2733,7 +2766,8 @@
         "66"
       ],
       "naics_3": [
-        "523"
+        "523",
+        "525"
       ],
       "nace_divisions": [
         "64",
@@ -4406,14 +4440,266 @@
         "96"
       ]
     },
-    {"id": "pet_daycare", "name": "Pet daycare & boarding", "audience": "smb_core", "examples": ["dog daycare", "cat boarding", "pet hotels"], "keywords": ["pet daycare", "dog daycare", "boarding", "pet hotel", "kennel"], "sector_id": "pet_services"},
-    {"id": "pet_walking_sitting", "name": "Pet walking & sitting", "audience": "smb_core", "examples": ["dog walkers", "pet sitters", "home visits"], "keywords": ["dog walker", "pet sitter", "pet sitting", "dog walking"], "sector_id": "pet_services"},
-    {"id": "pet_training", "name": "Pet training", "audience": "smb_core", "examples": ["dog training", "puppy classes", "obedience"], "keywords": ["dog training", "pet training", "obedience", "puppy class"], "sector_id": "pet_services"},
-    {"id": "art_galleries_small", "name": "Independent art galleries", "audience": "smb_core", "examples": ["contemporary art", "local artists", "exhibition spaces"], "keywords": ["art gallery", "exhibition", "contemporary art", "fine art"], "sector_id": "cultural"},
-    {"id": "small_museums", "name": "Small museums", "audience": "smb_core", "examples": ["local history museums", "themed museums", "private collections"], "keywords": ["museum", "small museum", "history museum", "themed museum"], "sector_id": "cultural"},
-    {"id": "private_libraries_archives", "name": "Private libraries & archives", "audience": "smb_core", "examples": ["specialty libraries", "research archives", "rare books"], "keywords": ["library", "archive", "rare books", "research library"], "sector_id": "cultural"},
-    {"id": "guest_houses", "name": "Guest houses & pensions", "audience": "smb_core", "examples": ["guest houses", "pensions", "small lodges"], "keywords": ["guest house", "pension", "lodge", "small lodging"], "sector_id": "hospitality"},
-    {"id": "campgrounds_rv_parks", "name": "Campgrounds & RV parks", "audience": "smb_core", "examples": ["RV parks", "campgrounds", "glamping sites"], "keywords": ["campground", "rv park", "camping", "glamping", "tent site"], "sector_id": "hospitality"},
-    {"id": "specialty_construction", "name": "Specialty construction services", "audience": "smb_core", "examples": ["foundation", "demolition", "scaffolding", "site preparation"], "keywords": ["foundation", "demolition", "scaffolding", "site prep", "excavation"], "sector_id": "construction"}
+    {
+      "id": "pet_daycare",
+      "name": "Pet daycare & boarding",
+      "audience": "smb_core",
+      "examples": [
+        "dog daycare",
+        "cat boarding",
+        "pet hotels"
+      ],
+      "keywords": [
+        "pet daycare",
+        "dog daycare",
+        "boarding",
+        "pet hotel",
+        "kennel"
+      ],
+      "sector_id": "pet_services"
+    },
+    {
+      "id": "pet_walking_sitting",
+      "name": "Pet walking & sitting",
+      "audience": "smb_core",
+      "examples": [
+        "dog walkers",
+        "pet sitters",
+        "home visits"
+      ],
+      "keywords": [
+        "dog walker",
+        "pet sitter",
+        "pet sitting",
+        "dog walking"
+      ],
+      "sector_id": "pet_services"
+    },
+    {
+      "id": "pet_training",
+      "name": "Pet training",
+      "audience": "smb_core",
+      "examples": [
+        "dog training",
+        "puppy classes",
+        "obedience"
+      ],
+      "keywords": [
+        "dog training",
+        "pet training",
+        "obedience",
+        "puppy class"
+      ],
+      "sector_id": "pet_services"
+    },
+    {
+      "id": "art_galleries_small",
+      "name": "Independent art galleries",
+      "audience": "smb_core",
+      "examples": [
+        "contemporary art",
+        "local artists",
+        "exhibition spaces"
+      ],
+      "keywords": [
+        "art gallery",
+        "exhibition",
+        "contemporary art",
+        "fine art"
+      ],
+      "sector_id": "cultural"
+    },
+    {
+      "id": "small_museums",
+      "name": "Small museums",
+      "audience": "smb_core",
+      "examples": [
+        "local history museums",
+        "themed museums",
+        "private collections"
+      ],
+      "keywords": [
+        "museum",
+        "small museum",
+        "history museum",
+        "themed museum"
+      ],
+      "sector_id": "cultural"
+    },
+    {
+      "id": "private_libraries_archives",
+      "name": "Private libraries & archives",
+      "audience": "smb_core",
+      "examples": [
+        "specialty libraries",
+        "research archives",
+        "rare books"
+      ],
+      "keywords": [
+        "library",
+        "archive",
+        "rare books",
+        "research library"
+      ],
+      "sector_id": "cultural"
+    },
+    {
+      "id": "guest_houses",
+      "name": "Guest houses & pensions",
+      "audience": "smb_core",
+      "examples": [
+        "guest houses",
+        "pensions",
+        "small lodges"
+      ],
+      "keywords": [
+        "guest house",
+        "pension",
+        "lodge",
+        "small lodging"
+      ],
+      "sector_id": "hospitality"
+    },
+    {
+      "id": "campgrounds_rv_parks",
+      "name": "Campgrounds & RV parks",
+      "audience": "smb_core",
+      "examples": [
+        "RV parks",
+        "campgrounds",
+        "glamping sites"
+      ],
+      "keywords": [
+        "campground",
+        "rv park",
+        "camping",
+        "glamping",
+        "tent site"
+      ],
+      "sector_id": "hospitality"
+    },
+    {
+      "id": "specialty_construction",
+      "name": "Specialty construction services",
+      "audience": "smb_core",
+      "examples": [
+        "foundation",
+        "demolition",
+        "scaffolding",
+        "site preparation"
+      ],
+      "keywords": [
+        "foundation",
+        "demolition",
+        "scaffolding",
+        "site prep",
+        "excavation"
+      ],
+      "sector_id": "construction"
+    },
+    {
+      "id": "air_transport_carriers",
+      "name": "Air transportation carriers",
+      "audience": "corp_only",
+      "examples": [
+        "passenger airlines",
+        "cargo airlines",
+        "charter operators"
+      ],
+      "keywords": [
+        "airline",
+        "air carrier",
+        "aviation",
+        "cargo air",
+        "charter flight"
+      ],
+      "sector_id": "transport_small",
+      "isic_divisions": [
+        "51"
+      ],
+      "naics_3": [
+        "481"
+      ],
+      "nace_divisions": [
+        "51"
+      ]
+    },
+    {
+      "id": "rail_transport_carriers",
+      "name": "Rail transportation",
+      "audience": "corp_only",
+      "examples": [
+        "freight rail",
+        "passenger rail",
+        "commuter rail"
+      ],
+      "keywords": [
+        "rail",
+        "railway",
+        "freight rail",
+        "passenger rail"
+      ],
+      "sector_id": "transport_small",
+      "isic_divisions": [
+        "49"
+      ],
+      "naics_3": [
+        "482"
+      ],
+      "nace_divisions": [
+        "49"
+      ]
+    },
+    {
+      "id": "water_transport_carriers",
+      "name": "Water transportation",
+      "audience": "corp_only",
+      "examples": [
+        "ocean freight",
+        "inland shipping",
+        "ferry operators"
+      ],
+      "keywords": [
+        "shipping",
+        "ocean freight",
+        "maritime",
+        "ferry"
+      ],
+      "sector_id": "transport_small",
+      "isic_divisions": [
+        "50"
+      ],
+      "naics_3": [
+        "483"
+      ],
+      "nace_divisions": [
+        "50"
+      ]
+    },
+    {
+      "id": "pipeline_transport",
+      "name": "Pipeline transportation",
+      "audience": "corp_only",
+      "examples": [
+        "oil pipelines",
+        "gas pipelines",
+        "refined products pipelines"
+      ],
+      "keywords": [
+        "pipeline",
+        "oil pipeline",
+        "gas pipeline"
+      ],
+      "sector_id": "transport_small",
+      "isic_divisions": [
+        "49"
+      ],
+      "naics_3": [
+        "486"
+      ],
+      "nace_divisions": [
+        "49"
+      ]
+    }
   ]
 }
