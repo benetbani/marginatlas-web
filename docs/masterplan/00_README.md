@@ -61,6 +61,11 @@ without the others, with the exception of:
 | 13 | `13_TRACK_K_VERIFICATION_AND_QA.md` | Per-track gates + final smoke test | 280 |
 | 14 | `14_TRACK_L_HANDOFF_REFRESH.md` | Update `docs/handoff/` so next session picks up cleanly | 220 |
 | 15 | `15_EXECUTION_PROMPT.md` | Paste-ready prompt for a fresh session | 220 |
+| 16 | `16_TRACK_M_TOP_CITIES_PRIORITY.md` | **Wave 2.** Curate the canonical 100-city list with tier classification | 250 |
+| 17 | `17_TRACK_N_COUNTRY_CITY_SHORTCUTS.md` | **Wave 2.** Country landing pages get 6-12 city quick-pick tiles | 240 |
+| 18 | `18_TRACK_O_NEIGHBORHOOD_DEEP_DIVE.md` | **Wave 2.** Drill into neighborhoods/boroughs for tier-1 cities (~26k new cells) | 280 |
+| 19 | `19_TRACK_P_TAX_OVERLAY.md` | **Wave 2.** Post-tax + social contribution view on cell pages | 270 |
+| 20 | `20_TRACK_Q_OPTIONAL_HIERARCHY_UX.md` | **Wave 2.** Fluid navigation — drop in at any level, skip levels freely | 260 |
 
 ---
 
@@ -135,3 +140,17 @@ When a session is executing this plan:
 | J | Sitemap regen, quality badges, OG images, SEO polish |
 | K | Per-track verification gates + final smoke test on 200 URLs |
 | L | Refresh `docs/handoff/` to reflect the new state |
+| **M** | **Wave 2.** Curate top-100 cities list with tier classification |
+| **N** | **Wave 2.** Country pages get 6-12 city quick-pick tiles |
+| **O** | **Wave 2.** Neighborhood drill-down for tier-1 cities (NYC boroughs, London, Tokyo, etc.) |
+| **P** | **Wave 2.** Post-tax + social contribution overlay on cell pages |
+| **Q** | **Wave 2.** Optional-hierarchy navigation — drop in at any level |
+
+### Wave priority
+
+- **Wave 1 (data layer + ingest)**: B → C → D → E → F → G → H → I → J → K → L (current execution arc)
+- **Wave 2 (city-centric UX + tax)**: M → N → Q → O → P (depends on Wave 1 ingest landing)
+
+Wave 2 reflects the founder's strategic direction: cities matter
+disproportionately, navigation should be fluid, neighborhoods for
+top metros, taxes as exploratory.

@@ -40,6 +40,11 @@
 | J.6 Featured tiles | PENDING | — | — |
 | K Verification | PENDING | n/a | — |
 | L Handoff refresh | PENDING | n/a | — |
+| **M Top-100 cities list** (Wave 2) | PENDING | n/a | — |
+| **N Country city shortcuts** (Wave 2) | PENDING | n/a | — |
+| **O Neighborhood drill-down** (Wave 2) | PENDING | n/a | — |
+| **P Tax overlay** (Wave 2) | PENDING | n/a | — |
+| **Q Optional-hierarchy UX** (Wave 2) | PENDING | n/a | — |
 
 ## Notes per track
 
@@ -131,3 +136,4 @@ clearly so the next session executes it first before any further ingest.
 - **2026-05-17 session start**: founder issued "go" signal after master plan accepted. A.1 + A.3 DONE (founder); A.2 + A.5 DEFERRED with Lorem Ipsum override. Beginning sequential execution from Track B.
 - **2026-05-17 mid-session**: B DONE (+13 NAICS-3 codes, +4 industries); C.1 PARTIAL (+2,162 CA rows, table mystery solved via cube list); C.3 in background (~13 new codes × 51 states); discovered B-014 critical data-layer bug.
 - **2026-05-17 late-session**: C.3 DONE (+6,867 US rows); B-014 RESOLVED (5 functions added, fallback chain rewritten, verified live on 5 URLs); J.1 DONE (sitemap regen). Total regional_cells: 179,409 → 186,640. Session ending after Track L handoff refresh.
+- **2026-05-18 planning extension**: Founder shared strategic direction (city-disproportionate focus, optional hierarchy, neighborhoods for tier-1, taxes exploratory). Added 5 new Wave 2 tracks (M, N, O, P, Q) to master plan. Not yet executed — pending founder go signal.
