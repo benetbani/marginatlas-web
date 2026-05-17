@@ -88,19 +88,19 @@ repo).
 |---|---|---|
 | `cells_master` | ~722,000 | v1.5 US Census SUSB pre-existing data |
 | `extrapolated_cells` | 57,816 | Regression-based country estimates (219 country codes) |
-| `regional_cells` | **179,409** | Sub-national data added across sessions 3-4 |
+| `regional_cells` | **186,640** | Sub-national data; sessions 3-5 (delta +7,231 in session 5) |
 
 ### regional_cells breakdown (Session 4 work)
 
 | Country / source | Rows | Tier | Phase |
 |---|---|---|---|
-| United States (county-level via Census CBP) | 87,573 | P | 10 |
+| United States (county-level via Census CBP) | 92,707 | P | 10 + Track C.3 re-execute (session 5) |
 | EU-27 + EFTA (NUTS-1/2/3 via Eurostat) | 43,903 | S | 1 |
 | Global city overlay (38 countries) | 41,448 | X | 18 |
 | Japan (prefecture + municipality via e-Stat) | 6,951 | P | 8 |
+| Canada (correct table 33-10-1095) | 2,227 | P | 11 + Track C.1 retry (session 5) |
 | Brazil (state via IBGE) | 1,483 | P | 15 |
 | Brazil cities (derived from BR states) | 834 | X | 18b |
-| Canada (partial — wrong source table) | 65 | P | 11 |
 
 ### RLS policies
 

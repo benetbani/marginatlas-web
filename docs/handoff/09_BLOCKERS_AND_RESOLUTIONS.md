@@ -10,19 +10,20 @@
 
 | ID | Title | Severity | Owner | Resolution time | Status |
 |---|---|---|---|---|---|
-| **B-001** | Cloudflare DNS for marginatlas.com | HIGH | Founder | 5 min | OPEN |
-| **B-002** | Editorial tone undecided | MEDIUM | Founder | 30 min thinking | OPEN |
+| **B-001** | Cloudflare DNS for marginatlas.com | HIGH | Founder | 5 min | CLOSED (founder confirmed session 5) |
+| **B-002** | Editorial tone undecided | MEDIUM | Founder | 30 min thinking | OPEN (founder explicit: Lorem Ipsum acceptable for now) |
 | **B-003** | France Sirene 6 GB CSV download | LOW | Founder | 30 min download | OPEN |
-| **B-004** | NAICS-3 taxonomy coverage gap | MEDIUM | Engineering | 1-2 hours | OPEN |
-| **B-005** | Canada StatCan wrong source table | LOW | Engineering | 1 hour | OPEN |
+| **B-004** | NAICS-3 taxonomy coverage gap | MEDIUM | Engineering | 1-2 hours | CLOSED (session 5 Track B; 73 → 86 codes; +13 codes + 4 new industries; 5 skipped as non-applicable) |
+| **B-005** | Canada StatCan wrong source table | LOW | Engineering | 1 hour | PARTIAL (session 5: correct table 33-10-1095 found, +2,162 rows; below 12k target as single-snapshot table caps yield; multi-snapshot stacking deferred) |
 | **B-006** | OECD SDMX endpoint migration | LOW | Engineering | 2 hours | OPEN |
 | **B-007** | UK NOMIS numeric ID lookup | LOW | Engineering | 3-4 hours | OPEN |
-| **B-008** | Real images for 18 surfaces | LOW | Founder + designer | TBD | OPEN |
+| **B-008** | Real images for 18 surfaces | LOW | Founder + designer | TBD | OPEN (founder will provide later) |
 | **B-009** | Korea KOSIS impossible | PERMANENT | — | — | CLOSED (permanent skip) |
 | **B-010** | Germany Destatis Kreis paid-only | PERMANENT | — | — | CLOSED (DUPLICATE — Eurostat covers) |
 | **B-011** | Auth + Stripe not built | DEFERRED | Engineering | 2-3 days | OPEN (deferred until founder asks) |
 | **B-012** | EU LAU per-country pipelines | LOW | Engineering | 5-8 hours | OPEN |
 | **B-013** | Smaller country ingest pipelines | LOW | Engineering | Multi-day | OPEN |
+| **B-014** | regional_cells invisible to website data layer | CRITICAL | Engineering | 3-4 hours | CLOSED (session 5; 5 functions added + getCellBySlug/getCellVariants/sitemap rewritten; verified live on DE/JP/BR/CA/US URLs) |
 
 ---
 
