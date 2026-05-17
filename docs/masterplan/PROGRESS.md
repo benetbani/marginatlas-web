@@ -18,9 +18,9 @@
 | C.3 US re-execute | DONE | +6,867 rows (US total 87,573 → 92,707) | 2026-05-17 |
 | **B-014 critical fix** | DONE — regional_cells now reachable from data layer | n/a (5 functions added + sitemap rewrite) | 2026-05-17 |
 | J.1 Sitemap regen | DONE (includes top 10k regional_cells) | n/a | 2026-05-17 |
-| D.2 Netherlands | PENDING | — | — |
-| D.5 Spain | PENDING | — | — |
-| D.8 Italy | PENDING | — | — |
+| D.2 Netherlands | PARTIAL — +4,799 rows (below 10k target; CBS publishes section-level only at gemeente granularity, 14 industries × 483 gemeenten) | +4,799 | 2026-05-18 |
+| D.5 Spain | DONE — +11,287 rows (52 provinces × CNAE divisions × strata; table 301; below 30k target due to NACE→industry_id dedup) | +11,287 | 2026-05-18 |
+| D.8 Italy | DEFERRED — ISTAT bulk SDMX exceeds 600s curl timeout; chunked per-region fetch needed (next session) | 0 | — |
 | E.2 UK LAD | PENDING | — | — |
 | E.3 UK MSOA | PENDING (stretch) | — | — |
 | F OECD | PENDING | — | — |
@@ -137,3 +137,15 @@ clearly so the next session executes it first before any further ingest.
 - **2026-05-17 mid-session**: B DONE (+13 NAICS-3 codes, +4 industries); C.1 PARTIAL (+2,162 CA rows, table mystery solved via cube list); C.3 in background (~13 new codes × 51 states); discovered B-014 critical data-layer bug.
 - **2026-05-17 late-session**: C.3 DONE (+6,867 US rows); B-014 RESOLVED (5 functions added, fallback chain rewritten, verified live on 5 URLs); J.1 DONE (sitemap regen). Total regional_cells: 179,409 → 186,640. Session ending after Track L handoff refresh.
 - **2026-05-18 planning extension**: Founder shared strategic direction (city-disproportionate focus, optional hierarchy, neighborhoods for tier-1, taxes exploratory). Added 5 new Wave 2 tracks (M, N, O, P, Q) to master plan. Not yet executed — pending founder go signal.
+- **2026-05-18 Wave 1 push**: Founder issued "go". Track D.2 Netherlands +4,799 rows (CBS 81575NED, section-level SBI x 483 gemeenten). Track D.5 Spain +11,287 rows (INE table 301, province x CNAE x strata). Track D.8 Italy deferred (ISTAT ASIAULP_7 dataflow size exceeds 10-min curl timeout; needs per-region chunked fetch). regional_cells total: 186,640 → 202,726 (+16,086).
+
+## Italy next-session notes (D.8)
+
+- Dataflow ID: `IT1,183_285_DF_DICA_ASIAULP_7,1.0`
+- Endpoint: `https://esploradati.istat.it/SDMXWS/rest/data/`
+- Accept header: `application/vnd.sdmx.data+json;version=2.0`
+- Full-Italy fetch is ~70+ MB and exceeds 10-min bandwidth budget.
+- Strategy for next session: chunked fetch by region code. ISTAT dimension keys allow filtering; replace `all/` with `<region_code>/` in URL. Probe `https://esploradati.istat.it/SDMXWS/rest/datastructure/IT1/DICA_ASIAULP/1.0` first to enumerate region codes.
+- Alternative: download the cube via ISTAT's bulk export at `https://www.istat.it/it/files/2024/...` (annual CSV) — faster than SDMX.
+- Same NACE 2-digit mapping pattern as Spain (`nace_to_industry_id`). Provinces correspond to ITC1..ITF6 etc.
+- Target: ~30k rows.
