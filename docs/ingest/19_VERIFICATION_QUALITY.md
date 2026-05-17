@@ -8,7 +8,7 @@
 
 | Phase | Status | Rows added | Spot-check pass rate | Notes |
 |---|---|---|---|---|
-| 01 EU NUTS | not started | 0 / 260,000 target | — | — |
+| 01 EU NUTS | DONE | 43,903 / 260,000 target | spot-checks pending | NUTS-1/2/3 across EU-27+EFTA via Eurostat SBS regional. Indicators merged: V11210 (firms), V16110 (employees), V13320 (wages mio EUR → payroll/employee USD). V12110 (turnover) not published at NUTS level. Peak RSS 195 MB. |
 | 02 EU LAU | not started | 0 / 150,000 target | — | — |
 | 03 DE Kreise | not started | 0 / 24,000 target | — | — |
 | 04 FR communes | not started | 0 / 60,000 target | — | — |
