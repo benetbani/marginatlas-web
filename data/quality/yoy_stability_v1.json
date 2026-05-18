@@ -1,0 +1,10 @@
+{
+  "generated_at": "2026-05-18T21:25:43Z",
+  "method": "Year-over-year revenue/firm change > 50% (ratio >= 1.5 or <= 0.667). Pandemic years 2020-2021 transitions excluded.",
+  "totals": {
+    "unique_series": 82125,
+    "multi_year_series": 35550,
+    "flagged_transitions": 0
+  },
+  "samples": []
+}

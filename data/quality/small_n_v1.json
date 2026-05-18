@@ -1,0 +1,1845 @@
+{
+  "generated_at": "2026-05-18T21:23:35Z",
+  "method": "Cell n_enterprises bucketing. <5 = very-thin (hide from default UI). 5-19 = thin (add small-sample badge). 20-49 = caution. 50+ = OK.",
+  "buckets": {
+    "5-19": 136908,
+    "20-49": 58970,
+    "50-199": 53101,
+    "200+": 58940,
+    "null": 68111,
+    "<5": 3
+  },
+  "by_country_top_30_thin": {
+    "AU": {
+      "5-19": 52033,
+      "200+": 1935,
+      "20-49": 22233,
+      "50-199": 12116,
+      "null": 1340
+    },
+    "US": {
+      "5-19": 47635,
+      "20-49": 17667,
+      "50-199": 12908,
+      "200+": 5345,
+      "null": 5677
+    },
+    "MX": {
+      "5-19": 25931,
+      "200+": 4886,
+      "20-49": 10379,
+      "50-199": 8477,
+      "null": 1634
+    },
+    "GB": {
+      "5-19": 5135,
+      "20-49": 3358,
+      "200+": 3465,
+      "50-199": 4655
+    },
+    "ES": {
+      "5-19": 3406,
+      "200+": 5288,
+      "20-49": 1852,
+      "50-199": 2873,
+      "null": 8
+    },
+    "CA": {
+      "20-49": 396,
+      "50-199": 615,
+      "200+": 817,
+      "5-19": 679,
+      "null": 3035
+    },
+    "JP": {
+      "50-199": 1533,
+      "20-49": 538,
+      "200+": 3830,
+      "5-19": 509
+    },
+    "DE": {
+      "null": 212,
+      "50-199": 1243,
+      "200+": 4420,
+      "20-49": 258,
+      "5-19": 177
+    },
+    "FR": {
+      "50-199": 790,
+      "200+": 3996,
+      "20-49": 257,
+      "null": 88,
+      "5-19": 140
+    },
+    "EL": {
+      "200+": 1150,
+      "50-199": 611,
+      "20-49": 218,
+      "5-19": 122,
+      "null": 27
+    },
+    "PT": {
+      "200+": 772,
+      "50-199": 284,
+      "20-49": 118,
+      "null": 21,
+      "5-19": 113
+    },
+    "FI": {
+      "200+": 499,
+      "50-199": 188,
+      "5-19": 104,
+      "20-49": 54,
+      "null": 34
+    },
+    "IT": {
+      "200+": 2580,
+      "5-19": 96,
+      "50-199": 518,
+      "20-49": 197,
+      "null": 17
+    },
+    "NL": {
+      "200+": 5045,
+      "50-199": 2483,
+      "20-49": 405,
+      "5-19": 92,
+      "null": 4
+    },
+    "BE": {
+      "200+": 1104,
+      "50-199": 338,
+      "5-19": 83,
+      "20-49": 114,
+      "<5": 3,
+      "null": 5
+    },
+    "AT": {
+      "200+": 1037,
+      "50-199": 355,
+      "5-19": 77,
+      "20-49": 128,
+      "null": 1747
+    },
+    "RO": {
+      "200+": 1230,
+      "50-199": 220,
+      "null": 6,
+      "5-19": 68,
+      "20-49": 59
+    },
+    "NO": {
+      "200+": 629,
+      "5-19": 62,
+      "50-199": 224,
+      "20-49": 94,
+      "null": 23
+    },
+    "PL": {
+      "200+": 2596,
+      "50-199": 526,
+      "null": 4,
+      "20-49": 105,
+      "5-19": 53
+    },
+    "BG": {
+      "50-199": 210,
+      "20-49": 72,
+      "200+": 660,
+      "5-19": 46,
+      "null": 4
+    },
+    "BR": {
+      "50-199": 109,
+      "20-49": 58,
+      "200+": 142,
+      "5-19": 45
+    },
+    "MT": {
+      "200+": 128,
+      "20-49": 43,
+      "50-199": 53,
+      "5-19": 35,
+      "null": 4
+    },
+    "DK": {
+      "200+": 552,
+      "50-199": 161,
+      "null": 1,
+      "20-49": 41,
+      "5-19": 35
+    },
+    "UK": {
+      "200+": 1169,
+      "50-199": 257,
+      "20-49": 58,
+      "5-19": 34
+    },
+    "CZ": {
+      "200+": 947,
+      "50-199": 123,
+      "20-49": 16,
+      "5-19": 32
+    },
+    "HU": {
+      "50-199": 263,
+      "200+": 1064,
+      "20-49": 52,
+      "5-19": 31
+    },
+    "SK": {
+      "200+": 577,
+      "50-199": 79,
+      "20-49": 22,
+      "5-19": 24
+    },
+    "LU": {
+      "200+": 128,
+      "50-199": 83,
+      "null": 4,
+      "20-49": 17,
+      "5-19": 22
+    },
+    "SE": {
+      "200+": 1079,
+      "50-199": 302,
+      "null": 3,
+      "5-19": 21,
+      "20-49": 54
+    },
+    "LT": {
+      "200+": 305,
+      "50-199": 71,
+      "20-49": 7,
+      "5-19": 14
+    }
+  },
+  "very_thin_samples": [
+    {
+      "country": "BE",
+      "geo_id": "BE35",
+      "industry_id": "textile_apparel_mfg",
+      "size_band": "total",
+      "year": 2018,
+      "n_enterprises": 0
+    },
+    {
+      "country": "BE",
+      "geo_id": "BE34",
+      "industry_id": "other_transport_mfg",
+      "size_band": "total",
+      "year": 2020,
+      "n_enterprises": 0
+    },
+    {
+      "country": "BE",
+      "geo_id": "BE34",
+      "industry_id": "other_transport_mfg",
+      "size_band": "total",
+      "year": 2020,
+      "n_enterprises": 0
+    }
+  ],
+  "thin_samples": [
+    {
+      "country": "US",
+      "geo_id": "US-51-800",
+      "industry_id": "warehousing_storage",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 15
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-810",
+      "industry_id": "warehousing_storage",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 11
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-710",
+      "industry_id": "warehousing_storage",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 14
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-107",
+      "industry_id": "warehousing_storage",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 13
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-153",
+      "industry_id": "warehousing_storage",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 11
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-003",
+      "industry_id": "software_development",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 15
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-073",
+      "industry_id": "software_development",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-600",
+      "industry_id": "software_development",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 8
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-610",
+      "industry_id": "software_development",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-061",
+      "industry_id": "software_development",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 11
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-067",
+      "industry_id": "software_development",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 7
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-069",
+      "industry_id": "software_development",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-117",
+      "industry_id": "software_development",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 10
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-540",
+      "industry_id": "software_development",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 15
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-680",
+      "industry_id": "software_development",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-683",
+      "industry_id": "software_development",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 6
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-770",
+      "industry_id": "software_development",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 7
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-760",
+      "industry_id": "software_development",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 19
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-041",
+      "industry_id": "software_development",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 17
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-085",
+      "industry_id": "software_development",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 10
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-121",
+      "industry_id": "software_development",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 7
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-153",
+      "industry_id": "software_development",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 14
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-550",
+      "industry_id": "software_development",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 11
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-700",
+      "industry_id": "software_development",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 8
+    },
+    {
+      "country": "GB",
+      "geo_id": "GB-E07000007",
+      "industry_id": "electrical_equipment_mfg",
+      "size_band": "total",
+      "year": 2024,
+      "n_enterprises": 15
+    },
+    {
+      "country": "GB",
+      "geo_id": "GB-E07000007",
+      "industry_id": "machinery_mfg",
+      "size_band": "total",
+      "year": 2024,
+      "n_enterprises": 15
+    },
+    {
+      "country": "GB",
+      "geo_id": "GB-E07000007",
+      "industry_id": "motor_vehicles_mfg",
+      "size_band": "total",
+      "year": 2024,
+      "n_enterprises": 5
+    },
+    {
+      "country": "GB",
+      "geo_id": "GB-E07000007",
+      "industry_id": "other_transport_mfg",
+      "size_band": "total",
+      "year": 2024,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-550",
+      "industry_id": "media_publishing",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 8
+    },
+    {
+      "country": "GB",
+      "geo_id": "GB-E07000007",
+      "industry_id": "electricity_gas_utilities",
+      "size_band": "total",
+      "year": 2024,
+      "n_enterprises": 10
+    },
+    {
+      "country": "GB",
+      "geo_id": "GB-E07000007",
+      "industry_id": "water_waste",
+      "size_band": "total",
+      "year": 2024,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-650",
+      "industry_id": "media_publishing",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-56-023",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 12
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-013",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 11
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-059",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 19
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-087",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 6
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-121",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 7
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-161",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 6
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-660",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-770",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 8
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-810",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 7
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-710",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 9
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-001",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 8
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-003",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 15
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-009",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 7
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-019",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 9
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-023",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 6
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-031",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 10
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-065",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-083",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 9
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-085",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 13
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-137",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 7
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-167",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 9
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-171",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 9
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-179",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 16
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-185",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 15
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-187",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 7
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-191",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 6
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-195",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-650",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 13
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-690",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 8
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-720",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-775",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 7
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-830",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-840",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 10
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-015",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 6
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-027",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-047",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 12
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-051",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-061",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 11
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-067",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 8
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-147",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 8
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-159",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-163",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 6
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-197",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 7
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-540",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 18
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-570",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-590",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 14
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-595",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-600",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 14
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-630",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 14
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-640",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 7
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-683",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 7
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-790",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 8
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-820",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 12
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-173",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-740",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 9
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-800",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 15
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-069",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 17
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-117",
+      "industry_id": "broadcasting_telecom",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 10
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-003",
+      "industry_id": "it_services_hosting",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-510",
+      "industry_id": "it_services_hosting",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 14
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-700",
+      "industry_id": "it_services_hosting",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-047",
+      "industry_id": "it_services_hosting",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-085",
+      "industry_id": "it_services_hosting",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 7
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-550",
+      "industry_id": "it_services_hosting",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 12
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-600",
+      "industry_id": "it_services_hosting",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 6
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-710",
+      "industry_id": "it_services_hosting",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-760",
+      "industry_id": "it_services_hosting",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 18
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-179",
+      "industry_id": "it_services_hosting",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-001",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 17
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-005",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-009",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 12
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-025",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 6
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-035",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 8
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-037",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-057",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 11
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-077",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 8
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-079",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 7
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-093",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 15
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-105",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 11
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-119",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 8
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-135",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 11
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-143",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 13
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-149",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 8
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-175",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-195",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 15
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-580",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 9
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-595",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 7
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-670",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 7
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-678",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 8
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-750",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 11
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-011",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-027",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 10
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-051",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 7
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-053",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 8
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-071",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 6
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-075",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 12
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-083",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 18
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-099",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 8
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-101",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 6
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-103",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 13
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-109",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 12
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-125",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-127",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 7
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-131",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 11
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-133",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 8
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-137",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 17
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-139",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 11
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-145",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 9
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-147",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 17
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-155",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 17
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-159",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-163",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 9
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-167",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 14
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-169",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 12
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-173",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 16
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-183",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 6
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-193",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-520",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 16
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-610",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 15
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-620",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 8
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-640",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 14
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-690",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 13
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-720",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 8
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-730",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 17
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-830",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 12
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-047",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 7
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-690",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 9
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-775",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 12
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-830",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 7
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-015",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 16
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-031",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-061",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 18
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-067",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-073",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 6
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-075",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 14
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-117",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 6
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-137",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-165",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 14
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-171",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 14
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-191",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 15
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-197",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-199",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 12
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-520",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 6
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-590",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 12
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-678",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-683",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 7
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-750",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 8
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-790",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 6
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-185",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 6
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-820",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 7
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-023",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 6
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-069",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 9
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-121",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 19
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-145",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 7
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-147",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-177",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 11
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-179",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 11
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-187",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 10
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-570",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 8
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-610",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 15
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-650",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 8
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-740",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 5
+    },
+    {
+      "country": "GB",
+      "geo_id": "GB-E07000007",
+      "industry_id": "air_transport_carriers",
+      "size_band": "total",
+      "year": 2024,
+      "n_enterprises": 5
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-800",
+      "industry_id": "investment_securities",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 15
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-001",
+      "industry_id": "insurance",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 6
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-009",
+      "industry_id": "insurance",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 7
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-025",
+      "industry_id": "insurance",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 6
+    },
+    {
+      "country": "US",
+      "geo_id": "US-51-035",
+      "industry_id": "insurance",
+      "size_band": "total",
+      "year": 2022,
+      "n_enterprises": 6
+    }
+  ]
+}
