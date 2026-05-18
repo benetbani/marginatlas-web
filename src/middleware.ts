@@ -41,23 +41,31 @@ const AI_CRAWLER_PATTERNS = [
   /imagesiftbot/i,
 ];
 
-// Cheap signal: scrapers often skip Accept-Language. Real browsers always have it.
+// Cheap signal: scrapers often skip Accept-Language AND match obvious tool UAs.
+// CC.6 — only block on BOTH conditions. Brave / Firefox in strict-privacy
+// modes legitimately omit Accept-Language, so we don't 403 them on that
+// signal alone.
 function looksLikeBareScraper(req: NextRequest): boolean {
   const ua = req.headers.get("user-agent") || "";
   const lang = req.headers.get("accept-language") || "";
-  const accept = req.headers.get("accept") || "";
   // Allow legit search bots
   if (/(googlebot|bingbot|duckduckbot|slurp|baiduspider|yandex)/i.test(ua)) {
     return false;
   }
-  // No UA at all
+  // Allow real browser UAs even when Accept-Language is missing (privacy modes)
+  if (
+    /(mozilla|firefox|safari|chrome|edg\/|brave|opera|seamonkey|chromium)/i.test(
+      ua
+    )
+  ) {
+    return false;
+  }
+  // No UA at all = bot
   if (!ua) return true;
-  // No Accept-Language and looks like a tool
-  if (!lang && /(curl|wget|python|httpx|axios|node-fetch|libwww|java\/)/i.test(ua)) {
+  // Tool-UA + missing Accept-Language = scraper
+  if (!lang && /(curl|wget|python|httpx|axios|node-fetch|libwww|java\/|go-http|ruby|perl|scrapy)/i.test(ua)) {
     return true;
   }
-  // Accept header is */* only (typical of bare HTTP clients)
-  if (accept === "*/*" && !lang) return true;
   return false;
 }
 
