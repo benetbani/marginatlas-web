@@ -10,6 +10,7 @@ import { AskWidget } from "@/components/AskWidget";
 import { CityPicker } from "@/components/CityPicker";
 import { QualityLegend } from "@/components/QualityLegend";
 import { RecentlyAddedStrip } from "@/components/RecentlyAddedStrip";
+import { WhatsHotStrip } from "@/components/WhatsHotStrip";
 
 export const revalidate = 86400; // 1 day
 
@@ -194,6 +195,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* What's hot — Plan v9 Track BB.10 */}
+      <WhatsHotStrip />
 
       {/* Newsletter signup */}
       <section className="py-10">
