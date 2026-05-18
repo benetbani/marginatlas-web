@@ -35,6 +35,7 @@ import { AudienceCaveat } from "@/components/AudienceCaveat";
 import { AcrossCountriesStrip } from "@/components/AcrossCountriesStrip";
 import { SECTOR_BY_ID, INDUSTRY_BY_ID, slugToIndustry, resolveToMeasuredIndustry } from "@/lib/taxonomy";
 import { CellDataset, Breadcrumbs } from "@/components/StructuredData";
+import { RelatedIndustriesStrip } from "@/components/RelatedIndustriesStrip";
 
 // ISR: regenerate every 6 hours (21600 seconds) — Track EE.1.
 // Per-cell tiering (1h for quality_10>=8, 24h for 5-7, 7d for <5) is not
@@ -462,6 +463,16 @@ export default async function CellPage({
           </div>
         </section>
       )}
+
+      {/* Related industries (sibling sector links) — DD.4 internal linking */}
+      {measuredIndustry?.sector_id ? (
+        <RelatedIndustriesStrip
+          country={country}
+          geo={geo}
+          currentIndustryId={measuredIndustry.id}
+          sectorId={measuredIndustry.sector_id}
+        />
+      ) : null}
 
       {/* About the data link */}
       <section className="py-6 text-sm text-ink-700/70">
