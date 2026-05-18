@@ -34,9 +34,13 @@ export function DistributionHistogram({
   }
 
   // Anchor mass: cumulative probabilities at each percentile, plus
-  // approximate min/max derived by mirroring the tail spreads.
+  // approximate min/max derived by mirroring the tail spreads. For
+  // long-tail distributions (p90 / p50 > 5) we extend the upper tail
+  // further so the rightmost bars don't get clipped (CC.4).
+  const longTail = p50 > 0 && p90 / p50 > 5;
+  const upperMul = longTail ? 1.0 : 0.6;
   const tailBelow = Math.max((p25 - p10) * 0.6, 1);
-  const tailAbove = Math.max((p90 - p75) * 0.6, 1);
+  const tailAbove = Math.max((p90 - p75) * upperMul, 1);
   const pMin = Math.max(p10 - tailBelow, 0);
   const pMax = p90 + tailAbove;
 
@@ -73,7 +77,12 @@ export function DistributionHistogram({
     heights[i] = mass;
   }
 
-  const maxH = Math.max(...heights);
+  // Clamp maxH to the 90th percentile of bar heights so a single huge
+  // central spike doesn't crush all the other bars to invisibility (CC.4).
+  const sortedHeights = [...heights].sort((a, b) => a - b);
+  const p90Bar = sortedHeights[Math.floor(sortedHeights.length * 0.9)] || 0;
+  const rawMax = Math.max(...heights);
+  const maxH = p90Bar > 0 ? Math.max(p90Bar * 1.15, rawMax * 0.4) : rawMax;
   // viewBox dims
   const SVG_W = 720;
   const SVG_H = 200;

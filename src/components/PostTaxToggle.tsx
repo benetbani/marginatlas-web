@@ -35,6 +35,10 @@ export function PostTaxToggle({ country, grossRevenue, payroll }: Props) {
   const result = estimatePostTax(country, grossRevenue, payroll);
   if (!result) return null;
 
+  // CC.5: distinguish "no payroll data" from "payroll is genuinely $0" so
+  // we can hide the misleading "Payroll: $0" + employer social row.
+  const payrollMissing = payroll === null || payroll === undefined;
+
   return (
     <div className="card mt-4">
       <div className="flex items-center justify-between gap-3 flex-wrap">
@@ -58,12 +62,21 @@ export function PostTaxToggle({ country, grossRevenue, payroll }: Props) {
       {open && (
         <div className="mt-5 space-y-1.5 text-sm">
           <Row label="Gross revenue" value={fmtMoney(result.gross_revenue)} />
-          <Row label="Estimated payroll" value={`− ${fmtMoney(result.payroll)}`} muted />
-          <Row
-            label={`Employer social contributions (${fmtPct(result.rates.employer_social)})`}
-            value={`− ${fmtMoney(result.employer_social_cost)}`}
-            muted
-          />
+          {payrollMissing ? (
+            <div className="text-xs text-ink-700/70 italic py-1">
+              Payroll data not available for this cell — owner take-home below
+              assumes no payroll deduction (upper-bound estimate).
+            </div>
+          ) : (
+            <>
+              <Row label="Estimated payroll" value={`− ${fmtMoney(result.payroll)}`} muted />
+              <Row
+                label={`Employer social contributions (${fmtPct(result.rates.employer_social)})`}
+                value={`− ${fmtMoney(result.employer_social_cost)}`}
+                muted
+              />
+            </>
+          )}
           <div className="border-t border-cream-300 mt-2 pt-2">
             <Row
               label="Pre-tax profit"
