@@ -39,15 +39,17 @@ export function NewsletterSignup() {
   }
 
   return (
-    <div className="card bg-ink-100/30 border-ink-200">
+    <div id="newsletter" className="card bg-ink-100/30 border-ink-200 scroll-mt-20">
       <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
-        Stay updated
+        Monthly cell of the month
       </div>
       <h3 className="mt-2 text-lg font-semibold text-ink-900">
-        Get new countries + data refreshes by email
+        Pick a benchmark you didn&apos;t know you needed.
       </h3>
       <p className="mt-1 text-sm text-ink-700">
-        One email a month. No marketing. Unsubscribe anytime.
+        Once a month we send a single hand-picked cell — full distribution,
+        tax-aware owner take-home, what makes it surprising. No marketing.
+        Unsubscribe in one click.
       </p>
       {state === "success" ? (
         <p className="mt-4 text-sm text-atlas-600">✓ Thank you — you'll hear from us when v1.18 ships.</p>
