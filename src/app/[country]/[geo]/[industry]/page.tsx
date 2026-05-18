@@ -38,6 +38,7 @@ import { CellDataset, Breadcrumbs } from "@/components/StructuredData";
 import { RelatedIndustriesStrip } from "@/components/RelatedIndustriesStrip";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { CellWarningChips } from "@/components/CellWarningChips";
+import { EmptyStateCard } from "@/components/EmptyStateCard";
 
 // ISR: regenerate every 6 hours (21600 seconds) — Track EE.1.
 // Per-cell tiering (1h for quality_10>=8, 24h for 5-7, 7d for <5) is not
@@ -234,8 +235,18 @@ export default async function CellPage({
         }
       />
 
+      {/* CC.13 empty-state — when the cell has no usable revenue metric */}
+      {cell.revenue_per_firm == null && cell.rev_p50 == null ? (
+        <EmptyStateCard
+          industryName={cell.industry_name || industry}
+          geoName={cell.geo_name || geo}
+          neighborUrl={nudge?.url}
+          neighborGeoName={nudge?.geo_name}
+        />
+      ) : null}
+
       {/* Nudge bar — appears when coverage is weak and a stronger neighbor exists */}
-      {nudge && (
+      {nudge && cell.revenue_per_firm != null && (
         <div className="mb-4 rounded-xl border border-atlas-300 bg-atlas-100/60 px-4 py-2.5 text-sm flex items-center gap-2 flex-wrap">
           <span aria-hidden>🧭</span>
           <span className="text-cocoa-900">
