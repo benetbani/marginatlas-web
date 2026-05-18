@@ -8,6 +8,7 @@ import {
   type Industry,
 } from "@/lib/taxonomy";
 import { getCellBySlug } from "@/lib/cells";
+import { SectorAcrossWorld } from "@/components/SectorAcrossWorld";
 
 export const revalidate = 86400;
 
@@ -127,6 +128,9 @@ export default async function SectorPage({ params }: { params: Promise<Params> }
           </div>
         </section>
       )}
+
+      {/* FF.3 — same sector across 12 countries */}
+      <SectorAcrossWorld sectorName={s.name} industries={visible} />
 
       {/* Full industry list */}
       <section className="py-8">
