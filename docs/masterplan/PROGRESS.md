@@ -40,7 +40,7 @@
 | J.6 Featured tiles | PENDING | — | — |
 | K Verification | PENDING | n/a | — |
 | L Handoff refresh | PENDING | n/a | — |
-| **M Top-100 cities list** (Wave 2) | PENDING | n/a | — |
+| **M Top-100 cities list** (Wave 2) | FIRST PASS DONE — 102 cities locked (29 tier-1 / 49 tier-2 / 24 tier-3); 52 measured / 41 extrapolated / 9 missing; awaiting founder review per T-M.2 | n/a | 2026-05-18 |
 | **N Country city shortcuts** (Wave 2) | PENDING | n/a | — |
 | **O Neighborhood drill-down** (Wave 2) | PENDING | n/a | — |
 | **P Tax overlay** (Wave 2) | PENDING | n/a | — |
@@ -139,6 +139,7 @@ clearly so the next session executes it first before any further ingest.
 - **2026-05-18 planning extension**: Founder shared strategic direction (city-disproportionate focus, optional hierarchy, neighborhoods for tier-1, taxes exploratory). Added 5 new Wave 2 tracks (M, N, O, P, Q) to master plan. Not yet executed — pending founder go signal.
 - **2026-05-18 Wave 1 push**: Founder issued "go". Track D.2 Netherlands +4,799 rows (CBS 81575NED, section-level SBI x 483 gemeenten). Track D.5 Spain +11,287 rows (INE table 301, province x CNAE x strata). Track D.8 Italy deferred (ISTAT ASIAULP_7 dataflow size exceeds 10-min curl timeout; needs per-region chunked fetch). regional_cells total: 186,640 → 202,726 (+16,086).
 - **2026-05-18 Wave 1 push #2 (Italy → UK)**: Founder "do number one then number two". Italy retry with smaller dataflow (ASIAUE1P_5, province-level) also timed out — ISTAT data endpoint structurally slow regardless of dataflow size. Italy stays DEFERRED with switch-to-CSV strategy documented. UK NOMIS Track E.2 landed +15,816 rows (NM_141_1, 382 LADs × 88 SIC 2-digit, single bulk CSV ~11s fetch). Includes all 33 London boroughs natively. regional_cells: 202,726 → 218,542 (+15,816).
+- **2026-05-18 Wave 1/2 pivot**: Founder "continue with the other steps". Probed OECD (wrong schema — employment not business counts), ABS (CABEE not in SDMX), NZ Stats (502 gateway), Mexico INEGI (token required). Pivoted to Wave 2 Track M (top-100 cities curation) as the productive path. Locked first-draft list at `src/lib/cities/top100.json` (102 cities, 29/49/24 tier split, 52 measured / 41 extrapolated / 9 missing, 53 countries). Loader at `src/lib/cities.ts` exposes TOP_100_CITIES, CITIES_BY_COUNTRY, lookupCity, NEIGHBORHOOD_DRILL_CITIES. Awaiting founder review per T-M.2 before locking. Track M is the anchor for Wave 2 tracks N/O/Q.
 
 ## Italy next-session notes (D.8)
 
