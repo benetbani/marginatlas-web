@@ -84,7 +84,22 @@ export async function generateMetadata({
   const title = `How much do ${ind.toLowerCase()} earn in ${geoName}? | Margin Atlas`;
   const median = cell.revenue_per_firm ? `~${formatMoney(cell.revenue_per_firm)} typical revenue` : "Revenue and employment numbers";
   const desc = `${median} for ${ind.toLowerCase()} in ${geoName}, ${cell.year}. Bottom-10%, typical, and top-10% spread across ${cell.n_enterprises?.toLocaleString() || "thousands of"} firms.`;
-  return { title, description: desc, openGraph: { title, description: desc } };
+  const ogPath = `/og/cell?country=${encodeURIComponent(country)}&geo=${encodeURIComponent(geo)}&industry=${encodeURIComponent(industry)}`;
+  return {
+    title,
+    description: desc,
+    openGraph: {
+      title,
+      description: desc,
+      images: [{ url: ogPath, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: desc,
+      images: [ogPath],
+    },
+  };
 }
 
 export default async function CellPage({
