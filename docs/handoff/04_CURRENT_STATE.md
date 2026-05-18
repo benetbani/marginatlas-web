@@ -88,7 +88,7 @@ repo).
 |---|---|---|
 | `cells_master` | ~722,000 | v1.5 US Census SUSB pre-existing data |
 | `extrapolated_cells` | 57,816 | Regression-based country estimates (219 country codes) |
-| `regional_cells` | **218,542** | Sub-national data; sessions 3-7 (delta +31,902 across sessions 6-7: NL +4,799, ES +11,287, GB +15,816) |
+| `regional_cells` | **289,427** | Sub-national data; sessions 3-8 (delta +102,787 across sessions 6-8: NL +4,799, ES +11,287, GB +15,816, AU +70,885 — biggest single landing) |
 
 ### regional_cells breakdown (Session 4 work)
 
@@ -99,6 +99,7 @@ repo).
 | Global city overlay (38 countries) | 41,448 | X | 18 |
 | Japan (prefecture + municipality via e-Stat) | 6,951 | P | 8 |
 | Canada (correct table 33-10-1095) | 2,227 | P | 11 + Track C.1 retry (session 5) |
+| Australia (2,310 SA2s × ANZSIC × employment size) | 70,885 | P | Track G.2 (session 8) |
 | United Kingdom (382 LADs × SIC 2-digit) | 15,816 | P | Track E.2 (session 7) |
 | Spain (52 provinces × CNAE × strata) | 11,287 | P | Track D.5 (session 6) |
 | Netherlands (483 gemeenten × SBI sections) | 4,799 | P | Track D.2 (session 6) |

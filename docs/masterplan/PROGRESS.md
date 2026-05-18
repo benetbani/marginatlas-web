@@ -24,7 +24,7 @@
 | E.2 UK LAD | DONE — +15,816 rows (382 LADs × 88 SIC 2-digit; NM_141_1; below 25-30k target due to NACE→industry_id dedup) | +15,816 | 2026-05-18 |
 | E.3 UK MSOA | PENDING (stretch) | — | — |
 | F OECD | PENDING | — | — |
-| G.2 Australia | PENDING | — | — |
+| G.2 Australia | DONE — **+70,885 rows** (2,310 SA2s × 12 ANZSIC divisions × 5 size bands; ABS 8165.0 DC08; SA2 includes Sydney/Melbourne/Brisbane CBDs natively) | +70,885 | 2026-05-18 |
 | G.4 New Zealand | PENDING | — | — |
 | H France | BLOCKED-A.4 | — | — |
 | I.1 Mexico | PENDING | — | — |
