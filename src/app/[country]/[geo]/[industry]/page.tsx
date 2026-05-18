@@ -36,8 +36,13 @@ import { AcrossCountriesStrip } from "@/components/AcrossCountriesStrip";
 import { SECTOR_BY_ID, INDUSTRY_BY_ID, slugToIndustry, resolveToMeasuredIndustry } from "@/lib/taxonomy";
 import { CellDataset, Breadcrumbs } from "@/components/StructuredData";
 
-// ISR: regenerate every 7 days (604800 seconds)
-export const revalidate = 604800;
+// ISR: regenerate every 6 hours (21600 seconds) — Track EE.1.
+// Per-cell tiering (1h for quality_10>=8, 24h for 5-7, 7d for <5) is not
+// possible without converting to dynamic rendering since Next App Router
+// requires revalidate to be a static export. 6h is the compromise that
+// catches Supabase refreshes within a working day while keeping CDN hit
+// rates high.
+export const revalidate = 21600;
 export const dynamicParams = true;
 
 type Params = { country: string; geo: string; industry: string };
