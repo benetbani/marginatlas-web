@@ -4,6 +4,8 @@ import { FeaturedCellTile, type FeaturedTileSpec } from "@/components/FeaturedCe
 import { SectorMasterMenu } from "@/components/SectorMasterMenu";
 import { FirstFrameStrip } from "@/components/FirstFrameStrip";
 import { CellOfTheWeek } from "@/components/CellOfTheWeek";
+import { GlobalCoverageStrip } from "@/components/GlobalCoverageStrip";
+import { TaxOverlayTeaser } from "@/components/TaxOverlayTeaser";
 
 export const revalidate = 86400; // 1 day
 
@@ -53,6 +55,9 @@ export default function HomePage() {
         <FirstFrameStrip />
       </section>
 
+      {/* Global coverage strip — Plan v8 Track S.2 */}
+      <GlobalCoverageStrip />
+
       {/* Featured cells — above the fold (Plan v4.0 Step 15 + Step 16 + Step 19) */}
       <section className="py-6">
         <div className="flex items-baseline justify-between gap-4 flex-wrap mb-4">
@@ -82,6 +87,9 @@ export default function HomePage() {
 
       {/* Cell of the week — Plan v4.0 Step 19 */}
       <CellOfTheWeek />
+
+      {/* Tax overlay teaser — Plan v8 Track S.6 */}
+      <TaxOverlayTeaser />
 
       {/* Stats strip */}
       <section className="py-8 grid grid-cols-2 md:grid-cols-4 gap-4">
