@@ -32,6 +32,8 @@ import { CellPageNav } from "@/components/CellPageNav";
 import { CellActions } from "@/components/CellActions";
 import { AtlasScore } from "@/components/AtlasScore";
 import { SmartImage } from "@/components/SmartImage";
+import { AtlasHeroImage } from "@/components/AtlasHeroImage";
+import { pickCellHeroImage } from "@/lib/images";
 import { AudienceCaveat } from "@/components/AudienceCaveat";
 import { AcrossCountriesStrip } from "@/components/AcrossCountriesStrip";
 import { SECTOR_BY_ID, INDUSTRY_BY_ID, slugToIndustry, resolveToMeasuredIndustry } from "@/lib/taxonomy";
@@ -355,13 +357,14 @@ export default async function CellPage({
           )}
         </div>
         <div className="hidden lg:block">
-          {/* Image placeholder CELL-1: industry- or sector-themed photo. Falls back to sector emoji. */}
-          <SmartImage
+          {/* Plan v12 IM8 — real photo when manifest has one for this
+              cell's (city, industry); falls back to SmartImage glyph. */}
+          <AtlasHeroImage
+            image={pickCellHeroImage(geo, cell.industry_id || null, cell.sector_id || null)}
             alt={`${cell.industry_name || "Industry"} in ${cell.geo_name}`}
             glyph={(cell.sector_id && SECTOR_BY_ID[cell.sector_id]?.icon) || "🏢"}
             caption={cell.sector_name || "Industry"}
             aspectRatio={1.5}
-            intent="hero"
           />
         </div>
       </header>

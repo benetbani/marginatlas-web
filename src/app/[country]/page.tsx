@@ -15,6 +15,8 @@ import {
 } from "@/lib/taxonomy";
 import { flagFromIso2 } from "@/lib/countries";
 import { SmartImage } from "@/components/SmartImage";
+import { AtlasHeroImage } from "@/components/AtlasHeroImage";
+import { pickCountryHeroImage } from "@/lib/images";
 import { CountryCityShortcuts } from "@/components/CountryCityShortcuts";
 import { CountryStatsStrip } from "@/components/CountryStatsStrip";
 import { CountryQualitySummary } from "@/components/CountryQualitySummary";
@@ -164,12 +166,12 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
           </div>
         </div>
         <div className="hidden lg:block mt-6 lg:mt-0">
-          <SmartImage
+          {/* Plan v12 IM9 — real country hero photo when manifest has one. */}
+          <AtlasHeroImage
+            image={pickCountryHeroImage(iso2)}
             alt={`${meta.name} — country atlas hero`}
             glyph={sig.glyph}
             aspectRatio={1.5}
-            intent="hero"
-            rounded="2xl"
           />
         </div>
       </header>
