@@ -15,6 +15,7 @@ import {
   resolveToMeasuredIndustry,
 } from "./taxonomy";
 import { iso2ToIso3, iso3ToIso2, iso2ToName } from "./countries";
+import { lookupNeighborhoodGeoId } from "./cities";
 
 export type Cell = {
   // identity
@@ -134,6 +135,9 @@ export function slugify(s: string | null | undefined): string {
 export function regionalSlugToGeoId(country: string, geoSlug: string): string {
   const c = country.toUpperCase();
   const slug = geoSlug.toLowerCase();
+  // Neighborhood alias (Track O): friendly names like 'manhattan' → 'US-36-061'.
+  const aliased = lookupNeighborhoodGeoId(c, slug);
+  if (aliased) return aliased;
   const cityPrefix = `${c.toLowerCase()}-city-`;
   if (slug.startsWith(cityPrefix)) {
     return `${c}-CITY-${slug.slice(cityPrefix.length)}`;

@@ -93,3 +93,37 @@ export function lookupCity(country: string, slug: string): CityEntry | null {
   }
   return null;
 }
+
+/**
+ * Neighborhood / borough / ward alias map for tier-1 cities (Track O).
+ * URL slug -> regional_cells geo_id.
+ *
+ * Friendly slugs like /us/manhattan/restaurants resolve to the underlying
+ * county FIPS (US-36-061) so users don't have to know the cryptic code.
+ *
+ * Per Track O plan: NYC + Tokyo + London + Paris + Sao Paulo + Moscow +
+ * Istanbul are the target cities. First pass ships NYC (5 boroughs from
+ * US Census). London arrives natively via UK NOMIS LAD codes. Tokyo
+ * wards need additional e-Stat ingest (deferred).
+ */
+export const NEIGHBORHOOD_ALIASES: Record<string, Record<string, string>> = {
+  US: {
+    // NYC boroughs (each is a NY county)
+    "manhattan": "US-36-061",
+    "the-bronx": "US-36-005",
+    "bronx": "US-36-005",
+    "brooklyn": "US-36-047",
+    "queens": "US-36-081",
+    "staten-island": "US-36-085",
+  },
+};
+
+/**
+ * Look up a neighborhood slug to its underlying regional_cells geo_id.
+ * Returns null if the (country, slug) pair isn't a known neighborhood.
+ */
+export function lookupNeighborhoodGeoId(country: string, slug: string): string | null {
+  const map = NEIGHBORHOOD_ALIASES[country.toUpperCase()];
+  if (!map) return null;
+  return map[slug.toLowerCase()] || null;
+}
