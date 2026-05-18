@@ -24,6 +24,7 @@ import { Tooltip } from "@/components/Tooltip";
 import { DimensionSwitcher } from "@/components/DimensionSwitcher";
 import { TimeSeriesChart } from "@/components/TimeSeriesChart";
 import { TypicalFirmCard } from "@/components/TypicalFirmCard";
+import { PostTaxToggle } from "@/components/PostTaxToggle";
 import { AcrossStatesStrip } from "@/components/AcrossStatesStrip";
 import { CellPageNav } from "@/components/CellPageNav";
 import { CellActions } from "@/components/CellActions";
@@ -309,7 +310,18 @@ export default async function CellPage({
       {/* Atlas Score + Typical-firm biography card */}
       <section id="typical-firm" className="py-6 grid md:grid-cols-[1fr_2fr] gap-4">
         <AtlasScore cell={cell} />
-        <TypicalFirmCard cell={cell} currencySymbol="$" />
+        <div>
+          <TypicalFirmCard cell={cell} currencySymbol="$" />
+          <PostTaxToggle
+            country={country}
+            grossRevenue={cell.revenue_per_firm ?? null}
+            payroll={
+              cell.payroll_per_employee != null && cell.n_employees != null && cell.n_enterprises
+                ? (cell.payroll_per_employee * cell.n_employees) / cell.n_enterprises
+                : null
+            }
+          />
+        </div>
       </section>
 
       {/* Distribution — histogram + 5-bar tier view side by side */}
