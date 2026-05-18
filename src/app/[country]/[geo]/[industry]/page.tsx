@@ -36,6 +36,7 @@ import { AcrossCountriesStrip } from "@/components/AcrossCountriesStrip";
 import { SECTOR_BY_ID, INDUSTRY_BY_ID, slugToIndustry, resolveToMeasuredIndustry } from "@/lib/taxonomy";
 import { CellDataset, Breadcrumbs } from "@/components/StructuredData";
 import { RelatedIndustriesStrip } from "@/components/RelatedIndustriesStrip";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 // ISR: regenerate every 6 hours (21600 seconds) — Track EE.1.
 // Per-cell tiering (1h for quality_10>=8, 24h for 5-7, 7d for <5) is not
@@ -201,6 +202,22 @@ export default async function CellPage({
           { name: country.toUpperCase(), url: `https://marginatlas.com/${country}` },
           { name: cell.geo_name || geo, url: `https://marginatlas.com/${country}/${geo}` },
           { name: cell.industry_name || industry, url },
+        ]}
+      />
+      {/* Visible adaptive breadcrumb (CC.10) — distinct from the JSON-LD above */}
+      <Breadcrumb
+        items={[
+          { label: "Home", href: "/" },
+          {
+            label: country.toUpperCase(),
+            href: `/${country.toLowerCase()}`,
+            glyph: flagFromIso2(country.toUpperCase()),
+          },
+          {
+            label: cell.geo_name || geo,
+            href: `/${country.toLowerCase()}/${geo}`,
+          },
+          { label: cell.industry_name || industry },
         ]}
       />
 
