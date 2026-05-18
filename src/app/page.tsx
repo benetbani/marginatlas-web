@@ -18,18 +18,18 @@ export const revalidate = 86400; // 1 day
  * resolve are filtered out at render time — no "Coming soon" ever ships.
  */
 const FEATURED: FeaturedTileSpec[] = [
-  { iso2: "US", geo: "california",              industry: "restaurants",                title: "Restaurants",                  region: "California",            glyph: "🍽️" },
-  { iso2: "US", geo: "new-york",                industry: "real-estate-agencies",       title: "Real estate agencies",         region: "New York",              glyph: "🏘️" },
-  { iso2: "US", geo: "california",              industry: "software-development",       title: "Software development",         region: "California",            glyph: "💻" },
-  { iso2: "US", geo: "district-of-columbia",    industry: "management-consulting",      title: "Management consulting",        region: "Washington, D.C.",      glyph: "💼" },
-  { iso2: "US", geo: "florida",                 industry: "hairdressers-beauty",        title: "Hairdressers & beauty",        region: "Florida",               glyph: "💇" },
-  { iso2: "US", geo: "texas",                   industry: "residential-construction",   title: "Residential construction",     region: "Texas",                 glyph: "🏗️" },
-  { iso2: "US", geo: "texas",                   industry: "auto-repair-shops",          title: "Auto repair shops",            region: "Texas",                 glyph: "🔧" },
-  { iso2: "DE", geo: "germany",                 industry: "metal-products-manufacturing", title: "Metal products mfg",         region: "Germany",               glyph: "⚙️" },
-  { iso2: "FR", geo: "france",                  industry: "hotels-lodging",             title: "Hotels & lodging",             region: "France",                glyph: "🏨" },
-  { iso2: "IT", geo: "italy",                   industry: "restaurants",                title: "Restaurants",                  region: "Italy",                 glyph: "🍝" },
-  { iso2: "JP", geo: "japan",                   industry: "restaurants",                title: "Restaurants",                  region: "Japan",                 glyph: "🍱" },
-  { iso2: "IN", geo: "india",                   industry: "software-development",       title: "Software development",         region: "India",                 glyph: "💻" },
+  { iso2: "US", geo: "new-york",          industry: "restaurants",                title: "Restaurants",              region: "New York",         glyph: "🍽️" },
+  { iso2: "GB", geo: "gb",                industry: "legal-services",             title: "Legal services",           region: "United Kingdom",   glyph: "⚖️" },
+  { iso2: "DE", geo: "germany",           industry: "software-development",       title: "Software development",     region: "Germany",          glyph: "💻" },
+  { iso2: "ES", geo: "madrid",            industry: "cafes-coffee-shops",         title: "Cafés & coffee shops",     region: "Madrid",           glyph: "☕" },
+  { iso2: "JP", geo: "japan",             industry: "restaurants",                title: "Restaurants",              region: "Japan",            glyph: "🍱" },
+  { iso2: "BR", geo: "br-sp",             industry: "grocery-stores",             title: "Grocery & retail",         region: "São Paulo",        glyph: "🛒" },
+  { iso2: "MX", geo: "mx-cmx",            industry: "restaurants",                title: "Restaurants",              region: "Mexico City",      glyph: "🌮" },
+  { iso2: "AU", geo: "australia",         industry: "cafes-coffee-shops",         title: "Cafés & coffee shops",     region: "Australia",        glyph: "🥐" },
+  { iso2: "AL", geo: "al",                industry: "cafes-coffee-shops",         title: "Cafés & coffee shops",     region: "Albania",          glyph: "☕" },
+  { iso2: "CH", geo: "ch",                industry: "legal-services",             title: "Professional services",    region: "Switzerland",      glyph: "🏛️" },
+  { iso2: "AE", geo: "ae",                industry: "grocery-stores",             title: "Retail",                   region: "United Arab Emirates", glyph: "🛍️" },
+  { iso2: "IN", geo: "india",             industry: "software-development",       title: "Software development",     region: "India",            glyph: "💻" },
 ];
 
 export default function HomePage() {
@@ -39,14 +39,35 @@ export default function HomePage() {
       <section className="py-8 md:py-12">
         <div className="max-w-4xl">
           <h1 className="text-4xl md:text-6xl font-semibold tracking-tight text-ink-900 leading-[1.05]">
-            How much does a typical{" "}
-            <span className="gradient-name">small business</span> earn?
+            Small-business benchmarks across{" "}
+            <span className="gradient-name">191 countries</span>.
           </h1>
           <p className="mt-5 text-lg md:text-xl text-cocoa-900/80 max-w-3xl leading-relaxed">
-            Revenue, employment, and wages for small businesses across 219 countries.
-            Compiled from official statistics, standardized so a bakery in Paris
-            compares directly to a bakery in California.
+            Revenue, payroll, and after-tax owner take-home for every covered
+            country × industry × city × size combination — all from one query.
+            Compiled from official statistics and standardized so a bakery in
+            Paris compares directly to a bakery in California.
           </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <a
+              href="/browse"
+              className="inline-flex items-center px-5 py-2.5 rounded-full bg-ink-900 text-cream-50 text-sm font-medium hover:bg-ink-800 transition"
+            >
+              Browse 191 countries →
+            </a>
+            <a
+              href="#ask-atlas"
+              className="inline-flex items-center px-5 py-2.5 rounded-full bg-cream-100 border border-parchment text-ink-900 text-sm font-medium hover:bg-parchment-100 transition"
+            >
+              Try Ask Atlas →
+            </a>
+            <a
+              href="#pick-a-city"
+              className="inline-flex items-center px-5 py-2.5 rounded-full bg-cream-100 border border-parchment text-ink-900 text-sm font-medium hover:bg-parchment-100 transition"
+            >
+              Pick a city →
+            </a>
+          </div>
         </div>
 
         {/* Navigator — full width, dominant */}
@@ -95,10 +116,14 @@ export default function HomePage() {
       <TaxOverlayTeaser />
 
       {/* Ask Atlas widget — Plan v8 Track S.5 (live after key in Vercel) */}
-      <AskWidget />
+      <div id="ask-atlas" className="scroll-mt-20">
+        <AskWidget />
+      </div>
 
       {/* Pick a city — Plan v8 Track S.4 */}
-      <CityPicker />
+      <div id="pick-a-city" className="scroll-mt-20">
+        <CityPicker />
+      </div>
 
       {/* Quality legend — Plan v8 Track S.7 */}
       <QualityLegend />
@@ -106,9 +131,9 @@ export default function HomePage() {
       {/* Stats strip */}
       <section className="py-8 grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          ["219", "countries"],
+          ["191", "countries covered"],
           ["180+", "SMB industries"],
-          ["780k", "data cells"],
+          ["357k+", "data cells"],
           ["Free", "to browse"],
         ].map(([n, label]) => (
           <div key={label} className="rounded-2xl bg-cream-100 border border-parchment p-5">
