@@ -168,6 +168,54 @@ const ASK_BUCKETS = new Map<string, { count: number; windowStart: number }>();
 const ASK_WINDOW_MS = 60 * 60 * 1000; // 1 hour
 const ASK_FREE_LIMIT = 10;
 
+/**
+ * JJ.3 — best-effort monthly spend cap. Tracks queries + estimated cost in
+ * this Edge instance's memory. Cold starts reset the counter so this is
+ * conservative on the high side rather than the low side (we may briefly
+ * over-spend across redeploys, never silently runaway in one instance).
+ *
+ * Override via env: ASK_MONTHLY_CAP_USD (default 200).
+ * Cost model: Claude Sonnet 4.5 ~$3 input + $15 output per 1M tokens; with
+ * the tool loop running ~1.5 turns avg, a typical query bills ~$0.04. We
+ * round up to $0.06/query to leave headroom and account for outliers.
+ */
+const ASK_MONTHLY_CAP_USD = Number(
+  process.env.ASK_MONTHLY_CAP_USD ?? "200"
+);
+const ASK_PER_QUERY_COST_USD = 0.06;
+const ASK_SPEND_STATE: { month: string; queriesUsed: number } = {
+  month: "",
+  queriesUsed: 0,
+};
+
+function currentMonthKey(): string {
+  const d = new Date();
+  return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, "0")}`;
+}
+
+function monthlySpendStatus(): {
+  spendUsd: number;
+  capUsd: number;
+  overBudget: boolean;
+} {
+  const m = currentMonthKey();
+  if (ASK_SPEND_STATE.month !== m) {
+    ASK_SPEND_STATE.month = m;
+    ASK_SPEND_STATE.queriesUsed = 0;
+  }
+  const spendUsd = ASK_SPEND_STATE.queriesUsed * ASK_PER_QUERY_COST_USD;
+  return { spendUsd, capUsd: ASK_MONTHLY_CAP_USD, overBudget: spendUsd >= ASK_MONTHLY_CAP_USD };
+}
+
+function recordAskSpend(): void {
+  const m = currentMonthKey();
+  if (ASK_SPEND_STATE.month !== m) {
+    ASK_SPEND_STATE.month = m;
+    ASK_SPEND_STATE.queriesUsed = 0;
+  }
+  ASK_SPEND_STATE.queriesUsed++;
+}
+
 function clientIpFromHeaders(req: NextRequest): string {
   return (
     req.headers.get("x-real-ip") ||
@@ -239,6 +287,22 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    // JJ.3 — monthly spend ceiling. Fall through to preview stub when
+    // we've burned the budget so we never hemorrhage Anthropic spend.
+    const spend = monthlySpendStatus();
+    if (spend.overBudget) {
+      return NextResponse.json({
+        answer:
+          `"${question}"\n\n` +
+          `Ask Atlas has hit this month's spending limit ($${spend.capUsd.toFixed(0)}). ` +
+          `Live answers resume on the first of next month. Every cell page still ` +
+          `shows typical revenue, employment, and distribution for any ` +
+          `country × industry × size combination — try /browse or /compare in the meantime.`,
+        preview: true,
+        budgetCapped: true,
+      });
+    }
+
     // Live agentic loop with bounded turns
     const messages: { role: "user" | "assistant"; content: Block[] | string }[] = [
       { role: "user", content: question },
@@ -278,6 +342,7 @@ export async function POST(request: NextRequest) {
       messages.push({ role: "user", content: toolResults });
     }
 
+    recordAskSpend();
     return NextResponse.json({ answer, toolCalls, preview: false });
   } catch (e) {
     const msg = e instanceof Error ? e.message : "server error";
