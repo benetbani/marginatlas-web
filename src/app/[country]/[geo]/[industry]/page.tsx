@@ -227,7 +227,7 @@ export default async function CellPage({
         ]}
       />
 
-      {/* AA.6 staleness + AA.9 industry-mapping warning chips */}
+      {/* AA.6 staleness + AA.9 industry-mapping + Plan v10 WW cross-country chips */}
       <CellWarningChips
         year={cell.year}
         requestedIndustrySlug={industry}
@@ -237,6 +237,10 @@ export default async function CellPage({
             ? `/${country.toLowerCase()}/${geo}/${industryToSlug(measuredIndustry.id)}`
             : undefined
         }
+        country={country.toUpperCase()}
+        geoId={cell.geo_id}
+        industryId={cell.industry_id}
+        sizeBand={cell.size_band}
       />
 
       {/* CC.13 empty-state — when the cell has no usable revenue metric */}
