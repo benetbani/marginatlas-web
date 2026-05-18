@@ -26,7 +26,15 @@ const MAX_TURNS = 4;
 const SYSTEM_PROMPT = `You are Margin Atlas, a small-business benchmarking assistant.
 
 You answer questions about typical revenue, employment, wages, and firm distributions
-across industries and US states (more countries coming).
+across industries and geographies.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit — editorial tone is being
+finalised; until then, keep responses short and factual.
+
+Covered countries with measured sub-national data: US (counties), AU (SA2),
+MX (states + municipios), GB (LADs incl. all London boroughs), DE/FR/IT/ES/NL/PL/SE
+(EU NUTS regions), JP (prefectures + major cities), BR (states + cities), CA (provinces).
+For countries outside this list, fall back to country-level estimates with a note.
 
 Rules:
 - Use the query_cells tool whenever the user asks about a specific industry × location.
@@ -49,12 +57,16 @@ const TOOL = {
     properties: {
       country: {
         type: "string",
-        description: "ISO-2 country code, e.g. 'US'. Only 'US' is supported for now.",
+        description:
+          "ISO-2 country code, e.g. 'US', 'AU', 'MX', 'GB', 'DE', 'FR', 'JP', 'BR', 'CA'.",
       },
       region: {
         type: "string",
         description:
-          "Region slug, e.g. 'california', 'new-york'. Required when country is US.",
+          "Region or city slug. Examples: 'california', 'new-york', 'us-06-037' (LA County), " +
+          "'manhattan', 'brooklyn', 'gb-e09000033' (Westminster), 'de21' (Oberbayern), " +
+          "'jp-13000' (Tokyo), 'br-sp' (São Paulo), 'mx-09' (CDMX). " +
+          "If unsure, pick a known major region for the country.",
       },
       industry_id: {
         type: "string",
@@ -77,14 +89,27 @@ async function executeTool(input: ToolInput) {
   if (!INDUSTRY_BY_ID[input.industry_id]) {
     return { error: "Unknown industry_id. Use a valid id from the taxonomy." };
   }
-  if (input.country.toUpperCase() !== "US") {
-    return { error: "Only US data is queryable right now. More countries coming." };
-  }
-  const region = input.region || "california";
+  const country = input.country.toUpperCase();
+  // Per-country default region when caller omits it
+  const DEFAULT_REGION: Record<string, string> = {
+    US: "california",
+    AU: "au-101",       // Sydney - Inner City SA2
+    MX: "mx-09",        // CDMX
+    GB: "gb-e09000033", // Westminster
+    DE: "de21",         // Oberbayern
+    FR: "fr10",         // Île-de-France
+    IT: "itc4",         // Lombardia
+    ES: "es-28",        // Madrid
+    NL: "nl-gm0363",    // Amsterdam
+    JP: "jp-13000",     // Tokyo
+    BR: "br-sp",        // São Paulo state
+    CA: "ca-on",        // Ontario
+  };
+  const region = input.region || DEFAULT_REGION[country] || country.toLowerCase();
   const industrySlug = industryToSlug(input.industry_id);
-  const cell = await getCellBySlug(input.country.toLowerCase(), region, industrySlug);
+  const cell = await getCellBySlug(country.toLowerCase(), region, industrySlug);
   if (!cell) {
-    return { error: `No data for ${input.industry_id} in ${region}.` };
+    return { error: `No data for ${input.industry_id} in ${region}, ${country}. Try another region or industry.` };
   }
   return {
     country: cell.country,
@@ -198,15 +223,18 @@ export async function POST(request: NextRequest) {
 
     if (!process.env.ANTHROPIC_API_KEY) {
       // Preview stub when key is not configured.
+      // NOTE for ops: live mode activates as soon as ANTHROPIC_API_KEY appears in
+      // process.env. In production that means setting it in Vercel
+      // (Settings → Environment Variables → ANTHROPIC_API_KEY). In local dev
+      // it's picked up from .env.local automatically.
       return NextResponse.json({
         answer:
           `"${question}"\n\n` +
-          `Ask Atlas is in private preview. Live answers come from a typed query ` +
-          `over our cell database — join the waitlist at the bottom of this page ` +
-          `to be notified when it opens up.\n\nIn the meantime, every cell page ` +
-          `already shows typical revenue, employment, and distribution for any ` +
-          `country × industry × size combination — navigate to the relevant page ` +
-          `from the home navigator.`,
+          `Lorem ipsum dolor sit amet — Ask Atlas is wired and ready, but the ` +
+          `production API key isn't deployed yet. Once the operator pastes the ` +
+          `ANTHROPIC_API_KEY into Vercel and redeploys, live answers will start ` +
+          `streaming. Every cell page already shows typical revenue, employment, ` +
+          `and distribution for any country × industry × size combination.`,
         preview: true,
       });
     }
