@@ -11,6 +11,7 @@ import { CityPicker } from "@/components/CityPicker";
 import { QualityLegend } from "@/components/QualityLegend";
 import { RecentlyAddedStrip } from "@/components/RecentlyAddedStrip";
 import { WhatsHotStrip } from "@/components/WhatsHotStrip";
+import { SpotlightCountry } from "@/components/SpotlightCountry";
 
 export const revalidate = 86400; // 1 day
 
@@ -110,6 +111,9 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* Spotlight country of the day — Plan v9 Track BB.4 */}
+      <SpotlightCountry />
 
       {/* Sector master menu — Plan v4.0 Step 13 */}
       <SectorMasterMenu />
