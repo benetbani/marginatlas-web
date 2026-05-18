@@ -65,6 +65,51 @@
     }
   }
 
+  /* Print stylesheet — make cell pages PDF-friendly for analysts. */
+  @media print {
+    header.sticky,
+    footer,
+    nav,
+    button,
+    [class*="hover\\:"],
+    .scroll-mt-20 #ask-atlas,
+    .scroll-mt-20 #pick-a-city,
+    [id="newsletter"] {
+      display: none !important;
+    }
+    body {
+      background: white !important;
+      background-image: none !important;
+      color: black !important;
+    }
+    main,
+    .card,
+    section,
+    article {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    h1, h2, h3 {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+    a {
+      color: black !important;
+      text-decoration: underline;
+    }
+    /* Make tables fit the page */
+    table {
+      page-break-inside: auto;
+      font-size: 11pt;
+    }
+    /* Add the URL after each link for print */
+    a[href^="/"]::after {
+      content: " (marginatlas.com" attr(href) ")";
+      font-size: 9pt;
+      color: #555;
+    }
+  }
+
   /* Subtle hover lift on cards across the site (Track BB.8). Skipped
      when prefers-reduced-motion is on. */
   @media (prefers-reduced-motion: no-preference) {
