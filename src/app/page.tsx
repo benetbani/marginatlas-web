@@ -6,6 +6,9 @@ import { FirstFrameStrip } from "@/components/FirstFrameStrip";
 import { CellOfTheWeek } from "@/components/CellOfTheWeek";
 import { GlobalCoverageStrip } from "@/components/GlobalCoverageStrip";
 import { TaxOverlayTeaser } from "@/components/TaxOverlayTeaser";
+import { AskWidget } from "@/components/AskWidget";
+import { CityPicker } from "@/components/CityPicker";
+import { QualityLegend } from "@/components/QualityLegend";
 
 export const revalidate = 86400; // 1 day
 
@@ -90,6 +93,15 @@ export default function HomePage() {
 
       {/* Tax overlay teaser — Plan v8 Track S.6 */}
       <TaxOverlayTeaser />
+
+      {/* Ask Atlas widget — Plan v8 Track S.5 (live after key in Vercel) */}
+      <AskWidget />
+
+      {/* Pick a city — Plan v8 Track S.4 */}
+      <CityPicker />
+
+      {/* Quality legend — Plan v8 Track S.7 */}
+      <QualityLegend />
 
       {/* Stats strip */}
       <section className="py-8 grid grid-cols-2 md:grid-cols-4 gap-4">
