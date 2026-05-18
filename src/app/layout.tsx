@@ -33,10 +33,11 @@ export default function RootLayout({
             <div className="flex items-center gap-2">
               <nav className="text-sm text-ink-800 hidden md:flex">
                 <a href="/browse" className="hover:text-atlas-600 mx-2 transition-colors">Browse</a>
+                <a href="/world" className="hover:text-atlas-600 mx-2 transition-colors">World</a>
                 <a href="/compare" className="hover:text-atlas-600 mx-2 transition-colors">Compare</a>
                 <a href="/you" className="hover:text-atlas-600 mx-2 transition-colors">How do I compare?</a>
                 <a href="/ask" className="hover:text-atlas-600 mx-2 transition-colors">Ask</a>
-                <a href="/blog" className="hover:text-atlas-600 mx-2 transition-colors">Blog</a>
+                <a href="/coverage" className="hover:text-atlas-600 mx-2 transition-colors">Coverage</a>
                 <a href="/pricing" className="hover:text-atlas-600 mx-2 transition-colors">Pricing</a>
               </nav>
               <GlobalSearch />

@@ -152,6 +152,12 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
               {qual.label}
             </span>
             <span className="text-xs text-cocoa-700/70">Coverage tier {meta.quality}</span>
+            <a
+              href={`/coverage/${iso2.toLowerCase()}`}
+              className="ml-1 text-xs text-atlas-700 hover:text-atlas-900 font-medium"
+            >
+              See coverage scorecard →
+            </a>
           </div>
         </div>
         <div className="hidden lg:block mt-6 lg:mt-0">
