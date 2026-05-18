@@ -1,0 +1,2063 @@
+{
+  "generated_at": "2026-05-18T17:22:43Z",
+  "tables": {
+    "regional_cells": {
+      "total_rows": 356761,
+      "peer_groups": 437,
+      "counts": {
+        "empty": 115578,
+        "outliers": 5832,
+        "zeros": 234
+      },
+      "samples": {
+        "empty": [
+          {
+            "country": "LU",
+            "geo_id": "LU0",
+            "industry_id": "motor_vehicles_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "LU",
+            "geo_id": "LU00",
+            "industry_id": "motor_vehicles_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "MT",
+            "geo_id": "MT0",
+            "industry_id": "motor_vehicles_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "MT",
+            "geo_id": "MT00",
+            "industry_id": "motor_vehicles_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "BR",
+            "geo_id": "BR-CE",
+            "industry_id": "forestry_logging",
+            "size_band": "total",
+            "year": 2021,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "PT",
+            "geo_id": "PT2",
+            "industry_id": "motor_vehicles_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "PT",
+            "geo_id": "PT20",
+            "industry_id": "motor_vehicles_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "AT",
+            "geo_id": "AT1",
+            "industry_id": "other_transport_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "AT",
+            "geo_id": "AT12",
+            "industry_id": "other_transport_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "AT",
+            "geo_id": "AT2",
+            "industry_id": "other_transport_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "AT",
+            "geo_id": "AT22",
+            "industry_id": "other_transport_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "BR",
+            "geo_id": "BR-RN",
+            "industry_id": "forestry_logging",
+            "size_band": "total",
+            "year": 2021,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "AT",
+            "geo_id": "AT32",
+            "industry_id": "other_transport_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "AT",
+            "geo_id": "AT33",
+            "industry_id": "other_transport_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "BR",
+            "geo_id": "BR-PB",
+            "industry_id": "forestry_logging",
+            "size_band": "total",
+            "year": 2021,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "BG",
+            "geo_id": "BG32",
+            "industry_id": "other_transport_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "BG",
+            "geo_id": "BG33",
+            "industry_id": "other_transport_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "BG",
+            "geo_id": "BG34",
+            "industry_id": "other_transport_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "PT",
+            "geo_id": "PT3",
+            "industry_id": "employment_services",
+            "size_band": "total",
+            "year": 2020,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "PT",
+            "geo_id": "PT30",
+            "industry_id": "employment_services",
+            "size_band": "total",
+            "year": 2020,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DE11",
+            "industry_id": "other_transport_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "BR",
+            "geo_id": "BR-SE",
+            "industry_id": "forestry_logging",
+            "size_band": "total",
+            "year": 2021,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DEB3",
+            "industry_id": "other_transport_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DEC",
+            "industry_id": "other_transport_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DEC0",
+            "industry_id": "other_transport_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DED4",
+            "industry_id": "other_transport_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DED5",
+            "industry_id": "other_transport_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "BR",
+            "geo_id": "BR-BA",
+            "industry_id": "forestry_logging",
+            "size_band": "total",
+            "year": 2021,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "BR",
+            "geo_id": "BR-MG",
+            "industry_id": "forestry_logging",
+            "size_band": "total",
+            "year": 2021,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRM",
+            "industry_id": "plastics_rubber_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRM0",
+            "industry_id": "plastics_rubber_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRY1",
+            "industry_id": "plastics_rubber_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "BR",
+            "geo_id": "BR-ES",
+            "industry_id": "forestry_logging",
+            "size_band": "total",
+            "year": 2021,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRM",
+            "industry_id": "plastics_rubber_mfg",
+            "size_band": "total",
+            "year": 2020,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRM0",
+            "industry_id": "plastics_rubber_mfg",
+            "size_band": "total",
+            "year": 2020,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRY1",
+            "industry_id": "plastics_rubber_mfg",
+            "size_band": "total",
+            "year": 2020,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRY3",
+            "industry_id": "plastics_rubber_mfg",
+            "size_band": "total",
+            "year": 2020,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "LU",
+            "geo_id": "LU0",
+            "industry_id": "plastics_rubber_mfg",
+            "size_band": "total",
+            "year": 2020,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "LU",
+            "geo_id": "LU00",
+            "industry_id": "plastics_rubber_mfg",
+            "size_band": "total",
+            "year": 2020,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "MT",
+            "geo_id": "MT0",
+            "industry_id": "plastics_rubber_mfg",
+            "size_band": "total",
+            "year": 2020,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "MT",
+            "geo_id": "MT00",
+            "industry_id": "plastics_rubber_mfg",
+            "size_band": "total",
+            "year": 2020,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "NL",
+            "geo_id": "NL1",
+            "industry_id": "plastics_rubber_mfg",
+            "size_band": "total",
+            "year": 2020,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "NL",
+            "geo_id": "NL13",
+            "industry_id": "plastics_rubber_mfg",
+            "size_band": "total",
+            "year": 2020,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "BR",
+            "geo_id": "BR-MT",
+            "industry_id": "forestry_logging",
+            "size_band": "total",
+            "year": 2021,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "PT",
+            "geo_id": "PT15",
+            "industry_id": "plastics_rubber_mfg",
+            "size_band": "total",
+            "year": 2020,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "PT",
+            "geo_id": "PT17",
+            "industry_id": "plastics_rubber_mfg",
+            "size_band": "total",
+            "year": 2020,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "PT",
+            "geo_id": "PT3",
+            "industry_id": "plastics_rubber_mfg",
+            "size_band": "total",
+            "year": 2020,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "PT",
+            "geo_id": "PT30",
+            "industry_id": "plastics_rubber_mfg",
+            "size_band": "total",
+            "year": 2020,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRD1",
+            "industry_id": "metal_products_mfg",
+            "size_band": "total",
+            "year": 2020,
+            "issue": "all metrics null"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRD2",
+            "industry_id": "metal_products_mfg",
+            "size_band": "total",
+            "year": 2020,
+            "issue": "all metrics null"
+          }
+        ],
+        "outliers": [
+          {
+            "country": "KR",
+            "geo_id": "KR-CITY-seoul",
+            "industry_id": "marketing_design",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=5.1 (rev=101977248 vs median=15776538, n=134)"
+          },
+          {
+            "country": "KR",
+            "geo_id": "KR-CITY-seoul",
+            "industry_id": "water_waste",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=5.7 (rev=149810479 vs median=20364687, n=134)"
+          },
+          {
+            "country": "KR",
+            "geo_id": "KR-CITY-busan",
+            "industry_id": "other_transport_mfg",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=5.1 (rev=353405559 vs median=50186690, n=137)"
+          },
+          {
+            "country": "KR",
+            "geo_id": "KR-CITY-busan",
+            "industry_id": "management_consulting",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=5.3 (rev=131215998 vs median=16741544, n=135)"
+          },
+          {
+            "country": "KR",
+            "geo_id": "KR-CITY-incheon",
+            "industry_id": "other_transport_mfg",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=5.1 (rev=353405559 vs median=50186690, n=137)"
+          },
+          {
+            "country": "KR",
+            "geo_id": "KR-CITY-incheon",
+            "industry_id": "management_consulting",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=5.3 (rev=131215998 vs median=16741544, n=135)"
+          },
+          {
+            "country": "KR",
+            "geo_id": "KR-CITY-daegu",
+            "industry_id": "management_consulting",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=5.0 (rev=124967617 vs median=16741544, n=135)"
+          },
+          {
+            "country": "AU",
+            "geo_id": "AU-CITY-sydney",
+            "industry_id": "travel_agencies",
+            "size_band": "TOTAL",
+            "year": 2024,
+            "issue": "outlier z=8.4 (rev=1957524 vs median=226791, n=136)"
+          },
+          {
+            "country": "AU",
+            "geo_id": "AU-CITY-sydney",
+            "industry_id": "security_services",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=7.0 (rev=76081941 vs median=11041441, n=137)"
+          },
+          {
+            "country": "AU",
+            "geo_id": "AU-CITY-sydney",
+            "industry_id": "office_support",
+            "size_band": "10-19",
+            "year": 2024,
+            "issue": "outlier z=5.8 (rev=3571495 vs median=647129, n=140)"
+          },
+          {
+            "country": "AU",
+            "geo_id": "AU-CITY-sydney",
+            "industry_id": "office_support",
+            "size_band": "20-49",
+            "year": 2024,
+            "issue": "outlier z=5.2 (rev=6104932 vs median=1221126, n=137)"
+          },
+          {
+            "country": "AU",
+            "geo_id": "AU-CITY-sydney",
+            "industry_id": "office_support",
+            "size_band": "TOTAL",
+            "year": 2024,
+            "issue": "outlier z=5.7 (rev=908099 vs median=160957, n=135)"
+          },
+          {
+            "country": "AU",
+            "geo_id": "AU-CITY-sydney",
+            "industry_id": "electronics_mfg",
+            "size_band": "TOTAL",
+            "year": 2024,
+            "issue": "outlier z=8.2 (rev=9208487 vs median=1030905, n=143)"
+          },
+          {
+            "country": "AU",
+            "geo_id": "AU-CITY-sydney",
+            "industry_id": "textile_apparel_mfg",
+            "size_band": "10-19",
+            "year": 2024,
+            "issue": "outlier z=5.5 (rev=2409731 vs median=438590, n=144)"
+          },
+          {
+            "country": "AU",
+            "geo_id": "AU-CITY-sydney",
+            "industry_id": "textile_apparel_mfg",
+            "size_band": "20-49",
+            "year": 2024,
+            "issue": "outlier z=7.3 (rev=7084696 vs median=915268, n=145)"
+          },
+          {
+            "country": "AU",
+            "geo_id": "AU-CITY-sydney",
+            "industry_id": "textile_apparel_mfg",
+            "size_band": "50-249",
+            "year": 2024,
+            "issue": "outlier z=5.4 (rev=30405727 vs median=4219874, n=168)"
+          },
+          {
+            "country": "AU",
+            "geo_id": "AU-CITY-sydney",
+            "industry_id": "wood_paper_mfg",
+            "size_band": "TOTAL",
+            "year": 2024,
+            "issue": "outlier z=6.3 (rev=3506967 vs median=589634, n=143)"
+          },
+          {
+            "country": "AU",
+            "geo_id": "AU-CITY-sydney",
+            "industry_id": "chemical_pharma_mfg",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=6.8 (rev=651889576 vs median=99235982, n=143)"
+          },
+          {
+            "country": "CA",
+            "geo_id": "CA-CITY-ottawa",
+            "industry_id": "warehousing_storage",
+            "size_band": "TOTAL",
+            "year": 2024,
+            "issue": "outlier z=5.0 (rev=5168191 vs median=917812, n=144)"
+          },
+          {
+            "country": "AE",
+            "geo_id": "AE-CITY-sharjah",
+            "industry_id": "chemical_pharma_mfg",
+            "size_band": "TOTAL",
+            "year": 2024,
+            "issue": "outlier z=6.3 (rev=22836179 vs median=3056171, n=143)"
+          },
+          {
+            "country": "AE",
+            "geo_id": "AE-CITY-sharjah",
+            "industry_id": "machinery_mfg",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=5.8 (rev=258989829 vs median=39170980, n=134)"
+          },
+          {
+            "country": "AE",
+            "geo_id": "AE-CITY-sharjah",
+            "industry_id": "motor_vehicles_mfg",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=6.8 (rev=765027424 vs median=91716475, n=134)"
+          },
+          {
+            "country": "AE",
+            "geo_id": "AE-CITY-sharjah",
+            "industry_id": "other_transport_mfg",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=9.4 (rev=607607156 vs median=50186690, n=137)"
+          },
+          {
+            "country": "AE",
+            "geo_id": "AE-CITY-sharjah",
+            "industry_id": "mining_quarrying",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=6.6 (rev=277916727 vs median=33590372, n=127)"
+          },
+          {
+            "country": "AE",
+            "geo_id": "AE-CITY-sharjah",
+            "industry_id": "management_consulting",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=10.4 (rev=241180362 vs median=16741544, n=135)"
+          },
+          {
+            "country": "AE",
+            "geo_id": "AE-CITY-sharjah",
+            "industry_id": "travel_agencies",
+            "size_band": "TOTAL",
+            "year": 2024,
+            "issue": "outlier z=5.4 (rev=1332507 vs median=226791, n=136)"
+          },
+          {
+            "country": "AE",
+            "geo_id": "AE-CITY-sharjah",
+            "industry_id": "electronics_mfg",
+            "size_band": "TOTAL",
+            "year": 2024,
+            "issue": "outlier z=5.2 (rev=6234367 vs median=1030905, n=143)"
+          },
+          {
+            "country": "AE",
+            "geo_id": "AE-CITY-sharjah",
+            "industry_id": "it_services_hosting",
+            "size_band": "10-19",
+            "year": 2024,
+            "issue": "outlier z=5.3 (rev=2951263 vs median=486703, n=139)"
+          },
+          {
+            "country": "AE",
+            "geo_id": "AE-CITY-sharjah",
+            "industry_id": "it_services_hosting",
+            "size_band": "TOTAL",
+            "year": 2024,
+            "issue": "outlier z=5.5 (rev=1043604 vs median=166396, n=142)"
+          },
+          {
+            "country": "AE",
+            "geo_id": "AE-CITY-sharjah",
+            "industry_id": "banking",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=5.8 (rev=125397436 vs median=18519084, n=139)"
+          },
+          {
+            "country": "AE",
+            "geo_id": "AE-CITY-sharjah",
+            "industry_id": "marketing_design",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=7.6 (rev=145327322 vs median=15776538, n=134)"
+          },
+          {
+            "country": "AE",
+            "geo_id": "AE-CITY-sharjah",
+            "industry_id": "water_waste",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=8.8 (rev=221751732 vs median=20364687, n=134)"
+          },
+          {
+            "country": "AE",
+            "geo_id": "AE-CITY-sharjah",
+            "industry_id": "property_leasing",
+            "size_band": "TOTAL",
+            "year": 2024,
+            "issue": "outlier z=6.4 (rev=1546991 vs median=210812, n=132)"
+          },
+          {
+            "country": "AE",
+            "geo_id": "AE-CITY-sharjah",
+            "industry_id": "travel_agencies",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=6.7 (rev=355624827 vs median=46596639, n=132)"
+          },
+          {
+            "country": "SA",
+            "geo_id": "SA-CITY-riyadh",
+            "industry_id": "other_transport_mfg",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=5.6 (rev=385202271 vs median=50186690, n=137)"
+          },
+          {
+            "country": "SA",
+            "geo_id": "SA-CITY-riyadh",
+            "industry_id": "management_consulting",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=5.8 (rev=142111152 vs median=16741544, n=135)"
+          },
+          {
+            "country": "SA",
+            "geo_id": "SA-CITY-riyadh",
+            "industry_id": "water_waste",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=5.1 (rev=136840287 vs median=20364687, n=134)"
+          },
+          {
+            "country": "SA",
+            "geo_id": "SA-CITY-jeddah",
+            "industry_id": "management_consulting",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=5.5 (rev=136189854 vs median=16741544, n=135)"
+          },
+          {
+            "country": "MX",
+            "geo_id": "MX-17-008",
+            "industry_id": "metal_products_mfg",
+            "size_band": "total",
+            "year": 2024,
+            "issue": "outlier z=171.0 (rev=63238460 vs median=488333, n=1476)"
+          },
+          {
+            "country": "MX",
+            "geo_id": "MX-17-009",
+            "industry_id": "metal_products_mfg",
+            "size_band": "total",
+            "year": 2024,
+            "issue": "outlier z=10.5 (rev=4342621 vs median=488333, n=1476)"
+          },
+          {
+            "country": "MX",
+            "geo_id": "MX-17-011",
+            "industry_id": "food_beverage_mfg",
+            "size_band": "total",
+            "year": 2024,
+            "issue": "outlier z=25.5 (rev=12040205 vs median=642500, n=2053)"
+          },
+          {
+            "country": "MX",
+            "geo_id": "MX-17-011",
+            "industry_id": "textile_apparel_mfg",
+            "size_band": "total",
+            "year": 2024,
+            "issue": "outlier z=811.9 (rev=121371833 vs median=150019, n=1210)"
+          },
+          {
+            "country": "MX",
+            "geo_id": "MX-17-011",
+            "industry_id": "chemical_pharma_mfg",
+            "size_band": "total",
+            "year": 2024,
+            "issue": "outlier z=17.0 (rev=491354214 vs median=19078967, n=218)"
+          },
+          {
+            "country": "MX",
+            "geo_id": "MX-17-011",
+            "industry_id": "chemical_pharma_mfg",
+            "size_band": "50-249",
+            "year": 2024,
+            "issue": "outlier z=28.6 (rev=615996500 vs median=19507945, n=186)"
+          },
+          {
+            "country": "MX",
+            "geo_id": "MX-17-011",
+            "industry_id": "metal_products_mfg",
+            "size_band": "total",
+            "year": 2024,
+            "issue": "outlier z=27.7 (rev=10650538 vs median=488333, n=1476)"
+          },
+          {
+            "country": "MX",
+            "geo_id": "MX-17-011",
+            "industry_id": "motor_vehicles_mfg",
+            "size_band": "total",
+            "year": 2024,
+            "issue": "outlier z=21.3 (rev=4504614143 vs median=140080889, n=126)"
+          },
+          {
+            "country": "MX",
+            "geo_id": "MX-17-011",
+            "industry_id": "furniture_other_mfg",
+            "size_band": "total",
+            "year": 2024,
+            "issue": "outlier z=7.6 (rev=2537452 vs median=378417, n=940)"
+          },
+          {
+            "country": "MX",
+            "geo_id": "MX-17-011",
+            "industry_id": "furniture_other_mfg",
+            "size_band": "50-249",
+            "year": 2024,
+            "issue": "outlier z=20.7 (rev=142716625 vs median=5640143, n=170)"
+          },
+          {
+            "country": "MX",
+            "geo_id": "MX-17-011",
+            "industry_id": "real_estate_agencies",
+            "size_band": "total",
+            "year": 2024,
+            "issue": "outlier z=5.7 (rev=1703429 vs median=267577, n=808)"
+          },
+          {
+            "country": "MX",
+            "geo_id": "MX-17-011",
+            "industry_id": "employment_services",
+            "size_band": "total",
+            "year": 2024,
+            "issue": "outlier z=26.5 (rev=6242824 vs median=353220, n=810)"
+          }
+        ],
+        "zeros": [
+          {
+            "country": "DE",
+            "geo_id": "DE6",
+            "industry_id": "textile_apparel_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "employees=0 but firms=5"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DE60",
+            "industry_id": "textile_apparel_mfg",
+            "size_band": "total",
+            "year": 2019,
+            "issue": "employees=0 but firms=5"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DE2",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=432"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DE21",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=120"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DE27",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=53"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DE6",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=6"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DE60",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=6"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DE7",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=157"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DE73",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=49"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DE8",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=42"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DE80",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=42"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DE91",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=59"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DE92",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=57"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DE93",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=30"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DE94",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=46"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DEA1",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=59"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DEA2",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=89"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DEA3",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=38"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DEA4",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=42"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DEA5",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=70"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DEB1",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=122"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DEB2",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=27"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DEB3",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=59"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DED",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=160"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DED2",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=59"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DED5",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=44"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DEF",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=76"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DEF0",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=76"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DEG",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=74"
+          },
+          {
+            "country": "DE",
+            "geo_id": "DEG0",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=74"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRB",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=44"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRB0",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=44"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRC",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=145"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRC1",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=79"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRD1",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=34"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRD2",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=21"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRE",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=118"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRE1",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=89"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRF1",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=65"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRF2",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=99"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRF3",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=67"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRJ1",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=114"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRJ2",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=181"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRK1",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=69"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRK2",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=255"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRL",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=142"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRL0",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=142"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRY1",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=27"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRY2",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=19"
+          },
+          {
+            "country": "FR",
+            "geo_id": "FRY3",
+            "industry_id": "mining_quarrying",
+            "size_band": "total",
+            "year": 2018,
+            "issue": "employees=0 but firms=21"
+          }
+        ]
+      }
+    },
+    "cells_master": {
+      "total_rows": 89000,
+      "peer_groups": 158,
+      "counts": {
+        "outliers": 1189,
+        "zeros": 2
+      },
+      "samples": {
+        "outliers": [
+          {
+            "country": "US",
+            "geo_id": "US-12",
+            "industry_id": "531",
+            "size_band": "250+",
+            "year": 2019,
+            "issue": "outlier z=9.8 (rev=192489340 vs median=16434790, n=335)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-12",
+            "industry_id": "561",
+            "size_band": "250+",
+            "year": 2019,
+            "issue": "outlier z=15.0 (rev=252761795 vs median=16364284, n=953)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-13",
+            "industry_id": null,
+            "size_band": "1-9",
+            "year": 2019,
+            "issue": "outlier z=6.7 (rev=2670825 vs median=478616, n=329)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-13",
+            "industry_id": "611",
+            "size_band": "250+",
+            "year": 2019,
+            "issue": "outlier z=9.0 (rev=228317887 vs median=22920683, n=298)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-16",
+            "industry_id": "721",
+            "size_band": "1-9",
+            "year": 2019,
+            "issue": "outlier z=5.4 (rev=889117 vs median=273595, n=318)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-17",
+            "industry_id": "424",
+            "size_band": "250+",
+            "year": 2019,
+            "issue": "outlier z=7.5 (rev=1149288972 vs median=135309350, n=823)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-17",
+            "industry_id": "561",
+            "size_band": "250+",
+            "year": 2020,
+            "issue": "outlier z=12.0 (rev=205507835 vs median=16364284, n=953)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-17",
+            "industry_id": "621",
+            "size_band": "250+",
+            "year": 2020,
+            "issue": "outlier z=7.8 (rev=199079118 vs median=25268891, n=663)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-18",
+            "industry_id": null,
+            "size_band": "10-49",
+            "year": 2020,
+            "issue": "outlier z=7.0 (rev=32248029 vs median=4737360, n=338)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-19",
+            "industry_id": "623",
+            "size_band": "1-9",
+            "year": 2020,
+            "issue": "outlier z=5.2 (rev=954574 vs median=306767, n=333)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-20",
+            "industry_id": "424",
+            "size_band": "1-9",
+            "year": 2020,
+            "issue": "outlier z=9.4 (rev=15284788 vs median=3154950, n=1308)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-47",
+            "industry_id": "621",
+            "size_band": "250+",
+            "year": 2018,
+            "issue": "outlier z=5.6 (rev=148556816 vs median=25268891, n=663)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-06",
+            "industry_id": "512",
+            "size_band": "250+",
+            "year": 2020,
+            "issue": "outlier z=38.7 (rev=953211466 vs median=25870909, n=85)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-06",
+            "industry_id": "519",
+            "size_band": "250+",
+            "year": 2020,
+            "issue": "outlier z=70.6 (rev=3186431625 vs median=36603420, n=80)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-06",
+            "industry_id": "532",
+            "size_band": "250+",
+            "year": 2020,
+            "issue": "outlier z=5.0 (rev=112655541 vs median=22839213, n=270)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-06",
+            "industry_id": "561",
+            "size_band": "250+",
+            "year": 2020,
+            "issue": "outlier z=6.6 (rev=120758865 vs median=16364284, n=953)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-06",
+            "industry_id": "621",
+            "size_band": "250+",
+            "year": 2020,
+            "issue": "outlier z=17.7 (rev=418012900 vs median=25268891, n=663)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-08",
+            "industry_id": "423",
+            "size_band": "250+",
+            "year": 2020,
+            "issue": "outlier z=5.5 (rev=568632495 vs median=100667865, n=1200)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-08",
+            "industry_id": "611",
+            "size_band": "1-9",
+            "year": 2020,
+            "issue": "outlier z=6.1 (rev=1074549 vs median=266747, n=670)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-08",
+            "industry_id": "611",
+            "size_band": "1-9",
+            "year": 2020,
+            "issue": "outlier z=6.1 (rev=1074549 vs median=266747, n=670)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-12",
+            "industry_id": "423",
+            "size_band": "250+",
+            "year": 2020,
+            "issue": "outlier z=5.5 (rev=565745993 vs median=100667865, n=1200)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-12",
+            "industry_id": "813",
+            "size_band": "250+",
+            "year": 2020,
+            "issue": "outlier z=8.8 (rev=140437380 vs median=11695891, n=229)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-13",
+            "industry_id": null,
+            "size_band": "250+",
+            "year": 2020,
+            "issue": "outlier z=10.4 (rev=829285490 vs median=64503636, n=349)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-13",
+            "industry_id": "611",
+            "size_band": "250+",
+            "year": 2020,
+            "issue": "outlier z=8.2 (rev=208397080 vs median=22920683, n=298)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-15",
+            "industry_id": "561",
+            "size_band": "250+",
+            "year": 2020,
+            "issue": "outlier z=17.3 (rev=289402744 vs median=16364284, n=953)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-41",
+            "industry_id": "524",
+            "size_band": "1-9",
+            "year": 2021,
+            "issue": "outlier z=10.2 (rev=3805859 vs median=909857, n=274)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-42",
+            "industry_id": "424",
+            "size_band": "250+",
+            "year": 2021,
+            "issue": "outlier z=12.8 (rev=1872492845 vs median=135309350, n=823)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-00",
+            "industry_id": "237",
+            "size_band": "250+",
+            "year": 2019,
+            "issue": "outlier z=5.3 (rev=594533992 vs median=125431454, n=182)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-00",
+            "industry_id": "423",
+            "size_band": "250+",
+            "year": 2019,
+            "issue": "outlier z=7.5 (rev=740283428 vs median=100667865, n=1200)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-00",
+            "industry_id": "515",
+            "size_band": "250+",
+            "year": 2019,
+            "issue": "outlier z=39.1 (rev=1405728417 vs median=41612963, n=137)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-00",
+            "industry_id": "522",
+            "size_band": "250+",
+            "year": 2019,
+            "issue": "outlier z=30.1 (rev=2885576139 vs median=84335502, n=418)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-00",
+            "industry_id": "541",
+            "size_band": "250+",
+            "year": 2019,
+            "issue": "outlier z=16.1 (rev=398664942 vs median=23142684, n=1021)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-00",
+            "industry_id": "541",
+            "size_band": "250+",
+            "year": 2019,
+            "issue": "outlier z=7.1 (rev=188773393 vs median=23142684, n=1021)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-00",
+            "industry_id": "623",
+            "size_band": "250+",
+            "year": 2019,
+            "issue": "outlier z=5.2 (rev=115131361 vs median=25564307, n=305)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-00",
+            "industry_id": "623",
+            "size_band": "250+",
+            "year": 2019,
+            "issue": "outlier z=5.2 (rev=115131361 vs median=25564307, n=305)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-00",
+            "industry_id": "813",
+            "size_band": "250+",
+            "year": 2019,
+            "issue": "outlier z=8.4 (rev=134002784 vs median=11695891, n=229)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-34",
+            "industry_id": "423",
+            "size_band": "250+",
+            "year": 2020,
+            "issue": "outlier z=5.7 (rev=587922798 vs median=100667865, n=1200)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-34",
+            "industry_id": "713",
+            "size_band": "1-9",
+            "year": 2020,
+            "issue": "outlier z=5.6 (rev=866473 vs median=258073, n=436)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-34",
+            "industry_id": "713",
+            "size_band": "1-9",
+            "year": 2020,
+            "issue": "outlier z=5.6 (rev=866473 vs median=258073, n=436)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-22",
+            "industry_id": null,
+            "size_band": "10-49",
+            "year": 2018,
+            "issue": "outlier z=6.0 (rev=28345041 vs median=4737360, n=338)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-10",
+            "industry_id": "561",
+            "size_band": "10-49",
+            "year": 2021,
+            "issue": "outlier z=5.2 (rev=7178673 vs median=2227279, n=1056)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-11",
+            "industry_id": "711",
+            "size_band": "10-49",
+            "year": 2021,
+            "issue": "outlier z=5.0 (rev=8269977 vs median=2529220, n=288)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-12",
+            "industry_id": "811",
+            "size_band": "250+",
+            "year": 2021,
+            "issue": "outlier z=9.0 (rev=105862075 vs median=11498871, n=280)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-20",
+            "industry_id": "561",
+            "size_band": "250+",
+            "year": 2021,
+            "issue": "outlier z=9.0 (rev=157595626 vs median=16364284, n=953)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-00",
+            "industry_id": "212",
+            "size_band": "1-9",
+            "year": 2018,
+            "issue": "outlier z=6.6 (rev=7575299 vs median=2647215, n=130)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-00",
+            "industry_id": "561",
+            "size_band": "250+",
+            "year": 2018,
+            "issue": "outlier z=7.3 (rev=130700792 vs median=16364284, n=953)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-00",
+            "industry_id": "561",
+            "size_band": "250+",
+            "year": 2018,
+            "issue": "outlier z=12.9 (rev=219016802 vs median=16364284, n=953)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-00",
+            "industry_id": "713",
+            "size_band": "250+",
+            "year": 2018,
+            "issue": "outlier z=5.3 (rev=83417961 vs median=16277093, n=176)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-00",
+            "industry_id": "813",
+            "size_band": "250+",
+            "year": 2018,
+            "issue": "outlier z=9.9 (rev=155577954 vs median=11695891, n=229)"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-01",
+            "industry_id": null,
+            "size_band": "10-49",
+            "year": 2018,
+            "issue": "outlier z=7.2 (rev=33339356 vs median=4737360, n=338)"
+          }
+        ],
+        "zeros": [
+          {
+            "country": "US",
+            "geo_id": "US-21",
+            "industry_id": "512",
+            "size_band": "1-9",
+            "year": 2018,
+            "issue": "employees=0 but firms=5"
+          },
+          {
+            "country": "US",
+            "geo_id": "US-41",
+            "industry_id": "483",
+            "size_band": "1-9",
+            "year": 2018,
+            "issue": "employees=0 but firms=5"
+          }
+        ]
+      }
+    },
+    "extrapolated_cells": {
+      "total_rows": 58608,
+      "peer_groups": 264,
+      "counts": {
+        "outliers": 4061
+      },
+      "samples": {
+        "outliers": [
+          {
+            "country": "ECS",
+            "geo_id": "ECS",
+            "industry_id": "textile_apparel_mfg",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=6.6 (rev=81642004 vs median=8160689, n=222)"
+          },
+          {
+            "country": "ECS",
+            "geo_id": "ECS",
+            "industry_id": "chemical_pharma_mfg",
+            "size_band": "TOTAL",
+            "year": 2024,
+            "issue": "outlier z=5.4 (rev=11175441 vs median=1384470, n=222)"
+          },
+          {
+            "country": "ECS",
+            "geo_id": "ECS",
+            "industry_id": "other_transport_mfg",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=7.1 (rev=272984596 vs median=25349202, n=222)"
+          },
+          {
+            "country": "ECS",
+            "geo_id": "ECS",
+            "industry_id": "real_estate_agencies",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=5.1 (rev=65241584 vs median=8647436, n=222)"
+          },
+          {
+            "country": "ECS",
+            "geo_id": "ECS",
+            "industry_id": "mining_quarrying",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=5.9 (rev=132247539 vs median=14906424, n=222)"
+          },
+          {
+            "country": "ECS",
+            "geo_id": "ECS",
+            "industry_id": "management_consulting",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=9.8 (rev=98534965 vs median=6641415, n=222)"
+          },
+          {
+            "country": "ECS",
+            "geo_id": "ECS",
+            "industry_id": "marketing_design",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=6.7 (rev=66541513 vs median=6586758, n=222)"
+          },
+          {
+            "country": "ECS",
+            "geo_id": "ECS",
+            "industry_id": "water_waste",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=8.0 (rev=96197734 vs median=7937363, n=222)"
+          },
+          {
+            "country": "ECS",
+            "geo_id": "ECS",
+            "industry_id": "property_leasing",
+            "size_band": "TOTAL",
+            "year": 2024,
+            "issue": "outlier z=5.5 (rev=755929 vs median=93178, n=222)"
+          },
+          {
+            "country": "ECS",
+            "geo_id": "ECS",
+            "industry_id": "travel_agencies",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=5.7 (rev=171649691 vs median=20298403, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "textile_apparel_mfg",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=10.9 (rev=129865236 vs median=8160689, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "chemical_pharma_mfg",
+            "size_band": "TOTAL",
+            "year": 2024,
+            "issue": "outlier z=8.7 (rev=17023903 vs median=1384470, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "machinery_mfg",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=5.3 (rev=201021706 vs median=27232826, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "motor_vehicles_mfg",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=7.3 (rev=578545029 vs median=56400069, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "banking",
+            "size_band": "50-249",
+            "year": 2024,
+            "issue": "outlier z=6.0 (rev=21624012 vs median=2568891, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "other_transport_mfg",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=11.9 (rev=440721371 vs median=25349202, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "it_services_hosting",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=6.1 (rev=115390302 vs median=13460045, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "banking",
+            "size_band": "20-49",
+            "year": 2024,
+            "issue": "outlier z=5.0 (rev=6656042 vs median=954939, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "real_estate_agencies",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=8.0 (rev=98040354 vs median=8647436, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "furniture_other_mfg",
+            "size_band": "50-249",
+            "year": 2024,
+            "issue": "outlier z=5.4 (rev=17231607 vs median=2311045, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "oil_gas_extraction",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=6.3 (rev=425959077 vs median=48508655, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "mining_quarrying",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=9.6 (rev=205329748 vs median=14906424, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "legal_services",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=6.1 (rev=98304034 vs median=11593979, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "management_consulting",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=17.4 (rev=169692271 vs median=6641415, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "engineering_architecture",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=6.1 (rev=94907434 vs median=11139158, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "water_waste",
+            "size_band": "50-249",
+            "year": 2024,
+            "issue": "outlier z=5.6 (rev=19887449 vs median=2544546, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "travel_agencies",
+            "size_band": "50-249",
+            "year": 2024,
+            "issue": "outlier z=5.1 (rev=28560155 vs median=4018141, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "travel_agencies",
+            "size_band": "TOTAL",
+            "year": 2024,
+            "issue": "outlier z=6.7 (rev=1014801 vs median=108121, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "security_services",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=5.2 (rev=41751364 vs median=5818242, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "electronics_mfg",
+            "size_band": "TOTAL",
+            "year": 2024,
+            "issue": "outlier z=7.0 (rev=4732609 vs median=484044, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "textile_apparel_mfg",
+            "size_band": "20-49",
+            "year": 2024,
+            "issue": "outlier z=6.4 (rev=3714435 vs median=417375, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "textile_apparel_mfg",
+            "size_band": "50-249",
+            "year": 2024,
+            "issue": "outlier z=7.1 (rev=15536663 vs median=1546328, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "wholesale_food",
+            "size_band": "TOTAL",
+            "year": 2024,
+            "issue": "outlier z=5.3 (rev=3298975 vs median=445687, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "auto_dealers_gas",
+            "size_band": "TOTAL",
+            "year": 2024,
+            "issue": "outlier z=5.7 (rev=1616830 vs median=202659, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "machinery_mfg",
+            "size_band": "TOTAL",
+            "year": 2024,
+            "issue": "outlier z=6.0 (rev=6162416 vs median=732518, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "it_services_hosting",
+            "size_band": "50-249",
+            "year": 2024,
+            "issue": "outlier z=5.2 (rev=18586547 vs median=2590645, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "broadcasting_telecom",
+            "size_band": "10-19",
+            "year": 2024,
+            "issue": "outlier z=5.5 (rev=2829629 vs median=368721, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "broadcasting_telecom",
+            "size_band": "20-49",
+            "year": 2024,
+            "issue": "outlier z=5.5 (rev=6787409 vs median=880441, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "broadcasting_telecom",
+            "size_band": "TOTAL",
+            "year": 2024,
+            "issue": "outlier z=5.8 (rev=7066189 vs median=867595, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "it_services_hosting",
+            "size_band": "10-19",
+            "year": 2024,
+            "issue": "outlier z=5.4 (rev=2289077 vs median=307339, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "it_services_hosting",
+            "size_band": "TOTAL",
+            "year": 2024,
+            "issue": "outlier z=5.5 (rev=807381 vs median=104956, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "banking",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=7.6 (rev=94468570 vs median=8774408, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "real_estate_agencies",
+            "size_band": "50-249",
+            "year": 2024,
+            "issue": "outlier z=5.7 (rev=20622608 vs median=2609482, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "oil_gas_extraction",
+            "size_band": "50-249",
+            "year": 2024,
+            "issue": "outlier z=5.4 (rev=41676240 vs median=5499651, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "furniture_other_mfg",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=5.2 (rev=115013333 vs median=15819963, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "electricity_gas_utilities",
+            "size_band": "20-49",
+            "year": 2024,
+            "issue": "outlier z=5.0 (rev=28530934 vs median=4087124, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "mining_quarrying",
+            "size_band": "50-249",
+            "year": 2024,
+            "issue": "outlier z=5.3 (rev=21215732 vs median=2860379, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "legal_services",
+            "size_band": "TOTAL",
+            "year": 2024,
+            "issue": "outlier z=6.3 (rev=333558 vs median=38002, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "marketing_design",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=11.0 (rev=106053568 vs median=6586758, n=222)"
+          },
+          {
+            "country": "EUU",
+            "geo_id": "EUU",
+            "industry_id": "water_waste",
+            "size_band": "GE250",
+            "year": 2024,
+            "issue": "outlier z=13.7 (rev=159049707 vs median=7937363, n=222)"
+          }
+        ]
+      }
+    }
+  }
+}
