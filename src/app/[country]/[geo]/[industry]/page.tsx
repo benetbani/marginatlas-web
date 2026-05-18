@@ -26,6 +26,7 @@ import { DimensionSwitcher } from "@/components/DimensionSwitcher";
 import { TimeSeriesChart } from "@/components/TimeSeriesChart";
 import { TypicalFirmCard } from "@/components/TypicalFirmCard";
 import { PostTaxToggle } from "@/components/PostTaxToggle";
+import { NetProfitWaterfall } from "@/components/NetProfitWaterfall";
 import { AcrossStatesStrip } from "@/components/AcrossStatesStrip";
 import { CellPageNav } from "@/components/CellPageNav";
 import { CellActions } from "@/components/CellActions";
@@ -395,6 +396,19 @@ export default async function CellPage({
           <PostTaxToggle
             country={country}
             regionId={cell.geo_id || geo}
+            grossRevenue={cell.revenue_per_firm ?? cell.rev_p50 ?? null}
+            payroll={
+              cell.payroll_per_employee != null && cell.n_employees != null && cell.n_enterprises
+                ? (cell.payroll_per_employee * cell.n_employees) / cell.n_enterprises
+                : null
+            }
+          />
+          {/* Plan v10 net-profit waterfall (TT + UU + ZZ) */}
+          <NetProfitWaterfall
+            iso2={country.toUpperCase()}
+            geoId={cell.geo_id || geo}
+            industryId={cell.industry_id || null}
+            sectorId={cell.sector_id || null}
             grossRevenue={cell.revenue_per_firm ?? cell.rev_p50 ?? null}
             payroll={
               cell.payroll_per_employee != null && cell.n_employees != null && cell.n_enterprises
