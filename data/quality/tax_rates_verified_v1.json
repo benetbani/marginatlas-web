@@ -1,0 +1,64 @@
+{
+  "version": "1.0.0",
+  "anchor": "Plan v11 Q5 — country tax rate cross-validation against canonical published sources (PwC Worldwide Tax Summaries, KPMG, national tax offices). Each entry compares our stored value vs the canonical 2024 value and notes the delta.",
+  "convention": "verdict: 'match' (our value within ±1pp of canonical), 'minor_delta' (within ±2.5pp), 'flag' (>2.5pp delta). source_url cited per entry.",
+  "generated_at": "2026-05-18T23:55:00Z",
+  "method": "WebSearch against pwc.com / kpmg.com / gov.uk / national tax offices for each country's 2024 corporate income tax headline rate. Comparison batch 1 (5 of 146 countries) — remaining batched in future pushes.",
+  "results": {
+    "US": {
+      "our_cit": 0.21,
+      "canonical_cit": 0.21,
+      "delta_pp": 0.0,
+      "verdict": "match",
+      "notes": "21% federal CIT confirmed; state CIT adds 0-9.99% (already captured in us_states_2024.json).",
+      "source_url": "https://taxsummaries.pwc.com/united-states/corporate/taxes-on-corporate-income"
+    },
+    "DE": {
+      "our_cit": 0.299,
+      "canonical_cit_range": [0.30, 0.33],
+      "delta_pp": "country fallback under-shoots Munich/Frankfurt by 1-3pp; sub-regional file captures variance correctly",
+      "verdict": "minor_delta",
+      "notes": "CIT 15% + 5.5% Soli = 15.825% + Gewerbesteuer (3.5% × Hebesatz 250-580%) = 30-33% combined. Our country fallback 29.9% is the low end (small-city Hebesatz). DE2 Bayern sub-regional file correctly shows Munich at 33%.",
+      "source_url": "https://taxsummaries.pwc.com/germany/corporate/taxes-on-corporate-income"
+    },
+    "MX": {
+      "our_cit": 0.30,
+      "canonical_cit": 0.30,
+      "delta_pp": 0.0,
+      "verdict": "match",
+      "notes": "ISR 30% confirmed for corporates.",
+      "source_url": "https://taxsummaries.pwc.com/mexico/corporate/taxes-on-corporate-income"
+    },
+    "GB": {
+      "our_cit": 0.25,
+      "canonical_cit": 0.25,
+      "delta_pp": 0.0,
+      "verdict": "match",
+      "notes": "UK Corporation Tax main rate 25% for profits > £250K. Small profits rate 19% for < £50K. Marginal relief for £50K-£250K. Confirmed via HMRC gov.uk.",
+      "source_url": "https://www.gov.uk/government/publications/rates-and-allowances-corporation-tax"
+    }
+  },
+  "pending_countries_for_future_batches": [
+    "FR", "IT", "ES", "CA", "AU", "BR", "CN", "JP", "KR", "IN",
+    "RU", "TR", "ID", "NL", "BE", "CH", "AT", "PL", "SE", "NO", "DK",
+    "AR", "CL", "CO", "PE", "VE", "ZA", "NG", "EG", "SA", "AE",
+    "IL", "TH", "MY", "PH", "VN", "PK", "BD", "NZ", "FI", "IS", "PT",
+    "IE", "GR", "RO", "CZ", "SK", "HU", "BG", "HR", "SI",
+    "EE", "LV", "LT", "LU", "MT", "CY",
+    "MD", "UA", "BY", "MK", "BA", "ME", "RS", "AL", "AD", "MC", "LI", "SM",
+    "AM", "AZ", "GE", "KZ", "UZ", "KG", "TJ", "TM",
+    "TW", "HK", "SG", "LK", "NP", "MM", "KH", "LA", "MN",
+    "QA", "KW", "BH", "OM", "JO", "LB", "MA", "TN", "DZ",
+    "GH", "ET", "TZ", "UG", "RW", "AO", "MZ", "ZM", "ZW", "CM", "CI", "SN",
+    "FJ", "PG", "WS",
+    "CR", "PA", "DO", "GT", "HN", "SV", "NI", "JM", "TT", "BB", "BS", "CU",
+    "EC", "UY", "PY", "BO"
+  ],
+  "summary": {
+    "batch_1_verified": 4,
+    "matches": 3,
+    "minor_deltas": 1,
+    "flags": 0,
+    "pending": 142
+  }
+}
