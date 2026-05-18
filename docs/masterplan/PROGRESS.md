@@ -21,7 +21,7 @@
 | D.2 Netherlands | PARTIAL — +4,799 rows (below 10k target; CBS publishes section-level only at gemeente granularity, 14 industries × 483 gemeenten) | +4,799 | 2026-05-18 |
 | D.5 Spain | DONE — +11,287 rows (52 provinces × CNAE divisions × strata; table 301; below 30k target due to NACE→industry_id dedup) | +11,287 | 2026-05-18 |
 | D.8 Italy | DEFERRED — ISTAT bulk SDMX exceeds 600s curl timeout; chunked per-region fetch needed (next session) | 0 | — |
-| E.2 UK LAD | PENDING | — | — |
+| E.2 UK LAD | DONE — +15,816 rows (382 LADs × 88 SIC 2-digit; NM_141_1; below 25-30k target due to NACE→industry_id dedup) | +15,816 | 2026-05-18 |
 | E.3 UK MSOA | PENDING (stretch) | — | — |
 | F OECD | PENDING | — | — |
 | G.2 Australia | PENDING | — | — |
@@ -138,14 +138,16 @@ clearly so the next session executes it first before any further ingest.
 - **2026-05-17 late-session**: C.3 DONE (+6,867 US rows); B-014 RESOLVED (5 functions added, fallback chain rewritten, verified live on 5 URLs); J.1 DONE (sitemap regen). Total regional_cells: 179,409 → 186,640. Session ending after Track L handoff refresh.
 - **2026-05-18 planning extension**: Founder shared strategic direction (city-disproportionate focus, optional hierarchy, neighborhoods for tier-1, taxes exploratory). Added 5 new Wave 2 tracks (M, N, O, P, Q) to master plan. Not yet executed — pending founder go signal.
 - **2026-05-18 Wave 1 push**: Founder issued "go". Track D.2 Netherlands +4,799 rows (CBS 81575NED, section-level SBI x 483 gemeenten). Track D.5 Spain +11,287 rows (INE table 301, province x CNAE x strata). Track D.8 Italy deferred (ISTAT ASIAULP_7 dataflow size exceeds 10-min curl timeout; needs per-region chunked fetch). regional_cells total: 186,640 → 202,726 (+16,086).
+- **2026-05-18 Wave 1 push #2 (Italy → UK)**: Founder "do number one then number two". Italy retry with smaller dataflow (ASIAUE1P_5, province-level) also timed out — ISTAT data endpoint structurally slow regardless of dataflow size. Italy stays DEFERRED with switch-to-CSV strategy documented. UK NOMIS Track E.2 landed +15,816 rows (NM_141_1, 382 LADs × 88 SIC 2-digit, single bulk CSV ~11s fetch). Includes all 33 London boroughs natively. regional_cells: 202,726 → 218,542 (+15,816).
 
 ## Italy next-session notes (D.8)
 
-- Dataflow ID: `IT1,183_285_DF_DICA_ASIAULP_7,1.0`
-- Endpoint: `https://esploradati.istat.it/SDMXWS/rest/data/`
-- Accept header: `application/vnd.sdmx.data+json;version=2.0`
-- Full-Italy fetch is ~70+ MB and exceeds 10-min bandwidth budget.
-- Strategy for next session: chunked fetch by region code. ISTAT dimension keys allow filtering; replace `all/` with `<region_code>/` in URL. Probe `https://esploradati.istat.it/SDMXWS/rest/datastructure/IT1/DICA_ASIAULP/1.0` first to enumerate region codes.
-- Alternative: download the cube via ISTAT's bulk export at `https://www.istat.it/it/files/2024/...` (annual CSV) — faster than SDMX.
-- Same NACE 2-digit mapping pattern as Spain (`nace_to_industry_id`). Provinces correspond to ITC1..ITF6 etc.
-- Target: ~30k rows.
+**Status as of session 7**: ISTAT data endpoint is structurally slow for the ASIA dataflow family. Even the smaller `183_277_DF_DICA_ASIAUE1P_5` (province-level NACE 2-digit) times out after 2-3 min with 0 bytes returned. The metadata endpoint works fine (3MB dataflow list in 9s) so ISTAT IS reachable — the data routes specifically are heavily throttled or backend-slow.
+
+Two attempted endpoints, both hang:
+- `IT1,183_285_DF_DICA_ASIAULP_7,1.0/all/?lastNObservations=1` (full Italy comuni — 71MB partial then timeout)
+- `183_277_DF_DICA_ASIAUE1P_5/.......?lastNObservations=1` (province-level, 8-dim wildcard — 0 bytes after 2 min)
+
+**Strategy for next session — drop SDMX, use bulk CSV**: ISTAT publishes the ASIA cube as annual CSV at `dati.istat.it` or `https://www.istat.it/it/files/`. Download once, parse offline. Estimated 30k rows for province × NACE 2-digit OR ~300k for comune × NACE.
+
+Same NACE 2-digit mapping pattern as Spain (`nace_to_industry_id`).

@@ -16,7 +16,7 @@
 | **B-004** | NAICS-3 taxonomy coverage gap | MEDIUM | Engineering | 1-2 hours | CLOSED (session 5 Track B; 73 → 86 codes; +13 codes + 4 new industries; 5 skipped as non-applicable) |
 | **B-005** | Canada StatCan wrong source table | LOW | Engineering | 1 hour | PARTIAL (session 5: correct table 33-10-1095 found, +2,162 rows; below 12k target as single-snapshot table caps yield; multi-snapshot stacking deferred) |
 | **B-006** | OECD SDMX endpoint migration | LOW | Engineering | 2 hours | OPEN |
-| **B-007** | UK NOMIS numeric ID lookup | LOW | Engineering | 3-4 hours | OPEN |
+| **B-007** | UK NOMIS numeric ID lookup | LOW | Engineering | 3-4 hours | CLOSED (session 7; NM_141_1 + TYPE434 + 88 SIC 2-digit IDs cached, +15,816 rows) |
 | **B-008** | Real images for 18 surfaces | LOW | Founder + designer | TBD | OPEN (founder will provide later) |
 | **B-009** | Korea KOSIS impossible | PERMANENT | — | — | CLOSED (permanent skip) |
 | **B-010** | Germany Destatis Kreis paid-only | PERMANENT | — | — | CLOSED (DUPLICATE — Eurostat covers) |
