@@ -8,6 +8,7 @@
 import { supabaseAdmin } from "./supabase";
 import {
   INDUSTRY_BY_ID,
+  INDUSTRIES,
   SECTOR_BY_ID,
   naics6ToIndustry,
   slugToIndustry,
@@ -300,11 +301,15 @@ export async function getCellBySlug(
 ): Promise<Cell | null> {
   const country = countrySlug.toUpperCase();
 
-  // Non-US: regional_cells (sub-national) first, then extrapolated_cells.
+  // Non-US: regional_cells (sub-national) first, then extrapolated_cells,
+  // then sector-average fallback (CC.7) so we don't 404 on legitimate
+  // unmapped industries.
   if (country !== "US") {
     const regional = await getRegionalCell(country, geoSlug, industrySlug, selector);
     if (regional) return regional;
-    return getExtrapolatedCell(country, industrySlug, selector);
+    const extrap = await getExtrapolatedCell(country, industrySlug, selector);
+    if (extrap) return extrap;
+    return getSectorFallbackCell(country, industrySlug, selector);
   }
 
   // US: try state-level cells_master first; if the geoSlug isn't a state slug,
@@ -745,6 +750,85 @@ export async function getExtrapolatedCell(
     quality_score: (r.quality_score as number) || 40,
     coverage_tier: (r.coverage_tier as string) || "X",
     coverage_source: (r.coverage_source as string) || "Estimated from regional patterns",
+    currency: "USD",
+  };
+  return applyTaxonomy(cell);
+}
+
+/**
+ * Sector-level fallback (Track CC.7).
+ *
+ * When both regional + extrapolated lookups miss for a (country, industry),
+ * fall back to ANY industry in the same sector that the country DOES have
+ * data for. Returns the highest-quality match with industry_description
+ * rewritten to reflect that the user is seeing a sector-average proxy.
+ *
+ * The returned cell is clearly marked via quality_score (capped at 30,
+ * legacy 0-100) and coverage_tier="X" so the UI renders a low-confidence
+ * chip rather than passing it off as a measurement.
+ */
+export async function getSectorFallbackCell(
+  iso2: string,
+  industrySlug: string,
+  selector: CellSelector = {}
+): Promise<Cell | null> {
+  const iso3 = iso2ToIso3(iso2);
+  if (!iso3) return null;
+  const rawInd = slugToIndustry(industrySlug);
+  if (!rawInd) return null;
+  const sectorId = rawInd.sector_id;
+  if (!sectorId) return null;
+  const peerIds = INDUSTRIES.filter(
+    (i) => i.sector_id === sectorId && i.id !== rawInd.id
+  ).map((i) => i.id);
+  if (peerIds.length === 0) return null;
+
+  let q = supabaseAdmin
+    .from("extrapolated_cells")
+    .select("*")
+    .eq("country_iso3", iso3)
+    .in("industry_id", peerIds)
+    .order("quality_score", { ascending: false, nullsFirst: false })
+    .order("year", { ascending: false, nullsFirst: false })
+    .limit(1);
+  if (selector.sizeBand) q = q.eq("size_band", selector.sizeBand);
+  if (selector.year) q = q.eq("year", selector.year);
+
+  const { data, error } = await q;
+  if (error || !data || data.length === 0) return null;
+  const r = data[0] as Record<string, unknown>;
+  const predRev = (r.predicted_rev_per_firm as number) ?? null;
+  const p10 = predRev != null ? predRev * 0.4 : null;
+  const p25 = predRev != null ? predRev * 0.65 : null;
+  const p50 = predRev;
+  const p75 = predRev != null ? predRev * 1.45 : null;
+  const p90 = predRev != null ? predRev * 2.1 : null;
+
+  const cell: Cell = {
+    country: iso2.toUpperCase(),
+    geo_id: iso3,
+    geo_level: "country",
+    geo_name: (r.country_name as string) || iso2ToName(iso2),
+    naics_6: null,
+    naics_4: null,
+    industry_id: rawInd.id,
+    industry_description: `${rawInd.name} (sector average)`,
+    size_band: (r.size_band as string) || null,
+    year: (r.year as number) || 2024,
+    n_enterprises: null,
+    n_employees: null,
+    total_revenue: null,
+    total_revenue_usd: null,
+    revenue_per_firm: predRev,
+    rev_p10: p10,
+    rev_p25: p25,
+    rev_p50: p50,
+    rev_p75: p75,
+    rev_p90: p90,
+    payroll_per_employee: null,
+    quality_score: Math.min(((r.quality_score as number) || 30), 30),
+    coverage_tier: "X",
+    coverage_source: "Sector-average fallback",
     currency: "USD",
   };
   return applyTaxonomy(cell);
