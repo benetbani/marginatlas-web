@@ -9,6 +9,7 @@ import { TaxOverlayTeaser } from "@/components/TaxOverlayTeaser";
 import { AskWidget } from "@/components/AskWidget";
 import { CityPicker } from "@/components/CityPicker";
 import { QualityLegend } from "@/components/QualityLegend";
+import { RecentlyAddedStrip } from "@/components/RecentlyAddedStrip";
 
 export const revalidate = 86400; // 1 day
 
@@ -81,6 +82,9 @@ export default function HomePage() {
 
       {/* Global coverage strip — Plan v8 Track S.2 */}
       <GlobalCoverageStrip />
+
+      {/* Recently-added countries strip — Plan v9 Track BB.2 */}
+      <RecentlyAddedStrip />
 
       {/* Featured cells — above the fold (Plan v4.0 Step 15 + Step 16 + Step 19) */}
       <section className="py-6">
