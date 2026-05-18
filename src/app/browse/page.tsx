@@ -9,21 +9,51 @@ function flag(code: string): string {
   return String.fromCodePoint(...codePoints);
 }
 
+export const metadata = {
+  title: "Browse — Margin Atlas",
+  description:
+    "Browse 191 countries and 25 sectors across the Margin Atlas database — pick a country to drill into local business benchmarks, or a sector to compare across the world.",
+  alternates: { canonical: "/browse" },
+};
+
 export default function BrowsePage() {
-  // Show top 16 countries by quality
+  // Show top 16 countries by quality, group the rest into a single open section
   const topCountries = COUNTRIES.filter((c) => c.quality === "A" || c.quality === "B").slice(0, 16);
   const allOthers = COUNTRIES.filter((c) => c.quality === "C" || c.quality === "D");
 
   return (
     <div>
       <header className="py-10">
-        <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-ink-900">
-          Browse the data
+        <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
+          Browse
+        </div>
+        <h1 className="mt-2 text-4xl md:text-5xl font-semibold tracking-tight text-ink-900">
+          The whole atlas, three ways
         </h1>
         <p className="mt-3 text-lg text-ink-800/80 max-w-2xl">
-          Pick a country to see what we know about businesses there, or pick a
-          sector to compare the same kind of business across the world.
+          Start where you think. Country if you know the place. Sector if you
+          know the industry. Or one of the world entry points at the top.
         </p>
+        <div className="mt-5 flex flex-wrap gap-3">
+          <a
+            href="/world"
+            className="inline-flex items-center px-4 py-2 rounded-full bg-ink-900 text-cream-50 text-sm font-medium hover:bg-ink-800 transition"
+          >
+            Open the world map →
+          </a>
+          <a
+            href="/coverage"
+            className="inline-flex items-center px-4 py-2 rounded-full bg-cream-100 border border-parchment text-ink-900 text-sm font-medium hover:bg-white transition"
+          >
+            See coverage report →
+          </a>
+          <a
+            href="/compare"
+            className="inline-flex items-center px-4 py-2 rounded-full bg-cream-100 border border-parchment text-ink-900 text-sm font-medium hover:bg-white transition"
+          >
+            Compare cells →
+          </a>
+        </div>
       </header>
 
       {/* By country */}
@@ -98,27 +128,36 @@ export default function BrowsePage() {
         </div>
       </section>
 
-      {/* Popular pages */}
+      {/* Popular pages — globally diverse picks */}
       <section className="py-12">
         <h2 className="text-xl md:text-2xl font-semibold text-ink-900">Popular pages</h2>
+        <p className="text-sm text-ink-700/70 mt-1">
+          Hand-picked entry points across the atlas. Click any tile to see the
+          full cell — distribution, time series, after-tax owner take.
+        </p>
         <div className="mt-5 grid md:grid-cols-2 lg:grid-cols-3 gap-3">
           {[
-            ["/us/california/restaurants", "Restaurants — California"],
-            ["/us/texas/auto-repair-shops", "Auto repair — Texas"],
-            ["/us/new-york/legal-services", "Legal services — New York"],
-            ["/us/florida/hairdressers-beauty", "Hairdressers & beauty — Florida"],
-            ["/us/massachusetts/software-development", "Software development — Massachusetts"],
-            ["/us/illinois/manufacturing", "Manufacturing — Illinois"],
-            ["/us/california/dental-practices", "Dental practices — California"],
-            ["/us/texas/construction", "Construction — Texas"],
-            ["/us/new-york/banking", "Banking — New York"],
-          ].map(([href, label]) => (
+            ["/us/new-york/restaurants", "🇺🇸", "Restaurants — New York"],
+            ["/gb/london/legal-services", "🇬🇧", "Legal services — London"],
+            ["/de/munich/software-development", "🇩🇪", "Software dev — Munich"],
+            ["/es/madrid/cafes-coffee-shops", "🇪🇸", "Cafés — Madrid"],
+            ["/jp/jp-13000/restaurants", "🇯🇵", "Restaurants — Tokyo"],
+            ["/br/br-sp/grocery-stores", "🇧🇷", "Grocery — São Paulo"],
+            ["/mx/mx-cmx/restaurants", "🇲🇽", "Restaurants — Mexico City"],
+            ["/au/australia/cafes-coffee-shops", "🇦🇺", "Cafés — Australia"],
+            ["/al/tirana/cafes-coffee-shops", "🇦🇱", "Cafés — Tirana"],
+            ["/ch/zurich/legal-services", "🇨🇭", "Pro services — Zurich"],
+            ["/ae/ae/grocery-stores", "🇦🇪", "Retail — UAE"],
+            ["/in/india/software-development", "🇮🇳", "Software dev — India"],
+          ].map(([href, glyph, label]) => (
             <a
               key={href}
               href={href}
-              className="block px-4 py-3 rounded-xl border border-slate-200/60 bg-white hover:border-atlas-500 transition text-sm text-ink-900"
+              className="flex items-center gap-3 px-4 py-3 rounded-xl border border-slate-200/60 bg-white hover:border-atlas-500 transition text-sm text-ink-900"
             >
-              {label} →
+              <span className="text-xl leading-none flag">{glyph}</span>
+              <span className="flex-1">{label}</span>
+              <span className="text-atlas-600">→</span>
             </a>
           ))}
         </div>
