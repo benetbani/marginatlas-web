@@ -394,7 +394,8 @@ export default async function CellPage({
           <TypicalFirmCard cell={cell} currencySymbol="$" />
           <PostTaxToggle
             country={country}
-            grossRevenue={cell.revenue_per_firm ?? null}
+            regionId={cell.geo_id || geo}
+            grossRevenue={cell.revenue_per_firm ?? cell.rev_p50 ?? null}
             payroll={
               cell.payroll_per_employee != null && cell.n_employees != null && cell.n_enterprises
                 ? (cell.payroll_per_employee * cell.n_employees) / cell.n_enterprises

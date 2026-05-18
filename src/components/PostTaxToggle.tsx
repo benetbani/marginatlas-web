@@ -11,10 +11,11 @@
 "use client";
 
 import { useState } from "react";
-import { estimatePostTax } from "@/lib/tax";
+import { estimatePostTax, getEffectiveCorporateTaxRate } from "@/lib/tax";
 
 type Props = {
   country: string;          // ISO-2
+  regionId?: string | null; // sub-region id (state, Land, canton, etc.)
   grossRevenue: number | null;
   payroll: number | null;   // total payroll for the typical firm (USD/year)
 };
@@ -30,10 +31,23 @@ function fmtPct(v: number): string {
   return `${(v * 100).toFixed(1)}%`;
 }
 
-export function PostTaxToggle({ country, grossRevenue, payroll }: Props) {
+export function PostTaxToggle({ country, regionId, grossRevenue, payroll }: Props) {
   const [open, setOpen] = useState(false);
   const result = estimatePostTax(country, grossRevenue, payroll);
   if (!result) return null;
+
+  // Plan v10 SS — combined CIT for sub-regional cells (Munich Hebesatz,
+  // California state CIT, Zug canton, etc.). Falls back to country rate.
+  const effective = getEffectiveCorporateTaxRate(country, regionId);
+  // Apply the sub-regional rate when it differs from country base
+  let effectiveCitOwed = result.cit_owed;
+  let effectiveOwnerTake = result.owner_take;
+  if (effective.subregional && effective.rate !== result.rates.cit) {
+    effectiveCitOwed = result.pre_tax_profit > 0
+      ? result.pre_tax_profit * effective.rate
+      : 0;
+    effectiveOwnerTake = result.pre_tax_profit - effectiveCitOwed;
+  }
 
   // CC.5: distinguish "no payroll data" from "payroll is genuinely $0" so
   // we can hide the misleading "Payroll: $0" + employer social row.
@@ -84,8 +98,8 @@ export function PostTaxToggle({ country, grossRevenue, payroll }: Props) {
             />
           </div>
           <Row
-            label={`Corporate income tax (${fmtPct(result.rates.cit)})`}
-            value={`− ${fmtMoney(result.cit_owed)}`}
+            label={`Corporate income tax (${effective.breakdown})`}
+            value={`− ${fmtMoney(effectiveCitOwed)}`}
             muted
           />
           <div className="border-t border-atlas-300 mt-2 pt-2.5 flex items-center justify-between">
@@ -93,7 +107,7 @@ export function PostTaxToggle({ country, grossRevenue, payroll }: Props) {
               Owner take-home
             </div>
             <div className="text-lg font-bold text-atlas-700">
-              {fmtMoney(result.owner_take)}
+              {fmtMoney(effectiveOwnerTake)}
             </div>
           </div>
 
