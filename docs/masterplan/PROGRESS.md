@@ -182,6 +182,21 @@ clearly so the next session executes it first before any further ingest.
   - **BB.7 loading skeletons** (`44e9b5c`): root + country loading.tsx (cell page already had one). animate-pulse blocks mirror the page chrome so layout doesn't jump.
   - **KK Wave 4 city overlay** (data only, +30,360 rows): scripts/ingest/city_overlay/fetch_wave4.py covers 63 countries × top metro cities → 49 countries with extrapolated baseline got city rows (14 skipped: TW/SG/IS/etc. with empty extrapolated_cells). Peak RAM 70MB, upload 91s. Cities now reachable: Shanghai, Beijing, Shenzhen, Seoul, Mumbai, Dubai, Lagos, Cairo, Istanbul, Bangkok, Jakarta, Manila, KL, Karachi, Lahore, Buenos Aires, Bogotá, Lima, Warsaw, Prague, Budapest, Lisbon, Auckland, Wellington, and ~80 more.
   - **Coverage audit re-run** (data only): re-ran scripts/quality/audit_coverage.py to capture the +30,360 Wave 4 rows so /coverage and /coverage/[iso2] reflect the new state.
+- **2026-05-18 Plan v9 autonomous push #4**: Founder said "Continue by executing all of them, all of them, all of them!" after seeing the logo-direction memo + roadmap. This push went deep into visible polish + new product surfaces + trust signals + data widening. 14 commits (`18a8715` → `102a986`) + 1 background data job landed.
+  - **CC.10 visible breadcrumb** (`18a8715`): new Breadcrumb component renders Home / 🇺🇸 US / California / Restaurants on every cell page. Collapses middle items to "···" when nesting > 4 deep.
+  - **/industries top-level directory** (`6899490`): new entry path alongside /browse + /sectors. Popular (12) + by-sector (full grouping) + A-Z (372 links).
+  - **/calculator percentile lookup** (`50acd42`): pick country + industry, enter your annual revenue, see your percentile in the comparable cell. Linear interpolation across p10/p25/p50/p75/p90; no data collection. Bumps /api/cell-lookup to return all 5 percentiles.
+  - **AA.6 + AA.9 warning chips** (`072227a`): staleness chip (year<2018 warn, <2015 escalate) + industry-mapping-mismatch chip render quietly under the breadcrumb when triggered.
+  - **FF.3 sector cross-country** (`7ff5097`): new SectorAcrossWorld strip on /sectors/[id] fans out 12 cell-lookup queries for the first measured industry in the sector and renders a horizontal-bar comparison.
+  - **CC.13 empty-state card** (`7e2f15a`): when a cell loads but has no usable metrics, render an EmptyStateCard with closest-neighbor + browse + industry pivots instead of "—" everywhere. Nudge bar suppresses when EmptyStateCard shows.
+  - **FF.4 compare delta dots + share** (`3d77705`): per-row max gets a moss dot, min gets a clay dot; current 4-slot config serializes to ?q=<json> for shareable comparison URLs; "Copy share link" button.
+  - **Submit-a-correction form** (`273f903`): inline CTA on every cell page expands to a 3-field form; POSTs to new /api/correction which inserts into a Supabase `corrections` table (fails soft when table doesn't exist).
+  - **Wave 5 city overlay** (data only, +9,240 rows): 29 more countries got capital + secondary city rows (additional African capitals, LATAM second-tier, Caribbean, smaller European, Central Asia, Pacific). Peak RAM 32MB.
+  - **Print stylesheet** (`ba83009`): @media print rules hide chrome, force white background, expand link hrefs inline, avoid page-breaks inside cards + headings.
+  - **Currency switcher** (`1f42f23`): USD/EUR/GBP/JPY/CAD/AUD pill toggle on cell pages persists choice via localStorage + dispatches a custom event so multiple Money components stay in sync. Headline number wired through Money; full retrofit deferred.
+  - **GG.2 markdown coverage report** (`d3c9062`): scripts/quality/write_coverage_md.py generates docs/ingest/COVERAGE_AUDIT_v2.md from coverage_v2.json. Headline numbers + top-30 best-covered + most-needed + region-by-region + tier rollup.
+  - **Tax table expansion** (`dd77c82`): country_rates_2024.json grew from 68 → 146 country entries covering all major Asian, Latin American, MENA, African, post-Soviet, Pacific economies + smaller European. CountryStatsStrip now reads "Country-specific" for 78 more countries instead of "OECD fallback".
+  - **Nav surface** (`102a986`): /industries + /calculator promoted into header nav; footer Browse and Use columns updated with /industries, /world, /calculator.
 
 ## Italy next-session notes (D.8)
 
