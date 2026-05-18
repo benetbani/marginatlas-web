@@ -86,11 +86,14 @@ export function DistributionHistogram({
   const barGap = 1;
   const barW = innerW / bins - barGap;
 
-  // Mark p10/p50/p90 on x-axis
+  // Mark p10/p50/p90 on x-axis.
+  // Labels are thresholds, NOT maxima — the long tail past p90 contains 10%
+  // of firms earning ABOVE the marker. Reading "top 10%" as a max is the
+  // common misread; the labels here are explicit about that.
   const markers: { v: number; label: string }[] = [
-    { v: p10, label: "Bottom 10%" },
-    { v: p50, label: "Typical" },
-    { v: p90, label: "Top 10%" },
+    { v: p10, label: "10% earn under" },
+    { v: p50, label: "Median" },
+    { v: p90, label: "10% earn over" },
   ];
 
   function xAt(v: number): number {
@@ -103,7 +106,8 @@ export function DistributionHistogram({
         Where firms actually cluster
       </div>
       <div className="text-xs text-ink-700/60 mb-3">
-        Estimated density across the revenue range. Marks show bottom 10%, typical, and top 10%.
+        Estimated density across the revenue range. Markers are thresholds —
+        the long tail past the "10% earn over" line is the upper decile.
       </div>
       <svg
         viewBox={`0 0 ${SVG_W} ${SVG_H}`}
