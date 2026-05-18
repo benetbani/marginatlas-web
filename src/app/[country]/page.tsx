@@ -16,6 +16,8 @@ import {
 import { flagFromIso2 } from "@/lib/countries";
 import { SmartImage } from "@/components/SmartImage";
 import { CountryCityShortcuts } from "@/components/CountryCityShortcuts";
+import { CountryStatsStrip } from "@/components/CountryStatsStrip";
+import { CountryQualitySummary } from "@/components/CountryQualitySummary";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -174,6 +176,12 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
 
       {/* Top cities — Track N (Wave 2) */}
       <CountryCityShortcuts iso2={iso2} />
+
+      {/* Tax + headline stats — Track FF.2 */}
+      <CountryStatsStrip iso2={iso2} />
+
+      {/* Quality scorecard summary — Track FF.2 */}
+      <CountryQualitySummary iso2={iso2} />
 
       {/* Top industries */}
       {topIndustries.length > 0 ? (
