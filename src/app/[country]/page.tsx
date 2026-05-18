@@ -58,6 +58,17 @@ const COUNTRY_SIGNATURE: Record<string, { line: string; glyph: string }> = {
   IN: { line: "IT services, custom software, retail, family workshops.", glyph: "⚙️" },
   SG: { line: "Boutique hospitality, food, services, and IT firms.", glyph: "🍜" },
   AR: { line: "Restaurants, agriculture, leather goods, small retail.", glyph: "🥩" },
+  AL: { line: "Cafés, hospitality on the Adriatic coast, small-batch agriculture, family-run construction.", glyph: "☕" },
+  AD: { line: "Mountain hospitality, retail, financial services, ski tourism.", glyph: "🏔️" },
+  AZ: { line: "Caspian energy services, hospitality in Baku, agriculture, retail.", glyph: "🌊" },
+  GE: { line: "Tbilisi hospitality, wine, IT services, family-run trades.", glyph: "🍷" },
+  IL: { line: "Software, security, biotech, boutique hospitality.", glyph: "🚀" },
+  KZ: { line: "Oil services, agriculture, retail, Almaty professional services.", glyph: "🛢️" },
+  LI: { line: "Precision manufacturing, financial services, niche family firms.", glyph: "🏔️" },
+  MC: { line: "Hospitality, luxury retail, financial services.", glyph: "🎰" },
+  MX: { line: "Restaurants, small manufacturing, retail, construction, professional services.", glyph: "🌮" },
+  RU: { line: "Restaurants, retail, IT services, construction, agriculture across vast geography.", glyph: "🏛️" },
+  SM: { line: "Tourism, retail, small-batch manufacturing.", glyph: "🏰" },
 };
 
 export async function generateStaticParams(): Promise<Params[]> {
