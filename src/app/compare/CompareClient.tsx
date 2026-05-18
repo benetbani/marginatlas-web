@@ -125,6 +125,54 @@ export function CompareClient() {
     setSlots((prev) => prev.map((s, i) => (i === idx ? { ...s, [field]: value } : s)));
   }
 
+  // FF.4 — load slots from ?q= param on mount, and write current slots back
+  // to URL so the comparison is shareable.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get("q");
+    if (!q) return;
+    try {
+      const parsed = JSON.parse(decodeURIComponent(q));
+      if (Array.isArray(parsed) && parsed.length === 4) {
+        setSlots(parsed);
+      }
+    } catch {
+      // ignore
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const url = new URL(window.location.href);
+    url.searchParams.set("q", encodeURIComponent(JSON.stringify(slots)));
+    window.history.replaceState(null, "", url.toString());
+  }, [slots]);
+
+  function shareLink(): string {
+    if (typeof window === "undefined") return "";
+    return window.location.href;
+  }
+
+  function copyShareLink() {
+    if (typeof navigator === "undefined" || !navigator.clipboard) return;
+    navigator.clipboard.writeText(shareLink()).catch(() => {});
+  }
+
+  // FF.4 — per-row max/min for delta dots
+  function rowExtremes(getValue: (c: CompactCell) => number | null) {
+    const vals = slots
+      .map((_, i) => {
+        const c = cells[i];
+        return c ? getValue(c) : null;
+      })
+      .map((v) => (v != null && isFinite(v) ? v : null));
+    const present = vals.filter((v): v is number => v != null);
+    if (present.length < 2) return { max: null as number | null, min: null as number | null };
+    return { max: Math.max(...present), min: Math.min(...present) };
+  }
+
   return (
     <div className="space-y-6">
       {/* Pickers grid */}
@@ -178,11 +226,21 @@ export function CompareClient() {
 
       {/* Comparison table */}
       <section className="card">
-        <h2 className="text-xl font-semibold text-ink-900">Side-by-side</h2>
-        <p className="mt-1 text-sm text-ink-700">
-          Numbers pull from the live database. Non-US countries return
-          once their data layer is live.
-        </p>
+        <div className="flex items-baseline justify-between gap-4 flex-wrap">
+          <div>
+            <h2 className="text-xl font-semibold text-ink-900">Side-by-side</h2>
+            <p className="mt-1 text-sm text-ink-700">
+              Highest value in each row gets a moss dot; lowest gets a clay dot.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={copyShareLink}
+            className="text-xs px-3 py-1.5 rounded-full bg-cream-100 border border-parchment text-ink-900 hover:bg-white transition font-medium"
+          >
+            Copy share link
+          </button>
+        </div>
         <div className="mt-6 overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
@@ -206,39 +264,62 @@ export function CompareClient() {
             <tbody className="text-ink-800">
               {(
                 [
-                  ["Typical revenue", (c: CompactCell) => fmtMoney(c.revenue_per_firm)],
-                  ["Bottom 10%", (c: CompactCell) => fmtMoney(c.rev_p10)],
-                  ["Top 10%", (c: CompactCell) => fmtMoney(c.rev_p90)],
-                  ["Firms", (c: CompactCell) => fmtNum(c.n_enterprises)],
-                  ["Employees", (c: CompactCell) => fmtNum(c.n_employees)],
+                  ["Typical revenue", (c) => c.revenue_per_firm, fmtMoney],
+                  ["Bottom 10%", (c) => c.rev_p10, fmtMoney],
+                  ["Top 10%", (c) => c.rev_p90, fmtMoney],
+                  ["Firms", (c) => c.n_enterprises, fmtNum],
+                  ["Employees", (c) => c.n_employees, fmtNum],
                   [
                     "Employees per firm",
-                    (c: CompactCell) =>
-                      c.employees_per_firm != null
-                        ? c.employees_per_firm.toFixed(1)
-                        : "—",
+                    (c) => c.employees_per_firm,
+                    (v: number | null) => (v != null ? v.toFixed(1) : "—"),
                   ],
-                  ["Wage per employee", (c: CompactCell) => fmtMoney(c.payroll_per_employee)],
+                  ["Wage per employee", (c) => c.payroll_per_employee, fmtMoney],
                   [
                     "Quality",
-                    (c: CompactCell) =>
-                      c.quality_score != null ? `${c.quality_score}/100` : "—",
+                    (c) => c.quality_score,
+                    (v: number | null) => (v != null ? `${v}/100` : "—"),
                   ],
-                  ["Year", (c: CompactCell) => (c.year != null ? String(c.year) : "—")],
-                ] as [string, (c: CompactCell) => string][]
-              ).map(([label, fn]) => (
-                <tr key={label} className="border-b border-ink-100/60">
-                  <td className="py-3 pr-4 text-ink-700">{label}</td>
-                  {slots.map((_, i) => {
-                    const c = cells[i];
-                    return (
-                      <td key={i} className="py-3 px-3 text-ink-900 tabular-nums">
-                        {c ? fn(c) : loading[i] ? "…" : "—"}
-                      </td>
-                    );
-                  })}
-                </tr>
-              ))}
+                  [
+                    "Year",
+                    (c) => c.year,
+                    (v: number | null) => (v != null ? String(v) : "—"),
+                  ],
+                ] as [
+                  string,
+                  (c: CompactCell) => number | null,
+                  (v: number | null) => string
+                ][]
+              ).map(([label, valueOf, fmt]) => {
+                const { max, min } = rowExtremes(valueOf);
+                return (
+                  <tr key={label} className="border-b border-ink-100/60">
+                    <td className="py-3 pr-4 text-ink-700">{label}</td>
+                    {slots.map((_, i) => {
+                      const c = cells[i];
+                      const v = c ? valueOf(c) : null;
+                      const isMax = v != null && max != null && v === max;
+                      const isMin = v != null && min != null && v === min && max !== min;
+                      const dotClass = isMax
+                        ? "bg-moss-500"
+                        : isMin
+                        ? "bg-clay-500"
+                        : "bg-transparent";
+                      return (
+                        <td key={i} className="py-3 px-3 text-ink-900 tabular-nums">
+                          <span className="inline-flex items-center gap-1.5">
+                            <span
+                              className={`inline-block w-2 h-2 rounded-full ${dotClass}`}
+                              aria-hidden
+                            />
+                            <span>{c ? fmt(valueOf(c)) : loading[i] ? "…" : "—"}</span>
+                          </span>
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
