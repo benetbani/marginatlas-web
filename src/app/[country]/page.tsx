@@ -15,6 +15,7 @@ import {
 } from "@/lib/taxonomy";
 import { flagFromIso2 } from "@/lib/countries";
 import { SmartImage } from "@/components/SmartImage";
+import { CountryCityShortcuts } from "@/components/CountryCityShortcuts";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -131,6 +132,9 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
           />
         </div>
       </header>
+
+      {/* Top cities — Track N (Wave 2) */}
+      <CountryCityShortcuts iso2={iso2} />
 
       {/* Top industries */}
       {topIndustries.length > 0 ? (

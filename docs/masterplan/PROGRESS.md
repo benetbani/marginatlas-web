@@ -41,7 +41,7 @@
 | K Verification | PENDING | n/a | — |
 | L Handoff refresh | PENDING | n/a | — |
 | **M Top-100 cities list** (Wave 2) | FIRST PASS DONE — 102 cities locked (29 tier-1 / 49 tier-2 / 24 tier-3); 52 measured / 41 extrapolated / 9 missing; awaiting founder review per T-M.2 | n/a | 2026-05-18 |
-| **N Country city shortcuts** (Wave 2) | PENDING | n/a | — |
+| **N Country city shortcuts** (Wave 2) | DONE — CountryCityShortcuts component wired into /[country] page; renders 2-12 tiles per country with tier-1 "Global" chip + "Estimated" chip for extrapolated; missing-data cities dropped (R-016); verified live on /us /de /gb /es /nl /jp /br | n/a | 2026-05-18 |
 | **O Neighborhood drill-down** (Wave 2) | PENDING | n/a | — |
 | **P Tax overlay** (Wave 2) | PENDING | n/a | — |
 | **Q Optional-hierarchy UX** (Wave 2) | PENDING | n/a | — |
