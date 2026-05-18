@@ -10,20 +10,66 @@ type CellDatasetProps = {
   url: string;
   industryName: string;
   geoName: string;
+  country?: string;
   year: number;
   source?: string; // ignored intentionally
   medianRevenue?: number | null;
   nEnterprises?: number | null;
+  nEmployees?: number | null;
+  wagePerEmployee?: number | null;
+  revP10?: number | null;
+  revP90?: number | null;
+  qualityScore?: number | null;
+  csvExportUrl?: string;
 };
 
 export function CellDataset({
   url,
   industryName,
   geoName,
+  country,
   year,
   nEnterprises,
+  nEmployees,
+  medianRevenue,
+  wagePerEmployee,
+  revP10,
+  revP90,
+  qualityScore,
+  csvExportUrl,
 }: CellDatasetProps) {
-  const data = {
+  // DD.2 — enriched Dataset entry with variableMeasured PropertyValue entries
+  // carrying real values, plus DataDownload distribution + temporal coverage.
+  const variableMeasured: object[] = [];
+  if (medianRevenue != null) {
+    variableMeasured.push({
+      "@type": "PropertyValue",
+      name: "typical revenue per firm",
+      value: medianRevenue,
+      unitText: "USD",
+      description:
+        revP10 != null && revP90 != null
+          ? `Bottom 10% ~ ${Math.round(revP10).toLocaleString()} USD; top 10% ~ ${Math.round(revP90).toLocaleString()} USD.`
+          : undefined,
+    });
+  }
+  if (nEmployees != null && nEnterprises) {
+    variableMeasured.push({
+      "@type": "PropertyValue",
+      name: "employees per firm",
+      value: nEmployees / nEnterprises,
+    });
+  }
+  if (wagePerEmployee != null) {
+    variableMeasured.push({
+      "@type": "PropertyValue",
+      name: "wage per employee",
+      value: wagePerEmployee,
+      unitText: "USD per year",
+    });
+  }
+
+  const data: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "Dataset",
     name: `${industryName} business benchmarks in ${geoName}, ${year}`,
@@ -31,15 +77,18 @@ export function CellDataset({
       nEnterprises ? `, covering ${nEnterprises.toLocaleString()} businesses` : ""
     }.`,
     url,
+    identifier: url,
     keywords: [
       industryName,
       geoName,
+      country || "",
       "small business",
       "benchmark",
       "revenue",
       "employment",
       "wages",
-    ],
+      `${year}`,
+    ].filter(Boolean),
     creator: {
       "@type": "Organization",
       name: "Margin Atlas",
@@ -48,18 +97,45 @@ export function CellDataset({
     publisher: {
       "@type": "Organization",
       name: "Tesseract Research",
+      url: "https://marginatlas.com",
     },
+    inLanguage: "en",
     isAccessibleForFree: true,
     datePublished: `${year}-01-01`,
+    temporalCoverage: `${year}/${year}`,
     spatialCoverage: { "@type": "Place", name: geoName },
-    variableMeasured: [
+    variableMeasured: variableMeasured.length > 0 ? variableMeasured : [
       "typical revenue per firm",
       "employees per firm",
       "wages per employee",
     ],
-    // NOTE: deliberately no `measurementTechnique` field — would leak method.
-    // NOTE: deliberately no `license` field — keep redistribution implicit.
+    includedInDataCatalog: {
+      "@type": "DataCatalog",
+      name: "Margin Atlas",
+      url: "https://marginatlas.com",
+    },
+    // NOTE: deliberately no `measurementTechnique` / source agency / license
+    // fields — keep methodology private per R-002.
   };
+
+  if (csvExportUrl) {
+    data.distribution = [
+      {
+        "@type": "DataDownload",
+        encodingFormat: "text/csv",
+        contentUrl: csvExportUrl,
+      },
+    ];
+  }
+
+  if (qualityScore != null) {
+    data.additionalProperty = {
+      "@type": "PropertyValue",
+      name: "Confidence score (1-10)",
+      value: Math.round((qualityScore / 10) * 10) / 10,
+    };
+  }
+
   return (
     <script
       type="application/ld+json"

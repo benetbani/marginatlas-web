@@ -175,9 +175,16 @@ export default async function CellPage({
         url={url}
         industryName={cell.industry_name || industry}
         geoName={cell.geo_name || geo}
+        country={country.toUpperCase()}
         year={cell.year}
         medianRevenue={cell.revenue_per_firm}
         nEnterprises={cell.n_enterprises}
+        nEmployees={cell.n_employees}
+        wagePerEmployee={cell.payroll_per_employee}
+        revP10={cell.rev_p10}
+        revP90={cell.rev_p90}
+        qualityScore={cell.quality_score}
+        csvExportUrl={`https://marginatlas.com/api/export-csv?country=${country}&geo=${geo}&industry=${industry}`}
       />
       <Breadcrumbs
         items={[
