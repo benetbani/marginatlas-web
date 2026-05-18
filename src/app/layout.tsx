@@ -46,10 +46,10 @@ export default function RootLayout({
             <div className="flex items-center gap-2">
               <nav className="text-sm text-ink-800 hidden md:flex">
                 <a href="/browse" className="hover:text-atlas-600 mx-2 transition-colors">Browse</a>
+                <a href="/industries" className="hover:text-atlas-600 mx-2 transition-colors">Industries</a>
                 <a href="/world" className="hover:text-atlas-600 mx-2 transition-colors">World</a>
+                <a href="/calculator" className="hover:text-atlas-600 mx-2 transition-colors">Calculator</a>
                 <a href="/compare" className="hover:text-atlas-600 mx-2 transition-colors">Compare</a>
-                <a href="/you" className="hover:text-atlas-600 mx-2 transition-colors">How do I compare?</a>
-                <a href="/ask" className="hover:text-atlas-600 mx-2 transition-colors">Ask</a>
                 <a href="/coverage" className="hover:text-atlas-600 mx-2 transition-colors">Coverage</a>
                 <a href="/pricing" className="hover:text-atlas-600 mx-2 transition-colors">Pricing</a>
               </nav>
@@ -74,17 +74,17 @@ export default function RootLayout({
                 <div className="font-semibold text-ink-900 mb-3 text-xs uppercase tracking-wide">Browse</div>
                 <ul className="space-y-2 text-xs">
                   <li><a href="/browse" className="hover:text-atlas-600">All 191 countries</a></li>
-                  <li><a href="/cities" className="hover:text-atlas-600">Top cities</a></li>
+                  <li><a href="/industries" className="hover:text-atlas-600">All industries</a></li>
+                  <li><a href="/world" className="hover:text-atlas-600">World map</a></li>
                   <li><a href="/sectors/manufacturing" className="hover:text-atlas-600">Sectors</a></li>
-                  <li><a href="/browse?random=1" className="hover:text-atlas-600">Random cell</a></li>
                 </ul>
               </div>
               <div>
                 <div className="font-semibold text-ink-900 mb-3 text-xs uppercase tracking-wide">Use</div>
                 <ul className="space-y-2 text-xs">
-                  <li><a href="/#ask-atlas" className="hover:text-atlas-600">Ask Atlas</a></li>
+                  <li><a href="/calculator" className="hover:text-atlas-600">Where do I sit?</a></li>
                   <li><a href="/compare" className="hover:text-atlas-600">Compare cells</a></li>
-                  <li><a href="/compare?mine=1" className="hover:text-atlas-600">Compare to me</a></li>
+                  <li><a href="/#ask-atlas" className="hover:text-atlas-600">Ask Atlas</a></li>
                   <li><a href="/#newsletter" className="hover:text-atlas-600">Newsletter</a></li>
                 </ul>
               </div>
