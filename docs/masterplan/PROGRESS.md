@@ -27,7 +27,7 @@
 | G.2 Australia | DONE — **+70,885 rows** (2,310 SA2s × 12 ANZSIC divisions × 5 size bands; ABS 8165.0 DC08; SA2 includes Sydney/Melbourne/Brisbane CBDs natively) | +70,885 | 2026-05-18 |
 | G.4 New Zealand | PENDING | — | — |
 | H France | BLOCKED-A.4 | — | — |
-| I.1 Mexico | PENDING | — | — |
+| I.1 Mexico | DONE — **+55,454 rows** (Censos Económicos 2024 bulk CSV download via XML manifest of mass-download .exe; 32 states × ~80 SCIAN 3-digit subsectors × size strata; municipality detail where present) | +55,454 | 2026-05-18 |
 | I.2 Argentina | PENDING | — | — |
 | I.3 Chile | PENDING | — | — |
 | I.4 Colombia | PENDING | — | — |
