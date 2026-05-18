@@ -43,6 +43,45 @@
   .font-serif {
     font-feature-settings: "kern" on, "liga" on, "calt" on;
   }
+
+  /* Hero entry animation — gentle fade + slight upward slide. Respects
+     prefers-reduced-motion. (Track BB.8) */
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    h1 {
+      animation: hero-rise 480ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    h1 + p {
+      animation: hero-rise 480ms cubic-bezier(0.16, 1, 0.3, 1) 120ms both;
+    }
+  }
+
+  /* Subtle hover lift on cards across the site (Track BB.8). Skipped
+     when prefers-reduced-motion is on. */
+  @media (prefers-reduced-motion: no-preference) {
+    .card,
+    a[href][class*="rounded-xl"],
+    a[href][class*="rounded-2xl"] {
+      transition:
+        transform 180ms ease-out,
+        box-shadow 180ms ease-out,
+        border-color 180ms ease-out;
+    }
+    .card:hover,
+    a[href][class*="rounded-xl"]:hover,
+    a[href][class*="rounded-2xl"]:hover {
+      transform: translateY(-1px);
+    }
+  }
 }
 
 @layer components {
