@@ -120,13 +120,19 @@ export function middleware(req: NextRequest) {
         },
       });
     }
-    const res = NextResponse.next();
+    const res = NextResponse.next({ request: { headers: withPathname(req, path) } });
     res.headers.set("X-RateLimit-Limit", String(PAGE_LIMIT));
     res.headers.set("X-RateLimit-Remaining", String(remaining));
     return res;
   }
 
-  return NextResponse.next();
+  return NextResponse.next({ request: { headers: withPathname(req, path) } });
+}
+
+function withPathname(req: NextRequest, path: string): Headers {
+  const headers = new Headers(req.headers);
+  headers.set("x-pathname", path);
+  return headers;
 }
 
 export const config = {
