@@ -90,6 +90,19 @@ export function middleware(req: NextRequest) {
   const ua = req.headers.get("user-agent") || "";
   const path = req.nextUrl.pathname;
 
+  // 0. Canonicalization (CC.12) — redirect uppercase paths and trailing
+  // slashes to the lowercase no-slash canonical form. Skip API and Next
+  // internals.
+  if (!path.startsWith("/api/") && !path.startsWith("/_next") && path !== "/") {
+    const stripped = path.endsWith("/") ? path.slice(0, -1) : path;
+    const lower = stripped.toLowerCase();
+    if (lower !== path) {
+      const url = req.nextUrl.clone();
+      url.pathname = lower;
+      return NextResponse.redirect(url, 308);
+    }
+  }
+
   // 1. AI crawlers — 451 Unavailable For Legal Reasons
   for (const re of AI_CRAWLER_PATTERNS) {
     if (re.test(ua)) {
