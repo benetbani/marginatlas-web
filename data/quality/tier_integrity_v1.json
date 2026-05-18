@@ -1,0 +1,5016 @@
+{
+  "generated_at": "2026-05-18T21:21:20Z",
+  "method": "Per coverage_tier invariant: P>=5 percentiles; S>=3; M/T/X>=revenue.",
+  "tier_counts": {
+    "P": 272291,
+    "X": 61284,
+    "S": 42458
+  },
+  "tier_violations": {
+    "P": 272291,
+    "S": 42458,
+    "X": 527
+  },
+  "issues": [
+    {
+      "country": "US",
+      "geo_id": "US-20-099",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-115",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-117",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-121",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-131",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-149",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-155",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-191",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-201",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-011",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-035",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-037",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-059",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-085",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-095",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-111",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-113",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-133",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-139",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-151",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-169",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-175",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-181",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-209",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-103",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-173",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-177",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-015",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-051",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-055",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-079",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-091",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-125",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-161",
+      "industry_id": "nursing_elderly",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-001",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-005",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-007",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-009",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-011",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-013",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-015",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-021",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-023",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-025",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-027",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-029",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-035",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-041",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-051",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-053",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-057",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-059",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-069",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-073",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-077",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-079",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-085",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-097",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-099",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-103",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-111",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-119",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-123",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-125",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-127",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-131",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-133",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-137",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-139",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-143",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-147",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-149",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-151",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-155",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-157",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-159",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-163",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-167",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-177",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-185",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-191",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-193",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-197",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-201",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-203",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-205",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-209",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-037",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-055",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-061",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-113",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-117",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-121",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-161",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-169",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-171",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-175",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-045",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-091",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-173",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-041",
+      "industry_id": "performing_arts",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-045",
+      "industry_id": "performing_arts",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-177",
+      "industry_id": "performing_arts",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-057",
+      "industry_id": "performing_arts",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-091",
+      "industry_id": "performing_arts",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-209",
+      "industry_id": "performing_arts",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-173",
+      "industry_id": "performing_arts",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-169",
+      "industry_id": "museums_cultural",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-091",
+      "industry_id": "museums_cultural",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-173",
+      "industry_id": "museums_cultural",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-009",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-013",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-015",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-035",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-037",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-045",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-051",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-057",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-061",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-079",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-087",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-103",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-111",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-113",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-121",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-123",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-125",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-133",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-149",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-151",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-155",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-161",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-169",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-175",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-177",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-209",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-173",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-055",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-091",
+      "industry_id": "sports_fitness",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-009",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-011",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-015",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-035",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-037",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-041",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-045",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-051",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-055",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-057",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-059",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-061",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-079",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-091",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-099",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-103",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-107",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-109",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-111",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-113",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-121",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-125",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-133",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-149",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-151",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-155",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-161",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-169",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-173",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-175",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-177",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-181",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-193",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-209",
+      "industry_id": "hotels_lodging",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-001",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-003",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-005",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-007",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-009",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-011",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-013",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-015",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-021",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-023",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-027",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-029",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-031",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-035",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-037",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-041",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-043",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-045",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-047",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-051",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-053",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-055",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-057",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-059",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-061",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-063",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-065",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-067",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-069",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-073",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-075",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-077",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-079",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-081",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-085",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-087",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-089",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-091",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-093",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-095",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-099",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-103",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-105",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-107",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-109",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-111",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-113",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-115",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-117",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-119",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-121",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-123",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-125",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-127",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-131",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-133",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-137",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-139",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-143",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-145",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-147",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-149",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-151",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-153",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-155",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-157",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-159",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-161",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-163",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-167",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-169",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-171",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-173",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-175",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-177",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-179",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-181",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-183",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-185",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-189",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-191",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-193",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-195",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-197",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-201",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-205",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-207",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-209",
+      "industry_id": "restaurants",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-001",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-003",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-005",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-007",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-009",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-011",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-013",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-015",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-021",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-027",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-029",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-031",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-035",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-043",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-045",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-047",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-049",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-051",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-053",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-057",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-059",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-061",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-063",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-065",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-067",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-069",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-073",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-077",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-079",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-081",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-085",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-095",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-099",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-119",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-121",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-123",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-125",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-131",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-135",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-137",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-139",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-141",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-143",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-145",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-147",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-149",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-155",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-157",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-161",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-163",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-171",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-181",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-183",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-189",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-193",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-195",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-197",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-201",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-037",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-041",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-055",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-087",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-091",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-103",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-107",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-109",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-111",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-113",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-115",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-117",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-133",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-151",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-159",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-169",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-175",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-191",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-205",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-173",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-177",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-209",
+      "industry_id": "auto_repair_shops",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-005",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-009",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-011",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-013",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-015",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-021",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-027",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-029",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-031",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-035",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-037",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-041",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-051",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-055",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-057",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-061",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-079",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-087",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-091",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-111",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-113",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-115",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-117",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-121",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-125",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-131",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-133",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-151",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-163",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-181",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-191",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-193",
+      "industry_id": "banking",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-193",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-045",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-059",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-085",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-099",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-103",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-149",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-155",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-157",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-159",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-161",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-169",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-175",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-177",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-209",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-20-173",
+      "industry_id": "hairdressers_beauty",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-067",
+      "industry_id": "oil_gas_extraction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-071",
+      "industry_id": "oil_gas_extraction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-195",
+      "industry_id": "oil_gas_extraction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-013",
+      "industry_id": "mining_quarrying",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-067",
+      "industry_id": "mining_quarrying",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-095",
+      "industry_id": "mining_quarrying",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-133",
+      "industry_id": "mining_quarrying",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-235",
+      "industry_id": "mining_quarrying",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-195",
+      "industry_id": "mining_quarrying",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-071",
+      "industry_id": "mining_quarrying",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-013",
+      "industry_id": "electricity_gas_utilities",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-015",
+      "industry_id": "electricity_gas_utilities",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-019",
+      "industry_id": "electricity_gas_utilities",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-041",
+      "industry_id": "electricity_gas_utilities",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-049",
+      "industry_id": "electricity_gas_utilities",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-067",
+      "industry_id": "electricity_gas_utilities",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-071",
+      "industry_id": "electricity_gas_utilities",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-073",
+      "industry_id": "electricity_gas_utilities",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-093",
+      "industry_id": "electricity_gas_utilities",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-111",
+      "industry_id": "electricity_gas_utilities",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-117",
+      "industry_id": "electricity_gas_utilities",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-125",
+      "industry_id": "electricity_gas_utilities",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-151",
+      "industry_id": "electricity_gas_utilities",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-161",
+      "industry_id": "electricity_gas_utilities",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-167",
+      "industry_id": "electricity_gas_utilities",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-195",
+      "industry_id": "electricity_gas_utilities",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-021",
+      "industry_id": "electricity_gas_utilities",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-059",
+      "industry_id": "electricity_gas_utilities",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-197",
+      "industry_id": "banking",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-107",
+      "industry_id": "electricity_gas_utilities",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-179",
+      "industry_id": "electricity_gas_utilities",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-199",
+      "industry_id": "electricity_gas_utilities",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-211",
+      "industry_id": "electricity_gas_utilities",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-001",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-005",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-009",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-015",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-019",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-021",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-027",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-029",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-031",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-047",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-049",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-069",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-077",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-079",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-081",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-083",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-089",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-103",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-107",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-117",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-125",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-139",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-141",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-153",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-163",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-167",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-173",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-183",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-193",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-195",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-199",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-205",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-207",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-213",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-215",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-217",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-223",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-227",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-229",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-231",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-235",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-239",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-017",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-035",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-037",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-039",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-043",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-045",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-059",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-061",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-065",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-067",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-071",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-073",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-085",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-093",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-099",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-101",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-105",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-111",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-113",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-123",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-137",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-143",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-145",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-151",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-155",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-157",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-175",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-179",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-185",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-197",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-209",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-211",
+      "industry_id": "residential_construction",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-001",
+      "industry_id": "civil_engineering",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-015",
+      "industry_id": "civil_engineering",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-035",
+      "industry_id": "civil_engineering",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    },
+    {
+      "country": "US",
+      "geo_id": "US-21-071",
+      "industry_id": "civil_engineering",
+      "size_band": "total",
+      "tier": "P",
+      "n_percentiles_present": 0,
+      "required": 5,
+      "has_revenue_per_firm": false
+    }
+  ]
+}
