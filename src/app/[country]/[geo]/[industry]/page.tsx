@@ -40,6 +40,8 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import { CellWarningChips } from "@/components/CellWarningChips";
 import { EmptyStateCard } from "@/components/EmptyStateCard";
 import { CorrectionForm } from "@/components/CorrectionForm";
+import { CurrencySwitcher } from "@/components/CurrencySwitcher";
+import { Money } from "@/components/Money";
 
 // ISR: regenerate every 6 hours (21600 seconds) — Track EE.1.
 // Per-cell tiering (1h for quality_10>=8, 24h for 5-7, 7d for <5) is not
@@ -331,10 +333,14 @@ export default async function CellPage({
           )}
           <p className="mt-4 text-lg text-ink-800/80 max-w-3xl leading-relaxed">
             A typical {(cell.industry_name || "firm").toLowerCase().replace(/s$/, "")} here brings in about{" "}
-            <strong>{formatMoney(cell.revenue_per_firm)}</strong> per year. There are{" "}
+            <strong><Money usd={cell.revenue_per_firm} /></strong> per year. There are{" "}
             <strong>{cell.n_enterprises?.toLocaleString() || "—"}</strong> of them in {cell.geo_name}, employing roughly{" "}
             <strong>{cell.n_employees?.toLocaleString() || "—"}</strong> people.
           </p>
+          <div className="mt-3 flex items-center gap-2 flex-wrap text-xs text-ink-700/70">
+            <span>Show numbers in:</span>
+            <CurrencySwitcher />
+          </div>
           {rank && (
             <p className="mt-3 text-sm text-ink-700/70">
               Ranks <strong className="text-ink-900">#{rank.rank}</strong> out of{" "}
