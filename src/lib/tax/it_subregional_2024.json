@@ -1,0 +1,29 @@
+{
+  "version": "1.0.0",
+  "anchor": "Plan v10 Track SS — Italy 20-region IRAP variation. IRES 24% federal + IRAP 3.9% standard regional, with surcharges in many regions (Lazio +0.92%, Calabria +0.92%, Sardegna +0.5%, etc.). Combined ranges 27.9% - 28.8% effective.",
+  "convention": "irap_rate is the regional rate applied to net production value. Effective combined corporate tax = 0.24 IRES + IRAP rate.",
+  "default_country_rate": { "corporate_income_tax_combined": 0.279, "notes": "IRES 24% + IRAP standard 3.9%." },
+  "regions": {
+    "ITC1": { "name": "Piemonte",            "capital": "Torino",       "irap_rate": 0.0390, "combined_corp_tax": 0.279, "notes": "Standard IRAP." },
+    "ITC2": { "name": "Valle d'Aosta",       "capital": "Aosta",        "irap_rate": 0.0390, "combined_corp_tax": 0.279, "notes": "Standard." },
+    "ITC3": { "name": "Liguria",             "capital": "Genova",       "irap_rate": 0.0390, "combined_corp_tax": 0.279, "notes": "Standard." },
+    "ITC4": { "name": "Lombardia",           "capital": "Milano",       "irap_rate": 0.0390, "combined_corp_tax": 0.279, "notes": "Standard. Highest revenue region." },
+    "ITH1": { "name": "Provincia Bolzano",   "capital": "Bolzano",      "irap_rate": 0.0290, "combined_corp_tax": 0.269, "notes": "Autonomous province — IRAP reduced by 1%." },
+    "ITH2": { "name": "Provincia Trento",    "capital": "Trento",       "irap_rate": 0.0290, "combined_corp_tax": 0.269, "notes": "Autonomous province — IRAP reduced." },
+    "ITH3": { "name": "Veneto",              "capital": "Venezia",      "irap_rate": 0.0390, "combined_corp_tax": 0.279, "notes": "Standard." },
+    "ITH4": { "name": "Friuli-Venezia Giulia","capital": "Trieste",     "irap_rate": 0.0390, "combined_corp_tax": 0.279, "notes": "Standard." },
+    "ITH5": { "name": "Emilia-Romagna",      "capital": "Bologna",      "irap_rate": 0.0390, "combined_corp_tax": 0.279, "notes": "Standard." },
+    "ITI1": { "name": "Toscana",             "capital": "Firenze",      "irap_rate": 0.0390, "combined_corp_tax": 0.279, "notes": "Standard." },
+    "ITI2": { "name": "Umbria",              "capital": "Perugia",      "irap_rate": 0.0390, "combined_corp_tax": 0.279, "notes": "Standard." },
+    "ITI3": { "name": "Marche",              "capital": "Ancona",       "irap_rate": 0.0390, "combined_corp_tax": 0.279, "notes": "Standard." },
+    "ITI4": { "name": "Lazio",               "capital": "Roma",         "irap_rate": 0.0482, "combined_corp_tax": 0.288, "notes": "+0.92% surcharge; healthcare deficit clause." },
+    "ITF1": { "name": "Abruzzo",             "capital": "L'Aquila",     "irap_rate": 0.0482, "combined_corp_tax": 0.288, "notes": "+0.92% surcharge." },
+    "ITF2": { "name": "Molise",              "capital": "Campobasso",   "irap_rate": 0.0482, "combined_corp_tax": 0.288, "notes": "+0.92% surcharge." },
+    "ITF3": { "name": "Campania",            "capital": "Napoli",       "irap_rate": 0.0482, "combined_corp_tax": 0.288, "notes": "+0.92% surcharge." },
+    "ITF4": { "name": "Puglia",              "capital": "Bari",         "irap_rate": 0.0390, "combined_corp_tax": 0.279, "notes": "Standard." },
+    "ITF5": { "name": "Basilicata",          "capital": "Potenza",      "irap_rate": 0.0390, "combined_corp_tax": 0.279, "notes": "Standard." },
+    "ITF6": { "name": "Calabria",            "capital": "Catanzaro",    "irap_rate": 0.0482, "combined_corp_tax": 0.288, "notes": "+0.92% surcharge." },
+    "ITG1": { "name": "Sicilia",             "capital": "Palermo",      "irap_rate": 0.0390, "combined_corp_tax": 0.279, "notes": "Standard." },
+    "ITG2": { "name": "Sardegna",            "capital": "Cagliari",     "irap_rate": 0.0440, "combined_corp_tax": 0.284, "notes": "+0.5% surcharge." }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0",
+  "anchor": "Plan v10 Track SS — Canada provincial corporate tax variation. Federal CIT 15% + provincial CIT 8-16% = combined 23-31%. Quebec uses its own collection.",
+  "convention": "combined_corp_tax = federal 15% + provincial top rate. Small business deduction reduces both federal + provincial portions for active business income below thresholds (~$500K CAD).",
+  "default_country_rate": { "corporate_income_tax_combined": 0.265, "notes": "Federal 15% + provincial avg 11.5%." },
+  "regions": {
+    "CA-AB": { "name": "Alberta",                "capital": "Edmonton",     "provincial_cit": 0.08, "combined_corp_tax": 0.23, "notes": "Lowest combined rate in Canada." },
+    "CA-BC": { "name": "British Columbia",       "capital": "Victoria",     "provincial_cit": 0.12, "combined_corp_tax": 0.27, "notes": "Standard." },
+    "CA-MB": { "name": "Manitoba",               "capital": "Winnipeg",     "provincial_cit": 0.12, "combined_corp_tax": 0.27, "notes": "Standard." },
+    "CA-NB": { "name": "New Brunswick",          "capital": "Fredericton",  "provincial_cit": 0.14, "combined_corp_tax": 0.29, "notes": "Higher provincial rate." },
+    "CA-NL": { "name": "Newfoundland and Labrador", "capital": "St. John's", "provincial_cit": 0.15, "combined_corp_tax": 0.30, "notes": "Higher; resource-rent driven." },
+    "CA-NS": { "name": "Nova Scotia",            "capital": "Halifax",      "provincial_cit": 0.14, "combined_corp_tax": 0.29, "notes": "Higher." },
+    "CA-ON": { "name": "Ontario",                "capital": "Toronto",      "provincial_cit": 0.115, "combined_corp_tax": 0.265, "notes": "Standard. Most populous." },
+    "CA-PE": { "name": "Prince Edward Island",   "capital": "Charlottetown","provincial_cit": 0.16, "combined_corp_tax": 0.31, "notes": "Highest combined rate." },
+    "CA-QC": { "name": "Québec",                 "capital": "Québec City",  "provincial_cit": 0.115, "combined_corp_tax": 0.265, "notes": "Standard. Independent tax collection (Revenu Québec)." },
+    "CA-SK": { "name": "Saskatchewan",           "capital": "Regina",       "provincial_cit": 0.12, "combined_corp_tax": 0.27, "notes": "Standard." },
+    "CA-NT": { "name": "Northwest Territories",  "capital": "Yellowknife",  "provincial_cit": 0.115, "combined_corp_tax": 0.265, "notes": "Northern; standard." },
+    "CA-NU": { "name": "Nunavut",                "capital": "Iqaluit",      "provincial_cit": 0.12, "combined_corp_tax": 0.27, "notes": "Northern; standard." },
+    "CA-YT": { "name": "Yukon",                  "capital": "Whitehorse",   "provincial_cit": 0.12, "combined_corp_tax": 0.27, "notes": "Northern; standard." }
+  }
+}

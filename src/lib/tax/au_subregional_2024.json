@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "anchor": "Plan v10 Track SS — Australian state payroll tax variation. CIT 30% federal (25% small business). Payroll tax is state-level — varies materially from 4.75% (Queensland) to 6.85% (NSW) above thresholds.",
+  "convention": "payroll_tax_rate is top state payroll rate. payroll_threshold is the annual payroll exemption (no tax below). Land tax varies separately by state.",
+  "default_country_rate": { "corporate_income_tax": 0.30, "notes": "Federal CIT 30% (25% for SMEs with turnover < AUD 50M)." },
+  "regions": {
+    "AU-NSW": { "name": "New South Wales",          "capital": "Sydney",     "payroll_tax_rate": 0.0545, "payroll_threshold_aud": 1200000, "notes": "Standard 5.45% above AUD 1.2M; mental health levy +0.5% above AUD 10M." },
+    "AU-VIC": { "name": "Victoria",                 "capital": "Melbourne",  "payroll_tax_rate": 0.0485, "payroll_threshold_aud": 900000,  "notes": "Standard 4.85% above AUD 900K. Regional rate 1.2125% in qualifying areas." },
+    "AU-QLD": { "name": "Queensland",               "capital": "Brisbane",   "payroll_tax_rate": 0.0475, "payroll_threshold_aud": 1300000, "notes": "Standard 4.75% above AUD 1.3M; mental health levy 0.25% above AUD 10M." },
+    "AU-WA":  { "name": "Western Australia",        "capital": "Perth",      "payroll_tax_rate": 0.0550, "payroll_threshold_aud": 1000000, "notes": "5.5% above AUD 1M; diminishing threshold up to AUD 7.5M." },
+    "AU-SA":  { "name": "South Australia",          "capital": "Adelaide",   "payroll_tax_rate": 0.0495, "payroll_threshold_aud": 1500000, "notes": "4.95% above AUD 1.5M (variable 0-4.95% in the AUD 1.5M-1.7M range)." },
+    "AU-TAS": { "name": "Tasmania",                 "capital": "Hobart",     "payroll_tax_rate": 0.0610, "payroll_threshold_aud": 1250000, "notes": "4% above AUD 1.25M, 6.1% above AUD 2M." },
+    "AU-ACT": { "name": "Australian Capital Territory", "capital": "Canberra","payroll_tax_rate": 0.0685, "payroll_threshold_aud": 2000000, "notes": "Highest rate: 6.85% above AUD 2M." },
+    "AU-NT":  { "name": "Northern Territory",       "capital": "Darwin",     "payroll_tax_rate": 0.0550, "payroll_threshold_aud": 1500000, "notes": "5.5% above AUD 1.5M." }
+  }
+}

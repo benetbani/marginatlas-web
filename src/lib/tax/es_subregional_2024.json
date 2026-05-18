@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0",
+  "anchor": "Plan v10 Track SS — Spain 17 autonomous communities + Basque + Navarre foral regimes. Standard CIT 25% federal; Basque Country (Álava, Bizkaia, Gipuzkoa) + Navarre have own tax administration with similar but separately-administered rates.",
+  "convention": "Standard CIT applies in 15 communities. Basque + Navarre operate independent regimes via 'Concierto Económico' / 'Convenio Económico'. canary_special applies in Canary Islands ZEC zone (4% CIT for qualifying entities).",
+  "default_country_rate": { "corporate_income_tax": 0.25, "notes": "Spanish CIT 25% standard, 15% for new companies first 2 profit years." },
+  "regions": {
+    "ES-AN": { "name": "Andalucía",            "capital": "Sevilla",         "corporate_income_tax": 0.25, "notes": "Standard." },
+    "ES-AR": { "name": "Aragón",               "capital": "Zaragoza",        "corporate_income_tax": 0.25, "notes": "Standard." },
+    "ES-AS": { "name": "Asturias",             "capital": "Oviedo",          "corporate_income_tax": 0.25, "notes": "Standard." },
+    "ES-CB": { "name": "Cantabria",            "capital": "Santander",       "corporate_income_tax": 0.25, "notes": "Standard." },
+    "ES-CL": { "name": "Castilla y León",      "capital": "Valladolid",      "corporate_income_tax": 0.25, "notes": "Standard." },
+    "ES-CM": { "name": "Castilla-La Mancha",   "capital": "Toledo",          "corporate_income_tax": 0.25, "notes": "Standard." },
+    "ES-CN": { "name": "Canarias",             "capital": "Las Palmas",      "corporate_income_tax": 0.25, "notes": "Standard, but ZEC zone qualifying entities pay 4% CIT (significant for some SMBs). IGIC 7% replaces VAT." },
+    "ES-CT": { "name": "Cataluña",             "capital": "Barcelona",       "corporate_income_tax": 0.25, "notes": "Standard." },
+    "ES-EX": { "name": "Extremadura",          "capital": "Mérida",          "corporate_income_tax": 0.25, "notes": "Standard." },
+    "ES-GA": { "name": "Galicia",              "capital": "Santiago",        "corporate_income_tax": 0.25, "notes": "Standard." },
+    "ES-IB": { "name": "Illes Balears",        "capital": "Palma",           "corporate_income_tax": 0.25, "notes": "Standard." },
+    "ES-MC": { "name": "Murcia",               "capital": "Murcia",          "corporate_income_tax": 0.25, "notes": "Standard." },
+    "ES-MD": { "name": "Madrid",               "capital": "Madrid",          "corporate_income_tax": 0.25, "notes": "Standard. Major financial centre." },
+    "ES-NC": { "name": "Navarra",              "capital": "Pamplona",        "corporate_income_tax": 0.28, "notes": "Foral regime via Convenio Económico — own tax administration. CIT 28% standard (24% small business)." },
+    "ES-PV": { "name": "País Vasco",           "capital": "Vitoria-Gasteiz", "corporate_income_tax": 0.24, "notes": "Foral regime via Concierto Económico. Three provinces (Álava, Bizkaia, Gipuzkoa) set rates. CIT 24% standard (most permissive), 20% small business." },
+    "ES-RI": { "name": "La Rioja",             "capital": "Logroño",         "corporate_income_tax": 0.25, "notes": "Standard." },
+    "ES-VC": { "name": "Comunitat Valenciana", "capital": "Valencia",        "corporate_income_tax": 0.25, "notes": "Standard." }
+  }
+}

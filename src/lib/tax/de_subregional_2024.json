@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0",
+  "anchor": "Plan v10 Track SS — Germany Land + city Gewerbesteuer Hebesatz table. Combined CIT = federal 15% + Solidaritätszuschlag 5.5%-on-CIT + trade tax (Gewerbesteuermesszahl 3.5% × municipal Hebesatz). Hebesatz varies wildly: rural Saxony-Anhalt 250%, Munich 490%, Frankfurt 460%.",
+  "convention": "All rates as decimal. gewerbesteuer_hebesatz is the municipal multiplier on the federal Gewerbesteuermesszahl 3.5%. Effective trade tax = 0.035 × hebesatz. Combined corporate tax = 0.15 × (1 + 0.055) + (0.035 × hebesatz). notes captures Land + city detail.",
+  "disclaimer": "Hebesatz is set by Gemeinde and changes annually. Values reflect 2024 published rates for the named city/Land capital.",
+  "default_country_rate": { "corporate_income_tax_combined": 0.299, "notes": "Federal CIT 15% + Soli 5.5% + average Hebesatz 412% trade tax. Country median fallback." },
+  "regions": {
+    "DE1":  { "name": "Baden-Württemberg",     "capital": "Stuttgart",       "gewerbesteuer_hebesatz": 4.20, "combined_corp_tax": 0.305, "notes": "Stuttgart 420%; Karlsruhe 430%." },
+    "DE2":  { "name": "Bayern",                "capital": "München",         "gewerbesteuer_hebesatz": 4.90, "combined_corp_tax": 0.330, "notes": "Munich 490% — highest in Germany among major cities. Nuremberg 447%." },
+    "DE3":  { "name": "Berlin",                "capital": "Berlin",          "gewerbesteuer_hebesatz": 4.10, "combined_corp_tax": 0.302, "notes": "Berlin 410%." },
+    "DE4":  { "name": "Brandenburg",           "capital": "Potsdam",         "gewerbesteuer_hebesatz": 3.55, "combined_corp_tax": 0.283, "notes": "Potsdam 355%. Lower than urban average." },
+    "DE5":  { "name": "Bremen",                "capital": "Bremen",          "gewerbesteuer_hebesatz": 4.60, "combined_corp_tax": 0.319, "notes": "Bremen 460%." },
+    "DE6":  { "name": "Hamburg",               "capital": "Hamburg",         "gewerbesteuer_hebesatz": 4.70, "combined_corp_tax": 0.322, "notes": "Hamburg 470%." },
+    "DE7":  { "name": "Hessen",                "capital": "Frankfurt",       "gewerbesteuer_hebesatz": 4.60, "combined_corp_tax": 0.319, "notes": "Frankfurt 460%; Wiesbaden 454%." },
+    "DE8":  { "name": "Mecklenburg-Vorpommern","capital": "Schwerin",        "gewerbesteuer_hebesatz": 3.85, "combined_corp_tax": 0.293, "notes": "Schwerin 385%; rural 250-300%." },
+    "DE9":  { "name": "Niedersachsen",         "capital": "Hannover",        "gewerbesteuer_hebesatz": 4.80, "combined_corp_tax": 0.326, "notes": "Hannover 480%; Braunschweig 470%." },
+    "DEA":  { "name": "Nordrhein-Westfalen",   "capital": "Düsseldorf",      "gewerbesteuer_hebesatz": 4.40, "combined_corp_tax": 0.312, "notes": "Düsseldorf 440%; Köln 475%; Essen 480%." },
+    "DEB":  { "name": "Rheinland-Pfalz",       "capital": "Mainz",           "gewerbesteuer_hebesatz": 4.40, "combined_corp_tax": 0.312, "notes": "Mainz 440%." },
+    "DEC":  { "name": "Saarland",              "capital": "Saarbrücken",     "gewerbesteuer_hebesatz": 4.10, "combined_corp_tax": 0.302, "notes": "Saarbrücken 410%." },
+    "DED":  { "name": "Sachsen",               "capital": "Dresden",         "gewerbesteuer_hebesatz": 4.50, "combined_corp_tax": 0.316, "notes": "Dresden 450%; Leipzig 460%." },
+    "DEE":  { "name": "Sachsen-Anhalt",        "capital": "Magdeburg",       "gewerbesteuer_hebesatz": 4.50, "combined_corp_tax": 0.316, "notes": "Magdeburg 450%. Rural Land has 250%-300% Hebesätze." },
+    "DEF":  { "name": "Schleswig-Holstein",    "capital": "Kiel",            "gewerbesteuer_hebesatz": 4.30, "combined_corp_tax": 0.309, "notes": "Kiel 430%." },
+    "DEG":  { "name": "Thüringen",             "capital": "Erfurt",          "gewerbesteuer_hebesatz": 4.50, "combined_corp_tax": 0.316, "notes": "Erfurt 450%." }
+  }
+}

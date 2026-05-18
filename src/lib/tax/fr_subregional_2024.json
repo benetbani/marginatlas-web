@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0",
+  "anchor": "Plan v10 Track SS — France régional CFE + CVAE variation. CIT 25% is federal; territorial taxes (CFE on rental value + CVAE phasing out by 2027) set per commune within statutory bands.",
+  "convention": "corporate_income_tax stays at federal 25%. cfe_avg_rate is the average local commune CFE rate (typically 19-26% of cadastral rental value, effective burden 1-3% of revenue for service businesses). Corsica + DOM-TOM have special regimes.",
+  "default_country_rate": { "corporate_income_tax": 0.255, "notes": "CIT 25% + ~0.5% effective CFE/CVAE for typical SMB." },
+  "regions": {
+    "FR-ARA":  { "name": "Auvergne-Rhône-Alpes", "capital": "Lyon",              "corporate_income_tax": 0.25, "cfe_avg_rate": 0.250, "notes": "Lyon CFE high vs national avg." },
+    "FR-BFC":  { "name": "Bourgogne-Franche-Comté", "capital": "Dijon",          "corporate_income_tax": 0.25, "cfe_avg_rate": 0.220, "notes": "Moderate." },
+    "FR-BRE":  { "name": "Bretagne",             "capital": "Rennes",            "corporate_income_tax": 0.25, "cfe_avg_rate": 0.215, "notes": "Average." },
+    "FR-CVL":  { "name": "Centre-Val de Loire",  "capital": "Orléans",           "corporate_income_tax": 0.25, "cfe_avg_rate": 0.210, "notes": "Below average." },
+    "FR-COR":  { "name": "Corse",                "capital": "Ajaccio",           "corporate_income_tax": 0.25, "cfe_avg_rate": 0.200, "notes": "Corsican special zone — partial CIT exemptions for some sectors." },
+    "FR-GES":  { "name": "Grand Est",            "capital": "Strasbourg",        "corporate_income_tax": 0.25, "cfe_avg_rate": 0.230, "notes": "Average." },
+    "FR-HDF":  { "name": "Hauts-de-France",      "capital": "Lille",             "corporate_income_tax": 0.25, "cfe_avg_rate": 0.235, "notes": "Average." },
+    "FR-IDF":  { "name": "Île-de-France",        "capital": "Paris",             "corporate_income_tax": 0.25, "cfe_avg_rate": 0.270, "notes": "Paris + petite couronne; highest CFE rates nationally." },
+    "FR-NOR":  { "name": "Normandie",            "capital": "Rouen",             "corporate_income_tax": 0.25, "cfe_avg_rate": 0.220, "notes": "Average." },
+    "FR-NAQ":  { "name": "Nouvelle-Aquitaine",   "capital": "Bordeaux",          "corporate_income_tax": 0.25, "cfe_avg_rate": 0.215, "notes": "Average." },
+    "FR-OCC":  { "name": "Occitanie",            "capital": "Toulouse",          "corporate_income_tax": 0.25, "cfe_avg_rate": 0.225, "notes": "Average." },
+    "FR-PDL":  { "name": "Pays de la Loire",     "capital": "Nantes",            "corporate_income_tax": 0.25, "cfe_avg_rate": 0.215, "notes": "Average." },
+    "FR-PAC":  { "name": "Provence-Alpes-Côte d'Azur", "capital": "Marseille",  "corporate_income_tax": 0.25, "cfe_avg_rate": 0.245, "notes": "Nice + Marseille above average." }
+  }
+}

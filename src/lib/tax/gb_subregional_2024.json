@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "anchor": "Plan v10 Track SS — UK devolved tax variation. Corporation Tax is not devolved (25% UK-wide; small profits rate 19% under £50k) but Scotland sets income tax bands separately (affects sole traders + partnerships), Wales has Land Transaction Tax instead of SDLT, and NI applies separate employer-NIC regime via NICs Holiday for some manufacturers.",
+  "convention": "corporate_income_tax stays at UK federal 25% across regions. pit_top reflects top income tax band for sole traders / partnerships. Scotland's banding diverges from rest of UK above £43k. employer_nic stays UK-wide unless noted.",
+  "default_country_rate": { "corporate_income_tax": 0.25, "notes": "UK Corporation Tax. Devolved variations affect PIT (Scotland) + transaction taxes (Wales) + employer reliefs (NI)." },
+  "regions": {
+    "GB-ENG": { "name": "England",          "capital": "London",     "corporate_income_tax": 0.25, "pit_top": 0.45, "notes": "UK-standard PIT bands. Top rate 45% above £125k." },
+    "GB-SCT": { "name": "Scotland",         "capital": "Edinburgh",  "corporate_income_tax": 0.25, "pit_top": 0.48, "notes": "Scottish income tax bands more progressive: starter 19%, basic 20%, intermediate 21%, higher 42% (above £43.5k), advanced 45% (above £75k), top 48% (above £125k). Affects sole traders." },
+    "GB-WLS": { "name": "Wales",            "capital": "Cardiff",    "corporate_income_tax": 0.25, "pit_top": 0.45, "notes": "Welsh rates of income tax = England equivalent. Land Transaction Tax replaces SDLT; commercial LTT 6% top band." },
+    "GB-NIR": { "name": "Northern Ireland", "capital": "Belfast",    "corporate_income_tax": 0.25, "pit_top": 0.45, "notes": "Manufacturing-eligible firms benefit from NIC Employer reliefs not available in GB. Same income tax as England." }
+  }
+}
