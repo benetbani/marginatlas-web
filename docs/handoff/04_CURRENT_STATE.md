@@ -88,7 +88,7 @@ repo).
 |---|---|---|
 | `cells_master` | ~722,000 | v1.5 US Census SUSB pre-existing data |
 | `extrapolated_cells` | 57,816 | Regression-based country estimates (219 country codes) |
-| `regional_cells` | **356,761** | Sub-national data; sessions 3-10 (delta +170,121 across sessions 6-10: NL +4,799, ES +11,287, GB +15,816, AU +70,885, MX +55,454, AL/RU/KZ/AZ/GE/IL/CH/AT/AD/LI/MC/SM city overlay +13,464) |
+| `regional_cells` | **~357,000** | Sub-national data; sessions 3-11 (delta +170,121 across sessions 6-10 + session 11 added 142 new COUNTRIES via free-coverage unlock from existing extrapolated_cells) |
 
 ### regional_cells breakdown (Session 4 work)
 
