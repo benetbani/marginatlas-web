@@ -37,6 +37,7 @@ import { SECTOR_BY_ID, INDUSTRY_BY_ID, slugToIndustry, resolveToMeasuredIndustry
 import { CellDataset, Breadcrumbs } from "@/components/StructuredData";
 import { RelatedIndustriesStrip } from "@/components/RelatedIndustriesStrip";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { CellWarningChips } from "@/components/CellWarningChips";
 
 // ISR: regenerate every 6 hours (21600 seconds) — Track EE.1.
 // Per-cell tiering (1h for quality_10>=8, 24h for 5-7, 7d for <5) is not
@@ -219,6 +220,18 @@ export default async function CellPage({
           },
           { label: cell.industry_name || industry },
         ]}
+      />
+
+      {/* AA.6 staleness + AA.9 industry-mapping warning chips */}
+      <CellWarningChips
+        year={cell.year}
+        requestedIndustrySlug={industry}
+        resolvedIndustryName={measuredIndustry?.name}
+        resolvedIndustryUrl={
+          measuredIndustry
+            ? `/${country.toLowerCase()}/${geo}/${industryToSlug(measuredIndustry.id)}`
+            : undefined
+        }
       />
 
       {/* Nudge bar — appears when coverage is weak and a stronger neighbor exists */}
