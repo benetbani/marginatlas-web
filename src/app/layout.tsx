@@ -4,10 +4,23 @@ import { Organization } from "@/components/StructuredData";
 import { GlobalSearch } from "@/components/GlobalSearch";
 
 export const metadata: Metadata = {
-  title: "Margin Atlas — Global Small-Business Benchmarking",
+  title: "Margin Atlas — Small-business benchmarks across 191 countries",
   description:
-    "The unified database of small-business revenue, employment, and wage benchmarks across 40+ countries. Compiled from official business statistics, standardized for cross-country comparison.",
+    "Revenue, payroll, and after-tax owner take-home for every covered country, industry, city, and size combination. Compiled from official business statistics and standardized for cross-country comparison.",
   metadataBase: new URL("https://marginatlas.com"),
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({

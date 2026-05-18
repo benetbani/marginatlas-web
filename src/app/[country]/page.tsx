@@ -104,6 +104,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   return {
     title: `${c.name} — small-business benchmarks | Margin Atlas`,
     description: `Typical revenue, employment, and wages for small businesses in ${c.name}.`,
+    alternates: { canonical: `/${country.toLowerCase()}` },
   };
 }
 
