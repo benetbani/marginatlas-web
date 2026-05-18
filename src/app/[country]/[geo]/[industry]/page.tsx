@@ -20,6 +20,7 @@ import { flagFromIso2, iso2ToName } from "@/lib/countries";
 import { DistributionBars } from "@/components/DistributionBars";
 import { DistributionHistogram } from "@/components/DistributionHistogram";
 import { QualityBadge } from "@/components/QualityBadge";
+import { QualityDots, score100to10 } from "@/components/QualityDots";
 import { Tooltip } from "@/components/Tooltip";
 import { DimensionSwitcher } from "@/components/DimensionSwitcher";
 import { TimeSeriesChart } from "@/components/TimeSeriesChart";
@@ -363,11 +364,28 @@ export default async function CellPage({
 
       {/* Quality */}
       <section id="quality" className="py-6">
-        <QualityBadge
-          qualityScore={cell.quality_score}
-          coverageTier={cell.coverage_tier}
-          coverageSource={cell.coverage_source}
-        />
+        <div className="card">
+          <div className="text-xs uppercase tracking-wide text-ink-700/70 font-medium mb-3">
+            Data quality
+          </div>
+          <div className="flex items-center gap-4 flex-wrap">
+            <QualityDots
+              score={score100to10(cell.quality_score)}
+              detail={`Year ${cell.year} · tier ${cell.coverage_tier ?? "?"}`}
+            />
+            <QualityBadge
+              qualityScore={cell.quality_score}
+              coverageTier={cell.coverage_tier}
+              coverageSource={cell.coverage_source}
+            />
+          </div>
+          {score100to10(cell.quality_score) < 4 && (
+            <div className="mt-4 rounded-lg bg-clay-100/50 border border-clay-300 px-3 py-2 text-xs text-clay-700">
+              Low-confidence estimate. This cell is derived via heavy proxy
+              scaling — interpret as directional only.
+            </div>
+          )}
+        </div>
       </section>
 
       {/* Same industry across states (US) or countries (non-US) */}
