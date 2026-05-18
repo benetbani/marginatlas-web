@@ -39,6 +39,7 @@ import { RelatedIndustriesStrip } from "@/components/RelatedIndustriesStrip";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { CellWarningChips } from "@/components/CellWarningChips";
 import { EmptyStateCard } from "@/components/EmptyStateCard";
+import { CorrectionForm } from "@/components/CorrectionForm";
 
 // ISR: regenerate every 6 hours (21600 seconds) — Track EE.1.
 // Per-cell tiering (1h for quality_10>=8, 24h for 5-7, 7d for <5) is not
@@ -514,6 +515,9 @@ export default async function CellPage({
           sectorId={measuredIndustry.sector_id}
         />
       ) : null}
+
+      {/* Send a correction */}
+      <CorrectionForm cellUrl={`/${country}/${geo}/${industry}`} />
 
       {/* About the data link */}
       <section className="py-6 text-sm text-ink-700/70">
