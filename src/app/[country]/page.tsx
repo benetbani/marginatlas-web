@@ -69,6 +69,27 @@ const COUNTRY_SIGNATURE: Record<string, { line: string; glyph: string }> = {
   MX: { line: "Restaurants, small manufacturing, retail, construction, professional services.", glyph: "🌮" },
   RU: { line: "Restaurants, retail, IT services, construction, agriculture across vast geography.", glyph: "🏛️" },
   SM: { line: "Tourism, retail, small-batch manufacturing.", glyph: "🏰" },
+  // CC.3 — country-specific glyph + signature for newer additions
+  CN: { line: "Restaurants, manufacturing, retail, services across China's massive metros.", glyph: "🐉" },
+  KR: { line: "Cafés, design, software, family-run hospitality.", glyph: "🎴" },
+  TH: { line: "Restaurants, hospitality, craft trades, cottage manufacturing.", glyph: "🍜" },
+  VN: { line: "Cafés, restaurants, light manufacturing, fast-growing services.", glyph: "🍜" },
+  ID: { line: "Restaurants, retail, craft trades, hospitality across the archipelago.", glyph: "🏝️" },
+  PH: { line: "Restaurants, hospitality, business services, retail.", glyph: "🍱" },
+  MY: { line: "Restaurants, hospitality, small manufacturing, professional services.", glyph: "🍜" },
+  PK: { line: "Textiles, retail, restaurants, family-run manufacturing.", glyph: "🧵" },
+  BD: { line: "Textiles, restaurants, retail, small manufacturing.", glyph: "🧵" },
+  EG: { line: "Restaurants, hospitality, retail, family-run trades.", glyph: "🏺" },
+  NG: { line: "Restaurants, retail, hospitality, small manufacturing in Lagos and beyond.", glyph: "🌍" },
+  ZA: { line: "Restaurants, hospitality, retail, professional services.", glyph: "🦓" },
+  KE: { line: "Restaurants, hospitality, retail, agribusiness.", glyph: "🦁" },
+  AE: { line: "Hospitality, retail, professional services, luxury food.", glyph: "🐪" },
+  SA: { line: "Hospitality, retail, restaurants, family-run trades.", glyph: "🕌" },
+  TR: { line: "Restaurants, retail, hospitality, family-run small manufacturing.", glyph: "🥙" },
+  CL: { line: "Restaurants, vineyards, retail, hospitality.", glyph: "🍷" },
+  CO: { line: "Cafés, restaurants, retail, hospitality.", glyph: "☕" },
+  PE: { line: "Restaurants, hospitality, retail, craft trades.", glyph: "🦙" },
+  NZ: { line: "Cafés, hospitality, small farms, design studios.", glyph: "🥝" },
 };
 
 export async function generateStaticParams(): Promise<Params[]> {
