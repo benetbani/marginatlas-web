@@ -20,6 +20,9 @@ type CompactCell = {
   year: number | null;
   revenue_per_firm: number | null;
   rev_p10: number | null;
+  rev_p25: number | null;
+  rev_p50: number | null;
+  rev_p75: number | null;
   rev_p90: number | null;
   n_enterprises: number | null;
   n_employees: number | null;
@@ -62,6 +65,9 @@ export async function GET(req: NextRequest) {
     year: cell.year,
     revenue_per_firm: cell.revenue_per_firm ?? null,
     rev_p10: cell.rev_p10 ?? null,
+    rev_p25: cell.rev_p25 ?? null,
+    rev_p50: cell.rev_p50 ?? null,
+    rev_p75: cell.rev_p75 ?? null,
     rev_p90: cell.rev_p90 ?? null,
     n_enterprises: cell.n_enterprises ?? null,
     n_employees: cell.n_employees ?? null,
