@@ -1,57 +1,57 @@
 {
-  "generated_at": "2026-05-18T18:32:37Z",
+  "generated_at": "2026-05-18T19:03:57Z",
   "totals": {
-    "countries": 254,
-    "regional_cells_total": 356761,
+    "countries": 264,
+    "regional_cells_total": 366793,
     "extrapolated_cells_total": 58344,
     "industries_covered": 78
   },
   "countries": [
     {
-      "iso2": "US",
-      "regional_cells": 97237,
-      "extrapolated_cells": 264,
-      "industries": 73,
-      "geographies": 2907,
-      "tiers": {
-        "P": 96460,
-        "X": 777
-      },
-      "avg_quality": 94.6,
-      "avg_quality_10": 9.5,
-      "year_range": [
-        2022,
-        2024
-      ]
-    },
-    {
       "iso2": "AU",
-      "regional_cells": 66055,
+      "regional_cells": 80728,
       "extrapolated_cells": 264,
       "industries": 50,
-      "geographies": 2365,
+      "geographies": 2366,
       "tiers": {
-        "P": 63213,
-        "X": 2842
+        "X": 196,
+        "P": 80532
       },
-      "avg_quality": 88.1,
-      "avg_quality_10": 8.8,
+      "avg_quality": 89.9,
+      "avg_quality_10": 9.0,
       "year_range": [
         2024,
         2024
       ]
     },
     {
+      "iso2": "US",
+      "regional_cells": 80448,
+      "extrapolated_cells": 264,
+      "industries": 73,
+      "geographies": 2792,
+      "tiers": {
+        "P": 77628,
+        "X": 2820
+      },
+      "avg_quality": 93.3,
+      "avg_quality_10": 9.3,
+      "year_range": [
+        2022,
+        2024
+      ]
+    },
+    {
       "iso2": "MX",
-      "regional_cells": 60039,
+      "regional_cells": 54277,
       "extrapolated_cells": 264,
       "industries": 63,
-      "geographies": 1806,
+      "geographies": 1973,
       "tiers": {
-        "P": 58197,
-        "X": 1842
+        "P": 53110,
+        "X": 1167
       },
-      "avg_quality": 94.0,
+      "avg_quality": 94.5,
       "avg_quality_10": 9.4,
       "year_range": [
         2024,
@@ -59,32 +59,16 @@
       ]
     },
     {
-      "iso2": "GB",
-      "regional_cells": 22243,
-      "extrapolated_cells": 0,
-      "industries": 60,
-      "geographies": 274,
-      "tiers": {
-        "P": 22243
-      },
-      "avg_quality": 90.0,
-      "avg_quality_10": 9.0,
-      "year_range": [
-        2024,
-        2024
-      ]
-    },
-    {
       "iso2": "ES",
-      "regional_cells": 11627,
+      "regional_cells": 14502,
       "extrapolated_cells": 0,
       "industries": 57,
-      "geographies": 65,
+      "geographies": 70,
       "tiers": {
-        "S": 2598,
-        "P": 9029
+        "S": 2686,
+        "P": 11816
       },
-      "avg_quality": 87.9,
+      "avg_quality": 88.3,
       "avg_quality_10": 8.8,
       "year_range": [
         2018,
@@ -92,13 +76,13 @@
       ]
     },
     {
-      "iso2": "JP",
-      "regional_cells": 9199,
+      "iso2": "GB",
+      "regional_cells": 13462,
       "extrapolated_cells": 0,
-      "industries": 39,
-      "geographies": 133,
+      "industries": 60,
+      "geographies": 174,
       "tiers": {
-        "P": 9199
+        "P": 13462
       },
       "avg_quality": 90.0,
       "avg_quality_10": 9.0,
@@ -108,16 +92,16 @@
       ]
     },
     {
-      "iso2": "RU",
-      "regional_cells": 6134,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 10,
+      "iso2": "JP",
+      "regional_cells": 7989,
+      "extrapolated_cells": 0,
+      "industries": 52,
+      "geographies": 133,
       "tiers": {
-        "X": 6134
+        "P": 7989
       },
-      "avg_quality": 37.0,
-      "avg_quality_10": 3.7,
+      "avg_quality": 90.0,
+      "avg_quality_10": 9.0,
       "year_range": [
         2024,
         2024
@@ -125,47 +109,14 @@
     },
     {
       "iso2": "DE",
-      "regional_cells": 5090,
+      "regional_cells": 6147,
       "extrapolated_cells": 0,
-      "industries": 41,
+      "industries": 42,
       "geographies": 54,
       "tiers": {
-        "S": 5090
+        "S": 6147
       },
-      "avg_quality": 76.7,
-      "avg_quality_10": 7.7,
-      "year_range": [
-        2018,
-        2020
-      ]
-    },
-    {
-      "iso2": "NL",
-      "regional_cells": 4978,
-      "extrapolated_cells": 0,
-      "industries": 46,
-      "geographies": 211,
-      "tiers": {
-        "P": 3406,
-        "S": 1572
-      },
-      "avg_quality": 85.6,
-      "avg_quality_10": 8.6,
-      "year_range": [
-        2018,
-        2024
-      ]
-    },
-    {
-      "iso2": "FR",
-      "regional_cells": 4399,
-      "extrapolated_cells": 0,
-      "industries": 41,
-      "geographies": 43,
-      "tiers": {
-        "S": 4399
-      },
-      "avg_quality": 75.8,
+      "avg_quality": 75.7,
       "avg_quality_10": 7.6,
       "year_range": [
         2018,
@@ -174,49 +125,81 @@
     },
     {
       "iso2": "CA",
-      "regional_cells": 4181,
+      "regional_cells": 5491,
       "extrapolated_cells": 264,
       "industries": 66,
       "geographies": 20,
       "tiers": {
-        "P": 1286,
-        "X": 2895
+        "P": 2195,
+        "X": 3296
       },
-      "avg_quality": 60.2,
-      "avg_quality_10": 6.0,
+      "avg_quality": 64.2,
+      "avg_quality_10": 6.4,
       "year_range": [
         2024,
         2024
       ]
     },
     {
-      "iso2": "BR",
-      "regional_cells": 4007,
+      "iso2": "NL",
+      "regional_cells": 4816,
       "extrapolated_cells": 0,
-      "industries": 58,
-      "geographies": 42,
+      "industries": 46,
+      "geographies": 224,
       "tiers": {
-        "P": 2180,
-        "X": 1827
+        "S": 1846,
+        "P": 2970
       },
-      "avg_quality": 64.2,
-      "avg_quality_10": 6.4,
+      "avg_quality": 84.5,
+      "avg_quality_10": 8.5,
       "year_range": [
-        2021,
-        2021
+        2018,
+        2024
       ]
     },
     {
-      "iso2": "CL",
-      "regional_cells": 2929,
+      "iso2": "FR",
+      "regional_cells": 4748,
+      "extrapolated_cells": 0,
+      "industries": 43,
+      "geographies": 43,
+      "tiers": {
+        "S": 4748
+      },
+      "avg_quality": 75.1,
+      "avg_quality_10": 7.5,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "IL",
+      "regional_cells": 4246,
       "extrapolated_cells": 264,
       "industries": 44,
-      "geographies": 4,
+      "geographies": 8,
       "tiers": {
-        "X": 2929
+        "X": 4246
       },
-      "avg_quality": 47.0,
-      "avg_quality_10": 4.7,
+      "avg_quality": 37.4,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "IN",
+      "regional_cells": 3753,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 8,
+      "tiers": {
+        "X": 3753
+      },
+      "avg_quality": 39.5,
+      "avg_quality_10": 3.9,
       "year_range": [
         2024,
         2024
@@ -224,141 +207,28 @@
     },
     {
       "iso2": "CN",
-      "regional_cells": 2735,
+      "regional_cells": 3396,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 9,
+      "tiers": {
+        "X": 3396
+      },
+      "avg_quality": 40.2,
+      "avg_quality_10": 4.0,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "RU",
+      "regional_cells": 3350,
       "extrapolated_cells": 264,
       "industries": 44,
       "geographies": 10,
       "tiers": {
-        "X": 2735
-      },
-      "avg_quality": 47.0,
-      "avg_quality_10": 4.7,
-      "year_range": [
-        2024,
-        2024
-      ]
-    },
-    {
-      "iso2": "IT",
-      "regional_cells": 2555,
-      "extrapolated_cells": 0,
-      "industries": 41,
-      "geographies": 26,
-      "tiers": {
-        "S": 2555
-      },
-      "avg_quality": 77.0,
-      "avg_quality_10": 7.7,
-      "year_range": [
-        2018,
-        2020
-      ]
-    },
-    {
-      "iso2": "ZA",
-      "regional_cells": 2512,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 5,
-      "tiers": {
-        "X": 2512
-      },
-      "avg_quality": 47.0,
-      "avg_quality_10": 4.7,
-      "year_range": [
-        2024,
-        2024
-      ]
-    },
-    {
-      "iso2": "PL",
-      "regional_cells": 2509,
-      "extrapolated_cells": 0,
-      "industries": 39,
-      "geographies": 24,
-      "tiers": {
-        "S": 2509
-      },
-      "avg_quality": 76.8,
-      "avg_quality_10": 7.7,
-      "year_range": [
-        2018,
-        2020
-      ]
-    },
-    {
-      "iso2": "IN",
-      "regional_cells": 2315,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 8,
-      "tiers": {
-        "X": 2315
-      },
-      "avg_quality": 47.0,
-      "avg_quality_10": 4.7,
-      "year_range": [
-        2024,
-        2024
-      ]
-    },
-    {
-      "iso2": "AT",
-      "regional_cells": 2280,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 17,
-      "tiers": {
-        "S": 1167,
-        "X": 1113
-      },
-      "avg_quality": 57.4,
-      "avg_quality_10": 5.7,
-      "year_range": [
-        2018,
-        2024
-      ]
-    },
-    {
-      "iso2": "EG",
-      "regional_cells": 2217,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 3,
-      "tiers": {
-        "X": 2217
-      },
-      "avg_quality": 47.0,
-      "avg_quality_10": 4.7,
-      "year_range": [
-        2024,
-        2024
-      ]
-    },
-    {
-      "iso2": "KE",
-      "regional_cells": 2078,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 3,
-      "tiers": {
-        "X": 2078
-      },
-      "avg_quality": 47.0,
-      "avg_quality_10": 4.7,
-      "year_range": [
-        2024,
-        2024
-      ]
-    },
-    {
-      "iso2": "CH",
-      "regional_cells": 2006,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 6,
-      "tiers": {
-        "X": 2006
+        "X": 3350
       },
       "avg_quality": 37.0,
       "avg_quality_10": 3.7,
@@ -368,93 +238,13 @@
       ]
     },
     {
-      "iso2": "PE",
-      "regional_cells": 1881,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 4,
-      "tiers": {
-        "X": 1881
-      },
-      "avg_quality": 47.0,
-      "avg_quality_10": 4.7,
-      "year_range": [
-        2024,
-        2024
-      ]
-    },
-    {
-      "iso2": "TR",
-      "regional_cells": 1827,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 5,
-      "tiers": {
-        "X": 1827
-      },
-      "avg_quality": 47.0,
-      "avg_quality_10": 4.7,
-      "year_range": [
-        2024,
-        2024
-      ]
-    },
-    {
-      "iso2": "NG",
-      "regional_cells": 1735,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 4,
-      "tiers": {
-        "X": 1735
-      },
-      "avg_quality": 47.0,
-      "avg_quality_10": 4.7,
-      "year_range": [
-        2024,
-        2024
-      ]
-    },
-    {
-      "iso2": "EL",
-      "regional_cells": 1577,
-      "extrapolated_cells": 0,
-      "industries": 40,
-      "geographies": 19,
-      "tiers": {
-        "S": 1577
-      },
-      "avg_quality": 76.9,
-      "avg_quality_10": 7.7,
-      "year_range": [
-        2018,
-        2020
-      ]
-    },
-    {
-      "iso2": "IL",
-      "regional_cells": 1556,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 8,
-      "tiers": {
-        "X": 1556
-      },
-      "avg_quality": 40.3,
-      "avg_quality_10": 4.0,
-      "year_range": [
-        2024,
-        2024
-      ]
-    },
-    {
       "iso2": "UK",
-      "regional_cells": 1527,
+      "regional_cells": 3218,
       "extrapolated_cells": 0,
-      "industries": 29,
+      "industries": 36,
       "geographies": 53,
       "tiers": {
-        "S": 1527
+        "S": 3218
       },
       "avg_quality": 75.9,
       "avg_quality_10": 7.6,
@@ -464,31 +254,15 @@
       ]
     },
     {
-      "iso2": "IR",
-      "regional_cells": 1390,
+      "iso2": "IT",
+      "regional_cells": 3146,
       "extrapolated_cells": 0,
-      "industries": 44,
-      "geographies": 4,
+      "industries": 42,
+      "geographies": 26,
       "tiers": {
-        "X": 1390
+        "S": 3146
       },
-      "avg_quality": 47.0,
-      "avg_quality_10": 4.7,
-      "year_range": [
-        2024,
-        2024
-      ]
-    },
-    {
-      "iso2": "BE",
-      "regional_cells": 1303,
-      "extrapolated_cells": 0,
-      "industries": 39,
-      "geographies": 14,
-      "tiers": {
-        "S": 1303
-      },
-      "avg_quality": 77.0,
+      "avg_quality": 76.6,
       "avg_quality_10": 7.7,
       "year_range": [
         2018,
@@ -496,15 +270,47 @@
       ]
     },
     {
-      "iso2": "RO",
-      "regional_cells": 1286,
+      "iso2": "TR",
+      "regional_cells": 2867,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 5,
+      "tiers": {
+        "X": 2867
+      },
+      "avg_quality": 37.4,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "PE",
+      "regional_cells": 2865,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 4,
+      "tiers": {
+        "X": 2865
+      },
+      "avg_quality": 40.4,
+      "avg_quality_10": 4.0,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "PL",
+      "regional_cells": 2699,
       "extrapolated_cells": 0,
       "industries": 40,
-      "geographies": 12,
+      "geographies": 24,
       "tiers": {
-        "S": 1286
+        "S": 2699
       },
-      "avg_quality": 76.0,
+      "avg_quality": 76.3,
       "avg_quality_10": 7.6,
       "year_range": [
         2018,
@@ -512,13 +318,62 @@
       ]
     },
     {
-      "iso2": "AL",
-      "regional_cells": 1269,
+      "iso2": "AR",
+      "regional_cells": 2432,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 4,
+      "tiers": {
+        "X": 2432
+      },
+      "avg_quality": 40.7,
+      "avg_quality_10": 4.1,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "MY",
+      "regional_cells": 2302,
       "extrapolated_cells": 264,
       "industries": 44,
       "geographies": 5,
       "tiers": {
-        "X": 1269
+        "X": 2302
+      },
+      "avg_quality": 39.0,
+      "avg_quality_10": 3.9,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "AT",
+      "regional_cells": 2265,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 15,
+      "tiers": {
+        "S": 1391,
+        "X": 874
+      },
+      "avg_quality": 60.5,
+      "avg_quality_10": 6.0,
+      "year_range": [
+        2018,
+        2024
+      ]
+    },
+    {
+      "iso2": "KZ",
+      "regional_cells": 2092,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 4,
+      "tiers": {
+        "X": 2092
       },
       "avg_quality": 37.0,
       "avg_quality_10": 3.7,
@@ -528,93 +383,110 @@
       ]
     },
     {
-      "iso2": "MA",
-      "regional_cells": 1244,
+      "iso2": "GE",
+      "regional_cells": 1976,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 4,
+      "tiers": {
+        "X": 1976
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "CL",
+      "regional_cells": 1941,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 4,
+      "tiers": {
+        "X": 1941
+      },
+      "avg_quality": 43.8,
+      "avg_quality_10": 4.4,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "BR",
+      "regional_cells": 1886,
+      "extrapolated_cells": 0,
+      "industries": 58,
+      "geographies": 38,
+      "tiers": {
+        "P": 1282,
+        "X": 604
+      },
+      "avg_quality": 71.0,
+      "avg_quality_10": 7.1,
+      "year_range": [
+        2021,
+        2021
+      ]
+    },
+    {
+      "iso2": "NZ",
+      "regional_cells": 1860,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 3,
+      "tiers": {
+        "X": 1860
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "AZ",
+      "regional_cells": 1817,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 3,
+      "tiers": {
+        "X": 1817
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "VN",
+      "regional_cells": 1766,
       "extrapolated_cells": 264,
       "industries": 44,
       "geographies": 5,
       "tiers": {
-        "X": 1244
+        "X": 1766
       },
-      "avg_quality": 47.0,
-      "avg_quality_10": 4.7,
+      "avg_quality": 42.9,
+      "avg_quality_10": 4.3,
       "year_range": [
         2024,
         2024
       ]
     },
     {
-      "iso2": "HU",
-      "regional_cells": 1206,
+      "iso2": "EL",
+      "regional_cells": 1733,
       "extrapolated_cells": 0,
-      "industries": 37,
-      "geographies": 11,
+      "industries": 40,
+      "geographies": 17,
       "tiers": {
-        "S": 1206
-      },
-      "avg_quality": 77.1,
-      "avg_quality_10": 7.7,
-      "year_range": [
-        2018,
-        2020
-      ]
-    },
-    {
-      "iso2": "SE",
-      "regional_cells": 1180,
-      "extrapolated_cells": 0,
-      "industries": 38,
-      "geographies": 11,
-      "tiers": {
-        "S": 1180
-      },
-      "avg_quality": 76.8,
-      "avg_quality_10": 7.7,
-      "year_range": [
-        2018,
-        2020
-      ]
-    },
-    {
-      "iso2": "PH",
-      "regional_cells": 1178,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 4,
-      "tiers": {
-        "X": 1178
-      },
-      "avg_quality": 47.0,
-      "avg_quality_10": 4.7,
-      "year_range": [
-        2024,
-        2024
-      ]
-    },
-    {
-      "iso2": "MY",
-      "regional_cells": 1064,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 4,
-      "tiers": {
-        "X": 1064
-      },
-      "avg_quality": 47.0,
-      "avg_quality_10": 4.7,
-      "year_range": [
-        2024,
-        2024
-      ]
-    },
-    {
-      "iso2": "PT",
-      "regional_cells": 1044,
-      "extrapolated_cells": 0,
-      "industries": 39,
-      "geographies": 10,
-      "tiers": {
-        "S": 1044
+        "S": 1733
       },
       "avg_quality": 76.5,
       "avg_quality_10": 7.6,
@@ -624,13 +496,29 @@
       ]
     },
     {
-      "iso2": "GE",
-      "regional_cells": 976,
+      "iso2": "SA",
+      "regional_cells": 1696,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 5,
+      "tiers": {
+        "X": 1696
+      },
+      "avg_quality": 42.4,
+      "avg_quality_10": 4.2,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "CO",
+      "regional_cells": 1675,
       "extrapolated_cells": 264,
       "industries": 44,
       "geographies": 4,
       "tiers": {
-        "X": 976
+        "X": 1675
       },
       "avg_quality": 37.0,
       "avg_quality_10": 3.7,
@@ -640,15 +528,63 @@
       ]
     },
     {
-      "iso2": "CZ",
-      "regional_cells": 916,
-      "extrapolated_cells": 0,
-      "industries": 39,
-      "geographies": 9,
+      "iso2": "AL",
+      "regional_cells": 1591,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 4,
       "tiers": {
-        "S": 916
+        "X": 1591
       },
-      "avg_quality": 77.1,
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "TZ",
+      "regional_cells": 1583,
+      "extrapolated_cells": 0,
+      "industries": 44,
+      "geographies": 2,
+      "tiers": {
+        "X": 1583
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "SM",
+      "regional_cells": 1464,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 2,
+      "tiers": {
+        "X": 1464
+      },
+      "avg_quality": 36.0,
+      "avg_quality_10": 3.6,
+      "year_range": [
+        2023,
+        2023
+      ]
+    },
+    {
+      "iso2": "BE",
+      "regional_cells": 1408,
+      "extrapolated_cells": 0,
+      "industries": 41,
+      "geographies": 14,
+      "tiers": {
+        "S": 1408
+      },
+      "avg_quality": 76.6,
       "avg_quality_10": 7.7,
       "year_range": [
         2018,
@@ -656,45 +592,173 @@
       ]
     },
     {
-      "iso2": "SA",
-      "regional_cells": 867,
+      "iso2": "RO",
+      "regional_cells": 1397,
+      "extrapolated_cells": 0,
+      "industries": 40,
+      "geographies": 12,
+      "tiers": {
+        "S": 1397
+      },
+      "avg_quality": 74.4,
+      "avg_quality_10": 7.4,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "ZA",
+      "regional_cells": 1337,
       "extrapolated_cells": 264,
       "industries": 44,
-      "geographies": 4,
+      "geographies": 5,
       "tiers": {
-        "X": 867
+        "X": 1337
       },
-      "avg_quality": 47.0,
-      "avg_quality_10": 4.7,
+      "avg_quality": 39.0,
+      "avg_quality_10": 3.9,
       "year_range": [
         2024,
         2024
       ]
     },
     {
-      "iso2": "NZ",
-      "regional_cells": 837,
+      "iso2": "ID",
+      "regional_cells": 1316,
       "extrapolated_cells": 264,
       "industries": 44,
-      "geographies": 4,
+      "geographies": 6,
       "tiers": {
-        "X": 837
+        "X": 1316
       },
-      "avg_quality": 47.0,
-      "avg_quality_10": 4.7,
+      "avg_quality": 39.2,
+      "avg_quality_10": 3.9,
       "year_range": [
         2024,
         2024
       ]
     },
     {
-      "iso2": "CO",
-      "regional_cells": 804,
+      "iso2": "HU",
+      "regional_cells": 1236,
+      "extrapolated_cells": 0,
+      "industries": 40,
+      "geographies": 11,
+      "tiers": {
+        "S": 1236
+      },
+      "avg_quality": 76.6,
+      "avg_quality_10": 7.7,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "SE",
+      "regional_cells": 1181,
+      "extrapolated_cells": 0,
+      "industries": 38,
+      "geographies": 11,
+      "tiers": {
+        "S": 1181
+      },
+      "avg_quality": 76.6,
+      "avg_quality_10": 7.7,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "TH",
+      "regional_cells": 1177,
       "extrapolated_cells": 264,
       "industries": 44,
       "geographies": 4,
       "tiers": {
-        "X": 804
+        "X": 1177
+      },
+      "avg_quality": 41.5,
+      "avg_quality_10": 4.1,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "PH",
+      "regional_cells": 1116,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 5,
+      "tiers": {
+        "X": 1116
+      },
+      "avg_quality": 37.6,
+      "avg_quality_10": 3.8,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "UZ",
+      "regional_cells": 1102,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 2,
+      "tiers": {
+        "X": 1102
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "PT",
+      "regional_cells": 1020,
+      "extrapolated_cells": 0,
+      "industries": 39,
+      "geographies": 10,
+      "tiers": {
+        "S": 1020
+      },
+      "avg_quality": 75.7,
+      "avg_quality_10": 7.6,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "CZ",
+      "regional_cells": 1013,
+      "extrapolated_cells": 0,
+      "industries": 42,
+      "geographies": 9,
+      "tiers": {
+        "S": 1013
+      },
+      "avg_quality": 76.6,
+      "avg_quality_10": 7.7,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "IR",
+      "regional_cells": 910,
+      "extrapolated_cells": 0,
+      "industries": 44,
+      "geographies": 4,
+      "tiers": {
+        "X": 910
       },
       "avg_quality": 47.0,
       "avg_quality_10": 4.7,
@@ -705,60 +769,12 @@
     },
     {
       "iso2": "BG",
-      "regional_cells": 785,
-      "extrapolated_cells": 0,
-      "industries": 39,
-      "geographies": 8,
-      "tiers": {
-        "S": 785
-      },
-      "avg_quality": 76.9,
-      "avg_quality_10": 7.7,
-      "year_range": [
-        2018,
-        2020
-      ]
-    },
-    {
-      "iso2": "NO",
-      "regional_cells": 755,
+      "regional_cells": 906,
       "extrapolated_cells": 0,
       "industries": 40,
-      "geographies": 12,
+      "geographies": 8,
       "tiers": {
-        "S": 755
-      },
-      "avg_quality": 76.3,
-      "avg_quality_10": 7.6,
-      "year_range": [
-        2018,
-        2020
-      ]
-    },
-    {
-      "iso2": "KZ",
-      "regional_cells": 733,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 5,
-      "tiers": {
-        "X": 733
-      },
-      "avg_quality": 37.0,
-      "avg_quality_10": 3.7,
-      "year_range": [
-        2024,
-        2024
-      ]
-    },
-    {
-      "iso2": "FI",
-      "regional_cells": 685,
-      "extrapolated_cells": 0,
-      "industries": 38,
-      "geographies": 7,
-      "tiers": {
-        "S": 685
+        "S": 906
       },
       "avg_quality": 76.1,
       "avg_quality_10": 7.6,
@@ -768,29 +784,125 @@
       ]
     },
     {
-      "iso2": "AR",
-      "regional_cells": 645,
+      "iso2": "NO",
+      "regional_cells": 900,
+      "extrapolated_cells": 0,
+      "industries": 41,
+      "geographies": 12,
+      "tiers": {
+        "S": 900
+      },
+      "avg_quality": 76.1,
+      "avg_quality_10": 7.6,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "CH",
+      "regional_cells": 877,
       "extrapolated_cells": 264,
       "industries": 44,
-      "geographies": 2,
+      "geographies": 6,
       "tiers": {
-        "X": 645
+        "X": 877
       },
-      "avg_quality": 47.0,
-      "avg_quality_10": 4.7,
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
       "year_range": [
         2024,
         2024
       ]
     },
     {
-      "iso2": "AZ",
-      "regional_cells": 642,
+      "iso2": "NG",
+      "regional_cells": 865,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 5,
+      "tiers": {
+        "X": 865
+      },
+      "avg_quality": 42.8,
+      "avg_quality_10": 4.3,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "KR",
+      "regional_cells": 815,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 4,
+      "tiers": {
+        "X": 815
+      },
+      "avg_quality": 39.3,
+      "avg_quality_10": 3.9,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "MA",
+      "regional_cells": 798,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 6,
+      "tiers": {
+        "X": 798
+      },
+      "avg_quality": 37.6,
+      "avg_quality_10": 3.8,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "FI",
+      "regional_cells": 746,
+      "extrapolated_cells": 0,
+      "industries": 38,
+      "geographies": 7,
+      "tiers": {
+        "S": 746
+      },
+      "avg_quality": 75.8,
+      "avg_quality_10": 7.6,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "AE",
+      "regional_cells": 679,
       "extrapolated_cells": 264,
       "industries": 44,
       "geographies": 3,
       "tiers": {
-        "X": 642
+        "X": 679
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "EC",
+      "regional_cells": 675,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 2,
+      "tiers": {
+        "X": 675
       },
       "avg_quality": 37.0,
       "avg_quality_10": 3.7,
@@ -801,12 +913,140 @@
     },
     {
       "iso2": "DK",
-      "regional_cells": 629,
+      "regional_cells": 643,
       "extrapolated_cells": 0,
-      "industries": 39,
+      "industries": 38,
       "geographies": 6,
       "tiers": {
-        "S": 629
+        "S": 643
+      },
+      "avg_quality": 76.2,
+      "avg_quality_10": 7.6,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "UA",
+      "regional_cells": 623,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 4,
+      "tiers": {
+        "X": 623
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "EG",
+      "regional_cells": 621,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 3,
+      "tiers": {
+        "X": 621
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "ET",
+      "regional_cells": 593,
+      "extrapolated_cells": 0,
+      "industries": 44,
+      "geographies": 1,
+      "tiers": {
+        "X": 593
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "VE",
+      "regional_cells": 558,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 2,
+      "tiers": {
+        "X": 558
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "MC",
+      "regional_cells": 554,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 1,
+      "tiers": {
+        "X": 554
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "DZ",
+      "regional_cells": 528,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 2,
+      "tiers": {
+        "X": 528
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "FJ",
+      "regional_cells": 508,
+      "extrapolated_cells": 0,
+      "industries": 44,
+      "geographies": 1,
+      "tiers": {
+        "X": 508
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "SK",
+      "regional_cells": 503,
+      "extrapolated_cells": 0,
+      "industries": 37,
+      "geographies": 5,
+      "tiers": {
+        "S": 503
       },
       "avg_quality": 76.7,
       "avg_quality_10": 7.7,
@@ -816,45 +1056,109 @@
       ]
     },
     {
-      "iso2": "AE",
-      "regional_cells": 590,
+      "iso2": "PK",
+      "regional_cells": 500,
       "extrapolated_cells": 264,
       "industries": 44,
       "geographies": 3,
       "tiers": {
-        "X": 590
+        "X": 500
       },
-      "avg_quality": 47.0,
-      "avg_quality_10": 4.7,
+      "avg_quality": 37.7,
+      "avg_quality_10": 3.8,
       "year_range": [
         2024,
         2024
       ]
     },
     {
-      "iso2": "ID",
-      "regional_cells": 542,
+      "iso2": "UG",
+      "regional_cells": 500,
+      "extrapolated_cells": 0,
+      "industries": 44,
+      "geographies": 1,
+      "tiers": {
+        "X": 500
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "HR",
+      "regional_cells": 419,
+      "extrapolated_cells": 0,
+      "industries": 39,
+      "geographies": 6,
+      "tiers": {
+        "S": 419
+      },
+      "avg_quality": 76.6,
+      "avg_quality_10": 7.7,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "BY",
+      "regional_cells": 407,
       "extrapolated_cells": 264,
       "industries": 44,
-      "geographies": 4,
+      "geographies": 1,
       "tiers": {
-        "X": 542
+        "X": 407
       },
-      "avg_quality": 47.0,
-      "avg_quality_10": 4.7,
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
       "year_range": [
         2024,
         2024
       ]
     },
     {
-      "iso2": "SM",
-      "regional_cells": 526,
+      "iso2": "TN",
+      "regional_cells": 396,
       "extrapolated_cells": 264,
       "industries": 44,
       "geographies": 2,
       "tiers": {
-        "X": 526
+        "X": 396
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "LT",
+      "regional_cells": 362,
+      "extrapolated_cells": 0,
+      "industries": 41,
+      "geographies": 3,
+      "tiers": {
+        "S": 362
+      },
+      "avg_quality": 76.7,
+      "avg_quality_10": 7.7,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "LI",
+      "regional_cells": 346,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 2,
+      "tiers": {
+        "X": 346
       },
       "avg_quality": 36.0,
       "avg_quality_10": 3.6,
@@ -864,48 +1168,32 @@
       ]
     },
     {
-      "iso2": "SK",
-      "regional_cells": 525,
+      "iso2": "RW",
+      "regional_cells": 336,
       "extrapolated_cells": 0,
-      "industries": 38,
-      "geographies": 5,
-      "tiers": {
-        "S": 525
-      },
-      "avg_quality": 77.0,
-      "avg_quality_10": 7.7,
-      "year_range": [
-        2018,
-        2020
-      ]
-    },
-    {
-      "iso2": "HR",
-      "regional_cells": 478,
-      "extrapolated_cells": 0,
-      "industries": 39,
-      "geographies": 6,
-      "tiers": {
-        "S": 478
-      },
-      "avg_quality": 77.0,
-      "avg_quality_10": 7.7,
-      "year_range": [
-        2018,
-        2020
-      ]
-    },
-    {
-      "iso2": "KR",
-      "regional_cells": 332,
-      "extrapolated_cells": 264,
       "industries": 44,
       "geographies": 1,
       "tiers": {
-        "X": 332
+        "X": 336
       },
-      "avg_quality": 47.0,
-      "avg_quality_10": 4.7,
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "DO",
+      "regional_cells": 323,
+      "extrapolated_cells": 0,
+      "industries": 44,
+      "geographies": 2,
+      "tiers": {
+        "X": 323
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
       "year_range": [
         2024,
         2024
@@ -913,14 +1201,14 @@
     },
     {
       "iso2": "SI",
-      "regional_cells": 332,
+      "regional_cells": 321,
       "extrapolated_cells": 0,
       "industries": 38,
       "geographies": 3,
       "tiers": {
-        "S": 332
+        "S": 321
       },
-      "avg_quality": 76.7,
+      "avg_quality": 76.6,
       "avg_quality_10": 7.7,
       "year_range": [
         2018,
@@ -929,14 +1217,14 @@
     },
     {
       "iso2": "IE",
-      "regional_cells": 306,
+      "regional_cells": 296,
       "extrapolated_cells": 0,
       "industries": 33,
       "geographies": 4,
       "tiers": {
-        "S": 306
+        "S": 296
       },
-      "avg_quality": 77.0,
+      "avg_quality": 76.6,
       "avg_quality_10": 7.7,
       "year_range": [
         2018,
@@ -944,39 +1232,39 @@
       ]
     },
     {
-      "iso2": "LT",
-      "regional_cells": 289,
-      "extrapolated_cells": 0,
-      "industries": 37,
-      "geographies": 3,
-      "tiers": {
-        "S": 289
-      },
-      "avg_quality": 77.1,
-      "avg_quality_10": 7.7,
-      "year_range": [
-        2018,
-        2020
-      ]
-    },
-    {
-      "iso2": "TH",
-      "regional_cells": 266,
+      "iso2": "UY",
+      "regional_cells": 292,
       "extrapolated_cells": 264,
       "industries": 44,
-      "geographies": 3,
+      "geographies": 1,
       "tiers": {
-        "X": 266
+        "X": 292
       },
-      "avg_quality": 47.0,
-      "avg_quality_10": 4.7,
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
       "year_range": [
         2024,
         2024
       ]
     },
     {
-      "iso2": "MC",
+      "iso2": "GT",
+      "regional_cells": 264,
+      "extrapolated_cells": 0,
+      "industries": 44,
+      "geographies": 1,
+      "tiers": {
+        "X": 264
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "HK",
       "regional_cells": 264,
       "extrapolated_cells": 264,
       "industries": 44,
@@ -992,13 +1280,13 @@
       ]
     },
     {
-      "iso2": "LI",
-      "regional_cells": 236,
+      "iso2": "LB",
+      "regional_cells": 264,
       "extrapolated_cells": 264,
       "industries": 44,
-      "geographies": 2,
+      "geographies": 1,
       "tiers": {
-        "X": 236
+        "X": 264
       },
       "avg_quality": 36.0,
       "avg_quality_10": 3.6,
@@ -1008,141 +1296,13 @@
       ]
     },
     {
-      "iso2": "EE",
-      "regional_cells": 205,
-      "extrapolated_cells": 0,
-      "industries": 39,
-      "geographies": 2,
-      "tiers": {
-        "S": 205
-      },
-      "avg_quality": 77.1,
-      "avg_quality_10": 7.7,
-      "year_range": [
-        2018,
-        2020
-      ]
-    },
-    {
-      "iso2": "LU",
-      "regional_cells": 196,
-      "extrapolated_cells": 0,
-      "industries": 35,
-      "geographies": 2,
-      "tiers": {
-        "S": 196
-      },
-      "avg_quality": 75.1,
-      "avg_quality_10": 7.5,
-      "year_range": [
-        2018,
-        2020
-      ]
-    },
-    {
-      "iso2": "LV",
-      "regional_cells": 193,
-      "extrapolated_cells": 0,
-      "industries": 38,
-      "geographies": 2,
-      "tiers": {
-        "S": 193
-      },
-      "avg_quality": 76.9,
-      "avg_quality_10": 7.7,
-      "year_range": [
-        2018,
-        2020
-      ]
-    },
-    {
-      "iso2": "CY",
-      "regional_cells": 192,
-      "extrapolated_cells": 0,
-      "industries": 37,
-      "geographies": 2,
-      "tiers": {
-        "S": 192
-      },
-      "avg_quality": 76.8,
-      "avg_quality_10": 7.7,
-      "year_range": [
-        2018,
-        2020
-      ]
-    },
-    {
-      "iso2": "MT",
-      "regional_cells": 191,
-      "extrapolated_cells": 0,
-      "industries": 36,
-      "geographies": 2,
-      "tiers": {
-        "S": 191
-      },
-      "avg_quality": 75.9,
-      "avg_quality_10": 7.6,
-      "year_range": [
-        2018,
-        2020
-      ]
-    },
-    {
-      "iso2": "PK",
-      "regional_cells": 106,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 2,
-      "tiers": {
-        "X": 106
-      },
-      "avg_quality": 47.0,
-      "avg_quality_10": 4.7,
-      "year_range": [
-        2024,
-        2024
-      ]
-    },
-    {
-      "iso2": "IS",
-      "regional_cells": 56,
-      "extrapolated_cells": 0,
-      "industries": 25,
-      "geographies": 2,
-      "tiers": {
-        "S": 56
-      },
-      "avg_quality": 76.0,
-      "avg_quality_10": 7.6,
-      "year_range": [
-        2018,
-        2018
-      ]
-    },
-    {
-      "iso2": "UA",
-      "regional_cells": 28,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 2,
-      "tiers": {
-        "X": 28
-      },
-      "avg_quality": 47.0,
-      "avg_quality_10": 4.7,
-      "year_range": [
-        2024,
-        2024
-      ]
-    },
-    {
-      "iso2": "AD",
-      "regional_cells": 18,
+      "iso2": "LK",
+      "regional_cells": 264,
       "extrapolated_cells": 264,
       "industries": 44,
       "geographies": 1,
       "tiers": {
-        "X": 18
+        "X": 264
       },
       "avg_quality": 37.0,
       "avg_quality_10": 3.7,
@@ -1152,32 +1312,224 @@
       ]
     },
     {
-      "iso2": "BD",
-      "regional_cells": 16,
+      "iso2": "QA",
+      "regional_cells": 263,
       "extrapolated_cells": 264,
       "industries": 44,
       "geographies": 1,
       "tiers": {
-        "X": 16
+        "X": 263
       },
-      "avg_quality": 47.0,
-      "avg_quality_10": 4.7,
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
       "year_range": [
         2024,
         2024
       ]
     },
     {
-      "iso2": "VN",
-      "regional_cells": 8,
-      "extrapolated_cells": 264,
-      "industries": 44,
+      "iso2": "LV",
+      "regional_cells": 244,
+      "extrapolated_cells": 0,
+      "industries": 41,
       "geographies": 2,
       "tiers": {
-        "X": 8
+        "S": 244
       },
-      "avg_quality": 47.0,
-      "avg_quality_10": 4.7,
+      "avg_quality": 76.4,
+      "avg_quality_10": 7.6,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "JO",
+      "regional_cells": 238,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 1,
+      "tiers": {
+        "X": 238
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "LU",
+      "regional_cells": 232,
+      "extrapolated_cells": 0,
+      "industries": 37,
+      "geographies": 2,
+      "tiers": {
+        "S": 232
+      },
+      "avg_quality": 72.5,
+      "avg_quality_10": 7.3,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "MT",
+      "regional_cells": 221,
+      "extrapolated_cells": 0,
+      "industries": 38,
+      "geographies": 2,
+      "tiers": {
+        "S": 221
+      },
+      "avg_quality": 72.1,
+      "avg_quality_10": 7.2,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "CY",
+      "regional_cells": 215,
+      "extrapolated_cells": 0,
+      "industries": 37,
+      "geographies": 2,
+      "tiers": {
+        "S": 215
+      },
+      "avg_quality": 76.4,
+      "avg_quality_10": 7.6,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "EE",
+      "regional_cells": 214,
+      "extrapolated_cells": 0,
+      "industries": 39,
+      "geographies": 2,
+      "tiers": {
+        "S": 214
+      },
+      "avg_quality": 76.5,
+      "avg_quality_10": 7.7,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "BD",
+      "regional_cells": 201,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 1,
+      "tiers": {
+        "X": 201
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "OM",
+      "regional_cells": 185,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 1,
+      "tiers": {
+        "X": 185
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "GH",
+      "regional_cells": 115,
+      "extrapolated_cells": 0,
+      "industries": 33,
+      "geographies": 1,
+      "tiers": {
+        "X": 115
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "IS",
+      "regional_cells": 115,
+      "extrapolated_cells": 0,
+      "industries": 31,
+      "geographies": 2,
+      "tiers": {
+        "S": 115
+      },
+      "avg_quality": 76.0,
+      "avg_quality_10": 7.6,
+      "year_range": [
+        2018,
+        2018
+      ]
+    },
+    {
+      "iso2": "CR",
+      "regional_cells": 99,
+      "extrapolated_cells": 0,
+      "industries": 40,
+      "geographies": 1,
+      "tiers": {
+        "X": 99
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "KE",
+      "regional_cells": 49,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 3,
+      "tiers": {
+        "X": 49
+      },
+      "avg_quality": 42.5,
+      "avg_quality_10": 4.3,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "PA",
+      "regional_cells": 16,
+      "extrapolated_cells": 0,
+      "industries": 5,
+      "geographies": 1,
+      "tiers": {
+        "X": 16
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
       "year_range": [
         2024,
         2024
@@ -1185,6 +1537,20 @@
     },
     {
       "iso2": "ABW",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "AD",
       "regional_cells": 0,
       "extrapolated_cells": 264,
       "industries": 44,
@@ -1478,20 +1844,6 @@
       ]
     },
     {
-      "iso2": "BY",
-      "regional_cells": 0,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 0,
-      "tiers": {},
-      "avg_quality": 0,
-      "avg_quality_10": 0.0,
-      "year_range": [
-        null,
-        null
-      ]
-    },
-    {
       "iso2": "CAF",
       "regional_cells": 0,
       "extrapolated_cells": 264,
@@ -1730,20 +2082,6 @@
       ]
     },
     {
-      "iso2": "DZ",
-      "regional_cells": 0,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 0,
-      "tiers": {},
-      "avg_quality": 0,
-      "avg_quality_10": 0.0,
-      "year_range": [
-        null,
-        null
-      ]
-    },
-    {
       "iso2": "EAP",
       "regional_cells": 0,
       "extrapolated_cells": 264,
@@ -1773,20 +2111,6 @@
     },
     {
       "iso2": "EAS",
-      "regional_cells": 0,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 0,
-      "tiers": {},
-      "avg_quality": 0,
-      "avg_quality_10": 0.0,
-      "year_range": [
-        null,
-        null
-      ]
-    },
-    {
-      "iso2": "EC",
       "regional_cells": 0,
       "extrapolated_cells": 264,
       "industries": 44,
@@ -2080,20 +2404,6 @@
       ]
     },
     {
-      "iso2": "HK",
-      "regional_cells": 0,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 0,
-      "tiers": {},
-      "avg_quality": 0,
-      "avg_quality_10": 0.0,
-      "year_range": [
-        null,
-        null
-      ]
-    },
-    {
       "iso2": "HND",
       "regional_cells": 0,
       "extrapolated_cells": 264,
@@ -2262,20 +2572,6 @@
       ]
     },
     {
-      "iso2": "JO",
-      "regional_cells": 0,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 0,
-      "tiers": {},
-      "avg_quality": 0,
-      "avg_quality_10": 0.0,
-      "year_range": [
-        null,
-        null
-      ]
-    },
-    {
       "iso2": "KGZ",
       "regional_cells": 0,
       "extrapolated_cells": 264,
@@ -2374,20 +2670,6 @@
       ]
     },
     {
-      "iso2": "LB",
-      "regional_cells": 0,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 0,
-      "tiers": {},
-      "avg_quality": 0,
-      "avg_quality_10": 0.0,
-      "year_range": [
-        null,
-        null
-      ]
-    },
-    {
       "iso2": "LBR",
       "regional_cells": 0,
       "extrapolated_cells": 264,
@@ -2445,20 +2727,6 @@
     },
     {
       "iso2": "LDC",
-      "regional_cells": 0,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 0,
-      "tiers": {},
-      "avg_quality": 0,
-      "avg_quality_10": 0.0,
-      "year_range": [
-        null,
-        null
-      ]
-    },
-    {
-      "iso2": "LK",
       "regional_cells": 0,
       "extrapolated_cells": 264,
       "industries": 44,
@@ -2878,20 +3146,6 @@
       ]
     },
     {
-      "iso2": "OM",
-      "regional_cells": 0,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 0,
-      "tiers": {},
-      "avg_quality": 0,
-      "avg_quality_10": 0.0,
-      "year_range": [
-        null,
-        null
-      ]
-    },
-    {
       "iso2": "OSS",
       "regional_cells": 0,
       "extrapolated_cells": 264,
@@ -3033,20 +3287,6 @@
     },
     {
       "iso2": "PYF",
-      "regional_cells": 0,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 0,
-      "tiers": {},
-      "avg_quality": 0,
-      "avg_quality_10": 0.0,
-      "year_range": [
-        null,
-        null
-      ]
-    },
-    {
-      "iso2": "QA",
       "regional_cells": 0,
       "extrapolated_cells": 264,
       "industries": 44,
@@ -3438,20 +3678,6 @@
       ]
     },
     {
-      "iso2": "TN",
-      "regional_cells": 0,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 0,
-      "tiers": {},
-      "avg_quality": 0,
-      "avg_quality_10": 0.0,
-      "year_range": [
-        null,
-        null
-      ]
-    },
-    {
       "iso2": "TON",
       "regional_cells": 0,
       "extrapolated_cells": 264,
@@ -3550,49 +3776,7 @@
       ]
     },
     {
-      "iso2": "UY",
-      "regional_cells": 0,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 0,
-      "tiers": {},
-      "avg_quality": 0,
-      "avg_quality_10": 0.0,
-      "year_range": [
-        null,
-        null
-      ]
-    },
-    {
-      "iso2": "UZ",
-      "regional_cells": 0,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 0,
-      "tiers": {},
-      "avg_quality": 0,
-      "avg_quality_10": 0.0,
-      "year_range": [
-        null,
-        null
-      ]
-    },
-    {
       "iso2": "VCT",
-      "regional_cells": 0,
-      "extrapolated_cells": 264,
-      "industries": 44,
-      "geographies": 0,
-      "tiers": {},
-      "avg_quality": 0,
-      "avg_quality_10": 0.0,
-      "year_range": [
-        null,
-        null
-      ]
-    },
-    {
-      "iso2": "VE",
       "regional_cells": 0,
       "extrapolated_cells": 264,
       "industries": 44,
