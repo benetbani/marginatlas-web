@@ -1,0 +1,3721 @@
+{
+  "generated_at": "2026-05-18T18:32:37Z",
+  "totals": {
+    "countries": 254,
+    "regional_cells_total": 356761,
+    "extrapolated_cells_total": 58344,
+    "industries_covered": 78
+  },
+  "countries": [
+    {
+      "iso2": "US",
+      "regional_cells": 97237,
+      "extrapolated_cells": 264,
+      "industries": 73,
+      "geographies": 2907,
+      "tiers": {
+        "P": 96460,
+        "X": 777
+      },
+      "avg_quality": 94.6,
+      "avg_quality_10": 9.5,
+      "year_range": [
+        2022,
+        2024
+      ]
+    },
+    {
+      "iso2": "AU",
+      "regional_cells": 66055,
+      "extrapolated_cells": 264,
+      "industries": 50,
+      "geographies": 2365,
+      "tiers": {
+        "P": 63213,
+        "X": 2842
+      },
+      "avg_quality": 88.1,
+      "avg_quality_10": 8.8,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "MX",
+      "regional_cells": 60039,
+      "extrapolated_cells": 264,
+      "industries": 63,
+      "geographies": 1806,
+      "tiers": {
+        "P": 58197,
+        "X": 1842
+      },
+      "avg_quality": 94.0,
+      "avg_quality_10": 9.4,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "GB",
+      "regional_cells": 22243,
+      "extrapolated_cells": 0,
+      "industries": 60,
+      "geographies": 274,
+      "tiers": {
+        "P": 22243
+      },
+      "avg_quality": 90.0,
+      "avg_quality_10": 9.0,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "ES",
+      "regional_cells": 11627,
+      "extrapolated_cells": 0,
+      "industries": 57,
+      "geographies": 65,
+      "tiers": {
+        "S": 2598,
+        "P": 9029
+      },
+      "avg_quality": 87.9,
+      "avg_quality_10": 8.8,
+      "year_range": [
+        2018,
+        2025
+      ]
+    },
+    {
+      "iso2": "JP",
+      "regional_cells": 9199,
+      "extrapolated_cells": 0,
+      "industries": 39,
+      "geographies": 133,
+      "tiers": {
+        "P": 9199
+      },
+      "avg_quality": 90.0,
+      "avg_quality_10": 9.0,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "RU",
+      "regional_cells": 6134,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 10,
+      "tiers": {
+        "X": 6134
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "DE",
+      "regional_cells": 5090,
+      "extrapolated_cells": 0,
+      "industries": 41,
+      "geographies": 54,
+      "tiers": {
+        "S": 5090
+      },
+      "avg_quality": 76.7,
+      "avg_quality_10": 7.7,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "NL",
+      "regional_cells": 4978,
+      "extrapolated_cells": 0,
+      "industries": 46,
+      "geographies": 211,
+      "tiers": {
+        "P": 3406,
+        "S": 1572
+      },
+      "avg_quality": 85.6,
+      "avg_quality_10": 8.6,
+      "year_range": [
+        2018,
+        2024
+      ]
+    },
+    {
+      "iso2": "FR",
+      "regional_cells": 4399,
+      "extrapolated_cells": 0,
+      "industries": 41,
+      "geographies": 43,
+      "tiers": {
+        "S": 4399
+      },
+      "avg_quality": 75.8,
+      "avg_quality_10": 7.6,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "CA",
+      "regional_cells": 4181,
+      "extrapolated_cells": 264,
+      "industries": 66,
+      "geographies": 20,
+      "tiers": {
+        "P": 1286,
+        "X": 2895
+      },
+      "avg_quality": 60.2,
+      "avg_quality_10": 6.0,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "BR",
+      "regional_cells": 4007,
+      "extrapolated_cells": 0,
+      "industries": 58,
+      "geographies": 42,
+      "tiers": {
+        "P": 2180,
+        "X": 1827
+      },
+      "avg_quality": 64.2,
+      "avg_quality_10": 6.4,
+      "year_range": [
+        2021,
+        2021
+      ]
+    },
+    {
+      "iso2": "CL",
+      "regional_cells": 2929,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 4,
+      "tiers": {
+        "X": 2929
+      },
+      "avg_quality": 47.0,
+      "avg_quality_10": 4.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "CN",
+      "regional_cells": 2735,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 10,
+      "tiers": {
+        "X": 2735
+      },
+      "avg_quality": 47.0,
+      "avg_quality_10": 4.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "IT",
+      "regional_cells": 2555,
+      "extrapolated_cells": 0,
+      "industries": 41,
+      "geographies": 26,
+      "tiers": {
+        "S": 2555
+      },
+      "avg_quality": 77.0,
+      "avg_quality_10": 7.7,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "ZA",
+      "regional_cells": 2512,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 5,
+      "tiers": {
+        "X": 2512
+      },
+      "avg_quality": 47.0,
+      "avg_quality_10": 4.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "PL",
+      "regional_cells": 2509,
+      "extrapolated_cells": 0,
+      "industries": 39,
+      "geographies": 24,
+      "tiers": {
+        "S": 2509
+      },
+      "avg_quality": 76.8,
+      "avg_quality_10": 7.7,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "IN",
+      "regional_cells": 2315,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 8,
+      "tiers": {
+        "X": 2315
+      },
+      "avg_quality": 47.0,
+      "avg_quality_10": 4.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "AT",
+      "regional_cells": 2280,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 17,
+      "tiers": {
+        "S": 1167,
+        "X": 1113
+      },
+      "avg_quality": 57.4,
+      "avg_quality_10": 5.7,
+      "year_range": [
+        2018,
+        2024
+      ]
+    },
+    {
+      "iso2": "EG",
+      "regional_cells": 2217,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 3,
+      "tiers": {
+        "X": 2217
+      },
+      "avg_quality": 47.0,
+      "avg_quality_10": 4.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "KE",
+      "regional_cells": 2078,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 3,
+      "tiers": {
+        "X": 2078
+      },
+      "avg_quality": 47.0,
+      "avg_quality_10": 4.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "CH",
+      "regional_cells": 2006,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 6,
+      "tiers": {
+        "X": 2006
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "PE",
+      "regional_cells": 1881,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 4,
+      "tiers": {
+        "X": 1881
+      },
+      "avg_quality": 47.0,
+      "avg_quality_10": 4.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "TR",
+      "regional_cells": 1827,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 5,
+      "tiers": {
+        "X": 1827
+      },
+      "avg_quality": 47.0,
+      "avg_quality_10": 4.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "NG",
+      "regional_cells": 1735,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 4,
+      "tiers": {
+        "X": 1735
+      },
+      "avg_quality": 47.0,
+      "avg_quality_10": 4.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "EL",
+      "regional_cells": 1577,
+      "extrapolated_cells": 0,
+      "industries": 40,
+      "geographies": 19,
+      "tiers": {
+        "S": 1577
+      },
+      "avg_quality": 76.9,
+      "avg_quality_10": 7.7,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "IL",
+      "regional_cells": 1556,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 8,
+      "tiers": {
+        "X": 1556
+      },
+      "avg_quality": 40.3,
+      "avg_quality_10": 4.0,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "UK",
+      "regional_cells": 1527,
+      "extrapolated_cells": 0,
+      "industries": 29,
+      "geographies": 53,
+      "tiers": {
+        "S": 1527
+      },
+      "avg_quality": 75.9,
+      "avg_quality_10": 7.6,
+      "year_range": [
+        2018,
+        2018
+      ]
+    },
+    {
+      "iso2": "IR",
+      "regional_cells": 1390,
+      "extrapolated_cells": 0,
+      "industries": 44,
+      "geographies": 4,
+      "tiers": {
+        "X": 1390
+      },
+      "avg_quality": 47.0,
+      "avg_quality_10": 4.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "BE",
+      "regional_cells": 1303,
+      "extrapolated_cells": 0,
+      "industries": 39,
+      "geographies": 14,
+      "tiers": {
+        "S": 1303
+      },
+      "avg_quality": 77.0,
+      "avg_quality_10": 7.7,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "RO",
+      "regional_cells": 1286,
+      "extrapolated_cells": 0,
+      "industries": 40,
+      "geographies": 12,
+      "tiers": {
+        "S": 1286
+      },
+      "avg_quality": 76.0,
+      "avg_quality_10": 7.6,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "AL",
+      "regional_cells": 1269,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 5,
+      "tiers": {
+        "X": 1269
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "MA",
+      "regional_cells": 1244,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 5,
+      "tiers": {
+        "X": 1244
+      },
+      "avg_quality": 47.0,
+      "avg_quality_10": 4.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "HU",
+      "regional_cells": 1206,
+      "extrapolated_cells": 0,
+      "industries": 37,
+      "geographies": 11,
+      "tiers": {
+        "S": 1206
+      },
+      "avg_quality": 77.1,
+      "avg_quality_10": 7.7,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "SE",
+      "regional_cells": 1180,
+      "extrapolated_cells": 0,
+      "industries": 38,
+      "geographies": 11,
+      "tiers": {
+        "S": 1180
+      },
+      "avg_quality": 76.8,
+      "avg_quality_10": 7.7,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "PH",
+      "regional_cells": 1178,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 4,
+      "tiers": {
+        "X": 1178
+      },
+      "avg_quality": 47.0,
+      "avg_quality_10": 4.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "MY",
+      "regional_cells": 1064,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 4,
+      "tiers": {
+        "X": 1064
+      },
+      "avg_quality": 47.0,
+      "avg_quality_10": 4.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "PT",
+      "regional_cells": 1044,
+      "extrapolated_cells": 0,
+      "industries": 39,
+      "geographies": 10,
+      "tiers": {
+        "S": 1044
+      },
+      "avg_quality": 76.5,
+      "avg_quality_10": 7.6,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "GE",
+      "regional_cells": 976,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 4,
+      "tiers": {
+        "X": 976
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "CZ",
+      "regional_cells": 916,
+      "extrapolated_cells": 0,
+      "industries": 39,
+      "geographies": 9,
+      "tiers": {
+        "S": 916
+      },
+      "avg_quality": 77.1,
+      "avg_quality_10": 7.7,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "SA",
+      "regional_cells": 867,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 4,
+      "tiers": {
+        "X": 867
+      },
+      "avg_quality": 47.0,
+      "avg_quality_10": 4.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "NZ",
+      "regional_cells": 837,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 4,
+      "tiers": {
+        "X": 837
+      },
+      "avg_quality": 47.0,
+      "avg_quality_10": 4.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "CO",
+      "regional_cells": 804,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 4,
+      "tiers": {
+        "X": 804
+      },
+      "avg_quality": 47.0,
+      "avg_quality_10": 4.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "BG",
+      "regional_cells": 785,
+      "extrapolated_cells": 0,
+      "industries": 39,
+      "geographies": 8,
+      "tiers": {
+        "S": 785
+      },
+      "avg_quality": 76.9,
+      "avg_quality_10": 7.7,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "NO",
+      "regional_cells": 755,
+      "extrapolated_cells": 0,
+      "industries": 40,
+      "geographies": 12,
+      "tiers": {
+        "S": 755
+      },
+      "avg_quality": 76.3,
+      "avg_quality_10": 7.6,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "KZ",
+      "regional_cells": 733,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 5,
+      "tiers": {
+        "X": 733
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "FI",
+      "regional_cells": 685,
+      "extrapolated_cells": 0,
+      "industries": 38,
+      "geographies": 7,
+      "tiers": {
+        "S": 685
+      },
+      "avg_quality": 76.1,
+      "avg_quality_10": 7.6,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "AR",
+      "regional_cells": 645,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 2,
+      "tiers": {
+        "X": 645
+      },
+      "avg_quality": 47.0,
+      "avg_quality_10": 4.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "AZ",
+      "regional_cells": 642,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 3,
+      "tiers": {
+        "X": 642
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "DK",
+      "regional_cells": 629,
+      "extrapolated_cells": 0,
+      "industries": 39,
+      "geographies": 6,
+      "tiers": {
+        "S": 629
+      },
+      "avg_quality": 76.7,
+      "avg_quality_10": 7.7,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "AE",
+      "regional_cells": 590,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 3,
+      "tiers": {
+        "X": 590
+      },
+      "avg_quality": 47.0,
+      "avg_quality_10": 4.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "ID",
+      "regional_cells": 542,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 4,
+      "tiers": {
+        "X": 542
+      },
+      "avg_quality": 47.0,
+      "avg_quality_10": 4.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "SM",
+      "regional_cells": 526,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 2,
+      "tiers": {
+        "X": 526
+      },
+      "avg_quality": 36.0,
+      "avg_quality_10": 3.6,
+      "year_range": [
+        2023,
+        2023
+      ]
+    },
+    {
+      "iso2": "SK",
+      "regional_cells": 525,
+      "extrapolated_cells": 0,
+      "industries": 38,
+      "geographies": 5,
+      "tiers": {
+        "S": 525
+      },
+      "avg_quality": 77.0,
+      "avg_quality_10": 7.7,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "HR",
+      "regional_cells": 478,
+      "extrapolated_cells": 0,
+      "industries": 39,
+      "geographies": 6,
+      "tiers": {
+        "S": 478
+      },
+      "avg_quality": 77.0,
+      "avg_quality_10": 7.7,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "KR",
+      "regional_cells": 332,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 1,
+      "tiers": {
+        "X": 332
+      },
+      "avg_quality": 47.0,
+      "avg_quality_10": 4.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "SI",
+      "regional_cells": 332,
+      "extrapolated_cells": 0,
+      "industries": 38,
+      "geographies": 3,
+      "tiers": {
+        "S": 332
+      },
+      "avg_quality": 76.7,
+      "avg_quality_10": 7.7,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "IE",
+      "regional_cells": 306,
+      "extrapolated_cells": 0,
+      "industries": 33,
+      "geographies": 4,
+      "tiers": {
+        "S": 306
+      },
+      "avg_quality": 77.0,
+      "avg_quality_10": 7.7,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "LT",
+      "regional_cells": 289,
+      "extrapolated_cells": 0,
+      "industries": 37,
+      "geographies": 3,
+      "tiers": {
+        "S": 289
+      },
+      "avg_quality": 77.1,
+      "avg_quality_10": 7.7,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "TH",
+      "regional_cells": 266,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 3,
+      "tiers": {
+        "X": 266
+      },
+      "avg_quality": 47.0,
+      "avg_quality_10": 4.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "MC",
+      "regional_cells": 264,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 1,
+      "tiers": {
+        "X": 264
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "LI",
+      "regional_cells": 236,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 2,
+      "tiers": {
+        "X": 236
+      },
+      "avg_quality": 36.0,
+      "avg_quality_10": 3.6,
+      "year_range": [
+        2023,
+        2023
+      ]
+    },
+    {
+      "iso2": "EE",
+      "regional_cells": 205,
+      "extrapolated_cells": 0,
+      "industries": 39,
+      "geographies": 2,
+      "tiers": {
+        "S": 205
+      },
+      "avg_quality": 77.1,
+      "avg_quality_10": 7.7,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "LU",
+      "regional_cells": 196,
+      "extrapolated_cells": 0,
+      "industries": 35,
+      "geographies": 2,
+      "tiers": {
+        "S": 196
+      },
+      "avg_quality": 75.1,
+      "avg_quality_10": 7.5,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "LV",
+      "regional_cells": 193,
+      "extrapolated_cells": 0,
+      "industries": 38,
+      "geographies": 2,
+      "tiers": {
+        "S": 193
+      },
+      "avg_quality": 76.9,
+      "avg_quality_10": 7.7,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "CY",
+      "regional_cells": 192,
+      "extrapolated_cells": 0,
+      "industries": 37,
+      "geographies": 2,
+      "tiers": {
+        "S": 192
+      },
+      "avg_quality": 76.8,
+      "avg_quality_10": 7.7,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "MT",
+      "regional_cells": 191,
+      "extrapolated_cells": 0,
+      "industries": 36,
+      "geographies": 2,
+      "tiers": {
+        "S": 191
+      },
+      "avg_quality": 75.9,
+      "avg_quality_10": 7.6,
+      "year_range": [
+        2018,
+        2020
+      ]
+    },
+    {
+      "iso2": "PK",
+      "regional_cells": 106,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 2,
+      "tiers": {
+        "X": 106
+      },
+      "avg_quality": 47.0,
+      "avg_quality_10": 4.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "IS",
+      "regional_cells": 56,
+      "extrapolated_cells": 0,
+      "industries": 25,
+      "geographies": 2,
+      "tiers": {
+        "S": 56
+      },
+      "avg_quality": 76.0,
+      "avg_quality_10": 7.6,
+      "year_range": [
+        2018,
+        2018
+      ]
+    },
+    {
+      "iso2": "UA",
+      "regional_cells": 28,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 2,
+      "tiers": {
+        "X": 28
+      },
+      "avg_quality": 47.0,
+      "avg_quality_10": 4.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "AD",
+      "regional_cells": 18,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 1,
+      "tiers": {
+        "X": 18
+      },
+      "avg_quality": 37.0,
+      "avg_quality_10": 3.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "BD",
+      "regional_cells": 16,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 1,
+      "tiers": {
+        "X": 16
+      },
+      "avg_quality": 47.0,
+      "avg_quality_10": 4.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "VN",
+      "regional_cells": 8,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 2,
+      "tiers": {
+        "X": 8
+      },
+      "avg_quality": 47.0,
+      "avg_quality_10": 4.7,
+      "year_range": [
+        2024,
+        2024
+      ]
+    },
+    {
+      "iso2": "ABW",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "AFE",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "AFG",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "AFW",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "AGO",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "AM",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "ARB",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "ASM",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "ATG",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "BDI",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "BEN",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "BFA",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "BH",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "BHS",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "BLZ",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "BMU",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "BOL",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "BRB",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "BRN",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "BTN",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "BWA",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "BY",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "CAF",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "CEB",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "CHI",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "CIV",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "CMR",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "COD",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "COG",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "COM",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "CPV",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "CRI",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "CSS",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "CUB",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "CUW",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "CYM",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "DJI",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "DMA",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "DOM",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "DZ",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "EAP",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "EAR",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "EAS",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "EC",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "ECA",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "ECS",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "EMU",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "ETH",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "EUU",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "FCS",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "FJI",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "FRO",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "FSM",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "GAB",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "GHA",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "GIN",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "GMB",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "GNB",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "GNQ",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "GRD",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "GRL",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "GTM",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "GUM",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "GUY",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "HK",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "HND",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "HPC",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "HTI",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "IBD",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "IBT",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "IDA",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "IDB",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "IDX",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "IMN",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "IRN",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "IRQ",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "JAM",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "JO",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "KGZ",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "KHM",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "KIR",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "KNA",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "KW",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "LAC",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "LAO",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "LB",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "LBR",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "LBY",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "LCA",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "LCN",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "LDC",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "LK",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "LMY",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "LSO",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "LTE",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "MAC",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "MAF",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "MDA",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "MDG",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "MDV",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "ME",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "MEA",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "MHL",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "MIC",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "MLI",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "MMR",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "MNA",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "MNG",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "MNP",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "MOZ",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "MRT",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "MUS",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "MWI",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "NAC",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "NAM",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "NCL",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "NER",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "NIC",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "NPL",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "NRU",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "OED",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "OM",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "OSS",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "PAN",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "PLW",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "PNG",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "PRE",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "PRI",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "PSE",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "PSS",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "PST",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "PY",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "PYF",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "QA",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "RWA",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "SAS",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "SDN",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "SEN",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "SLB",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "SLE",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "SLV",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "SOM",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "SSA",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "SSF",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "SST",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "STP",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "SUR",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "SWZ",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "SXM",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "SYC",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "SYR",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "TCA",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "TCD",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "TEA",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "TEC",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "TGO",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "TJK",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "TKM",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "TLA",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "TLS",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "TMN",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "TN",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "TON",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "TSA",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "TSS",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "TTO",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "TUV",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "TZA",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "UGA",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "UY",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "UZ",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "VCT",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "VE",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "VIR",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "VUT",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "WLD",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "WSM",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "XKX",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "YEM",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "ZMB",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    },
+    {
+      "iso2": "ZWE",
+      "regional_cells": 0,
+      "extrapolated_cells": 264,
+      "industries": 44,
+      "geographies": 0,
+      "tiers": {},
+      "avg_quality": 0,
+      "avg_quality_10": 0.0,
+      "year_range": [
+        null,
+        null
+      ]
+    }
+  ]
+}
