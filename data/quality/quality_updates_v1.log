@@ -1,0 +1,17 @@
+# Quality update run at 2026-05-18T18:53:27Z
+
+regional_cells.empty: 50 cells flagged to quality_score=10
+regional_cells.outliers: 50 cells flagged to quality_score=20
+regional_cells.zeros: 50 cells flagged to quality_score=20
+FAIL cells_master.outliers: {'country': 'US', 'geo_id': 'US-18', 'size_band': '10-49'}
+cells_master.outliers: 49 cells flagged to quality_score=20
+cells_master.zeros: 2 cells flagged to quality_score=20
+extrapolated_cells.outliers: 50 cells flagged to quality_score=20
+
+# Summary
+  cells_master.outliers: 49
+  cells_master.zeros: 2
+  extrapolated_cells.outliers: 50
+  regional_cells.empty: 50
+  regional_cells.outliers: 50
+  regional_cells.zeros: 50
