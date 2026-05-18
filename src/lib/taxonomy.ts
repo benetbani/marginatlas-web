@@ -73,26 +73,173 @@ export function naics6ToIndustry(naics6: string | null | undefined): string | nu
   return NAICS_3_TO_INDUSTRY[String(naics6).slice(0, 3)] || null;
 }
 
-/** Slug → industry_id (matches name slug or keyword). */
-export function slugToIndustry(slug: string | null | undefined): Industry | null {
-  if (!slug) return null;
-  const s = slug.toLowerCase().replace(/-/g, " ");
-  for (const ind of INDUSTRIES) {
-    const nameSlug = ind.name.toLowerCase();
-    if (nameSlug === s || nameSlug.includes(s)) return ind;
-    if (ind.keywords.some((k) => k === s || k.includes(s) || s.includes(k))) return ind;
-  }
-  return null;
+/**
+ * Strip diacritics so "Cafés" slugifies to "cafes" not "caf-s".
+ * Uses NFD decomposition + remove combining marks.
+ */
+function stripDiacritics(s: string): string {
+  return s.normalize("NFD").replace(/[̀-ͯ]/g, "");
 }
 
 /** Build URL slug from an industry id or name. */
 export function industryToSlug(industryId: string): string {
   const ind = INDUSTRY_BY_ID[industryId];
-  if (!ind) return industryId;
-  return ind.name
+  const name = ind ? ind.name : industryId;
+  return stripDiacritics(name)
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
+}
+
+/**
+ * Canonical-slug → Industry lookup. Built at module load from industryToSlug().
+ * Exact match wins over any fuzzy fallback — fixes the historical bug where
+ * /de/munich/metal-products-mfg resolved to mining_quarrying via keyword
+ * substring match.
+ */
+export const SLUG_TO_INDUSTRY: Record<string, Industry> = (() => {
+  const m: Record<string, Industry> = {};
+  for (const ind of INDUSTRIES) {
+    m[industryToSlug(ind.id)] = ind;
+  }
+  return m;
+})();
+
+/**
+ * Hand-curated aliases for shortened or alternate slugs that appear in URLs,
+ * outbound links, or user typings. Keys are slug-form (lowercase + dashes);
+ * values are canonical industry ids.
+ */
+export const INDUSTRY_SLUG_ALIASES: Record<string, string> = {
+  // Shortened manufacturing slugs
+  "metal-products-mfg": "metal_products_mfg",
+  "food-beverage-mfg": "food_beverage_mfg",
+  "textile-apparel-mfg": "textile_apparel_mfg",
+  "motor-vehicles-mfg": "motor_vehicles_mfg",
+  "chemicals-mfg": "chemicals_mfg",
+  "pharmaceuticals-mfg": "pharmaceuticals_mfg",
+  "plastics-rubber-mfg": "plastics_rubber_mfg",
+  "wood-paper-mfg": "wood_paper_mfg",
+  // Preserve old broken-accent slug for back-compat
+  "caf-s-coffee-shops": "cafes_coffee",
+  "cafes-coffee": "cafes_coffee",
+  "cafe": "cafes_coffee",
+  "cafes": "cafes_coffee",
+  // Common singulars and short forms
+  "restaurant": "restaurants",
+  "lawyer": "legal_services",
+  "lawyers": "legal_services",
+  "legal": "legal_services",
+  "tax-accountant": "accounting_tax",
+  "tax-accountants": "accounting_tax",
+  "accountant": "accounting_tax",
+  "accountants": "accounting_tax",
+  "accounting": "accounting_tax",
+  "doctor": "doctors_clinics",
+  "doctors": "doctors_clinics",
+  "clinic": "doctors_clinics",
+  "clinics": "doctors_clinics",
+  "dentist": "dental_practices",
+  "dentists": "dental_practices",
+  "dental": "dental_practices",
+  "hairdresser": "hairdressers_beauty",
+  "hairdressers": "hairdressers_beauty",
+  "hair-salon": "hair_salons",
+  "barber": "barbershops",
+  "barbers": "barbershops",
+  "salon": "hair_salons",
+  "spa": "day_spas",
+  "spas": "day_spas",
+  "vet": "veterinary_pet_care",
+  "veterinarian": "veterinary_pet_care",
+  "plumber": "residential_construction",
+  "plumbers": "residential_construction",
+  "electrician": "residential_construction",
+  "electricians": "residential_construction",
+  "trucking": "trucking_freight",
+  "freight": "trucking_freight",
+  "logistics": "trucking_freight",
+  "ecommerce": "ecommerce_mail_order",
+  "e-commerce": "ecommerce_mail_order",
+  "online-store": "ecommerce_mail_order",
+  "grocery": "grocery_stores",
+  "supermarket": "grocery_stores",
+  "supermarkets": "grocery_stores",
+  "bakery": "food_beverage_mfg",
+  "bakeries": "food_beverage_mfg",
+  "real-estate": "real_estate_agencies",
+  "realtor": "real_estate_agencies",
+  "realtors": "real_estate_agencies",
+  "insurance-agent": "insurance",
+  "fitness": "sports_fitness",
+  "gym": "sports_fitness",
+  "gyms": "sports_fitness",
+  "yoga": "sports_fitness",
+  "bar": "bars_nightclubs",
+  "bars": "bars_nightclubs",
+  "pub": "bars_nightclubs",
+  "nightclub": "bars_nightclubs",
+};
+
+/**
+ * Tighter fuzzy fallback. Splits both candidate and target into tokens and
+ * requires that EVERY query token appears as a complete word in the name
+ * or keyword set. Avoids the old `s.includes(k)` substring trap where
+ * "metal products mfg" matched mining via the bare "metal" keyword.
+ */
+function fuzzyIndustryFallback(slugWords: string): Industry | null {
+  const queryTokens = slugWords.split(/\s+/).filter((t) => t.length >= 3);
+  if (queryTokens.length === 0) return null;
+
+  let bestInd: Industry | null = null;
+  let bestScore = 0;
+
+  for (const ind of INDUSTRIES) {
+    const nameTokens = new Set(
+      stripDiacritics(ind.name)
+        .toLowerCase()
+        .split(/[^a-z0-9]+/)
+        .filter(Boolean)
+    );
+    const kwTokens = new Set<string>();
+    for (const k of ind.keywords) {
+      for (const t of stripDiacritics(k).toLowerCase().split(/[^a-z0-9]+/)) {
+        if (t) kwTokens.add(t);
+      }
+    }
+    let score = 0;
+    for (const q of queryTokens) {
+      if (nameTokens.has(q)) score += 3;
+      else if (kwTokens.has(q)) score += 1;
+    }
+    // Require ALL query tokens to land somewhere; otherwise drop.
+    if (score < queryTokens.length) continue;
+    if (score > bestScore) {
+      bestScore = score;
+      bestInd = ind;
+    }
+  }
+  return bestInd;
+}
+
+/** Slug → industry. Order: canonical exact → alias map → tight fuzzy fallback. */
+export function slugToIndustry(slug: string | null | undefined): Industry | null {
+  if (!slug) return null;
+  const norm = stripDiacritics(slug)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  if (!norm) return null;
+
+  // 1. Canonical slug exact match
+  if (SLUG_TO_INDUSTRY[norm]) return SLUG_TO_INDUSTRY[norm];
+
+  // 2. Alias map exact match
+  const aliasId = INDUSTRY_SLUG_ALIASES[norm];
+  if (aliasId && INDUSTRY_BY_ID[aliasId]) return INDUSTRY_BY_ID[aliasId];
+
+  // 3. Tight fuzzy fallback (word-boundary token match, every token required)
+  return fuzzyIndustryFallback(norm.replace(/-/g, " "));
 }
 
 /**
