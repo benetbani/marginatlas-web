@@ -20,6 +20,7 @@ import { pickCountryHeroImage } from "@/lib/images";
 import { CountryCityShortcuts } from "@/components/CountryCityShortcuts";
 import { CountryStatsStrip } from "@/components/CountryStatsStrip";
 import { CountryQualitySummary } from "@/components/CountryQualitySummary";
+import { hasRegionalCoverage } from "@/lib/coverage/regional";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -124,6 +125,13 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
     glyph: "🏬",
   };
   const qual = QUALITY_LABEL[meta.quality] || QUALITY_LABEL.C;
+  // Plan v13 Wave 1 — countries with only city-level data (e.g. Argentina)
+  // must not advertise a sub-regional view. The flag is plumbed here so
+  // any future Regions tab/section can be wrapped with `{showRegions ? ... : null}`.
+  // Today the country page surfaces only cities + cell-page entrypoints,
+  // neither of which depend on region-level coverage.
+  const showRegions = hasRegionalCoverage(iso2);
+  void showRegions;
 
   return (
     <div>
