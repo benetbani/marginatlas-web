@@ -121,8 +121,8 @@ async function executeTool(input: ToolInput) {
     top_10pct_revenue_usd: cell.rev_p90,
     n_firms: cell.n_enterprises,
     n_employees: cell.n_employees,
-    employees_per_firm:
-      cell.n_employees && cell.n_enterprises ? cell.n_employees / cell.n_enterprises : null,
+    // Plan v13 Wave 4a — avg-employees-per-firm omitted (n_enterprises
+    // denominator is unreliable, so the derived ratio looks dubious).
     wage_per_employee_usd: cell.payroll_per_employee,
     quality_score: cell.quality_score,
   };

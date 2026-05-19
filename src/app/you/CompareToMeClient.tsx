@@ -29,7 +29,6 @@ type CompactCell = {
   n_employees: number | null;
   payroll_per_employee: number | null;
   quality_score: number | null;
-  employees_per_firm: number | null;
 };
 
 function fmtMoney(v: number | null | undefined): string {
@@ -44,7 +43,7 @@ export function CompareToMeClient() {
   const [region, setRegion] = useState("california");
   const [industry, setIndustry] = useState("restaurants");
   const [myRevenue, setMyRevenue] = useState<string>("");
-  const [myEmployees, setMyEmployees] = useState<string>("");
+  // Plan v13 Wave 4a — headcount input removed (avg-staff comparison gone).
 
   const [cell, setCell] = useState<CompactCell | null>(null);
   const [loading, setLoading] = useState(false);
@@ -72,7 +71,6 @@ export function CompareToMeClient() {
   }, [region, industry]);
 
   const myRevenueNum = parseFloat(myRevenue.replace(/[^0-9.]/g, "")) || 0;
-  const myEmployeesNum = parseFloat(myEmployees.replace(/[^0-9.]/g, "")) || 0;
 
   // Compute percentile rank of user revenue within p10/p25/p50/p75/p90
   const percentileRank = useMemo(() => {
@@ -105,9 +103,8 @@ export function CompareToMeClient() {
     ? (myRevenueNum - cell.revenue_per_firm) / cell.revenue_per_firm
     : null;
 
-  const empVsTypical = cell?.employees_per_firm && myEmployeesNum
-    ? (myEmployeesNum - cell.employees_per_firm) / cell.employees_per_firm
-    : null;
+  // Plan v13 Wave 4a — headcount-vs-typical comparison removed because the
+  // avg-employees-per-firm denominator (n_enterprises) is unreliable.
 
   return (
     <div className="space-y-6">
@@ -151,19 +148,6 @@ export function CompareToMeClient() {
               placeholder="e.g. 750000"
               value={myRevenue}
               onChange={(e) => setMyRevenue(e.target.value)}
-              className="w-full bg-white border border-ink-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-atlas-500/30"
-            />
-          </div>
-          <div>
-            <label className="text-xs text-ink-700/70 mb-1 block">
-              Your headcount
-            </label>
-            <input
-              type="text"
-              inputMode="decimal"
-              placeholder="e.g. 8"
-              value={myEmployees}
-              onChange={(e) => setMyEmployees(e.target.value)}
               className="w-full bg-white border border-ink-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-atlas-500/30"
             />
           </div>
@@ -227,7 +211,7 @@ export function CompareToMeClient() {
               )}
 
               {revVsTypical != null && (
-                <div className="grid grid-cols-2 gap-3 mt-2">
+                <div className="mt-2">
                   <div className="border border-ink-200 rounded-lg p-3">
                     <div className="text-[10px] uppercase tracking-wide text-ink-700/60">
                       Revenue vs typical
@@ -241,24 +225,6 @@ export function CompareToMeClient() {
                       {(revVsTypical * 100).toFixed(0)}%
                     </div>
                   </div>
-                  {empVsTypical != null && cell.employees_per_firm && (
-                    <div className="border border-ink-200 rounded-lg p-3">
-                      <div className="text-[10px] uppercase tracking-wide text-ink-700/60">
-                        Headcount vs typical
-                      </div>
-                      <div
-                        className={`text-2xl font-semibold ${
-                          empVsTypical >= 0 ? "text-emerald-700" : "text-rose-700"
-                        }`}
-                      >
-                        {empVsTypical >= 0 ? "+" : ""}
-                        {(empVsTypical * 100).toFixed(0)}%
-                      </div>
-                      <div className="text-[10px] text-ink-700/60 mt-1">
-                        Typical: {cell.employees_per_firm.toFixed(1)}
-                      </div>
-                    </div>
-                  )}
                 </div>
               )}
             </>

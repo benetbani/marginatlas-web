@@ -23,7 +23,6 @@ type CompactCell = {
   n_employees: number | null;
   payroll_per_employee: number | null;
   quality_score: number | null;
-  employees_per_firm: number | null;
   cellUrl: string | null;
 };
 

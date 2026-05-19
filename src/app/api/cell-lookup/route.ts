@@ -28,8 +28,8 @@ type CompactCell = {
   n_employees: number | null;
   payroll_per_employee: number | null;
   quality_score: number | null;
-  // employees_per_firm derived
-  employees_per_firm: number | null;
+  // Plan v13 Wave 4a — employees_per_firm derived field removed
+  // (n_enterprises denominator is unreliable).
   cellUrl: string | null;
 };
 
@@ -55,9 +55,6 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ cell: null, reason: "no_match" });
   }
 
-  const empPerFirm =
-    cell.n_employees && cell.n_enterprises ? cell.n_employees / cell.n_enterprises : null;
-
   const compact: CompactCell = {
     country: cell.country,
     region: cell.geo_name,
@@ -73,7 +70,6 @@ export async function GET(req: NextRequest) {
     n_employees: cell.n_employees ?? null,
     payroll_per_employee: cell.payroll_per_employee ?? null,
     quality_score: cell.quality_score ?? null,
-    employees_per_firm: empPerFirm,
     cellUrl: cell.geo_name
       ? `/${cell.country.toLowerCase()}/${slugify(cell.geo_name)}/${industrySlug}`
       : null,

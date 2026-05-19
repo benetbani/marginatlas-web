@@ -53,13 +53,8 @@ export function CellDataset({
           : undefined,
     });
   }
-  if (nEmployees != null && nEnterprises) {
-    variableMeasured.push({
-      "@type": "PropertyValue",
-      name: "employees per firm",
-      value: nEmployees / nEnterprises,
-    });
-  }
+  // Plan v13 Wave 4a — avg-employees-per-firm display removed (n_enterprises
+  // denominator is unreliable, so the derived ratio looks dubious).
   if (wagePerEmployee != null) {
     variableMeasured.push({
       "@type": "PropertyValue",
@@ -106,7 +101,6 @@ export function CellDataset({
     spatialCoverage: { "@type": "Place", name: geoName },
     variableMeasured: variableMeasured.length > 0 ? variableMeasured : [
       "typical revenue per firm",
-      "employees per firm",
       "wages per employee",
     ],
     includedInDataCatalog: {

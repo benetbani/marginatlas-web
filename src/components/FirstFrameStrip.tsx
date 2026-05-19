@@ -52,8 +52,8 @@ export async function FirstFrameStrip() {
   if (!cell || !pick) return null;
 
   const flag = flagFromIso2(pick.country);
-  const empPerFirm =
-    cell.n_employees && cell.n_enterprises ? cell.n_employees / cell.n_enterprises : null;
+  // Plan v13 Wave 4a — avg-employees-per-firm display removed (n_enterprises
+  // denominator is unreliable, so the derived ratio looks dubious).
   const cellUrl = `/${pick.country}/${pick.geo}/${pick.industry}`;
 
   return (
@@ -77,14 +77,9 @@ export async function FirstFrameStrip() {
             See full cell →
           </span>
         </div>
-        <div className="mt-3 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
+        <div className="mt-3 grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
           <Cell label="Typical revenue / firm" value={fmtMoney(cell.revenue_per_firm)} />
           <Cell label="Firms" value={fmtCount(cell.n_enterprises)} />
-          <Cell
-            label="Employees / firm"
-            value={empPerFirm != null ? empPerFirm.toFixed(1) : "—"}
-            mutedOnMobile
-          />
           <Cell
             label="Wage / employee"
             value={fmtMoney(cell.payroll_per_employee)}
