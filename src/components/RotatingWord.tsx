@@ -26,6 +26,16 @@ export function RotatingWord({
   const [phase, setPhase] = useState<"in" | "out">("in");
 
   useEffect(() => {
+    // Plan v14 6c: respect prefers-reduced-motion. Users with motion
+    // reduction enabled get a single static pick and no rotation interval.
+    const reduce =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) {
+      setIndex(Math.floor(Math.random() * words.length));
+      return;
+    }
+
     let mounted = true;
     let intervalId: ReturnType<typeof setInterval> | undefined;
 
