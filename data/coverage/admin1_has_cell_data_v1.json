@@ -1,0 +1,587 @@
+{
+  "AD": {
+    "has_any_regional_data": true
+  },
+  "AE": {
+    "has_any_regional_data": true
+  },
+  "AF": {
+    "has_any_regional_data": false
+  },
+  "AG": {
+    "has_any_regional_data": false
+  },
+  "AL": {
+    "has_any_regional_data": true
+  },
+  "AM": {
+    "has_any_regional_data": true
+  },
+  "AO": {
+    "has_any_regional_data": true
+  },
+  "AR": {
+    "has_any_regional_data": true
+  },
+  "AT": {
+    "has_any_regional_data": true
+  },
+  "AU": {
+    "has_any_regional_data": true
+  },
+  "AZ": {
+    "has_any_regional_data": true
+  },
+  "BA": {
+    "has_any_regional_data": false
+  },
+  "BB": {
+    "has_any_regional_data": true
+  },
+  "BD": {
+    "has_any_regional_data": true
+  },
+  "BE": {
+    "has_any_regional_data": true
+  },
+  "BF": {
+    "has_any_regional_data": true
+  },
+  "BG": {
+    "has_any_regional_data": true
+  },
+  "BH": {
+    "has_any_regional_data": true
+  },
+  "BI": {
+    "has_any_regional_data": false
+  },
+  "BJ": {
+    "has_any_regional_data": true
+  },
+  "BN": {
+    "has_any_regional_data": false
+  },
+  "BO": {
+    "has_any_regional_data": true
+  },
+  "BR": {
+    "has_any_regional_data": true
+  },
+  "BS": {
+    "has_any_regional_data": true
+  },
+  "BT": {
+    "has_any_regional_data": false
+  },
+  "BW": {
+    "has_any_regional_data": false
+  },
+  "BY": {
+    "has_any_regional_data": true
+  },
+  "BZ": {
+    "has_any_regional_data": false
+  },
+  "CA": {
+    "has_any_regional_data": true
+  },
+  "CD": {
+    "has_any_regional_data": false
+  },
+  "CF": {
+    "has_any_regional_data": false
+  },
+  "CG": {
+    "has_any_regional_data": false
+  },
+  "CH": {
+    "has_any_regional_data": true
+  },
+  "CI": {
+    "has_any_regional_data": true
+  },
+  "CL": {
+    "has_any_regional_data": true
+  },
+  "CM": {
+    "has_any_regional_data": true
+  },
+  "CN": {
+    "has_any_regional_data": true
+  },
+  "CO": {
+    "has_any_regional_data": true
+  },
+  "CR": {
+    "has_any_regional_data": true
+  },
+  "CU": {
+    "has_any_regional_data": true
+  },
+  "CV": {
+    "has_any_regional_data": false
+  },
+  "CY": {
+    "has_any_regional_data": true
+  },
+  "CZ": {
+    "has_any_regional_data": true
+  },
+  "DE": {
+    "has_any_regional_data": true
+  },
+  "DJ": {
+    "has_any_regional_data": false
+  },
+  "DK": {
+    "has_any_regional_data": true
+  },
+  "DM": {
+    "has_any_regional_data": false
+  },
+  "DO": {
+    "has_any_regional_data": true
+  },
+  "DZ": {
+    "has_any_regional_data": true
+  },
+  "EC": {
+    "has_any_regional_data": true
+  },
+  "EE": {
+    "has_any_regional_data": true
+  },
+  "EG": {
+    "has_any_regional_data": true
+  },
+  "ES": {
+    "has_any_regional_data": true
+  },
+  "ET": {
+    "has_any_regional_data": true
+  },
+  "FI": {
+    "has_any_regional_data": true
+  },
+  "FJ": {
+    "has_any_regional_data": true
+  },
+  "FM": {
+    "has_any_regional_data": false
+  },
+  "FR": {
+    "has_any_regional_data": true
+  },
+  "GA": {
+    "has_any_regional_data": false
+  },
+  "GB": {
+    "has_any_regional_data": true
+  },
+  "GD": {
+    "has_any_regional_data": false
+  },
+  "GE": {
+    "has_any_regional_data": true
+  },
+  "GH": {
+    "has_any_regional_data": true
+  },
+  "GM": {
+    "has_any_regional_data": false
+  },
+  "GN": {
+    "has_any_regional_data": false
+  },
+  "GQ": {
+    "has_any_regional_data": false
+  },
+  "GR": {
+    "has_any_regional_data": false
+  },
+  "GT": {
+    "has_any_regional_data": true
+  },
+  "GW": {
+    "has_any_regional_data": false
+  },
+  "GY": {
+    "has_any_regional_data": false
+  },
+  "HK": {
+    "has_any_regional_data": true
+  },
+  "HN": {
+    "has_any_regional_data": true
+  },
+  "HR": {
+    "has_any_regional_data": true
+  },
+  "HT": {
+    "has_any_regional_data": false
+  },
+  "HU": {
+    "has_any_regional_data": true
+  },
+  "ID": {
+    "has_any_regional_data": true
+  },
+  "IE": {
+    "has_any_regional_data": true
+  },
+  "IL": {
+    "has_any_regional_data": true
+  },
+  "IN": {
+    "has_any_regional_data": true
+  },
+  "IQ": {
+    "has_any_regional_data": false
+  },
+  "IR": {
+    "has_any_regional_data": true
+  },
+  "IS": {
+    "has_any_regional_data": true
+  },
+  "IT": {
+    "has_any_regional_data": true
+  },
+  "JM": {
+    "has_any_regional_data": true
+  },
+  "JO": {
+    "has_any_regional_data": true
+  },
+  "JP": {
+    "has_any_regional_data": true
+  },
+  "KE": {
+    "has_any_regional_data": true
+  },
+  "KG": {
+    "has_any_regional_data": true
+  },
+  "KH": {
+    "has_any_regional_data": false
+  },
+  "KI": {
+    "has_any_regional_data": false
+  },
+  "KM": {
+    "has_any_regional_data": false
+  },
+  "KN": {
+    "has_any_regional_data": false
+  },
+  "KR": {
+    "has_any_regional_data": true
+  },
+  "KW": {
+    "has_any_regional_data": true
+  },
+  "KZ": {
+    "has_any_regional_data": true
+  },
+  "LA": {
+    "has_any_regional_data": false
+  },
+  "LB": {
+    "has_any_regional_data": true
+  },
+  "LC": {
+    "has_any_regional_data": false
+  },
+  "LI": {
+    "has_any_regional_data": true
+  },
+  "LK": {
+    "has_any_regional_data": true
+  },
+  "LR": {
+    "has_any_regional_data": false
+  },
+  "LS": {
+    "has_any_regional_data": false
+  },
+  "LT": {
+    "has_any_regional_data": true
+  },
+  "LU": {
+    "has_any_regional_data": true
+  },
+  "LV": {
+    "has_any_regional_data": true
+  },
+  "LY": {
+    "has_any_regional_data": false
+  },
+  "MA": {
+    "has_any_regional_data": true
+  },
+  "MC": {
+    "has_any_regional_data": true
+  },
+  "MD": {
+    "has_any_regional_data": true
+  },
+  "ME": {
+    "has_any_regional_data": false
+  },
+  "MG": {
+    "has_any_regional_data": true
+  },
+  "MH": {
+    "has_any_regional_data": false
+  },
+  "MK": {
+    "has_any_regional_data": false
+  },
+  "ML": {
+    "has_any_regional_data": true
+  },
+  "MM": {
+    "has_any_regional_data": false
+  },
+  "MN": {
+    "has_any_regional_data": false
+  },
+  "MO": {
+    "has_any_regional_data": false
+  },
+  "MR": {
+    "has_any_regional_data": false
+  },
+  "MT": {
+    "has_any_regional_data": true
+  },
+  "MU": {
+    "has_any_regional_data": false
+  },
+  "MV": {
+    "has_any_regional_data": false
+  },
+  "MW": {
+    "has_any_regional_data": false
+  },
+  "MX": {
+    "has_any_regional_data": true
+  },
+  "MY": {
+    "has_any_regional_data": true
+  },
+  "MZ": {
+    "has_any_regional_data": true
+  },
+  "NA": {
+    "has_any_regional_data": false
+  },
+  "NE": {
+    "has_any_regional_data": true
+  },
+  "NG": {
+    "has_any_regional_data": true
+  },
+  "NI": {
+    "has_any_regional_data": true
+  },
+  "NL": {
+    "has_any_regional_data": true
+  },
+  "NO": {
+    "has_any_regional_data": true
+  },
+  "NP": {
+    "has_any_regional_data": false
+  },
+  "NR": {
+    "has_any_regional_data": false
+  },
+  "NZ": {
+    "has_any_regional_data": true
+  },
+  "OM": {
+    "has_any_regional_data": true
+  },
+  "PA": {
+    "has_any_regional_data": true
+  },
+  "PE": {
+    "has_any_regional_data": true
+  },
+  "PG": {
+    "has_any_regional_data": true
+  },
+  "PH": {
+    "has_any_regional_data": true
+  },
+  "PK": {
+    "has_any_regional_data": true
+  },
+  "PL": {
+    "has_any_regional_data": true
+  },
+  "PS": {
+    "has_any_regional_data": false
+  },
+  "PT": {
+    "has_any_regional_data": true
+  },
+  "PW": {
+    "has_any_regional_data": false
+  },
+  "PY": {
+    "has_any_regional_data": true
+  },
+  "QA": {
+    "has_any_regional_data": true
+  },
+  "RO": {
+    "has_any_regional_data": true
+  },
+  "RS": {
+    "has_any_regional_data": false
+  },
+  "RU": {
+    "has_any_regional_data": true
+  },
+  "RW": {
+    "has_any_regional_data": true
+  },
+  "SA": {
+    "has_any_regional_data": true
+  },
+  "SB": {
+    "has_any_regional_data": false
+  },
+  "SC": {
+    "has_any_regional_data": false
+  },
+  "SD": {
+    "has_any_regional_data": false
+  },
+  "SE": {
+    "has_any_regional_data": true
+  },
+  "SG": {
+    "has_any_regional_data": false
+  },
+  "SI": {
+    "has_any_regional_data": true
+  },
+  "SK": {
+    "has_any_regional_data": true
+  },
+  "SL": {
+    "has_any_regional_data": false
+  },
+  "SM": {
+    "has_any_regional_data": true
+  },
+  "SN": {
+    "has_any_regional_data": true
+  },
+  "SO": {
+    "has_any_regional_data": false
+  },
+  "SR": {
+    "has_any_regional_data": false
+  },
+  "ST": {
+    "has_any_regional_data": false
+  },
+  "SV": {
+    "has_any_regional_data": true
+  },
+  "SY": {
+    "has_any_regional_data": false
+  },
+  "SZ": {
+    "has_any_regional_data": false
+  },
+  "TD": {
+    "has_any_regional_data": false
+  },
+  "TG": {
+    "has_any_regional_data": false
+  },
+  "TH": {
+    "has_any_regional_data": true
+  },
+  "TJ": {
+    "has_any_regional_data": true
+  },
+  "TL": {
+    "has_any_regional_data": false
+  },
+  "TM": {
+    "has_any_regional_data": true
+  },
+  "TN": {
+    "has_any_regional_data": true
+  },
+  "TO": {
+    "has_any_regional_data": false
+  },
+  "TR": {
+    "has_any_regional_data": true
+  },
+  "TT": {
+    "has_any_regional_data": true
+  },
+  "TV": {
+    "has_any_regional_data": false
+  },
+  "TW": {
+    "has_any_regional_data": false
+  },
+  "TZ": {
+    "has_any_regional_data": true
+  },
+  "UA": {
+    "has_any_regional_data": true
+  },
+  "UG": {
+    "has_any_regional_data": true
+  },
+  "US": {
+    "has_any_regional_data": true
+  },
+  "UY": {
+    "has_any_regional_data": true
+  },
+  "UZ": {
+    "has_any_regional_data": true
+  },
+  "VC": {
+    "has_any_regional_data": false
+  },
+  "VE": {
+    "has_any_regional_data": true
+  },
+  "VN": {
+    "has_any_regional_data": true
+  },
+  "VU": {
+    "has_any_regional_data": false
+  },
+  "WS": {
+    "has_any_regional_data": true
+  },
+  "XK": {
+    "has_any_regional_data": false
+  },
+  "YE": {
+    "has_any_regional_data": false
+  },
+  "ZA": {
+    "has_any_regional_data": true
+  },
+  "ZM": {
+    "has_any_regional_data": true
+  },
+  "ZW": {
+    "has_any_regional_data": true
+  }
+}
