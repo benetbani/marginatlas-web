@@ -405,9 +405,9 @@ export default async function CellPage({
       </section>
 
       {/* Headline grid.
-         Plan v13 Wave 4d — mapped to canonical "revenue-tiles" tone (cream-50)
-         so the headline stats band carries a visible accent break from the hero. */}
-      <section id="stats" className={`grid grid-cols-1 md:grid-cols-3 gap-4 py-6 ${getToneClass("revenue-tiles")}`}>
+         Plan v14 A.1 (T-A1.4): legacy id="stats" renamed to canonical
+         "revenue-tiles" — direct SECTION_TONES lookup, no mapping layer. */}
+      <section id="revenue-tiles" className={`grid grid-cols-1 md:grid-cols-3 gap-4 py-6 ${getToneClass("revenue-tiles")}`}>
         <Stat
           label="People working"
           value={cell.n_employees?.toLocaleString() || "—"}
@@ -428,9 +428,10 @@ export default async function CellPage({
       </section>
 
       {/* Atlas Score + Typical-firm biography card.
-         Plan v13 Wave 4d — mapped to canonical "tax-and-cost-panel" tone
-         since it hosts PostTaxToggle + NetProfitWaterfall + MarginWaterfall. */}
-      <section id="typical-firm" className={`py-6 grid md:grid-cols-[1fr_2fr] gap-4 ${getToneClass("tax-and-cost-panel")}`}>
+         Plan v14 A.1 (T-A1.4): legacy id="typical-firm" renamed to canonical
+         "tax-and-cost-panel" — section hosts PostTaxToggle +
+         NetProfitWaterfall + MarginWaterfall. */}
+      <section id="tax-and-cost-panel" className={`py-6 grid md:grid-cols-[1fr_2fr] gap-4 ${getToneClass("tax-and-cost-panel")}`}>
         <AtlasScore cell={cell} />
         <div>
           <TypicalFirmCard cell={cell} currencySymbol="$" />
@@ -472,9 +473,10 @@ export default async function CellPage({
       {/* Plan v13 Wave 2 — Bottom 20% / Median / Top 10% revenue tiles +
          smooth log-normal distribution curve. Replaces the prior
          histogram + 5-bar tier view.
-         Plan v13 Wave 4d — mapped to canonical "margin-waterfall" tone (cream-100)
-         to extend the visible alternation across this composite section. */}
-      <section id="distribution" className={`py-6 ${getToneClass("margin-waterfall")}`}>
+         Plan v14 A.1 (T-A1.4): legacy id="distribution" renamed to canonical
+         "revenue-distribution". Tone stays mapped to "margin-waterfall"
+         (cream-100) to extend the visible alternation across this band. */}
+      <section id="revenue-distribution" className={`py-6 ${getToneClass("margin-waterfall")}`}>
         <RevenueTiles
           p10={cell.rev_p10 ?? null}
           p20={null}
@@ -517,9 +519,10 @@ export default async function CellPage({
       )}
 
       {/* Comparable cells.
-         Plan v13 Wave 4d — mapped to canonical "related-cells" tone. */}
+         Plan v14 A.1 (T-A1.4): legacy id="comparable" renamed to canonical
+         "related-cells". */}
       {comparables.length > 0 && (
-        <section id="comparable" className={`py-8 ${getToneClass("related-cells")}`}>
+        <section id="related-cells" className={`py-8 ${getToneClass("related-cells")}`}>
           <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
             Other industries in {cell.geo_name}
           </h2>

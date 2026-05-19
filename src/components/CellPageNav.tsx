@@ -13,14 +13,23 @@ import { useEffect, useState } from "react";
 
 type Section = { id: string; label: string };
 
+/**
+ * Plan v14 A.1 (T-A1.4) — section IDs match canonical CELL_PAGE_SECTIONS
+ * after the legacy rename. The hero `<header>` still carries id="headline"
+ * so we keep that as the first anchor; everything else uses the canonical
+ * id that the page now renders.
+ *
+ * Removed: `timeseries` (Wave 1 ripped the time-series chart) and `quality`
+ * (Wave 1 follow-up removed the engineering provenance panel). Both
+ * sections no longer exist on the page, so navigating to them silently
+ * scrolled to the top — worse than not listing them.
+ */
 const SECTIONS: Section[] = [
   { id: "headline", label: "Headline" },
-  { id: "typical-firm", label: "Typical firm" },
-  { id: "distribution", label: "Distribution" },
-  { id: "timeseries", label: "Over time" },
-  { id: "quality", label: "Quality" },
+  { id: "tax-and-cost-panel", label: "Typical firm" },
+  { id: "revenue-distribution", label: "Distribution" },
   { id: "across-states", label: "Across states" },
-  { id: "comparable", label: "Other industries" },
+  { id: "related-cells", label: "Other industries" },
 ];
 
 export function CellPageNav() {
