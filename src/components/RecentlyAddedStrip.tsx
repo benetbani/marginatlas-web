@@ -6,24 +6,25 @@
  * on the COUNTRIES table.
  */
 
+import { CountryFlag } from "@/components/CountryFlag";
+
 type RecentEntry = {
   iso2: string;
   name: string;
-  flag: string;
   hint: string;
 };
 
 const RECENTLY_ADDED: RecentEntry[] = [
-  { iso2: "al", name: "Albania", flag: "🇦🇱", hint: "6 cities incl. Tirana" },
-  { iso2: "ru", name: "Russia", flag: "🇷🇺", hint: "Moscow, St Petersburg + 8 more" },
-  { iso2: "kz", name: "Kazakhstan", flag: "🇰🇿", hint: "Almaty + Astana" },
-  { iso2: "az", name: "Azerbaijan", flag: "🇦🇿", hint: "Baku" },
-  { iso2: "ge", name: "Georgia", flag: "🇬🇪", hint: "Tbilisi" },
-  { iso2: "ch", name: "Switzerland", flag: "🇨🇭", hint: "Zurich + Geneva" },
-  { iso2: "at", name: "Austria", flag: "🇦🇹", hint: "Vienna" },
-  { iso2: "il", name: "Israel", flag: "🇮🇱", hint: "Tel Aviv" },
-  { iso2: "ad", name: "Andorra", flag: "🇦🇩", hint: "Microstate" },
-  { iso2: "mc", name: "Monaco", flag: "🇲🇨", hint: "Microstate" },
+  { iso2: "al", name: "Albania", hint: "6 cities incl. Tirana" },
+  { iso2: "ru", name: "Russia", hint: "Moscow, St Petersburg + 8 more" },
+  { iso2: "kz", name: "Kazakhstan", hint: "Almaty + Astana" },
+  { iso2: "az", name: "Azerbaijan", hint: "Baku" },
+  { iso2: "ge", name: "Georgia", hint: "Tbilisi" },
+  { iso2: "ch", name: "Switzerland", hint: "Zurich + Geneva" },
+  { iso2: "at", name: "Austria", hint: "Vienna" },
+  { iso2: "il", name: "Israel", hint: "Tel Aviv" },
+  { iso2: "ad", name: "Andorra", hint: "Microstate" },
+  { iso2: "mc", name: "Monaco", hint: "Microstate" },
 ];
 
 export function RecentlyAddedStrip() {
@@ -53,7 +54,7 @@ export function RecentlyAddedStrip() {
             className="snap-start shrink-0 min-w-[180px] px-4 py-3 rounded-xl bg-cream-100 border border-parchment hover:border-atlas-500 hover:bg-white transition"
           >
             <div className="flex items-center gap-2">
-              <span className="text-2xl leading-none">{c.flag}</span>
+              <CountryFlag iso2={c.iso2} label={c.name} className="w-7" />
               <span className="text-sm font-semibold text-ink-900">{c.name}</span>
             </div>
             <div className="mt-1 text-xs text-ink-700/70">{c.hint}</div>

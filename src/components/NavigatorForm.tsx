@@ -12,7 +12,10 @@ import {
   visibleIndustries,
   type Gate,
 } from "@/lib/taxonomy";
-import { flagFromIso2 } from "@/lib/countries";
+// Plan v13 Wave 4a — emoji flagFromIso2 removed from dropdown labels
+// (ComboField input is a plain text field and can't host the SVG CountryFlag
+// image without an invasive rewrite). Flags still render on the destination
+// pages via <CountryFlag>.
 
 /** Client-side gate read — matches lib/audience.ts on the server. */
 function readClientGate(): Gate {
@@ -99,12 +102,12 @@ export function NavigatorForm() {
     setGate(readClientGate());
   }, []);
 
-  // Country options — alphabetical, flag prefixed
+  // Country options — alphabetical. (Flag emoji prefix removed in Wave 4a.)
   const countryOptions: ComboOption[] = useMemo(
     () =>
       COUNTRIES.map((c) => ({
         value: c.code,
-        label: `${flagFromIso2(c.code)}  ${c.name}`,
+        label: c.name,
         keywords: [c.code.toLowerCase(), c.name.toLowerCase()],
       })),
     []

@@ -6,11 +6,15 @@
  * items collapse to "···" so the trail never wraps.
  */
 import Link from "next/link";
+import { CountryFlag } from "@/components/CountryFlag";
 
 export type Crumb = {
   label: string;
   href?: string;
+  /** Emoji or character glyph rendered before the label. */
   glyph?: string;
+  /** ISO-2 country code — when set, renders the SVG <CountryFlag> instead of an emoji. */
+  iso2?: string;
 };
 
 type Props = {
@@ -53,7 +57,9 @@ export function Breadcrumb({ items, maxVisible = 4 }: Props) {
                 href={crumb.href}
                 className="hover:text-atlas-700 transition-colors inline-flex items-center gap-1"
               >
-                {crumb.glyph ? (
+                {crumb.iso2 ? (
+                  <CountryFlag iso2={crumb.iso2} label={crumb.label} className="w-4" />
+                ) : crumb.glyph ? (
                   <span className="text-base leading-none flag" aria-hidden>
                     {crumb.glyph}
                   </span>
@@ -62,7 +68,9 @@ export function Breadcrumb({ items, maxVisible = 4 }: Props) {
               </Link>
             ) : (
               <span className="text-ink-900 font-medium inline-flex items-center gap-1">
-                {crumb.glyph ? (
+                {crumb.iso2 ? (
+                  <CountryFlag iso2={crumb.iso2} label={crumb.label} className="w-4" />
+                ) : crumb.glyph ? (
                   <span className="text-base leading-none flag" aria-hidden>
                     {crumb.glyph}
                   </span>

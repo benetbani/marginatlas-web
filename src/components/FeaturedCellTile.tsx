@@ -9,7 +9,7 @@
  */
 
 import { getCellBySlug } from "@/lib/cells";
-import { flagFromIso2 } from "@/lib/countries";
+import { CountryFlag } from "@/components/CountryFlag";
 
 function fmtMoney(v: number | null | undefined): string {
   if (v == null || isNaN(v)) return "—";
@@ -26,7 +26,6 @@ export type FeaturedTileSpec = {
   title: string;
   region: string;
   glyph: string;
-  flagOverride?: string;
 };
 
 export async function FeaturedCellTile({ spec }: { spec: FeaturedTileSpec }) {
@@ -35,7 +34,6 @@ export async function FeaturedCellTile({ spec }: { spec: FeaturedTileSpec }) {
   if (!cell || cell.revenue_per_firm == null) return null;
 
   const href = `/${spec.iso2.toLowerCase()}/${spec.geo}/${spec.industry}`;
-  const flag = spec.flagOverride || flagFromIso2(spec.iso2);
 
   return (
     <a
@@ -45,7 +43,7 @@ export async function FeaturedCellTile({ spec }: { spec: FeaturedTileSpec }) {
       <div className="p-5 flex flex-col gap-3 h-full">
         <div className="flex items-center justify-between text-xs">
           <span className="inline-flex items-center gap-1.5 text-cocoa-700 font-medium">
-            <span className="flag text-lg leading-none" aria-hidden>{flag}</span>
+            <CountryFlag iso2={spec.iso2} label={spec.region} className="w-5" />
             <span>{spec.region}</span>
           </span>
           {cell.year && (

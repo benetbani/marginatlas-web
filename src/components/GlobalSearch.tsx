@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { COUNTRIES, industryToSlug, visibleIndustries, visibleSectors } from "@/lib/taxonomy";
-import { flagFromIso2 } from "@/lib/countries";
+import { CountryFlag } from "@/components/CountryFlag";
 
 function readClientGate(): { revealMixed: boolean; revealCorp: boolean } {
   if (typeof window === "undefined") return { revealMixed: false, revealCorp: false };
@@ -23,7 +23,8 @@ type SearchResult = {
   kind: "industry" | "country" | "sector";
   id: string;
   label: string;
-  flag?: string;
+  /** ISO-2 country code — set for kind === "country" so we can render <CountryFlag>. */
+  iso2?: string;
   icon?: string;
   examples?: string[];
 };
@@ -91,7 +92,7 @@ export function GlobalSearch() {
             kind: "country" as const,
             id: c.code,
             label: c.name,
-            flag: flagFromIso2(c.code),
+            iso2: c.code,
           })),
         // Sectors — only visible ones, in curated display order
         ...visibleSectors(gate)
@@ -199,8 +200,8 @@ export function GlobalSearch() {
                     }`}
                   >
                     <span className="pill bg-cream-200 text-cocoa-700">{r.kind}</span>
-                    {r.flag && (
-                      <span className="flag text-lg" aria-hidden>{r.flag}</span>
+                    {r.iso2 && (
+                      <CountryFlag iso2={r.iso2} label={r.label} className="w-5" />
                     )}
                     {r.icon && (
                       <span className="text-lg" aria-hidden>{r.icon}</span>

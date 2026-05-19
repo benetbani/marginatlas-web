@@ -6,35 +6,36 @@
  * once Track JJ.6 (top-queries dashboard) lands.
  */
 import Link from "next/link";
+import { CountryFlag } from "@/components/CountryFlag";
 
 type HotCell = {
   href: string;
+  iso2: string;
   title: string;
   region: string;
-  flag: string;
   blurb: string;
 };
 
 const HOT_CELLS: HotCell[] = [
   {
     href: "/us/california/restaurants",
+    iso2: "US",
     title: "Restaurants",
     region: "California",
-    flag: "🇺🇸",
     blurb: "The single most-viewed cell in the atlas — median revenue, payroll, and after-tax owner take-home for every size band.",
   },
   {
     href: "/gb/london/legal-services",
+    iso2: "GB",
     title: "Legal services",
     region: "London",
-    flag: "🇬🇧",
     blurb: "All 33 LADs covered natively. Compare boutique firms in Camden against the City of London.",
   },
   {
     href: "/de/munich/software-development",
+    iso2: "DE",
     title: "Software development",
     region: "Munich",
-    flag: "🇩🇪",
     blurb: "Bayern's tech corridor. Per-firm revenue, payroll, and effective tax burden for 5 size bands.",
   },
 ];
@@ -66,7 +67,7 @@ export function WhatsHotStrip() {
             className="block p-5 rounded-xl bg-cream-100 border border-parchment hover:border-atlas-500 hover:bg-white transition"
           >
             <div className="flex items-center gap-2 text-sm font-semibold text-ink-900">
-              <span className="text-xl leading-none">{c.flag}</span>
+              <CountryFlag iso2={c.iso2} label={c.region} className="w-6" />
               <span>
                 {c.title} <span className="text-ink-700/70">— {c.region}</span>
               </span>

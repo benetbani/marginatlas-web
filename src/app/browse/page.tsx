@@ -1,13 +1,7 @@
 import { SECTORS_ORDERED, COUNTRIES, INDUSTRIES_BY_SECTOR } from "@/lib/taxonomy";
+import { CountryFlag } from "@/components/CountryFlag";
 
 export const revalidate = 86400; // 1 day
-
-// Country flag emoji from ISO code
-function flag(code: string): string {
-  if (code.length !== 2) return "🌐";
-  const codePoints = code.toUpperCase().split("").map((c) => 0x1f1e6 + c.charCodeAt(0) - 65);
-  return String.fromCodePoint(...codePoints);
-}
 
 export const metadata = {
   title: "Browse — Margin Atlas",
@@ -69,7 +63,7 @@ export default function BrowsePage() {
               href={`/${c.code.toLowerCase()}`}
               className="card hover:border-atlas-500 transition flex items-center gap-3"
             >
-              <span className="text-2xl">{flag(c.code)}</span>
+              <CountryFlag iso2={c.code} label={c.name} className="w-8" />
               <div>
                 <div className="font-medium text-ink-900">{c.name}</div>
                 <div className="text-xs text-ink-700/60">
@@ -91,7 +85,7 @@ export default function BrowsePage() {
                   href={`/${c.code.toLowerCase()}`}
                   className="px-3 py-2 rounded-lg border border-slate-200/60 bg-white hover:border-atlas-500 transition text-sm flex items-center gap-2"
                 >
-                  <span>{flag(c.code)}</span>
+                  <CountryFlag iso2={c.code} label={c.name} className="w-5" />
                   <span className="text-ink-900">{c.name}</span>
                 </a>
               ))}
@@ -137,25 +131,25 @@ export default function BrowsePage() {
         </p>
         <div className="mt-5 grid md:grid-cols-2 lg:grid-cols-3 gap-3">
           {[
-            ["/us/new-york/restaurants", "🇺🇸", "Restaurants — New York"],
-            ["/gb/london/legal-services", "🇬🇧", "Legal services — London"],
-            ["/de/munich/software-development", "🇩🇪", "Software dev — Munich"],
-            ["/es/madrid/cafes-coffee-shops", "🇪🇸", "Cafés — Madrid"],
-            ["/jp/jp-13000/restaurants", "🇯🇵", "Restaurants — Tokyo"],
-            ["/br/br-sp/grocery-stores", "🇧🇷", "Grocery — São Paulo"],
-            ["/mx/mx-cmx/restaurants", "🇲🇽", "Restaurants — Mexico City"],
-            ["/au/australia/cafes-coffee-shops", "🇦🇺", "Cafés — Australia"],
-            ["/al/tirana/cafes-coffee-shops", "🇦🇱", "Cafés — Tirana"],
-            ["/ch/zurich/legal-services", "🇨🇭", "Pro services — Zurich"],
-            ["/ae/ae/grocery-stores", "🇦🇪", "Retail — UAE"],
-            ["/in/india/software-development", "🇮🇳", "Software dev — India"],
-          ].map(([href, glyph, label]) => (
+            ["/us/new-york/restaurants", "US", "Restaurants — New York"],
+            ["/gb/london/legal-services", "GB", "Legal services — London"],
+            ["/de/munich/software-development", "DE", "Software dev — Munich"],
+            ["/es/madrid/cafes-coffee-shops", "ES", "Cafés — Madrid"],
+            ["/jp/jp-13000/restaurants", "JP", "Restaurants — Tokyo"],
+            ["/br/br-sp/grocery-stores", "BR", "Grocery — São Paulo"],
+            ["/mx/mx-cmx/restaurants", "MX", "Restaurants — Mexico City"],
+            ["/au/australia/cafes-coffee-shops", "AU", "Cafés — Australia"],
+            ["/al/tirana/cafes-coffee-shops", "AL", "Cafés — Tirana"],
+            ["/ch/zurich/legal-services", "CH", "Pro services — Zurich"],
+            ["/ae/ae/grocery-stores", "AE", "Retail — UAE"],
+            ["/in/india/software-development", "IN", "Software dev — India"],
+          ].map(([href, iso2, label]) => (
             <a
               key={href}
               href={href}
               className="flex items-center gap-3 px-4 py-3 rounded-xl border border-slate-200/60 bg-white hover:border-atlas-500 transition text-sm text-ink-900"
             >
-              <span className="text-xl leading-none flag">{glyph}</span>
+              <CountryFlag iso2={iso2} label={label} className="w-6" />
               <span className="flex-1">{label}</span>
               <span className="text-atlas-600">→</span>
             </a>

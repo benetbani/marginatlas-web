@@ -7,7 +7,7 @@
  */
 
 import { getCellBySlug } from "@/lib/cells";
-import { flagFromIso2 } from "@/lib/countries";
+import { CountryFlag } from "@/components/CountryFlag";
 
 type Pick = { country: string; geo: string; industry: string };
 
@@ -51,7 +51,6 @@ export async function FirstFrameStrip() {
   }
   if (!cell || !pick) return null;
 
-  const flag = flagFromIso2(pick.country);
   // Plan v13 Wave 4a — avg-employees-per-firm display removed (n_enterprises
   // denominator is unreliable, so the derived ratio looks dubious).
   const cellUrl = `/${pick.country}/${pick.geo}/${pick.industry}`;
@@ -68,9 +67,9 @@ export async function FirstFrameStrip() {
               <span className="w-1.5 h-1.5 rounded-full bg-atlas-500 animate-pulse" aria-hidden />
               First look
             </span>
-            <span className="text-cocoa-700">
-              <span className="flag mr-1" aria-hidden>{flag}</span>
-              {cell.industry_name} in {cell.geo_name} · {cell.year}
+            <span className="text-cocoa-700 inline-flex items-center gap-1">
+              <CountryFlag iso2={pick.country} label={cell.geo_name || pick.country} className="w-4" />
+              <span>{cell.industry_name} in {cell.geo_name} · {cell.year}</span>
             </span>
           </div>
           <span className="text-xs text-atlas-700 font-medium hover:text-atlas-900">

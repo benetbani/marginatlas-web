@@ -15,7 +15,7 @@ import {
   listUsStates,
 } from "@/lib/cells";
 import { INDUSTRIES, industryToSlug } from "@/lib/taxonomy";
-import { flagFromIso2, iso2ToName } from "@/lib/countries";
+import { iso2ToName } from "@/lib/countries";
 import { CountryFlag } from "@/components/CountryFlag";
 import { RevenueTiles } from "@/components/RevenueTiles";
 import { RevenueDistribution } from "@/components/RevenueDistribution";
@@ -248,14 +248,16 @@ export default async function CellPage({
           { name: cell.industry_name || industry, url },
         ]}
       />
-      {/* Visible adaptive breadcrumb (CC.10) — distinct from the JSON-LD above */}
+      {/* Visible adaptive breadcrumb (CC.10) — distinct from the JSON-LD above.
+         Plan v13 Wave 4a: country glyph is now an SVG <CountryFlag> via the
+         iso2 field rather than the emoji glyph. */}
       <Breadcrumb
         items={[
           { label: "Home", href: "/" },
           {
             label: country.toUpperCase(),
             href: `/${country.toLowerCase()}`,
-            glyph: flagFromIso2(country.toUpperCase()),
+            iso2: country.toUpperCase(),
           },
           {
             label: cell.geo_name || geo,

@@ -7,7 +7,7 @@
  */
 
 import { cellUrl, type Cell } from "@/lib/cells";
-import { flagFromIso2 } from "@/lib/countries";
+import { CountryFlag } from "@/components/CountryFlag";
 
 function fmtMoney(v: number | null | undefined, sym = "$"): string {
   if (v == null || isNaN(v)) return "—";
@@ -52,9 +52,7 @@ export function AcrossCountriesStrip({
                 className="grid grid-cols-[180px_1fr_auto] items-center gap-3 px-2 py-1.5 rounded hover:bg-cream-100 transition"
               >
                 <div className="text-sm text-ink-900 truncate inline-flex items-center gap-2">
-                  <span className="flag text-base" aria-hidden>
-                    {flagFromIso2(c.country)}
-                  </span>
+                  <CountryFlag iso2={c.country} label={c.geo_name || c.country} className="w-5" />
                   <span className="truncate">{c.geo_name || c.country}</span>
                 </div>
                 <div className="h-3 bg-cream-200 rounded overflow-hidden">

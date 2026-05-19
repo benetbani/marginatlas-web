@@ -9,7 +9,7 @@
 import Link from "next/link";
 import { getCellBySlug } from "@/lib/cells";
 import { industryToSlug, type Industry } from "@/lib/taxonomy";
-import { flagFromIso2 } from "@/lib/countries";
+import { CountryFlag } from "@/components/CountryFlag";
 
 type Props = {
   sectorName: string;
@@ -91,9 +91,7 @@ export async function SectorAcrossWorld({ sectorName, industries }: Props) {
               className="grid grid-cols-[140px,1fr,90px] items-center gap-3 px-3 py-2 rounded-lg hover:bg-cream-100 transition"
             >
               <span className="flex items-center gap-2 text-sm text-ink-900">
-                <span className="flag text-lg leading-none">
-                  {flagFromIso2(c.iso2)}
-                </span>
+                <CountryFlag iso2={c.iso2} label={c.name} className="w-5" />
                 <span className="truncate">{c.name}</span>
               </span>
               <span className="h-2 bg-cream-100 rounded-full overflow-hidden">

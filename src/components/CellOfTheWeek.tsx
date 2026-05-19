@@ -7,7 +7,7 @@
  */
 
 import { getCellBySlug } from "@/lib/cells";
-import { flagFromIso2 } from "@/lib/countries";
+import { CountryFlag } from "@/components/CountryFlag";
 
 type Pick = {
   country: string;
@@ -98,7 +98,6 @@ export async function CellOfTheWeek() {
     const pick = ROTATION[(week + i) % ROTATION.length];
     const cell = await getCellBySlug(pick.country, pick.geo, pick.industry);
     if (cell && cell.revenue_per_firm != null) {
-      const flag = flagFromIso2(pick.country);
       const href = `/${pick.country}/${pick.geo}/${pick.industry}`;
       return (
         <section className="py-8">
@@ -117,9 +116,9 @@ export async function CellOfTheWeek() {
             </div>
             <div className="grid md:grid-cols-[1fr_auto] gap-6 items-center">
               <div>
-                <h2 className="text-xl md:text-2xl font-semibold text-ink-900 leading-tight">
-                  <span className="flag text-2xl mr-2" aria-hidden>{flag}</span>
-                  {cell.industry_name} in {cell.geo_name}
+                <h2 className="text-xl md:text-2xl font-semibold text-ink-900 leading-tight inline-flex items-center gap-2 flex-wrap">
+                  <CountryFlag iso2={pick.country} label={cell.geo_name || pick.country} className="w-7" />
+                  <span>{cell.industry_name} in {cell.geo_name}</span>
                 </h2>
                 <p className="mt-3 text-sm md:text-base text-cocoa-900/85 leading-relaxed max-w-2xl">
                   {pick.note}

@@ -7,11 +7,13 @@
  * over the year.
  */
 import Link from "next/link";
+import { CountryFlag } from "@/components/CountryFlag";
 
 type Spotlight = {
   iso2: string;
   name: string;
-  flag: string;
+  /** Kept on entries for source-readability; rendered via <CountryFlag iso2=…> not as an emoji. */
+  flag?: string;
   line: string;
   topIndustries: { label: string; href: string }[];
 };
@@ -146,7 +148,7 @@ export function SpotlightCountry() {
     <section className="py-10">
       <div className="rounded-2xl bg-gradient-to-br from-cream-100 via-cream-50 to-parchment-100 border border-parchment p-6 md:p-8">
         <div className="flex items-center gap-3">
-          <span className="text-4xl leading-none">{s.flag}</span>
+          <CountryFlag iso2={s.iso2} label={s.name} className="w-14" />
           <div>
             <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
               Country of the day
