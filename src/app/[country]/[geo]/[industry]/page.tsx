@@ -357,46 +357,52 @@ export default async function CellPage({
         currentYear={currentYear}
       />
 
-      {/* Hero — tone-map intentionally NOT applied; existing markup uses
-         dark text colors on light surfaces which would be invisible on the
-         canonical hero tone (ink-dark). Hero stays on the default page bg. */}
-      <header id="headline" className="py-8 lg:grid lg:grid-cols-[1.5fr_1fr] lg:gap-8 lg:items-start">
-        <div>
-          <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium flex items-center gap-2">
-            {cell.sector_name && <>{cell.sector_name} · </>}
-            <CountryFlag iso2={country} className="w-5" />
-            <span>{cell.geo_name || iso2ToName(country)}</span>
-          </div>
-          <h1 className="mt-2 text-3xl md:text-5xl font-semibold tracking-tight text-ink-900">
-            How much do <span className="text-atlas-600">{(cell.industry_name || "businesses").toLowerCase()}</span> earn in {cell.geo_name}?
-          </h1>
-          {cell.industry_examples && cell.industry_examples.length > 0 && (
-            <p className="mt-2 text-sm text-ink-700/60">
-              Includes: {cell.industry_examples.slice(0, 5).join(" · ")}
+      {/* Hero — Plan v14 A.1 (T-A1.3): canonical ink-dark tone applied.
+         Text colors flipped to cream/atlas-light variants so they remain
+         legible on the bg-ink-900 surface. The accented industry name in
+         the headline becomes atlas-300 (warmer, more visible on dark) and
+         the "typical revenue" line keeps the same emphasis structure but
+         in the cream family. Note: id="headline" preserved — CellPageNav
+         still anchors against it. */}
+      <section id="hero" className={`py-8 ${getToneClass("hero")}`}>
+        <header id="headline" className="lg:grid lg:grid-cols-[1.5fr_1fr] lg:gap-8 lg:items-start">
+          <div>
+            <div className="text-xs uppercase tracking-wide text-cream-300/80 font-medium flex items-center gap-2">
+              {cell.sector_name && <>{cell.sector_name} · </>}
+              <CountryFlag iso2={country} className="w-5" />
+              <span>{cell.geo_name || iso2ToName(country)}</span>
+            </div>
+            <h1 className="mt-2 text-3xl md:text-5xl font-semibold tracking-tight text-cream-50">
+              How much do <span className="text-atlas-300">{(cell.industry_name || "businesses").toLowerCase()}</span> earn in {cell.geo_name}?
+            </h1>
+            {cell.industry_examples && cell.industry_examples.length > 0 && (
+              <p className="mt-2 text-sm text-cream-300/70">
+                Includes: {cell.industry_examples.slice(0, 5).join(" · ")}
+              </p>
+            )}
+            <p className="mt-4 text-lg text-cream-200/85 max-w-3xl leading-relaxed">
+              A typical {(cell.industry_name || "firm").toLowerCase().replace(/s$/, "")} here brings in about{" "}
+              <strong className="text-cream-50"><Money usd={cell.revenue_per_firm} /></strong> per year, employing roughly{" "}
+              <strong className="text-cream-50">{cell.n_employees?.toLocaleString() || "—"}</strong> people in {cell.geo_name}.
             </p>
-          )}
-          <p className="mt-4 text-lg text-ink-800/80 max-w-3xl leading-relaxed">
-            A typical {(cell.industry_name || "firm").toLowerCase().replace(/s$/, "")} here brings in about{" "}
-            <strong><Money usd={cell.revenue_per_firm} /></strong> per year, employing roughly{" "}
-            <strong>{cell.n_employees?.toLocaleString() || "—"}</strong> people in {cell.geo_name}.
-          </p>
-          <div className="mt-3 flex items-center gap-2 flex-wrap text-xs text-ink-700/70">
-            <span>Show numbers in:</span>
-            <CurrencySwitcher />
+            <div className="mt-3 flex items-center gap-2 flex-wrap text-xs text-cream-300/70">
+              <span>Show numbers in:</span>
+              <CurrencySwitcher />
+            </div>
           </div>
-        </div>
-        <div className="hidden lg:block">
-          {/* Plan v12 IM8 — real photo when manifest has one for this
-              cell's (city, industry); falls back to SmartImage glyph. */}
-          <AtlasHeroImage
-            image={pickCellHeroImage(geo, cell.industry_id || null, cell.sector_id || null)}
-            alt={`${cell.industry_name || "Industry"} in ${cell.geo_name}`}
-            glyph={(cell.sector_id && SECTOR_BY_ID[cell.sector_id]?.icon) || "🏢"}
-            caption={cell.sector_name || "Industry"}
-            aspectRatio={1.5}
-          />
-        </div>
-      </header>
+          <div className="hidden lg:block">
+            {/* Plan v12 IM8 — real photo when manifest has one for this
+                cell's (city, industry); falls back to SmartImage glyph. */}
+            <AtlasHeroImage
+              image={pickCellHeroImage(geo, cell.industry_id || null, cell.sector_id || null)}
+              alt={`${cell.industry_name || "Industry"} in ${cell.geo_name}`}
+              glyph={(cell.sector_id && SECTOR_BY_ID[cell.sector_id]?.icon) || "🏢"}
+              caption={cell.sector_name || "Industry"}
+              aspectRatio={1.5}
+            />
+          </div>
+        </header>
+      </section>
 
       {/* Headline grid.
          Plan v13 Wave 4d — mapped to canonical "revenue-tiles" tone (cream-50)

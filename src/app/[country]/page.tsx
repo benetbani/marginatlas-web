@@ -163,32 +163,34 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
         so sister country pages always have identical structure.
       */}
 
-      {/* 1. hero — tone-map intentionally NOT applied; the canonical hero
-         tone (ink-dark) would render existing dark text colors invisible.
-         Hero stays on the default page bg until a dark-hero refactor lands. */}
-      <section id="hero">
-        <header className="py-8 lg:grid lg:grid-cols-[1.4fr_1fr] lg:gap-10 lg:items-center">
+      {/* 1. hero — Plan v14 A.1 (T-A1.3): canonical ink-dark tone applied.
+         Text colors flipped to cream/atlas-light variants so they remain
+         legible on the bg-ink-900 surface. CountryFlag is a flat SVG and
+         renders fine on dark. The coverage quality chip keeps its semantic
+         color but gets a translucent ink-800 background so it integrates. */}
+      <section id="hero" className={`py-8 ${getToneClass("hero")}`}>
+        <header className="lg:grid lg:grid-cols-[1.4fr_1fr] lg:gap-10 lg:items-center">
           <div>
-            <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
+            <div className="text-xs uppercase tracking-wide text-cream-300/80 font-medium">
               Country
             </div>
-            <h1 className="mt-2 text-4xl md:text-6xl font-semibold tracking-tight text-ink-900 flex items-center gap-3 flex-wrap">
+            <h1 className="mt-2 text-4xl md:text-6xl font-semibold tracking-tight text-cream-50 flex items-center gap-3 flex-wrap">
               <CountryFlag iso2={iso2} className="w-12 md:w-16" />
               <span>{meta.name}</span>
             </h1>
-            <p className="mt-4 text-lg text-ink-800/80 max-w-2xl leading-relaxed">
+            <p className="mt-4 text-lg text-cream-200/85 max-w-2xl leading-relaxed">
               {sig.line}
             </p>
             <div className="mt-5 flex flex-wrap items-center gap-2">
               <span
-                className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${qual.tone}`}
+                className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border bg-ink-800 text-cream-100 border-cream-200/20"
               >
                 {qual.label}
               </span>
-              <span className="text-xs text-cocoa-700/70">Coverage tier {meta.quality}</span>
+              <span className="text-xs text-cream-300/70">Coverage tier {meta.quality}</span>
               <a
                 href={`/coverage/${iso2.toLowerCase()}`}
-                className="ml-1 text-xs text-atlas-700 hover:text-atlas-900 font-medium"
+                className="ml-1 text-xs text-atlas-300 hover:text-atlas-200 font-medium"
               >
                 See coverage scorecard →
               </a>

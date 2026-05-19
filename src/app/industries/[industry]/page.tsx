@@ -119,19 +119,19 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
         Sections render in the exact order defined in INDUSTRY_PAGE_SECTIONS.
       */}
 
-      {/* 1. hero — tone-map intentionally NOT applied; the canonical hero
-         tone (ink-dark) would render existing dark text colors invisible.
-         Hero stays on the default page bg until a dark-hero refactor lands. */}
-      <section id="hero">
-        <header className="py-8">
-          <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
+      {/* 1. hero — Plan v14 A.1 (T-A1.3): canonical ink-dark tone applied.
+         Sector eyebrow + name + examples flipped to cream variants for
+         legibility on bg-ink-900. */}
+      <section id="hero" className={`py-8 ${getToneClass("hero")}`}>
+        <header>
+          <div className="text-xs uppercase tracking-wide text-cream-300/80 font-medium">
             {sector ? sector.name : "Industry"}
           </div>
-          <h1 className="mt-2 text-4xl md:text-6xl font-semibold tracking-tight text-ink-900">
+          <h1 className="mt-2 text-4xl md:text-6xl font-semibold tracking-tight text-cream-50">
             {ind.name}
           </h1>
           {ind.examples && ind.examples.length > 0 && (
-            <p className="mt-4 text-lg text-ink-800/80 max-w-2xl leading-relaxed">
+            <p className="mt-4 text-lg text-cream-200/85 max-w-2xl leading-relaxed">
               {ind.examples.slice(0, 4).join(" · ")}
             </p>
           )}
