@@ -44,19 +44,54 @@ const INDUSTRIES = loadManifest("industries_manifest.json");
 const COUNTRIES = loadManifest("countries_manifest.json");
 const SECTORS = loadManifest("sectors_manifest.json");
 
+// Plan v13 Wave 4c — manual override layer. Founder-curated entries in
+// manual_overrides_v1.json win against the auto-generated manifest. The
+// file's shape is { overrides: { "<category>/<slug>": AtlasImage } }.
+function loadOverrides(): Record<string, AtlasImage> {
+  try {
+    const raw = fs.readFileSync(
+      path.join(dataDir, "manual_overrides_v1.json"),
+      "utf-8",
+    );
+    const parsed = JSON.parse(raw) as { overrides?: Record<string, AtlasImage> };
+    return parsed?.overrides || {};
+  } catch {
+    return {};
+  }
+}
+
+const OVERRIDES = loadOverrides();
+
+function checkOverride(category: string, slug: string): AtlasImage | null {
+  const key = `${category}/${slug}`;
+  return (
+    OVERRIDES[key] ||
+    OVERRIDES[`${category}/${slug.toLowerCase()}`] ||
+    null
+  );
+}
+
 export function getCityImages(slug: string): AtlasImage[] {
+  const override = checkOverride("cities", slug);
+  if (override) return [override];
   return CITIES[slug] || CITIES[slug.toLowerCase()] || [];
 }
 
 export function getIndustryImages(industryId: string): AtlasImage[] {
+  const override = checkOverride("industries", industryId);
+  if (override) return [override];
   return INDUSTRIES[industryId] || [];
 }
 
 export function getCountryImages(iso2: string): AtlasImage[] {
+  const override = checkOverride("countries", iso2.toUpperCase());
+  if (override) return [override];
   return COUNTRIES[iso2.toUpperCase()] || COUNTRIES[iso2.toLowerCase()] || [];
 }
 
 export function getSectorImages(sectorId: string): AtlasImage[] {
+  const override = checkOverride("sectors", sectorId);
+  if (override) return [override];
   return SECTORS[sectorId] || [];
 }
 

@@ -1,0 +1,13 @@
+{
+  "_anchor": "Plan v13 Wave 4c — founder hand-picks override ANY auto-generated image. Edit by hand to swap in a chosen URL for any cell/country/industry/sector.",
+  "_format": "Keys are '{category}/{slug}'. Values match the AtlasImage type: {url, source, attribution, license, width?, height?, description?}. Category is one of: cities, countries, industries, sectors. Slug matches the manifest key (city slug like 'paris', country ISO-2 like 'US', industry id like 'restaurants').",
+  "_example": {
+    "cities/paris": {
+      "url": "https://images.unsplash.com/photo-...",
+      "source": "unsplash",
+      "attribution": "Photo by Some Photographer on Unsplash",
+      "license": "Unsplash License"
+    }
+  },
+  "overrides": {}
+}
