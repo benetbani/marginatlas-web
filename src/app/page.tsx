@@ -12,7 +12,6 @@ import { QualityLegend } from "@/components/QualityLegend";
 import { RecentlyAddedStrip } from "@/components/RecentlyAddedStrip";
 import { WhatsHotStrip } from "@/components/WhatsHotStrip";
 import { SpotlightCountry } from "@/components/SpotlightCountry";
-import { GlobalSearch } from "@/components/GlobalSearch";
 import { RotatingWord } from "@/components/RotatingWord";
 import { HERO_CITIES, HERO_BUSINESSES } from "@/lib/hero-words";
 import { getToneClass } from "@/lib/page-layout/section-order";
@@ -57,32 +56,19 @@ export default function HomePage() {
   return (
     <div>
       {/*
-        Hero: Plan v13 Wave 4e.
-        Rotating headline ("How much does a [BUSINESS] make in [CITY]?") over a
-        full-width background video. Card sits above the video with high opacity
-        so the video only bleeds at the section edges.
-
-        Founder to drop a 60-90s loop file at public/videos/hero-cities-loop.mp4
-       : until then, the poster image displays as a static fallback.
+        Hero: Plan v14 6d — quiet editorial masthead.
+        Per impeccable shape doc 2026-05-20: dark cinematic frame removed;
+        the hero is a typographic broadsheet masthead sitting directly on
+        cream-100 paper. Rotating headline preserved; in-hero search
+        removed (HeaderSearch in layout.tsx covers it globally).
       */}
-      <section className="relative h-[80vh] min-h-[600px] overflow-hidden bg-ink-900 left-1/2 right-1/2 -mx-[50vw] w-screen -mt-10">
-        <video
-          className="absolute inset-0 w-full h-full object-cover opacity-60"
-          poster="/images/hero-poster.svg"
-          autoPlay
-          muted
-          loop
-          playsInline
-        >
-          <source src="/videos/hero-cities-loop.mp4" type="video/mp4" />
-        </video>
-
-        {/* Subtle dark gradient overlay for legibility at top and bottom */}
-        <div className="absolute inset-0 bg-gradient-to-b from-ink-900/30 via-transparent to-ink-900/40 pointer-events-none" />
-
-        <div className="absolute inset-0 flex items-center justify-center px-4">
-          <div className="w-full max-w-3xl bg-cream-50 border border-parchment rounded-3xl p-6 sm:p-8 md:p-12 shadow-sm">
-            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-ink-900 text-center leading-tight">
+      <ToneBand tone="home-hero">
+        <section className="py-16 md:py-24 lg:py-28">
+          <div className="max-w-4xl">
+            <div className="text-xs font-semibold uppercase tracking-[0.18em] text-atlas-700 mb-6">
+              Small-business benchmarks · 191 countries
+            </div>
+            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-ink-900 leading-[1.05]">
               How much does a{" "}
               <span className="inline-block min-w-[5ch] text-atlas-600">
                 <RotatingWord
@@ -100,12 +86,28 @@ export default function HomePage() {
               </span>
               ?
             </h1>
-            <div className="mt-6 md:mt-8">
-              <GlobalSearch />
+            <p className="mt-5 md:mt-6 max-w-2xl text-lg md:text-xl text-cocoa-700/90 leading-relaxed">
+              Revenue, margins, and what they actually mean, for the businesses behind every street.
+            </p>
+            <div className="mt-8 md:mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm md:text-base">
+              <a
+                href="/browse"
+                className="inline-flex items-center gap-1.5 font-medium text-ink-800 hover:text-atlas-600 transition-colors border-b border-parchment hover:border-atlas-500 pb-0.5"
+              >
+                Browse 191 countries
+                <span aria-hidden="true">→</span>
+              </a>
+              <a
+                href="/about-data"
+                className="inline-flex items-center gap-1.5 font-medium text-ink-800 hover:text-atlas-600 transition-colors border-b border-parchment hover:border-atlas-500 pb-0.5"
+              >
+                See the methodology
+                <span aria-hidden="true">→</span>
+              </a>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </ToneBand>
 
       {/* Navigator: full width, dominant */}
       <ToneBand tone="home-navigator">

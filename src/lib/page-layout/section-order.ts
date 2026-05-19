@@ -76,10 +76,11 @@ export const SECTION_TONES: Record<string, SectionTone> = {
   "top-countries": "white",
   "top-cities-for-industry": "cream-100",
 
-  // Homepage. Hero stays ink-dark (already styled inline); the rest
-  // alternate cream-50 / white / cream-100 to give the page rhythm
-  // instead of a single flat body bg.
-  "home-hero": "ink-dark",
+  // Homepage. Plan v14 6d: hero is a quiet editorial masthead on
+  // cream-100 paper (was ink-dark cinematic video frame). The slight
+  // warmth distinguishes it from the cream-50 body and the cream-50
+  // navigator section directly below, preserving the alternation.
+  "home-hero": "cream-100",
   "home-navigator": "cream-50",
   "home-featured": "white",
   "home-global-coverage": "cream-100",
