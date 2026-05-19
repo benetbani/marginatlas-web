@@ -226,6 +226,18 @@ clearly so the next session executes it first before any further ingest.
   - **IM8 + IM9 hero image rendering** (`AtlasHeroImage.tsx`): server component renders real `<img>` with attribution chip when manifest has one; falls through to SmartImage glyph chrome. Wired into cell + country pages. Verified live: `/us/california/restaurants` now shows a real coffee-bar photo (Wikimedia / Geoff Peters CC-BY) instead of the 🏢 glyph.
   - **Q5 tax verification batch 1** (`eee3168`): web-verified US, DE, MX, GB. 3 matches, 1 minor_delta (DE country fallback under-shoots Munich by 1-3pp; DE2 Bayern sub-regional captures it correctly). 142 countries queued for future batches.
   - **Background at session end**: M1v2 PATCH 8,000/9,673; IM4 countries manifest at ~24/126.
+- **2026-05-19 Plan v12 autonomous push #2**: Continuation after compaction. Closed out MX cleanup, finished IM4, started IM2/IM3, extended Q5 verification.
+  - **M1 final — MX peso cleanup converged**: M1v2 reported success patching 9,673 cells but had a silent **URL-encoding bug**: `size_band=eq.250+` parses `+` as space in PostgREST, so every PATCH for the `250+` size band returned 200 with 0 rows affected. M1v3 hit the same bug. Real damage: all `total`/`2-9`/`10-49`/`50-249` cells were correctly converted; only `250+` cells stayed in pesos.
+  - **M1v5 parallel patcher** (`fix_peso_parallel.py`): 12-worker ThreadPoolExecutor blasted 3,390 cells >= $5M. Worked but over-divided 1,209 legitimate USD large-firm cells (banking/utilities/auto-mfg major-city 250+ bands) because it didn't distinguish "already-converted USD legitimately >$5M" from "still in pesos".
+  - **M1v6 backup restoration** (`restore_from_backup.py`): read `mx_peso_backup_all_v1.json`, restored 1,209 over-patched cells to their M1v2-intended USD values. 3,320 cells already correct; 609 entries no longer exist in DB (trimmed by later ingests).
+  - **M1v7 final cleanup** (`final_cleanup.py`): two-prong with URL-encoding fix (`urllib.parse.quote(sb, safe="")`). 193 in-backup cells restored; 43 not-in-backup cells >$1B divided by 17.5. **MX cell distribution now mirrors US** — `MX >= $5M: 1,849` vs `US: 1,845`; `MX >= $1B: 7` vs `US: 56`. The 7 remaining >$1B cells are all plausible USD: Pemex Tabasco, BBVA México, CFE, Banamex, Banorte, Televisa concentration, CMX banking.
+  - **IM4 countries manifest landed**: `website/data/images/countries_manifest.json` with 126 entries (US/GB/DE/FR/IT/ES/JP/CN/IN/BR/MX/...). Each entry has 2 candidate Wikimedia/Unsplash photos with attribution + license. Checkpoint-every-10-entries added to `build_manifests.py` so interrupted runs resume cleanly.
+  - **IM2 cities + IM3 industries**: running in background, both should land ~200 + ~180 entries.
+  - **Q5 batches 2 + 3 + 4** (`tax_rates_verified_v1.json`): added JP, FR, CA, IN, BR, CN, AU, IT (batch 2) + ES, KR, RU, CH (batch 3) + TR, ID, NL, SE, NO, DK, BE, PL (batch 4). 21 additional matches, 0 flags. **Total verified: 25 / 146**. Russia flagged for 2026 refresh routine (rising 20% → 25% in 2025 reform).
+  - **Q7 commercial rent verification batch 1+2** (`commercial_rent_verified_v1.json`): 8 cities cross-validated against Cushman & Wakefield / Colliers / JLL 2024 MarketBeat reports. **6 matches** (London/HK/SG/Tokyo/NYC-borough), **1 minor_delta** (Paris -22% vs prime — our value is a blended median, defensible), **1 flag** (`US-CITY-new-york-midtown` $1,100/sqm/yr exceeds Class A Manhattan $834 by 32% — needs founder review: rename to "Plaza District" or reduce). Queued in `review_queue` array for /admin/review.
+  - **Q9 industry-margin verification batch 1** (`industry_margins_verified_v1.json`): 8 representative industries cross-validated against Damodaran NYU "Operating and Net Margins by Sector" January 2026 dataset. **6 matches + 2 minor_deltas + 0 flags**. Critical caveat captured: Damodaran is a public-co dataset (Microsoft / Lululemon / Marriott) and runs systematically HIGHER than SMB-realistic margins. Atlas values appropriately sit below Damodaran for software (20% vs 41% — SMB dev shops vs hyperscalers), restaurants (10% vs 17% — independents vs chains), apparel (6% vs 10% — independents vs branded). Q9 batch 2 should expand to IRS SOI cross-validation for primary SMB anchor; Damodaran kept as upper-bound sanity.
+  - **/admin/review Verifications tab landed** (`src/app/admin/review/page.tsx`): new tab consolidates Q5 (tax), Q7 (rent), Q9 (margin) verification tables with verdict pills (match / minor / flag), per-row source URLs, and a "Founder review queue" callout for any flagged items needing decision. Verified rendering live at `/admin/review?key=v11review2026&tab=verifications` — 3 sections, 3 tables, 41 rows, caveat banner for Q9.
+  - **Image manifests still streaming**: at session end, cities 60/207 (29%), industries 100/180 (56%), countries 120/126 (95%). Checkpoint-every-10-entries means even if interrupted the partial JSON ships; on resume the manifest-aware build skips already-fetched entries.
 
 ## Italy next-session notes (D.8)
 
@@ -238,3 +250,34 @@ Two attempted endpoints, both hang:
 **Strategy for next session — drop SDMX, use bulk CSV**: ISTAT publishes the ASIA cube as annual CSV at `dati.istat.it` or `https://www.istat.it/it/files/`. Download once, parse offline. Estimated 30k rows for province × NACE 2-digit OR ~300k for comune × NACE.
 
 Same NACE 2-digit mapping pattern as Spain (`nace_to_industry_id`).
+
+## Plan v13 Wave 2 — profit waterfall + statistical presentation (2026-05-19)
+
+Critical-path subset of the Wave 2 plan shipped. Full 180-industry canonical
+margin rebuild (T1) deferred to Wave 2b — current pass uses the existing
+`industry_margins.json` as the source.
+
+**Shipped:**
+- **T2 margin floor utility** (`src/lib/finance/margin_floor.ts`): `clampMargin(value, kind)` enforces 15% gross / 5% operating / 3% net SMB-realistic floors. Defensive backstop for every public render.
+- **T5 simple-statistics** added (~12 KB) for log-normal fitting in the new distribution component.
+- **T6 RevenueTiles** (`src/components/RevenueTiles.tsx`): Bottom 20% / Typical (median) / Top 10% tiles. Big, prominent, calm — replaces the "0% earn under $X" cluster language.
+- **T7 RevenueDistribution** (`src/components/RevenueDistribution.tsx`): smooth asymmetric SVG curve fit from supplied percentiles via log-normal MLE. p20 / p50 / p90 markers, no axes, pure shape.
+- **T8 MarginWaterfall** (`src/components/MarginWaterfall.tsx`): three stacked horizontal bars (gross 100% / operating / net). Every segment passes through `clampMargin` before render.
+- **T10 cell-page refactor** (`src/app/[country]/[geo]/[industry]/page.tsx`): replaced the DistributionHistogram + DistributionBars pair with `RevenueTiles` + `RevenueDistribution`. Added `MarginWaterfall` after the existing `NetProfitWaterfall`. Net-margin input to the waterfall is sourced from `estimateNetProfit()` and clamped before display.
+- **T4 (partial) clamp at render sites**: wired `clampMargin` into `NetProfitWaterfall.tsx` (the "X% net margin" footer) and into the page's `computedNetMargin` flow. India `textile_apparel_mfg` previously displayed sub-3% net; now displays exactly 3.0% — floor active and verified.
+- **Helper**: new compact money formatter at `src/lib/format/money.ts` (`419794 → "419K"`).
+
+**Deferred to Wave 2b (separate session):**
+- T1 — 180-industry canonical margin rebuild from IRS SOI / NRA / NAHB / NACS / NRF / etc.
+- T3 — replace `industry_margins.json` with canonical v2 output
+- T9 — `section-order.ts` constants for sister-page consistency
+- T11 — country page canonical order refactor
+- T12 — industry page canonical order refactor
+
+**Verification:**
+- `npx tsc --noEmit` clean
+- `npm run build` clean
+- Live URLs sampled: `/us/california/restaurants` (full data — tiles, curve, waterfall all visible; net margin 12.2%), `/us/california/grocery-stores` (empty percentile data — graceful empty states render; profit waterfall still shows gross + operating), `/jp/tokyo/restaurants` (empty percentile data — graceful empty state), `/in/maharashtra/textile-apparel-mfg` (full data — net margin floored at exactly 3.0%).
+- No displayed net margin below 3% across the sample.
+
+**Commits:** `08a2223` (margin_floor) → `6fbf6b5` (simple-statistics) → `aa6644f` (RevenueTiles + money formatter) → `42c9d7e` (RevenueDistribution) → `56b4f54` (MarginWaterfall) → `902a82d` (cell-page refactor) → `6a46c46` (clamp at render sites).
