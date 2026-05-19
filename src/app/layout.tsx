@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Organization } from "@/components/StructuredData";
-import { GlobalSearch } from "@/components/GlobalSearch";
+import { HeaderSearch } from "@/components/HeaderSearch";
 
 export const metadata: Metadata = {
   title: "Margin Atlas — Small-business benchmarks across 191 countries",
@@ -53,7 +53,7 @@ export default function RootLayout({
                 <a href="/coverage" className="hover:text-atlas-600 mx-2 transition-colors">Coverage</a>
                 <a href="/pricing" className="hover:text-atlas-600 mx-2 transition-colors">Pricing</a>
               </nav>
-              <GlobalSearch />
+              <HeaderSearch />
             </div>
           </div>
         </header>
