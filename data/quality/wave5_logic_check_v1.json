@@ -1,0 +1,3009 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-05-19T08:05:22Z",
+  "dry_run": false,
+  "totals": {
+    "regional_cells_scanned": 376033,
+    "cells_master_scanned": 0,
+    "extrapolated_cells_scanned": 58608,
+    "total_cells_scanned": 434641,
+    "peer_medians_built": 467,
+    "flagged_numeric": 4330,
+    "flagged_shape": 160,
+    "flagged_extreme_regional": 30,
+    "flagged_extreme_extrap": 150,
+    "normalized_count": 180,
+    "normalization_failures": 0,
+    "extrapolation_candidates": 49126,
+    "extrapolated_inserted": 49126,
+    "extrapolation_duplicates_skipped": 0,
+    "insert_failures": 0
+  },
+  "top_10_extreme_outliers": [
+    {
+      "table": "extrapolated_cells",
+      "country_iso3": "BDI",
+      "country_name": "Burundi",
+      "industry_id": "management_consulting",
+      "size_band": "GE250",
+      "year": 2024,
+      "predicted_rev_per_firm": 19404.3240635909,
+      "peer_median": 13010512.19,
+      "ratio": 0.001491434294070701
+    },
+    {
+      "table": "extrapolated_cells",
+      "country_iso3": "BDI",
+      "country_name": "Burundi",
+      "industry_id": "water_waste",
+      "size_band": "GE250",
+      "year": 2024,
+      "predicted_rev_per_firm": 35923.0354320728,
+      "peer_median": 14980555.23,
+      "ratio": 0.0023979775702928203
+    },
+    {
+      "table": "extrapolated_cells",
+      "country_iso3": "MCO",
+      "country_name": "Monaco",
+      "industry_id": "management_consulting",
+      "size_band": "GE250",
+      "year": 2024,
+      "predicted_rev_per_firm": 4393392599.42063,
+      "peer_median": 13010512.19,
+      "ratio": 337.6802185234055
+    },
+    {
+      "table": "extrapolated_cells",
+      "country_iso3": "BDI",
+      "country_name": "Burundi",
+      "industry_id": "other_transport_mfg",
+      "size_band": "GE250",
+      "year": 2024,
+      "predicted_rev_per_firm": 148145.64871143,
+      "peer_median": 46818896.02,
+      "ratio": 0.003164227722245852
+    },
+    {
+      "table": "extrapolated_cells",
+      "country_iso3": "BDI",
+      "country_name": "Burundi",
+      "industry_id": "marketing_design",
+      "size_band": "GE250",
+      "year": 2024,
+      "predicted_rev_per_firm": 44202.2282886724,
+      "peer_median": 11997122.7,
+      "ratio": 0.0036844024516538786
+    },
+    {
+      "table": "extrapolated_cells",
+      "country_iso3": "BDI",
+      "country_name": "Burundi",
+      "industry_id": "textile_apparel_mfg",
+      "size_band": "GE250",
+      "year": 2024,
+      "predicted_rev_per_firm": 55932.034005168,
+      "peer_median": 14832316.88,
+      "ratio": 0.003770957326335655
+    },
+    {
+      "table": "extrapolated_cells",
+      "country_iso3": "AFG",
+      "country_name": "Afghanistan",
+      "industry_id": "management_consulting",
+      "size_band": "GE250",
+      "year": 2023,
+      "predicted_rev_per_firm": 57671.6219673009,
+      "peer_median": 13010512.19,
+      "ratio": 0.004432694203355641
+    },
+    {
+      "table": "extrapolated_cells",
+      "country_iso3": "MCO",
+      "country_name": "Monaco",
+      "industry_id": "water_waste",
+      "size_band": "GE250",
+      "year": 2024,
+      "predicted_rev_per_firm": 3226232937.05416,
+      "peer_median": 14980555.23,
+      "ratio": 215.36137262745234
+    },
+    {
+      "table": "extrapolated_cells",
+      "country_iso3": "BDI",
+      "country_name": "Burundi",
+      "industry_id": "mining_quarrying",
+      "size_band": "GE250",
+      "year": 2024,
+      "predicted_rev_per_firm": 132492.534007017,
+      "peer_median": 26161605.48,
+      "ratio": 0.005064388502773837
+    },
+    {
+      "table": "extrapolated_cells",
+      "country_iso3": "LIE",
+      "country_name": "Liechtenstein",
+      "industry_id": "management_consulting",
+      "size_band": "GE250",
+      "year": 2023,
+      "predicted_rev_per_firm": 2487130216.96717,
+      "peer_median": 13010512.19,
+      "ratio": 191.1631287566681
+    }
+  ],
+  "top_10_normalizations": [
+    {
+      "table": "regional_cells",
+      "country": "MC",
+      "geo_id": "MC-CITY-monaco",
+      "industry_id": "travel_agencies",
+      "size_band": "50-249",
+      "year": 2024,
+      "revenue_per_firm": 368332395.12,
+      "peer_median": 6309368.42,
+      "ratio": 58.3786475287173,
+      "new_revenue_per_firm": 31546842.1,
+      "delta": -336785553.02
+    },
+    {
+      "table": "regional_cells",
+      "country": "MX",
+      "geo_id": "MX-19-041",
+      "industry_id": "motor_vehicles_mfg",
+      "size_band": "total",
+      "year": 2024,
+      "revenue_per_firm": 552244530.61,
+      "peer_median": 9503745.45,
+      "ratio": 58.10809364743666,
+      "new_revenue_per_firm": 47518727.25,
+      "delta": -504725803.36
+    },
+    {
+      "table": "regional_cells",
+      "country": "MX",
+      "geo_id": "MX-09-016",
+      "industry_id": "banking",
+      "size_band": "total",
+      "year": 2024,
+      "revenue_per_firm": 70469021.96,
+      "peer_median": 1219428.57142857,
+      "ratio": 57.78856065135901,
+      "new_revenue_per_firm": 6097142.85714285,
+      "delta": -64371879.10285714
+    },
+    {
+      "table": "regional_cells",
+      "country": "US",
+      "geo_id": "US-CITY-san-francisco",
+      "industry_id": "management_consulting",
+      "size_band": "GE250",
+      "year": 2024,
+      "revenue_per_firm": 749327166.24,
+      "peer_median": 13010512.19,
+      "ratio": 57.59397902996777,
+      "new_revenue_per_firm": 65052560.949999996,
+      "delta": -684274605.29
+    },
+    {
+      "table": "regional_cells",
+      "country": "MC",
+      "geo_id": "MC-CITY-monaco",
+      "industry_id": "electricity_gas_utilities",
+      "size_band": "20-49",
+      "year": 2024,
+      "revenue_per_firm": 361348372.03,
+      "peer_median": 6396705.36,
+      "ratio": 56.48976335373995,
+      "new_revenue_per_firm": 31983526.8,
+      "delta": -329364845.22999996
+    },
+    {
+      "table": "regional_cells",
+      "country": "MX",
+      "geo_id": "MX-21-045",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "year": 2024,
+      "revenue_per_firm": 3900,
+      "peer_median": 219677.419354839,
+      "ratio": 0.017753303964757685,
+      "new_revenue_per_firm": 43935.4838709678,
+      "delta": 40035.4838709678
+    },
+    {
+      "table": "regional_cells",
+      "country": "LI",
+      "geo_id": "LI-CITY-vaduz",
+      "industry_id": "textile_apparel_mfg",
+      "size_band": "50-249",
+      "year": 2023,
+      "revenue_per_firm": 162890526.6,
+      "peer_median": 2892985.29,
+      "ratio": 56.30534215402111,
+      "new_revenue_per_firm": 14464926.45,
+      "delta": -148425600.15
+    },
+    {
+      "table": "regional_cells",
+      "country": "MC",
+      "geo_id": "MC-CITY-monaco",
+      "industry_id": "it_services_hosting",
+      "size_band": "10-19",
+      "year": 2024,
+      "revenue_per_firm": 30940674.07,
+      "peer_median": 553764.47,
+      "ratio": 55.8733464246993,
+      "new_revenue_per_firm": 2768822.3499999996,
+      "delta": -28171851.72
+    },
+    {
+      "table": "regional_cells",
+      "country": "MC",
+      "geo_id": "MC-CITY-monaco",
+      "industry_id": "wholesale_food",
+      "size_band": "TOTAL",
+      "year": 2024,
+      "revenue_per_firm": 44314261.51,
+      "peer_median": 802415.07,
+      "ratio": 55.22610824096312,
+      "new_revenue_per_firm": 4012075.3499999996,
+      "delta": -40302186.16
+    },
+    {
+      "table": "regional_cells",
+      "country": "MX",
+      "geo_id": "MX-12-054",
+      "industry_id": "childcare_social",
+      "size_band": "total",
+      "year": 2024,
+      "revenue_per_firm": 4000,
+      "peer_median": 219677.419354839,
+      "ratio": 0.01820851688693096,
+      "new_revenue_per_firm": 43935.4838709678,
+      "delta": 39935.4838709678
+    }
+  ],
+  "samples": {
+    "flagged_numeric_top_50": [
+      {
+        "table": "regional_cells",
+        "country": "AD",
+        "geo_id": "AD-CITY-andorra-la-vella",
+        "industry_id": "banking",
+        "size_band": "0-9",
+        "revenue_per_firm": 306800.51,
+        "bounds": [
+          500000,
+          10000000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AD",
+        "geo_id": "AD-CITY-andorra-la-vella",
+        "industry_id": "electricity_gas_utilities",
+        "size_band": "GE250",
+        "revenue_per_firm": 1468500383.19,
+        "bounds": [
+          5000,
+          1000000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AD",
+        "geo_id": "AD-CITY-andorra-la-vella",
+        "industry_id": "grocery_stores",
+        "size_band": "GE250",
+        "revenue_per_firm": 448226006.37,
+        "bounds": [
+          50000,
+          100000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AD",
+        "geo_id": "AD-CITY-andorra-la-vella",
+        "industry_id": "restaurants",
+        "size_band": "GE250",
+        "revenue_per_firm": 64461700.12,
+        "bounds": [
+          20000,
+          10000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AD",
+        "geo_id": "AD-CITY-andorra-la-vella",
+        "industry_id": "software_development",
+        "size_band": "GE250",
+        "revenue_per_firm": 262976345.69,
+        "bounds": [
+          20000,
+          100000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AE",
+        "geo_id": "AE-CITY-abu-dhabi",
+        "industry_id": "auto_dealers_gas",
+        "size_band": "GE250",
+        "revenue_per_firm": 515726888.12,
+        "bounds": [
+          200000,
+          500000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AE",
+        "geo_id": "AE-CITY-abu-dhabi",
+        "industry_id": "banking",
+        "size_band": "0-9",
+        "revenue_per_firm": 333983.5,
+        "bounds": [
+          500000,
+          10000000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AE",
+        "geo_id": "AE-CITY-abu-dhabi",
+        "industry_id": "electricity_gas_utilities",
+        "size_band": "GE250",
+        "revenue_per_firm": 1607124991.03,
+        "bounds": [
+          5000,
+          1000000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AE",
+        "geo_id": "AE-CITY-abu-dhabi",
+        "industry_id": "grocery_stores",
+        "size_band": "GE250",
+        "revenue_per_firm": 488726914.35,
+        "bounds": [
+          50000,
+          100000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AE",
+        "geo_id": "AE-CITY-abu-dhabi",
+        "industry_id": "restaurants",
+        "size_band": "GE250",
+        "revenue_per_firm": 70159708.86,
+        "bounds": [
+          20000,
+          10000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AE",
+        "geo_id": "AE-CITY-abu-dhabi",
+        "industry_id": "software_development",
+        "size_band": "GE250",
+        "revenue_per_firm": 287927737.86,
+        "bounds": [
+          20000,
+          100000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AE",
+        "geo_id": "AE-CITY-dubai",
+        "industry_id": "auto_dealers_gas",
+        "size_band": "GE250",
+        "revenue_per_firm": 552564522.99,
+        "bounds": [
+          200000,
+          500000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AE",
+        "geo_id": "AE-CITY-dubai",
+        "industry_id": "motor_vehicles_mfg",
+        "size_band": "GE250",
+        "revenue_per_firm": 1043219214.65,
+        "bounds": [
+          5000,
+          1000000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AE",
+        "geo_id": "AE-CITY-dubai",
+        "industry_id": "banking",
+        "size_band": "0-9",
+        "revenue_per_firm": 357839.47,
+        "bounds": [
+          500000,
+          10000000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AE",
+        "geo_id": "AE-CITY-dubai",
+        "industry_id": "electricity_gas_utilities",
+        "size_band": "GE250",
+        "revenue_per_firm": 1721919633.25,
+        "bounds": [
+          5000,
+          1000000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AE",
+        "geo_id": "AE-CITY-dubai",
+        "industry_id": "grocery_stores",
+        "size_band": "GE250",
+        "revenue_per_firm": 523635979.66,
+        "bounds": [
+          50000,
+          100000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AE",
+        "geo_id": "AE-CITY-dubai",
+        "industry_id": "restaurants",
+        "size_band": "GE250",
+        "revenue_per_firm": 75171116.63,
+        "bounds": [
+          20000,
+          10000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AE",
+        "geo_id": "AE-CITY-dubai",
+        "industry_id": "software_development",
+        "size_band": "GE250",
+        "revenue_per_firm": 308494004.85,
+        "bounds": [
+          20000,
+          100000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AE",
+        "geo_id": "AE-CITY-sharjah",
+        "industry_id": "restaurants",
+        "size_band": "GE250",
+        "revenue_per_firm": 55125485.53,
+        "bounds": [
+          20000,
+          10000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AE",
+        "geo_id": "AE-CITY-sharjah",
+        "industry_id": "banking",
+        "size_band": "0-9",
+        "revenue_per_firm": 262415.61,
+        "bounds": [
+          500000,
+          10000000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AE",
+        "geo_id": "AE-CITY-sharjah",
+        "industry_id": "banking",
+        "size_band": "TOTAL",
+        "revenue_per_firm": 459153,
+        "bounds": [
+          500000,
+          10000000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AE",
+        "geo_id": "AE-CITY-sharjah",
+        "industry_id": "electricity_gas_utilities",
+        "size_band": "GE250",
+        "revenue_per_firm": 1262741064.38,
+        "bounds": [
+          5000,
+          1000000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AE",
+        "geo_id": "AE-CITY-sharjah",
+        "industry_id": "grocery_stores",
+        "size_band": "GE250",
+        "revenue_per_firm": 383999718.42,
+        "bounds": [
+          50000,
+          100000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AE",
+        "geo_id": "AE-CITY-sharjah",
+        "industry_id": "software_development",
+        "size_band": "GE250",
+        "revenue_per_firm": 226228936.89,
+        "bounds": [
+          20000,
+          100000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-durres",
+        "industry_id": "banking",
+        "size_band": "0-9",
+        "revenue_per_firm": 77855.32,
+        "bounds": [
+          500000,
+          10000000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-durres",
+        "industry_id": "banking",
+        "size_band": "TOTAL",
+        "revenue_per_firm": 116537.11,
+        "bounds": [
+          500000,
+          10000000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-durres",
+        "industry_id": "auto_dealers_gas",
+        "size_band": "0-9",
+        "revenue_per_firm": 82050.02,
+        "bounds": [
+          200000,
+          500000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-durres",
+        "industry_id": "grocery_stores",
+        "size_band": "GE250",
+        "revenue_per_firm": 102030474.12,
+        "bounds": [
+          50000,
+          100000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-durres",
+        "industry_id": "restaurants",
+        "size_band": "GE250",
+        "revenue_per_firm": 16570000.84,
+        "bounds": [
+          20000,
+          10000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-durres",
+        "industry_id": "hotels_lodging",
+        "size_band": "0-9",
+        "revenue_per_firm": 32603.56,
+        "bounds": [
+          50000,
+          200000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-elbasan",
+        "industry_id": "banking",
+        "size_band": "0-9",
+        "revenue_per_firm": 63025.73,
+        "bounds": [
+          500000,
+          10000000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-elbasan",
+        "industry_id": "banking",
+        "size_band": "TOTAL",
+        "revenue_per_firm": 94339.56,
+        "bounds": [
+          500000,
+          10000000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-elbasan",
+        "industry_id": "auto_dealers_gas",
+        "size_band": "0-9",
+        "revenue_per_firm": 66421.45,
+        "bounds": [
+          200000,
+          500000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-elbasan",
+        "industry_id": "restaurants",
+        "size_band": "GE250",
+        "revenue_per_firm": 13413810.2,
+        "bounds": [
+          20000,
+          10000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-elbasan",
+        "industry_id": "hotels_lodging",
+        "size_band": "0-9",
+        "revenue_per_firm": 26393.36,
+        "bounds": [
+          50000,
+          200000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-fier",
+        "industry_id": "banking",
+        "size_band": "0-9",
+        "revenue_per_firm": 63025.73,
+        "bounds": [
+          500000,
+          10000000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-fier",
+        "industry_id": "banking",
+        "size_band": "TOTAL",
+        "revenue_per_firm": 94339.56,
+        "bounds": [
+          500000,
+          10000000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-fier",
+        "industry_id": "auto_dealers_gas",
+        "size_band": "0-9",
+        "revenue_per_firm": 66421.45,
+        "bounds": [
+          200000,
+          500000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-fier",
+        "industry_id": "restaurants",
+        "size_band": "GE250",
+        "revenue_per_firm": 13413810.2,
+        "bounds": [
+          20000,
+          10000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-fier",
+        "industry_id": "hotels_lodging",
+        "size_band": "0-9",
+        "revenue_per_firm": 26393.36,
+        "bounds": [
+          50000,
+          200000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-shkoder",
+        "industry_id": "banking",
+        "size_band": "0-9",
+        "revenue_per_firm": 66733.13,
+        "bounds": [
+          500000,
+          10000000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-shkoder",
+        "industry_id": "banking",
+        "size_band": "TOTAL",
+        "revenue_per_firm": 99888.95,
+        "bounds": [
+          500000,
+          10000000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-shkoder",
+        "industry_id": "auto_dealers_gas",
+        "size_band": "0-9",
+        "revenue_per_firm": 70328.59,
+        "bounds": [
+          200000,
+          500000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-shkoder",
+        "industry_id": "restaurants",
+        "size_band": "GE250",
+        "revenue_per_firm": 14202857.86,
+        "bounds": [
+          20000,
+          10000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-shkoder",
+        "industry_id": "hotels_lodging",
+        "size_band": "0-9",
+        "revenue_per_firm": 27945.91,
+        "bounds": [
+          50000,
+          200000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-tirana",
+        "industry_id": "banking",
+        "size_band": "0-9",
+        "revenue_per_firm": 103807.09,
+        "bounds": [
+          500000,
+          10000000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-tirana",
+        "industry_id": "banking",
+        "size_band": "TOTAL",
+        "revenue_per_firm": 155382.81,
+        "bounds": [
+          500000,
+          10000000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-tirana",
+        "industry_id": "auto_dealers_gas",
+        "size_band": "0-9",
+        "revenue_per_firm": 109400.03,
+        "bounds": [
+          200000,
+          500000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-tirana",
+        "industry_id": "grocery_stores",
+        "size_band": "GE250",
+        "revenue_per_firm": 136040632.15,
+        "bounds": [
+          50000,
+          100000000
+        ],
+        "issue": "out_of_industry_bounds"
+      },
+      {
+        "table": "regional_cells",
+        "country": "AL",
+        "geo_id": "AL-CITY-tirana",
+        "industry_id": "restaurants",
+        "size_band": "GE250",
+        "revenue_per_firm": 22093334.45,
+        "bounds": [
+          20000,
+          10000000
+        ],
+        "issue": "out_of_industry_bounds"
+      }
+    ],
+    "flagged_shape_top_50": [
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-schaan",
+        "industry_id": "water_waste",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 1067365296.28,
+        "p50": 74902776.15,
+        "p90": 5603667805.45
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-schaan",
+        "industry_id": "banking",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 378920439.64,
+        "p50": 74280445.35,
+        "p90": 1989332308.11
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-schaan",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 1392792921.5,
+        "p50": 65052560.95,
+        "p90": 7312162837.88
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-schaan",
+        "industry_id": "other_transport_mfg",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 2629429002.35,
+        "p50": 234094480.1,
+        "p90": 13804502262.33
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-schaan",
+        "industry_id": "textile_apparel_mfg",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 720025298.65,
+        "p50": 74161584.4,
+        "p90": 3780132817.92
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-schaan",
+        "industry_id": "chemical_pharma_mfg",
+        "size_band": "TOTAL",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 76230637.59,
+        "p50": 12807607.85,
+        "p90": 400210847.36
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-schaan",
+        "industry_id": "motor_vehicles_mfg",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 2229406941.3,
+        "p50": 473285491.6,
+        "p90": 11704386441.83
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-schaan",
+        "industry_id": "real_estate_agencies",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 410453327.87,
+        "p50": 73895463.95,
+        "p90": 2154879971.33
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-schaan",
+        "industry_id": "mining_quarrying",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 1010112579.34,
+        "p50": 130808027.4,
+        "p90": 5303091041.53
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-schaan",
+        "industry_id": "marketing_design",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 593738432.52,
+        "p50": 59985613.5,
+        "p90": 3117126770.73
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-schaan",
+        "industry_id": "property_leasing",
+        "size_band": "TOTAL",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 5187538.58,
+        "p50": 946727.05,
+        "p90": 27234577.54
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-schaan",
+        "industry_id": "travel_agencies",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 1237905942.04,
+        "p50": 177510522.7,
+        "p90": 6499006195.69
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-vaduz",
+        "industry_id": "other_transport_mfg",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 2911153538.31,
+        "p50": 234094480.1,
+        "p90": 15283556076.14
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-vaduz",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 1542020734.52,
+        "p50": 65052560.95,
+        "p90": 8095608856.23
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-vaduz",
+        "industry_id": "water_waste",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 1181725863.73,
+        "p50": 74902776.15,
+        "p90": 6204060784.59
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-vaduz",
+        "industry_id": "textile_apparel_mfg",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 797170866.36,
+        "p50": 74161584.4,
+        "p90": 4185147048.41
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-vaduz",
+        "industry_id": "banking",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 419519058.17,
+        "p50": 74280445.35,
+        "p90": 2202475055.4
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-vaduz",
+        "industry_id": "chemical_pharma_mfg",
+        "size_band": "TOTAL",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 84398205.9,
+        "p50": 12807607.85,
+        "p90": 443090581
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-vaduz",
+        "industry_id": "motor_vehicles_mfg",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 2468271970.72,
+        "p50": 473285491.6,
+        "p90": 12958427846.3
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-vaduz",
+        "industry_id": "real_estate_agencies",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 454430470.14,
+        "p50": 73895463.95,
+        "p90": 2385759968.26
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-vaduz",
+        "industry_id": "mining_quarrying",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 1118338927.12,
+        "p50": 130808027.4,
+        "p90": 5871279367.4
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-vaduz",
+        "industry_id": "marketing_design",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 657353264.58,
+        "p50": 59985613.5,
+        "p90": 3451104639.02
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-vaduz",
+        "industry_id": "property_leasing",
+        "size_band": "TOTAL",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 5743346.28,
+        "p50": 946727.05,
+        "p90": 30152567.99
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-vaduz",
+        "industry_id": "travel_agencies",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 1370538721.54,
+        "p50": 177510522.7,
+        "p90": 7195328288.09
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 3163242671.58,
+        "p50": 65052560.95,
+        "p90": 16607024025.82
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "travel_agencies",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 2497056982.97,
+        "p50": 177510522.7,
+        "p90": 13109549160.58
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "auto_dealers_gas",
+        "size_band": "TOTAL",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 9366343.46,
+        "p50": 1855322.55,
+        "p90": 49173303.19
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "water_waste",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 2322887714.68,
+        "p50": 74902776.15,
+        "p90": 12195160502.07
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "other_transport_mfg",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 5581505071.26,
+        "p50": 234094480.1,
+        "p90": 29302901624.12
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "banking",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 739427955.86,
+        "p50": 74280445.35,
+        "p90": 3881996768.29
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "travel_agencies",
+        "size_band": "TOTAL",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 6920671.22,
+        "p50": 1033853.1,
+        "p90": 36333523.88
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "mining_quarrying",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 2058284829.16,
+        "p50": 130808027.4,
+        "p90": 10805995353.09
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "it_services_hosting",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 718501681.63,
+        "p50": 109331912.35,
+        "p90": 3772133828.57
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "machinery_mfg",
+        "size_band": "TOTAL",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 37651822.19,
+        "p50": 6802032.6,
+        "p90": 197672066.49
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "textile_apparel_mfg",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 1504837848.58,
+        "p50": 74161584.4,
+        "p90": 7900398705.05
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "chemical_pharma_mfg",
+        "size_band": "TOTAL",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 152268132.7,
+        "p50": 12807607.85,
+        "p90": 799407696.7
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "machinery_mfg",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 1077119865.62,
+        "p50": 215279325.15,
+        "p90": 5654879294.48
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "motor_vehicles_mfg",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 4313681198.16,
+        "p50": 473285491.6,
+        "p90": 22646826290.36
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "banking",
+        "size_band": "50-249",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 132199626.86,
+        "p50": 19639910.55,
+        "p90": 694048040.99
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "real_estate_agencies",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 808263319.1,
+        "p50": 73895463.95,
+        "p90": 4243382425.25
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "furniture_other_mfg",
+        "size_band": "50-249",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 93267808.06,
+        "p50": 19603469.4,
+        "p90": 489655992.29
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "oil_gas_extraction",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 2717031612.27,
+        "p50": 395741584.9,
+        "p90": 14264415964.41
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "legal_services",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 605377595.97,
+        "p50": 93986349.85,
+        "p90": 3178232378.85
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "engineering_architecture",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 587317413.41,
+        "p50": 90378964.6,
+        "p90": 3083416420.41
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "water_waste",
+        "size_band": "50-249",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 112854769.53,
+        "p50": 21383333.5,
+        "p90": 592487540.02
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "security_services",
+        "size_band": "GE250",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 217455477.47,
+        "p50": 45758784.5,
+        "p90": 1141641256.71
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "electronics_mfg",
+        "size_band": "TOTAL",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 33626713.35,
+        "p50": 4679352.3,
+        "p90": 176540245.1
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "textile_apparel_mfg",
+        "size_band": "20-49",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 24013804.1,
+        "p50": 3934497.2,
+        "p90": 126072471.55
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "textile_apparel_mfg",
+        "size_band": "50-249",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 113456773.92,
+        "p50": 14464926.45,
+        "p90": 595648063.06
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "it_services_hosting",
+        "size_band": "50-249",
+        "shape_issue": "percentiles not monotonic",
+        "p10": 96785406.97,
+        "p50": 20373923.25,
+        "p90": 508123386.6
+      }
+    ],
+    "flagged_extreme_regional_top_50": [
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "travel_agencies",
+        "size_band": "50-249",
+        "year": 2024,
+        "revenue_per_firm": 368332395.12,
+        "peer_median": 6309368.42,
+        "ratio": 58.3786475287173
+      },
+      {
+        "table": "regional_cells",
+        "country": "MX",
+        "geo_id": "MX-19-041",
+        "industry_id": "motor_vehicles_mfg",
+        "size_band": "total",
+        "year": 2024,
+        "revenue_per_firm": 552244530.61,
+        "peer_median": 9503745.45,
+        "ratio": 58.10809364743666
+      },
+      {
+        "table": "regional_cells",
+        "country": "MX",
+        "geo_id": "MX-09-016",
+        "industry_id": "banking",
+        "size_band": "total",
+        "year": 2024,
+        "revenue_per_firm": 70469021.96,
+        "peer_median": 1219428.57142857,
+        "ratio": 57.78856065135901
+      },
+      {
+        "table": "regional_cells",
+        "country": "US",
+        "geo_id": "US-CITY-san-francisco",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2024,
+        "revenue_per_firm": 749327166.24,
+        "peer_median": 13010512.19,
+        "ratio": 57.59397902996777
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "electricity_gas_utilities",
+        "size_band": "20-49",
+        "year": 2024,
+        "revenue_per_firm": 361348372.03,
+        "peer_median": 6396705.36,
+        "ratio": 56.48976335373995
+      },
+      {
+        "table": "regional_cells",
+        "country": "MX",
+        "geo_id": "MX-21-045",
+        "industry_id": "childcare_social",
+        "size_band": "total",
+        "year": 2024,
+        "revenue_per_firm": 3900,
+        "peer_median": 219677.419354839,
+        "ratio": 0.017753303964757685
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-vaduz",
+        "industry_id": "textile_apparel_mfg",
+        "size_band": "50-249",
+        "year": 2023,
+        "revenue_per_firm": 162890526.6,
+        "peer_median": 2892985.29,
+        "ratio": 56.30534215402111
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "it_services_hosting",
+        "size_band": "10-19",
+        "year": 2024,
+        "revenue_per_firm": 30940674.07,
+        "peer_median": 553764.47,
+        "ratio": 55.8733464246993
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "wholesale_food",
+        "size_band": "TOTAL",
+        "year": 2024,
+        "revenue_per_firm": 44314261.51,
+        "peer_median": 802415.07,
+        "ratio": 55.22610824096312
+      },
+      {
+        "table": "regional_cells",
+        "country": "MX",
+        "geo_id": "MX-12-054",
+        "industry_id": "childcare_social",
+        "size_band": "total",
+        "year": 2024,
+        "revenue_per_firm": 4000,
+        "peer_median": 219677.419354839,
+        "ratio": 0.01820851688693096
+      },
+      {
+        "table": "regional_cells",
+        "country": "MG",
+        "geo_id": "MG-CITY-antananarivo",
+        "industry_id": "marketing_design",
+        "size_band": "GE250",
+        "year": 2024,
+        "revenue_per_firm": 219396.12,
+        "peer_median": 11997122.7,
+        "ratio": 0.01828739486010258
+      },
+      {
+        "table": "regional_cells",
+        "country": "MX",
+        "geo_id": "MX-24-040",
+        "industry_id": "metal_products_mfg",
+        "size_band": "total",
+        "year": 2024,
+        "revenue_per_firm": 28176342.86,
+        "peer_median": 520375,
+        "ratio": 54.14622697093442
+      },
+      {
+        "table": "regional_cells",
+        "country": "MZ",
+        "geo_id": "MZ-CITY-maputo",
+        "industry_id": "water_waste",
+        "size_band": "GE250",
+        "year": 2024,
+        "revenue_per_firm": 276741.39,
+        "peer_median": 14980555.23,
+        "ratio": 0.018473373366415604
+      },
+      {
+        "table": "regional_cells",
+        "country": "MG",
+        "geo_id": "MG-CITY-antananarivo",
+        "industry_id": "textile_apparel_mfg",
+        "size_band": "GE250",
+        "year": 2024,
+        "revenue_per_firm": 276053.1,
+        "peer_median": 14832316.88,
+        "ratio": 0.01861159670693335
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "chemical_pharma_mfg",
+        "size_band": "GE250",
+        "year": 2024,
+        "revenue_per_firm": 4452591737.39,
+        "peer_median": 83154010.95,
+        "ratio": 53.54632550517998
+      },
+      {
+        "table": "regional_cells",
+        "country": "US",
+        "geo_id": "US-CITY-new-york",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2024,
+        "revenue_per_firm": 695803797.22,
+        "peer_median": 13010512.19,
+        "ratio": 53.48012338475047
+      },
+      {
+        "table": "regional_cells",
+        "country": "MX",
+        "geo_id": "MX-05-022",
+        "industry_id": "metal_products_mfg",
+        "size_band": "total",
+        "year": 2024,
+        "revenue_per_firm": 27603935.71,
+        "peer_median": 520375,
+        "ratio": 53.046237251981744
+      },
+      {
+        "table": "regional_cells",
+        "country": "MX",
+        "geo_id": "MX-09-014",
+        "industry_id": "banking",
+        "size_band": "total",
+        "year": 2024,
+        "revenue_per_firm": 64476349.14,
+        "peer_median": 1219428.57142857,
+        "ratio": 52.87423195641993
+      },
+      {
+        "table": "regional_cells",
+        "country": "MX",
+        "geo_id": "MX-14-002",
+        "industry_id": "metal_products_mfg",
+        "size_band": "total",
+        "year": 2024,
+        "revenue_per_firm": 27463954.29,
+        "peer_median": 520375,
+        "ratio": 52.7772362046601
+      },
+      {
+        "table": "regional_cells",
+        "country": "QA",
+        "geo_id": "QA-CITY-doha",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2024,
+        "revenue_per_firm": 679188104.88,
+        "peer_median": 13010512.19,
+        "ratio": 52.20302590408626
+      },
+      {
+        "table": "regional_cells",
+        "country": "MX",
+        "geo_id": "MX-13-077",
+        "industry_id": "textile_apparel_mfg",
+        "size_band": "total",
+        "year": 2024,
+        "revenue_per_firm": 8906979.59,
+        "peer_median": 171764.705882353,
+        "ratio": 51.85570309246573
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-vaduz",
+        "industry_id": "electronics_mfg",
+        "size_band": "TOTAL",
+        "year": 2023,
+        "revenue_per_firm": 48509712.77,
+        "peer_median": 935870.46,
+        "ratio": 51.83378987087594
+      },
+      {
+        "table": "regional_cells",
+        "country": "US",
+        "geo_id": "US-CITY-boston",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2024,
+        "revenue_per_firm": 669042112.71,
+        "peer_median": 13010512.19,
+        "ratio": 51.42319556214182
+      },
+      {
+        "table": "regional_cells",
+        "country": "US",
+        "geo_id": "US-CITY-seattle",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2024,
+        "revenue_per_firm": 669042112.71,
+        "peer_median": 13010512.19,
+        "ratio": 51.42319556214182
+      },
+      {
+        "table": "regional_cells",
+        "country": "MX",
+        "geo_id": "MX-30-085",
+        "industry_id": "metal_products_mfg",
+        "size_band": "total",
+        "year": 2024,
+        "revenue_per_firm": 26699453.97,
+        "peer_median": 520375,
+        "ratio": 51.30810275282248
+      },
+      {
+        "table": "regional_cells",
+        "country": "MX",
+        "geo_id": "MX-15-109",
+        "industry_id": "textile_apparel_mfg",
+        "size_band": "total",
+        "year": 2024,
+        "revenue_per_firm": 8801053.97,
+        "peer_median": 171764.705882353,
+        "ratio": 51.23901283904108
+      },
+      {
+        "table": "regional_cells",
+        "country": "NE",
+        "geo_id": "NE-CITY-niamey",
+        "industry_id": "water_waste",
+        "size_band": "GE250",
+        "year": 2024,
+        "revenue_per_firm": 294311.82,
+        "peer_median": 14980555.23,
+        "ratio": 0.019646255795019687
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-schaan",
+        "industry_id": "textile_apparel_mfg",
+        "size_band": "50-249",
+        "year": 2023,
+        "revenue_per_firm": 147126927.25,
+        "peer_median": 2892985.29,
+        "ratio": 50.856438074042195
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-vaduz",
+        "industry_id": "oil_gas_extraction",
+        "size_band": "GE250",
+        "year": 2023,
+        "revenue_per_firm": 3994223813.9,
+        "peer_median": 79148316.98,
+        "ratio": 50.46505050649783
+      },
+      {
+        "table": "regional_cells",
+        "country": "MX",
+        "geo_id": "MX-30-014",
+        "industry_id": "chemical_pharma_mfg",
+        "size_band": "total",
+        "year": 2024,
+        "revenue_per_firm": 48000,
+        "peer_median": 2408491.43,
+        "ratio": 0.01992948756309255
+      }
+    ],
+    "flagged_extreme_extrap_top_50": [
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 19404.3240635909,
+        "peer_median": 13010512.19,
+        "ratio": 0.001491434294070701
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "water_waste",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 35923.0354320728,
+        "peer_median": 14980555.23,
+        "ratio": 0.0023979775702928203
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "MCO",
+        "country_name": "Monaco",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 4393392599.42063,
+        "peer_median": 13010512.19,
+        "ratio": 337.6802185234055
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "other_transport_mfg",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 148145.64871143,
+        "peer_median": 46818896.02,
+        "ratio": 0.003164227722245852
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "marketing_design",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 44202.2282886724,
+        "peer_median": 11997122.7,
+        "ratio": 0.0036844024516538786
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "textile_apparel_mfg",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 55932.034005168,
+        "peer_median": 14832316.88,
+        "ratio": 0.003770957326335655
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "AFG",
+        "country_name": "Afghanistan",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2023,
+        "predicted_rev_per_firm": 57671.6219673009,
+        "peer_median": 13010512.19,
+        "ratio": 0.004432694203355641
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "MCO",
+        "country_name": "Monaco",
+        "industry_id": "water_waste",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 3226232937.05416,
+        "peer_median": 14980555.23,
+        "ratio": 215.36137262745234
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "mining_quarrying",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 132492.534007017,
+        "peer_median": 26161605.48,
+        "ratio": 0.005064388502773837
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "LIE",
+        "country_name": "Liechtenstein",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2023,
+        "predicted_rev_per_firm": 2487130216.96717,
+        "peer_median": 13010512.19,
+        "ratio": 191.1631287566681
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "property_leasing",
+        "size_band": "TOTAL",
+        "year": 2024,
+        "predicted_rev_per_firm": 1005.04937412544,
+        "peer_median": 189345.41,
+        "ratio": 0.0053080207971528855
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "travel_agencies",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 200149.902324714,
+        "peer_median": 35502104.54,
+        "ratio": 0.005637691199382458
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "chemical_pharma_mfg",
+        "size_band": "TOTAL",
+        "year": 2024,
+        "predicted_rev_per_firm": 15096.7254572396,
+        "peer_median": 2561521.57,
+        "ratio": 0.005893655409366551
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "MCO",
+        "country_name": "Monaco",
+        "industry_id": "other_transport_mfg",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 7752090376.7524,
+        "peer_median": 46818896.02,
+        "ratio": 165.5761035766601
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "CAF",
+        "country_name": "Central African Republic",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 84313.1063010656,
+        "peer_median": 13010512.19,
+        "ratio": 0.006480383329248901
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "AFG",
+        "country_name": "Afghanistan",
+        "industry_id": "water_waste",
+        "size_band": "GE250",
+        "year": 2023,
+        "predicted_rev_per_firm": 98392.1223543905,
+        "peer_median": 14980555.23,
+        "ratio": 0.006567989026024271
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "MWI",
+        "country_name": "Malawi",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 86119.0940737067,
+        "peer_median": 13010512.19,
+        "ratio": 0.006619193219764141
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "MCO",
+        "country_name": "Monaco",
+        "industry_id": "marketing_design",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 1727021905.16029,
+        "peer_median": 11997122.7,
+        "ratio": 143.95300842928697
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "MCO",
+        "country_name": "Monaco",
+        "industry_id": "textile_apparel_mfg",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 2090052567.47272,
+        "peer_median": 14832316.88,
+        "ratio": 140.91207627116984
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "MDG",
+        "country_name": "Madagascar",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 92560.7803481378,
+        "peer_median": 13010512.19,
+        "ratio": 0.00711430718456118
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "real_estate_agencies",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 109138.373452365,
+        "peer_median": 14779092.79,
+        "ratio": 0.007384646338117011
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "LIE",
+        "country_name": "Liechtenstein",
+        "industry_id": "water_waste",
+        "size_band": "GE250",
+        "year": 2023,
+        "predicted_rev_per_firm": 1906009457.63427,
+        "peer_median": 14980555.23,
+        "ratio": 127.23223060633313
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "banking",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 121543.253416983,
+        "peer_median": 14856089.07,
+        "ratio": 0.008181376191559344
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "AFG",
+        "country_name": "Afghanistan",
+        "industry_id": "other_transport_mfg",
+        "size_band": "GE250",
+        "year": 2023,
+        "predicted_rev_per_firm": 386858.164231692,
+        "peer_median": 46818896.02,
+        "ratio": 0.008262863867324737
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "textile_apparel_mfg",
+        "size_band": "50-249",
+        "year": 2024,
+        "predicted_rev_per_firm": 24258.352142512,
+        "peer_median": 2892985.29,
+        "ratio": 0.008385231762623999
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "electronics_mfg",
+        "size_band": "TOTAL",
+        "year": 2024,
+        "predicted_rev_per_firm": 7975.65758020416,
+        "peer_median": 935870.46,
+        "ratio": 0.00852218113626982
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "motor_vehicles_mfg",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 852373.236284422,
+        "peer_median": 94657098.32,
+        "ratio": 0.009004852794059555
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "SOM",
+        "country_name": "Somalia, Fed. Rep.",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 118575.601550377,
+        "peer_median": 13010512.19,
+        "ratio": 0.009113830402581331
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "MCO",
+        "country_name": "Monaco",
+        "industry_id": "mining_quarrying",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 2858728929.39096,
+        "peer_median": 26161605.48,
+        "ratio": 109.27192261103389
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "YEM",
+        "country_name": "Yemen, Rep.",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2018,
+        "predicted_rev_per_firm": 119985.626130431,
+        "peer_median": 13010512.19,
+        "ratio": 0.009222206195898504
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "travel_agencies",
+        "size_band": "TOTAL",
+        "year": 2024,
+        "predicted_rev_per_firm": 1917.53454357943,
+        "peer_median": 206770.62,
+        "ratio": 0.009273728267485149
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "CAF",
+        "country_name": "Central African Republic",
+        "industry_id": "water_waste",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 139805.57142928,
+        "peer_median": 14980555.23,
+        "ratio": 0.009332469276526275
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "AFG",
+        "country_name": "Afghanistan",
+        "industry_id": "marketing_design",
+        "size_band": "GE250",
+        "year": 2023,
+        "predicted_rev_per_firm": 112486.008502131,
+        "peer_median": 11997122.7,
+        "ratio": 0.009376082191951825
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "MWI",
+        "country_name": "Malawi",
+        "industry_id": "water_waste",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 142573.424463315,
+        "peer_median": 14980555.23,
+        "ratio": 0.009517232323792514
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "AFG",
+        "country_name": "Afghanistan",
+        "industry_id": "textile_apparel_mfg",
+        "size_band": "GE250",
+        "year": 2023,
+        "predicted_rev_per_firm": 141776.714872673,
+        "peer_median": 14832316.88,
+        "ratio": 0.009558635782913034
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "COD",
+        "country_name": "Congo, Dem. Rep.",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 125067.029539144,
+        "peer_median": 13010512.19,
+        "ratio": 0.009612767561547015
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "MOZ",
+        "country_name": "Mozambique",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 127522.412217017,
+        "peer_median": 13010512.19,
+        "ratio": 0.00980149054508645
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BMU",
+        "country_name": "Bermuda",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 1317857892.43149,
+        "peer_median": 13010512.19,
+        "ratio": 101.29177646398946
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "LIE",
+        "country_name": "Liechtenstein",
+        "industry_id": "other_transport_mfg",
+        "size_band": "GE250",
+        "year": 2023,
+        "predicted_rev_per_firm": 4695408932.76289,
+        "peer_median": 46818896.02,
+        "ratio": 100.28875799969983
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "MDG",
+        "country_name": "Madagascar",
+        "industry_id": "water_waste",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 152411.169715068,
+        "peer_median": 14980555.23,
+        "ratio": 0.010173933300539489
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "MCO",
+        "country_name": "Monaco",
+        "industry_id": "travel_agencies",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 3468134698.56642,
+        "peer_median": 35502104.54,
+        "ratio": 97.6881439425343
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "textile_apparel_mfg",
+        "size_band": "20-49",
+        "year": 2024,
+        "predicted_rev_per_firm": 8146.41293422493,
+        "peer_median": 786899.44,
+        "ratio": 0.010352546361228737
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "legal_services",
+        "size_band": "TOTAL",
+        "year": 2024,
+        "predicted_rev_per_firm": 760.420593361187,
+        "peer_median": 71382.64,
+        "ratio": 0.010652738443985638
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "property_leasing",
+        "size_band": "0-9",
+        "year": 2024,
+        "predicted_rev_per_firm": 928.649725143646,
+        "peer_median": 84981.16,
+        "ratio": 0.010927712979484465
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "LIE",
+        "country_name": "Liechtenstein",
+        "industry_id": "marketing_design",
+        "size_band": "GE250",
+        "year": 2023,
+        "predicted_rev_per_firm": 1060247200.92717,
+        "peer_median": 11997122.7,
+        "ratio": 88.3751235558481
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "LIE",
+        "country_name": "Liechtenstein",
+        "industry_id": "textile_apparel_mfg",
+        "size_band": "GE250",
+        "year": 2023,
+        "predicted_rev_per_firm": 1285759461.87769,
+        "peer_median": 14832316.88,
+        "ratio": 86.68635333778616
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "CAF",
+        "country_name": "Central African Republic",
+        "industry_id": "other_transport_mfg",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 540617.841220157,
+        "peer_median": 46818896.02,
+        "ratio": 0.011547001043963466
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "machinery_mfg",
+        "size_band": "TOTAL",
+        "year": 2024,
+        "predicted_rev_per_firm": 15821.8327915841,
+        "peer_median": 1360406.52,
+        "ratio": 0.011630224171216189
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "MWI",
+        "country_name": "Malawi",
+        "industry_id": "other_transport_mfg",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 550809.272048366,
+        "peer_median": 46818896.02,
+        "ratio": 0.01176467877015025
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "NER",
+        "country_name": "Niger",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 154805.73608368,
+        "peer_median": 13010512.19,
+        "ratio": 0.011898512051098582
+      }
+    ],
+    "normalizations_top_50": [
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "travel_agencies",
+        "size_band": "50-249",
+        "year": 2024,
+        "revenue_per_firm": 368332395.12,
+        "peer_median": 6309368.42,
+        "ratio": 58.3786475287173,
+        "new_revenue_per_firm": 31546842.1,
+        "delta": -336785553.02
+      },
+      {
+        "table": "regional_cells",
+        "country": "MX",
+        "geo_id": "MX-19-041",
+        "industry_id": "motor_vehicles_mfg",
+        "size_band": "total",
+        "year": 2024,
+        "revenue_per_firm": 552244530.61,
+        "peer_median": 9503745.45,
+        "ratio": 58.10809364743666,
+        "new_revenue_per_firm": 47518727.25,
+        "delta": -504725803.36
+      },
+      {
+        "table": "regional_cells",
+        "country": "MX",
+        "geo_id": "MX-09-016",
+        "industry_id": "banking",
+        "size_band": "total",
+        "year": 2024,
+        "revenue_per_firm": 70469021.96,
+        "peer_median": 1219428.57142857,
+        "ratio": 57.78856065135901,
+        "new_revenue_per_firm": 6097142.85714285,
+        "delta": -64371879.10285714
+      },
+      {
+        "table": "regional_cells",
+        "country": "US",
+        "geo_id": "US-CITY-san-francisco",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2024,
+        "revenue_per_firm": 749327166.24,
+        "peer_median": 13010512.19,
+        "ratio": 57.59397902996777,
+        "new_revenue_per_firm": 65052560.949999996,
+        "delta": -684274605.29
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "electricity_gas_utilities",
+        "size_band": "20-49",
+        "year": 2024,
+        "revenue_per_firm": 361348372.03,
+        "peer_median": 6396705.36,
+        "ratio": 56.48976335373995,
+        "new_revenue_per_firm": 31983526.8,
+        "delta": -329364845.22999996
+      },
+      {
+        "table": "regional_cells",
+        "country": "MX",
+        "geo_id": "MX-21-045",
+        "industry_id": "childcare_social",
+        "size_band": "total",
+        "year": 2024,
+        "revenue_per_firm": 3900,
+        "peer_median": 219677.419354839,
+        "ratio": 0.017753303964757685,
+        "new_revenue_per_firm": 43935.4838709678,
+        "delta": 40035.4838709678
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-vaduz",
+        "industry_id": "textile_apparel_mfg",
+        "size_band": "50-249",
+        "year": 2023,
+        "revenue_per_firm": 162890526.6,
+        "peer_median": 2892985.29,
+        "ratio": 56.30534215402111,
+        "new_revenue_per_firm": 14464926.45,
+        "delta": -148425600.15
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "it_services_hosting",
+        "size_band": "10-19",
+        "year": 2024,
+        "revenue_per_firm": 30940674.07,
+        "peer_median": 553764.47,
+        "ratio": 55.8733464246993,
+        "new_revenue_per_firm": 2768822.3499999996,
+        "delta": -28171851.72
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "wholesale_food",
+        "size_band": "TOTAL",
+        "year": 2024,
+        "revenue_per_firm": 44314261.51,
+        "peer_median": 802415.07,
+        "ratio": 55.22610824096312,
+        "new_revenue_per_firm": 4012075.3499999996,
+        "delta": -40302186.16
+      },
+      {
+        "table": "regional_cells",
+        "country": "MX",
+        "geo_id": "MX-12-054",
+        "industry_id": "childcare_social",
+        "size_band": "total",
+        "year": 2024,
+        "revenue_per_firm": 4000,
+        "peer_median": 219677.419354839,
+        "ratio": 0.01820851688693096,
+        "new_revenue_per_firm": 43935.4838709678,
+        "delta": 39935.4838709678
+      },
+      {
+        "table": "regional_cells",
+        "country": "MG",
+        "geo_id": "MG-CITY-antananarivo",
+        "industry_id": "marketing_design",
+        "size_band": "GE250",
+        "year": 2024,
+        "revenue_per_firm": 219396.12,
+        "peer_median": 11997122.7,
+        "ratio": 0.01828739486010258,
+        "new_revenue_per_firm": 2399424.54,
+        "delta": 2180028.42
+      },
+      {
+        "table": "regional_cells",
+        "country": "MX",
+        "geo_id": "MX-24-040",
+        "industry_id": "metal_products_mfg",
+        "size_band": "total",
+        "year": 2024,
+        "revenue_per_firm": 28176342.86,
+        "peer_median": 520375,
+        "ratio": 54.14622697093442,
+        "new_revenue_per_firm": 2601875,
+        "delta": -25574467.86
+      },
+      {
+        "table": "regional_cells",
+        "country": "MZ",
+        "geo_id": "MZ-CITY-maputo",
+        "industry_id": "water_waste",
+        "size_band": "GE250",
+        "year": 2024,
+        "revenue_per_firm": 276741.39,
+        "peer_median": 14980555.23,
+        "ratio": 0.018473373366415604,
+        "new_revenue_per_firm": 2996111.046,
+        "delta": 2719369.656
+      },
+      {
+        "table": "regional_cells",
+        "country": "MG",
+        "geo_id": "MG-CITY-antananarivo",
+        "industry_id": "textile_apparel_mfg",
+        "size_band": "GE250",
+        "year": 2024,
+        "revenue_per_firm": 276053.1,
+        "peer_median": 14832316.88,
+        "ratio": 0.01861159670693335,
+        "new_revenue_per_firm": 2966463.376,
+        "delta": 2690410.276
+      },
+      {
+        "table": "regional_cells",
+        "country": "MC",
+        "geo_id": "MC-CITY-monaco",
+        "industry_id": "chemical_pharma_mfg",
+        "size_band": "GE250",
+        "year": 2024,
+        "revenue_per_firm": 4452591737.39,
+        "peer_median": 83154010.95,
+        "ratio": 53.54632550517998,
+        "new_revenue_per_firm": 415770054.75,
+        "delta": -4036821682.6400003
+      },
+      {
+        "table": "regional_cells",
+        "country": "US",
+        "geo_id": "US-CITY-new-york",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2024,
+        "revenue_per_firm": 695803797.22,
+        "peer_median": 13010512.19,
+        "ratio": 53.48012338475047,
+        "new_revenue_per_firm": 65052560.949999996,
+        "delta": -630751236.27
+      },
+      {
+        "table": "regional_cells",
+        "country": "MX",
+        "geo_id": "MX-05-022",
+        "industry_id": "metal_products_mfg",
+        "size_band": "total",
+        "year": 2024,
+        "revenue_per_firm": 27603935.71,
+        "peer_median": 520375,
+        "ratio": 53.046237251981744,
+        "new_revenue_per_firm": 2601875,
+        "delta": -25002060.71
+      },
+      {
+        "table": "regional_cells",
+        "country": "MX",
+        "geo_id": "MX-09-014",
+        "industry_id": "banking",
+        "size_band": "total",
+        "year": 2024,
+        "revenue_per_firm": 64476349.14,
+        "peer_median": 1219428.57142857,
+        "ratio": 52.87423195641993,
+        "new_revenue_per_firm": 6097142.85714285,
+        "delta": -58379206.28285715
+      },
+      {
+        "table": "regional_cells",
+        "country": "MX",
+        "geo_id": "MX-14-002",
+        "industry_id": "metal_products_mfg",
+        "size_band": "total",
+        "year": 2024,
+        "revenue_per_firm": 27463954.29,
+        "peer_median": 520375,
+        "ratio": 52.7772362046601,
+        "new_revenue_per_firm": 2601875,
+        "delta": -24862079.29
+      },
+      {
+        "table": "regional_cells",
+        "country": "QA",
+        "geo_id": "QA-CITY-doha",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2024,
+        "revenue_per_firm": 679188104.88,
+        "peer_median": 13010512.19,
+        "ratio": 52.20302590408626,
+        "new_revenue_per_firm": 65052560.949999996,
+        "delta": -614135543.93
+      },
+      {
+        "table": "regional_cells",
+        "country": "MX",
+        "geo_id": "MX-13-077",
+        "industry_id": "textile_apparel_mfg",
+        "size_band": "total",
+        "year": 2024,
+        "revenue_per_firm": 8906979.59,
+        "peer_median": 171764.705882353,
+        "ratio": 51.85570309246573,
+        "new_revenue_per_firm": 858823.529411765,
+        "delta": -8048156.060588235
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-vaduz",
+        "industry_id": "electronics_mfg",
+        "size_band": "TOTAL",
+        "year": 2023,
+        "revenue_per_firm": 48509712.77,
+        "peer_median": 935870.46,
+        "ratio": 51.83378987087594,
+        "new_revenue_per_firm": 4679352.3,
+        "delta": -43830360.470000006
+      },
+      {
+        "table": "regional_cells",
+        "country": "US",
+        "geo_id": "US-CITY-boston",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2024,
+        "revenue_per_firm": 669042112.71,
+        "peer_median": 13010512.19,
+        "ratio": 51.42319556214182,
+        "new_revenue_per_firm": 65052560.949999996,
+        "delta": -603989551.76
+      },
+      {
+        "table": "regional_cells",
+        "country": "US",
+        "geo_id": "US-CITY-seattle",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2024,
+        "revenue_per_firm": 669042112.71,
+        "peer_median": 13010512.19,
+        "ratio": 51.42319556214182,
+        "new_revenue_per_firm": 65052560.949999996,
+        "delta": -603989551.76
+      },
+      {
+        "table": "regional_cells",
+        "country": "MX",
+        "geo_id": "MX-30-085",
+        "industry_id": "metal_products_mfg",
+        "size_band": "total",
+        "year": 2024,
+        "revenue_per_firm": 26699453.97,
+        "peer_median": 520375,
+        "ratio": 51.30810275282248,
+        "new_revenue_per_firm": 2601875,
+        "delta": -24097578.97
+      },
+      {
+        "table": "regional_cells",
+        "country": "MX",
+        "geo_id": "MX-15-109",
+        "industry_id": "textile_apparel_mfg",
+        "size_band": "total",
+        "year": 2024,
+        "revenue_per_firm": 8801053.97,
+        "peer_median": 171764.705882353,
+        "ratio": 51.23901283904108,
+        "new_revenue_per_firm": 858823.529411765,
+        "delta": -7942230.440588236
+      },
+      {
+        "table": "regional_cells",
+        "country": "NE",
+        "geo_id": "NE-CITY-niamey",
+        "industry_id": "water_waste",
+        "size_band": "GE250",
+        "year": 2024,
+        "revenue_per_firm": 294311.82,
+        "peer_median": 14980555.23,
+        "ratio": 0.019646255795019687,
+        "new_revenue_per_firm": 2996111.046,
+        "delta": 2701799.2260000003
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-schaan",
+        "industry_id": "textile_apparel_mfg",
+        "size_band": "50-249",
+        "year": 2023,
+        "revenue_per_firm": 147126927.25,
+        "peer_median": 2892985.29,
+        "ratio": 50.856438074042195,
+        "new_revenue_per_firm": 14464926.45,
+        "delta": -132662000.8
+      },
+      {
+        "table": "regional_cells",
+        "country": "LI",
+        "geo_id": "LI-CITY-vaduz",
+        "industry_id": "oil_gas_extraction",
+        "size_band": "GE250",
+        "year": 2023,
+        "revenue_per_firm": 3994223813.9,
+        "peer_median": 79148316.98,
+        "ratio": 50.46505050649783,
+        "new_revenue_per_firm": 395741584.90000004,
+        "delta": -3598482229.0
+      },
+      {
+        "table": "regional_cells",
+        "country": "MX",
+        "geo_id": "MX-30-014",
+        "industry_id": "chemical_pharma_mfg",
+        "size_band": "total",
+        "year": 2024,
+        "revenue_per_firm": 48000,
+        "peer_median": 2408491.43,
+        "ratio": 0.01992948756309255,
+        "new_revenue_per_firm": 481698.2860000001,
+        "delta": 433698.2860000001
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 19404.3240635909,
+        "peer_median": 13010512.19,
+        "ratio": 0.001491434294070701,
+        "new_predicted_rev_per_firm": 2602102.438,
+        "delta": 2582698.1139364094
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "water_waste",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 35923.0354320728,
+        "peer_median": 14980555.23,
+        "ratio": 0.0023979775702928203,
+        "new_predicted_rev_per_firm": 2996111.046,
+        "delta": 2960188.0105679273
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "MCO",
+        "country_name": "Monaco",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 4393392599.42063,
+        "peer_median": 13010512.19,
+        "ratio": 337.6802185234055,
+        "new_predicted_rev_per_firm": 65052560.949999996,
+        "delta": -4328340038.470631
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "other_transport_mfg",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 148145.64871143,
+        "peer_median": 46818896.02,
+        "ratio": 0.003164227722245852,
+        "new_predicted_rev_per_firm": 9363779.204000002,
+        "delta": 9215633.555288572
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "marketing_design",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 44202.2282886724,
+        "peer_median": 11997122.7,
+        "ratio": 0.0036844024516538786,
+        "new_predicted_rev_per_firm": 2399424.54,
+        "delta": 2355222.3117113276
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "textile_apparel_mfg",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 55932.034005168,
+        "peer_median": 14832316.88,
+        "ratio": 0.003770957326335655,
+        "new_predicted_rev_per_firm": 2966463.376,
+        "delta": 2910531.3419948323
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "AFG",
+        "country_name": "Afghanistan",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2023,
+        "predicted_rev_per_firm": 57671.6219673009,
+        "peer_median": 13010512.19,
+        "ratio": 0.004432694203355641,
+        "new_predicted_rev_per_firm": 2602102.438,
+        "delta": 2544430.8160326993
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "MCO",
+        "country_name": "Monaco",
+        "industry_id": "water_waste",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 3226232937.05416,
+        "peer_median": 14980555.23,
+        "ratio": 215.36137262745234,
+        "new_predicted_rev_per_firm": 74902776.15,
+        "delta": -3151330160.90416
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "mining_quarrying",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 132492.534007017,
+        "peer_median": 26161605.48,
+        "ratio": 0.005064388502773837,
+        "new_predicted_rev_per_firm": 5232321.096000001,
+        "delta": 5099828.561992984
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "LIE",
+        "country_name": "Liechtenstein",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2023,
+        "predicted_rev_per_firm": 2487130216.96717,
+        "peer_median": 13010512.19,
+        "ratio": 191.1631287566681,
+        "new_predicted_rev_per_firm": 65052560.949999996,
+        "delta": -2422077656.01717
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "property_leasing",
+        "size_band": "TOTAL",
+        "year": 2024,
+        "predicted_rev_per_firm": 1005.04937412544,
+        "peer_median": 189345.41,
+        "ratio": 0.0053080207971528855,
+        "new_predicted_rev_per_firm": 37869.082,
+        "delta": 36864.03262587456
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "travel_agencies",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 200149.902324714,
+        "peer_median": 35502104.54,
+        "ratio": 0.005637691199382458,
+        "new_predicted_rev_per_firm": 7100420.908,
+        "delta": 6900271.005675286
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "BDI",
+        "country_name": "Burundi",
+        "industry_id": "chemical_pharma_mfg",
+        "size_band": "TOTAL",
+        "year": 2024,
+        "predicted_rev_per_firm": 15096.7254572396,
+        "peer_median": 2561521.57,
+        "ratio": 0.005893655409366551,
+        "new_predicted_rev_per_firm": 512304.314,
+        "delta": 497207.5885427604
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "MCO",
+        "country_name": "Monaco",
+        "industry_id": "other_transport_mfg",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 7752090376.7524,
+        "peer_median": 46818896.02,
+        "ratio": 165.5761035766601,
+        "new_predicted_rev_per_firm": 234094480.10000002,
+        "delta": -7517995896.6524
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "CAF",
+        "country_name": "Central African Republic",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 84313.1063010656,
+        "peer_median": 13010512.19,
+        "ratio": 0.006480383329248901,
+        "new_predicted_rev_per_firm": 2602102.438,
+        "delta": 2517789.3316989345
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "AFG",
+        "country_name": "Afghanistan",
+        "industry_id": "water_waste",
+        "size_band": "GE250",
+        "year": 2023,
+        "predicted_rev_per_firm": 98392.1223543905,
+        "peer_median": 14980555.23,
+        "ratio": 0.006567989026024271,
+        "new_predicted_rev_per_firm": 2996111.046,
+        "delta": 2897718.9236456095
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "MWI",
+        "country_name": "Malawi",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 86119.0940737067,
+        "peer_median": 13010512.19,
+        "ratio": 0.006619193219764141,
+        "new_predicted_rev_per_firm": 2602102.438,
+        "delta": 2515983.3439262933
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "MCO",
+        "country_name": "Monaco",
+        "industry_id": "marketing_design",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 1727021905.16029,
+        "peer_median": 11997122.7,
+        "ratio": 143.95300842928697,
+        "new_predicted_rev_per_firm": 59985613.5,
+        "delta": -1667036291.66029
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "MCO",
+        "country_name": "Monaco",
+        "industry_id": "textile_apparel_mfg",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 2090052567.47272,
+        "peer_median": 14832316.88,
+        "ratio": 140.91207627116984,
+        "new_predicted_rev_per_firm": 74161584.4,
+        "delta": -2015890983.0727198
+      },
+      {
+        "table": "extrapolated_cells",
+        "country_iso3": "MDG",
+        "country_name": "Madagascar",
+        "industry_id": "management_consulting",
+        "size_band": "GE250",
+        "year": 2024,
+        "predicted_rev_per_firm": 92560.7803481378,
+        "peer_median": 13010512.19,
+        "ratio": 0.00711430718456118,
+        "new_predicted_rev_per_firm": 2602102.438,
+        "delta": 2509541.657651862
+      }
+    ],
+    "insert_failures_top_20": []
+  }
+}

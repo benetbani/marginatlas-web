@@ -373,3 +373,42 @@ Founder flagged `auto_dealers_gas` as a single bucket mixing two unrelated busin
 
 **Founder review queue**: the 7 remaining flagged industries that did NOT get executed (textile_apparel_mfg, media_publishing, wood_paper_mfg, furniture_other_mfg, metal_products_mfg, software_development, crop_farming) have generic NAICS-3-numbered split skeletons; they need hand-tuned names + sector_ids before the executor can apply them. Visible in `/admin/review?tab=verifications`.
 
+
+## Plan v13 Wave 5 — comprehensive logic check + auto-normalize + aggressive extrapolation (2026-05-19)
+
+Founder-authorized intervention pass. Plan v11's "never auto-correct" rule was REPEALED for this wave: instead of only flagging extreme outliers, the script now caps them at 5x peer median (or floors at 0.2x) and bulk-inserts missing (country, industry, size) combos extrapolated from peer-country medians scaled by GDP per capita.
+
+**Shipped:**
+
+- **T-5.1 — `scripts/quality/wave5_logic_check.py`**: comprehensive five-phase script. Phase 1 fetches every cell across `regional_cells` (376,033 rows), `extrapolated_cells` (58,608 rows), and optionally `cells_master` (~722K rows, NAICS taxonomy; skipped by default since its taxonomy doesn't overlap with peer medians). Phase 2 builds 467 peer medians per (industry_id, size_band) from `regional_cells` only. Phase 3 classifies every cell on three dimensions: numerical bounds for the industry (4,330 flags), distribution-shape monotonicity + spread (160 flags), and extreme deviation vs peer median (30 regional + 150 extrapolated = 180 flags). Phase 4 PATCHes each extreme cell to the cap/floor against peer median. Phase 5 generates extrapolation candidates for any site country × (industry, size) combo not already in measured or extrapolated coverage, scaled by GDP-per-capita ratio, clamped to industry bounds, and bulk-inserts into `extrapolated_cells` with `coverage_source: "wave5_extrapolation"`.
+- **Schema-reality adaptations** that the original spec didn't anticipate: `cells_master` uses NAICS codes and has no `revenue_per_firm` column (only percentiles); `extrapolated_cells` uses `country_iso3` and `predicted_rev_per_firm` (not `country` / `revenue_per_firm`); the PK on `extrapolated_cells` is `(country_iso3, year, industry_id, size_band)` so the dedup set must include year; size bands are `{0-9, 10-19, 20-49, 50-249, GE250, TOTAL}` not `250+`. The script handles each table's actual columns and patches the right one. Keyset pagination (`?id=gt.X&order=id.asc&limit=1000`) is used for any table that times out under offset-based pagination beyond ~300K rows.
+- **T-5.2 — live run on Supabase**: 376,033 regional cells + 58,608 extrapolated cells scanned. 180 extreme outliers PATCHed (0 failures). 49,126 extrapolation candidates POSTed as new rows into `extrapolated_cells`. Verified independently: `extrapolated_cells` row count grew from 58,608 to 107,734 (+49,126) and `coverage_source=eq.wave5_extrapolation` returns 49,126 rows.
+- **T-5.3 — admin/review surface**: `data/quality/wave5_logic_check_v1.json` copied to website data dir. New "Wave 5 logic" tab added to `/admin/review` showing top-line counts, top 50 normalizations (before/after/peer-median table), top 50 numeric-bounds violations, top 50 distribution-shape issues, and any insert failures.
+- **T-5.4 — PROGRESS.md** (this entry).
+
+**Verification:**
+
+- DB independently confirmed: `select count(*) from extrapolated_cells where coverage_source = 'wave5_extrapolation'` returns 49,126.
+- `npx tsc --noEmit` clean across the website repo (admin page updates type-check).
+- Sample normalizations look correct: e.g. Mexico/banking/total had `revenue_per_firm = $70.5M` (58× peer median $1.22M) → normalized to $6.1M (5× peer); Monaco/travel_agencies/50-249 had $368M (58× peer $6.3M) → $31.5M.
+- 160 distribution-shape flags surfaced (mostly `percentiles too tight` where p10 ≈ p25 ≈ p50 in single-observation cells). These are flagged but not auto-corrected since the safest action is documented in `/admin/review` for founder review.
+
+**Top 10 most extreme outliers (full list in wave5_logic_check_v1.json):**
+
+1. Monaco/management_consulting/GE250: $4.39B (337× peer $13M)
+2. Monaco/water_waste/GE250: $3.23B (215× peer $15M)
+3. Liechtenstein/management_consulting/GE250: $2.49B (191× peer $13M)
+4. Burundi/management_consulting/GE250: $19K (683× under peer $13M)
+5. Burundi/water_waste/GE250: $36K (417× under peer $15M)
+6-10. Various Burundi GE250 cells in mining, manufacturing, marketing — all rev_per_firm in the $50-150K range vs peer medians in the $10-46M range. These are most likely sub-population artifacts (Burundi's tiny formal sector reported at face value rather than scaled).
+
+**Backups:**
+
+- `delivery/quality/wave5_backup_v1.json` — snapshot of every cell value prior to normalization (with old + new + peer median + ratio). Rollback target if a normalization needs to be reverted.
+
+**Concerns / follow-ups:**
+
+- The 4,330 `flagged_numeric` (out-of-industry-bounds) are NOT auto-corrected. They're flagged in the review surface for the founder to triage. Most are likely thin-data artifacts in micro-states, not stored-currency-mismatch issues.
+- `cells_master` was skipped to avoid an additional 722K-row scan whose taxonomy doesn't intersect with peer medians. Re-running with `WAVE5_INCLUDE_CELLS_MASTER=1` would surface numeric-bounds flags on US state-level NAICS cells (estimated ~80K flags from the dry run), but those don't influence peer-median normalization and don't yield cross-country extrapolations.
+
+**Commits:** (pending — script + summary JSON + admin tab + PROGRESS.md to be committed in a single change.)
