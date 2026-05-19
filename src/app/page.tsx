@@ -12,6 +12,9 @@ import { QualityLegend } from "@/components/QualityLegend";
 import { RecentlyAddedStrip } from "@/components/RecentlyAddedStrip";
 import { WhatsHotStrip } from "@/components/WhatsHotStrip";
 import { SpotlightCountry } from "@/components/SpotlightCountry";
+import { GlobalSearch } from "@/components/GlobalSearch";
+import { RotatingWord } from "@/components/RotatingWord";
+import { HERO_CITIES, HERO_BUSINESSES } from "@/lib/hero-words";
 
 export const revalidate = 86400; // 1 day
 
@@ -38,42 +41,59 @@ const FEATURED: FeaturedTileSpec[] = [
 export default function HomePage() {
   return (
     <div>
-      {/* Hero — image OFF the right (Plan v4.0 Step 11). Navigator dominates full width (Step 12). */}
-      <section className="py-8 md:py-12">
-        <div className="max-w-4xl">
-          <h1 className="text-4xl md:text-6xl font-semibold tracking-tight text-ink-900 leading-[1.05]">
-            Small-business benchmarks across{" "}
-            <span className="gradient-name">191 countries</span>.
-          </h1>
-          <p className="mt-5 text-lg md:text-xl text-cocoa-900/80 max-w-3xl leading-relaxed">
-            Revenue, payroll, and after-tax owner take-home for every covered
-            country × industry × city × size combination — all from one query.
-            Compiled from official statistics and standardized so a bakery in
-            Paris compares directly to a bakery in California.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <a
-              href="/browse"
-              className="inline-flex items-center px-5 py-2.5 rounded-full bg-ink-900 text-cream-50 text-sm font-medium hover:bg-ink-800 transition"
-            >
-              Browse 191 countries →
-            </a>
-            <a
-              href="#ask-atlas"
-              className="inline-flex items-center px-5 py-2.5 rounded-full bg-cream-100 border border-parchment text-ink-900 text-sm font-medium hover:bg-parchment-100 transition"
-            >
-              Try Ask Atlas →
-            </a>
-            <a
-              href="#pick-a-city"
-              className="inline-flex items-center px-5 py-2.5 rounded-full bg-cream-100 border border-parchment text-ink-900 text-sm font-medium hover:bg-parchment-100 transition"
-            >
-              Pick a city →
-            </a>
+      {/*
+        Hero — Plan v13 Wave 4e.
+        Rotating headline ("How much does a [BUSINESS] make in [CITY]?") over a
+        full-width background video. Card sits above the video with high opacity
+        so the video only bleeds at the section edges.
+
+        Founder to drop a 60-90s loop file at public/videos/hero-cities-loop.mp4
+        — until then, the poster image displays as a static fallback.
+      */}
+      <section className="relative h-[80vh] min-h-[600px] overflow-hidden bg-ink-900 left-1/2 right-1/2 -mx-[50vw] w-screen -mt-10">
+        <video
+          className="absolute inset-0 w-full h-full object-cover opacity-60"
+          poster="/images/hero-poster.svg"
+          autoPlay
+          muted
+          loop
+          playsInline
+        >
+          <source src="/videos/hero-cities-loop.mp4" type="video/mp4" />
+        </video>
+
+        {/* Subtle dark gradient overlay for legibility at top and bottom */}
+        <div className="absolute inset-0 bg-gradient-to-b from-ink-900/30 via-transparent to-ink-900/40 pointer-events-none" />
+
+        <div className="absolute inset-0 flex items-center justify-center px-4">
+          <div className="w-full max-w-3xl bg-cream-50/85 backdrop-blur-md border border-cream-200/50 rounded-3xl p-6 sm:p-8 md:p-12 shadow-lg">
+            <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-ink-900 text-center leading-tight">
+              How much does a{" "}
+              <span className="inline-block min-w-[5ch] text-atlas-600">
+                <RotatingWord
+                  words={HERO_BUSINESSES as unknown as string[]}
+                  interval={2000}
+                />
+              </span>{" "}
+              make in{" "}
+              <span className="inline-block min-w-[7ch] text-atlas-600">
+                <RotatingWord
+                  words={HERO_CITIES as unknown as string[]}
+                  interval={2000}
+                  offset={1000}
+                />
+              </span>
+              ?
+            </h1>
+            <div className="mt-6 md:mt-8">
+              <GlobalSearch />
+            </div>
           </div>
         </div>
+      </section>
 
-        {/* Navigator — full width, dominant */}
+      {/* Navigator — full width, dominant */}
+      <section className="py-8 md:py-12">
         <div className="mt-8 md:mt-10">
           <NavigatorForm />
         </div>
