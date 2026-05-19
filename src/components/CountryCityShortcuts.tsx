@@ -29,14 +29,6 @@ type Snapshot = {
   revenue_per_firm: number | null;
 };
 
-function fmtCount(n: number | null | undefined): string {
-  if (n == null || isNaN(n)) return "—";
-  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
-  if (n >= 10_000) return `${Math.round(n / 1000)}k`;
-  if (n >= 1_000) return `${(n / 1000).toFixed(1)}k`;
-  return String(n);
-}
-
 function fmtMoney(v: number | null | undefined): string {
   if (v == null || isNaN(v)) return "—";
   if (v >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
@@ -98,18 +90,12 @@ export async function CountryCityShortcuts({
                   </span>
                 )}
               </div>
-              {s.n_enterprises != null && (
+              {s.revenue_per_firm != null ? (
                 <div className="mt-1.5 text-xs text-cocoa-700">
-                  ~{fmtCount(s.n_enterprises)} {defaultIndustry.replace(/_/g, " ")}
-                  {s.revenue_per_firm != null && (
-                    <>
-                      {" · "}typical{" "}
-                      <strong className="text-ink-900">{fmtMoney(s.revenue_per_firm)}</strong>
-                    </>
-                  )}
+                  Typical{" "}
+                  <strong className="text-ink-900">{fmtMoney(s.revenue_per_firm)}</strong>
                 </div>
-              )}
-              {s.n_enterprises == null && (
+              ) : (
                 <div className="mt-1.5 text-xs text-ink-700/60">
                   Open for full numbers →
                 </div>
