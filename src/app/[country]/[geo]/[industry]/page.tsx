@@ -98,7 +98,7 @@ export async function generateMetadata({
   const geoName = cell.geo_name || geo;
   const title = `How much do ${ind.toLowerCase()} earn in ${geoName}? | Margin Atlas`;
   const median = cell.revenue_per_firm ? `~${formatMoney(cell.revenue_per_firm)} typical revenue` : "Revenue and employment numbers";
-  const desc = `${median} for ${ind.toLowerCase()} in ${geoName}, ${cell.year}. Bottom-10%, typical, and top-10% spread across ${cell.n_enterprises?.toLocaleString() || "thousands of"} firms.`;
+  const desc = `${median} for ${ind.toLowerCase()} in ${geoName}. Bottom-10%, typical, and top-10% benchmarks.`;
   const ogPath = `/og/cell?country=${encodeURIComponent(country)}&geo=${encodeURIComponent(geo)}&industry=${encodeURIComponent(industry)}`;
   const canonical = `/${country.toLowerCase()}/${geo.toLowerCase()}/${industry.toLowerCase()}`;
   return {
@@ -328,7 +328,7 @@ export default async function CellPage({
           <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium flex items-center gap-2">
             {cell.sector_name && <>{cell.sector_name} · </>}
             <span className="flag text-base" aria-hidden>{flagFromIso2(country)}</span>
-            <span>{cell.geo_name || iso2ToName(country)} · {cell.year}</span>
+            <span>{cell.geo_name || iso2ToName(country)}</span>
           </div>
           <h1 className="mt-2 text-3xl md:text-5xl font-semibold tracking-tight text-ink-900">
             How much do <span className="text-atlas-600">{(cell.industry_name || "businesses").toLowerCase()}</span> earn in {cell.geo_name}?
@@ -472,7 +472,7 @@ export default async function CellPage({
           <div className="flex items-center gap-4 flex-wrap">
             <QualityDots
               score={score100to10(cell.quality_score)}
-              detail={`Year ${cell.year} · tier ${cell.coverage_tier ?? "?"}`}
+              detail="Most recent data"
             />
             <QualityBadge
               qualityScore={cell.quality_score}

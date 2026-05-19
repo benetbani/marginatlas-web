@@ -103,30 +103,9 @@ export function CellWarningChips({
     }
   }
 
-  // AA.6 — staleness
-  if (year != null) {
-    if (year < 2015) {
-      chips.push(
-        <span
-          key="hide-stale"
-          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-clay-100 border border-clay-300 text-xs font-medium text-clay-900"
-        >
-          <span aria-hidden>⚠</span>
-          Data from {year} — refresh pending
-        </span>
-      );
-    } else if (year < 2018) {
-      chips.push(
-        <span
-          key="warn-stale"
-          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-cream-200 border border-parchment text-xs font-medium text-ink-900"
-        >
-          <span aria-hidden>🕰</span>
-          {year} data — newer benchmarks available for some neighbors
-        </span>
-      );
-    }
-  }
+  // AA.6 staleness chips removed per Plan v13 Wave 1 — never display raw years
+  // to public visitors. `year` prop is retained for type compatibility.
+  void year;
 
   // AA.9 — industry-mapping warning
   if (

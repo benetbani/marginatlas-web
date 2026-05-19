@@ -49,40 +49,14 @@ export function CountryQualitySummary({ iso2 }: { iso2: string }) {
 
   return (
     <section className="py-6">
-      <div className="text-xs uppercase tracking-wide text-atlas-700 font-semibold mb-3">
-        Data depth
-      </div>
       <div className="rounded-xl border border-ink-200 bg-cream-50 p-5 md:p-6 flex flex-wrap items-center justify-between gap-4">
         <div className="flex flex-wrap items-center gap-6 text-sm">
-          <div>
-            <div className="text-2xl font-semibold text-ink-900 tabular-nums">
-              {totalCells.toLocaleString()}
-            </div>
-            <div className="text-xs text-ink-700/70">cells in atlas</div>
-          </div>
-          <div>
-            <div className="text-2xl font-semibold text-atlas-700 tabular-nums">
-              {entry.avg_quality_10.toFixed(1)}
-              <span className="text-base text-ink-700/70 font-normal">/10</span>
-            </div>
-            <div className="text-xs text-ink-700/70">avg confidence</div>
-          </div>
           <div>
             <div className="text-2xl font-semibold text-ink-900 tabular-nums">
               {entry.industries}
             </div>
             <div className="text-xs text-ink-700/70">industries covered</div>
           </div>
-          {entry.year_range[0] && entry.year_range[1] ? (
-            <div>
-              <div className="text-2xl font-semibold text-ink-900 tabular-nums">
-                {entry.year_range[0] === entry.year_range[1]
-                  ? entry.year_range[0]
-                  : `${entry.year_range[0]}–${entry.year_range[1]}`}
-              </div>
-              <div className="text-xs text-ink-700/70">data years</div>
-            </div>
-          ) : null}
         </div>
         <Link
           href={`/coverage/${iso2.toLowerCase()}`}
