@@ -17,8 +17,9 @@ import {
 import { INDUSTRIES, industryToSlug } from "@/lib/taxonomy";
 import { flagFromIso2, iso2ToName } from "@/lib/countries";
 import { CountryFlag } from "@/components/CountryFlag";
-import { DistributionBars } from "@/components/DistributionBars";
-import { DistributionHistogram } from "@/components/DistributionHistogram";
+import { RevenueTiles } from "@/components/RevenueTiles";
+import { RevenueDistribution } from "@/components/RevenueDistribution";
+import { MarginWaterfall } from "@/components/MarginWaterfall";
 import { QualityBadge } from "@/components/QualityBadge";
 import { QualityDots, score100to10 } from "@/components/QualityDots";
 import { Tooltip } from "@/components/Tooltip";
@@ -44,6 +45,20 @@ import { EmptyStateCard } from "@/components/EmptyStateCard";
 import { CorrectionForm } from "@/components/CorrectionForm";
 import { CurrencySwitcher } from "@/components/CurrencySwitcher";
 import { Money } from "@/components/Money";
+import { estimateNetProfit } from "@/lib/finance/net_profit";
+import industryMarginsJson from "@/lib/finance/industry_margins.json";
+import { clampMargin } from "@/lib/finance/margin_floor";
+
+type IndustryMarginRow = { gross_margin: number; operating_margin: number; asset_intensity?: number };
+const INDUSTRY_MARGINS = industryMarginsJson as unknown as {
+  default_fallback: IndustryMarginRow;
+  industries: Record<string, IndustryMarginRow>;
+};
+
+function lookupIndustryMargin(industryId: string | null | undefined): IndustryMarginRow {
+  if (!industryId) return INDUSTRY_MARGINS.default_fallback;
+  return INDUSTRY_MARGINS.industries[industryId] || INDUSTRY_MARGINS.default_fallback;
+}
 
 // ISR: regenerate every 6 hours (21600 seconds) — Track EE.1.
 // Per-cell tiering (1h for quality_10>=8, 24h for 5-7, 7d for <5) is not
@@ -182,6 +197,28 @@ export default async function CellPage({
   );
   // Silence eslint unused — INDUSTRY_BY_ID may not be used directly here
   void INDUSTRY_BY_ID;
+
+  // Margin waterfall inputs — gross + operating come from the industry
+  // lookup, net comes from estimateNetProfit() so it reflects the
+  // sub-regional tax + fixed-cost adjustments. clampMargin is applied
+  // inside the MarginWaterfall component as a defensive floor.
+  const marginRow = lookupIndustryMargin(cell.industry_id);
+  const grossRevenueForMargin = cell.revenue_per_firm ?? cell.rev_p50 ?? null;
+  const payrollForMargin =
+    cell.payroll_per_employee != null && cell.n_employees != null && cell.n_enterprises
+      ? (cell.payroll_per_employee * cell.n_employees) / cell.n_enterprises
+      : null;
+  const computedNetMargin =
+    grossRevenueForMargin && grossRevenueForMargin > 0
+      ? estimateNetProfit({
+          iso2: country.toUpperCase(),
+          geoId: cell.geo_id || geo,
+          industryId: cell.industry_id || null,
+          sectorId: cell.sector_id || null,
+          grossRevenue: grossRevenueForMargin,
+          payroll: payrollForMargin,
+        }).net_margin
+      : null;
 
   const url = `https://marginatlas.com/${country}/${geo}/${industry}`;
   return (
@@ -408,25 +445,35 @@ export default async function CellPage({
                 : null
             }
           />
+          {/* Plan v13 Wave 2 — profit waterfall integrity visual.
+             Gross + operating from industry lookup, net from the
+             estimateNetProfit() call above. All three pass through
+             clampMargin inside the component. */}
+          <MarginWaterfall
+            grossMargin={marginRow.gross_margin ?? null}
+            operatingMargin={marginRow.operating_margin ?? null}
+            netMargin={computedNetMargin}
+          />
         </div>
       </section>
 
-      {/* Distribution — histogram + 5-bar tier view side by side */}
-      <section id="distribution" className="py-6 grid lg:grid-cols-2 gap-4">
-        <DistributionHistogram
-          p10={cell.rev_p10}
-          p25={cell.rev_p25}
-          p50={cell.rev_p50}
-          p75={cell.rev_p75}
-          p90={cell.rev_p90}
+      {/* Plan v13 Wave 2 — Bottom 20% / Median / Top 10% revenue tiles +
+         smooth log-normal distribution curve. Replaces the prior
+         histogram + 5-bar tier view. */}
+      <section id="distribution">
+        <RevenueTiles
+          p10={cell.rev_p10 ?? null}
+          p20={null}
+          p50={cell.rev_p50 ?? null}
+          p90={cell.rev_p90 ?? null}
           currencySymbol="$"
         />
-        <DistributionBars
-          p10={cell.rev_p10}
-          p25={cell.rev_p25}
-          p50={cell.rev_p50}
-          p75={cell.rev_p75}
-          p90={cell.rev_p90}
+        <RevenueDistribution
+          p10={cell.rev_p10 ?? null}
+          p25={cell.rev_p25 ?? null}
+          p50={cell.rev_p50 ?? null}
+          p75={cell.rev_p75 ?? null}
+          p90={cell.rev_p90 ?? null}
           currencySymbol="$"
         />
       </section>
