@@ -146,7 +146,7 @@ export function SpotlightCountry() {
 
   return (
     <section className="py-10">
-      <div className="rounded-2xl bg-gradient-to-br from-cream-100 via-cream-50 to-parchment-100 border border-parchment p-6 md:p-8">
+      <div className="rounded-2xl bg-cream-100 border border-parchment p-6 md:p-8">
         <div className="flex items-center gap-3">
           <CountryFlag iso2={s.iso2} label={s.name} className="w-14" />
           <div>

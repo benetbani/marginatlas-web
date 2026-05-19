@@ -30,9 +30,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-ink-50 text-ink-900 font-sans">
+      <body className="min-h-screen bg-cream-50 text-ink-900 font-sans">
         <Organization />
-        <header className="border-b border-ink-200 bg-ink-50/85 backdrop-blur sticky top-0 z-10">
+        <header className="border-b border-ink-200 bg-cream-50 sticky top-0 z-10">
           <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
             <a href="/" className="flex items-center gap-2 font-semibold text-lg tracking-tight">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
