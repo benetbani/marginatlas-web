@@ -68,7 +68,7 @@ function Stat({ number, label, suffix }: { number: number; label: string; suffix
     : String(number);
   return (
     <div>
-      <div className="text-3xl md:text-4xl font-bold text-cocoa-900 tabular-nums">
+      <div className="text-3xl md:text-4xl font-bold text-ink-900 tabular-nums">
         {display}{suffix}
       </div>
       <div className="mt-1 text-xs uppercase tracking-wider text-ink-700/60 font-medium">

@@ -91,7 +91,7 @@ export function QualityBadge({ qualityScore, coverageTier, coverageSource }: Pro
         </div>
         <div className="text-sm font-medium text-ink-900">{label}</div>
       </div>
-      <div className="mt-3 inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-parchment text-cocoa-900">
+      <div className="mt-3 inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-parchment text-ink-900">
         {genericSource}
       </div>
     </div>

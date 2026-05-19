@@ -22,7 +22,7 @@ export function QualityLegend() {
         <div className="text-xs uppercase tracking-wider text-ink-700/60 font-medium mb-2">
           Data quality scale
         </div>
-        <h2 className="text-xl md:text-2xl font-semibold text-cocoa-900">
+        <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
           Every cell carries a 1-10 confidence score
         </h2>
         <p className="mt-2 text-sm text-ink-800/80 max-w-3xl">

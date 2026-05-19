@@ -329,7 +329,7 @@ export default async function CellPage({
       {nudge && cell.revenue_per_firm != null && (
         <div className="mb-4 rounded-xl border border-atlas-300 bg-atlas-100/60 px-4 py-2.5 text-sm flex items-center gap-2 flex-wrap">
           <span aria-hidden>🧭</span>
-          <span className="text-cocoa-900">
+          <span className="text-ink-900">
             Stronger data for{" "}
             <strong>{cell.industry_name || industry.replace(/-/g, " ")}</strong> exists in{" "}
             <strong>{nudge.geo_name}</strong>.

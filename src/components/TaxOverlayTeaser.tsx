@@ -28,7 +28,7 @@ export function TaxOverlayTeaser() {
           <div className="text-xs uppercase tracking-wider text-atlas-700 font-semibold">
             New
           </div>
-          <h2 className="mt-1 text-2xl md:text-3xl font-semibold text-cocoa-900">
+          <h2 className="mt-1 text-2xl md:text-3xl font-semibold text-ink-900">
             How much does the owner actually take home?
           </h2>
           <p className="mt-3 text-sm md:text-base text-ink-800/80 leading-relaxed">
@@ -57,7 +57,7 @@ export function TaxOverlayTeaser() {
             <Row label="Corporate tax (25%)" value={`− ${fmt(cit)}`} muted />
             <div className="border-t border-atlas-400 my-2" />
             <div className="flex items-center justify-between font-semibold">
-              <span className="text-cocoa-900">Owner take-home</span>
+              <span className="text-ink-900">Owner take-home</span>
               <span className="text-atlas-700 text-base">{fmt(ownerTake)}</span>
             </div>
           </div>

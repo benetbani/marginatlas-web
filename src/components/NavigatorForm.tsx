@@ -259,7 +259,7 @@ export function NavigatorForm() {
           <button
             type="button"
             onClick={surpriseMe}
-            className="px-4 py-3 rounded-xl bg-cream-100 hover:bg-cream-200 text-cocoa-900 text-sm font-medium border border-parchment transition"
+            className="px-4 py-3 rounded-xl bg-cream-100 hover:bg-cream-200 text-ink-900 text-sm font-medium border border-parchment transition"
           >
             Surprise me ✦
           </button>

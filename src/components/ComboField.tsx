@@ -160,7 +160,7 @@ export function ComboField({
                   : "border-transparent hover:bg-cream-100"
               }`}
             >
-              <span className="font-medium text-cocoa-900">{o.label}</span>
+              <span className="font-medium text-ink-900">{o.label}</span>
               {o.examples && o.examples.length > 0 && (
                 <span className="text-cocoa-700/60 ml-1.5">
                   · {o.examples.slice(0, 3).join(", ")}

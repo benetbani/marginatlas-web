@@ -84,7 +84,7 @@ export function NetProfitWaterfall({
         <Row label="= Pre-tax profit" value={fmtMoney(w.pre_tax_profit)} />
         <Row label={`− Corporate income tax (${w.effective_cit_breakdown})`} value={fmtMoney(-w.corporate_income_tax)} muted />
         <div className="border-t border-atlas-300 mt-3 pt-3 flex items-center justify-between">
-          <div className="text-sm font-semibold text-cocoa-900">
+          <div className="text-sm font-semibold text-ink-900">
             Net profit (owner take-home)
           </div>
           <div className="text-right">
@@ -97,7 +97,7 @@ export function NetProfitWaterfall({
       </div>
 
       <div className="mt-5 rounded-lg bg-cream-100 border border-parchment p-3 text-xs text-ink-700/80 leading-relaxed">
-        <strong className="text-cocoa-900">Estimate only: not financial or tax advice.</strong>{" "}
+        <strong className="text-ink-900">Estimate only: not financial or tax advice.</strong>{" "}
         COGS pulled from industry-typical gross margin. Payroll inferred
         from operating margin when not measured. Fixed costs from city /
         country commercial rent + commercial property tax + per-country

@@ -102,7 +102,7 @@ export function PostTaxToggle({ country, regionId, grossRevenue, payroll }: Prop
             muted
           />
           <div className="border-t border-atlas-300 mt-2 pt-2.5 flex items-center justify-between">
-            <div className="text-sm font-semibold text-cocoa-900">
+            <div className="text-sm font-semibold text-ink-900">
               Owner take-home
             </div>
             <div className="text-lg font-bold text-atlas-700">
@@ -111,7 +111,7 @@ export function PostTaxToggle({ country, regionId, grossRevenue, payroll }: Prop
           </div>
 
           <div className="mt-5 rounded-lg bg-cream-100 border border-parchment p-3 text-xs text-ink-700/80 leading-relaxed">
-            <strong className="text-cocoa-900">Planning estimate only: not tax advice.</strong>
+            <strong className="text-ink-900">Planning estimate only: not tax advice.</strong>
             {" "}
             Country-level approximation. Actual liability varies by region,
             business form, deductions, incentives, and treaty positions.

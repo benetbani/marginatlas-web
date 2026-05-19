@@ -64,7 +64,7 @@ export async function FeaturedCellTile({ spec }: { spec: FeaturedTileSpec }) {
           </div>
           {cell.n_enterprises ? (
             <div className="text-[10px] text-cocoa-700/60 text-right tabular-nums leading-tight">
-              <div className="font-medium text-cocoa-900">
+              <div className="font-medium text-ink-900">
                 {cell.n_enterprises >= 1000
                   ? `${(cell.n_enterprises / 1000).toFixed(1)}k`
                   : cell.n_enterprises.toLocaleString()}

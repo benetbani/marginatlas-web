@@ -32,7 +32,7 @@ export function AudienceCaveat({ industry, usingParentData }: Props) {
   // 2. Mixed bimodal — warn that average can mislead.
   if (audience === "mixed_caution") {
     return (
-      <div className="rounded-xl border border-cream-300 bg-cream-100 px-4 py-2.5 text-sm text-cocoa-900 flex items-start gap-2">
+      <div className="rounded-xl border border-cream-300 bg-cream-100 px-4 py-2.5 text-sm text-ink-900 flex items-start gap-2">
         <span aria-hidden className="text-base">⚠️</span>
         <div>
           <span className="font-medium">Read with caution.</span>{" "}
@@ -47,7 +47,7 @@ export function AudienceCaveat({ industry, usingParentData }: Props) {
   // 3. Corp-only opened by direct URL — make the limitation explicit.
   if (audience === "corp_only") {
     return (
-      <div className="rounded-xl border border-clay-300 bg-clay-100 px-4 py-2.5 text-sm text-cocoa-900 flex items-start gap-2">
+      <div className="rounded-xl border border-clay-300 bg-clay-100 px-4 py-2.5 text-sm text-ink-900 flex items-start gap-2">
         <span aria-hidden className="text-base">🏛️</span>
         <div>
           <span className="font-medium">Large-firm industry.</span>{" "}

@@ -68,7 +68,7 @@ export function CityPicker() {
   return (
     <section className="my-12">
       <div className="rounded-2xl border border-parchment bg-cream-100 p-6 md:p-8">
-        <h2 className="text-2xl md:text-3xl font-semibold text-cocoa-900">
+        <h2 className="text-2xl md:text-3xl font-semibold text-ink-900">
           Or pick a city directly
         </h2>
         <p className="mt-2 text-sm text-ink-800/80 max-w-2xl">

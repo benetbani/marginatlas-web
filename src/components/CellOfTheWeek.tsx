@@ -120,7 +120,7 @@ export async function CellOfTheWeek() {
                   <CountryFlag iso2={pick.country} label={cell.geo_name || pick.country} className="w-7" />
                   <span>{cell.industry_name} in {cell.geo_name}</span>
                 </h2>
-                <p className="mt-3 text-sm md:text-base text-cocoa-900/85 leading-relaxed max-w-2xl">
+                <p className="mt-3 text-sm md:text-base text-ink-900/85 leading-relaxed max-w-2xl">
                   {pick.note}
                 </p>
                 <div className="mt-4 text-xs text-atlas-700 font-medium group-hover:text-atlas-900">

@@ -226,7 +226,7 @@ export default function HomePage() {
                 <div className="font-semibold text-lg text-ink-900">
                   The full distribution. Bottom 10%, Typical, Top 10%.
                 </div>
-                <p className="mt-1.5 text-sm text-cocoa-900/80 leading-relaxed">
+                <p className="mt-1.5 text-sm text-ink-900/80 leading-relaxed">
                   Not just an average. Every cell shows the spread: what the smallest
                   businesses make, what the typical one does, and what the biggest 10%
                   bring in.
@@ -241,7 +241,7 @@ export default function HomePage() {
                 <div className="font-semibold text-lg text-ink-900">
                   Side-by-side comparisons across countries and industries.
                 </div>
-                <p className="mt-1.5 text-sm text-cocoa-900/80 leading-relaxed">
+                <p className="mt-1.5 text-sm text-ink-900/80 leading-relaxed">
                   Friendly industry names map across every country, so you can compare
                   bakeries in Paris to bakeries in California without wrestling with
                   classification codes.
@@ -256,7 +256,7 @@ export default function HomePage() {
                 <div className="font-semibold text-lg text-ink-900">
                   Quality you can trust. Every cell rated, every number traceable.
                 </div>
-                <p className="mt-1.5 text-sm text-cocoa-900/80 leading-relaxed">
+                <p className="mt-1.5 text-sm text-ink-900/80 leading-relaxed">
                   Each cell carries a 5-star quality rating so you know whether
                   you&apos;re looking at a direct measurement, a modeled estimate, or
                   something in between. No black boxes.

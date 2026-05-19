@@ -15,7 +15,7 @@ export default function SectorsIndex() {
         <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-ink-900">
           Browse categories
         </h1>
-        <p className="mt-3 text-lg text-cocoa-900/80 max-w-2xl">
+        <p className="mt-3 text-lg text-ink-900/80 max-w-2xl">
           Twenty small-business categories. Pick a category to see every
           industry inside it.
         </p>

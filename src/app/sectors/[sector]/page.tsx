@@ -66,7 +66,7 @@ export default async function SectorPage({ params }: { params: Promise<Params> }
         <span className="mx-2">/</span>
         <a href="/browse" className="hover:text-atlas-700">Browse</a>
         <span className="mx-2">/</span>
-        <span className="text-cocoa-900">{s.name}</span>
+        <span className="text-ink-900">{s.name}</span>
       </nav>
 
       <header className="py-8">
@@ -87,7 +87,7 @@ export default async function SectorPage({ params }: { params: Promise<Params> }
               {s.name}
             </h1>
             {s.tagline && (
-              <p className="mt-2 text-lg text-cocoa-900/80 max-w-3xl">
+              <p className="mt-2 text-lg text-ink-900/80 max-w-3xl">
                 {s.tagline}
               </p>
             )}
@@ -161,7 +161,7 @@ export default async function SectorPage({ params }: { params: Promise<Params> }
               <a
                 key={other.id}
                 href={`/sectors/${other.id}`}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cream-100 border border-parchment hover:border-atlas-600 text-sm text-cocoa-900 transition"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cream-100 border border-parchment hover:border-atlas-600 text-sm text-ink-900 transition"
               >
                 <span aria-hidden>{other.icon}</span>
                 <span>{other.name}</span>

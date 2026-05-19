@@ -55,7 +55,7 @@ export function AskWidget() {
         <div className="text-xs uppercase tracking-wider text-atlas-700 font-semibold">
           Ask Atlas
         </div>
-        <h2 className="mt-1 text-2xl md:text-3xl font-semibold text-cocoa-900">
+        <h2 className="mt-1 text-2xl md:text-3xl font-semibold text-ink-900">
           Ask anything about small-business benchmarks
         </h2>
         <p className="mt-2 text-sm md:text-base text-ink-800/80 leading-relaxed max-w-3xl">
