@@ -17,7 +17,7 @@ type Props = {
 };
 
 function fmtMoney(v: number | null | undefined, sym = "$"): string {
-  if (v == null || isNaN(v)) return "—";
+  if (v == null || isNaN(v)) return "-";
   if (v >= 1e9) return `${sym}${(v / 1e9).toFixed(1)}B`;
   if (v >= 1e6) return `${sym}${(v / 1e6).toFixed(1)}M`;
   if (v >= 1e3) return `${sym}${(v / 1e3).toFixed(0)}K`;
@@ -44,7 +44,7 @@ export function AcrossStatesStrip({ industryName, currentGeoName, cells }: Props
               <a
                 key={c.geo_id}
                 href={cellUrl(c) || "#"}
-                className="grid grid-cols-[140px_1fr_auto_auto] items-center gap-3 px-2 py-1.5 rounded hover:bg-ink-100/60 transition"
+                className="grid grid-cols-[140px_1fr_auto] items-center gap-3 px-2 py-1.5 rounded hover:bg-ink-100/60 transition"
               >
                 <div className="text-sm text-ink-900 truncate">{c.geo_name || c.geo_id}</div>
                 <div className="h-3 bg-slate-100/70 rounded overflow-hidden">
@@ -52,9 +52,6 @@ export function AcrossStatesStrip({ industryName, currentGeoName, cells }: Props
                     className="h-full bg-atlas-500"
                     style={{ width: `${pct}%`, transition: "width 0.4s ease" }}
                   />
-                </div>
-                <div className="text-xs text-ink-700/80 tabular-nums text-right w-20">
-                  {c.n_enterprises?.toLocaleString() || "—"} firms
                 </div>
                 <div className="text-xs text-ink-700/60 tabular-nums text-right w-20">
                   {fmtMoney(c.revenue_per_firm)}
