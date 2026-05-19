@@ -57,7 +57,7 @@ export function SectorMasterMenu() {
                   {examples.map((e) => (
                     <span
                       key={e}
-                      className="text-[10px] px-1.5 py-0.5 rounded-full bg-white/60 text-cocoa-700/80"
+                      className="text-[10px] px-1.5 py-0.5 rounded-full bg-white text-cocoa-700/80"
                     >
                       {e}
                     </span>

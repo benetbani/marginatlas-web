@@ -70,7 +70,7 @@ export default function RootLayout({
           </div>
         </header>
         <main className="max-w-7xl mx-auto px-6 py-10">{children}</main>
-        <footer className="border-t border-ink-200 mt-20 bg-ink-100/40">
+        <footer className="border-t border-ink-200 mt-20 bg-ink-100">
           <div className="max-w-7xl mx-auto px-6 py-12">
             <div className="flex items-center gap-2 font-semibold text-ink-900 mb-8">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">

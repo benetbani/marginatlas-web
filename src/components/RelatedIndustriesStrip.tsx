@@ -30,7 +30,7 @@ export function RelatedIndustriesStrip({
   if (siblings.length === 0) return null;
 
   return (
-    <section className="mt-10 card bg-cream-100/40">
+    <section className="mt-10 card bg-cream-100">
       <div className="text-xs uppercase tracking-wide text-atlas-700 font-semibold">
         More in this sector
       </div>

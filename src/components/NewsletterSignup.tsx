@@ -39,7 +39,7 @@ export function NewsletterSignup() {
   }
 
   return (
-    <div id="newsletter" className="card bg-ink-100/30 border-ink-200 scroll-mt-20">
+    <div id="newsletter" className="card bg-ink-100 border-ink-200 scroll-mt-20">
       <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
         Monthly cell of the month
       </div>
