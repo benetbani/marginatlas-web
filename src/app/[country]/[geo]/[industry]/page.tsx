@@ -6,7 +6,6 @@ import {
   getTopCells,
   getSameIndustryAcrossStates,
   getSameIndustryAcrossCountries,
-  getIndustryRankInState,
   getNudgeNeighbor,
   cellUrl,
   slugify,
@@ -150,11 +149,10 @@ export default async function CellPage({
 
   // Fan out the remaining data fetches concurrently. None block the others.
   const isUsCell = country.toLowerCase() === "us";
-  const [comparables, acrossStates, acrossCountries, rank, nudge] = await Promise.all([
+  const [comparables, acrossStates, acrossCountries, nudge] = await Promise.all([
     getComparableCells(cell.geo_name || "", cell.naics_6 || undefined, 6),
     isUsCell ? getSameIndustryAcrossStates(industry, cell.geo_id, 10) : Promise.resolve([]),
     isUsCell ? Promise.resolve([]) : getSameIndustryAcrossCountries(industry, country, 10),
-    getIndustryRankInState(cell.geo_id, cell.naics_6 || null),
     getNudgeNeighbor(cell),
   ]);
 
@@ -340,21 +338,13 @@ export default async function CellPage({
           )}
           <p className="mt-4 text-lg text-ink-800/80 max-w-3xl leading-relaxed">
             A typical {(cell.industry_name || "firm").toLowerCase().replace(/s$/, "")} here brings in about{" "}
-            <strong><Money usd={cell.revenue_per_firm} /></strong> per year. There are{" "}
-            <strong>{cell.n_enterprises?.toLocaleString() || "—"}</strong> of them in {cell.geo_name}, employing roughly{" "}
-            <strong>{cell.n_employees?.toLocaleString() || "—"}</strong> people.
+            <strong><Money usd={cell.revenue_per_firm} /></strong> per year, employing roughly{" "}
+            <strong>{cell.n_employees?.toLocaleString() || "—"}</strong> people in {cell.geo_name}.
           </p>
           <div className="mt-3 flex items-center gap-2 flex-wrap text-xs text-ink-700/70">
             <span>Show numbers in:</span>
             <CurrencySwitcher />
           </div>
-          {rank && (
-            <p className="mt-3 text-sm text-ink-700/70">
-              Ranks <strong className="text-ink-900">#{rank.rank}</strong> out of{" "}
-              <strong className="text-ink-900">{rank.total}</strong> industries
-              in {cell.geo_name} by firm count.
-            </p>
-          )}
         </div>
         <div className="hidden lg:block">
           {/* Plan v12 IM8 — real photo when manifest has one for this
@@ -370,12 +360,7 @@ export default async function CellPage({
       </header>
 
       {/* Headline grid */}
-      <section id="stats" className="grid grid-cols-2 md:grid-cols-4 gap-4 py-6">
-        <Stat
-          label="How many firms"
-          value={cell.n_enterprises?.toLocaleString() || "—"}
-          yoy={yoy.n_enterprises}
-        />
+      <section id="stats" className="grid grid-cols-1 md:grid-cols-3 gap-4 py-6">
         <Stat
           label="People working"
           value={cell.n_employees?.toLocaleString() || "—"}
