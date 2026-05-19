@@ -20,8 +20,6 @@ import { CountryFlag } from "@/components/CountryFlag";
 import { RevenueTiles } from "@/components/RevenueTiles";
 import { RevenueDistribution } from "@/components/RevenueDistribution";
 import { MarginWaterfall } from "@/components/MarginWaterfall";
-import { QualityBadge } from "@/components/QualityBadge";
-import { QualityDots, score100to10 } from "@/components/QualityDots";
 import { Tooltip } from "@/components/Tooltip";
 import { DimensionSwitcher } from "@/components/DimensionSwitcher";
 import { TypicalFirmCard } from "@/components/TypicalFirmCard";
@@ -483,31 +481,9 @@ export default async function CellPage({
       {/* Plan v13 Wave 1: time series chart removed —
          multi-year coverage is too uneven across cells to display honestly. */}
 
-      {/* Quality */}
-      <section id="quality" className="py-6">
-        <div className="card">
-          <div className="text-xs uppercase tracking-wide text-ink-700/70 font-medium mb-3">
-            Data quality
-          </div>
-          <div className="flex items-center gap-4 flex-wrap">
-            <QualityDots
-              score={score100to10(cell.quality_score)}
-              detail="Most recent data"
-            />
-            <QualityBadge
-              qualityScore={cell.quality_score}
-              coverageTier={cell.coverage_tier}
-              coverageSource={cell.coverage_source}
-            />
-          </div>
-          {score100to10(cell.quality_score) < 4 && (
-            <div className="mt-4 rounded-lg bg-clay-100/50 border border-clay-300 px-3 py-2 text-xs text-clay-700">
-              Low-confidence estimate. This cell is derived via heavy proxy
-              scaling — interpret as directional only.
-            </div>
-          )}
-        </div>
-      </section>
+      {/* Plan v13 Wave 1 follow-up: Data Quality section removed.
+         The 10/10 confidence score and ★★★★★ rating exposed engineering
+         provenance the founder explicitly said never to display. */}
 
       {/* Same industry across states (US) or countries (non-US) */}
       <div id="across-states" />
