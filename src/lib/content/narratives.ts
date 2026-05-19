@@ -46,10 +46,19 @@ export function getCellNarrative(
   industryId: string,
   sizeBand: string | null | undefined
 ): string | null {
-  const key = `${country.toUpperCase()}|${geoId}|${industryId}|${
-    sizeBand || "total"
-  }`;
-  return NARRATIVES[key] || null;
+  const c = country.toUpperCase();
+  const sb = sizeBand || "total";
+  // Try the specific size-band entry first, then fall back to the cell's
+  // "total" band (the narrative generator only covered "total" cells; the
+  // commentary applies to the industry × geo regardless of which size band
+  // the user happens to be filtering by).
+  const direct = `${c}|${geoId}|${industryId}|${sb}`;
+  if (NARRATIVES[direct]) return NARRATIVES[direct];
+  if (sb !== "total") {
+    const total = `${c}|${geoId}|${industryId}|total`;
+    if (NARRATIVES[total]) return NARRATIVES[total];
+  }
+  return null;
 }
 
 /**

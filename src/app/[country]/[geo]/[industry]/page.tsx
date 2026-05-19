@@ -237,16 +237,19 @@ export default async function CellPage({
   });
 
   // Plan v14 Phase B — per-cell editorial narrative (Haiku-generated bulk
-  // with Sonnet quality pass on top-200). Keyed by the source-of-truth
-  // identifiers, NOT the URL slugs: the cache was built off
-  // cells_master / regional_cells / extrapolated_cells primary keys. When
-  // there is no cached entry, the narrative section silently omits itself
-  // per the Wave 4a (D2) degrade-quietly rule.
-  const narrative = cell.industry_id
+  // with Sonnet quality pass on top-200). The cache keys use the FRIENDLY
+  // industry id (e.g. "restaurants"), but US cells_master rows may have a
+  // null industry_id with the friendly slug only derivable via NAICS. We
+  // resolve the URL slug to a friendly id and fall back to cell.industry_id
+  // so the lookup hits whether the cell was loaded from cells_master,
+  // regional_cells, or extrapolated_cells.
+  const resolvedIndustryForNarrative =
+    slugToIndustry(industry)?.id || cell.industry_id;
+  const narrative = resolvedIndustryForNarrative
     ? getCellNarrative(
         country,
         cell.geo_id || geo,
-        cell.industry_id,
+        resolvedIndustryForNarrative,
         cell.size_band || "total"
       )
     : null;
@@ -436,10 +439,11 @@ export default async function CellPage({
         </header>
       </section>
 
-      {/* Plan v14 Phase B: per-cell editorial narrative. Renders only when
-         a cached narrative exists for this cell; otherwise the section
-         silently omits itself (Wave 4a D2). 2 paragraphs, max ~180 words,
-         carrying the SEO keyphrase in the first sentence. */}
+      {/* Plan v14 Phase B: per-cell editorial narrative. Renders only
+         when a cached narrative exists for this cell (with fallback to
+         the "total" size-band); otherwise the section silently omits
+         itself (Wave 4a D2). 2 paragraphs, ~120-180 words, opens with
+         the SEO keyphrase pattern. */}
       {narrative ? (
         <section id="narrative" className={`py-8 ${getToneClass("narrative")}`}>
           <div className="max-w-3xl">
