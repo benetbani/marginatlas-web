@@ -48,6 +48,8 @@ import { Money } from "@/components/Money";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
 import industryMarginsJson from "@/lib/finance/industry_margins.json";
 import { clampMargin } from "@/lib/finance/margin_floor";
+import { generateFAQs } from "@/lib/seo/faq_generator";
+import { FAQSchema } from "@/components/FAQSchema";
 
 type IndustryMarginRow = { gross_margin: number; operating_margin: number; asset_intensity?: number };
 const INDUSTRY_MARGINS = industryMarginsJson as unknown as {
@@ -222,6 +224,17 @@ export default async function CellPage({
   // Defensive floor — never let a sub-3% net margin reach the page.
   const computedNetMargin = rawNetMargin != null ? clampMargin(rawNetMargin, "net") : null;
 
+  // Plan v14 Phase C.4 — FAQPage JSON-LD payload. The question text matches
+  // the phrase universe (scripts/seo/build_phrase_universe.py), so any organic
+  // search for "how much does a pharmacy make in California" surfaces this
+  // page. Answers are derived live from the cell's revenue + margin numbers;
+  // source-agency hygiene (R-002) is enforced inside the generator.
+  const faqs = generateFAQs(cell, {
+    gross_margin: marginRow.gross_margin,
+    operating_margin: marginRow.operating_margin,
+    net_margin: computedNetMargin,
+  });
+
   const url = `https://marginatlas.com/${country}/${geo}/${industry}`;
   return (
     <div className="xl:flex xl:gap-6">
@@ -241,6 +254,9 @@ export default async function CellPage({
         qualityScore={cell.quality_score}
         csvExportUrl={`https://marginatlas.com/api/export-csv?country=${country}&geo=${geo}&industry=${industry}`}
       />
+      {/* Plan v14 Phase C.4 — FAQPage JSON-LD. Five data-backed Q&As per cell,
+         no visible DOM. Targets AI Overviews + Google People Also Ask. */}
+      <FAQSchema faqs={faqs} />
       <Breadcrumbs
         items={[
           { name: "Home", url: "https://marginatlas.com/" },
