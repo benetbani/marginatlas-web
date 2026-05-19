@@ -20,7 +20,7 @@ import { RevenueTiles } from "@/components/RevenueTiles";
 import { RevenueDistribution } from "@/components/RevenueDistribution";
 import { MarginWaterfall } from "@/components/MarginWaterfall";
 import industryMarginsJson from "@/lib/finance/industry_margins.json";
-import { INDUSTRY_PAGE_SECTIONS } from "@/lib/page-layout/section-order";
+import { INDUSTRY_PAGE_SECTIONS, getToneClass } from "@/lib/page-layout/section-order";
 
 void INDUSTRY_PAGE_SECTIONS;
 
@@ -119,7 +119,9 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
         Sections render in the exact order defined in INDUSTRY_PAGE_SECTIONS.
       */}
 
-      {/* 1. hero */}
+      {/* 1. hero — tone-map intentionally NOT applied; the canonical hero
+         tone (ink-dark) would render existing dark text colors invisible.
+         Hero stays on the default page bg until a dark-hero refactor lands. */}
       <section id="hero">
         <header className="py-8">
           <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
@@ -139,7 +141,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
       {/* 2. industry-tiles — aggregated revenue tiles across geographies.
          Plan v13 Wave 4a (D2): silent omission when no aggregated percentiles. */}
       {aggP50 != null && (
-        <section id="industry-tiles">
+        <section id="industry-tiles" className={`py-6 ${getToneClass("industry-tiles")}`}>
           <RevenueTiles
             p10={aggP10}
             p50={aggP50}
@@ -151,7 +153,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
       {/* 3. revenue-distribution — log-normal curve from same aggregated percentiles.
          Plan v13 Wave 4a (D2): silent omission when insufficient points. */}
       {aggP50 != null && (
-        <section id="revenue-distribution">
+        <section id="revenue-distribution" className={`py-6 ${getToneClass("revenue-distribution")}`}>
           <RevenueDistribution
             p10={aggP10}
             p50={aggP50}
@@ -162,7 +164,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
 
       {/* 4. margin-waterfall — sourced directly from canonical industry_margins.json.
          MarginWaterfall returns null when all three margins are null. */}
-      <section id="margin-waterfall">
+      <section id="margin-waterfall" className={`py-6 ${getToneClass("margin-waterfall")}`}>
         <MarginWaterfall
           grossMargin={margin.gross_margin}
           operatingMargin={margin.operating_margin}
@@ -178,7 +180,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
       {/* 5. top-countries — countries ranked by median revenue per firm.
          Plan v13 Wave 4a (D2): silent omission when ranking is empty. */}
       {topCountries.length > 0 && (
-        <section id="top-countries" className="py-8">
+        <section id="top-countries" className={`py-8 ${getToneClass("top-countries")}`}>
           <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
             Top countries for {ind.name.toLowerCase()}
           </h2>

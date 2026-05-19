@@ -22,7 +22,7 @@ import { CountryStatsStrip } from "@/components/CountryStatsStrip";
 import { CountryQualitySummary } from "@/components/CountryQualitySummary";
 import { hasRegionalCoverage } from "@/lib/coverage/regional";
 import { getAdmin1Regions } from "@/lib/coverage/admin1";
-import { COUNTRY_PAGE_SECTIONS } from "@/lib/page-layout/section-order";
+import { COUNTRY_PAGE_SECTIONS, getToneClass } from "@/lib/page-layout/section-order";
 
 // Keep section-order constant referenced for type checking — sections render in this exact order below.
 void COUNTRY_PAGE_SECTIONS;
@@ -163,7 +163,9 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
         so sister country pages always have identical structure.
       */}
 
-      {/* 1. hero */}
+      {/* 1. hero — tone-map intentionally NOT applied; the canonical hero
+         tone (ink-dark) would render existing dark text colors invisible.
+         Hero stays on the default page bg until a dark-hero refactor lands. */}
       <section id="hero">
         <header className="py-8 lg:grid lg:grid-cols-[1.4fr_1fr] lg:gap-10 lg:items-center">
           <div>
@@ -205,14 +207,14 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
       </section>
 
       {/* 2. country-stats — Track FF.2 headline stats + quality scorecard */}
-      <section id="country-stats">
+      <section id="country-stats" className={`py-6 ${getToneClass("country-stats")}`}>
         <CountryStatsStrip iso2={iso2} />
         <CountryQualitySummary iso2={iso2} />
       </section>
 
       {/* 3. industry-mix-grid — top SMB-relevant industries (silent omission if empty) */}
       {topIndustries.length > 0 && (
-        <section id="industry-mix-grid">
+        <section id="industry-mix-grid" className={getToneClass("industry-mix-grid")}>
           <div className="py-8">
             <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
               Top small-business industries in {meta.name}
@@ -259,7 +261,7 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
       )}
 
       {/* 4. top-cities — Track N (Wave 2). CountryCityShortcuts handles its own silent omission. */}
-      <section id="top-cities">
+      <section id="top-cities" className={`py-6 ${getToneClass("top-cities")}`}>
         <CountryCityShortcuts iso2={iso2} />
       </section>
 
@@ -267,7 +269,7 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
          for all 194 countries with admin1 data. Silent omission for SG (the
          single country with no admin1 entries) per Wave 4a (D2). */}
       {regions.length > 0 ? (
-        <section id="regions" className="py-8">
+        <section id="regions" className={`py-8 ${getToneClass("regions")}`}>
           <div className="text-xs uppercase tracking-wide text-atlas-700 font-semibold mb-3">
             Regions of {countryName}
           </div>
@@ -291,7 +293,7 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
 
       {/* 7. related-countries — Compare CTA. Kept because it's an evergreen
          navigation aid, not a data-dependent section. */}
-      <section id="related-countries" className="py-10">
+      <section id="related-countries" className={`py-10 ${getToneClass("related-countries")}`}>
         <div className="card-cream">
           <h2 className="text-lg font-semibold text-ink-900">
             Compare {meta.name} to other countries

@@ -37,6 +37,7 @@ import { AcrossCountriesStrip } from "@/components/AcrossCountriesStrip";
 import { SECTOR_BY_ID, INDUSTRY_BY_ID, slugToIndustry, resolveToMeasuredIndustry } from "@/lib/taxonomy";
 import { CellDataset, Breadcrumbs } from "@/components/StructuredData";
 import { RelatedIndustriesStrip } from "@/components/RelatedIndustriesStrip";
+import { getToneClass } from "@/lib/page-layout/section-order";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { CellWarningChips } from "@/components/CellWarningChips";
 // Plan v13 Wave 4a (D2) — EmptyStateCard import removed; we degrade silently now.
@@ -356,7 +357,9 @@ export default async function CellPage({
         currentYear={currentYear}
       />
 
-      {/* Hero */}
+      {/* Hero — tone-map intentionally NOT applied; existing markup uses
+         dark text colors on light surfaces which would be invisible on the
+         canonical hero tone (ink-dark). Hero stays on the default page bg. */}
       <header id="headline" className="py-8 lg:grid lg:grid-cols-[1.5fr_1fr] lg:gap-8 lg:items-start">
         <div>
           <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium flex items-center gap-2">
@@ -395,8 +398,10 @@ export default async function CellPage({
         </div>
       </header>
 
-      {/* Headline grid */}
-      <section id="stats" className="grid grid-cols-1 md:grid-cols-3 gap-4 py-6">
+      {/* Headline grid.
+         Plan v13 Wave 4d — mapped to canonical "revenue-tiles" tone (cream-50)
+         so the headline stats band carries a visible accent break from the hero. */}
+      <section id="stats" className={`grid grid-cols-1 md:grid-cols-3 gap-4 py-6 ${getToneClass("revenue-tiles")}`}>
         <Stat
           label="People working"
           value={cell.n_employees?.toLocaleString() || "—"}
@@ -416,8 +421,10 @@ export default async function CellPage({
         />
       </section>
 
-      {/* Atlas Score + Typical-firm biography card */}
-      <section id="typical-firm" className="py-6 grid md:grid-cols-[1fr_2fr] gap-4">
+      {/* Atlas Score + Typical-firm biography card.
+         Plan v13 Wave 4d — mapped to canonical "tax-and-cost-panel" tone
+         since it hosts PostTaxToggle + NetProfitWaterfall + MarginWaterfall. */}
+      <section id="typical-firm" className={`py-6 grid md:grid-cols-[1fr_2fr] gap-4 ${getToneClass("tax-and-cost-panel")}`}>
         <AtlasScore cell={cell} />
         <div>
           <TypicalFirmCard cell={cell} currencySymbol="$" />
@@ -458,8 +465,10 @@ export default async function CellPage({
 
       {/* Plan v13 Wave 2 — Bottom 20% / Median / Top 10% revenue tiles +
          smooth log-normal distribution curve. Replaces the prior
-         histogram + 5-bar tier view. */}
-      <section id="distribution">
+         histogram + 5-bar tier view.
+         Plan v13 Wave 4d — mapped to canonical "margin-waterfall" tone (cream-100)
+         to extend the visible alternation across this composite section. */}
+      <section id="distribution" className={`py-6 ${getToneClass("margin-waterfall")}`}>
         <RevenueTiles
           p10={cell.rev_p10 ?? null}
           p20={null}
@@ -501,9 +510,10 @@ export default async function CellPage({
         />
       )}
 
-      {/* Comparable cells */}
+      {/* Comparable cells.
+         Plan v13 Wave 4d — mapped to canonical "related-cells" tone. */}
       {comparables.length > 0 && (
-        <section id="comparable" className="py-8">
+        <section id="comparable" className={`py-8 ${getToneClass("related-cells")}`}>
           <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
             Other industries in {cell.geo_name}
           </h2>
