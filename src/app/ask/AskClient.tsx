@@ -92,7 +92,7 @@ export function AskClient() {
           <button
             type="submit"
             disabled={loading || !question.trim()}
-            className="px-4 py-2 rounded-lg bg-atlas-500 hover:bg-atlas-600 text-white font-medium text-sm disabled:opacity-50 transition"
+            className="px-4 py-2 rounded-lg bg-atlas-500 hover:bg-atlas-600 text-cream-50 font-medium text-sm disabled:opacity-50 transition"
           >
             {loading ? "Thinking…" : "Ask"}
           </button>
@@ -149,7 +149,7 @@ export function AskClient() {
             <button
               type="submit"
               disabled={waitlistState === "loading"}
-              className="px-4 py-2 rounded-lg bg-ink-900 hover:bg-ink-800 text-white font-medium text-sm transition"
+              className="px-4 py-2 rounded-lg bg-ink-900 hover:bg-ink-800 text-cream-50 font-medium text-sm transition"
             >
               {waitlistState === "loading" ? "…" : "Join waitlist"}
             </button>

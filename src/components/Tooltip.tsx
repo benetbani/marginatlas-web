@@ -30,7 +30,7 @@ export function Tooltip({ text, size = "sm" }: Props) {
         ?
       </button>
       {open && (
-        <span className="absolute z-30 left-1/2 -translate-x-1/2 top-full mt-1 w-64 px-3 py-2 rounded-lg bg-ink-900 text-white text-xs leading-relaxed shadow-lg">
+        <span className="absolute z-30 left-1/2 -translate-x-1/2 top-full mt-1 w-64 px-3 py-2 rounded-lg bg-ink-900 text-cream-50 text-xs leading-relaxed shadow-lg">
           {text}
         </span>
       )}

@@ -67,7 +67,7 @@ export function NewsletterSignup() {
           <button
             type="submit"
             disabled={state === "loading"}
-            className="px-4 py-2 rounded-lg bg-atlas-500 hover:bg-atlas-600 text-white font-medium text-sm disabled:opacity-50 transition"
+            className="px-4 py-2 rounded-lg bg-atlas-500 hover:bg-atlas-600 text-cream-50 font-medium text-sm disabled:opacity-50 transition"
           >
             {state === "loading" ? "Signing up…" : "Sign up"}
           </button>

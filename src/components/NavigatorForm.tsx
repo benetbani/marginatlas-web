@@ -265,7 +265,7 @@ export function NavigatorForm() {
           </button>
           <button
             onClick={submit}
-            className="px-8 py-4 rounded-xl bg-atlas-500 hover:bg-atlas-600 active:bg-atlas-700 text-white font-semibold text-base shadow-sm transition"
+            className="px-8 py-4 rounded-xl bg-atlas-500 hover:bg-atlas-600 active:bg-atlas-700 text-cream-50 font-semibold text-base shadow-sm transition"
           >
             Show me the numbers →
           </button>

@@ -50,7 +50,7 @@ export async function GlobalCoverageStrip() {
           ))}
           <a
             href="/browse"
-            className="inline-flex items-center px-3 py-1 rounded-full bg-atlas-600 hover:bg-atlas-700 text-white text-xs font-medium transition"
+            className="inline-flex items-center px-3 py-1 rounded-full bg-atlas-600 hover:bg-atlas-700 text-cream-50 text-xs font-medium transition"
           >
             Browse all →
           </a>

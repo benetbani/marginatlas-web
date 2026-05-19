@@ -154,7 +154,7 @@ function WaterfallBar({ w }: { w: Waterfall }) {
             <div
               key={i}
               style={{ width: w, backgroundColor: s.color }}
-              className="relative group flex items-center justify-center text-xs font-medium text-white/90"
+              className="relative group flex items-center justify-center text-xs font-medium text-cream-50/90"
               title={`${s.label}: ${s.value.toLocaleString()}`}
             >
               {parseFloat(w) > 8 ? s.label : null}

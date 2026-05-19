@@ -34,7 +34,7 @@ export function QualityLegend() {
           {TIERS.map((t) => (
             <div key={t.range} className="flex items-start gap-3">
               <div
-                className={`mt-0.5 w-7 h-7 rounded-md flex items-center justify-center text-xs font-bold text-white shrink-0 ${t.color}`}
+                className={`mt-0.5 w-7 h-7 rounded-md flex items-center justify-center text-xs font-bold text-cream-50 shrink-0 ${t.color}`}
               >
                 {t.range}
               </div>

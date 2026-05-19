@@ -120,7 +120,7 @@ export default function PricingPage() {
               href={t.ctaHref}
               className={`mt-6 block text-center px-4 py-3 rounded-xl font-medium transition ${
                 t.highlight
-                  ? "bg-atlas-500 text-white hover:bg-atlas-600"
+                  ? "bg-atlas-500 text-cream-50 hover:bg-atlas-600"
                   : "border border-ink-700/20 hover:border-atlas-500 text-ink-900"
               }`}
             >

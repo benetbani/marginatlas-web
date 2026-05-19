@@ -81,7 +81,7 @@ export function AskWidget() {
           <button
             type="submit"
             disabled={loading || !question.trim()}
-            className="px-5 py-3 rounded-lg bg-atlas-600 hover:bg-atlas-700 disabled:bg-cream-300 disabled:text-ink-500 text-white text-sm font-semibold transition whitespace-nowrap"
+            className="px-5 py-3 rounded-lg bg-atlas-600 hover:bg-atlas-700 disabled:bg-cream-300 disabled:text-ink-500 text-cream-50 text-sm font-semibold transition whitespace-nowrap"
           >
             {loading ? "Thinking..." : "Ask →"}
           </button>

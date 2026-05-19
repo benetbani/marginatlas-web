@@ -39,7 +39,7 @@ export function TaxOverlayTeaser() {
           </p>
           <Link
             href="/es/madrid/cafes-coffee"
-            className="mt-5 inline-flex items-center gap-1 px-4 py-2 rounded-lg bg-atlas-600 hover:bg-atlas-700 text-white text-sm font-medium transition"
+            className="mt-5 inline-flex items-center gap-1 px-4 py-2 rounded-lg bg-atlas-600 hover:bg-atlas-700 text-cream-50 text-sm font-medium transition"
           >
             See the sample cell →
           </Link>
