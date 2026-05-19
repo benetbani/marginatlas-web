@@ -172,12 +172,12 @@
     },
     {
       "id": "mining_quarrying",
-      "name": "Mining & quarrying",
+      "name": "Mining & quarrying (metals, stone)",
       "audience": "corp_only",
       "examples": [
-        "coal",
-        "metals",
+        "metal ores",
         "stone",
+        "sand",
         "gravel"
       ],
       "keywords": [
@@ -193,18 +193,45 @@
       ],
       "sector_id": "mining_energy",
       "isic_divisions": [
-        "05",
         "07",
         "08"
       ],
       "naics_3": [
-        "212",
+        "212"
+      ],
+      "nace_divisions": [
+        "07",
+        "08"
+      ]
+    },
+    {
+      "id": "mining_support",
+      "name": "Mining support services",
+      "audience": "corp_only",
+      "examples": [
+        "drilling support",
+        "exploration services"
+      ],
+      "keywords": [
+        "mining",
+        "coal",
+        "quarry",
+        "metal",
+        "stone",
+        "gravel",
+        "ore",
+        "minerals",
+        "iron"
+      ],
+      "sector_id": "mining_energy",
+      "isic_divisions": [
+        "09"
+      ],
+      "naics_3": [
         "213"
       ],
       "nace_divisions": [
-        "05",
-        "07",
-        "08"
+        "09"
       ]
     },
     {
@@ -274,14 +301,13 @@
       ]
     },
     {
-      "id": "food_beverage_mfg",
-      "name": "Food & beverage manufacturing",
+      "id": "food_mfg",
+      "name": "Food manufacturing",
       "audience": "smb_friendly",
       "examples": [
+        "bakery products",
         "dairy products",
-        "baked goods",
-        "drinks",
-        "meat processing"
+        "packaged food"
       ],
       "keywords": [
         "food",
@@ -297,15 +323,44 @@
       ],
       "sector_id": "farming_food_production",
       "isic_divisions": [
-        "10",
+        "10"
+      ],
+      "naics_3": [
+        "311"
+      ],
+      "nace_divisions": [
+        "10"
+      ]
+    },
+    {
+      "id": "beverage_mfg",
+      "name": "Beverage manufacturing",
+      "audience": "smb_friendly",
+      "examples": [
+        "soft drinks",
+        "bottled water",
+        "juices"
+      ],
+      "keywords": [
+        "food",
+        "beverage",
+        "dairy",
+        "bakery",
+        "drink",
+        "brewing",
+        "manufacturing",
+        "processing",
+        "meat",
+        "snacks"
+      ],
+      "sector_id": "farming_food_production",
+      "isic_divisions": [
         "11"
       ],
       "naics_3": [
-        "311",
         "312"
       ],
       "nace_divisions": [
-        "10",
         "11"
       ]
     },
@@ -313,7 +368,7 @@
       "id": "craft_beer_mfg",
       "name": "Craft breweries & taprooms",
       "audience": "smb_core",
-      "parent_id": "food_beverage_mfg",
+      "parent_id": "beverage_mfg",
       "examples": [
         "microbreweries",
         "brewpubs",
@@ -334,7 +389,7 @@
       "id": "coffee_roasters",
       "name": "Coffee roasters",
       "audience": "smb_core",
-      "parent_id": "food_beverage_mfg",
+      "parent_id": "food_mfg",
       "examples": [
         "specialty coffee",
         "wholesale roasters"
@@ -352,7 +407,7 @@
       "id": "specialty_food_production",
       "name": "Specialty food production",
       "audience": "smb_core",
-      "parent_id": "food_beverage_mfg",
+      "parent_id": "food_mfg",
       "examples": [
         "sauces",
         "preserves",
@@ -373,7 +428,7 @@
       "id": "artisan_bakery_wholesale",
       "name": "Artisan bakery (wholesale)",
       "audience": "smb_core",
-      "parent_id": "food_beverage_mfg",
+      "parent_id": "food_mfg",
       "examples": [
         "bread",
         "pastries",
@@ -562,13 +617,12 @@
     },
     {
       "id": "chemical_pharma_mfg",
-      "name": "Chemical & pharmaceutical manufacturing",
+      "name": "Chemical & pharma manufacturing",
       "audience": "corp_only",
       "examples": [
-        "drugs",
-        "cosmetics",
-        "cleaning products",
-        "paints"
+        "industrial chemicals",
+        "pharmaceuticals",
+        "cleaning compounds"
       ],
       "keywords": [
         "chemical",
@@ -587,12 +641,42 @@
         "21"
       ],
       "naics_3": [
-        "325",
-        "324"
+        "325"
       ],
       "nace_divisions": [
         "20",
         "21"
+      ]
+    },
+    {
+      "id": "petroleum_coal_mfg",
+      "name": "Petroleum & coal products",
+      "audience": "corp_only",
+      "examples": [
+        "refined petroleum",
+        "asphalt",
+        "lubricants"
+      ],
+      "keywords": [
+        "chemical",
+        "pharmaceutical",
+        "pharma",
+        "drug",
+        "cosmetic",
+        "cleaning",
+        "paint",
+        "soap",
+        "fertilizer"
+      ],
+      "sector_id": "heavy_industry",
+      "isic_divisions": [
+        "19"
+      ],
+      "naics_3": [
+        "324"
+      ],
+      "nace_divisions": [
+        "19"
       ]
     },
     {
@@ -1582,14 +1666,12 @@
       ]
     },
     {
-      "id": "furniture_home_stores",
-      "name": "Furniture & home goods stores",
+      "id": "furniture_stores",
+      "name": "Furniture stores",
       "audience": "smb_core",
       "examples": [
-        "furniture",
-        "home decor",
-        "DIY stores",
-        "garden centers"
+        "furniture retail",
+        "home furnishings"
       ],
       "keywords": [
         "furniture",
@@ -1605,7 +1687,35 @@
         "47"
       ],
       "naics_3": [
-        "442",
+        "442"
+      ],
+      "nace_divisions": [
+        "47"
+      ]
+    },
+    {
+      "id": "building_garden_stores",
+      "name": "Building & garden supply stores",
+      "audience": "smb_core",
+      "examples": [
+        "hardware",
+        "lumber",
+        "garden supplies"
+      ],
+      "keywords": [
+        "furniture",
+        "home",
+        "decor",
+        "diy",
+        "garden",
+        "improvement",
+        "store"
+      ],
+      "sector_id": "retail_shops",
+      "isic_divisions": [
+        "47"
+      ],
+      "naics_3": [
         "444"
       ],
       "nace_divisions": [
@@ -1616,7 +1726,7 @@
       "id": "hardware_stores",
       "name": "Hardware stores (local)",
       "audience": "smb_core",
-      "parent_id": "furniture_home_stores",
+      "parent_id": "building_garden_stores",
       "examples": [
         "neighborhood hardware",
         "small DIY"
@@ -1632,7 +1742,7 @@
       "id": "garden_centers",
       "name": "Garden centers & nurseries",
       "audience": "smb_core",
-      "parent_id": "furniture_home_stores",
+      "parent_id": "building_garden_stores",
       "examples": [
         "plant nurseries",
         "garden supply"
@@ -1649,7 +1759,7 @@
       "id": "home_decor_gift",
       "name": "Home decor & gift shops",
       "audience": "smb_core",
-      "parent_id": "furniture_home_stores",
+      "parent_id": "furniture_stores",
       "examples": [
         "decor boutiques",
         "gift shops"
@@ -1731,13 +1841,13 @@
       "sector_id": "retail_shops"
     },
     {
-      "id": "auto_dealers_gas",
-      "name": "Auto dealers & gas stations",
+      "id": "auto_dealers",
+      "name": "Auto dealers",
       "audience": "smb_friendly",
       "examples": [
         "car dealers",
         "used car lots",
-        "gas stations"
+        "motorcycle dealers"
       ],
       "keywords": [
         "car",
@@ -1750,15 +1860,41 @@
       ],
       "sector_id": "retail_shops",
       "isic_divisions": [
-        "45",
+        "45"
+      ],
+      "naics_3": [
+        "441"
+      ],
+      "nace_divisions": [
+        "45"
+      ]
+    },
+    {
+      "id": "gas_stations",
+      "name": "Gas stations",
+      "audience": "smb_friendly",
+      "examples": [
+        "gas stations",
+        "service stations",
+        "fuel retail"
+      ],
+      "keywords": [
+        "car",
+        "auto",
+        "dealer",
+        "vehicle",
+        "gas station",
+        "petrol",
+        "fuel"
+      ],
+      "sector_id": "retail_shops",
+      "isic_divisions": [
         "47"
       ],
       "naics_3": [
-        "441",
         "447"
       ],
       "nace_divisions": [
-        "45",
         "47"
       ]
     },
@@ -2029,13 +2165,13 @@
       "sector_id": "trades_home"
     },
     {
-      "id": "passenger_transport",
-      "name": "Passenger transport",
+      "id": "transit_ground_passenger",
+      "name": "Transit & ground passenger transport",
       "audience": "smb_core",
       "examples": [
-        "taxis",
-        "ride-share",
+        "urban transit",
         "buses",
+        "taxis",
         "limousines"
       ],
       "keywords": [
@@ -2053,12 +2189,69 @@
         "49"
       ],
       "naics_3": [
-        "485",
-        "487",
-        "488"
+        "485"
       ],
       "nace_divisions": [
         "49"
+      ]
+    },
+    {
+      "id": "scenic_sightseeing_transport",
+      "name": "Scenic & sightseeing transport",
+      "audience": "smb_core",
+      "examples": [
+        "sightseeing tours",
+        "scenic transport"
+      ],
+      "keywords": [
+        "taxi",
+        "uber",
+        "lyft",
+        "rideshare",
+        "bus",
+        "passenger",
+        "transport",
+        "limo"
+      ],
+      "sector_id": "transport_small",
+      "isic_divisions": [
+        "49"
+      ],
+      "naics_3": [
+        "487"
+      ],
+      "nace_divisions": [
+        "49"
+      ]
+    },
+    {
+      "id": "transport_support",
+      "name": "Transport support services",
+      "audience": "smb_core",
+      "examples": [
+        "freight forwarding",
+        "port services",
+        "terminal services"
+      ],
+      "keywords": [
+        "taxi",
+        "uber",
+        "lyft",
+        "rideshare",
+        "bus",
+        "passenger",
+        "transport",
+        "limo"
+      ],
+      "sector_id": "transport_small",
+      "isic_divisions": [
+        "52"
+      ],
+      "naics_3": [
+        "488"
+      ],
+      "nace_divisions": [
+        "52"
       ]
     },
     {
@@ -2090,14 +2283,11 @@
       ]
     },
     {
-      "id": "postal_courier",
-      "name": "Postal & courier",
+      "id": "postal_service",
+      "name": "Postal service",
       "audience": "mixed_caution",
       "examples": [
-        "mail",
-        "parcels",
-        "express delivery",
-        "courier services"
+        "postal service"
       ],
       "keywords": [
         "postal",
@@ -2115,7 +2305,37 @@
         "53"
       ],
       "naics_3": [
-        "491",
+        "491"
+      ],
+      "nace_divisions": [
+        "53"
+      ]
+    },
+    {
+      "id": "courier_messenger",
+      "name": "Couriers & messengers",
+      "audience": "mixed_caution",
+      "examples": [
+        "courier",
+        "messenger",
+        "local delivery"
+      ],
+      "keywords": [
+        "postal",
+        "post",
+        "mail",
+        "courier",
+        "parcel",
+        "express",
+        "delivery",
+        "fedex",
+        "ups"
+      ],
+      "sector_id": "transport_small",
+      "isic_divisions": [
+        "53"
+      ],
+      "naics_3": [
         "492"
       ],
       "nace_divisions": [
@@ -2680,14 +2900,12 @@
       ]
     },
     {
-      "id": "broadcasting_telecom",
-      "name": "Broadcasting & telecom",
+      "id": "broadcasting",
+      "name": "Broadcasting",
       "audience": "corp_only",
       "examples": [
-        "TV",
-        "radio",
-        "internet providers",
-        "mobile networks"
+        "radio stations",
+        "television broadcasting"
       ],
       "keywords": [
         "broadcasting",
@@ -2699,17 +2917,44 @@
         "mobile network",
         "cable"
       ],
-      "sector_id": "creative_media",
+      "sector_id": "telecom_broadcasting",
       "isic_divisions": [
-        "60",
+        "60"
+      ],
+      "naics_3": [
+        "515"
+      ],
+      "nace_divisions": [
+        "60"
+      ]
+    },
+    {
+      "id": "telecom",
+      "name": "Telecommunications",
+      "audience": "corp_only",
+      "examples": [
+        "wireless carriers",
+        "wired telecom",
+        "ISPs"
+      ],
+      "keywords": [
+        "broadcasting",
+        "tv",
+        "television",
+        "radio",
+        "telecom",
+        "internet",
+        "mobile network",
+        "cable"
+      ],
+      "sector_id": "telecom_broadcasting",
+      "isic_divisions": [
         "61"
       ],
       "naics_3": [
-        "515",
         "517"
       ],
       "nace_divisions": [
-        "60",
         "61"
       ]
     },
@@ -2742,14 +2987,12 @@
       ]
     },
     {
-      "id": "investment_securities",
-      "name": "Investment & securities",
+      "id": "securities_brokerage",
+      "name": "Securities & brokerage",
       "audience": "corp_only",
       "examples": [
-        "asset management",
-        "brokerage",
-        "private equity",
-        "hedge funds"
+        "securities dealers",
+        "commodity contracts"
       ],
       "keywords": [
         "investment",
@@ -2762,15 +3005,41 @@
       ],
       "sector_id": "finance_corp",
       "isic_divisions": [
-        "64",
         "66"
       ],
       "naics_3": [
-        "523",
+        "523"
+      ],
+      "nace_divisions": [
+        "66"
+      ]
+    },
+    {
+      "id": "funds_trusts",
+      "name": "Funds & trusts",
+      "audience": "corp_only",
+      "examples": [
+        "mutual funds",
+        "trusts",
+        "pension funds"
+      ],
+      "keywords": [
+        "investment",
+        "asset management",
+        "broker",
+        "securities",
+        "fund",
+        "private equity",
+        "hedge fund"
+      ],
+      "sector_id": "finance_corp",
+      "isic_divisions": [
+        "66"
+      ],
+      "naics_3": [
         "525"
       ],
       "nace_divisions": [
-        "64",
         "66"
       ]
     },
@@ -2847,13 +3116,12 @@
       ]
     },
     {
-      "id": "property_leasing",
-      "name": "Property leasing & rental",
+      "id": "real_estate_leasing",
+      "name": "Real estate leasing",
       "audience": "smb_core",
       "examples": [
-        "landlords",
-        "equipment rental",
-        "car rental"
+        "property management",
+        "rental property"
       ],
       "keywords": [
         "landlord",
@@ -2866,15 +3134,40 @@
       ],
       "sector_id": "real_estate",
       "isic_divisions": [
-        "68",
+        "68"
+      ],
+      "naics_3": [
+        "531"
+      ],
+      "nace_divisions": [
+        "68"
+      ]
+    },
+    {
+      "id": "equipment_rental",
+      "name": "Equipment rental & leasing",
+      "audience": "smb_core",
+      "examples": [
+        "equipment rental",
+        "vehicle leasing"
+      ],
+      "keywords": [
+        "landlord",
+        "leasing",
+        "rental",
+        "lease",
+        "rent",
+        "equipment rental",
+        "car rental"
+      ],
+      "sector_id": "professional_services",
+      "isic_divisions": [
         "77"
       ],
       "naics_3": [
-        "531",
         "532"
       ],
       "nace_divisions": [
-        "68",
         "77"
       ]
     },

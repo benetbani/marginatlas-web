@@ -94,6 +94,21 @@ function clientIp(req: NextRequest): string {
   );
 }
 
+// --- Plan v13 Wave 4b: split-industry redirects (auto-generated) ---
+const TAXONOMY_REDIRECTS: Record<string, string> = {
+  "auto-dealers-gas-stations": "auto-dealers",
+  "broadcasting-telecom": "broadcasting",
+  "chemical-pharmaceutical-manufacturing": "chemical-pharma-manufacturing",
+  "food-beverage-manufacturing": "food-manufacturing",
+  "furniture-home-goods-stores": "furniture-stores",
+  "investment-securities": "securities-brokerage",
+  "mining-quarrying": "mining-quarrying-metals-stone",
+  "passenger-transport": "transit-ground-passenger-transport",
+  "postal-courier": "postal-service",
+  "property-leasing-rental": "real-estate-leasing",
+};
+// --- end Plan v13 Wave 4b ---
+
 export function middleware(req: NextRequest) {
   const ua = req.headers.get("user-agent") || "";
   const path = req.nextUrl.pathname;
@@ -110,6 +125,24 @@ export function middleware(req: NextRequest) {
       return NextResponse.redirect(url, 308);
     }
   }
+
+  // --- Plan v13 Wave 4b redirect handler ---
+  // Match either /us/<geo>/<old-slug> or /industries/<old-slug>.
+  // Rewrite the last URL segment to the new canonical slug.
+  if (!path.startsWith("/api/") && !path.startsWith("/_next")) {
+    const segments = path.split("/").filter(Boolean);
+    if (segments.length > 0) {
+      const last = segments[segments.length - 1];
+      const target = TAXONOMY_REDIRECTS[last];
+      if (target && target !== last) {
+        segments[segments.length - 1] = target;
+        const url = req.nextUrl.clone();
+        url.pathname = "/" + segments.join("/");
+        return NextResponse.redirect(url, 308);
+      }
+    }
+  }
+  // --- end Plan v13 Wave 4b redirect handler ---
 
   // 1. AI crawlers — 451 Unavailable For Legal Reasons
   for (const re of AI_CRAWLER_PATTERNS) {

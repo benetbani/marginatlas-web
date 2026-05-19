@@ -113,7 +113,8 @@ export const SLUG_TO_INDUSTRY: Record<string, Industry> = (() => {
 export const INDUSTRY_SLUG_ALIASES: Record<string, string> = {
   // Shortened manufacturing slugs
   "metal-products-mfg": "metal_products_mfg",
-  "food-beverage-mfg": "food_beverage_mfg",
+  "food-beverage-mfg": "food_mfg",
+  "food_beverage_mfg": "food_mfg",
   "textile-apparel-mfg": "textile_apparel_mfg",
   "motor-vehicles-mfg": "motor_vehicles_mfg",
   "chemicals-mfg": "chemicals_mfg",
@@ -165,8 +166,8 @@ export const INDUSTRY_SLUG_ALIASES: Record<string, string> = {
   "grocery": "grocery_stores",
   "supermarket": "grocery_stores",
   "supermarkets": "grocery_stores",
-  "bakery": "food_beverage_mfg",
-  "bakeries": "food_beverage_mfg",
+  "bakery": "food_mfg",
+  "bakeries": "food_mfg",
   "real-estate": "real_estate_agencies",
   "realtor": "real_estate_agencies",
   "realtors": "real_estate_agencies",
@@ -216,11 +217,11 @@ export const INDUSTRY_SLUG_ALIASES: Record<string, string> = {
   "florist": "specialty_food_production",
   "wine": "specialty_food_production",
   "winery": "specialty_food_production",
-  "brewery": "food_beverage_mfg",
-  "distillery": "food_beverage_mfg",
+  "brewery": "beverage_mfg",
+  "distillery": "beverage_mfg",
   "butcher": "specialty_food_production",
   "deli": "specialty_food_production",
-  "patisserie": "food_beverage_mfg",
+  "patisserie": "food_mfg",
   "pizzeria": "restaurants",
   "diner": "restaurants",
   "bistro": "restaurants",
@@ -281,7 +282,7 @@ export const INDUSTRY_SLUG_ALIASES: Record<string, string> = {
   "seamstress": "textile_apparel_mfg",
   "carpenter": "wood_paper_mfg",
   "furniture-maker": "wood_paper_mfg",
-  "winemaker": "food_beverage_mfg",
+  "winemaker": "beverage_mfg",
   "farm": "forestry_logging",
   "agriculture": "forestry_logging",
 };
@@ -435,7 +436,8 @@ export const PARENT_FALLBACK_MAP: Record<string, string> = {
   vocational_training: "media_publishing",
   // Specialty retail aggregate → grocery_stores (closest covered retail anchor)
   general_merchandise: "grocery_stores",
-  furniture_home_stores: "grocery_stores",
+  furniture_stores: "grocery_stores",
+  building_garden_stores: "grocery_stores",
   electronics_appliance_stores: "grocery_stores",
   health_beauty_stores: "grocery_stores",
   ecommerce_mail_order: "grocery_stores",
@@ -465,9 +467,11 @@ export const PARENT_FALLBACK_MAP: Record<string, string> = {
   wholesale_durables: "wholesale_food",
   wholesale_general: "wholesale_food",
   // Transport
-  passenger_transport: "trucking_freight",
+  transit_ground_passenger: "trucking_freight",
+  scenic_sightseeing_transport: "trucking_freight",
+  transport_support: "trucking_freight",
   // Manufacturing food adjacency
-  catering: "food_beverage_mfg",
+  catering: "food_mfg",
 };
 
 /**

@@ -1,0 +1,298 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-05-19T05:34:37Z",
+  "wave": "Plan v13 Wave 4b",
+  "cap": 10,
+  "applied": 10,
+  "splits": [
+    {
+      "old_id": "auto_dealers_gas",
+      "old_name": "Auto dealers & gas stations",
+      "old_slug": "auto-dealers-gas-stations",
+      "old_naics_3": [
+        "441",
+        "447"
+      ],
+      "new_entries": [
+        {
+          "id": "auto_dealers",
+          "name": "Auto dealers",
+          "naics_3": [
+            "441"
+          ]
+        },
+        {
+          "id": "gas_stations",
+          "name": "Gas stations",
+          "naics_3": [
+            "447"
+          ]
+        }
+      ],
+      "redirect_target_id": "auto_dealers",
+      "redirect_target_slug": "auto-dealers",
+      "cloned_margins_from": "auto_dealers_gas"
+    },
+    {
+      "old_id": "broadcasting_telecom",
+      "old_name": "Broadcasting & telecom",
+      "old_slug": "broadcasting-telecom",
+      "old_naics_3": [
+        "515",
+        "517"
+      ],
+      "new_entries": [
+        {
+          "id": "broadcasting",
+          "name": "Broadcasting",
+          "naics_3": [
+            "515"
+          ]
+        },
+        {
+          "id": "telecom",
+          "name": "Telecommunications",
+          "naics_3": [
+            "517"
+          ]
+        }
+      ],
+      "redirect_target_id": "broadcasting",
+      "redirect_target_slug": "broadcasting",
+      "cloned_margins_from": null
+    },
+    {
+      "old_id": "chemical_pharma_mfg",
+      "old_name": "Chemical & pharmaceutical manufacturing",
+      "old_slug": "chemical-pharmaceutical-manufacturing",
+      "old_naics_3": [
+        "325",
+        "324"
+      ],
+      "new_entries": [
+        {
+          "id": "chemical_pharma_mfg",
+          "name": "Chemical & pharma manufacturing",
+          "naics_3": [
+            "325"
+          ]
+        },
+        {
+          "id": "petroleum_coal_mfg",
+          "name": "Petroleum & coal products",
+          "naics_3": [
+            "324"
+          ]
+        }
+      ],
+      "redirect_target_id": "chemical_pharma_mfg",
+      "redirect_target_slug": "chemical-pharma-manufacturing",
+      "cloned_margins_from": null
+    },
+    {
+      "old_id": "food_beverage_mfg",
+      "old_name": "Food & beverage manufacturing",
+      "old_slug": "food-beverage-manufacturing",
+      "old_naics_3": [
+        "311",
+        "312"
+      ],
+      "new_entries": [
+        {
+          "id": "food_mfg",
+          "name": "Food manufacturing",
+          "naics_3": [
+            "311"
+          ]
+        },
+        {
+          "id": "beverage_mfg",
+          "name": "Beverage manufacturing",
+          "naics_3": [
+            "312"
+          ]
+        }
+      ],
+      "redirect_target_id": "food_mfg",
+      "redirect_target_slug": "food-manufacturing",
+      "cloned_margins_from": "food_beverage_mfg"
+    },
+    {
+      "old_id": "furniture_home_stores",
+      "old_name": "Furniture & home goods stores",
+      "old_slug": "furniture-home-goods-stores",
+      "old_naics_3": [
+        "442",
+        "444"
+      ],
+      "new_entries": [
+        {
+          "id": "furniture_stores",
+          "name": "Furniture stores",
+          "naics_3": [
+            "442"
+          ]
+        },
+        {
+          "id": "building_garden_stores",
+          "name": "Building & garden supply stores",
+          "naics_3": [
+            "444"
+          ]
+        }
+      ],
+      "redirect_target_id": "furniture_stores",
+      "redirect_target_slug": "furniture-stores",
+      "cloned_margins_from": "furniture_home_stores"
+    },
+    {
+      "old_id": "investment_securities",
+      "old_name": "Investment & securities",
+      "old_slug": "investment-securities",
+      "old_naics_3": [
+        "523",
+        "525"
+      ],
+      "new_entries": [
+        {
+          "id": "securities_brokerage",
+          "name": "Securities & brokerage",
+          "naics_3": [
+            "523"
+          ]
+        },
+        {
+          "id": "funds_trusts",
+          "name": "Funds & trusts",
+          "naics_3": [
+            "525"
+          ]
+        }
+      ],
+      "redirect_target_id": "securities_brokerage",
+      "redirect_target_slug": "securities-brokerage",
+      "cloned_margins_from": null
+    },
+    {
+      "old_id": "mining_quarrying",
+      "old_name": "Mining & quarrying",
+      "old_slug": "mining-quarrying",
+      "old_naics_3": [
+        "212",
+        "213"
+      ],
+      "new_entries": [
+        {
+          "id": "mining_quarrying",
+          "name": "Mining & quarrying (metals, stone)",
+          "naics_3": [
+            "212"
+          ]
+        },
+        {
+          "id": "mining_support",
+          "name": "Mining support services",
+          "naics_3": [
+            "213"
+          ]
+        }
+      ],
+      "redirect_target_id": "mining_quarrying",
+      "redirect_target_slug": "mining-quarrying-metals-stone",
+      "cloned_margins_from": null
+    },
+    {
+      "old_id": "passenger_transport",
+      "old_name": "Passenger transport",
+      "old_slug": "passenger-transport",
+      "old_naics_3": [
+        "485",
+        "487",
+        "488"
+      ],
+      "new_entries": [
+        {
+          "id": "transit_ground_passenger",
+          "name": "Transit & ground passenger transport",
+          "naics_3": [
+            "485"
+          ]
+        },
+        {
+          "id": "scenic_sightseeing_transport",
+          "name": "Scenic & sightseeing transport",
+          "naics_3": [
+            "487"
+          ]
+        },
+        {
+          "id": "transport_support",
+          "name": "Transport support services",
+          "naics_3": [
+            "488"
+          ]
+        }
+      ],
+      "redirect_target_id": "transit_ground_passenger",
+      "redirect_target_slug": "transit-ground-passenger-transport",
+      "cloned_margins_from": "passenger_transport"
+    },
+    {
+      "old_id": "postal_courier",
+      "old_name": "Postal & courier",
+      "old_slug": "postal-courier",
+      "old_naics_3": [
+        "491",
+        "492"
+      ],
+      "new_entries": [
+        {
+          "id": "postal_service",
+          "name": "Postal service",
+          "naics_3": [
+            "491"
+          ]
+        },
+        {
+          "id": "courier_messenger",
+          "name": "Couriers & messengers",
+          "naics_3": [
+            "492"
+          ]
+        }
+      ],
+      "redirect_target_id": "postal_service",
+      "redirect_target_slug": "postal-service",
+      "cloned_margins_from": "postal_courier"
+    },
+    {
+      "old_id": "property_leasing",
+      "old_name": "Property leasing & rental",
+      "old_slug": "property-leasing-rental",
+      "old_naics_3": [
+        "531",
+        "532"
+      ],
+      "new_entries": [
+        {
+          "id": "real_estate_leasing",
+          "name": "Real estate leasing",
+          "naics_3": [
+            "531"
+          ]
+        },
+        {
+          "id": "equipment_rental",
+          "name": "Equipment rental & leasing",
+          "naics_3": [
+            "532"
+          ]
+        }
+      ],
+      "redirect_target_id": "real_estate_leasing",
+      "redirect_target_slug": "real-estate-leasing",
+      "cloned_margins_from": "property_leasing"
+    }
+  ],
+  "known_limitation": "Cell-level data in Supabase (cells_master / regional_cells / extrapolated_cells) still tagged with old NAICS-3 codes. Lookups for new industry IDs will resolve via NAICS_3_TO_INDUSTRY at query time because the new entries carry the subset NAICS-3 codes, so cells for NAICS 441 now map to auto_dealers and cells for NAICS 447 map to gas_stations automatically. No re-ingest needed for the NAICS-3-distinct splits."
+}

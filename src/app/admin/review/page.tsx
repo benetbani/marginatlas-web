@@ -152,6 +152,38 @@ type MarginVerifiedReport = {
   }>;
 };
 
+type Wave5Report = {
+  version: string;
+  generated_at: string;
+  dry_run: boolean;
+  totals: {
+    regional_cells_scanned: number;
+    cells_master_scanned: number;
+    extrapolated_cells_scanned: number;
+    total_cells_scanned: number;
+    peer_medians_built: number;
+    flagged_numeric: number;
+    flagged_shape: number;
+    flagged_extreme_regional: number;
+    flagged_extreme_extrap: number;
+    normalized_count: number;
+    normalization_failures: number;
+    extrapolation_candidates: number;
+    extrapolated_inserted: number;
+    insert_failures: number;
+  };
+  top_10_extreme_outliers: Array<Record<string, unknown>>;
+  top_10_normalizations: Array<Record<string, unknown>>;
+  samples: {
+    flagged_numeric_top_50: Array<Record<string, unknown>>;
+    flagged_shape_top_50: Array<Record<string, unknown>>;
+    flagged_extreme_regional_top_50: Array<Record<string, unknown>>;
+    flagged_extreme_extrap_top_50: Array<Record<string, unknown>>;
+    normalizations_top_50: Array<Record<string, unknown>>;
+    insert_failures_top_20: string[];
+  };
+};
+
 type TaxonomyBundlingReport = {
   version: string;
   generated_at: string;
@@ -211,6 +243,7 @@ export default async function ReviewQueue({
   const rentVerified = loadJson<RentVerifiedReport>("commercial_rent_verified_v1.json");
   const marginVerified = loadJson<MarginVerifiedReport>("industry_margins_verified_v1.json");
   const taxonomyBundling = loadJson<TaxonomyBundlingReport>("taxonomy_bundling_audit_v1.json");
+  const wave5 = loadJson<Wave5Report>("wave5_logic_check_v1.json");
 
   const totals = {
     currency: currency?.totals.flagged_total ?? 0,
@@ -221,6 +254,7 @@ export default async function ReviewQueue({
     taxFlags: (taxVerified?.summary.flags ?? 0) + (taxVerified?.summary.minor_deltas ?? 0),
     rentFlags: (rentVerified?.summary.flags ?? 0) + (rentVerified?.summary.minor_deltas ?? 0),
     marginFlags: (marginVerified?.summary.flags ?? 0) + (marginVerified?.summary.minor_deltas ?? 0),
+    wave5: (wave5?.totals.flagged_numeric ?? 0) + (wave5?.totals.flagged_extreme_regional ?? 0) + (wave5?.totals.flagged_extreme_extrap ?? 0),
   };
   const grandTotal = Object.values(totals).reduce((a, b) => a + b, 0);
 
@@ -241,7 +275,7 @@ export default async function ReviewQueue({
         ships (Q15 finisher).
       </p>
 
-      <div className="mt-6 grid grid-cols-2 md:grid-cols-7 gap-2">
+      <div className="mt-6 grid grid-cols-2 md:grid-cols-8 gap-2">
         <Stat label="Total flags" value={grandTotal} accent />
         <Stat label="Currency (Q1)" value={totals.currency} href={`?key=${sp.key}&tab=currency`} active={tab === "currency"} />
         <Stat label="Variance (Q3)" value={totals.variance} href={`?key=${sp.key}&tab=variance`} active={tab === "variance"} />
@@ -249,6 +283,7 @@ export default async function ReviewQueue({
         <Stat label="Small-n (Q12)" value={totals.smallN} href={`?key=${sp.key}&tab=smallN`} active={tab === "smallN"} />
         <Stat label="YoY (Q14)" value={totals.yoy} href={`?key=${sp.key}&tab=yoy`} active={tab === "yoy"} />
         <Stat label="Verifications" value={totals.taxFlags + totals.rentFlags + totals.marginFlags} href={`?key=${sp.key}&tab=verifications`} active={tab === "verifications"} />
+        <Stat label="Wave 5 logic" value={totals.wave5} href={`?key=${sp.key}&tab=wave5`} active={tab === "wave5"} />
       </div>
 
       {tab === "currency" && currency ? <CurrencyTab data={currency} /> : null}
@@ -258,6 +293,7 @@ export default async function ReviewQueue({
       {tab === "plausibility" && plaus ? <PlausibilityTab data={plaus} /> : null}
       {tab === "tier" && tier ? <TierTab data={tier} /> : null}
       {tab === "verifications" ? <VerificationsTab tax={taxVerified} rent={rentVerified} margin={marginVerified} taxonomy={taxonomyBundling} /> : null}
+      {tab === "wave5" ? <Wave5Tab data={wave5} /> : null}
     </div>
   );
 }
@@ -787,6 +823,200 @@ function PlausibilityTab({ data }: { data: PlausibilityReport }) {
         ))}
       </div>
       <p className="mt-3 text-sm text-ink-700/80">Already documented in /admin/anomalies + cell-page warning chips.</p>
+    </section>
+  );
+}
+
+function Wave5Tab({ data }: { data: Wave5Report | null }) {
+  if (!data) {
+    return (
+      <section className="mt-10">
+        <h2 className="text-xl font-semibold text-ink-900">Wave 5 — Logic check</h2>
+        <p className="mt-3 text-sm text-ink-700/60">No wave5_logic_check_v1.json on disk yet.</p>
+      </section>
+    );
+  }
+  const t = data.totals;
+  return (
+    <section className="mt-10 space-y-8">
+      <div>
+        <h2 className="text-xl font-semibold text-ink-900">
+          Plan v13 Wave 5 — Comprehensive logic check + auto-normalize + extrapolate
+        </h2>
+        <p className="mt-1 text-sm text-ink-700/80 max-w-3xl">
+          Founder-authorized pass. Reviewed every cell across regional_cells, cells_master,
+          and extrapolated_cells. Extreme outliers (&gt;50× off peer median) were capped
+          to 5× (or floored to 0.2×). Missing country × industry × size combos were
+          extrapolated from peer countries scaled by GDP per capita. Backups stored at
+          {" "}<code className="text-xs">delivery/quality/wave5_backup_v1.json</code>.
+          Generated {data.generated_at}.{data.dry_run ? " (DRY RUN — no DB writes.)" : ""}
+        </p>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-2 text-sm">
+        <div className="p-3 rounded-lg bg-cream-100 border border-parchment">
+          <div className="text-xs uppercase text-ink-700/70">Cells scanned</div>
+          <div className="text-lg font-semibold tabular-nums">{t.total_cells_scanned.toLocaleString()}</div>
+          <div className="text-[10px] text-ink-700/70">{t.regional_cells_scanned.toLocaleString()} regional + {t.cells_master_scanned.toLocaleString()} US + {t.extrapolated_cells_scanned.toLocaleString()} extrap</div>
+        </div>
+        <div className="p-3 rounded-lg bg-cream-100 border border-parchment">
+          <div className="text-xs uppercase text-ink-700/70">Peer medians</div>
+          <div className="text-lg font-semibold tabular-nums">{t.peer_medians_built.toLocaleString()}</div>
+        </div>
+        <div className="p-3 rounded-lg bg-cream-100 border border-parchment">
+          <div className="text-xs uppercase text-ink-700/70">Numeric flags</div>
+          <div className="text-lg font-semibold tabular-nums text-clay-700">{t.flagged_numeric.toLocaleString()}</div>
+        </div>
+        <div className="p-3 rounded-lg bg-cream-100 border border-parchment">
+          <div className="text-xs uppercase text-ink-700/70">Extreme outliers</div>
+          <div className="text-lg font-semibold tabular-nums text-clay-700">{(t.flagged_extreme_regional + t.flagged_extreme_extrap).toLocaleString()}</div>
+          <div className="text-[10px] text-ink-700/70">{t.flagged_extreme_regional} regional + {t.flagged_extreme_extrap} extrap</div>
+        </div>
+        <div className="p-3 rounded-lg bg-moss-50 border border-moss-300">
+          <div className="text-xs uppercase text-moss-700">Auto-normalized</div>
+          <div className="text-lg font-semibold tabular-nums text-moss-900">{t.normalized_count.toLocaleString()}</div>
+          {t.normalization_failures > 0 ? (
+            <div className="text-[10px] text-clay-700">{t.normalization_failures} failed</div>
+          ) : null}
+        </div>
+        <div className="p-3 rounded-lg bg-atlas-50 border border-atlas-300">
+          <div className="text-xs uppercase text-atlas-700">Extrapolated inserted</div>
+          <div className="text-lg font-semibold tabular-nums text-atlas-900">{t.extrapolated_inserted.toLocaleString()}</div>
+          <div className="text-[10px] text-ink-700/70">of {t.extrapolation_candidates.toLocaleString()} candidates</div>
+        </div>
+      </div>
+
+      <div>
+        <h3 className="text-sm font-semibold text-ink-900 mb-2">Top 50 normalizations applied</h3>
+        <div className="overflow-x-auto rounded-xl border border-ink-200">
+          <table className="w-full text-xs">
+            <thead className="bg-cream-100 text-ink-900">
+              <tr className="text-left">
+                <th className="py-2 px-2">Table</th>
+                <th className="py-2 px-2">Country</th>
+                <th className="py-2 px-2">Industry</th>
+                <th className="py-2 px-2">Size</th>
+                <th className="py-2 px-2 text-right">Before</th>
+                <th className="py-2 px-2 text-right">After</th>
+                <th className="py-2 px-2 text-right">Peer median</th>
+                <th className="py-2 px-2 text-right">Ratio</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.samples.normalizations_top_50.map((n, i) => {
+                const before = (n.revenue_per_firm as number) ?? (n.predicted_rev_per_firm as number);
+                const after = (n.new_revenue_per_firm as number) ?? (n.new_predicted_rev_per_firm as number);
+                const country = (n.country as string) ?? (n.country_iso3 as string);
+                return (
+                  <tr key={i} className="border-t border-ink-200/40">
+                    <td className="py-1.5 px-2 text-xs font-mono">{String(n.table)}</td>
+                    <td className="py-1.5 px-2 font-medium">{country}</td>
+                    <td className="py-1.5 px-2">{String(n.industry_id)}</td>
+                    <td className="py-1.5 px-2 text-xs">{String(n.size_band)}</td>
+                    <td className="py-1.5 px-2 text-right tabular-nums text-clay-700">{fmtMoney(before)}</td>
+                    <td className="py-1.5 px-2 text-right tabular-nums text-moss-700">{fmtMoney(after)}</td>
+                    <td className="py-1.5 px-2 text-right tabular-nums">{fmtMoney(n.peer_median as number)}</td>
+                    <td className="py-1.5 px-2 text-right tabular-nums">{Number(n.ratio).toFixed(1)}×</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <h3 className="text-sm font-semibold text-ink-900 mb-2">Top 50 numeric bounds violations</h3>
+        <p className="text-xs text-ink-700/70 mb-2">
+          Cells where revenue/firm falls outside the conservative physical bounds for that industry.
+          These were flagged but NOT auto-normalized unless they were also extreme vs peer median.
+        </p>
+        <div className="overflow-x-auto rounded-xl border border-ink-200">
+          <table className="w-full text-xs">
+            <thead className="bg-cream-100 text-ink-900">
+              <tr className="text-left">
+                <th className="py-2 px-2">Table</th>
+                <th className="py-2 px-2">Country</th>
+                <th className="py-2 px-2">Industry</th>
+                <th className="py-2 px-2">Size</th>
+                <th className="py-2 px-2 text-right">Value</th>
+                <th className="py-2 px-2 text-right">Bounds</th>
+                <th className="py-2 px-2">Issue</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.samples.flagged_numeric_top_50.map((n, i) => {
+                const val = (n.revenue_per_firm as number) ?? (n.rev_p50 as number) ?? (n.predicted_rev_per_firm as number);
+                const country = (n.country as string) ?? (n.country_iso3 as string);
+                const bounds = n.bounds as [number, number] | undefined;
+                return (
+                  <tr key={i} className="border-t border-ink-200/40">
+                    <td className="py-1.5 px-2 text-xs font-mono">{String(n.table)}</td>
+                    <td className="py-1.5 px-2 font-medium">{country}</td>
+                    <td className="py-1.5 px-2">{String(n.industry_id)}</td>
+                    <td className="py-1.5 px-2 text-xs">{String(n.size_band)}</td>
+                    <td className="py-1.5 px-2 text-right tabular-nums text-clay-700">{fmtMoney(val)}</td>
+                    <td className="py-1.5 px-2 text-right tabular-nums text-ink-700/70">
+                      {bounds ? `${fmtMoney(bounds[0])} - ${fmtMoney(bounds[1])}` : "—"}
+                    </td>
+                    <td className="py-1.5 px-2 text-xs">{String(n.issue)}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {data.samples.flagged_shape_top_50.length > 0 ? (
+        <div>
+          <h3 className="text-sm font-semibold text-ink-900 mb-2">Top 50 distribution-shape issues</h3>
+          <p className="text-xs text-ink-700/70 mb-2">
+            Percentiles that violate p10 ≤ p25 ≤ p50 ≤ p75 ≤ p90 or whose spread (p90/p10) is implausibly tight or wide.
+          </p>
+          <div className="overflow-x-auto rounded-xl border border-ink-200">
+            <table className="w-full text-xs">
+              <thead className="bg-cream-100 text-ink-900">
+                <tr className="text-left">
+                  <th className="py-2 px-2">Table</th>
+                  <th className="py-2 px-2">Country</th>
+                  <th className="py-2 px-2">Industry</th>
+                  <th className="py-2 px-2">Size</th>
+                  <th className="py-2 px-2 text-right">p10</th>
+                  <th className="py-2 px-2 text-right">p50</th>
+                  <th className="py-2 px-2 text-right">p90</th>
+                  <th className="py-2 px-2">Issue</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.samples.flagged_shape_top_50.map((n, i) => (
+                  <tr key={i} className="border-t border-ink-200/40">
+                    <td className="py-1.5 px-2 text-xs font-mono">{String(n.table)}</td>
+                    <td className="py-1.5 px-2 font-medium">{String(n.country ?? n.country_iso3 ?? "—")}</td>
+                    <td className="py-1.5 px-2">{String(n.industry_id)}</td>
+                    <td className="py-1.5 px-2 text-xs">{String(n.size_band)}</td>
+                    <td className="py-1.5 px-2 text-right tabular-nums">{fmtMoney(n.p10 as number)}</td>
+                    <td className="py-1.5 px-2 text-right tabular-nums">{fmtMoney(n.p50 as number)}</td>
+                    <td className="py-1.5 px-2 text-right tabular-nums">{fmtMoney(n.p90 as number)}</td>
+                    <td className="py-1.5 px-2 text-xs text-clay-700">{String(n.shape_issue)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ) : null}
+
+      {data.samples.insert_failures_top_20.length > 0 ? (
+        <div>
+          <h3 className="text-sm font-semibold text-clay-700 mb-2">Insert failures</h3>
+          <ul className="text-xs space-y-1 text-ink-700">
+            {data.samples.insert_failures_top_20.map((e, i) => (
+              <li key={i} className="font-mono">{e}</li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
     </section>
   );
 }

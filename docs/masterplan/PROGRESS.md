@@ -335,3 +335,41 @@ Founder review after Waves 1-3 surfaced residual issues — orphan components, d
 
 **Spec file:** `docs/specs/2026-05-19-plan-v13-wave4-credibility-followup-design.md` (Wave 4a is the first of four sub-waves the spec covers; 4b taxonomy, 4c images, 4d discoverability + polish ship separately).
 
+## Plan v13 Wave 4b — taxonomy bundling audit + splits (2026-05-19)
+
+Founder flagged `auto_dealers_gas` as a single bucket mixing two unrelated business models — capital-intensive showroom auto sales (NAICS 441) and commodity-thin gasoline retail (NAICS 447). Audited all 206 industries for the same failure mode and split the top 10 most obvious bundles.
+
+**Shipped:**
+
+- **T-4b.1 — audit script** (`scripts/quality/audit_industry_bundling.py` in the parent atlas/ tree): scores every industry on (a) multi-NAICS-3 multiplicity, (b) lexical clustering of `examples` + `keywords`, (c) conjunction patterns in the `name` field. Output: `delivery/quality/taxonomy_bundling_audit_v1.json` plus a mirrored copy at `website/data/quality/taxonomy_bundling_audit_v1.json` for the admin page to read. 17 industries flagged as split candidates (all multi-NAICS-3).
+- **T-4b.2 — admin/review Taxonomy subsection** (`src/app/admin/review/page.tsx`): added as the 4th subsection under the Verifications tab (after Q9). Renders the audit table with severity score, dubious-because reasoning, suggested splits, and Split/Rename/Keep action chips that encode the decision into a `?decision=...&id=...` query string for a follow-up server action.
+- **T-4b.3 — top 10 splits executed** (`scripts/quality/execute_taxonomy_splits.py`):
+  - `auto_dealers_gas` → `auto_dealers` + `gas_stations`
+  - `broadcasting_telecom` → `broadcasting` + `telecom`
+  - `chemical_pharma_mfg` → `chemical_pharma_mfg` (NAICS 325 only) + `petroleum_coal_mfg`
+  - `food_beverage_mfg` → `food_mfg` + `beverage_mfg`
+  - `furniture_home_stores` → `furniture_stores` + `building_garden_stores`
+  - `investment_securities` → `securities_brokerage` + `funds_trusts`
+  - `mining_quarrying` → `mining_quarrying` (renamed, NAICS 212 only) + `mining_support`
+  - `passenger_transport` → `transit_ground_passenger` + `scenic_sightseeing_transport` + `transport_support`
+  - `postal_courier` → `postal_service` + `courier_messenger`
+  - `property_leasing` → `real_estate_leasing` + `equipment_rental`
+  - `industries.json` rewritten with the new entries in place, `industry_margins.json` cloned per new ID, `src/middleware.ts` updated with a 308-redirect map for the 10 old slugs. Audit trail at `delivery/quality/taxonomy_splits_executed_v1.json` and `website/data/quality/taxonomy_splits_executed_v1.json`.
+  - `src/lib/taxonomy.ts` aliases + `PARENT_FALLBACK_MAP` updated to point at the new IDs (bakery→food_mfg, brewery→beverage_mfg, etc.). Sub-niches with `parent_id` pointing at the old IDs were re-pointed via `PARENT_REMAP_OVERRIDES` (craft_beer_mfg→beverage_mfg, hardware_stores→building_garden_stores, etc.).
+- **T-4b.4 — cell-level data re-ingest (deferred)**: cells in Supabase (`cells_master`, `regional_cells`, `extrapolated_cells`) still carry their original NAICS-6 codes. Because the new industry entries each carry the subset NAICS-3 codes, `naics6ToIndustry` automatically routes 441-prefix cells to `auto_dealers` and 447-prefix cells to `gas_stations` — no re-ingest needed for splits where the two halves live in distinct NAICS-3 codes. **Known limitation**: every executed split lands on a distinct NAICS-3 code, so this batch is clean. Splits where two new entries would share a NAICS-3 (none in this round) would require either a manual NAICS-6 re-derivation or accepting that one half wins all the cells.
+
+**Verification:**
+
+- `npx tsc --noEmit` clean.
+- `npm run build` clean: 217 industries total (was 206), 186 visible (was 180). Taxonomy verifier passes — no orphan sectors, no orphan parents.
+- Live spot-checks (Next.js server on :3000):
+  - `/industries/auto-dealers` → 200
+  - `/industries/gas-stations` → 200
+  - `/industries/auto-dealers-gas-stations` → 308 → `/industries/auto-dealers` (200)
+  - `/us/california/auto-dealers` → 200
+  - `/us/california/gas-stations` → 200
+  - `/us/california/auto-dealers-gas-stations` → 308 → `/us/california/auto-dealers` (200)
+  - `/industries/food-manufacturing` → 200, `/industries/beverage-manufacturing` → 200, `/industries/food-beverage-manufacturing` → 308 → `food-manufacturing`.
+
+**Founder review queue**: the 7 remaining flagged industries that did NOT get executed (textile_apparel_mfg, media_publishing, wood_paper_mfg, furniture_other_mfg, metal_products_mfg, software_development, crop_farming) have generic NAICS-3-numbered split skeletons; they need hand-tuned names + sector_ids before the executor can apply them. Visible in `/admin/review?tab=verifications`.
+

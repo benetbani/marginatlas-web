@@ -39,13 +39,6 @@
       "asset_intensity": 1.0,
       "notes": "Equipment + harvesting rights heavy."
     },
-    "food_beverage_mfg": {
-      "gross_margin": 0.32,
-      "operating_margin": 0.11,
-      "net_margin": 0.0715,
-      "asset_intensity": 0.55,
-      "notes": "Plant + equipment. Commodity input volatility."
-    },
     "craft_beer_mfg": {
       "gross_margin": 0.55,
       "operating_margin": 0.12,
@@ -600,13 +593,6 @@
       "asset_intensity": 0.3,
       "notes": "Compete with chains; thin margins."
     },
-    "furniture_home_stores": {
-      "gross_margin": 0.42,
-      "operating_margin": 0.08,
-      "net_margin": 0.052,
-      "asset_intensity": 0.3,
-      "notes": "Showroom + delivery."
-    },
     "hardware_stores": {
       "gross_margin": 0.38,
       "operating_margin": 0.07,
@@ -648,14 +634,6 @@
       "net_margin": 0.03,
       "asset_intensity": 0.18,
       "notes": "Insurance reimbursement compression.",
-      "floor_applied": true
-    },
-    "auto_dealers_gas": {
-      "gross_margin": 0.15,
-      "operating_margin": 0.05,
-      "net_margin": 0.03,
-      "asset_intensity": 0.45,
-      "notes": "Volume model; thin per-unit margin.",
       "floor_applied": true
     },
     "ecommerce_mail_order": {
@@ -748,13 +726,6 @@
       "net_margin": 0.0455,
       "asset_intensity": 0.6,
       "notes": "Fuel + truck capex heavy."
-    },
-    "passenger_transport": {
-      "gross_margin": 0.25,
-      "operating_margin": 0.07,
-      "net_margin": 0.0455,
-      "asset_intensity": 0.55,
-      "notes": "Vehicle + driver heavy."
     },
     "warehousing_storage": {
       "gross_margin": 0.4,
@@ -867,13 +838,6 @@
       "net_margin": 0.144,
       "asset_intensity": 0.05,
       "notes": "Commission; office overhead."
-    },
-    "property_leasing": {
-      "gross_margin": 0.75,
-      "operating_margin": 0.3,
-      "net_margin": 0.165,
-      "asset_intensity": 2.5,
-      "notes": "Owned property dominates asset base."
     },
     "legal_services": {
       "gross_margin": 0.92,
@@ -1338,14 +1302,6 @@
       "notes": "NAICS 326 plastics + rubber products. Capital-heavy molding/extrusion equipment. Resin commodity exposure compresses gross. Sector-typical nondurable-mfg band.",
       "source_url": "https://www.bls.gov/iag/tgs/iag326.htm"
     },
-    "postal_courier": {
-      "gross_margin": 0.22,
-      "operating_margin": 0.07,
-      "net_margin": 0.04,
-      "asset_intensity": 0.4,
-      "notes": "IBISWorld couriers + local delivery: industry profit share ~8.5% revenue 2026. SMB local courier 3-8% net; gross 15-25%. Fleet + fuel intensive.",
-      "source_url": "https://www.ibisworld.com/united-states/industry/couriers-local-delivery-services/1950/"
-    },
     "water_waste": {
       "gross_margin": 0.45,
       "operating_margin": 0.12,
@@ -1361,6 +1317,101 @@
       "asset_intensity": 0.3,
       "notes": "Pharma wholesaler gross margin ~6.3% per HHS ASPE 2022; broader chemical/pharma distributors run 15-25% gross at SMB scale (specialty product mix). High volume, low takerate model.",
       "source_url": "https://aspe.hhs.gov/reports/margins-retail-channel"
+    },
+    "auto_dealers": {
+      "gross_margin": 0.15,
+      "operating_margin": 0.05,
+      "net_margin": 0.03,
+      "asset_intensity": 0.45,
+      "notes": "Cloned from auto_dealers_gas during Wave 4b split. Volume model; thin per-unit margin.",
+      "floor_applied": true
+    },
+    "gas_stations": {
+      "gross_margin": 0.15,
+      "operating_margin": 0.05,
+      "net_margin": 0.03,
+      "asset_intensity": 0.45,
+      "notes": "Cloned from auto_dealers_gas during Wave 4b split. Volume model; thin per-unit margin.",
+      "floor_applied": true
+    },
+    "food_mfg": {
+      "gross_margin": 0.32,
+      "operating_margin": 0.11,
+      "net_margin": 0.0715,
+      "asset_intensity": 0.55,
+      "notes": "Cloned from food_beverage_mfg during Wave 4b split. Plant + equipment. Commodity input volatility."
+    },
+    "beverage_mfg": {
+      "gross_margin": 0.32,
+      "operating_margin": 0.11,
+      "net_margin": 0.0715,
+      "asset_intensity": 0.55,
+      "notes": "Cloned from food_beverage_mfg during Wave 4b split. Plant + equipment. Commodity input volatility."
+    },
+    "furniture_stores": {
+      "gross_margin": 0.42,
+      "operating_margin": 0.08,
+      "net_margin": 0.052,
+      "asset_intensity": 0.3,
+      "notes": "Cloned from furniture_home_stores during Wave 4b split. Showroom + delivery."
+    },
+    "building_garden_stores": {
+      "gross_margin": 0.42,
+      "operating_margin": 0.08,
+      "net_margin": 0.052,
+      "asset_intensity": 0.3,
+      "notes": "Cloned from furniture_home_stores during Wave 4b split. Showroom + delivery."
+    },
+    "transit_ground_passenger": {
+      "gross_margin": 0.25,
+      "operating_margin": 0.07,
+      "net_margin": 0.0455,
+      "asset_intensity": 0.55,
+      "notes": "Cloned from passenger_transport during Wave 4b split. Vehicle + driver heavy."
+    },
+    "scenic_sightseeing_transport": {
+      "gross_margin": 0.25,
+      "operating_margin": 0.07,
+      "net_margin": 0.0455,
+      "asset_intensity": 0.55,
+      "notes": "Cloned from passenger_transport during Wave 4b split. Vehicle + driver heavy."
+    },
+    "transport_support": {
+      "gross_margin": 0.25,
+      "operating_margin": 0.07,
+      "net_margin": 0.0455,
+      "asset_intensity": 0.55,
+      "notes": "Cloned from passenger_transport during Wave 4b split. Vehicle + driver heavy."
+    },
+    "postal_service": {
+      "gross_margin": 0.22,
+      "operating_margin": 0.07,
+      "net_margin": 0.04,
+      "asset_intensity": 0.4,
+      "notes": "Cloned from postal_courier during Wave 4b split. IBISWorld couriers + local delivery: industry profit share ~8.5% revenue 2026. SMB local courier 3-8% net; gross 15-25%. Fleet + fuel intensive.",
+      "source_url": "https://www.ibisworld.com/united-states/industry/couriers-local-delivery-services/1950/"
+    },
+    "courier_messenger": {
+      "gross_margin": 0.22,
+      "operating_margin": 0.07,
+      "net_margin": 0.04,
+      "asset_intensity": 0.4,
+      "notes": "Cloned from postal_courier during Wave 4b split. IBISWorld couriers + local delivery: industry profit share ~8.5% revenue 2026. SMB local courier 3-8% net; gross 15-25%. Fleet + fuel intensive.",
+      "source_url": "https://www.ibisworld.com/united-states/industry/couriers-local-delivery-services/1950/"
+    },
+    "real_estate_leasing": {
+      "gross_margin": 0.75,
+      "operating_margin": 0.3,
+      "net_margin": 0.165,
+      "asset_intensity": 2.5,
+      "notes": "Cloned from property_leasing during Wave 4b split. Owned property dominates asset base."
+    },
+    "equipment_rental": {
+      "gross_margin": 0.75,
+      "operating_margin": 0.3,
+      "net_margin": 0.165,
+      "asset_intensity": 2.5,
+      "notes": "Cloned from property_leasing during Wave 4b split. Owned property dominates asset base."
     }
   }
 }
