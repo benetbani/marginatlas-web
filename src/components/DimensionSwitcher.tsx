@@ -139,32 +139,8 @@ export function DimensionSwitcher({
           </>
         )}
 
-        {/* Year */}
-        {years.length > 1 && (
-          <>
-            <span className="text-ink-700/40 hidden md:inline">·</span>
-            <label className="flex items-center gap-2">
-              <span className="text-xs text-ink-700/60">Year</span>
-              <select
-                aria-label="Year"
-                value={year}
-                disabled={pending}
-                onChange={(e) => {
-                  setYear(e.target.value);
-                  navigate(geoSlug, industrySlug, undefined, e.target.value);
-                }}
-                className="appearance-none bg-white border border-ink-200 hover:border-atlas-500 rounded-lg px-3 py-1.5 pr-8 text-sm font-medium text-ink-900 focus:outline-none focus:ring-2 focus:ring-atlas-500/30 transition cursor-pointer bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 12 12%22 fill=%22none%22><path d=%22M3 5l3 3 3-3%22 stroke=%22%23475569%22 stroke-width=%221.5%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>')] bg-no-repeat bg-[length:12px] bg-[right_0.625rem_center]"
-              >
-                <option value="">Latest</option>
-                {years.map((y) => (
-                  <option key={y} value={String(y)}>
-                    {y}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </>
-        )}
+        {/* Plan v13 Wave 1: year selector removed. The page always
+           shows the most recent vintage; users never pick a year. */}
 
         {pending && (
           <span className="text-xs text-ink-700/60 ml-auto animate-pulse">

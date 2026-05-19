@@ -23,7 +23,6 @@ import { QualityBadge } from "@/components/QualityBadge";
 import { QualityDots, score100to10 } from "@/components/QualityDots";
 import { Tooltip } from "@/components/Tooltip";
 import { DimensionSwitcher } from "@/components/DimensionSwitcher";
-import { TimeSeriesChart } from "@/components/TimeSeriesChart";
 import { TypicalFirmCard } from "@/components/TypicalFirmCard";
 import { PostTaxToggle } from "@/components/PostTaxToggle";
 import { NetProfitWaterfall } from "@/components/NetProfitWaterfall";
@@ -432,22 +431,8 @@ export default async function CellPage({
         />
       </section>
 
-      {/* Time series */}
-      {timeSeries.length >= 2 && (
-        <section id="timeseries" className="py-6 grid md:grid-cols-2 gap-4">
-          <TimeSeriesChart
-            data={timeSeries}
-            metric="revenue_per_firm"
-            label="Typical revenue per firm"
-            currencySymbol="$"
-          />
-          <TimeSeriesChart
-            data={timeSeries}
-            metric="n_enterprises"
-            label="Number of firms"
-          />
-        </section>
-      )}
+      {/* Plan v13 Wave 1: time series chart removed —
+         multi-year coverage is too uneven across cells to display honestly. */}
 
       {/* Quality */}
       <section id="quality" className="py-6">
