@@ -53,9 +53,10 @@ export const SECTION_TONES: Record<string, SectionTone> = {
   // Cell page
   "hero": "ink-dark",
   // Plan v14 Phase B — editorial narrative sits between the ink-dark hero
-  // and the cream revenue tiles. cream-50 keeps the reading band airy and
-  // distinct from both neighbors.
-  "narrative": "cream-50",
+  // and the cream revenue tiles. Plan v14 6c (audit v2 N-2): switched to
+  // white so it doesn't collide tonally with the cream-50 revenue-tiles
+  // section directly below, restoring the alternation rhythm.
+  "narrative": "white",
   "revenue-tiles": "cream-50",
   "revenue-distribution": "white",
   "margin-waterfall": "cream-100",
