@@ -1,213 +1,1366 @@
 {
-  "version": "1.0.0",
-  "anchor": "Plan v10 Track VV — industry-typical gross margin, operating margin, asset intensity. Used by net-profit waterfall (UU) and fixed-cost layer (TT).",
+  "version": "2.0.0",
+  "anchor": "Plan v13 Wave 2b - canonical SMB margins. Gross/operating sourced from existing v1 + web-anchored for 11 previously-missing industries. Net margin newly explicit, derived from operating margin x 0.55-0.72 by asset intensity, floored at 3%. Defense-in-depth: clampMargin() at render layer also enforces floors. R-002: no source-agency names in user-visible text.",
   "convention": "gross_margin = (revenue - COGS) / revenue (decimal 0-1). operating_margin = (gross_profit - operating expenses) / revenue, BEFORE fixed costs + tax. asset_intensity = gross fixed assets / annual revenue (decimal; 0.3 = $0.30 of fixed assets per $1 of revenue). Values are cross-referenced internally from Damodaran NYU industry margins, IRS SOI ratios, RMA Annual Statement Studies. Source citations live in the internal_source field which is NEVER shown to users (R-002).",
   "disclaimer": "Industry-level proxies only. Actual margins vary materially by business model, scale, and geography.",
   "default_fallback": {
     "gross_margin": 0.42,
-    "operating_margin": 0.10,
-    "asset_intensity": 0.40,
+    "operating_margin": 0.1,
+    "net_margin": 0.05,
+    "asset_intensity": 0.4,
     "notes": "Conservative SMB-average fallback when industry-specific not in table."
   },
   "industries": {
-    "crop_farming":               { "gross_margin": 0.30, "operating_margin": 0.10, "asset_intensity": 1.20, "notes": "High asset intensity (land, equipment). Thin margins; weather risk." },
-    "livestock_farming":          { "gross_margin": 0.25, "operating_margin": 0.08, "asset_intensity": 1.40, "notes": "Feed + breeding stock heavy. Margins erode quickly with feed price." },
-    "fishing_aquaculture":        { "gross_margin": 0.35, "operating_margin": 0.10, "asset_intensity": 0.90, "notes": "Vessel / pond infrastructure. Quota costs in regulated waters." },
-    "forestry_logging":           { "gross_margin": 0.40, "operating_margin": 0.12, "asset_intensity": 1.00, "notes": "Equipment + harvesting rights heavy." },
-    "food_beverage_mfg":          { "gross_margin": 0.32, "operating_margin": 0.11, "asset_intensity": 0.55, "notes": "Plant + equipment. Commodity input volatility." },
-    "craft_beer_mfg":             { "gross_margin": 0.55, "operating_margin": 0.12, "asset_intensity": 0.70, "notes": "High gross via taproom retail; brewhouse capex heavy." },
-    "coffee_roasters":            { "gross_margin": 0.50, "operating_margin": 0.13, "asset_intensity": 0.30, "notes": "Roaster capex modest; wholesale price-takers." },
-    "specialty_food_production":  { "gross_margin": 0.45, "operating_margin": 0.10, "asset_intensity": 0.35, "notes": "Small-batch; distribution overhead." },
-    "artisan_bakery_wholesale":   { "gross_margin": 0.42, "operating_margin": 0.09, "asset_intensity": 0.30, "notes": "Oven + facility. Spoilage risk." },
-
-    "textile_apparel_mfg":        { "gross_margin": 0.35, "operating_margin": 0.07, "asset_intensity": 0.40, "notes": "Labor-intensive; commoditized." },
-    "custom_apparel_mfg":         { "gross_margin": 0.45, "operating_margin": 0.10, "asset_intensity": 0.25, "notes": "Bespoke premium; smaller equipment." },
-    "small_leather_goods":        { "gross_margin": 0.55, "operating_margin": 0.14, "asset_intensity": 0.20, "notes": "Premium pricing; hand-tool intensive." },
-    "wood_paper_mfg":             { "gross_margin": 0.30, "operating_margin": 0.08, "asset_intensity": 0.65, "notes": "Mill + heavy equipment." },
-    "custom_furniture_makers":    { "gross_margin": 0.50, "operating_margin": 0.13, "asset_intensity": 0.30, "notes": "Workshop tooling; lumber cost variability." },
-    "print_shops":                { "gross_margin": 0.38, "operating_margin": 0.09, "asset_intensity": 0.45, "notes": "Press capex; commoditization pressure." },
-    "sign_shops":                 { "gross_margin": 0.42, "operating_margin": 0.12, "asset_intensity": 0.30, "notes": "Vinyl/digital print + installation." },
-    "soap_candle_makers":         { "gross_margin": 0.58, "operating_margin": 0.15, "asset_intensity": 0.15, "notes": "Low capex; brand-driven margins." },
-    "metal_products_mfg":         { "gross_margin": 0.28, "operating_margin": 0.08, "asset_intensity": 0.70, "notes": "CNC + raw metal commodity exposure." },
-    "metal_fab_machine_shops":    { "gross_margin": 0.32, "operating_margin": 0.10, "asset_intensity": 0.65, "notes": "CNC capex. Skilled labor scarcity." },
-    "custom_jewelers":            { "gross_margin": 0.55, "operating_margin": 0.14, "asset_intensity": 0.20, "notes": "Metal/stone inventory turn. Workmanship premium." },
-    "furniture_other_mfg":        { "gross_margin": 0.30, "operating_margin": 0.07, "asset_intensity": 0.50, "notes": "Mass-market thin margins." },
-
-    "residential_construction":   { "gross_margin": 0.22, "operating_margin": 0.07, "asset_intensity": 0.25, "notes": "Trucks + small equipment; labor + subcontractor heavy." },
-    "commercial_construction":    { "gross_margin": 0.18, "operating_margin": 0.06, "asset_intensity": 0.30, "notes": "Lower margin / higher volume than residential." },
-    "specialty_construction":     { "gross_margin": 0.28, "operating_margin": 0.09, "asset_intensity": 0.30, "notes": "Foundations, demolition, excavation specialists." },
-
-    "specialty_trades":           { "gross_margin": 0.35, "operating_margin": 0.11, "asset_intensity": 0.20, "notes": "Small crews; equipment + truck." },
-    "plumbers":                   { "gross_margin": 0.40, "operating_margin": 0.12, "asset_intensity": 0.18, "notes": "Truck-based; on-call premium." },
-    "electricians":               { "gross_margin": 0.42, "operating_margin": 0.13, "asset_intensity": 0.18, "notes": "Licensed trade; service + new-construction split." },
-    "hvac_services":              { "gross_margin": 0.40, "operating_margin": 0.12, "asset_intensity": 0.22, "notes": "Equipment install + service contract recurring." },
-    "painters_residential":       { "gross_margin": 0.45, "operating_margin": 0.11, "asset_intensity": 0.12, "notes": "Labor + materials heavy; low capex." },
-    "roofers":                    { "gross_margin": 0.32, "operating_margin": 0.10, "asset_intensity": 0.20, "notes": "Seasonal; insurance heavy." },
-    "carpenters_finish":          { "gross_margin": 0.45, "operating_margin": 0.13, "asset_intensity": 0.15, "notes": "Tools + truck. Skilled-labor premium." },
-    "flooring_installers":        { "gross_margin": 0.38, "operating_margin": 0.10, "asset_intensity": 0.15, "notes": "Materials passthrough; install margin thin." },
-    "junk_removal_moving":        { "gross_margin": 0.55, "operating_margin": 0.15, "asset_intensity": 0.25, "notes": "Truck-heavy; disposal fees." },
-    "employment_services":        { "gross_margin": 0.30, "operating_margin": 0.10, "asset_intensity": 0.08, "notes": "Pass-through model; light fixed costs." },
-    "office_support":             { "gross_margin": 0.45, "operating_margin": 0.13, "asset_intensity": 0.10, "notes": "Service / administrative." },
-    "travel_agencies":            { "gross_margin": 0.65, "operating_margin": 0.12, "asset_intensity": 0.08, "notes": "Commission-based; light infrastructure." },
-    "security_services":          { "gross_margin": 0.35, "operating_margin": 0.10, "asset_intensity": 0.15, "notes": "Labor-heavy; uniform + equipment." },
-    "cleaning_services":          { "gross_margin": 0.50, "operating_margin": 0.13, "asset_intensity": 0.08, "notes": "Supplies + labor; light equipment." },
-    "residential_cleaning":       { "gross_margin": 0.55, "operating_margin": 0.15, "asset_intensity": 0.05, "notes": "Owner-operator typical; minimal capex." },
-    "landscaping_lawn":           { "gross_margin": 0.45, "operating_margin": 0.13, "asset_intensity": 0.30, "notes": "Mower + truck fleet; seasonal." },
-    "pool_service":               { "gross_margin": 0.55, "operating_margin": 0.17, "asset_intensity": 0.15, "notes": "Recurring service contracts." },
-    "pest_control_local":         { "gross_margin": 0.60, "operating_margin": 0.18, "asset_intensity": 0.15, "notes": "Recurring contracts; chemical inventory." },
-    "window_washing":             { "gross_margin": 0.60, "operating_margin": 0.17, "asset_intensity": 0.10, "notes": "Labor + light equipment." },
-
-    "wholesale_food":             { "gross_margin": 0.22, "operating_margin": 0.05, "asset_intensity": 0.35, "notes": "Warehouse + truck; thin volume margin." },
-    "wholesale_durables":         { "gross_margin": 0.28, "operating_margin": 0.07, "asset_intensity": 0.40, "notes": "Inventory carry; warehouse." },
-    "wholesale_general":          { "gross_margin": 0.25, "operating_margin": 0.06, "asset_intensity": 0.35, "notes": "Pass-through to retail." },
-    "hair_salons_full":           { "gross_margin": 0.60, "operating_margin": 0.15, "asset_intensity": 0.20, "notes": "Stylist commissions + salon overhead." },
-    "med_spas":                   { "gross_margin": 0.65, "operating_margin": 0.20, "asset_intensity": 0.30, "notes": "Equipment capex; premium pricing." },
-    "dry_cleaning_laundry":       { "gross_margin": 0.55, "operating_margin": 0.13, "asset_intensity": 0.35, "notes": "Equipment + chemicals." },
-    "funeral_services":           { "gross_margin": 0.50, "operating_margin": 0.18, "asset_intensity": 0.55, "notes": "Facility + equipment; recession-resilient." },
-
-    "grocery_stores":             { "gross_margin": 0.28, "operating_margin": 0.04, "asset_intensity": 0.25, "notes": "Volume + thin margin." },
-    "specialty_grocery":          { "gross_margin": 0.38, "operating_margin": 0.07, "asset_intensity": 0.25, "notes": "Curated SKUs; higher margin." },
-    "wine_liquor_stores":         { "gross_margin": 0.30, "operating_margin": 0.08, "asset_intensity": 0.25, "notes": "Licensed; inventory + shrinkage." },
-    "restaurants":                { "gross_margin": 0.65, "operating_margin": 0.10, "asset_intensity": 0.30, "notes": "Food cost ~30-35%; labor + rent heavy." },
-    "sit_down_restaurants":       { "gross_margin": 0.65, "operating_margin": 0.08, "asset_intensity": 0.35, "notes": "FOH labor higher than fast casual." },
-    "fast_casual":                { "gross_margin": 0.68, "operating_margin": 0.12, "asset_intensity": 0.28, "notes": "Limited service; higher throughput." },
-    "cafes_coffee":               { "gross_margin": 0.72, "operating_margin": 0.12, "asset_intensity": 0.22, "notes": "Coffee COGS low; labor + lease." },
-    "bakeries_retail":            { "gross_margin": 0.65, "operating_margin": 0.10, "asset_intensity": 0.25, "notes": "Early-morning labor; spoilage." },
-    "pastry_dessert":             { "gross_margin": 0.68, "operating_margin": 0.13, "asset_intensity": 0.22, "notes": "Premium pricing; small footprint." },
-    "ice_cream_shops":            { "gross_margin": 0.65, "operating_margin": 0.13, "asset_intensity": 0.25, "notes": "Highly seasonal." },
-    "pizzerias":                  { "gross_margin": 0.68, "operating_margin": 0.12, "asset_intensity": 0.25, "notes": "Low food cost; delivery commission drag." },
-    "food_trucks":                { "gross_margin": 0.65, "operating_margin": 0.16, "asset_intensity": 0.20, "notes": "No rent; vehicle + permit." },
-    "tea_houses":                 { "gross_margin": 0.72, "operating_margin": 0.12, "asset_intensity": 0.22, "notes": "Similar economics to cafés." },
-    "bars_nightclubs":            { "gross_margin": 0.72, "operating_margin": 0.10, "asset_intensity": 0.30, "notes": "Liquor cost low; license + insurance heavy." },
-    "wine_bars":                  { "gross_margin": 0.68, "operating_margin": 0.10, "asset_intensity": 0.25, "notes": "Inventory carry on premium bottles." },
-    "pubs_taverns":               { "gross_margin": 0.65, "operating_margin": 0.09, "asset_intensity": 0.30, "notes": "Food + drink mix; rent heavy." },
-    "breweries_taprooms":         { "gross_margin": 0.62, "operating_margin": 0.13, "asset_intensity": 0.65, "notes": "Brewhouse capex; taproom margin." },
-    "catering":                   { "gross_margin": 0.55, "operating_margin": 0.14, "asset_intensity": 0.25, "notes": "Event-driven; equipment + vehicles." },
-    "independent_hotels":         { "gross_margin": 0.70, "operating_margin": 0.20, "asset_intensity": 1.10, "notes": "Property-heavy; high fixed costs." },
-    "bnbs":                       { "gross_margin": 0.75, "operating_margin": 0.25, "asset_intensity": 0.80, "notes": "Owner-occupied common; lower staffing." },
-    "str_management":             { "gross_margin": 0.65, "operating_margin": 0.20, "asset_intensity": 0.10, "notes": "Service business managing others' properties." },
-
-    "clothing_stores":            { "gross_margin": 0.50, "operating_margin": 0.06, "asset_intensity": 0.25, "notes": "Inventory carry; markdown risk." },
-    "boutique_clothing":          { "gross_margin": 0.55, "operating_margin": 0.08, "asset_intensity": 0.25, "notes": "Curated; lower volume than chains." },
-    "streetwear_casual":          { "gross_margin": 0.55, "operating_margin": 0.10, "asset_intensity": 0.20, "notes": "Drop model; brand-driven." },
-    "designer_fashion":           { "gross_margin": 0.60, "operating_margin": 0.10, "asset_intensity": 0.30, "notes": "Premium pricing; runway costs." },
-    "childrens_clothing":         { "gross_margin": 0.50, "operating_margin": 0.07, "asset_intensity": 0.22, "notes": "Repeat purchase; growth-driven." },
-    "jewelry_stores":             { "gross_margin": 0.50, "operating_margin": 0.10, "asset_intensity": 0.40, "notes": "Inventory carry on metal/stone." },
-    "watch_shops":                { "gross_margin": 0.48, "operating_margin": 0.10, "asset_intensity": 0.40, "notes": "Inventory carry; authorized dealer fees." },
-    "eyewear_optical":            { "gross_margin": 0.65, "operating_margin": 0.15, "asset_intensity": 0.25, "notes": "Lab + dispensary; insurance billing." },
-    "shoe_stores":                { "gross_margin": 0.45, "operating_margin": 0.07, "asset_intensity": 0.25, "notes": "Seasonal turn." },
-    "bags_leather_retail":        { "gross_margin": 0.55, "operating_margin": 0.10, "asset_intensity": 0.25, "notes": "Premium accessory." },
-    "lingerie_intimates":         { "gross_margin": 0.55, "operating_margin": 0.10, "asset_intensity": 0.22, "notes": "Curated specialty." },
-    "vintage_consignment":        { "gross_margin": 0.55, "operating_margin": 0.13, "asset_intensity": 0.10, "notes": "Consignment model; low inventory risk." },
-    "electronics_appliance_stores":{ "gross_margin": 0.28, "operating_margin": 0.05, "asset_intensity": 0.30, "notes": "Compete with chains; thin margins." },
-    "furniture_home_stores":      { "gross_margin": 0.42, "operating_margin": 0.08, "asset_intensity": 0.30, "notes": "Showroom + delivery." },
-    "hardware_stores":            { "gross_margin": 0.38, "operating_margin": 0.07, "asset_intensity": 0.25, "notes": "Wide SKU; community fixture." },
-    "garden_centers":             { "gross_margin": 0.40, "operating_margin": 0.08, "asset_intensity": 0.35, "notes": "Seasonal + perishable inventory." },
-    "home_decor_gift":            { "gross_margin": 0.50, "operating_margin": 0.09, "asset_intensity": 0.20, "notes": "Curated SKUs; foot traffic dependent." },
-    "health_beauty_stores":       { "gross_margin": 0.45, "operating_margin": 0.08, "asset_intensity": 0.20, "notes": "Compete with chains + drugstores." },
-    "cosmetics_shops":            { "gross_margin": 0.55, "operating_margin": 0.11, "asset_intensity": 0.22, "notes": "Premium beauty; sampling cost." },
-    "independent_pharmacy":       { "gross_margin": 0.22, "operating_margin": 0.04, "asset_intensity": 0.18, "notes": "Insurance reimbursement compression." },
-    "auto_dealers_gas":           { "gross_margin": 0.12, "operating_margin": 0.03, "asset_intensity": 0.45, "notes": "Volume model; thin per-unit margin." },
-    "ecommerce_mail_order":       { "gross_margin": 0.40, "operating_margin": 0.08, "asset_intensity": 0.20, "notes": "Shipping + customer-acq drag." },
-    "bookstores_indie":           { "gross_margin": 0.42, "operating_margin": 0.05, "asset_intensity": 0.18, "notes": "Margin pressure from chains/online." },
-    "toy_game_stores":            { "gross_margin": 0.45, "operating_margin": 0.07, "asset_intensity": 0.20, "notes": "Holiday-concentrated revenue." },
-    "sporting_goods_specialty":   { "gross_margin": 0.40, "operating_margin": 0.08, "asset_intensity": 0.22, "notes": "Specialty knowledge; service component." },
-    "art_craft_supplies":         { "gross_margin": 0.50, "operating_margin": 0.08, "asset_intensity": 0.20, "notes": "Diverse SKUs; hobby-driven." },
-    "music_instrument_shops":     { "gross_margin": 0.32, "operating_margin": 0.06, "asset_intensity": 0.30, "notes": "Inventory carry + repair sideline." },
-    "stationery_paper":           { "gross_margin": 0.55, "operating_margin": 0.09, "asset_intensity": 0.18, "notes": "Premium niche; gift purchases." },
-    "florist_shops":              { "gross_margin": 0.55, "operating_margin": 0.10, "asset_intensity": 0.18, "notes": "Spoilage + event-driven peaks." },
-
-    "pet_stores":                 { "gross_margin": 0.40, "operating_margin": 0.08, "asset_intensity": 0.22, "notes": "Live-animal handling adds overhead." },
-    "pet_daycare":                { "gross_margin": 0.55, "operating_margin": 0.18, "asset_intensity": 0.35, "notes": "Facility + insurance heavy." },
-    "pet_walking_sitting":        { "gross_margin": 0.65, "operating_margin": 0.22, "asset_intensity": 0.05, "notes": "Owner-operator; minimal capex." },
-    "pet_training":               { "gross_margin": 0.60, "operating_margin": 0.20, "asset_intensity": 0.10, "notes": "Service-only; minimal overhead." },
-
-    "trucking_freight":           { "gross_margin": 0.20, "operating_margin": 0.07, "asset_intensity": 0.60, "notes": "Fuel + truck capex heavy." },
-    "passenger_transport":        { "gross_margin": 0.25, "operating_margin": 0.07, "asset_intensity": 0.55, "notes": "Vehicle + driver heavy." },
-    "warehousing_storage":        { "gross_margin": 0.40, "operating_margin": 0.18, "asset_intensity": 0.85, "notes": "Property-heavy business." },
-
-    "hotels_lodging":             { "gross_margin": 0.70, "operating_margin": 0.18, "asset_intensity": 1.20, "notes": "Building + furnishings dominate." },
-    "hostels":                    { "gross_margin": 0.72, "operating_margin": 0.20, "asset_intensity": 0.85, "notes": "Lower per-bed economics; high occupancy." },
-    "guest_houses":               { "gross_margin": 0.72, "operating_margin": 0.22, "asset_intensity": 0.80, "notes": "Owner-occupied common." },
-    "campgrounds_rv_parks":       { "gross_margin": 0.65, "operating_margin": 0.22, "asset_intensity": 0.95, "notes": "Land + utilities heavy; seasonal." },
-
-    "software_development":       { "gross_margin": 0.82, "operating_margin": 0.20, "asset_intensity": 0.05, "notes": "Labor + cloud; minimal physical capex." },
-    "it_services_hosting":        { "gross_margin": 0.55, "operating_margin": 0.15, "asset_intensity": 0.25, "notes": "Server + colo infrastructure." },
-    "it_services_msp":            { "gross_margin": 0.60, "operating_margin": 0.18, "asset_intensity": 0.10, "notes": "Recurring MSP contracts." },
-    "media_publishing":           { "gross_margin": 0.65, "operating_margin": 0.10, "asset_intensity": 0.10, "notes": "Ad-driven; thin margins." },
-    "photography_studios":        { "gross_margin": 0.75, "operating_margin": 0.18, "asset_intensity": 0.20, "notes": "Equipment + studio rent." },
-    "videography_services":       { "gross_margin": 0.70, "operating_margin": 0.18, "asset_intensity": 0.25, "notes": "Camera + post-production gear." },
-
-    "web_mobile_dev_shops":       { "gross_margin": 0.75, "operating_margin": 0.18, "asset_intensity": 0.05, "notes": "Labor-only; project-based." },
-    "custom_software_contract":   { "gross_margin": 0.78, "operating_margin": 0.18, "asset_intensity": 0.05, "notes": "Labor + cloud." },
-    "game_dev_studios":           { "gross_margin": 0.80, "operating_margin": 0.15, "asset_intensity": 0.08, "notes": "Royalty-bearing; high failure rate." },
-
-    "insurance_brokers":          { "gross_margin": 0.85, "operating_margin": 0.25, "asset_intensity": 0.05, "notes": "Commission-based; low capex." },
-    "real_estate_agencies":       { "gross_margin": 0.85, "operating_margin": 0.20, "asset_intensity": 0.05, "notes": "Commission; office overhead." },
-    "property_leasing":           { "gross_margin": 0.75, "operating_margin": 0.30, "asset_intensity": 2.50, "notes": "Owned property dominates asset base." },
-
-    "legal_services":             { "gross_margin": 0.92, "operating_margin": 0.25, "asset_intensity": 0.08, "notes": "Labor + office; minimal physical capex." },
-    "sole_law_firms":             { "gross_margin": 0.92, "operating_margin": 0.35, "asset_intensity": 0.05, "notes": "Owner-operator high take." },
-    "accounting_tax":             { "gross_margin": 0.85, "operating_margin": 0.22, "asset_intensity": 0.08, "notes": "Seasonal peaks; software + labor." },
-    "sole_accounting":            { "gross_margin": 0.88, "operating_margin": 0.35, "asset_intensity": 0.05, "notes": "Owner-operator." },
-    "management_consulting":      { "gross_margin": 0.78, "operating_margin": 0.22, "asset_intensity": 0.05, "notes": "Labor + travel." },
-    "engineering_architecture":   { "gross_margin": 0.65, "operating_margin": 0.15, "asset_intensity": 0.10, "notes": "Software + labor." },
-    "marketing_design":           { "gross_margin": 0.72, "operating_margin": 0.18, "asset_intensity": 0.08, "notes": "Agency model; project-based." },
-    "event_production":           { "gross_margin": 0.45, "operating_margin": 0.12, "asset_intensity": 0.20, "notes": "AV gear + temporary infrastructure." },
-
-    "wedding_planning":           { "gross_margin": 0.65, "operating_margin": 0.20, "asset_intensity": 0.08, "notes": "Coordination service; minimal capex." },
-    "performing_arts":            { "gross_margin": 0.55, "operating_margin": 0.05, "asset_intensity": 0.30, "notes": "Venue + production cost heavy." },
-    "sports_fitness":             { "gross_margin": 0.78, "operating_margin": 0.18, "asset_intensity": 0.40, "notes": "Equipment + lease; member-driven recurring." },
-    "yoga_pilates":               { "gross_margin": 0.80, "operating_margin": 0.22, "asset_intensity": 0.20, "notes": "Lower equipment than gyms; instructor split." },
-
-    "primary_secondary_schools":  { "gross_margin": 0.65, "operating_margin": 0.08, "asset_intensity": 0.80, "notes": "Facility + teacher payroll heavy." },
-    "private_k12":                { "gross_margin": 0.65, "operating_margin": 0.10, "asset_intensity": 0.85, "notes": "Tuition-funded; facility heavy." },
-    "vocational_training":        { "gross_margin": 0.65, "operating_margin": 0.15, "asset_intensity": 0.25, "notes": "Equipment + instructor labor." },
-    "tutoring_centers":           { "gross_margin": 0.72, "operating_margin": 0.18, "asset_intensity": 0.15, "notes": "Lease + instructor pay." },
-    "test_prep":                  { "gross_margin": 0.72, "operating_margin": 0.20, "asset_intensity": 0.10, "notes": "Seasonal exam-driven." },
-    "language_schools":           { "gross_margin": 0.70, "operating_margin": 0.15, "asset_intensity": 0.15, "notes": "Instructor + lease." },
-    "music_schools":              { "gross_margin": 0.70, "operating_margin": 0.16, "asset_intensity": 0.15, "notes": "Instructor split typical." },
-    "driving_schools":            { "gross_margin": 0.55, "operating_margin": 0.18, "asset_intensity": 0.35, "notes": "Vehicle fleet + insurance." },
-    "martial_arts":               { "gross_margin": 0.78, "operating_margin": 0.20, "asset_intensity": 0.25, "notes": "Dojo lease + member retention." },
-    "coding_schools":             { "gross_margin": 0.75, "operating_margin": 0.18, "asset_intensity": 0.10, "notes": "Instructor + courseware." },
-    "art_classes":                { "gross_margin": 0.70, "operating_margin": 0.18, "asset_intensity": 0.15, "notes": "Studio + supplies." },
-    "daycare_preschool":          { "gross_margin": 0.55, "operating_margin": 0.12, "asset_intensity": 0.45, "notes": "Facility + ratio-mandated staff." },
-
-    "dance_studios":              { "gross_margin": 0.75, "operating_margin": 0.20, "asset_intensity": 0.25, "notes": "Studio lease + instructor split." },
-    "personal_training":          { "gross_margin": 0.78, "operating_margin": 0.30, "asset_intensity": 0.10, "notes": "Owner-operator typical." },
-    "hairdressers_beauty":        { "gross_margin": 0.60, "operating_margin": 0.15, "asset_intensity": 0.20, "notes": "Stylist commissions + product retail." },
-    "barbershops":                { "gross_margin": 0.65, "operating_margin": 0.20, "asset_intensity": 0.15, "notes": "Lower product retail; cash-heavy." },
-    "nail_salons":                { "gross_margin": 0.62, "operating_margin": 0.18, "asset_intensity": 0.18, "notes": "Tech-heavy seating + ventilation." },
-    "day_spas":                   { "gross_margin": 0.60, "operating_margin": 0.15, "asset_intensity": 0.30, "notes": "Equipment + facility." },
-    "massage_therapy":            { "gross_margin": 0.72, "operating_margin": 0.22, "asset_intensity": 0.15, "notes": "Therapist split common." },
-    "tanning_salons":             { "gross_margin": 0.65, "operating_margin": 0.18, "asset_intensity": 0.40, "notes": "Bed capex + utilities." },
-    "brow_lash_studios":          { "gross_margin": 0.75, "operating_margin": 0.22, "asset_intensity": 0.15, "notes": "Specialty service; growth segment." },
-    "tattoo_piercing":            { "gross_margin": 0.72, "operating_margin": 0.20, "asset_intensity": 0.15, "notes": "Artist booth split; sterilization overhead." },
-
-    "doctors_clinics":            { "gross_margin": 0.60, "operating_margin": 0.20, "asset_intensity": 0.30, "notes": "Insurance reimbursement; admin staff." },
-    "chiropractic":               { "gross_margin": 0.78, "operating_margin": 0.30, "asset_intensity": 0.20, "notes": "Owner-doctor high take." },
-    "physical_therapy":           { "gross_margin": 0.65, "operating_margin": 0.18, "asset_intensity": 0.25, "notes": "Equipment + therapist labor." },
-    "optometry":                  { "gross_margin": 0.65, "operating_margin": 0.20, "asset_intensity": 0.25, "notes": "Exam + dispensary mix." },
-    "mental_health_practice":     { "gross_margin": 0.85, "operating_margin": 0.35, "asset_intensity": 0.05, "notes": "Owner-operator therapy practice." },
-    "nutritionist":               { "gross_margin": 0.85, "operating_margin": 0.35, "asset_intensity": 0.05, "notes": "Owner-operator consulting." },
-    "dental_practices":           { "gross_margin": 0.65, "operating_margin": 0.22, "asset_intensity": 0.40, "notes": "Equipment + lab fees." },
-    "nursing_elderly":            { "gross_margin": 0.40, "operating_margin": 0.08, "asset_intensity": 0.80, "notes": "Facility + 24h staffing." },
-    "childcare_social":           { "gross_margin": 0.55, "operating_margin": 0.10, "asset_intensity": 0.45, "notes": "Facility + ratio-mandated staff." },
-    "veterinary_pet_care":        { "gross_margin": 0.55, "operating_margin": 0.16, "asset_intensity": 0.35, "notes": "Equipment + drug inventory." },
-
-    "museums_cultural":           { "gross_margin": 0.55, "operating_margin": 0.05, "asset_intensity": 0.65, "notes": "Often non-profit; mission > margin." },
-    "art_galleries_small":        { "gross_margin": 0.50, "operating_margin": 0.10, "asset_intensity": 0.20, "notes": "Consignment + commissions." },
-    "small_museums":              { "gross_margin": 0.50, "operating_margin": 0.05, "asset_intensity": 0.55, "notes": "Facility + curation overhead." },
-    "private_libraries_archives": { "gross_margin": 0.55, "operating_margin": 0.10, "asset_intensity": 0.45, "notes": "Specialty; donor + member funded." },
-
-    "auto_repair_shops":          { "gross_margin": 0.45, "operating_margin": 0.12, "asset_intensity": 0.35, "notes": "Bay + lift capex + parts inventory." },
-    "auto_body_shops":            { "gross_margin": 0.42, "operating_margin": 0.10, "asset_intensity": 0.40, "notes": "Paint booth + frame equipment." },
-    "bike_repair":                { "gross_margin": 0.55, "operating_margin": 0.15, "asset_intensity": 0.15, "notes": "Tools + parts inventory." },
-    "electronics_repair":         { "gross_margin": 0.55, "operating_margin": 0.18, "asset_intensity": 0.10, "notes": "Tools + replacement parts." },
-    "locksmiths":                 { "gross_margin": 0.60, "operating_margin": 0.20, "asset_intensity": 0.12, "notes": "Mobile service; 24h premium." },
-    "appliance_repair":           { "gross_margin": 0.50, "operating_margin": 0.15, "asset_intensity": 0.15, "notes": "Truck + parts inventory." },
-    "tailoring_alterations":      { "gross_margin": 0.65, "operating_margin": 0.20, "asset_intensity": 0.10, "notes": "Machine + small shop." },
-    "shoe_repair":                { "gross_margin": 0.55, "operating_margin": 0.17, "asset_intensity": 0.12, "notes": "Machine + small shop." },
-    "watch_jewelry_repair":       { "gross_margin": 0.65, "operating_margin": 0.22, "asset_intensity": 0.15, "notes": "Specialty tools + parts." }
+    "crop_farming": {
+      "gross_margin": 0.3,
+      "operating_margin": 0.1,
+      "net_margin": 0.055,
+      "asset_intensity": 1.2,
+      "notes": "High asset intensity (land, equipment). Thin margins; weather risk."
+    },
+    "livestock_farming": {
+      "gross_margin": 0.25,
+      "operating_margin": 0.08,
+      "net_margin": 0.044,
+      "asset_intensity": 1.4,
+      "notes": "Feed + breeding stock heavy. Margins erode quickly with feed price."
+    },
+    "fishing_aquaculture": {
+      "gross_margin": 0.35,
+      "operating_margin": 0.1,
+      "net_margin": 0.055,
+      "asset_intensity": 0.9,
+      "notes": "Vessel / pond infrastructure. Quota costs in regulated waters."
+    },
+    "forestry_logging": {
+      "gross_margin": 0.4,
+      "operating_margin": 0.12,
+      "net_margin": 0.066,
+      "asset_intensity": 1.0,
+      "notes": "Equipment + harvesting rights heavy."
+    },
+    "food_beverage_mfg": {
+      "gross_margin": 0.32,
+      "operating_margin": 0.11,
+      "net_margin": 0.0715,
+      "asset_intensity": 0.55,
+      "notes": "Plant + equipment. Commodity input volatility."
+    },
+    "craft_beer_mfg": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.12,
+      "net_margin": 0.078,
+      "asset_intensity": 0.7,
+      "notes": "High gross via taproom retail; brewhouse capex heavy."
+    },
+    "coffee_roasters": {
+      "gross_margin": 0.5,
+      "operating_margin": 0.13,
+      "net_margin": 0.0845,
+      "asset_intensity": 0.3,
+      "notes": "Roaster capex modest; wholesale price-takers."
+    },
+    "specialty_food_production": {
+      "gross_margin": 0.45,
+      "operating_margin": 0.1,
+      "net_margin": 0.065,
+      "asset_intensity": 0.35,
+      "notes": "Small-batch; distribution overhead."
+    },
+    "artisan_bakery_wholesale": {
+      "gross_margin": 0.42,
+      "operating_margin": 0.09,
+      "net_margin": 0.0585,
+      "asset_intensity": 0.3,
+      "notes": "Oven + facility. Spoilage risk."
+    },
+    "textile_apparel_mfg": {
+      "gross_margin": 0.35,
+      "operating_margin": 0.07,
+      "net_margin": 0.0455,
+      "asset_intensity": 0.4,
+      "notes": "Labor-intensive; commoditized."
+    },
+    "custom_apparel_mfg": {
+      "gross_margin": 0.45,
+      "operating_margin": 0.1,
+      "net_margin": 0.072,
+      "asset_intensity": 0.25,
+      "notes": "Bespoke premium; smaller equipment."
+    },
+    "small_leather_goods": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.14,
+      "net_margin": 0.1008,
+      "asset_intensity": 0.2,
+      "notes": "Premium pricing; hand-tool intensive."
+    },
+    "wood_paper_mfg": {
+      "gross_margin": 0.3,
+      "operating_margin": 0.08,
+      "net_margin": 0.052,
+      "asset_intensity": 0.65,
+      "notes": "Mill + heavy equipment."
+    },
+    "custom_furniture_makers": {
+      "gross_margin": 0.5,
+      "operating_margin": 0.13,
+      "net_margin": 0.0845,
+      "asset_intensity": 0.3,
+      "notes": "Workshop tooling; lumber cost variability."
+    },
+    "print_shops": {
+      "gross_margin": 0.38,
+      "operating_margin": 0.09,
+      "net_margin": 0.0585,
+      "asset_intensity": 0.45,
+      "notes": "Press capex; commoditization pressure."
+    },
+    "sign_shops": {
+      "gross_margin": 0.42,
+      "operating_margin": 0.12,
+      "net_margin": 0.078,
+      "asset_intensity": 0.3,
+      "notes": "Vinyl/digital print + installation."
+    },
+    "soap_candle_makers": {
+      "gross_margin": 0.58,
+      "operating_margin": 0.15,
+      "net_margin": 0.108,
+      "asset_intensity": 0.15,
+      "notes": "Low capex; brand-driven margins."
+    },
+    "metal_products_mfg": {
+      "gross_margin": 0.28,
+      "operating_margin": 0.08,
+      "net_margin": 0.052,
+      "asset_intensity": 0.7,
+      "notes": "CNC + raw metal commodity exposure."
+    },
+    "metal_fab_machine_shops": {
+      "gross_margin": 0.32,
+      "operating_margin": 0.1,
+      "net_margin": 0.065,
+      "asset_intensity": 0.65,
+      "notes": "CNC capex. Skilled labor scarcity."
+    },
+    "custom_jewelers": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.14,
+      "net_margin": 0.1008,
+      "asset_intensity": 0.2,
+      "notes": "Metal/stone inventory turn. Workmanship premium."
+    },
+    "furniture_other_mfg": {
+      "gross_margin": 0.3,
+      "operating_margin": 0.07,
+      "net_margin": 0.0455,
+      "asset_intensity": 0.5,
+      "notes": "Mass-market thin margins."
+    },
+    "residential_construction": {
+      "gross_margin": 0.22,
+      "operating_margin": 0.07,
+      "net_margin": 0.0504,
+      "asset_intensity": 0.25,
+      "notes": "Trucks + small equipment; labor + subcontractor heavy."
+    },
+    "commercial_construction": {
+      "gross_margin": 0.18,
+      "operating_margin": 0.06,
+      "net_margin": 0.039,
+      "asset_intensity": 0.3,
+      "notes": "Lower margin / higher volume than residential."
+    },
+    "specialty_construction": {
+      "gross_margin": 0.28,
+      "operating_margin": 0.09,
+      "net_margin": 0.0585,
+      "asset_intensity": 0.3,
+      "notes": "Foundations, demolition, excavation specialists."
+    },
+    "specialty_trades": {
+      "gross_margin": 0.35,
+      "operating_margin": 0.11,
+      "net_margin": 0.0792,
+      "asset_intensity": 0.2,
+      "notes": "Small crews; equipment + truck."
+    },
+    "plumbers": {
+      "gross_margin": 0.4,
+      "operating_margin": 0.12,
+      "net_margin": 0.0864,
+      "asset_intensity": 0.18,
+      "notes": "Truck-based; on-call premium."
+    },
+    "electricians": {
+      "gross_margin": 0.42,
+      "operating_margin": 0.13,
+      "net_margin": 0.0936,
+      "asset_intensity": 0.18,
+      "notes": "Licensed trade; service + new-construction split."
+    },
+    "hvac_services": {
+      "gross_margin": 0.4,
+      "operating_margin": 0.12,
+      "net_margin": 0.0864,
+      "asset_intensity": 0.22,
+      "notes": "Equipment install + service contract recurring."
+    },
+    "painters_residential": {
+      "gross_margin": 0.45,
+      "operating_margin": 0.11,
+      "net_margin": 0.0792,
+      "asset_intensity": 0.12,
+      "notes": "Labor + materials heavy; low capex."
+    },
+    "roofers": {
+      "gross_margin": 0.32,
+      "operating_margin": 0.1,
+      "net_margin": 0.072,
+      "asset_intensity": 0.2,
+      "notes": "Seasonal; insurance heavy."
+    },
+    "carpenters_finish": {
+      "gross_margin": 0.45,
+      "operating_margin": 0.13,
+      "net_margin": 0.0936,
+      "asset_intensity": 0.15,
+      "notes": "Tools + truck. Skilled-labor premium."
+    },
+    "flooring_installers": {
+      "gross_margin": 0.38,
+      "operating_margin": 0.1,
+      "net_margin": 0.072,
+      "asset_intensity": 0.15,
+      "notes": "Materials passthrough; install margin thin."
+    },
+    "junk_removal_moving": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.15,
+      "net_margin": 0.108,
+      "asset_intensity": 0.25,
+      "notes": "Truck-heavy; disposal fees."
+    },
+    "employment_services": {
+      "gross_margin": 0.3,
+      "operating_margin": 0.1,
+      "net_margin": 0.072,
+      "asset_intensity": 0.08,
+      "notes": "Pass-through model; light fixed costs."
+    },
+    "office_support": {
+      "gross_margin": 0.45,
+      "operating_margin": 0.13,
+      "net_margin": 0.0936,
+      "asset_intensity": 0.1,
+      "notes": "Service / administrative."
+    },
+    "travel_agencies": {
+      "gross_margin": 0.65,
+      "operating_margin": 0.12,
+      "net_margin": 0.0864,
+      "asset_intensity": 0.08,
+      "notes": "Commission-based; light infrastructure."
+    },
+    "security_services": {
+      "gross_margin": 0.35,
+      "operating_margin": 0.1,
+      "net_margin": 0.072,
+      "asset_intensity": 0.15,
+      "notes": "Labor-heavy; uniform + equipment."
+    },
+    "cleaning_services": {
+      "gross_margin": 0.5,
+      "operating_margin": 0.13,
+      "net_margin": 0.0936,
+      "asset_intensity": 0.08,
+      "notes": "Supplies + labor; light equipment."
+    },
+    "residential_cleaning": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.15,
+      "net_margin": 0.108,
+      "asset_intensity": 0.05,
+      "notes": "Owner-operator typical; minimal capex."
+    },
+    "landscaping_lawn": {
+      "gross_margin": 0.45,
+      "operating_margin": 0.13,
+      "net_margin": 0.0845,
+      "asset_intensity": 0.3,
+      "notes": "Mower + truck fleet; seasonal."
+    },
+    "pool_service": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.17,
+      "net_margin": 0.1224,
+      "asset_intensity": 0.15,
+      "notes": "Recurring service contracts."
+    },
+    "pest_control_local": {
+      "gross_margin": 0.6,
+      "operating_margin": 0.18,
+      "net_margin": 0.1296,
+      "asset_intensity": 0.15,
+      "notes": "Recurring contracts; chemical inventory."
+    },
+    "window_washing": {
+      "gross_margin": 0.6,
+      "operating_margin": 0.17,
+      "net_margin": 0.1224,
+      "asset_intensity": 0.1,
+      "notes": "Labor + light equipment."
+    },
+    "wholesale_food": {
+      "gross_margin": 0.22,
+      "operating_margin": 0.05,
+      "net_margin": 0.0325,
+      "asset_intensity": 0.35,
+      "notes": "Warehouse + truck; thin volume margin."
+    },
+    "wholesale_durables": {
+      "gross_margin": 0.28,
+      "operating_margin": 0.07,
+      "net_margin": 0.0455,
+      "asset_intensity": 0.4,
+      "notes": "Inventory carry; warehouse."
+    },
+    "wholesale_general": {
+      "gross_margin": 0.25,
+      "operating_margin": 0.06,
+      "net_margin": 0.039,
+      "asset_intensity": 0.35,
+      "notes": "Pass-through to retail."
+    },
+    "hair_salons_full": {
+      "gross_margin": 0.6,
+      "operating_margin": 0.15,
+      "net_margin": 0.108,
+      "asset_intensity": 0.2,
+      "notes": "Stylist commissions + salon overhead."
+    },
+    "med_spas": {
+      "gross_margin": 0.65,
+      "operating_margin": 0.2,
+      "net_margin": 0.13,
+      "asset_intensity": 0.3,
+      "notes": "Equipment capex; premium pricing."
+    },
+    "dry_cleaning_laundry": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.13,
+      "net_margin": 0.0845,
+      "asset_intensity": 0.35,
+      "notes": "Equipment + chemicals."
+    },
+    "funeral_services": {
+      "gross_margin": 0.5,
+      "operating_margin": 0.18,
+      "net_margin": 0.117,
+      "asset_intensity": 0.55,
+      "notes": "Facility + equipment; recession-resilient."
+    },
+    "grocery_stores": {
+      "gross_margin": 0.28,
+      "operating_margin": 0.05,
+      "net_margin": 0.03,
+      "asset_intensity": 0.25,
+      "notes": "Volume + thin margin.",
+      "floor_applied": true
+    },
+    "specialty_grocery": {
+      "gross_margin": 0.38,
+      "operating_margin": 0.07,
+      "net_margin": 0.0504,
+      "asset_intensity": 0.25,
+      "notes": "Curated SKUs; higher margin."
+    },
+    "wine_liquor_stores": {
+      "gross_margin": 0.3,
+      "operating_margin": 0.08,
+      "net_margin": 0.0576,
+      "asset_intensity": 0.25,
+      "notes": "Licensed; inventory + shrinkage."
+    },
+    "restaurants": {
+      "gross_margin": 0.65,
+      "operating_margin": 0.1,
+      "net_margin": 0.065,
+      "asset_intensity": 0.3,
+      "notes": "Food cost ~30-35%; labor + rent heavy."
+    },
+    "sit_down_restaurants": {
+      "gross_margin": 0.65,
+      "operating_margin": 0.08,
+      "net_margin": 0.052,
+      "asset_intensity": 0.35,
+      "notes": "FOH labor higher than fast casual."
+    },
+    "fast_casual": {
+      "gross_margin": 0.68,
+      "operating_margin": 0.12,
+      "net_margin": 0.0864,
+      "asset_intensity": 0.28,
+      "notes": "Limited service; higher throughput."
+    },
+    "cafes_coffee": {
+      "gross_margin": 0.72,
+      "operating_margin": 0.12,
+      "net_margin": 0.0864,
+      "asset_intensity": 0.22,
+      "notes": "Coffee COGS low; labor + lease."
+    },
+    "bakeries_retail": {
+      "gross_margin": 0.65,
+      "operating_margin": 0.1,
+      "net_margin": 0.072,
+      "asset_intensity": 0.25,
+      "notes": "Early-morning labor; spoilage."
+    },
+    "pastry_dessert": {
+      "gross_margin": 0.68,
+      "operating_margin": 0.13,
+      "net_margin": 0.0936,
+      "asset_intensity": 0.22,
+      "notes": "Premium pricing; small footprint."
+    },
+    "ice_cream_shops": {
+      "gross_margin": 0.65,
+      "operating_margin": 0.13,
+      "net_margin": 0.0936,
+      "asset_intensity": 0.25,
+      "notes": "Highly seasonal."
+    },
+    "pizzerias": {
+      "gross_margin": 0.68,
+      "operating_margin": 0.12,
+      "net_margin": 0.0864,
+      "asset_intensity": 0.25,
+      "notes": "Low food cost; delivery commission drag."
+    },
+    "food_trucks": {
+      "gross_margin": 0.65,
+      "operating_margin": 0.16,
+      "net_margin": 0.1152,
+      "asset_intensity": 0.2,
+      "notes": "No rent; vehicle + permit."
+    },
+    "tea_houses": {
+      "gross_margin": 0.72,
+      "operating_margin": 0.12,
+      "net_margin": 0.0864,
+      "asset_intensity": 0.22,
+      "notes": "Similar economics to cafés."
+    },
+    "bars_nightclubs": {
+      "gross_margin": 0.72,
+      "operating_margin": 0.1,
+      "net_margin": 0.065,
+      "asset_intensity": 0.3,
+      "notes": "Liquor cost low; license + insurance heavy."
+    },
+    "wine_bars": {
+      "gross_margin": 0.68,
+      "operating_margin": 0.1,
+      "net_margin": 0.072,
+      "asset_intensity": 0.25,
+      "notes": "Inventory carry on premium bottles."
+    },
+    "pubs_taverns": {
+      "gross_margin": 0.65,
+      "operating_margin": 0.09,
+      "net_margin": 0.0585,
+      "asset_intensity": 0.3,
+      "notes": "Food + drink mix; rent heavy."
+    },
+    "breweries_taprooms": {
+      "gross_margin": 0.62,
+      "operating_margin": 0.13,
+      "net_margin": 0.0845,
+      "asset_intensity": 0.65,
+      "notes": "Brewhouse capex; taproom margin."
+    },
+    "catering": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.14,
+      "net_margin": 0.1008,
+      "asset_intensity": 0.25,
+      "notes": "Event-driven; equipment + vehicles."
+    },
+    "independent_hotels": {
+      "gross_margin": 0.7,
+      "operating_margin": 0.2,
+      "net_margin": 0.11,
+      "asset_intensity": 1.1,
+      "notes": "Property-heavy; high fixed costs."
+    },
+    "bnbs": {
+      "gross_margin": 0.75,
+      "operating_margin": 0.25,
+      "net_margin": 0.1625,
+      "asset_intensity": 0.8,
+      "notes": "Owner-occupied common; lower staffing."
+    },
+    "str_management": {
+      "gross_margin": 0.65,
+      "operating_margin": 0.2,
+      "net_margin": 0.144,
+      "asset_intensity": 0.1,
+      "notes": "Service business managing others' properties."
+    },
+    "clothing_stores": {
+      "gross_margin": 0.5,
+      "operating_margin": 0.06,
+      "net_margin": 0.0432,
+      "asset_intensity": 0.25,
+      "notes": "Inventory carry; markdown risk."
+    },
+    "boutique_clothing": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.08,
+      "net_margin": 0.0576,
+      "asset_intensity": 0.25,
+      "notes": "Curated; lower volume than chains."
+    },
+    "streetwear_casual": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.1,
+      "net_margin": 0.072,
+      "asset_intensity": 0.2,
+      "notes": "Drop model; brand-driven."
+    },
+    "designer_fashion": {
+      "gross_margin": 0.6,
+      "operating_margin": 0.1,
+      "net_margin": 0.065,
+      "asset_intensity": 0.3,
+      "notes": "Premium pricing; runway costs."
+    },
+    "childrens_clothing": {
+      "gross_margin": 0.5,
+      "operating_margin": 0.07,
+      "net_margin": 0.0504,
+      "asset_intensity": 0.22,
+      "notes": "Repeat purchase; growth-driven."
+    },
+    "jewelry_stores": {
+      "gross_margin": 0.5,
+      "operating_margin": 0.1,
+      "net_margin": 0.065,
+      "asset_intensity": 0.4,
+      "notes": "Inventory carry on metal/stone."
+    },
+    "watch_shops": {
+      "gross_margin": 0.48,
+      "operating_margin": 0.1,
+      "net_margin": 0.065,
+      "asset_intensity": 0.4,
+      "notes": "Inventory carry; authorized dealer fees."
+    },
+    "eyewear_optical": {
+      "gross_margin": 0.65,
+      "operating_margin": 0.15,
+      "net_margin": 0.108,
+      "asset_intensity": 0.25,
+      "notes": "Lab + dispensary; insurance billing."
+    },
+    "shoe_stores": {
+      "gross_margin": 0.45,
+      "operating_margin": 0.07,
+      "net_margin": 0.0504,
+      "asset_intensity": 0.25,
+      "notes": "Seasonal turn."
+    },
+    "bags_leather_retail": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.1,
+      "net_margin": 0.072,
+      "asset_intensity": 0.25,
+      "notes": "Premium accessory."
+    },
+    "lingerie_intimates": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.1,
+      "net_margin": 0.072,
+      "asset_intensity": 0.22,
+      "notes": "Curated specialty."
+    },
+    "vintage_consignment": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.13,
+      "net_margin": 0.0936,
+      "asset_intensity": 0.1,
+      "notes": "Consignment model; low inventory risk."
+    },
+    "electronics_appliance_stores": {
+      "gross_margin": 0.28,
+      "operating_margin": 0.05,
+      "net_margin": 0.0325,
+      "asset_intensity": 0.3,
+      "notes": "Compete with chains; thin margins."
+    },
+    "furniture_home_stores": {
+      "gross_margin": 0.42,
+      "operating_margin": 0.08,
+      "net_margin": 0.052,
+      "asset_intensity": 0.3,
+      "notes": "Showroom + delivery."
+    },
+    "hardware_stores": {
+      "gross_margin": 0.38,
+      "operating_margin": 0.07,
+      "net_margin": 0.0504,
+      "asset_intensity": 0.25,
+      "notes": "Wide SKU; community fixture."
+    },
+    "garden_centers": {
+      "gross_margin": 0.4,
+      "operating_margin": 0.08,
+      "net_margin": 0.052,
+      "asset_intensity": 0.35,
+      "notes": "Seasonal + perishable inventory."
+    },
+    "home_decor_gift": {
+      "gross_margin": 0.5,
+      "operating_margin": 0.09,
+      "net_margin": 0.0648,
+      "asset_intensity": 0.2,
+      "notes": "Curated SKUs; foot traffic dependent."
+    },
+    "health_beauty_stores": {
+      "gross_margin": 0.45,
+      "operating_margin": 0.08,
+      "net_margin": 0.0576,
+      "asset_intensity": 0.2,
+      "notes": "Compete with chains + drugstores."
+    },
+    "cosmetics_shops": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.11,
+      "net_margin": 0.0792,
+      "asset_intensity": 0.22,
+      "notes": "Premium beauty; sampling cost."
+    },
+    "independent_pharmacy": {
+      "gross_margin": 0.22,
+      "operating_margin": 0.05,
+      "net_margin": 0.03,
+      "asset_intensity": 0.18,
+      "notes": "Insurance reimbursement compression.",
+      "floor_applied": true
+    },
+    "auto_dealers_gas": {
+      "gross_margin": 0.15,
+      "operating_margin": 0.05,
+      "net_margin": 0.03,
+      "asset_intensity": 0.45,
+      "notes": "Volume model; thin per-unit margin.",
+      "floor_applied": true
+    },
+    "ecommerce_mail_order": {
+      "gross_margin": 0.4,
+      "operating_margin": 0.08,
+      "net_margin": 0.0576,
+      "asset_intensity": 0.2,
+      "notes": "Shipping + customer-acq drag."
+    },
+    "bookstores_indie": {
+      "gross_margin": 0.42,
+      "operating_margin": 0.05,
+      "net_margin": 0.036,
+      "asset_intensity": 0.18,
+      "notes": "Margin pressure from chains/online."
+    },
+    "toy_game_stores": {
+      "gross_margin": 0.45,
+      "operating_margin": 0.07,
+      "net_margin": 0.0504,
+      "asset_intensity": 0.2,
+      "notes": "Holiday-concentrated revenue."
+    },
+    "sporting_goods_specialty": {
+      "gross_margin": 0.4,
+      "operating_margin": 0.08,
+      "net_margin": 0.0576,
+      "asset_intensity": 0.22,
+      "notes": "Specialty knowledge; service component."
+    },
+    "art_craft_supplies": {
+      "gross_margin": 0.5,
+      "operating_margin": 0.08,
+      "net_margin": 0.0576,
+      "asset_intensity": 0.2,
+      "notes": "Diverse SKUs; hobby-driven."
+    },
+    "music_instrument_shops": {
+      "gross_margin": 0.32,
+      "operating_margin": 0.06,
+      "net_margin": 0.039,
+      "asset_intensity": 0.3,
+      "notes": "Inventory carry + repair sideline."
+    },
+    "stationery_paper": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.09,
+      "net_margin": 0.0648,
+      "asset_intensity": 0.18,
+      "notes": "Premium niche; gift purchases."
+    },
+    "florist_shops": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.1,
+      "net_margin": 0.072,
+      "asset_intensity": 0.18,
+      "notes": "Spoilage + event-driven peaks."
+    },
+    "pet_stores": {
+      "gross_margin": 0.4,
+      "operating_margin": 0.08,
+      "net_margin": 0.0576,
+      "asset_intensity": 0.22,
+      "notes": "Live-animal handling adds overhead."
+    },
+    "pet_daycare": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.18,
+      "net_margin": 0.117,
+      "asset_intensity": 0.35,
+      "notes": "Facility + insurance heavy."
+    },
+    "pet_walking_sitting": {
+      "gross_margin": 0.65,
+      "operating_margin": 0.22,
+      "net_margin": 0.1584,
+      "asset_intensity": 0.05,
+      "notes": "Owner-operator; minimal capex."
+    },
+    "pet_training": {
+      "gross_margin": 0.6,
+      "operating_margin": 0.2,
+      "net_margin": 0.144,
+      "asset_intensity": 0.1,
+      "notes": "Service-only; minimal overhead."
+    },
+    "trucking_freight": {
+      "gross_margin": 0.2,
+      "operating_margin": 0.07,
+      "net_margin": 0.0455,
+      "asset_intensity": 0.6,
+      "notes": "Fuel + truck capex heavy."
+    },
+    "passenger_transport": {
+      "gross_margin": 0.25,
+      "operating_margin": 0.07,
+      "net_margin": 0.0455,
+      "asset_intensity": 0.55,
+      "notes": "Vehicle + driver heavy."
+    },
+    "warehousing_storage": {
+      "gross_margin": 0.4,
+      "operating_margin": 0.18,
+      "net_margin": 0.099,
+      "asset_intensity": 0.85,
+      "notes": "Property-heavy business."
+    },
+    "hotels_lodging": {
+      "gross_margin": 0.7,
+      "operating_margin": 0.18,
+      "net_margin": 0.099,
+      "asset_intensity": 1.2,
+      "notes": "Building + furnishings dominate."
+    },
+    "hostels": {
+      "gross_margin": 0.72,
+      "operating_margin": 0.2,
+      "net_margin": 0.11,
+      "asset_intensity": 0.85,
+      "notes": "Lower per-bed economics; high occupancy."
+    },
+    "guest_houses": {
+      "gross_margin": 0.72,
+      "operating_margin": 0.22,
+      "net_margin": 0.143,
+      "asset_intensity": 0.8,
+      "notes": "Owner-occupied common."
+    },
+    "campgrounds_rv_parks": {
+      "gross_margin": 0.65,
+      "operating_margin": 0.22,
+      "net_margin": 0.121,
+      "asset_intensity": 0.95,
+      "notes": "Land + utilities heavy; seasonal."
+    },
+    "software_development": {
+      "gross_margin": 0.82,
+      "operating_margin": 0.2,
+      "net_margin": 0.144,
+      "asset_intensity": 0.05,
+      "notes": "Labor + cloud; minimal physical capex."
+    },
+    "it_services_hosting": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.15,
+      "net_margin": 0.108,
+      "asset_intensity": 0.25,
+      "notes": "Server + colo infrastructure."
+    },
+    "it_services_msp": {
+      "gross_margin": 0.6,
+      "operating_margin": 0.18,
+      "net_margin": 0.1296,
+      "asset_intensity": 0.1,
+      "notes": "Recurring MSP contracts."
+    },
+    "media_publishing": {
+      "gross_margin": 0.65,
+      "operating_margin": 0.1,
+      "net_margin": 0.072,
+      "asset_intensity": 0.1,
+      "notes": "Ad-driven; thin margins."
+    },
+    "photography_studios": {
+      "gross_margin": 0.75,
+      "operating_margin": 0.18,
+      "net_margin": 0.1296,
+      "asset_intensity": 0.2,
+      "notes": "Equipment + studio rent."
+    },
+    "videography_services": {
+      "gross_margin": 0.7,
+      "operating_margin": 0.18,
+      "net_margin": 0.1296,
+      "asset_intensity": 0.25,
+      "notes": "Camera + post-production gear."
+    },
+    "web_mobile_dev_shops": {
+      "gross_margin": 0.75,
+      "operating_margin": 0.18,
+      "net_margin": 0.1296,
+      "asset_intensity": 0.05,
+      "notes": "Labor-only; project-based."
+    },
+    "custom_software_contract": {
+      "gross_margin": 0.78,
+      "operating_margin": 0.18,
+      "net_margin": 0.1296,
+      "asset_intensity": 0.05,
+      "notes": "Labor + cloud."
+    },
+    "game_dev_studios": {
+      "gross_margin": 0.8,
+      "operating_margin": 0.15,
+      "net_margin": 0.108,
+      "asset_intensity": 0.08,
+      "notes": "Royalty-bearing; high failure rate."
+    },
+    "insurance_brokers": {
+      "gross_margin": 0.85,
+      "operating_margin": 0.25,
+      "net_margin": 0.18,
+      "asset_intensity": 0.05,
+      "notes": "Commission-based; low capex."
+    },
+    "real_estate_agencies": {
+      "gross_margin": 0.85,
+      "operating_margin": 0.2,
+      "net_margin": 0.144,
+      "asset_intensity": 0.05,
+      "notes": "Commission; office overhead."
+    },
+    "property_leasing": {
+      "gross_margin": 0.75,
+      "operating_margin": 0.3,
+      "net_margin": 0.165,
+      "asset_intensity": 2.5,
+      "notes": "Owned property dominates asset base."
+    },
+    "legal_services": {
+      "gross_margin": 0.92,
+      "operating_margin": 0.25,
+      "net_margin": 0.18,
+      "asset_intensity": 0.08,
+      "notes": "Labor + office; minimal physical capex."
+    },
+    "sole_law_firms": {
+      "gross_margin": 0.92,
+      "operating_margin": 0.35,
+      "net_margin": 0.252,
+      "asset_intensity": 0.05,
+      "notes": "Owner-operator high take."
+    },
+    "accounting_tax": {
+      "gross_margin": 0.85,
+      "operating_margin": 0.22,
+      "net_margin": 0.1584,
+      "asset_intensity": 0.08,
+      "notes": "Seasonal peaks; software + labor."
+    },
+    "sole_accounting": {
+      "gross_margin": 0.88,
+      "operating_margin": 0.35,
+      "net_margin": 0.252,
+      "asset_intensity": 0.05,
+      "notes": "Owner-operator."
+    },
+    "management_consulting": {
+      "gross_margin": 0.78,
+      "operating_margin": 0.22,
+      "net_margin": 0.1584,
+      "asset_intensity": 0.05,
+      "notes": "Labor + travel."
+    },
+    "engineering_architecture": {
+      "gross_margin": 0.65,
+      "operating_margin": 0.15,
+      "net_margin": 0.108,
+      "asset_intensity": 0.1,
+      "notes": "Software + labor."
+    },
+    "marketing_design": {
+      "gross_margin": 0.72,
+      "operating_margin": 0.18,
+      "net_margin": 0.1296,
+      "asset_intensity": 0.08,
+      "notes": "Agency model; project-based."
+    },
+    "event_production": {
+      "gross_margin": 0.45,
+      "operating_margin": 0.12,
+      "net_margin": 0.0864,
+      "asset_intensity": 0.2,
+      "notes": "AV gear + temporary infrastructure."
+    },
+    "wedding_planning": {
+      "gross_margin": 0.65,
+      "operating_margin": 0.2,
+      "net_margin": 0.144,
+      "asset_intensity": 0.08,
+      "notes": "Coordination service; minimal capex."
+    },
+    "performing_arts": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.05,
+      "net_margin": 0.0325,
+      "asset_intensity": 0.3,
+      "notes": "Venue + production cost heavy."
+    },
+    "sports_fitness": {
+      "gross_margin": 0.78,
+      "operating_margin": 0.18,
+      "net_margin": 0.117,
+      "asset_intensity": 0.4,
+      "notes": "Equipment + lease; member-driven recurring."
+    },
+    "yoga_pilates": {
+      "gross_margin": 0.8,
+      "operating_margin": 0.22,
+      "net_margin": 0.1584,
+      "asset_intensity": 0.2,
+      "notes": "Lower equipment than gyms; instructor split."
+    },
+    "primary_secondary_schools": {
+      "gross_margin": 0.65,
+      "operating_margin": 0.08,
+      "net_margin": 0.052,
+      "asset_intensity": 0.8,
+      "notes": "Facility + teacher payroll heavy."
+    },
+    "private_k12": {
+      "gross_margin": 0.65,
+      "operating_margin": 0.1,
+      "net_margin": 0.055,
+      "asset_intensity": 0.85,
+      "notes": "Tuition-funded; facility heavy."
+    },
+    "vocational_training": {
+      "gross_margin": 0.65,
+      "operating_margin": 0.15,
+      "net_margin": 0.108,
+      "asset_intensity": 0.25,
+      "notes": "Equipment + instructor labor."
+    },
+    "tutoring_centers": {
+      "gross_margin": 0.72,
+      "operating_margin": 0.18,
+      "net_margin": 0.1296,
+      "asset_intensity": 0.15,
+      "notes": "Lease + instructor pay."
+    },
+    "test_prep": {
+      "gross_margin": 0.72,
+      "operating_margin": 0.2,
+      "net_margin": 0.144,
+      "asset_intensity": 0.1,
+      "notes": "Seasonal exam-driven."
+    },
+    "language_schools": {
+      "gross_margin": 0.7,
+      "operating_margin": 0.15,
+      "net_margin": 0.108,
+      "asset_intensity": 0.15,
+      "notes": "Instructor + lease."
+    },
+    "music_schools": {
+      "gross_margin": 0.7,
+      "operating_margin": 0.16,
+      "net_margin": 0.1152,
+      "asset_intensity": 0.15,
+      "notes": "Instructor split typical."
+    },
+    "driving_schools": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.18,
+      "net_margin": 0.117,
+      "asset_intensity": 0.35,
+      "notes": "Vehicle fleet + insurance."
+    },
+    "martial_arts": {
+      "gross_margin": 0.78,
+      "operating_margin": 0.2,
+      "net_margin": 0.144,
+      "asset_intensity": 0.25,
+      "notes": "Dojo lease + member retention."
+    },
+    "coding_schools": {
+      "gross_margin": 0.75,
+      "operating_margin": 0.18,
+      "net_margin": 0.1296,
+      "asset_intensity": 0.1,
+      "notes": "Instructor + courseware."
+    },
+    "art_classes": {
+      "gross_margin": 0.7,
+      "operating_margin": 0.18,
+      "net_margin": 0.1296,
+      "asset_intensity": 0.15,
+      "notes": "Studio + supplies."
+    },
+    "daycare_preschool": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.12,
+      "net_margin": 0.078,
+      "asset_intensity": 0.45,
+      "notes": "Facility + ratio-mandated staff."
+    },
+    "dance_studios": {
+      "gross_margin": 0.75,
+      "operating_margin": 0.2,
+      "net_margin": 0.144,
+      "asset_intensity": 0.25,
+      "notes": "Studio lease + instructor split."
+    },
+    "personal_training": {
+      "gross_margin": 0.78,
+      "operating_margin": 0.3,
+      "net_margin": 0.216,
+      "asset_intensity": 0.1,
+      "notes": "Owner-operator typical."
+    },
+    "hairdressers_beauty": {
+      "gross_margin": 0.6,
+      "operating_margin": 0.15,
+      "net_margin": 0.108,
+      "asset_intensity": 0.2,
+      "notes": "Stylist commissions + product retail."
+    },
+    "barbershops": {
+      "gross_margin": 0.65,
+      "operating_margin": 0.2,
+      "net_margin": 0.144,
+      "asset_intensity": 0.15,
+      "notes": "Lower product retail; cash-heavy."
+    },
+    "nail_salons": {
+      "gross_margin": 0.62,
+      "operating_margin": 0.18,
+      "net_margin": 0.1296,
+      "asset_intensity": 0.18,
+      "notes": "Tech-heavy seating + ventilation."
+    },
+    "day_spas": {
+      "gross_margin": 0.6,
+      "operating_margin": 0.15,
+      "net_margin": 0.0975,
+      "asset_intensity": 0.3,
+      "notes": "Equipment + facility."
+    },
+    "massage_therapy": {
+      "gross_margin": 0.72,
+      "operating_margin": 0.22,
+      "net_margin": 0.1584,
+      "asset_intensity": 0.15,
+      "notes": "Therapist split common."
+    },
+    "tanning_salons": {
+      "gross_margin": 0.65,
+      "operating_margin": 0.18,
+      "net_margin": 0.117,
+      "asset_intensity": 0.4,
+      "notes": "Bed capex + utilities."
+    },
+    "brow_lash_studios": {
+      "gross_margin": 0.75,
+      "operating_margin": 0.22,
+      "net_margin": 0.1584,
+      "asset_intensity": 0.15,
+      "notes": "Specialty service; growth segment."
+    },
+    "tattoo_piercing": {
+      "gross_margin": 0.72,
+      "operating_margin": 0.2,
+      "net_margin": 0.144,
+      "asset_intensity": 0.15,
+      "notes": "Artist booth split; sterilization overhead."
+    },
+    "doctors_clinics": {
+      "gross_margin": 0.6,
+      "operating_margin": 0.2,
+      "net_margin": 0.13,
+      "asset_intensity": 0.3,
+      "notes": "Insurance reimbursement; admin staff."
+    },
+    "chiropractic": {
+      "gross_margin": 0.78,
+      "operating_margin": 0.3,
+      "net_margin": 0.216,
+      "asset_intensity": 0.2,
+      "notes": "Owner-doctor high take."
+    },
+    "physical_therapy": {
+      "gross_margin": 0.65,
+      "operating_margin": 0.18,
+      "net_margin": 0.1296,
+      "asset_intensity": 0.25,
+      "notes": "Equipment + therapist labor."
+    },
+    "optometry": {
+      "gross_margin": 0.65,
+      "operating_margin": 0.2,
+      "net_margin": 0.144,
+      "asset_intensity": 0.25,
+      "notes": "Exam + dispensary mix."
+    },
+    "mental_health_practice": {
+      "gross_margin": 0.85,
+      "operating_margin": 0.35,
+      "net_margin": 0.252,
+      "asset_intensity": 0.05,
+      "notes": "Owner-operator therapy practice."
+    },
+    "nutritionist": {
+      "gross_margin": 0.85,
+      "operating_margin": 0.35,
+      "net_margin": 0.252,
+      "asset_intensity": 0.05,
+      "notes": "Owner-operator consulting."
+    },
+    "dental_practices": {
+      "gross_margin": 0.65,
+      "operating_margin": 0.22,
+      "net_margin": 0.143,
+      "asset_intensity": 0.4,
+      "notes": "Equipment + lab fees."
+    },
+    "nursing_elderly": {
+      "gross_margin": 0.4,
+      "operating_margin": 0.08,
+      "net_margin": 0.052,
+      "asset_intensity": 0.8,
+      "notes": "Facility + 24h staffing."
+    },
+    "childcare_social": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.1,
+      "net_margin": 0.065,
+      "asset_intensity": 0.45,
+      "notes": "Facility + ratio-mandated staff."
+    },
+    "veterinary_pet_care": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.16,
+      "net_margin": 0.104,
+      "asset_intensity": 0.35,
+      "notes": "Equipment + drug inventory."
+    },
+    "museums_cultural": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.05,
+      "net_margin": 0.0325,
+      "asset_intensity": 0.65,
+      "notes": "Often non-profit; mission > margin."
+    },
+    "art_galleries_small": {
+      "gross_margin": 0.5,
+      "operating_margin": 0.1,
+      "net_margin": 0.072,
+      "asset_intensity": 0.2,
+      "notes": "Consignment + commissions."
+    },
+    "small_museums": {
+      "gross_margin": 0.5,
+      "operating_margin": 0.05,
+      "net_margin": 0.0325,
+      "asset_intensity": 0.55,
+      "notes": "Facility + curation overhead."
+    },
+    "private_libraries_archives": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.1,
+      "net_margin": 0.065,
+      "asset_intensity": 0.45,
+      "notes": "Specialty; donor + member funded."
+    },
+    "auto_repair_shops": {
+      "gross_margin": 0.45,
+      "operating_margin": 0.12,
+      "net_margin": 0.078,
+      "asset_intensity": 0.35,
+      "notes": "Bay + lift capex + parts inventory."
+    },
+    "auto_body_shops": {
+      "gross_margin": 0.42,
+      "operating_margin": 0.1,
+      "net_margin": 0.065,
+      "asset_intensity": 0.4,
+      "notes": "Paint booth + frame equipment."
+    },
+    "bike_repair": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.15,
+      "net_margin": 0.108,
+      "asset_intensity": 0.15,
+      "notes": "Tools + parts inventory."
+    },
+    "electronics_repair": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.18,
+      "net_margin": 0.1296,
+      "asset_intensity": 0.1,
+      "notes": "Tools + replacement parts."
+    },
+    "locksmiths": {
+      "gross_margin": 0.6,
+      "operating_margin": 0.2,
+      "net_margin": 0.144,
+      "asset_intensity": 0.12,
+      "notes": "Mobile service; 24h premium."
+    },
+    "appliance_repair": {
+      "gross_margin": 0.5,
+      "operating_margin": 0.15,
+      "net_margin": 0.108,
+      "asset_intensity": 0.15,
+      "notes": "Truck + parts inventory."
+    },
+    "tailoring_alterations": {
+      "gross_margin": 0.65,
+      "operating_margin": 0.2,
+      "net_margin": 0.144,
+      "asset_intensity": 0.1,
+      "notes": "Machine + small shop."
+    },
+    "shoe_repair": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.17,
+      "net_margin": 0.1224,
+      "asset_intensity": 0.12,
+      "notes": "Machine + small shop."
+    },
+    "watch_jewelry_repair": {
+      "gross_margin": 0.65,
+      "operating_margin": 0.22,
+      "net_margin": 0.1584,
+      "asset_intensity": 0.15,
+      "notes": "Specialty tools + parts."
+    },
+    "civil_engineering": {
+      "gross_margin": 0.16,
+      "operating_margin": 0.07,
+      "net_margin": 0.05,
+      "asset_intensity": 0.4,
+      "notes": "CFMA 2024 Construction Financial Benchmarker: ~14.8% gross for general contractors; well-run firms net 5-8%. SMB civil-infra firms (roads, bridges, utility install) closer to specialty contractor band.",
+      "source_url": "https://cfma.org/articles/cfma-s-2-24-construction-financial-benchmarker-executive-summary"
+    },
+    "electrical_equipment_mfg": {
+      "gross_margin": 0.28,
+      "operating_margin": 0.08,
+      "net_margin": 0.05,
+      "asset_intensity": 0.6,
+      "notes": "NAICS 335 manufacturers; SMB motors / batteries / lighting fab. Asset-heavy. Sector-typical durable-goods mfg margin band.",
+      "source_url": "https://secure.icfo.pro/industry-metrics/naics/335-electrical-equipment--appliance--and-component-manufacturing"
+    },
+    "gambling_amusement": {
+      "gross_margin": 0.55,
+      "operating_margin": 0.12,
+      "net_margin": 0.07,
+      "asset_intensity": 0.8,
+      "notes": "Casinos/gaming gross ~55-68% (high hold). SMB regional casinos and amusement venues run thinner net after gaming tax + facility capex. Excludes large strip operators.",
+      "source_url": "https://csimarket.com/Industry/industry_Profitability_Ratios.php?ind=904"
+    },
+    "general_merchandise": {
+      "gross_margin": 0.3,
+      "operating_margin": 0.06,
+      "net_margin": 0.04,
+      "asset_intensity": 0.4,
+      "notes": "Dollar stores / discount general merch: 25-35% gross, 3-6% net. Dollar General ~3% net 2025; ~6% peak. SMB independent variety stores in same band.",
+      "source_url": "https://www.eaglerockcfo.com/blog/research/retail-chain-finance-benchmarks-2026"
+    },
+    "higher_education": {
+      "gross_margin": 0.45,
+      "operating_margin": 0.05,
+      "net_margin": 0.03,
+      "asset_intensity": 1.2,
+      "notes": "Small private colleges (CIC Financial Indicators): 4% operating margin is baseline financial strength. Many small institutions run at or below the line. Tuition-driven revenue; facility/faculty fixed cost heavy.",
+      "source_url": "https://cic.edu/wp-content/uploads/2024/08/Sample-College_2024_FIT.pdf"
+    },
+    "insurance": {
+      "gross_margin": 0.4,
+      "operating_margin": 0.18,
+      "net_margin": 0.12,
+      "asset_intensity": 0.1,
+      "notes": "Independent insurance brokers/agencies: 15-30% net typical for well-run independents; 5-10% net franchise-band. SMB-focused at 12% mid. Commission-based, light fixed assets.",
+      "source_url": "https://www.agencybrokerage.com/resources/blog/insurance-agency-profit-margin-benchmarks/"
+    },
+    "machinery_mfg": {
+      "gross_margin": 0.3,
+      "operating_margin": 0.09,
+      "net_margin": 0.05,
+      "asset_intensity": 0.7,
+      "notes": "NAICS 333 machinery mfg: SMB ag / construction / industrial equipment fab. Heavy fixed assets, skilled labor. Sector-typical durable-goods margin band.",
+      "source_url": "https://www.bls.gov/iag/tgs/iag333.htm"
+    },
+    "plastics_rubber_mfg": {
+      "gross_margin": 0.25,
+      "operating_margin": 0.08,
+      "net_margin": 0.05,
+      "asset_intensity": 0.65,
+      "notes": "NAICS 326 plastics + rubber products. Capital-heavy molding/extrusion equipment. Resin commodity exposure compresses gross. Sector-typical nondurable-mfg band.",
+      "source_url": "https://www.bls.gov/iag/tgs/iag326.htm"
+    },
+    "postal_courier": {
+      "gross_margin": 0.22,
+      "operating_margin": 0.07,
+      "net_margin": 0.04,
+      "asset_intensity": 0.4,
+      "notes": "IBISWorld couriers + local delivery: industry profit share ~8.5% revenue 2026. SMB local courier 3-8% net; gross 15-25%. Fleet + fuel intensive.",
+      "source_url": "https://www.ibisworld.com/united-states/industry/couriers-local-delivery-services/1950/"
+    },
+    "water_waste": {
+      "gross_margin": 0.45,
+      "operating_margin": 0.12,
+      "net_margin": 0.07,
+      "asset_intensity": 1.5,
+      "notes": "Water/wastewater + waste collection. AWWA benchmarking tracks utility ops. Private hauler segment runs higher margin than regulated water utility. Blended SMB-typical estimate. Extremely asset-heavy.",
+      "source_url": "https://www.awwa.org/programs/benchmarking/"
+    },
+    "wholesale_chemicals_pharma": {
+      "gross_margin": 0.2,
+      "operating_margin": 0.06,
+      "net_margin": 0.04,
+      "asset_intensity": 0.3,
+      "notes": "Pharma wholesaler gross margin ~6.3% per HHS ASPE 2022; broader chemical/pharma distributors run 15-25% gross at SMB scale (specialty product mix). High volume, low takerate model.",
+      "source_url": "https://aspe.hhs.gov/reports/margins-retail-channel"
+    }
   }
 }

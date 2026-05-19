@@ -1,0 +1,59 @@
+{
+  "anchor": "Plan v13 Wave 2b - industries where source/derived margin was below SMB floor. Floors applied at write time; this list is for founder review.",
+  "floors": {
+    "gross": 0.15,
+    "operating": 0.05,
+    "net": 0.03
+  },
+  "entries": [
+    {
+      "industry_id": "grocery_stores",
+      "field": "operating_margin",
+      "unclamped_value_pct": 4.0,
+      "floored_to_pct": 5.0,
+      "source_url": "v1 internal (Damodaran / IRS SOI / RMA cross-reference)"
+    },
+    {
+      "industry_id": "grocery_stores",
+      "field": "net_margin",
+      "unclamped_value_pct": 2.88,
+      "floored_to_pct": 3.0,
+      "source_url": "derived: operating_margin 0.04 * factor (asset_intensity=0.25)"
+    },
+    {
+      "industry_id": "independent_pharmacy",
+      "field": "operating_margin",
+      "unclamped_value_pct": 4.0,
+      "floored_to_pct": 5.0,
+      "source_url": "v1 internal (Damodaran / IRS SOI / RMA cross-reference)"
+    },
+    {
+      "industry_id": "independent_pharmacy",
+      "field": "net_margin",
+      "unclamped_value_pct": 2.88,
+      "floored_to_pct": 3.0,
+      "source_url": "derived: operating_margin 0.04 * factor (asset_intensity=0.18)"
+    },
+    {
+      "industry_id": "auto_dealers_gas",
+      "field": "gross_margin",
+      "unclamped_value_pct": 12.0,
+      "floored_to_pct": 15.0,
+      "source_url": "v1 internal (Damodaran / IRS SOI / RMA cross-reference)"
+    },
+    {
+      "industry_id": "auto_dealers_gas",
+      "field": "operating_margin",
+      "unclamped_value_pct": 3.0,
+      "floored_to_pct": 5.0,
+      "source_url": "v1 internal (Damodaran / IRS SOI / RMA cross-reference)"
+    },
+    {
+      "industry_id": "auto_dealers_gas",
+      "field": "net_margin",
+      "unclamped_value_pct": 1.95,
+      "floored_to_pct": 3.0,
+      "source_url": "derived: operating_margin 0.03 * factor (asset_intensity=0.45)"
+    }
+  ]
+}
