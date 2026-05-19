@@ -309,3 +309,29 @@ Wave 2 made the render layer defensive (`clampMargin` floor on every public rend
 7 sub-floor source/derived values across 3 industries — `grocery_stores`, `independent_pharmacy`, `auto_dealers_gas`. These are genuinely razor-thin SMB margins (~2-4% net before floor) that legitimately operate near or below the survival floor. Floors are applied; this file is for visibility, not action.
 
 **Commits:** `d3ad8b9` (margins v2 data + backup + review) → `b7df6f5` (section-order constants) → `12f6c4b` (country page refactor) → `7eeb048` (industry page launch).
+
+## Plan v13 Wave 4a — Cleanup pass (2026-05-19)
+
+Founder review after Waves 1-3 surfaced residual issues — orphan components, dubious-looking derivations, and self-flagging banners that made the site read as broken. Wave 4a strips them surgically.
+
+**Shipped:**
+
+- **T-4a.1 — orphan clustering charts deleted.** `src/components/DistributionHistogram.tsx` and `src/components/DistributionBars.tsx` removed (no remaining importers across embed, industry, country, or cell routes — verified via grep). Stale references in `src/lib/cells.ts` comments updated to point at the Wave 2 replacements (`RevenueTiles` + `RevenueDistribution`). Commit: `662383f`.
+- **T-4a.2 — avg-employees-per-firm display removed everywhere.** Founder flagged "average staff 3.3 people" as suspect now that the firm-count denominator (removed in Wave 1) is no longer surfaced. Stripped from `FirstFrameStrip` (Employees / firm tile), `you/CompareToMeClient` (Headcount vs typical panel + headcount input), `StructuredData` (JSON-LD `variableMeasured` entry), `api/cell-lookup` (derived response field), `api/ask` (Ask LLM tool's cell summary). Underlying DB fields `n_employees` + `n_enterprises` kept for internal use. Commit: `cb03f32`.
+- **T-4a.3 — silent-omission empty states.** Per D2 in the Wave 4 design, sections with no usable data render NOTHING rather than a "Not available" / "Coming soon" / "we don't have firm-level numbers" banner. `RevenueTiles`, `RevenueDistribution`, and `MarginWaterfall` all return `null` for thin data. Cell page `EmptyStateCard` rendering removed (and the component file deleted). Country page `tax-overview` stub removed (silent until the real panel ships); `industry-mix-grid` empty branch silently omits. Industry page banners removed across `industry-tiles`, `revenue-distribution`, `top-countries`; `top-cities-for-industry` stub removed entirely. `CellWarningChips` cross-country plausibility chip suppressed; `AudienceCaveat` sub-niche-borrowing banner suppressed (bimodal-caution + corp-only chips kept as reading instructions); `PostTaxToggle` "Payroll data not available" caveat removed. `section-order.ts` comment updated to document the override of "sections always render" with the D2 silent-omission rule. Commit: `450eb8b`.
+- **T-4a.4 — flag sweep finished.** Wave 1 replaced emoji flags with `<CountryFlag>` on the highest-profile surfaces. This wave finishes the sweep across the 8 remaining call sites the Wave 1 implementer left behind, plus the homepage strips the founder flagged as missing flags: `AcrossCountriesStrip`, `SectorAcrossWorld`, `FeaturedCellTile` (drops `flagOverride`), `CellOfTheWeek`, `FirstFrameStrip`, `GlobalSearch` (drops `SearchResult.flag` for `iso2`), `RecentlyAddedStrip`, `SpotlightCountry`, `WhatsHotStrip`, plus the `/browse` page (3 grids + its own local emoji helper). The `Breadcrumb` Crumb type gained an `iso2` field that takes precedence over `glyph` and renders `<CountryFlag>` (cell page uses it). `NavigatorForm` is the lone exception — `ComboField`'s label is used as the input value, so the country dropdown loses its emoji prefix entirely rather than gaining an SVG image; flags still render on every destination page. `flagFromIso2` utility retained in `lib/countries.ts` as a fallback. Commit: `c033ab6`.
+
+**Verification:**
+
+- `npx tsc --noEmit` clean after every commit and at end of wave.
+- `npm run build` clean — all 702 static pages generated successfully (initial run hit a Windows filesystem race renaming `500.html` during export, retry succeeded).
+- Grep for `DistributionHistogram|DistributionBars|RangeBars|EarningsClusters`: 0 hits anywhere in `src/`.
+- Grep for `flagFromIso2`: 2 hits, both expected — the definition in `lib/countries.ts` and the explanatory comment in `NavigatorForm.tsx`.
+- Grep for `"Not available|"Coming soon|"No data|"We don.t have|Margin breakdown not |Earnings distribution not |firm.level numbers` across `*.tsx`: only matches are comments documenting that the banners were removed.
+- Grep for `avgEmployees|employees_per_firm|staffPerFirm|average staff|employees per firm|staff_per_firm|emp_per_firm`: only matches are a JSDoc comment in `TypicalFirmCard` describing the derivation conceptually, and the explanatory comment in `api/cell-lookup` documenting the field removal. No live render paths.
+- Dev-server URL verification deferred — the dev server's `.next` cache was invalidated by the in-wave `npm run build` (Windows file lock between dev's webpack chunks and the build's static export), serving 500s with `Cannot find module './7627.js'`. Per ground rules, the dev server was NOT restarted; the build succeeded and the grep evidence covers the same surface area.
+
+**Commits in order:** `662383f` (T-4a.1) → `cb03f32` (T-4a.2) → `450eb8b` (T-4a.3) → `c033ab6` (T-4a.4).
+
+**Spec file:** `docs/specs/2026-05-19-plan-v13-wave4-credibility-followup-design.md` (Wave 4a is the first of four sub-waves the spec covers; 4b taxonomy, 4c images, 4d discoverability + polish ship separately).
+
