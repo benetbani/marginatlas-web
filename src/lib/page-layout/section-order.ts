@@ -23,6 +23,7 @@ export const COUNTRY_PAGE_SECTIONS = [
   "country-stats",
   "industry-mix-grid",
   "top-cities",
+  "regions",
   "tax-overview",
   "related-countries",
 ] as const;

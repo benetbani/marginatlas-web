@@ -5,6 +5,7 @@
  * top SMB-relevant industries, "Compare {country}" CTA.
  */
 
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTopIndustriesForCountry, slugify } from "@/lib/cells";
 import {
@@ -20,6 +21,7 @@ import { CountryCityShortcuts } from "@/components/CountryCityShortcuts";
 import { CountryStatsStrip } from "@/components/CountryStatsStrip";
 import { CountryQualitySummary } from "@/components/CountryQualitySummary";
 import { hasRegionalCoverage } from "@/lib/coverage/regional";
+import { getAdmin1Regions } from "@/lib/coverage/admin1";
 import { COUNTRY_PAGE_SECTIONS } from "@/lib/page-layout/section-order";
 
 // Keep section-order constant referenced for type checking — sections render in this exact order below.
@@ -135,6 +137,12 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
   // neither of which depend on region-level coverage.
   const showRegions = hasRegionalCoverage(iso2);
   void showRegions;
+
+  // Plan v13 Wave 4d — admin-1 sub-region navigation list. All 194 countries
+  // (except SG) have admin1 data. Empty array → silent omission per Wave 4a
+  // (D2): no "Regions not available" banner.
+  const regions = getAdmin1Regions(iso2);
+  const countryName = meta.name;
 
   return (
     <div>
@@ -255,11 +263,33 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
         <CountryCityShortcuts iso2={iso2} />
       </section>
 
-      {/* 5. tax-overview — Plan v13 Wave 4a (D2): stub removed. The real
+      {/* 5. regions — Plan v13 Wave 4d. Admin-1 sub-region navigation list
+         for all 194 countries with admin1 data. Silent omission for SG (the
+         single country with no admin1 entries) per Wave 4a (D2). */}
+      {regions.length > 0 ? (
+        <section id="regions" className="py-8">
+          <div className="text-xs uppercase tracking-wide text-atlas-700 font-semibold mb-3">
+            Regions of {countryName}
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 text-sm">
+            {regions.map((r) => (
+              <Link
+                key={r.admin1_code}
+                href={`/${iso2.toLowerCase()}/${r.slug}`}
+                className="px-3 py-2 rounded-lg border border-parchment hover:border-atlas-400 hover:bg-cream-100 text-ink-900 transition"
+              >
+                {r.name}
+              </Link>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {/* 6. tax-overview — Plan v13 Wave 4a (D2): stub removed. The real
          tax panel will be added when the component exists; until then the
          section silently does not render. */}
 
-      {/* 6. related-countries — Compare CTA. Kept because it's an evergreen
+      {/* 7. related-countries — Compare CTA. Kept because it's an evergreen
          navigation aid, not a data-dependent section. */}
       <section id="related-countries" className="py-10">
         <div className="card-cream">
