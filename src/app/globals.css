@@ -27,6 +27,13 @@
     );
     background-attachment: scroll;
     background-repeat: no-repeat;
+    /* Plan v14 A.1 (T-A1.2) — kill the brief horizontal scrollbar that the
+       homepage hero's full-bleed trick (`-mx-[50vw] w-screen`) can introduce
+       on viewports with a vertical scrollbar. `w-screen` resolves to 100vw,
+       which on Chromium counts the scrollbar gutter, so the hero overflows
+       by ~15px. Hiding overflow-x on body is the cleanest cross-section fix
+       and doesn't interfere with any vertical scroll behavior. */
+    overflow-x: hidden;
   }
 
   /* Flag emoji rendering on Windows — fall back to Twemoji so country flags
