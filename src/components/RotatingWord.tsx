@@ -32,7 +32,6 @@ export function RotatingWord({
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
-      setIndex(Math.floor(Math.random() * words.length));
       return;
     }
 
