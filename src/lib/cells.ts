@@ -686,7 +686,7 @@ export async function getExtrapolatedVariants(
  *
  * Note: extrapolated_cells holds a single point estimate (predicted_rev_per_firm),
  * not a distribution. We synthesize a coarse spread (±50%) around the point
- * estimate so the histogram + DistributionBars still render meaningfully.
+ * estimate so RevenueTiles + RevenueDistribution still render meaningfully.
  * The synthesized spread is clearly marked "estimated" via coverage_tier=X
  * and quality_score=40, so the UI shows a 2-star quality badge.
  */
@@ -717,8 +717,8 @@ export async function getExtrapolatedCell(
   const r = data[0] as Record<string, unknown>;
 
   const predRev = (r.predicted_rev_per_firm as number) ?? null;
-  // Coarse spread synthesis: ±50% wedge so DistributionBars/Histogram render
-  // something rather than five identical bars. Clearly flagged via quality.
+  // Coarse spread synthesis: ±50% wedge so RevenueTiles/RevenueDistribution
+  // render something rather than identical values. Clearly flagged via quality.
   const p10 = predRev != null ? predRev * 0.4 : null;
   const p25 = predRev != null ? predRev * 0.65 : null;
   const p50 = predRev;
