@@ -94,6 +94,15 @@ const config: Config = {
           "ui-serif",
           "serif",
         ],
+        // Plan v14 6b: editorial display serif loaded via next/font in
+        // src/app/layout.tsx. CSS variable resolves to Cormorant Garamond at
+        // runtime; falls through to Georgia when the variable is unset.
+        display: [
+          "var(--font-display)",
+          "Georgia",
+          "ui-serif",
+          "serif",
+        ],
       },
     },
   },

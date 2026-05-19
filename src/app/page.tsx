@@ -67,7 +67,7 @@ export default function HomePage() {
 
         <div className="absolute inset-0 flex items-center justify-center px-4">
           <div className="w-full max-w-3xl bg-cream-50 border border-parchment rounded-3xl p-6 sm:p-8 md:p-12 shadow-sm">
-            <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-ink-900 text-center leading-tight">
+            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-ink-900 text-center leading-tight">
               How much does a{" "}
               <span className="inline-block min-w-[5ch] text-atlas-600">
                 <RotatingWord

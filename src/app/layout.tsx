@@ -1,7 +1,19 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import { Cormorant_Garamond } from "next/font/google";
 import { Organization } from "@/components/StructuredData";
 import { HeaderSearch } from "@/components/HeaderSearch";
+
+// Plan v14 6b: editorial display serif for hero headlines + other broadsheet
+// moments. Mirrors the wordmark vibe and pushes the homepage hero out of the
+// Inter-everywhere SaaS lane. Loaded via next/font so it self-hosts with
+// font-display: swap; falls through to Georgia/serif when offline.
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  display: "swap",
+  variable: "--font-display",
+});
 
 export const metadata: Metadata = {
   title: "Margin Atlas: Small-business benchmarks across 191 countries",
@@ -29,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={cormorant.variable}>
       <body className="min-h-screen bg-cream-50 text-ink-900 font-sans">
         <Organization />
         <header className="border-b border-ink-200 bg-cream-50 sticky top-0 z-10">
