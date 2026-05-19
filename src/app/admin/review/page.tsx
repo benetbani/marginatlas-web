@@ -94,6 +94,92 @@ type PlausibilityReport = {
   samples: Array<Record<string, unknown>>;
 };
 
+type TaxVerifiedReport = {
+  summary: {
+    total_verified?: number;
+    matches?: number;
+    minor_deltas?: number;
+    flags?: number;
+    pending?: number;
+  };
+  results: Record<string, {
+    our_cit: number;
+    canonical_cit?: number;
+    canonical_cit_range?: [number, number];
+    delta_pp?: number | string;
+    verdict: "match" | "minor_delta" | "flag";
+    notes: string;
+    source_url: string;
+  }>;
+};
+
+type RentVerifiedReport = {
+  summary: {
+    total_verified?: number;
+    matches?: number;
+    minor_deltas?: number;
+    flags?: number;
+    pending_cities?: number;
+  };
+  results: Record<string, {
+    our_value_usd_sqm_yr: number;
+    canonical_usd_sqm_yr: number;
+    canonical_basis: string;
+    delta_pct: string;
+    verdict: "match" | "minor_delta" | "flag";
+    notes: string;
+    source_url: string;
+  }>;
+  review_queue?: Array<{ city_id: string; issue: string; severity: string }>;
+};
+
+type MarginVerifiedReport = {
+  summary: {
+    matches?: number;
+    minor_deltas?: number;
+    flags?: number;
+    pending?: number;
+  };
+  important_caveat?: string;
+  results: Record<string, {
+    our_op_margin: number;
+    damodaran_op_margin?: number;
+    damodaran_op_margin_proxy?: number;
+    delta_pp: number;
+    verdict: "match" | "minor_delta" | "flag";
+    notes: string;
+    source_url: string;
+  }>;
+};
+
+type TaxonomyBundlingReport = {
+  version: string;
+  generated_at: string;
+  total_industries: number;
+  flagged_count: number;
+  split_count: number;
+  rename_count: number;
+  flagged: Array<{
+    industry_id: string;
+    current_name: string;
+    current_audience?: string;
+    current_sector_id?: string;
+    current_examples: string[];
+    current_keywords?: string[];
+    current_naics_3: string[];
+    severity_score: number;
+    dubious_because: string;
+    suggested_splits: Array<{
+      new_id: string;
+      new_name: string;
+      examples_subset: string[];
+      naics_3_subset: string[];
+      sector_id: string;
+    }>;
+    recommended_action: "split" | "rename" | "keep";
+  }>;
+};
+
 function fmtMoney(v: number | null | undefined): string {
   if (v == null || !isFinite(v)) return "—";
   const sign = v < 0 ? "−" : "";
@@ -121,6 +207,10 @@ export default async function ReviewQueue({
   const smallN = loadJson<SmallNReport>("small_n_v1.json");
   const yoy = loadJson<YoYReport>("yoy_stability_v1.json");
   const plaus = loadJson<PlausibilityReport>("plausibility_scan_v1.json");
+  const taxVerified = loadJson<TaxVerifiedReport>("tax_rates_verified_v1.json");
+  const rentVerified = loadJson<RentVerifiedReport>("commercial_rent_verified_v1.json");
+  const marginVerified = loadJson<MarginVerifiedReport>("industry_margins_verified_v1.json");
+  const taxonomyBundling = loadJson<TaxonomyBundlingReport>("taxonomy_bundling_audit_v1.json");
 
   const totals = {
     currency: currency?.totals.flagged_total ?? 0,
@@ -128,6 +218,9 @@ export default async function ReviewQueue({
     smallN: (smallN?.buckets["<5"] ?? 0) + (smallN?.buckets["5-19"] ?? 0),
     yoy: yoy?.totals.flagged_transitions ?? 0,
     plausibility: plaus?.totals.flagged_total ?? 0,
+    taxFlags: (taxVerified?.summary.flags ?? 0) + (taxVerified?.summary.minor_deltas ?? 0),
+    rentFlags: (rentVerified?.summary.flags ?? 0) + (rentVerified?.summary.minor_deltas ?? 0),
+    marginFlags: (marginVerified?.summary.flags ?? 0) + (marginVerified?.summary.minor_deltas ?? 0),
   };
   const grandTotal = Object.values(totals).reduce((a, b) => a + b, 0);
 
@@ -148,13 +241,14 @@ export default async function ReviewQueue({
         ships (Q15 finisher).
       </p>
 
-      <div className="mt-6 grid grid-cols-2 md:grid-cols-6 gap-2">
+      <div className="mt-6 grid grid-cols-2 md:grid-cols-7 gap-2">
         <Stat label="Total flags" value={grandTotal} accent />
         <Stat label="Currency (Q1)" value={totals.currency} href={`?key=${sp.key}&tab=currency`} active={tab === "currency"} />
         <Stat label="Variance (Q3)" value={totals.variance} href={`?key=${sp.key}&tab=variance`} active={tab === "variance"} />
         <Stat label="Plausibility (PP)" value={totals.plausibility} href={`?key=${sp.key}&tab=plausibility`} active={tab === "plausibility"} />
         <Stat label="Small-n (Q12)" value={totals.smallN} href={`?key=${sp.key}&tab=smallN`} active={tab === "smallN"} />
         <Stat label="YoY (Q14)" value={totals.yoy} href={`?key=${sp.key}&tab=yoy`} active={tab === "yoy"} />
+        <Stat label="Verifications" value={totals.taxFlags + totals.rentFlags + totals.marginFlags} href={`?key=${sp.key}&tab=verifications`} active={tab === "verifications"} />
       </div>
 
       {tab === "currency" && currency ? <CurrencyTab data={currency} /> : null}
@@ -163,8 +257,325 @@ export default async function ReviewQueue({
       {tab === "yoy" && yoy ? <YoYTab data={yoy} /> : null}
       {tab === "plausibility" && plaus ? <PlausibilityTab data={plaus} /> : null}
       {tab === "tier" && tier ? <TierTab data={tier} /> : null}
+      {tab === "verifications" ? <VerificationsTab tax={taxVerified} rent={rentVerified} margin={marginVerified} taxonomy={taxonomyBundling} /> : null}
     </div>
   );
+}
+
+function VerificationsTab({
+  tax,
+  rent,
+  margin,
+  taxonomy,
+}: {
+  tax: TaxVerifiedReport | null;
+  rent: RentVerifiedReport | null;
+  margin: MarginVerifiedReport | null;
+  taxonomy: TaxonomyBundlingReport | null;
+}) {
+  return (
+    <section className="mt-10 space-y-10">
+      <div>
+        <h2 className="text-xl font-semibold text-ink-900">
+          Q5 — Tax rate cross-validation
+          {tax ? ` (${tax.summary.total_verified ?? 0}/${(tax.summary.total_verified ?? 0) + (tax.summary.pending ?? 0)} countries)` : ""}
+        </h2>
+        <p className="mt-1 text-sm text-ink-700/80 max-w-3xl">
+          Each country&apos;s stored corporate income tax rate cross-checked against PwC Worldwide Tax Summaries 2024 (and KPMG/national tax offices where useful).
+        </p>
+        {tax ? (
+          <>
+            <div className="mt-3 flex gap-2 text-xs">
+              <Pill tone="moss">{tax.summary.matches ?? 0} matches</Pill>
+              <Pill tone="amber">{tax.summary.minor_deltas ?? 0} minor deltas</Pill>
+              <Pill tone="clay">{tax.summary.flags ?? 0} flags</Pill>
+              <Pill tone="ink">{tax.summary.pending ?? 0} pending</Pill>
+            </div>
+            <div className="mt-4 overflow-x-auto rounded-xl border border-ink-200">
+              <table className="w-full text-xs">
+                <thead className="bg-cream-100 text-ink-900 text-left">
+                  <tr>
+                    <th className="py-2 px-2">Country</th>
+                    <th className="py-2 px-2 text-right">Stored CIT</th>
+                    <th className="py-2 px-2 text-right">Canonical</th>
+                    <th className="py-2 px-2 text-right">Delta</th>
+                    <th className="py-2 px-2">Verdict</th>
+                    <th className="py-2 px-2">Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {Object.entries(tax.results).map(([iso, r]) => (
+                    <tr key={iso} className="border-t border-ink-200/40 align-top">
+                      <td className="py-1.5 px-2 font-medium">{iso}</td>
+                      <td className="py-1.5 px-2 text-right tabular-nums">{(r.our_cit * 100).toFixed(1)}%</td>
+                      <td className="py-1.5 px-2 text-right tabular-nums">
+                        {r.canonical_cit != null
+                          ? `${(r.canonical_cit * 100).toFixed(1)}%`
+                          : r.canonical_cit_range
+                          ? `${(r.canonical_cit_range[0] * 100).toFixed(0)}-${(r.canonical_cit_range[1] * 100).toFixed(0)}%`
+                          : "—"}
+                      </td>
+                      <td className="py-1.5 px-2 text-right tabular-nums">
+                        {typeof r.delta_pp === "number" ? `${r.delta_pp > 0 ? "+" : ""}${r.delta_pp.toFixed(1)}pp` : r.delta_pp ?? "—"}
+                      </td>
+                      <td className="py-1.5 px-2">
+                        <VerdictPill v={r.verdict} />
+                      </td>
+                      <td className="py-1.5 px-2 max-w-[360px] text-ink-700/85">{r.notes}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
+        ) : (
+          <p className="mt-3 text-xs text-ink-700/60">No tax_rates_verified_v1.json on disk.</p>
+        )}
+      </div>
+
+      <div>
+        <h2 className="text-xl font-semibold text-ink-900">
+          Q7 — Commercial rent cross-validation
+          {rent ? ` (${rent.summary.total_verified ?? 0}/${(rent.summary.total_verified ?? 0) + (rent.summary.pending_cities ?? 0)} cities)` : ""}
+        </h2>
+        <p className="mt-1 text-sm text-ink-700/80 max-w-3xl">
+          Each city&apos;s stored office rent (USD per sqm per year) checked against Cushman &amp; Wakefield / Colliers / JLL 2024 reports.
+        </p>
+        {rent ? (
+          <>
+            <div className="mt-3 flex gap-2 text-xs">
+              <Pill tone="moss">{rent.summary.matches ?? 0} matches</Pill>
+              <Pill tone="amber">{rent.summary.minor_deltas ?? 0} minor deltas</Pill>
+              <Pill tone="clay">{rent.summary.flags ?? 0} flags</Pill>
+              <Pill tone="ink">{rent.summary.pending_cities ?? 0} pending</Pill>
+            </div>
+            <div className="mt-4 overflow-x-auto rounded-xl border border-ink-200">
+              <table className="w-full text-xs">
+                <thead className="bg-cream-100 text-ink-900 text-left">
+                  <tr>
+                    <th className="py-2 px-2">City</th>
+                    <th className="py-2 px-2 text-right">Stored</th>
+                    <th className="py-2 px-2 text-right">Canonical</th>
+                    <th className="py-2 px-2 text-right">Delta</th>
+                    <th className="py-2 px-2">Verdict</th>
+                    <th className="py-2 px-2">Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {Object.entries(rent.results).map(([city, r]) => (
+                    <tr key={city} className="border-t border-ink-200/40 align-top">
+                      <td className="py-1.5 px-2 font-medium">{city}</td>
+                      <td className="py-1.5 px-2 text-right tabular-nums">${r.our_value_usd_sqm_yr}</td>
+                      <td className="py-1.5 px-2 text-right tabular-nums">${r.canonical_usd_sqm_yr}</td>
+                      <td className="py-1.5 px-2 text-right tabular-nums">{r.delta_pct}</td>
+                      <td className="py-1.5 px-2"><VerdictPill v={r.verdict} /></td>
+                      <td className="py-1.5 px-2 max-w-[360px] text-ink-700/85">{r.notes}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {rent.review_queue && rent.review_queue.length > 0 ? (
+              <div className="mt-4 rounded-xl border border-clay-300 bg-clay-50 p-3">
+                <div className="text-xs uppercase tracking-wide font-semibold text-clay-700">Founder review queue</div>
+                <ul className="mt-2 space-y-1.5 text-sm text-ink-900">
+                  {rent.review_queue.map((q, i) => (
+                    <li key={i}>
+                      <span className="font-medium">{q.city_id}</span> — {q.issue}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+          </>
+        ) : (
+          <p className="mt-3 text-xs text-ink-700/60">No commercial_rent_verified_v1.json on disk.</p>
+        )}
+      </div>
+
+      <div>
+        <h2 className="text-xl font-semibold text-ink-900">
+          Q9 — Industry operating-margin cross-validation
+          {margin ? ` (${(margin.summary.matches ?? 0) + (margin.summary.minor_deltas ?? 0) + (margin.summary.flags ?? 0)}/180 industries)` : ""}
+        </h2>
+        <p className="mt-1 text-sm text-ink-700/80 max-w-3xl">
+          Stored operating margins cross-checked against Damodaran NYU 2024 dataset.
+        </p>
+        {margin?.important_caveat ? (
+          <div className="mt-3 rounded-xl border border-amber-300 bg-amber-50 p-3 text-xs text-ink-900">
+            <span className="font-semibold uppercase tracking-wide text-amber-900">Caveat —</span> {margin.important_caveat}
+          </div>
+        ) : null}
+        {margin ? (
+          <>
+            <div className="mt-3 flex gap-2 text-xs">
+              <Pill tone="moss">{margin.summary.matches ?? 0} matches</Pill>
+              <Pill tone="amber">{margin.summary.minor_deltas ?? 0} minor</Pill>
+              <Pill tone="clay">{margin.summary.flags ?? 0} flags</Pill>
+              <Pill tone="ink">{margin.summary.pending ?? 0} pending</Pill>
+            </div>
+            <div className="mt-4 overflow-x-auto rounded-xl border border-ink-200">
+              <table className="w-full text-xs">
+                <thead className="bg-cream-100 text-ink-900 text-left">
+                  <tr>
+                    <th className="py-2 px-2">Industry</th>
+                    <th className="py-2 px-2 text-right">Atlas op-margin</th>
+                    <th className="py-2 px-2 text-right">Damodaran</th>
+                    <th className="py-2 px-2 text-right">Δpp</th>
+                    <th className="py-2 px-2">Verdict</th>
+                    <th className="py-2 px-2">Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {Object.entries(margin.results).map(([id, r]) => (
+                    <tr key={id} className="border-t border-ink-200/40 align-top">
+                      <td className="py-1.5 px-2 font-medium">{id}</td>
+                      <td className="py-1.5 px-2 text-right tabular-nums">{(r.our_op_margin * 100).toFixed(1)}%</td>
+                      <td className="py-1.5 px-2 text-right tabular-nums">
+                        {((r.damodaran_op_margin ?? r.damodaran_op_margin_proxy ?? 0) * 100).toFixed(1)}%
+                        {r.damodaran_op_margin_proxy ? "*" : ""}
+                      </td>
+                      <td className="py-1.5 px-2 text-right tabular-nums">{r.delta_pp > 0 ? "+" : ""}{r.delta_pp.toFixed(1)}</td>
+                      <td className="py-1.5 px-2"><VerdictPill v={r.verdict} /></td>
+                      <td className="py-1.5 px-2 max-w-[420px] text-ink-700/85">{r.notes}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
+        ) : (
+          <p className="mt-3 text-xs text-ink-700/60">No industry_margins_verified_v1.json on disk.</p>
+        )}
+      </div>
+
+      <div>
+        <h2 className="text-xl font-semibold text-ink-900">
+          Taxonomy — industry bundling audit
+          {taxonomy ? ` (${taxonomy.flagged_count}/${taxonomy.total_industries} flagged)` : ""}
+        </h2>
+        <p className="mt-1 text-sm text-ink-700/80 max-w-3xl">
+          Industries that bundle two or more unrelated business models —
+          e.g. <span className="font-mono text-xs">auto_dealers_gas</span> mixes
+          motor-vehicle dealers (NAICS 441) with gasoline stations (NAICS 447).
+          Multi-NAICS-3 bundles and conjunction names are scored;
+          severity reflects how confident the heuristic is that a split
+          is needed. Action links carry the decision into a query string
+          for a follow-up split script.
+        </p>
+        {taxonomy ? (
+          <>
+            <div className="mt-3 flex gap-2 text-xs">
+              <Pill tone="clay">{taxonomy.split_count} split candidates</Pill>
+              <Pill tone="amber">{taxonomy.rename_count} rename candidates</Pill>
+              <Pill tone="ink">{taxonomy.total_industries - taxonomy.flagged_count} clean</Pill>
+            </div>
+            <div className="mt-4 overflow-x-auto rounded-xl border border-ink-200">
+              <table className="w-full text-xs">
+                <thead className="bg-cream-100 text-ink-900 text-left">
+                  <tr>
+                    <th className="py-2 px-2">Industry</th>
+                    <th className="py-2 px-2 text-right">Sev</th>
+                    <th className="py-2 px-2">Why dubious</th>
+                    <th className="py-2 px-2">Suggested splits</th>
+                    <th className="py-2 px-2">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {taxonomy.flagged.map((f) => (
+                    <tr key={f.industry_id} className="border-t border-ink-200/40 align-top">
+                      <td className="py-1.5 px-2 max-w-[200px]">
+                        <div className="font-medium text-ink-900">{f.current_name}</div>
+                        <div className="text-[10px] font-mono text-ink-700/70">{f.industry_id}</div>
+                        <div className="mt-0.5 text-[10px] text-ink-700/60">
+                          NAICS-3: {f.current_naics_3.join(", ") || "—"}
+                        </div>
+                      </td>
+                      <td className="py-1.5 px-2 text-right tabular-nums font-semibold">
+                        {f.severity_score}
+                      </td>
+                      <td className="py-1.5 px-2 max-w-[320px] text-ink-700/85">
+                        {f.dubious_because}
+                      </td>
+                      <td className="py-1.5 px-2 max-w-[260px]">
+                        {f.suggested_splits.length === 0 ? (
+                          <span className="text-ink-700/50">—</span>
+                        ) : (
+                          <ul className="space-y-1">
+                            {f.suggested_splits.map((s) => (
+                              <li key={s.new_id} className="text-[11px]">
+                                <span className="font-medium">{s.new_name}</span>
+                                <span className="ml-1 font-mono text-[10px] text-ink-700/70">
+                                  {s.new_id}
+                                </span>
+                                {s.naics_3_subset.length > 0 ? (
+                                  <span className="ml-1 text-[10px] text-ink-700/60">
+                                    [{s.naics_3_subset.join(",")}]
+                                  </span>
+                                ) : null}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </td>
+                      <td className="py-1.5 px-2">
+                        <div className="flex flex-col gap-1">
+                          <a
+                            href={`?decision=split&id=${f.industry_id}`}
+                            className="text-[10px] px-2 py-0.5 rounded border border-clay-300 bg-clay-50 text-clay-900 hover:bg-clay-100 text-center"
+                          >
+                            Split
+                          </a>
+                          <a
+                            href={`?decision=rename&id=${f.industry_id}`}
+                            className="text-[10px] px-2 py-0.5 rounded border border-amber-300 bg-amber-50 text-amber-900 hover:bg-amber-100 text-center"
+                          >
+                            Rename
+                          </a>
+                          <a
+                            href={`?decision=keep&id=${f.industry_id}`}
+                            className="text-[10px] px-2 py-0.5 rounded border border-parchment bg-cream-100 text-ink-900 hover:bg-cream-200 text-center"
+                          >
+                            Keep
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
+        ) : (
+          <p className="mt-3 text-xs text-ink-700/60">No taxonomy_bundling_audit_v1.json on disk. Run <span className="font-mono">python scripts/quality/audit_industry_bundling.py</span>.</p>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function Pill({ tone, children }: { tone: "moss" | "amber" | "clay" | "ink"; children: React.ReactNode }) {
+  const map = {
+    moss: "bg-moss-100 text-moss-900 border-moss-300",
+    amber: "bg-amber-100 text-amber-900 border-amber-300",
+    clay: "bg-clay-100 text-clay-900 border-clay-300",
+    ink: "bg-cream-100 text-ink-900 border-parchment",
+  } as const;
+  return (
+    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full border font-medium ${map[tone]}`}>
+      {children}
+    </span>
+  );
+}
+
+function VerdictPill({ v }: { v: "match" | "minor_delta" | "flag" }) {
+  const map = {
+    match: { tone: "moss" as const, label: "match" },
+    minor_delta: { tone: "amber" as const, label: "minor" },
+    flag: { tone: "clay" as const, label: "flag" },
+  };
+  const m = map[v];
+  return <Pill tone={m.tone}>{m.label}</Pill>;
 }
 
 function Stat({

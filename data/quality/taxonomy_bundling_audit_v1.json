@@ -1,0 +1,1438 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-05-19T05:12:24Z",
+  "total_industries": 206,
+  "flagged_count": 17,
+  "split_count": 17,
+  "rename_count": 0,
+  "flagged": [
+    {
+      "industry_id": "textile_apparel_mfg",
+      "current_name": "Textile & apparel manufacturing",
+      "current_audience": "smb_friendly",
+      "current_sector_id": "manufacturing_artisan",
+      "current_examples": [
+        "clothing",
+        "fabrics",
+        "leather goods",
+        "shoes"
+      ],
+      "current_keywords": [
+        "textile",
+        "apparel",
+        "clothing",
+        "fabric",
+        "leather",
+        "shoes",
+        "garment",
+        "fashion",
+        "weaving"
+      ],
+      "current_naics_3": [
+        "313",
+        "314",
+        "315",
+        "316"
+      ],
+      "current_isic_divisions": [
+        "13",
+        "14",
+        "15"
+      ],
+      "current_nace_divisions": [
+        "13",
+        "14",
+        "15"
+      ],
+      "severity_score": 6,
+      "dubious_because": "4 NAICS-3 codes bundled: 313 (textile mills), 314 (textile product mills), 315 (apparel manufacturing), 316 (leather & allied products). Examples/keywords split into 8 lexical clusters. Name \"Textile & apparel manufacturing\" uses conjunction with multi-NAICS bundle.",
+      "suggested_splits": [
+        {
+          "new_id": "textile_apparel_mfg_313",
+          "new_name": "Textile Mills",
+          "examples_subset": [
+            "textile mills"
+          ],
+          "naics_3_subset": [
+            "313"
+          ],
+          "isic_divisions_subset": [
+            "13",
+            "14",
+            "15"
+          ],
+          "nace_divisions_subset": [
+            "13",
+            "14",
+            "15"
+          ],
+          "sector_id": "manufacturing_artisan"
+        },
+        {
+          "new_id": "textile_apparel_mfg_314",
+          "new_name": "Textile Product Mills",
+          "examples_subset": [
+            "textile product mills"
+          ],
+          "naics_3_subset": [
+            "314"
+          ],
+          "isic_divisions_subset": [
+            "13",
+            "14",
+            "15"
+          ],
+          "nace_divisions_subset": [
+            "13",
+            "14",
+            "15"
+          ],
+          "sector_id": "manufacturing_artisan"
+        },
+        {
+          "new_id": "textile_apparel_mfg_315",
+          "new_name": "Apparel Manufacturing",
+          "examples_subset": [
+            "apparel manufacturing"
+          ],
+          "naics_3_subset": [
+            "315"
+          ],
+          "isic_divisions_subset": [
+            "13",
+            "14",
+            "15"
+          ],
+          "nace_divisions_subset": [
+            "13",
+            "14",
+            "15"
+          ],
+          "sector_id": "manufacturing_artisan"
+        },
+        {
+          "new_id": "textile_apparel_mfg_316",
+          "new_name": "Leather & Allied Products",
+          "examples_subset": [
+            "leather & allied products"
+          ],
+          "naics_3_subset": [
+            "316"
+          ],
+          "isic_divisions_subset": [
+            "13",
+            "14",
+            "15"
+          ],
+          "nace_divisions_subset": [
+            "13",
+            "14",
+            "15"
+          ],
+          "sector_id": "manufacturing_artisan"
+        }
+      ],
+      "recommended_action": "split"
+    },
+    {
+      "industry_id": "media_publishing",
+      "current_name": "Media & publishing",
+      "current_audience": "smb_friendly",
+      "current_sector_id": "creative_media",
+      "current_examples": [
+        "newspapers",
+        "books",
+        "magazines",
+        "online media"
+      ],
+      "current_keywords": [
+        "media",
+        "publishing",
+        "newspaper",
+        "book",
+        "magazine",
+        "publisher",
+        "blog"
+      ],
+      "current_naics_3": [
+        "511",
+        "512",
+        "519"
+      ],
+      "current_isic_divisions": [
+        "58",
+        "59"
+      ],
+      "current_nace_divisions": [
+        "58",
+        "59"
+      ],
+      "severity_score": 5,
+      "dubious_because": "3 NAICS-3 codes bundled: 511 (publishing (incl. software)), 512 (motion picture & sound recording), 519 (other information services). Examples/keywords split into 6 lexical clusters. Name \"Media & publishing\" uses conjunction with multi-NAICS bundle.",
+      "suggested_splits": [
+        {
+          "new_id": "media_publishing_511",
+          "new_name": "Publishing (Incl. Software)",
+          "examples_subset": [
+            "publishing (incl. software)"
+          ],
+          "naics_3_subset": [
+            "511"
+          ],
+          "isic_divisions_subset": [
+            "58",
+            "59"
+          ],
+          "nace_divisions_subset": [
+            "58",
+            "59"
+          ],
+          "sector_id": "creative_media"
+        },
+        {
+          "new_id": "media_publishing_512",
+          "new_name": "Motion Picture & Sound Recording",
+          "examples_subset": [
+            "motion picture & sound recording"
+          ],
+          "naics_3_subset": [
+            "512"
+          ],
+          "isic_divisions_subset": [
+            "58",
+            "59"
+          ],
+          "nace_divisions_subset": [
+            "58",
+            "59"
+          ],
+          "sector_id": "creative_media"
+        },
+        {
+          "new_id": "media_publishing_519",
+          "new_name": "Other Information Services",
+          "examples_subset": [
+            "other information services"
+          ],
+          "naics_3_subset": [
+            "519"
+          ],
+          "isic_divisions_subset": [
+            "58",
+            "59"
+          ],
+          "nace_divisions_subset": [
+            "58",
+            "59"
+          ],
+          "sector_id": "creative_media"
+        }
+      ],
+      "recommended_action": "split"
+    },
+    {
+      "industry_id": "wood_paper_mfg",
+      "current_name": "Wood & paper products",
+      "current_audience": "smb_friendly",
+      "current_sector_id": "manufacturing_artisan",
+      "current_examples": [
+        "furniture",
+        "packaging",
+        "paper",
+        "printing"
+      ],
+      "current_keywords": [
+        "wood",
+        "paper",
+        "furniture",
+        "packaging",
+        "printing",
+        "cardboard",
+        "lumber",
+        "manufacturing"
+      ],
+      "current_naics_3": [
+        "321",
+        "322",
+        "323"
+      ],
+      "current_isic_divisions": [
+        "16",
+        "17",
+        "18"
+      ],
+      "current_nace_divisions": [
+        "16",
+        "17",
+        "18"
+      ],
+      "severity_score": 5,
+      "dubious_because": "3 NAICS-3 codes bundled: 321 (wood product manufacturing), 322 (paper manufacturing), 323 (printing). Examples/keywords split into 8 lexical clusters. Name \"Wood & paper products\" uses conjunction with multi-NAICS bundle.",
+      "suggested_splits": [
+        {
+          "new_id": "wood_paper_mfg_321",
+          "new_name": "Wood Product Manufacturing",
+          "examples_subset": [
+            "wood product manufacturing"
+          ],
+          "naics_3_subset": [
+            "321"
+          ],
+          "isic_divisions_subset": [
+            "16",
+            "17",
+            "18"
+          ],
+          "nace_divisions_subset": [
+            "16",
+            "17",
+            "18"
+          ],
+          "sector_id": "manufacturing_artisan"
+        },
+        {
+          "new_id": "wood_paper_mfg_322",
+          "new_name": "Paper Manufacturing",
+          "examples_subset": [
+            "paper manufacturing"
+          ],
+          "naics_3_subset": [
+            "322"
+          ],
+          "isic_divisions_subset": [
+            "16",
+            "17",
+            "18"
+          ],
+          "nace_divisions_subset": [
+            "16",
+            "17",
+            "18"
+          ],
+          "sector_id": "manufacturing_artisan"
+        },
+        {
+          "new_id": "wood_paper_mfg_323",
+          "new_name": "Printing",
+          "examples_subset": [
+            "printing"
+          ],
+          "naics_3_subset": [
+            "323"
+          ],
+          "isic_divisions_subset": [
+            "16",
+            "17",
+            "18"
+          ],
+          "nace_divisions_subset": [
+            "16",
+            "17",
+            "18"
+          ],
+          "sector_id": "manufacturing_artisan"
+        }
+      ],
+      "recommended_action": "split"
+    },
+    {
+      "industry_id": "auto_dealers_gas",
+      "current_name": "Auto dealers & gas stations",
+      "current_audience": "smb_friendly",
+      "current_sector_id": "retail_shops",
+      "current_examples": [
+        "car dealers",
+        "used car lots",
+        "gas stations"
+      ],
+      "current_keywords": [
+        "car",
+        "auto",
+        "dealer",
+        "vehicle",
+        "gas station",
+        "petrol",
+        "fuel"
+      ],
+      "current_naics_3": [
+        "441",
+        "447"
+      ],
+      "current_isic_divisions": [
+        "45",
+        "47"
+      ],
+      "current_nace_divisions": [
+        "45",
+        "47"
+      ],
+      "severity_score": 4,
+      "dubious_because": "2 NAICS-3 codes bundled: 441 (motor vehicle & parts dealers), 447 (gasoline stations). Examples/keywords split into 6 lexical clusters. Name \"Auto dealers & gas stations\" uses conjunction with multi-NAICS bundle.",
+      "suggested_splits": [
+        {
+          "new_id": "auto_dealers",
+          "new_name": "Auto dealers",
+          "examples_subset": [
+            "car dealers",
+            "used car lots",
+            "motorcycle dealers"
+          ],
+          "naics_3_subset": [
+            "441"
+          ],
+          "isic_divisions_subset": [
+            "45"
+          ],
+          "nace_divisions_subset": [
+            "45"
+          ],
+          "sector_id": "retail_shops"
+        },
+        {
+          "new_id": "gas_stations",
+          "new_name": "Gas stations",
+          "examples_subset": [
+            "gas stations",
+            "service stations",
+            "fuel retail"
+          ],
+          "naics_3_subset": [
+            "447"
+          ],
+          "isic_divisions_subset": [
+            "47"
+          ],
+          "nace_divisions_subset": [
+            "47"
+          ],
+          "sector_id": "retail_shops"
+        }
+      ],
+      "recommended_action": "split"
+    },
+    {
+      "industry_id": "broadcasting_telecom",
+      "current_name": "Broadcasting & telecom",
+      "current_audience": "corp_only",
+      "current_sector_id": "creative_media",
+      "current_examples": [
+        "TV",
+        "radio",
+        "internet providers",
+        "mobile networks"
+      ],
+      "current_keywords": [
+        "broadcasting",
+        "tv",
+        "television",
+        "radio",
+        "telecom",
+        "internet",
+        "mobile network",
+        "cable"
+      ],
+      "current_naics_3": [
+        "515",
+        "517"
+      ],
+      "current_isic_divisions": [
+        "60",
+        "61"
+      ],
+      "current_nace_divisions": [
+        "60",
+        "61"
+      ],
+      "severity_score": 4,
+      "dubious_because": "2 NAICS-3 codes bundled: 515 (broadcasting), 517 (telecommunications). Examples/keywords split into 7 lexical clusters. Name \"Broadcasting & telecom\" uses conjunction with multi-NAICS bundle.",
+      "suggested_splits": [
+        {
+          "new_id": "broadcasting",
+          "new_name": "Broadcasting",
+          "examples_subset": [
+            "radio stations",
+            "television broadcasting"
+          ],
+          "naics_3_subset": [
+            "515"
+          ],
+          "isic_divisions_subset": [
+            "60"
+          ],
+          "nace_divisions_subset": [
+            "60"
+          ],
+          "sector_id": "tech_information"
+        },
+        {
+          "new_id": "telecom",
+          "new_name": "Telecommunications",
+          "examples_subset": [
+            "wireless carriers",
+            "wired telecom",
+            "ISPs"
+          ],
+          "naics_3_subset": [
+            "517"
+          ],
+          "isic_divisions_subset": [
+            "61"
+          ],
+          "nace_divisions_subset": [
+            "61"
+          ],
+          "sector_id": "tech_information"
+        }
+      ],
+      "recommended_action": "split"
+    },
+    {
+      "industry_id": "chemical_pharma_mfg",
+      "current_name": "Chemical & pharmaceutical manufacturing",
+      "current_audience": "corp_only",
+      "current_sector_id": "heavy_industry",
+      "current_examples": [
+        "drugs",
+        "cosmetics",
+        "cleaning products",
+        "paints"
+      ],
+      "current_keywords": [
+        "chemical",
+        "pharmaceutical",
+        "pharma",
+        "drug",
+        "cosmetic",
+        "cleaning",
+        "paint",
+        "soap",
+        "fertilizer"
+      ],
+      "current_naics_3": [
+        "325",
+        "324"
+      ],
+      "current_isic_divisions": [
+        "20",
+        "21"
+      ],
+      "current_nace_divisions": [
+        "20",
+        "21"
+      ],
+      "severity_score": 4,
+      "dubious_because": "2 NAICS-3 codes bundled: 325 (chemical manufacturing), 324 (petroleum & coal products). Examples/keywords split into 7 lexical clusters. Name \"Chemical & pharmaceutical manufacturing\" uses conjunction with multi-NAICS bundle.",
+      "suggested_splits": [
+        {
+          "new_id": "chemical_pharma_mfg_325",
+          "new_name": "Chemical Manufacturing",
+          "examples_subset": [
+            "chemical manufacturing"
+          ],
+          "naics_3_subset": [
+            "325"
+          ],
+          "isic_divisions_subset": [
+            "20",
+            "21"
+          ],
+          "nace_divisions_subset": [
+            "20",
+            "21"
+          ],
+          "sector_id": "heavy_industry"
+        },
+        {
+          "new_id": "chemical_pharma_mfg_324",
+          "new_name": "Petroleum & Coal Products",
+          "examples_subset": [
+            "petroleum & coal products"
+          ],
+          "naics_3_subset": [
+            "324"
+          ],
+          "isic_divisions_subset": [
+            "20",
+            "21"
+          ],
+          "nace_divisions_subset": [
+            "20",
+            "21"
+          ],
+          "sector_id": "heavy_industry"
+        }
+      ],
+      "recommended_action": "split"
+    },
+    {
+      "industry_id": "food_beverage_mfg",
+      "current_name": "Food & beverage manufacturing",
+      "current_audience": "smb_friendly",
+      "current_sector_id": "farming_food_production",
+      "current_examples": [
+        "dairy products",
+        "baked goods",
+        "drinks",
+        "meat processing"
+      ],
+      "current_keywords": [
+        "food",
+        "beverage",
+        "dairy",
+        "bakery",
+        "drink",
+        "brewing",
+        "manufacturing",
+        "processing",
+        "meat",
+        "snacks"
+      ],
+      "current_naics_3": [
+        "311",
+        "312"
+      ],
+      "current_isic_divisions": [
+        "10",
+        "11"
+      ],
+      "current_nace_divisions": [
+        "10",
+        "11"
+      ],
+      "severity_score": 4,
+      "dubious_because": "2 NAICS-3 codes bundled: 311 (food manufacturing), 312 (beverage & tobacco manufacturing). Examples/keywords split into 8 lexical clusters. Name \"Food & beverage manufacturing\" uses conjunction with multi-NAICS bundle.",
+      "suggested_splits": [
+        {
+          "new_id": "food_mfg",
+          "new_name": "Food manufacturing",
+          "examples_subset": [
+            "bakery products",
+            "dairy products",
+            "packaged food"
+          ],
+          "naics_3_subset": [
+            "311"
+          ],
+          "isic_divisions_subset": [
+            "10"
+          ],
+          "nace_divisions_subset": [
+            "10"
+          ],
+          "sector_id": "manufacturing_production"
+        },
+        {
+          "new_id": "beverage_mfg",
+          "new_name": "Beverage manufacturing",
+          "examples_subset": [
+            "soft drinks",
+            "bottled water",
+            "juices"
+          ],
+          "naics_3_subset": [
+            "312"
+          ],
+          "isic_divisions_subset": [
+            "11"
+          ],
+          "nace_divisions_subset": [
+            "11"
+          ],
+          "sector_id": "manufacturing_production"
+        }
+      ],
+      "recommended_action": "split"
+    },
+    {
+      "industry_id": "furniture_home_stores",
+      "current_name": "Furniture & home goods stores",
+      "current_audience": "smb_core",
+      "current_sector_id": "retail_shops",
+      "current_examples": [
+        "furniture",
+        "home decor",
+        "DIY stores",
+        "garden centers"
+      ],
+      "current_keywords": [
+        "furniture",
+        "home",
+        "decor",
+        "diy",
+        "garden",
+        "improvement",
+        "store"
+      ],
+      "current_naics_3": [
+        "442",
+        "444"
+      ],
+      "current_isic_divisions": [
+        "47"
+      ],
+      "current_nace_divisions": [
+        "47"
+      ],
+      "severity_score": 4,
+      "dubious_because": "2 NAICS-3 codes bundled: 442 (furniture & home furnishings stores), 444 (building material & garden supply). Examples/keywords split into 5 lexical clusters. Name \"Furniture & home goods stores\" uses conjunction with multi-NAICS bundle.",
+      "suggested_splits": [
+        {
+          "new_id": "furniture_stores",
+          "new_name": "Furniture stores",
+          "examples_subset": [
+            "furniture retail",
+            "home furnishings"
+          ],
+          "naics_3_subset": [
+            "442"
+          ],
+          "isic_divisions_subset": [
+            "47"
+          ],
+          "nace_divisions_subset": [
+            "47"
+          ],
+          "sector_id": "retail_shops"
+        },
+        {
+          "new_id": "building_garden_stores",
+          "new_name": "Building & garden supply stores",
+          "examples_subset": [
+            "hardware",
+            "lumber",
+            "garden supplies"
+          ],
+          "naics_3_subset": [
+            "444"
+          ],
+          "isic_divisions_subset": [
+            "47"
+          ],
+          "nace_divisions_subset": [
+            "47"
+          ],
+          "sector_id": "retail_shops"
+        }
+      ],
+      "recommended_action": "split"
+    },
+    {
+      "industry_id": "furniture_other_mfg",
+      "current_name": "Furniture & other manufacturing",
+      "current_audience": "smb_core",
+      "current_sector_id": "manufacturing_artisan",
+      "current_examples": [
+        "furniture",
+        "toys",
+        "jewelry",
+        "sporting goods"
+      ],
+      "current_keywords": [
+        "furniture",
+        "toy",
+        "jewelry",
+        "sporting",
+        "instruments",
+        "musical",
+        "manufacturing"
+      ],
+      "current_naics_3": [
+        "337",
+        "339"
+      ],
+      "current_isic_divisions": [
+        "31",
+        "32"
+      ],
+      "current_nace_divisions": [
+        "31",
+        "32"
+      ],
+      "severity_score": 4,
+      "dubious_because": "2 NAICS-3 codes bundled: 337 (furniture manufacturing), 339 (miscellaneous manufacturing). Examples/keywords split into 7 lexical clusters. Name \"Furniture & other manufacturing\" uses conjunction with multi-NAICS bundle.",
+      "suggested_splits": [
+        {
+          "new_id": "furniture_other_mfg_337",
+          "new_name": "Furniture Manufacturing",
+          "examples_subset": [
+            "furniture manufacturing"
+          ],
+          "naics_3_subset": [
+            "337"
+          ],
+          "isic_divisions_subset": [
+            "31",
+            "32"
+          ],
+          "nace_divisions_subset": [
+            "31",
+            "32"
+          ],
+          "sector_id": "manufacturing_artisan"
+        },
+        {
+          "new_id": "furniture_other_mfg_339",
+          "new_name": "Miscellaneous Manufacturing",
+          "examples_subset": [
+            "miscellaneous manufacturing"
+          ],
+          "naics_3_subset": [
+            "339"
+          ],
+          "isic_divisions_subset": [
+            "31",
+            "32"
+          ],
+          "nace_divisions_subset": [
+            "31",
+            "32"
+          ],
+          "sector_id": "manufacturing_artisan"
+        }
+      ],
+      "recommended_action": "split"
+    },
+    {
+      "industry_id": "investment_securities",
+      "current_name": "Investment & securities",
+      "current_audience": "corp_only",
+      "current_sector_id": "finance_corp",
+      "current_examples": [
+        "asset management",
+        "brokerage",
+        "private equity",
+        "hedge funds"
+      ],
+      "current_keywords": [
+        "investment",
+        "asset management",
+        "broker",
+        "securities",
+        "fund",
+        "private equity",
+        "hedge fund"
+      ],
+      "current_naics_3": [
+        "523",
+        "525"
+      ],
+      "current_isic_divisions": [
+        "64",
+        "66"
+      ],
+      "current_nace_divisions": [
+        "64",
+        "66"
+      ],
+      "severity_score": 4,
+      "dubious_because": "2 NAICS-3 codes bundled: 523 (securities & commodity contracts), 525 (funds, trusts, other financial). Examples/keywords split into 6 lexical clusters. Name \"Investment & securities\" uses conjunction with multi-NAICS bundle.",
+      "suggested_splits": [
+        {
+          "new_id": "securities_brokerage",
+          "new_name": "Securities & brokerage",
+          "examples_subset": [
+            "securities dealers",
+            "commodity contracts"
+          ],
+          "naics_3_subset": [
+            "523"
+          ],
+          "isic_divisions_subset": [
+            "66"
+          ],
+          "nace_divisions_subset": [
+            "66"
+          ],
+          "sector_id": "finance_insurance"
+        },
+        {
+          "new_id": "funds_trusts",
+          "new_name": "Funds & trusts",
+          "examples_subset": [
+            "mutual funds",
+            "trusts",
+            "pension funds"
+          ],
+          "naics_3_subset": [
+            "525"
+          ],
+          "isic_divisions_subset": [
+            "66"
+          ],
+          "nace_divisions_subset": [
+            "66"
+          ],
+          "sector_id": "finance_insurance"
+        }
+      ],
+      "recommended_action": "split"
+    },
+    {
+      "industry_id": "metal_products_mfg",
+      "current_name": "Metal products manufacturing",
+      "current_audience": "smb_friendly",
+      "current_sector_id": "manufacturing_artisan",
+      "current_examples": [
+        "steel parts",
+        "structural metals",
+        "hardware",
+        "tools"
+      ],
+      "current_keywords": [
+        "metal",
+        "steel",
+        "iron",
+        "aluminum",
+        "hardware",
+        "tools",
+        "fabrication",
+        "manufacturing"
+      ],
+      "current_naics_3": [
+        "331",
+        "332",
+        "327"
+      ],
+      "current_isic_divisions": [
+        "24",
+        "25"
+      ],
+      "current_nace_divisions": [
+        "24",
+        "25"
+      ],
+      "severity_score": 4,
+      "dubious_because": "3 NAICS-3 codes bundled: 331 (primary metals), 332 (fabricated metals), 327 (nonmetallic mineral products). Examples/keywords split into 8 lexical clusters.",
+      "suggested_splits": [
+        {
+          "new_id": "metal_products_mfg_331",
+          "new_name": "Primary Metals",
+          "examples_subset": [
+            "primary metals"
+          ],
+          "naics_3_subset": [
+            "331"
+          ],
+          "isic_divisions_subset": [
+            "24",
+            "25"
+          ],
+          "nace_divisions_subset": [
+            "24",
+            "25"
+          ],
+          "sector_id": "manufacturing_artisan"
+        },
+        {
+          "new_id": "metal_products_mfg_332",
+          "new_name": "Fabricated Metals",
+          "examples_subset": [
+            "fabricated metals"
+          ],
+          "naics_3_subset": [
+            "332"
+          ],
+          "isic_divisions_subset": [
+            "24",
+            "25"
+          ],
+          "nace_divisions_subset": [
+            "24",
+            "25"
+          ],
+          "sector_id": "manufacturing_artisan"
+        },
+        {
+          "new_id": "metal_products_mfg_327",
+          "new_name": "Nonmetallic Mineral Products",
+          "examples_subset": [
+            "nonmetallic mineral products"
+          ],
+          "naics_3_subset": [
+            "327"
+          ],
+          "isic_divisions_subset": [
+            "24",
+            "25"
+          ],
+          "nace_divisions_subset": [
+            "24",
+            "25"
+          ],
+          "sector_id": "manufacturing_artisan"
+        }
+      ],
+      "recommended_action": "split"
+    },
+    {
+      "industry_id": "mining_quarrying",
+      "current_name": "Mining & quarrying",
+      "current_audience": "corp_only",
+      "current_sector_id": "mining_energy",
+      "current_examples": [
+        "coal",
+        "metals",
+        "stone",
+        "gravel"
+      ],
+      "current_keywords": [
+        "mining",
+        "coal",
+        "quarry",
+        "metal",
+        "stone",
+        "gravel",
+        "ore",
+        "minerals",
+        "iron"
+      ],
+      "current_naics_3": [
+        "212",
+        "213"
+      ],
+      "current_isic_divisions": [
+        "05",
+        "07",
+        "08"
+      ],
+      "current_nace_divisions": [
+        "05",
+        "07",
+        "08"
+      ],
+      "severity_score": 4,
+      "dubious_because": "2 NAICS-3 codes bundled: 212 (mining (except oil & gas)), 213 (support activities for mining). Examples/keywords split into 8 lexical clusters. Name \"Mining & quarrying\" uses conjunction with multi-NAICS bundle.",
+      "suggested_splits": [
+        {
+          "new_id": "mining_metal_ore",
+          "new_name": "Mining & quarrying",
+          "examples_subset": [
+            "metal ores",
+            "stone",
+            "sand",
+            "gravel"
+          ],
+          "naics_3_subset": [
+            "212"
+          ],
+          "isic_divisions_subset": [
+            "07",
+            "08"
+          ],
+          "nace_divisions_subset": [
+            "07",
+            "08"
+          ],
+          "sector_id": "mining_energy"
+        },
+        {
+          "new_id": "mining_support",
+          "new_name": "Mining support services",
+          "examples_subset": [
+            "drilling support",
+            "exploration services"
+          ],
+          "naics_3_subset": [
+            "213"
+          ],
+          "isic_divisions_subset": [
+            "09"
+          ],
+          "nace_divisions_subset": [
+            "09"
+          ],
+          "sector_id": "mining_energy"
+        }
+      ],
+      "recommended_action": "split"
+    },
+    {
+      "industry_id": "passenger_transport",
+      "current_name": "Passenger transport",
+      "current_audience": "smb_core",
+      "current_sector_id": "transport_small",
+      "current_examples": [
+        "taxis",
+        "ride-share",
+        "buses",
+        "limousines"
+      ],
+      "current_keywords": [
+        "taxi",
+        "uber",
+        "lyft",
+        "rideshare",
+        "bus",
+        "passenger",
+        "transport",
+        "limo"
+      ],
+      "current_naics_3": [
+        "485",
+        "487",
+        "488"
+      ],
+      "current_isic_divisions": [
+        "49"
+      ],
+      "current_nace_divisions": [
+        "49"
+      ],
+      "severity_score": 4,
+      "dubious_because": "3 NAICS-3 codes bundled: 485 (transit & ground passenger), 487 (scenic & sightseeing transport), 488 (support activities for transport). Examples/keywords split into 8 lexical clusters.",
+      "suggested_splits": [
+        {
+          "new_id": "transit_ground_passenger",
+          "new_name": "Transit & ground passenger transport",
+          "examples_subset": [
+            "urban transit",
+            "buses",
+            "taxis",
+            "limousines"
+          ],
+          "naics_3_subset": [
+            "485"
+          ],
+          "isic_divisions_subset": [
+            "49"
+          ],
+          "nace_divisions_subset": [
+            "49"
+          ],
+          "sector_id": "transport_logistics"
+        },
+        {
+          "new_id": "scenic_sightseeing_transport",
+          "new_name": "Scenic & sightseeing transport",
+          "examples_subset": [
+            "sightseeing tours",
+            "scenic transport"
+          ],
+          "naics_3_subset": [
+            "487"
+          ],
+          "isic_divisions_subset": [
+            "49"
+          ],
+          "nace_divisions_subset": [
+            "49"
+          ],
+          "sector_id": "transport_logistics"
+        },
+        {
+          "new_id": "transport_support",
+          "new_name": "Transport support services",
+          "examples_subset": [
+            "freight forwarding",
+            "port services",
+            "terminal services"
+          ],
+          "naics_3_subset": [
+            "488"
+          ],
+          "isic_divisions_subset": [
+            "52"
+          ],
+          "nace_divisions_subset": [
+            "52"
+          ],
+          "sector_id": "transport_logistics"
+        }
+      ],
+      "recommended_action": "split"
+    },
+    {
+      "industry_id": "postal_courier",
+      "current_name": "Postal & courier",
+      "current_audience": "mixed_caution",
+      "current_sector_id": "transport_small",
+      "current_examples": [
+        "mail",
+        "parcels",
+        "express delivery",
+        "courier services"
+      ],
+      "current_keywords": [
+        "postal",
+        "post",
+        "mail",
+        "courier",
+        "parcel",
+        "express",
+        "delivery",
+        "fedex",
+        "ups"
+      ],
+      "current_naics_3": [
+        "491",
+        "492"
+      ],
+      "current_isic_divisions": [
+        "53"
+      ],
+      "current_nace_divisions": [
+        "53"
+      ],
+      "severity_score": 4,
+      "dubious_because": "2 NAICS-3 codes bundled: 491 (postal service), 492 (couriers & messengers). Examples/keywords split into 6 lexical clusters. Name \"Postal & courier\" uses conjunction with multi-NAICS bundle.",
+      "suggested_splits": [
+        {
+          "new_id": "postal_service",
+          "new_name": "Postal service",
+          "examples_subset": [
+            "postal service"
+          ],
+          "naics_3_subset": [
+            "491"
+          ],
+          "isic_divisions_subset": [
+            "53"
+          ],
+          "nace_divisions_subset": [
+            "53"
+          ],
+          "sector_id": "transport_logistics"
+        },
+        {
+          "new_id": "courier_messenger",
+          "new_name": "Couriers & messengers",
+          "examples_subset": [
+            "courier",
+            "messenger",
+            "local delivery"
+          ],
+          "naics_3_subset": [
+            "492"
+          ],
+          "isic_divisions_subset": [
+            "53"
+          ],
+          "nace_divisions_subset": [
+            "53"
+          ],
+          "sector_id": "transport_logistics"
+        }
+      ],
+      "recommended_action": "split"
+    },
+    {
+      "industry_id": "property_leasing",
+      "current_name": "Property leasing & rental",
+      "current_audience": "smb_core",
+      "current_sector_id": "real_estate",
+      "current_examples": [
+        "landlords",
+        "equipment rental",
+        "car rental"
+      ],
+      "current_keywords": [
+        "landlord",
+        "leasing",
+        "rental",
+        "lease",
+        "rent",
+        "equipment rental",
+        "car rental"
+      ],
+      "current_naics_3": [
+        "531",
+        "532"
+      ],
+      "current_isic_divisions": [
+        "68",
+        "77"
+      ],
+      "current_nace_divisions": [
+        "68",
+        "77"
+      ],
+      "severity_score": 4,
+      "dubious_because": "2 NAICS-3 codes bundled: 531 (real estate), 532 (rental & leasing services). Examples/keywords split into 3 lexical clusters. Name \"Property leasing & rental\" uses conjunction with multi-NAICS bundle.",
+      "suggested_splits": [
+        {
+          "new_id": "real_estate_leasing",
+          "new_name": "Real estate leasing",
+          "examples_subset": [
+            "property management",
+            "rental property"
+          ],
+          "naics_3_subset": [
+            "531"
+          ],
+          "isic_divisions_subset": [
+            "68"
+          ],
+          "nace_divisions_subset": [
+            "68"
+          ],
+          "sector_id": "real_estate"
+        },
+        {
+          "new_id": "equipment_rental",
+          "new_name": "Equipment rental & leasing",
+          "examples_subset": [
+            "equipment rental",
+            "vehicle leasing"
+          ],
+          "naics_3_subset": [
+            "532"
+          ],
+          "isic_divisions_subset": [
+            "77"
+          ],
+          "nace_divisions_subset": [
+            "77"
+          ],
+          "sector_id": "professional_services"
+        }
+      ],
+      "recommended_action": "split"
+    },
+    {
+      "industry_id": "crop_farming",
+      "current_name": "Crop farming",
+      "current_audience": "smb_friendly",
+      "current_sector_id": "farming_food_production",
+      "current_examples": [
+        "wheat",
+        "corn",
+        "vegetables",
+        "fruits"
+      ],
+      "current_keywords": [
+        "farm",
+        "farming",
+        "crop",
+        "wheat",
+        "corn",
+        "vegetables",
+        "fruit",
+        "grain",
+        "rice",
+        "harvest",
+        "cultivation",
+        "agriculture"
+      ],
+      "current_naics_3": [
+        "111",
+        "115"
+      ],
+      "current_isic_divisions": [
+        "01"
+      ],
+      "current_nace_divisions": [
+        "01"
+      ],
+      "severity_score": 3,
+      "dubious_because": "2 NAICS-3 codes bundled: 111 (crop production), 115 (support activities for agriculture). Examples/keywords split into 7 lexical clusters.",
+      "suggested_splits": [
+        {
+          "new_id": "crop_farming_111",
+          "new_name": "Crop Production",
+          "examples_subset": [
+            "crop production"
+          ],
+          "naics_3_subset": [
+            "111"
+          ],
+          "isic_divisions_subset": [
+            "01"
+          ],
+          "nace_divisions_subset": [
+            "01"
+          ],
+          "sector_id": "farming_food_production"
+        },
+        {
+          "new_id": "crop_farming_115",
+          "new_name": "Support Activities For Agriculture",
+          "examples_subset": [
+            "support activities for agriculture"
+          ],
+          "naics_3_subset": [
+            "115"
+          ],
+          "isic_divisions_subset": [
+            "01"
+          ],
+          "nace_divisions_subset": [
+            "01"
+          ],
+          "sector_id": "farming_food_production"
+        }
+      ],
+      "recommended_action": "split"
+    },
+    {
+      "industry_id": "software_development",
+      "current_name": "Software development",
+      "current_audience": "smb_core",
+      "current_sector_id": "creative_media",
+      "current_examples": [
+        "web apps",
+        "mobile apps",
+        "custom software",
+        "SaaS"
+      ],
+      "current_keywords": [
+        "software",
+        "saas",
+        "app",
+        "developer",
+        "programming",
+        "code",
+        "web app",
+        "mobile app"
+      ],
+      "current_naics_3": [
+        "511",
+        "541"
+      ],
+      "current_isic_divisions": [
+        "62"
+      ],
+      "current_nace_divisions": [
+        "62"
+      ],
+      "severity_score": 3,
+      "dubious_because": "2 NAICS-3 codes bundled: 511 (publishing (incl. software)), 541 (professional & technical services). Examples/keywords split into 6 lexical clusters.",
+      "suggested_splits": [
+        {
+          "new_id": "software_development_511",
+          "new_name": "Publishing (Incl. Software)",
+          "examples_subset": [
+            "publishing (incl. software)"
+          ],
+          "naics_3_subset": [
+            "511"
+          ],
+          "isic_divisions_subset": [
+            "62"
+          ],
+          "nace_divisions_subset": [
+            "62"
+          ],
+          "sector_id": "creative_media"
+        },
+        {
+          "new_id": "software_development_541",
+          "new_name": "Professional & Technical Services",
+          "examples_subset": [
+            "professional & technical services"
+          ],
+          "naics_3_subset": [
+            "541"
+          ],
+          "isic_divisions_subset": [
+            "62"
+          ],
+          "nace_divisions_subset": [
+            "62"
+          ],
+          "sector_id": "creative_media"
+        }
+      ],
+      "recommended_action": "split"
+    }
+  ]
+}
