@@ -50,6 +50,7 @@ import industryMarginsJson from "@/lib/finance/industry_margins.json";
 import { clampMargin } from "@/lib/finance/margin_floor";
 import { generateFAQs } from "@/lib/seo/faq_generator";
 import { FAQSchema } from "@/components/FAQSchema";
+import { getCellNarrative } from "@/lib/content/narratives";
 
 type IndustryMarginRow = { gross_margin: number; operating_margin: number; asset_intensity?: number };
 const INDUSTRY_MARGINS = industryMarginsJson as unknown as {
@@ -235,6 +236,21 @@ export default async function CellPage({
     net_margin: computedNetMargin,
   });
 
+  // Plan v14 Phase B — per-cell editorial narrative (Haiku-generated bulk
+  // with Sonnet quality pass on top-200). Keyed by the source-of-truth
+  // identifiers, NOT the URL slugs: the cache was built off
+  // cells_master / regional_cells / extrapolated_cells primary keys. When
+  // there is no cached entry, the narrative section silently omits itself
+  // per the Wave 4a (D2) degrade-quietly rule.
+  const narrative = cell.industry_id
+    ? getCellNarrative(
+        country,
+        cell.geo_id || geo,
+        cell.industry_id,
+        cell.size_band || "total"
+      )
+    : null;
+
   const url = `https://marginatlas.com/${country}/${geo}/${industry}`;
   return (
     <div className="xl:flex xl:gap-6">
@@ -254,7 +270,7 @@ export default async function CellPage({
         qualityScore={cell.quality_score}
         csvExportUrl={`https://marginatlas.com/api/export-csv?country=${country}&geo=${geo}&industry=${industry}`}
       />
-      {/* Plan v14 Phase C.4 — FAQPage JSON-LD. Five data-backed Q&As per cell,
+      {/* Plan v14 Phase C.4: FAQPage JSON-LD. Five data-backed Q&As per cell,
          no visible DOM. Targets AI Overviews + Google People Also Ask. */}
       <FAQSchema faqs={faqs} />
       <Breadcrumbs
@@ -265,7 +281,7 @@ export default async function CellPage({
           { name: cell.industry_name || industry, url },
         ]}
       />
-      {/* Visible adaptive breadcrumb (CC.10) — distinct from the JSON-LD above.
+      {/* Visible adaptive breadcrumb (CC.10): distinct from the JSON-LD above.
          Plan v13 Wave 4a: country glyph is now an SVG <CountryFlag> via the
          iso2 field rather than the emoji glyph. */}
       <Breadcrumb
@@ -300,13 +316,13 @@ export default async function CellPage({
         sizeBand={cell.size_band}
       />
 
-      {/* Plan v13 Wave 4a (D2) — EmptyStateCard removed. When a cell has no
+      {/* Plan v13 Wave 4a (D2): EmptyStateCard removed. When a cell has no
          usable revenue metric, the data sections silently omit themselves
          (RevenueTiles, RevenueDistribution, MarginWaterfall all return null)
          and the nudge bar below still surfaces a stronger neighbor when one
          exists, so the page degrades without broadcasting brokenness. */}
 
-      {/* Nudge bar — appears when coverage is weak and a stronger neighbor exists */}
+      {/* Nudge bar: appears when coverage is weak and a stronger neighbor exists */}
       {nudge && cell.revenue_per_firm != null && (
         <div className="mb-4 rounded-xl border border-atlas-300 bg-atlas-100/60 px-4 py-2.5 text-sm flex items-center gap-2 flex-wrap">
           <span aria-hidden>🧭</span>
@@ -358,7 +374,7 @@ export default async function CellPage({
         </span>
       </nav>
 
-      {/* In-page dimension switcher — region/industry/size/year */}
+      {/* In-page dimension switcher: region/industry/size/year */}
       <DimensionSwitcher
         country={country}
         geoSlug={geo}
@@ -373,12 +389,12 @@ export default async function CellPage({
         currentYear={currentYear}
       />
 
-      {/* Hero — Plan v14 A.1 (T-A1.3): canonical ink-dark tone applied.
+      {/* Hero: Plan v14 A.1 (T-A1.3): canonical ink-dark tone applied.
          Text colors flipped to cream/atlas-light variants so they remain
          legible on the bg-ink-900 surface. The accented industry name in
          the headline becomes atlas-300 (warmer, more visible on dark) and
          the "typical revenue" line keeps the same emphasis structure but
-         in the cream family. Note: id="headline" preserved — CellPageNav
+         in the cream family. Note: id="headline" preserved: CellPageNav
          still anchors against it. */}
       <section id="hero" className={`py-8 ${getToneClass("hero")}`}>
         <header id="headline" className="lg:grid lg:grid-cols-[1.5fr_1fr] lg:gap-8 lg:items-start">
@@ -399,7 +415,7 @@ export default async function CellPage({
             <p className="mt-4 text-lg text-cream-200/85 max-w-3xl leading-relaxed">
               A typical {(cell.industry_name || "firm").toLowerCase().replace(/s$/, "")} here brings in about{" "}
               <strong className="text-cream-50"><Money usd={cell.revenue_per_firm} /></strong> per year, employing roughly{" "}
-              <strong className="text-cream-50">{cell.n_employees?.toLocaleString() || "—"}</strong> people in {cell.geo_name}.
+              <strong className="text-cream-50">{cell.n_employees?.toLocaleString() || "-"}</strong> people in {cell.geo_name}.
             </p>
             <div className="mt-3 flex items-center gap-2 flex-wrap text-xs text-cream-300/70">
               <span>Show numbers in:</span>
@@ -407,7 +423,7 @@ export default async function CellPage({
             </div>
           </div>
           <div className="hidden lg:block">
-            {/* Plan v12 IM8 — real photo when manifest has one for this
+            {/* Plan v12 IM8: real photo when manifest has one for this
                 cell's (city, industry); falls back to SmartImage glyph. */}
             <AtlasHeroImage
               image={pickCellHeroImage(geo, cell.industry_id || null, cell.sector_id || null)}
@@ -420,19 +436,33 @@ export default async function CellPage({
         </header>
       </section>
 
+      {/* Plan v14 Phase B: per-cell editorial narrative. Renders only when
+         a cached narrative exists for this cell; otherwise the section
+         silently omits itself (Wave 4a D2). 2 paragraphs, max ~180 words,
+         carrying the SEO keyphrase in the first sentence. */}
+      {narrative ? (
+        <section id="narrative" className={`py-8 ${getToneClass("narrative")}`}>
+          <div className="max-w-3xl">
+            <p className="text-base md:text-lg leading-relaxed text-ink-900 whitespace-pre-line">
+              {narrative}
+            </p>
+          </div>
+        </section>
+      ) : null}
+
       {/* Headline grid.
          Plan v14 A.1 (T-A1.4): legacy id="stats" renamed to canonical
-         "revenue-tiles" — direct SECTION_TONES lookup, no mapping layer. */}
+         "revenue-tiles": direct SECTION_TONES lookup, no mapping layer. */}
       <section id="revenue-tiles" className={`grid grid-cols-1 md:grid-cols-3 gap-4 py-6 ${getToneClass("revenue-tiles")}`}>
         <Stat
           label="People working"
-          value={cell.n_employees?.toLocaleString() || "—"}
+          value={cell.n_employees?.toLocaleString() || "-"}
           yoy={yoy.n_employees}
         />
         <Stat
           label="Typical yearly revenue"
           value={formatMoney(cell.revenue_per_firm)}
-          tooltip="The middle firm — half make more, half make less. Often called the median."
+          tooltip="The middle firm: half make more, half make less. Often called the median."
           yoy={yoy.revenue_per_firm}
         />
         <Stat
@@ -445,7 +475,7 @@ export default async function CellPage({
 
       {/* Atlas Score + Typical-firm biography card.
          Plan v14 A.1 (T-A1.4): legacy id="typical-firm" renamed to canonical
-         "tax-and-cost-panel" — section hosts PostTaxToggle +
+         "tax-and-cost-panel": section hosts PostTaxToggle +
          NetProfitWaterfall + MarginWaterfall. */}
       <section id="tax-and-cost-panel" className={`py-6 grid md:grid-cols-[1fr_2fr] gap-4 ${getToneClass("tax-and-cost-panel")}`}>
         <AtlasScore cell={cell} />
@@ -474,7 +504,7 @@ export default async function CellPage({
                 : null
             }
           />
-          {/* Plan v13 Wave 2 — profit waterfall integrity visual.
+          {/* Plan v13 Wave 2: profit waterfall integrity visual.
              Gross + operating from industry lookup, net from the
              estimateNetProfit() call above. All three pass through
              clampMargin inside the component. */}
@@ -486,7 +516,7 @@ export default async function CellPage({
         </div>
       </section>
 
-      {/* Plan v13 Wave 2 — Bottom 20% / Median / Top 10% revenue tiles +
+      {/* Plan v13 Wave 2: Bottom 20% / Median / Top 10% revenue tiles +
          smooth log-normal distribution curve. Replaces the prior
          histogram + 5-bar tier view.
          Plan v14 A.1 (T-A1.4): legacy id="distribution" renamed to canonical
@@ -510,7 +540,7 @@ export default async function CellPage({
         />
       </section>
 
-      {/* Plan v13 Wave 1: time series chart removed —
+      {/* Plan v13 Wave 1: time series chart removed:
          multi-year coverage is too uneven across cells to display honestly. */}
 
       {/* Plan v13 Wave 1 follow-up: Data Quality section removed.
@@ -564,7 +594,7 @@ export default async function CellPage({
         </section>
       )}
 
-      {/* Related industries (sibling sector links) — DD.4 internal linking */}
+      {/* Related industries (sibling sector links): DD.4 internal linking */}
       {measuredIndustry?.sector_id ? (
         <RelatedIndustriesStrip
           country={country}
@@ -662,7 +692,7 @@ function computeYoY(
 }
 
 function formatMoney(v: number | null | undefined): string {
-  if (v == null || isNaN(v)) return "—";
+  if (v == null || isNaN(v)) return "-";
   if (v >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
   if (v >= 1e6) return `$${(v / 1e6).toFixed(1)}M`;
   if (v >= 1e3) return `$${(v / 1e3).toFixed(0)}K`;

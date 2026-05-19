@@ -15,7 +15,7 @@ export const dynamicParams = true;
 type Params = { country: string; geo: string; industry: string };
 
 function fmtMoney(v: number | null | undefined): string {
-  if (v == null || isNaN(v)) return "—";
+  if (v == null || isNaN(v)) return "-";
   if (v >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
   if (v >= 1e6) return `$${(v / 1e6).toFixed(1)}M`;
   if (v >= 1e3) return `$${(v / 1e3).toFixed(0)}K`;
@@ -49,8 +49,8 @@ export default async function EmbedCell({ params }: { params: Promise<Params> })
       </h2>
       <div className="mt-4 grid grid-cols-3 gap-3 text-sm">
         <Stat label="Typical revenue" value={fmtMoney(cell.revenue_per_firm)} />
-        <Stat label="Firms" value={cell.n_enterprises?.toLocaleString() || "—"} />
-        <Stat label="Employees" value={cell.n_employees?.toLocaleString() || "—"} />
+        <Stat label="Firms" value={cell.n_enterprises?.toLocaleString() || "-"} />
+        <Stat label="Employees" value={cell.n_employees?.toLocaleString() || "-"} />
         <Stat label="Bottom 10%" value={fmtMoney(cell.rev_p10)} />
         <Stat label="Top 10%" value={fmtMoney(cell.rev_p90)} />
         <Stat label="Wage / employee" value={fmtMoney(cell.payroll_per_employee)} />

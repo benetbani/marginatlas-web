@@ -15,15 +15,15 @@ type Props = {
 };
 
 const TIER_COLORS: Record<number, { fill: string; label: string }> = {
-  10: { fill: "bg-moss-700", label: "Excellent — direct measurement" },
-  9:  { fill: "bg-moss-700", label: "Excellent — direct measurement, minor gaps" },
-  8:  { fill: "bg-moss-500", label: "Very High — secondary published source" },
-  7:  { fill: "bg-atlas-500", label: "High — modeled from primary with strong fit" },
-  6:  { fill: "bg-atlas-500", label: "Good — city overlay from country extrapolation" },
-  5:  { fill: "bg-atlas-300", label: "Medium — proxy country with small scaling" },
-  4:  { fill: "bg-clay-300", label: "Low — proxy country with moderate scaling" },
-  3:  { fill: "bg-clay-500", label: "Very Low — proxy with heavy scaling; interpret carefully" },
-  2:  { fill: "bg-clay-700", label: "Unreliable — distant proxy" },
+  10: { fill: "bg-moss-700", label: "Excellent: direct measurement" },
+  9:  { fill: "bg-moss-700", label: "Excellent: direct measurement, minor gaps" },
+  8:  { fill: "bg-moss-500", label: "Very High: secondary published source" },
+  7:  { fill: "bg-atlas-500", label: "High: modeled from primary with strong fit" },
+  6:  { fill: "bg-atlas-500", label: "Good: city overlay from country extrapolation" },
+  5:  { fill: "bg-atlas-300", label: "Medium: proxy country with small scaling" },
+  4:  { fill: "bg-clay-300", label: "Low: proxy country with moderate scaling" },
+  3:  { fill: "bg-clay-500", label: "Very Low: proxy with heavy scaling; interpret carefully" },
+  2:  { fill: "bg-clay-700", label: "Unreliable: distant proxy" },
   1:  { fill: "bg-clay-900", label: "Pure guess" },
 };
 
@@ -48,7 +48,7 @@ export function QualityDots({ score, detail, size = "md" }: Props) {
   return (
     <div
       className="inline-flex items-center gap-0.5 cursor-help"
-      aria-label={`Data quality ${s} of 10 — ${tier.label}`}
+      aria-label={`Data quality ${s} of 10: ${tier.label}`}
       title={titleText}
     >
       {Array.from({ length: 10 }).map((_, i) => (

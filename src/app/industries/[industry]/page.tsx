@@ -61,7 +61,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   const ind = resolveToMeasuredIndustry(raw) || raw;
   if (!ind) return { title: "Industry not found | Margin Atlas" };
   return {
-    title: `${ind.name} — small-business benchmarks | Margin Atlas`,
+    title: `${ind.name}: small-business benchmarks | Margin Atlas`,
     description: `How much do ${ind.name.toLowerCase()} earn across 191 countries? Revenue, margins, and where the industry concentrates.`,
     alternates: { canonical: `/industries/${industry.toLowerCase()}` },
   };
@@ -115,11 +115,11 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
       </nav>
 
       {/*
-        Plan v13 Wave 2b — canonical industry page section order.
+        Plan v13 Wave 2b: canonical industry page section order.
         Sections render in the exact order defined in INDUSTRY_PAGE_SECTIONS.
       */}
 
-      {/* 1. hero — Plan v14 A.1 (T-A1.3): canonical ink-dark tone applied.
+      {/* 1. hero: Plan v14 A.1 (T-A1.3): canonical ink-dark tone applied.
          Sector eyebrow + name + examples flipped to cream variants for
          legibility on bg-ink-900. */}
       <section id="hero" className={`py-8 ${getToneClass("hero")}`}>
@@ -138,7 +138,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
         </header>
       </section>
 
-      {/* 2. industry-tiles — aggregated revenue tiles across geographies.
+      {/* 2. industry-tiles: aggregated revenue tiles across geographies.
          Plan v13 Wave 4a (D2): silent omission when no aggregated percentiles. */}
       {aggP50 != null && (
         <section id="industry-tiles" className={`py-6 ${getToneClass("industry-tiles")}`}>
@@ -150,7 +150,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
         </section>
       )}
 
-      {/* 3. revenue-distribution — log-normal curve from same aggregated percentiles.
+      {/* 3. revenue-distribution: log-normal curve from same aggregated percentiles.
          Plan v13 Wave 4a (D2): silent omission when insufficient points. */}
       {aggP50 != null && (
         <section id="revenue-distribution" className={`py-6 ${getToneClass("revenue-distribution")}`}>
@@ -162,7 +162,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
         </section>
       )}
 
-      {/* 4. margin-waterfall — sourced directly from canonical industry_margins.json.
+      {/* 4. margin-waterfall: sourced directly from canonical industry_margins.json.
          MarginWaterfall returns null when all three margins are null. */}
       <section id="margin-waterfall" className={`py-6 ${getToneClass("margin-waterfall")}`}>
         <MarginWaterfall
@@ -177,7 +177,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
         )}
       </section>
 
-      {/* 5. top-countries — countries ranked by median revenue per firm.
+      {/* 5. top-countries: countries ranked by median revenue per firm.
          Plan v13 Wave 4a (D2): silent omission when ranking is empty. */}
       {topCountries.length > 0 && (
         <section id="top-countries" className={`py-8 ${getToneClass("top-countries")}`}>
@@ -204,7 +204,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
         </section>
       )}
 
-      {/* 6. top-cities-for-industry — Plan v13 Wave 4a (D2): stub removed.
+      {/* 6. top-cities-for-industry: Plan v13 Wave 4a (D2): stub removed.
          Section will be re-added when the city-level rollup ships. */}
     </div>
   );

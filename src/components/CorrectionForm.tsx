@@ -22,7 +22,7 @@ export function CorrectionForm({ cellUrl }: Props) {
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!message || message.length < 10) {
-      setErr("Tell us a bit more — what looks off?");
+      setErr("Tell us a bit more: what looks off?");
       return;
     }
     setState("sending");
@@ -51,7 +51,7 @@ export function CorrectionForm({ cellUrl }: Props) {
   if (state === "done") {
     return (
       <div className="my-6 rounded-xl border border-moss-300 bg-moss-50 px-4 py-3 text-sm text-moss-900">
-        ✓ Thank you — your note is in the queue. We review every correction.
+        ✓ Thank you: your note is in the queue. We review every correction.
       </div>
     );
   }
@@ -81,14 +81,14 @@ export function CorrectionForm({ cellUrl }: Props) {
         <textarea
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder="e.g. 'The typical revenue for restaurants in Tirana is way too high — my own café does ~€60K, not the $1.2M shown.'"
+          placeholder="e.g. 'The typical revenue for restaurants in Tirana is way too high: my own café does ~€60K, not the $1.2M shown.'"
           rows={3}
           className="mt-1 w-full px-3 py-2 rounded-lg border border-ink-200 bg-white text-sm"
         />
       </label>
       <label className="block">
         <span className="text-xs text-ink-700/70">
-          Email (optional — only if you want a reply)
+          Email (optional: only if you want a reply)
         </span>
         <input
           type="email"

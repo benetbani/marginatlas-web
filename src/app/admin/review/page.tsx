@@ -213,7 +213,7 @@ type TaxonomyBundlingReport = {
 };
 
 function fmtMoney(v: number | null | undefined): string {
-  if (v == null || !isFinite(v)) return "—";
+  if (v == null || !isFinite(v)) return "-";
   const sign = v < 0 ? "−" : "";
   const abs = Math.abs(v);
   if (abs >= 1e9) return `${sign}$${(abs / 1e9).toFixed(2)}B`;
@@ -313,7 +313,7 @@ function VerificationsTab({
     <section className="mt-10 space-y-10">
       <div>
         <h2 className="text-xl font-semibold text-ink-900">
-          Q5 — Tax rate cross-validation
+          Q5: Tax rate cross-validation
           {tax ? ` (${tax.summary.total_verified ?? 0}/${(tax.summary.total_verified ?? 0) + (tax.summary.pending ?? 0)} countries)` : ""}
         </h2>
         <p className="mt-1 text-sm text-ink-700/80 max-w-3xl">
@@ -349,10 +349,10 @@ function VerificationsTab({
                           ? `${(r.canonical_cit * 100).toFixed(1)}%`
                           : r.canonical_cit_range
                           ? `${(r.canonical_cit_range[0] * 100).toFixed(0)}-${(r.canonical_cit_range[1] * 100).toFixed(0)}%`
-                          : "—"}
+                          : "-"}
                       </td>
                       <td className="py-1.5 px-2 text-right tabular-nums">
-                        {typeof r.delta_pp === "number" ? `${r.delta_pp > 0 ? "+" : ""}${r.delta_pp.toFixed(1)}pp` : r.delta_pp ?? "—"}
+                        {typeof r.delta_pp === "number" ? `${r.delta_pp > 0 ? "+" : ""}${r.delta_pp.toFixed(1)}pp` : r.delta_pp ?? "-"}
                       </td>
                       <td className="py-1.5 px-2">
                         <VerdictPill v={r.verdict} />
@@ -371,7 +371,7 @@ function VerificationsTab({
 
       <div>
         <h2 className="text-xl font-semibold text-ink-900">
-          Q7 — Commercial rent cross-validation
+          Q7: Commercial rent cross-validation
           {rent ? ` (${rent.summary.total_verified ?? 0}/${(rent.summary.total_verified ?? 0) + (rent.summary.pending_cities ?? 0)} cities)` : ""}
         </h2>
         <p className="mt-1 text-sm text-ink-700/80 max-w-3xl">
@@ -417,7 +417,7 @@ function VerificationsTab({
                 <ul className="mt-2 space-y-1.5 text-sm text-ink-900">
                   {rent.review_queue.map((q, i) => (
                     <li key={i}>
-                      <span className="font-medium">{q.city_id}</span> — {q.issue}
+                      <span className="font-medium">{q.city_id}</span>: {q.issue}
                     </li>
                   ))}
                 </ul>
@@ -431,7 +431,7 @@ function VerificationsTab({
 
       <div>
         <h2 className="text-xl font-semibold text-ink-900">
-          Q9 — Industry operating-margin cross-validation
+          Q9: Industry operating-margin cross-validation
           {margin ? ` (${(margin.summary.matches ?? 0) + (margin.summary.minor_deltas ?? 0) + (margin.summary.flags ?? 0)}/180 industries)` : ""}
         </h2>
         <p className="mt-1 text-sm text-ink-700/80 max-w-3xl">
@@ -439,7 +439,7 @@ function VerificationsTab({
         </p>
         {margin?.important_caveat ? (
           <div className="mt-3 rounded-xl border border-amber-300 bg-amber-50 p-3 text-xs text-ink-900">
-            <span className="font-semibold uppercase tracking-wide text-amber-900">Caveat —</span> {margin.important_caveat}
+            <span className="font-semibold uppercase tracking-wide text-amber-900">Caveat:</span> {margin.important_caveat}
           </div>
         ) : null}
         {margin ? (
@@ -487,12 +487,12 @@ function VerificationsTab({
 
       <div>
         <h2 className="text-xl font-semibold text-ink-900">
-          Taxonomy — industry bundling audit
+          Taxonomy: industry bundling audit
           {taxonomy ? ` (${taxonomy.flagged_count}/${taxonomy.total_industries} flagged)` : ""}
         </h2>
         <p className="mt-1 text-sm text-ink-700/80 max-w-3xl">
-          Industries that bundle two or more unrelated business models —
-          e.g. <span className="font-mono text-xs">auto_dealers_gas</span> mixes
+          Industries that bundle two or more unrelated business models.
+          For example, <span className="font-mono text-xs">auto_dealers_gas</span> mixes
           motor-vehicle dealers (NAICS 441) with gasoline stations (NAICS 447).
           Multi-NAICS-3 bundles and conjunction names are scored;
           severity reflects how confident the heuristic is that a split
@@ -524,7 +524,7 @@ function VerificationsTab({
                         <div className="font-medium text-ink-900">{f.current_name}</div>
                         <div className="text-[10px] font-mono text-ink-700/70">{f.industry_id}</div>
                         <div className="mt-0.5 text-[10px] text-ink-700/60">
-                          NAICS-3: {f.current_naics_3.join(", ") || "—"}
+                          NAICS-3: {f.current_naics_3.join(", ") || "-"}
                         </div>
                       </td>
                       <td className="py-1.5 px-2 text-right tabular-nums font-semibold">
@@ -535,7 +535,7 @@ function VerificationsTab({
                       </td>
                       <td className="py-1.5 px-2 max-w-[260px]">
                         {f.suggested_splits.length === 0 ? (
-                          <span className="text-ink-700/50">—</span>
+                          <span className="text-ink-700/50">-</span>
                         ) : (
                           <ul className="space-y-1">
                             {f.suggested_splits.map((s) => (
@@ -653,11 +653,11 @@ function CurrencyTab({ data }: { data: CurrencyReport }) {
   return (
     <section className="mt-10">
       <h2 className="text-xl font-semibold text-ink-900">
-        Q1 — Currency conversion sanity ({data.totals.flagged_total.toLocaleString()} flags)
+        Q1: Currency conversion sanity ({data.totals.flagged_total.toLocaleString()} flags)
       </h2>
       <p className="mt-1 text-sm text-ink-700/80 max-w-3xl">
         Cells where revenue/firm is 10× a peer median AND dividing by the
-        country&apos;s local-to-USD FX rate brings it into 0.1-10× range —
+        country&apos;s local-to-USD FX rate brings it into 0.1-10× range;
         i.e. almost certainly stored in local currency.
       </p>
 
@@ -714,7 +714,7 @@ function VarianceTab({ data }: { data: VarianceReport }) {
   return (
     <section className="mt-10">
       <h2 className="text-xl font-semibold text-ink-900">
-        Q3 — Cross-country variance ({data.totals.flagged_total.toLocaleString()} flagged groups)
+        Q3: Cross-country variance ({data.totals.flagged_total.toLocaleString()} flagged groups)
       </h2>
       <div className="mt-4 overflow-x-auto rounded-xl border border-ink-200">
         <table className="w-full text-xs">
@@ -749,7 +749,7 @@ function VarianceTab({ data }: { data: VarianceReport }) {
 function SmallNTab({ data }: { data: SmallNReport }) {
   return (
     <section className="mt-10">
-      <h2 className="text-xl font-semibold text-ink-900">Q12 — Small sample</h2>
+      <h2 className="text-xl font-semibold text-ink-900">Q12: Small sample</h2>
       <div className="mt-3 grid grid-cols-3 md:grid-cols-6 gap-2 text-sm">
         {Object.entries(data.buckets).map(([k, v]) => (
           <div key={k} className="p-3 rounded-lg bg-cream-100 border border-parchment">
@@ -786,7 +786,7 @@ function YoYTab({ data }: { data: YoYReport }) {
   return (
     <section className="mt-10">
       <h2 className="text-xl font-semibold text-ink-900">
-        Q14 — Year-over-year stability ({data.totals.flagged_transitions.toLocaleString()} flagged transitions)
+        Q14: Year-over-year stability ({data.totals.flagged_transitions.toLocaleString()} flagged transitions)
       </h2>
       <p className="mt-1 text-sm text-ink-700/80">&gt;50% YoY change excluding 2020-2021 pandemic transitions.</p>
       <div className="mt-4 overflow-x-auto rounded-xl border border-ink-200">
@@ -813,7 +813,7 @@ function PlausibilityTab({ data }: { data: PlausibilityReport }) {
   return (
     <section className="mt-10">
       <h2 className="text-xl font-semibold text-ink-900">
-        Plan v10 PP — Cross-country plausibility ({data.totals.flagged_total.toLocaleString()} flags)
+        Plan v10 PP: Cross-country plausibility ({data.totals.flagged_total.toLocaleString()} flags)
       </h2>
       <div className="mt-3 flex flex-wrap gap-2 text-xs">
         {Object.entries(data.totals.by_check).map(([k, n]) => (
@@ -831,7 +831,7 @@ function Wave5Tab({ data }: { data: Wave5Report | null }) {
   if (!data) {
     return (
       <section className="mt-10">
-        <h2 className="text-xl font-semibold text-ink-900">Wave 5 — Logic check</h2>
+        <h2 className="text-xl font-semibold text-ink-900">Wave 5: Logic check</h2>
         <p className="mt-3 text-sm text-ink-700/60">No wave5_logic_check_v1.json on disk yet.</p>
       </section>
     );
@@ -841,7 +841,7 @@ function Wave5Tab({ data }: { data: Wave5Report | null }) {
     <section className="mt-10 space-y-8">
       <div>
         <h2 className="text-xl font-semibold text-ink-900">
-          Plan v13 Wave 5 — Comprehensive logic check + auto-normalize + extrapolate
+          Plan v13 Wave 5: Comprehensive logic check + auto-normalize + extrapolate
         </h2>
         <p className="mt-1 text-sm text-ink-700/80 max-w-3xl">
           Founder-authorized pass. Reviewed every cell across regional_cells, cells_master,
@@ -849,7 +849,7 @@ function Wave5Tab({ data }: { data: Wave5Report | null }) {
           to 5× (or floored to 0.2×). Missing country × industry × size combos were
           extrapolated from peer countries scaled by GDP per capita. Backups stored at
           {" "}<code className="text-xs">delivery/quality/wave5_backup_v1.json</code>.
-          Generated {data.generated_at}.{data.dry_run ? " (DRY RUN — no DB writes.)" : ""}
+          Generated {data.generated_at}.{data.dry_run ? " (DRY RUN. No DB writes.)" : ""}
         </p>
       </div>
 
@@ -957,7 +957,7 @@ function Wave5Tab({ data }: { data: Wave5Report | null }) {
                     <td className="py-1.5 px-2 text-xs">{String(n.size_band)}</td>
                     <td className="py-1.5 px-2 text-right tabular-nums text-clay-700">{fmtMoney(val)}</td>
                     <td className="py-1.5 px-2 text-right tabular-nums text-ink-700/70">
-                      {bounds ? `${fmtMoney(bounds[0])} - ${fmtMoney(bounds[1])}` : "—"}
+                      {bounds ? `${fmtMoney(bounds[0])} - ${fmtMoney(bounds[1])}` : "-"}
                     </td>
                     <td className="py-1.5 px-2 text-xs">{String(n.issue)}</td>
                   </tr>
@@ -992,7 +992,7 @@ function Wave5Tab({ data }: { data: Wave5Report | null }) {
                 {data.samples.flagged_shape_top_50.map((n, i) => (
                   <tr key={i} className="border-t border-ink-200/40">
                     <td className="py-1.5 px-2 text-xs font-mono">{String(n.table)}</td>
-                    <td className="py-1.5 px-2 font-medium">{String(n.country ?? n.country_iso3 ?? "—")}</td>
+                    <td className="py-1.5 px-2 font-medium">{String(n.country ?? n.country_iso3 ?? "-")}</td>
                     <td className="py-1.5 px-2">{String(n.industry_id)}</td>
                     <td className="py-1.5 px-2 text-xs">{String(n.size_band)}</td>
                     <td className="py-1.5 px-2 text-right tabular-nums">{fmtMoney(n.p10 as number)}</td>
@@ -1024,7 +1024,7 @@ function Wave5Tab({ data }: { data: Wave5Report | null }) {
 function TierTab({ data }: { data: TierReport }) {
   return (
     <section className="mt-10">
-      <h2 className="text-xl font-semibold text-ink-900">Q13 — Tier integrity</h2>
+      <h2 className="text-xl font-semibold text-ink-900">Q13: Tier integrity</h2>
       <div className="mt-3 grid grid-cols-3 md:grid-cols-5 gap-2 text-sm">
         {Object.entries(data.tier_counts).map(([t, c]) => {
           const v = data.tier_violations[t] || 0;

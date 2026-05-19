@@ -31,7 +31,7 @@ export default function CellError({
         We couldn&apos;t load this cell.
       </h1>
       <p className="mt-3 text-ink-700 leading-relaxed">
-        A data fetch failed mid-render. The atlas is still up — try one of
+        A data fetch failed mid-render. The atlas is still up: try one of
         the options below, or reload to re-fetch.
       </p>
       <div className="mt-6 flex flex-wrap gap-3 text-sm">

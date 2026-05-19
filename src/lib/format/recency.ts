@@ -26,10 +26,10 @@ export function formatRecency(_input?: RecencyInput): string {
  * Escape hatch for /admin/review and other internal surfaces.
  */
 export function formatRecencyDebug(input: RecencyInput): string {
-  if (input == null) return "—";
+  if (input == null) return "-";
   if (typeof input === "number") return String(input);
   if (typeof input === "string") return input;
   const { from, to } = input;
   if (from && to && from !== to) return `${from}–${to}`;
-  return String(from ?? to ?? "—");
+  return String(from ?? to ?? "-");
 }

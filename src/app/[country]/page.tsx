@@ -33,7 +33,7 @@ export const dynamicParams = true;
 type Params = { country: string };
 
 function fmtMoney(v: number | null | undefined): string {
-  if (v == null || isNaN(v)) return "—";
+  if (v == null || isNaN(v)) return "-";
   if (v >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
   if (v >= 1e6) return `$${(v / 1e6).toFixed(1)}M`;
   if (v >= 1e3) return `$${(v / 1e3).toFixed(0)}K`;
@@ -48,10 +48,10 @@ const QUALITY_LABEL: Record<string, { label: string; tone: string }> = {
 };
 
 const COUNTRY_SIGNATURE: Record<string, { line: string; glyph: string }> = {
-  US: { line: "America's small-business heartland — restaurants, real estate, software.", glyph: "🏬" },
+  US: { line: "America's small-business heartland: restaurants, real estate, software.", glyph: "🏬" },
   CA: { line: "Skilled trades, residential construction, and craft food across vast geography.", glyph: "🏗️" },
   AU: { line: "Cafés, hospitality, and small specialty trades from Sydney to Perth.", glyph: "☕" },
-  DE: { line: "The Mittelstand — small to mid-size manufacturing and precision trades.", glyph: "🏭" },
+  DE: { line: "The Mittelstand: small to mid-size manufacturing and precision trades.", glyph: "🏭" },
   FR: { line: "Boutique food, fashion, cosmetics, and design at every scale.", glyph: "💄" },
   IT: { line: "Family-owned fashion, boutique food, and artisan craft.", glyph: "👗" },
   ES: { line: "Tourism, hospitality, and family hotels across coast and city.", glyph: "🏨" },
@@ -112,7 +112,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   const c = COUNTRIES.find((c) => c.code === iso2);
   if (!c) return { title: "Country not found | Margin Atlas" };
   return {
-    title: `${c.name} — small-business benchmarks | Margin Atlas`,
+    title: `${c.name}: small-business benchmarks | Margin Atlas`,
     description: `Typical revenue, employment, and wages for small businesses in ${c.name}.`,
     alternates: { canonical: `/${country.toLowerCase()}` },
   };
@@ -157,13 +157,13 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
       </nav>
 
       {/*
-        Plan v13 Wave 2b — canonical country page section order.
+        Plan v13 Wave 2b: canonical country page section order.
         Sections render in the exact order defined in COUNTRY_PAGE_SECTIONS.
         Sections degrade with an empty-state fallback rather than disappearing,
         so sister country pages always have identical structure.
       */}
 
-      {/* 1. hero — Plan v14 A.1 (T-A1.3): canonical ink-dark tone applied.
+      {/* 1. hero: Plan v14 A.1 (T-A1.3): canonical ink-dark tone applied.
          Text colors flipped to cream/atlas-light variants so they remain
          legible on the bg-ink-900 surface. CountryFlag is a flat SVG and
          renders fine on dark. The coverage quality chip keeps its semantic
@@ -197,10 +197,10 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
             </div>
           </div>
           <div className="hidden lg:block mt-6 lg:mt-0">
-            {/* Plan v12 IM9 — real country hero photo when manifest has one. */}
+            {/* Plan v12 IM9: real country hero photo when manifest has one. */}
             <AtlasHeroImage
               image={pickCountryHeroImage(iso2)}
-              alt={`${meta.name} — country atlas hero`}
+              alt={`${meta.name}: country atlas hero`}
               glyph={sig.glyph}
               aspectRatio={1.5}
             />
@@ -208,13 +208,13 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
         </header>
       </section>
 
-      {/* 2. country-stats — Track FF.2 headline stats + quality scorecard */}
+      {/* 2. country-stats: Track FF.2 headline stats + quality scorecard */}
       <section id="country-stats" className={`py-6 ${getToneClass("country-stats")}`}>
         <CountryStatsStrip iso2={iso2} />
         <CountryQualitySummary iso2={iso2} />
       </section>
 
-      {/* 3. industry-mix-grid — top SMB-relevant industries (silent omission if empty) */}
+      {/* 3. industry-mix-grid: top SMB-relevant industries (silent omission if empty) */}
       {topIndustries.length > 0 && (
         <section id="industry-mix-grid" className={getToneClass("industry-mix-grid")}>
           <div className="py-8">
@@ -222,7 +222,7 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
               Top small-business industries in {meta.name}
             </h2>
             <p className="mt-1 text-sm text-ink-700/70">
-              Most-covered SMB categories. Click any tile for the full cell page —
+              Most-covered SMB categories. Click any tile for the full cell page:
               distribution, time series, neighbors.
             </p>
             <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -262,12 +262,12 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
         </section>
       )}
 
-      {/* 4. top-cities — Track N (Wave 2). CountryCityShortcuts handles its own silent omission. */}
+      {/* 4. top-cities: Track N (Wave 2). CountryCityShortcuts handles its own silent omission. */}
       <section id="top-cities" className={`py-6 ${getToneClass("top-cities")}`}>
         <CountryCityShortcuts iso2={iso2} />
       </section>
 
-      {/* 5. regions — Plan v13 Wave 4d. Admin-1 sub-region navigation list
+      {/* 5. regions: Plan v13 Wave 4d. Admin-1 sub-region navigation list
          for all 194 countries with admin1 data. Silent omission for SG (the
          single country with no admin1 entries) per Wave 4a (D2). */}
       {regions.length > 0 ? (
@@ -289,11 +289,11 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
         </section>
       ) : null}
 
-      {/* 6. tax-overview — Plan v13 Wave 4a (D2): stub removed. The real
+      {/* 6. tax-overview: Plan v13 Wave 4a (D2): stub removed. The real
          tax panel will be added when the component exists; until then the
          section silently does not render. */}
 
-      {/* 7. related-countries — Compare CTA. Kept because it's an evergreen
+      {/* 7. related-countries: Compare CTA. Kept because it's an evergreen
          navigation aid, not a data-dependent section. */}
       <section id="related-countries" className={`py-10 ${getToneClass("related-countries")}`}>
         <div className="card-cream">

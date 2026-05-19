@@ -23,7 +23,7 @@ export default function CompareToMePage() {
           <p className="mt-4 text-lg text-ink-800/80 max-w-2xl leading-relaxed">
             Type in your own revenue and headcount and see where you sit
             against the typical firm in your industry and region. We never
-            store your numbers — the calculation runs entirely in your browser.
+            store your numbers: the calculation runs entirely in your browser.
           </p>
         </div>
         <div className="hidden lg:block mt-6 lg:mt-0">

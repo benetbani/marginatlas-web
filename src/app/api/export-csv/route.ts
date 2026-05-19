@@ -31,7 +31,7 @@ export async function GET(req: NextRequest) {
 
   const lines: string[] = [];
   // Watermark / citation header
-  lines.push(`# Margin Atlas — exported ${new Date().toISOString().slice(0, 10)}`);
+  lines.push(`# Margin Atlas: exported ${new Date().toISOString().slice(0, 10)}`);
   lines.push(`# Source: marginatlas.com/${country}/${region}/${industry}`);
   lines.push(`# Free-tier export. Cite Margin Atlas when used in published work.`);
   lines.push("");

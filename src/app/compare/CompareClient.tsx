@@ -45,7 +45,7 @@ const US_REGION_OPTIONS = [
 ];
 
 function fmtMoney(v: number | null | undefined): string {
-  if (v == null || isNaN(v)) return "—";
+  if (v == null || isNaN(v)) return "-";
   if (v >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
   if (v >= 1e6) return `$${(v / 1e6).toFixed(1)}M`;
   if (v >= 1e3) return `$${(v / 1e3).toFixed(0)}K`;
@@ -53,7 +53,7 @@ function fmtMoney(v: number | null | undefined): string {
 }
 
 function fmtNum(v: number | null | undefined): string {
-  if (v == null || isNaN(v)) return "—";
+  if (v == null || isNaN(v)) return "-";
   if (v >= 1e6) return `${(v / 1e6).toFixed(1)}M`;
   if (v >= 1e3) return `${(v / 1e3).toFixed(0)}K`;
   return v.toFixed(0);
@@ -251,7 +251,7 @@ export function CompareClient() {
                       {cells[i]?.region || s.country}
                     </div>
                     <div className="text-xs text-ink-700/70 font-normal">
-                      {s.industry && INDUSTRY_BY_ID[s.industry] ? INDUSTRY_BY_ID[s.industry].name : "—"}
+                      {s.industry && INDUSTRY_BY_ID[s.industry] ? INDUSTRY_BY_ID[s.industry].name : "-"}
                     </div>
                     {loading[i] && (
                       <div className="text-[10px] text-ink-700/50 mt-1">loading…</div>
@@ -271,7 +271,7 @@ export function CompareClient() {
                   [
                     "Quality",
                     (c) => c.quality_score,
-                    (v: number | null) => (v != null ? `${v}/100` : "—"),
+                    (v: number | null) => (v != null ? `${v}/100` : "-"),
                   ],
                 ] as [
                   string,
@@ -300,7 +300,7 @@ export function CompareClient() {
                               className={`inline-block w-2 h-2 rounded-full ${dotClass}`}
                               aria-hidden
                             />
-                            <span>{c ? fmt(valueOf(c)) : loading[i] ? "…" : "—"}</span>
+                            <span>{c ? fmt(valueOf(c)) : loading[i] ? "…" : "-"}</span>
                           </span>
                         </td>
                       );

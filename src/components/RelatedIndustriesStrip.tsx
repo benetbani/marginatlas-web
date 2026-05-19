@@ -35,7 +35,7 @@ export function RelatedIndustriesStrip({
         More in this sector
       </div>
       <div className="mt-1 text-sm text-ink-700/80">
-        Same geography ({geo.replace(/-/g, " ")}), different industry — explore
+        Same geography ({geo.replace(/-/g, " ")}), different industry: explore
         the {sector?.name?.toLowerCase() || "sector"} neighbors.
       </div>
       <div className="mt-3 flex flex-wrap gap-2">

@@ -52,7 +52,7 @@ function chipSize(cells: number): string {
 }
 
 export const metadata = {
-  title: "World map — Margin Atlas",
+  title: "World map: Margin Atlas",
   description: "Every country in Margin Atlas.",
 };
 
@@ -191,7 +191,7 @@ export default async function WorldPage() {
           <Link href="/coverage" className="text-atlas-700 hover:text-atlas-900">
             the coverage report
           </Link>
-          {" "}— countries with multiple requests jump the queue.
+          {" "}: countries with multiple requests jump the queue.
         </p>
       </section>
     </div>

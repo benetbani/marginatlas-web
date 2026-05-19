@@ -28,7 +28,7 @@ const SYSTEM_PROMPT = `You are Margin Atlas, a small-business benchmarking assis
 You answer questions about typical revenue, employment, wages, and firm distributions
 across industries and geographies.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit — editorial tone is being
+Lorem ipsum dolor sit amet, consectetur adipiscing elit: editorial tone is being
 finalised; until then, keep responses short and factual.
 
 Covered countries with measured sub-national data: US (counties), AU (SA2),
@@ -38,7 +38,7 @@ For countries outside this list, fall back to country-level estimates with a not
 
 Rules:
 - Use the query_cells tool whenever the user asks about a specific industry × location.
-- Never reveal the underlying data source, agency name, or methodology — refer to
+- Never reveal the underlying data source, agency name, or methodology: refer to
   "compiled business statistics" or "our covered cells" if asked.
 - Be concise. Lead with the headline number, then context.
 - When numbers are very approximate or quality is low (score < 50), say so.
@@ -278,7 +278,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({
         answer:
           `"${question}"\n\n` +
-          `Lorem ipsum dolor sit amet — Ask Atlas is wired and ready, but the ` +
+          `Lorem ipsum dolor sit amet: Ask Atlas is wired and ready, but the ` +
           `production API key isn't deployed yet. Once the operator pastes the ` +
           `ANTHROPIC_API_KEY into Vercel and redeploys, live answers will start ` +
           `streaming. Every cell page already shows typical revenue, employment, ` +
@@ -297,7 +297,7 @@ export async function POST(request: NextRequest) {
           `Ask Atlas has hit this month's spending limit ($${spend.capUsd.toFixed(0)}). ` +
           `Live answers resume on the first of next month. Every cell page still ` +
           `shows typical revenue, employment, and distribution for any ` +
-          `country × industry × size combination — try /browse or /compare in the meantime.`,
+          `country × industry × size combination: try /browse or /compare in the meantime.`,
         preview: true,
         budgetCapped: true,
       });

@@ -30,7 +30,7 @@ type Snapshot = {
 };
 
 function fmtMoney(v: number | null | undefined): string {
-  if (v == null || isNaN(v)) return "—";
+  if (v == null || isNaN(v)) return "-";
   if (v >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
   if (v >= 1e6) return `$${(v / 1e6).toFixed(1)}M`;
   if (v >= 1e3) return `$${Math.round(v / 1e3)}K`;
@@ -68,7 +68,7 @@ export async function CountryCityShortcuts({
         Top cities in {cities[0].country_name}
       </h2>
       <p className="mt-1 text-sm text-ink-700/70">
-        Skip the region drill — pick a city directly.
+        Skip the region drill: pick a city directly.
       </p>
       <div className="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
         {renderable.map((s) => {

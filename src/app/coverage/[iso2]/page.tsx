@@ -55,17 +55,17 @@ export async function generateMetadata({
   const upper = iso2.toUpperCase();
   const c = COUNTRIES.find((c) => c.code === upper);
   return {
-    title: `${c?.name || iso2} coverage — Margin Atlas`,
+    title: `${c?.name || iso2} coverage: Margin Atlas`,
     description: `Per-country data quality scorecard for ${c?.name || iso2}.`,
   };
 }
 
 const TIER_DESCRIPTIONS: Record<string, string> = {
-  P: "Primary — direct measurement",
-  S: "Secondary — official aggregation",
-  M: "Modeled — derived from primary inputs",
-  T: "Tabulated — published table consumed as-is",
-  X: "Extrapolated — proxy + scaling factor",
+  P: "Primary: direct measurement",
+  S: "Secondary: official aggregation",
+  M: "Modeled: derived from primary inputs",
+  T: "Tabulated: published table consumed as-is",
+  X: "Extrapolated: proxy + scaling factor",
 };
 
 export default async function PerCountryCoverage({
@@ -100,7 +100,7 @@ export default async function PerCountryCoverage({
 
       {!entry ? (
         <p className="mt-6 text-ink-700">
-          No coverage data on disk for {meta.name} yet — run the coverage audit
+          No coverage data on disk for {meta.name} yet: run the coverage audit
           to refresh.
         </p>
       ) : (
@@ -182,11 +182,11 @@ export default async function PerCountryCoverage({
             <p className="text-sm text-ink-700">
               Data spans{" "}
               <strong className="text-ink-900 tabular-nums">
-                {entry.year_range[0] ?? "—"}
+                {entry.year_range[0] ?? "-"}
               </strong>{" "}
               to{" "}
               <strong className="text-ink-900 tabular-nums">
-                {entry.year_range[1] ?? "—"}
+                {entry.year_range[1] ?? "-"}
               </strong>
               .
             </p>

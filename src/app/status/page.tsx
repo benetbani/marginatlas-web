@@ -169,7 +169,7 @@ function labelFor(result: Check["result"]): string {
 }
 
 export const metadata = {
-  title: "Status — Margin Atlas",
+  title: "Status: Margin Atlas",
   description: "Live uptime of Margin Atlas dependencies.",
 };
 

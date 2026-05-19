@@ -19,7 +19,7 @@ type Props = {
 };
 
 function fmtMoney(v: number): string {
-  if (!isFinite(v) || isNaN(v)) return "—";
+  if (!isFinite(v) || isNaN(v)) return "-";
   const sign = v < 0 ? "−" : "";
   const abs = Math.abs(v);
   if (abs >= 1e9) return `${sign}$${(abs / 1e9).toFixed(2)}B`;
@@ -54,7 +54,7 @@ export function NetProfitWaterfall({
     <section className="card mt-6">
       <div className="flex items-baseline justify-between gap-3 flex-wrap mb-1">
         <div className="text-xs uppercase tracking-wide text-atlas-700 font-semibold">
-          Net profit waterfall — typical firm
+          Net profit waterfall: typical firm
         </div>
         <div className="text-xs text-ink-700/60">
           Estimate · all figures annual USD
@@ -97,7 +97,7 @@ export function NetProfitWaterfall({
       </div>
 
       <div className="mt-5 rounded-lg bg-cream-100 border border-parchment p-3 text-xs text-ink-700/80 leading-relaxed">
-        <strong className="text-cocoa-900">Estimate only — not financial or tax advice.</strong>{" "}
+        <strong className="text-cocoa-900">Estimate only: not financial or tax advice.</strong>{" "}
         COGS pulled from industry-typical gross margin. Payroll inferred
         from operating margin when not measured. Fixed costs from city /
         country commercial rent + commercial property tax + per-country

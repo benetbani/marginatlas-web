@@ -4,7 +4,7 @@ import { Organization } from "@/components/StructuredData";
 import { HeaderSearch } from "@/components/HeaderSearch";
 
 export const metadata: Metadata = {
-  title: "Margin Atlas — Small-business benchmarks across 191 countries",
+  title: "Margin Atlas: Small-business benchmarks across 191 countries",
   description:
     "Revenue, payroll, and after-tax owner take-home for every covered country, industry, city, and size combination. Compiled from official business statistics and standardized for cross-country comparison.",
   metadataBase: new URL("https://marginatlas.com"),

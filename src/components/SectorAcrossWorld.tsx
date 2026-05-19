@@ -32,7 +32,7 @@ const COUNTRIES_TO_SAMPLE: { iso2: string; geo: string; name: string }[] = [
 ];
 
 function fmtMoney(v: number | null | undefined): string {
-  if (v == null || isNaN(v)) return "—";
+  if (v == null || isNaN(v)) return "-";
   if (v >= 1e9) return `$${(v / 1e9).toFixed(2)}B`;
   if (v >= 1e6) return `$${(v / 1e6).toFixed(2)}M`;
   if (v >= 1e3) return `$${(v / 1e3).toFixed(0)}K`;
@@ -78,7 +78,7 @@ export async function SectorAcrossWorld({ sectorName, industries }: Props) {
         {focus.name} across the world
       </h2>
       <p className="text-sm text-ink-700/70 mb-4">
-        Typical revenue per firm in {sectorName.toLowerCase()} — same industry,
+        Typical revenue per firm in {sectorName.toLowerCase()}: same industry,
         different country. Sorted by typical revenue.
       </p>
       <div className="space-y-1.5">

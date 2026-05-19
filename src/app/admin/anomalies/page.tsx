@@ -102,13 +102,13 @@ export default async function AnomaliesPage({
                 <span>
                   rows scanned:{" "}
                   <strong className="text-ink-900">
-                    {data.total_rows?.toLocaleString() ?? "—"}
+                    {data.total_rows?.toLocaleString() ?? "-"}
                   </strong>
                 </span>
                 <span>
                   peer groups:{" "}
                   <strong className="text-ink-900">
-                    {data.peer_groups?.toLocaleString() ?? "—"}
+                    {data.peer_groups?.toLocaleString() ?? "-"}
                   </strong>
                 </span>
               </div>

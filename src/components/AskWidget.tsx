@@ -59,7 +59,7 @@ export function AskWidget() {
           Ask anything about small-business benchmarks
         </h2>
         <p className="mt-2 text-sm md:text-base text-ink-800/80 leading-relaxed max-w-3xl">
-          Plain English question, real numbers back. Free for everyone — 10
+          Plain English question, real numbers back. Free for everyone: 10
           questions per IP per hour.
         </p>
 

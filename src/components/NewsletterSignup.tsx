@@ -47,12 +47,12 @@ export function NewsletterSignup() {
         Pick a benchmark you didn&apos;t know you needed.
       </h3>
       <p className="mt-1 text-sm text-ink-700">
-        Once a month we send a single hand-picked cell — full distribution,
+        Once a month we send a single hand-picked cell: full distribution,
         tax-aware owner take-home, what makes it surprising. No marketing.
         Unsubscribe in one click.
       </p>
       {state === "success" ? (
-        <p className="mt-4 text-sm text-atlas-600">✓ Thank you — you'll hear from us when v1.18 ships.</p>
+        <p className="mt-4 text-sm text-atlas-600">✓ Thank you: you'll hear from us when v1.18 ships.</p>
       ) : (
         <form onSubmit={submit} className="mt-4 flex flex-col sm:flex-row gap-2">
           <input

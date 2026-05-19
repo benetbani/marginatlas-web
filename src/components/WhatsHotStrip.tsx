@@ -22,7 +22,7 @@ const HOT_CELLS: HotCell[] = [
     iso2: "US",
     title: "Restaurants",
     region: "California",
-    blurb: "The single most-viewed cell in the atlas — median revenue, payroll, and after-tax owner take-home for every size band.",
+    blurb: "The single most-viewed cell in the atlas: median revenue, payroll, and after-tax owner take-home for every size band.",
   },
   {
     href: "/gb/london/legal-services",
@@ -69,7 +69,7 @@ export function WhatsHotStrip() {
             <div className="flex items-center gap-2 text-sm font-semibold text-ink-900">
               <CountryFlag iso2={c.iso2} label={c.region} className="w-6" />
               <span>
-                {c.title} <span className="text-ink-700/70">— {c.region}</span>
+                {c.title} <span className="text-ink-700/70">: {c.region}</span>
               </span>
             </div>
             <p className="mt-2 text-sm text-ink-700 leading-relaxed">{c.blurb}</p>

@@ -11,6 +11,7 @@
 
 export const CELL_PAGE_SECTIONS = [
   "hero",
+  "narrative",
   "revenue-tiles",
   "revenue-distribution",
   "margin-waterfall",
@@ -51,6 +52,10 @@ export type SectionTone = "ink-dark" | "cream-50" | "white" | "cream-100" | "mos
 export const SECTION_TONES: Record<string, SectionTone> = {
   // Cell page
   "hero": "ink-dark",
+  // Plan v14 Phase B — editorial narrative sits between the ink-dark hero
+  // and the cream revenue tiles. cream-50 keeps the reading band airy and
+  // distinct from both neighbors.
+  "narrative": "cream-50",
   "revenue-tiles": "cream-50",
   "revenue-distribution": "white",
   "margin-waterfall": "cream-100",

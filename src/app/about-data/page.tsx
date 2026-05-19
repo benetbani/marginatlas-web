@@ -25,7 +25,7 @@ export default function AboutDataPage() {
       </h1>
       <p className="mt-4 text-lg text-ink-800 leading-relaxed">
         Margin Atlas brings together small-business benchmarks across 40+
-        countries — revenue, employment, wages, and the spread between the
+        countries: revenue, employment, wages, and the spread between the
         smallest and largest firms in every industry.
       </p>
 
@@ -34,19 +34,19 @@ export default function AboutDataPage() {
         <ul className="mt-4 space-y-3 text-ink-800">
           <li className="flex gap-3">
             <span className="text-atlas-500 shrink-0">·</span>
-            <span><strong>Typical numbers</strong> — what the middle firm in an industry actually earns, employs, and pays.</span>
+            <span><strong>Typical numbers.</strong> What the middle firm in an industry actually earns, employs, and pays.</span>
           </li>
           <li className="flex gap-3">
             <span className="text-atlas-500 shrink-0">·</span>
-            <span><strong>The spread</strong> — what the smallest 10% and biggest 10% look like, so you understand the full range.</span>
+            <span><strong>The spread.</strong> What the smallest 10% and biggest 10% look like, so you understand the full range.</span>
           </li>
           <li className="flex gap-3">
             <span className="text-atlas-500 shrink-0">·</span>
-            <span><strong>Cross-country comparison</strong> — friendly industry names that match across borders, so a "Restaurant" in California compares directly to a "Restaurant" in Paris.</span>
+            <span><strong>Cross-country comparison.</strong> Friendly industry names that match across borders, so a "Restaurant" in California compares directly to a "Restaurant" in Paris.</span>
           </li>
           <li className="flex gap-3">
             <span className="text-atlas-500 shrink-0">·</span>
-            <span><strong>Sub-national depth</strong> — state-level, regional, and county-level data where available.</span>
+            <span><strong>Sub-national depth.</strong> State-level, regional, and county-level data where available.</span>
           </li>
         </ul>
       </section>
@@ -57,10 +57,10 @@ export default function AboutDataPage() {
           Every cell shows a 5-star quality rating:
         </p>
         <ul className="mt-3 space-y-2 text-sm text-ink-800">
-          <li><span className="text-atlas-500">★★★★★</span> — direct primary measurement, highest confidence</li>
-          <li><span className="text-atlas-500">★★★★</span><span className="text-ink-300">☆</span> — modeled from primary sources, high confidence</li>
-          <li><span className="text-atlas-500">★★★</span><span className="text-ink-300">☆☆</span> — derived or estimated, moderate confidence</li>
-          <li><span className="text-atlas-500">★★</span><span className="text-ink-300">☆☆☆</span> — extrapolated from regional patterns</li>
+          <li><span className="text-atlas-500">★★★★★</span>. Direct primary measurement, highest confidence.</li>
+          <li><span className="text-atlas-500">★★★★</span><span className="text-ink-300">☆</span>. Modeled from primary sources, high confidence.</li>
+          <li><span className="text-atlas-500">★★★</span><span className="text-ink-300">☆☆</span>. Derived or estimated, moderate confidence.</li>
+          <li><span className="text-atlas-500">★★</span><span className="text-ink-300">☆☆☆</span>. Extrapolated from regional patterns.</li>
         </ul>
         <p className="mt-3 text-sm text-ink-700">
           Cells with weaker ratings carry a clear "Estimated" label so you know what you're looking at.

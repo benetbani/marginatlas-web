@@ -36,7 +36,7 @@ export function AskClient() {
         );
       } else if (r.ok) {
         const j = await r.json();
-        setResponse(j.answer || "No answer yet — this feature isn't fully wired.");
+        setResponse(j.answer || "No answer yet: this feature isn't fully wired.");
       } else {
         const j = await r.json().catch(() => ({}));
         setResponse(

@@ -25,11 +25,11 @@ const SPOTLIGHTS: Spotlight[] = [
     iso2: "us",
     name: "United States",
     flag: "🇺🇸",
-    line: "America's small-business heartland — restaurants, real estate, software.",
+    line: "America's small-business heartland: restaurants, real estate, software.",
     topIndustries: [
-      { label: "Restaurants — California", href: "/us/california/restaurants" },
-      { label: "Real-estate agencies — New York", href: "/us/new-york/real-estate-agencies" },
-      { label: "Software development — California", href: "/us/california/software-development" },
+      { label: "Restaurants, California", href: "/us/california/restaurants" },
+      { label: "Real-estate agencies, New York", href: "/us/new-york/real-estate-agencies" },
+      { label: "Software development, California", href: "/us/california/software-development" },
     ],
   },
   {
@@ -38,20 +38,20 @@ const SPOTLIGHTS: Spotlight[] = [
     flag: "🇬🇧",
     line: "Boutique services, indie retail, hospitality, creative agencies.",
     topIndustries: [
-      { label: "Legal services — London", href: "/gb/london/legal-services" },
-      { label: "Cafés & coffee — Manchester", href: "/gb/manchester/cafes-coffee-shops" },
-      { label: "Software development — London", href: "/gb/london/software-development" },
+      { label: "Legal services, London", href: "/gb/london/legal-services" },
+      { label: "Cafés & coffee, Manchester", href: "/gb/manchester/cafes-coffee-shops" },
+      { label: "Software development, London", href: "/gb/london/software-development" },
     ],
   },
   {
     iso2: "de",
     name: "Germany",
     flag: "🇩🇪",
-    line: "The Mittelstand — small to mid-size manufacturing and precision trades.",
+    line: "The Mittelstand: small to mid-size manufacturing and precision trades.",
     topIndustries: [
-      { label: "Metal products mfg — Bayern", href: "/de/de21/metal-products-manufacturing" },
-      { label: "Software development — Berlin", href: "/de/berlin/software-development" },
-      { label: "Restaurants — Munich", href: "/de/munich/restaurants" },
+      { label: "Metal products mfg, Bayern", href: "/de/de21/metal-products-manufacturing" },
+      { label: "Software development, Berlin", href: "/de/berlin/software-development" },
+      { label: "Restaurants, Munich", href: "/de/munich/restaurants" },
     ],
   },
   {
@@ -60,9 +60,9 @@ const SPOTLIGHTS: Spotlight[] = [
     flag: "🇪🇸",
     line: "Tourism, hospitality, and family hotels across coast and city.",
     topIndustries: [
-      { label: "Cafés & coffee — Madrid", href: "/es/madrid/cafes-coffee-shops" },
-      { label: "Restaurants — Barcelona", href: "/es/barcelona/restaurants" },
-      { label: "Hotels & lodging — Spain", href: "/es/spain/hotels-lodging" },
+      { label: "Cafés & coffee, Madrid", href: "/es/madrid/cafes-coffee-shops" },
+      { label: "Restaurants, Barcelona", href: "/es/barcelona/restaurants" },
+      { label: "Hotels & lodging, Spain", href: "/es/spain/hotels-lodging" },
     ],
   },
   {
@@ -71,9 +71,9 @@ const SPOTLIGHTS: Spotlight[] = [
     flag: "🇯🇵",
     line: "Family-run restaurants, ateliers, and precision craft trades.",
     topIndustries: [
-      { label: "Restaurants — Tokyo", href: "/jp/jp-13000/restaurants" },
-      { label: "Cafés & coffee — Japan", href: "/jp/japan/cafes-coffee-shops" },
-      { label: "Software development — Japan", href: "/jp/japan/software-development" },
+      { label: "Restaurants, Tokyo", href: "/jp/jp-13000/restaurants" },
+      { label: "Cafés & coffee, Japan", href: "/jp/japan/cafes-coffee-shops" },
+      { label: "Software development, Japan", href: "/jp/japan/software-development" },
     ],
   },
   {
@@ -82,9 +82,9 @@ const SPOTLIGHTS: Spotlight[] = [
     flag: "🇧🇷",
     line: "Restaurants, craft beverages, fashion, agriculture.",
     topIndustries: [
-      { label: "Restaurants — São Paulo", href: "/br/br-sp/restaurants" },
-      { label: "Grocery stores — São Paulo", href: "/br/br-sp/grocery-stores" },
-      { label: "Cafés & coffee — Rio", href: "/br/br-rj/cafes-coffee-shops" },
+      { label: "Restaurants, São Paulo", href: "/br/br-sp/restaurants" },
+      { label: "Grocery stores, São Paulo", href: "/br/br-sp/grocery-stores" },
+      { label: "Cafés & coffee, Rio", href: "/br/br-rj/cafes-coffee-shops" },
     ],
   },
   {
@@ -93,9 +93,9 @@ const SPOTLIGHTS: Spotlight[] = [
     flag: "🇲🇽",
     line: "Restaurants, small manufacturing, retail, construction, professional services.",
     topIndustries: [
-      { label: "Restaurants — Mexico City", href: "/mx/mx-cmx/restaurants" },
-      { label: "Grocery stores — Jalisco", href: "/mx/mx-jal/grocery-stores" },
-      { label: "Cafés & coffee — Mexico City", href: "/mx/mx-cmx/cafes-coffee-shops" },
+      { label: "Restaurants, Mexico City", href: "/mx/mx-cmx/restaurants" },
+      { label: "Grocery stores, Jalisco", href: "/mx/mx-jal/grocery-stores" },
+      { label: "Cafés & coffee, Mexico City", href: "/mx/mx-cmx/cafes-coffee-shops" },
     ],
   },
   {
@@ -104,9 +104,9 @@ const SPOTLIGHTS: Spotlight[] = [
     flag: "🇨🇭",
     line: "Watches, precision instruments, boutique services.",
     topIndustries: [
-      { label: "Legal services — Zurich", href: "/ch/zurich/legal-services" },
-      { label: "Software development — Switzerland", href: "/ch/ch/software-development" },
-      { label: "Restaurants — Geneva", href: "/ch/geneva/restaurants" },
+      { label: "Legal services, Zurich", href: "/ch/zurich/legal-services" },
+      { label: "Software development, Switzerland", href: "/ch/ch/software-development" },
+      { label: "Restaurants, Geneva", href: "/ch/geneva/restaurants" },
     ],
   },
   {
@@ -115,9 +115,9 @@ const SPOTLIGHTS: Spotlight[] = [
     flag: "🇦🇱",
     line: "Cafés, hospitality on the Adriatic coast, family-run construction.",
     topIndustries: [
-      { label: "Cafés & coffee — Tirana", href: "/al/tirana/cafes-coffee-shops" },
-      { label: "Restaurants — Albania", href: "/al/al/restaurants" },
-      { label: "Residential construction — Albania", href: "/al/al/residential-construction" },
+      { label: "Cafés & coffee, Tirana", href: "/al/tirana/cafes-coffee-shops" },
+      { label: "Restaurants, Albania", href: "/al/al/restaurants" },
+      { label: "Residential construction, Albania", href: "/al/al/residential-construction" },
     ],
   },
   {
@@ -126,9 +126,9 @@ const SPOTLIGHTS: Spotlight[] = [
     flag: "🇮🇱",
     line: "Software, security, biotech, boutique hospitality.",
     topIndustries: [
-      { label: "Software development — Tel Aviv", href: "/il/tel-aviv/software-development" },
-      { label: "Cafés & coffee — Tel Aviv", href: "/il/tel-aviv/cafes-coffee-shops" },
-      { label: "Legal services — Israel", href: "/il/il/legal-services" },
+      { label: "Software development, Tel Aviv", href: "/il/tel-aviv/software-development" },
+      { label: "Cafés & coffee, Tel Aviv", href: "/il/tel-aviv/cafes-coffee-shops" },
+      { label: "Legal services, Israel", href: "/il/il/legal-services" },
     ],
   },
 ];

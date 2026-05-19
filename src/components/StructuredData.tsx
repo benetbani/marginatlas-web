@@ -205,7 +205,7 @@ export function Organization() {
     name: "Margin Atlas",
     url: "https://marginatlas.com",
     description:
-      "Small-business benchmarks across 40+ countries — revenue, employment, and wage distributions.",
+      "Small-business benchmarks across 40+ countries: revenue, employment, and wage distributions.",
     // NOTE: no `sameAs` linking to data mirrors. We don't broadcast where the
     // raw data lives publicly.
   };

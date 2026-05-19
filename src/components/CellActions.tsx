@@ -60,7 +60,7 @@ export function CellActions({
           setTimeout(() => setOverCap(false), 3500);
           return;
         }
-        list.push({ country, geo, industry, label: `${industryName} — ${geoName}` });
+        list.push({ country, geo, industry, label: `${industryName}: ${geoName}` });
         setSaved(true);
       }
       localStorage.setItem(SAVED_KEY, JSON.stringify(list));
@@ -91,7 +91,7 @@ export function CellActions({
         }`}
         aria-pressed={saved}
         aria-label={saved ? "Unsave this cell" : "Save this cell"}
-        title={saved ? "Saved — click to unsave" : `Save this cell (${savedCount}/${SAVE_CAP_FREE})`}
+        title={saved ? "Saved: click to unsave" : `Save this cell (${savedCount}/${SAVE_CAP_FREE})`}
       >
         <span aria-hidden>{saved ? "★" : "☆"}</span>
         <span>{saved ? "Saved" : "Save"}</span>

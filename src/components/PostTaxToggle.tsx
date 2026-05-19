@@ -76,7 +76,7 @@ export function PostTaxToggle({ country, regionId, grossRevenue, payroll }: Prop
       {open && (
         <div className="mt-5 space-y-1.5 text-sm">
           <Row label="Gross revenue" value={fmtMoney(result.gross_revenue)} />
-          {/* Plan v13 Wave 4a (D2) — silent omission: when payroll is missing,
+          {/* Plan v13 Wave 4a (D2): silent omission: when payroll is missing,
              quietly drop the payroll + employer-social rows. The take-home
              calculation still runs (treating payroll as zero) so the user
              sees a number, just an upper-bound one. No banner. */}
@@ -111,13 +111,13 @@ export function PostTaxToggle({ country, regionId, grossRevenue, payroll }: Prop
           </div>
 
           <div className="mt-5 rounded-lg bg-cream-100 border border-parchment p-3 text-xs text-ink-700/80 leading-relaxed">
-            <strong className="text-cocoa-900">Planning estimate only — not tax advice.</strong>
+            <strong className="text-cocoa-900">Planning estimate only: not tax advice.</strong>
             {" "}
             Country-level approximation. Actual liability varies by region,
             business form, deductions, incentives, and treaty positions.
             {!result.country_specific && (
               <>
-                {" "}This country isn&apos;t in the rate table yet — figures use
+                {" "}This country isn&apos;t in the rate table yet: figures use
                 a conservative OECD-average fallback.
               </>
             )}

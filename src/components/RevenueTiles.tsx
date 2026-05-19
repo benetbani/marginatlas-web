@@ -77,7 +77,7 @@ function Tile({
         {eyebrow}
       </div>
       <div className={`mt-1 text-3xl md:text-4xl font-semibold tabular-nums ${txt}`}>
-        {value != null ? `${currencySymbol}${formatMoney(value)}` : "—"}
+        {value != null ? `${currencySymbol}${formatMoney(value)}` : "-"}
       </div>
     </div>
   );

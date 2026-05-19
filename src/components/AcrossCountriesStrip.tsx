@@ -10,7 +10,7 @@ import { cellUrl, type Cell } from "@/lib/cells";
 import { CountryFlag } from "@/components/CountryFlag";
 
 function fmtMoney(v: number | null | undefined, sym = "$"): string {
-  if (v == null || isNaN(v)) return "—";
+  if (v == null || isNaN(v)) return "-";
   if (v >= 1e9) return `${sym}${(v / 1e9).toFixed(1)}B`;
   if (v >= 1e6) return `${sym}${(v / 1e6).toFixed(1)}M`;
   if (v >= 1e3) return `${sym}${(v / 1e3).toFixed(0)}K`;

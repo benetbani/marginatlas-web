@@ -39,16 +39,16 @@ export function TypicalFirmCard({ cell, currencySymbol = "$" }: { cell: CellLike
       <div className="grid grid-cols-2 gap-x-6 gap-y-3 mt-3">
         <Row
           label="Revenue per employee"
-          value={revPerEmployee != null ? fmtMoney(revPerEmployee, currencySymbol) : "—"}
+          value={revPerEmployee != null ? fmtMoney(revPerEmployee, currencySymbol) : "-"}
           tooltip="How much revenue each employee brings in on average."
         />
         <Row
           label="Wage per employee"
-          value={wage != null ? fmtMoney(wage, currencySymbol) : "—"}
+          value={wage != null ? fmtMoney(wage, currencySymbol) : "-"}
         />
         <Row
           label="Revenue minus wages"
-          value={grossSpread != null ? fmtMoney(grossSpread, currencySymbol) : "—"}
+          value={grossSpread != null ? fmtMoney(grossSpread, currencySymbol) : "-"}
           tooltip="What's left per employee after paying wages. A rough gross-margin proxy before rent, materials, and taxes."
         />
       </div>
@@ -69,7 +69,7 @@ function Row({ label, value, tooltip }: { label: string; value: string; tooltip?
 }
 
 function fmtMoney(v: number, sym = "$"): string {
-  if (v == null || isNaN(v)) return "—";
+  if (v == null || isNaN(v)) return "-";
   if (v >= 1e9) return `${sym}${(v / 1e9).toFixed(1)}B`;
   if (v >= 1e6) return `${sym}${(v / 1e6).toFixed(1)}M`;
   if (v >= 1e3) return `${sym}${(v / 1e3).toFixed(0)}K`;

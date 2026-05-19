@@ -25,7 +25,7 @@ const ROTATION: Pick[] = [
     country: "us",
     geo: "california",
     industry: "restaurants",
-    note: "California restaurants are the canonical SMB benchmark — high firm count, real spread, strong data.",
+    note: "California restaurants are the canonical SMB benchmark: high firm count, real spread, strong data.",
   },
   {
     country: "us",
@@ -37,7 +37,7 @@ const ROTATION: Pick[] = [
     country: "de",
     geo: "germany",
     industry: "metal-products-manufacturing",
-    note: "Germany's metal products manufacturing — the backbone of the Mittelstand.",
+    note: "Germany's metal products manufacturing: the backbone of the Mittelstand.",
   },
   {
     country: "fr",
@@ -61,13 +61,13 @@ const ROTATION: Pick[] = [
     country: "us",
     geo: "california",
     industry: "software-development",
-    note: "Software development in California — both the long tail of indie shops and the well-funded startups.",
+    note: "Software development in California: both the long tail of indie shops and the well-funded startups.",
   },
   {
     country: "it",
     geo: "italy",
     industry: "restaurants",
-    note: "Italian restaurants — globally the most-searched SMB benchmark; the data tells the story.",
+    note: "Italian restaurants: globally the most-searched SMB benchmark; the data tells the story.",
   },
   {
     country: "jp",
@@ -78,7 +78,7 @@ const ROTATION: Pick[] = [
 ];
 
 function fmtMoney(v: number | null | undefined): string {
-  if (v == null || isNaN(v)) return "—";
+  if (v == null || isNaN(v)) return "-";
   if (v >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
   if (v >= 1e6) return `$${(v / 1e6).toFixed(1)}M`;
   if (v >= 1e3) return `$${(v / 1e3).toFixed(0)}K`;

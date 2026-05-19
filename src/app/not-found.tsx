@@ -70,7 +70,7 @@ export default async function NotFound() {
                 href="/us/california/restaurants"
                 className="block px-4 py-3 rounded-xl border border-ink-200 bg-white hover:border-atlas-500 transition text-sm text-ink-900"
               >
-                <div className="font-medium">Restaurants — California →</div>
+                <div className="font-medium">Restaurants: California →</div>
                 <div className="text-xs text-ink-700/70 mt-1">Most-visited cell</div>
               </Link>
               <Link

@@ -11,7 +11,7 @@ const TIERS = [
   { range: "6",  label: "Good", desc: "City overlay from country extrapolation × population share", color: "bg-atlas-500" },
   { range: "5",  label: "Medium", desc: "Proxy country with small scaling", color: "bg-atlas-300" },
   { range: "4",  label: "Low", desc: "Proxy country with moderate scaling", color: "bg-clay-300" },
-  { range: "3",  label: "Very Low", desc: "Heavy proxy scaling — interpret carefully", color: "bg-clay-500" },
+  { range: "3",  label: "Very Low", desc: "Heavy proxy scaling: interpret carefully", color: "bg-clay-500" },
   { range: "≤2", label: "Hidden", desc: "Too uncertain to surface in default view", color: "bg-clay-700" },
 ];
 

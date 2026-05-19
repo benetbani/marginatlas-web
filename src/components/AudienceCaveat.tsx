@@ -52,8 +52,8 @@ export function AudienceCaveat({ industry, usingParentData }: Props) {
         <div>
           <span className="font-medium">Large-firm industry.</span>{" "}
           This category is dominated by major corporations, so the numbers
-          here reflect the industry as a whole — including very large
-          firms — and may not be representative of small businesses.
+          here reflect the industry as a whole: including very large
+          firms: and may not be representative of small businesses.
           <a href="/pricing" className="ml-1 underline hover:text-atlas-700">
             Pro unlocks firm-size segmentation.
           </a>

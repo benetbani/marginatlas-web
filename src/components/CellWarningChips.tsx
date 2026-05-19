@@ -100,7 +100,7 @@ export function CellWarningChips({
         className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-atlas-100 border border-atlas-300 text-xs font-medium text-atlas-900"
       >
         <span aria-hidden>↪</span>
-        Showing {resolvedIndustryName} —{" "}
+        Showing {resolvedIndustryName}:{" "}
         <Link href={resolvedIndustryUrl} className="underline hover:text-atlas-700">
           canonical URL
         </Link>

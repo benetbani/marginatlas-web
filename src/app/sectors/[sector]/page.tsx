@@ -23,13 +23,13 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   const s = resolveSector(sector);
   if (!s) return { title: "Sector not found" };
   return {
-    title: `${s.name} — industries and benchmarks | Margin Atlas`,
+    title: `${s.name}: industries and benchmarks | Margin Atlas`,
     description: `Revenue, employment, and wage benchmarks for every small-business industry inside ${s.name.toLowerCase()}.`,
   };
 }
 
 function fmtMoney(v: number | null | undefined): string {
-  if (v == null || isNaN(v)) return "—";
+  if (v == null || isNaN(v)) return "-";
   if (v >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
   if (v >= 1e6) return `$${(v / 1e6).toFixed(1)}M`;
   if (v >= 1e3) return `$${(v / 1e3).toFixed(0)}K`;
@@ -129,7 +129,7 @@ export default async function SectorPage({ params }: { params: Promise<Params> }
         </section>
       )}
 
-      {/* FF.3 — same sector across 12 countries */}
+      {/* FF.3: same sector across 12 countries */}
       <SectorAcrossWorld sectorName={s.name} industries={visible} />
 
       {/* Full industry list */}

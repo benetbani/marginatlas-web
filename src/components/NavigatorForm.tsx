@@ -211,7 +211,7 @@ export function NavigatorForm() {
             setSubdivision("");
           }}
           disabled={country !== "US"}
-          tooltip="First-level administrative division — like US states or French regions."
+          tooltip="First-level administrative division: like US states or French regions."
         />
         <ComboField
           id="subdivision"

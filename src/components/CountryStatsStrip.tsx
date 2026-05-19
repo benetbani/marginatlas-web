@@ -51,7 +51,7 @@ export function CountryStatsStrip({ iso2 }: Props) {
         />
       </div>
       <p className="mt-2 text-xs text-ink-700/70 max-w-2xl">
-        Headline rates only — actual liability varies by deductions, regional
+        Headline rates only: actual liability varies by deductions, regional
         surcharges, and business form. Cell pages show the full after-tax
         breakdown including owner take-home.
       </p>

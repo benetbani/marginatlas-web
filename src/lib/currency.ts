@@ -32,7 +32,7 @@ export function convertFromUsd(amountUsd: number, target: CurrencyCode): number 
 }
 
 export function formatMoney(amountUsd: number | null | undefined, target: CurrencyCode = "USD"): string {
-  if (amountUsd == null || !isFinite(amountUsd)) return "—";
+  if (amountUsd == null || !isFinite(amountUsd)) return "-";
   const converted = convertFromUsd(amountUsd, target);
   const sym = CURRENCIES.find((c) => c.code === target)?.symbol || "$";
   if (target === "JPY") {

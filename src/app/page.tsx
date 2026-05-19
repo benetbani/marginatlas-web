@@ -42,13 +42,13 @@ export default function HomePage() {
   return (
     <div>
       {/*
-        Hero — Plan v13 Wave 4e.
+        Hero: Plan v13 Wave 4e.
         Rotating headline ("How much does a [BUSINESS] make in [CITY]?") over a
         full-width background video. Card sits above the video with high opacity
         so the video only bleeds at the section edges.
 
         Founder to drop a 60-90s loop file at public/videos/hero-cities-loop.mp4
-        — until then, the poster image displays as a static fallback.
+       : until then, the poster image displays as a static fallback.
       */}
       <section className="relative h-[80vh] min-h-[600px] overflow-hidden bg-ink-900 left-1/2 right-1/2 -mx-[50vw] w-screen -mt-10">
         <video
@@ -92,23 +92,23 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Navigator — full width, dominant */}
+      {/* Navigator: full width, dominant */}
       <section className="py-8 md:py-12">
         <div className="mt-8 md:mt-10">
           <NavigatorForm />
         </div>
 
-        {/* First-frame data preview — Plan v4.0 Step 15 */}
+        {/* First-frame data preview: Plan v4.0 Step 15 */}
         <FirstFrameStrip />
       </section>
 
-      {/* Global coverage strip — Plan v8 Track S.2 */}
+      {/* Global coverage strip: Plan v8 Track S.2 */}
       <GlobalCoverageStrip />
 
-      {/* Recently-added countries strip — Plan v9 Track BB.2 */}
+      {/* Recently-added countries strip: Plan v9 Track BB.2 */}
       <RecentlyAddedStrip />
 
-      {/* Featured cells — above the fold (Plan v4.0 Step 15 + Step 16 + Step 19) */}
+      {/* Featured cells: above the fold (Plan v4.0 Step 15 + Step 16 + Step 19) */}
       <section className="py-6">
         <div className="flex items-baseline justify-between gap-4 flex-wrap mb-4">
           <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-ink-900">
@@ -132,29 +132,29 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Spotlight country of the day — Plan v9 Track BB.4 */}
+      {/* Spotlight country of the day: Plan v9 Track BB.4 */}
       <SpotlightCountry />
 
-      {/* Sector master menu — Plan v4.0 Step 13 */}
+      {/* Sector master menu: Plan v4.0 Step 13 */}
       <SectorMasterMenu />
 
-      {/* Cell of the week — Plan v4.0 Step 19 */}
+      {/* Cell of the week: Plan v4.0 Step 19 */}
       <CellOfTheWeek />
 
-      {/* Tax overlay teaser — Plan v8 Track S.6 */}
+      {/* Tax overlay teaser: Plan v8 Track S.6 */}
       <TaxOverlayTeaser />
 
-      {/* Ask Atlas widget — Plan v8 Track S.5 (live after key in Vercel) */}
+      {/* Ask Atlas widget: Plan v8 Track S.5 (live after key in Vercel) */}
       <div id="ask-atlas" className="scroll-mt-20">
         <AskWidget />
       </div>
 
-      {/* Pick a city — Plan v8 Track S.4 */}
+      {/* Pick a city: Plan v8 Track S.4 */}
       <div id="pick-a-city" className="scroll-mt-20">
         <CityPicker />
       </div>
 
-      {/* Quality legend — Plan v8 Track S.7 */}
+      {/* Quality legend: Plan v8 Track S.7 */}
       <QualityLegend />
 
       {/* Stats strip */}
@@ -186,7 +186,7 @@ export default function HomePage() {
               Bottom 10% · Typical · Top 10%
             </div>
             <p className="mt-3 text-sm text-cocoa-900/80">
-              Not just an average. Every cell shows the spread — what the smallest
+              Not just an average. Every cell shows the spread: what the smallest
               businesses make, what the typical one does, and what the biggest 10%
               bring in.
             </p>
@@ -220,7 +220,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* What's hot — Plan v9 Track BB.10 */}
+      {/* What's hot: Plan v9 Track BB.10 */}
       <WhatsHotStrip />
 
       {/* Newsletter signup */}

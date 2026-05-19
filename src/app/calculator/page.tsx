@@ -12,9 +12,9 @@ import { CalculatorForm } from "@/components/CalculatorForm";
 export const revalidate = 86400;
 
 export const metadata = {
-  title: "Where do you sit? — Margin Atlas calculator",
+  title: "Where do you sit?: Margin Atlas calculator",
   description:
-    "Enter your country, industry, and typical revenue — see where your business sits in the distribution of similar firms.",
+    "Enter your country, industry, and typical revenue: see where your business sits in the distribution of similar firms.",
   alternates: { canonical: "/calculator" },
 };
 
@@ -36,7 +36,7 @@ export default function CalculatorPage() {
       <p className="mt-3 text-lg text-ink-800/80 leading-relaxed">
         Pick your country, your industry, and the typical revenue your firm
         does in a year. We&apos;ll show you which percentile that lands in
-        for comparable businesses — and the cell page for the deeper read.
+        for comparable businesses: and the cell page for the deeper read.
       </p>
 
       <div className="mt-8">

@@ -53,7 +53,7 @@ export async function generateMetadata({
   if (!regionName) return { title: "Page not found" };
   const countryName = iso2ToName(iso2);
   const title = `Small business industries in ${regionName}, ${countryName} | Margin Atlas`;
-  const description = `Benchmarks and typical revenue for small businesses across ${regionName} — restaurants, retail, services, manufacturing, and more.`;
+  const description = `Benchmarks and typical revenue for small businesses across ${regionName}: restaurants, retail, services, manufacturing, and more.`;
   return {
     title,
     description,

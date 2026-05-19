@@ -4,9 +4,9 @@ import { CountryFlag } from "@/components/CountryFlag";
 export const revalidate = 86400; // 1 day
 
 export const metadata = {
-  title: "Browse — Margin Atlas",
+  title: "Browse | Margin Atlas",
   description:
-    "Browse 191 countries and 25 sectors across the Margin Atlas database — pick a country to drill into local business benchmarks, or a sector to compare across the world.",
+    "Browse 191 countries and 25 sectors across the Margin Atlas database. Pick a country to drill into local business benchmarks, or a sector to compare across the world.",
   alternates: { canonical: "/browse" },
 };
 
@@ -122,27 +122,27 @@ export default function BrowsePage() {
         </div>
       </section>
 
-      {/* Popular pages — globally diverse picks */}
+      {/* Popular pages: globally diverse picks */}
       <section className="py-12">
         <h2 className="text-xl md:text-2xl font-semibold text-ink-900">Popular pages</h2>
         <p className="text-sm text-ink-700/70 mt-1">
           Hand-picked entry points across the atlas. Click any tile to see the
-          full cell — distribution, time series, after-tax owner take.
+          full cell: distribution, time series, after-tax owner take.
         </p>
         <div className="mt-5 grid md:grid-cols-2 lg:grid-cols-3 gap-3">
           {[
-            ["/us/new-york/restaurants", "US", "Restaurants — New York"],
-            ["/gb/london/legal-services", "GB", "Legal services — London"],
-            ["/de/munich/software-development", "DE", "Software dev — Munich"],
-            ["/es/madrid/cafes-coffee-shops", "ES", "Cafés — Madrid"],
-            ["/jp/jp-13000/restaurants", "JP", "Restaurants — Tokyo"],
-            ["/br/br-sp/grocery-stores", "BR", "Grocery — São Paulo"],
-            ["/mx/mx-cmx/restaurants", "MX", "Restaurants — Mexico City"],
-            ["/au/australia/cafes-coffee-shops", "AU", "Cafés — Australia"],
-            ["/al/tirana/cafes-coffee-shops", "AL", "Cafés — Tirana"],
-            ["/ch/zurich/legal-services", "CH", "Pro services — Zurich"],
-            ["/ae/ae/grocery-stores", "AE", "Retail — UAE"],
-            ["/in/india/software-development", "IN", "Software dev — India"],
+            ["/us/new-york/restaurants", "US", "Restaurants, New York"],
+            ["/gb/london/legal-services", "GB", "Legal services, London"],
+            ["/de/munich/software-development", "DE", "Software dev, Munich"],
+            ["/es/madrid/cafes-coffee-shops", "ES", "Cafés, Madrid"],
+            ["/jp/jp-13000/restaurants", "JP", "Restaurants, Tokyo"],
+            ["/br/br-sp/grocery-stores", "BR", "Grocery, São Paulo"],
+            ["/mx/mx-cmx/restaurants", "MX", "Restaurants, Mexico City"],
+            ["/au/australia/cafes-coffee-shops", "AU", "Cafés, Australia"],
+            ["/al/tirana/cafes-coffee-shops", "AL", "Cafés, Tirana"],
+            ["/ch/zurich/legal-services", "CH", "Pro services, Zurich"],
+            ["/ae/ae/grocery-stores", "AE", "Retail, UAE"],
+            ["/in/india/software-development", "IN", "Software dev, India"],
           ].map(([href, iso2, label]) => (
             <a
               key={href}

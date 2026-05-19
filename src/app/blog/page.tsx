@@ -36,7 +36,7 @@ export default function BlogIndex() {
           </a>
         ))}
         {posts.length === 0 && (
-          <p className="text-sm text-ink-700/70">No posts yet — drop Markdown files in <code>content/blog/</code>.</p>
+          <p className="text-sm text-ink-700/70">No posts yet: drop Markdown files in <code>content/blog/</code>.</p>
         )}
       </section>
     </div>

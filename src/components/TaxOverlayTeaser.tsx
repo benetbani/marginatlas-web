@@ -32,7 +32,7 @@ export function TaxOverlayTeaser() {
             How much does the owner actually take home?
           </h2>
           <p className="mt-3 text-sm md:text-base text-ink-800/80 leading-relaxed">
-            Every cell page now has an after-tax breakdown — gross revenue,
+            Every cell page now has an after-tax breakdown: gross revenue,
             payroll, employer social contributions, corporate income tax,
             and what's left for the owner. Country-level rates for 64
             jurisdictions, computed live.

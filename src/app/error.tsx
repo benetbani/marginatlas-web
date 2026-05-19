@@ -30,7 +30,7 @@ export default function RootError({
         That didn&apos;t render right.
       </h1>
       <p className="mt-3 text-ink-700 leading-relaxed">
-        Something in this page threw an error. The rest of the site is fine —
+        Something in this page threw an error. The rest of the site is fine:
         you can retry or jump elsewhere.
       </p>
       <div className="mt-6 flex flex-wrap gap-3 text-sm">

@@ -62,7 +62,7 @@ function countryName(iso2: string): string {
 }
 
 export const metadata = {
-  title: "Coverage report — Margin Atlas",
+  title: "Coverage report: Margin Atlas",
   description:
     "Per-country data quality and coverage across the 191 countries in Margin Atlas.",
 };
@@ -77,7 +77,7 @@ export default async function CoveragePage() {
           Coverage report
         </h1>
         <p className="mt-4 text-ink-700">
-          Coverage data is being prepared — check back shortly. (No
+          Coverage data is being prepared: check back shortly. (No
           coverage_v2.json on disk yet.)
         </p>
       </div>
@@ -173,7 +173,7 @@ export default async function CoveragePage() {
             Most-needed countries
           </h2>
           <p className="text-sm text-ink-700/80 mb-3">
-            Countries where our confidence is lowest — first up for refinement.
+            Countries where our confidence is lowest: first up for refinement.
           </p>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
             {mostNeeded.map((c) => (

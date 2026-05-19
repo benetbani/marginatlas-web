@@ -392,7 +392,7 @@ export function audienceLabel(tag: AudienceTag | undefined): string {
   switch (tag) {
     case "smb_core": return "Small-business core";
     case "smb_friendly": return "SMB-friendly";
-    case "mixed_caution": return "Mixed — read with caution";
+    case "mixed_caution": return "Mixed: read with caution";
     case "corp_only": return "Large-firm dominated";
     default: return "";
   }

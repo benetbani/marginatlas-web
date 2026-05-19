@@ -57,7 +57,7 @@ export function AtlasScore({ cell }: { cell: CellLike }) {
     <div className="card">
       <div className="text-xs uppercase tracking-wide text-ink-700/70 font-medium mb-2 flex items-center">
         Atlas Score
-        <Tooltip text="A 0-100 composite score reflecting how attractive this cell looks on four signals: firm count, spread between typical and top firms, wage level, and data quality. Higher is generally better — but read the underlying numbers; the score is a starting point, not a verdict." />
+        <Tooltip text="A 0-100 composite score reflecting how attractive this cell looks on four signals: firm count, spread between typical and top firms, wage level, and data quality. Higher is generally better: but read the underlying numbers; the score is a starting point, not a verdict." />
       </div>
       <div className="flex items-baseline gap-4">
         <div className="text-5xl font-semibold text-ink-900 tabular-nums">{score}</div>

@@ -17,7 +17,7 @@ import {
 export const revalidate = 86400;
 
 export const metadata = {
-  title: "All industries — Margin Atlas",
+  title: "All industries: Margin Atlas",
   description:
     "Every industry covered in Margin Atlas. Pick one to see how it earns across 191 countries.",
   alternates: { canonical: "/industries" },
@@ -53,7 +53,7 @@ export default function IndustriesIndex() {
           Every industry we cover
         </h1>
         <p className="mt-3 text-lg text-ink-800/80">
-          Pick an industry to see how it earns across 191 countries — typical
+          Pick an industry to see how it earns across 191 countries: typical
           revenue, employment, after-tax owner take-home, and the full
           distribution from bottom 10% to top 10%.
         </p>
@@ -129,7 +129,7 @@ export default function IndustriesIndex() {
         </h2>
         <p className="text-sm text-ink-700/70 mb-5">
           {INDUSTRIES.filter(isDefaultVisible).length} default-visible
-          industries. Each opens California as a sample geography — switch
+          industries. Each opens California as a sample geography: switch
           to any of 191 countries from the country picker on the cell page.
         </p>
         <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-1.5 text-sm">

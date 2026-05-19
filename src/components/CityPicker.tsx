@@ -72,7 +72,7 @@ export function CityPicker() {
           Or pick a city directly
         </h2>
         <p className="mt-2 text-sm text-ink-800/80 max-w-2xl">
-          Type the first letters of any city, borough, or neighborhood — over
+          Type the first letters of any city, borough, or neighborhood: over
           200 curated locations across all covered countries.
         </p>
         <div className="mt-5 relative max-w-xl">

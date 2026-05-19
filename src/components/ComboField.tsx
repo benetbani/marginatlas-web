@@ -6,7 +6,7 @@ export type ComboOption = {
   value: string;
   label: string;
   examples?: string[]; // shown in lighter tone as bracket examples
-  keywords?: string[]; // not visible — used for search matching
+  keywords?: string[]; // not visible: used for search matching
   group?: string; // optional group header
 };
 
@@ -170,7 +170,7 @@ export function ComboField({
           ))}
           {filtered.length > 50 && (
             <li className="px-3.5 py-2 text-xs text-cocoa-700/50 italic">
-              {filtered.length - 50} more — keep typing to narrow
+              {filtered.length - 50} more: keep typing to narrow
             </li>
           )}
         </ul>
