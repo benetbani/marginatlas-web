@@ -1,25 +1,31 @@
 /**
- * Sitemap (Track DD.6 split version).
+ * Sitemap (Track DD.6 split version + Plan v14 Phase C.7 hub expansion).
  *
  * Next 15 generateSitemaps splits one virtual sitemap into multiple physical
  * sitemap-NN.xml files behind a sitemap-index. Each sub-sitemap stays under
  * Google's 50,000-URL / 50MB cap.
  *
  * Buckets:
- *   id=0 → static + 191 country pages + 25 sectors + coverage/world/status
+ *   id=0 → static + 195 country pages + 25 sectors + coverage/world/status
+ *          + Plan v14 C.7: 195 /[country]/industries hubs
  *   id=1 → top 5,000 US cells_master entries
  *   id=2 → top 20,000 regional_cells entries (filtered to quality_10 >= 4)
- *   id=3 → 191 /coverage/[iso2] scorecard pages
+ *   id=3 → 195 /coverage/[iso2] scorecard pages
+ *   id=4 → Plan v14 C.7: /[country]/[geo]/industries hubs across the ~36
+ *          countries with regional coverage × their admin1 regions
+ *          (~3,500 URLs, well under the 50K cap).
  */
 import type { MetadataRoute } from "next";
 import { getTopCells, getTopRegionalCells, slugify, regionalCellUrl } from "@/lib/cells";
 import { COUNTRIES, SECTORS_ORDERED } from "@/lib/taxonomy";
 import { score100to10 } from "@/components/QualityDots";
+import { hasRegionalCoverage } from "@/lib/coverage/regional";
+import { getAdmin1Regions } from "@/lib/coverage/admin1";
 
 const BASE_URL = "https://marginatlas.com";
 
 export async function generateSitemaps() {
-  return [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }];
+  return [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
 }
 
 export default async function sitemap({
@@ -31,6 +37,7 @@ export default async function sitemap({
   if (id === 1) return usCellsSitemap();
   if (id === 2) return regionalCellsSitemap();
   if (id === 3) return coverageScorecardSitemap();
+  if (id === 4) return regionIndustryHubsSitemap();
   return [];
 }
 
@@ -64,7 +71,16 @@ async function staticAndContainersSitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticUrls, ...countryUrls, ...sectorUrls];
+  // Plan v14 Phase C.7 — /[country]/industries hub per country (~195 URLs).
+  // High-value internal-link nexus for the country topical-authority play.
+  const countryHubUrls: MetadataRoute.Sitemap = COUNTRIES.map((c) => ({
+    url: `${BASE_URL}/${c.code.toLowerCase()}/industries`,
+    lastModified: new Date(),
+    changeFrequency: "weekly",
+    priority: 0.75,
+  }));
+
+  return [...staticUrls, ...countryUrls, ...sectorUrls, ...countryHubUrls];
 }
 
 async function usCellsSitemap(): Promise<MetadataRoute.Sitemap> {
@@ -100,4 +116,29 @@ async function coverageScorecardSitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: "weekly" as const,
     priority: 0.5,
   }));
+}
+
+/**
+ * Plan v14 Phase C.7 — region industry hubs.
+ *
+ * For every country with regional coverage (per regional_coverage_v1.json,
+ * currently ~36 countries) emit /[iso2]/[region-slug]/industries.
+ * Caps each country at its full admin1 list; the total stays in the low
+ * thousands — well under the 50K-URL bucket cap.
+ */
+async function regionIndustryHubsSitemap(): Promise<MetadataRoute.Sitemap> {
+  const out: MetadataRoute.Sitemap = [];
+  for (const c of COUNTRIES) {
+    if (!hasRegionalCoverage(c.code)) continue;
+    const regions = getAdmin1Regions(c.code);
+    for (const r of regions) {
+      out.push({
+        url: `${BASE_URL}/${c.code.toLowerCase()}/${r.slug.toLowerCase()}/industries`,
+        lastModified: new Date(),
+        changeFrequency: "weekly" as const,
+        priority: 0.6,
+      });
+    }
+  }
+  return out;
 }
