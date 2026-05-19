@@ -132,7 +132,7 @@
           "sector_id": "manufacturing_artisan"
         }
       ],
-      "recommended_action": "split"
+      "recommended_action": "split_done"
     },
     {
       "industry_id": "media_publishing",
@@ -228,7 +228,7 @@
           "sector_id": "creative_media"
         }
       ],
-      "recommended_action": "split"
+      "recommended_action": "split_done"
     },
     {
       "industry_id": "wood_paper_mfg",
@@ -333,7 +333,7 @@
           "sector_id": "manufacturing_artisan"
         }
       ],
-      "recommended_action": "split"
+      "recommended_action": "split_done"
     },
     {
       "industry_id": "auto_dealers_gas",
@@ -790,7 +790,7 @@
           "sector_id": "manufacturing_artisan"
         }
       ],
-      "recommended_action": "split"
+      "recommended_action": "split_done"
     },
     {
       "industry_id": "investment_securities",
@@ -962,7 +962,7 @@
           "sector_id": "manufacturing_artisan"
         }
       ],
-      "recommended_action": "split"
+      "recommended_action": "split_done"
     },
     {
       "industry_id": "mining_quarrying",
@@ -1361,7 +1361,7 @@
           "sector_id": "farming_food_production"
         }
       ],
-      "recommended_action": "split"
+      "recommended_action": "split_done"
     },
     {
       "industry_id": "software_development",
@@ -1432,7 +1432,7 @@
           "sector_id": "creative_media"
         }
       ],
-      "recommended_action": "split"
+      "recommended_action": "keep_acknowledged"
     }
   ]
 }

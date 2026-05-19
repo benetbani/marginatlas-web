@@ -3,7 +3,7 @@
   "generated_at": "2026-05-19T05:34:37Z",
   "wave": "Plan v13 Wave 4b",
   "cap": 10,
-  "applied": 10,
+  "applied": 16,
   "splits": [
     {
       "old_id": "auto_dealers_gas",
@@ -292,7 +292,407 @@
       "redirect_target_id": "real_estate_leasing",
       "redirect_target_slug": "real-estate-leasing",
       "cloned_margins_from": "property_leasing"
+    },
+    {
+      "old_id": "textile_apparel_mfg",
+      "old_name": "Textile & apparel manufacturing",
+      "old_slug": "textile-apparel-manufacturing",
+      "old_naics_3": [
+        "313",
+        "314",
+        "315",
+        "316"
+      ],
+      "new_entries": [
+        {
+          "id": "textiles_fabric_mfg",
+          "name": "Textiles & fabric manufacturing",
+          "naics_3": [
+            "313",
+            "314"
+          ]
+        },
+        {
+          "id": "apparel_mfg",
+          "name": "Apparel manufacturing",
+          "naics_3": [
+            "315",
+            "316"
+          ]
+        }
+      ],
+      "redirect_target_id": "apparel_mfg",
+      "redirect_target_slug": "apparel-manufacturing",
+      "cloned_margins_from": "textile_apparel_mfg",
+      "parent_remap": {
+        "custom_apparel_mfg": "apparel_mfg",
+        "small_leather_goods": "apparel_mfg"
+      }
+    },
+    {
+      "old_id": "media_publishing",
+      "old_name": "Media & publishing",
+      "old_slug": "media-publishing",
+      "old_naics_3": [
+        "511",
+        "512",
+        "519"
+      ],
+      "new_entries": [
+        {
+          "id": "news_periodical_publishing",
+          "name": "News & periodical publishing",
+          "naics_3": [
+            "511",
+            "519"
+          ]
+        },
+        {
+          "id": "motion_picture_recording",
+          "name": "Motion picture & sound recording",
+          "naics_3": [
+            "512"
+          ]
+        }
+      ],
+      "redirect_target_id": "news_periodical_publishing",
+      "redirect_target_slug": "news-periodical-publishing",
+      "cloned_margins_from": "media_publishing",
+      "parent_remap": {}
+    },
+    {
+      "old_id": "wood_paper_mfg",
+      "old_name": "Wood & paper products",
+      "old_slug": "wood-paper-products",
+      "old_naics_3": [
+        "321",
+        "322",
+        "323"
+      ],
+      "new_entries": [
+        {
+          "id": "wood_products_mfg",
+          "name": "Wood products manufacturing",
+          "naics_3": [
+            "321"
+          ]
+        },
+        {
+          "id": "paper_mfg",
+          "name": "Paper & printing manufacturing",
+          "naics_3": [
+            "322",
+            "323"
+          ]
+        }
+      ],
+      "redirect_target_id": "wood_products_mfg",
+      "redirect_target_slug": "wood-products-manufacturing",
+      "cloned_margins_from": "wood_paper_mfg",
+      "parent_remap": {
+        "custom_furniture_makers": "wood_products_mfg",
+        "print_shops": "paper_mfg",
+        "sign_shops": "paper_mfg"
+      }
+    },
+    {
+      "old_id": "furniture_other_mfg",
+      "old_name": "Furniture & other manufacturing",
+      "old_slug": "furniture-other-manufacturing",
+      "old_naics_3": [
+        "337",
+        "339"
+      ],
+      "new_entries": [
+        {
+          "id": "furniture_mfg",
+          "name": "Furniture manufacturing",
+          "naics_3": [
+            "337"
+          ]
+        },
+        {
+          "id": "misc_mfg",
+          "name": "Miscellaneous manufacturing",
+          "naics_3": [
+            "339"
+          ]
+        }
+      ],
+      "redirect_target_id": "furniture_mfg",
+      "redirect_target_slug": "furniture-manufacturing",
+      "cloned_margins_from": "furniture_other_mfg",
+      "parent_remap": {}
+    },
+    {
+      "old_id": "metal_products_mfg",
+      "old_name": "Metal products manufacturing",
+      "old_slug": "metal-products-manufacturing",
+      "old_naics_3": [
+        "331",
+        "332",
+        "327"
+      ],
+      "new_entries": [
+        {
+          "id": "fabricated_metal_mfg",
+          "name": "Fabricated metal manufacturing",
+          "naics_3": [
+            "332"
+          ]
+        },
+        {
+          "id": "primary_metal_mfg",
+          "name": "Primary metal manufacturing",
+          "naics_3": [
+            "331",
+            "327"
+          ]
+        }
+      ],
+      "redirect_target_id": "fabricated_metal_mfg",
+      "redirect_target_slug": "fabricated-metal-manufacturing",
+      "cloned_margins_from": "metal_products_mfg",
+      "parent_remap": {
+        "metal_fab_machine_shops": "fabricated_metal_mfg",
+        "custom_jewelers": "fabricated_metal_mfg"
+      }
+    },
+    {
+      "old_id": "crop_farming",
+      "old_name": "Crop farming",
+      "old_slug": "crop-farming",
+      "old_naics_3": [
+        "111",
+        "115"
+      ],
+      "new_entries": [
+        {
+          "id": "grain_farming",
+          "name": "Grain farming",
+          "naics_3": [
+            "111",
+            "115"
+          ]
+        },
+        {
+          "id": "vegetable_fruit_farming",
+          "name": "Vegetable & fruit farming",
+          "naics_3": [
+            "111"
+          ]
+        }
+      ],
+      "redirect_target_id": "grain_farming",
+      "redirect_target_slug": "grain-farming",
+      "cloned_margins_from": "crop_farming",
+      "parent_remap": {}
     }
   ],
-  "known_limitation": "Cell-level data in Supabase (cells_master / regional_cells / extrapolated_cells) still tagged with old NAICS-3 codes. Lookups for new industry IDs will resolve via NAICS_3_TO_INDUSTRY at query time because the new entries carry the subset NAICS-3 codes, so cells for NAICS 441 now map to auto_dealers and cells for NAICS 447 map to gas_stations automatically. No re-ingest needed for the NAICS-3-distinct splits."
+  "known_limitation": "Cell-level data in Supabase (cells_master / regional_cells / extrapolated_cells) still tagged with old NAICS-3 codes. Lookups for new industry IDs will resolve via NAICS_3_TO_INDUSTRY at query time because the new entries carry the subset NAICS-3 codes, so cells for NAICS 441 now map to auto_dealers and cells for NAICS 447 map to gas_stations automatically. No re-ingest needed for the NAICS-3-distinct splits.",
+  "waves": [
+    {
+      "wave": "Plan v14 Phase A.3",
+      "generated_at": "2026-05-19T18:46:26Z",
+      "applied": 6,
+      "splits": [
+        {
+          "old_id": "textile_apparel_mfg",
+          "old_name": "Textile & apparel manufacturing",
+          "old_slug": "textile-apparel-manufacturing",
+          "old_naics_3": [
+            "313",
+            "314",
+            "315",
+            "316"
+          ],
+          "new_entries": [
+            {
+              "id": "textiles_fabric_mfg",
+              "name": "Textiles & fabric manufacturing",
+              "naics_3": [
+                "313",
+                "314"
+              ]
+            },
+            {
+              "id": "apparel_mfg",
+              "name": "Apparel manufacturing",
+              "naics_3": [
+                "315",
+                "316"
+              ]
+            }
+          ],
+          "redirect_target_id": "apparel_mfg",
+          "redirect_target_slug": "apparel-manufacturing",
+          "cloned_margins_from": "textile_apparel_mfg",
+          "parent_remap": {
+            "custom_apparel_mfg": "apparel_mfg",
+            "small_leather_goods": "apparel_mfg"
+          }
+        },
+        {
+          "old_id": "media_publishing",
+          "old_name": "Media & publishing",
+          "old_slug": "media-publishing",
+          "old_naics_3": [
+            "511",
+            "512",
+            "519"
+          ],
+          "new_entries": [
+            {
+              "id": "news_periodical_publishing",
+              "name": "News & periodical publishing",
+              "naics_3": [
+                "511",
+                "519"
+              ]
+            },
+            {
+              "id": "motion_picture_recording",
+              "name": "Motion picture & sound recording",
+              "naics_3": [
+                "512"
+              ]
+            }
+          ],
+          "redirect_target_id": "news_periodical_publishing",
+          "redirect_target_slug": "news-periodical-publishing",
+          "cloned_margins_from": "media_publishing",
+          "parent_remap": {}
+        },
+        {
+          "old_id": "wood_paper_mfg",
+          "old_name": "Wood & paper products",
+          "old_slug": "wood-paper-products",
+          "old_naics_3": [
+            "321",
+            "322",
+            "323"
+          ],
+          "new_entries": [
+            {
+              "id": "wood_products_mfg",
+              "name": "Wood products manufacturing",
+              "naics_3": [
+                "321"
+              ]
+            },
+            {
+              "id": "paper_mfg",
+              "name": "Paper & printing manufacturing",
+              "naics_3": [
+                "322",
+                "323"
+              ]
+            }
+          ],
+          "redirect_target_id": "wood_products_mfg",
+          "redirect_target_slug": "wood-products-manufacturing",
+          "cloned_margins_from": "wood_paper_mfg",
+          "parent_remap": {
+            "custom_furniture_makers": "wood_products_mfg",
+            "print_shops": "paper_mfg",
+            "sign_shops": "paper_mfg"
+          }
+        },
+        {
+          "old_id": "furniture_other_mfg",
+          "old_name": "Furniture & other manufacturing",
+          "old_slug": "furniture-other-manufacturing",
+          "old_naics_3": [
+            "337",
+            "339"
+          ],
+          "new_entries": [
+            {
+              "id": "furniture_mfg",
+              "name": "Furniture manufacturing",
+              "naics_3": [
+                "337"
+              ]
+            },
+            {
+              "id": "misc_mfg",
+              "name": "Miscellaneous manufacturing",
+              "naics_3": [
+                "339"
+              ]
+            }
+          ],
+          "redirect_target_id": "furniture_mfg",
+          "redirect_target_slug": "furniture-manufacturing",
+          "cloned_margins_from": "furniture_other_mfg",
+          "parent_remap": {}
+        },
+        {
+          "old_id": "metal_products_mfg",
+          "old_name": "Metal products manufacturing",
+          "old_slug": "metal-products-manufacturing",
+          "old_naics_3": [
+            "331",
+            "332",
+            "327"
+          ],
+          "new_entries": [
+            {
+              "id": "fabricated_metal_mfg",
+              "name": "Fabricated metal manufacturing",
+              "naics_3": [
+                "332"
+              ]
+            },
+            {
+              "id": "primary_metal_mfg",
+              "name": "Primary metal manufacturing",
+              "naics_3": [
+                "331",
+                "327"
+              ]
+            }
+          ],
+          "redirect_target_id": "fabricated_metal_mfg",
+          "redirect_target_slug": "fabricated-metal-manufacturing",
+          "cloned_margins_from": "metal_products_mfg",
+          "parent_remap": {
+            "metal_fab_machine_shops": "fabricated_metal_mfg",
+            "custom_jewelers": "fabricated_metal_mfg"
+          }
+        },
+        {
+          "old_id": "crop_farming",
+          "old_name": "Crop farming",
+          "old_slug": "crop-farming",
+          "old_naics_3": [
+            "111",
+            "115"
+          ],
+          "new_entries": [
+            {
+              "id": "grain_farming",
+              "name": "Grain farming",
+              "naics_3": [
+                "111",
+                "115"
+              ]
+            },
+            {
+              "id": "vegetable_fruit_farming",
+              "name": "Vegetable & fruit farming",
+              "naics_3": [
+                "111"
+              ]
+            }
+          ],
+          "redirect_target_id": "grain_farming",
+          "redirect_target_slug": "grain-farming",
+          "cloned_margins_from": "crop_farming",
+          "parent_remap": {}
+        }
+      ]
+    }
+  ],
+  "last_updated": "2026-05-19T18:46:26Z"
 }

@@ -99,13 +99,19 @@ const TAXONOMY_REDIRECTS: Record<string, string> = {
   "auto-dealers-gas-stations": "auto-dealers",
   "broadcasting-telecom": "broadcasting",
   "chemical-pharmaceutical-manufacturing": "chemical-pharma-manufacturing",
+  "crop-farming": "grain-farming",
   "food-beverage-manufacturing": "food-manufacturing",
   "furniture-home-goods-stores": "furniture-stores",
+  "furniture-other-manufacturing": "furniture-manufacturing",
   "investment-securities": "securities-brokerage",
+  "media-publishing": "news-periodical-publishing",
+  "metal-products-manufacturing": "fabricated-metal-manufacturing",
   "mining-quarrying": "mining-quarrying-metals-stone",
   "passenger-transport": "transit-ground-passenger-transport",
   "postal-courier": "postal-service",
   "property-leasing-rental": "real-estate-leasing",
+  "textile-apparel-manufacturing": "apparel-manufacturing",
+  "wood-paper-products": "wood-products-manufacturing",
 };
 // --- end Plan v13 Wave 4b ---
 

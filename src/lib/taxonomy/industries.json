@@ -10,25 +10,24 @@
   },
   "industries": [
     {
-      "id": "crop_farming",
-      "name": "Crop farming",
+      "id": "grain_farming",
+      "name": "Grain farming",
       "audience": "smb_friendly",
       "examples": [
         "wheat",
         "corn",
-        "vegetables",
-        "fruits"
+        "soybeans",
+        "rice"
       ],
       "keywords": [
         "farm",
         "farming",
-        "crop",
+        "grain",
         "wheat",
         "corn",
-        "vegetables",
-        "fruit",
-        "grain",
+        "soybean",
         "rice",
+        "crop",
         "harvest",
         "cultivation",
         "agriculture"
@@ -40,6 +39,41 @@
       "naics_3": [
         "111",
         "115"
+      ],
+      "nace_divisions": [
+        "01"
+      ]
+    },
+    {
+      "id": "vegetable_fruit_farming",
+      "name": "Vegetable & fruit farming",
+      "audience": "smb_friendly",
+      "examples": [
+        "vegetables",
+        "fruits",
+        "tree nuts",
+        "berries",
+        "orchards"
+      ],
+      "keywords": [
+        "farm",
+        "farming",
+        "vegetable",
+        "fruit",
+        "orchard",
+        "berry",
+        "nut",
+        "produce",
+        "harvest",
+        "cultivation",
+        "agriculture"
+      ],
+      "sector_id": "farming_food_production",
+      "isic_divisions": [
+        "01"
+      ],
+      "naics_3": [
+        "111"
       ],
       "nace_divisions": [
         "01"
@@ -443,40 +477,68 @@
       "sector_id": "farming_food_production"
     },
     {
-      "id": "textile_apparel_mfg",
-      "name": "Textile & apparel manufacturing",
+      "id": "textiles_fabric_mfg",
+      "name": "Textiles & fabric manufacturing",
+      "audience": "smb_friendly",
+      "examples": [
+        "yarn",
+        "fabric",
+        "carpets",
+        "textile mills"
+      ],
+      "keywords": [
+        "textile",
+        "fabric",
+        "yarn",
+        "carpet",
+        "weaving",
+        "knitting",
+        "mill",
+        "fiber",
+        "manufacturing"
+      ],
+      "sector_id": "manufacturing_artisan",
+      "isic_divisions": [
+        "13"
+      ],
+      "naics_3": [
+        "313",
+        "314"
+      ],
+      "nace_divisions": [
+        "13"
+      ]
+    },
+    {
+      "id": "apparel_mfg",
+      "name": "Apparel manufacturing",
       "audience": "smb_friendly",
       "examples": [
         "clothing",
-        "fabrics",
+        "hosiery",
         "leather goods",
         "shoes"
       ],
       "keywords": [
-        "textile",
         "apparel",
         "clothing",
-        "fabric",
+        "garment",
+        "hosiery",
         "leather",
         "shoes",
-        "garment",
         "fashion",
-        "weaving"
+        "manufacturing"
       ],
       "sector_id": "manufacturing_artisan",
       "isic_divisions": [
-        "13",
         "14",
         "15"
       ],
       "naics_3": [
-        "313",
-        "314",
         "315",
         "316"
       ],
       "nace_divisions": [
-        "13",
         "14",
         "15"
       ]
@@ -485,7 +547,7 @@
       "id": "custom_apparel_mfg",
       "name": "Custom apparel & uniforms",
       "audience": "smb_core",
-      "parent_id": "textile_apparel_mfg",
+      "parent_id": "apparel_mfg",
       "examples": [
         "uniforms",
         "custom t-shirts",
@@ -504,7 +566,7 @@
       "id": "small_leather_goods",
       "name": "Small leather goods",
       "audience": "smb_core",
-      "parent_id": "textile_apparel_mfg",
+      "parent_id": "apparel_mfg",
       "examples": [
         "wallets",
         "bags",
@@ -521,38 +583,64 @@
       "sector_id": "manufacturing_artisan"
     },
     {
-      "id": "wood_paper_mfg",
-      "name": "Wood & paper products",
+      "id": "wood_products_mfg",
+      "name": "Wood products manufacturing",
       "audience": "smb_friendly",
       "examples": [
-        "furniture",
-        "packaging",
-        "paper",
-        "printing"
+        "sawmills",
+        "plywood",
+        "lumber",
+        "wood components"
       ],
       "keywords": [
         "wood",
-        "paper",
-        "furniture",
-        "packaging",
-        "printing",
-        "cardboard",
         "lumber",
+        "sawmill",
+        "plywood",
+        "veneer",
+        "millwork",
         "manufacturing"
       ],
       "sector_id": "manufacturing_artisan",
       "isic_divisions": [
-        "16",
+        "16"
+      ],
+      "naics_3": [
+        "321"
+      ],
+      "nace_divisions": [
+        "16"
+      ]
+    },
+    {
+      "id": "paper_mfg",
+      "name": "Paper & printing manufacturing",
+      "audience": "smb_friendly",
+      "examples": [
+        "pulp",
+        "paper",
+        "cardboard",
+        "packaging",
+        "printing"
+      ],
+      "keywords": [
+        "paper",
+        "pulp",
+        "cardboard",
+        "packaging",
+        "printing",
+        "manufacturing"
+      ],
+      "sector_id": "manufacturing_artisan",
+      "isic_divisions": [
         "17",
         "18"
       ],
       "naics_3": [
-        "321",
         "322",
         "323"
       ],
       "nace_divisions": [
-        "16",
         "17",
         "18"
       ]
@@ -561,7 +649,7 @@
       "id": "custom_furniture_makers",
       "name": "Custom furniture makers",
       "audience": "smb_core",
-      "parent_id": "wood_paper_mfg",
+      "parent_id": "wood_products_mfg",
       "examples": [
         "bespoke furniture",
         "cabinetry",
@@ -580,7 +668,7 @@
       "id": "print_shops",
       "name": "Print shops (offset & digital)",
       "audience": "smb_core",
-      "parent_id": "wood_paper_mfg",
+      "parent_id": "paper_mfg",
       "examples": [
         "business cards",
         "flyers",
@@ -600,7 +688,7 @@
       "id": "sign_shops",
       "name": "Sign shops & graphics fab",
       "audience": "smb_core",
-      "parent_id": "wood_paper_mfg",
+      "parent_id": "paper_mfg",
       "examples": [
         "business signs",
         "vehicle wraps",
@@ -726,45 +814,78 @@
       ]
     },
     {
-      "id": "metal_products_mfg",
-      "name": "Metal products manufacturing",
+      "id": "fabricated_metal_mfg",
+      "name": "Fabricated metal manufacturing",
       "audience": "smb_friendly",
       "examples": [
-        "steel parts",
-        "structural metals",
+        "forgings",
         "hardware",
+        "springs",
+        "structural metals",
         "tools"
       ],
       "keywords": [
         "metal",
-        "steel",
-        "iron",
-        "aluminum",
+        "fabrication",
         "hardware",
         "tools",
-        "fabrication",
+        "forging",
+        "spring",
+        "structural",
         "manufacturing"
       ],
       "sector_id": "manufacturing_artisan",
       "isic_divisions": [
-        "24",
         "25"
       ],
       "naics_3": [
+        "332"
+      ],
+      "nace_divisions": [
+        "25"
+      ]
+    },
+    {
+      "id": "primary_metal_mfg",
+      "name": "Primary metal manufacturing",
+      "audience": "smb_friendly",
+      "examples": [
+        "steel mills",
+        "foundries",
+        "smelting",
+        "aluminum",
+        "nonmetallic minerals"
+      ],
+      "keywords": [
+        "steel",
+        "iron",
+        "aluminum",
+        "foundry",
+        "smelting",
+        "mill",
+        "primary metal",
+        "mineral",
+        "manufacturing"
+      ],
+      "sector_id": "manufacturing_artisan",
+      "isic_divisions": [
+        "23",
+        "24"
+      ],
+      "naics_3": [
         "331",
-        "332",
         "327"
       ],
       "nace_divisions": [
-        "24",
-        "25"
+        "23",
+        "24"
       ]
     },
     {
       "id": "metal_fab_machine_shops",
       "name": "Metal fabrication & machine shops",
       "audience": "smb_core",
-      "parent_id": "metal_products_mfg",
+      "parent_id": "fabricated_metal_mfg",
       "examples": [
         "custom fabrication",
         "welding shops",
@@ -783,7 +904,7 @@
       "id": "custom_jewelers",
       "name": "Custom jewelers (mfg)",
       "audience": "smb_core",
-      "parent_id": "metal_products_mfg",
+      "parent_id": "fabricated_metal_mfg",
       "examples": [
         "bespoke jewelry",
         "goldsmiths",
@@ -950,35 +1071,60 @@
       ]
     },
     {
-      "id": "furniture_other_mfg",
-      "name": "Furniture & other manufacturing",
+      "id": "furniture_mfg",
+      "name": "Furniture manufacturing",
       "audience": "smb_core",
       "examples": [
-        "furniture",
-        "toys",
-        "jewelry",
-        "sporting goods"
+        "household furniture",
+        "office furniture",
+        "cabinets"
       ],
       "keywords": [
         "furniture",
-        "toy",
-        "jewelry",
-        "sporting",
-        "instruments",
-        "musical",
+        "cabinet",
+        "upholstery",
+        "mattress",
         "manufacturing"
       ],
       "sector_id": "manufacturing_artisan",
       "isic_divisions": [
-        "31",
+        "31"
+      ],
+      "naics_3": [
+        "337"
+      ],
+      "nace_divisions": [
+        "31"
+      ]
+    },
+    {
+      "id": "misc_mfg",
+      "name": "Miscellaneous manufacturing",
+      "audience": "smb_core",
+      "examples": [
+        "medical equipment",
+        "jewelry",
+        "sporting goods",
+        "musical instruments",
+        "toys"
+      ],
+      "keywords": [
+        "medical equipment",
+        "jewelry",
+        "sporting",
+        "instruments",
+        "musical",
+        "toy",
+        "manufacturing"
+      ],
+      "sector_id": "manufacturing_artisan",
+      "isic_divisions": [
         "32"
       ],
       "naics_3": [
-        "337",
         "339"
       ],
       "nace_divisions": [
-        "31",
         "32"
       ]
     },
@@ -2866,36 +3012,65 @@
       "sector_id": "creative_media"
     },
     {
-      "id": "media_publishing",
-      "name": "Media & publishing",
+      "id": "news_periodical_publishing",
+      "name": "News & periodical publishing",
       "audience": "smb_friendly",
       "examples": [
         "newspapers",
-        "books",
         "magazines",
-        "online media"
+        "books",
+        "online news"
       ],
       "keywords": [
-        "media",
         "publishing",
         "newspaper",
-        "book",
         "magazine",
+        "book",
         "publisher",
-        "blog"
+        "press",
+        "media",
+        "news"
       ],
       "sector_id": "creative_media",
       "isic_divisions": [
-        "58",
-        "59"
+        "58"
       ],
       "naics_3": [
         "511",
-        "512",
         "519"
       ],
       "nace_divisions": [
-        "58",
+        "58"
+      ]
+    },
+    {
+      "id": "motion_picture_recording",
+      "name": "Motion picture & sound recording",
+      "audience": "smb_friendly",
+      "examples": [
+        "film production",
+        "music recording",
+        "video studios",
+        "post-production"
+      ],
+      "keywords": [
+        "film",
+        "movie",
+        "motion picture",
+        "music",
+        "recording",
+        "studio",
+        "video",
+        "production"
+      ],
+      "sector_id": "creative_media",
+      "isic_divisions": [
+        "59"
+      ],
+      "naics_3": [
+        "512"
+      ],
+      "nace_divisions": [
         "59"
       ]
     },
