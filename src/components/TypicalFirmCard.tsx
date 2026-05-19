@@ -19,6 +19,9 @@ type CellLike = {
 };
 
 export function TypicalFirmCard({ cell, currencySymbol = "$" }: { cell: CellLike; currencySymbol?: string }) {
+  // Plan v13 Wave 1 — firm-count display and the derived avg-employees-per-firm
+  // were removed because the underlying n_enterprises field is unreliable.
+  // Per-employee metrics are taken straight from the wage/revenue fields.
   const empPerFirm =
     cell.n_employees && cell.n_enterprises ? cell.n_employees / cell.n_enterprises : null;
   const revPerEmployee =
@@ -31,10 +34,9 @@ export function TypicalFirmCard({ cell, currencySymbol = "$" }: { cell: CellLike
     <div className="card">
       <div className="text-xs uppercase tracking-wide text-ink-700/70 font-medium mb-2 flex items-center">
         The typical firm
-        <Tooltip text="Derived ratios for the middle-of-the-pack firm: people on staff, revenue each person generates, what they earn, and the gap between the two." />
+        <Tooltip text="Derived per-employee ratios: revenue each person generates, what they earn, and the gap between the two." />
       </div>
       <div className="grid grid-cols-2 gap-x-6 gap-y-3 mt-3">
-        <Row label="People on staff" value={empPerFirm != null ? fmtCount(empPerFirm) : "—"} />
         <Row
           label="Revenue per employee"
           value={revPerEmployee != null ? fmtMoney(revPerEmployee, currencySymbol) : "—"}
@@ -74,9 +76,3 @@ function fmtMoney(v: number, sym = "$"): string {
   return `${sym}${v.toFixed(0)}`;
 }
 
-function fmtCount(v: number): string {
-  if (v == null || isNaN(v)) return "—";
-  if (v >= 100) return v.toFixed(0);
-  if (v >= 10) return v.toFixed(1);
-  return v.toFixed(1);
-}

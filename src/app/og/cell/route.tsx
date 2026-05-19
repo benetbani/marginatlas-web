@@ -37,12 +37,12 @@ export async function GET(request: Request) {
       const indName = cell.industry_name || cell.industry_description || industry;
       const geoName = cell.geo_name || geo;
       title = `${indName} — ${geoName}`;
-      subtitle = `Typical revenue, employment & wage for ${cell.year}`;
+      subtitle = `Typical revenue, employment & wage`;
       median = formatMoney(cell.revenue_per_firm);
       detail =
         cell.rev_p10 && cell.rev_p90
           ? `Range ${formatMoney(cell.rev_p10)} – ${formatMoney(cell.rev_p90)}`
-          : `${cell.n_enterprises?.toLocaleString() || "Many"} firms`;
+          : `${indName} in ${geoName}`;
     }
   } catch {
     // fall through to defaults

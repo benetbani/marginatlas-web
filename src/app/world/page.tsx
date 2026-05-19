@@ -1,9 +1,9 @@
 /**
  * /world — global coverage map page (Track FF.1).
  *
- * Server-rendered: country chips sized by cell count, color-coded by
- * average quality. Picks up the coverage_v2.json that GG.1 produces.
- * No client JS, no map tile API — just CSS grid + computed sizing.
+ * Server-rendered list of every country in the atlas, grouped by
+ * region. Public copy never exposes the internal cell-count or
+ * confidence-score signals (Plan v13 Wave 1).
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -53,8 +53,7 @@ function chipSize(cells: number): string {
 
 export const metadata = {
   title: "World map — Margin Atlas",
-  description:
-    "Every country in Margin Atlas, sized by cell count and colored by data confidence.",
+  description: "Every country in Margin Atlas.",
 };
 
 // Loose regional groupings so the page reads geographically rather than
@@ -122,9 +121,8 @@ export default async function WorldPage() {
           The atlas in one view
         </h1>
         <p className="mt-3 text-ink-700 leading-relaxed">
-          Each tile is a country we cover. Bigger tiles mean more cells. Color
-          codes the average data confidence — moss green is strong, clay red
-          means the country is in early extrapolation.
+          Each tile is a country we cover. Tap one to drill into its
+          regions and industries.
         </p>
       </header>
 

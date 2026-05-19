@@ -27,6 +27,9 @@ export function TimeSeriesChart({
   currencySymbol = "$",
   label,
 }: TimeSeriesChartProps) {
+  // Plan v13 Wave 1 — n_enterprises is not a renderable public series
+  // because the underlying firm-count field is unreliable.
+  if (metric === "n_enterprises") return null;
   const pts = data
     .filter((d) => d[metric] != null && !isNaN(d[metric] as number))
     .map((d) => ({ year: d.year, v: d[metric] as number }));
@@ -78,7 +81,7 @@ export function TimeSeriesChart({
     <div className="card">
       <div className="flex items-baseline justify-between mb-1">
         <div className="text-xs uppercase tracking-wide text-ink-700/60 font-medium">
-          {label || (metric === "revenue_per_firm" ? "Typical revenue over time" : "Number of firms over time")}
+          {label || "Typical revenue over time"}
         </div>
         <span
           className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium ${

@@ -267,23 +267,12 @@ export function CompareClient() {
                   ["Typical revenue", (c) => c.revenue_per_firm, fmtMoney],
                   ["Bottom 10%", (c) => c.rev_p10, fmtMoney],
                   ["Top 10%", (c) => c.rev_p90, fmtMoney],
-                  ["Firms", (c) => c.n_enterprises, fmtNum],
                   ["Employees", (c) => c.n_employees, fmtNum],
-                  [
-                    "Employees per firm",
-                    (c) => c.employees_per_firm,
-                    (v: number | null) => (v != null ? v.toFixed(1) : "—"),
-                  ],
                   ["Wage per employee", (c) => c.payroll_per_employee, fmtMoney],
                   [
                     "Quality",
                     (c) => c.quality_score,
                     (v: number | null) => (v != null ? `${v}/100` : "—"),
-                  ],
-                  [
-                    "Year",
-                    (c) => c.year,
-                    (v: number | null) => (v != null ? String(v) : "—"),
                   ],
                 ] as [
                   string,
