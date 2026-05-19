@@ -16,6 +16,7 @@ import {
 } from "@/lib/cells";
 import { INDUSTRIES, industryToSlug } from "@/lib/taxonomy";
 import { flagFromIso2, iso2ToName } from "@/lib/countries";
+import { CountryFlag } from "@/components/CountryFlag";
 import { DistributionBars } from "@/components/DistributionBars";
 import { DistributionHistogram } from "@/components/DistributionHistogram";
 import { QualityBadge } from "@/components/QualityBadge";
@@ -294,7 +295,7 @@ export default async function CellPage({
         <a href="/" className="hover:text-atlas-600">Home</a>
         <span className="mx-2">/</span>
         <a href={`/${country}`} className="hover:text-atlas-600 inline-flex items-center gap-1">
-          <span className="flag" aria-hidden>{flagFromIso2(country)}</span>
+          <CountryFlag iso2={country} className="w-4" />
           <span>{iso2ToName(country)}</span>
         </a>
         <span className="mx-2">/</span>
@@ -325,7 +326,7 @@ export default async function CellPage({
         <div>
           <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium flex items-center gap-2">
             {cell.sector_name && <>{cell.sector_name} · </>}
-            <span className="flag text-base" aria-hidden>{flagFromIso2(country)}</span>
+            <CountryFlag iso2={country} className="w-5" />
             <span>{cell.geo_name || iso2ToName(country)}</span>
           </div>
           <h1 className="mt-2 text-3xl md:text-5xl font-semibold tracking-tight text-ink-900">

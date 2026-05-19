@@ -13,7 +13,7 @@ import {
   SECTOR_BY_ID,
   industryToSlug,
 } from "@/lib/taxonomy";
-import { flagFromIso2 } from "@/lib/countries";
+import { CountryFlag } from "@/components/CountryFlag";
 import { SmartImage } from "@/components/SmartImage";
 import { AtlasHeroImage } from "@/components/AtlasHeroImage";
 import { pickCountryHeroImage } from "@/lib/images";
@@ -132,7 +132,7 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
         <a href="/" className="hover:text-atlas-600">Home</a>
         <span className="mx-2">/</span>
         <span className="inline-flex items-center gap-1">
-          <span className="flag" aria-hidden>{flagFromIso2(iso2)}</span>
+          <CountryFlag iso2={iso2} className="w-4" />
           <span>{meta.name}</span>
         </span>
       </nav>
@@ -144,7 +144,7 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
             Country
           </div>
           <h1 className="mt-2 text-4xl md:text-6xl font-semibold tracking-tight text-ink-900 flex items-center gap-3 flex-wrap">
-            <span className="flag text-5xl md:text-6xl" aria-hidden>{flagFromIso2(iso2)}</span>
+            <CountryFlag iso2={iso2} className="w-12 md:w-16" />
             <span>{meta.name}</span>
           </h1>
           <p className="mt-4 text-lg text-ink-800/80 max-w-2xl leading-relaxed">

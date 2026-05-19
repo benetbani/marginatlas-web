@@ -7,7 +7,7 @@
 
 import { COUNTRIES } from "@/lib/taxonomy";
 import { TOP_100_CITIES } from "@/lib/cities";
-import { flagFromIso2 } from "@/lib/countries";
+import { CountryFlag } from "@/components/CountryFlag";
 import { supabaseAdmin } from "@/lib/supabase";
 
 async function getRegionalCellCount(): Promise<number> {
@@ -44,7 +44,7 @@ export async function GlobalCoverageStrip() {
               href={`/${iso2.toLowerCase()}`}
               className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white hover:bg-atlas-100 hover:text-atlas-700 border border-cream-300 text-xs font-medium text-ink-800 transition"
             >
-              <span className="flag text-base" aria-hidden>{flagFromIso2(iso2)}</span>
+              <CountryFlag iso2={iso2} className="w-4" />
               <span>{iso2}</span>
             </a>
           ))}
