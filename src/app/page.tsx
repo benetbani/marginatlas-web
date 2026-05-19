@@ -15,6 +15,21 @@ import { SpotlightCountry } from "@/components/SpotlightCountry";
 import { GlobalSearch } from "@/components/GlobalSearch";
 import { RotatingWord } from "@/components/RotatingWord";
 import { HERO_CITIES, HERO_BUSINESSES } from "@/lib/hero-words";
+import { getToneClass } from "@/lib/page-layout/section-order";
+
+/**
+ * Plan v14 6b: full-bleed tone wrapper for homepage sections. The inner
+ * content lives inside the layout's `max-w-7xl mx-auto px-6` constraint,
+ * but the background color spans the full viewport via the same trick
+ * the hero already uses (`left-1/2 right-1/2 -mx-[50vw] w-screen`).
+ */
+function ToneBand({ tone, children }: { tone: string; children: React.ReactNode }) {
+  return (
+    <div className={`relative left-1/2 right-1/2 -mx-[50vw] w-screen ${getToneClass(tone)}`}>
+      <div className="max-w-7xl mx-auto px-6">{children}</div>
+    </div>
+  );
+}
 
 export const revalidate = 86400; // 1 day
 
@@ -93,146 +108,176 @@ export default function HomePage() {
       </section>
 
       {/* Navigator: full width, dominant */}
-      <section className="py-8 md:py-12">
-        <div className="mt-8 md:mt-10">
-          <NavigatorForm />
-        </div>
+      <ToneBand tone="home-navigator">
+        <section className="py-8 md:py-12">
+          <div className="mt-8 md:mt-10">
+            <NavigatorForm />
+          </div>
 
-        {/* First-frame data preview: Plan v4.0 Step 15 */}
-        <FirstFrameStrip />
-      </section>
-
-      {/* Global coverage strip: Plan v8 Track S.2 */}
-      <GlobalCoverageStrip />
-
-      {/* Recently-added countries strip: Plan v9 Track BB.2 */}
-      <RecentlyAddedStrip />
+          {/* First-frame data preview: Plan v4.0 Step 15 */}
+          <FirstFrameStrip />
+        </section>
+      </ToneBand>
 
       {/* Featured cells: above the fold (Plan v4.0 Step 15 + Step 16 + Step 19) */}
-      <section className="py-6">
-        <div className="flex items-baseline justify-between gap-4 flex-wrap mb-4">
-          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-ink-900">
-            Start with something familiar
-          </h2>
-          <a
-            href="/browse"
-            className="text-sm text-atlas-700 hover:text-atlas-900 font-medium"
-          >
-            Browse everything →
-          </a>
-        </div>
-        <p className="text-sm text-cocoa-700/80 max-w-2xl mb-6">
-          Twelve cells most people recognize on sight. Click any tile for the full
-          numbers: distribution, spread, time series, comparable industries.
-        </p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 auto-rows-fr">
-          {FEATURED.map((spec) => (
-            <FeaturedCellTile key={`${spec.iso2}-${spec.geo}-${spec.industry}`} spec={spec} />
-          ))}
-        </div>
-      </section>
+      <ToneBand tone="home-featured">
+        <section className="py-10">
+          <div className="flex items-baseline justify-between gap-4 flex-wrap mb-4">
+            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-ink-900">
+              Start with something familiar
+            </h2>
+            <a
+              href="/browse"
+              className="text-sm text-atlas-700 hover:text-atlas-900 font-medium"
+            >
+              Browse everything →
+            </a>
+          </div>
+          <p className="text-sm text-cocoa-700/80 max-w-2xl mb-6">
+            Twelve cells most people recognize on sight. Click any tile for the full
+            numbers: distribution, spread, time series, comparable industries.
+          </p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 auto-rows-fr">
+            {FEATURED.map((spec) => (
+              <FeaturedCellTile key={`${spec.iso2}-${spec.geo}-${spec.industry}`} spec={spec} />
+            ))}
+          </div>
+        </section>
+      </ToneBand>
+
+      {/* Global coverage strip: Plan v8 Track S.2 */}
+      <ToneBand tone="home-global-coverage">
+        <GlobalCoverageStrip />
+      </ToneBand>
+
+      {/* Recently-added countries strip: Plan v9 Track BB.2 */}
+      <ToneBand tone="home-recently-added">
+        <RecentlyAddedStrip />
+      </ToneBand>
 
       {/* Spotlight country of the day: Plan v9 Track BB.4 */}
-      <SpotlightCountry />
+      <ToneBand tone="home-spotlight">
+        <SpotlightCountry />
+      </ToneBand>
 
       {/* Sector master menu: Plan v4.0 Step 13 */}
-      <SectorMasterMenu />
+      <ToneBand tone="home-sectors">
+        <SectorMasterMenu />
+      </ToneBand>
 
       {/* Cell of the week: Plan v4.0 Step 19 */}
-      <CellOfTheWeek />
+      <ToneBand tone="home-cell-of-the-week">
+        <CellOfTheWeek />
+      </ToneBand>
 
       {/* Tax overlay teaser: Plan v8 Track S.6 */}
-      <TaxOverlayTeaser />
+      <ToneBand tone="home-tax-overlay">
+        <TaxOverlayTeaser />
+      </ToneBand>
 
       {/* Ask Atlas widget: Plan v8 Track S.5 (live after key in Vercel) */}
-      <div id="ask-atlas" className="scroll-mt-20">
-        <AskWidget />
-      </div>
+      <ToneBand tone="home-ask">
+        <div id="ask-atlas" className="scroll-mt-20">
+          <AskWidget />
+        </div>
+      </ToneBand>
 
       {/* Pick a city: Plan v8 Track S.4 */}
-      <div id="pick-a-city" className="scroll-mt-20">
-        <CityPicker />
-      </div>
+      <ToneBand tone="home-city-picker">
+        <div id="pick-a-city" className="scroll-mt-20">
+          <CityPicker />
+        </div>
+      </ToneBand>
 
       {/* Quality legend: Plan v8 Track S.7 */}
-      <QualityLegend />
+      <ToneBand tone="home-quality">
+        <QualityLegend />
+      </ToneBand>
 
       {/* Stats strip */}
-      <section className="py-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-        {[
-          ["191", "countries covered"],
-          ["180+", "SMB industries"],
-          ["357k+", "data cells"],
-          ["Free", "to browse"],
-        ].map(([n, label]) => (
-          <div key={label} className="rounded-2xl bg-cream-100 border border-parchment p-5">
-            <div className="text-3xl font-semibold text-ink-900 tabular-nums">{n}</div>
-            <div className="text-sm text-cocoa-700/80 mt-1">{label}</div>
-          </div>
-        ))}
-      </section>
+      <ToneBand tone="home-stats">
+        <section className="py-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[
+            ["191", "countries covered"],
+            ["180+", "SMB industries"],
+            ["357k+", "data cells"],
+            ["Free", "to browse"],
+          ].map(([n, label]) => (
+            <div key={label} className="rounded-2xl bg-cream-100 border border-parchment p-5">
+              <div className="text-3xl font-semibold text-ink-900 tabular-nums">{n}</div>
+              <div className="text-sm text-cocoa-700/80 mt-1">{label}</div>
+            </div>
+          ))}
+        </section>
+      </ToneBand>
 
       {/* What's inside — numbered list, no card grid */}
-      <section className="py-10">
-        <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-ink-900">
-          What you&apos;ll see on every cell
-        </h2>
-        <ol className="mt-6 max-w-3xl divide-y divide-parchment border-t border-b border-parchment">
-          <li className="grid grid-cols-[2.5rem_1fr] gap-4 py-5">
-            <span className="text-xs uppercase tracking-wider text-atlas-700 font-semibold tabular-nums pt-1">
-              01
-            </span>
-            <div>
-              <div className="font-semibold text-lg text-ink-900">
-                The full distribution. Bottom 10%, Typical, Top 10%.
+      <ToneBand tone="home-what-youll-see">
+        <section className="py-10">
+          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-ink-900">
+            What you&apos;ll see on every cell
+          </h2>
+          <ol className="mt-6 max-w-3xl divide-y divide-parchment border-t border-b border-parchment">
+            <li className="grid grid-cols-[2.5rem_1fr] gap-4 py-5">
+              <span className="text-xs uppercase tracking-wider text-atlas-700 font-semibold tabular-nums pt-1">
+                01
+              </span>
+              <div>
+                <div className="font-semibold text-lg text-ink-900">
+                  The full distribution. Bottom 10%, Typical, Top 10%.
+                </div>
+                <p className="mt-1.5 text-sm text-cocoa-900/80 leading-relaxed">
+                  Not just an average. Every cell shows the spread: what the smallest
+                  businesses make, what the typical one does, and what the biggest 10%
+                  bring in.
+                </p>
               </div>
-              <p className="mt-1.5 text-sm text-cocoa-900/80 leading-relaxed">
-                Not just an average. Every cell shows the spread: what the smallest
-                businesses make, what the typical one does, and what the biggest 10%
-                bring in.
-              </p>
-            </div>
-          </li>
-          <li className="grid grid-cols-[2.5rem_1fr] gap-4 py-5">
-            <span className="text-xs uppercase tracking-wider text-atlas-700 font-semibold tabular-nums pt-1">
-              02
-            </span>
-            <div>
-              <div className="font-semibold text-lg text-ink-900">
-                Side-by-side comparisons across countries and industries.
+            </li>
+            <li className="grid grid-cols-[2.5rem_1fr] gap-4 py-5">
+              <span className="text-xs uppercase tracking-wider text-atlas-700 font-semibold tabular-nums pt-1">
+                02
+              </span>
+              <div>
+                <div className="font-semibold text-lg text-ink-900">
+                  Side-by-side comparisons across countries and industries.
+                </div>
+                <p className="mt-1.5 text-sm text-cocoa-900/80 leading-relaxed">
+                  Friendly industry names map across every country, so you can compare
+                  bakeries in Paris to bakeries in California without wrestling with
+                  classification codes.
+                </p>
               </div>
-              <p className="mt-1.5 text-sm text-cocoa-900/80 leading-relaxed">
-                Friendly industry names map across every country, so you can compare
-                bakeries in Paris to bakeries in California without wrestling with
-                classification codes.
-              </p>
-            </div>
-          </li>
-          <li className="grid grid-cols-[2.5rem_1fr] gap-4 py-5">
-            <span className="text-xs uppercase tracking-wider text-atlas-700 font-semibold tabular-nums pt-1">
-              03
-            </span>
-            <div>
-              <div className="font-semibold text-lg text-ink-900">
-                Quality you can trust. Every cell rated, every number traceable.
+            </li>
+            <li className="grid grid-cols-[2.5rem_1fr] gap-4 py-5">
+              <span className="text-xs uppercase tracking-wider text-atlas-700 font-semibold tabular-nums pt-1">
+                03
+              </span>
+              <div>
+                <div className="font-semibold text-lg text-ink-900">
+                  Quality you can trust. Every cell rated, every number traceable.
+                </div>
+                <p className="mt-1.5 text-sm text-cocoa-900/80 leading-relaxed">
+                  Each cell carries a 5-star quality rating so you know whether
+                  you&apos;re looking at a direct measurement, a modeled estimate, or
+                  something in between. No black boxes.
+                </p>
               </div>
-              <p className="mt-1.5 text-sm text-cocoa-900/80 leading-relaxed">
-                Each cell carries a 5-star quality rating so you know whether
-                you&apos;re looking at a direct measurement, a modeled estimate, or
-                something in between. No black boxes.
-              </p>
-            </div>
-          </li>
-        </ol>
-      </section>
+            </li>
+          </ol>
+        </section>
+      </ToneBand>
 
       {/* What's hot: Plan v9 Track BB.10 */}
-      <WhatsHotStrip />
+      <ToneBand tone="home-whats-hot">
+        <WhatsHotStrip />
+      </ToneBand>
 
       {/* Newsletter signup */}
-      <section className="py-10">
-        <NewsletterSignup />
-      </section>
+      <ToneBand tone="home-newsletter">
+        <section className="py-10">
+          <NewsletterSignup />
+        </section>
+      </ToneBand>
     </div>
   );
 }

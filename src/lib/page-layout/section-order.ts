@@ -74,6 +74,26 @@ export const SECTION_TONES: Record<string, SectionTone> = {
   "industry-tiles": "cream-50",
   "top-countries": "white",
   "top-cities-for-industry": "cream-100",
+
+  // Homepage. Hero stays ink-dark (already styled inline); the rest
+  // alternate cream-50 / white / cream-100 to give the page rhythm
+  // instead of a single flat body bg.
+  "home-hero": "ink-dark",
+  "home-navigator": "cream-50",
+  "home-featured": "white",
+  "home-global-coverage": "cream-100",
+  "home-recently-added": "white",
+  "home-spotlight": "white",
+  "home-sectors": "cream-100",
+  "home-cell-of-the-week": "white",
+  "home-tax-overlay": "cream-50",
+  "home-ask": "cream-50",
+  "home-city-picker": "white",
+  "home-quality": "cream-100",
+  "home-stats": "white",
+  "home-what-youll-see": "cream-50",
+  "home-whats-hot": "white",
+  "home-newsletter": "cream-100",
 };
 
 export const TONE_CLASSES: Record<SectionTone, string> = {
