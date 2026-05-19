@@ -22,21 +22,12 @@ export function AudienceCaveat({ industry, usingParentData }: Props) {
   const audience = industry.audience || "smb_friendly";
   const parent = industry.parent_id ? INDUSTRY_BY_ID[industry.parent_id] : null;
 
-  // 1. Sub-niche showing parent data — explain the borrowing.
-  if (usingParentData && parent) {
-    return (
-      <div className="rounded-xl border border-cream-300 bg-cream-100 px-4 py-2.5 text-sm text-cocoa-900 flex items-start gap-2">
-        <span aria-hidden className="text-base">ℹ️</span>
-        <div>
-          <span className="font-medium">Best available numbers.</span>{" "}
-          We don&apos;t yet have direct measurements for{" "}
-          <strong>{industry.name.toLowerCase()}</strong>, so we&apos;re showing the
-          parent category, <strong>{parent.name.toLowerCase()}</strong>.
-          Granular data is on the way.
-        </div>
-      </div>
-    );
-  }
+  // Plan v13 Wave 4a (D2) — sub-niche-borrowing banner removed. The page
+  // silently shows parent-category numbers without broadcasting "we don't
+  // have direct measurements." The URL remains stable; sister sub-niche
+  // pages still render so future granular data can drop in transparently.
+  void usingParentData;
+  void parent;
 
   // 2. Mixed bimodal — warn that average can mislead.
   if (audience === "mixed_caution") {

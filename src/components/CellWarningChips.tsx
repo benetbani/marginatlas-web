@@ -71,37 +71,15 @@ export function CellWarningChips({
 }: Props) {
   const chips: React.ReactNode[] = [];
 
-  // Plan v10 WW — cross-country plausibility chip
-  if (country && industryId) {
-    const report = loadPlausibility();
-    if (report) {
-      const upperCountry = country.toUpperCase();
-      const match = report.samples.find(
-        (s) =>
-          s.industry_id === industryId &&
-          ((s.check === "gdp_correlation" && s.country === upperCountry) ||
-            (s.check === "poorer_richer_inversion" &&
-              (s.poorer_country === upperCountry || s.richer_country === upperCountry)))
-      );
-      if (match) {
-        const detail =
-          match.check === "gdp_correlation" && match.z_score
-            ? `revenue ${Math.abs(match.z_score).toFixed(1)}σ from expected for this GDP level`
-            : match.check === "poorer_richer_inversion" && match.revenue_ratio
-            ? `revenue ${match.revenue_ratio.toFixed(1)}× a richer-country peer`
-            : "flagged by cross-country check";
-        chips.push(
-          <span
-            key="cross-country"
-            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-clay-100 border border-clay-300 text-xs font-medium text-clay-900"
-          >
-            <span aria-hidden>⚠</span>
-            Cross-country check: {detail}
-          </span>
-        );
-      }
-    }
-  }
+  // Plan v13 Wave 4a (D2) — cross-country plausibility chip suppressed.
+  // The chip self-flagged suspect data ("revenue 2.1σ from expected") which
+  // broadcasts brokenness rather than degrading silently. Internal QC still
+  // tracks plausibility via the admin/review surface and the scan JSON.
+  void country;
+  void industryId;
+  void geoId;
+  void sizeBand;
+  void loadPlausibility;
 
   // AA.6 staleness chips removed per Plan v13 Wave 1 — never display raw years
   // to public visitors. `year` prop is retained for type compatibility.

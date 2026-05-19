@@ -136,42 +136,32 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
         </header>
       </section>
 
-      {/* 2. industry-tiles — aggregated revenue tiles across geographies */}
-      <section id="industry-tiles">
-        {aggP50 != null ? (
+      {/* 2. industry-tiles — aggregated revenue tiles across geographies.
+         Plan v13 Wave 4a (D2): silent omission when no aggregated percentiles. */}
+      {aggP50 != null && (
+        <section id="industry-tiles">
           <RevenueTiles
             p10={aggP10}
             p50={aggP50}
             p90={aggP90}
-            emptyMessage={`Global earnings distribution not yet available for ${ind.name.toLowerCase()}.`}
           />
-        ) : (
-          <div className="py-6">
-            <p className="text-sm text-ink-700/60 italic">
-              Global earnings distribution not yet available for {ind.name.toLowerCase()}. Open a country page to see local benchmarks.
-            </p>
-          </div>
-        )}
-      </section>
+        </section>
+      )}
 
-      {/* 3. revenue-distribution — log-normal curve from same aggregated percentiles */}
-      <section id="revenue-distribution">
-        {aggP50 != null ? (
+      {/* 3. revenue-distribution — log-normal curve from same aggregated percentiles.
+         Plan v13 Wave 4a (D2): silent omission when insufficient points. */}
+      {aggP50 != null && (
+        <section id="revenue-distribution">
           <RevenueDistribution
             p10={aggP10}
             p50={aggP50}
             p90={aggP90}
           />
-        ) : (
-          <div className="py-6">
-            <p className="text-sm text-ink-700/60 italic">
-              Distribution curve will appear once we have at least three country-level data points for {ind.name.toLowerCase()}.
-            </p>
-          </div>
-        )}
-      </section>
+        </section>
+      )}
 
-      {/* 4. margin-waterfall — sourced directly from canonical industry_margins.json */}
+      {/* 4. margin-waterfall — sourced directly from canonical industry_margins.json.
+         MarginWaterfall returns null when all three margins are null. */}
       <section id="margin-waterfall">
         <MarginWaterfall
           grossMargin={margin.gross_margin}
@@ -185,12 +175,13 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
         )}
       </section>
 
-      {/* 5. top-countries — countries ranked by median revenue per firm */}
-      <section id="top-countries" className="py-8">
-        <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
-          Top countries for {ind.name.toLowerCase()}
-        </h2>
-        {topCountries.length > 0 ? (
+      {/* 5. top-countries — countries ranked by median revenue per firm.
+         Plan v13 Wave 4a (D2): silent omission when ranking is empty. */}
+      {topCountries.length > 0 && (
+        <section id="top-countries" className="py-8">
+          <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
+            Top countries for {ind.name.toLowerCase()}
+          </h2>
           <div className="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {topCountries.slice(0, 9).map((c) => {
               const iso2 = c.country.toUpperCase();
@@ -208,23 +199,11 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
               );
             })}
           </div>
-        ) : (
-          <p className="mt-2 text-sm text-ink-700/60 italic">
-            Cross-country ranking not yet available for {ind.name.toLowerCase()}.
-          </p>
-        )}
-      </section>
+        </section>
+      )}
 
-      {/* 6. top-cities-for-industry — stub until city-level rollup ships */}
-      <section id="top-cities-for-industry" className="py-8">
-        <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
-          Top cities for {ind.name.toLowerCase()}
-        </h2>
-        <p className="mt-2 text-sm text-ink-700/60 italic">
-          City-level ranking for {ind.name.toLowerCase()} not yet available.
-          Open a country page above to see its top cities.
-        </p>
-      </section>
+      {/* 6. top-cities-for-industry — Plan v13 Wave 4a (D2): stub removed.
+         Section will be re-added when the city-level rollup ships. */}
     </div>
   );
 }

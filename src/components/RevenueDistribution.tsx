@@ -37,14 +37,11 @@ export function RevenueDistribution({
   if (p75 != null && p75 > 0) points.push({ q: 0.75, v: p75 });
   if (p90 != null && p90 > 0) points.push({ q: 0.9, v: p90 });
 
+  // Plan v13 Wave 4a (D2) — silent omission: insufficient percentile points
+  // for a log-normal fit → render nothing, not a "Distribution shape not
+  // estimable" banner.
   if (points.length < 2 || p50 == null) {
-    return (
-      <section className="py-6">
-        <p className="text-sm text-ink-700/60 italic">
-          Distribution shape not estimable for this cell.
-        </p>
-      </section>
-    );
+    return null;
   }
 
   // Log-normal MLE from percentiles: ln(v) is normally distributed

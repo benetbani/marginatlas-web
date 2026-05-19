@@ -76,12 +76,11 @@ export function PostTaxToggle({ country, regionId, grossRevenue, payroll }: Prop
       {open && (
         <div className="mt-5 space-y-1.5 text-sm">
           <Row label="Gross revenue" value={fmtMoney(result.gross_revenue)} />
-          {payrollMissing ? (
-            <div className="text-xs text-ink-700/70 italic py-1">
-              Payroll data not available for this cell — owner take-home below
-              assumes no payroll deduction (upper-bound estimate).
-            </div>
-          ) : (
+          {/* Plan v13 Wave 4a (D2) — silent omission: when payroll is missing,
+             quietly drop the payroll + employer-social rows. The take-home
+             calculation still runs (treating payroll as zero) so the user
+             sees a number, just an upper-bound one. No banner. */}
+          {!payrollMissing && (
             <>
               <Row label="Estimated payroll" value={`− ${fmtMoney(result.payroll)}`} muted />
               <Row

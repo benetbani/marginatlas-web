@@ -39,7 +39,8 @@ import { CellDataset, Breadcrumbs } from "@/components/StructuredData";
 import { RelatedIndustriesStrip } from "@/components/RelatedIndustriesStrip";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { CellWarningChips } from "@/components/CellWarningChips";
-import { EmptyStateCard } from "@/components/EmptyStateCard";
+// Plan v13 Wave 4a (D2) — EmptyStateCard import removed; we degrade silently now.
+// import { EmptyStateCard } from "@/components/EmptyStateCard";
 import { CorrectionForm } from "@/components/CorrectionForm";
 import { CurrencySwitcher } from "@/components/CurrencySwitcher";
 import { Money } from "@/components/Money";
@@ -280,15 +281,11 @@ export default async function CellPage({
         sizeBand={cell.size_band}
       />
 
-      {/* CC.13 empty-state — when the cell has no usable revenue metric */}
-      {cell.revenue_per_firm == null && cell.rev_p50 == null ? (
-        <EmptyStateCard
-          industryName={cell.industry_name || industry}
-          geoName={cell.geo_name || geo}
-          neighborUrl={nudge?.url}
-          neighborGeoName={nudge?.geo_name}
-        />
-      ) : null}
+      {/* Plan v13 Wave 4a (D2) — EmptyStateCard removed. When a cell has no
+         usable revenue metric, the data sections silently omit themselves
+         (RevenueTiles, RevenueDistribution, MarginWaterfall all return null)
+         and the nudge bar below still surfaces a stronger neighbor when one
+         exists, so the page degrades without broadcasting brokenness. */}
 
       {/* Nudge bar — appears when coverage is weak and a stronger neighbor exists */}
       {nudge && cell.revenue_per_firm != null && (

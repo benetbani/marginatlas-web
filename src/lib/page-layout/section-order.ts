@@ -1,10 +1,12 @@
 /**
  * Plan v13 Wave 2b — canonical section order per page type.
  *
- * Sister pages (same template, different cell/country/industry) MUST
- * render IDENTICAL sections in IDENTICAL order. Each section gets a
- * graceful "Not available for this <cell|country|industry>" empty state
- * — sections never disappear, they degrade.
+ * Sister pages (same template, different cell/country/industry) render
+ * sections in this exact order WHEN the underlying data is present.
+ *
+ * Plan v13 Wave 4a (D2) override: sections with no usable data render
+ * NOTHING — no "Not available" banner, no "Coming soon" stub. Pages
+ * are shorter when data is thin but never broadcast brokenness.
  */
 
 export const CELL_PAGE_SECTIONS = [

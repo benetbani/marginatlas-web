@@ -13,12 +13,10 @@ type Props = {
 };
 
 export function MarginWaterfall({ grossMargin, operatingMargin, netMargin }: Props) {
+  // Plan v13 Wave 4a (D2) — silent omission: no usable margins → render
+  // nothing, not a "Margin breakdown not available" banner.
   if (grossMargin == null && operatingMargin == null && netMargin == null) {
-    return (
-      <section className="py-6">
-        <p className="text-sm text-ink-700/60 italic">Margin breakdown not available.</p>
-      </section>
-    );
+    return null;
   }
 
   const g = grossMargin != null ? clampMargin(grossMargin, "gross") : null;

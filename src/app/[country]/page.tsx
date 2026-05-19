@@ -202,9 +202,9 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
         <CountryQualitySummary iso2={iso2} />
       </section>
 
-      {/* 3. industry-mix-grid — top SMB-relevant industries */}
-      <section id="industry-mix-grid">
-        {topIndustries.length > 0 ? (
+      {/* 3. industry-mix-grid — top SMB-relevant industries (silent omission if empty) */}
+      {topIndustries.length > 0 && (
+        <section id="industry-mix-grid">
           <div className="py-8">
             <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
               Top small-business industries in {meta.name}
@@ -247,38 +247,20 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
               })}
             </div>
           </div>
-        ) : (
-          <div className="py-10">
-            <div className="card">
-              <p className="text-sm text-ink-800">
-                Industry mix not yet available for {meta.name}. Try the{" "}
-                <a href="/" className="text-atlas-700 underline">home navigator</a> or{" "}
-                <a href="/compare" className="text-atlas-700 underline">Compare</a> to pick cells side-by-side.
-              </p>
-            </div>
-          </div>
-        )}
-      </section>
+        </section>
+      )}
 
-      {/* 4. top-cities — Track N (Wave 2) */}
+      {/* 4. top-cities — Track N (Wave 2). CountryCityShortcuts handles its own silent omission. */}
       <section id="top-cities">
         <CountryCityShortcuts iso2={iso2} />
       </section>
 
-      {/* 5. tax-overview — stub until dedicated component lands */}
-      <section id="tax-overview" className="py-8">
-        <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
-          Tax overview
-        </h2>
-        <p className="mt-2 text-sm text-ink-700/70">
-          Country-level corporate, payroll, and VAT context for {meta.name}.
-          A dedicated tax panel is coming. In the meantime, see the headline
-          rates surfaced in country-stats above and per-cell tax detail on
-          any industry cell page.
-        </p>
-      </section>
+      {/* 5. tax-overview — Plan v13 Wave 4a (D2): stub removed. The real
+         tax panel will be added when the component exists; until then the
+         section silently does not render. */}
 
-      {/* 6. related-countries — Compare CTA until a real "related" component exists */}
+      {/* 6. related-countries — Compare CTA. Kept because it's an evergreen
+         navigation aid, not a data-dependent section. */}
       <section id="related-countries" className="py-10">
         <div className="card-cream">
           <h2 className="text-lg font-semibold text-ink-900">

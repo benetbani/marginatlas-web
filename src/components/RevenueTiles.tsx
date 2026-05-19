@@ -16,7 +16,6 @@ type Props = {
   p50: number | null;
   p90: number | null;
   currencySymbol?: string;
-  emptyMessage?: string;
 };
 
 export function RevenueTiles({
@@ -25,17 +24,14 @@ export function RevenueTiles({
   p50,
   p90,
   currencySymbol = "$",
-  emptyMessage = "Earnings distribution not available for this cell.",
 }: Props) {
   // Interpolate p20 from p10 if not supplied (~halfway between p10 and p50)
   const effP20 = p20 ?? (p10 != null && p50 != null ? p10 + (p50 - p10) * 0.4 : null);
 
+  // Plan v13 Wave 4a (D2) — silent omission: no usable percentiles → render
+  // nothing, not an "Earnings distribution not available" banner.
   if (p50 == null && effP20 == null && p90 == null) {
-    return (
-      <section className="py-6">
-        <p className="text-sm text-ink-700/60 italic">{emptyMessage}</p>
-      </section>
-    );
+    return null;
   }
 
   return (
