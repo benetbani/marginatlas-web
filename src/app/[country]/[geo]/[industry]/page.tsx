@@ -208,7 +208,7 @@ export default async function CellPage({
     cell.payroll_per_employee != null && cell.n_employees != null && cell.n_enterprises
       ? (cell.payroll_per_employee * cell.n_employees) / cell.n_enterprises
       : null;
-  const computedNetMargin =
+  const rawNetMargin =
     grossRevenueForMargin && grossRevenueForMargin > 0
       ? estimateNetProfit({
           iso2: country.toUpperCase(),
@@ -219,6 +219,8 @@ export default async function CellPage({
           payroll: payrollForMargin,
         }).net_margin
       : null;
+  // Defensive floor — never let a sub-3% net margin reach the page.
+  const computedNetMargin = rawNetMargin != null ? clampMargin(rawNetMargin, "net") : null;
 
   const url = `https://marginatlas.com/${country}/${geo}/${industry}`;
   return (

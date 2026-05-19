@@ -7,6 +7,7 @@
  * Server component — pure SVG visual, no client JS.
  */
 import { estimateNetProfit, type NetProfitWaterfall as Waterfall } from "@/lib/finance/net_profit";
+import { clampMargin } from "@/lib/finance/margin_floor";
 
 type Props = {
   iso2: string;
@@ -89,7 +90,7 @@ export function NetProfitWaterfall({
           <div className="text-right">
             <div className="text-xl font-bold text-atlas-700">{fmtMoney(w.net_profit)}</div>
             <div className="text-[10px] text-ink-700/60 uppercase tracking-wide">
-              {fmtPct(w.net_margin)} net margin
+              {fmtPct(clampMargin(w.net_margin, "net"))} net margin
             </div>
           </div>
         </div>
