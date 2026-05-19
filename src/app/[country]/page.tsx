@@ -14,13 +14,16 @@ import {
   industryToSlug,
 } from "@/lib/taxonomy";
 import { CountryFlag } from "@/components/CountryFlag";
-import { SmartImage } from "@/components/SmartImage";
 import { AtlasHeroImage } from "@/components/AtlasHeroImage";
 import { pickCountryHeroImage } from "@/lib/images";
 import { CountryCityShortcuts } from "@/components/CountryCityShortcuts";
 import { CountryStatsStrip } from "@/components/CountryStatsStrip";
 import { CountryQualitySummary } from "@/components/CountryQualitySummary";
 import { hasRegionalCoverage } from "@/lib/coverage/regional";
+import { COUNTRY_PAGE_SECTIONS } from "@/lib/page-layout/section-order";
+
+// Keep section-order constant referenced for type checking — sections render in this exact order below.
+void COUNTRY_PAGE_SECTIONS;
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -145,112 +148,138 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
         </span>
       </nav>
 
-      {/* Hero */}
-      <header className="py-8 lg:grid lg:grid-cols-[1.4fr_1fr] lg:gap-10 lg:items-center">
-        <div>
-          <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
-            Country
-          </div>
-          <h1 className="mt-2 text-4xl md:text-6xl font-semibold tracking-tight text-ink-900 flex items-center gap-3 flex-wrap">
-            <CountryFlag iso2={iso2} className="w-12 md:w-16" />
-            <span>{meta.name}</span>
-          </h1>
-          <p className="mt-4 text-lg text-ink-800/80 max-w-2xl leading-relaxed">
-            {sig.line}
-          </p>
-          <div className="mt-5 flex flex-wrap items-center gap-2">
-            <span
-              className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${qual.tone}`}
-            >
-              {qual.label}
-            </span>
-            <span className="text-xs text-cocoa-700/70">Coverage tier {meta.quality}</span>
-            <a
-              href={`/coverage/${iso2.toLowerCase()}`}
-              className="ml-1 text-xs text-atlas-700 hover:text-atlas-900 font-medium"
-            >
-              See coverage scorecard →
-            </a>
-          </div>
-        </div>
-        <div className="hidden lg:block mt-6 lg:mt-0">
-          {/* Plan v12 IM9 — real country hero photo when manifest has one. */}
-          <AtlasHeroImage
-            image={pickCountryHeroImage(iso2)}
-            alt={`${meta.name} — country atlas hero`}
-            glyph={sig.glyph}
-            aspectRatio={1.5}
-          />
-        </div>
-      </header>
+      {/*
+        Plan v13 Wave 2b — canonical country page section order.
+        Sections render in the exact order defined in COUNTRY_PAGE_SECTIONS.
+        Sections degrade with an empty-state fallback rather than disappearing,
+        so sister country pages always have identical structure.
+      */}
 
-      {/* Top cities — Track N (Wave 2) */}
-      <CountryCityShortcuts iso2={iso2} />
-
-      {/* Tax + headline stats — Track FF.2 */}
-      <CountryStatsStrip iso2={iso2} />
-
-      {/* Quality scorecard summary — Track FF.2 */}
-      <CountryQualitySummary iso2={iso2} />
-
-      {/* Top industries */}
-      {topIndustries.length > 0 ? (
-        <section className="py-8">
-          <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
-            Top small-business industries in {meta.name}
-          </h2>
-          <p className="mt-1 text-sm text-ink-700/70">
-            Most-covered SMB categories. Click any tile for the full cell page —
-            distribution, time series, neighbors.
-          </p>
-          <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {topIndustries.map((ind) => {
-              const indRecord = INDUSTRY_BY_ID[ind.industry_id];
-              const sector = indRecord ? SECTOR_BY_ID[indRecord.sector_id] : null;
-              const slug = industryToSlug(ind.industry_id);
-              const geo = iso2 === "US" ? "california" : slugify(meta.name);
-              return (
-                <a
-                  key={ind.industry_id}
-                  href={`/${iso2.toLowerCase()}/${geo}/${slug}`}
-                  className="block px-4 py-3 rounded-xl border border-cream-300 bg-white hover:border-atlas-600 hover:shadow-[0_6px_18px_rgba(120,53,15,0.08)] transition"
-                >
-                  <div className="flex items-center gap-2 text-[10px] uppercase tracking-wider text-atlas-700 font-semibold">
-                    {sector && <span aria-hidden>{sector.icon}</span>}
-                    <span>{sector?.name || "Industry"}</span>
-                  </div>
-                  <div className="mt-1 text-sm font-semibold text-ink-900">
-                    {ind.industry_name}
-                  </div>
-                  <div className="mt-1.5 text-xs text-cocoa-700">
-                    {ind.revenue_per_firm != null ? (
-                      <>
-                        Typical revenue:{" "}
-                        <strong className="text-ink-900">{fmtMoney(ind.revenue_per_firm)}</strong>
-                      </>
-                    ) : (
-                      <span className="text-ink-700/60">Open for full numbers →</span>
-                    )}
-                  </div>
-                </a>
-              );
-            })}
-          </div>
-        </section>
-      ) : (
-        <section className="py-10">
-          <div className="card">
-            <p className="text-sm text-ink-800">
-              No SMB-relevant industries listed yet for {meta.name}. Try the{" "}
-              <a href="/" className="text-atlas-700 underline">home navigator</a> or{" "}
-              <a href="/compare" className="text-atlas-700 underline">Compare</a> to pick cells side-by-side.
+      {/* 1. hero */}
+      <section id="hero">
+        <header className="py-8 lg:grid lg:grid-cols-[1.4fr_1fr] lg:gap-10 lg:items-center">
+          <div>
+            <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
+              Country
+            </div>
+            <h1 className="mt-2 text-4xl md:text-6xl font-semibold tracking-tight text-ink-900 flex items-center gap-3 flex-wrap">
+              <CountryFlag iso2={iso2} className="w-12 md:w-16" />
+              <span>{meta.name}</span>
+            </h1>
+            <p className="mt-4 text-lg text-ink-800/80 max-w-2xl leading-relaxed">
+              {sig.line}
             </p>
+            <div className="mt-5 flex flex-wrap items-center gap-2">
+              <span
+                className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${qual.tone}`}
+              >
+                {qual.label}
+              </span>
+              <span className="text-xs text-cocoa-700/70">Coverage tier {meta.quality}</span>
+              <a
+                href={`/coverage/${iso2.toLowerCase()}`}
+                className="ml-1 text-xs text-atlas-700 hover:text-atlas-900 font-medium"
+              >
+                See coverage scorecard →
+              </a>
+            </div>
           </div>
-        </section>
-      )}
+          <div className="hidden lg:block mt-6 lg:mt-0">
+            {/* Plan v12 IM9 — real country hero photo when manifest has one. */}
+            <AtlasHeroImage
+              image={pickCountryHeroImage(iso2)}
+              alt={`${meta.name} — country atlas hero`}
+              glyph={sig.glyph}
+              aspectRatio={1.5}
+            />
+          </div>
+        </header>
+      </section>
 
-      {/* Compare CTA */}
-      <section className="py-10">
+      {/* 2. country-stats — Track FF.2 headline stats + quality scorecard */}
+      <section id="country-stats">
+        <CountryStatsStrip iso2={iso2} />
+        <CountryQualitySummary iso2={iso2} />
+      </section>
+
+      {/* 3. industry-mix-grid — top SMB-relevant industries */}
+      <section id="industry-mix-grid">
+        {topIndustries.length > 0 ? (
+          <div className="py-8">
+            <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
+              Top small-business industries in {meta.name}
+            </h2>
+            <p className="mt-1 text-sm text-ink-700/70">
+              Most-covered SMB categories. Click any tile for the full cell page —
+              distribution, time series, neighbors.
+            </p>
+            <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {topIndustries.map((ind) => {
+                const indRecord = INDUSTRY_BY_ID[ind.industry_id];
+                const sector = indRecord ? SECTOR_BY_ID[indRecord.sector_id] : null;
+                const slug = industryToSlug(ind.industry_id);
+                const geo = iso2 === "US" ? "california" : slugify(meta.name);
+                return (
+                  <a
+                    key={ind.industry_id}
+                    href={`/${iso2.toLowerCase()}/${geo}/${slug}`}
+                    className="block px-4 py-3 rounded-xl border border-cream-300 bg-white hover:border-atlas-600 hover:shadow-[0_6px_18px_rgba(120,53,15,0.08)] transition"
+                  >
+                    <div className="flex items-center gap-2 text-[10px] uppercase tracking-wider text-atlas-700 font-semibold">
+                      {sector && <span aria-hidden>{sector.icon}</span>}
+                      <span>{sector?.name || "Industry"}</span>
+                    </div>
+                    <div className="mt-1 text-sm font-semibold text-ink-900">
+                      {ind.industry_name}
+                    </div>
+                    <div className="mt-1.5 text-xs text-cocoa-700">
+                      {ind.revenue_per_firm != null ? (
+                        <>
+                          Typical revenue:{" "}
+                          <strong className="text-ink-900">{fmtMoney(ind.revenue_per_firm)}</strong>
+                        </>
+                      ) : (
+                        <span className="text-ink-700/60">Open for full numbers →</span>
+                      )}
+                    </div>
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        ) : (
+          <div className="py-10">
+            <div className="card">
+              <p className="text-sm text-ink-800">
+                Industry mix not yet available for {meta.name}. Try the{" "}
+                <a href="/" className="text-atlas-700 underline">home navigator</a> or{" "}
+                <a href="/compare" className="text-atlas-700 underline">Compare</a> to pick cells side-by-side.
+              </p>
+            </div>
+          </div>
+        )}
+      </section>
+
+      {/* 4. top-cities — Track N (Wave 2) */}
+      <section id="top-cities">
+        <CountryCityShortcuts iso2={iso2} />
+      </section>
+
+      {/* 5. tax-overview — stub until dedicated component lands */}
+      <section id="tax-overview" className="py-8">
+        <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
+          Tax overview
+        </h2>
+        <p className="mt-2 text-sm text-ink-700/70">
+          Country-level corporate, payroll, and VAT context for {meta.name}.
+          A dedicated tax panel is coming. In the meantime, see the headline
+          rates surfaced in country-stats above and per-cell tax detail on
+          any industry cell page.
+        </p>
+      </section>
+
+      {/* 6. related-countries — Compare CTA until a real "related" component exists */}
+      <section id="related-countries" className="py-10">
         <div className="card-cream">
           <h2 className="text-lg font-semibold text-ink-900">
             Compare {meta.name} to other countries
