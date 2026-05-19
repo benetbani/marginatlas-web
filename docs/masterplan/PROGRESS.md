@@ -281,3 +281,31 @@ margin rebuild (T1) deferred to Wave 2b — current pass uses the existing
 - No displayed net margin below 3% across the sample.
 
 **Commits:** `08a2223` (margin_floor) → `6fbf6b5` (simple-statistics) → `aa6644f` (RevenueTiles + money formatter) → `42c9d7e` (RevenueDistribution) → `56b4f54` (MarginWaterfall) → `902a82d` (cell-page refactor) → `6a46c46` (clamp at render sites).
+
+## Plan v13 Wave 2b — canonical SMB margins + section-order harmonization (2026-05-19)
+
+Wave 2 made the render layer defensive (`clampMargin` floor on every public render). Wave 2b makes the **source numbers themselves** SMB-realistic and harmonizes sister-page section order so country + industry pages always present the same structure.
+
+**Shipped:**
+
+- **T-2b.1 + T-2b.2 — 11 previously-missing industries web-sourced** and added to `src/lib/finance/industry_margins.json`: `civil_engineering`, `electrical_equipment_mfg`, `gambling_amusement`, `general_merchandise`, `higher_education`, `insurance`, `machinery_mfg`, `plastics_rubber_mfg`, `postal_courier`, `water_waste`, `wholesale_chemicals_pharma`. Each carries `gross_margin`, `operating_margin`, `net_margin`, `asset_intensity`, plus a `source_url` and `notes` field describing what SMB segment the number reflects.
+- **T-2b.3 — explicit net_margin for 191 industries**: net margin is now stored per-industry (was previously derived elsewhere in the pipeline, which is how sub-3% values were leaking through). Derivation: `net = operating × factor`, where factor is 0.72 for capital-light services (asset_intensity < 0.3), 0.55 for asset-heavy industries (> 0.8), and 0.65 mid-band. Final value floored at 3%.
+- **T-2b.4 + T-2b.5 — defense-in-depth floors**: every entry runs through gross ≥ 15% / operating ≥ 5% / net ≥ 3% at **write time** (in addition to the existing render-time `clampMargin`). 3 entries (`grocery_stores`, `independent_pharmacy`, `auto_dealers_gas`) were clamped and carry `floor_applied: true`. The unclamped source values for 7 sub-floor fields were logged to `src/lib/finance/marginal_industries_review.json` for founder review.
+- **v1 backup preserved**: `src/lib/finance/industry_margins_v1_backup.json` is the untouched pre-Wave-2b copy.
+- **v2 anchor field**: file now version `2.0.0` with anchor describing the canonical SMB rebuild + defense-in-depth design.
+- **T-2b.6 — section-order constants** (`src/lib/page-layout/section-order.ts`): canonical exports `CELL_PAGE_SECTIONS`, `COUNTRY_PAGE_SECTIONS`, `INDUSTRY_PAGE_SECTIONS` as `as const` tuples plus matching union types. Sister pages must render these sections in this exact order; empty data degrades to an in-section fallback message rather than dropping the section.
+- **T-2b.7 — country page refactor** (`src/app/[country]/page.tsx`): JSX restructured into 6 explicit `<section id="...">` wrappers in canonical order (`hero`, `country-stats`, `industry-mix-grid`, `top-cities`, `tax-overview`, `related-countries`). `tax-overview` ships as a stub today; `related-countries` reuses the existing Compare CTA. Every section renders even when its data is empty.
+- **T-2b.8 — industry page launch** (`src/app/industries/[industry]/page.tsx`): new dynamic route for /industries/{slug}. Renders the 6 canonical INDUSTRY_PAGE_SECTIONS (`hero`, `industry-tiles`, `revenue-distribution`, `margin-waterfall`, `top-countries`, `top-cities-for-industry`). Industry tiles + distribution aggregate p10/p50/p90 from `getSameIndustryAcrossCountries`; margin waterfall reads directly from the new explicit `net_margin` field; top-countries lists global rank; top-cities is a stub until a city-level rollup ships. All 180 SMB-visible industry pages pre-rendered at build time.
+
+**Verification:**
+
+- `npx tsc --noEmit` clean (no diagnostics).
+- `npm run build` clean: 180 industry pages pre-rendered, country pages SSG, no errors or warnings.
+- Section order verified via source: country template (`src/app/[country]/page.tsx`) renders `hero → country-stats → industry-mix-grid → top-cities → tax-overview → related-countries` in this exact order. Industry template (`src/app/industries/[industry]/page.tsx`) renders `hero → industry-tiles → revenue-distribution → margin-waterfall → top-countries → top-cities-for-industry`. Since /us and /jp share the same template, they emit identical section structure; same for /industries/restaurants and /industries/software-development.
+- Spot-check on the new explicit net_margin field — restaurants: 6.5% net, grocery_stores: 3.0% net (floored), textile_apparel_mfg: 4.55% net, software_development: 14.4% net, insurance: 12% net, higher_education: 3.0% net (floored from 3.25%).
+
+**Founder review queue** (`src/lib/finance/marginal_industries_review.json`):
+
+7 sub-floor source/derived values across 3 industries — `grocery_stores`, `independent_pharmacy`, `auto_dealers_gas`. These are genuinely razor-thin SMB margins (~2-4% net before floor) that legitimately operate near or below the survival floor. Floors are applied; this file is for visibility, not action.
+
+**Commits:** `d3ad8b9` (margins v2 data + backup + review) → `b7df6f5` (section-order constants) → `12f6c4b` (country page refactor) → `7eeb048` (industry page launch).
