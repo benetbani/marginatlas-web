@@ -66,7 +66,7 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-b from-ink-900/30 via-transparent to-ink-900/40 pointer-events-none" />
 
         <div className="absolute inset-0 flex items-center justify-center px-4">
-          <div className="w-full max-w-3xl bg-cream-50/85 backdrop-blur-md border border-cream-200/50 rounded-3xl p-6 sm:p-8 md:p-12 shadow-lg">
+          <div className="w-full max-w-3xl bg-cream-50 border border-parchment rounded-3xl p-6 sm:p-8 md:p-12 shadow-sm">
             <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-ink-900 text-center leading-tight">
               How much does a{" "}
               <span className="inline-block min-w-[5ch] text-atlas-600">
@@ -172,52 +172,58 @@ export default function HomePage() {
         ))}
       </section>
 
-      {/* What's inside */}
+      {/* What's inside — numbered list, no card grid */}
       <section className="py-10">
         <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-ink-900">
           What you&apos;ll see on every cell
         </h2>
-        <div className="mt-6 grid md:grid-cols-3 gap-4">
-          <div className="card">
-            <div className="text-xs uppercase tracking-wider text-atlas-700 font-semibold">
-              The full distribution
+        <ol className="mt-6 max-w-3xl divide-y divide-parchment border-t border-b border-parchment">
+          <li className="grid grid-cols-[2.5rem_1fr] gap-4 py-5">
+            <span className="text-xs uppercase tracking-wider text-atlas-700 font-semibold tabular-nums pt-1">
+              01
+            </span>
+            <div>
+              <div className="font-semibold text-lg text-ink-900">
+                The full distribution. Bottom 10%, Typical, Top 10%.
+              </div>
+              <p className="mt-1.5 text-sm text-cocoa-900/80 leading-relaxed">
+                Not just an average. Every cell shows the spread: what the smallest
+                businesses make, what the typical one does, and what the biggest 10%
+                bring in.
+              </p>
             </div>
-            <div className="mt-2 font-semibold text-lg text-ink-900">
-              Bottom 10% · Typical · Top 10%
+          </li>
+          <li className="grid grid-cols-[2.5rem_1fr] gap-4 py-5">
+            <span className="text-xs uppercase tracking-wider text-atlas-700 font-semibold tabular-nums pt-1">
+              02
+            </span>
+            <div>
+              <div className="font-semibold text-lg text-ink-900">
+                Side-by-side comparisons across countries and industries.
+              </div>
+              <p className="mt-1.5 text-sm text-cocoa-900/80 leading-relaxed">
+                Friendly industry names map across every country, so you can compare
+                bakeries in Paris to bakeries in California without wrestling with
+                classification codes.
+              </p>
             </div>
-            <p className="mt-3 text-sm text-cocoa-900/80">
-              Not just an average. Every cell shows the spread: what the smallest
-              businesses make, what the typical one does, and what the biggest 10%
-              bring in.
-            </p>
-          </div>
-          <div className="card">
-            <div className="text-xs uppercase tracking-wider text-atlas-700 font-semibold">
-              Side-by-side comparisons
+          </li>
+          <li className="grid grid-cols-[2.5rem_1fr] gap-4 py-5">
+            <span className="text-xs uppercase tracking-wider text-atlas-700 font-semibold tabular-nums pt-1">
+              03
+            </span>
+            <div>
+              <div className="font-semibold text-lg text-ink-900">
+                Quality you can trust. Every cell rated, every number traceable.
+              </div>
+              <p className="mt-1.5 text-sm text-cocoa-900/80 leading-relaxed">
+                Each cell carries a 5-star quality rating so you know whether
+                you&apos;re looking at a direct measurement, a modeled estimate, or
+                something in between. No black boxes.
+              </p>
             </div>
-            <div className="mt-2 font-semibold text-lg text-ink-900">
-              Across countries and industries
-            </div>
-            <p className="mt-3 text-sm text-cocoa-900/80">
-              Friendly industry names map across every country, so you can compare
-              bakeries in Paris to bakeries in California without wrestling with
-              classification codes.
-            </p>
-          </div>
-          <div className="card">
-            <div className="text-xs uppercase tracking-wider text-atlas-700 font-semibold">
-              Quality you can trust
-            </div>
-            <div className="mt-2 font-semibold text-lg text-ink-900">
-              Every cell rated, every number traceable
-            </div>
-            <p className="mt-3 text-sm text-cocoa-900/80">
-              Each cell carries a 5-star quality rating so you know whether
-              you&apos;re looking at a direct measurement, a modeled estimate, or
-              something in between. No black boxes.
-            </p>
-          </div>
-        </div>
+          </li>
+        </ol>
       </section>
 
       {/* What's hot: Plan v9 Track BB.10 */}
