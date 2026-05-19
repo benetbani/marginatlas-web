@@ -47,7 +47,7 @@ export function AcrossStatesStrip({ industryName, currentGeoName, cells }: Props
                 className="grid grid-cols-[140px_1fr_auto] items-center gap-3 px-2 py-1.5 rounded hover:bg-ink-100/60 transition"
               >
                 <div className="text-sm text-ink-900 truncate">{c.geo_name || c.geo_id}</div>
-                <div className="h-3 bg-slate-100/70 rounded overflow-hidden">
+                <div className="h-3 bg-cream-100/70 rounded overflow-hidden">
                   <div
                     className="h-full bg-atlas-500"
                     style={{ width: `${pct}%`, transition: "width 0.4s ease" }}

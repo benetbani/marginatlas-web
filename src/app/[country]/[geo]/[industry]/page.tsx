@@ -584,7 +584,7 @@ export default async function CellPage({
               <a
                 key={`${c.geo_id}-${c.naics_6}-${c.year}`}
                 href={cellUrl(c)}
-                className="block px-4 py-3 rounded-xl border border-slate-200/60 bg-white hover:border-atlas-500 transition"
+                className="block px-4 py-3 rounded-xl border border-parchment bg-white hover:border-atlas-500 transition"
               >
                 <div className="text-sm font-medium text-ink-900 line-clamp-1">
                   {c.industry_name || c.industry_description || c.naics_6}

@@ -83,7 +83,7 @@ export default function BrowsePage() {
                 <a
                   key={c.code}
                   href={`/${c.code.toLowerCase()}`}
-                  className="px-3 py-2 rounded-lg border border-slate-200/60 bg-white hover:border-atlas-500 transition text-sm flex items-center gap-2"
+                  className="px-3 py-2 rounded-lg border border-parchment bg-white hover:border-atlas-500 transition text-sm flex items-center gap-2"
                 >
                   <CountryFlag iso2={c.code} label={c.name} className="w-5" />
                   <span className="text-ink-900">{c.name}</span>
@@ -147,7 +147,7 @@ export default function BrowsePage() {
             <a
               key={href}
               href={href}
-              className="flex items-center gap-3 px-4 py-3 rounded-xl border border-slate-200/60 bg-white hover:border-atlas-500 transition text-sm text-ink-900"
+              className="flex items-center gap-3 px-4 py-3 rounded-xl border border-parchment bg-white hover:border-atlas-500 transition text-sm text-ink-900"
             >
               <CountryFlag iso2={iso2} label={label} className="w-6" />
               <span className="flex-1">{label}</span>

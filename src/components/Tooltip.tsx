@@ -25,7 +25,7 @@ export function Tooltip({ text, size = "sm" }: Props) {
           e.preventDefault();
           setOpen((o) => !o);
         }}
-        className={`ml-1 inline-flex items-center justify-center ${dim} rounded-full bg-slate-200/70 text-ink-700/70 hover:bg-atlas-100 hover:text-atlas-600 transition cursor-help`}
+        className={`ml-1 inline-flex items-center justify-center ${dim} rounded-full bg-parchment/70 text-ink-700/70 hover:bg-atlas-100 hover:text-atlas-600 transition cursor-help`}
       >
         ?
       </button>

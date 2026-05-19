@@ -191,7 +191,7 @@ export function CompareToMeClient() {
                     </strong>{" "}
                     percentile.
                   </div>
-                  <div className="relative h-7 bg-slate-100/70 rounded overflow-hidden">
+                  <div className="relative h-7 bg-cream-100/70 rounded overflow-hidden">
                     <div
                       className="absolute top-0 bottom-0 left-0 bg-gradient-to-r from-atlas-200 via-atlas-400 to-atlas-600"
                       style={{ width: "100%" }}
