@@ -134,8 +134,14 @@ export default function HomePage() {
                Each rotating word sits at the END of its line, so length changes
                only affect the right edge of one line, never the rest of the
                headline. */}
-            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-ink-900 leading-[1.08]">
-              <span className="block">
+            {/* Plan v15 Block 5: each line is its own true block element so
+               business word + "make" can never visually concatenate. flex
+               flex-col on the h1 forces vertical stacking regardless of
+               child display rules. min-w-[8ch] reserves just enough room
+               for "New York" — Barcelona/Sao Paulo expand the span, which
+               is acceptable per founder. */}
+            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-ink-900 leading-[1.08] flex flex-col">
+              <span className="block w-full">
                 How much does a{" "}
                 <span className="text-atlas-600">
                   <RotatingWord
@@ -144,9 +150,9 @@ export default function HomePage() {
                   />
                 </span>
               </span>
-              <span className="block">
+              <span className="block w-full">
                 make in{" "}
-                <span className="inline-flex justify-start text-atlas-600 min-w-[9ch]">
+                <span className="inline-flex justify-start text-atlas-600 min-w-[8ch]">
                   <RotatingWord
                     words={HERO_CITIES as unknown as string[]}
                     interval={2000}
