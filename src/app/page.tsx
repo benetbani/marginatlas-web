@@ -7,6 +7,7 @@ import { GlobalCoverageStrip } from "@/components/GlobalCoverageStrip";
 import { TaxOverlayTeaser } from "@/components/TaxOverlayTeaser";
 import { AskWidget } from "@/components/AskWidget";
 import { CityPicker } from "@/components/CityPicker";
+import { CitiesDotsMap } from "@/components/CitiesDotsMap";
 import { QualityLegend } from "@/components/QualityLegend";
 import { RotatingWord } from "@/components/RotatingWord";
 import { HERO_CITIES, HERO_BUSINESSES } from "@/lib/hero-words";
@@ -244,22 +245,27 @@ export default function HomePage() {
         </section>
       </ToneBand>
 
-      {/* Plan v15 Block 3 — top cities placeholder (coming soon). */}
+      {/* Plan v15 Block 3 + 8c — top cities placeholder with stylized world dots. */}
       <ToneBand tone="home-cities-placeholder">
         <section className="py-10 md:py-14">
           <div className="rounded-md bg-cream-100 border border-parchment border-l-4 border-l-atlas-600 px-6 py-8 md:px-10 md:py-10">
-            <div className="flex flex-wrap items-center gap-3 mb-3">
-              <span className="inline-flex items-center text-[11px] font-semibold uppercase tracking-[0.14em] text-atlas-700 bg-white border border-atlas-200 rounded-full px-2.5 py-0.5">
-                Coming soon
-              </span>
+            <div className="grid md:grid-cols-[1fr_minmax(0,420px)] gap-8 md:gap-10 items-center">
+              <div>
+                <div className="flex flex-wrap items-center gap-3 mb-3">
+                  <span className="inline-flex items-center text-[11px] font-semibold uppercase tracking-[0.14em] text-atlas-700 bg-white border border-atlas-200 rounded-full px-2.5 py-0.5">
+                    Coming soon
+                  </span>
+                </div>
+                <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight text-ink-900">
+                  Top 100 cities, drilled to the neighborhood
+                </h2>
+                <p className="mt-3 md:mt-4 max-w-xl text-base md:text-lg text-ink-800 leading-relaxed">
+                  Coming this summer — Manhattan blocks, central Tokyo wards, Paris arrondissements.
+                  Same benchmarks, finer geography.
+                </p>
+              </div>
+              <CitiesDotsMap />
             </div>
-            <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight text-ink-900">
-              Top 100 cities, drilled to the neighborhood
-            </h2>
-            <p className="mt-3 md:mt-4 max-w-2xl text-base md:text-lg text-ink-800 leading-relaxed">
-              Coming this summer — Manhattan blocks, central Tokyo wards, Paris arrondissements.
-              Same benchmarks, finer geography.
-            </p>
           </div>
         </section>
       </ToneBand>
