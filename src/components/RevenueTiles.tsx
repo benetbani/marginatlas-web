@@ -9,6 +9,7 @@
  * "Typical" carries an inline ⓘ tooltip disclosing the median definition.
  */
 import { formatMoney } from "@/lib/format/money";
+import { paretoTail } from "@/lib/stats/pareto";
 
 type Props = {
   p10?: number | null;
@@ -32,30 +33,65 @@ export function RevenueTiles({
     return null;
   }
 
+  // Plan v15 Block 8a — Pareto-tail extrapolation for top 1% / top 0.1%.
+  // Only shown when both p50 and p90 are present and the fit yields α > 1
+  // (finite-mean regime). Helper returns null otherwise — keeps casual
+  // visitors away from numbers we can't stand behind.
+  const tail = paretoTail(p50, p90);
+
   return (
-    <section className="py-6 grid grid-cols-1 md:grid-cols-3 gap-4" aria-label="Where every business lands">
-      <Tile
-        eyebrow="Bottom 10% earn"
-        icon="▼"
-        value={p10 ?? null}
-        currencySymbol={currencySymbol}
-        tone="muted"
-      />
-      <Tile
-        eyebrow="Typical"
-        icon="ⓘ"
-        iconTitle="Median — the middle value. Half the businesses earn less, half earn more."
-        value={p50}
-        currencySymbol={currencySymbol}
-        tone="accent"
-      />
-      <Tile
-        eyebrow="Top 10% earn"
-        icon="▲"
-        value={p90}
-        currencySymbol={currencySymbol}
-        tone="muted"
-      />
+    <section className="py-6" aria-label="Where every business lands">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <Tile
+          eyebrow="Bottom 10% earn"
+          icon="▼"
+          value={p10 ?? null}
+          currencySymbol={currencySymbol}
+          tone="muted"
+        />
+        <Tile
+          eyebrow="Typical"
+          icon="ⓘ"
+          iconTitle="Median — the middle value. Half the businesses earn less, half earn more."
+          value={p50}
+          currencySymbol={currencySymbol}
+          tone="accent"
+        />
+        <Tile
+          eyebrow="Top 10% earn"
+          icon="▲"
+          value={p90}
+          currencySymbol={currencySymbol}
+          tone="muted"
+        />
+      </div>
+      {tail && (
+        <div className="mt-4 rounded-lg border border-parchment bg-cream-50 px-4 py-3 md:px-5 md:py-4 flex flex-wrap items-baseline gap-x-6 gap-y-2 text-sm">
+          <span className="text-xs uppercase tracking-wide text-ink-700/70 font-medium">
+            Modeled tail
+          </span>
+          <span className="text-ink-800">
+            Top 1%:{" "}
+            <span className="font-semibold text-ink-900 tabular-nums">
+              {currencySymbol}
+              {formatMoney(tail.p99)}
+            </span>
+          </span>
+          <span className="text-ink-800">
+            Top 0.1%:{" "}
+            <span className="font-semibold text-ink-900 tabular-nums">
+              {currencySymbol}
+              {formatMoney(tail.p999)}
+            </span>
+          </span>
+          <span
+            className="text-xs text-ink-700/70"
+            title={`Single-parameter Pareto fit on the p50/p90 anchors. Tail index α = ${tail.alpha.toFixed(2)}.`}
+          >
+            Pareto-fit estimate ⓘ
+          </span>
+        </div>
+      )}
     </section>
   );
 }
