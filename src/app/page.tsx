@@ -84,7 +84,7 @@ export default function HomePage() {
               </span>
               <span className="block">
                 make in{" "}
-                <span className="text-atlas-600">
+                <span className="inline-flex justify-start text-atlas-600 min-w-[9ch]">
                   <RotatingWord
                     words={HERO_CITIES as unknown as string[]}
                     interval={2000}

@@ -14,7 +14,7 @@ export const HERO_CITIES = [
   "Berlin",
   "Milan",
   "Barcelona",
-  "Rio de Janeiro",
+  "Sao Paulo",
   "Mumbai",
   "Dubai",
   "Lagos",
