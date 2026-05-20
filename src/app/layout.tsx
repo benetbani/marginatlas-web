@@ -44,13 +44,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={cormorant.variable}>
       <body className="min-h-screen bg-cream-50 text-ink-900 font-sans">
-        {/* Plausible Analytics — privacy-friendly, cookieless, GDPR-safe.
-            Loaded afterInteractive so it never blocks render. The data-domain
-            must match the property name in the Plausible dashboard. */}
+        {/* Microsoft Clarity — heatmaps + session recordings, free forever.
+            The src URL is Clarity's loader; it injects the actual tracking
+            script after load. afterInteractive so it never blocks render. */}
         <Script
-          defer
-          src="https://plausible.io/js/script.js"
-          data-domain="www.marginatlas.com"
+          id="ms-clarity"
+          src="https://www.clarity.ms/tag/wtu315an8b"
           strategy="afterInteractive"
         />
         <Organization />
