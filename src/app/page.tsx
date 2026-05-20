@@ -63,33 +63,41 @@ export default function HomePage() {
         removed (HeaderSearch in layout.tsx covers it globally).
       */}
       <ToneBand tone="home-hero">
-        <section className="py-16 md:py-24 lg:py-28">
+        <section className="pt-8 pb-10 md:pt-12 md:pb-14 lg:pt-14 lg:pb-16">
           <div className="max-w-4xl">
-            <div className="text-xs font-semibold uppercase tracking-[0.18em] text-atlas-700 mb-6">
+            <div className="text-xs font-semibold uppercase tracking-[0.18em] text-atlas-700 mb-4 md:mb-5">
               Small-business benchmarks · 191 countries
             </div>
-            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-ink-900 leading-[1.05]">
-              How much does a{" "}
-              <span className="inline-block min-w-[5ch] text-atlas-600">
-                <RotatingWord
-                  words={HERO_BUSINESSES as unknown as string[]}
-                  interval={2000}
-                />
-              </span>{" "}
-              make in{" "}
-              <span className="inline-block min-w-[7ch] text-atlas-600">
-                <RotatingWord
-                  words={HERO_CITIES as unknown as string[]}
-                  interval={2000}
-                  offset={1000}
-                />
+            {/* Two-line layout so the question mark stays anchored to the city.
+               Each rotating word sits at the END of its line, so length changes
+               only affect the right edge of one line, never the rest of the
+               headline. */}
+            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-ink-900 leading-[1.08]">
+              <span className="block">
+                How much does a{" "}
+                <span className="text-atlas-600">
+                  <RotatingWord
+                    words={HERO_BUSINESSES as unknown as string[]}
+                    interval={2000}
+                  />
+                </span>
               </span>
-              ?
+              <span className="block">
+                make in{" "}
+                <span className="text-atlas-600">
+                  <RotatingWord
+                    words={HERO_CITIES as unknown as string[]}
+                    interval={2000}
+                    offset={1000}
+                  />
+                </span>
+                <span className="text-ink-900">?</span>
+              </span>
             </h1>
-            <p className="mt-5 md:mt-6 max-w-2xl text-lg md:text-xl text-cocoa-700/90 leading-relaxed">
+            <p className="mt-4 md:mt-5 max-w-2xl text-base md:text-lg text-ink-700/90 leading-relaxed">
               Revenue, margins, and what they actually mean, for the businesses behind every street.
             </p>
-            <div className="mt-8 md:mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm md:text-base">
+            <div className="mt-5 md:mt-6 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm md:text-base">
               <a
                 href="/browse"
                 className="inline-flex items-center gap-1.5 font-medium text-ink-800 hover:text-atlas-600 transition-colors border-b border-parchment hover:border-atlas-500 pb-0.5"
