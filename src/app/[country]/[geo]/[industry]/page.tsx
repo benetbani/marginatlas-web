@@ -63,14 +63,22 @@ function lookupIndustryMargin(industryId: string | null | undefined): IndustryMa
   return INDUSTRY_MARGINS.industries[industryId] || INDUSTRY_MARGINS.default_fallback;
 }
 
-// ISR: regenerate every 6 hours (21600 seconds) — Track EE.1.
-// Per-cell tiering (1h for quality_10>=8, 24h for 5-7, 7d for <5) is not
-// possible without converting to dynamic rendering since Next App Router
-// requires revalidate to be a static export. 6h is the compromise that
-// catches Supabase refreshes within a working day while keeping CDN hit
-// rates high.
-export const revalidate = 21600;
-export const dynamicParams = true;
+// Plan v15 hotfix R-003 (catastrophic): the page reads `searchParams`
+// (size + year), which Next 15.5.18 strictly classifies as dynamic. The
+// previous `revalidate = 21600` + `dynamicParams = true` combo silently
+// threw DYNAMIC_SERVER_USAGE on every non-pre-rendered cell page — only
+// the top-100 popular URLs in generateStaticParams survived, everything
+// else 500'd on first SSR. Sentry's beforeSend filter was swallowing
+// the digest; once Sentry's webpack wrapper was disabled (commit
+// c5a7e73), the underlying error stopped being silenced and surfaced as
+// a hard 500 cached at the Vercel edge.
+//
+// Fix: declare the route fully dynamic. CDN caching is still available
+// at the Vercel edge layer via response headers — we lose Next's ISR
+// pre-render for the top 100, but every benchmark page renders again.
+// Follow-up: move size/year into client-side state inside
+// DimensionSwitcher so the page can become static-ISR again.
+export const dynamic = "force-dynamic";
 
 type Params = { country: string; geo: string; industry: string };
 type SearchParams = { size?: string; year?: string };
