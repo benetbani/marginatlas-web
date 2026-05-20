@@ -54,8 +54,16 @@ const sentryBuildOptions = {
   // tunnelRoute: "/monitoring",
 };
 
-module.exports = withSentryConfig(
-  nextConfig,
-  sentryWebpackPluginOptions,
-  sentryBuildOptions
-);
+// Plan v15 Block 1a — Sentry wrapper temporarily disabled: was causing
+// `RangeError: Maximum call stack size exceeded` in Set.add on every
+// SSR request under Next 15.5.18 + @sentry/nextjs combination. Sentry
+// itself is gated on NODE_ENV === 'production' in the runtime configs,
+// so dev wasn't supposed to report anyway, but the webpack wrapper
+// was injecting instrumentation that overflowed. Re-enable after
+// upstream fix lands or after we pin a known-good @sentry/nextjs.
+module.exports = nextConfig;
+// module.exports = withSentryConfig(
+//   nextConfig,
+//   sentryWebpackPluginOptions,
+//   sentryBuildOptions
+// );
