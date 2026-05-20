@@ -23,6 +23,7 @@ import { CountryQualitySummary } from "@/components/CountryQualitySummary";
 import { hasRegionalCoverage } from "@/lib/coverage/regional";
 import { getAdmin1Regions } from "@/lib/coverage/admin1";
 import { COUNTRY_PAGE_SECTIONS, getToneClass } from "@/lib/page-layout/section-order";
+import { getCountryAnchor } from "@/lib/content/country-anchors";
 
 // Keep section-order constant referenced for type checking — sections render in this exact order below.
 void COUNTRY_PAGE_SECTIONS;
@@ -39,13 +40,6 @@ function fmtMoney(v: number | null | undefined): string {
   if (v >= 1e3) return `$${(v / 1e3).toFixed(0)}K`;
   return `$${v.toFixed(0)}`;
 }
-
-const QUALITY_LABEL: Record<string, { label: string; tone: string }> = {
-  A: { label: "Highest-quality coverage", tone: "bg-moss-100 text-moss-700 border-moss-300" },
-  B: { label: "Strong coverage",           tone: "bg-atlas-100 text-atlas-800 border-atlas-300" },
-  C: { label: "Partial coverage",          tone: "bg-cream-200 text-cocoa-700 border-cream-300" },
-  D: { label: "Estimated only",            tone: "bg-clay-100 text-clay-700 border-clay-300" },
-};
 
 const COUNTRY_SIGNATURE: Record<string, { line: string; glyph: string }> = {
   US: { line: "America's small-business heartland: restaurants, real estate, software.", glyph: "🏬" },
@@ -129,7 +123,6 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
     line: "Small-business benchmarks across this country.",
     glyph: "🏬",
   };
-  const qual = QUALITY_LABEL[meta.quality] || QUALITY_LABEL.C;
   // Plan v13 Wave 1 — countries with only city-level data (e.g. Argentina)
   // must not advertise a sub-regional view. The flag is plumbed here so
   // any future Regions tab/section can be wrapped with `{showRegions ? ... : null}`.
@@ -163,38 +156,27 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
         so sister country pages always have identical structure.
       */}
 
-      {/* 1. hero: Plan v14 A.1 (T-A1.3): canonical ink-dark tone applied.
-         Text colors flipped to cream/atlas-light variants so they remain
-         legible on the bg-ink-900 surface. CountryFlag is a flat SVG and
-         renders fine on dark. The coverage quality chip keeps its semantic
-         color but gets a translucent ink-800 background so it integrates. */}
-      <section id="hero" className={`py-8 ${getToneClass("hero")}`}>
+      {/* 1. hero: Plan v15 Block 4 — cream-100 surface to match the rest of
+         the site (the previous ink-dark wrapper felt like an error when
+         every other page is cream). Tagline now reads from the editorial
+         style-guide anchor lookup. The coverage tier chip was removed from
+         the hero; coverage detail still lives in the CountryQualitySummary
+         section just below. */}
+      <section id="hero" className="py-8 px-6 md:px-8 bg-cream-100">
         <header className="lg:grid lg:grid-cols-[1.4fr_1fr] lg:gap-10 lg:items-center">
           <div>
-            <div className="text-xs uppercase tracking-wide text-cream-300/80 font-medium">
+            <div className="text-xs uppercase tracking-wide text-ink-700/70 font-medium">
               Country
             </div>
-            <h1 className="mt-2 text-4xl md:text-6xl font-semibold tracking-tight text-cream-50 flex items-center gap-3 flex-wrap">
-              <CountryFlag iso2={iso2} className="w-12 md:w-16" />
+            <h1 className="mt-2 text-4xl md:text-6xl font-semibold tracking-tight text-ink-900 flex items-center gap-3 flex-wrap">
+              <span className="inline-flex pl-1">
+                <CountryFlag iso2={iso2} className="w-12 md:w-16" />
+              </span>
               <span>{meta.name}</span>
             </h1>
-            <p className="mt-4 text-lg text-cream-200/85 max-w-2xl leading-relaxed">
-              {sig.line}
+            <p className="mt-4 text-lg text-ink-700 max-w-2xl leading-relaxed">
+              {getCountryAnchor(iso2, meta.name)}
             </p>
-            <div className="mt-5 flex flex-wrap items-center gap-2">
-              <span
-                className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border bg-ink-800 text-cream-100 border-cream-200/20"
-              >
-                {qual.label}
-              </span>
-              <span className="text-xs text-cream-300/70">Coverage tier {meta.quality}</span>
-              <a
-                href={`/coverage/${iso2.toLowerCase()}`}
-                className="ml-1 text-xs text-atlas-300 hover:text-atlas-200 font-medium"
-              >
-                See coverage scorecard →
-              </a>
-            </div>
           </div>
           <div className="hidden lg:block mt-6 lg:mt-0">
             {/* Plan v12 IM9: real country hero photo when manifest has one. */}
