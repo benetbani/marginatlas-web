@@ -110,7 +110,7 @@ export function PostTaxToggle({ country, regionId, grossRevenue, payroll }: Prop
             </div>
           </div>
 
-          <div className="mt-5 rounded-lg bg-cream-100 border border-parchment p-3 text-xs text-ink-700/80 leading-relaxed">
+          <div className="mt-5 rounded-lg bg-cream-100 border border-parchment p-3 text-xs text-ink-800 leading-relaxed">
             <strong className="text-ink-900">Planning estimate only: not tax advice.</strong>
             {" "}
             Country-level approximation. Actual liability varies by region,

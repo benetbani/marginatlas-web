@@ -40,7 +40,7 @@ export function QualityLegend() {
               </div>
               <div>
                 <div className="text-sm font-semibold text-ink-900">{t.label}</div>
-                <div className="text-xs text-ink-700/80 leading-snug">{t.desc}</div>
+                <div className="text-xs text-ink-800 leading-snug">{t.desc}</div>
               </div>
             </div>
           ))}

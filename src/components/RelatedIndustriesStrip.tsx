@@ -34,7 +34,7 @@ export function RelatedIndustriesStrip({
       <div className="text-xs uppercase tracking-wide text-atlas-700 font-semibold">
         More in this sector
       </div>
-      <div className="mt-1 text-sm text-ink-700/80">
+      <div className="mt-1 text-sm text-ink-800">
         Same geography ({geo.replace(/-/g, " ")}), different industry: explore
         the {sector?.name?.toLowerCase() || "sector"} neighbors.
       </div>

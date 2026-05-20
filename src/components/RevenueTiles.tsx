@@ -76,7 +76,7 @@ function Tile({
   tone: "muted" | "accent";
 }) {
   const bg = tone === "accent" ? "bg-cream-100 border-atlas-300" : "bg-cream-50 border-parchment";
-  const txt = tone === "accent" ? "text-ink-900" : "text-ink-700/85";
+  const txt = tone === "accent" ? "text-ink-900" : "text-ink-800";
   const iconColor = tone === "accent" ? "text-atlas-600" : "text-ink-500";
   return (
     <div className={`rounded-xl border ${bg} p-5 md:p-6`}>

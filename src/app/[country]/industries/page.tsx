@@ -80,7 +80,7 @@ export default async function CountryIndustriesPage({
           Small business industries in {name}
         </h1>
       </div>
-      <p className="text-ink-700/85 max-w-2xl mb-8">
+      <p className="text-ink-800 max-w-2xl mb-8">
         Benchmarks for the typical small business across {name}&apos;s
         economy. Click an industry to see typical revenue, profit margins,
         and cost structures.

@@ -18,7 +18,7 @@ export async function GlobalCoverageStrip() {
           <div className="text-2xl md:text-3xl font-semibold text-ink-900 tracking-tight">
             Small businesses, every corner of the world
           </div>
-          <div className="mt-2 text-sm text-ink-700/80">
+          <div className="mt-2 text-sm text-ink-800">
             From the metropolitan capitals to the smallest economies — one consistent benchmark.
           </div>
         </div>

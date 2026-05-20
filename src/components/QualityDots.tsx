@@ -57,7 +57,7 @@ export function QualityDots({ score, detail, size = "md" }: Props) {
           className={`${dotW} ${dotH} rounded-sm ${i < s ? tier.fill : "bg-cream-300"}`}
         />
       ))}
-      <span className={`ml-1.5 ${fontSize} text-ink-700/80 tabular-nums font-medium`}>
+      <span className={`ml-1.5 ${fontSize} text-ink-800 tabular-nums font-medium`}>
         {s}/10
       </span>
     </div>

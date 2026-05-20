@@ -162,7 +162,7 @@ export default async function PerCountryCoverage({
                           style={{ width: `${pct}%` }}
                         />
                       </div>
-                      <span className="text-right text-ink-700/80 tabular-nums">
+                      <span className="text-right text-ink-800 tabular-nums">
                         {count.toLocaleString()}
                       </span>
                       <span className="col-span-3 text-xs text-ink-700/60 pl-[68px]">

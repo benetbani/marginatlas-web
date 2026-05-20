@@ -113,7 +113,7 @@ export default async function RegionIndustriesPage({
       <h1 className="text-3xl md:text-4xl font-semibold text-ink-900 mb-3">
         Small business industries in {regionName}
       </h1>
-      <p className="text-ink-700/85 max-w-2xl mb-8">
+      <p className="text-ink-800 max-w-2xl mb-8">
         Benchmarks for the typical small business across {regionName},{" "}
         {countryName}. Click an industry to see typical revenue, profit
         margins, and cost structures for the region.

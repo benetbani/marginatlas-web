@@ -96,7 +96,7 @@ export function NetProfitWaterfall({
         </div>
       </div>
 
-      <div className="mt-5 rounded-lg bg-cream-100 border border-parchment p-3 text-xs text-ink-700/80 leading-relaxed">
+      <div className="mt-5 rounded-lg bg-cream-100 border border-parchment p-3 text-xs text-ink-800 leading-relaxed">
         <strong className="text-ink-900">Estimate only: not financial or tax advice.</strong>{" "}
         COGS pulled from industry-typical gross margin. Payroll inferred
         from operating margin when not measured. Fixed costs from city /

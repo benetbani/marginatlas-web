@@ -29,7 +29,7 @@ export default async function NotFound() {
         We don&apos;t have that one yet.
       </h1>
       {path ? (
-        <p className="mt-3 text-sm text-ink-700/80">
+        <p className="mt-3 text-sm text-ink-800">
           Tried to reach <code className="px-1.5 py-0.5 rounded bg-parchment-100 text-ink-900">{path}</code>
         </p>
       ) : null}

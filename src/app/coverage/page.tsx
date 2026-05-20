@@ -130,7 +130,7 @@ export default async function CoveragePage() {
             <div className="text-3xl font-semibold text-ink-900 tabular-nums">
               {n}
             </div>
-            <div className="text-sm text-ink-700/80 mt-1">{label}</div>
+            <div className="text-sm text-ink-800 mt-1">{label}</div>
           </div>
         ))}
       </section>
@@ -172,7 +172,7 @@ export default async function CoveragePage() {
           <h2 className="text-xl font-semibold text-ink-900 mb-1">
             Most-needed countries
           </h2>
-          <p className="text-sm text-ink-700/80 mb-3">
+          <p className="text-sm text-ink-800 mb-3">
             Countries where our confidence is lowest: first up for refinement.
           </p>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
