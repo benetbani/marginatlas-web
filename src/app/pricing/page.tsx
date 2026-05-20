@@ -9,7 +9,7 @@ export default function PricingPage() {
       blurb: "Preview snapshots, get a feel for the data, build a watch-list.",
       features: [
         "50 snapshot previews per month",
-        "Median (p50) values only",
+        "Typical (median) values only",
         "100-row CSV export (watermarked)",
         "5 saved snapshots",
         "Email signup required",
@@ -25,7 +25,7 @@ export default function PricingPage() {
       blurb: "For solo founders, operators, and small-business researchers.",
       features: [
         "Unlimited benchmark views",
-        "Full p10/p25/p50/p75/p90 distributions",
+        "Bottom 10% to top 10%, plus quartiles",
         "CSV/Excel exports up to 10k rows",
         "20 saved snapshots + email alerts",
         "50 AI queries / month",

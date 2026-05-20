@@ -127,7 +127,7 @@ export default function BrowsePage() {
         <h2 className="text-xl md:text-2xl font-semibold text-ink-900">Popular pages</h2>
         <p className="text-sm text-ink-700/70 mt-1">
           Hand-picked entry points across the atlas. Click any tile to see the
-          full benchmark: distribution, time series, after-tax owner take.
+          full benchmark: where every business lands, time series, after-tax owner take.
         </p>
         <div className="mt-5 grid md:grid-cols-2 lg:grid-cols-3 gap-3">
           {[

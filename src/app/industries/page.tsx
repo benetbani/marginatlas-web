@@ -54,8 +54,8 @@ export default function IndustriesIndex() {
         </h1>
         <p className="mt-3 text-lg text-ink-800/80">
           Pick an industry to see how it earns worldwide: typical
-          revenue, employment, after-tax owner take-home, and the full
-          distribution from bottom 10% to top 10%.
+          revenue, employment, after-tax owner take-home, and where
+          every business lands from bottom 10% to top 10%.
         </p>
       </header>
 

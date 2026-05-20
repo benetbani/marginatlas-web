@@ -83,23 +83,22 @@ export function RevenueDistribution({
     .map((p) => `L${sx(p.x).toFixed(1)},${sy(p.y).toFixed(1)}`)
     .join(" ")} L${sx(samples[samples.length - 1].x).toFixed(1)},${(H - padY).toFixed(1)} Z`;
 
-  // p20 marker (interpolate if not supplied)
-  const p20 = p10 != null && p50 != null ? p10 + (p50 - p10) * 0.4 : null;
-
+  // Plan v15 Block 6 — anchors normalized to Bottom 10% / Typical / Top 10%.
+  // p10 is the canonical low anchor (was an interpolated p20 previously).
   const markers: Array<{ x: number; label: string; sub: string }> = [];
-  if (p20 != null) markers.push({ x: p20, label: "Bottom 20%", sub: `${currencySymbol}${formatMoney(p20)}` });
-  markers.push({ x: p50, label: "Median", sub: `${currencySymbol}${formatMoney(p50)}` });
+  if (p10 != null) markers.push({ x: p10, label: "Bottom 10%", sub: `${currencySymbol}${formatMoney(p10)}` });
+  markers.push({ x: p50, label: "Typical", sub: `${currencySymbol}${formatMoney(p50)}` });
   if (p90 != null) markers.push({ x: p90, label: "Top 10%", sub: `${currencySymbol}${formatMoney(p90)}` });
 
   return (
-    <section className="py-6" aria-label="Revenue distribution">
+    <section className="py-6" aria-label="Where every business lands">
       <svg
         viewBox={`0 0 ${W} ${H + 28}`}
         preserveAspectRatio="none"
         className="w-full"
         style={{ height: "180px" }}
         role="img"
-        aria-label="Smooth distribution curve of revenue per firm"
+        aria-label="Smooth curve showing where every business lands by revenue"
       >
         <path d={areaPath} fill="#86C3B9" fillOpacity="0.35" />
         <path d={linePath} fill="none" stroke="#3A7268" strokeWidth="2" />

@@ -217,10 +217,18 @@ export function CalculatorForm({ countries, industries }: Props) {
             </div>
           </div>
           <div className="mt-4 grid grid-cols-5 gap-1 text-xs text-center">
-            {(["p10", "p25", "p50", "p75", "p90"] as const).map((k) => (
+            {(
+              [
+                { k: "p10", label: "Bottom 10%" },
+                { k: "p25", label: "Lower mid" },
+                { k: "p50", label: "Typical" },
+                { k: "p75", label: "Upper mid" },
+                { k: "p90", label: "Top 10%" },
+              ] as const
+            ).map(({ k, label }) => (
               <div key={k} className="p-2 rounded bg-white border border-ink-200">
-                <div className="text-ink-700/60 uppercase tracking-wide text-[10px]">
-                  {k}
+                <div className="text-ink-700/60 tracking-wide text-[10px]">
+                  {label}
                 </div>
                 <div className="font-medium text-ink-900 tabular-nums">
                   {fmtMoney(result[`rev_${k}` as keyof CellResult] as number | null)}

@@ -521,8 +521,8 @@ export default async function CellPage({
         </div>
       </section>
 
-      {/* Plan v13 Wave 2: Bottom 20% / Median / Top 10% revenue tiles +
-         smooth log-normal distribution curve. Replaces the prior
+      {/* Plan v15 Block 6: Bottom 10% / Typical / Top 10% revenue tiles +
+         smooth log-normal curve. Replaces the prior
          histogram + 5-bar tier view.
          Plan v14 A.1 (T-A1.4): legacy id="distribution" renamed to canonical
          "revenue-distribution". Tone stays mapped to "margin-waterfall"

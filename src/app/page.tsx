@@ -290,7 +290,7 @@ export default function HomePage() {
           </div>
           <p className="text-sm text-cocoa-700/80 max-w-2xl mb-6">
             Eight benchmarks most people recognize on sight. Click any tile for the full
-            numbers: distribution, spread, time series, comparable industries.
+            numbers: where every business lands, time series, comparable industries.
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 auto-rows-fr">
             {FEATURED.map((spec) => (

@@ -205,7 +205,7 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
             </h2>
             <p className="mt-1 text-sm text-ink-700/70">
               Most-covered SMB categories. Click any tile for the full benchmark:
-              distribution, time series, neighbors.
+              where every business lands, time series, neighbors.
             </p>
             <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {topIndustries.map((ind) => {
