@@ -68,7 +68,7 @@ export default function RootLayout({
               <nav className="text-sm text-ink-800 hidden md:flex">
                 <a href="/browse" className="hover:text-atlas-600 mx-2 transition-colors">Browse</a>
                 <a href="/industries" className="hover:text-atlas-600 mx-2 transition-colors">Industries</a>
-                <a href="/world" className="hover:text-atlas-600 mx-2 transition-colors">World</a>
+                <a href="/world" className="hover:text-atlas-600 mx-2 transition-colors">Regions</a>
                 <a href="/calculator" className="hover:text-atlas-600 mx-2 transition-colors">Calculator</a>
                 <a href="/compare" className="hover:text-atlas-600 mx-2 transition-colors">Compare</a>
                 <a href="/coverage" className="hover:text-atlas-600 mx-2 transition-colors">Coverage</a>
