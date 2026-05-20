@@ -7,6 +7,10 @@
  */
 import { supabaseAdmin } from "./supabase";
 import {
+  rollForward,
+  INFLATION_TARGET_YEAR,
+} from "./stats/inflation";
+import {
   INDUSTRY_BY_ID,
   INDUSTRIES,
   SECTOR_BY_ID,
@@ -146,6 +150,34 @@ export function regionalSlugToGeoId(country: string, geoSlug: string): string {
   return slug.toUpperCase();
 }
 
+/**
+ * Plan v15 Block 8b — roll the percentile anchors + per-firm headline
+ * + payroll/employee forward to the current target year using a
+ * country-specific cumulative CPI factor. The cell's `year` field is
+ * advanced to the target year so callers see a consistent "current"
+ * snapshot regardless of the underlying source vintage. Counts of
+ * enterprises/employees are NOT inflated (they're stock measures).
+ */
+function applyRollforward(cell: Cell): Cell {
+  const from = cell.year;
+  if (!from || from >= INFLATION_TARGET_YEAR) return cell;
+  const iso2 = cell.country;
+  const out: Cell = {
+    ...cell,
+    year: INFLATION_TARGET_YEAR,
+    revenue_per_firm: rollForward(cell.revenue_per_firm, from, iso2),
+    total_revenue: rollForward(cell.total_revenue, from, iso2),
+    total_revenue_usd: rollForward(cell.total_revenue_usd, from, iso2),
+    rev_p10: rollForward(cell.rev_p10, from, iso2),
+    rev_p25: rollForward(cell.rev_p25, from, iso2),
+    rev_p50: rollForward(cell.rev_p50, from, iso2),
+    rev_p75: rollForward(cell.rev_p75, from, iso2),
+    rev_p90: rollForward(cell.rev_p90, from, iso2),
+    payroll_per_employee: rollForward(cell.payroll_per_employee, from, iso2),
+  };
+  return out;
+}
+
 /** Normalise a regional_cells row to the unified Cell shape. */
 function normalizeRegionalRow(r: Record<string, unknown>): Cell {
   const revP50 = r.rev_p50 as number | null;
@@ -178,7 +210,7 @@ function normalizeRegionalRow(r: Record<string, unknown>): Cell {
     coverage_source: (r.coverage_source as string) || "National business statistics",
     currency: (r.currency as string) || "USD",
   };
-  return applyTaxonomy(cell);
+  return applyRollforward(applyTaxonomy(cell));
 }
 
 /**
@@ -284,7 +316,7 @@ function normalizeRow(r: Record<string, unknown>): Cell {
     coverage_source: r.coverage_source as string | null,
     currency: (r.currency as string) || "USD",
   };
-  return applyTaxonomy(cell);
+  return applyRollforward(applyTaxonomy(cell));
 }
 
 export type CellSelector = {
@@ -631,7 +663,7 @@ export async function getSameIndustryAcrossCountries(
       coverage_source: (r.coverage_source as string) || "Estimated from regional patterns",
       currency: "USD",
     };
-    return applyTaxonomy(cell);
+    return applyRollforward(applyTaxonomy(cell));
   });
 }
 
@@ -674,7 +706,7 @@ export async function getExtrapolatedVariants(
       coverage_source: (r.coverage_source as string) || "Estimated from regional patterns",
       currency: "USD",
     };
-    return applyTaxonomy(cell);
+    return applyRollforward(applyTaxonomy(cell));
   });
 }
 
@@ -752,7 +784,7 @@ export async function getExtrapolatedCell(
     coverage_source: (r.coverage_source as string) || "Estimated from regional patterns",
     currency: "USD",
   };
-  return applyTaxonomy(cell);
+  return applyRollforward(applyTaxonomy(cell));
 }
 
 /**
@@ -831,7 +863,7 @@ export async function getSectorFallbackCell(
     coverage_source: "Sector-average fallback",
     currency: "USD",
   };
-  return applyTaxonomy(cell);
+  return applyRollforward(applyTaxonomy(cell));
 }
 
 /**
