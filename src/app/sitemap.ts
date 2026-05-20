@@ -22,7 +22,7 @@ import { score100to10 } from "@/components/QualityDots";
 import { hasRegionalCoverage } from "@/lib/coverage/regional";
 import { getAdmin1Regions } from "@/lib/coverage/admin1";
 
-const BASE_URL = "https://marginatlas.com";
+const BASE_URL = "https://www.marginatlas.com";
 
 export async function generateSitemaps() {
   return [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];

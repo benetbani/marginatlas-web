@@ -56,9 +56,9 @@ async function runChecks(): Promise<Check[]> {
 
   checks.push(
     (async () => {
-      const r = await checkUrl("https://marginatlas.com/", { method: "HEAD" });
+      const r = await checkUrl("https://www.marginatlas.com/", { method: "HEAD" });
       return {
-        name: "marginatlas.com",
+        name: "www.marginatlas.com",
         description: "Production landing page",
         ...r,
       };
@@ -94,7 +94,7 @@ async function runChecks(): Promise<Check[]> {
 
   checks.push(
     (async () => {
-      const r = await checkUrl("https://marginatlas.com/api/ask", {
+      const r = await checkUrl("https://www.marginatlas.com/api/ask", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ question: "ping" }),

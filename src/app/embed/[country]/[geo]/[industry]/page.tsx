@@ -37,7 +37,7 @@ export default async function EmbedCell({ params }: { params: Promise<Params> })
   const cell = await getCellBySlug(country, geo, industry);
   if (!cell) notFound();
 
-  const url = `https://marginatlas.com/${country}/${geo}/${industry}`;
+  const url = `https://www.marginatlas.com/${country}/${geo}/${industry}`;
   return (
     <div className="p-5 max-w-2xl">
       <div className="text-[10px] uppercase tracking-wide text-atlas-600 font-medium">

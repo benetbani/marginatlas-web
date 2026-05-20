@@ -254,7 +254,7 @@ export default async function CellPage({
       )
     : null;
 
-  const url = `https://marginatlas.com/${country}/${geo}/${industry}`;
+  const url = `https://www.marginatlas.com/${country}/${geo}/${industry}`;
   return (
     <div className="xl:flex xl:gap-6">
       <div className="xl:flex-1 xl:min-w-0">
@@ -271,16 +271,16 @@ export default async function CellPage({
         revP10={cell.rev_p10}
         revP90={cell.rev_p90}
         qualityScore={cell.quality_score}
-        csvExportUrl={`https://marginatlas.com/api/export-csv?country=${country}&geo=${geo}&industry=${industry}`}
+        csvExportUrl={`https://www.marginatlas.com/api/export-csv?country=${country}&geo=${geo}&industry=${industry}`}
       />
       {/* Plan v14 Phase C.4: FAQPage JSON-LD. Five data-backed Q&As per cell,
          no visible DOM. Targets AI Overviews + Google People Also Ask. */}
       <FAQSchema faqs={faqs} />
       <Breadcrumbs
         items={[
-          { name: "Home", url: "https://marginatlas.com/" },
-          { name: country.toUpperCase(), url: `https://marginatlas.com/${country}` },
-          { name: cell.geo_name || geo, url: `https://marginatlas.com/${country}/${geo}` },
+          { name: "Home", url: "https://www.marginatlas.com/" },
+          { name: country.toUpperCase(), url: `https://www.marginatlas.com/${country}` },
+          { name: cell.geo_name || geo, url: `https://www.marginatlas.com/${country}/${geo}` },
           { name: cell.industry_name || industry, url },
         ]}
       />

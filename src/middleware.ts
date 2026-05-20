@@ -119,6 +119,19 @@ export function middleware(req: NextRequest) {
   const ua = req.headers.get("user-agent") || "";
   const path = req.nextUrl.pathname;
 
+  // -1. Apex → www canonical (Phase F server-side fallback).
+  // Primary apex-to-www handling lives in Vercel DNS / project settings,
+  // but if that mis-fires, this edge redirect still preserves the
+  // canonical domain. 308 keeps method + body intact (vs 301 which
+  // browsers may downgrade POST → GET).
+  const host = req.headers.get("host") || "";
+  if (host === "marginatlas.com") {
+    const url = req.nextUrl.clone();
+    url.host = "www.marginatlas.com";
+    url.protocol = "https:";
+    return NextResponse.redirect(url, 308);
+  }
+
   // 0. Canonicalization (CC.12) — redirect uppercase paths and trailing
   // slashes to the lowercase no-slash canonical form. Skip API and Next
   // internals.

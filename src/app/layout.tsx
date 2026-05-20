@@ -1,5 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Cormorant_Garamond } from "next/font/google";
 import { Organization } from "@/components/StructuredData";
 import { HeaderSearch } from "@/components/HeaderSearch";
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   title: "Margin Atlas: Small-business benchmarks across 191 countries",
   description:
     "Revenue, payroll, and after-tax owner take-home for every covered country, industry, city, and size combination. Compiled from official business statistics and standardized for cross-country comparison.",
-  metadataBase: new URL("https://marginatlas.com"),
+  metadataBase: new URL("https://www.marginatlas.com"),
   alternates: {
     canonical: "/",
   },
@@ -43,6 +44,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={cormorant.variable}>
       <body className="min-h-screen bg-cream-50 text-ink-900 font-sans">
+        {/* Plausible Analytics — privacy-friendly, cookieless, GDPR-safe.
+            Loaded afterInteractive so it never blocks render. The data-domain
+            must match the property name in the Plausible dashboard. */}
+        <Script
+          defer
+          src="https://plausible.io/js/script.js"
+          data-domain="www.marginatlas.com"
+          strategy="afterInteractive"
+        />
         <Organization />
         <header className="border-b border-ink-200 bg-cream-50 sticky top-0 z-10">
           <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">

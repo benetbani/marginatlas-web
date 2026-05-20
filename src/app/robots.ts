@@ -43,7 +43,7 @@ export default function robots(): MetadataRoute.Robots {
         crawlDelay: 2,
       },
     ],
-    sitemap: "https://marginatlas.com/sitemap.xml",
-    host: "https://marginatlas.com",
+    sitemap: "https://www.marginatlas.com/sitemap.xml",
+    host: "https://www.marginatlas.com",
   };
 }

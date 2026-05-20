@@ -87,12 +87,12 @@ export function CellDataset({
     creator: {
       "@type": "Organization",
       name: "Margin Atlas",
-      url: "https://marginatlas.com",
+      url: "https://www.marginatlas.com",
     },
     publisher: {
       "@type": "Organization",
       name: "Tesseract Research",
-      url: "https://marginatlas.com",
+      url: "https://www.marginatlas.com",
     },
     inLanguage: "en",
     isAccessibleForFree: true,
@@ -106,7 +106,7 @@ export function CellDataset({
     includedInDataCatalog: {
       "@type": "DataCatalog",
       name: "Margin Atlas",
-      url: "https://marginatlas.com",
+      url: "https://www.marginatlas.com",
     },
     // NOTE: deliberately no `measurementTechnique` / source agency / license
     // fields — keep methodology private per R-002.
@@ -203,7 +203,7 @@ export function Organization() {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Margin Atlas",
-    url: "https://marginatlas.com",
+    url: "https://www.marginatlas.com",
     description:
       "Small-business benchmarks across 40+ countries: revenue, employment, and wage distributions.",
     // NOTE: no `sameAs` linking to data mirrors. We don't broadcast where the
