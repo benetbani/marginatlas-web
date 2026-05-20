@@ -134,12 +134,23 @@ type Block =
   | { type: "tool_result"; tool_use_id: string; content: string };
 
 async function callClaude(messages: { role: "user" | "assistant"; content: Block[] | string }[]) {
+  // Plan v14 Phase F: route through Vercel AI Gateway in production when
+  // ANTHROPIC_AI_GATEWAY_KEY is set; falls back to direct Anthropic when
+  // only ANTHROPIC_API_KEY is present (local dev, or if gateway is down).
+  // Same response shape either way; the gateway is Anthropic-compatible.
+  const gatewayKey = process.env.ANTHROPIC_AI_GATEWAY_KEY;
   const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) throw new Error("ANTHROPIC_API_KEY not set");
-  const r = await fetch("https://api.anthropic.com/v1/messages", {
+  if (!gatewayKey && !apiKey) {
+    throw new Error("Neither ANTHROPIC_AI_GATEWAY_KEY nor ANTHROPIC_API_KEY is set");
+  }
+  const baseUrl = gatewayKey ? "https://ai-gateway.vercel.sh" : "https://api.anthropic.com";
+  const authHeaders: Record<string, string> = gatewayKey
+    ? { Authorization: `Bearer ${gatewayKey}` }
+    : { "x-api-key": apiKey as string };
+  const r = await fetch(`${baseUrl}/v1/messages`, {
     method: "POST",
     headers: {
-      "x-api-key": apiKey,
+      ...authHeaders,
       "anthropic-version": "2023-06-01",
       "content-type": "application/json",
     },
@@ -153,7 +164,8 @@ async function callClaude(messages: { role: "user" | "assistant"; content: Block
   });
   if (!r.ok) {
     const text = await r.text();
-    throw new Error(`Anthropic ${r.status}: ${text.slice(0, 500)}`);
+    const provider = gatewayKey ? "AI Gateway" : "Anthropic";
+    throw new Error(`${provider} ${r.status}: ${text.slice(0, 500)}`);
   }
   return r.json();
 }
