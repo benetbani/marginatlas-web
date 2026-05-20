@@ -129,7 +129,7 @@ export function CellActions({
       </a>
       {overCap && (
         <span className="text-xs text-rose-700">
-          Free tier saves 5 cells. <a className="underline" href="/pricing">Upgrade</a> for unlimited.
+          Free tier saves 5. <a className="underline" href="/pricing">Upgrade</a> for unlimited.
         </span>
       )}
     </div>

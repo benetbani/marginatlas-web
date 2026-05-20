@@ -64,7 +64,7 @@ function countryName(iso2: string): string {
 export const metadata = {
   title: "Coverage report: Margin Atlas",
   description:
-    "Per-country data quality and coverage across the 191 countries in Margin Atlas.",
+    "Per-country data quality and coverage across Margin Atlas.",
 };
 
 export default async function CoveragePage() {
@@ -118,7 +118,7 @@ export default async function CoveragePage() {
           [report.totals.countries.toLocaleString(), "countries with data"],
           [
             (report.totals.regional_cells_total + report.totals.extrapolated_cells_total).toLocaleString(),
-            "total cells",
+            "total benchmarks",
           ],
           [report.totals.regional_cells_total.toLocaleString(), "measured / sub-national"],
           [report.totals.industries_covered.toLocaleString(), "industries"],
@@ -159,7 +159,7 @@ export default async function CoveragePage() {
                 </span>
               </div>
               <div className="mt-1 text-xs text-ink-700/70">
-                {(c.regional_cells + c.extrapolated_cells).toLocaleString()} cells ·{" "}
+                {(c.regional_cells + c.extrapolated_cells).toLocaleString()} benchmarks ·{" "}
                 {c.industries} industries
               </div>
             </Link>
@@ -184,7 +184,7 @@ export default async function CoveragePage() {
               >
                 <div className="font-semibold text-ink-900">{countryName(c.iso2)}</div>
                 <div className="mt-1 text-ink-700/70">
-                  q={c.avg_quality_10} · {(c.regional_cells + c.extrapolated_cells).toLocaleString()} cells
+                  q={c.avg_quality_10} · {(c.regional_cells + c.extrapolated_cells).toLocaleString()} benchmarks
                 </div>
               </Link>
             ))}

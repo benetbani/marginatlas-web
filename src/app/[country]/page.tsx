@@ -222,7 +222,7 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
               Top small-business industries in {meta.name}
             </h2>
             <p className="mt-1 text-sm text-ink-700/70">
-              Most-covered SMB categories. Click any tile for the full cell page:
+              Most-covered SMB categories. Click any tile for the full benchmark:
               distribution, time series, neighbors.
             </p>
             <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">

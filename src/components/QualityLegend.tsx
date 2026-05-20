@@ -23,7 +23,7 @@ export function QualityLegend() {
           Data quality scale
         </div>
         <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
-          Every cell carries a 1-10 confidence score
+          Every benchmark carries a 1-10 confidence score
         </h2>
         <p className="mt-2 text-sm text-ink-800/80 max-w-3xl">
           Pulled from direct national statistics where available; extrapolated

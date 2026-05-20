@@ -28,13 +28,6 @@ function fmtMoney(v: number | null | undefined): string {
   return `$${v.toFixed(0)}`;
 }
 
-function fmtCount(v: number | null | undefined): string {
-  if (v == null || isNaN(v)) return "-";
-  if (v >= 1e6) return `${(v / 1e6).toFixed(1)}M`;
-  if (v >= 1e3) return `${(v / 1e3).toFixed(0)}K`;
-  return v.toLocaleString();
-}
-
 export async function FirstFrameStrip() {
   // Hourly rotation index keeps the cache key stable per hour.
   const hourBucket = Math.floor(Date.now() / (1000 * 60 * 60));
@@ -69,20 +62,18 @@ export async function FirstFrameStrip() {
             </span>
             <span className="text-cocoa-700 inline-flex items-center gap-1">
               <CountryFlag iso2={pick.country} label={cell.geo_name || pick.country} className="w-4" />
-              <span>{cell.industry_name} in {cell.geo_name} · {cell.year}</span>
+              <span>{cell.industry_name} in {cell.geo_name}</span>
             </span>
           </div>
           <span className="text-xs text-atlas-700 font-medium hover:text-atlas-900">
-            See full cell →
+            See full snapshot →
           </span>
         </div>
-        <div className="mt-3 grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
+        <div className="mt-3 grid grid-cols-2 gap-3 md:gap-6">
           <Cell label="Typical revenue / firm" value={fmtMoney(cell.revenue_per_firm)} />
-          <Cell label="Firms" value={fmtCount(cell.n_enterprises)} />
           <Cell
             label="Wage / employee"
             value={fmtMoney(cell.payroll_per_employee)}
-            mutedOnMobile
           />
         </div>
       </a>
@@ -93,14 +84,12 @@ export async function FirstFrameStrip() {
 function Cell({
   label,
   value,
-  mutedOnMobile,
 }: {
   label: string;
   value: string;
-  mutedOnMobile?: boolean;
 }) {
   return (
-    <div className={mutedOnMobile ? "hidden md:block" : ""}>
+    <div>
       <div className="text-[10px] uppercase tracking-wider text-cocoa-700/70 font-medium">
         {label}
       </div>

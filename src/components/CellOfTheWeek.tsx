@@ -108,7 +108,7 @@ export async function CellOfTheWeek() {
             <div className="flex items-baseline justify-between gap-3 flex-wrap mb-3">
               <span className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-atlas-700 font-bold">
                 <span className="w-1.5 h-1.5 rounded-full bg-atlas-500" aria-hidden />
-                Cell of the week
+                Snapshot of the week
               </span>
               <span className="text-xs text-cocoa-700/60 tabular-nums">
                 Week {week}
@@ -124,7 +124,7 @@ export async function CellOfTheWeek() {
                   {pick.note}
                 </p>
                 <div className="mt-4 text-xs text-atlas-700 font-medium group-hover:text-atlas-900">
-                  Open the cell page →
+                  Open the full snapshot →
                 </div>
               </div>
               <div className="md:text-right">
@@ -134,11 +134,6 @@ export async function CellOfTheWeek() {
                 <div className="text-4xl md:text-5xl font-semibold text-ink-900 tabular-nums">
                   {fmtMoney(cell.revenue_per_firm)}
                 </div>
-                {cell.n_enterprises && (
-                  <div className="mt-1 text-xs text-cocoa-700/70 tabular-nums">
-                    Across {cell.n_enterprises.toLocaleString()} firms
-                  </div>
-                )}
               </div>
             </div>
           </a>

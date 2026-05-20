@@ -591,7 +591,7 @@ export default async function CellPage({
                   {c.industry_name || c.industry_description || c.naics_6}
                 </div>
                 <div className="text-xs text-ink-700/70 mt-1">
-                  {c.n_enterprises?.toLocaleString()} firms · {formatMoney(c.revenue_per_firm)} typical revenue
+                  {formatMoney(c.revenue_per_firm)} typical revenue
                 </div>
               </a>
             ))}

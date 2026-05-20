@@ -32,7 +32,7 @@ export function TaxOverlayTeaser() {
             How much does the owner actually take home?
           </h2>
           <p className="mt-3 text-sm md:text-base text-ink-800/80 leading-relaxed">
-            Every cell page now has an after-tax breakdown: gross revenue,
+            Every benchmark now has an after-tax breakdown: gross revenue,
             payroll, employer social contributions, corporate income tax,
             and what's left for the owner. Country-level rates for 64
             jurisdictions, computed live.
@@ -41,7 +41,7 @@ export function TaxOverlayTeaser() {
             href="/es/madrid/cafes-coffee"
             className="mt-5 inline-flex items-center gap-1 px-4 py-2 rounded-lg bg-atlas-600 hover:bg-atlas-700 text-cream-50 text-sm font-medium transition"
           >
-            See the sample cell →
+            See the sample →
           </Link>
         </div>
         <div className="rounded-xl bg-cream-100 p-5 text-sm border border-cream-300">

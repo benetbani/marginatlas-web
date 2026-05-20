@@ -171,7 +171,7 @@ export default async function WorldPage() {
                         {countryName(iso2)}
                       </span>
                       <span className="text-[10px] opacity-80 tabular-nums">
-                        {cells.toLocaleString()} cells · q{e.avg_quality_10}
+                        {cells.toLocaleString()} benchmarks · q{e.avg_quality_10}
                       </span>
                     </div>
                   </Link>

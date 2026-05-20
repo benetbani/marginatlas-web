@@ -45,7 +45,7 @@ export default function CellError({
           href="/browse"
           className="px-4 py-2 rounded-full bg-cream-100 border border-parchment text-ink-900 hover:bg-white transition font-medium"
         >
-          Browse other cells
+          Browse other benchmarks
         </Link>
         <Link
           href="/"

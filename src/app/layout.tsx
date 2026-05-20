@@ -17,9 +17,9 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Margin Atlas: Small-business benchmarks across 191 countries",
+  title: "Margin Atlas: Small-business benchmarks worldwide",
   description:
-    "Revenue, payroll, and after-tax owner take-home for every covered country, industry, city, and size combination. Compiled from official business statistics and standardized for cross-country comparison.",
+    "Revenue, payroll, and after-tax owner take-home for small businesses worldwide, broken down by industry, city, and size. Compiled from official business statistics and standardized for cross-country comparison.",
   metadataBase: new URL("https://www.marginatlas.com"),
   alternates: {
     canonical: "/",
@@ -94,7 +94,7 @@ export default function RootLayout({
               <div>
                 <div className="font-semibold text-ink-900 mb-3 text-xs uppercase tracking-wide">Browse</div>
                 <ul className="space-y-2 text-xs">
-                  <li><a href="/browse" className="hover:text-atlas-600">All 191 countries</a></li>
+                  <li><a href="/browse" className="hover:text-atlas-600">The whole world</a></li>
                   <li><a href="/industries" className="hover:text-atlas-600">All industries</a></li>
                   <li><a href="/world" className="hover:text-atlas-600">World map</a></li>
                   <li><a href="/sectors/manufacturing" className="hover:text-atlas-600">Sectors</a></li>
@@ -104,7 +104,7 @@ export default function RootLayout({
                 <div className="font-semibold text-ink-900 mb-3 text-xs uppercase tracking-wide">Use</div>
                 <ul className="space-y-2 text-xs">
                   <li><a href="/calculator" className="hover:text-atlas-600">Where do I sit?</a></li>
-                  <li><a href="/compare" className="hover:text-atlas-600">Compare cells</a></li>
+                  <li><a href="/compare" className="hover:text-atlas-600">Compare snapshots</a></li>
                   <li><a href="/#ask-atlas" className="hover:text-atlas-600">Ask Atlas</a></li>
                   <li><a href="/#newsletter" className="hover:text-atlas-600">Newsletter</a></li>
                 </ul>
@@ -139,7 +139,7 @@ export default function RootLayout({
             </div>
             <div className="mt-10 pt-6 border-t border-ink-200/60 flex flex-wrap items-center justify-between gap-3 text-xs text-ink-600">
               <span>© Tesseract Research · marginatlas.com</span>
-              <span>191 countries · 357k+ cells · free to browse</span>
+              <span>Covering small businesses worldwide · free to browse</span>
             </div>
           </div>
         </footer>

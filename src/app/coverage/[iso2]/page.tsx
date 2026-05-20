@@ -106,7 +106,7 @@ export default async function PerCountryCoverage({
       ) : (
         <>
           <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3">
-            <Stat label="Total cells" value={totalCells.toLocaleString()} />
+            <Stat label="Total benchmarks" value={totalCells.toLocaleString()} />
             <Stat label="Industries" value={entry.industries.toString()} />
             <Stat label="Geographies" value={entry.geographies.toString()} />
             <Stat
@@ -175,22 +175,6 @@ export default async function PerCountryCoverage({
             </section>
           ) : null}
 
-          <section className="mt-8">
-            <h2 className="text-lg font-semibold text-ink-900 mb-3">
-              Year range
-            </h2>
-            <p className="text-sm text-ink-700">
-              Data spans{" "}
-              <strong className="text-ink-900 tabular-nums">
-                {entry.year_range[0] ?? "-"}
-              </strong>{" "}
-              to{" "}
-              <strong className="text-ink-900 tabular-nums">
-                {entry.year_range[1] ?? "-"}
-              </strong>
-              .
-            </p>
-          </section>
         </>
       )}
 

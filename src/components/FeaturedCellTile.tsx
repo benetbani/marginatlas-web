@@ -46,32 +46,17 @@ export async function FeaturedCellTile({ spec }: { spec: FeaturedTileSpec }) {
             <CountryFlag iso2={spec.iso2} label={spec.region} className="w-5" />
             <span>{spec.region}</span>
           </span>
-          {cell.year && (
-            <span className="text-cocoa-700/50 tabular-nums">{cell.year}</span>
-          )}
         </div>
         <div className="text-base font-semibold text-ink-900 leading-tight group-hover:text-atlas-700 transition-colors">
           {spec.title} in {spec.region}
         </div>
-        <div className="mt-auto pt-3 border-t border-cocoa-700/10 flex items-baseline justify-between gap-2">
-          <div>
-            <div className="text-[10px] uppercase tracking-wider text-cocoa-700/60 font-medium">
-              Typical revenue
-            </div>
-            <div className="text-2xl font-semibold text-ink-900 tabular-nums">
-              {fmtMoney(cell.revenue_per_firm)}
-            </div>
+        <div className="mt-auto pt-3 border-t border-cocoa-700/10">
+          <div className="text-[10px] uppercase tracking-wider text-cocoa-700/60 font-medium">
+            Typical revenue
           </div>
-          {cell.n_enterprises ? (
-            <div className="text-[10px] text-cocoa-700/60 text-right tabular-nums leading-tight">
-              <div className="font-medium text-ink-900">
-                {cell.n_enterprises >= 1000
-                  ? `${(cell.n_enterprises / 1000).toFixed(1)}k`
-                  : cell.n_enterprises.toLocaleString()}
-              </div>
-              <div>firms</div>
-            </div>
-          ) : null}
+          <div className="text-2xl font-semibold text-ink-900 tabular-nums">
+            {fmtMoney(cell.revenue_per_firm)}
+          </div>
         </div>
       </div>
     </a>

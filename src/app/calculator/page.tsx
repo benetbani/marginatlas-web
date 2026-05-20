@@ -36,7 +36,7 @@ export default function CalculatorPage() {
       <p className="mt-3 text-lg text-ink-800/80 leading-relaxed">
         Pick your country, your industry, and the typical revenue your firm
         does in a year. We&apos;ll show you which percentile that lands in
-        for comparable businesses: and the cell page for the deeper read.
+        for comparable businesses, plus the full benchmark for the deeper read.
       </p>
 
       <div className="mt-8">
@@ -51,9 +51,9 @@ export default function CalculatorPage() {
           href="/compare"
           className="block p-4 rounded-xl border border-ink-200 bg-white hover:border-atlas-500 transition"
         >
-          <div className="font-medium text-ink-900">Compare cells side-by-side →</div>
+          <div className="font-medium text-ink-900">Compare snapshots side-by-side →</div>
           <div className="text-xs text-ink-700/70 mt-1">
-            Three cells, one view. Same industry across regions, or three
+            Three benchmarks, one view. Same industry across regions, or three
             different industries in the same place.
           </div>
         </Link>
@@ -61,7 +61,7 @@ export default function CalculatorPage() {
           href="/browse"
           className="block p-4 rounded-xl border border-ink-200 bg-white hover:border-atlas-500 transition"
         >
-          <div className="font-medium text-ink-900">Browse 191 countries →</div>
+          <div className="font-medium text-ink-900">Browse the whole world →</div>
           <div className="text-xs text-ink-700/70 mt-1">
             Start from a place if you&apos;d rather pick a country first.
           </div>
@@ -69,9 +69,9 @@ export default function CalculatorPage() {
       </section>
 
       <p className="mt-8 text-xs text-ink-700/60 max-w-2xl">
-        The calculator uses the same cell data that powers the rest of the
+        The calculator uses the same benchmark data that powers the rest of the
         atlas. It does not collect or store the revenue number you enter;
-        the percentile is computed in your browser from the cell&apos;s
+        the percentile is computed in your browser from the
         p10/p25/p50/p75/p90 spread.
       </p>
     </div>

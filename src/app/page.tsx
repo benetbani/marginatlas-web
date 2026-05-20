@@ -10,7 +10,6 @@ import { AskWidget } from "@/components/AskWidget";
 import { CityPicker } from "@/components/CityPicker";
 import { QualityLegend } from "@/components/QualityLegend";
 import { RecentlyAddedStrip } from "@/components/RecentlyAddedStrip";
-import { WhatsHotStrip } from "@/components/WhatsHotStrip";
 import { SpotlightCountry } from "@/components/SpotlightCountry";
 import { RotatingWord } from "@/components/RotatingWord";
 import { HERO_CITIES, HERO_BUSINESSES } from "@/lib/hero-words";
@@ -66,7 +65,7 @@ export default function HomePage() {
         <section className="pt-8 pb-10 md:pt-12 md:pb-14 lg:pt-14 lg:pb-16">
           <div className="max-w-4xl">
             <div className="text-xs font-semibold uppercase tracking-[0.18em] text-atlas-700 mb-4 md:mb-5">
-              Small-business benchmarks · 191 countries
+              Small-business benchmarks · worldwide
             </div>
             {/* Two-line layout so the question mark stays anchored to the city.
                Each rotating word sits at the END of its line, so length changes
@@ -102,7 +101,7 @@ export default function HomePage() {
                 href="/browse"
                 className="inline-flex items-center gap-1.5 font-medium text-ink-800 hover:text-atlas-600 transition-colors border-b border-parchment hover:border-atlas-500 pb-0.5"
               >
-                Browse 191 countries
+                Browse the whole world
                 <span aria-hidden="true">→</span>
               </a>
               <a
@@ -144,7 +143,7 @@ export default function HomePage() {
             </a>
           </div>
           <p className="text-sm text-cocoa-700/80 max-w-2xl mb-6">
-            Twelve cells most people recognize on sight. Click any tile for the full
+            Twelve benchmarks most people recognize on sight. Click any tile for the full
             numbers: distribution, spread, time series, comparable industries.
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 auto-rows-fr">
@@ -206,11 +205,10 @@ export default function HomePage() {
 
       {/* Stats strip */}
       <ToneBand tone="home-stats">
-        <section className="py-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <section className="py-8 grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
-            ["191", "countries covered"],
-            ["180+", "SMB industries"],
-            ["357k+", "data cells"],
+            ["Worldwide", "every country covered"],
+            ["Every SMB industry", "from cafés to manufacturing"],
             ["Free", "to browse"],
           ].map(([n, label]) => (
             <div key={label} className="rounded-2xl bg-cream-100 border border-parchment p-5">
@@ -219,67 +217,6 @@ export default function HomePage() {
             </div>
           ))}
         </section>
-      </ToneBand>
-
-      {/* What's inside — numbered list, no card grid */}
-      <ToneBand tone="home-what-youll-see">
-        <section className="py-10">
-          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-ink-900">
-            What you&apos;ll see on every cell
-          </h2>
-          <ol className="mt-6 max-w-3xl divide-y divide-parchment border-t border-b border-parchment">
-            <li className="grid grid-cols-[2.5rem_1fr] gap-4 py-5">
-              <span className="text-xs uppercase tracking-wider text-atlas-700 font-semibold tabular-nums pt-1">
-                01
-              </span>
-              <div>
-                <div className="font-semibold text-lg text-ink-900">
-                  The full distribution. Bottom 10%, Typical, Top 10%.
-                </div>
-                <p className="mt-1.5 text-sm text-ink-900/80 leading-relaxed">
-                  Not just an average. Every cell shows the spread: what the smallest
-                  businesses make, what the typical one does, and what the biggest 10%
-                  bring in.
-                </p>
-              </div>
-            </li>
-            <li className="grid grid-cols-[2.5rem_1fr] gap-4 py-5">
-              <span className="text-xs uppercase tracking-wider text-atlas-700 font-semibold tabular-nums pt-1">
-                02
-              </span>
-              <div>
-                <div className="font-semibold text-lg text-ink-900">
-                  Side-by-side comparisons across countries and industries.
-                </div>
-                <p className="mt-1.5 text-sm text-ink-900/80 leading-relaxed">
-                  Friendly industry names map across every country, so you can compare
-                  bakeries in Paris to bakeries in California without wrestling with
-                  classification codes.
-                </p>
-              </div>
-            </li>
-            <li className="grid grid-cols-[2.5rem_1fr] gap-4 py-5">
-              <span className="text-xs uppercase tracking-wider text-atlas-700 font-semibold tabular-nums pt-1">
-                03
-              </span>
-              <div>
-                <div className="font-semibold text-lg text-ink-900">
-                  Quality you can trust. Every cell rated, every number traceable.
-                </div>
-                <p className="mt-1.5 text-sm text-ink-900/80 leading-relaxed">
-                  Each cell carries a 5-star quality rating so you know whether
-                  you&apos;re looking at a direct measurement, a modeled estimate, or
-                  something in between. No black boxes.
-                </p>
-              </div>
-            </li>
-          </ol>
-        </section>
-      </ToneBand>
-
-      {/* What's hot: Plan v9 Track BB.10 */}
-      <ToneBand tone="home-whats-hot">
-        <WhatsHotStrip />
       </ToneBand>
 
       {/* Newsletter signup */}

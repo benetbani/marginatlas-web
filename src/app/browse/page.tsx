@@ -6,7 +6,7 @@ export const revalidate = 86400; // 1 day
 export const metadata = {
   title: "Browse | Margin Atlas",
   description:
-    "Browse 191 countries and 25 sectors across the Margin Atlas database. Pick a country to drill into local business benchmarks, or a sector to compare across the world.",
+    "Browse small-business benchmarks worldwide across 25 sectors. Pick a country to drill into local business benchmarks, or a sector to compare across the world.",
   alternates: { canonical: "/browse" },
 };
 
@@ -45,7 +45,7 @@ export default function BrowsePage() {
             href="/compare"
             className="inline-flex items-center px-4 py-2 rounded-full bg-cream-100 border border-parchment text-ink-900 text-sm font-medium hover:bg-white transition"
           >
-            Compare cells →
+            Compare snapshots →
           </a>
         </div>
       </header>
@@ -127,7 +127,7 @@ export default function BrowsePage() {
         <h2 className="text-xl md:text-2xl font-semibold text-ink-900">Popular pages</h2>
         <p className="text-sm text-ink-700/70 mt-1">
           Hand-picked entry points across the atlas. Click any tile to see the
-          full cell: distribution, time series, after-tax owner take.
+          full benchmark: distribution, time series, after-tax owner take.
         </p>
         <div className="mt-5 grid md:grid-cols-2 lg:grid-cols-3 gap-3">
           {[

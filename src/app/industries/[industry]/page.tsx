@@ -62,7 +62,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   if (!ind) return { title: "Industry not found | Margin Atlas" };
   return {
     title: `${ind.name}: small-business benchmarks | Margin Atlas`,
-    description: `How much do ${ind.name.toLowerCase()} earn across 191 countries? Revenue, margins, and where the industry concentrates.`,
+    description: `How much do ${ind.name.toLowerCase()} earn worldwide? Revenue, margins, and where the industry concentrates.`,
     alternates: { canonical: `/industries/${industry.toLowerCase()}` },
   };
 }

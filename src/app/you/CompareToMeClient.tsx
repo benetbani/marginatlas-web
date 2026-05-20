@@ -171,7 +171,7 @@ export function CompareToMeClient() {
             <>
               <div>
                 <div className="text-xs text-ink-700/70 mb-1">
-                  Industry: {INDUSTRY_BY_ID[industry]?.name || industry} in {cell.region} ({cell.year})
+                  Industry: {INDUSTRY_BY_ID[industry]?.name || industry} in {cell.region}
                 </div>
                 <div className="text-xs text-ink-700/70">
                   Typical firm earns <strong>{fmtMoney(cell.revenue_per_firm)}</strong>

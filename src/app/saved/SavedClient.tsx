@@ -41,14 +41,14 @@ export function SavedClient() {
     return (
       <div className="card max-w-xl">
         <p className="text-sm text-ink-800">
-          No saved cells yet. Open any cell page and click the{" "}
+          No saved snapshots yet. Open any benchmark page and click the{" "}
           <span className="font-medium">★ Save</span> button to add it here.
         </p>
         <a
           href="/"
           className="mt-4 inline-block text-sm text-atlas-600 hover:underline"
         >
-          Use the navigator to find your first cell →
+          Use the navigator to find your first benchmark →
         </a>
       </div>
     );

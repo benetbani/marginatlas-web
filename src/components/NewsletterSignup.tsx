@@ -41,13 +41,13 @@ export function NewsletterSignup() {
   return (
     <div id="newsletter" className="card bg-ink-100 border-ink-200 scroll-mt-20">
       <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
-        Monthly cell of the month
+        Monthly benchmark
       </div>
       <h3 className="mt-2 text-lg font-semibold text-ink-900">
         Pick a benchmark you didn&apos;t know you needed.
       </h3>
       <p className="mt-1 text-sm text-ink-700">
-        Once a month we send a single hand-picked cell: full distribution,
+        Once a month we send a single hand-picked snapshot: full distribution,
         tax-aware owner take-home, what makes it surprising. No marketing.
         Unsubscribe in one click.
       </p>

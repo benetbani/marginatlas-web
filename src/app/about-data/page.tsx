@@ -54,7 +54,7 @@ export default function AboutDataPage() {
       <section className="mt-10">
         <h2 className="text-xl font-semibold text-ink-900">Quality ratings</h2>
         <p className="mt-3 text-ink-800">
-          Every cell shows a 5-star quality rating:
+          Every benchmark shows a 5-star quality rating:
         </p>
         <ul className="mt-3 space-y-2 text-sm text-ink-800">
           <li><span className="text-atlas-500">★★★★★</span>. Direct primary measurement, highest confidence.</li>
@@ -63,21 +63,21 @@ export default function AboutDataPage() {
           <li><span className="text-atlas-500">★★</span><span className="text-ink-300">☆☆☆</span>. Extrapolated from regional patterns.</li>
         </ul>
         <p className="mt-3 text-sm text-ink-700">
-          Cells with weaker ratings carry a clear "Estimated" label so you know what you're looking at.
+          Benchmarks with weaker ratings carry a clear "Estimated" label so you know what you're looking at.
         </p>
       </section>
 
       <section className="mt-10">
         <h2 className="text-xl font-semibold text-ink-900">Updates</h2>
         <p className="mt-3 text-ink-800">
-          The dataset is refreshed regularly. Each cell page shows the year of the underlying observation.
+          The dataset is refreshed regularly. Each benchmark page indicates the recency of the underlying observation.
         </p>
       </section>
 
       <section className="mt-10">
         <h2 className="text-xl font-semibold text-ink-900">Citing Atlas</h2>
         <p className="mt-3 text-ink-800">
-          You're welcome to cite Atlas in articles, reports, or presentations. We ask only that you link back to the cell page you're citing.
+          You're welcome to cite Atlas in articles, reports, or presentations. We ask only that you link back to the benchmark page you're citing.
         </p>
       </section>
     </article>

@@ -27,7 +27,7 @@ export async function GET(request: Request) {
   const industry = url.searchParams.get("industry") || "restaurants";
 
   let title = "Margin Atlas";
-  let subtitle = "Small-business benchmarks across 191 countries";
+  let subtitle = "Small-business benchmarks worldwide";
   let median = "";
   let detail = "";
 
@@ -147,7 +147,7 @@ export async function GET(request: Request) {
           }}
         >
           <span>marginatlas.com</span>
-          <span>191 countries · 357k+ cells</span>
+          <span>Small businesses worldwide</span>
         </div>
       </div>
     ),

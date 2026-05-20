@@ -64,13 +64,15 @@ export function CellDataset({
     });
   }
 
+  // Plan v15 Block 2 — raw `year` is suppressed from all public-facing surfaces
+  // (founder R-002 catastrophic-flag). The `year` prop is still accepted for
+  // type compatibility with callers, but never rendered into the JSON-LD.
+  void year;
   const data: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "Dataset",
-    name: `${industryName} business benchmarks in ${geoName}, ${year}`,
-    description: `Revenue, employment, and wage benchmarks for ${industryName.toLowerCase()} firms in ${geoName}${
-      nEnterprises ? `, covering ${nEnterprises.toLocaleString()} businesses` : ""
-    }.`,
+    name: `${industryName} business benchmarks in ${geoName}`,
+    description: `Revenue, employment, and wage benchmarks for ${industryName.toLowerCase()} firms in ${geoName}.`,
     url,
     identifier: url,
     keywords: [
@@ -82,7 +84,6 @@ export function CellDataset({
       "revenue",
       "employment",
       "wages",
-      `${year}`,
     ].filter(Boolean),
     creator: {
       "@type": "Organization",
@@ -96,8 +97,6 @@ export function CellDataset({
     },
     inLanguage: "en",
     isAccessibleForFree: true,
-    datePublished: `${year}-01-01`,
-    temporalCoverage: `${year}/${year}`,
     spatialCoverage: { "@type": "Place", name: geoName },
     variableMeasured: variableMeasured.length > 0 ? variableMeasured : [
       "typical revenue per firm",
@@ -205,7 +204,7 @@ export function Organization() {
     name: "Margin Atlas",
     url: "https://www.marginatlas.com",
     description:
-      "Small-business benchmarks across 40+ countries: revenue, employment, and wage distributions.",
+      "Small-business benchmarks worldwide: revenue, employment, and wage distributions.",
     // NOTE: no `sameAs` linking to data mirrors. We don't broadcast where the
     // raw data lives publicly.
   };

@@ -71,14 +71,14 @@ export default async function NotFound() {
                 className="block px-4 py-3 rounded-xl border border-ink-200 bg-white hover:border-atlas-500 transition text-sm text-ink-900"
               >
                 <div className="font-medium">Restaurants: California →</div>
-                <div className="text-xs text-ink-700/70 mt-1">Most-visited cell</div>
+                <div className="text-xs text-ink-700/70 mt-1">Most-visited benchmark</div>
               </Link>
               <Link
                 href="/compare"
                 className="block px-4 py-3 rounded-xl border border-ink-200 bg-white hover:border-atlas-500 transition text-sm text-ink-900"
               >
-                <div className="font-medium">Compare cells side-by-side →</div>
-                <div className="text-xs text-ink-700/70 mt-1">4 cells, 1 view</div>
+                <div className="font-medium">Compare snapshots side-by-side →</div>
+                <div className="text-xs text-ink-700/70 mt-1">4 benchmarks, 1 view</div>
               </Link>
             </>
           )}
