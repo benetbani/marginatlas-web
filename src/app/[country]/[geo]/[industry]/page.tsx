@@ -99,16 +99,17 @@ export async function generateStaticParams(): Promise<Params[]> {
 
 export async function generateMetadata({
   params,
-  searchParams,
 }: {
   params: Promise<Params>;
-  searchParams: Promise<SearchParams>;
 }) {
   const { country, geo, industry } = await params;
-  const sp = await searchParams;
+  // No searchParams here — metadata uses the canonical cell (default
+  // size band / latest year). This removes the Dynamic Server Usage
+  // exception Next 15 was throwing during static-param generation,
+  // which Sentry was reporting as a noisy false-positive error.
   const cell = await getCellBySlug(country, geo, industry, {
-    sizeBand: sp.size || null,
-    year: sp.year ? Number(sp.year) : null,
+    sizeBand: null,
+    year: null,
   });
   if (!cell) return { title: "Page not found" };
   const ind = cell.industry_name || cell.industry_description || industry;
