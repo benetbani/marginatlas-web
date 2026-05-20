@@ -19,39 +19,50 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCellBySlug } from "@/lib/cells";
 import { INDUSTRY_BY_ID, industryToSlug } from "@/lib/taxonomy";
+import { paretoTail } from "@/lib/stats/pareto";
 
-const MODEL = "claude-sonnet-4-5";
+const MODEL = "claude-sonnet-4-6";
 const MAX_TURNS = 4;
 
-const SYSTEM_PROMPT = `You are Margin Atlas, a small-business benchmarking assistant.
+const SYSTEM_PROMPT = `You are Margin Atlas, an editorial small-business benchmarking assistant.
 
-You answer questions about typical revenue, employment, wages, and firm distributions
-across industries and geographies.
+You answer questions about typical revenue, employment, wages, and how those numbers
+spread across an industry — for any country, region, or city we cover.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit: editorial tone is being
-finalised; until then, keep responses short and factual.
+Voice:
+- Plain, decisive, analytical. No marketing flourish, no "revolutionary", no "transformative".
+- Lead with the headline number. Then one or two lines of context. Stop.
+- If a number is precise enough to quote, quote it. If it's modeled or approximate, say so once.
+- No statistician jargon. Say "Bottom 10%", "Typical", "Top 10%" — never "p10/p50/p90" or "the full distribution".
 
-Covered countries with measured sub-national data: US (counties), AU (SA2),
-MX (states + municipios), GB (LADs incl. all London boroughs), DE/FR/IT/ES/NL/PL/SE
-(EU NUTS regions), JP (prefectures + major cities), BR (states + cities), CA (provinces).
-For countries outside this list, fall back to country-level estimates with a note.
+What you have access to:
+- The query_cells tool returns the typical revenue per firm, the Bottom 10% / Top 10% spread,
+  a modeled Top 1% and Top 0.1% from a Pareto-tail fit, firm counts, employment, wage per
+  employee, and a 0-100 quality score.
+- Coverage: US (counties), AU (SA2), MX (states + municipios), GB (LADs incl. all London
+  boroughs), DE/FR/IT/ES/NL/PL/SE (EU NUTS regions), JP (prefectures + major cities),
+  BR (states + cities), CA (provinces). For other countries, fall back to country-level
+  estimates and note that sub-national detail isn't yet covered for that country.
 
 Rules:
-- Use the query_cells tool whenever the user asks about a specific industry × location.
-- Never reveal the underlying data source, agency name, or methodology: refer to
-  "compiled business statistics" or "our covered cells" if asked.
-- Be concise. Lead with the headline number, then context.
-- When numbers are very approximate or quality is low (score < 50), say so.
-- Always cite the year of the data.
-- If a country/region isn't covered, say so plainly and suggest a covered alternative.
+- Use query_cells whenever the user asks about a specific industry × location combination.
+- All figures are rolled forward to current values via country-specific inflation overlays.
+  Do not cite a calendar year unless the user explicitly asks for the source vintage.
+- When quality_score is below 50, say "this is a thin sample — read the number as directional"
+  in plain language. When it's below 30, decline to quote a precise figure.
+- Never name underlying agencies, source URLs, or specific releases. Refer to "compiled
+  business statistics" if pressed.
+- Never use the word "cell" / "cells" for our data units. Say "benchmark" or "snapshot".
+- If asked something we can't answer from the tool, say so plainly in one line.
 `;
 
 const TOOL = {
   name: "query_cells",
   description:
     "Look up small-business benchmarks for a given country, region, and industry. " +
-    "Returns typical revenue per firm, the bottom 10% and top 10% spread, number of " +
-    "firms, employees, wage per employee, and a quality score.",
+    "Returns the typical revenue per firm, the Bottom 10% and Top 10% revenue spread, " +
+    "modeled Top 1% and Top 0.1% from a Pareto-tail fit, firm and employee counts, " +
+    "wage per employee, and a 0-100 quality score.",
   input_schema: {
     type: "object",
     properties: {
@@ -111,14 +122,18 @@ async function executeTool(input: ToolInput) {
   if (!cell) {
     return { error: `No data for ${input.industry_id} in ${region}, ${country}. Try another region or industry.` };
   }
+  // Plan v15 Block 8d — surface the Pareto-modeled upper tail so the AI
+  // can answer "what does the top 1% earn?" without hand-waving.
+  const tail = paretoTail(cell.rev_p50, cell.rev_p90);
   return {
     country: cell.country,
     region: cell.geo_name,
     industry: cell.industry_name,
-    year: cell.year,
     typical_revenue_per_firm_usd: cell.revenue_per_firm,
     bottom_10pct_revenue_usd: cell.rev_p10,
     top_10pct_revenue_usd: cell.rev_p90,
+    top_1pct_revenue_usd_modeled: tail ? Math.round(tail.p99) : null,
+    top_0_1pct_revenue_usd_modeled: tail ? Math.round(tail.p999) : null,
     n_firms: cell.n_enterprises,
     n_employees: cell.n_employees,
     // Plan v13 Wave 4a — avg-employees-per-firm omitted (n_enterprises
@@ -290,11 +305,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({
         answer:
           `"${question}"\n\n` +
-          `Lorem ipsum dolor sit amet: Ask Atlas is wired and ready, but the ` +
-          `production API key isn't deployed yet. Once the operator pastes the ` +
-          `ANTHROPIC_API_KEY into Vercel and redeploys, live answers will start ` +
-          `streaming. Every cell page already shows typical revenue, employment, ` +
-          `and distribution for any country × industry × size combination.`,
+          `Ask Atlas is in preview while live answers wait on a production API key. ` +
+          `Every benchmark page already shows the typical revenue, employment, and ` +
+          `where every business lands for any country × industry × size combination — ` +
+          `browse one directly to see the numbers right now.`,
         preview: true,
       });
     }
@@ -307,9 +321,9 @@ export async function POST(request: NextRequest) {
         answer:
           `"${question}"\n\n` +
           `Ask Atlas has hit this month's spending limit ($${spend.capUsd.toFixed(0)}). ` +
-          `Live answers resume on the first of next month. Every cell page still ` +
-          `shows typical revenue, employment, and distribution for any ` +
-          `country × industry × size combination: try /browse or /compare in the meantime.`,
+          `Live answers resume on the first of next month. Every benchmark page still ` +
+          `shows typical revenue, employment, and where every business lands for any ` +
+          `country × industry × size combination — try /browse or /compare in the meantime.`,
         preview: true,
         budgetCapped: true,
       });
