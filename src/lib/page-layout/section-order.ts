@@ -96,6 +96,11 @@ export const SECTION_TONES: Record<string, SectionTone> = {
   "home-what-youll-see": "cream-50",
   "home-whats-hot": "white",
   "home-newsletter": "cream-100",
+  // Plan v15 Block 3 — homepage restructure additions
+  "home-primary-ctas": "white",
+  "home-methodology": "cream-50",
+  "home-cities-placeholder": "white",
+  "home-blog-rail": "cream-50",
 };
 
 export const TONE_CLASSES: Record<SectionTone, string> = {
