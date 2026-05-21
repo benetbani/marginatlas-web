@@ -13,6 +13,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import { findCountryIndustryImage } from "./images/country_industry_lookup";
 
 export type AtlasImage = {
   url: string;
@@ -108,13 +109,8 @@ export function pickCellHeroImage(
 ): AtlasImage | null {
   // Plan v20 — country-industry match first.
   if (iso2 && industryId) {
-    // Dynamic import to avoid breaking SSR if the manifest doesn't exist.
-    // We use require here to stay in sync source path; the lookup itself
-    // is synchronous and reads from disk once per process.
     try {
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const lookup = require("./images/country_industry_lookup") as typeof import("./images/country_industry_lookup");
-      const ci = lookup.findCountryIndustryImage(iso2, industryId);
+      const ci = findCountryIndustryImage(iso2, industryId);
       if (ci) {
         return {
           url: ci.url,

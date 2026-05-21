@@ -19,18 +19,30 @@ export type CountryIndustryImage = {
   generated_at?: string;
 };
 
-const MANIFEST_PATH = resolve(process.cwd(), "data", "images", "country_industry_v1.json");
+// Plan v21 — try multiple candidate paths because Vercel's
+// outputFileTracing sometimes lifts the file to .next/server/...
+// and process.cwd() in serverless functions may differ from the
+// repo root.
+const CANDIDATE_PATHS = [
+  resolve(process.cwd(), "data", "images", "country_industry_v1.json"),
+  resolve(process.cwd(), ".next", "server", "data", "images", "country_industry_v1.json"),
+  resolve(process.cwd(), "..", "data", "images", "country_industry_v1.json"),
+];
 
 let cache: Record<string, CountryIndustryImage> | undefined;
 
 function load(): Record<string, CountryIndustryImage> {
   if (cache !== undefined) return cache;
-  try {
-    const raw = readFileSync(MANIFEST_PATH, "utf-8");
-    cache = JSON.parse(raw) as Record<string, CountryIndustryImage>;
-  } catch {
-    cache = {};
+  for (const p of CANDIDATE_PATHS) {
+    try {
+      const raw = readFileSync(p, "utf-8");
+      cache = JSON.parse(raw) as Record<string, CountryIndustryImage>;
+      return cache;
+    } catch {
+      // try next candidate
+    }
   }
+  cache = {};
   return cache;
 }
 
