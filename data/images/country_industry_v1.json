@@ -1,0 +1,2390 @@
+{
+  "US|restaurants": {
+    "url": "https://images.pexels.com/photos/36486522/pexels-photo-36486522.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Vintage-style diner counter in a New York restaurant, showcasing classic tiles and bar stools.",
+    "photographer": "Brent Singleton",
+    "width": 6720,
+    "height": 4480,
+    "generated_at": "2026-05-21T18:14:07.088Z"
+  },
+  "US|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/11289590/pexels-photo-11289590.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Black and white image of a neon coffee shop sign in a rustic interior with exposed beams.",
+    "photographer": "Mark Neal",
+    "width": 5035,
+    "height": 3339,
+    "generated_at": "2026-05-21T18:14:08.594Z"
+  },
+  "US|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/3639541/pexels-photo-3639541.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Delicious variety of freshly baked breads and pastries in a charming London bakery.",
+    "photographer": "Lina Kivaka",
+    "width": 3861,
+    "height": 2574,
+    "generated_at": "2026-05-21T18:14:11.503Z"
+  },
+  "US|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/32919891/pexels-photo-32919891.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Warm interior of a traditional Irish pub featuring wooden bar and ale signs in San Francisco, CA.",
+    "photographer": "Tom Fisk",
+    "width": 5472,
+    "height": 3648,
+    "generated_at": "2026-05-21T18:14:13.110Z"
+  },
+  "US|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:14:13.956Z"
+  },
+  "US|grocery_stores": {
+    "url": "https://images.pexels.com/photos/8805471/pexels-photo-8805471.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A woman exploring colorful fresh produce in a bustling grocery store aisle.",
+    "photographer": "Mike Jones",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:14:15.440Z"
+  },
+  "US|clothing_stores": {
+    "url": "https://images.pexels.com/photos/19240704/pexels-photo-19240704.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A cheerful woman shopping at a boutique sale in Los Gatos, CA, with a 50% off sign.",
+    "photographer": "frank minjarez",
+    "width": 8640,
+    "height": 5760,
+    "generated_at": "2026-05-21T18:14:16.637Z"
+  },
+  "US|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20299702/pexels-photo-20299702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of luxurious necklaces on mannequins in a jewelry store.",
+    "photographer": "Robert So",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:14:20.371Z"
+  },
+  "GB|restaurants": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Eagle_Gastropub_Clerkenwell_2005.jpg/1280px-Eagle_Gastropub_Clerkenwell_2005.jpg",
+    "source": "wikimedia",
+    "description": "The Eagle, the first gastropub, Clerkenwell, London, 2005.",
+    "generated_at": "2026-05-21T18:14:21.971Z"
+  },
+  "GB|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/15569308/pexels-photo-15569308.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A vibrant street market scene under a bridge in London featuring a coffee booth and pedestrians.",
+    "photographer": "Jacek Herbut",
+    "width": 4576,
+    "height": 3056,
+    "generated_at": "2026-05-21T18:14:23.090Z"
+  },
+  "GB|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/3639541/pexels-photo-3639541.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Delicious variety of freshly baked breads and pastries in a charming London bakery.",
+    "photographer": "Lina Kivaka",
+    "width": 3861,
+    "height": 2574,
+    "generated_at": "2026-05-21T18:14:23.798Z"
+  },
+  "GB|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/24366088/pexels-photo-24366088.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Inviting English pub interior with Union Jack pillow and decor, ideal for leisure and hospitality themes.",
+    "photographer": "George Morina",
+    "width": 4032,
+    "height": 3024,
+    "generated_at": "2026-05-21T18:14:24.475Z"
+  },
+  "GB|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:14:25.216Z"
+  },
+  "GB|grocery_stores": {
+    "url": "https://images.pexels.com/photos/12932368/pexels-photo-12932368.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A woman examines fresh fruits in a vibrant grocery store produce section, shopping for healthy options.",
+    "photographer": "Atlantic Ambience",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:14:25.818Z"
+  },
+  "GB|clothing_stores": {
+    "url": "https://images.pexels.com/photos/19227457/pexels-photo-19227457.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Fashion-forward men in sunglasses showcase suits in a chic London boutique display.",
+    "photographer": "Y O U S E F M O R S I",
+    "width": 5328,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:14:26.487Z"
+  },
+  "GB|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/5013571/pexels-photo-5013571.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A storefront display in Glasgow showcasing Scottish-themed clothing and accessories.",
+    "photographer": "Sinitta Leunen",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:14:27.189Z"
+  },
+  "DE|restaurants": {
+    "url": "https://images.pexels.com/photos/29286757/pexels-photo-29286757.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A vibrant sign for Hacker-Pschorr Biergarten shines under sunlit trees, Munich.",
+    "photographer": "Vitaliy Haiduk",
+    "width": 3008,
+    "height": 2000,
+    "generated_at": "2026-05-21T18:14:27.760Z"
+  },
+  "DE|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/6612572/pexels-photo-6612572.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A cozy coffee shop interior featuring a modern espresso machine and various coffee accessories.",
+    "photographer": "Pavel Danilyuk",
+    "width": 5473,
+    "height": 3654,
+    "generated_at": "2026-05-21T18:14:28.347Z"
+  },
+  "DE|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/30888608/pexels-photo-30888608.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A variety of freshly baked artisan breads on display in a Berlin bakery.",
+    "photographer": "Silvio Pelegrin",
+    "width": 4331,
+    "height": 3532,
+    "generated_at": "2026-05-21T18:14:29.105Z"
+  },
+  "DE|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/1872888/pexels-photo-1872888.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Warm and inviting pub interior featuring a wooden bar and hanging wine glasses.",
+    "photographer": "Valeria Boltneva",
+    "width": 6472,
+    "height": 4315,
+    "generated_at": "2026-05-21T18:14:29.805Z"
+  },
+  "DE|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:14:30.556Z"
+  },
+  "DE|grocery_stores": {
+    "url": "https://images.pexels.com/photos/12932368/pexels-photo-12932368.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A woman examines fresh fruits in a vibrant grocery store produce section, shopping for healthy options.",
+    "photographer": "Atlantic Ambience",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:14:31.171Z"
+  },
+  "DE|clothing_stores": {
+    "url": "https://images.pexels.com/photos/1488467/pexels-photo-1488467.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Stylish indoor clothing display with mannequins at a modern boutique showcasing trendy apparel and accessories.",
+    "photographer": "Edgars Kisuro",
+    "width": 5472,
+    "height": 3648,
+    "generated_at": "2026-05-21T18:14:31.815Z"
+  },
+  "DE|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/28146843/pexels-photo-28146843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Luxury jewelry set elegantly displayed with necklaces and rings in a store setting.",
+    "photographer": "Pham Ngoc Anh",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:14:32.434Z"
+  },
+  "FR|restaurants": {
+    "url": "https://images.pexels.com/photos/6449840/pexels-photo-6449840.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Parisian bistro scene with people enjoying their drinks and conversations. Warm and inviting atmosphere.",
+    "photographer": "David Henry",
+    "width": 5638,
+    "height": 3753,
+    "generated_at": "2026-05-21T18:14:33.001Z"
+  },
+  "FR|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/440182/pexels-photo-440182.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Serene black and white image of an empty cafe terrace in Paris.",
+    "photographer": "Marta Siedlecka",
+    "width": 4031,
+    "height": 2543,
+    "generated_at": "2026-05-21T18:14:33.550Z"
+  },
+  "FR|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/35893693/pexels-photo-35893693.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Indulge in a colorful array of macarons and pastries at a Parisian patisserie, showcasing French culinary artistry.",
+    "photographer": "Liisbet Luup",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:14:34.174Z"
+  },
+  "FR|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/1872888/pexels-photo-1872888.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Warm and inviting pub interior featuring a wooden bar and hanging wine glasses.",
+    "photographer": "Valeria Boltneva",
+    "width": 6472,
+    "height": 4315,
+    "generated_at": "2026-05-21T18:14:34.950Z"
+  },
+  "FR|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:14:35.631Z"
+  },
+  "FR|grocery_stores": {
+    "url": "https://images.pexels.com/photos/12297472/pexels-photo-12297472.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A cozy Paris grocery store with vibrant fresh fruits and vegetables on display outside.",
+    "photographer": "Leinad Trappah",
+    "width": 3357,
+    "height": 2249,
+    "generated_at": "2026-05-21T18:14:36.324Z"
+  },
+  "FR|clothing_stores": {
+    "url": "https://images.pexels.com/photos/8619007/pexels-photo-8619007.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Mannequin with a pink dress and clothing rack in a stylish boutique.",
+    "photographer": "Chris F",
+    "width": 4047,
+    "height": 3510,
+    "generated_at": "2026-05-21T18:14:36.935Z"
+  },
+  "FR|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/19789287/pexels-photo-19789287.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Elegant façade of Van Cleef & Arpels jewelry store on Place Vendôme, Paris.",
+    "photographer": "Kirandeep Singh Walia",
+    "width": 6749,
+    "height": 4499,
+    "generated_at": "2026-05-21T18:14:37.481Z"
+  },
+  "IT|restaurants": {
+    "url": "https://images.pexels.com/photos/16054007/pexels-photo-16054007.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Traditional Italian trattoria facade with climbing plants in Florence, Italy, capturing urban charm.",
+    "photographer": "Oleksandra Zelena",
+    "width": 5745,
+    "height": 3830,
+    "generated_at": "2026-05-21T18:14:38.041Z"
+  },
+  "IT|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/32953063/pexels-photo-32953063.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Close-up of a professional espresso machine in a Milan café, Italy.",
+    "photographer": "Mihaela Claudia  Puscas",
+    "width": 4240,
+    "height": 2384,
+    "generated_at": "2026-05-21T18:14:38.597Z"
+  },
+  "IT|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/30470578/pexels-photo-30470578.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Mouthwatering assortment of Italian cannoli and pastries on display in a bakery. Perfect for food lovers.",
+    "photographer": "Natalia Sevruk",
+    "width": 5184,
+    "height": 3456,
+    "generated_at": "2026-05-21T18:14:39.529Z"
+  },
+  "IT|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/1872888/pexels-photo-1872888.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Warm and inviting pub interior featuring a wooden bar and hanging wine glasses.",
+    "photographer": "Valeria Boltneva",
+    "width": 6472,
+    "height": 4315,
+    "generated_at": "2026-05-21T18:14:40.320Z"
+  },
+  "IT|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:14:41.003Z"
+  },
+  "IT|grocery_stores": {
+    "url": "https://images.pexels.com/photos/12932368/pexels-photo-12932368.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A woman examines fresh fruits in a vibrant grocery store produce section, shopping for healthy options.",
+    "photographer": "Atlantic Ambience",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:14:41.624Z"
+  },
+  "IT|clothing_stores": {
+    "url": "https://images.pexels.com/photos/32652066/pexels-photo-32652066.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Fashionable woman window shopping in Milan, Italy at night, admiring elegant accessories.",
+    "photographer": "Mihaela Claudia  Puscas",
+    "width": 3760,
+    "height": 2558,
+    "generated_at": "2026-05-21T18:14:42.540Z"
+  },
+  "IT|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/15955333/pexels-photo-15955333.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A skilled artisan using a blowtorch and pliers to craft handmade jewelry with precision.",
+    "photographer": "COPPERTIST WU",
+    "width": 7008,
+    "height": 4672,
+    "generated_at": "2026-05-21T18:14:43.197Z"
+  },
+  "ES|restaurants": {
+    "url": "https://images.pexels.com/photos/1407275/pexels-photo-1407275.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": " Vibrant street art decorates a building facade in Madrid, Spain, showcasing urban culture.",
+    "photographer": "42 North",
+    "width": 5760,
+    "height": 3840,
+    "generated_at": "2026-05-21T18:14:43.751Z"
+  },
+  "ES|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/1407275/pexels-photo-1407275.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": " Vibrant street art decorates a building facade in Madrid, Spain, showcasing urban culture.",
+    "photographer": "42 North",
+    "width": 5760,
+    "height": 3840,
+    "generated_at": "2026-05-21T18:14:44.527Z"
+  },
+  "ES|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/9120377/pexels-photo-9120377.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Freshly baked artisanal breads displayed in a bakery window showcasing a variety of loaves.",
+    "photographer": "hissetmehurriyeti",
+    "width": 5184,
+    "height": 2912,
+    "generated_at": "2026-05-21T18:14:45.665Z"
+  },
+  "ES|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/1872888/pexels-photo-1872888.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Warm and inviting pub interior featuring a wooden bar and hanging wine glasses.",
+    "photographer": "Valeria Boltneva",
+    "width": 6472,
+    "height": 4315,
+    "generated_at": "2026-05-21T18:14:46.577Z"
+  },
+  "ES|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/35479245/pexels-photo-35479245.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Colorful hotel facade in Asturias, Spain with bright signage against a clear sky.",
+    "photographer": "Altamart",
+    "width": 4480,
+    "height": 2800,
+    "generated_at": "2026-05-21T18:14:47.268Z"
+  },
+  "ES|grocery_stores": {
+    "url": "https://images.pexels.com/photos/17626465/pexels-photo-17626465.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Vibrant outdoor produce store in Valencia displaying fresh fruits under a blue awning.",
+    "photographer": "Joaquin Carfagna",
+    "width": 5807,
+    "height": 3871,
+    "generated_at": "2026-05-21T18:14:47.883Z"
+  },
+  "ES|clothing_stores": {
+    "url": "https://images.pexels.com/photos/8386643/pexels-photo-8386643.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Vibrant clothing rack with diverse apparel in a contemporary boutique setting.",
+    "photographer": "Ron Lach",
+    "width": 6620,
+    "height": 4413,
+    "generated_at": "2026-05-21T18:14:48.633Z"
+  },
+  "ES|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/28146843/pexels-photo-28146843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Luxury jewelry set elegantly displayed with necklaces and rings in a store setting.",
+    "photographer": "Pham Ngoc Anh",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:14:49.293Z"
+  },
+  "JP|restaurants": {
+    "url": "https://images.pexels.com/photos/29356741/pexels-photo-29356741.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A warm and inviting izakaya scene in Tokyo's vibrant nightlife, showcasing Japanese culture.",
+    "photographer": "Alexander London",
+    "width": 6213,
+    "height": 4142,
+    "generated_at": "2026-05-21T18:14:49.933Z"
+  },
+  "JP|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/36879875/pexels-photo-36879875.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "High-rise apartment building in Tokyo with cherry blossoms at the front, illustrating urban life in Japan.",
+    "photographer": "Iban Lopez Luna",
+    "width": 5842,
+    "height": 3895,
+    "generated_at": "2026-05-21T18:14:50.507Z"
+  },
+  "JP|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/34975693/pexels-photo-34975693.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "City bakery with autumn foliage in urban setting, vibrant leaves and parked van create a picturesque scene.",
+    "photographer": "Huy Phan",
+    "width": 5773,
+    "height": 3758,
+    "generated_at": "2026-05-21T18:14:51.050Z"
+  },
+  "JP|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/9195573/pexels-photo-9195573.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Contemporary bar scene with Japanese sign and hanging paper lanterns, creating a vibrant atmosphere.",
+    "photographer": "Maksim Dyachuk",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:14:51.711Z"
+  },
+  "JP|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/96418/pexels-photo-96418.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Serene interior of a traditional Japanese ryokan with tatami flooring and sliding doors.",
+    "photographer": "Francesco Ungaro",
+    "width": 4833,
+    "height": 3167,
+    "generated_at": "2026-05-21T18:14:52.546Z"
+  },
+  "JP|grocery_stores": {
+    "url": "https://images.pexels.com/photos/19902241/pexels-photo-19902241.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Two women shopping at a vibrant fresh produce market in Tokyo, Japan.",
+    "photographer": "Markus Winkler",
+    "width": 3999,
+    "height": 2667,
+    "generated_at": "2026-05-21T18:14:53.227Z"
+  },
+  "JP|clothing_stores": {
+    "url": "https://images.pexels.com/photos/28387442/pexels-photo-28387442.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Interior of a stylish clothing store in Tokyo featuring two shoppers browsing modern apparel.",
+    "photographer": "Federico Abis",
+    "width": 6048,
+    "height": 4024,
+    "generated_at": "2026-05-21T18:14:53.909Z"
+  },
+  "JP|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/28146843/pexels-photo-28146843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Luxury jewelry set elegantly displayed with necklaces and rings in a store setting.",
+    "photographer": "Pham Ngoc Anh",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:14:54.530Z"
+  },
+  "BR|restaurants": {
+    "url": "https://images.pexels.com/photos/11047755/pexels-photo-11047755.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Stunning aerial view of Vidigal Beach with lush greenery and cityscape in Rio de Janeiro, Brazil.",
+    "photographer": "Daniel Wander",
+    "width": 4000,
+    "height": 2250,
+    "generated_at": "2026-05-21T18:14:55.096Z"
+  },
+  "BR|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/6612572/pexels-photo-6612572.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A cozy coffee shop interior featuring a modern espresso machine and various coffee accessories.",
+    "photographer": "Pavel Danilyuk",
+    "width": 5473,
+    "height": 3654,
+    "generated_at": "2026-05-21T18:14:55.709Z"
+  },
+  "BR|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/4716795/pexels-photo-4716795.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Close-up of freshly baked bread in a bakery kitchen, showcasing golden crusts and a baker in the background.",
+    "photographer": "Alex Pinheiro",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:14:56.458Z"
+  },
+  "BR|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/1872888/pexels-photo-1872888.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Warm and inviting pub interior featuring a wooden bar and hanging wine glasses.",
+    "photographer": "Valeria Boltneva",
+    "width": 6472,
+    "height": 4315,
+    "generated_at": "2026-05-21T18:14:57.348Z"
+  },
+  "BR|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:14:58.001Z"
+  },
+  "BR|grocery_stores": {
+    "url": "https://images.pexels.com/photos/16154014/pexels-photo-16154014.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Grocery store worker organizing fresh fruits and vegetables on display shelves.",
+    "photographer": "Rossella Fasoli",
+    "width": 8002,
+    "height": 5538,
+    "generated_at": "2026-05-21T18:14:58.732Z"
+  },
+  "BR|clothing_stores": {
+    "url": "https://images.pexels.com/photos/8619007/pexels-photo-8619007.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Mannequin with a pink dress and clothing rack in a stylish boutique.",
+    "photographer": "Chris F",
+    "width": 4047,
+    "height": 3510,
+    "generated_at": "2026-05-21T18:14:59.708Z"
+  },
+  "BR|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/28146843/pexels-photo-28146843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Luxury jewelry set elegantly displayed with necklaces and rings in a store setting.",
+    "photographer": "Pham Ngoc Anh",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:15:00.408Z"
+  },
+  "MX|restaurants": {
+    "url": "https://images.pexels.com/photos/2465825/pexels-photo-2465825.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Illuminated neon sign of Oh! Mexico Mexican Food & Taco Shop at night in an urban setting.",
+    "photographer": "Pipe Carbonell",
+    "width": 2738,
+    "height": 1825,
+    "generated_at": "2026-05-21T18:15:01.365Z"
+  },
+  "MX|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/28097271/pexels-photo-28097271.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Stylish cafe interior with plants and minimalist decor, perfect for coffee lovers.",
+    "photographer": "Amar  Preciado",
+    "width": 4242,
+    "height": 2828,
+    "generated_at": "2026-05-21T18:15:02.241Z"
+  },
+  "MX|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/19639008/pexels-photo-19639008.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Close-up of fresh bread loaves displayed at a bakery in Puebla, Mexico.",
+    "photographer": "Chris Luengas",
+    "width": 5165,
+    "height": 3443,
+    "generated_at": "2026-05-21T18:15:02.991Z"
+  },
+  "MX|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/1872888/pexels-photo-1872888.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Warm and inviting pub interior featuring a wooden bar and hanging wine glasses.",
+    "photographer": "Valeria Boltneva",
+    "width": 6472,
+    "height": 4315,
+    "generated_at": "2026-05-21T18:15:03.777Z"
+  },
+  "MX|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/20210508/pexels-photo-20210508.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Stunning aerial view of Cancun's beachfront resorts along the vibrant turquoise waters.",
+    "photographer": "Israel Torres",
+    "width": 8064,
+    "height": 6048,
+    "generated_at": "2026-05-21T18:15:04.946Z"
+  },
+  "MX|grocery_stores": {
+    "url": "https://images.pexels.com/photos/37009052/pexels-photo-37009052.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Fresh vegetables including peppers, squash, and mushrooms in a grocery store produce aisle.",
+    "photographer": "solle",
+    "width": 3838,
+    "height": 2891,
+    "generated_at": "2026-05-21T18:15:05.688Z"
+  },
+  "MX|clothing_stores": {
+    "url": "https://images.pexels.com/photos/33703900/pexels-photo-33703900.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Colorful street scene in Oaxaca featuring local vendors selling clothing near a boutique.",
+    "photographer": "Miguel González",
+    "width": 6729,
+    "height": 4486,
+    "generated_at": "2026-05-21T18:15:06.513Z"
+  },
+  "MX|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/28146843/pexels-photo-28146843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Luxury jewelry set elegantly displayed with necklaces and rings in a store setting.",
+    "photographer": "Pham Ngoc Anh",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:15:09.051Z"
+  },
+  "CA|restaurants": {
+    "url": "https://images.pexels.com/photos/1029601/pexels-photo-1029601.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Open-air Toronto restaurant with contemporary design, patrons dining and chatting.",
+    "photographer": "Scott Webb",
+    "width": 6000,
+    "height": 3375,
+    "generated_at": "2026-05-21T18:15:09.660Z"
+  },
+  "CA|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/6612572/pexels-photo-6612572.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A cozy coffee shop interior featuring a modern espresso machine and various coffee accessories.",
+    "photographer": "Pavel Danilyuk",
+    "width": 5473,
+    "height": 3654,
+    "generated_at": "2026-05-21T18:15:10.363Z"
+  },
+  "CA|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/9120377/pexels-photo-9120377.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Freshly baked artisanal breads displayed in a bakery window showcasing a variety of loaves.",
+    "photographer": "hissetmehurriyeti",
+    "width": 5184,
+    "height": 2912,
+    "generated_at": "2026-05-21T18:15:11.097Z"
+  },
+  "CA|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/1872888/pexels-photo-1872888.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Warm and inviting pub interior featuring a wooden bar and hanging wine glasses.",
+    "photographer": "Valeria Boltneva",
+    "width": 6472,
+    "height": 4315,
+    "generated_at": "2026-05-21T18:15:11.761Z"
+  },
+  "CA|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/29649745/pexels-photo-29649745.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Luxurious hotel lobby in Québec, Canada featuring elegant decor and grand chandeliers.",
+    "photographer": "Clément Proust",
+    "width": 6718,
+    "height": 4479,
+    "generated_at": "2026-05-21T18:15:12.424Z"
+  },
+  "CA|grocery_stores": {
+    "url": "https://images.pexels.com/photos/12932368/pexels-photo-12932368.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A woman examines fresh fruits in a vibrant grocery store produce section, shopping for healthy options.",
+    "photographer": "Atlantic Ambience",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:15:13.120Z"
+  },
+  "CA|clothing_stores": {
+    "url": "https://images.pexels.com/photos/5531709/pexels-photo-5531709.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Chic boutique with elegant clothing display and stylish interior design.",
+    "photographer": "Rachel Claire",
+    "width": 5472,
+    "height": 3648,
+    "generated_at": "2026-05-21T18:15:13.741Z"
+  },
+  "CA|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20299702/pexels-photo-20299702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of luxurious necklaces on mannequins in a jewelry store.",
+    "photographer": "Robert So",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:15:14.504Z"
+  },
+  "AU|restaurants": {
+    "url": "https://images.pexels.com/photos/29067916/pexels-photo-29067916.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A relaxed dining scene at a Melbourne restaurant with diverse patrons enjoying their meal.",
+    "photographer": "Lawrence Lam",
+    "width": 6937,
+    "height": 4625,
+    "generated_at": "2026-05-21T18:15:15.133Z"
+  },
+  "AU|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/6612572/pexels-photo-6612572.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A cozy coffee shop interior featuring a modern espresso machine and various coffee accessories.",
+    "photographer": "Pavel Danilyuk",
+    "width": 5473,
+    "height": 3654,
+    "generated_at": "2026-05-21T18:15:15.913Z"
+  },
+  "AU|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/9120377/pexels-photo-9120377.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Freshly baked artisanal breads displayed in a bakery window showcasing a variety of loaves.",
+    "photographer": "hissetmehurriyeti",
+    "width": 5184,
+    "height": 2912,
+    "generated_at": "2026-05-21T18:15:16.664Z"
+  },
+  "AU|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/5531663/pexels-photo-5531663.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Inviting rustic pub interior with wooden floors and brick walls, featuring a long bar counter and seating area.",
+    "photographer": "Rachel Claire",
+    "width": 5472,
+    "height": 3648,
+    "generated_at": "2026-05-21T18:15:17.307Z"
+  },
+  "AU|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:15:17.966Z"
+  },
+  "AU|grocery_stores": {
+    "url": "https://images.pexels.com/photos/12932368/pexels-photo-12932368.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A woman examines fresh fruits in a vibrant grocery store produce section, shopping for healthy options.",
+    "photographer": "Atlantic Ambience",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:15:18.606Z"
+  },
+  "AU|clothing_stores": {
+    "url": "https://images.pexels.com/photos/5531709/pexels-photo-5531709.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Chic boutique with elegant clothing display and stylish interior design.",
+    "photographer": "Rachel Claire",
+    "width": 5472,
+    "height": 3648,
+    "generated_at": "2026-05-21T18:15:19.271Z"
+  },
+  "AU|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/28146843/pexels-photo-28146843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Luxury jewelry set elegantly displayed with necklaces and rings in a store setting.",
+    "photographer": "Pham Ngoc Anh",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:15:19.968Z"
+  },
+  "NL|restaurants": {
+    "url": "https://images.pexels.com/photos/19250524/pexels-photo-19250524.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Charming outdoor seating of a restaurant in Amsterdam, perfect for city dining ambiance.",
+    "photographer": "Caroline Cagnin",
+    "width": 3912,
+    "height": 2934,
+    "generated_at": "2026-05-21T18:15:20.647Z"
+  },
+  "NL|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/6612572/pexels-photo-6612572.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A cozy coffee shop interior featuring a modern espresso machine and various coffee accessories.",
+    "photographer": "Pavel Danilyuk",
+    "width": 5473,
+    "height": 3654,
+    "generated_at": "2026-05-21T18:15:21.288Z"
+  },
+  "NL|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/31484077/pexels-photo-31484077.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A display of fresh breads and pastries in a bakery setting, highlighting variety and texture.",
+    "photographer": "rao qingwei",
+    "width": 5645,
+    "height": 3763,
+    "generated_at": "2026-05-21T18:15:21.929Z"
+  },
+  "NL|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/1872888/pexels-photo-1872888.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Warm and inviting pub interior featuring a wooden bar and hanging wine glasses.",
+    "photographer": "Valeria Boltneva",
+    "width": 6472,
+    "height": 4315,
+    "generated_at": "2026-05-21T18:15:22.612Z"
+  },
+  "NL|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:15:23.312Z"
+  },
+  "NL|grocery_stores": {
+    "url": "https://images.pexels.com/photos/16154014/pexels-photo-16154014.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Grocery store worker organizing fresh fruits and vegetables on display shelves.",
+    "photographer": "Rossella Fasoli",
+    "width": 8002,
+    "height": 5538,
+    "generated_at": "2026-05-21T18:15:23.996Z"
+  },
+  "NL|clothing_stores": {
+    "url": "https://images.pexels.com/photos/1488467/pexels-photo-1488467.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Stylish indoor clothing display with mannequins at a modern boutique showcasing trendy apparel and accessories.",
+    "photographer": "Edgars Kisuro",
+    "width": 5472,
+    "height": 3648,
+    "generated_at": "2026-05-21T18:15:24.668Z"
+  },
+  "NL|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/28146843/pexels-photo-28146843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Luxury jewelry set elegantly displayed with necklaces and rings in a store setting.",
+    "photographer": "Pham Ngoc Anh",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:15:25.271Z"
+  },
+  "BE|restaurants": {
+    "url": "https://images.pexels.com/photos/2387675/pexels-photo-2387675.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Spacious restaurant with stylish interior design, featuring wooden tables and a group of diners enjoying a meal.",
+    "photographer": "Adrien Olichon",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:15:25.947Z"
+  },
+  "BE|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/6612572/pexels-photo-6612572.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A cozy coffee shop interior featuring a modern espresso machine and various coffee accessories.",
+    "photographer": "Pavel Danilyuk",
+    "width": 5473,
+    "height": 3654,
+    "generated_at": "2026-05-21T18:15:26.551Z"
+  },
+  "BE|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/36445213/pexels-photo-36445213.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Skilled baker meticulously shaping dough for freshly baked artisan bread in a traditional bakery setting.",
+    "photographer": "Yasin Onuş",
+    "width": 6439,
+    "height": 4293,
+    "generated_at": "2026-05-21T18:15:27.174Z"
+  },
+  "BE|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/1872888/pexels-photo-1872888.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Warm and inviting pub interior featuring a wooden bar and hanging wine glasses.",
+    "photographer": "Valeria Boltneva",
+    "width": 6472,
+    "height": 4315,
+    "generated_at": "2026-05-21T18:15:27.826Z"
+  },
+  "BE|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:15:28.477Z"
+  },
+  "BE|grocery_stores": {
+    "url": "https://images.pexels.com/photos/16154014/pexels-photo-16154014.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Grocery store worker organizing fresh fruits and vegetables on display shelves.",
+    "photographer": "Rossella Fasoli",
+    "width": 8002,
+    "height": 5538,
+    "generated_at": "2026-05-21T18:15:29.150Z"
+  },
+  "BE|clothing_stores": {
+    "url": "https://images.pexels.com/photos/1488467/pexels-photo-1488467.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Stylish indoor clothing display with mannequins at a modern boutique showcasing trendy apparel and accessories.",
+    "photographer": "Edgars Kisuro",
+    "width": 5472,
+    "height": 3648,
+    "generated_at": "2026-05-21T18:15:29.812Z"
+  },
+  "BE|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/8201192/pexels-photo-8201192.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Elderly man calculating sales in a jewelry store with luxury items on display.",
+    "photographer": "Kampus Production",
+    "width": 5192,
+    "height": 3466,
+    "generated_at": "2026-05-21T18:15:30.440Z"
+  },
+  "CH|restaurants": {
+    "url": "https://images.pexels.com/photos/2387675/pexels-photo-2387675.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Spacious restaurant with stylish interior design, featuring wooden tables and a group of diners enjoying a meal.",
+    "photographer": "Adrien Olichon",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:15:31.049Z"
+  },
+  "CH|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/6612572/pexels-photo-6612572.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A cozy coffee shop interior featuring a modern espresso machine and various coffee accessories.",
+    "photographer": "Pavel Danilyuk",
+    "width": 5473,
+    "height": 3654,
+    "generated_at": "2026-05-21T18:15:31.644Z"
+  },
+  "CH|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/30918875/pexels-photo-30918875.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Golden-brown artisan bread fresh from the oven in a Berlin bakery, showcasing fine baking craft.",
+    "photographer": "Travel with  Lenses",
+    "width": 6325,
+    "height": 4217,
+    "generated_at": "2026-05-21T18:15:32.258Z"
+  },
+  "CH|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/1872888/pexels-photo-1872888.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Warm and inviting pub interior featuring a wooden bar and hanging wine glasses.",
+    "photographer": "Valeria Boltneva",
+    "width": 6472,
+    "height": 4315,
+    "generated_at": "2026-05-21T18:15:32.978Z"
+  },
+  "CH|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:15:33.595Z"
+  },
+  "CH|grocery_stores": {
+    "url": "https://images.pexels.com/photos/12932368/pexels-photo-12932368.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A woman examines fresh fruits in a vibrant grocery store produce section, shopping for healthy options.",
+    "photographer": "Atlantic Ambience",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:15:34.220Z"
+  },
+  "CH|clothing_stores": {
+    "url": "https://images.pexels.com/photos/30785212/pexels-photo-30785212.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the picturesque architecture and shopping in Gstaad, Switzerland's luxurious Swiss Alps village.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:15:34.873Z"
+  },
+  "CH|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/28146843/pexels-photo-28146843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Luxury jewelry set elegantly displayed with necklaces and rings in a store setting.",
+    "photographer": "Pham Ngoc Anh",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:15:35.510Z"
+  },
+  "AT|restaurants": {
+    "url": "https://images.pexels.com/photos/2387675/pexels-photo-2387675.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Spacious restaurant with stylish interior design, featuring wooden tables and a group of diners enjoying a meal.",
+    "photographer": "Adrien Olichon",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:15:36.080Z"
+  },
+  "AT|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/6612572/pexels-photo-6612572.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A cozy coffee shop interior featuring a modern espresso machine and various coffee accessories.",
+    "photographer": "Pavel Danilyuk",
+    "width": 5473,
+    "height": 3654,
+    "generated_at": "2026-05-21T18:15:36.753Z"
+  },
+  "AT|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/2924872/pexels-photo-2924872.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Artisan breads on a wooden tray and tablecloth, showcasing fresh bakery goods indoors.",
+    "photographer": "Tim Erben",
+    "width": 5448,
+    "height": 3632,
+    "generated_at": "2026-05-21T18:15:37.344Z"
+  },
+  "AT|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/1872888/pexels-photo-1872888.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Warm and inviting pub interior featuring a wooden bar and hanging wine glasses.",
+    "photographer": "Valeria Boltneva",
+    "width": 6472,
+    "height": 4315,
+    "generated_at": "2026-05-21T18:15:38.115Z"
+  },
+  "AT|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/18328707/pexels-photo-18328707.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Sunlight streaming through a modern hotel lobby with glass doors in Steiermark, Austria.",
+    "photographer": "Michael Pointner",
+    "width": 5842,
+    "height": 3895,
+    "generated_at": "2026-05-21T18:15:38.778Z"
+  },
+  "AT|grocery_stores": {
+    "url": "https://images.pexels.com/photos/12932368/pexels-photo-12932368.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A woman examines fresh fruits in a vibrant grocery store produce section, shopping for healthy options.",
+    "photographer": "Atlantic Ambience",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:15:39.384Z"
+  },
+  "AT|clothing_stores": {
+    "url": "https://images.pexels.com/photos/1488467/pexels-photo-1488467.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Stylish indoor clothing display with mannequins at a modern boutique showcasing trendy apparel and accessories.",
+    "photographer": "Edgars Kisuro",
+    "width": 5472,
+    "height": 3648,
+    "generated_at": "2026-05-21T18:15:40.069Z"
+  },
+  "AT|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/28146843/pexels-photo-28146843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Luxury jewelry set elegantly displayed with necklaces and rings in a store setting.",
+    "photographer": "Pham Ngoc Anh",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:15:40.796Z"
+  },
+  "SE|restaurants": {
+    "url": "https://images.pexels.com/photos/16480438/pexels-photo-16480438.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Bright Scandinavian-style restaurant interior with chairs and tables in Gothenburg, Sweden.",
+    "photographer": "Efrem  Efre",
+    "width": 6960,
+    "height": 4640,
+    "generated_at": "2026-05-21T18:15:41.468Z"
+  },
+  "SE|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/6612572/pexels-photo-6612572.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A cozy coffee shop interior featuring a modern espresso machine and various coffee accessories.",
+    "photographer": "Pavel Danilyuk",
+    "width": 5473,
+    "height": 3654,
+    "generated_at": "2026-05-21T18:15:42.073Z"
+  },
+  "SE|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/31484077/pexels-photo-31484077.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A display of fresh breads and pastries in a bakery setting, highlighting variety and texture.",
+    "photographer": "rao qingwei",
+    "width": 5645,
+    "height": 3763,
+    "generated_at": "2026-05-21T18:15:42.762Z"
+  },
+  "SE|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/1872888/pexels-photo-1872888.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Warm and inviting pub interior featuring a wooden bar and hanging wine glasses.",
+    "photographer": "Valeria Boltneva",
+    "width": 6472,
+    "height": 4315,
+    "generated_at": "2026-05-21T18:15:43.508Z"
+  },
+  "SE|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:15:44.120Z"
+  },
+  "SE|grocery_stores": {
+    "url": "https://images.pexels.com/photos/7129133/pexels-photo-7129133.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Heap of fresh red radish near pile of fennel placed on shelf with price in light grocery store with vegetables",
+    "photographer": "Michael Burrows",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:15:44.755Z"
+  },
+  "SE|clothing_stores": {
+    "url": "https://images.pexels.com/photos/1488467/pexels-photo-1488467.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Stylish indoor clothing display with mannequins at a modern boutique showcasing trendy apparel and accessories.",
+    "photographer": "Edgars Kisuro",
+    "width": 5472,
+    "height": 3648,
+    "generated_at": "2026-05-21T18:15:45.401Z"
+  },
+  "SE|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/28146843/pexels-photo-28146843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Luxury jewelry set elegantly displayed with necklaces and rings in a store setting.",
+    "photographer": "Pham Ngoc Anh",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:15:46.039Z"
+  },
+  "PL|restaurants": {
+    "url": "https://images.pexels.com/photos/17768178/pexels-photo-17768178.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Outdoor dining area of a Polish restaurant with traditional architecture, set in a quaint old town.",
+    "photographer": "Egor Komarov",
+    "width": 8272,
+    "height": 6200,
+    "generated_at": "2026-05-21T18:15:46.718Z"
+  },
+  "PL|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/6612572/pexels-photo-6612572.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A cozy coffee shop interior featuring a modern espresso machine and various coffee accessories.",
+    "photographer": "Pavel Danilyuk",
+    "width": 5473,
+    "height": 3654,
+    "generated_at": "2026-05-21T18:15:47.329Z"
+  },
+  "PL|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/9120377/pexels-photo-9120377.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Freshly baked artisanal breads displayed in a bakery window showcasing a variety of loaves.",
+    "photographer": "hissetmehurriyeti",
+    "width": 5184,
+    "height": 2912,
+    "generated_at": "2026-05-21T18:15:48.122Z"
+  },
+  "PL|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/1872888/pexels-photo-1872888.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Warm and inviting pub interior featuring a wooden bar and hanging wine glasses.",
+    "photographer": "Valeria Boltneva",
+    "width": 6472,
+    "height": 4315,
+    "generated_at": "2026-05-21T18:15:48.929Z"
+  },
+  "PL|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:15:49.612Z"
+  },
+  "PL|grocery_stores": {
+    "url": "https://images.pexels.com/photos/37056883/pexels-photo-37056883.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Photo of an urban grocery store, ProMarket, displaying colorful fresh produce outside.",
+    "photographer": "Eftim Futekov",
+    "width": 3840,
+    "height": 2560,
+    "generated_at": "2026-05-21T18:15:50.290Z"
+  },
+  "PL|clothing_stores": {
+    "url": "https://images.pexels.com/photos/1488467/pexels-photo-1488467.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Stylish indoor clothing display with mannequins at a modern boutique showcasing trendy apparel and accessories.",
+    "photographer": "Edgars Kisuro",
+    "width": 5472,
+    "height": 3648,
+    "generated_at": "2026-05-21T18:15:50.943Z"
+  },
+  "PL|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/28146843/pexels-photo-28146843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Luxury jewelry set elegantly displayed with necklaces and rings in a store setting.",
+    "photographer": "Pham Ngoc Anh",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:15:51.642Z"
+  },
+  "PT|restaurants": {
+    "url": "https://images.pexels.com/photos/13061558/pexels-photo-13061558.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Elegant historic restaurant interior with patrons dining and ornate decor, providing a classic ambiance.",
+    "photographer": "Jonathan Borba",
+    "width": 5472,
+    "height": 3648,
+    "generated_at": "2026-05-21T18:15:52.350Z"
+  },
+  "PT|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/34493528/pexels-photo-34493528.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore a vintage coffee shop adorned with retro cameras and rustic decor, perfect for enthusiasts.",
+    "photographer": "Alexandre  Canteiro",
+    "width": 4000,
+    "height": 2670,
+    "generated_at": "2026-05-21T18:15:52.974Z"
+  },
+  "PT|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/9120377/pexels-photo-9120377.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Freshly baked artisanal breads displayed in a bakery window showcasing a variety of loaves.",
+    "photographer": "hissetmehurriyeti",
+    "width": 5184,
+    "height": 2912,
+    "generated_at": "2026-05-21T18:15:53.676Z"
+  },
+  "PT|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/1872888/pexels-photo-1872888.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Warm and inviting pub interior featuring a wooden bar and hanging wine glasses.",
+    "photographer": "Valeria Boltneva",
+    "width": 6472,
+    "height": 4315,
+    "generated_at": "2026-05-21T18:15:54.383Z"
+  },
+  "PT|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/10890612/pexels-photo-10890612.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Elegant hotel lobby in Lisbon with stylish interior design and reception desk.",
+    "photographer": "The 7 Hotel Lisbon",
+    "width": 6546,
+    "height": 4364,
+    "generated_at": "2026-05-21T18:15:54.996Z"
+  },
+  "PT|grocery_stores": {
+    "url": "https://images.pexels.com/photos/8422731/pexels-photo-8422731.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A friendly grocery store clerk presenting fresh produce with two elderly shoppers.",
+    "photographer": "Kampus Production",
+    "width": 6016,
+    "height": 4016,
+    "generated_at": "2026-05-21T18:15:55.609Z"
+  },
+  "PT|clothing_stores": {
+    "url": "https://images.pexels.com/photos/8201205/pexels-photo-8201205.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Mature shoppers browse clothes and handbags in a Portuguese boutique.",
+    "photographer": "Kampus Production",
+    "width": 5219,
+    "height": 3484,
+    "generated_at": "2026-05-21T18:15:56.286Z"
+  },
+  "PT|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/28146843/pexels-photo-28146843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Luxury jewelry set elegantly displayed with necklaces and rings in a store setting.",
+    "photographer": "Pham Ngoc Anh",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:15:56.925Z"
+  },
+  "IE|restaurants": {
+    "url": "https://images.pexels.com/photos/2387675/pexels-photo-2387675.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Spacious restaurant with stylish interior design, featuring wooden tables and a group of diners enjoying a meal.",
+    "photographer": "Adrien Olichon",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:15:57.623Z"
+  },
+  "IE|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/6612572/pexels-photo-6612572.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A cozy coffee shop interior featuring a modern espresso machine and various coffee accessories.",
+    "photographer": "Pavel Danilyuk",
+    "width": 5473,
+    "height": 3654,
+    "generated_at": "2026-05-21T18:15:58.275Z"
+  },
+  "IE|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/9120377/pexels-photo-9120377.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Freshly baked artisanal breads displayed in a bakery window showcasing a variety of loaves.",
+    "photographer": "hissetmehurriyeti",
+    "width": 5184,
+    "height": 2912,
+    "generated_at": "2026-05-21T18:15:58.942Z"
+  },
+  "IE|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/35004395/pexels-photo-35004395.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Warm, inviting interior of an Irish pub with a wooden bar counter and stools.",
+    "photographer": "Selim Karadayı",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:15:59.935Z"
+  },
+  "IE|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:16:00.687Z"
+  },
+  "IE|grocery_stores": {
+    "url": "https://images.pexels.com/photos/12932368/pexels-photo-12932368.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A woman examines fresh fruits in a vibrant grocery store produce section, shopping for healthy options.",
+    "photographer": "Atlantic Ambience",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:16:01.397Z"
+  },
+  "IE|clothing_stores": {
+    "url": "https://images.pexels.com/photos/8619007/pexels-photo-8619007.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Mannequin with a pink dress and clothing rack in a stylish boutique.",
+    "photographer": "Chris F",
+    "width": 4047,
+    "height": 3510,
+    "generated_at": "2026-05-21T18:16:03.173Z"
+  },
+  "IE|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20299702/pexels-photo-20299702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of luxurious necklaces on mannequins in a jewelry store.",
+    "photographer": "Robert So",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:16:04.032Z"
+  },
+  "DK|restaurants": {
+    "url": "https://images.pexels.com/photos/5865303/pexels-photo-5865303.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Stylish restaurant interior with wooden decor and table settings for a cozy dining experience.",
+    "photographer": "Rachel Claire",
+    "width": 5368,
+    "height": 3579,
+    "generated_at": "2026-05-21T18:16:04.980Z"
+  },
+  "DK|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/6612572/pexels-photo-6612572.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A cozy coffee shop interior featuring a modern espresso machine and various coffee accessories.",
+    "photographer": "Pavel Danilyuk",
+    "width": 5473,
+    "height": 3654,
+    "generated_at": "2026-05-21T18:16:05.695Z"
+  },
+  "DK|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/31484077/pexels-photo-31484077.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A display of fresh breads and pastries in a bakery setting, highlighting variety and texture.",
+    "photographer": "rao qingwei",
+    "width": 5645,
+    "height": 3763,
+    "generated_at": "2026-05-21T18:16:06.433Z"
+  },
+  "DK|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/5531663/pexels-photo-5531663.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Inviting rustic pub interior with wooden floors and brick walls, featuring a long bar counter and seating area.",
+    "photographer": "Rachel Claire",
+    "width": 5472,
+    "height": 3648,
+    "generated_at": "2026-05-21T18:16:07.208Z"
+  },
+  "DK|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:16:07.822Z"
+  },
+  "DK|grocery_stores": {
+    "url": "https://images.pexels.com/photos/16154014/pexels-photo-16154014.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Grocery store worker organizing fresh fruits and vegetables on display shelves.",
+    "photographer": "Rossella Fasoli",
+    "width": 8002,
+    "height": 5538,
+    "generated_at": "2026-05-21T18:16:08.471Z"
+  },
+  "DK|clothing_stores": {
+    "url": "https://images.pexels.com/photos/1488467/pexels-photo-1488467.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Stylish indoor clothing display with mannequins at a modern boutique showcasing trendy apparel and accessories.",
+    "photographer": "Edgars Kisuro",
+    "width": 5472,
+    "height": 3648,
+    "generated_at": "2026-05-21T18:16:09.139Z"
+  },
+  "DK|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/28146843/pexels-photo-28146843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Luxury jewelry set elegantly displayed with necklaces and rings in a store setting.",
+    "photographer": "Pham Ngoc Anh",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:16:10.124Z"
+  },
+  "NO|restaurants": {
+    "url": "https://images.pexels.com/photos/37654916/pexels-photo-37654916.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Elegant restaurant interior with panoramic windows showcasing a serene fjord landscape.",
+    "photographer": "Aishwarya Pavithram",
+    "width": 4032,
+    "height": 3024,
+    "generated_at": "2026-05-21T18:16:10.829Z"
+  },
+  "NO|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/6612572/pexels-photo-6612572.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A cozy coffee shop interior featuring a modern espresso machine and various coffee accessories.",
+    "photographer": "Pavel Danilyuk",
+    "width": 5473,
+    "height": 3654,
+    "generated_at": "2026-05-21T18:16:11.473Z"
+  },
+  "NO|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/31484077/pexels-photo-31484077.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A display of fresh breads and pastries in a bakery setting, highlighting variety and texture.",
+    "photographer": "rao qingwei",
+    "width": 5645,
+    "height": 3763,
+    "generated_at": "2026-05-21T18:16:12.144Z"
+  },
+  "NO|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/1872888/pexels-photo-1872888.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Warm and inviting pub interior featuring a wooden bar and hanging wine glasses.",
+    "photographer": "Valeria Boltneva",
+    "width": 6472,
+    "height": 4315,
+    "generated_at": "2026-05-21T18:16:12.813Z"
+  },
+  "NO|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:16:13.411Z"
+  },
+  "NO|grocery_stores": {
+    "url": "https://images.pexels.com/photos/12932368/pexels-photo-12932368.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A woman examines fresh fruits in a vibrant grocery store produce section, shopping for healthy options.",
+    "photographer": "Atlantic Ambience",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:16:14.116Z"
+  },
+  "NO|clothing_stores": {
+    "url": "https://images.pexels.com/photos/1488467/pexels-photo-1488467.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Stylish indoor clothing display with mannequins at a modern boutique showcasing trendy apparel and accessories.",
+    "photographer": "Edgars Kisuro",
+    "width": 5472,
+    "height": 3648,
+    "generated_at": "2026-05-21T18:16:14.782Z"
+  },
+  "NO|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/28146843/pexels-photo-28146843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Luxury jewelry set elegantly displayed with necklaces and rings in a store setting.",
+    "photographer": "Pham Ngoc Anh",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:16:15.399Z"
+  },
+  "FI|restaurants": {
+    "url": "https://images.pexels.com/photos/2387675/pexels-photo-2387675.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Spacious restaurant with stylish interior design, featuring wooden tables and a group of diners enjoying a meal.",
+    "photographer": "Adrien Olichon",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:16:15.987Z"
+  },
+  "FI|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/6612572/pexels-photo-6612572.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A cozy coffee shop interior featuring a modern espresso machine and various coffee accessories.",
+    "photographer": "Pavel Danilyuk",
+    "width": 5473,
+    "height": 3654,
+    "generated_at": "2026-05-21T18:16:16.609Z"
+  },
+  "FI|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/31484077/pexels-photo-31484077.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A display of fresh breads and pastries in a bakery setting, highlighting variety and texture.",
+    "photographer": "rao qingwei",
+    "width": 5645,
+    "height": 3763,
+    "generated_at": "2026-05-21T18:16:17.259Z"
+  },
+  "FI|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/1872888/pexels-photo-1872888.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Warm and inviting pub interior featuring a wooden bar and hanging wine glasses.",
+    "photographer": "Valeria Boltneva",
+    "width": 6472,
+    "height": 4315,
+    "generated_at": "2026-05-21T18:16:18.044Z"
+  },
+  "FI|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:16:18.718Z"
+  },
+  "FI|grocery_stores": {
+    "url": "https://images.pexels.com/photos/12932368/pexels-photo-12932368.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A woman examines fresh fruits in a vibrant grocery store produce section, shopping for healthy options.",
+    "photographer": "Atlantic Ambience",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:16:19.355Z"
+  },
+  "FI|clothing_stores": {
+    "url": "https://images.pexels.com/photos/1488467/pexels-photo-1488467.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Stylish indoor clothing display with mannequins at a modern boutique showcasing trendy apparel and accessories.",
+    "photographer": "Edgars Kisuro",
+    "width": 5472,
+    "height": 3648,
+    "generated_at": "2026-05-21T18:16:20.026Z"
+  },
+  "FI|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/28146843/pexels-photo-28146843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Luxury jewelry set elegantly displayed with necklaces and rings in a store setting.",
+    "photographer": "Pham Ngoc Anh",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:16:20.687Z"
+  },
+  "GR|restaurants": {
+    "url": "https://images.pexels.com/photos/30310428/pexels-photo-30310428.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Warm and inviting Greek café interior with set dining tables in Athens, Greece.",
+    "photographer": "Ali Durmuş Cevlan",
+    "width": 5466,
+    "height": 3644,
+    "generated_at": "2026-05-21T18:16:21.371Z"
+  },
+  "GR|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/34493528/pexels-photo-34493528.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore a vintage coffee shop adorned with retro cameras and rustic decor, perfect for enthusiasts.",
+    "photographer": "Alexandre  Canteiro",
+    "width": 4000,
+    "height": 2670,
+    "generated_at": "2026-05-21T18:16:22.081Z"
+  },
+  "GR|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/9120377/pexels-photo-9120377.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Freshly baked artisanal breads displayed in a bakery window showcasing a variety of loaves.",
+    "photographer": "hissetmehurriyeti",
+    "width": 5184,
+    "height": 2912,
+    "generated_at": "2026-05-21T18:16:22.905Z"
+  },
+  "GR|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/1872888/pexels-photo-1872888.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Warm and inviting pub interior featuring a wooden bar and hanging wine glasses.",
+    "photographer": "Valeria Boltneva",
+    "width": 6472,
+    "height": 4315,
+    "generated_at": "2026-05-21T18:16:23.610Z"
+  },
+  "GR|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:16:24.206Z"
+  },
+  "GR|grocery_stores": {
+    "url": "https://images.pexels.com/photos/16154014/pexels-photo-16154014.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Grocery store worker organizing fresh fruits and vegetables on display shelves.",
+    "photographer": "Rossella Fasoli",
+    "width": 8002,
+    "height": 5538,
+    "generated_at": "2026-05-21T18:16:24.900Z"
+  },
+  "GR|clothing_stores": {
+    "url": "https://images.pexels.com/photos/5711494/pexels-photo-5711494.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Sunlit street in Greece lined with boutique shops and a Greek flag, capturing vibrant urban life.",
+    "photographer": "Markus Winkler",
+    "width": 3999,
+    "height": 2666,
+    "generated_at": "2026-05-21T18:16:25.566Z"
+  },
+  "GR|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/28146843/pexels-photo-28146843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Luxury jewelry set elegantly displayed with necklaces and rings in a store setting.",
+    "photographer": "Pham Ngoc Anh",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:16:26.271Z"
+  },
+  "CZ|restaurants": {
+    "url": "https://images.pexels.com/photos/2387675/pexels-photo-2387675.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Spacious restaurant with stylish interior design, featuring wooden tables and a group of diners enjoying a meal.",
+    "photographer": "Adrien Olichon",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:16:26.907Z"
+  },
+  "CZ|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/6612572/pexels-photo-6612572.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A cozy coffee shop interior featuring a modern espresso machine and various coffee accessories.",
+    "photographer": "Pavel Danilyuk",
+    "width": 5473,
+    "height": 3654,
+    "generated_at": "2026-05-21T18:16:27.669Z"
+  },
+  "CZ|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/36445141/pexels-photo-36445141.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Close-up view of freshly baked bread and pastries in an artisan bakery's oven.",
+    "photographer": "Yasin Onuş",
+    "width": 6411,
+    "height": 4274,
+    "generated_at": "2026-05-21T18:16:28.402Z"
+  },
+  "CZ|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/1872888/pexels-photo-1872888.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Warm and inviting pub interior featuring a wooden bar and hanging wine glasses.",
+    "photographer": "Valeria Boltneva",
+    "width": 6472,
+    "height": 4315,
+    "generated_at": "2026-05-21T18:16:29.121Z"
+  },
+  "CZ|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:16:29.858Z"
+  },
+  "CZ|grocery_stores": {
+    "url": "https://images.pexels.com/photos/12932368/pexels-photo-12932368.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A woman examines fresh fruits in a vibrant grocery store produce section, shopping for healthy options.",
+    "photographer": "Atlantic Ambience",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:16:30.548Z"
+  },
+  "CZ|clothing_stores": {
+    "url": "https://images.pexels.com/photos/8619007/pexels-photo-8619007.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Mannequin with a pink dress and clothing rack in a stylish boutique.",
+    "photographer": "Chris F",
+    "width": 4047,
+    "height": 3510,
+    "generated_at": "2026-05-21T18:16:31.291Z"
+  },
+  "CZ|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/28146843/pexels-photo-28146843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Luxury jewelry set elegantly displayed with necklaces and rings in a store setting.",
+    "photographer": "Pham Ngoc Anh",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:16:31.996Z"
+  },
+  "HU|restaurants": {
+    "url": "https://images.pexels.com/photos/2387675/pexels-photo-2387675.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Spacious restaurant with stylish interior design, featuring wooden tables and a group of diners enjoying a meal.",
+    "photographer": "Adrien Olichon",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:16:32.650Z"
+  },
+  "HU|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/6612572/pexels-photo-6612572.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A cozy coffee shop interior featuring a modern espresso machine and various coffee accessories.",
+    "photographer": "Pavel Danilyuk",
+    "width": 5473,
+    "height": 3654,
+    "generated_at": "2026-05-21T18:16:33.333Z"
+  },
+  "HU|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/36445141/pexels-photo-36445141.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Close-up view of freshly baked bread and pastries in an artisan bakery's oven.",
+    "photographer": "Yasin Onuş",
+    "width": 6411,
+    "height": 4274,
+    "generated_at": "2026-05-21T18:16:34.141Z"
+  },
+  "HU|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/1872888/pexels-photo-1872888.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Warm and inviting pub interior featuring a wooden bar and hanging wine glasses.",
+    "photographer": "Valeria Boltneva",
+    "width": 6472,
+    "height": 4315,
+    "generated_at": "2026-05-21T18:16:34.847Z"
+  },
+  "HU|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:16:35.613Z"
+  },
+  "HU|grocery_stores": {
+    "url": "https://images.pexels.com/photos/12932368/pexels-photo-12932368.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A woman examines fresh fruits in a vibrant grocery store produce section, shopping for healthy options.",
+    "photographer": "Atlantic Ambience",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:16:36.230Z"
+  },
+  "HU|clothing_stores": {
+    "url": "https://images.pexels.com/photos/8619007/pexels-photo-8619007.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Mannequin with a pink dress and clothing rack in a stylish boutique.",
+    "photographer": "Chris F",
+    "width": 4047,
+    "height": 3510,
+    "generated_at": "2026-05-21T18:16:36.945Z"
+  },
+  "HU|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20858959/pexels-photo-20858959.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of elegant gold jewelry pieces in a store setting, showcasing earrings, rings, and a bracelet.",
+    "photographer": "amine photographe",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:16:37.710Z"
+  },
+  "RO|restaurants": {
+    "url": "https://images.pexels.com/photos/5865303/pexels-photo-5865303.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Stylish restaurant interior with wooden decor and table settings for a cozy dining experience.",
+    "photographer": "Rachel Claire",
+    "width": 5368,
+    "height": 3579,
+    "generated_at": "2026-05-21T18:16:38.398Z"
+  },
+  "RO|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/37464853/pexels-photo-37464853.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Ambient coffee shop interior featuring roastery equipment and comfy seating. Perfect for cafe enthusiasts.",
+    "photographer": "AZiZ AL-MLK",
+    "width": 5000,
+    "height": 3333,
+    "generated_at": "2026-05-21T18:16:38.997Z"
+  },
+  "RO|bakeries_pastries": {
+    "url": "https://images.pexels.com/photos/36445213/pexels-photo-36445213.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Skilled baker meticulously shaping dough for freshly baked artisan bread in a traditional bakery setting.",
+    "photographer": "Yasin Onuş",
+    "width": 6439,
+    "height": 4293,
+    "generated_at": "2026-05-21T18:16:39.694Z"
+  },
+  "RO|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/1872888/pexels-photo-1872888.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Warm and inviting pub interior featuring a wooden bar and hanging wine glasses.",
+    "photographer": "Valeria Boltneva",
+    "width": 6472,
+    "height": 4315,
+    "generated_at": "2026-05-21T18:16:40.431Z"
+  },
+  "RO|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/18328707/pexels-photo-18328707.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Sunlight streaming through a modern hotel lobby with glass doors in Steiermark, Austria.",
+    "photographer": "Michael Pointner",
+    "width": 5842,
+    "height": 3895,
+    "generated_at": "2026-05-21T18:16:41.173Z"
+  },
+  "RO|grocery_stores": {
+    "url": "https://images.pexels.com/photos/12932368/pexels-photo-12932368.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A woman examines fresh fruits in a vibrant grocery store produce section, shopping for healthy options.",
+    "photographer": "Atlantic Ambience",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:16:41.802Z"
+  },
+  "RO|clothing_stores": {
+    "url": "https://images.pexels.com/photos/8619007/pexels-photo-8619007.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Mannequin with a pink dress and clothing rack in a stylish boutique.",
+    "photographer": "Chris F",
+    "width": 4047,
+    "height": 3510,
+    "generated_at": "2026-05-21T18:16:42.572Z"
+  },
+  "RO|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/28146843/pexels-photo-28146843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Luxury jewelry set elegantly displayed with necklaces and rings in a store setting.",
+    "photographer": "Pham Ngoc Anh",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:16:43.269Z"
+  },
+  "TR|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:16:46.404Z"
+  },
+  "TR|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20299702/pexels-photo-20299702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of luxurious necklaces on mannequins in a jewelry store.",
+    "photographer": "Robert So",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:16:48.984Z"
+  },
+  "RU|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:16:51.752Z"
+  },
+  "RU|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20299702/pexels-photo-20299702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of luxurious necklaces on mannequins in a jewelry store.",
+    "photographer": "Robert So",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:16:53.403Z"
+  },
+  "UA|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:16:56.167Z"
+  },
+  "UA|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20299702/pexels-photo-20299702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of luxurious necklaces on mannequins in a jewelry store.",
+    "photographer": "Robert So",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:16:57.817Z"
+  },
+  "IN|cafes_coffee_shops": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/The_St_John%27s_Coffee_Shop_in_downtown_Covington_Louisiana%2C_interior%2C_August_2023.jpg/1280px-The_St_John%27s_Coffee_Shop_in_downtown_Covington_Louisiana%2C_interior%2C_August_2023.jpg",
+    "source": "wikimedia",
+    "description": "The St John's Coffee Shop in downtown Covington Louisiana, interior, August 2023",
+    "generated_at": "2026-05-21T18:16:59.780Z"
+  },
+  "IN|bakeries_pastries": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Fresh_made_bread_02.jpg/1280px-Fresh_made_bread_02.jpg",
+    "source": "wikimedia",
+    "description": "Freshly made bread from a local bakery",
+    "generated_at": "2026-05-21T18:17:02.063Z"
+  },
+  "IN|bars_pubs_clubs": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Great_Indian%2C_Upper_Holloway%2C_N19_-_2025-07-28.jpg/1280px-Great_Indian%2C_Upper_Holloway%2C_N19_-_2025-07-28.jpg",
+    "source": "wikimedia",
+    "description": "This has been through quite a few identities in recent years, and has recently opened as an Indian gastropub. Looking nice now. (View of interior, and older photo of it as The Prince Alfred from 2008.",
+    "generated_at": "2026-05-21T18:17:04.152Z"
+  },
+  "IN|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/33803739/pexels-photo-33803739.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Beautifully designed hotel lobby in Bikaner, Rajasthan, showcasing elegant Indian heritage architecture and decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 9282,
+    "height": 6188,
+    "generated_at": "2026-05-21T18:17:05.653Z"
+  },
+  "IN|clothing_stores": {
+    "url": "https://images.pexels.com/photos/8886953/pexels-photo-8886953.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A young woman admires traditional saris in a vibrant Indian clothing store.",
+    "photographer": "Lara Jameson",
+    "width": 5040,
+    "height": 3360,
+    "generated_at": "2026-05-21T18:17:07.147Z"
+  },
+  "IN|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20299702/pexels-photo-20299702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of luxurious necklaces on mannequins in a jewelry store.",
+    "photographer": "Robert So",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:17:07.868Z"
+  },
+  "CN|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:17:11.467Z"
+  },
+  "CN|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20299702/pexels-photo-20299702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of luxurious necklaces on mannequins in a jewelry store.",
+    "photographer": "Robert So",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:17:13.678Z"
+  },
+  "KR|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:17:16.817Z"
+  },
+  "KR|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20299702/pexels-photo-20299702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of luxurious necklaces on mannequins in a jewelry store.",
+    "photographer": "Robert So",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:17:18.878Z"
+  },
+  "ID|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:17:21.721Z"
+  },
+  "ID|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20299702/pexels-photo-20299702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of luxurious necklaces on mannequins in a jewelry store.",
+    "photographer": "Robert So",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:17:23.570Z"
+  },
+  "TH|cafes_coffee_shops": {
+    "url": "https://images.pexels.com/photos/26319138/pexels-photo-26319138.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A sleek and modern coffee shop interior in Jawa Timur, Indonesia, featuring bar equipment.",
+    "photographer": "Fian  Dewangga",
+    "width": 3444,
+    "height": 2583,
+    "generated_at": "2026-05-21T18:17:25.046Z"
+  },
+  "TH|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:17:27.163Z"
+  },
+  "TH|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20299702/pexels-photo-20299702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of luxurious necklaces on mannequins in a jewelry store.",
+    "photographer": "Robert So",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:17:29.285Z"
+  },
+  "VN|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:17:31.988Z"
+  },
+  "VN|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20299702/pexels-photo-20299702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of luxurious necklaces on mannequins in a jewelry store.",
+    "photographer": "Robert So",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:17:33.677Z"
+  },
+  "PH|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:17:36.886Z"
+  },
+  "PH|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20299702/pexels-photo-20299702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of luxurious necklaces on mannequins in a jewelry store.",
+    "photographer": "Robert So",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:17:38.578Z"
+  },
+  "MY|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:17:41.369Z"
+  },
+  "MY|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/28146843/pexels-photo-28146843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Luxury jewelry set elegantly displayed with necklaces and rings in a store setting.",
+    "photographer": "Pham Ngoc Anh",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:17:43.140Z"
+  },
+  "SG|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:17:46.064Z"
+  },
+  "SG|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20299702/pexels-photo-20299702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of luxurious necklaces on mannequins in a jewelry store.",
+    "photographer": "Robert So",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:17:47.698Z"
+  },
+  "AE|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:17:51.380Z"
+  },
+  "AE|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20299702/pexels-photo-20299702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of luxurious necklaces on mannequins in a jewelry store.",
+    "photographer": "Robert So",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:17:53.528Z"
+  },
+  "SA|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:17:56.350Z"
+  },
+  "SA|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/28146841/pexels-photo-28146841.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Luxury jewelry display with tansanit and diamond pieces in a store.",
+    "photographer": "Pham Ngoc Anh",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:17:57.998Z"
+  },
+  "IL|cafes_coffee_shops": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/The_St_John%27s_Coffee_Shop_in_downtown_Covington_Louisiana%2C_interior%2C_August_2023.jpg/1280px-The_St_John%27s_Coffee_Shop_in_downtown_Covington_Louisiana%2C_interior%2C_August_2023.jpg",
+    "source": "wikimedia",
+    "description": "The St John's Coffee Shop in downtown Covington Louisiana, interior, August 2023",
+    "generated_at": "2026-05-21T18:17:59.383Z"
+  },
+  "IL|bakeries_pastries": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Druze_Woman_Making_and_Selling_Druze_Pita_Bread_%28Laffa%29_%284101775283%29.jpg/1280px-Druze_Woman_Making_and_Selling_Druze_Pita_Bread_%28Laffa%29_%284101775283%29.jpg",
+    "source": "wikimedia",
+    "description": "Street Portrait experiment with low light and no flash.\n\nTaken at the Carmel Market which is the main \"shuk\" or marketplace in Tel Aviv. Here you can find almost anything: from clothing to meat, baker",
+    "generated_at": "2026-05-21T18:18:00.242Z"
+  },
+  "IL|bars_pubs_clubs": {
+    "url": "https://images.pexels.com/photos/1872888/pexels-photo-1872888.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Warm and inviting pub interior featuring a wooden bar and hanging wine glasses.",
+    "photographer": "Valeria Boltneva",
+    "width": 6472,
+    "height": 4315,
+    "generated_at": "2026-05-21T18:18:01.013Z"
+  },
+  "IL|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:18:01.695Z"
+  },
+  "IL|grocery_stores": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Fresh_Produce_Winco.JPG/1280px-Fresh_Produce_Winco.JPG",
+    "source": "wikimedia",
+    "description": "The fresh produce section at WinCo grocery store in Eureka, California.",
+    "generated_at": "2026-05-21T18:18:03.058Z"
+  },
+  "IL|clothing_stores": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Clothing_shop_in_Mek%27ele.jpg/1280px-Clothing_shop_in_Mek%27ele.jpg",
+    "source": "wikimedia",
+    "description": "A clothing shop in Mek'ele, Ethiopia",
+    "generated_at": "2026-05-21T18:18:04.844Z"
+  },
+  "IL|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20299702/pexels-photo-20299702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of luxurious necklaces on mannequins in a jewelry store.",
+    "photographer": "Robert So",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:18:06.588Z"
+  },
+  "EG|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:18:09.529Z"
+  },
+  "EG|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20299702/pexels-photo-20299702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of luxurious necklaces on mannequins in a jewelry store.",
+    "photographer": "Robert So",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:18:11.215Z"
+  },
+  "ZA|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:18:14.057Z"
+  },
+  "ZA|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20299702/pexels-photo-20299702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of luxurious necklaces on mannequins in a jewelry store.",
+    "photographer": "Robert So",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:18:15.718Z"
+  },
+  "NG|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:18:18.544Z"
+  },
+  "NG|grocery_stores": {
+    "url": "https://images.pexels.com/photos/9705833/pexels-photo-9705833.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A family of three shopping in a grocery store, selecting fresh produce together.",
+    "photographer": "Greta Hoffman",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:18:19.221Z"
+  },
+  "NG|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20299702/pexels-photo-20299702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of luxurious necklaces on mannequins in a jewelry store.",
+    "photographer": "Robert So",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:18:20.306Z"
+  },
+  "KE|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:18:23.094Z"
+  },
+  "KE|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20299702/pexels-photo-20299702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of luxurious necklaces on mannequins in a jewelry store.",
+    "photographer": "Robert So",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:18:24.785Z"
+  },
+  "MA|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:18:27.560Z"
+  },
+  "MA|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20299702/pexels-photo-20299702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of luxurious necklaces on mannequins in a jewelry store.",
+    "photographer": "Robert So",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:18:29.221Z"
+  },
+  "AR|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:18:32.006Z"
+  },
+  "AR|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20299702/pexels-photo-20299702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of luxurious necklaces on mannequins in a jewelry store.",
+    "photographer": "Robert So",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:18:33.674Z"
+  },
+  "CL|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:18:36.518Z"
+  },
+  "CL|grocery_stores": {
+    "url": "https://images.pexels.com/photos/12932368/pexels-photo-12932368.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A woman examines fresh fruits in a vibrant grocery store produce section, shopping for healthy options.",
+    "photographer": "Atlantic Ambience",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:18:37.174Z"
+  },
+  "CL|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20299702/pexels-photo-20299702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of luxurious necklaces on mannequins in a jewelry store.",
+    "photographer": "Robert So",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:18:38.302Z"
+  },
+  "CO|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:18:41.052Z"
+  },
+  "CO|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20299702/pexels-photo-20299702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of luxurious necklaces on mannequins in a jewelry store.",
+    "photographer": "Robert So",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:18:42.707Z"
+  },
+  "PE|hotels_lodging": {
+    "url": "https://images.pexels.com/photos/34607320/pexels-photo-34607320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "Explore the elegant reception area of a Miami Beach boutique hotel, showcasing modern coastal design and vibrant decor.",
+    "photographer": "Abhishek  Navlakha",
+    "width": 6240,
+    "height": 4160,
+    "generated_at": "2026-05-21T18:18:45.461Z"
+  },
+  "PE|jewelry_stores": {
+    "url": "https://images.pexels.com/photos/20299702/pexels-photo-20299702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "source": "pexels",
+    "description": "A refined display of luxurious necklaces on mannequins in a jewelry store.",
+    "photographer": "Robert So",
+    "width": 6000,
+    "height": 4000,
+    "generated_at": "2026-05-21T18:18:47.115Z"
+  }
+}
