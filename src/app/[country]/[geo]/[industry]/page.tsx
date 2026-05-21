@@ -158,14 +158,18 @@ export default async function CellPage({
   const currentSize = sp.size || null;
   const currentYear = sp.year ? Number(sp.year) : null;
 
-  const cell = await getCellBySlug(country, geo, industry, {
-    sizeBand: currentSize,
-    year: currentYear,
-  });
+  // Plan v18 Phase 0.5 — start cell + variants concurrently. They don't
+  // depend on each other and previously ran sequentially (2 round-trips
+  // back to back). Parallelising halves the first-paint latency on every
+  // benchmark page.
+  const [cell, variants] = await Promise.all([
+    getCellBySlug(country, geo, industry, {
+      sizeBand: currentSize,
+      year: currentYear,
+    }),
+    getCellVariants(country, geo, industry),
+  ]);
   if (!cell) notFound();
-
-  // Fetch siblings for the dimension switcher (one round-trip, capped at 200 rows).
-  const variants = await getCellVariants(country, geo, industry);
   const availableSizes = distinctSizeBands(variants);
   const availableYears = distinctYears(variants);
   const timeSeries = buildTimeSeries(variants);
