@@ -196,11 +196,51 @@ export function middleware(req: NextRequest) {
     const res = NextResponse.next({ request: { headers: withPathname(req, path) } });
     res.headers.set("X-RateLimit-Limit", String(PAGE_LIMIT));
     res.headers.set("X-RateLimit-Remaining", String(remaining));
+    // Plan v17 Phase 4.3 — edge-cache rendered HTML for cacheable routes.
+    // Vercel honors `s-maxage` at the CDN layer even when the underlying
+    // route is `force-dynamic`. First request fills the cache; subsequent
+    // requests serve from edge within s-maxage. `stale-while-revalidate`
+    // keeps responses fast even after the window expires.
+    if (CACHEABLE_PATTERNS.some((re) => re.test(path))) {
+      res.headers.set(
+        "Cache-Control",
+        "public, s-maxage=21600, stale-while-revalidate=86400",
+      );
+    }
     return res;
   }
 
   return NextResponse.next({ request: { headers: withPathname(req, path) } });
 }
+
+// Plan v17 Phase 4.3 — paths the edge should cache for 6h with 24h stale.
+// Excludes /api/, /random (intentionally rotating), /saved (per-user),
+// /you and /compare (client-state-heavy).
+const CACHEABLE_PATTERNS: RegExp[] = [
+  /^\/$/,
+  /^\/about-data$/,
+  /^\/browse$/,
+  /^\/blog($|\/)/,
+  /^\/coverage($|\/)/,
+  /^\/industries($|\/[a-z0-9-]+$)/,
+  /^\/sectors($|\/[a-z0-9_-]+$)/,
+  /^\/world$/,
+  /^\/pricing$/,
+  /^\/ask$/,
+  /^\/calculator$/,
+  /^\/status$/,
+  /^\/methodology$/,
+  // /{country}
+  /^\/[a-z]{2}$/,
+  // /{country}/{geo}/{industry}
+  /^\/[a-z]{2}\/[a-z0-9-]+\/[a-z0-9-]+$/,
+  // /{country}/{geo}/industries
+  /^\/[a-z]{2}\/[a-z0-9-]+\/industries$/,
+  // /{country}/industries
+  /^\/[a-z]{2}\/industries$/,
+  // /embed/{country}/{geo}/{industry}
+  /^\/embed\/[a-z]{2}\/[a-z0-9-]+\/[a-z0-9-]+$/,
+];
 
 function withPathname(req: NextRequest, path: string): Headers {
   const headers = new Headers(req.headers);

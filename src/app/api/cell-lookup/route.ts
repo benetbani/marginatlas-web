@@ -13,6 +13,11 @@ import { industryToSlug, INDUSTRY_BY_ID } from "@/lib/taxonomy";
 // Cache for 1 day on Vercel's edge cache
 export const revalidate = 86400;
 
+const CACHE_HEADERS = {
+  // Plan v17 Phase 4.3 — per-query edge caching for the /compare page.
+  "Cache-Control": "public, s-maxage=21600, stale-while-revalidate=86400",
+};
+
 type CompactCell = {
   country: string;
   region: string | null;
@@ -40,7 +45,10 @@ export async function GET(req: NextRequest) {
   const region = (url.searchParams.get("region") || "").toLowerCase();
 
   if (!country || !industryId || !INDUSTRY_BY_ID[industryId]) {
-    return NextResponse.json({ cell: null, reason: "missing or invalid country/industry" });
+    return NextResponse.json(
+      { cell: null, reason: "missing or invalid country/industry" },
+      { headers: CACHE_HEADERS },
+    );
   }
   const industrySlug = industryToSlug(industryId);
 
@@ -52,7 +60,7 @@ export async function GET(req: NextRequest) {
 
   const cell = await getCellBySlug(country.toLowerCase(), regionSlug, industrySlug);
   if (!cell) {
-    return NextResponse.json({ cell: null, reason: "no_match" });
+    return NextResponse.json({ cell: null, reason: "no_match" }, { headers: CACHE_HEADERS });
   }
 
   const compact: CompactCell = {
@@ -78,5 +86,5 @@ export async function GET(req: NextRequest) {
   // Suppress unused-import warning by referencing getTopCells in a no-op path
   void getTopCells;
 
-  return NextResponse.json({ cell: compact });
+  return NextResponse.json({ cell: compact }, { headers: CACHE_HEADERS });
 }

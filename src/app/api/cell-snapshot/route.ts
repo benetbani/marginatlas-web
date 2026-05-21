@@ -14,6 +14,11 @@ import { getCellBySlug } from "@/lib/cells";
 
 export const revalidate = 86400;
 
+const CACHE_HEADERS = {
+  // Plan v17 Phase 4.3 — edge-cache snapshot JSON for 6h with 24h stale.
+  "Cache-Control": "public, s-maxage=21600, stale-while-revalidate=86400",
+};
+
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
   const country = (url.searchParams.get("country") || "").toLowerCase();
@@ -23,12 +28,17 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ found: false }, { status: 400 });
   }
   const cell = await getCellBySlug(country, geo, industry);
-  if (!cell) return NextResponse.json({ found: false });
-  return NextResponse.json({
-    found: true,
-    revenue_per_firm: cell.revenue_per_firm,
-    n_enterprises: cell.n_enterprises,
-    quality_score: cell.quality_score,
-    year: cell.year,
-  });
+  if (!cell) {
+    return NextResponse.json({ found: false }, { headers: CACHE_HEADERS });
+  }
+  return NextResponse.json(
+    {
+      found: true,
+      revenue_per_firm: cell.revenue_per_firm,
+      n_enterprises: cell.n_enterprises,
+      quality_score: cell.quality_score,
+      year: cell.year,
+    },
+    { headers: CACHE_HEADERS },
+  );
 }
