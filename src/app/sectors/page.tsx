@@ -1,4 +1,5 @@
 import { visibleSectors, visibleIndustriesInSector } from "@/lib/taxonomy";
+import { SectorIcon } from "@/components/icons/SectorIcon";
 
 export const revalidate = 86400;
 
@@ -31,7 +32,10 @@ export default function SectorsIndex() {
               style={{ backgroundColor: s.header_color || "#F8F2E4" }}
             >
               <div className="flex items-start justify-between">
-                <span className="text-4xl leading-none" aria-hidden>{s.icon}</span>
+                {/* Plan v19 Block F — Phosphor icon replaces emoji */}
+                <span className="text-atlas-700" aria-hidden>
+                  <SectorIcon sectorId={s.id} size={40} weight="duotone" />
+                </span>
                 <span className="text-[11px] uppercase tracking-wider text-cocoa-700/60 font-medium tabular-nums">
                   {industries.length}
                 </span>

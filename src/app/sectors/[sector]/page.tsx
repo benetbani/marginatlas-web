@@ -9,6 +9,7 @@ import {
 } from "@/lib/taxonomy";
 import { getCellBySlug } from "@/lib/cells";
 import { SectorAcrossWorld } from "@/components/SectorAcrossWorld";
+import { SectorIcon } from "@/components/icons/SectorIcon";
 
 export const revalidate = 86400;
 // Plan v16: defer cold sectors to on-demand rendering so the build
@@ -91,18 +92,20 @@ export default async function SectorPage({ params }: { params: Promise<Params> }
       <header className="py-8">
         <div className="flex items-start gap-5">
           <div
-            className="text-6xl leading-none shrink-0 hidden md:flex items-center justify-center w-24 h-24 rounded-3xl border border-parchment"
+            className="shrink-0 hidden md:flex items-center justify-center w-24 h-24 rounded-3xl border border-parchment text-atlas-700"
             style={{ backgroundColor: s.header_color || "#F8F2E4" }}
             aria-hidden
           >
-            {s.icon}
+            <SectorIcon sectorId={s.id} size={48} weight="duotone" />
           </div>
           <div className="flex-1">
             <div className="text-xs uppercase tracking-wider text-atlas-700 font-semibold">
               Category
             </div>
-            <h1 className="mt-2 text-4xl md:text-5xl font-semibold tracking-tight text-ink-900">
-              <span className="md:hidden mr-2" aria-hidden>{s.icon}</span>
+            <h1 className="mt-2 text-4xl md:text-5xl font-semibold tracking-tight text-ink-900 flex items-center gap-3">
+              <span className="md:hidden text-atlas-700" aria-hidden>
+                <SectorIcon sectorId={s.id} size={32} weight="duotone" />
+              </span>
               {s.name}
             </h1>
             {s.tagline && (
