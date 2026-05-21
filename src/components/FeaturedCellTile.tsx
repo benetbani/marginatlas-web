@@ -12,8 +12,34 @@
  * asymmetry as a major UX defect.
  */
 
-import { getCellBySlug } from "@/lib/cells";
+import { getCellBySlug, type Cell } from "@/lib/cells";
 import { CountryFlag } from "@/components/CountryFlag";
+
+/**
+ * Plan v17 fix — race the Supabase fetch against a 2s timeout so the
+ * featured grid can stream within the page-level budget. When the cell
+ * lookup is slow (cold cache, Supabase cold start), we render the tile
+ * shape without a number rather than suspending the streaming boundary
+ * forever and ending up with empty `<template>` placeholders in the DOM.
+ */
+async function fetchCellWithTimeout(
+  country: string,
+  geo: string,
+  industry: string,
+  ms = 2000,
+): Promise<Cell | null> {
+  let timer: NodeJS.Timeout | null = null;
+  const timeout = new Promise<null>((resolve) => {
+    timer = setTimeout(() => resolve(null), ms);
+  });
+  try {
+    return await Promise.race([getCellBySlug(country, geo, industry), timeout]);
+  } catch {
+    return null;
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
 
 function fmtMoney(v: number | null | undefined): string {
   if (v == null || isNaN(v)) return "";
@@ -33,7 +59,7 @@ export type FeaturedTileSpec = {
 };
 
 export async function FeaturedCellTile({ spec }: { spec: FeaturedTileSpec }) {
-  const cell = await getCellBySlug(spec.iso2.toLowerCase(), spec.geo, spec.industry);
+  const cell = await fetchCellWithTimeout(spec.iso2.toLowerCase(), spec.geo, spec.industry);
   const revenue = cell?.revenue_per_firm ?? null;
   const href = `/${spec.iso2.toLowerCase()}/${spec.geo}/${spec.industry}`;
 

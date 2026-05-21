@@ -6,8 +6,32 @@
  * stale. Server component — fetches the cell at render time.
  */
 
-import { getCellBySlug } from "@/lib/cells";
+import { getCellBySlug, type Cell } from "@/lib/cells";
 import { CountryFlag } from "@/components/CountryFlag";
+
+/**
+ * Plan v17 fix — same timeout pattern as FeaturedCellTile. Bound the
+ * homepage stream time so a cold-cache Supabase call doesn't park the
+ * "Snapshot of the week" section as an empty `<template>` placeholder.
+ */
+async function fetchCellWithTimeout(
+  country: string,
+  geo: string,
+  industry: string,
+  ms = 1500,
+): Promise<Cell | null> {
+  let timer: NodeJS.Timeout | null = null;
+  const timeout = new Promise<null>((resolve) => {
+    timer = setTimeout(() => resolve(null), ms);
+  });
+  try {
+    return await Promise.race([getCellBySlug(country, geo, industry), timeout]);
+  } catch {
+    return null;
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
 
 type Pick = {
   country: string;
@@ -93,10 +117,12 @@ function weekNumber(d: Date): number {
 
 export async function CellOfTheWeek() {
   const week = weekNumber(new Date());
-  // Pick this week's cell; if it has no data, walk forward.
-  for (let i = 0; i < ROTATION.length; i++) {
+  // Plan v17 fix — bound total time to ~3s. Try only the first 2 picks
+  // for this week. If neither resolves quickly, skip the section entirely.
+  const MAX_TRIES = 2;
+  for (let i = 0; i < MAX_TRIES; i++) {
     const pick = ROTATION[(week + i) % ROTATION.length];
-    const cell = await getCellBySlug(pick.country, pick.geo, pick.industry);
+    const cell = await fetchCellWithTimeout(pick.country, pick.geo, pick.industry);
     if (cell && cell.revenue_per_firm != null) {
       const href = `/${pick.country}/${pick.geo}/${pick.industry}`;
       return (
