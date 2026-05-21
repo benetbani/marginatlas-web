@@ -56,6 +56,8 @@ import {
   estimateEmployeesFromFirms,
 } from "@/lib/extrapolations/fill_missing";
 import { HeroBenchmark } from "@/components/HeroBenchmark";
+import { DistributionVisual } from "@/components/DistributionVisual";
+import { NetProfitSummary } from "@/components/NetProfitSummary";
 
 type IndustryMarginRow = { gross_margin: number; operating_margin: number; asset_intensity?: number };
 const INDUSTRY_MARGINS = industryMarginsJson as unknown as {
@@ -224,7 +226,7 @@ export default async function CellPage({
     cell.payroll_per_employee != null && cell.n_employees != null && cell.n_enterprises
       ? (cell.payroll_per_employee * cell.n_employees) / cell.n_enterprises
       : null;
-  const rawNetMargin =
+  const netProfitResult =
     grossRevenueForMargin && grossRevenueForMargin > 0
       ? estimateNetProfit({
           iso2: country.toUpperCase(),
@@ -233,8 +235,10 @@ export default async function CellPage({
           sectorId: cell.sector_id || null,
           grossRevenue: grossRevenueForMargin,
           payroll: payrollForMargin,
-        }).net_margin
+        })
       : null;
+  const rawNetMargin = netProfitResult?.net_margin ?? null;
+  const netTakeHome = netProfitResult?.net_profit ?? null;
   // Defensive floor — never let a sub-3% net margin reach the page.
   const computedNetMargin = rawNetMargin != null ? clampMargin(rawNetMargin, "net") : null;
 
@@ -495,8 +499,9 @@ export default async function CellPage({
                 : null
             }
           />
-          {/* Plan v10 net-profit waterfall (TT + UU + ZZ) */}
-          <NetProfitWaterfall
+          {/* Plan v23 Part 2 — collapsed by default. Single-line take-home
+              figure. Expand to reveal the full waterfall on demand. */}
+          <NetProfitSummary
             iso2={country.toUpperCase()}
             geoId={cell.geo_id || geo}
             industryId={cell.industry_id || null}
@@ -507,6 +512,7 @@ export default async function CellPage({
                 ? (cell.payroll_per_employee * cell.n_employees) / cell.n_enterprises
                 : null
             }
+            takeHome={netTakeHome}
           />
           {/* Plan v13 Wave 2: profit waterfall integrity visual.
              Gross + operating from industry lookup, net from the
@@ -520,27 +526,14 @@ export default async function CellPage({
         </div>
       </section>
 
-      {/* Plan v15 Block 6: Bottom 10% / Typical / Top 10% revenue tiles +
-         smooth log-normal curve. Replaces the prior
-         histogram + 5-bar tier view.
-         Plan v14 A.1 (T-A1.4): legacy id="distribution" renamed to canonical
-         "revenue-distribution". Tone stays mapped to "margin-waterfall"
-         (cream-100) to extend the visible alternation across this band. */}
+      {/* Plan v23 Part 2 — single visual distribution band replaces the
+         previous tile-grid + log-normal-curve combo. One image to look
+         at instead of a number-slap. */}
       <section id="revenue-distribution" className={`py-6 ${getToneClass("margin-waterfall")}`}>
-        <RevenueTiles
+        <DistributionVisual
           p10={cell.rev_p10 ?? null}
-          p20={null}
           p50={cell.rev_p50 ?? null}
           p90={cell.rev_p90 ?? null}
-          currencySymbol="$"
-        />
-        <RevenueDistribution
-          p10={cell.rev_p10 ?? null}
-          p25={cell.rev_p25 ?? null}
-          p50={cell.rev_p50 ?? null}
-          p75={cell.rev_p75 ?? null}
-          p90={cell.rev_p90 ?? null}
-          currencySymbol="$"
         />
       </section>
 
