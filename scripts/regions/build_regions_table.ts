@@ -85,6 +85,8 @@ type RegionEntry = {
   value: string;
   label: string;
   level: string | null;
+  /** Slug of the parent region within the same country, or null if top-level. */
+  parent: string | null;
 };
 
 function geoSlugFromId(geoId: string): string {
@@ -160,9 +162,27 @@ async function main() {
   type Output = Record<string, RegionEntry[]>;
   const out: Output = {};
 
+  // Compute parent for each geo_id within a country using prefix matching.
+  // The parent is the LONGEST other geo_id in the same country that:
+  //   - is a strict prefix of the child
+  //   - is shorter than the child
+  // City-overlay slugs (xx-CITY-...) don't share prefix with state slugs,
+  // so they fall back to no parent (rendered as top-level regions).
+  function findParent(geoId: string, allInCountry: string[]): string | null {
+    let best: string | null = null;
+    for (const other of allInCountry) {
+      if (other === geoId) continue;
+      if (other.length >= geoId.length) continue;
+      if (!geoId.startsWith(other)) continue;
+      if (best === null || other.length > best.length) best = other;
+    }
+    return best;
+  }
+
   for (const iso2 of ALL_COUNTRY_ISO2) {
     const fromData = map.get(iso2);
     if (fromData && fromData.size > 0) {
+      const allGeoIds = Array.from(fromData.keys());
       // Sort: shorter geo_id (broader region) first, then by name
       const sorted = Array.from(fromData.entries()).sort((a, b) => {
         if (a[0].length !== b[0].length) return a[0].length - b[0].length;
@@ -172,13 +192,17 @@ async function main() {
         value: geoSlugFromId(geoId),
         label: labelize(info.geo_name, geoId),
         level: info.geo_level,
+        parent: (() => {
+          const p = findParent(geoId, allGeoIds);
+          return p ? geoSlugFromId(p) : null;
+        })(),
       }));
-      // Limit to top 60 to keep dropdown manageable
-      out[iso2] = entries.slice(0, 60);
+      // Limit to top 200 (keeps dropdown manageable while allowing subdivisions)
+      out[iso2] = entries.slice(0, 200);
     } else {
       // Country-level fallback
       out[iso2] = [
-        { value: iso2.toLowerCase(), label: `All of ${iso2}`, level: "country" },
+        { value: iso2.toLowerCase(), label: `All of ${iso2}`, level: "country", parent: null },
       ];
     }
   }
@@ -186,11 +210,16 @@ async function main() {
   // Also include countries that appeared in data but weren't in our list
   for (const [iso2, regions] of map) {
     if (out[iso2]) continue;
+    const allGeoIds = Array.from(regions.keys());
     const sorted = Array.from(regions.entries()).sort((a, b) => a[0].localeCompare(b[0]));
-    out[iso2] = sorted.slice(0, 60).map(([geoId, info]) => ({
+    out[iso2] = sorted.slice(0, 200).map(([geoId, info]) => ({
       value: geoSlugFromId(geoId),
       label: labelize(info.geo_name, geoId),
       level: info.geo_level,
+      parent: (() => {
+        const p = findParent(geoId, allGeoIds);
+        return p ? geoSlugFromId(p) : null;
+      })(),
     }));
   }
 
@@ -210,6 +239,7 @@ async function main() {
   lines.push("  value: string;");
   lines.push("  label: string;");
   lines.push("  level: string | null;");
+  lines.push("  parent: string | null;");
   lines.push("};");
   lines.push("");
   lines.push("export const REGIONS_BY_COUNTRY_AUTO: Record<string, RegionEntry[]> = {");
@@ -218,7 +248,7 @@ async function main() {
   for (const iso2 of orderedKeys) {
     const entries = out[iso2];
     const lines2 = entries.map(
-      (e) => `    { value: ${JSON.stringify(e.value)}, label: ${JSON.stringify(e.label)}, level: ${JSON.stringify(e.level)} }`,
+      (e) => `    { value: ${JSON.stringify(e.value)}, label: ${JSON.stringify(e.label)}, level: ${JSON.stringify(e.level)}, parent: ${JSON.stringify(e.parent)} }`,
     );
     lines.push(`  ${iso2}: [`);
     lines.push(lines2.join(",\n"));

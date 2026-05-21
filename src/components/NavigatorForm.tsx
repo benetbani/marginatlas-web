@@ -12,7 +12,7 @@ import {
   visibleIndustries,
   type Gate,
 } from "@/lib/taxonomy";
-import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
+import { getRegionsForCountry, getSubdivisionsForRegion } from "@/lib/regions/regions-by-country";
 // Plan v13 Wave 4a — emoji flagFromIso2 removed from dropdown labels
 // (ComboField input is a plain text field and can't host the SVG CountryFlag
 // image without an invasive rewrite). Flags still render on the destination
@@ -67,11 +67,20 @@ export function NavigatorForm() {
     return getRegionsForCountry(country, name);
   }, [country]);
 
-  // Subdivision (county, etc.) — placeholder for now
-  const subdivisionOptions: ComboOption[] = useMemo(
-    () => [{ value: "", label: "All subdivisions" }],
-    []
-  );
+  // Plan v21 Block 3 — subdivisions cascade from selected region.
+  // For US, the region value is a state slug and subdivisions are
+  // counties (geo_id "us-{fips}-{county}"). For non-US, subdivisions
+  // are entries whose `parent` matches the picked region's geo_id.
+  const subdivisionOptions: ComboOption[] = useMemo(() => {
+    if (!region) return [{ value: "", label: "Pick a region first" }];
+    const subs = getSubdivisionsForRegion(country, region);
+    if (subs.length === 0) {
+      return [{ value: "", label: "No deeper subdivisions covered" }];
+    }
+    return [{ value: "", label: "Any subdivision" } as ComboOption].concat(
+      subs.map((s) => ({ value: s.value, label: s.label })),
+    );
+  }, [country, region]);
 
   // Sector options — curated display order, NOT alphabetical (Plan v4.0)
   const sectorOptions: ComboOption[] = useMemo(
@@ -133,7 +142,11 @@ export function NavigatorForm() {
         }
       }
       const indSlug = industryToSlug(industry);
-      const path = `/${cc}/${r}/${indSlug}`;
+      // Plan v21 Block 3 — if a subdivision is selected, navigate to
+      // that finer-grained URL (e.g. `/us/us-06-037/restaurants` for
+      // Los Angeles County). Otherwise stay at the region level.
+      const targetGeo = subdivision || r;
+      const path = `/${cc}/${targetGeo}/${indSlug}`;
       router.push(path);
     } catch (err) {
       // Defensive fallback: hard navigation if the router push throws.
