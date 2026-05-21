@@ -206,13 +206,6 @@ export default function HomePage() {
                   Manhattan blocks. Central Tokyo wards. Paris arrondissements. The
                   same benchmarks at neighborhood resolution, rolling out city by city.
                 </p>
-                <a
-                  href="#newsletter"
-                  className="mt-5 inline-flex items-center gap-1.5 text-atlas-700 hover:text-atlas-900 font-medium text-sm md:text-base border-b border-atlas-200 hover:border-atlas-500 pb-0.5 transition-colors"
-                >
-                  Subscribe to be first
-                  <span aria-hidden="true">→</span>
-                </a>
               </div>
               <CitiesDotsMap />
             </div>
