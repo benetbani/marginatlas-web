@@ -67,7 +67,7 @@ const BLOG_FALLBACK: BlogPost[] = [
   },
   {
     slug: "reading-eurostat-sbs",
-    title: "How to read a Eurostat SBS release without getting lost",
+    title: "How to read a European business-statistics release without getting lost",
     excerpt: "The three tables that matter and the four columns most analysts misread.",
     date: "2026-04-28",
   },

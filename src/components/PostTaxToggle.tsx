@@ -118,7 +118,7 @@ export function PostTaxToggle({ country, regionId, grossRevenue, payroll }: Prop
             {!result.country_specific && (
               <>
                 {" "}This country isn&apos;t in the rate table yet: figures use
-                a conservative OECD-average fallback.
+                a conservative regional-average fallback.
               </>
             )}
             {" "}State / canton / Land-level refinement is a Pro feature

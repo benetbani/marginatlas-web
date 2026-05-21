@@ -47,7 +47,7 @@ export function CountryStatsStrip({ iso2 }: Props) {
         />
         <Tile
           label="Rate source"
-          value={verified ? "Country-specific" : "OECD fallback"}
+          value={verified ? "Country-specific" : "Regional benchmark fallback"}
         />
       </div>
       <p className="mt-2 text-xs text-ink-700/70 max-w-2xl">
