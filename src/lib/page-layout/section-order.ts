@@ -50,8 +50,10 @@ export type IndustrySection = (typeof INDUSTRY_PAGE_SECTIONS)[number];
 export type SectionTone = "ink-dark" | "cream-50" | "white" | "cream-100" | "moss-tinted";
 
 export const SECTION_TONES: Record<string, SectionTone> = {
-  // Cell page
-  "hero": "ink-dark",
+  // Cell page. Plan v19 Block C — switched from ink-dark cinematic to
+  // cream-100 broadsheet, matching the homepage hero treatment. Founder
+  // explicit: dark hero on a cream site reads as "totally unrelated".
+  "hero": "cream-100",
   // Plan v14 Phase B — editorial narrative sits between the ink-dark hero
   // and the cream revenue tiles. Plan v14 6c (audit v2 N-2): switched to
   // white so it doesn't collide tonally with the cream-50 revenue-tiles

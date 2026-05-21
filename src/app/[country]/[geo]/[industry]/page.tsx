@@ -405,42 +405,41 @@ export default async function CellPage({
         currentYear={currentYear}
       />
 
-      {/* Hero: Plan v14 A.1 (T-A1.3): canonical ink-dark tone applied.
-         Text colors flipped to cream/atlas-light variants so they remain
-         legible on the bg-ink-900 surface. The accented industry name in
-         the headline becomes atlas-300 (warmer, more visible on dark) and
-         the "typical revenue" line keeps the same emphasis structure but
-         in the cream family. Note: id="headline" preserved: CellPageNav
-         still anchors against it. */}
-      <section id="hero" className={`py-8 ${getToneClass("hero")}`}>
-        <header id="headline" className="lg:grid lg:grid-cols-[1.5fr_1fr] lg:gap-8 lg:items-start">
+      {/* Hero: Plan v19 Block C — cream broadsheet treatment matching the
+          homepage. Text colors flipped from cream-on-ink back to ink-on-cream.
+          The accented industry name uses atlas-600 (same as homepage hero).
+          Industry examples + typical-revenue line use ink-800/85 for the
+          calmer body weight. id="headline" preserved for CellPageNav. */}
+      <section id="hero" className={`py-10 md:py-12 ${getToneClass("hero")}`}>
+        <header id="headline" className="lg:grid lg:grid-cols-[1.5fr_1fr] lg:gap-10 lg:items-start">
           <div>
-            <div className="text-xs uppercase tracking-wide text-cream-300/80 font-medium flex items-center gap-2">
+            <div className="text-sm md:text-base font-bold uppercase tracking-[0.12em] text-atlas-700 flex items-center gap-2">
               {cell.sector_name && <>{cell.sector_name} · </>}
               <CountryFlag iso2={country} className="w-5" />
               <span>{cell.geo_name || iso2ToName(country)}</span>
             </div>
-            <h1 className="mt-2 text-3xl md:text-5xl font-semibold tracking-tight text-cream-50">
-              How much do <span className="text-atlas-300">{(cell.industry_name || "businesses").toLowerCase()}</span> earn in {cell.geo_name}?
+            <h1 className="mt-3 font-display text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight text-ink-900 leading-[1.08]">
+              How much do <span className="text-atlas-600">{(cell.industry_name || "businesses").toLowerCase()}</span> earn in {cell.geo_name}?
             </h1>
             {cell.industry_examples && cell.industry_examples.length > 0 && (
-              <p className="mt-2 text-sm text-cream-300/70">
+              <p className="mt-3 text-sm text-cocoa-700/70">
                 Includes: {cell.industry_examples.slice(0, 5).join(" · ")}
               </p>
             )}
-            <p className="mt-4 text-lg text-cream-200/85 max-w-3xl leading-relaxed">
+            <p className="mt-4 text-base md:text-lg text-ink-800 max-w-3xl leading-relaxed">
               A typical {(cell.industry_name || "firm").toLowerCase().replace(/s$/, "")} here brings in about{" "}
-              <strong className="text-cream-50"><Money usd={cell.revenue_per_firm} /></strong> per year, employing roughly{" "}
-              <strong className="text-cream-50">{cell.n_employees?.toLocaleString() || "-"}</strong> people in {cell.geo_name}.
+              <strong className="text-ink-900"><Money usd={cell.revenue_per_firm} /></strong> per year, employing roughly{" "}
+              <strong className="text-ink-900">{cell.n_employees?.toLocaleString() || "an unknown number of"}</strong> people in {cell.geo_name}.
             </p>
-            <div className="mt-3 flex items-center gap-2 flex-wrap text-xs text-cream-300/70">
+            <div className="mt-4 flex items-center gap-2 flex-wrap text-xs text-cocoa-700/70">
               <span>Show numbers in:</span>
               <CurrencySwitcher />
             </div>
           </div>
           <div className="hidden lg:block">
-            {/* Plan v12 IM8: real photo when manifest has one for this
-                cell's (city, industry); falls back to SmartImage glyph. */}
+            {/* Plan v12 IM8 + Plan v19 Block C: real photo when manifest has one
+                for this cell's (city, industry); falls back to SmartImage glyph
+                (now Phosphor icon, not emoji). */}
             <AtlasHeroImage
               image={pickCellHeroImage(geo, cell.industry_id || null, cell.sector_id || null)}
               alt={`${cell.industry_name || "Industry"} in ${cell.geo_name}`}
