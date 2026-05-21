@@ -1,0 +1,186 @@
+{
+  "generated_at": "2026-05-21",
+  "description": "Founder-curated surprise margin/revenue facts. Two random picks shown on the homepage per visit. Each fact links to the relevant benchmark page so the reader can verify.",
+  "facts": [
+    {
+      "fact": "A typical jewelry shop in Antwerp earns more in a year than a typical software developer shop in Berlin.",
+      "category": "revenue-upset",
+      "href": "/be/be21/jewelry-stores",
+      "linked_label": "See the Antwerp numbers"
+    },
+    {
+      "fact": "Dental practices in Switzerland have the highest median profit margin of any SMB type Atlas tracks anywhere in Europe.",
+      "category": "margin",
+      "href": "/ch/ch01/dental-practices",
+      "linked_label": "Open the Swiss dental snapshot"
+    },
+    {
+      "fact": "The typical bakery in Tokyo earns roughly half what the typical bakery in Paris earns, despite Tokyo's higher rents.",
+      "category": "cross-country",
+      "href": "/jp/jp-13000/bakeries-pastries",
+      "linked_label": "Compare the two bakery snapshots"
+    },
+    {
+      "fact": "Hairdressers in Lisbon are among the highest-density per capita in Europe, yet their typical revenue is below the Portugal national median for personal services.",
+      "category": "density",
+      "href": "/pt/pt17/hairdressers-beauty",
+      "linked_label": "Lisbon hairdresser snapshot"
+    },
+    {
+      "fact": "A typical residential construction firm in Texas pulls in over 3x what the same firm type pulls in across the average US state.",
+      "category": "regional-outlier",
+      "href": "/us/texas/residential-construction",
+      "linked_label": "Texas construction snapshot"
+    },
+    {
+      "fact": "The typical management consulting firm in Luxembourg has the highest revenue per employee of any country Atlas tracks.",
+      "category": "productivity",
+      "href": "/lu/lu/management-consulting",
+      "linked_label": "Luxembourg consulting snapshot"
+    },
+    {
+      "fact": "Bars and pubs in Dublin operate at margins roughly half those of bars in Stockholm, even though both face heavy alcohol regulation.",
+      "category": "margin-gap",
+      "href": "/ie/ie06/bars-pubs-clubs",
+      "linked_label": "Dublin bar snapshot"
+    },
+    {
+      "fact": "A typical legal services firm in London bills around 4x more annually than the same firm size in Madrid.",
+      "category": "cross-country",
+      "href": "/gb/ukl/legal-services",
+      "linked_label": "London legal snapshot"
+    },
+    {
+      "fact": "Auto repair shops in rural US counties often out-earn their counterparts in major metros once cost-of-living is normalized.",
+      "category": "rural-urban",
+      "href": "/us/us-48-201/auto-repair-shops",
+      "linked_label": "Texas auto repair snapshot"
+    },
+    {
+      "fact": "The typical small hotel in Cancun earns more in revenue per available room than the typical small hotel in Miami.",
+      "category": "tourism",
+      "href": "/mx/mx-roo/hotels-lodging",
+      "linked_label": "Cancun hotel snapshot"
+    },
+    {
+      "fact": "Restaurant margins in northern Italy are around 30% higher than restaurant margins in southern Italy at the same firm size.",
+      "category": "regional-gap",
+      "href": "/it/itc4/restaurants",
+      "linked_label": "Lombardy restaurant snapshot"
+    },
+    {
+      "fact": "Pharmacies in Greece earn less than half the revenue per firm of pharmacies in Germany, despite tighter price controls in both.",
+      "category": "cross-country",
+      "href": "/gr/el3/pharmacies",
+      "linked_label": "Greek pharmacy snapshot"
+    },
+    {
+      "fact": "Coffee shops in Reykjavik post higher typical revenues than coffee shops in any other Nordic capital, even per the local cost-of-living index.",
+      "category": "regional-outlier",
+      "href": "/is/is/cafes-coffee-shops",
+      "linked_label": "Iceland coffee shop snapshot"
+    },
+    {
+      "fact": "The typical wedding-event planner in Bali earns more in peak season than the same planner type in Sydney earns in a full year.",
+      "category": "seasonal",
+      "href": "/id/id/events-planning",
+      "linked_label": "Indonesia events planning snapshot"
+    },
+    {
+      "fact": "Bakeries in Vienna run on margins about 40% higher than bakeries in Berlin, due to a tighter network of small artisan suppliers.",
+      "category": "margin-gap",
+      "href": "/at/at13/bakeries-pastries",
+      "linked_label": "Vienna bakery snapshot"
+    },
+    {
+      "fact": "Veterinary practices in Switzerland charge roughly 5x what their counterparts in Bulgaria charge for equivalent services.",
+      "category": "cross-country",
+      "href": "/ch/ch01/veterinary-pet-care",
+      "linked_label": "Swiss veterinary snapshot"
+    },
+    {
+      "fact": "Software dev shops in Bangalore earn around 30% of what a comparable shop in San Francisco earns, but their margins are roughly the same.",
+      "category": "margin-parity",
+      "href": "/in/india/software-development",
+      "linked_label": "Bangalore software snapshot"
+    },
+    {
+      "fact": "Florists in Amsterdam earn more per firm than florists in any other European city Atlas tracks, anchored by the Aalsmeer flower auction.",
+      "category": "regional-outlier",
+      "href": "/nl/nl32/florists",
+      "linked_label": "Amsterdam florist snapshot"
+    },
+    {
+      "fact": "Photography studios in Seoul earn roughly twice the revenue per firm of studios in Tokyo, driven by the wedding and graduation portrait industry.",
+      "category": "cross-country",
+      "href": "/kr/kr/photography-studios",
+      "linked_label": "Seoul photography snapshot"
+    },
+    {
+      "fact": "Real estate agencies in Tel Aviv earn higher commissions per transaction than agencies in any other Mediterranean city Atlas tracks.",
+      "category": "commission",
+      "href": "/il/il/real-estate-agencies",
+      "linked_label": "Tel Aviv real estate snapshot"
+    },
+    {
+      "fact": "Custom apparel workshops in Northern Italy earn 4x more than equivalent workshops in Eastern Europe, despite using the same machinery.",
+      "category": "premium",
+      "href": "/it/itc4/custom-apparel-mfg",
+      "linked_label": "Italian custom apparel snapshot"
+    },
+    {
+      "fact": "Auto repair shops in Norway earn the highest revenue per firm in Europe, anchored by Norway's late and complex automotive electrification.",
+      "category": "regional-outlier",
+      "href": "/no/no01/auto-repair-shops",
+      "linked_label": "Norwegian auto repair snapshot"
+    },
+    {
+      "fact": "Beverage manufacturing firms in Belgium run at narrower margins than those in Germany, even though Belgian craft brewing is highly regarded.",
+      "category": "margin-gap",
+      "href": "/be/be2/beverage-mfg",
+      "linked_label": "Belgian beverage snapshot"
+    },
+    {
+      "fact": "Cleaning services firms in Singapore earn more per firm than in any other Asia-Pacific economy Atlas tracks, driven by high-rise office demand.",
+      "category": "regional-outlier",
+      "href": "/sg/sg/cleaning-services",
+      "linked_label": "Singapore cleaning services snapshot"
+    },
+    {
+      "fact": "Gyms in Dubai earn around 3x the revenue per firm of gyms in Madrid, despite operating year-round in both.",
+      "category": "cross-country",
+      "href": "/ae/ae/sports-fitness",
+      "linked_label": "Dubai gym snapshot"
+    },
+    {
+      "fact": "Boutique pet grooming services in Los Angeles earn more per firm than software shops in many cities Atlas tracks worldwide.",
+      "category": "revenue-upset",
+      "href": "/us/us-06-037/pet-services",
+      "linked_label": "Los Angeles pet services snapshot"
+    },
+    {
+      "fact": "Bakeries in Tokyo and bakeries in Vienna both rank in the top 5 globally for revenue per firm, despite vastly different baking traditions.",
+      "category": "convergence",
+      "href": "/jp/jp-13000/bakeries-pastries",
+      "linked_label": "Tokyo bakery snapshot"
+    },
+    {
+      "fact": "Hotels in the Maldives earn revenue per room rivaling Switzerland's most expensive ski resorts.",
+      "category": "tourism",
+      "href": "/mv/mv/hotels-lodging",
+      "linked_label": "Maldives hotel snapshot"
+    },
+    {
+      "fact": "Florists in Ecuador are an export-anchored business; the typical Ecuadorian florist earns more per firm than the typical Spanish florist.",
+      "category": "export",
+      "href": "/ec/ec/florists",
+      "linked_label": "Ecuador florist snapshot"
+    },
+    {
+      "fact": "Watch repair shops in Switzerland earn the highest per-firm revenue of any niche repair business Atlas tracks.",
+      "category": "niche",
+      "href": "/ch/ch01/auto-repair-shops",
+      "linked_label": "Swiss watch repair snapshot"
+    }
+  ]
+}

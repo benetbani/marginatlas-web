@@ -10,6 +10,7 @@ import { CityPicker } from "@/components/CityPicker";
 import { CitiesDotsMap } from "@/components/CitiesDotsMap";
 import { QualityLegend } from "@/components/QualityLegend";
 import { RotatingWord } from "@/components/RotatingWord";
+import { DidYouKnow } from "@/components/DidYouKnow";
 import { HERO_CITIES, HERO_BUSINESSES } from "@/lib/hero-words";
 import { getToneClass } from "@/lib/page-layout/section-order";
 import { getAllPosts, type BlogPost } from "@/lib/blog";
@@ -243,6 +244,13 @@ export default function HomePage() {
             ))}
           </div>
         </section>
+      </ToneBand>
+
+      {/* Plan v19 Block H — Did You Know surprise facts. Two rotating
+          curated factoids about unexpected SMB economics. Sits between
+          the FEATURED grid and the global coverage strip. */}
+      <ToneBand tone="home-blog-rail">
+        <DidYouKnow />
       </ToneBand>
 
       {/* Global coverage strip: Plan v8 Track S.2 */}
