@@ -96,8 +96,21 @@ const COUNTRY_SIGNATURE: Record<string, { line: string; glyph: string }> = {
   NZ: { line: "Cafés, hospitality, small farms, design studios.", glyph: "🥝" },
 };
 
+// Plan v16: cap build-time static generation to the top 25 countries
+// by traffic potential (G7 + major emerging markets + key SMB hubs).
+// The remaining ~170 countries render on demand via dynamicParams=true.
+// Previous behavior pre-built all 195, which timed out Vercel's per-page
+// 60s budget on low-coverage entries that did long Supabase fallback walks.
+const STATIC_COUNTRY_CODES = new Set([
+  "US", "GB", "DE", "FR", "IT", "ES", "JP", "BR", "MX", "CA",
+  "AU", "NL", "BE", "CH", "AT", "SE", "PL", "PT", "IE", "DK",
+  "IN", "CN", "ID", "TR", "AE",
+]);
+
 export async function generateStaticParams(): Promise<Params[]> {
-  return COUNTRIES.map((c) => ({ country: c.code.toLowerCase() }));
+  return COUNTRIES
+    .filter((c) => STATIC_COUNTRY_CODES.has(c.code))
+    .map((c) => ({ country: c.code.toLowerCase() }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }) {

@@ -46,12 +46,17 @@ function lookupIndustryMargin(industryId: string | null | undefined): IndustryMa
   return INDUSTRY_MARGINS.industries[industryId] || INDUSTRY_MARGINS.default_fallback;
 }
 
+// Plan v16: cap build-time static generation to the top 30 SMB-core
+// industries (alphabetical). The rest render on demand via
+// dynamicParams=true. Previous behavior pre-built all 192 industries,
+// which routinely timed out Vercel's per-page 60s budget. Once S-100
+// (ISR restore) lands, this cap can grow.
+const STATIC_INDUSTRY_CAP = 30;
+
 export async function generateStaticParams(): Promise<Params[]> {
   return INDUSTRIES
-    .filter((i) => {
-      const a = i.audience || "smb_friendly";
-      return a === "smb_core" || a === "smb_friendly";
-    })
+    .filter((i) => (i.audience || "smb_friendly") === "smb_core")
+    .slice(0, STATIC_INDUSTRY_CAP)
     .map((i) => ({ industry: industryToSlug(i.id) }));
 }
 

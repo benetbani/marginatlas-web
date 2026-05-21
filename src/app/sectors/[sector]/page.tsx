@@ -11,11 +11,28 @@ import { getCellBySlug } from "@/lib/cells";
 import { SectorAcrossWorld } from "@/components/SectorAcrossWorld";
 
 export const revalidate = 86400;
+// Plan v16: defer cold sectors to on-demand rendering so the build
+// doesn't time out on quickStat fan-out (6 Supabase calls per sector
+// × 20 sectors = 120 build-time queries). Top sectors pre-render;
+// the rest are dynamicParams=true.
+export const dynamicParams = true;
 
 type Params = { sector: string };
 
+const STATIC_SECTOR_IDS = new Set([
+  "food_drink",
+  "retail_shops",
+  "beauty_wellness",
+  "professional_services",
+  "software_tech",
+  "trades_home",
+  "hospitality",
+]);
+
 export async function generateStaticParams(): Promise<Params[]> {
-  return SECTORS_ORDERED.map((s) => ({ sector: s.id }));
+  return SECTORS_ORDERED
+    .filter((s) => STATIC_SECTOR_IDS.has(s.id))
+    .map((s) => ({ sector: s.id }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }) {

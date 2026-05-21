@@ -9,6 +9,13 @@ const nextConfig = {
   // CVE-scanners.
   poweredByHeader: false,
 
+  // Plan v16: raise per-page static-generation timeout from the 60s
+  // default to 300s. Pages like /industries/[industry] and /[country]/[iso2]
+  // do multiple Supabase hits per render; Vercel's build was timing out
+  // before content finished loading. This is a build-time guardrail
+  // only; runtime requests are still bound by Vercel's function limits.
+  staticPageGenerationTimeout: 300,
+
   // External image hosts the next/image optimizer is allowed to fetch.
   // Anything else returns 400 from the optimizer endpoint.
   images: {
