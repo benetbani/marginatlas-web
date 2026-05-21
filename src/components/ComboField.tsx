@@ -141,9 +141,9 @@ export function ComboField({
       {open && filtered.length > 0 && (
         <ul
           ref={listRef}
-          className="absolute z-20 mt-1.5 w-full max-h-80 overflow-auto rounded-xl border border-parchment bg-white shadow-[0_10px_30px_rgba(120,53,15,0.12),inset_0_1px_0_rgba(255,255,255,0.5)]"
+          className="absolute z-20 mt-1.5 w-full max-h-[60vh] overflow-auto rounded-xl border border-parchment bg-white shadow-[0_10px_30px_rgba(120,53,15,0.12),inset_0_1px_0_rgba(255,255,255,0.5)]"
         >
-          {filtered.slice(0, 50).map((o, i) => (
+          {filtered.map((o, i) => (
             <li
               key={o.value}
               onMouseDown={(e) => {
@@ -168,11 +168,6 @@ export function ComboField({
               )}
             </li>
           ))}
-          {filtered.length > 50 && (
-            <li className="px-3.5 py-2 text-xs text-cocoa-700/50 italic">
-              {filtered.length - 50} more: keep typing to narrow
-            </li>
-          )}
         </ul>
       )}
     </div>

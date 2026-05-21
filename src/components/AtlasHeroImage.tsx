@@ -1,26 +1,15 @@
 /**
- * Plan v12 IM8 — cell page hero image with attribution.
+ * Cell-page hero image.
  *
- * Renders a real photo when one exists in the image manifest, else
- * falls back to the existing SmartImage glyph chrome. Attribution chip
- * sits bottom-right per Wikimedia / Unsplash / Pexels license terms.
- *
- * Plan v13 Wave 3 fix: Wikimedia attribution strings include literal
- * HTML markup like `<a href="...">Diliff</a>` which previously rendered
- * as escaped text in the figcaption ("&lt;a href...&gt;Diliff&lt;/a&gt;").
- * stripHtml() collapses any tag to its inner text so the caption reads
- * cleanly without exposing markup.
+ * Plan v16 Block A7 — attribution figcaption removed. Founder reported
+ * a Vancouver photo rendered for Italian coffee shops, then leaked
+ * "Bank of Vancouver, British Columbia" via the caption. Per R-002
+ * (no source leaks) and the v16 reformation pass, no attribution string
+ * is ever surfaced on the page. License compliance lives in metadata
+ * and the eventual `/credits` page.
  */
 import { SmartImage } from "./SmartImage";
 import type { AtlasImage } from "@/lib/images";
-
-/** Strip HTML tags from an attribution string; keep inner text only. */
-function stripHtml(input: string): string {
-  return input
-    .replace(/<[^>]+>/g, "") // drop all tags
-    .replace(/\s+/g, " ")    // collapse whitespace
-    .trim();
-}
 
 type Props = {
   image: AtlasImage | null;
@@ -63,9 +52,6 @@ export function AtlasHeroImage({
           className="w-full h-full object-cover"
         />
       </div>
-      <figcaption className="absolute bottom-0 right-0 max-w-[80%] px-2 py-0.5 bg-ink-900/55 text-cream-50 text-[10px] truncate">
-        {stripHtml(image.attribution)}
-      </figcaption>
     </figure>
   );
 }

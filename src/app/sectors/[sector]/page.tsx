@@ -37,7 +37,9 @@ function fmtMoney(v: number | null | undefined): string {
 }
 
 async function quickStat(ind: Industry): Promise<number | null> {
-  // Use California as the snapshot anchor for US-resolvable industries.
+  // Use California as a global anchor for the headline number on the sector
+  // landing. The user-visible tile routes to the industry landing page,
+  // never directly to California (see industry tiles below).
   try {
     const c = await getCellBySlug("us", "california", industryToSlug(ind.id));
     return c?.revenue_per_firm ?? null;
@@ -108,7 +110,7 @@ export default async function SectorPage({ params }: { params: Promise<Params> }
             {previewIndustries.map((ind, i) => (
               <a
                 key={ind.id}
-                href={`/us/california/${industryToSlug(ind.id)}`}
+                href={`/industries/${industryToSlug(ind.id)}`}
                 className="rounded-2xl bg-white border border-parchment p-4 hover:border-atlas-600 hover:shadow-[0_6px_20px_rgba(120,53,15,0.08)] transition-all flex flex-col gap-2"
               >
                 <div className="font-semibold text-ink-900">{ind.name}</div>
@@ -117,7 +119,7 @@ export default async function SectorPage({ params }: { params: Promise<Params> }
                 </div>
                 <div className="mt-auto pt-2 border-t border-cocoa-700/10 flex items-baseline justify-between">
                   <span className="text-[10px] uppercase tracking-wider text-cocoa-700/60">
-                    California
+                    Typical
                   </span>
                   <span className="text-base font-semibold text-ink-900 tabular-nums">
                     {fmtMoney(previewStats[i])}
@@ -141,7 +143,7 @@ export default async function SectorPage({ params }: { params: Promise<Params> }
           {visible.map((ind) => (
             <a
               key={ind.id}
-              href={`/us/california/${industryToSlug(ind.id)}`}
+              href={`/industries/${industryToSlug(ind.id)}`}
               className="px-3 py-2 rounded-xl bg-cream-100 hover:bg-cream-200 border border-parchment hover:border-atlas-600 transition text-sm text-ink-900"
             >
               {ind.name}

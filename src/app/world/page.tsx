@@ -1,9 +1,9 @@
 /**
- * /world — global coverage map page (Track FF.1).
+ * /world — global coverage page.
  *
- * Server-rendered list of every country in the atlas, grouped by
- * region. Public copy never exposes the internal cell-count or
- * confidence-score signals (Plan v13 Wave 1).
+ * Plan v16 Block A9 — uniform tile sizes, no benchmark-count or quality
+ * score leaked into the UI (D-107 + R-002 lockdown). Server-rendered;
+ * regional grouping kept.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -34,21 +34,6 @@ function loadReport(): CoverageReport | null {
     }
   }
   return null;
-}
-
-function qualityFill(q: number): string {
-  if (q >= 7) return "bg-moss-200 border-moss-400 text-moss-900";
-  if (q >= 5) return "bg-cream-200 border-parchment text-ink-900";
-  if (q >= 3) return "bg-clay-100 border-clay-300 text-clay-900";
-  return "bg-ink-100 border-ink-200 text-ink-700/70";
-}
-
-function chipSize(cells: number): string {
-  // 4 size buckets, ramp tile area with cell-count tiers
-  if (cells >= 50000) return "col-span-2 row-span-2 text-base";
-  if (cells >= 10000) return "col-span-2 text-sm";
-  if (cells >= 1000) return "text-sm";
-  return "text-xs";
 }
 
 export const metadata = {
@@ -114,69 +99,38 @@ export default async function WorldPage() {
   return (
     <div className="py-12">
       <header className="max-w-3xl">
-        <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
-          Coverage at a glance
+        <div className="text-xs uppercase tracking-wide text-atlas-700 font-semibold">
+          Worldwide coverage
         </div>
         <h1 className="mt-2 text-3xl md:text-4xl font-semibold tracking-tight text-ink-900">
-          The atlas in one view
+          Every country in Margin Atlas
         </h1>
-        <p className="mt-3 text-ink-700 leading-relaxed">
-          Each tile is a country we cover. Tap one to drill into its
-          regions and industries.
+        <p className="mt-3 text-ink-800 leading-relaxed">
+          Tap any country to drill into its regions and small-business industries.
         </p>
       </header>
-
-      <section className="mt-6 flex flex-wrap items-center gap-2 text-xs">
-        <span className="text-ink-700/70">Quality:</span>
-        <span className="px-2 py-0.5 rounded-full bg-moss-200 border border-moss-400 text-moss-900 font-medium">
-          7-10 strong
-        </span>
-        <span className="px-2 py-0.5 rounded-full bg-cream-200 border border-parchment text-ink-900 font-medium">
-          5-6 solid
-        </span>
-        <span className="px-2 py-0.5 rounded-full bg-clay-100 border border-clay-300 text-clay-900 font-medium">
-          3-4 emerging
-        </span>
-        <span className="px-2 py-0.5 rounded-full bg-ink-100 border border-ink-200 text-ink-700/70 font-medium">
-          1-2 sparse
-        </span>
-      </section>
 
       {allRegions.map(([region, isos]) => {
         const present = isos.filter(covered);
         if (present.length === 0) return null;
         return (
           <section key={region} className="mt-10">
-            <h2 className="text-lg font-semibold text-ink-900 mb-3">
-              {region}{" "}
-              <span className="text-sm font-normal text-ink-700/70">
-                ({present.length})
-              </span>
-            </h2>
-            <div className="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-8 gap-2 auto-rows-[80px]">
-              {present.map((iso2) => {
-                const e = byIso2.get(iso2)!;
-                const cells = e.regional_cells + e.extrapolated_cells;
-                return (
-                  <Link
-                    key={iso2}
-                    href={`/${iso2.toLowerCase()}`}
-                    className={`flex flex-col justify-between p-2 rounded-lg border transition hover:scale-[1.02] hover:shadow-sm ${qualityFill(
-                      e.avg_quality_10
-                    )} ${chipSize(cells)}`}
-                  >
-                    <div className="font-mono font-semibold text-xs">{iso2}</div>
-                    <div className="flex flex-col leading-tight">
-                      <span className="font-semibold truncate">
-                        {countryName(iso2)}
-                      </span>
-                      <span className="text-[10px] opacity-80 tabular-nums">
-                        {cells.toLocaleString()} benchmarks · q{e.avg_quality_10}
-                      </span>
-                    </div>
-                  </Link>
-                );
-              })}
+            <h2 className="text-lg font-semibold text-ink-900 mb-3">{region}</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+              {present.map((iso2) => (
+                <Link
+                  key={iso2}
+                  href={`/${iso2.toLowerCase()}`}
+                  className="flex items-center gap-3 p-3 rounded-xl bg-cream-100 border border-parchment hover:bg-white hover:border-atlas-500 transition-colors"
+                >
+                  <span className="font-mono font-semibold text-xs text-cocoa-700/70 shrink-0 w-8">
+                    {iso2}
+                  </span>
+                  <span className="text-sm font-medium text-ink-900 truncate">
+                    {countryName(iso2)}
+                  </span>
+                </Link>
+              ))}
             </div>
           </section>
         );
@@ -184,14 +138,14 @@ export default async function WorldPage() {
 
       <section className="mt-12 p-6 rounded-2xl bg-cream-100 border border-parchment">
         <h2 className="text-lg font-semibold text-ink-900">
-          Want a country we don&apos;t cover?
+          Want a country we don&apos;t cover yet?
         </h2>
-        <p className="mt-1 text-sm text-ink-700">
+        <p className="mt-1 text-sm text-ink-800">
           Send a note via{" "}
           <Link href="/coverage" className="text-atlas-700 hover:text-atlas-900">
             the coverage report
           </Link>
-          {" "}: countries with multiple requests jump the queue.
+          . Countries with multiple requests jump the queue.
         </p>
       </section>
     </div>

@@ -6,8 +6,8 @@ import {
   COUNTRIES,
   INDUSTRIES,
   INDUSTRY_BY_ID,
-  industryToSlug,
 } from "@/lib/taxonomy";
+import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
 
 type Slot = { country: string; industry: string; region: string };
 
@@ -25,24 +25,6 @@ type CompactCell = {
   quality_score: number | null;
   cellUrl: string | null;
 };
-
-const US_REGION_OPTIONS = [
-  "california",
-  "texas",
-  "new-york",
-  "florida",
-  "illinois",
-  "pennsylvania",
-  "ohio",
-  "georgia",
-  "north-carolina",
-  "michigan",
-  "washington",
-  "massachusetts",
-  "virginia",
-  "new-jersey",
-  "arizona",
-];
 
 function fmtMoney(v: number | null | undefined): string {
   if (v == null || isNaN(v)) return "-";
@@ -186,24 +168,35 @@ export function CompareClient() {
               label="Country"
               options={countryOptions}
               value={slot.country}
-              onChange={(v) => updateSlot(idx, "country", v)}
+              onChange={(v) => {
+                updateSlot(idx, "country", v);
+                // Reset region when country changes so the first option of
+                // the new country takes effect.
+                const name = COUNTRIES.find((c) => c.code === v)?.name || v;
+                const opts = getRegionsForCountry(v, name);
+                updateSlot(idx, "region", opts[0]?.value || "");
+              }}
             />
-            {slot.country === "US" && (
-              <div>
-                <label className="text-xs text-ink-700/70 mb-1 block">Region</label>
-                <select
-                  value={slot.region}
-                  onChange={(e) => updateSlot(idx, "region", e.target.value)}
-                  className="w-full bg-white border border-ink-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-atlas-500/30"
-                >
-                  {US_REGION_OPTIONS.map((r) => (
-                    <option key={r} value={r}>
-                      {r.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
+            {(() => {
+              const name = COUNTRIES.find((c) => c.code === slot.country)?.name || slot.country;
+              const regionOpts = getRegionsForCountry(slot.country, name);
+              return (
+                <div>
+                  <label className="text-xs text-ink-700/70 mb-1 block">Region</label>
+                  <select
+                    value={slot.region}
+                    onChange={(e) => updateSlot(idx, "region", e.target.value)}
+                    className="w-full bg-white border border-ink-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-atlas-500/30"
+                  >
+                    {regionOpts.map((r) => (
+                      <option key={r.value || "country-level"} value={r.value}>
+                        {r.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              );
+            })()}
             <ComboField
               id={`industry-${idx}`}
               label="Industry"
@@ -228,8 +221,9 @@ export function CompareClient() {
         <div className="flex items-baseline justify-between gap-4 flex-wrap">
           <div>
             <h2 className="text-xl font-semibold text-ink-900">Side-by-side</h2>
-            <p className="mt-1 text-sm text-ink-700">
-              Highest value in each row gets a moss dot; lowest gets a clay dot.
+            <p className="mt-1 text-sm text-ink-800">
+              Highest value in each row gets a moss dot. Lowest gets a clay dot.
+              Pickers above update results automatically.
             </p>
           </div>
           <button
@@ -240,6 +234,11 @@ export function CompareClient() {
             Copy share link
           </button>
         </div>
+        {Object.values(cells).every((c) => !c) && Object.values(loading).every((l) => !l) && (
+          <p className="mt-4 text-sm text-ink-700 italic">
+            Pick a country and an industry for each slot above to see the comparison.
+          </p>
+        )}
         <div className="mt-6 overflow-x-auto">
           <table className="w-full text-sm">
             <thead>

@@ -12,6 +12,7 @@ import {
   visibleIndustries,
   type Gate,
 } from "@/lib/taxonomy";
+import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
 // Plan v13 Wave 4a — emoji flagFromIso2 removed from dropdown labels
 // (ComboField input is a plain text field and can't host the SVG CountryFlag
 // image without an invasive rewrite). Flags still render on the destination
@@ -31,60 +32,6 @@ function readClientGate(): Gate {
     revealMixed: pro || showMixed || showLarge,
   };
 }
-
-const US_STATES = [
-  { value: "alabama", label: "Alabama" },
-  { value: "alaska", label: "Alaska" },
-  { value: "arizona", label: "Arizona" },
-  { value: "arkansas", label: "Arkansas" },
-  { value: "california", label: "California" },
-  { value: "colorado", label: "Colorado" },
-  { value: "connecticut", label: "Connecticut" },
-  { value: "delaware", label: "Delaware" },
-  { value: "district-of-columbia", label: "District of Columbia" },
-  { value: "florida", label: "Florida" },
-  { value: "georgia", label: "Georgia" },
-  { value: "hawaii", label: "Hawaii" },
-  { value: "idaho", label: "Idaho" },
-  { value: "illinois", label: "Illinois" },
-  { value: "indiana", label: "Indiana" },
-  { value: "iowa", label: "Iowa" },
-  { value: "kansas", label: "Kansas" },
-  { value: "kentucky", label: "Kentucky" },
-  { value: "louisiana", label: "Louisiana" },
-  { value: "maine", label: "Maine" },
-  { value: "maryland", label: "Maryland" },
-  { value: "massachusetts", label: "Massachusetts" },
-  { value: "michigan", label: "Michigan" },
-  { value: "minnesota", label: "Minnesota" },
-  { value: "mississippi", label: "Mississippi" },
-  { value: "missouri", label: "Missouri" },
-  { value: "montana", label: "Montana" },
-  { value: "nebraska", label: "Nebraska" },
-  { value: "nevada", label: "Nevada" },
-  { value: "new-hampshire", label: "New Hampshire" },
-  { value: "new-jersey", label: "New Jersey" },
-  { value: "new-mexico", label: "New Mexico" },
-  { value: "new-york", label: "New York" },
-  { value: "north-carolina", label: "North Carolina" },
-  { value: "north-dakota", label: "North Dakota" },
-  { value: "ohio", label: "Ohio" },
-  { value: "oklahoma", label: "Oklahoma" },
-  { value: "oregon", label: "Oregon" },
-  { value: "pennsylvania", label: "Pennsylvania" },
-  { value: "rhode-island", label: "Rhode Island" },
-  { value: "south-carolina", label: "South Carolina" },
-  { value: "south-dakota", label: "South Dakota" },
-  { value: "tennessee", label: "Tennessee" },
-  { value: "texas", label: "Texas" },
-  { value: "utah", label: "Utah" },
-  { value: "vermont", label: "Vermont" },
-  { value: "virginia", label: "Virginia" },
-  { value: "washington", label: "Washington" },
-  { value: "west-virginia", label: "West Virginia" },
-  { value: "wisconsin", label: "Wisconsin" },
-  { value: "wyoming", label: "Wyoming" },
-];
 
 export function NavigatorForm() {
   const router = useRouter();
@@ -113,10 +60,11 @@ export function NavigatorForm() {
     []
   );
 
-  // Region options — depends on country
+  // Region options — depends on country. Resolves from the per-country
+  // region table (see src/lib/regions/regions-by-country.ts).
   const regionOptions: ComboOption[] = useMemo(() => {
-    if (country === "US") return US_STATES;
-    return [{ value: "", label: "Country-level (sub-national coming)" }];
+    const name = COUNTRIES.find((c) => c.code === country)?.name || country;
+    return getRegionsForCountry(country, name);
   }, [country]);
 
   // Subdivision (county, etc.) — placeholder for now
@@ -162,27 +110,49 @@ export function NavigatorForm() {
   );
 
   function submit() {
-    if (!industry) {
-      alert("Pick an industry to find the data you're looking for.");
-      return;
-    }
-    const cc = country.toLowerCase();
-    // Non-US countries: use country name as the geo slug (matches getExtrapolatedCell)
-    let r = region;
-    if (!r) {
-      if (cc === "us") {
-        r = "california";
-      } else {
-        const countryName = COUNTRIES.find((c) => c.code === country)?.name || country;
-        r = countryName.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+    try {
+      if (!industry) {
+        alert("Pick an industry to find the data you're looking for.");
+        return;
+      }
+      const cc = country.toLowerCase();
+      // Resolve region slug. If the user didn't pick one explicitly, use
+      // the first option for that country (which is always present per
+      // getRegionsForCountry — country-level fallback as last resort).
+      let r = region;
+      if (!r) {
+        const opts = regionOptions;
+        const firstWithValue = opts.find((o) => o.value);
+        if (firstWithValue) {
+          r = firstWithValue.value;
+        } else if (cc === "us") {
+          r = "california";
+        } else {
+          const countryName = COUNTRIES.find((c) => c.code === country)?.name || country;
+          r = countryName.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+        }
+      }
+      const indSlug = industryToSlug(industry);
+      const path = `/${cc}/${r}/${indSlug}`;
+      router.push(path);
+    } catch (err) {
+      // Defensive fallback: hard navigation if the router push throws.
+      if (typeof window !== "undefined") {
+        // eslint-disable-next-line no-console
+        console.error("NavigatorForm submit failed", err);
+        window.location.href = "/random";
       }
     }
-    const indSlug = industryToSlug(industry);
-    router.push(`/${cc}/${r}/${indSlug}`);
   }
 
   function surpriseMe() {
-    router.push("/random");
+    try {
+      router.push("/random");
+    } catch {
+      if (typeof window !== "undefined") {
+        window.location.href = "/random";
+      }
+    }
   }
 
   return (
@@ -210,8 +180,7 @@ export function NavigatorForm() {
             setRegion(v);
             setSubdivision("");
           }}
-          disabled={country !== "US"}
-          tooltip="First-level administrative division: like US states or French regions."
+          tooltip="First-level administrative division: like US states, French regions, or Japanese prefectures."
         />
         <ComboField
           id="subdivision"
@@ -264,6 +233,7 @@ export function NavigatorForm() {
             Surprise me ✦
           </button>
           <button
+            type="button"
             onClick={submit}
             className="px-8 py-4 rounded-xl bg-atlas-500 hover:bg-atlas-600 active:bg-atlas-700 text-cream-50 font-semibold text-base shadow-sm transition"
           >
