@@ -37,15 +37,15 @@ export const revalidate = 86400; // 1 day
  * Tiles use measured parent industries (no sub-niches) per Plan v4 Step 16.
  */
 const FEATURED: FeaturedTileSpec[] = [
-  { iso2: "US", geo: "california",   industry: "software-development", title: "Software development", region: "San Francisco",   glyph: "💻" },
-  { iso2: "GB", geo: "gb",           industry: "legal-services",       title: "Legal services",       region: "United Kingdom",  glyph: "⚖️" },
-  { iso2: "DE", geo: "germany",      industry: "metal-products-mfg",   title: "Metal manufacturing",  region: "Germany",         glyph: "🔩" },
-  { iso2: "JP", geo: "japan",        industry: "restaurants",          title: "Ramen shops",          region: "Tokyo",           glyph: "🍜" },
-  { iso2: "US", geo: "california",   industry: "fitness-gyms",         title: "Gyms",                 region: "Los Angeles",     glyph: "🏋️" },
-  { iso2: "IT", geo: "italy",        industry: "clothing-stores",      title: "Boutiques",            region: "Milan",           glyph: "👗" },
-  { iso2: "FR", geo: "france",       industry: "jewelry-stores",       title: "Jewelry shops",        region: "Paris",           glyph: "💎" },
-  { iso2: "ES", geo: "spain",        industry: "restaurants",          title: "Restaurants",          region: "Barcelona",       glyph: "🥘" },
-  { iso2: "MX", geo: "mx-roo",       industry: "hotels-lodging",       title: "Hotels",               region: "Cancún",          glyph: "🏨" },
+  { iso2: "US", geo: "california",  industry: "software-development",   title: "Software development", region: "San Francisco",  glyph: "💻" },
+  { iso2: "GB", geo: "gb",          industry: "legal-services",         title: "Legal services",       region: "United Kingdom", glyph: "⚖️" },
+  { iso2: "DE", geo: "de21",        industry: "fabricated-metal-mfg",   title: "Metal manufacturing",  region: "Bavaria",        glyph: "🔩" },
+  { iso2: "JP", geo: "jp-13000",    industry: "restaurants",            title: "Ramen shops",          region: "Tokyo",          glyph: "🍜" },
+  { iso2: "US", geo: "us-06-037",   industry: "sports-fitness",         title: "Gyms",                 region: "Los Angeles",    glyph: "🏋️" },
+  { iso2: "IT", geo: "itc4c",       industry: "clothing-stores",        title: "Boutiques",            region: "Milan",          glyph: "👗" },
+  { iso2: "FR", geo: "fr101",       industry: "jewelry-stores",         title: "Jewelry shops",        region: "Paris",          glyph: "💎" },
+  { iso2: "ES", geo: "es511",       industry: "restaurants",            title: "Restaurants",          region: "Barcelona",      glyph: "🥘" },
+  { iso2: "MX", geo: "mx-roo",      industry: "hotels-lodging",         title: "Hotels",               region: "Cancún",         glyph: "🏨" },
 ];
 
 /**
