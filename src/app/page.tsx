@@ -11,6 +11,7 @@ import { CitiesDotsMap } from "@/components/CitiesDotsMap";
 import { QualityLegend } from "@/components/QualityLegend";
 import { RotatingWord } from "@/components/RotatingWord";
 import { DidYouKnow } from "@/components/DidYouKnow";
+import { ExploreCards } from "@/components/ExploreCards";
 import { HERO_CITIES, HERO_BUSINESSES } from "@/lib/hero-words";
 import { getToneClass } from "@/lib/page-layout/section-order";
 import { getAllPosts, type BlogPost } from "@/lib/blog";
@@ -172,22 +173,15 @@ export default function HomePage() {
       <ToneBand tone="home-navigator">
         <section className="pt-2 pb-10 md:pb-14">
           <NavigatorForm />
-          <div className="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4 sm:justify-start">
-            <a
-              href="/browse"
-              className="inline-flex items-center justify-center gap-2 rounded-md bg-atlas-600 hover:bg-atlas-700 text-white font-medium text-sm md:text-base px-5 py-3 w-full sm:w-[200px] transition-colors shadow-sm"
-            >
-              Browse by country
-              <span aria-hidden="true">→</span>
-            </a>
-            <a
-              href="/industries"
-              className="inline-flex items-center justify-center gap-2 rounded-md bg-cream-100 hover:bg-white text-ink-900 font-medium text-sm md:text-base px-5 py-3 w-full sm:w-[200px] border border-parchment hover:border-atlas-500 transition-colors"
-            >
-              Browse by industry
-              <span aria-hidden="true">→</span>
-            </a>
-          </div>
+        </section>
+      </ToneBand>
+
+      {/* Plan v21 Block 5 — image-card explore section replaces the
+          pair of compact CTAs. Two big symmetric cards, full-bleed
+          background image, click the whole card. */}
+      <ToneBand tone="home-featured">
+        <section className="py-8 md:py-10">
+          <ExploreCards />
         </section>
       </ToneBand>
 

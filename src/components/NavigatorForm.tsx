@@ -156,7 +156,13 @@ export function NavigatorForm() {
   }
 
   return (
-    <div className="rounded-3xl bg-white p-6 md:p-8 lg:p-10 border border-parchment shadow-[0_1px_2px_rgba(76,39,18,0.04),_0_8px_32px_rgba(76,39,18,0.06)]">
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        submit();
+      }}
+      className="rounded-3xl bg-white p-6 md:p-8 lg:p-10 border border-parchment shadow-[0_1px_2px_rgba(76,39,18,0.04),_0_8px_32px_rgba(76,39,18,0.06)]"
+    >
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         <ComboField
           id="country"
@@ -233,14 +239,13 @@ export function NavigatorForm() {
             Surprise me ✦
           </button>
           <button
-            type="button"
-            onClick={submit}
+            type="submit"
             className="px-8 py-4 rounded-xl bg-atlas-500 hover:bg-atlas-600 active:bg-atlas-700 text-cream-50 font-semibold text-base shadow-sm transition"
           >
             Show me the numbers →
           </button>
         </div>
       </div>
-    </div>
+    </form>
   );
 }
