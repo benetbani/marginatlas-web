@@ -15,6 +15,7 @@
 import { getCellBySlug, type Cell } from "@/lib/cells";
 import { CountryFlag } from "@/components/CountryFlag";
 import { getFeaturedSnapshot, findSnapshotCell } from "@/lib/snapshots";
+import { IndustryIcon } from "@/components/icons/IndustryIcon";
 
 /**
  * Plan v18 Phase 0 — read the cell from the pre-baked snapshot JSON
@@ -83,6 +84,14 @@ export async function FeaturedCellTile({ spec }: { spec: FeaturedTileSpec }) {
           <span className="inline-flex items-center gap-1.5 text-cocoa-700 font-medium">
             <CountryFlag iso2={spec.iso2} label={spec.region} className="w-5" />
             <span>{spec.region}</span>
+          </span>
+          {/* Plan v19 Block F — industry icon replaces emoji glyph */}
+          <span className="text-atlas-600" aria-hidden>
+            <IndustryIcon
+              industryId={spec.industry.replace(/-/g, "_")}
+              size={20}
+              weight="duotone"
+            />
           </span>
         </div>
         <div className="text-base font-semibold text-ink-900 leading-tight group-hover:text-atlas-700 transition-colors">

@@ -128,7 +128,8 @@ export default function HomePage() {
       <ToneBand tone="home-hero">
         <section className="pt-8 pb-10 md:pt-12 md:pb-14 lg:pt-14 lg:pb-16">
           <div className="max-w-4xl">
-            <div className="text-xs font-semibold uppercase tracking-[0.18em] text-atlas-700 mb-4 md:mb-5">
+            {/* Plan v19 Block E — bigger, bolder eyebrow. */}
+            <div className="text-sm md:text-base font-bold uppercase tracking-[0.12em] text-atlas-700 mb-4 md:mb-5">
               № 1 site for tracking small to medium business benchmarks globally
             </div>
             <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-ink-900 leading-[1.08] flex flex-col">
@@ -141,9 +142,13 @@ export default function HomePage() {
                   />
                 </span>
               </span>
+              {/* Plan v19 Block D — question mark anchored to a fixed-width
+                  container. City name centers within. Short cities sit
+                  centered with whitespace either side; long cities expand
+                  but never reach the bookends. The `?` never moves. */}
               <span className="block w-full whitespace-nowrap">
-                make in{" "}
-                <span className="inline text-atlas-600">
+                make in
+                <span className="inline-block min-w-[12ch] px-3 md:px-4 text-center text-atlas-600 align-baseline">
                   <RotatingWord
                     words={HERO_CITIES as unknown as string[]}
                     interval={2000}

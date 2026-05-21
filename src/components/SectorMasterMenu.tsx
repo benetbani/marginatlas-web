@@ -9,6 +9,7 @@
  */
 
 import { visibleSectors, visibleIndustriesInSector } from "@/lib/taxonomy";
+import { SectorIcon } from "@/components/icons/SectorIcon";
 
 export function SectorMasterMenu() {
   const sectors = visibleSectors({});
@@ -35,8 +36,9 @@ export function SectorMasterMenu() {
               style={{ backgroundColor: s.header_color || "#F8F2E4" }}
             >
               <div className="flex items-start justify-between gap-2">
-                <div className="text-3xl leading-none" aria-hidden>
-                  {s.icon}
+                {/* Plan v19 Block F — Phosphor icon replaces emoji */}
+                <div className="text-atlas-700" aria-hidden>
+                  <SectorIcon sectorId={s.id} size={32} weight="duotone" />
                 </div>
                 <div className="text-[10px] uppercase tracking-wider text-cocoa-700/50 font-medium tabular-nums">
                   {industries.length}

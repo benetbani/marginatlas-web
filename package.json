@@ -17,6 +17,7 @@
     "prebuild": "npx tsx scripts/verify_taxonomy.ts && npx tsx scripts/verify_no_em_dashes.ts && npx tsx scripts/verify_no_source_agencies.ts && npx tsx scripts/audit/find_dead_links.ts --strict"
   },
   "dependencies": {
+    "@phosphor-icons/react": "^2.1.10",
     "@sentry/nextjs": "^10.53.1",
     "@supabase/supabase-js": "^2.45.0",
     "gray-matter": "^4.0.3",
