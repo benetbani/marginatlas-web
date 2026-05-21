@@ -25,8 +25,14 @@ STEP 1 — Read the handoff package in order, fully, before responding:
   E:\atlas\website\docs\handoff\11_NEXT_STEPS.md
   E:\atlas\website\docs\handoff\12_VERIFICATION_URLS.md
   E:\atlas\website\docs\handoff\13_GLOSSARY.md
+  E:\atlas\website\docs\handoff\15_SESSION_5_UPDATE.md   ← READ LAST; authoritative delta
 
-STEP 2 — Operating rules you MUST internalise from those files:
+The file 15_SESSION_5_UPDATE.md overrides 00-14 wherever they conflict.
+It captures the 13 commits + Plan v15 + R-003 hotfix shipped on
+2026-05-21. Chapters 00-14 were last updated 2026-05-17 so several
+"current state" claims in them are stale.
+
+STEP 2 — Operating rules you MUST internalise (chapter 10 + chapter 15 §8):
   - Never use the word "okay". Be direct. No fluff vocabulary.
   - Never reveal source agencies (Eurostat, Census, e-Stat, IBGE, etc.)
     in user-facing copy. Internal docs only.
@@ -34,44 +40,55 @@ STEP 2 — Operating rules you MUST internalise from those files:
     uses the warm-earth palette (atlas, cream, parchment, moss, clay,
     cocoa) defined in tailwind.config.ts.
   - Banking sectors stay OFF the default UI (corp_only audience tag).
-  - /ask route stays in preview mode until editorial tone is locked.
-  - No paid Destatis. No "Coming soon" tiles. No alphabetical sort on
-    the sector menu. No image-on-right hero layouts.
   - Never commit .env.local. Never echo secret keys back to chat.
   - Python ingest: chunksize streaming only, RSS cap 600 MB, no
     parallel pipelines, resume from progress.json.
   - tsc + lint before every commit. No --no-verify. No force push.
+  - Never display calendar years in user-facing copy (D-107 in ch 15).
+  - Never use "cell" / "cells" in user-facing copy. Say "benchmark"
+    or "snapshot" (D-107).
+  - Never use raw `p10/p50/p90` notation. Say "Bottom 10% / Typical /
+    Top 10%" (D-107).
+  - Never re-add `export const revalidate` AND `await searchParams` to
+    the same page — that's R-003, catastrophic 500s. See D-101 ch 15.
+  - Never re-enable `withSentryConfig(...)` without verifying SSR doesn't
+    crash with RangeError. See D-100 / B-100 ch 15.
 
-STEP 3 — Current data state (as of handoff):
-  - regional_cells: 179,409 rows live in Supabase
-  - cells_master (US state): 722,000 rows
-  - extrapolated_cells (country-level): 57,816 rows
-  - Phases DONE: 01 EU NUTS (43,903), 08 JP (6,951), 10 US (87,573),
-    15a BR (1,483), 18 city overlay (41,448)
-  - Phases PARTIAL: 11 CA (65, wrong table), 15 LATAM, 17 OECD+WB
-  - Phases DEFERRED: 02, 04-07, 09, 12-14, 16 (see file 11)
+STEP 3 — Current state (as of session 5, 2026-05-21):
+  - Site is LIVE at https://www.marginatlas.com (DNS B-001 resolved).
+  - HEAD: c4d99b4 on main. 13 commits shipped in session 5.
+  - Working tree: clean except for auto-generated noise + untracked
+    data files listed in chapter 15 §6.
+  - All 8 blocks of Plan v15 + R-003 hotfix are shipped.
+  - Per-cell narratives cache (2,259 entries) live at
+    data/content/cell_narratives_v1.json.
+  - Style guide locked at docs/specs/2026-05-19-site-editorial-style-guide.md.
+  - Sentry webpack wrapper DISABLED in next.config.js (B-100). Runtime
+    init still active in production.
+  - Benchmark page (/[country]/[geo]/[industry]) is force-dynamic;
+    Next ISR caching is OFF until S-100 lands (B-101).
 
-STEP 4 — Active blockers requiring founder action (file 09):
-  - B-001 Cloudflare DNS: marginatlas.com returns 522, Vercel preview
-    works. Founder needs to update nameservers or add A/CNAME.
-  - B-002 Editorial tone undecided — blocks /ask live mode + narrative.
-  - B-008 Real product images still placeholder.
-  - ANTHROPIC_API_KEY exists in .env.local but NOT in Vercel env vars.
+STEP 4 — Active blockers (chapter 15 §3):
+  - B-008 Unsplash production tier still pending approval.
+  - B-100 Sentry webpack wrapper disabled (re-enable after upstream fix).
+  - B-101 Benchmark pages bypass Next ISR (S-100 restores caching).
 
-STEP 5 — Highest-yield next steps (file 11):
-  - S-04 NAICS-3 expansion in US Census pipeline (largest row gain
-    per hour of work).
-  - S-05 Canada retry on correct table 33-10-0418.
-  - S-06 OECD endpoint migration to sdmx.oecd.org/public/rest/data/.
-  - S-07 UK NOMIS numeric ID lookup.
+STEP 5 — Highest-leverage next steps (chapter 15 §7):
+  - S-100 Restore ISR caching on benchmark pages by moving the size/year
+    switcher to a client component using useSearchParams.
+  - S-101 Rename internal "cell" identifiers (cosmetic).
+  - S-102 Bulk-import remaining 185 country anchors from the style guide.
+  - S-103 Re-enable Sentry once @sentry/nextjs has a Next 15.5.18 fix.
+  - S-104 AskWidget streaming UX.
+  - S-105 Quarterly CPI table refresh in src/lib/stats/inflation.ts.
 
-STEP 6 — After reading all 14 files, reply with EXACTLY this format
+STEP 6 — After reading all 16 files, reply with EXACTLY this format
 and nothing else:
 
   Handoff loaded.
-  Regional cells: <number from file 04>
-  Top blocker: <B-XXX from file 09>
-  Next step I recommend: <S-XX from file 11> — <one sentence why>
+  HEAD: <commit hash from chapter 15 §0>
+  Live URL: <www URL from chapter 15 §1>
+  Top open follow-up: <S-XXX from chapter 15 §7> — <one sentence why>
   Awaiting instruction.
 
 Do NOT summarise the files. Do NOT propose a plan. Do NOT start coding.

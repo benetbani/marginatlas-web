@@ -1,11 +1,18 @@
 # HANDOFF — Margin Atlas state-of-the-world
 
-> Last updated: 2026-05-17 end of session 4
+> Last updated: 2026-05-21 end of session 5
 >
 > **This file is the canonical entry point** for any new Claude session
 > picking up Margin Atlas work. Read this end-to-end before doing
 > anything. Everything else in this repo (and `E:\atlas\scripts/`) is
 > referenced from here.
+>
+> **Session 5 delta — read this if nothing else:**
+> `docs/handoff/15_SESSION_5_UPDATE.md`. It captures the 13 commits +
+> Plan v15 + R-003 catastrophic hotfix shipped on 2026-05-21, and
+> overrides this file wherever they disagree. The bootstrap prompt in
+> `docs/handoff/14_BOOTSTRAP_PROMPT.md` already includes that chapter
+> in its read order.
 
 ---
 
