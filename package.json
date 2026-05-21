@@ -9,7 +9,11 @@
     "lint": "next lint",
     "verify:taxonomy": "npx tsx scripts/verify_taxonomy.ts",
     "verify:em-dashes": "npx tsx scripts/verify_no_em_dashes.ts",
-    "prebuild": "npx tsx scripts/verify_taxonomy.ts && npx tsx scripts/verify_no_em_dashes.ts"
+    "verify:dead-links": "npx tsx scripts/audit/find_dead_links.ts --strict",
+    "audit:inventory": "npx tsx scripts/audit/enumerate_urls.ts",
+    "audit:probe": "npx tsx scripts/audit/probe_urls.ts",
+    "audit:report": "npx tsx scripts/audit/report.ts",
+    "prebuild": "npx tsx scripts/verify_taxonomy.ts && npx tsx scripts/verify_no_em_dashes.ts && npx tsx scripts/audit/find_dead_links.ts --strict"
   },
   "dependencies": {
     "@sentry/nextjs": "^10.53.1",

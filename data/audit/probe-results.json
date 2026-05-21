@@ -1,0 +1,2929 @@
+[
+  {
+    "path": "/",
+    "source": "static",
+    "status": 0,
+    "duration_ms": 10018,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/pricing",
+    "source": "static",
+    "status": 200,
+    "duration_ms": 1709,
+    "content_length": 33957,
+    "has_h1": true,
+    "classification": "slow"
+  },
+  {
+    "path": "/world",
+    "source": "static",
+    "status": 200,
+    "duration_ms": 2649,
+    "content_length": 236667,
+    "has_h1": true,
+    "classification": "slow"
+  },
+  {
+    "path": "/compare",
+    "source": "static",
+    "status": 200,
+    "duration_ms": 2450,
+    "content_length": 48473,
+    "has_h1": true,
+    "classification": "slow"
+  },
+  {
+    "path": "/you",
+    "source": "static",
+    "status": 200,
+    "duration_ms": 469,
+    "content_length": 30772,
+    "has_h1": true,
+    "classification": "ok"
+  },
+  {
+    "path": "/saved",
+    "source": "static",
+    "status": 200,
+    "duration_ms": 470,
+    "content_length": 25799,
+    "has_h1": true,
+    "classification": "ok"
+  },
+  {
+    "path": "/browse",
+    "source": "static",
+    "status": 200,
+    "duration_ms": 903,
+    "content_length": 242270,
+    "has_h1": true,
+    "classification": "ok"
+  },
+  {
+    "path": "/industries",
+    "source": "static",
+    "status": 200,
+    "duration_ms": 520,
+    "content_length": 220327,
+    "has_h1": true,
+    "classification": "ok"
+  },
+  {
+    "path": "/sectors",
+    "source": "static",
+    "status": 200,
+    "duration_ms": 416,
+    "content_length": 60371,
+    "has_h1": true,
+    "classification": "ok"
+  },
+  {
+    "path": "/about-data",
+    "source": "static",
+    "status": 200,
+    "duration_ms": 450,
+    "content_length": 33327,
+    "has_h1": true,
+    "classification": "ok"
+  },
+  {
+    "path": "/methodology",
+    "source": "static",
+    "status": 200,
+    "duration_ms": 505,
+    "content_length": 25923,
+    "has_h1": false,
+    "classification": "empty"
+  },
+  {
+    "path": "/coverage",
+    "source": "static",
+    "status": 200,
+    "duration_ms": 577,
+    "content_length": 432319,
+    "has_h1": true,
+    "classification": "ok"
+  },
+  {
+    "path": "/blog",
+    "source": "static",
+    "status": 200,
+    "duration_ms": 617,
+    "content_length": 110933,
+    "has_h1": true,
+    "classification": "ok"
+  },
+  {
+    "path": "/random",
+    "source": "static",
+    "status": 0,
+    "duration_ms": 10009,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/calculator",
+    "source": "static",
+    "status": 200,
+    "duration_ms": 547,
+    "content_length": 78191,
+    "has_h1": true,
+    "classification": "ok"
+  },
+  {
+    "path": "/ask",
+    "source": "static",
+    "status": 200,
+    "duration_ms": 417,
+    "content_length": 28659,
+    "has_h1": true,
+    "classification": "ok"
+  },
+  {
+    "path": "/status",
+    "source": "static",
+    "status": 200,
+    "duration_ms": 5576,
+    "content_length": 34139,
+    "has_h1": true,
+    "classification": "slow"
+  },
+  {
+    "path": "/sitemap.xml",
+    "source": "static",
+    "status": 200,
+    "duration_ms": 200,
+    "content_length": 29053,
+    "has_h1": false,
+    "classification": "ok"
+  },
+  {
+    "path": "/robots.txt",
+    "source": "static",
+    "status": 200,
+    "duration_ms": 421,
+    "content_length": 614,
+    "has_h1": false,
+    "classification": "empty"
+  },
+  {
+    "path": "/sectors/food_drink",
+    "source": "sector",
+    "origin": "food_drink",
+    "status": 0,
+    "duration_ms": 10011,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/sectors/retail_shops",
+    "source": "sector",
+    "origin": "retail_shops",
+    "status": 0,
+    "duration_ms": 10012,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/sectors/beauty_wellness",
+    "source": "sector",
+    "origin": "beauty_wellness",
+    "status": 0,
+    "duration_ms": 10009,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/sectors/trades_home",
+    "source": "sector",
+    "origin": "trades_home",
+    "status": 0,
+    "duration_ms": 10012,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/sectors/hospitality",
+    "source": "sector",
+    "origin": "hospitality",
+    "status": 0,
+    "duration_ms": 10016,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/sectors/professional_services",
+    "source": "sector",
+    "origin": "professional_services",
+    "status": 0,
+    "duration_ms": 10014,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/sectors/software_tech",
+    "source": "sector",
+    "origin": "software_tech",
+    "status": 0,
+    "duration_ms": 10012,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/sectors/real_estate",
+    "source": "sector",
+    "origin": "real_estate",
+    "status": 0,
+    "duration_ms": 10016,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/sectors/transport_small",
+    "source": "sector",
+    "origin": "transport_small",
+    "status": 0,
+    "duration_ms": 10014,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/sectors/manufacturing_artisan",
+    "source": "sector",
+    "origin": "manufacturing_artisan",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/sectors/construction",
+    "source": "sector",
+    "origin": "construction",
+    "status": 0,
+    "duration_ms": 10016,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/sectors/farming_food_production",
+    "source": "sector",
+    "origin": "farming_food_production",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/sectors/health_clinics",
+    "source": "sector",
+    "origin": "health_clinics",
+    "status": 0,
+    "duration_ms": 10019,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/sectors/education_instruction",
+    "source": "sector",
+    "origin": "education_instruction",
+    "status": 0,
+    "duration_ms": 10012,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/sectors/creative_media",
+    "source": "sector",
+    "origin": "creative_media",
+    "status": 0,
+    "duration_ms": 10016,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/sectors/repair",
+    "source": "sector",
+    "origin": "repair",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/sectors/pet_services",
+    "source": "sector",
+    "origin": "pet_services",
+    "status": 0,
+    "duration_ms": 10011,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/sectors/events_entertainment",
+    "source": "sector",
+    "origin": "events_entertainment",
+    "status": 0,
+    "duration_ms": 10016,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/sectors/cultural",
+    "source": "sector",
+    "origin": "cultural",
+    "status": 0,
+    "duration_ms": 10002,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/sectors/other_local",
+    "source": "sector",
+    "origin": "other_local",
+    "status": 0,
+    "duration_ms": 10016,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/grain-farming",
+    "source": "industry",
+    "origin": "grain_farming",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/vegetable-fruit-farming",
+    "source": "industry",
+    "origin": "vegetable_fruit_farming",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/livestock-farming",
+    "source": "industry",
+    "origin": "livestock_farming",
+    "status": 0,
+    "duration_ms": 10007,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/fishing-aquaculture",
+    "source": "industry",
+    "origin": "fishing_aquaculture",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/forestry-logging",
+    "source": "industry",
+    "origin": "forestry_logging",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/food-mfg",
+    "source": "industry",
+    "origin": "food_mfg",
+    "status": 0,
+    "duration_ms": 10014,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/beverage-mfg",
+    "source": "industry",
+    "origin": "beverage_mfg",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/craft-beer-mfg",
+    "source": "industry",
+    "origin": "craft_beer_mfg",
+    "status": 0,
+    "duration_ms": 10016,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/coffee-roasters",
+    "source": "industry",
+    "origin": "coffee_roasters",
+    "status": 0,
+    "duration_ms": 10009,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/specialty-food-production",
+    "source": "industry",
+    "origin": "specialty_food_production",
+    "status": 0,
+    "duration_ms": 10016,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/artisan-bakery-wholesale",
+    "source": "industry",
+    "origin": "artisan_bakery_wholesale",
+    "status": 0,
+    "duration_ms": 10005,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/textiles-fabric-mfg",
+    "source": "industry",
+    "origin": "textiles_fabric_mfg",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/apparel-mfg",
+    "source": "industry",
+    "origin": "apparel_mfg",
+    "status": 0,
+    "duration_ms": 10025,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/custom-apparel-mfg",
+    "source": "industry",
+    "origin": "custom_apparel_mfg",
+    "status": 200,
+    "duration_ms": 7659,
+    "content_length": 32759,
+    "has_h1": true,
+    "classification": "slow"
+  },
+  {
+    "path": "/industries/small-leather-goods",
+    "source": "industry",
+    "origin": "small_leather_goods",
+    "status": 200,
+    "duration_ms": 7528,
+    "content_length": 32765,
+    "has_h1": true,
+    "classification": "slow"
+  },
+  {
+    "path": "/industries/wood-products-mfg",
+    "source": "industry",
+    "origin": "wood_products_mfg",
+    "status": 0,
+    "duration_ms": 10016,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/paper-mfg",
+    "source": "industry",
+    "origin": "paper_mfg",
+    "status": 0,
+    "duration_ms": 10011,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/custom-furniture-makers",
+    "source": "industry",
+    "origin": "custom_furniture_makers",
+    "status": 0,
+    "duration_ms": 10003,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/print-shops",
+    "source": "industry",
+    "origin": "print_shops",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/sign-shops",
+    "source": "industry",
+    "origin": "sign_shops",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/soap-candle-makers",
+    "source": "industry",
+    "origin": "soap_candle_makers",
+    "status": 0,
+    "duration_ms": 10002,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/fabricated-metal-mfg",
+    "source": "industry",
+    "origin": "fabricated_metal_mfg",
+    "status": 0,
+    "duration_ms": 10004,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/primary-metal-mfg",
+    "source": "industry",
+    "origin": "primary_metal_mfg",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/metal-fab-machine-shops",
+    "source": "industry",
+    "origin": "metal_fab_machine_shops",
+    "status": 0,
+    "duration_ms": 10014,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/custom-jewelers",
+    "source": "industry",
+    "origin": "custom_jewelers",
+    "status": 200,
+    "duration_ms": 9930,
+    "content_length": 32863,
+    "has_h1": true,
+    "classification": "slow"
+  },
+  {
+    "path": "/industries/furniture-mfg",
+    "source": "industry",
+    "origin": "furniture_mfg",
+    "status": 0,
+    "duration_ms": 10016,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/misc-mfg",
+    "source": "industry",
+    "origin": "misc_mfg",
+    "status": 0,
+    "duration_ms": 10007,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/residential-construction",
+    "source": "industry",
+    "origin": "residential_construction",
+    "status": 0,
+    "duration_ms": 10002,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/commercial-construction",
+    "source": "industry",
+    "origin": "commercial_construction",
+    "status": 0,
+    "duration_ms": 10005,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/specialty-trades",
+    "source": "industry",
+    "origin": "specialty_trades",
+    "status": 0,
+    "duration_ms": 10005,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/plumbers",
+    "source": "industry",
+    "origin": "plumbers",
+    "status": 0,
+    "duration_ms": 10005,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/electricians",
+    "source": "industry",
+    "origin": "electricians",
+    "status": 0,
+    "duration_ms": 10010,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/hvac-services",
+    "source": "industry",
+    "origin": "hvac_services",
+    "status": 0,
+    "duration_ms": 10002,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/painters-residential",
+    "source": "industry",
+    "origin": "painters_residential",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/roofers",
+    "source": "industry",
+    "origin": "roofers",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/carpenters-finish",
+    "source": "industry",
+    "origin": "carpenters_finish",
+    "status": 0,
+    "duration_ms": 10002,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/flooring-installers",
+    "source": "industry",
+    "origin": "flooring_installers",
+    "status": 0,
+    "duration_ms": 10012,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/wholesale-food",
+    "source": "industry",
+    "origin": "wholesale_food",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/wholesale-durables",
+    "source": "industry",
+    "origin": "wholesale_durables",
+    "status": 0,
+    "duration_ms": 10002,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/wholesale-general",
+    "source": "industry",
+    "origin": "wholesale_general",
+    "status": 0,
+    "duration_ms": 10014,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/grocery-stores",
+    "source": "industry",
+    "origin": "grocery_stores",
+    "status": 0,
+    "duration_ms": 10017,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/specialty-grocery",
+    "source": "industry",
+    "origin": "specialty_grocery",
+    "status": 0,
+    "duration_ms": 10012,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/wine-liquor-stores",
+    "source": "industry",
+    "origin": "wine_liquor_stores",
+    "status": 0,
+    "duration_ms": 10008,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/clothing-stores",
+    "source": "industry",
+    "origin": "clothing_stores",
+    "status": 0,
+    "duration_ms": 10011,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/boutique-clothing",
+    "source": "industry",
+    "origin": "boutique_clothing",
+    "status": 0,
+    "duration_ms": 10017,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/streetwear-casual",
+    "source": "industry",
+    "origin": "streetwear_casual",
+    "status": 0,
+    "duration_ms": 10016,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/designer-fashion",
+    "source": "industry",
+    "origin": "designer_fashion",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/childrens-clothing",
+    "source": "industry",
+    "origin": "childrens_clothing",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/jewelry-stores",
+    "source": "industry",
+    "origin": "jewelry_stores",
+    "status": 0,
+    "duration_ms": 10007,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/watch-shops",
+    "source": "industry",
+    "origin": "watch_shops",
+    "status": 0,
+    "duration_ms": 10007,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/eyewear-optical",
+    "source": "industry",
+    "origin": "eyewear_optical",
+    "status": 0,
+    "duration_ms": 10016,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/shoe-stores",
+    "source": "industry",
+    "origin": "shoe_stores",
+    "status": 0,
+    "duration_ms": 10011,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/bags-leather-retail",
+    "source": "industry",
+    "origin": "bags_leather_retail",
+    "status": 0,
+    "duration_ms": 10008,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/lingerie-intimates",
+    "source": "industry",
+    "origin": "lingerie_intimates",
+    "status": 200,
+    "duration_ms": 1138,
+    "content_length": 32627,
+    "has_h1": true,
+    "classification": "ok"
+  },
+  {
+    "path": "/industries/vintage-consignment",
+    "source": "industry",
+    "origin": "vintage_consignment",
+    "status": 200,
+    "duration_ms": 1297,
+    "content_length": 32633,
+    "has_h1": true,
+    "classification": "ok"
+  },
+  {
+    "path": "/industries/electronics-appliance-stores",
+    "source": "industry",
+    "origin": "electronics_appliance_stores",
+    "status": 0,
+    "duration_ms": 10007,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/furniture-stores",
+    "source": "industry",
+    "origin": "furniture_stores",
+    "status": 0,
+    "duration_ms": 10004,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/building-garden-stores",
+    "source": "industry",
+    "origin": "building_garden_stores",
+    "status": 0,
+    "duration_ms": 10014,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/hardware-stores",
+    "source": "industry",
+    "origin": "hardware_stores",
+    "status": 0,
+    "duration_ms": 10008,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/garden-centers",
+    "source": "industry",
+    "origin": "garden_centers",
+    "status": 0,
+    "duration_ms": 10016,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/home-decor-gift",
+    "source": "industry",
+    "origin": "home_decor_gift",
+    "status": 0,
+    "duration_ms": 10016,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/health-beauty-stores",
+    "source": "industry",
+    "origin": "health_beauty_stores",
+    "status": 0,
+    "duration_ms": 10009,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/cosmetics-shops",
+    "source": "industry",
+    "origin": "cosmetics_shops",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/independent-pharmacy",
+    "source": "industry",
+    "origin": "independent_pharmacy",
+    "status": 0,
+    "duration_ms": 10017,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/auto-dealers",
+    "source": "industry",
+    "origin": "auto_dealers",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/gas-stations",
+    "source": "industry",
+    "origin": "gas_stations",
+    "status": 0,
+    "duration_ms": 10006,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/ecommerce-mail-order",
+    "source": "industry",
+    "origin": "ecommerce_mail_order",
+    "status": 0,
+    "duration_ms": 10009,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/bookstores-indie",
+    "source": "industry",
+    "origin": "bookstores_indie",
+    "status": 0,
+    "duration_ms": 10019,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/toy-game-stores",
+    "source": "industry",
+    "origin": "toy_game_stores",
+    "status": 0,
+    "duration_ms": 10009,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/pet-stores",
+    "source": "industry",
+    "origin": "pet_stores",
+    "status": 0,
+    "duration_ms": 10014,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/sporting-goods-specialty",
+    "source": "industry",
+    "origin": "sporting_goods_specialty",
+    "status": 0,
+    "duration_ms": 10016,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/art-craft-supplies",
+    "source": "industry",
+    "origin": "art_craft_supplies",
+    "status": 0,
+    "duration_ms": 10009,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/music-instrument-shops",
+    "source": "industry",
+    "origin": "music_instrument_shops",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/stationery-paper",
+    "source": "industry",
+    "origin": "stationery_paper",
+    "status": 0,
+    "duration_ms": 10020,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/florist-shops",
+    "source": "industry",
+    "origin": "florist_shops",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/trucking-freight",
+    "source": "industry",
+    "origin": "trucking_freight",
+    "status": 0,
+    "duration_ms": 10016,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/junk-removal-moving",
+    "source": "industry",
+    "origin": "junk_removal_moving",
+    "status": 0,
+    "duration_ms": 10010,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/transit-ground-passenger",
+    "source": "industry",
+    "origin": "transit_ground_passenger",
+    "status": 0,
+    "duration_ms": 10010,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/scenic-sightseeing-transport",
+    "source": "industry",
+    "origin": "scenic_sightseeing_transport",
+    "status": 0,
+    "duration_ms": 10009,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/transport-support",
+    "source": "industry",
+    "origin": "transport_support",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/warehousing-storage",
+    "source": "industry",
+    "origin": "warehousing_storage",
+    "status": 0,
+    "duration_ms": 10007,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/restaurants",
+    "source": "industry",
+    "origin": "restaurants",
+    "status": 0,
+    "duration_ms": 10014,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/sit-down-restaurants",
+    "source": "industry",
+    "origin": "sit_down_restaurants",
+    "status": 0,
+    "duration_ms": 10016,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/fast-casual",
+    "source": "industry",
+    "origin": "fast_casual",
+    "status": 0,
+    "duration_ms": 10018,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/cafes-coffee",
+    "source": "industry",
+    "origin": "cafes_coffee",
+    "status": 0,
+    "duration_ms": 10010,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/bakeries-retail",
+    "source": "industry",
+    "origin": "bakeries_retail",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/pastry-dessert",
+    "source": "industry",
+    "origin": "pastry_dessert",
+    "status": 0,
+    "duration_ms": 10016,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/ice-cream-shops",
+    "source": "industry",
+    "origin": "ice_cream_shops",
+    "status": 0,
+    "duration_ms": 10008,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/pizzerias",
+    "source": "industry",
+    "origin": "pizzerias",
+    "status": 0,
+    "duration_ms": 10006,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/food-trucks",
+    "source": "industry",
+    "origin": "food_trucks",
+    "status": 0,
+    "duration_ms": 10009,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/tea-houses",
+    "source": "industry",
+    "origin": "tea_houses",
+    "status": 0,
+    "duration_ms": 10005,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/bars-nightclubs",
+    "source": "industry",
+    "origin": "bars_nightclubs",
+    "status": 0,
+    "duration_ms": 10003,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/wine-bars",
+    "source": "industry",
+    "origin": "wine_bars",
+    "status": 0,
+    "duration_ms": 10010,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/pubs-taverns",
+    "source": "industry",
+    "origin": "pubs_taverns",
+    "status": 0,
+    "duration_ms": 10004,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/breweries-taprooms",
+    "source": "industry",
+    "origin": "breweries_taprooms",
+    "status": 0,
+    "duration_ms": 10011,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/catering",
+    "source": "industry",
+    "origin": "catering",
+    "status": 0,
+    "duration_ms": 10004,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/hotels-lodging",
+    "source": "industry",
+    "origin": "hotels_lodging",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/independent-hotels",
+    "source": "industry",
+    "origin": "independent_hotels",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/bnbs",
+    "source": "industry",
+    "origin": "bnbs",
+    "status": 200,
+    "duration_ms": 258,
+    "content_length": 26596,
+    "has_h1": false,
+    "classification": "empty"
+  },
+  {
+    "path": "/industries/hostels",
+    "source": "industry",
+    "origin": "hostels",
+    "status": 0,
+    "duration_ms": 10012,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/str-management",
+    "source": "industry",
+    "origin": "str_management",
+    "status": 0,
+    "duration_ms": 10004,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/software-development",
+    "source": "industry",
+    "origin": "software_development",
+    "status": 0,
+    "duration_ms": 10010,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/web-mobile-dev-shops",
+    "source": "industry",
+    "origin": "web_mobile_dev_shops",
+    "status": 0,
+    "duration_ms": 10067,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/custom-software-contract",
+    "source": "industry",
+    "origin": "custom_software_contract",
+    "status": 0,
+    "duration_ms": 10182,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/game-dev-studios",
+    "source": "industry",
+    "origin": "game_dev_studios",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/it-services-hosting",
+    "source": "industry",
+    "origin": "it_services_hosting",
+    "status": 0,
+    "duration_ms": 10002,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/it-services-msp",
+    "source": "industry",
+    "origin": "it_services_msp",
+    "status": 0,
+    "duration_ms": 10007,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/news-periodical-publishing",
+    "source": "industry",
+    "origin": "news_periodical_publishing",
+    "status": 0,
+    "duration_ms": 10014,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/motion-picture-recording",
+    "source": "industry",
+    "origin": "motion_picture_recording",
+    "status": 0,
+    "duration_ms": 10012,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/insurance-brokers",
+    "source": "industry",
+    "origin": "insurance_brokers",
+    "status": 0,
+    "duration_ms": 10006,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/real-estate-agencies",
+    "source": "industry",
+    "origin": "real_estate_agencies",
+    "status": 0,
+    "duration_ms": 10014,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/real-estate-leasing",
+    "source": "industry",
+    "origin": "real_estate_leasing",
+    "status": 0,
+    "duration_ms": 10012,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/equipment-rental",
+    "source": "industry",
+    "origin": "equipment_rental",
+    "status": 0,
+    "duration_ms": 10004,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/legal-services",
+    "source": "industry",
+    "origin": "legal_services",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/sole-law-firms",
+    "source": "industry",
+    "origin": "sole_law_firms",
+    "status": 0,
+    "duration_ms": 10016,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/accounting-tax",
+    "source": "industry",
+    "origin": "accounting_tax",
+    "status": 0,
+    "duration_ms": 10003,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/sole-accounting",
+    "source": "industry",
+    "origin": "sole_accounting",
+    "status": 0,
+    "duration_ms": 10008,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/management-consulting",
+    "source": "industry",
+    "origin": "management_consulting",
+    "status": 0,
+    "duration_ms": 10014,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/engineering-architecture",
+    "source": "industry",
+    "origin": "engineering_architecture",
+    "status": 0,
+    "duration_ms": 10010,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/marketing-design",
+    "source": "industry",
+    "origin": "marketing_design",
+    "status": 0,
+    "duration_ms": 10014,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/photography-studios",
+    "source": "industry",
+    "origin": "photography_studios",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/videography-services",
+    "source": "industry",
+    "origin": "videography_services",
+    "status": 0,
+    "duration_ms": 10014,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/wedding-planning",
+    "source": "industry",
+    "origin": "wedding_planning",
+    "status": 0,
+    "duration_ms": 10008,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/event-production",
+    "source": "industry",
+    "origin": "event_production",
+    "status": 0,
+    "duration_ms": 10011,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/employment-services",
+    "source": "industry",
+    "origin": "employment_services",
+    "status": 0,
+    "duration_ms": 10014,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/office-support",
+    "source": "industry",
+    "origin": "office_support",
+    "status": 0,
+    "duration_ms": 10009,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/travel-agencies",
+    "source": "industry",
+    "origin": "travel_agencies",
+    "status": 0,
+    "duration_ms": 10002,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/security-services",
+    "source": "industry",
+    "origin": "security_services",
+    "status": 0,
+    "duration_ms": 10001,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/cleaning-services",
+    "source": "industry",
+    "origin": "cleaning_services",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/residential-cleaning",
+    "source": "industry",
+    "origin": "residential_cleaning",
+    "status": 0,
+    "duration_ms": 10006,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/landscaping-lawn",
+    "source": "industry",
+    "origin": "landscaping_lawn",
+    "status": 0,
+    "duration_ms": 10003,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/pool-service",
+    "source": "industry",
+    "origin": "pool_service",
+    "status": 0,
+    "duration_ms": 10012,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/pest-control-local",
+    "source": "industry",
+    "origin": "pest_control_local",
+    "status": 0,
+    "duration_ms": 10016,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/window-washing",
+    "source": "industry",
+    "origin": "window_washing",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/primary-secondary-schools",
+    "source": "industry",
+    "origin": "primary_secondary_schools",
+    "status": 0,
+    "duration_ms": 10011,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/private-k12",
+    "source": "industry",
+    "origin": "private_k12",
+    "status": 0,
+    "duration_ms": 10010,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/vocational-training",
+    "source": "industry",
+    "origin": "vocational_training",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/tutoring-centers",
+    "source": "industry",
+    "origin": "tutoring_centers",
+    "status": 0,
+    "duration_ms": 10014,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/test-prep",
+    "source": "industry",
+    "origin": "test_prep",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/language-schools",
+    "source": "industry",
+    "origin": "language_schools",
+    "status": 0,
+    "duration_ms": 10029,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/music-schools",
+    "source": "industry",
+    "origin": "music_schools",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/dance-studios",
+    "source": "industry",
+    "origin": "dance_studios",
+    "status": 0,
+    "duration_ms": 10011,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/driving-schools",
+    "source": "industry",
+    "origin": "driving_schools",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/martial-arts",
+    "source": "industry",
+    "origin": "martial_arts",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/coding-schools",
+    "source": "industry",
+    "origin": "coding_schools",
+    "status": 0,
+    "duration_ms": 10012,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/art-classes",
+    "source": "industry",
+    "origin": "art_classes",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/doctors-clinics",
+    "source": "industry",
+    "origin": "doctors_clinics",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/chiropractic",
+    "source": "industry",
+    "origin": "chiropractic",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/physical-therapy",
+    "source": "industry",
+    "origin": "physical_therapy",
+    "status": 0,
+    "duration_ms": 10026,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/optometry",
+    "source": "industry",
+    "origin": "optometry",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/mental-health-practice",
+    "source": "industry",
+    "origin": "mental_health_practice",
+    "status": 0,
+    "duration_ms": 10014,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/nutritionist",
+    "source": "industry",
+    "origin": "nutritionist",
+    "status": 0,
+    "duration_ms": 10001,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/dental-practices",
+    "source": "industry",
+    "origin": "dental_practices",
+    "status": 0,
+    "duration_ms": 10006,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/nursing-elderly",
+    "source": "industry",
+    "origin": "nursing_elderly",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/childcare-social",
+    "source": "industry",
+    "origin": "childcare_social",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/daycare-preschool",
+    "source": "industry",
+    "origin": "daycare_preschool",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/veterinary-pet-care",
+    "source": "industry",
+    "origin": "veterinary_pet_care",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/performing-arts",
+    "source": "industry",
+    "origin": "performing_arts",
+    "status": 0,
+    "duration_ms": 10014,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/sports-fitness",
+    "source": "industry",
+    "origin": "sports_fitness",
+    "status": 0,
+    "duration_ms": 10012,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/yoga-pilates",
+    "source": "industry",
+    "origin": "yoga_pilates",
+    "status": 0,
+    "duration_ms": 10009,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/personal-training",
+    "source": "industry",
+    "origin": "personal_training",
+    "status": 0,
+    "duration_ms": 10009,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/museums-cultural",
+    "source": "industry",
+    "origin": "museums_cultural",
+    "status": 0,
+    "duration_ms": 10011,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/hairdressers-beauty",
+    "source": "industry",
+    "origin": "hairdressers_beauty",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/hair-salons-full",
+    "source": "industry",
+    "origin": "hair_salons_full",
+    "status": 0,
+    "duration_ms": 10002,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/barbershops",
+    "source": "industry",
+    "origin": "barbershops",
+    "status": 0,
+    "duration_ms": 10018,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/nail-salons",
+    "source": "industry",
+    "origin": "nail_salons",
+    "status": 0,
+    "duration_ms": 10001,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/day-spas",
+    "source": "industry",
+    "origin": "day_spas",
+    "status": 0,
+    "duration_ms": 10016,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/massage-therapy",
+    "source": "industry",
+    "origin": "massage_therapy",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/tanning-salons",
+    "source": "industry",
+    "origin": "tanning_salons",
+    "status": 0,
+    "duration_ms": 10014,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/brow-lash-studios",
+    "source": "industry",
+    "origin": "brow_lash_studios",
+    "status": 0,
+    "duration_ms": 10003,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/med-spas",
+    "source": "industry",
+    "origin": "med_spas",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/tattoo-piercing",
+    "source": "industry",
+    "origin": "tattoo_piercing",
+    "status": 0,
+    "duration_ms": 10012,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/auto-repair-shops",
+    "source": "industry",
+    "origin": "auto_repair_shops",
+    "status": 0,
+    "duration_ms": 10012,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/auto-body-shops",
+    "source": "industry",
+    "origin": "auto_body_shops",
+    "status": 0,
+    "duration_ms": 10007,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/bike-repair",
+    "source": "industry",
+    "origin": "bike_repair",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/electronics-repair",
+    "source": "industry",
+    "origin": "electronics_repair",
+    "status": 0,
+    "duration_ms": 10002,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/locksmiths",
+    "source": "industry",
+    "origin": "locksmiths",
+    "status": 0,
+    "duration_ms": 10017,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/appliance-repair",
+    "source": "industry",
+    "origin": "appliance_repair",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/dry-cleaning-laundry",
+    "source": "industry",
+    "origin": "dry_cleaning_laundry",
+    "status": 0,
+    "duration_ms": 10009,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/tailoring-alterations",
+    "source": "industry",
+    "origin": "tailoring_alterations",
+    "status": 0,
+    "duration_ms": 10011,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/shoe-repair",
+    "source": "industry",
+    "origin": "shoe_repair",
+    "status": 0,
+    "duration_ms": 10014,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/watch-jewelry-repair",
+    "source": "industry",
+    "origin": "watch_jewelry_repair",
+    "status": 0,
+    "duration_ms": 10011,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/funeral-services",
+    "source": "industry",
+    "origin": "funeral_services",
+    "status": 0,
+    "duration_ms": 10003,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/pet-daycare",
+    "source": "industry",
+    "origin": "pet_daycare",
+    "status": 0,
+    "duration_ms": 10010,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/pet-walking-sitting",
+    "source": "industry",
+    "origin": "pet_walking_sitting",
+    "status": 0,
+    "duration_ms": 10014,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/pet-training",
+    "source": "industry",
+    "origin": "pet_training",
+    "status": 0,
+    "duration_ms": 10014,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/art-galleries-small",
+    "source": "industry",
+    "origin": "art_galleries_small",
+    "status": 0,
+    "duration_ms": 10012,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/small-museums",
+    "source": "industry",
+    "origin": "small_museums",
+    "status": 0,
+    "duration_ms": 10002,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/private-libraries-archives",
+    "source": "industry",
+    "origin": "private_libraries_archives",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/guest-houses",
+    "source": "industry",
+    "origin": "guest_houses",
+    "status": 0,
+    "duration_ms": 10004,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/campgrounds-rv-parks",
+    "source": "industry",
+    "origin": "campgrounds_rv_parks",
+    "status": 0,
+    "duration_ms": 10014,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/industries/specialty-construction",
+    "source": "industry",
+    "origin": "specialty_construction",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/us",
+    "source": "country",
+    "origin": "US",
+    "status": 0,
+    "duration_ms": 10011,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/de",
+    "source": "country",
+    "origin": "DE",
+    "status": 0,
+    "duration_ms": 10002,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/fr",
+    "source": "country",
+    "origin": "FR",
+    "status": 0,
+    "duration_ms": 10018,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/it",
+    "source": "country",
+    "origin": "IT",
+    "status": 0,
+    "duration_ms": 10002,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/es",
+    "source": "country",
+    "origin": "ES",
+    "status": 0,
+    "duration_ms": 10006,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/gb",
+    "source": "country",
+    "origin": "GB",
+    "status": 0,
+    "duration_ms": 10010,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/jp",
+    "source": "country",
+    "origin": "JP",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/br",
+    "source": "country",
+    "origin": "BR",
+    "status": 0,
+    "duration_ms": 10017,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/mx",
+    "source": "country",
+    "origin": "MX",
+    "status": 0,
+    "duration_ms": 10004,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/ca",
+    "source": "country",
+    "origin": "CA",
+    "status": 0,
+    "duration_ms": 10007,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/au",
+    "source": "country",
+    "origin": "AU",
+    "status": 0,
+    "duration_ms": 10020,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/nl",
+    "source": "country",
+    "origin": "NL",
+    "status": 0,
+    "duration_ms": 10005,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/pl",
+    "source": "country",
+    "origin": "PL",
+    "status": 0,
+    "duration_ms": 10006,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/pt",
+    "source": "country",
+    "origin": "PT",
+    "status": 0,
+    "duration_ms": 10026,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/be",
+    "source": "country",
+    "origin": "BE",
+    "status": 0,
+    "duration_ms": 10007,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/at",
+    "source": "country",
+    "origin": "AT",
+    "status": 0,
+    "duration_ms": 10003,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/ch",
+    "source": "country",
+    "origin": "CH",
+    "status": 0,
+    "duration_ms": 10011,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/se",
+    "source": "country",
+    "origin": "SE",
+    "status": 0,
+    "duration_ms": 10007,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/no",
+    "source": "country",
+    "origin": "NO",
+    "status": 0,
+    "duration_ms": 10012,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/dk",
+    "source": "country",
+    "origin": "DK",
+    "status": 0,
+    "duration_ms": 10010,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/fi",
+    "source": "country",
+    "origin": "FI",
+    "status": 0,
+    "duration_ms": 10010,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/ie",
+    "source": "country",
+    "origin": "IE",
+    "status": 0,
+    "duration_ms": 10014,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/gr",
+    "source": "country",
+    "origin": "GR",
+    "status": 0,
+    "duration_ms": 10008,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/cz",
+    "source": "country",
+    "origin": "CZ",
+    "status": 0,
+    "duration_ms": 10019,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/hu",
+    "source": "country",
+    "origin": "HU",
+    "status": 0,
+    "duration_ms": 10004,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/ro",
+    "source": "country",
+    "origin": "RO",
+    "status": 0,
+    "duration_ms": 10008,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/in",
+    "source": "country",
+    "origin": "IN",
+    "status": 0,
+    "duration_ms": 10006,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/cn",
+    "source": "country",
+    "origin": "CN",
+    "status": 0,
+    "duration_ms": 10022,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/ru",
+    "source": "country",
+    "origin": "RU",
+    "status": 0,
+    "duration_ms": 10004,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/us/california/restaurants",
+    "source": "cell",
+    "origin": "us|california|restaurants",
+    "status": 0,
+    "duration_ms": 10007,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/us/new-york/legal-services",
+    "source": "cell",
+    "origin": "us|new-york|legal-services",
+    "status": 0,
+    "duration_ms": 10013,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/us/us-06-037/restaurants",
+    "source": "cell",
+    "origin": "us|us-06-037|restaurants",
+    "status": 0,
+    "duration_ms": 10017,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/us/us-06-037/sports-fitness",
+    "source": "cell",
+    "origin": "us|us-06-037|sports-fitness",
+    "status": 0,
+    "duration_ms": 10016,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/gb/gb/legal-services",
+    "source": "cell",
+    "origin": "gb|gb|legal-services",
+    "status": 0,
+    "duration_ms": 10014,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/de/de21/fabricated-metal-mfg",
+    "source": "cell",
+    "origin": "de|de21|fabricated-metal-mfg",
+    "status": 0,
+    "duration_ms": 10001,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/de/de212/restaurants",
+    "source": "cell",
+    "origin": "de|de212|restaurants",
+    "status": 0,
+    "duration_ms": 10009,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/fr/fr101/jewelry-stores",
+    "source": "cell",
+    "origin": "fr|fr101|jewelry-stores",
+    "status": 0,
+    "duration_ms": 10007,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/fr/fr101/restaurants",
+    "source": "cell",
+    "origin": "fr|fr101|restaurants",
+    "status": 0,
+    "duration_ms": 10005,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/it/itc4c/clothing-stores",
+    "source": "cell",
+    "origin": "it|itc4c|clothing-stores",
+    "status": 0,
+    "duration_ms": 10006,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/it/itc4c/restaurants",
+    "source": "cell",
+    "origin": "it|itc4c|restaurants",
+    "status": 0,
+    "duration_ms": 10009,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/es/es511/restaurants",
+    "source": "cell",
+    "origin": "es|es511|restaurants",
+    "status": 0,
+    "duration_ms": 10011,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/jp/jp-13000/restaurants",
+    "source": "cell",
+    "origin": "jp|jp-13000|restaurants",
+    "status": 0,
+    "duration_ms": 10006,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/jp/japan/restaurants",
+    "source": "cell",
+    "origin": "jp|japan|restaurants",
+    "status": 0,
+    "duration_ms": 10006,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/br/br-sp/restaurants",
+    "source": "cell",
+    "origin": "br|br-sp|restaurants",
+    "status": 0,
+    "duration_ms": 10005,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/br/br-city-sao-paulo/restaurants",
+    "source": "cell",
+    "origin": "br|br-city-sao-paulo|restaurants",
+    "status": 0,
+    "duration_ms": 10026,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/mx/mexico/wholesale-food-beverages",
+    "source": "cell",
+    "origin": "mx|mexico|wholesale-food-beverages",
+    "status": 0,
+    "duration_ms": 10005,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/mx/mx-roo/hotels-lodging",
+    "source": "cell",
+    "origin": "mx|mx-roo|hotels-lodging",
+    "status": 0,
+    "duration_ms": 10012,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/ca/ca-on/restaurants",
+    "source": "cell",
+    "origin": "ca|ca-on|restaurants",
+    "status": 0,
+    "duration_ms": 10009,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/au/au-nsw/restaurants",
+    "source": "cell",
+    "origin": "au|au-nsw|restaurants",
+    "status": 0,
+    "duration_ms": 10004,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/in/india/software-development",
+    "source": "cell",
+    "origin": "in|india|software-development",
+    "status": 0,
+    "duration_ms": 10018,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/api/cell-lookup?country=us&industry=restaurants&region=california",
+    "source": "api",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/api/cell-snapshot?country=us&geo=california&industry=restaurants",
+    "source": "api",
+    "status": 0,
+    "duration_ms": 10000,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/api/popular-cell-snapshot",
+    "source": "api",
+    "status": 200,
+    "duration_ms": 424,
+    "content_length": 246,
+    "has_h1": false,
+    "classification": "ok"
+  },
+  {
+    "path": "/api/export-csv?country=us&region=california&industry=restaurants",
+    "source": "api",
+    "status": 0,
+    "duration_ms": 10015,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/sectors/manufacturing",
+    "source": "literal",
+    "origin": ".\\src\\app\\layout.tsx",
+    "status": 0,
+    "duration_ms": 10000,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/#ask-atlas",
+    "source": "literal",
+    "origin": ".\\src\\app\\layout.tsx",
+    "status": 0,
+    "duration_ms": 10004,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/#newsletter",
+    "source": "literal",
+    "origin": ".\\src\\app\\layout.tsx",
+    "status": 0,
+    "duration_ms": 10003,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  },
+  {
+    "path": "/about-data#tax",
+    "source": "literal",
+    "origin": ".\\src\\app\\layout.tsx",
+    "status": 200,
+    "duration_ms": 259,
+    "content_length": 33327,
+    "has_h1": true,
+    "classification": "ok"
+  },
+  {
+    "path": "/about-data#glossary",
+    "source": "literal",
+    "origin": ".\\src\\app\\layout.tsx",
+    "status": 200,
+    "duration_ms": 538,
+    "content_length": 33327,
+    "has_h1": true,
+    "classification": "ok"
+  },
+  {
+    "path": "/about-data#quality",
+    "source": "literal",
+    "origin": ".\\src\\app\\layout.tsx",
+    "status": 200,
+    "duration_ms": 235,
+    "content_length": 33327,
+    "has_h1": true,
+    "classification": "ok"
+  },
+  {
+    "path": "/about-data#sources",
+    "source": "literal",
+    "origin": ".\\src\\app\\layout.tsx",
+    "status": 200,
+    "duration_ms": 233,
+    "content_length": 33327,
+    "has_h1": true,
+    "classification": "ok"
+  },
+  {
+    "path": "/about-data#contact",
+    "source": "literal",
+    "origin": ".\\src\\app\\layout.tsx",
+    "status": 200,
+    "duration_ms": 230,
+    "content_length": 33327,
+    "has_h1": true,
+    "classification": "ok"
+  },
+  {
+    "path": "/api",
+    "source": "literal",
+    "origin": ".\\src\\app\\layout.tsx",
+    "status": 200,
+    "duration_ms": 344,
+    "content_length": 28831,
+    "has_h1": false,
+    "classification": "empty"
+  },
+  {
+    "path": "/es/madrid/cafes-coffee",
+    "source": "literal",
+    "origin": ".\\src\\components\\TaxOverlayTeaser.tsx",
+    "status": 0,
+    "duration_ms": 10014,
+    "content_length": 0,
+    "has_h1": false,
+    "classification": "timeout"
+  }
+]
