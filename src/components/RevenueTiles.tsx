@@ -52,7 +52,7 @@ export function RevenueTiles({
         <Tile
           eyebrow="Typical"
           icon="ⓘ"
-          iconTitle="Median — the middle value. Half the businesses earn less, half earn more."
+          iconTitle="Median. The middle value: half the businesses earn less, half earn more."
           value={p50}
           currencySymbol={currencySymbol}
           tone="accent"

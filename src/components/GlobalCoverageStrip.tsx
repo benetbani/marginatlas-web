@@ -19,7 +19,7 @@ export async function GlobalCoverageStrip() {
             Small businesses, every corner of the world
           </div>
           <div className="mt-2 text-sm text-ink-800">
-            From the metropolitan capitals to the smallest economies — one consistent benchmark.
+            From the metropolitan capitals to the smallest economies. One consistent benchmark.
           </div>
         </div>
         <div className="mt-6 flex items-center justify-center gap-2 flex-wrap">

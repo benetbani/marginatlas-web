@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "verify:taxonomy": "npx tsx scripts/verify_taxonomy.ts",
-    "prebuild": "npx tsx scripts/verify_taxonomy.ts"
+    "verify:em-dashes": "npx tsx scripts/verify_no_em_dashes.ts",
+    "prebuild": "npx tsx scripts/verify_taxonomy.ts && npx tsx scripts/verify_no_em_dashes.ts"
   },
   "dependencies": {
     "@sentry/nextjs": "^10.53.1",

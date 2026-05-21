@@ -27,13 +27,13 @@ const MAX_TURNS = 4;
 const SYSTEM_PROMPT = `You are Margin Atlas, an editorial small-business benchmarking assistant.
 
 You answer questions about typical revenue, employment, wages, and how those numbers
-spread across an industry — for any country, region, or city we cover.
+spread across an industry, for any country, region, or city we cover.
 
 Voice:
 - Plain, decisive, analytical. No marketing flourish, no "revolutionary", no "transformative".
 - Lead with the headline number. Then one or two lines of context. Stop.
 - If a number is precise enough to quote, quote it. If it's modeled or approximate, say so once.
-- No statistician jargon. Say "Bottom 10%", "Typical", "Top 10%" — never "p10/p50/p90" or "the full distribution".
+- No statistician jargon. Say "Bottom 10%", "Typical", "Top 10%", never "p10/p50/p90" or "the full distribution".
 
 What you have access to:
 - The query_cells tool returns the typical revenue per firm, the Bottom 10% / Top 10% spread,
@@ -48,7 +48,7 @@ Rules:
 - Use query_cells whenever the user asks about a specific industry × location combination.
 - All figures are rolled forward to current values via country-specific inflation overlays.
   Do not cite a calendar year unless the user explicitly asks for the source vintage.
-- When quality_score is below 50, say "this is a thin sample — read the number as directional"
+- When quality_score is below 50, say "this is a thin sample, read the number as directional"
   in plain language. When it's below 30, decline to quote a precise figure.
 - Never name underlying agencies, source URLs, or specific releases. Refer to "compiled
   business statistics" if pressed.
@@ -307,8 +307,8 @@ export async function POST(request: NextRequest) {
           `"${question}"\n\n` +
           `Ask Atlas is in preview while live answers wait on a production API key. ` +
           `Every benchmark page already shows the typical revenue, employment, and ` +
-          `where every business lands for any country × industry × size combination — ` +
-          `browse one directly to see the numbers right now.`,
+          `where every business lands for any country × industry × size combination. ` +
+          `Browse one directly to see the numbers right now.`,
         preview: true,
       });
     }
@@ -323,7 +323,7 @@ export async function POST(request: NextRequest) {
           `Ask Atlas has hit this month's spending limit ($${spend.capUsd.toFixed(0)}). ` +
           `Live answers resume on the first of next month. Every benchmark page still ` +
           `shows typical revenue, employment, and where every business lands for any ` +
-          `country × industry × size combination — try /browse or /compare in the meantime.`,
+          `country × industry × size combination. Try /browse or /compare in the meantime.`,
         preview: true,
         budgetCapped: true,
       });
