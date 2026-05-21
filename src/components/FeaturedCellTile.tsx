@@ -1,18 +1,22 @@
 /**
- * FeaturedCellTile — server-rendered tile for the home-page 12-tile
- * featured anchors grid (Plan v4.0 Step 16).
+ * FeaturedCellTile — home-page tile for the curated 3×3 featured grid.
  *
- * Plan v4.0 change: NO "Coming soon" tiles. If the underlying cell is
- * not found, this component returns null and the tile is dropped from
- * the grid entirely. Callers should expect this and not allocate visual
- * space for missing tiles.
+ * Plan v16 Block H change: tile ALWAYS renders the same shape. When the
+ * underlying benchmark is unavailable, we render the tile chrome without
+ * a number rather than dropping it. This preserves the grid's symmetric
+ * 3×3 layout regardless of data state. The click still navigates to the
+ * cell page (which has its own fallback handling).
+ *
+ * Compared with the prior null-return behavior (Plan v4.0 Step 16.7):
+ * symmetry trumps perfect data density. The founder flagged 4-then-2
+ * asymmetry as a major UX defect.
  */
 
 import { getCellBySlug } from "@/lib/cells";
 import { CountryFlag } from "@/components/CountryFlag";
 
 function fmtMoney(v: number | null | undefined): string {
-  if (v == null || isNaN(v)) return "-";
+  if (v == null || isNaN(v)) return "";
   if (v >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
   if (v >= 1e6) return `$${(v / 1e6).toFixed(1)}M`;
   if (v >= 1e3) return `$${(v / 1e3).toFixed(0)}K`;
@@ -30,9 +34,7 @@ export type FeaturedTileSpec = {
 
 export async function FeaturedCellTile({ spec }: { spec: FeaturedTileSpec }) {
   const cell = await getCellBySlug(spec.iso2.toLowerCase(), spec.geo, spec.industry);
-  // Plan v4.0 Step 16.7: if data is missing, drop the tile entirely.
-  if (!cell || cell.revenue_per_firm == null) return null;
-
+  const revenue = cell?.revenue_per_firm ?? null;
   const href = `/${spec.iso2.toLowerCase()}/${spec.geo}/${spec.industry}`;
 
   return (
@@ -54,8 +56,12 @@ export async function FeaturedCellTile({ spec }: { spec: FeaturedTileSpec }) {
           <div className="text-[10px] uppercase tracking-wider text-cocoa-700/60 font-medium">
             Typical revenue
           </div>
-          <div className="text-2xl font-semibold text-ink-900 tabular-nums">
-            {fmtMoney(cell.revenue_per_firm)}
+          <div className="text-2xl font-semibold text-ink-900 tabular-nums min-h-[2rem]">
+            {fmtMoney(revenue) || (
+              <span className="text-base font-medium text-cocoa-700/60">
+                Click for details
+              </span>
+            )}
           </div>
         </div>
       </div>
