@@ -14,13 +14,14 @@
 
 import { getCellBySlug, type Cell } from "@/lib/cells";
 import { CountryFlag } from "@/components/CountryFlag";
+import { getFeaturedSnapshot, findSnapshotCell } from "@/lib/snapshots";
 
 /**
- * Plan v17 fix — race the Supabase fetch against a 2s timeout so the
- * featured grid can stream within the page-level budget. When the cell
- * lookup is slow (cold cache, Supabase cold start), we render the tile
- * shape without a number rather than suspending the streaming boundary
- * forever and ending up with empty `<template>` placeholders in the DOM.
+ * Plan v18 Phase 0 — read the cell from the pre-baked snapshot JSON
+ * first. Snapshot lookups are synchronous (no Supabase round-trip),
+ * so the 9-tile grid renders in essentially zero time. If the snapshot
+ * doesn't have the entry (dev environment without baked data), fall back
+ * to the Plan v17 2-second timeout race against Supabase.
  */
 async function fetchCellWithTimeout(
   country: string,
@@ -59,8 +60,17 @@ export type FeaturedTileSpec = {
 };
 
 export async function FeaturedCellTile({ spec }: { spec: FeaturedTileSpec }) {
-  const cell = await fetchCellWithTimeout(spec.iso2.toLowerCase(), spec.geo, spec.industry);
-  const revenue = cell?.revenue_per_firm ?? null;
+  // Plan v18 Phase 0 — try snapshot first (sync, no Supabase). On miss,
+  // fall back to the timeout-protected Supabase fetch.
+  const snap = getFeaturedSnapshot();
+  const baked = findSnapshotCell(snap, spec.iso2, spec.geo, spec.industry);
+  let revenue: number | null;
+  if (baked) {
+    revenue = baked.revenue_per_firm;
+  } else {
+    const cell = await fetchCellWithTimeout(spec.iso2.toLowerCase(), spec.geo, spec.industry);
+    revenue = cell?.revenue_per_firm ?? null;
+  }
   const href = `/${spec.iso2.toLowerCase()}/${spec.geo}/${spec.industry}`;
 
   return (

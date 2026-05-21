@@ -10,6 +10,7 @@
 
 import { NextResponse } from "next/server";
 import { getCellBySlug } from "@/lib/cells";
+import { getPopularRotationSnapshot, findSnapshotCell } from "@/lib/snapshots";
 
 export const revalidate = 3600;
 
@@ -34,10 +35,25 @@ const ROTATION: { country: string; geo: string; industry: string }[] = [
 
 export async function GET() {
   const hourBucket = Math.floor(Date.now() / (1000 * 60 * 60));
-  // Try the bucket's pick; if it has no data, walk the rotation until something resolves.
+  const snap = getPopularRotationSnapshot();
+  // Plan v18 Phase 0 — read from baked snapshot first; only walk to
+  // Supabase if the snapshot is empty or this pick is missing.
   for (let i = 0; i < ROTATION.length; i++) {
     const pick = ROTATION[(hourBucket + i) % ROTATION.length];
-    const cell = await getCellBySlug(pick.country, pick.geo, pick.industry);
+    const industrySnapshotKey = pick.industry.replace(/-/g, "_");
+    const baked = findSnapshotCell(snap, pick.country, pick.geo, industrySnapshotKey);
+    const cell = baked && baked.revenue_per_firm != null
+      ? {
+          revenue_per_firm: baked.revenue_per_firm,
+          n_enterprises: baked.n_enterprises,
+          n_employees: baked.n_employees,
+          payroll_per_employee: baked.payroll_per_employee,
+          year: baked.year,
+          industry_name: baked.industry_name,
+          geo_name: baked.geo_name,
+          country: baked.iso2,
+        }
+      : await getCellBySlug(pick.country, pick.geo, pick.industry);
     if (cell && cell.revenue_per_firm != null) {
       return NextResponse.json(
         {

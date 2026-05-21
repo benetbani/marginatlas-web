@@ -8,6 +8,7 @@
 
 import { getCellBySlug, type Cell } from "@/lib/cells";
 import { CountryFlag } from "@/components/CountryFlag";
+import { getCellOfTheWeekSnapshot, findSnapshotCell } from "@/lib/snapshots";
 
 /**
  * Plan v17 fix — same timeout pattern as FeaturedCellTile. Bound the
@@ -117,12 +118,32 @@ function weekNumber(d: Date): number {
 
 export async function CellOfTheWeek() {
   const week = weekNumber(new Date());
-  // Plan v17 fix — bound total time to ~3s. Try only the first 2 picks
-  // for this week. If neither resolves quickly, skip the section entirely.
+  const snap = getCellOfTheWeekSnapshot();
+  // Plan v18 Phase 0 — read from baked snapshot first (sync); fall back
+  // to the Plan v17 2-try timeout race only if the snapshot is missing
+  // or this week's pick isn't in it.
   const MAX_TRIES = 2;
   for (let i = 0; i < MAX_TRIES; i++) {
     const pick = ROTATION[(week + i) % ROTATION.length];
-    const cell = await fetchCellWithTimeout(pick.country, pick.geo, pick.industry);
+    const industrySnapshotKey = pick.industry.replace(/-/g, "_");
+    const baked = findSnapshotCell(snap, pick.country, pick.geo, industrySnapshotKey);
+    let cell: { revenue_per_firm: number | null; industry_name: string | null; geo_name: string | null } | null;
+    if (baked) {
+      cell = {
+        revenue_per_firm: baked.revenue_per_firm,
+        industry_name: baked.industry_name,
+        geo_name: baked.geo_name,
+      };
+    } else {
+      const live = await fetchCellWithTimeout(pick.country, pick.geo, pick.industry);
+      cell = live
+        ? {
+            revenue_per_firm: live.revenue_per_firm ?? null,
+            industry_name: live.industry_name ?? null,
+            geo_name: live.geo_name ?? null,
+          }
+        : null;
+    }
     if (cell && cell.revenue_per_firm != null) {
       const href = `/${pick.country}/${pick.geo}/${pick.industry}`;
       return (
