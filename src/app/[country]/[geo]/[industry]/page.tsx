@@ -80,10 +80,14 @@ export const dynamicParams = true;
 
 type Params = { country: string; geo: string; industry: string };
 
-/** Pre-render the top 100 highest-traffic US cells at build time. */
+/**
+ * Plan v22 Block D1 — pre-render the top 200 highest-traffic cells at
+ * build time. Doubled from 100. First visitors to these URLs pay no
+ * Supabase cost; subsequent visitors get edge-cached responses.
+ */
 export async function generateStaticParams(): Promise<Params[]> {
   try {
-    const top = await getTopCells(100);
+    const top = await getTopCells(200);
     const seen = new Set<string>();
     const params: Params[] = [];
     for (const c of top) {
