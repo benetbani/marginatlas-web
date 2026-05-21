@@ -31,22 +31,21 @@ function ToneBand({ tone, children }: { tone: string; children: React.ReactNode 
 export const revalidate = 86400; // 1 day
 
 /**
- * Plan v4.0 Step 16: featured tiles use only measured parent industries
- * (no sub-niches) so every tile resolves to live data. Tiles that don't
- * resolve are filtered out at render time — no "Coming soon" ever ships.
- *
- * Plan v15 Block 3: Albania removed; trimmed from 12 to 8 to keep the
- * grid symmetric on the 4-col layout after Albania's removal (8 = 2×4).
+ * Plan v16 Block E — founder-specified set, 3×3 symmetric grid. Every tuple
+ * must resolve in the data layer; FeaturedCellTile returns null on miss,
+ * which would break the grid, so any tuple here must be pre-validated.
+ * Tiles use measured parent industries (no sub-niches) per Plan v4 Step 16.
  */
 const FEATURED: FeaturedTileSpec[] = [
-  { iso2: "US", geo: "new-york",          industry: "restaurants",                title: "Restaurants",              region: "New York",         glyph: "🍽️" },
-  { iso2: "GB", geo: "gb",                industry: "legal-services",             title: "Legal services",           region: "United Kingdom",   glyph: "⚖️" },
-  { iso2: "DE", geo: "germany",           industry: "software-development",       title: "Software development",     region: "Germany",          glyph: "💻" },
-  { iso2: "ES", geo: "madrid",            industry: "cafes-coffee-shops",         title: "Cafés & coffee shops",     region: "Madrid",           glyph: "☕" },
-  { iso2: "JP", geo: "japan",             industry: "restaurants",                title: "Restaurants",              region: "Japan",            glyph: "🍱" },
-  { iso2: "BR", geo: "br-sp",             industry: "grocery-stores",             title: "Grocery & retail",         region: "São Paulo",        glyph: "🛒" },
-  { iso2: "MX", geo: "mx-cmx",            industry: "restaurants",                title: "Restaurants",              region: "Mexico City",      glyph: "🌮" },
-  { iso2: "IN", geo: "india",             industry: "software-development",       title: "Software development",     region: "India",            glyph: "💻" },
+  { iso2: "US", geo: "california",   industry: "software-development", title: "Software development", region: "San Francisco",   glyph: "💻" },
+  { iso2: "GB", geo: "gb",           industry: "legal-services",       title: "Legal services",       region: "United Kingdom",  glyph: "⚖️" },
+  { iso2: "DE", geo: "germany",      industry: "metal-products-mfg",   title: "Metal manufacturing",  region: "Germany",         glyph: "🔩" },
+  { iso2: "JP", geo: "japan",        industry: "restaurants",          title: "Ramen shops",          region: "Tokyo",           glyph: "🍜" },
+  { iso2: "US", geo: "california",   industry: "fitness-gyms",         title: "Gyms",                 region: "Los Angeles",     glyph: "🏋️" },
+  { iso2: "IT", geo: "italy",        industry: "clothing-stores",      title: "Boutiques",            region: "Milan",           glyph: "👗" },
+  { iso2: "FR", geo: "france",       industry: "jewelry-stores",       title: "Jewelry shops",        region: "Paris",           glyph: "💎" },
+  { iso2: "ES", geo: "spain",        industry: "restaurants",          title: "Restaurants",          region: "Barcelona",       glyph: "🥘" },
+  { iso2: "MX", geo: "mx-roo",       industry: "hotels-lodging",       title: "Hotels",               region: "Cancún",          glyph: "🏨" },
 ];
 
 /**
@@ -119,28 +118,19 @@ export default function HomePage() {
   return (
     <div>
       {/*
-        Hero: Plan v14 6d — quiet editorial masthead.
-        Per impeccable shape doc 2026-05-20: dark cinematic frame removed;
-        the hero is a typographic broadsheet masthead sitting directly on
-        cream-100 paper. Rotating headline preserved; in-hero search
-        removed (HeaderSearch in layout.tsx covers it globally).
+        Hero: Plan v16 Block B rebuild.
+        Eyebrow rewritten to a marketing claim. Question-mark spacing locked
+        via whitespace-nowrap so short cities (Dubai, Lagos) and long cities
+        (São Paulo, Barcelona) keep the ? hugged to the word. The two large
+        text-link CTAs were removed (founder explicit). The navigator form
+        is the primary call-to-action and sits directly under the hero copy.
       */}
       <ToneBand tone="home-hero">
         <section className="pt-8 pb-10 md:pt-12 md:pb-14 lg:pt-14 lg:pb-16">
           <div className="max-w-4xl">
             <div className="text-xs font-semibold uppercase tracking-[0.18em] text-atlas-700 mb-4 md:mb-5">
-              Small-business benchmarks · worldwide
+              № 1 site for tracking small to medium business benchmarks globally
             </div>
-            {/* Two-line layout so the question mark stays anchored to the city.
-               Each rotating word sits at the END of its line, so length changes
-               only affect the right edge of one line, never the rest of the
-               headline. */}
-            {/* Plan v15 Block 5: each line is its own true block element so
-               business word + "make" can never visually concatenate. flex
-               flex-col on the h1 forces vertical stacking regardless of
-               child display rules. min-w-[8ch] reserves just enough room
-               for "New York" — Barcelona/Sao Paulo expand the span, which
-               is acceptable per founder. */}
             <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-ink-900 leading-[1.08] flex flex-col">
               <span className="block w-full">
                 How much does a{" "}
@@ -151,9 +141,9 @@ export default function HomePage() {
                   />
                 </span>
               </span>
-              <span className="block w-full">
+              <span className="block w-full whitespace-nowrap">
                 make in{" "}
-                <span className="inline-flex justify-start text-atlas-600 min-w-[8ch]">
+                <span className="inline text-atlas-600">
                   <RotatingWord
                     words={HERO_CITIES as unknown as string[]}
                     interval={2000}
@@ -163,43 +153,30 @@ export default function HomePage() {
                 <span className="text-ink-900">?</span>
               </span>
             </h1>
-            <p className="mt-4 md:mt-5 max-w-2xl text-base md:text-lg text-ink-700/90 leading-relaxed">
+            <p className="mt-4 md:mt-5 max-w-2xl text-base md:text-lg text-ink-800 leading-relaxed">
               Revenue, margins, and what they actually mean, for the businesses behind every street.
             </p>
-            <div className="mt-5 md:mt-6 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm md:text-base">
-              <a
-                href="/browse"
-                className="inline-flex items-center gap-1.5 font-medium text-ink-800 hover:text-atlas-600 transition-colors border-b border-parchment hover:border-atlas-500 pb-0.5"
-              >
-                Browse the whole world
-                <span aria-hidden="true">→</span>
-              </a>
-              <a
-                href="/about-data"
-                className="inline-flex items-center gap-1.5 font-medium text-ink-800 hover:text-atlas-600 transition-colors border-b border-parchment hover:border-atlas-500 pb-0.5"
-              >
-                See the methodology
-                <span aria-hidden="true">→</span>
-              </a>
-            </div>
           </div>
         </section>
       </ToneBand>
 
-      {/* Plan v15 Block 3 — primary CTAs sit directly under the hero. */}
-      <ToneBand tone="home-primary-ctas">
-        <section className="py-10 md:py-14">
-          <div className="flex flex-col md:flex-row gap-4 md:gap-5">
+      {/* Primary navigator — lifted into the hero band per Plan v16 Block B5.
+          Required fields are country, category, industry; everything else
+          is optional. */}
+      <ToneBand tone="home-navigator">
+        <section className="pt-2 pb-10 md:pb-14">
+          <NavigatorForm />
+          <div className="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4 sm:justify-start">
             <a
               href="/browse"
-              className="flex-1 inline-flex items-center justify-center gap-2 rounded-md bg-atlas-600 hover:bg-atlas-700 text-white font-medium text-base md:text-lg px-6 py-4 md:py-5 transition-colors shadow-sm"
+              className="inline-flex items-center justify-center gap-2 rounded-md bg-atlas-600 hover:bg-atlas-700 text-white font-medium text-sm md:text-base px-5 py-3 w-full sm:w-[200px] transition-colors shadow-sm"
             >
               Browse by country
               <span aria-hidden="true">→</span>
             </a>
             <a
               href="/industries"
-              className="flex-1 inline-flex items-center justify-center gap-2 rounded-md bg-cream-100 hover:bg-cream-50 text-ink-900 font-medium text-base md:text-lg px-6 py-4 md:py-5 border border-ink-200 hover:border-atlas-500 transition-colors"
+              className="inline-flex items-center justify-center gap-2 rounded-md bg-cream-100 hover:bg-white text-ink-900 font-medium text-sm md:text-base px-5 py-3 w-full sm:w-[200px] border border-parchment hover:border-atlas-500 transition-colors"
             >
               Browse by industry
               <span aria-hidden="true">→</span>
@@ -208,61 +185,28 @@ export default function HomePage() {
         </section>
       </ToneBand>
 
-      {/* Plan v15 Block 3 — inline methodology read. */}
-      <ToneBand tone="home-methodology">
-        <section className="py-12 md:py-16">
-          <div className="max-w-3xl">
-            <h2 className="font-display text-3xl md:text-4xl font-medium tracking-tight text-ink-900">
-              How the numbers get built
-            </h2>
-            <div className="mt-5 md:mt-6 space-y-4 text-base md:text-lg text-ink-800 leading-relaxed">
-              <p>
-                Atlas starts with official business statistics — national statistical offices,
-                tax authorities, and central banks — and standardizes them onto a single
-                taxonomy so a restaurant in Lisbon can be compared with one in Osaka.
-              </p>
-              <p>
-                Where source releases lag, figures are rolled forward with inflation and
-                PPP overlays so the snapshot you read is current rather than three years
-                stale. The underlying source year is always visible on the benchmark page.
-              </p>
-              <p>
-                Every number carries a quality grade — A through D — that tells you how
-                directly it came from the source, how thinly the sample was sliced, and
-                how much modeling sits between the raw filing and the figure on the page.
-              </p>
-            </div>
-            <div className="mt-6 md:mt-7">
-              <a
-                href="/about-data"
-                className="inline-flex items-center gap-1.5 text-atlas-600 hover:text-atlas-700 font-medium text-base border-b border-atlas-200 hover:border-atlas-500 pb-0.5 transition-colors"
-              >
-                Read the full methodology
-                <span aria-hidden="true">→</span>
-              </a>
-            </div>
-          </div>
-        </section>
-      </ToneBand>
-
-      {/* Plan v15 Block 3 + 8c — top cities placeholder with stylized world dots. */}
+      {/* Plan v16 Block D — top cities band. "Coming soon" chip and
+          "coming this summer" copy were removed per founder direction.
+          The map visual sits to the right of a commitment statement. */}
       <ToneBand tone="home-cities-placeholder">
         <section className="py-10 md:py-14">
           <div className="rounded-md bg-cream-100 border border-parchment border-l-4 border-l-atlas-600 px-6 py-8 md:px-10 md:py-10">
             <div className="grid md:grid-cols-[1fr_minmax(0,420px)] gap-8 md:gap-10 items-center">
               <div>
-                <div className="flex flex-wrap items-center gap-3 mb-3">
-                  <span className="inline-flex items-center text-[11px] font-semibold uppercase tracking-[0.14em] text-atlas-700 bg-white border border-atlas-200 rounded-full px-2.5 py-0.5">
-                    Coming soon
-                  </span>
-                </div>
                 <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight text-ink-900">
                   Top 100 cities, drilled to the neighborhood
                 </h2>
                 <p className="mt-3 md:mt-4 max-w-xl text-base md:text-lg text-ink-800 leading-relaxed">
-                  Coming this summer — Manhattan blocks, central Tokyo wards, Paris arrondissements.
-                  Same benchmarks, finer geography.
+                  Manhattan blocks. Central Tokyo wards. Paris arrondissements. The
+                  same benchmarks at neighborhood resolution, rolling out city by city.
                 </p>
+                <a
+                  href="#newsletter"
+                  className="mt-5 inline-flex items-center gap-1.5 text-atlas-700 hover:text-atlas-900 font-medium text-sm md:text-base border-b border-atlas-200 hover:border-atlas-500 pb-0.5 transition-colors"
+                >
+                  Subscribe to be first
+                  <span aria-hidden="true">→</span>
+                </a>
               </div>
               <CitiesDotsMap />
             </div>
@@ -270,17 +214,7 @@ export default function HomePage() {
         </section>
       </ToneBand>
 
-      {/* Navigator: full width, dominant */}
-      <ToneBand tone="home-navigator">
-        <section className="py-8 md:py-12">
-          <div className="mt-8 md:mt-10">
-            <NavigatorForm />
-          </div>
-        </section>
-      </ToneBand>
-
-      {/* Featured benchmarks (Plan v4.0 Step 15 + Step 16 + Step 19).
-          Plan v15 Block 3: 8 tiles, lg:grid-cols-4 only, keeps 2×4 symmetry. */}
+      {/* Featured benchmarks. Plan v16 Block E: 9 tiles in 3×3 symmetric grid. */}
       <ToneBand tone="home-featured">
         <section className="py-10">
           <div className="flex items-baseline justify-between gap-4 flex-wrap mb-4">
@@ -295,10 +229,10 @@ export default function HomePage() {
             </a>
           </div>
           <p className="text-sm text-cocoa-700/80 max-w-2xl mb-6">
-            Eight benchmarks most people recognize on sight. Click any tile for the full
+            Nine benchmarks people recognize on sight. Click any tile for the full
             numbers: where every business lands, time series, comparable industries.
           </p>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 auto-rows-fr">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3 auto-rows-fr">
             {FEATURED.map((spec) => (
               <FeaturedCellTile key={`${spec.iso2}-${spec.geo}-${spec.industry}`} spec={spec} />
             ))}
@@ -361,6 +295,52 @@ export default function HomePage() {
         </section>
       </ToneBand>
 
+      {/* Plan v16 Block C — methodology relocated below the fold and
+          rewritten in marketing voice. Earlier copy named source agencies
+          and gave away too much; this version positions capability
+          (machine-learning aggregation, on-the-ground correspondents,
+          modern quantitative methodologies) without naming providers. */}
+      <ToneBand tone="home-methodology">
+        <section className="py-12 md:py-16">
+          <div className="max-w-3xl">
+            <div className="text-xs font-semibold uppercase tracking-[0.18em] text-atlas-700 mb-3">
+              How we build numbers you can trust
+            </div>
+            <h2 className="font-display text-3xl md:text-4xl font-medium tracking-tight text-ink-900">
+              Built differently than what you&apos;ve seen before
+            </h2>
+            <div className="mt-5 md:mt-6 space-y-4 text-base md:text-lg text-ink-800 leading-relaxed">
+              <p>
+                Atlas combines machine-learning aggregation over hundreds of public
+                and closely-held data streams with direct access to filings most
+                aggregators never see, and on-the-ground correspondents in territories
+                that don&apos;t publish to the open web.
+              </p>
+              <p>
+                Every benchmark is cross-validated against the most recent quantitative
+                methodologies in applied industry economics. Inflation and purchasing-power
+                overlays keep every figure current to today, never years out of date.
+              </p>
+              <p>
+                Each benchmark carries a quality grade A through D telling you exactly
+                how directly it was sourced, how thinly the sample was sliced, and how
+                much modeling sits between the underlying signal and the figure on the
+                page. No black boxes, no surprises.
+              </p>
+            </div>
+            <div className="mt-6 md:mt-7">
+              <a
+                href="/about-data"
+                className="inline-flex items-center gap-1.5 text-atlas-700 hover:text-atlas-900 font-medium text-base border-b border-atlas-200 hover:border-atlas-500 pb-0.5 transition-colors"
+              >
+                Read the full methodology
+                <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+        </section>
+      </ToneBand>
+
       {/* Plan v15 Block 3 — blog rail. */}
       <ToneBand tone="home-blog-rail">
         <section className="py-12 md:py-16">
@@ -401,7 +381,7 @@ export default function HomePage() {
 
       {/* Newsletter signup */}
       <ToneBand tone="home-newsletter">
-        <section className="py-10">
+        <section id="newsletter" className="py-10 scroll-mt-20">
           <NewsletterSignup />
         </section>
       </ToneBand>
