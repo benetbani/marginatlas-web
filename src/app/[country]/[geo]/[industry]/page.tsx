@@ -51,6 +51,10 @@ import { clampMargin } from "@/lib/finance/margin_floor";
 import { generateFAQs } from "@/lib/seo/faq_generator";
 import { FAQSchema } from "@/components/FAQSchema";
 import { getCellNarrative } from "@/lib/content/narratives";
+import {
+  estimateWagePerEmployee,
+  estimateEmployeesFromFirms,
+} from "@/lib/extrapolations/fill_missing";
 
 type IndustryMarginRow = { gross_margin: number; operating_margin: number; asset_intensity?: number };
 const INDUSTRY_MARGINS = industryMarginsJson as unknown as {
@@ -466,28 +470,45 @@ export default async function CellPage({
         </section>
       ) : null}
 
-      {/* Headline grid.
-         Plan v14 A.1 (T-A1.4): legacy id="stats" renamed to canonical
-         "revenue-tiles": direct SECTION_TONES lookup, no mapping layer. */}
-      <section id="revenue-tiles" className={`grid grid-cols-1 md:grid-cols-3 gap-4 py-6 ${getToneClass("revenue-tiles")}`}>
-        <Stat
-          label="People working"
-          value={cell.n_employees?.toLocaleString() || "-"}
-          yoy={yoy.n_employees}
-        />
-        <Stat
-          label="Typical yearly revenue"
-          value={formatMoney(cell.revenue_per_firm)}
-          tooltip="The middle firm: half make more, half make less. Often called the median."
-          yoy={yoy.revenue_per_firm}
-        />
-        <Stat
-          label="Wage per employee"
-          value={formatMoney(cell.payroll_per_employee)}
-          tooltip="Average annual pay across all employees in this industry."
-          yoy={yoy.payroll_per_employee}
-        />
-      </section>
+      {/* Plan v19 Block B — fill rule. Headline tiles fall back to
+         extrapolations when source data is null. People-working uses
+         n_enterprises × industry-typical headcount/firm. Wage uses
+         country median × industry multiplier. Tiles only suppress
+         themselves when even the extrapolation can't produce a number.
+         No more blank "-" tiles per founder rule. */}
+      {(() => {
+        const employeesEstimate =
+          cell.n_employees ?? estimateEmployeesFromFirms(cell.industry_id, cell.n_enterprises);
+        const employeesIsEstimate = cell.n_employees == null && employeesEstimate != null;
+        const wageEstimate =
+          cell.payroll_per_employee ?? estimateWagePerEmployee(country, cell.industry_id);
+        const wageIsEstimate = cell.payroll_per_employee == null && wageEstimate != null;
+        return (
+          <section id="revenue-tiles" className={`grid grid-cols-1 md:grid-cols-3 gap-4 py-6 ${getToneClass("revenue-tiles")}`}>
+            {employeesEstimate != null ? (
+              <Stat
+                label={employeesIsEstimate ? "People working (estimate)" : "People working"}
+                value={employeesEstimate.toLocaleString()}
+                yoy={yoy.n_employees}
+              />
+            ) : null}
+            <Stat
+              label="Typical yearly revenue"
+              value={formatMoney(cell.revenue_per_firm)}
+              tooltip="The middle firm: half make more, half make less. Often called the median."
+              yoy={yoy.revenue_per_firm}
+            />
+            {wageEstimate != null ? (
+              <Stat
+                label={wageIsEstimate ? "Wage per employee (estimate)" : "Wage per employee"}
+                value={formatMoney(wageEstimate)}
+                tooltip="Average annual pay across all employees in this industry."
+                yoy={yoy.payroll_per_employee}
+              />
+            ) : null}
+          </section>
+        );
+      })()}
 
       {/* Atlas Score + Typical-firm biography card.
          Plan v14 A.1 (T-A1.4): legacy id="typical-firm" renamed to canonical
