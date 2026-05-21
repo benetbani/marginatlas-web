@@ -21,6 +21,7 @@ import {
 } from "./taxonomy";
 import { iso2ToIso3, iso3ToIso2, iso2ToName } from "./countries";
 import { lookupNeighborhoodGeoId } from "./cities";
+import { CITY_FRIENDLY_TO_GEO_ID } from "./cities/city_aliases_generated";
 
 export type Cell = {
   // identity
@@ -140,6 +141,18 @@ export function slugify(s: string | null | undefined): string {
 export function regionalSlugToGeoId(country: string, geoSlug: string): string {
   const c = country.toUpperCase();
   const slug = geoSlug.toLowerCase();
+  // Plan v22 Block E — friendly city aliases. Resolves URLs like
+  // /us/los-angeles/restaurants → cells lookup against US-06-037.
+  const friendly = CITY_FRIENDLY_TO_GEO_ID[c]?.[slug];
+  if (friendly) {
+    // Same uppercase rules as below for consistency
+    if (friendly.includes("-city-")) {
+      const idx = friendly.indexOf("-city-");
+      const prefix = friendly.slice(0, idx).toUpperCase();
+      return `${prefix}-CITY-${friendly.slice(idx + 6)}`;
+    }
+    return friendly.toUpperCase();
+  }
   // Neighborhood alias (Track O): friendly names like 'manhattan' → 'US-36-061'.
   const aliased = lookupNeighborhoodGeoId(c, slug);
   if (aliased) return aliased;

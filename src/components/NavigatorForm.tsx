@@ -13,6 +13,7 @@ import {
   type Gate,
 } from "@/lib/taxonomy";
 import { getRegionsForCountry, getSubdivisionsForRegion } from "@/lib/regions/regions-by-country";
+import { CITIES_BY_STATE } from "@/lib/cities/city_aliases_generated";
 // Plan v13 Wave 4a — emoji flagFromIso2 removed from dropdown labels
 // (ComboField input is a plain text field and can't host the SVG CountryFlag
 // image without an invasive rewrite). Flags still render on the destination
@@ -67,12 +68,24 @@ export function NavigatorForm() {
     return getRegionsForCountry(country, name);
   }, [country]);
 
-  // Plan v21 Block 3 — subdivisions cascade from selected region.
-  // For US, the region value is a state slug and subdivisions are
-  // counties (geo_id "us-{fips}-{county}"). For non-US, subdivisions
-  // are entries whose `parent` matches the picked region's geo_id.
+  // Plan v22 Block E — city dropdown (replaces the previous
+  // subdivision dropdown). For US, region is a state slug and the cities
+  // come from CITIES_BY_STATE[country][stateSlug] (curated top cities
+  // with friendly slugs like "los-angeles"). For non-US, falls back to
+  // getSubdivisionsForRegion which uses the geo_id parent relation.
   const subdivisionOptions: ComboOption[] = useMemo(() => {
     if (!region) return [{ value: "", label: "Pick a region first" }];
+    const upper = country.toUpperCase();
+    const curatedCities = CITIES_BY_STATE[upper]?.[region.toLowerCase()];
+    if (curatedCities && curatedCities.length > 0) {
+      return [{ value: "", label: "Any city" } as ComboOption].concat(
+        curatedCities.map((slug) => ({
+          value: slug,
+          label: slug.split("-").map((w) => w[0]?.toUpperCase() + w.slice(1)).join(" "),
+        })),
+      );
+    }
+    // Non-curated fallback: regional_cells subdivision cascade
     const subs = getSubdivisionsForRegion(country, region);
     if (subs.length === 0) {
       return [{ value: "", label: "No deeper subdivisions covered" }];
@@ -203,12 +216,12 @@ export function NavigatorForm() {
         />
         <ComboField
           id="subdivision"
-          label="Subdivision"
+          label="City"
           options={subdivisionOptions}
           value={subdivision}
           onChange={setSubdivision}
           disabled={!region}
-          tooltip="Counties, municipalities, or NUTS-3 areas (when available)."
+          tooltip="Major cities within the picked region (when covered)."
         />
         <ComboField
           id="sector"
