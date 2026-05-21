@@ -21,7 +21,10 @@ import {
 } from "./taxonomy";
 import { iso2ToIso3, iso3ToIso2, iso2ToName } from "./countries";
 import { lookupNeighborhoodGeoId } from "./cities";
-import { CITY_FRIENDLY_TO_GEO_ID } from "./cities/city_aliases_generated";
+import {
+  CITY_FRIENDLY_TO_GEO_ID,
+  CITY_FRIENDLY_DISPLAY_LABEL,
+} from "./cities/city_aliases_generated";
 
 export type Cell = {
   // identity
@@ -257,7 +260,13 @@ export async function getRegionalCell(
 
   const { data, error } = await q;
   if (error || !data || data.length === 0) return null;
-  return normalizeRegionalRow(data[0] as Record<string, unknown>);
+  const cell = normalizeRegionalRow(data[0] as Record<string, unknown>);
+  // Plan v23 Part 1 grammar fix — if the URL used a friendly city slug,
+  // override geo_name to the canonical display label. /es/barcelona renders
+  // 'Barcelona' regardless of whatever the DB row has for that field.
+  const friendlyLabel = CITY_FRIENDLY_DISPLAY_LABEL[c]?.[geoSlug.toLowerCase()];
+  if (friendlyLabel) cell.geo_name = friendlyLabel;
+  return cell;
 }
 
 /** Regional variants — all years / size_bands for a (country, geo, industry). */
@@ -282,7 +291,12 @@ export async function getRegionalCellVariants(
     .order("n_enterprises", { ascending: false, nullsFirst: false })
     .limit(50);
   if (error || !data) return [];
-  return data.map((r) => normalizeRegionalRow(r as Record<string, unknown>));
+  const friendlyLabel = CITY_FRIENDLY_DISPLAY_LABEL[c]?.[geoSlug.toLowerCase()];
+  return data.map((r) => {
+    const cell = normalizeRegionalRow(r as Record<string, unknown>);
+    if (friendlyLabel) cell.geo_name = friendlyLabel;
+    return cell;
+  });
 }
 
 /** Add industry_id / industry_name / sector via taxonomy. */

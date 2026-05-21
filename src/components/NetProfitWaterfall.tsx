@@ -80,7 +80,7 @@ export function NetProfitWaterfall({
       <section className="card mt-6">
         <div className="flex items-baseline justify-between gap-3 flex-wrap mb-1">
           <div className="text-xs uppercase tracking-wide text-atlas-700 font-semibold">
-            Net profit waterfall: typical firm
+            Where does the money go?
           </div>
         </div>
         <p className="mt-3 text-sm text-ink-800 leading-relaxed">
@@ -98,7 +98,7 @@ export function NetProfitWaterfall({
     <section className="card mt-6">
       <div className="flex items-baseline justify-between gap-3 flex-wrap mb-1">
         <div className="text-xs uppercase tracking-wide text-atlas-700 font-semibold">
-          Net profit waterfall: typical firm
+          Where does the money go?
         </div>
         <div className="text-xs text-ink-700/60">
           Estimate, annual USD

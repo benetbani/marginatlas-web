@@ -55,6 +55,7 @@ import {
   estimateWagePerEmployee,
   estimateEmployeesFromFirms,
 } from "@/lib/extrapolations/fill_missing";
+import { HeroBenchmark } from "@/components/HeroBenchmark";
 
 type IndustryMarginRow = { gross_margin: number; operating_margin: number; asset_intensity?: number };
 const INDUSTRY_MARGINS = industryMarginsJson as unknown as {
@@ -404,61 +405,32 @@ export default async function CellPage({
         currentYear={currentYear}
       />
 
-      {/* Hero: Plan v19 Block C — cream broadsheet treatment matching the
-          homepage. Text colors flipped from cream-on-ink back to ink-on-cream.
-          The accented industry name uses atlas-600 (same as homepage hero).
-          Industry examples + typical-revenue line use ink-800/85 for the
-          calmer body weight. id="headline" preserved for CellPageNav. */}
-      <section id="hero" className={`py-10 md:py-12 ${getToneClass("hero")}`}>
-        <header id="headline" className="lg:grid lg:grid-cols-[1.5fr_1fr] lg:gap-10 lg:items-start">
-          <div>
-            <div className="text-sm md:text-base font-bold uppercase tracking-[0.12em] text-atlas-700 flex items-center gap-2">
-              {cell.sector_name && <>{cell.sector_name} · </>}
-              <CountryFlag iso2={country} className="w-5" />
-              <span>{cell.geo_name || iso2ToName(country)}</span>
-            </div>
-            <h1 className="mt-3 font-display text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight text-ink-900 leading-[1.08]">
-              How much do <span className="text-atlas-600">{(cell.industry_name || "businesses").toLowerCase()}</span> earn in {cell.geo_name}?
-            </h1>
-            {cell.industry_examples && cell.industry_examples.length > 0 && (
-              <p className="mt-3 text-sm text-cocoa-700/70">
-                Includes: {cell.industry_examples.slice(0, 5).join(" · ")}
-              </p>
-            )}
-            <p className="mt-4 text-base md:text-lg text-ink-800 max-w-3xl leading-relaxed">
-              A typical {(cell.industry_name || "firm").toLowerCase().replace(/s$/, "")} here brings in about{" "}
-              <strong className="text-ink-900"><Money usd={cell.revenue_per_firm} /></strong> per year, employing roughly{" "}
-              <strong className="text-ink-900">{cell.n_employees?.toLocaleString() || "an unknown number of"}</strong> people in {cell.geo_name}.
-            </p>
-            <div className="mt-4 flex items-center gap-2 flex-wrap text-xs text-cocoa-700/70">
-              <span>Show numbers in:</span>
-              <CurrencySwitcher />
-            </div>
-          </div>
-          <div className="hidden lg:block">
-            {/* Plan v12 IM8 + Plan v19 Block C: real photo when manifest has one
-                for this cell's (city, industry); falls back to SmartImage glyph
-                (now Phosphor icon, not emoji). */}
-            <AtlasHeroImage
-              image={pickCellHeroImage(geo, cell.industry_id || null, cell.sector_id || null, country)}
-              alt={`${cell.industry_name || "Industry"} in ${cell.geo_name}`}
-              glyph={(cell.sector_id && SECTOR_BY_ID[cell.sector_id]?.icon) || "🏢"}
-              caption={cell.sector_name || "Industry"}
-              aspectRatio={1.5}
-            />
-          </div>
-        </header>
-      </section>
+      {/* Plan v23 Part 2 — story-first hero. ONE giant revenue number under
+          the question-form headline. Replaces the previous grid-with-image
+          layout. The right-side hero image moves to a band lower on the
+          page so the typography can breathe. */}
+      <HeroBenchmark
+        iso2={country.toUpperCase()}
+        countryName={iso2ToName(country) || country.toUpperCase()}
+        geoName={cell.geo_name || iso2ToName(country) || country.toUpperCase()}
+        industryName={cell.industry_name || "businesses"}
+        industryExamples={cell.industry_examples}
+        sectorName={cell.sector_name || null}
+        revenue={cell.revenue_per_firm ?? null}
+        currencySymbol="$"
+      />
+      {/* Currency switcher under the hero, quiet */}
+      <div className="bg-cream-100 pb-6 md:pb-8 -mt-2 flex items-center gap-2 flex-wrap text-xs text-cocoa-700/70">
+        <span>Show numbers in:</span>
+        <CurrencySwitcher />
+      </div>
 
-      {/* Plan v14 Phase B: per-cell editorial narrative. Renders only
-         when a cached narrative exists for this cell (with fallback to
-         the "total" size-band); otherwise the section silently omits
-         itself (Wave 4a D2). 2 paragraphs, ~120-180 words, opens with
-         the SEO keyphrase pattern. */}
+      {/* Plan v23 Part 3 — narrative now reads as editorial prose. Drop
+         cap on the first paragraph, looser line-height, max-w-prose. */}
       {narrative ? (
-        <section id="narrative" className={`py-8 ${getToneClass("narrative")}`}>
-          <div className="max-w-3xl">
-            <p className="text-base md:text-lg leading-relaxed text-ink-900 whitespace-pre-line">
+        <section id="narrative" className={`py-12 md:py-16 ${getToneClass("narrative")}`}>
+          <div className="max-w-prose">
+            <p className="text-lg md:text-xl leading-[1.7] text-ink-900 whitespace-pre-line first-letter:font-display first-letter:text-6xl md:first-letter:text-7xl first-letter:float-left first-letter:mr-3 first-letter:leading-none first-letter:text-atlas-700">
               {narrative}
             </p>
           </div>

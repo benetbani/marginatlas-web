@@ -69,7 +69,7 @@ export function PostTaxToggle({ country, regionId, grossRevenue, payroll }: Prop
           className="px-3 py-1.5 rounded-lg border border-atlas-300 hover:border-atlas-600 hover:bg-atlas-50 text-sm font-medium text-atlas-700 transition"
           aria-expanded={open}
         >
-          {open ? "Hide after-tax breakdown" : "Show after-tax breakdown →"}
+          {open ? "Hide the breakdown" : "See the breakdown →"}
         </button>
       </div>
 
