@@ -96,15 +96,40 @@ export function getSectorImages(sectorId: string): AtlasImage[] {
 }
 
 /**
- * Best-image-for-cell picker. Order: city > industry > sector > none.
- * Cell pages will fall through to the existing SmartImage glyph if this
- * returns null.
+ * Best-image-for-cell picker. Plan v20: prefer the country-industry
+ * matched image (descriptions-scored, authentic-cuisine-aware) when
+ * available. Falls back to the legacy city > industry > sector chain.
  */
 export function pickCellHeroImage(
   citySlug: string | null | undefined,
   industryId: string | null | undefined,
-  sectorId?: string | null
+  sectorId?: string | null,
+  iso2?: string | null,
 ): AtlasImage | null {
+  // Plan v20 — country-industry match first.
+  if (iso2 && industryId) {
+    // Dynamic import to avoid breaking SSR if the manifest doesn't exist.
+    // We use require here to stay in sync source path; the lookup itself
+    // is synchronous and reads from disk once per process.
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const lookup = require("./images/country_industry_lookup") as typeof import("./images/country_industry_lookup");
+      const ci = lookup.findCountryIndustryImage(iso2, industryId);
+      if (ci) {
+        return {
+          url: ci.url,
+          source: ci.source,
+          attribution: ci.photographer || ci.source,
+          license: ci.source === "pexels" ? "Pexels License" : "CC",
+          width: ci.width ?? null,
+          height: ci.height ?? null,
+          description: ci.description,
+        };
+      }
+    } catch {
+      // ignore — fall through to legacy chain
+    }
+  }
   if (citySlug) {
     const c = getCityImages(citySlug);
     if (c.length > 0) return c[0];

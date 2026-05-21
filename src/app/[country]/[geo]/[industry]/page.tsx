@@ -436,7 +436,7 @@ export default async function CellPage({
                 for this cell's (city, industry); falls back to SmartImage glyph
                 (now Phosphor icon, not emoji). */}
             <AtlasHeroImage
-              image={pickCellHeroImage(geo, cell.industry_id || null, cell.sector_id || null)}
+              image={pickCellHeroImage(geo, cell.industry_id || null, cell.sector_id || null, country)}
               alt={`${cell.industry_name || "Industry"} in ${cell.geo_name}`}
               glyph={(cell.sector_id && SECTOR_BY_ID[cell.sector_id]?.icon) || "🏢"}
               caption={cell.sector_name || "Industry"}
