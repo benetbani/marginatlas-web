@@ -30,6 +30,11 @@ import {
   MANUAL_DISPLAY_LABEL,
 } from "./cities/manual_city_aliases";
 import { isCellSuppressed, applyCellOverrides } from "./cells/triage";
+import {
+  REVENUE_PER_FIRM_BOUNDS,
+  DEFAULT_REVENUE_BOUNDS,
+  classifyValue,
+} from "./qa/smb_bounds";
 
 export type Cell = {
   // identity
@@ -699,17 +704,34 @@ export async function getSameIndustryAcrossCountries(
   const ind = resolveToMeasuredIndustry(rawInd);
   if (!ind) return [];
   const excludeIso3 = iso2ToIso3(excludeIso2) || "";
+  // Plan v24 Block 6 — pull a wider slate so SMB-bound filtering still
+  // leaves enough comparators after dropping clearly-broken predictions
+  // (Chile $millions / Liechtenstein billions). Order by quality first,
+  // not revenue, so trustworthy countries surface before noise.
   let q = supabaseAdmin
     .from("extrapolated_cells")
     .select("*")
     .eq("industry_id", ind.id)
+    .order("quality_score", { ascending: false, nullsFirst: false })
     .order("predicted_rev_per_firm", { ascending: false, nullsFirst: false })
-    .limit(limit + 1);
+    .limit(limit * 5);
   if (excludeIso3) q = q.neq("country_iso3", excludeIso3);
   const { data, error } = await q;
   if (error || !data) return [];
 
-  return data.slice(0, limit).map((r) => {
+  // Apply SMB-physical bounds — drop rows whose predicted revenue is
+  // outside the conservative per-industry envelope. This is the same
+  // bounds table used by the scale-sanity scanner in Block 1, so the
+  // chart now agrees with the suppression / triage layer.
+  const bounds =
+    REVENUE_PER_FIRM_BOUNDS[ind.id] || DEFAULT_REVENUE_BOUNDS;
+
+  const filtered = data.filter((r) => {
+    const predRev = r.predicted_rev_per_firm as number | null;
+    return classifyValue(predRev, bounds) === "ok";
+  });
+
+  return filtered.slice(0, limit).map((r) => {
     const iso3 = (r.country_iso3 as string) || "";
     const iso2 = iso3ToIso2(iso3) || iso3.slice(0, 2);
     const predRev = (r.predicted_rev_per_firm as number) ?? null;
