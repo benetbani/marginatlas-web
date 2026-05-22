@@ -423,6 +423,28 @@ export type CellSelector = {
  * renders fully. Synthesized cells carry `is_synthetic = true` and a
  * 1-dot quality tier so the UI can badge them clearly.
  */
+/**
+ * Plan v26 follow-up — race the Supabase lookup against a budget. When
+ * the DB is slow (cold connection, missing indexes, statement timeout),
+ * the timeout wins and we fall through to synthesis. The user gets an
+ * Estimated-badged page instead of a 504 from Vercel killing the
+ * function. After Migration 1+2 the queries return in <200 ms and the
+ * timeout never fires.
+ */
+const CELL_LOOKUP_BUDGET_MS = 25_000;
+
+async function withTimeout<T>(p: Promise<T>, ms: number): Promise<T | null> {
+  let to: ReturnType<typeof setTimeout> | null = null;
+  const timeout = new Promise<null>((resolve) => {
+    to = setTimeout(() => resolve(null), ms);
+  });
+  try {
+    return await Promise.race([p, timeout]);
+  } finally {
+    if (to) clearTimeout(to);
+  }
+}
+
 export async function getCellBySlug(
   countrySlug: string,
   geoSlug: string,
@@ -430,7 +452,10 @@ export async function getCellBySlug(
   selector: CellSelector = {}
 ): Promise<Cell> {
   const country = countrySlug.toUpperCase();
-  const real = await getCellBySlugRaw(country, geoSlug, industrySlug, selector);
+  const real = await withTimeout(
+    getCellBySlugRaw(country, geoSlug, industrySlug, selector),
+    CELL_LOOKUP_BUDGET_MS,
+  );
   let cell: Cell;
   if (real) {
     cell = enforceSanity(fillMissingFields(real));

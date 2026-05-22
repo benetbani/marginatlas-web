@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import Script from "next/script";
 import { Cormorant_Garamond } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Organization } from "@/components/StructuredData";
 import { HeaderSearch } from "@/components/HeaderSearch";
 
@@ -143,6 +144,10 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
+        {/* Plan v26 C.5 — Vercel Speed Insights: real-user LCP / CLS /
+           INP captured per route. Free on Hobby. View in Vercel
+           dashboard → Speed Insights. */}
+        <SpeedInsights />
       </body>
     </html>
   );
