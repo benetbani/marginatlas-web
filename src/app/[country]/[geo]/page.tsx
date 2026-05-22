@@ -18,6 +18,7 @@ import { CITIES_BY_STATE } from "@/lib/cities/city_aliases_generated";
 import { iso2ToName } from "@/lib/countries";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
 import { fmtMoney } from "@/lib/format/money";
+import { getNeighborhoodsForCity } from "@/lib/cities/neighborhoods";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -101,6 +102,47 @@ export default async function RegionLandingPage({
           industry below to drill in.
         </p>
       </section>
+
+      {/* Plan v26 Phase B.4.4 — neighborhoods (when this geo is a
+         city with a neighborhood scheme in neighborhoods_v1.json).
+         Renders only for cities in the Phase B coverage list. */}
+      {(() => {
+        const nbList = getNeighborhoodsForCity(geo);
+        if (!nbList || nbList.length === 0) return null;
+        return (
+          <section className="py-10 md:py-14 bg-cream-50">
+            <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900">
+              Neighborhoods of {regionLabel}
+            </h2>
+            <p className="mt-2 text-sm md:text-base text-cocoa-700/80 max-w-2xl">
+              Each neighborhood has its own character: financial district,
+              affluent residential, tourist core, industrial. We adjust the
+              city-level numbers for the local economy below.
+            </p>
+            <div className="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
+              {nbList.map((nb) => (
+                <Link
+                  key={nb.slug}
+                  href={`/${country.toLowerCase()}/${geo.toLowerCase()}/${nb.slug}/restaurants`}
+                  className="group block rounded-2xl border border-parchment hover:border-atlas-500 bg-white p-5 transition-colors"
+                >
+                  <div className="text-xs uppercase tracking-wide text-cocoa-700/60 font-semibold">
+                    {nb.character.replace(/-/g, " ")}
+                  </div>
+                  <div className="mt-1.5 font-display text-lg md:text-xl font-medium tracking-tight text-ink-900 group-hover:text-atlas-700 transition-colors">
+                    {nb.name}
+                  </div>
+                  {nb.description && (
+                    <p className="mt-2 text-xs text-cocoa-700/70 line-clamp-2">
+                      {nb.description}
+                    </p>
+                  )}
+                </Link>
+              ))}
+            </div>
+          </section>
+        );
+      })()}
 
       {/* Top cities */}
       {curatedCities.length > 0 && (
