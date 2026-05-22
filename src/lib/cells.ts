@@ -25,6 +25,10 @@ import {
   CITY_FRIENDLY_TO_GEO_ID,
   CITY_FRIENDLY_DISPLAY_LABEL,
 } from "./cities/city_aliases_generated";
+import {
+  MANUAL_FRIENDLY_TO_GEO_ID,
+  MANUAL_DISPLAY_LABEL,
+} from "./cities/manual_city_aliases";
 import { isCellSuppressed, applyCellOverrides } from "./cells/triage";
 
 export type Cell = {
@@ -145,6 +149,19 @@ export function slugify(s: string | null | undefined): string {
 export function regionalSlugToGeoId(country: string, geoSlug: string): string {
   const c = country.toUpperCase();
   const slug = geoSlug.toLowerCase();
+  // Plan v24 Block 4 — manual city alias supplement. Checked BEFORE the
+  // auto-generated map so hand-curated entries (Frankfurt → DE712, not the
+  // NUTS-1 Hessen region) take precedence. Fixes the founder-reported
+  // "/de/frankfurt → Hessen" bug.
+  const manual = MANUAL_FRIENDLY_TO_GEO_ID[c]?.[slug];
+  if (manual) {
+    if (manual.includes("-city-")) {
+      const idx = manual.indexOf("-city-");
+      const prefix = manual.slice(0, idx).toUpperCase();
+      return `${prefix}-CITY-${manual.slice(idx + 6)}`;
+    }
+    return manual.toUpperCase();
+  }
   // Plan v22 Block E — friendly city aliases. Resolves URLs like
   // /us/los-angeles/restaurants → cells lookup against US-06-037.
   const friendly = CITY_FRIENDLY_TO_GEO_ID[c]?.[slug];
@@ -275,7 +292,10 @@ export async function getRegionalCell(
   // Plan v23 Part 1 grammar fix — if the URL used a friendly city slug,
   // override geo_name to the canonical display label. /es/barcelona renders
   // 'Barcelona' regardless of whatever the DB row has for that field.
-  const friendlyLabel = CITY_FRIENDLY_DISPLAY_LABEL[c]?.[geoSlug.toLowerCase()];
+  // Plan v24 Block 4 — manual map wins. /de/frankfurt → "Frankfurt am Main".
+  const manualLabel = MANUAL_DISPLAY_LABEL[c]?.[geoSlug.toLowerCase()];
+  const friendlyLabel =
+    manualLabel || CITY_FRIENDLY_DISPLAY_LABEL[c]?.[geoSlug.toLowerCase()];
   if (friendlyLabel) cell.geo_name = friendlyLabel;
   return cell;
 }
@@ -302,7 +322,9 @@ export async function getRegionalCellVariants(
     .order("n_enterprises", { ascending: false, nullsFirst: false })
     .limit(50);
   if (error || !data) return [];
-  const friendlyLabel = CITY_FRIENDLY_DISPLAY_LABEL[c]?.[geoSlug.toLowerCase()];
+  const manualLabel = MANUAL_DISPLAY_LABEL[c]?.[geoSlug.toLowerCase()];
+  const friendlyLabel =
+    manualLabel || CITY_FRIENDLY_DISPLAY_LABEL[c]?.[geoSlug.toLowerCase()];
   return data
     .map((r) => {
       const row = r as Record<string, unknown>;
