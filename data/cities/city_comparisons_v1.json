@@ -1,0 +1,107 @@
+{
+  "version": "1.0.0",
+  "anchor": "Plan v27 Lane C.5 — hand-picked city-vs-city comparison pairs. Canonical slug format: alphabetically-first-vs-alphabetically-second (e.g., new-york-vs-san-francisco, not san-francisco-vs-new-york). Each pair has a one-sentence editorial hook.",
+  "convention": "left and right are city slugs from city_list_v1.json. The pair's URL is /compare/cities/{left}-vs-{right} — verify alphabetical order before adding new pairs.",
+  "pairs": [
+    {
+      "left": "london",
+      "right": "new-york",
+      "hook": "Two financial capitals on opposite sides of the Atlantic. London is older and denser, New York is bigger and richer per resident."
+    },
+    {
+      "left": "los-angeles",
+      "right": "new-york",
+      "hook": "America's two biggest metros. New York stacks vertically and concentrates finance; Los Angeles sprawls horizontally and concentrates creative industries."
+    },
+    {
+      "left": "san-francisco",
+      "right": "shenzhen",
+      "hook": "The world's two software supercities. San Francisco is a smaller, denser, older market with deeper venture infrastructure; Shenzhen is younger, larger, and tightly coupled to manufacturing."
+    },
+    {
+      "left": "seoul",
+      "right": "tokyo",
+      "hook": "East Asia's two most concentrated metros. Tokyo is much larger by population; Seoul runs hotter on tech adoption and consumer services."
+    },
+    {
+      "left": "berlin",
+      "right": "paris",
+      "hook": "Europe's two cultural capitals. Paris is wealthier per capita and tighter on real estate; Berlin is cheaper, larger by area, and tilts toward creative SMBs."
+    },
+    {
+      "left": "delhi",
+      "right": "mumbai",
+      "hook": "India's two megacities. Mumbai is the financial capital; Delhi is the political and administrative center with a more diverse industrial base."
+    },
+    {
+      "left": "dubai",
+      "right": "singapore",
+      "hook": "The two top trade-and-finance hubs of the eastern hemisphere. Singapore is tightly regulated and services-heavy; Dubai is tourist-and-trade-heavy with broader retail."
+    },
+    {
+      "left": "mexico-city",
+      "right": "sao-paulo",
+      "hook": "Latin America's two biggest metros. São Paulo runs Brazil's industrial economy; Mexico City anchors both finance and a large informal SMB sector."
+    },
+    {
+      "left": "toronto",
+      "right": "vancouver",
+      "hook": "Canada's two coastal anchors. Toronto is the larger financial hub; Vancouver runs higher per-capita wealth and tilts toward natural-resource trade."
+    },
+    {
+      "left": "barcelona",
+      "right": "madrid",
+      "hook": "Spain's two largest metros. Madrid is the political and corporate center; Barcelona runs heavier on tourism, design, and Mediterranean trade."
+    },
+    {
+      "left": "bangkok",
+      "right": "ho-chi-minh-city",
+      "hook": "Southeast Asia's two big trade cities. Bangkok is older, larger, and more tourist-anchored; Ho Chi Minh City is younger and faster-growing on manufacturing."
+    },
+    {
+      "left": "lagos",
+      "right": "nairobi",
+      "hook": "Africa's two main commercial capitals. Lagos is much larger and oil-anchored; Nairobi is smaller, wealthier per capita, and more services-heavy."
+    },
+    {
+      "left": "cairo",
+      "right": "istanbul",
+      "hook": "Two ancient capitals straddling the Mediterranean. Istanbul is wealthier and more industrially diverse; Cairo is larger by population with a heavier informal economy."
+    },
+    {
+      "left": "buenos-aires",
+      "right": "santiago",
+      "hook": "South America's two southern-cone capitals. Buenos Aires is bigger; Santiago is wealthier per capita and runs cleaner governance."
+    },
+    {
+      "left": "melbourne",
+      "right": "sydney",
+      "hook": "Australia's two biggest cities. Sydney is the financial capital; Melbourne is culturally heavier and slightly larger by population."
+    },
+    {
+      "left": "hong-kong",
+      "right": "taipei",
+      "hook": "Two Chinese-speaking financial cities. Hong Kong is denser and more global-finance-anchored; Taipei is wealthier per capita on hardware and software."
+    },
+    {
+      "left": "amsterdam",
+      "right": "brussels",
+      "hook": "Two northwest European capitals an hour apart. Brussels runs on EU institutions; Amsterdam runs on trade, tourism, and creative industries."
+    },
+    {
+      "left": "moscow",
+      "right": "warsaw",
+      "hook": "Two large Slavic capitals. Moscow is much larger and resource-anchored; Warsaw is smaller, faster-growing, and integrated with the EU economy."
+    },
+    {
+      "left": "jakarta",
+      "right": "manila",
+      "hook": "Southeast Asia's two megacity capitals. Jakarta is the bigger metro economy; Manila is denser per square kilometer and more services-heavy."
+    },
+    {
+      "left": "doha",
+      "right": "riyadh",
+      "hook": "Two Gulf capitals. Riyadh is much larger; Doha runs richer per capita on a tighter gas-anchored base."
+    }
+  ]
+}

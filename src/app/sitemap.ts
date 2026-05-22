@@ -23,11 +23,12 @@ import { getAdmin1Regions } from "@/lib/coverage/admin1";
 import { isPathSuppressed } from "@/lib/quality/thin_pages";
 import neighborhoodsJson from "../../data/cities/neighborhoods_v1.json";
 import cityListJson from "../../data/cities/city_list_v1.json";
+import cityComparisonsJson from "../../data/cities/city_comparisons_v1.json";
 
 const BASE_URL = "https://www.marginatlas.com";
 
 export async function generateSitemaps() {
-  return [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
+  return [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }, { id: 7 }];
 }
 
 export default async function sitemap({
@@ -48,6 +49,8 @@ export default async function sitemap({
   if (numId === 3) return coverageScorecardSitemap();
   if (numId === 4) return regionIndustryHubsSitemap();
   if (numId === 5) return neighborhoodSitemap();
+  if (numId === 6) return citiesSitemap();
+  if (numId === 7) return knowledgeBaseSitemap();
   return [];
 }
 
@@ -225,6 +228,45 @@ async function neighborhoodSitemap(): Promise<MetadataRoute.Sitemap> {
         });
       }
     }
+  }
+  return out;
+}
+
+
+/** Plan v27 Lane C — cities deep build: metropolis + neighborhood hub +
+ *  curiosities + city-vs-city comparison pages. */
+async function citiesSitemap(): Promise<MetadataRoute.Sitemap> {
+  type CityListEntry = { slug: string; tier: number };
+  type Pair = { left: string; right: string };
+  const cities = (cityListJson as { cities: CityListEntry[] }).cities;
+  const pairs = (cityComparisonsJson as { pairs: Pair[] }).pairs;
+  const neighborhoodCities = (neighborhoodsJson as { cities: Record<string, unknown> }).cities;
+
+  const out: MetadataRoute.Sitemap = [];
+  out.push({ url: `${BASE_URL}/cities`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 });
+  for (const c of cities) {
+    out.push({ url: `${BASE_URL}/cities/${c.slug}`, lastModified: new Date(), changeFrequency: "weekly", priority: c.tier === 1 ? 0.85 : c.tier === 2 ? 0.75 : 0.6 });
+    if (c.tier <= 2) {
+      out.push({ url: `${BASE_URL}/cities/${c.slug}/curiosities`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.65 });
+    }
+  }
+  for (const slug of Object.keys(neighborhoodCities)) {
+    out.push({ url: `${BASE_URL}/cities/${slug}/neighborhoods`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 });
+  }
+  for (const p of pairs) {
+    out.push({ url: `${BASE_URL}/compare/cities/${p.left}-vs-${p.right}`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 });
+  }
+  return out;
+}
+
+/** Plan v27 Lane D — knowledge base for SEO. 60-page evergreen corpus
+ *  routed under /learn/. */
+async function knowledgeBaseSitemap(): Promise<MetadataRoute.Sitemap> {
+  const { LEARN_ARTICLES } = await import("@/lib/learn/articles");
+  const out: MetadataRoute.Sitemap = [];
+  out.push({ url: `${BASE_URL}/learn`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 });
+  for (const a of LEARN_ARTICLES) {
+    out.push({ url: `${BASE_URL}/learn/${a.slug}`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 });
   }
   return out;
 }

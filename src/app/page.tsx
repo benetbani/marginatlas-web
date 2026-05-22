@@ -7,6 +7,7 @@ import { GlobalCoverageStrip } from "@/components/GlobalCoverageStrip";
 import { TaxOverlayTeaser } from "@/components/TaxOverlayTeaser";
 import { AskWidget } from "@/components/AskWidget";
 import { CityPicker } from "@/components/CityPicker";
+import { TopCitiesMosaic } from "@/components/home/TopCitiesMosaic";
 import { CitiesDotsMap } from "@/components/CitiesDotsMap";
 import { QualityLegend } from "@/components/QualityLegend";
 import { RotatingWord } from "@/components/RotatingWord";
@@ -269,10 +270,12 @@ export default function HomePage() {
         </div>
       </ToneBand>
 
-      {/* Pick a city: Plan v8 Track S.4 */}
+      {/* Pick a city: Plan v27 Lane C.1 — replace flat CityPicker with
+          continent-grouped TopCitiesMosaic. CityPicker still imported
+          and available at /world for the dense alphabetical list. */}
       <ToneBand tone="home-city-picker">
         <div id="pick-a-city" className="scroll-mt-20">
-          <CityPicker />
+          <TopCitiesMosaic limit={12} />
         </div>
       </ToneBand>
 

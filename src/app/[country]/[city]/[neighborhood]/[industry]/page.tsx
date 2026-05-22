@@ -30,7 +30,7 @@ import { HeroBenchmark } from "@/components/HeroBenchmark";
 import { MarginWaterfall } from "@/components/MarginWaterfall";
 import { DistributionVisual } from "@/components/DistributionVisual";
 import { NetProfitSummary } from "@/components/NetProfitSummary";
-import { EstimatedBadge } from "@/components/EstimatedBadge";
+import { CoverageIndicator } from "@/components/CoverageIndicator";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { CountryFlag } from "@/components/CountryFlag";
 import { fmtMoney } from "@/lib/format/money";
@@ -186,8 +186,9 @@ export default async function NeighborhoodCellPage({
           </p>
         </section>
 
-        <EstimatedBadge
-          isSynthetic={true}
+        <CoverageIndicator
+          tier="estimated"
+          variant="expanded"
           industryName={ind.name}
           geoName={`${nb.name}, ${cityName}`}
         />

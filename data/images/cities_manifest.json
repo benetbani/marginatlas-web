@@ -61,362 +61,200 @@
   ],
   "chicago": [
     {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Chicago_September_2016-23.jpg/1280px-Chicago_September_2016-23.jpg",
-      "source": "wikimedia",
-      "attribution": "<a href=\"//commons.wikimedia.org/wiki/User:Alvesgaspar\" title=\"User:Alvesgaspar\">Alvesgaspar</a> via Wikimedia Commons (CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Chicago_September_2016-23.jpg)",
-      "license": "CC BY-SA 4.0",
-      "width": 1200,
-      "height": 331,
-      "description": "File:Chicago September 2016-23.jpg"
-    },
-    {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Chicago_Skyline_Hi-Res.jpg/1280px-Chicago_Skyline_Hi-Res.jpg",
-      "source": "wikimedia",
-      "attribution": "<a href=\"https://en.wikipedia.org/wiki/User:Buphoff\" class=\"extiw\" title=\"wikipedia:User:Buphoff\">Buphoff</a> at <a href=\"https://en.wikipedia.org/wiki/\" class=\"extiw\" title=\"wikipedia:\">English Wikipedia</a> via Wikimedia Commons (CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Chicago_Skyline_Hi-Res.jpg)",
-      "license": "CC BY-SA 3.0",
-      "width": 1200,
-      "height": 145,
-      "description": "File:Chicago Skyline Hi-Res.jpg"
+      "url": "https://images.unsplash.com/photo-1714662660476-022bfd34cf44?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NTUyMTB8MHwxfHNlYXJjaHwxfHxDaGljYWdvJTIwc2t5bGluZSUyMExha2UlMjBNaWNoaWdhbiUyMGFlcmlhbHxlbnwwfDB8fHwxNzc5MTY3Nzk5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "source": "unsplash",
+      "attribution": "Photo by Ricky Beron on Unsplash (https://unsplash.com/photos/an-aerial-view-of-a-large-city-next-to-a-body-of-water-RIs3Eov9GoM)",
+      "license": "Unsplash License",
+      "width": 3000,
+      "height": 1686,
+      "description": "an aerial view of a large city next to a body of water"
     }
   ],
   "boston": [
     {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/2017_Boston_skyline_from_Boston_Harbor_5_.jpg/1280px-2017_Boston_skyline_from_Boston_Harbor_5_.jpg",
-      "source": "wikimedia",
-      "attribution": "<a href=\"//commons.wikimedia.org/wiki/User:Beyond_My_Ken\" class=\"mw-redirect\" title=\"User:Beyond My Ken\">Beyond My Ken</a> via Wikimedia Commons (CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:2017_Boston_skyline_from_Boston_Harbor_5_.jpg)",
-      "license": "CC BY-SA 4.0",
-      "width": 1200,
-      "height": 691,
-      "description": "File:2017 Boston skyline from Boston Harbor 5 .jpg"
-    },
-    {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Back_Bay_Skyline_-_Boston_Waterfront_Skyline_%2817303695580%29.jpg/1280px-Back_Bay_Skyline_-_Boston_Waterfront_Skyline_%2817303695580%29.jpg",
-      "source": "wikimedia",
-      "attribution": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/people/87296837@N00\">Tony Webster</a> from Portland, Oregon via Wikimedia Commons (CC BY 2.0, https://commons.wikimedia.org/wiki/File:Back_Bay_Skyline_-_Boston_Waterfront_Skyline_(17303695580).jpg)",
-      "license": "CC BY 2.0",
-      "width": 1200,
-      "height": 800,
-      "description": "File:Back Bay Skyline - Boston Waterfront Skyline (17303695580).jpg"
+      "url": "https://images.unsplash.com/photo-1556079337-a837a2d11f04?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NTUyMTB8MHwxfHNlYXJjaHwxfHxCb3N0b24lMjBza3lsaW5lJTIwd2F0ZXJmcm9udCUyMGFlcmlhbHxlbnwwfDB8fHwxNzc5MTY3ODc1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "source": "unsplash",
+      "attribution": "Photo by todd kent on Unsplash (https://unsplash.com/photos/high-rise-buildings-iRKv_XiN--M)",
+      "license": "Unsplash License",
+      "width": 3923,
+      "height": 2940,
+      "description": "high-rise buildings"
     }
   ],
   "washington-dc": [
     {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Aerial_Washington_Monument_12_2014_DC_698.JPG/1280px-Aerial_Washington_Monument_12_2014_DC_698.JPG",
-      "source": "wikimedia",
-      "attribution": "<a href=\"//commons.wikimedia.org/wiki/User:Mariordo\" title=\"User:Mariordo\">Mariordo (Mario Roberto Durán Ortiz)</a> via Wikimedia Commons (CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Aerial_Washington_Monument_12_2014_DC_698.JPG)",
-      "license": "CC BY-SA 4.0",
-      "width": 1200,
-      "height": 800,
-      "description": "File:Aerial Washington Monument 12 2014 DC 698.JPG"
-    },
-    {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Aerial_view_of_Lafayette_Park_and_Washington_Mall%2C_Washington%2C_D.C._LCCN2010630447.jpg/1280px-Aerial_view_of_Lafayette_Park_and_Washington_Mall%2C_Washington%2C_D.C._LCCN2010630447.jpg",
-      "source": "wikimedia",
-      "attribution": "<bdi><a href=\"https://en.wikipedia.org/wiki/en:Carol_M._Highsmith\" class=\"extiw\" title=\"w:en:Carol M. Highsmith\"><span title=\"American photographer (born 1946)\">Carol M. Highsmith</span></a></bdi> via Wikimedia Commons (Public domain, https://commons.wikimedia.org/wiki/File:Aerial_view_of_Lafayette_Park_and_Washington_Mall,_Washington,_D.C._LCCN2010630447.jpg)",
-      "license": "Public domain",
-      "width": 1200,
-      "height": 800,
-      "description": "File:Aerial view of Lafayette Park and Washington Mall, Washington, D.C. LCCN2010630447.jpg"
+      "url": "https://images.unsplash.com/photo-1574365379583-54937ea00cb8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NTUyMTB8MHwxfHNlYXJjaHwxfHxXYXNoaW5ndG9uJTIwREMlMjBtb251bWVudHMlMjBhZXJpYWx8ZW58MHwwfHx8MTc3OTE2Nzk1Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "source": "unsplash",
+      "attribution": "Photo by Andy Feliciotti on Unsplash (https://unsplash.com/photos/high-rise-buildings-EmSWJzRYxG0)",
+      "license": "Unsplash License",
+      "width": 6027,
+      "height": 4018,
+      "description": "high-rise buildings"
     }
   ],
   "miami": [
     {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Miami_Beach_and_Port_of_Miami_Skyline_%282720195951%29.jpg/1280px-Miami_Beach_and_Port_of_Miami_Skyline_%282720195951%29.jpg",
-      "source": "wikimedia",
-      "attribution": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/people/30201239@N00\">joiseyshowaa</a> from Freehold, NJ, USA via Wikimedia Commons (CC BY-SA 2.0, https://commons.wikimedia.org/wiki/File:Miami_Beach_and_Port_of_Miami_Skyline_(2720195951).jpg)",
-      "license": "CC BY-SA 2.0",
-      "width": 1200,
-      "height": 841,
-      "description": "File:Miami Beach and Port of Miami Skyline (2720195951).jpg"
-    },
-    {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Miami_skyline_from_Miami_Beach_2006_by_Averette101.jpg/1280px-Miami_skyline_from_Miami_Beach_2006_by_Averette101.jpg",
-      "source": "wikimedia",
-      "attribution": "Marc Averette via Wikimedia Commons (Public domain, https://commons.wikimedia.org/wiki/File:Miami_skyline_from_Miami_Beach_2006_by_Averette101.jpg)",
-      "license": "Public domain",
-      "width": 1200,
-      "height": 900,
-      "description": "File:Miami skyline from Miami Beach 2006 by Averette101.jpg"
+      "url": "https://images.unsplash.com/photo-1589083130544-0d6a2926e519?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NTUyMTB8MHwxfHNlYXJjaHwxfHxNaWFtaSUyMHNreWxpbmUlMjBiZWFjaCUyMGFlcmlhbHxlbnwwfDB8fHwxNzc5MTY4MDI4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "source": "unsplash",
+      "attribution": "Photo by Antonio Cuellar on Unsplash (https://unsplash.com/photos/aerial-view-of-city-buildings-near-body-of-water-during-daytime-KDS5lCrj_ew)",
+      "license": "Unsplash License",
+      "width": 3000,
+      "height": 2000,
+      "description": "aerial view of city buildings near body of water during daytime"
     }
   ],
   "seattle": [
     {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Seattle_from_Space_Needle_June_2018_003.jpg/1280px-Seattle_from_Space_Needle_June_2018_003.jpg",
-      "source": "wikimedia",
-      "attribution": "<a href=\"//commons.wikimedia.org/wiki/User:King_of_Hearts\" title=\"User:King of Hearts\">King of Hearts</a> via Wikimedia Commons (CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Seattle_from_Space_Needle_June_2018_003.jpg)",
-      "license": "CC BY-SA 4.0",
-      "width": 1200,
-      "height": 800,
-      "description": "File:Seattle from Space Needle June 2018 003.jpg"
-    },
-    {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Seattle_from_Space_Needle_June_2018_009.jpg/1280px-Seattle_from_Space_Needle_June_2018_009.jpg",
-      "source": "wikimedia",
-      "attribution": "<a href=\"//commons.wikimedia.org/wiki/User:King_of_Hearts\" title=\"User:King of Hearts\">King of Hearts</a> via Wikimedia Commons (CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Seattle_from_Space_Needle_June_2018_009.jpg)",
-      "license": "CC BY-SA 4.0",
-      "width": 1200,
-      "height": 800,
-      "description": "File:Seattle from Space Needle June 2018 009.jpg"
+      "url": "https://images.unsplash.com/photo-1622839497468-9e4a20007cf8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NTUyMTB8MHwxfHNlYXJjaHwxfHxTZWF0dGxlJTIwU3BhY2UlMjBOZWVkbGUlMjBza3lsaW5lJTIwYWVyaWFsfGVufDB8MHx8fDE3NzkxNjgxMDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "source": "unsplash",
+      "attribution": "Photo by Robert Ritchie on Unsplash (https://unsplash.com/photos/a-view-of-a-city-with-a-tower-in-the-middle-of-it-JEicDFy5Cd8)",
+      "license": "Unsplash License",
+      "width": 5728,
+      "height": 3165,
+      "description": "a view of a city with a tower in the middle of it"
     }
   ],
   "austin": [
     {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Austin_Texas_skyline%2C_December_2023_-_Day.jpg/1280px-Austin_Texas_skyline%2C_December_2023_-_Day.jpg",
-      "source": "wikimedia",
-      "attribution": "Steve via Wikimedia Commons (CC BY-SA 2.0, https://commons.wikimedia.org/wiki/File:Austin_Texas_skyline,_December_2023_-_Day.jpg)",
-      "license": "CC BY-SA 2.0",
-      "width": 1200,
-      "height": 351,
-      "description": "File:Austin Texas skyline, December 2023 - Day.jpg"
-    },
-    {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Austin_Texas_skyline%2C_December_2023_-_Evening.jpg/1280px-Austin_Texas_skyline%2C_December_2023_-_Evening.jpg",
-      "source": "wikimedia",
-      "attribution": "Steve via Wikimedia Commons (CC BY-SA 2.0, https://commons.wikimedia.org/wiki/File:Austin_Texas_skyline,_December_2023_-_Evening.jpg)",
-      "license": "CC BY-SA 2.0",
-      "width": 1200,
-      "height": 530,
-      "description": "File:Austin Texas skyline, December 2023 - Evening.jpg"
+      "url": "https://images.unsplash.com/photo-1557335200-a65f7f032602?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NTUyMTB8MHwxfHNlYXJjaHwxfHxBdXN0aW4lMjBUZXhhcyUyMHNreWxpbmUlMjBhZXJpYWx8ZW58MHwwfHx8MTc3OTE2ODE4MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "source": "unsplash",
+      "attribution": "Photo by MJ Tangonan on Unsplash (https://unsplash.com/photos/river-near-buildings-during-daytime-wKfTNWaDYgs)",
+      "license": "Unsplash License",
+      "width": 5636,
+      "height": 3723,
+      "description": "river near buildings during daytime"
     }
   ],
   "denver": [
     {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Denver_Colorado_Skyline_at_Rocky_Mountain_Arsenal_%2853658444917%29.jpg/1280px-Denver_Colorado_Skyline_at_Rocky_Mountain_Arsenal_%2853658444917%29.jpg",
-      "source": "wikimedia",
-      "attribution": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/people/87296837@N00\">Tony Webster</a> via Wikimedia Commons (CC BY 2.0, https://commons.wikimedia.org/wiki/File:Denver_Colorado_Skyline_at_Rocky_Mountain_Arsenal_(53658444917).jpg)",
-      "license": "CC BY 2.0",
-      "width": 1200,
-      "height": 900,
-      "description": "File:Denver Colorado Skyline at Rocky Mountain Arsenal (53658444917).jpg"
-    },
-    {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Denver_Skyline_%2815242286069%29.jpg/1280px-Denver_Skyline_%2815242286069%29.jpg",
-      "source": "wikimedia",
-      "attribution": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/people/51986662@N05\">USFWS Mountain-Prairie</a> via Wikimedia Commons (Public domain, https://commons.wikimedia.org/wiki/File:Denver_Skyline_(15242286069).jpg)",
-      "license": "Public domain",
-      "width": 1200,
-      "height": 798,
-      "description": "File:Denver Skyline (15242286069).jpg"
+      "url": "https://images.unsplash.com/photo-1648441095877-90406e6ba04d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NTUyMTB8MHwxfHNlYXJjaHwxfHxEZW52ZXIlMjBDb2xvcmFkbyUyMHNreWxpbmUlMjBtb3VudGFpbnN8ZW58MHwwfHx8MTc3OTE2ODI1OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "source": "unsplash",
+      "attribution": "Photo by Bill Griepenstroh on Unsplash (https://unsplash.com/photos/a-view-of-a-city-with-mountains-in-the-background-Q9X_p5dDq_8)",
+      "license": "Unsplash License",
+      "width": 3840,
+      "height": 2160,
+      "description": "a view of a city with mountains in the background"
     }
   ],
   "atlanta": [
     {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Atlanta%2C_Georgia_Skyline.jpg/1280px-Atlanta%2C_Georgia_Skyline.jpg",
-      "source": "wikimedia",
-      "attribution": "<a href=\"//commons.wikimedia.org/wiki/User:Shawn_M._Kent\" title=\"User:Shawn M. Kent\">Shawn M. Kent</a> via Wikimedia Commons (CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Atlanta,_Georgia_Skyline.jpg)",
-      "license": "CC BY-SA 4.0",
-      "width": 1200,
-      "height": 800,
-      "description": "File:Atlanta, Georgia Skyline.jpg"
-    },
-    {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/6/68/Atlanta_Skyline_-_March_2019_%28cropped_2%29.jpg",
-      "source": "wikimedia",
-      "attribution": "formulanone via Wikimedia Commons (CC BY-SA 2.0, https://commons.wikimedia.org/wiki/File:Atlanta_Skyline_-_March_2019_(cropped_2).jpg)",
-      "license": "CC BY-SA 2.0",
-      "width": 1234,
-      "height": 822,
-      "description": "File:Atlanta Skyline - March 2019 (cropped 2).jpg"
+      "url": "https://images.unsplash.com/photo-1663601460253-aba72eea6edf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NTUyMTB8MHwxfHNlYXJjaHwxfHxBdGxhbnRhJTIwR2VvcmdpYSUyMHNreWxpbmUlMjBhZXJpYWx8ZW58MHwwfHx8MTc3OTE2ODMzN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "source": "unsplash",
+      "attribution": "Photo by Lance Asper on Unsplash (https://unsplash.com/photos/a-city-with-tall-buildings-9fxD3UW_C1I)",
+      "license": "Unsplash License",
+      "width": 4236,
+      "height": 2380,
+      "description": "a city with tall buildings"
     }
   ],
   "dallas": [
     {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Dallas_Skyline_at_Dusk.jpg/1280px-Dallas_Skyline_at_Dusk.jpg",
-      "source": "wikimedia",
-      "attribution": "<a rel=\"nofollow\" class=\"external text\" href=\"https://matthewtrader.com\">Matthew T Rader</a> via Wikimedia Commons (CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Dallas_Skyline_at_Dusk.jpg)",
-      "license": "CC BY-SA 4.0",
-      "width": 1200,
-      "height": 378,
-      "description": "File:Dallas Skyline at Dusk.jpg"
-    },
-    {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Dallas_Texas_skyline_from_Reunion_Tower_September_2025.png/1280px-Dallas_Texas_skyline_from_Reunion_Tower_September_2025.png",
-      "source": "wikimedia",
-      "attribution": "<a href=\"//commons.wikimedia.org/w/index.php?title=User:IcedCowboyCoffee&amp;action=edit&amp;redlink=1\" class=\"new\" title=\"User:IcedCowboyCoffee (page does not exist)\">IcedCowboyCoffee</a> via Wikimedia Commons (CC0, https://commons.wikimedia.org/wiki/File:Dallas_Texas_skyline_from_Reunion_Tower_September_2025.png)",
-      "license": "CC0",
-      "width": 1200,
-      "height": 504,
-      "description": "File:Dallas Texas skyline from Reunion Tower September 2025.png"
+      "url": "https://images.unsplash.com/photo-1621904878414-d4ca4756bd7e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NTUyMTB8MHwxfHNlYXJjaHwxfHxEYWxsYXMlMjBUZXhhcyUyMHNreWxpbmUlMjBhZXJpYWx8ZW58MHwwfHx8MTc3OTE2ODQxNHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "source": "unsplash",
+      "attribution": "Photo by R K on Unsplash (https://unsplash.com/photos/city-buildings-under-blue-sky-during-daytime-h1n7o0yb0sE)",
+      "license": "Unsplash License",
+      "width": 4272,
+      "height": 2848,
+      "description": "city buildings under blue sky during daytime"
     }
   ],
   "houston": [
     {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Houston%2C_Texas_Skyline_2017.jpg/1280px-Houston%2C_Texas_Skyline_2017.jpg",
-      "source": "wikimedia",
-      "attribution": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.pexels.com/@jayoke/\">Jason Villanueva</a> via Wikimedia Commons (CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Houston,_Texas_Skyline_2017.jpg)",
-      "license": "CC BY-SA 4.0",
-      "width": 1200,
-      "height": 800,
-      "description": "File:Houston, Texas Skyline 2017.jpg"
-    },
-    {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Houston_Skyline_-_Illustration.jpg/1280px-Houston_Skyline_-_Illustration.jpg",
-      "source": "wikimedia",
-      "attribution": "Familydestinationsguide.com Images via Wikimedia Commons (CC BY 2.0, https://commons.wikimedia.org/wiki/File:Houston_Skyline_-_Illustration.jpg)",
-      "license": "CC BY 2.0",
-      "width": 1200,
-      "height": 800,
-      "description": "File:Houston Skyline - Illustration.jpg"
+      "url": "https://images.unsplash.com/photo-1622007151631-25aa98ab394b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NTUyMTB8MHwxfHNlYXJjaHwxfHxIb3VzdG9uJTIwVGV4YXMlMjBza3lsaW5lJTIwYWVyaWFsfGVufDB8MHx8fDE3NzkxNjg0OTF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "source": "unsplash",
+      "attribution": "Photo by Adrian Newell on Unsplash (https://unsplash.com/photos/white-and-blue-high-rise-building-VGK4F9Euro0)",
+      "license": "Unsplash License",
+      "width": 7404,
+      "height": 4824,
+      "description": "white and blue high rise building"
     }
   ],
   "philadelphia": [
     {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/9/96/Philadelphia_Skyline_Amtrak.jpg",
-      "source": "wikimedia",
-      "attribution": "<a href=\"//commons.wikimedia.org/w/index.php?title=User:TECHNICALINTERFACE&amp;action=edit&amp;redlink=1\" class=\"new\" title=\"User:TECHNICALINTERFACE (page does not exist)\">TECHNICALINTERFACE</a> via Wikimedia Commons (CC0, https://commons.wikimedia.org/wiki/File:Philadelphia_Skyline_Amtrak.jpg)",
-      "license": "CC0",
-      "width": 1280,
-      "height": 960,
-      "description": "File:Philadelphia Skyline Amtrak.jpg"
-    },
-    {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Philadelphia_Skyline_from_the_Camden_Waterfront.jpg/1280px-Philadelphia_Skyline_from_the_Camden_Waterfront.jpg",
-      "source": "wikimedia",
-      "attribution": "<a href=\"//commons.wikimedia.org/w/index.php?title=User:Bronzeage10&amp;action=edit&amp;redlink=1\" class=\"new\" title=\"User:Bronzeage10 (page does not exist)\">Bronzeage10</a> via Wikimedia Commons (CC BY 4.0, https://commons.wikimedia.org/wiki/File:Philadelphia_Skyline_from_the_Camden_Waterfront.jpg)",
-      "license": "CC BY 4.0",
-      "width": 1200,
-      "height": 943,
-      "description": "File:Philadelphia Skyline from the Camden Waterfront.jpg"
+      "url": "https://images.unsplash.com/photo-1569761316261-9a8696fa2ca3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NTUyMTB8MHwxfHNlYXJjaHwxfHxQaGlsYWRlbHBoaWElMjBza3lsaW5lJTIwYWVyaWFsfGVufDB8MHx8fDE3NzkxNjg1Njh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "source": "unsplash",
+      "attribution": "Photo by ActionVance on Unsplash (https://unsplash.com/photos/aerial-photo-of-buildings-guy5aS3GvgA)",
+      "license": "Unsplash License",
+      "width": 8397,
+      "height": 5598,
+      "description": "aerial photo of buildings"
     }
   ],
   "phoenix": [
     {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Downtown_Phoenix_Skyline_%286974043971%29.jpg/1280px-Downtown_Phoenix_Skyline_%286974043971%29.jpg",
-      "source": "wikimedia",
-      "attribution": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/people/38478466@N06\">Alan Stark</a> from Goodyear, AZ, United States via Wikimedia Commons (CC BY-SA 2.0, https://commons.wikimedia.org/wiki/File:Downtown_Phoenix_Skyline_(6974043971).jpg)",
-      "license": "CC BY-SA 2.0",
-      "width": 1200,
-      "height": 751,
-      "description": "File:Downtown Phoenix Skyline (6974043971).jpg"
-    },
-    {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Downtown_Phoenix_Skyline_Lights.jpg/1280px-Downtown_Phoenix_Skyline_Lights.jpg",
-      "source": "wikimedia",
-      "attribution": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/people/38478466@N06\">Alan Stark</a> via Wikimedia Commons (CC BY-SA 2.0, https://commons.wikimedia.org/wiki/File:Downtown_Phoenix_Skyline_Lights.jpg)",
-      "license": "CC BY-SA 2.0",
-      "width": 1200,
-      "height": 820,
-      "description": "File:Downtown Phoenix Skyline Lights.jpg"
+      "url": "https://images.unsplash.com/photo-1729041534038-fdc1f9cf3d3a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NTUyMTB8MHwxfHNlYXJjaHwxfHxQaG9lbml4JTIwQXJpem9uYSUyMHNreWxpbmUlMjBkZXNlcnR8ZW58MHwwfHx8MTc3OTE2ODY0Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "source": "unsplash",
+      "attribution": "Photo by Nils Huenerfuerst on Unsplash (https://unsplash.com/photos/a-view-of-a-city-with-tall-buildings-RcDEbNQsjHU)",
+      "license": "Unsplash License",
+      "width": 8064,
+      "height": 6048,
+      "description": "A view of a city with tall buildings"
     }
   ],
   "san-diego": [
     {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/San_Diego_-_California_-_Yacht_Harbor_with_Hotels.jpg/1280px-San_Diego_-_California_-_Yacht_Harbor_with_Hotels.jpg",
-      "source": "wikimedia",
-      "attribution": "<a href=\"//commons.wikimedia.org/wiki/User:PictorialEvidence\" title=\"User:PictorialEvidence\">PictorialEvidence</a> via Wikimedia Commons (CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:San_Diego_-_California_-_Yacht_Harbor_with_Hotels.jpg)",
-      "license": "CC BY-SA 3.0",
-      "width": 1200,
-      "height": 800,
-      "description": "File:San Diego - California - Yacht Harbor with Hotels.jpg"
-    },
-    {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/San_Diego_Night_Skyline.jpg/1280px-San_Diego_Night_Skyline.jpg",
-      "source": "wikimedia",
-      "attribution": "<a href=\"//commons.wikimedia.org/w/index.php?title=User:Itsfluky&amp;action=edit&amp;redlink=1\" class=\"new\" title=\"User:Itsfluky (page does not exist)\">Eric</a> via Wikimedia Commons (CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:San_Diego_Night_Skyline.jpg)",
-      "license": "CC BY-SA 4.0",
-      "width": 1200,
-      "height": 800,
-      "description": "File:San Diego Night Skyline.jpg"
+      "url": "https://images.unsplash.com/photo-1514939775307-d44e7f10cabd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NTUyMTB8MHwxfHNlYXJjaHwxfHxTYW4lMjBEaWVnbyUyMHNreWxpbmUlMjBoYXJib3IlMjBhZXJpYWx8ZW58MHwwfHx8MTc3OTE2ODcyM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "source": "unsplash",
+      "attribution": "Photo by Lucas Davies on Unsplash (https://unsplash.com/photos/city-near-body-of-water-during-nighttime-uxIU0kYGu-k)",
+      "license": "Unsplash License",
+      "width": 5610,
+      "height": 3740,
+      "description": "city near body of water during nighttime"
     }
   ],
   "portland": [
     {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Mt_Hood_and_Portland_Oregon.jpg/1280px-Mt_Hood_and_Portland_Oregon.jpg",
-      "source": "wikimedia",
-      "attribution": "<a href=\"//commons.wikimedia.org/w/index.php?title=User:Barb_Salam&amp;action=edit&amp;redlink=1\" class=\"new\" title=\"User:Barb Salam (page does not exist)\">Barb Salam</a> via Wikimedia Commons (CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Mt_Hood_and_Portland_Oregon.jpg)",
-      "license": "CC BY-SA 4.0",
-      "width": 1200,
-      "height": 800,
-      "description": "File:Mt Hood and Portland Oregon.jpg"
-    },
-    {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Portland_Oregon_Aerial%2C_June_2024.jpg/1280px-Portland_Oregon_Aerial%2C_June_2024.jpg",
-      "source": "wikimedia",
-      "attribution": "<a href=\"//commons.wikimedia.org/wiki/User:Spicypepper999\" title=\"User:Spicypepper999\">Spicypepper999</a> via Wikimedia Commons (CC0, https://commons.wikimedia.org/wiki/File:Portland_Oregon_Aerial,_June_2024.jpg)",
-      "license": "CC0",
-      "width": 1200,
-      "height": 675,
-      "description": "File:Portland Oregon Aerial, June 2024.jpg"
+      "url": "https://images.unsplash.com/photo-1666584511293-73dfc7d29094?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NTUyMTB8MHwxfHNlYXJjaHwyfHxQb3J0bGFuZCUyME9yZWdvbiUyMHNreWxpbmUlMjBNb3VudCUyMEhvb2R8ZW58MHwwfHx8MTc3OTE2ODgwMHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "source": "unsplash",
+      "attribution": "Photo by Jo Heubeck & Domi Pfenninger on Unsplash (https://unsplash.com/photos/a-city-with-a-mountain-in-the-background-q97968aBJKA)",
+      "license": "Unsplash License",
+      "width": 5473,
+      "height": 3649,
+      "description": "a city with a mountain in the background"
     }
   ],
   "minneapolis": [
     {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Sunset_over_the_Minneapolis_skyline._%2823906034652%29.jpg/1280px-Sunset_over_the_Minneapolis_skyline._%2823906034652%29.jpg",
-      "source": "wikimedia",
-      "attribution": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/people/11375428@N04\">Mac H (media601)</a> via Wikimedia Commons (CC BY-SA 2.0, https://commons.wikimedia.org/wiki/File:Sunset_over_the_Minneapolis_skyline._(23906034652).jpg)",
-      "license": "CC BY-SA 2.0",
-      "width": 1200,
-      "height": 405,
-      "description": "File:Sunset over the Minneapolis skyline. (23906034652).jpg"
-    },
-    {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Central_Library_and_Downtown_Minneapolis_Skyline%2C_Minnesota_%2824074173246%29.jpg/1280px-Central_Library_and_Downtown_Minneapolis_Skyline%2C_Minnesota_%2824074173246%29.jpg",
-      "source": "wikimedia",
-      "attribution": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/people/87296837@N00\">Tony Webster</a> from Minneapolis, Minnesota via Wikimedia Commons (CC BY-SA 2.0, https://commons.wikimedia.org/wiki/File:Central_Library_and_Downtown_Minneapolis_Skyline,_Minnesota_(24074173246).jpg)",
-      "license": "CC BY-SA 2.0",
-      "width": 1200,
-      "height": 800,
-      "description": "File:Central Library and Downtown Minneapolis Skyline, Minnesota (24074173246).jpg"
+      "url": "https://images.unsplash.com/photo-1535082049017-5a7b43f3bcef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NTUyMTB8MHwxfHNlYXJjaHwxfHxNaW5uZWFwb2xpcyUyMHNreWxpbmUlMjBhZXJpYWx8ZW58MHwwfHx8MTc3OTE2ODg3N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "source": "unsplash",
+      "attribution": "Photo by Nicole Geri on Unsplash (https://unsplash.com/photos/aerial-shot-of-concrete-structures-near-body-of-water-ohK_uJJm2G8)",
+      "license": "Unsplash License",
+      "width": 3992,
+      "height": 2992,
+      "description": "aerial shot of concrete structures near body of water"
     }
   ],
   "detroit": [
     {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Belle_Isle_Bridge_and_Ambassador_Bridge%2C_against_Detroit%27s_Skyline%2C_Detroit%2C_Mich_%2872685%29.jpg/1280px-Belle_Isle_Bridge_and_Ambassador_Bridge%2C_against_Detroit%27s_Skyline%2C_Detroit%2C_Mich_%2872685%29.jpg",
-      "source": "wikimedia",
-      "attribution": "Tichnor Brothers, Publisher via Wikimedia Commons (Public domain, https://commons.wikimedia.org/wiki/File:Belle_Isle_Bridge_and_Ambassador_Bridge,_against_Detroit's_Skyline,_Detroit,_Mich_(72685).jpg)",
-      "license": "Public domain",
-      "width": 1200,
-      "height": 754,
-      "description": "File:Belle Isle Bridge and Ambassador Bridge, against Detroit's Skyline, Detroit, Mich (72685).jpg"
-    },
-    {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Detroit_Skyline_%28123143197%29.jpeg/1280px-Detroit_Skyline_%28123143197%29.jpeg",
-      "source": "wikimedia",
-      "attribution": "<div class=\"fn value\">\n<a rel=\"nofollow\" class=\"external text\" href=\"https://500px.com/mtighe\">Michael Tighe</a></div> via Wikimedia Commons (CC0, https://commons.wikimedia.org/wiki/File:Detroit_Skyline_(123143197).jpeg)",
-      "license": "CC0",
-      "width": 1200,
-      "height": 633,
-      "description": "File:Detroit Skyline (123143197).jpeg"
+      "url": "https://images.unsplash.com/photo-1568267938179-f50e67de5ffc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NTUyMTB8MHwxfHNlYXJjaHwxfHxEZXRyb2l0JTIwc2t5bGluZSUyMGFlcmlhbHxlbnwwfDB8fHwxNzc5MTY4OTU0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "source": "unsplash",
+      "attribution": "Photo by William Duggan on Unsplash (https://unsplash.com/photos/cityscape-at-night-1SmpGvlKq2U)",
+      "license": "Unsplash License",
+      "width": 4720,
+      "height": 3069,
+      "description": "cityscape at night"
     }
   ],
   "las-vegas": [
     {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Las_Vegas_%28Nevada%2C_USA%29%2C_The_Strip_--_2012_--_6215.jpg/1280px-Las_Vegas_%28Nevada%2C_USA%29%2C_The_Strip_--_2012_--_6215.jpg",
-      "source": "wikimedia",
-      "attribution": "<bdi><a href=\"https://www.wikidata.org/wiki/Q34788025\" class=\"extiw\" title=\"d:Q34788025\"><span title=\"German photographer and mathematician\">Dietmar Rabich</span></a></bdi> via Wikimedia Commons (CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Las_Vegas_(Nevada,_USA),_The_Strip_--_2012_--_6215.jpg)",
-      "license": "CC BY-SA 4.0",
-      "width": 1200,
-      "height": 675,
-      "description": "File:Las Vegas (Nevada, USA), The Strip -- 2012 -- 6215.jpg"
-    },
-    {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Las_Vegas_%28Nevada%2C_USA%29%2C_The_Strip_--_2012_--_6232.jpg/1280px-Las_Vegas_%28Nevada%2C_USA%29%2C_The_Strip_--_2012_--_6232.jpg",
-      "source": "wikimedia",
-      "attribution": "<bdi><a href=\"https://www.wikidata.org/wiki/Q34788025\" class=\"extiw\" title=\"d:Q34788025\"><span title=\"German photographer and mathematician\">Dietmar Rabich</span></a></bdi> via Wikimedia Commons (CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Las_Vegas_(Nevada,_USA),_The_Strip_--_2012_--_6232.jpg)",
-      "license": "CC BY-SA 4.0",
-      "width": 1200,
-      "height": 826,
-      "description": "File:Las Vegas (Nevada, USA), The Strip -- 2012 -- 6232.jpg"
+      "url": "https://images.unsplash.com/photo-1581351721010-8cf859cb14a4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NTUyMTB8MHwxfHNlYXJjaHwxfHxMYXMlMjBWZWdhcyUyMHN0cmlwJTIwYWVyaWFsJTIwbmlnaHR8ZW58MHwwfHx8MTc3OTE2OTAzMXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "source": "unsplash",
+      "attribution": "Photo by Julian Paefgen on Unsplash (https://unsplash.com/photos/city-with-lights-turned-on-during-night-time-uxU_jyu9e7U)",
+      "license": "Unsplash License",
+      "width": 5472,
+      "height": 3648,
+      "description": "city with lights turned on during night time"
     }
   ],
   "nashville": [
     {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Skyline%2C_Nashville%2C_Tennessee_LCCN2010630791.tif/lossy-page1-1280px-Skyline%2C_Nashville%2C_Tennessee_LCCN2010630791.tif.jpg",
-      "source": "wikimedia",
-      "attribution": "<bdi><a href=\"https://en.wikipedia.org/wiki/en:Carol_M._Highsmith\" class=\"extiw\" title=\"w:en:Carol M. Highsmith\"><span title=\"American photographer (born 1946)\">Carol M. Highsmith</span></a></bdi> via Wikimedia Commons (Public domain, https://commons.wikimedia.org/wiki/File:Skyline,_Nashville,_Tennessee_LCCN2010630791.tif)",
-      "license": "Public domain",
-      "width": 1200,
-      "height": 900,
-      "description": "File:Skyline, Nashville, Tennessee LCCN2010630791.tif"
-    },
-    {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Skyline_of_Nashville%2C_Tennessee_-_panoramio.jpg/1280px-Skyline_of_Nashville%2C_Tennessee_-_panoramio.jpg",
-      "source": "wikimedia",
-      "attribution": "<a rel=\"nofollow\" class=\"external text\" href=\"https://web.archive.org/web/20161015064828/http://www.panoramio.com/user/390799?with_photo_id=38882955\">dokaspar</a> via Wikimedia Commons (CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Skyline_of_Nashville,_Tennessee_-_panoramio.jpg)",
-      "license": "CC BY-SA 3.0",
-      "width": 1200,
-      "height": 900,
-      "description": "File:Skyline of Nashville, Tennessee - panoramio.jpg"
+      "url": "https://images.unsplash.com/photo-1698323363518-a7681b81a9d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NTUyMTB8MHwxfHNlYXJjaHwxfHxOYXNodmlsbGUlMjBUZW5uZXNzZWUlMjBza3lsaW5lJTIwYWVyaWFsfGVufDB8MHx8fDE3NzkxNjkxMDh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "source": "unsplash",
+      "attribution": "Photo by Mike Gattorna on Unsplash (https://unsplash.com/photos/a-view-of-a-city-with-tall-buildings-8GOtEYr7qho)",
+      "license": "Unsplash License",
+      "width": 5464,
+      "height": 3640,
+      "description": "a view of a city with tall buildings"
     }
   ],
   "mexico-city": [
@@ -461,22 +299,13 @@
   ],
   "guadalajara": [
     {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Skyline_Guadalajara_%28cropped%29.jpg/1280px-Skyline_Guadalajara_%28cropped%29.jpg",
-      "source": "wikimedia",
-      "attribution": "<a href=\"//commons.wikimedia.org/wiki/User:Allenpivot\" title=\"User:Allenpivot\">Allenpivot</a> via Wikimedia Commons (CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Skyline_Guadalajara_(cropped).jpg)",
-      "license": "CC BY-SA 3.0",
-      "width": 1200,
-      "height": 515,
-      "description": "File:Skyline Guadalajara (cropped).jpg"
-    },
-    {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Skyline_Guadalajara_Americas_IMG_20211017_144749.jpg/1280px-Skyline_Guadalajara_Americas_IMG_20211017_144749.jpg",
-      "source": "wikimedia",
-      "attribution": "<a href=\"//commons.wikimedia.org/wiki/User:Isacdaavid\" title=\"User:Isacdaavid\">Isacdaavid</a> via Wikimedia Commons (CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Skyline_Guadalajara_Americas_IMG_20211017_144749.jpg)",
-      "license": "CC BY-SA 4.0",
-      "width": 1200,
-      "height": 554,
-      "description": "File:Skyline Guadalajara Americas IMG 20211017 144749.jpg"
+      "url": "https://images.unsplash.com/photo-1709066677338-5df32ba43697?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NTUyMTB8MHwxfHNlYXJjaHwxfHxHdWFkYWxhamFyYSUyMHNreWxpbmUlMjBhZXJpYWx8ZW58MHwwfHx8MTc3OTE2OTMzOXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "source": "unsplash",
+      "attribution": "Photo by Sergio Rodríguez on Unsplash (https://unsplash.com/photos/an-aerial-view-of-a-large-building-with-a-sky-background-R2e7JvTC9J8)",
+      "license": "Unsplash License",
+      "width": 3538,
+      "height": 2654,
+      "description": "an aerial view of a large building with a sky background"
     }
   ],
   "london": [
@@ -501,22 +330,13 @@
   ],
   "manchester": [
     {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Manchester_Skyline_-_geograph.org.uk_-_3810636.jpg/1280px-Manchester_Skyline_-_geograph.org.uk_-_3810636.jpg",
-      "source": "wikimedia",
-      "attribution": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.geograph.org.uk/profile/45586\">Anthony Parkes</a> <span class=\"mw-valign-text-top noprint\" typeof=\"mw:File/Frameless\"><a href=\"//commons.wikimedia.org/wiki/File:Manchester_Skyline_-_geograph.org.uk_-_3810636.jpg#P170\" title=\"Edit this at Structured Data on Commons\"><img alt=\"Edit this at Structured Data on Commons\" src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/OOjs_UI_icon_edit-ltr-progressive.svg/20px-OOjs_UI_icon_edit-ltr-progressive.svg.png\" decoding=\"async\" width=\"10\" height=\"10\" class=\"mw-file-element\" data-file-width=\"20\" data-file-height=\"20\"></a></span> via Wikimedia Commons (CC BY-SA 2.0, https://commons.wikimedia.org/wiki/File:Manchester_Skyline_-_geograph.org.uk_-_3810636.jpg)",
-      "license": "CC BY-SA 2.0",
-      "width": 1200,
-      "height": 826,
-      "description": "File:Manchester Skyline - geograph.org.uk - 3810636.jpg"
-    },
-    {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Manchester_skyline_-_geograph.org.uk_-_8219663.jpg/1280px-Manchester_skyline_-_geograph.org.uk_-_8219663.jpg",
-      "source": "wikimedia",
-      "attribution": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.geograph.org.uk/profile/22742\">Gerald England</a> <span class=\"mw-valign-text-top noprint\" typeof=\"mw:File/Frameless\"><a href=\"//commons.wikimedia.org/wiki/File:Manchester_skyline_-_geograph.org.uk_-_8219663.jpg#P170\" title=\"Edit this at Structured Data on Commons\"><img alt=\"Edit this at Structured Data on Commons\" src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/OOjs_UI_icon_edit-ltr-progressive.svg/20px-OOjs_UI_icon_edit-ltr-progressive.svg.png\" decoding=\"async\" width=\"10\" height=\"10\" class=\"mw-file-element\" data-file-width=\"20\" data-file-height=\"20\"></a></span> via Wikimedia Commons (CC BY-SA 2.0, https://commons.wikimedia.org/wiki/File:Manchester_skyline_-_geograph.org.uk_-_8219663.jpg)",
-      "license": "CC BY-SA 2.0",
-      "width": 1200,
-      "height": 866,
-      "description": "File:Manchester skyline - geograph.org.uk - 8219663.jpg"
+      "url": "https://images.unsplash.com/photo-1515586838455-8f8f940d6853?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NTUyMTB8MHwxfHNlYXJjaHwxfHxNYW5jaGVzdGVyJTIwc2t5bGluZSUyMGFlcmlhbHxlbnwwfDB8fHwxNzc5MTY5NDE1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "source": "unsplash",
+      "attribution": "Photo by William McCue on Unsplash (https://unsplash.com/photos/aerial-photography-of-concrete-buildings-at-daytime-1jZbU_XuyvU)",
+      "license": "Unsplash License",
+      "width": 4096,
+      "height": 2997,
+      "description": "aerial photography of concrete buildings at daytime"
     }
   ],
   "birmingham": [

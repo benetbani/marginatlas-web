@@ -64,6 +64,7 @@ import { DistributionVisual } from "@/components/DistributionVisual";
 import { NetProfitSummary } from "@/components/NetProfitSummary";
 import { CellFallbackBanner } from "@/components/CellFallbackBanner";
 import { EstimatedBadge } from "@/components/EstimatedBadge";
+import { CoverageIndicator, deriveCoverageTier } from "@/components/CoverageIndicator";
 
 type IndustryMarginRow = { gross_margin: number; operating_margin: number; asset_intensity?: number };
 const INDUSTRY_MARGINS = industryMarginsJson as unknown as {
@@ -472,15 +473,17 @@ export default async function CellPage({
         />
       ) : null}
 
-      {/* Plan v25 Block 11 — synthetic-cell disclosure. Renders when
-          `is_synthetic` is set, indicating the numbers come from
-          country+industry baselines (synthesizeCell), not measured
-          data. */}
-      <EstimatedBadge
-        isSynthetic={cell.is_synthetic === true}
-        industryName={cell.industry_name}
-        geoName={cell.geo_name}
-      />
+      {/* Plan v27 Lane B — universal coverage indicator. Replaces the
+          old EstimatedBadge; communicates one of four tiers (measured /
+          regional / estimated / modeled) with a single vocabulary. */}
+      <section className="py-2">
+        <CoverageIndicator
+          tier={deriveCoverageTier(cell)}
+          variant="expanded"
+          industryName={cell.industry_name}
+          geoName={cell.geo_name}
+        />
+      </section>
 
       {/* Plan v23 Part 3 — narrative now reads as editorial prose. Drop
          cap on the first paragraph, looser line-height, max-w-prose. */}

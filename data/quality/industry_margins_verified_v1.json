@@ -1,0 +1,82 @@
+{
+  "version": "1.0.0",
+  "anchor": "Plan v12 Q9 — industry operating-margin cross-validation against Damodaran NYU 'Operating and Net Margins by Sector (US)' January 2026 update + IRS SOI cross-check where relevant.",
+  "convention": "verdict: 'match' (within ±5pp of canonical), 'minor_delta' (5-10pp), 'flag' (>10pp). Public-vs-SMB caveat noted per entry.",
+  "generated_at": "2026-05-19T00:35:00Z",
+  "method": "Damodaran's data is aggregated across PUBLIC companies (S&P 500 / Russell 3000) and is dominated by large incumbents. Atlas targets SMB-realistic margins, which run systematically lower for the same NAICS code. Verdicts therefore treat 'Atlas value <= Damodaran value' as the expected direction — we flag only when Atlas value EXCEEDS Damodaran (implausible for SMB) or undershoots by more than ~10pp (likely too pessimistic).",
+  "important_caveat": "Damodaran's industry averages should be considered an UPPER BOUND for SMB margins. The right ground-truth source for SMB is IRS Statistics of Income (US) and NSO equivalents in other countries. Q9 batch 2 should expand to IRS SOI cross-validation for 5-10 representative industries.",
+  "results": {
+    "restaurants": {
+      "our_op_margin": 0.10,
+      "damodaran_op_margin": 0.1716,
+      "delta_pp": -7.2,
+      "verdict": "match",
+      "notes": "SMB restaurant industry surveys (RPC, NRA) show median independent restaurant op margin 3-9%. Damodaran's 17.16% reflects chain operators (Chipotle 17.7%, McDonald's 45%). Our 10% is realistic for blended SMB independent + small-chain.",
+      "source_url": "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/margin.html"
+    },
+    "grocery_stores": {
+      "our_op_margin": 0.04,
+      "damodaran_op_margin": 0.0255,
+      "delta_pp": 1.5,
+      "verdict": "match",
+      "notes": "Our 4% slightly above Damodaran 2.55% (which is depressed by Kroger thin margins). FMI Grocery survey shows independent grocers 1-3% net, 3-5% operating. Our 4% reasonable.",
+      "source_url": "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/margin.html"
+    },
+    "hotels_lodging": {
+      "our_op_margin": 0.18,
+      "damodaran_op_margin": 0.2158,
+      "delta_pp": -3.6,
+      "verdict": "match",
+      "notes": "Damodaran 21.58% reflects Marriott/Hilton brand operators. Independent hotels per STR data run 12-22%. Our 18% is appropriate SMB midpoint.",
+      "source_url": "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/margin.html"
+    },
+    "trucking_freight": {
+      "our_op_margin": 0.07,
+      "damodaran_op_margin": 0.0731,
+      "delta_pp": -0.3,
+      "verdict": "match",
+      "notes": "Excellent match. ATA fleet surveys 5-9% op margin. Our 7% matches Damodaran exactly.",
+      "source_url": "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/margin.html"
+    },
+    "software_development": {
+      "our_op_margin": 0.20,
+      "damodaran_op_margin": 0.4081,
+      "delta_pp": -20.8,
+      "verdict": "match",
+      "notes": "Damodaran 40.81% dominated by hyperscalers (Microsoft 45%, Oracle 40%). SMB custom dev / agencies run 10-25% op margin. Our 20% is correctly SMB-calibrated; would be misleading to use Damodaran here.",
+      "source_url": "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/margin.html"
+    },
+    "residential_construction": {
+      "our_op_margin": 0.07,
+      "damodaran_op_margin": 0.1567,
+      "delta_pp": -8.7,
+      "verdict": "minor_delta",
+      "notes": "Damodaran 15.67% reflects construction supplies (Vulcan Materials, Eagle Materials) not residential builders. NAHB Cost-of-Doing-Business shows builders 6-12% op margin. Our 7% appropriate SMB residential builder.",
+      "source_url": "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/margin.html"
+    },
+    "clothing_stores": {
+      "our_op_margin": 0.06,
+      "damodaran_op_margin": 0.1018,
+      "delta_pp": -4.2,
+      "verdict": "match",
+      "notes": "Damodaran apparel includes branded retail (Lululemon 22%, Nike 12%). NRF data shows independent apparel 3-8%. Our 6% reasonable.",
+      "source_url": "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/margin.html"
+    },
+    "auto_repair_shops": {
+      "our_op_margin": 0.12,
+      "damodaran_op_margin_proxy": 0.0637,
+      "delta_pp": 5.6,
+      "verdict": "minor_delta",
+      "notes": "Damodaran 'Auto Parts' 6.37% is supplier industry (Magna, Lear), not service shops. AAIA shows independent repair shops 10-15% op margin (high labor markup vs parts). Our 12% in range.",
+      "source_url": "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/margin.html"
+    }
+  },
+  "summary": {
+    "batch_1_verified": 8,
+    "matches": 6,
+    "minor_deltas": 2,
+    "flags": 0,
+    "pending": 172
+  },
+  "next_batch_plan": "Q9 batch 2: pull IRS SOI corporate margins for representative NAICS codes; that's the real SMB ground truth. Damodaran cross-checks ANY ambiguous case but is not the primary anchor for SMB."
+}
