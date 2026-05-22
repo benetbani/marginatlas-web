@@ -5,12 +5,23 @@
  *   <meta property="og:image" content="/og/cell?country=us&geo=california&industry=restaurants" />
  *
  * Renders a 1200x630 image with the cell's revenue + industry + region.
- * Edge runtime so it ships in Vercel without bloat.
+ *
+ * Plan v26 Phase A.3 — switched from Edge to Node.js runtime. Plan v24
+ * Block 11's JSON-import of cell_triage_v1.json (2.8 MB) chained into
+ * this Edge bundle via cells.ts, pushing it over Vercel Hobby's 1 MB
+ * Edge function cap. Vercel rejected every deploy from Plan v24 Block 1
+ * through Plan v25 with: "The Edge Function 'og/cell' size is 1.15 MB
+ * and your plan size limit is 1 MB."
+ *
+ * Node runtime caps function size at 50 MB (no concern) at the cost of
+ * a slightly slower cold start (~50-100 ms). Imperceptible for OG
+ * image generation. If traffic later justifies Edge, the path is to
+ * decouple the triage data from cells.ts via a runtime fetch.
  */
 import { ImageResponse } from "next/og";
 import { getCellBySlug } from "@/lib/cells";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 function formatMoney(v: number | null | undefined): string {
   if (v == null) return "-";
