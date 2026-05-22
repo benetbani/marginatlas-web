@@ -1,0 +1,165 @@
+[
+  {
+    "table": "cells_master",
+    "total_rows": null,
+    "by_country": {},
+    "countries_count": 1,
+    "industries_sample": [
+      "42495 Paint, Varnish, and Supplies Merchant Wholesalers",
+      "424950 Paint, Varnish, and Supplies Merchant Wholesalers",
+      "51213 Motion Picture and Video Exhibition",
+      "515 Broadcasting (except Internet)",
+      "517311 Wired Telecommunications Carriers",
+      "519 Other Information Services",
+      "5191 Other Information Services",
+      "51912 Libraries and Archives",
+      "52212 Savings Institutions",
+      "53 Real Estate and Rental and Leasing",
+      "532284 Recreational Goods Rental",
+      "541213 Tax Preparation Services",
+      "54199 All Other Professional, Scientific, and Technical Services",
+      "561210 Facilities Support Services",
+      "56131 Employment Placement Agencies and Executive Search Services",
+      "56162 Security Systems Services",
+      "62111 Offices of Physicians",
+      "623210 Residential Intellectual and Developmental Disability Facili",
+      "71394 Fitness and Recreational Sports Centers",
+      "721211 RV (Recreational Vehicle) Parks and Campgrounds",
+      "722 Food Services and Drinking Places",
+      "81142 Reupholstery and Furniture Repair",
+      "8123 Drycleaning and Laundry Services",
+      "81233 Linen and Uniform Supply",
+      "81293 Parking Lots and Garages",
+      "8139 Business, Professional, Labor, Political, and Similar Organi",
+      "23817 Siding Contractors",
+      "23822 Plumbing, Heating, and Air-Conditioning Contractors",
+      "2389 Other Specialty Trade Contractors",
+      "23899 All Other Specialty Trade Contractors"
+    ],
+    "industries_count_approx": 717,
+    "geo_levels": {},
+    "year_min": null,
+    "year_max": null,
+    "null_rates": {
+      "n": 0,
+      "rev_p10": 0.14,
+      "rev_p50": 0.14,
+      "rev_p90": 0.14,
+      "total_employment": 0,
+      "mean_wage_per_employee_usd": 0,
+      "quality_score": 0
+    },
+    "quality_distribution": {
+      "lt_30": 0,
+      "30_50": 0,
+      "50_70": 68,
+      "70_85": 237,
+      "gte_85": 695
+    },
+    "notes": [
+      "US-only. NAICS-6 industry codes. State-level (geo_id = US-XX)."
+    ]
+  },
+  {
+    "table": "regional_cells",
+    "total_rows": null,
+    "by_country": {
+      "DE": 6522,
+      "ES": 14386,
+      "BE": 1618,
+      "CH": 1584,
+      "AT": 2833,
+      "PL": 3036,
+      "PT": 1176,
+      "SE": 1386,
+      "NO": 977,
+      "DK": 765,
+      "FI": 834,
+      "IE": 330,
+      "CZ": 1139,
+      "HU": 1390,
+      "RO": 1548,
+      "TR": 1320,
+      "RU": 2640,
+      "JP": 6951,
+      "KR": 1584,
+      "CN": 2640,
+      "IN": 2112,
+      "NZ": 1056,
+      "ZA": 1320,
+      "EG": 792,
+      "AR": 1056,
+      "CL": 1056,
+      "CO": 1056,
+      "PE": 1056,
+      "MY": 1320,
+      "TH": 1056,
+      "ID": 1584,
+      "PH": 1584,
+      "VN": 1320,
+      "AE": 792,
+      "SA": 1320,
+      "IL": 2112,
+      "QA": 264
+    },
+    "countries_count": 37,
+    "industries_sample": [
+      "air_transport_carriers",
+      "auto_dealers_gas"
+    ],
+    "industries_count_approx": 2,
+    "geo_levels": {
+      "county": 971,
+      "lad": 29
+    },
+    "year_min": null,
+    "year_max": null,
+    "null_rates": {
+      "n_enterprises": 0,
+      "rev_p10": 1,
+      "rev_p50": 1,
+      "rev_p90": 1,
+      "n_employees": 0.017,
+      "payroll_per_employee": 0.017,
+      "quality_score": 0
+    },
+    "quality_distribution": {
+      "lt_30": 0,
+      "30_50": 0,
+      "50_70": 0,
+      "70_85": 0,
+      "gte_85": 1000
+    },
+    "notes": []
+  },
+  {
+    "table": "extrapolated_cells",
+    "total_rows": 107734,
+    "by_country": {
+      "": 264,
+      "ABW": 264,
+      "AFE": 264,
+      "AFG": 208
+    },
+    "countries_count": 4,
+    "industries_sample": [
+      "air_transport_carriers",
+      "auto_dealers_gas"
+    ],
+    "industries_count_approx": 2,
+    "geo_levels": {
+      "country": 0
+    },
+    "year_min": null,
+    "year_max": null,
+    "null_rates": {
+      "predicted_rev_per_firm": 0,
+      "quality_score": 0,
+      "coverage_tier": 0
+    },
+    "quality_distribution": {},
+    "notes": [
+      "Country-level extrapolations. country_iso3 only (no sub-national)."
+    ]
+  }
+]
