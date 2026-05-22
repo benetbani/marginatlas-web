@@ -59,6 +59,7 @@ import { HeroBenchmark } from "@/components/HeroBenchmark";
 import { CityHero } from "@/components/CityHero";
 import { ComparableCitiesRibbon } from "@/components/ComparableCitiesRibbon";
 import { LocalContextCard } from "@/components/LocalContextCard";
+import { TrendSparkline } from "@/components/TrendSparkline";
 import { DistributionVisual } from "@/components/DistributionVisual";
 import { NetProfitSummary } from "@/components/NetProfitSummary";
 import { CellFallbackBanner } from "@/components/CellFallbackBanner";
@@ -443,10 +444,20 @@ export default async function CellPage({
         revenue={cell.revenue_per_firm ?? null}
         currencySymbol="$"
       />
-      {/* Currency switcher under the hero, quiet */}
-      <div className="bg-cream-100 pb-6 md:pb-8 -mt-2 flex items-center gap-2 flex-wrap text-xs text-cocoa-700/70">
-        <span>Show numbers in:</span>
-        <CurrencySwitcher />
+      {/* Currency switcher + trend sparkline under the hero, quiet */}
+      <div className="bg-cream-100 pb-6 md:pb-8 -mt-2 flex items-center gap-4 flex-wrap text-xs text-cocoa-700/70">
+        <div className="flex items-center gap-2">
+          <span>Show numbers in:</span>
+          <CurrencySwitcher />
+        </div>
+        {/* Reformation idea #3 — synthesized 5-year trajectory.
+            Industry-typical CAGR; clearly labelled as estimate. */}
+        {cell.industry_id ? (
+          <div className="flex items-center gap-2">
+            <span>5-yr trend:</span>
+            <TrendSparkline industryId={cell.industry_id} />
+          </div>
+        ) : null}
       </div>
 
       {/* Plan v24 Block 3 — substitution disclosure. Renders only when
