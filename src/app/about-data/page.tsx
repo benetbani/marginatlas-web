@@ -68,6 +68,60 @@ export default function AboutDataPage() {
       </section>
 
       <section className="mt-10">
+        <h2 className="text-xl font-semibold text-ink-900">Coverage tiers</h2>
+        <p className="mt-3 text-ink-800">
+          Every page in Atlas shows a coverage chip next to the headline number.
+          Four tiers, one vocabulary:
+        </p>
+
+        <div id="measured" className="mt-6 border-l-4 border-l-emerald-500 bg-emerald-50 px-5 py-4 rounded-r-lg scroll-mt-24">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-emerald-900 mb-1">
+            <span className="w-2 h-2 rounded-full bg-emerald-500" />
+            Measured
+          </div>
+          <p className="text-ink-800 text-sm leading-relaxed">
+            Direct measurement of the firms in this geography and industry.
+            Highest confidence; the number is what the average firm actually earns.
+          </p>
+        </div>
+
+        <div id="regional" className="mt-3 border-l-4 border-l-sky-500 bg-sky-50 px-5 py-4 rounded-r-lg scroll-mt-24">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-sky-900 mb-1">
+            <span className="w-2 h-2 rounded-full bg-sky-500" />
+            Regional
+          </div>
+          <p className="text-ink-800 text-sm leading-relaxed">
+            A broader regional or national benchmark applied to this geography.
+            Strong directional signal; precision drops the smaller the cell.
+          </p>
+        </div>
+
+        <div id="estimated" className="mt-3 border-l-4 border-l-amber-500 bg-amber-50 px-5 py-4 rounded-r-lg scroll-mt-24">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-amber-900 mb-1">
+            <span className="w-2 h-2 rounded-full bg-amber-500" />
+            Estimated
+          </div>
+          <p className="text-ink-800 text-sm leading-relaxed">
+            Estimated from country-level economic indicators (GDP per capita,
+            governance index, urbanization) combined with global industry
+            averages. Useful as orientation; not a precise reading.
+          </p>
+        </div>
+
+        <div id="modeled" className="mt-3 border-l-4 border-l-stone-500 bg-stone-50 px-5 py-4 rounded-r-lg scroll-mt-24">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-stone-900 mb-1">
+            <span className="w-2 h-2 rounded-full bg-stone-500" />
+            Modeled
+          </div>
+          <p className="text-ink-800 text-sm leading-relaxed">
+            A transparent model output combining global industry averages
+            with country-level scaling factors. No underlying observation
+            for this cell; the number is what we'd expect on average.
+          </p>
+        </div>
+      </section>
+
+      <section className="mt-10">
         <h2 className="text-xl font-semibold text-ink-900">Updates</h2>
         <p className="mt-3 text-ink-800">
           The dataset is refreshed regularly. Each benchmark page indicates the recency of the underlying observation.
