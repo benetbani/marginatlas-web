@@ -431,18 +431,27 @@ export async function getCellBySlug(
 ): Promise<Cell> {
   const country = countrySlug.toUpperCase();
   const real = await getCellBySlugRaw(country, geoSlug, industrySlug, selector);
+  let cell: Cell;
   if (real) {
-    // Real data — fill any missing fields with defaults, then enforce
-    // common-sense math so the rendered numbers add up.
-    return enforceSanity(fillMissingFields(real));
+    cell = enforceSanity(fillMissingFields(real));
+  } else {
+    cell = enforceSanity(
+      synthesizeCell(country, industrySlug, {
+        geoSlug,
+        geoName: geoNameFromSlug(country, geoSlug),
+        year: selector.year || undefined,
+      }),
+    );
   }
-  // No real data. Synthesize from country + industry baselines.
-  const synthesized = synthesizeCell(country, industrySlug, {
-    geoSlug,
-    geoName: geoNameFromSlug(country, geoSlug),
-    year: selector.year || undefined,
-  });
-  return enforceSanity(synthesized);
+  // Plan v26 A.5 drift fix — apply the manual / friendly city-alias
+  // display label UNIVERSALLY at the end of the lookup chain. Previously
+  // this override lived only in getRegionalCell, so when the chain fell
+  // through to getExtrapolatedCell (typical on production with limited
+  // RLS access) the page rendered country-level geo_name ("DE") instead
+  // of "Frankfurt am Main". Applying it here covers every code path.
+  const friendlyLabel = geoNameFromSlug(country, geoSlug);
+  if (friendlyLabel) cell.geo_name = friendlyLabel;
+  return cell;
 }
 
 /**
