@@ -22,11 +22,13 @@ import { score100to10 } from "@/components/QualityDots";
 import { hasRegionalCoverage } from "@/lib/coverage/regional";
 import { getAdmin1Regions } from "@/lib/coverage/admin1";
 import { isPathSuppressed } from "@/lib/quality/thin_pages";
+import neighborhoodsJson from "../../data/cities/neighborhoods_v1.json";
+import cityListJson from "../../data/cities/city_list_v1.json";
 
 const BASE_URL = "https://www.marginatlas.com";
 
 export async function generateSitemaps() {
-  return [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
+  return [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
 }
 
 export default async function sitemap({
@@ -46,6 +48,7 @@ export default async function sitemap({
   if (numId === 2) return regionalCellsSitemap();
   if (numId === 3) return coverageScorecardSitemap();
   if (numId === 4) return regionIndustryHubsSitemap();
+  if (numId === 5) return neighborhoodSitemap();
   return [];
 }
 
@@ -154,6 +157,68 @@ async function regionIndustryHubsSitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: "weekly" as const,
         priority: 0.6,
       });
+    }
+  }
+  return out;
+}
+
+/**
+ * Plan v26 Phase B.5 — neighborhood × industry URLs.
+ *
+ * Emits /[country]/[city]/[neighborhood]/[industry] for every entry
+ * in data/cities/neighborhoods_v1.json crossed with the top-20
+ * industries. ~23 cities × ~5 neighborhoods × 20 industries =
+ * ~2,300 URLs. Comfortably within the 50K-per-shard sitemap limit.
+ */
+async function neighborhoodSitemap(): Promise<MetadataRoute.Sitemap> {
+  const TOP_INDUSTRIES = [
+    "restaurants",
+    "cafes-coffee-shops",
+    "bars-pubs-clubs",
+    "bakeries-pastries",
+    "hotels-lodging",
+    "clothing-stores",
+    "jewelry-stores",
+    "grocery-stores",
+    "hairdressers-beauty",
+    "legal-services",
+    "management-consulting",
+    "accounting-bookkeeping",
+    "software-development",
+    "marketing-design",
+    "real-estate-agencies",
+    "residential-construction",
+    "specialty-trades",
+    "auto-repair-shops",
+    "veterinary-pet-care",
+    "fabricated-metal-mfg",
+  ];
+
+  type CityListEntry = { slug: string; iso2: string };
+  type CityScheme = {
+    scheme: string;
+    neighborhoods: Array<{ slug: string }>;
+  };
+
+  const cities = (cityListJson as { cities: CityListEntry[] }).cities;
+  const nbCities = (
+    neighborhoodsJson as { cities: Record<string, CityScheme> }
+  ).cities;
+
+  const out: MetadataRoute.Sitemap = [];
+  for (const [citySlug, scheme] of Object.entries(nbCities)) {
+    const cityEntry = cities.find((c) => c.slug === citySlug);
+    if (!cityEntry) continue;
+    const country = cityEntry.iso2.toLowerCase();
+    for (const nb of scheme.neighborhoods) {
+      for (const industrySlug of TOP_INDUSTRIES) {
+        out.push({
+          url: `${BASE_URL}/${country}/${citySlug}/${nb.slug}/${industrySlug}`,
+          lastModified: new Date(),
+          changeFrequency: "weekly" as const,
+          priority: 0.55,
+        });
+      }
     }
   }
   return out;
