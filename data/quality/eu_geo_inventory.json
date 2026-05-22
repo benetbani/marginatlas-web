@@ -1,0 +1,1789 @@
+[
+  {
+    "country": "DE",
+    "totalRows": 6522,
+    "uniqueGeos": 54,
+    "byLevel": {
+      "nuts1": 16,
+      "nuts2": 38
+    },
+    "sample": [
+      {
+        "geo_id": "DE1",
+        "geo_level": "nuts1",
+        "geo_name": "Baden-Württemberg"
+      },
+      {
+        "geo_id": "DE11",
+        "geo_level": "nuts2",
+        "geo_name": "Stuttgart"
+      },
+      {
+        "geo_id": "DE12",
+        "geo_level": "nuts2",
+        "geo_name": "Karlsruhe"
+      },
+      {
+        "geo_id": "DE13",
+        "geo_level": "nuts2",
+        "geo_name": "Freiburg"
+      },
+      {
+        "geo_id": "DE14",
+        "geo_level": "nuts2",
+        "geo_name": "Tübingen"
+      },
+      {
+        "geo_id": "DE2",
+        "geo_level": "nuts1",
+        "geo_name": "Bayern"
+      },
+      {
+        "geo_id": "DE21",
+        "geo_level": "nuts2",
+        "geo_name": "Oberbayern"
+      },
+      {
+        "geo_id": "DE22",
+        "geo_level": "nuts2",
+        "geo_name": "Niederbayern"
+      },
+      {
+        "geo_id": "DE23",
+        "geo_level": "nuts2",
+        "geo_name": "Oberpfalz"
+      },
+      {
+        "geo_id": "DE24",
+        "geo_level": "nuts2",
+        "geo_name": "Oberfranken"
+      },
+      {
+        "geo_id": "DE25",
+        "geo_level": "nuts2",
+        "geo_name": "Mittelfranken"
+      },
+      {
+        "geo_id": "DE26",
+        "geo_level": "nuts2",
+        "geo_name": "Unterfranken"
+      },
+      {
+        "geo_id": "DE27",
+        "geo_level": "nuts2",
+        "geo_name": "Schwaben"
+      },
+      {
+        "geo_id": "DE3",
+        "geo_level": "nuts1",
+        "geo_name": "Berlin"
+      },
+      {
+        "geo_id": "DE30",
+        "geo_level": "nuts2",
+        "geo_name": "Berlin"
+      },
+      {
+        "geo_id": "DE4",
+        "geo_level": "nuts1",
+        "geo_name": "Brandenburg"
+      },
+      {
+        "geo_id": "DE40",
+        "geo_level": "nuts2",
+        "geo_name": "Brandenburg"
+      },
+      {
+        "geo_id": "DE5",
+        "geo_level": "nuts1",
+        "geo_name": "Bremen"
+      },
+      {
+        "geo_id": "DE50",
+        "geo_level": "nuts2",
+        "geo_name": "Bremen"
+      },
+      {
+        "geo_id": "DE6",
+        "geo_level": "nuts1",
+        "geo_name": "Hamburg"
+      },
+      {
+        "geo_id": "DE60",
+        "geo_level": "nuts2",
+        "geo_name": "Hamburg"
+      },
+      {
+        "geo_id": "DE7",
+        "geo_level": "nuts1",
+        "geo_name": "Hessen"
+      },
+      {
+        "geo_id": "DE71",
+        "geo_level": "nuts2",
+        "geo_name": "Darmstadt"
+      },
+      {
+        "geo_id": "DE72",
+        "geo_level": "nuts2",
+        "geo_name": "Gießen"
+      },
+      {
+        "geo_id": "DE73",
+        "geo_level": "nuts2",
+        "geo_name": "Kassel"
+      }
+    ]
+  },
+  {
+    "country": "FR",
+    "totalRows": 5173,
+    "uniqueGeos": 43,
+    "byLevel": {
+      "nuts1": 15,
+      "nuts2": 28
+    },
+    "sample": [
+      {
+        "geo_id": "FR1",
+        "geo_level": "nuts1",
+        "geo_name": "Ile de France"
+      },
+      {
+        "geo_id": "FR10",
+        "geo_level": "nuts2",
+        "geo_name": "Ile de France"
+      },
+      {
+        "geo_id": "FRB",
+        "geo_level": "nuts1",
+        "geo_name": "Centre — Val de Loire"
+      },
+      {
+        "geo_id": "FRB0",
+        "geo_level": "nuts2",
+        "geo_name": "Centre — Val de Loire"
+      },
+      {
+        "geo_id": "FRC",
+        "geo_level": "nuts1",
+        "geo_name": "Bourgogne-Franche-Comté"
+      },
+      {
+        "geo_id": "FRC1",
+        "geo_level": "nuts2",
+        "geo_name": "Bourgogne"
+      },
+      {
+        "geo_id": "FRC2",
+        "geo_level": "nuts2",
+        "geo_name": "Franche-Comté"
+      },
+      {
+        "geo_id": "FRD",
+        "geo_level": "nuts1",
+        "geo_name": "Normandie"
+      },
+      {
+        "geo_id": "FRE",
+        "geo_level": "nuts1",
+        "geo_name": "Hauts-de-France"
+      },
+      {
+        "geo_id": "FRE1",
+        "geo_level": "nuts2",
+        "geo_name": "Nord-Pas de Calais"
+      },
+      {
+        "geo_id": "FRE2",
+        "geo_level": "nuts2",
+        "geo_name": "Picardie"
+      },
+      {
+        "geo_id": "FRF",
+        "geo_level": "nuts1",
+        "geo_name": "Grand Est"
+      },
+      {
+        "geo_id": "FRF1",
+        "geo_level": "nuts2",
+        "geo_name": "Alsace"
+      },
+      {
+        "geo_id": "FRF2",
+        "geo_level": "nuts2",
+        "geo_name": "Champagne-Ardenne"
+      },
+      {
+        "geo_id": "FRF3",
+        "geo_level": "nuts2",
+        "geo_name": "Lorraine"
+      },
+      {
+        "geo_id": "FRG",
+        "geo_level": "nuts1",
+        "geo_name": "Pays de la Loire"
+      },
+      {
+        "geo_id": "FRG0",
+        "geo_level": "nuts2",
+        "geo_name": "Pays de la Loire"
+      },
+      {
+        "geo_id": "FRH",
+        "geo_level": "nuts1",
+        "geo_name": "Bretagne"
+      },
+      {
+        "geo_id": "FRH0",
+        "geo_level": "nuts2",
+        "geo_name": "Bretagne"
+      },
+      {
+        "geo_id": "FRI",
+        "geo_level": "nuts1",
+        "geo_name": "Nouvelle-Aquitaine"
+      },
+      {
+        "geo_id": "FRI1",
+        "geo_level": "nuts2",
+        "geo_name": "Aquitaine"
+      },
+      {
+        "geo_id": "FRI2",
+        "geo_level": "nuts2",
+        "geo_name": "Limousin"
+      },
+      {
+        "geo_id": "FRI3",
+        "geo_level": "nuts2",
+        "geo_name": "Poitou-Charentes"
+      },
+      {
+        "geo_id": "FRJ",
+        "geo_level": "nuts1",
+        "geo_name": "Occitanie"
+      },
+      {
+        "geo_id": "FRJ1",
+        "geo_level": "nuts2",
+        "geo_name": "Languedoc-Roussillon"
+      }
+    ]
+  },
+  {
+    "country": "GB",
+    "totalRows": 15816,
+    "uniqueGeos": 249,
+    "byLevel": {
+      "lad": 249
+    },
+    "sample": [
+      {
+        "geo_id": "GB-E06000001",
+        "geo_level": "lad",
+        "geo_name": "Hartlepool"
+      },
+      {
+        "geo_id": "GB-E06000002",
+        "geo_level": "lad",
+        "geo_name": "Middlesbrough"
+      },
+      {
+        "geo_id": "GB-E06000003",
+        "geo_level": "lad",
+        "geo_name": "Redcar and Cleveland"
+      },
+      {
+        "geo_id": "GB-E06000004",
+        "geo_level": "lad",
+        "geo_name": "Stockton-on-Tees"
+      },
+      {
+        "geo_id": "GB-E06000005",
+        "geo_level": "lad",
+        "geo_name": "Darlington"
+      },
+      {
+        "geo_id": "GB-E06000006",
+        "geo_level": "lad",
+        "geo_name": "Halton"
+      },
+      {
+        "geo_id": "GB-E06000007",
+        "geo_level": "lad",
+        "geo_name": "Warrington"
+      },
+      {
+        "geo_id": "GB-E06000008",
+        "geo_level": "lad",
+        "geo_name": "Blackburn with Darwen"
+      },
+      {
+        "geo_id": "GB-E06000009",
+        "geo_level": "lad",
+        "geo_name": "Blackpool"
+      },
+      {
+        "geo_id": "GB-E06000010",
+        "geo_level": "lad",
+        "geo_name": "Kingston upon Hull, City of"
+      },
+      {
+        "geo_id": "GB-E06000011",
+        "geo_level": "lad",
+        "geo_name": "East Riding of Yorkshire"
+      },
+      {
+        "geo_id": "GB-E06000012",
+        "geo_level": "lad",
+        "geo_name": "North East Lincolnshire"
+      },
+      {
+        "geo_id": "GB-E06000013",
+        "geo_level": "lad",
+        "geo_name": "North Lincolnshire"
+      },
+      {
+        "geo_id": "GB-E06000014",
+        "geo_level": "lad",
+        "geo_name": "York"
+      },
+      {
+        "geo_id": "GB-E06000015",
+        "geo_level": "lad",
+        "geo_name": "Derby"
+      },
+      {
+        "geo_id": "GB-E06000016",
+        "geo_level": "lad",
+        "geo_name": "Leicester"
+      },
+      {
+        "geo_id": "GB-E06000017",
+        "geo_level": "lad",
+        "geo_name": "Rutland"
+      },
+      {
+        "geo_id": "GB-E06000018",
+        "geo_level": "lad",
+        "geo_name": "Nottingham"
+      },
+      {
+        "geo_id": "GB-E06000019",
+        "geo_level": "lad",
+        "geo_name": "Herefordshire, County of"
+      },
+      {
+        "geo_id": "GB-E06000020",
+        "geo_level": "lad",
+        "geo_name": "Telford and Wrekin"
+      },
+      {
+        "geo_id": "GB-E06000021",
+        "geo_level": "lad",
+        "geo_name": "Stoke-on-Trent"
+      },
+      {
+        "geo_id": "GB-E06000031",
+        "geo_level": "lad",
+        "geo_name": "Peterborough"
+      },
+      {
+        "geo_id": "GB-E06000032",
+        "geo_level": "lad",
+        "geo_name": "Luton"
+      },
+      {
+        "geo_id": "GB-E06000033",
+        "geo_level": "lad",
+        "geo_name": "Southend-on-Sea"
+      },
+      {
+        "geo_id": "GB-E06000034",
+        "geo_level": "lad",
+        "geo_name": "Thurrock"
+      }
+    ]
+  },
+  {
+    "country": "IT",
+    "totalRows": 3261,
+    "uniqueGeos": 26,
+    "byLevel": {
+      "nuts1": 5,
+      "nuts2": 21
+    },
+    "sample": [
+      {
+        "geo_id": "ITC",
+        "geo_level": "nuts1",
+        "geo_name": "Nord-Ovest"
+      },
+      {
+        "geo_id": "ITC1",
+        "geo_level": "nuts2",
+        "geo_name": "Piemonte"
+      },
+      {
+        "geo_id": "ITC2",
+        "geo_level": "nuts2",
+        "geo_name": "Valle d’Aosta/Vallée d’Aoste"
+      },
+      {
+        "geo_id": "ITC3",
+        "geo_level": "nuts2",
+        "geo_name": "Liguria"
+      },
+      {
+        "geo_id": "ITC4",
+        "geo_level": "nuts2",
+        "geo_name": "Lombardia"
+      },
+      {
+        "geo_id": "ITF",
+        "geo_level": "nuts1",
+        "geo_name": "Sud"
+      },
+      {
+        "geo_id": "ITF1",
+        "geo_level": "nuts2",
+        "geo_name": "Abruzzo"
+      },
+      {
+        "geo_id": "ITF2",
+        "geo_level": "nuts2",
+        "geo_name": "Molise"
+      },
+      {
+        "geo_id": "ITF3",
+        "geo_level": "nuts2",
+        "geo_name": "Campania"
+      },
+      {
+        "geo_id": "ITF4",
+        "geo_level": "nuts2",
+        "geo_name": "Puglia"
+      },
+      {
+        "geo_id": "ITF5",
+        "geo_level": "nuts2",
+        "geo_name": "Basilicata"
+      },
+      {
+        "geo_id": "ITF6",
+        "geo_level": "nuts2",
+        "geo_name": "Calabria"
+      },
+      {
+        "geo_id": "ITG",
+        "geo_level": "nuts1",
+        "geo_name": "Isole"
+      },
+      {
+        "geo_id": "ITG1",
+        "geo_level": "nuts2",
+        "geo_name": "Sicilia"
+      },
+      {
+        "geo_id": "ITG2",
+        "geo_level": "nuts2",
+        "geo_name": "Sardegna"
+      },
+      {
+        "geo_id": "ITH",
+        "geo_level": "nuts1",
+        "geo_name": "Nord-Est"
+      },
+      {
+        "geo_id": "ITH1",
+        "geo_level": "nuts2",
+        "geo_name": "Provincia Autonoma di Bolzano/Bozen"
+      },
+      {
+        "geo_id": "ITH2",
+        "geo_level": "nuts2",
+        "geo_name": "Provincia Autonoma di Trento"
+      },
+      {
+        "geo_id": "ITH3",
+        "geo_level": "nuts2",
+        "geo_name": "Veneto"
+      },
+      {
+        "geo_id": "ITH4",
+        "geo_level": "nuts2",
+        "geo_name": "Friuli-Venezia Giulia"
+      },
+      {
+        "geo_id": "ITH5",
+        "geo_level": "nuts2",
+        "geo_name": "Emilia-Romagna"
+      },
+      {
+        "geo_id": "ITI",
+        "geo_level": "nuts1",
+        "geo_name": "Centro (IT)"
+      },
+      {
+        "geo_id": "ITI1",
+        "geo_level": "nuts2",
+        "geo_name": "Toscana"
+      },
+      {
+        "geo_id": "ITI2",
+        "geo_level": "nuts2",
+        "geo_name": "Umbria"
+      },
+      {
+        "geo_id": "ITI3",
+        "geo_level": "nuts2",
+        "geo_name": "Marche"
+      }
+    ]
+  },
+  {
+    "country": "ES",
+    "totalRows": 14386,
+    "uniqueGeos": 78,
+    "byLevel": {
+      "province": 52,
+      "nuts2": 19,
+      "nuts1": 7
+    },
+    "sample": [
+      {
+        "geo_id": "ES-01",
+        "geo_level": "province",
+        "geo_name": "Álava"
+      },
+      {
+        "geo_id": "ES-02",
+        "geo_level": "province",
+        "geo_name": "Albacete"
+      },
+      {
+        "geo_id": "ES-03",
+        "geo_level": "province",
+        "geo_name": "Alicante"
+      },
+      {
+        "geo_id": "ES-04",
+        "geo_level": "province",
+        "geo_name": "Almería"
+      },
+      {
+        "geo_id": "ES-05",
+        "geo_level": "province",
+        "geo_name": "Ávila"
+      },
+      {
+        "geo_id": "ES-06",
+        "geo_level": "province",
+        "geo_name": "Badajoz"
+      },
+      {
+        "geo_id": "ES-07",
+        "geo_level": "province",
+        "geo_name": "Baleares"
+      },
+      {
+        "geo_id": "ES-08",
+        "geo_level": "province",
+        "geo_name": "Barcelona"
+      },
+      {
+        "geo_id": "ES-09",
+        "geo_level": "province",
+        "geo_name": "Burgos"
+      },
+      {
+        "geo_id": "ES-10",
+        "geo_level": "province",
+        "geo_name": "Cáceres"
+      },
+      {
+        "geo_id": "ES-11",
+        "geo_level": "province",
+        "geo_name": "Cádiz"
+      },
+      {
+        "geo_id": "ES-12",
+        "geo_level": "province",
+        "geo_name": "Castellón"
+      },
+      {
+        "geo_id": "ES-13",
+        "geo_level": "province",
+        "geo_name": "Ciudad Real"
+      },
+      {
+        "geo_id": "ES-14",
+        "geo_level": "province",
+        "geo_name": "Córdoba"
+      },
+      {
+        "geo_id": "ES13",
+        "geo_level": "nuts2",
+        "geo_name": "Cantabria"
+      },
+      {
+        "geo_id": "ES2",
+        "geo_level": "nuts1",
+        "geo_name": "Noreste"
+      },
+      {
+        "geo_id": "ES21",
+        "geo_level": "nuts2",
+        "geo_name": "País Vasco"
+      },
+      {
+        "geo_id": "ES22",
+        "geo_level": "nuts2",
+        "geo_name": "Comunidad Foral de Navarra"
+      },
+      {
+        "geo_id": "ES23",
+        "geo_level": "nuts2",
+        "geo_name": "La Rioja"
+      },
+      {
+        "geo_id": "ES24",
+        "geo_level": "nuts2",
+        "geo_name": "Aragón"
+      },
+      {
+        "geo_id": "ES3",
+        "geo_level": "nuts1",
+        "geo_name": "Comunidad de Madrid"
+      },
+      {
+        "geo_id": "ES30",
+        "geo_level": "nuts2",
+        "geo_name": "Comunidad de Madrid"
+      },
+      {
+        "geo_id": "ES4",
+        "geo_level": "nuts1",
+        "geo_name": "Centro (ES)"
+      },
+      {
+        "geo_id": "ES41",
+        "geo_level": "nuts2",
+        "geo_name": "Castilla y León"
+      },
+      {
+        "geo_id": "ES42",
+        "geo_level": "nuts2",
+        "geo_name": "Castilla-La Mancha"
+      }
+    ]
+  },
+  {
+    "country": "NL",
+    "totalRows": 6821,
+    "uniqueGeos": 359,
+    "byLevel": {
+      "nuts1": 4,
+      "nuts2": 12,
+      "municipality": 343
+    },
+    "sample": [
+      {
+        "geo_id": "NL1",
+        "geo_level": "nuts1",
+        "geo_name": "Noord-Nederland"
+      },
+      {
+        "geo_id": "NL11",
+        "geo_level": "nuts2",
+        "geo_name": "Groningen"
+      },
+      {
+        "geo_id": "NL12",
+        "geo_level": "nuts2",
+        "geo_name": "Friesland (NL)"
+      },
+      {
+        "geo_id": "NL13",
+        "geo_level": "nuts2",
+        "geo_name": "Drenthe"
+      },
+      {
+        "geo_id": "NL2",
+        "geo_level": "nuts1",
+        "geo_name": "Oost-Nederland"
+      },
+      {
+        "geo_id": "NL21",
+        "geo_level": "nuts2",
+        "geo_name": "Overijssel"
+      },
+      {
+        "geo_id": "NL22",
+        "geo_level": "nuts2",
+        "geo_name": "Gelderland"
+      },
+      {
+        "geo_id": "NL23",
+        "geo_level": "nuts2",
+        "geo_name": "Flevoland"
+      },
+      {
+        "geo_id": "NL3",
+        "geo_level": "nuts1",
+        "geo_name": "West-Nederland"
+      },
+      {
+        "geo_id": "NL31",
+        "geo_level": "nuts2",
+        "geo_name": "Utrecht (NUTS 2021)"
+      },
+      {
+        "geo_id": "NL32",
+        "geo_level": "nuts2",
+        "geo_name": "Noord-Holland"
+      },
+      {
+        "geo_id": "NL33",
+        "geo_level": "nuts2",
+        "geo_name": "Zuid-Holland (NUTS 2021)"
+      },
+      {
+        "geo_id": "NL34",
+        "geo_level": "nuts2",
+        "geo_name": "Zeeland"
+      },
+      {
+        "geo_id": "NL4",
+        "geo_level": "nuts1",
+        "geo_name": "Zuid-Nederland"
+      },
+      {
+        "geo_id": "NL41",
+        "geo_level": "nuts2",
+        "geo_name": "Noord-Brabant"
+      },
+      {
+        "geo_id": "NL42",
+        "geo_level": "nuts2",
+        "geo_name": "Limburg (NL)"
+      },
+      {
+        "geo_id": "NL-GM0059",
+        "geo_level": "municipality",
+        "geo_name": "Achtkarspelen"
+      },
+      {
+        "geo_id": "NL-GM0482",
+        "geo_level": "municipality",
+        "geo_name": "Alblasserdam"
+      },
+      {
+        "geo_id": "NL-GM0613",
+        "geo_level": "municipality",
+        "geo_name": "Albrandswaard"
+      },
+      {
+        "geo_id": "NL-GM0361",
+        "geo_level": "municipality",
+        "geo_name": "Alkmaar"
+      },
+      {
+        "geo_id": "NL-GM0141",
+        "geo_level": "municipality",
+        "geo_name": "Almelo"
+      },
+      {
+        "geo_id": "NL-GM0034",
+        "geo_level": "municipality",
+        "geo_name": "Almere"
+      },
+      {
+        "geo_id": "NL-GM0484",
+        "geo_level": "municipality",
+        "geo_name": "Alphen aan den Rijn"
+      },
+      {
+        "geo_id": "NL-GM1723",
+        "geo_level": "municipality",
+        "geo_name": "Alphen-Chaam"
+      },
+      {
+        "geo_id": "NL-GM1959",
+        "geo_level": "municipality",
+        "geo_name": "Altena"
+      }
+    ]
+  },
+  {
+    "country": "BE",
+    "totalRows": 1618,
+    "uniqueGeos": 14,
+    "byLevel": {
+      "nuts1": 3,
+      "nuts2": 11
+    },
+    "sample": [
+      {
+        "geo_id": "BE2",
+        "geo_level": "nuts1",
+        "geo_name": "Vlaams Gewest"
+      },
+      {
+        "geo_id": "BE21",
+        "geo_level": "nuts2",
+        "geo_name": "Prov. Antwerpen"
+      },
+      {
+        "geo_id": "BE22",
+        "geo_level": "nuts2",
+        "geo_name": "Prov. Limburg (BE)"
+      },
+      {
+        "geo_id": "BE23",
+        "geo_level": "nuts2",
+        "geo_name": "Prov. Oost-Vlaanderen"
+      },
+      {
+        "geo_id": "BE24",
+        "geo_level": "nuts2",
+        "geo_name": "Prov. Vlaams-Brabant"
+      },
+      {
+        "geo_id": "BE25",
+        "geo_level": "nuts2",
+        "geo_name": "Prov. West-Vlaanderen"
+      },
+      {
+        "geo_id": "BE3",
+        "geo_level": "nuts1",
+        "geo_name": "Région wallonne"
+      },
+      {
+        "geo_id": "BE31",
+        "geo_level": "nuts2",
+        "geo_name": "Prov. Brabant wallon"
+      },
+      {
+        "geo_id": "BE32",
+        "geo_level": "nuts2",
+        "geo_name": "Prov. Hainaut"
+      },
+      {
+        "geo_id": "BE33",
+        "geo_level": "nuts2",
+        "geo_name": "Prov. Liège"
+      },
+      {
+        "geo_id": "BE34",
+        "geo_level": "nuts2",
+        "geo_name": "Prov. Luxembourg (BE)"
+      },
+      {
+        "geo_id": "BE35",
+        "geo_level": "nuts2",
+        "geo_name": "Prov. Namur"
+      },
+      {
+        "geo_id": "BE1",
+        "geo_level": "nuts1",
+        "geo_name": "Région de Bruxelles-Capitale/Brussels Hoofdstedelijk Gewest"
+      },
+      {
+        "geo_id": "BE10",
+        "geo_level": "nuts2",
+        "geo_name": "Région de Bruxelles-Capitale/Brussels Hoofdstedelijk Gewest"
+      }
+    ]
+  },
+  {
+    "country": "CH",
+    "totalRows": 1584,
+    "uniqueGeos": 6,
+    "byLevel": {
+      "city": 6
+    },
+    "sample": [
+      {
+        "geo_id": "CH-CITY-zurich",
+        "geo_level": "city",
+        "geo_name": "Zurich"
+      },
+      {
+        "geo_id": "CH-CITY-geneva",
+        "geo_level": "city",
+        "geo_name": "Geneva"
+      },
+      {
+        "geo_id": "CH-CITY-basel",
+        "geo_level": "city",
+        "geo_name": "Basel"
+      },
+      {
+        "geo_id": "CH-CITY-bern",
+        "geo_level": "city",
+        "geo_name": "Bern"
+      },
+      {
+        "geo_id": "CH-CITY-lausanne",
+        "geo_level": "city",
+        "geo_name": "Lausanne"
+      },
+      {
+        "geo_id": "CH-CITY-lugano",
+        "geo_level": "city",
+        "geo_name": "Lugano"
+      }
+    ]
+  },
+  {
+    "country": "AT",
+    "totalRows": 2833,
+    "uniqueGeos": 17,
+    "byLevel": {
+      "nuts1": 3,
+      "nuts2": 9,
+      "city": 5
+    },
+    "sample": [
+      {
+        "geo_id": "AT1",
+        "geo_level": "nuts1",
+        "geo_name": "Ostösterreich"
+      },
+      {
+        "geo_id": "AT11",
+        "geo_level": "nuts2",
+        "geo_name": "Burgenland"
+      },
+      {
+        "geo_id": "AT12",
+        "geo_level": "nuts2",
+        "geo_name": "Niederösterreich"
+      },
+      {
+        "geo_id": "AT13",
+        "geo_level": "nuts2",
+        "geo_name": "Wien"
+      },
+      {
+        "geo_id": "AT2",
+        "geo_level": "nuts1",
+        "geo_name": "Südösterreich"
+      },
+      {
+        "geo_id": "AT21",
+        "geo_level": "nuts2",
+        "geo_name": "Kärnten"
+      },
+      {
+        "geo_id": "AT22",
+        "geo_level": "nuts2",
+        "geo_name": "Steiermark"
+      },
+      {
+        "geo_id": "AT3",
+        "geo_level": "nuts1",
+        "geo_name": "Westösterreich"
+      },
+      {
+        "geo_id": "AT31",
+        "geo_level": "nuts2",
+        "geo_name": "Oberösterreich"
+      },
+      {
+        "geo_id": "AT32",
+        "geo_level": "nuts2",
+        "geo_name": "Salzburg"
+      },
+      {
+        "geo_id": "AT33",
+        "geo_level": "nuts2",
+        "geo_name": "Tirol"
+      },
+      {
+        "geo_id": "AT34",
+        "geo_level": "nuts2",
+        "geo_name": "Vorarlberg"
+      },
+      {
+        "geo_id": "AT-CITY-vienna",
+        "geo_level": "city",
+        "geo_name": "Vienna"
+      },
+      {
+        "geo_id": "AT-CITY-graz",
+        "geo_level": "city",
+        "geo_name": "Graz"
+      },
+      {
+        "geo_id": "AT-CITY-linz",
+        "geo_level": "city",
+        "geo_name": "Linz"
+      },
+      {
+        "geo_id": "AT-CITY-salzburg",
+        "geo_level": "city",
+        "geo_name": "Salzburg"
+      },
+      {
+        "geo_id": "AT-CITY-innsbruck",
+        "geo_level": "city",
+        "geo_name": "Innsbruck"
+      }
+    ]
+  },
+  {
+    "country": "PL",
+    "totalRows": 3036,
+    "uniqueGeos": 24,
+    "byLevel": {
+      "nuts2": 17,
+      "nuts1": 7
+    },
+    "sample": [
+      {
+        "geo_id": "PL61",
+        "geo_level": "nuts2",
+        "geo_name": "Kujawsko-pomorskie"
+      },
+      {
+        "geo_id": "PL62",
+        "geo_level": "nuts2",
+        "geo_name": "Warmińsko-mazurskie"
+      },
+      {
+        "geo_id": "PL63",
+        "geo_level": "nuts2",
+        "geo_name": "Pomorskie"
+      },
+      {
+        "geo_id": "PL2",
+        "geo_level": "nuts1",
+        "geo_name": "Makroregion południowy"
+      },
+      {
+        "geo_id": "PL21",
+        "geo_level": "nuts2",
+        "geo_name": "Małopolskie"
+      },
+      {
+        "geo_id": "PL22",
+        "geo_level": "nuts2",
+        "geo_name": "Śląskie"
+      },
+      {
+        "geo_id": "PL4",
+        "geo_level": "nuts1",
+        "geo_name": "Makroregion północno-zachodni"
+      },
+      {
+        "geo_id": "PL41",
+        "geo_level": "nuts2",
+        "geo_name": "Wielkopolskie"
+      },
+      {
+        "geo_id": "PL42",
+        "geo_level": "nuts2",
+        "geo_name": "Zachodniopomorskie"
+      },
+      {
+        "geo_id": "PL43",
+        "geo_level": "nuts2",
+        "geo_name": "Lubuskie"
+      },
+      {
+        "geo_id": "PL5",
+        "geo_level": "nuts1",
+        "geo_name": "Makroregion południowo-zachodni"
+      },
+      {
+        "geo_id": "PL51",
+        "geo_level": "nuts2",
+        "geo_name": "Dolnośląskie"
+      },
+      {
+        "geo_id": "PL52",
+        "geo_level": "nuts2",
+        "geo_name": "Opolskie"
+      },
+      {
+        "geo_id": "PL6",
+        "geo_level": "nuts1",
+        "geo_name": "Makroregion północny"
+      },
+      {
+        "geo_id": "PL7",
+        "geo_level": "nuts1",
+        "geo_name": "Makroregion centralny"
+      },
+      {
+        "geo_id": "PL71",
+        "geo_level": "nuts2",
+        "geo_name": "Łódzkie"
+      },
+      {
+        "geo_id": "PL72",
+        "geo_level": "nuts2",
+        "geo_name": "Świętokrzyskie"
+      },
+      {
+        "geo_id": "PL8",
+        "geo_level": "nuts1",
+        "geo_name": "Makroregion wschodni"
+      },
+      {
+        "geo_id": "PL81",
+        "geo_level": "nuts2",
+        "geo_name": "Lubelskie"
+      },
+      {
+        "geo_id": "PL82",
+        "geo_level": "nuts2",
+        "geo_name": "Podkarpackie"
+      },
+      {
+        "geo_id": "PL84",
+        "geo_level": "nuts2",
+        "geo_name": "Podlaskie"
+      },
+      {
+        "geo_id": "PL9",
+        "geo_level": "nuts1",
+        "geo_name": "Makroregion województwo mazowieckie"
+      },
+      {
+        "geo_id": "PL91",
+        "geo_level": "nuts2",
+        "geo_name": "Warszawski stołeczny"
+      },
+      {
+        "geo_id": "PL92",
+        "geo_level": "nuts2",
+        "geo_name": "Mazowiecki regionalny"
+      }
+    ]
+  },
+  {
+    "country": "PT",
+    "totalRows": 1176,
+    "uniqueGeos": 10,
+    "byLevel": {
+      "nuts1": 3,
+      "nuts2": 7
+    },
+    "sample": [
+      {
+        "geo_id": "PT1",
+        "geo_level": "nuts1",
+        "geo_name": "Continente"
+      },
+      {
+        "geo_id": "PT11",
+        "geo_level": "nuts2",
+        "geo_name": "Norte"
+      },
+      {
+        "geo_id": "PT15",
+        "geo_level": "nuts2",
+        "geo_name": "Algarve"
+      },
+      {
+        "geo_id": "PT16",
+        "geo_level": "nuts2",
+        "geo_name": "Centro (PT) (NUTS 2021)"
+      },
+      {
+        "geo_id": "PT17",
+        "geo_level": "nuts2",
+        "geo_name": "Área Metropolitana de Lisboa (NUTS 2021)"
+      },
+      {
+        "geo_id": "PT18",
+        "geo_level": "nuts2",
+        "geo_name": "Alentejo (NUTS 2021)"
+      },
+      {
+        "geo_id": "PT2",
+        "geo_level": "nuts1",
+        "geo_name": "Região Autónoma dos Açores"
+      },
+      {
+        "geo_id": "PT20",
+        "geo_level": "nuts2",
+        "geo_name": "Região Autónoma dos Açores"
+      },
+      {
+        "geo_id": "PT3",
+        "geo_level": "nuts1",
+        "geo_name": "Região Autónoma da Madeira"
+      },
+      {
+        "geo_id": "PT30",
+        "geo_level": "nuts2",
+        "geo_name": "Região Autónoma da Madeira"
+      }
+    ]
+  },
+  {
+    "country": "SE",
+    "totalRows": 1386,
+    "uniqueGeos": 11,
+    "byLevel": {
+      "nuts1": 3,
+      "nuts2": 8
+    },
+    "sample": [
+      {
+        "geo_id": "SE1",
+        "geo_level": "nuts1",
+        "geo_name": "Östra Sverige"
+      },
+      {
+        "geo_id": "SE11",
+        "geo_level": "nuts2",
+        "geo_name": "Stockholm"
+      },
+      {
+        "geo_id": "SE12",
+        "geo_level": "nuts2",
+        "geo_name": "Östra Mellansverige"
+      },
+      {
+        "geo_id": "SE2",
+        "geo_level": "nuts1",
+        "geo_name": "Södra Sverige"
+      },
+      {
+        "geo_id": "SE21",
+        "geo_level": "nuts2",
+        "geo_name": "Småland med öarna"
+      },
+      {
+        "geo_id": "SE22",
+        "geo_level": "nuts2",
+        "geo_name": "Sydsverige"
+      },
+      {
+        "geo_id": "SE23",
+        "geo_level": "nuts2",
+        "geo_name": "Västsverige"
+      },
+      {
+        "geo_id": "SE3",
+        "geo_level": "nuts1",
+        "geo_name": "Norra Sverige"
+      },
+      {
+        "geo_id": "SE31",
+        "geo_level": "nuts2",
+        "geo_name": "Norra Mellansverige"
+      },
+      {
+        "geo_id": "SE32",
+        "geo_level": "nuts2",
+        "geo_name": "Mellersta Norrland"
+      },
+      {
+        "geo_id": "SE33",
+        "geo_level": "nuts2",
+        "geo_name": "Övre Norrland"
+      }
+    ]
+  },
+  {
+    "country": "DK",
+    "totalRows": 765,
+    "uniqueGeos": 6,
+    "byLevel": {
+      "nuts1": 1,
+      "nuts2": 5
+    },
+    "sample": [
+      {
+        "geo_id": "DK0",
+        "geo_level": "nuts1",
+        "geo_name": "Danmark"
+      },
+      {
+        "geo_id": "DK01",
+        "geo_level": "nuts2",
+        "geo_name": "Hovedstaden"
+      },
+      {
+        "geo_id": "DK02",
+        "geo_level": "nuts2",
+        "geo_name": "Sjælland"
+      },
+      {
+        "geo_id": "DK03",
+        "geo_level": "nuts2",
+        "geo_name": "Syddanmark"
+      },
+      {
+        "geo_id": "DK04",
+        "geo_level": "nuts2",
+        "geo_name": "Midtjylland"
+      },
+      {
+        "geo_id": "DK05",
+        "geo_level": "nuts2",
+        "geo_name": "Nordjylland"
+      }
+    ]
+  },
+  {
+    "country": "NO",
+    "totalRows": 977,
+    "uniqueGeos": 12,
+    "byLevel": {
+      "nuts1": 1,
+      "nuts2": 11
+    },
+    "sample": [
+      {
+        "geo_id": "NO0",
+        "geo_level": "nuts1",
+        "geo_name": "Norge"
+      },
+      {
+        "geo_id": "NO02",
+        "geo_level": "nuts2",
+        "geo_name": "Innlandet"
+      },
+      {
+        "geo_id": "NO06",
+        "geo_level": "nuts2",
+        "geo_name": "Trøndelag"
+      },
+      {
+        "geo_id": "NO07",
+        "geo_level": "nuts2",
+        "geo_name": "Nord-Norge"
+      },
+      {
+        "geo_id": "NO08",
+        "geo_level": "nuts2",
+        "geo_name": "Oslo og Viken"
+      },
+      {
+        "geo_id": "NO09",
+        "geo_level": "nuts2",
+        "geo_name": "Agder og Sør-Østlandet"
+      },
+      {
+        "geo_id": "NO0A",
+        "geo_level": "nuts2",
+        "geo_name": "Vestlandet"
+      },
+      {
+        "geo_id": "NO01",
+        "geo_level": "nuts2",
+        "geo_name": "Oslo og Akershus (statistical region 2016)"
+      },
+      {
+        "geo_id": "NO03",
+        "geo_level": "nuts2",
+        "geo_name": "Sør-Østlandet (statistical region 2016)"
+      },
+      {
+        "geo_id": "NO04",
+        "geo_level": "nuts2",
+        "geo_name": "Agder og Rogaland (statistical region 2016)"
+      },
+      {
+        "geo_id": "NO05",
+        "geo_level": "nuts2",
+        "geo_name": "Vestlandet (statistical region 2016)"
+      },
+      {
+        "geo_id": "NO0B",
+        "geo_level": "nuts2",
+        "geo_name": "Svalbard og Jan Mayen"
+      }
+    ]
+  },
+  {
+    "country": "FI",
+    "totalRows": 834,
+    "uniqueGeos": 7,
+    "byLevel": {
+      "nuts1": 2,
+      "nuts2": 5
+    },
+    "sample": [
+      {
+        "geo_id": "FI1",
+        "geo_level": "nuts1",
+        "geo_name": "Manner-Suomi"
+      },
+      {
+        "geo_id": "FI19",
+        "geo_level": "nuts2",
+        "geo_name": "Länsi-Suomi"
+      },
+      {
+        "geo_id": "FI1B",
+        "geo_level": "nuts2",
+        "geo_name": "Helsinki-Uusimaa"
+      },
+      {
+        "geo_id": "FI1C",
+        "geo_level": "nuts2",
+        "geo_name": "Etelä-Suomi"
+      },
+      {
+        "geo_id": "FI1D",
+        "geo_level": "nuts2",
+        "geo_name": "Pohjois- ja Itä-Suomi"
+      },
+      {
+        "geo_id": "FI2",
+        "geo_level": "nuts1",
+        "geo_name": "Åland"
+      },
+      {
+        "geo_id": "FI20",
+        "geo_level": "nuts2",
+        "geo_name": "Åland"
+      }
+    ]
+  },
+  {
+    "country": "GR",
+    "totalRows": 0,
+    "uniqueGeos": 0,
+    "byLevel": {},
+    "sample": []
+  },
+  {
+    "country": "CZ",
+    "totalRows": 1139,
+    "uniqueGeos": 11,
+    "byLevel": {
+      "nuts1": 2,
+      "nuts2": 9
+    },
+    "sample": [
+      {
+        "geo_id": "CZ0",
+        "geo_level": "nuts1",
+        "geo_name": "Česko"
+      },
+      {
+        "geo_id": "CZ01",
+        "geo_level": "nuts2",
+        "geo_name": "Praha"
+      },
+      {
+        "geo_id": "CZ02",
+        "geo_level": "nuts2",
+        "geo_name": "Střední Čechy"
+      },
+      {
+        "geo_id": "CZ03",
+        "geo_level": "nuts2",
+        "geo_name": "Jihozápad"
+      },
+      {
+        "geo_id": "CZ04",
+        "geo_level": "nuts2",
+        "geo_name": "Severozápad"
+      },
+      {
+        "geo_id": "CZ05",
+        "geo_level": "nuts2",
+        "geo_name": "Severovýchod"
+      },
+      {
+        "geo_id": "CZ06",
+        "geo_level": "nuts2",
+        "geo_name": "Jihovýchod"
+      },
+      {
+        "geo_id": "CZ07",
+        "geo_level": "nuts2",
+        "geo_name": "Střední Morava"
+      },
+      {
+        "geo_id": "CZ08",
+        "geo_level": "nuts2",
+        "geo_name": "Moravskoslezsko"
+      },
+      {
+        "geo_id": "CZZ",
+        "geo_level": "nuts1",
+        "geo_name": "Extra-Regio NUTS 1"
+      },
+      {
+        "geo_id": "CZZZ",
+        "geo_level": "nuts2",
+        "geo_name": "Extra-Regio NUTS 2"
+      }
+    ]
+  },
+  {
+    "country": "HU",
+    "totalRows": 1390,
+    "uniqueGeos": 11,
+    "byLevel": {
+      "nuts1": 3,
+      "nuts2": 8
+    },
+    "sample": [
+      {
+        "geo_id": "HU1",
+        "geo_level": "nuts1",
+        "geo_name": "Közép-Magyarország"
+      },
+      {
+        "geo_id": "HU11",
+        "geo_level": "nuts2",
+        "geo_name": "Budapest"
+      },
+      {
+        "geo_id": "HU12",
+        "geo_level": "nuts2",
+        "geo_name": "Pest"
+      },
+      {
+        "geo_id": "HU2",
+        "geo_level": "nuts1",
+        "geo_name": "Dunántúl"
+      },
+      {
+        "geo_id": "HU21",
+        "geo_level": "nuts2",
+        "geo_name": "Közép-Dunántúl"
+      },
+      {
+        "geo_id": "HU22",
+        "geo_level": "nuts2",
+        "geo_name": "Nyugat-Dunántúl"
+      },
+      {
+        "geo_id": "HU23",
+        "geo_level": "nuts2",
+        "geo_name": "Dél-Dunántúl"
+      },
+      {
+        "geo_id": "HU3",
+        "geo_level": "nuts1",
+        "geo_name": "Alföld és Észak"
+      },
+      {
+        "geo_id": "HU31",
+        "geo_level": "nuts2",
+        "geo_name": "Észak-Magyarország"
+      },
+      {
+        "geo_id": "HU32",
+        "geo_level": "nuts2",
+        "geo_name": "Észak-Alföld"
+      },
+      {
+        "geo_id": "HU33",
+        "geo_level": "nuts2",
+        "geo_name": "Dél-Alföld"
+      }
+    ]
+  },
+  {
+    "country": "RO",
+    "totalRows": 1548,
+    "uniqueGeos": 12,
+    "byLevel": {
+      "nuts1": 4,
+      "nuts2": 8
+    },
+    "sample": [
+      {
+        "geo_id": "RO1",
+        "geo_level": "nuts1",
+        "geo_name": "Macroregiunea Unu"
+      },
+      {
+        "geo_id": "RO11",
+        "geo_level": "nuts2",
+        "geo_name": "Nord-Vest"
+      },
+      {
+        "geo_id": "RO12",
+        "geo_level": "nuts2",
+        "geo_name": "Centru"
+      },
+      {
+        "geo_id": "RO2",
+        "geo_level": "nuts1",
+        "geo_name": "Macroregiunea Doi"
+      },
+      {
+        "geo_id": "RO21",
+        "geo_level": "nuts2",
+        "geo_name": "Nord-Est"
+      },
+      {
+        "geo_id": "RO22",
+        "geo_level": "nuts2",
+        "geo_name": "Sud-Est"
+      },
+      {
+        "geo_id": "RO3",
+        "geo_level": "nuts1",
+        "geo_name": "Macroregiunea Trei"
+      },
+      {
+        "geo_id": "RO31",
+        "geo_level": "nuts2",
+        "geo_name": "Sud-Muntenia"
+      },
+      {
+        "geo_id": "RO32",
+        "geo_level": "nuts2",
+        "geo_name": "Bucureşti-Ilfov"
+      },
+      {
+        "geo_id": "RO4",
+        "geo_level": "nuts1",
+        "geo_name": "Macroregiunea Patru"
+      },
+      {
+        "geo_id": "RO41",
+        "geo_level": "nuts2",
+        "geo_name": "Sud-Vest Oltenia"
+      },
+      {
+        "geo_id": "RO42",
+        "geo_level": "nuts2",
+        "geo_name": "Vest"
+      }
+    ]
+  },
+  {
+    "country": "TR",
+    "totalRows": 1320,
+    "uniqueGeos": 5,
+    "byLevel": {
+      "city": 5
+    },
+    "sample": [
+      {
+        "geo_id": "TR-CITY-bursa",
+        "geo_level": "city",
+        "geo_name": "Bursa"
+      },
+      {
+        "geo_id": "TR-CITY-istanbul",
+        "geo_level": "city",
+        "geo_name": "Istanbul"
+      },
+      {
+        "geo_id": "TR-CITY-ankara",
+        "geo_level": "city",
+        "geo_name": "Ankara"
+      },
+      {
+        "geo_id": "TR-CITY-izmir",
+        "geo_level": "city",
+        "geo_name": "Izmir"
+      },
+      {
+        "geo_id": "TR-CITY-antalya",
+        "geo_level": "city",
+        "geo_name": "Antalya"
+      }
+    ]
+  },
+  {
+    "country": "RU",
+    "totalRows": 2640,
+    "uniqueGeos": 10,
+    "byLevel": {
+      "city": 10
+    },
+    "sample": [
+      {
+        "geo_id": "RU-CITY-saint-petersburg",
+        "geo_level": "city",
+        "geo_name": "Saint Petersburg"
+      },
+      {
+        "geo_id": "RU-CITY-moscow",
+        "geo_level": "city",
+        "geo_name": "Moscow"
+      },
+      {
+        "geo_id": "RU-CITY-yekaterinburg",
+        "geo_level": "city",
+        "geo_name": "Yekaterinburg"
+      },
+      {
+        "geo_id": "RU-CITY-novosibirsk",
+        "geo_level": "city",
+        "geo_name": "Novosibirsk"
+      },
+      {
+        "geo_id": "RU-CITY-kazan",
+        "geo_level": "city",
+        "geo_name": "Kazan"
+      },
+      {
+        "geo_id": "RU-CITY-nizhny-novgorod",
+        "geo_level": "city",
+        "geo_name": "Nizhny Novgorod"
+      },
+      {
+        "geo_id": "RU-CITY-krasnodar",
+        "geo_level": "city",
+        "geo_name": "Krasnodar"
+      },
+      {
+        "geo_id": "RU-CITY-samara",
+        "geo_level": "city",
+        "geo_name": "Samara"
+      },
+      {
+        "geo_id": "RU-CITY-rostov-on-don",
+        "geo_level": "city",
+        "geo_name": "Rostov-on-Don"
+      },
+      {
+        "geo_id": "RU-CITY-ufa",
+        "geo_level": "city",
+        "geo_name": "Ufa"
+      }
+    ]
+  },
+  {
+    "country": "IE",
+    "totalRows": 330,
+    "uniqueGeos": 4,
+    "byLevel": {
+      "nuts1": 1,
+      "nuts2": 3
+    },
+    "sample": [
+      {
+        "geo_id": "IE0",
+        "geo_level": "nuts1",
+        "geo_name": "Ireland"
+      },
+      {
+        "geo_id": "IE04",
+        "geo_level": "nuts2",
+        "geo_name": "Northern and Western"
+      },
+      {
+        "geo_id": "IE05",
+        "geo_level": "nuts2",
+        "geo_name": "Southern"
+      },
+      {
+        "geo_id": "IE06",
+        "geo_level": "nuts2",
+        "geo_name": "Eastern and Midland"
+      }
+    ]
+  }
+]
