@@ -7,6 +7,7 @@
 
 import type { Cell } from "@/lib/cells";
 import { cellUrl } from "@/lib/cells";
+import { fmtMoney } from "@/lib/format/money";
 
 type CellLike = Cell;
 
@@ -15,14 +16,6 @@ type Props = {
   currentGeoName: string;
   cells: CellLike[];
 };
-
-function fmtMoney(v: number | null | undefined, sym = "$"): string {
-  if (v == null || isNaN(v)) return "-";
-  if (v >= 1e9) return `${sym}${(v / 1e9).toFixed(1)}B`;
-  if (v >= 1e6) return `${sym}${(v / 1e6).toFixed(1)}M`;
-  if (v >= 1e3) return `${sym}${(v / 1e3).toFixed(0)}K`;
-  return `${sym}${v.toFixed(0)}`;
-}
 
 export function AcrossStatesStrip({ industryName, currentGeoName, cells }: Props) {
   if (cells.length === 0) return null;

@@ -8,19 +8,12 @@
 
 import { notFound } from "next/navigation";
 import { getCellBySlug } from "@/lib/cells";
+import { fmtMoney } from "@/lib/format/money";
 
 export const revalidate = 604800;
 export const dynamicParams = true;
 
 type Params = { country: string; geo: string; industry: string };
-
-function fmtMoney(v: number | null | undefined): string {
-  if (v == null || isNaN(v)) return "-";
-  if (v >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
-  if (v >= 1e6) return `$${(v / 1e6).toFixed(1)}M`;
-  if (v >= 1e3) return `$${(v / 1e3).toFixed(0)}K`;
-  return `$${v.toFixed(0)}`;
-}
 
 export async function generateMetadata({ params }: { params: Promise<Params> }) {
   const { country, geo, industry } = await params;

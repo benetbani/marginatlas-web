@@ -10,6 +10,7 @@ import Link from "next/link";
 import { getCellBySlug } from "@/lib/cells";
 import { industryToSlug, type Industry } from "@/lib/taxonomy";
 import { CountryFlag } from "@/components/CountryFlag";
+import { fmtMoney } from "@/lib/format/money";
 
 type Props = {
   sectorName: string;
@@ -30,14 +31,6 @@ const COUNTRIES_TO_SAMPLE: { iso2: string; geo: string; name: string }[] = [
   { iso2: "AU", geo: "australia", name: "Australia" },
   { iso2: "IN", geo: "india", name: "India" },
 ];
-
-function fmtMoney(v: number | null | undefined): string {
-  if (v == null || isNaN(v)) return "-";
-  if (v >= 1e9) return `$${(v / 1e9).toFixed(2)}B`;
-  if (v >= 1e6) return `$${(v / 1e6).toFixed(2)}M`;
-  if (v >= 1e3) return `$${(v / 1e3).toFixed(0)}K`;
-  return `$${v.toFixed(0)}`;
-}
 
 export async function SectorAcrossWorld({ sectorName, industries }: Props) {
   if (industries.length === 0) return null;

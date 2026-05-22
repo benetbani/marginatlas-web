@@ -17,6 +17,7 @@ import { CountryFlag } from "@/components/CountryFlag";
 import { CITIES_BY_STATE } from "@/lib/cities/city_aliases_generated";
 import { iso2ToName } from "@/lib/countries";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
+import { fmtMoney } from "@/lib/format/money";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -47,14 +48,6 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
     title: `${regionLabel}: small-business benchmarks | Margin Atlas`,
     description: `Typical revenue, employment, and wages for small businesses in ${regionLabel}, ${countryName}.`,
   };
-}
-
-function fmtMoney(v: number | null | undefined): string {
-  if (v == null || isNaN(v)) return "-";
-  if (v >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
-  if (v >= 1e6) return `$${(v / 1e6).toFixed(1)}M`;
-  if (v >= 1e3) return `$${(v / 1e3).toFixed(0)}K`;
-  return `$${v.toFixed(0)}`;
 }
 
 function cityLabelFromSlug(slug: string): string {

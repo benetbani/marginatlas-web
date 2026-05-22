@@ -10,6 +10,7 @@ import {
 import { getCellBySlug } from "@/lib/cells";
 import { SectorAcrossWorld } from "@/components/SectorAcrossWorld";
 import { SectorIcon } from "@/components/icons/SectorIcon";
+import { fmtMoney } from "@/lib/format/money";
 
 export const revalidate = 86400;
 // Plan v16: defer cold sectors to on-demand rendering so the build
@@ -44,14 +45,6 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
     title: `${s.name}: industries and benchmarks | Margin Atlas`,
     description: `Revenue, employment, and wage benchmarks for every small-business industry inside ${s.name.toLowerCase()}.`,
   };
-}
-
-function fmtMoney(v: number | null | undefined): string {
-  if (v == null || isNaN(v)) return "-";
-  if (v >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
-  if (v >= 1e6) return `$${(v / 1e6).toFixed(1)}M`;
-  if (v >= 1e3) return `$${(v / 1e3).toFixed(0)}K`;
-  return `$${v.toFixed(0)}`;
 }
 
 async function quickStat(ind: Industry): Promise<number | null> {

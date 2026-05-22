@@ -8,6 +8,7 @@ import {
   INDUSTRY_BY_ID,
 } from "@/lib/taxonomy";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
+import { fmtMoney } from "@/lib/format/money";
 
 type Slot = { country: string; industry: string; region: string };
 
@@ -25,14 +26,6 @@ type CompactCell = {
   quality_score: number | null;
   cellUrl: string | null;
 };
-
-function fmtMoney(v: number | null | undefined): string {
-  if (v == null || isNaN(v)) return "-";
-  if (v >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
-  if (v >= 1e6) return `$${(v / 1e6).toFixed(1)}M`;
-  if (v >= 1e3) return `$${(v / 1e3).toFixed(0)}K`;
-  return `$${v.toFixed(0)}`;
-}
 
 function fmtNum(v: number | null | undefined): string {
   if (v == null || isNaN(v)) return "-";

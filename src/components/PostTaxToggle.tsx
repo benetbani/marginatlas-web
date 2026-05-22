@@ -12,6 +12,7 @@
 
 import { useState } from "react";
 import { estimatePostTax, getEffectiveCorporateTaxRate } from "@/lib/tax";
+import { fmtMoney } from "@/lib/format/money";
 
 type Props = {
   country: string;          // ISO-2
@@ -19,13 +20,6 @@ type Props = {
   grossRevenue: number | null;
   payroll: number | null;   // total payroll for the typical firm (USD/year)
 };
-
-function fmtMoney(v: number): string {
-  if (v >= 1e9) return `$${(v / 1e9).toFixed(2)}B`;
-  if (v >= 1e6) return `$${(v / 1e6).toFixed(2)}M`;
-  if (v >= 1e3) return `$${(v / 1e3).toFixed(0)}K`;
-  return `$${v.toFixed(0)}`;
-}
 
 function fmtPct(v: number): string {
   return `${(v * 100).toFixed(1)}%`;

@@ -10,6 +10,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { ComboField, type ComboOption } from "@/components/ComboField";
 import { INDUSTRIES, INDUSTRY_BY_ID } from "@/lib/taxonomy";
+import { fmtMoney } from "@/lib/format/money";
 
 const US_REGIONS = [
   "california", "texas", "new-york", "florida", "illinois", "pennsylvania",
@@ -30,14 +31,6 @@ type CompactCell = {
   payroll_per_employee: number | null;
   quality_score: number | null;
 };
-
-function fmtMoney(v: number | null | undefined): string {
-  if (v == null || isNaN(v)) return "-";
-  if (v >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
-  if (v >= 1e6) return `$${(v / 1e6).toFixed(1)}M`;
-  if (v >= 1e3) return `$${(v / 1e3).toFixed(0)}K`;
-  return `$${v.toFixed(0)}`;
-}
 
 export function CompareToMeClient() {
   const [region, setRegion] = useState("california");

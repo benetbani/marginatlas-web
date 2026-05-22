@@ -9,6 +9,7 @@
 import { getCellBySlug, type Cell } from "@/lib/cells";
 import { CountryFlag } from "@/components/CountryFlag";
 import { getCellOfTheWeekSnapshot, findSnapshotCell } from "@/lib/snapshots";
+import { fmtMoney } from "@/lib/format/money";
 
 /**
  * Plan v17 fix — same timeout pattern as FeaturedCellTile. Bound the
@@ -101,14 +102,6 @@ const ROTATION: Pick[] = [
     note: "Japanese restaurants: small footprint, high firm density, family-owned tradition.",
   },
 ];
-
-function fmtMoney(v: number | null | undefined): string {
-  if (v == null || isNaN(v)) return "-";
-  if (v >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
-  if (v >= 1e6) return `$${(v / 1e6).toFixed(1)}M`;
-  if (v >= 1e3) return `$${(v / 1e3).toFixed(0)}K`;
-  return `$${v.toFixed(0)}`;
-}
 
 function weekNumber(d: Date): number {
   // ISO-8601 week number (close enough for rotation purposes).

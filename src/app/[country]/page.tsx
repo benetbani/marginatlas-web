@@ -24,6 +24,7 @@ import { hasRegionalCoverage } from "@/lib/coverage/regional";
 import { getAdmin1Regions } from "@/lib/coverage/admin1";
 import { COUNTRY_PAGE_SECTIONS, getToneClass } from "@/lib/page-layout/section-order";
 import { getCountryAnchor } from "@/lib/content/country-anchors";
+import { fmtMoney } from "@/lib/format/money";
 
 // Keep section-order constant referenced for type checking — sections render in this exact order below.
 void COUNTRY_PAGE_SECTIONS;
@@ -32,14 +33,6 @@ export const revalidate = 86400;
 export const dynamicParams = true;
 
 type Params = { country: string };
-
-function fmtMoney(v: number | null | undefined): string {
-  if (v == null || isNaN(v)) return "-";
-  if (v >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
-  if (v >= 1e6) return `$${(v / 1e6).toFixed(1)}M`;
-  if (v >= 1e3) return `$${(v / 1e3).toFixed(0)}K`;
-  return `$${v.toFixed(0)}`;
-}
 
 const COUNTRY_SIGNATURE: Record<string, { line: string; glyph: string }> = {
   US: { line: "America's small-business heartland: restaurants, real estate, software.", glyph: "🏬" },

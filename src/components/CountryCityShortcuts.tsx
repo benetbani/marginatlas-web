@@ -13,6 +13,7 @@
 import Link from "next/link";
 import { getCitiesForCountry, type CityEntry } from "@/lib/cities";
 import { getCellBySlug } from "@/lib/cells";
+import { fmtMoney } from "@/lib/format/money";
 
 type Props = {
   iso2: string;
@@ -28,14 +29,6 @@ type Snapshot = {
   n_enterprises: number | null;
   revenue_per_firm: number | null;
 };
-
-function fmtMoney(v: number | null | undefined): string {
-  if (v == null || isNaN(v)) return "-";
-  if (v >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
-  if (v >= 1e6) return `$${(v / 1e6).toFixed(1)}M`;
-  if (v >= 1e3) return `$${Math.round(v / 1e3)}K`;
-  return `$${Math.round(v)}`;
-}
 
 export async function CountryCityShortcuts({
   iso2,
