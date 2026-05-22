@@ -58,6 +58,7 @@ import {
 import { HeroBenchmark } from "@/components/HeroBenchmark";
 import { CityHero } from "@/components/CityHero";
 import { ComparableCitiesRibbon } from "@/components/ComparableCitiesRibbon";
+import { LocalContextCard } from "@/components/LocalContextCard";
 import { DistributionVisual } from "@/components/DistributionVisual";
 import { NetProfitSummary } from "@/components/NetProfitSummary";
 import { CellFallbackBanner } from "@/components/CellFallbackBanner";
@@ -577,6 +578,16 @@ export default async function CellPage({
           p90={cell.rev_p90 ?? null}
         />
       </section>
+
+      {/* Reformation idea #5 — local cost-of-living context anchor.
+         Gives a frame for reading the revenue numbers against the
+         local economy: median wage, price tier, currency, market
+         type. Same data the synthesis engine uses (so estimated
+         cells stay coherent). */}
+      <LocalContextCard
+        iso2={country.toUpperCase()}
+        countryName={iso2ToName(country) || country.toUpperCase()}
+      />
 
       {/* Plan v13 Wave 1: time series chart removed:
          multi-year coverage is too uneven across cells to display honestly. */}
