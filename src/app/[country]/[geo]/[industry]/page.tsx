@@ -57,6 +57,7 @@ import {
 } from "@/lib/extrapolations/fill_missing";
 import { HeroBenchmark } from "@/components/HeroBenchmark";
 import { CityHero } from "@/components/CityHero";
+import { ComparableCitiesRibbon } from "@/components/ComparableCitiesRibbon";
 import { DistributionVisual } from "@/components/DistributionVisual";
 import { NetProfitSummary } from "@/components/NetProfitSummary";
 import { CellFallbackBanner } from "@/components/CellFallbackBanner";
@@ -600,6 +601,16 @@ export default async function CellPage({
           cells={acrossCountries}
         />
       )}
+
+      {/* Reformation idea #4 — comparable-cities ribbon. Sends users
+         to 3 peer cities (similar scale, often different country)
+         for the same industry. Renders only if seed city is in
+         data/cities/city_list_v1.json (silent otherwise). */}
+      <ComparableCitiesRibbon
+        citySlug={geo}
+        industrySlug={industry}
+        industryName={cell.industry_name || undefined}
+      />
 
       {/* Comparable cells.
          Plan v14 A.1 (T-A1.4): legacy id="comparable" renamed to canonical

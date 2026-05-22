@@ -1,0 +1,70 @@
+/**
+ * Reformation idea #4 — "If you liked X, look at Y" card ribbon.
+ *
+ * Renders 3 peer-city cards under the main benchmark. Each card links
+ * to the same industry in the peer city, encouraging horizontal
+ * exploration instead of bounce.
+ *
+ * Server component. Zero client cost.
+ */
+import { getComparableCities } from "@/lib/cities/comparable_cities";
+import { CountryFlag } from "@/components/CountryFlag";
+
+type Props = {
+  /** City slug from the URL — used as the seed for comparison. */
+  citySlug: string;
+  /** Industry slug — preserved so the destination card stays on the same industry. */
+  industrySlug: string;
+  /** Optional friendly industry name for the header copy. */
+  industryName?: string;
+};
+
+export function ComparableCitiesRibbon({
+  citySlug,
+  industrySlug,
+  industryName,
+}: Props) {
+  const peers = getComparableCities(citySlug, 3);
+  if (peers.length === 0) return null;
+
+  const seedLabel = citySlug
+    .split("-")
+    .map((s) => s[0]?.toUpperCase() + s.slice(1))
+    .join(" ");
+
+  return (
+    <section className="py-10 md:py-14">
+      <div className="text-xs uppercase tracking-wide text-atlas-600 font-semibold mb-2">
+        Cities that feel like {seedLabel}
+      </div>
+      <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mb-2 max-w-3xl">
+        If you&apos;re curious about {industryName ? industryName.toLowerCase() : "this industry"} elsewhere
+      </h2>
+      <p className="text-sm md:text-base text-cocoa-700/80 mb-6 max-w-2xl">
+        Comparable in scale, culture, or wealth. A starting point for
+        wandering.
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
+        {peers.map((p) => (
+          <a
+            key={`${p.iso2}-${p.slug}`}
+            href={`/${p.iso2.toLowerCase()}/${p.slug}/${industrySlug}`}
+            className="group block rounded-2xl border border-parchment hover:border-atlas-500 bg-white p-5 transition-colors"
+          >
+            <div className="flex items-center gap-2 text-xs uppercase tracking-wide text-cocoa-700/60 font-semibold mb-2">
+              <CountryFlag iso2={p.iso2} className="w-4" />
+              <span>{p.continent}</span>
+            </div>
+            <div className="font-display text-xl md:text-2xl font-medium tracking-tight text-ink-900 group-hover:text-atlas-700 transition-colors">
+              {p.name}
+            </div>
+            <div className="mt-3 text-xs text-cocoa-700/70 flex items-center gap-1.5 font-medium border-b border-atlas-200 group-hover:border-atlas-500 pb-0.5 transition-colors w-fit">
+              See {industryName ? industryName.toLowerCase() : "the benchmark"}
+              <span aria-hidden>→</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  );
+}
