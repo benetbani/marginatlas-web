@@ -21,6 +21,7 @@ import { COUNTRIES, SECTORS_ORDERED } from "@/lib/taxonomy";
 import { score100to10 } from "@/components/QualityDots";
 import { hasRegionalCoverage } from "@/lib/coverage/regional";
 import { getAdmin1Regions } from "@/lib/coverage/admin1";
+import { isPathSuppressed } from "@/lib/quality/thin_pages";
 
 const BASE_URL = "https://www.marginatlas.com";
 
@@ -87,8 +88,14 @@ async function usCellsSitemap(): Promise<MetadataRoute.Sitemap> {
   const cells = await getTopCells(5000);
   return cells
     .filter((c) => c.geo_name && (c.industry_description || c.naics_6))
-    .map((c) => ({
-      url: `${BASE_URL}/${c.country.toLowerCase()}/${slugify(c.geo_name)}/${slugify(c.industry_description || c.naics_6)}`,
+    .map((c) => {
+      const path = `/${c.country.toLowerCase()}/${slugify(c.geo_name)}/${slugify(c.industry_description || c.naics_6)}`;
+      return { path };
+    })
+    // Plan v24 Block 5 — drop pages flagged as thin / missing-core / broken.
+    .filter(({ path }) => !isPathSuppressed(path))
+    .map(({ path }) => ({
+      url: `${BASE_URL}${path}`,
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
       priority: 0.7,
@@ -101,6 +108,8 @@ async function regionalCellsSitemap(): Promise<MetadataRoute.Sitemap> {
     .filter((c) => score100to10(c.quality_score) >= 4)
     .map((c) => regionalCellUrl(c))
     .filter((u) => u.length > 0)
+    // Plan v24 Block 5 — same suppression for the international cells.
+    .filter((path) => !isPathSuppressed(path))
     .map((path) => ({
       url: `${BASE_URL}${path}`,
       lastModified: new Date(),
