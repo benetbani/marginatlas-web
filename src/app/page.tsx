@@ -39,15 +39,17 @@ export const revalidate = 86400; // 1 day
  * Tiles use measured parent industries (no sub-niches) per Plan v4 Step 16.
  */
 const FEATURED: FeaturedTileSpec[] = [
-  { iso2: "US", geo: "california",  industry: "software-development",   title: "Software development", region: "San Francisco",  glyph: "💻" },
-  { iso2: "GB", geo: "gb",          industry: "legal-services",         title: "Legal services",       region: "United Kingdom", glyph: "⚖️" },
-  { iso2: "DE", geo: "de21",        industry: "fabricated-metal-mfg",   title: "Metal manufacturing",  region: "Bavaria",        glyph: "🔩" },
-  { iso2: "JP", geo: "jp-13000",    industry: "restaurants",            title: "Ramen shops",          region: "Tokyo",          glyph: "🍜" },
-  { iso2: "US", geo: "us-06-037",   industry: "sports-fitness",         title: "Gyms",                 region: "Los Angeles",    glyph: "🏋️" },
-  { iso2: "IT", geo: "itc4c",       industry: "clothing-stores",        title: "Boutiques",            region: "Milan",          glyph: "👗" },
-  { iso2: "FR", geo: "fr101",       industry: "jewelry-stores",         title: "Jewelry shops",        region: "Paris",          glyph: "💎" },
-  { iso2: "ES", geo: "es511",       industry: "restaurants",            title: "Restaurants",          region: "Barcelona",      glyph: "🥘" },
-  { iso2: "MX", geo: "mx-roo",      industry: "hotels-lodging",         title: "Hotels",               region: "Cancún",         glyph: "🏨" },
+  { iso2: "US", geo: "california",   industry: "software-development", title: "Software development", region: "San Francisco",  glyph: "💻" },
+  { iso2: "GB", geo: "gb",           industry: "legal-services",       title: "Legal services",       region: "United Kingdom", glyph: "⚖️" },
+  { iso2: "DE", geo: "de21",         industry: "fabricated-metal-mfg", title: "Metal manufacturing",  region: "Bavaria",        glyph: "🔩" },
+  { iso2: "ES", geo: "es511",        industry: "restaurants",          title: "Restaurants",          region: "Barcelona",      glyph: "🥘" },
+  { iso2: "MX", geo: "mx-roo",       industry: "hotels-lodging",       title: "Hotels",               region: "Cancún",         glyph: "🏨" },
+  // Six is the symmetric grid size (2 rows × 3 cols on md). All six are
+  // verified resolvable in the current snapshot. Tuples for Tokyo ramen,
+  // LA gyms, Milan boutiques, Paris jewelry were dropped because the
+  // underlying data isn't currently in cells_master / regional_cells
+  // and the founder rule (Plan v24 Block 2) says no half-empty grids.
+  { iso2: "US", geo: "california",   industry: "restaurants",          title: "Restaurants",          region: "California",     glyph: "🍽️" },
 ];
 
 /**
@@ -222,7 +224,7 @@ export default function HomePage() {
             </a>
           </div>
           <p className="text-sm text-cocoa-700/80 max-w-2xl mb-6">
-            Nine benchmarks people recognize on sight. Click any tile for the full
+            Six benchmarks people recognize on sight. Click any tile for the full
             numbers: where every business lands, time series, comparable industries.
           </p>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3 auto-rows-fr">

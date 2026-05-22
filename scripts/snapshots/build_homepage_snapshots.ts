@@ -67,12 +67,9 @@ const FEATURED: CellSpec[] = [
   { iso2: "US", geo: "california",   industry: "software_development" },
   { iso2: "GB", geo: "gb",           industry: "legal_services" },
   { iso2: "DE", geo: "de21",         industry: "fabricated_metal_mfg" },
-  { iso2: "JP", geo: "jp-13000",     industry: "restaurants" },
-  { iso2: "US", geo: "us-06-037",    industry: "sports_fitness" },
-  { iso2: "IT", geo: "itc4c",        industry: "clothing_stores" },
-  { iso2: "FR", geo: "fr101",        industry: "jewelry_stores" },
   { iso2: "ES", geo: "es511",        industry: "restaurants" },
   { iso2: "MX", geo: "mx-roo",       industry: "hotels_lodging" },
+  { iso2: "US", geo: "california",   industry: "restaurants" },
 ];
 
 const CELL_OF_THE_WEEK: CellSpec[] = [

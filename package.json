@@ -11,10 +11,11 @@
     "verify:em-dashes": "npx tsx scripts/verify_no_em_dashes.ts",
     "verify:agencies": "npx tsx scripts/verify_no_source_agencies.ts",
     "verify:dead-links": "npx tsx scripts/audit/find_dead_links.ts --strict",
+    "verify:featured-tiles": "npx tsx scripts/verify_featured_tiles.ts",
     "audit:inventory": "npx tsx scripts/audit/enumerate_urls.ts",
     "audit:probe": "npx tsx scripts/audit/probe_urls.ts",
     "audit:report": "npx tsx scripts/audit/report.ts",
-    "prebuild": "npx tsx scripts/verify_taxonomy.ts && npx tsx scripts/verify_no_em_dashes.ts && npx tsx scripts/verify_no_source_agencies.ts && npx tsx scripts/audit/find_dead_links.ts --strict"
+    "prebuild": "npx tsx scripts/verify_taxonomy.ts && npx tsx scripts/verify_no_em_dashes.ts && npx tsx scripts/verify_no_source_agencies.ts && npx tsx scripts/audit/find_dead_links.ts --strict && npx tsx scripts/verify_featured_tiles.ts"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
