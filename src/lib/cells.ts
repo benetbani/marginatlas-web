@@ -30,6 +30,7 @@ import {
   MANUAL_DISPLAY_LABEL,
 } from "./cities/manual_city_aliases";
 import { isCellSuppressed, applyCellOverrides } from "./cells/triage";
+import { getPopularPlaceName } from "./geo/popular_place_overrides";
 import {
   REVENUE_PER_FIRM_BOUNDS,
   DEFAULT_REVENUE_BOUNDS,
@@ -483,8 +484,15 @@ export async function getCellBySlug(
  * Best-effort human label for a geo slug when we don't have a real
  * cell row to read geo_name from. Used by synthesizeCell to render a
  * sensible hero (e.g. "Frankfurt am Main" instead of "DE71").
+ *
+ * Plan v28 Lane C — popular-name override fires FIRST, so Quintana Roo
+ * displays as Cancún (the name the world knows) regardless of which
+ * data source the row came from. One name, one place.
  */
 function geoNameFromSlug(country: string, geoSlug: string): string | undefined {
+  // Plan v28 Lane C — popular-name overrides take priority.
+  const popular = getPopularPlaceName(country, geoSlug);
+  if (popular) return popular;
   const manualLabel = MANUAL_DISPLAY_LABEL[country]?.[geoSlug.toLowerCase()];
   if (manualLabel) return manualLabel;
   const friendlyLabel =

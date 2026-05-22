@@ -1,0 +1,189 @@
+{
+  "version": "1.0.0",
+  "anchor": "Plan v28 Lane A — realistic net-margin caps per sector. The estimateNetProfit() pipeline can produce inflated net margins when US-anchored gross margins are applied to non-US revenue minus low local payroll. These caps clamp the output to defensible ranges. Any margin above the hard cap gets clamped + flagged; any margin above the investigate threshold gets logged for review.",
+  "convention": "All values are decimals (0.20 = 20%). typical_low and typical_high define the band the median firm should land in. hard_cap is the ceiling — anything above gets clamped. investigate is the soft threshold — above this we log a flag for the audit pipeline. Source: industry-standard benchmarks cross-referenced internally; conservative side.",
+  "default_fallback": {
+    "typical_low": 0.04,
+    "typical_high": 0.12,
+    "investigate": 0.18,
+    "hard_cap": 0.25,
+    "notes": "Generic SMB fallback."
+  },
+  "sectors": {
+    "hospitality": {
+      "typical_low": 0.05,
+      "typical_high": 0.15,
+      "investigate": 0.18,
+      "hard_cap": 0.20,
+      "notes": "Hotels, restaurants are NOT high-margin businesses."
+    },
+    "food_drink": {
+      "typical_low": 0.03,
+      "typical_high": 0.10,
+      "investigate": 0.13,
+      "hard_cap": 0.14,
+      "notes": "Restaurants, cafes, bars run thin."
+    },
+    "retail_shops": {
+      "typical_low": 0.04,
+      "typical_high": 0.12,
+      "investigate": 0.15,
+      "hard_cap": 0.16,
+      "notes": "Independent retail."
+    },
+    "construction": {
+      "typical_low": 0.08,
+      "typical_high": 0.18,
+      "investigate": 0.22,
+      "hard_cap": 0.25,
+      "notes": "Residential and commercial construction."
+    },
+    "trades_home": {
+      "typical_low": 0.10,
+      "typical_high": 0.22,
+      "investigate": 0.26,
+      "hard_cap": 0.30,
+      "notes": "Plumbing, electrical, HVAC — pricing power tight."
+    },
+    "repair": {
+      "typical_low": 0.10,
+      "typical_high": 0.22,
+      "investigate": 0.26,
+      "hard_cap": 0.30,
+      "notes": "Auto repair, equipment repair."
+    },
+    "professional_services": {
+      "typical_low": 0.12,
+      "typical_high": 0.25,
+      "investigate": 0.30,
+      "hard_cap": 0.32,
+      "notes": "Law, accounting, consulting — owner draw mixes into this."
+    },
+    "creative_media": {
+      "typical_low": 0.10,
+      "typical_high": 0.20,
+      "investigate": 0.25,
+      "hard_cap": 0.28,
+      "notes": "Agencies, design, photography."
+    },
+    "software_tech": {
+      "typical_low": 0.08,
+      "typical_high": 0.22,
+      "investigate": 0.26,
+      "hard_cap": 0.28,
+      "notes": "Small dev shops; SaaS gross margin is higher but net after CAC is normal."
+    },
+    "beauty_wellness": {
+      "typical_low": 0.10,
+      "typical_high": 0.22,
+      "investigate": 0.26,
+      "hard_cap": 0.30,
+      "notes": "Salons, spas — owner-operator businesses."
+    },
+    "health_clinics": {
+      "typical_low": 0.10,
+      "typical_high": 0.20,
+      "investigate": 0.24,
+      "hard_cap": 0.28,
+      "notes": "Medical/dental practices — payor mix matters."
+    },
+    "education_instruction": {
+      "typical_low": 0.15,
+      "typical_high": 0.28,
+      "investigate": 0.32,
+      "hard_cap": 0.36,
+      "notes": "Tutoring runs lean; group classes higher."
+    },
+    "events_entertainment": {
+      "typical_low": 0.08,
+      "typical_high": 0.18,
+      "investigate": 0.22,
+      "hard_cap": 0.25,
+      "notes": "Event planners, venues."
+    },
+    "cultural": {
+      "typical_low": 0.05,
+      "typical_high": 0.15,
+      "investigate": 0.18,
+      "hard_cap": 0.20,
+      "notes": "Bookstores, galleries, music venues."
+    },
+    "pet_services": {
+      "typical_low": 0.15,
+      "typical_high": 0.28,
+      "investigate": 0.32,
+      "hard_cap": 0.35,
+      "notes": "Dog grooming, vet practices — owner-operator high margin."
+    },
+    "transport_small": {
+      "typical_low": 0.05,
+      "typical_high": 0.14,
+      "investigate": 0.18,
+      "hard_cap": 0.20,
+      "notes": "Trucking, delivery, taxi/rideshare."
+    },
+    "manufacturing_artisan": {
+      "typical_low": 0.05,
+      "typical_high": 0.14,
+      "investigate": 0.18,
+      "hard_cap": 0.20,
+      "notes": "Small-batch food, textiles, leather."
+    },
+    "heavy_industry": {
+      "typical_low": 0.04,
+      "typical_high": 0.12,
+      "investigate": 0.16,
+      "hard_cap": 0.18,
+      "notes": "Heavy manufacturing — capital intensive."
+    },
+    "mining_energy": {
+      "typical_low": 0.08,
+      "typical_high": 0.20,
+      "investigate": 0.25,
+      "hard_cap": 0.28,
+      "notes": "Highly commodity-cycle dependent."
+    },
+    "farming_food_production": {
+      "typical_low": 0.03,
+      "typical_high": 0.10,
+      "investigate": 0.14,
+      "hard_cap": 0.16,
+      "notes": "Margins thin and weather-dependent."
+    },
+    "real_estate": {
+      "typical_low": 0.10,
+      "typical_high": 0.22,
+      "investigate": 0.26,
+      "hard_cap": 0.30,
+      "notes": "Brokerage on company-side commission; not gross transaction."
+    },
+    "finance_corp": {
+      "typical_low": 0.12,
+      "typical_high": 0.25,
+      "investigate": 0.30,
+      "hard_cap": 0.34,
+      "notes": "Small finance shops — wide variance."
+    },
+    "telecom_broadcasting": {
+      "typical_low": 0.06,
+      "typical_high": 0.15,
+      "investigate": 0.18,
+      "hard_cap": 0.20,
+      "notes": "Capital-heavy."
+    },
+    "higher_ed_hospitals": {
+      "typical_low": 0.03,
+      "typical_high": 0.10,
+      "investigate": 0.14,
+      "hard_cap": 0.16,
+      "notes": "Non-profits and quasi-public — typically thin."
+    },
+    "other_local": {
+      "typical_low": 0.06,
+      "typical_high": 0.16,
+      "investigate": 0.20,
+      "hard_cap": 0.22,
+      "notes": "Generic local services."
+    }
+  }
+}

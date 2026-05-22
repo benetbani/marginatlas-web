@@ -218,6 +218,43 @@ export function synthesizeCell(
  */
 export function enforceSanity(cell: Cell): Cell {
   const out: Cell = { ...cell };
+  // Plan v28 Lane B — hard revenue ceiling at read time. Per-industry
+  // SMB bounds clamp revenue_per_firm BEFORE downstream consumers
+  // (margin estimator, comparator, narrative) see it. This catches
+  // extrapolated rows where industry × country produced absurd values
+  // (e.g. utilities at SMB-size-band in tax havens).
+  const indId = out.industry_id || "default";
+  const bounds = REVENUE_PER_FIRM_BOUNDS[indId] || DEFAULT_REVENUE_BOUNDS;
+  if (out.revenue_per_firm != null && out.revenue_per_firm > bounds.hi) {
+    out.revenue_per_firm = bounds.hi;
+  }
+  // Apply same ceiling to percentiles so they stay consistent.
+  for (const key of ["rev_p10", "rev_p25", "rev_p50", "rev_p75", "rev_p90"] as const) {
+    const v = out[key as keyof Cell] as number | null | undefined;
+    if (v != null && v > bounds.hi) {
+      (out as Record<string, unknown>)[key] = bounds.hi;
+    }
+  }
+
+  // Plan v28 Lane B — wage sanity. Catches local-currency-as-USD bugs
+  // (e.g., 6,000,000 yen leaked as $6M wage). Absolute SMB wage ceiling
+  // is $250K/yr/employee; floor is $1.2K (anything below is likely
+  // monthly mistaken for annual).
+  if (out.payroll_per_employee != null) {
+    if (out.payroll_per_employee > 250_000) {
+      // Looks like a currency or scale error — fall back to country median.
+      const cb = COUNTRY_BASELINE.countries[(out.country || "").toUpperCase()] || COUNTRY_BASELINE.default_fallback;
+      out.payroll_per_employee = cb.payroll_per_employee_usd;
+    } else if (out.payroll_per_employee > 0 && out.payroll_per_employee < 1200) {
+      // Possibly monthly. Multiply by 12; if still in range use it, else fall back.
+      const annualized = out.payroll_per_employee * 12;
+      const cb = COUNTRY_BASELINE.countries[(out.country || "").toUpperCase()] || COUNTRY_BASELINE.default_fallback;
+      out.payroll_per_employee = annualized <= 250_000 && annualized >= 1200
+        ? annualized
+        : cb.payroll_per_employee_usd;
+    }
+  }
+
   const wage = out.payroll_per_employee || 0;
   const rev = out.revenue_per_firm || 0;
   const empl = out.n_employees || 0;

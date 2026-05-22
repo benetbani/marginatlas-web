@@ -65,6 +65,7 @@ import { NetProfitSummary } from "@/components/NetProfitSummary";
 import { CellFallbackBanner } from "@/components/CellFallbackBanner";
 import { EstimatedBadge } from "@/components/EstimatedBadge";
 import { CoverageIndicator, deriveCoverageTier } from "@/components/CoverageIndicator";
+import { EditorialNote } from "@/components/EditorialNote";
 
 type IndustryMarginRow = { gross_margin: number; operating_margin: number; asset_intensity?: number };
 const INDUSTRY_MARGINS = industryMarginsJson as unknown as {
@@ -252,7 +253,7 @@ export default async function CellPage({
   const rawNetMargin = netProfitResult?.net_margin ?? null;
   const netTakeHome = netProfitResult?.net_profit ?? null;
   // Defensive floor — never let a sub-3% net margin reach the page.
-  const computedNetMargin = rawNetMargin != null ? clampMargin(rawNetMargin, "net") : null;
+  const computedNetMargin = rawNetMargin != null ? clampMargin(rawNetMargin, "net", cell.industry_id || null) : null;
 
   // Plan v14 Phase C.4 — FAQPage JSON-LD payload. The question text matches
   // the phrase universe (scripts/seo/build_phrase_universe.py), so any organic
@@ -484,6 +485,15 @@ export default async function CellPage({
           geoName={cell.geo_name}
         />
       </section>
+
+      {/* Plan v28 Lane D — editorial voice. One paragraph of context
+          between the headline and the data so the page reads like a
+          narrative, not just a dump. */}
+      <EditorialNote
+        industryId={cell.industry_id}
+        sectorId={cell.sector_id}
+        iso2={country.toUpperCase()}
+      />
 
       {/* Plan v23 Part 3 — narrative now reads as editorial prose. Drop
          cap on the first paragraph, looser line-height, max-w-prose. */}
