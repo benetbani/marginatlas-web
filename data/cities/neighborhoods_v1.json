@@ -1,0 +1,236 @@
+{
+  "version": "1.0.0",
+  "anchor": "Plan v26 Phase B.2 — neighborhood scheme per city. Founder direction: prefer the BIGGER chunks ('the five big neighborhoods should be the separation'). Default scheme = 5 cardinal macro zones (Central, North, South, East, West) for cities without a canonical 5-7 chunk subdivision. Cities with a well-known macro division (NYC 5 boroughs, Paris Right/Left Bank, Tokyo 5 wards zone aggregate, London 5 zones) get explicit overrides.",
+  "convention": "Each city: scheme ∈ {α-macro, β-subdivisions, γ-none}. neighborhoods = list of {slug, name, character, description?}. character ∈ {central-business, affluent-residential, mid-residential, working-residential, industrial, tourist, mixed-urban, academic}. Synthesis multiplies city-level data by (industry, character) multiplier (see character_multipliers_v1.json).",
+  "default_scheme_for_tier1_and_tier2": "α-macro with 5 cardinal zones — only when no canonical division is recorded below.",
+  "cities": {
+    "new-york": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "manhattan", "name": "Manhattan", "character": "central-business", "description": "Financial and corporate density; high commute volume; iconic central business district." },
+        { "slug": "brooklyn", "name": "Brooklyn", "character": "mixed-urban", "description": "Mixed residential, creative industries, growing tech and food scenes." },
+        { "slug": "queens", "name": "Queens", "character": "mid-residential", "description": "Diverse mid-class residential; airport-anchored services; small manufacturing." },
+        { "slug": "bronx", "name": "The Bronx", "character": "working-residential", "description": "Working-class residential; value retail; small-trade economy." },
+        { "slug": "staten-island", "name": "Staten Island", "character": "affluent-residential", "description": "Suburban residential, lower density, family-business economy." }
+      ]
+    },
+    "london": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "central-london", "name": "Central London", "character": "central-business", "description": "City of London, Westminster, Camden — financial core and government." },
+        { "slug": "north-london", "name": "North London", "character": "mid-residential", "description": "Islington, Camden Town, Hampstead — creative, residential, hospitality." },
+        { "slug": "south-london", "name": "South London", "character": "mid-residential", "description": "Lambeth, Southwark, Greenwich — mixed residential and emerging business." },
+        { "slug": "east-london", "name": "East London", "character": "mixed-urban", "description": "Tower Hamlets, Hackney, Stratford — tech, creative, and rapid regeneration." },
+        { "slug": "west-london", "name": "West London", "character": "affluent-residential", "description": "Kensington, Chelsea, Hammersmith — premium retail and residential." }
+      ]
+    },
+    "paris": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "right-bank-central", "name": "Right Bank, Central", "character": "central-business", "description": "1st-4th arrondissements; Louvre, Marais, Les Halles — heritage center and luxury retail." },
+        { "slug": "left-bank-central", "name": "Left Bank, Central", "character": "affluent-residential", "description": "5th-7th arrondissements; Latin Quarter, Saint-Germain — academic, cultural, premium." },
+        { "slug": "north-periphery", "name": "North Periphery", "character": "mixed-urban", "description": "18th-20th arrondissements and outer ring — diverse residential and small commerce." },
+        { "slug": "south-periphery", "name": "South Periphery", "character": "mid-residential", "description": "13th-15th arrondissements; tech and university campuses." }
+      ]
+    },
+    "tokyo": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "central", "name": "Central Tokyo", "character": "central-business", "description": "Chiyoda, Chuo, Minato — financial heart, headquarters, premium hospitality." },
+        { "slug": "west", "name": "West Tokyo", "character": "mixed-urban", "description": "Shinjuku, Shibuya, Setagaya — retail, nightlife, creative, residential mix." },
+        { "slug": "north", "name": "North Tokyo", "character": "mid-residential", "description": "Toshima, Bunkyo — universities, residential, mid-scale commerce." },
+        { "slug": "east", "name": "East Tokyo", "character": "working-residential", "description": "Sumida, Koto, Edogawa — traditional small business and workshops." },
+        { "slug": "south", "name": "South Tokyo", "character": "mid-residential", "description": "Shinagawa, Ota, Meguro — residential, light industrial, airport corridor." }
+      ]
+    },
+    "berlin": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "mitte-central", "name": "Mitte / Central", "character": "central-business", "description": "Mitte, Friedrichshain-Kreuzberg — government, startups, tourism." },
+        { "slug": "west", "name": "West Berlin", "character": "affluent-residential", "description": "Charlottenburg, Wilmersdorf — established residential and premium retail." },
+        { "slug": "east", "name": "East Berlin", "character": "mixed-urban", "description": "Prenzlauer Berg, Lichtenberg — gentrified mid-residential, creative." },
+        { "slug": "outer", "name": "Outer Berlin", "character": "mid-residential", "description": "Spandau, Reinickendorf, Treptow-Köpenick — suburban, light industrial." }
+      ]
+    },
+    "los-angeles": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "downtown", "name": "Downtown LA", "character": "central-business", "description": "Financial and Arts Districts; emerging residential." },
+        { "slug": "westside", "name": "Westside", "character": "affluent-residential", "description": "Santa Monica, Beverly Hills, Venice — premium residential and creative." },
+        { "slug": "san-fernando-valley", "name": "San Fernando Valley", "character": "mid-residential", "description": "Mid-residential, light industrial, entertainment-services." },
+        { "slug": "south-bay", "name": "South Bay", "character": "mid-residential", "description": "Torrance, Long Beach — residential, logistics, aerospace." },
+        { "slug": "east-la", "name": "East LA", "character": "working-residential", "description": "Working-class residential, immigrant economy, small trades." }
+      ]
+    },
+    "chicago": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "loop-downtown", "name": "Loop / Downtown", "character": "central-business" },
+        { "slug": "north-side", "name": "North Side", "character": "affluent-residential" },
+        { "slug": "south-side", "name": "South Side", "character": "working-residential" },
+        { "slug": "west-side", "name": "West Side", "character": "mid-residential" },
+        { "slug": "near-suburbs", "name": "Near Suburbs", "character": "mid-residential" }
+      ]
+    },
+    "san-francisco": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "downtown-soma", "name": "Downtown / SoMa", "character": "central-business" },
+        { "slug": "north-beach-fishermans-wharf", "name": "North Beach / Fisherman's Wharf", "character": "tourist" },
+        { "slug": "mission-castro", "name": "Mission / Castro", "character": "mixed-urban" },
+        { "slug": "richmond-sunset", "name": "Richmond / Sunset", "character": "mid-residential" },
+        { "slug": "south-san-francisco", "name": "South San Francisco", "character": "industrial" }
+      ]
+    },
+    "mexico-city": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "centro-historico", "name": "Centro Histórico", "character": "central-business" },
+        { "slug": "polanco-condesa-roma", "name": "Polanco / Condesa / Roma", "character": "affluent-residential" },
+        { "slug": "south-coyoacan-tlalpan", "name": "South (Coyoacán / Tlalpan)", "character": "mid-residential" },
+        { "slug": "north-azcapotzalco-gam", "name": "North (Azcapotzalco / GAM)", "character": "working-residential" },
+        { "slug": "east-iztapalapa", "name": "East (Iztapalapa)", "character": "working-residential" }
+      ]
+    },
+    "rome": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "centro-storico", "name": "Centro Storico", "character": "tourist" },
+        { "slug": "vatican-prati", "name": "Vatican / Prati", "character": "affluent-residential" },
+        { "slug": "trastevere-testaccio", "name": "Trastevere / Testaccio", "character": "mixed-urban" },
+        { "slug": "eur-south", "name": "EUR / South", "character": "central-business" },
+        { "slug": "east-tiburtino", "name": "East (Tiburtino)", "character": "working-residential" }
+      ]
+    },
+    "milan": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "centro-duomo", "name": "Centro / Duomo", "character": "central-business" },
+        { "slug": "porta-nuova-isola", "name": "Porta Nuova / Isola", "character": "central-business" },
+        { "slug": "navigli-tortona", "name": "Navigli / Tortona", "character": "mixed-urban" },
+        { "slug": "north-bicocca", "name": "North (Bicocca)", "character": "mid-residential" },
+        { "slug": "south-rogoredo", "name": "South (Rogoredo)", "character": "working-residential" }
+      ]
+    },
+    "madrid": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "centro-sol", "name": "Centro / Sol", "character": "tourist" },
+        { "slug": "salamanca-chamberi", "name": "Salamanca / Chamberí", "character": "affluent-residential" },
+        { "slug": "north-chamartin", "name": "North (Chamartín)", "character": "central-business" },
+        { "slug": "south-vallecas", "name": "South (Vallecas)", "character": "working-residential" },
+        { "slug": "west-moncloa", "name": "West (Moncloa)", "character": "mid-residential" }
+      ]
+    },
+    "barcelona": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "ciutat-vella", "name": "Ciutat Vella", "character": "tourist" },
+        { "slug": "eixample", "name": "Eixample", "character": "central-business" },
+        { "slug": "gracia-sant-gervasi", "name": "Gràcia / Sant Gervasi", "character": "affluent-residential" },
+        { "slug": "sant-marti-22at", "name": "Sant Martí / 22@", "character": "mixed-urban" },
+        { "slug": "sants-les-corts", "name": "Sants / Les Corts", "character": "mid-residential" }
+      ]
+    },
+    "shanghai": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "puxi-central", "name": "Puxi Central (Huangpu)", "character": "central-business" },
+        { "slug": "pudong", "name": "Pudong", "character": "central-business" },
+        { "slug": "french-concession", "name": "French Concession", "character": "affluent-residential" },
+        { "slug": "north-zhabei-baoshan", "name": "North (Zhabei / Baoshan)", "character": "working-residential" },
+        { "slug": "south-minhang", "name": "South (Minhang)", "character": "industrial" }
+      ]
+    },
+    "beijing": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "inner-ring", "name": "Inner Ring (Dongcheng / Xicheng)", "character": "central-business" },
+        { "slug": "chaoyang-cbd", "name": "Chaoyang / CBD", "character": "central-business" },
+        { "slug": "haidian", "name": "Haidian", "character": "academic" },
+        { "slug": "south-fengtai", "name": "South (Fengtai)", "character": "industrial" },
+        { "slug": "outer-suburbs", "name": "Outer Suburbs", "character": "mid-residential" }
+      ]
+    },
+    "seoul": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "gangbuk-central", "name": "Gangbuk Central (Jongno / Jung)", "character": "central-business" },
+        { "slug": "gangnam", "name": "Gangnam", "character": "affluent-residential" },
+        { "slug": "mapo-yeongdeungpo", "name": "Mapo / Yeongdeungpo", "character": "mixed-urban" },
+        { "slug": "songpa-southeast", "name": "Songpa / Southeast", "character": "mid-residential" },
+        { "slug": "gwanak-southwest", "name": "Gwanak / Southwest", "character": "working-residential" }
+      ]
+    },
+    "hong-kong": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "central-admiralty", "name": "Central / Admiralty", "character": "central-business" },
+        { "slug": "kowloon-tsim-sha-tsui", "name": "Kowloon / Tsim Sha Tsui", "character": "mixed-urban" },
+        { "slug": "wan-chai-causeway-bay", "name": "Wan Chai / Causeway Bay", "character": "central-business" },
+        { "slug": "new-territories", "name": "New Territories", "character": "mid-residential" },
+        { "slug": "outlying-islands", "name": "Outlying Islands", "character": "tourist" }
+      ]
+    },
+    "singapore": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "central-area", "name": "Central Area (Downtown Core)", "character": "central-business" },
+        { "slug": "orchard-bukit-timah", "name": "Orchard / Bukit Timah", "character": "affluent-residential" },
+        { "slug": "east-changi", "name": "East (Bedok / Changi)", "character": "mid-residential" },
+        { "slug": "west-jurong", "name": "West (Jurong)", "character": "industrial" },
+        { "slug": "north-woodlands", "name": "North (Woodlands)", "character": "mid-residential" }
+      ]
+    },
+    "mumbai": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "south-mumbai", "name": "South Mumbai", "character": "central-business" },
+        { "slug": "bandra-west", "name": "Bandra West", "character": "affluent-residential" },
+        { "slug": "andheri-west", "name": "Andheri West", "character": "mid-residential" },
+        { "slug": "suburbs-east", "name": "Eastern Suburbs", "character": "working-residential" },
+        { "slug": "navi-mumbai", "name": "Navi Mumbai", "character": "industrial" }
+      ]
+    },
+    "delhi": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "central-new-delhi", "name": "Central (New Delhi / Connaught Place)", "character": "central-business" },
+        { "slug": "south-delhi", "name": "South Delhi", "character": "affluent-residential" },
+        { "slug": "gurgaon", "name": "Gurgaon", "character": "central-business" },
+        { "slug": "noida", "name": "Noida", "character": "mid-residential" },
+        { "slug": "old-delhi-east", "name": "Old Delhi / East", "character": "working-residential" }
+      ]
+    },
+    "sao-paulo": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "centro-historico", "name": "Centro Histórico", "character": "mixed-urban" },
+        { "slug": "avenida-paulista-jardins", "name": "Avenida Paulista / Jardins", "character": "central-business" },
+        { "slug": "vila-olimpia-itaim", "name": "Vila Olímpia / Itaim", "character": "central-business" },
+        { "slug": "north-zona-norte", "name": "North (Zona Norte)", "character": "working-residential" },
+        { "slug": "east-zona-leste", "name": "East (Zona Leste)", "character": "working-residential" }
+      ]
+    },
+    "sydney": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "cbd-haymarket", "name": "CBD / Haymarket", "character": "central-business" },
+        { "slug": "eastern-suburbs", "name": "Eastern Suburbs", "character": "affluent-residential" },
+        { "slug": "north-shore", "name": "North Shore", "character": "affluent-residential" },
+        { "slug": "western-sydney", "name": "Western Sydney (Parramatta)", "character": "mid-residential" },
+        { "slug": "inner-west", "name": "Inner West", "character": "mixed-urban" }
+      ]
+    },
+    "dubai": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "downtown-dubai", "name": "Downtown Dubai", "character": "central-business" },
+        { "slug": "dubai-marina", "name": "Dubai Marina", "character": "affluent-residential" },
+        { "slug": "deira-bur-dubai", "name": "Deira / Bur Dubai", "character": "tourist" },
+        { "slug": "business-bay", "name": "Business Bay", "character": "central-business" },
+        { "slug": "jumeirah", "name": "Jumeirah", "character": "affluent-residential" }
+      ]
+    }
+  }
+}

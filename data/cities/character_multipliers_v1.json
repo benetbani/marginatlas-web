@@ -1,0 +1,170 @@
+{
+  "version": "1.0.0",
+  "anchor": "Plan v26 Phase B.3 — character × industry multiplier table. Applied to city-level cell data to synthesize neighborhood-level cells. revenue_per_firm and n_enterprises are multiplied by these factors. Common-sense calibration: a jewelry store in an affluent district makes more than the city average; a jewelry store in a working-class area makes less. Industrial manufacturing thrives in industrial zones and shrinks in central-business cores. Tourist hotels in tourist districts hit a multiplier > 1.5; in industrial districts <0.4.",
+  "convention": "Multipliers on revenue_per_firm and n_enterprises. Default = 1.0 (no change). Characters: central-business, affluent-residential, mid-residential, working-residential, industrial, tourist, mixed-urban, academic. Industries match src/lib/taxonomy/industries.json IDs. Unlisted (industry, character) combinations default to {revenue: 1.0, firms: 1.0}.",
+  "default_per_character": {
+    "central-business": { "revenue": 1.25, "firms": 1.15 },
+    "affluent-residential": { "revenue": 1.20, "firms": 0.95 },
+    "mid-residential": { "revenue": 1.00, "firms": 1.00 },
+    "working-residential": { "revenue": 0.75, "firms": 1.05 },
+    "industrial": { "revenue": 0.85, "firms": 0.85 },
+    "tourist": { "revenue": 1.15, "firms": 1.30 },
+    "mixed-urban": { "revenue": 1.05, "firms": 1.05 },
+    "academic": { "revenue": 0.95, "firms": 0.95 }
+  },
+  "industries": {
+    "restaurants": {
+      "central-business": { "revenue": 1.40, "firms": 1.25 },
+      "affluent-residential": { "revenue": 1.30, "firms": 1.05 },
+      "mid-residential": { "revenue": 1.00, "firms": 1.00 },
+      "working-residential": { "revenue": 0.70, "firms": 1.10 },
+      "industrial": { "revenue": 0.60, "firms": 0.50 },
+      "tourist": { "revenue": 1.45, "firms": 1.50 },
+      "mixed-urban": { "revenue": 1.10, "firms": 1.10 },
+      "academic": { "revenue": 1.05, "firms": 1.20 }
+    },
+    "cafes_coffee_shops": {
+      "central-business": { "revenue": 1.50, "firms": 1.30 },
+      "affluent-residential": { "revenue": 1.25, "firms": 1.10 },
+      "tourist": { "revenue": 1.35, "firms": 1.40 },
+      "academic": { "revenue": 1.20, "firms": 1.30 },
+      "industrial": { "revenue": 0.55, "firms": 0.45 }
+    },
+    "bars_pubs_clubs": {
+      "central-business": { "revenue": 1.45, "firms": 1.20 },
+      "tourist": { "revenue": 1.50, "firms": 1.45 },
+      "mixed-urban": { "revenue": 1.30, "firms": 1.25 },
+      "academic": { "revenue": 1.30, "firms": 1.35 },
+      "industrial": { "revenue": 0.45, "firms": 0.40 }
+    },
+    "bakeries_pastries": {
+      "affluent-residential": { "revenue": 1.30, "firms": 1.05 },
+      "tourist": { "revenue": 1.40, "firms": 1.20 },
+      "central-business": { "revenue": 1.20, "firms": 1.05 },
+      "working-residential": { "revenue": 0.80, "firms": 1.15 }
+    },
+    "hotels_lodging": {
+      "tourist": { "revenue": 1.70, "firms": 1.55 },
+      "central-business": { "revenue": 1.45, "firms": 1.25 },
+      "affluent-residential": { "revenue": 1.30, "firms": 1.00 },
+      "industrial": { "revenue": 0.35, "firms": 0.25 },
+      "working-residential": { "revenue": 0.50, "firms": 0.40 }
+    },
+    "jewelry_stores": {
+      "affluent-residential": { "revenue": 1.80, "firms": 1.20 },
+      "central-business": { "revenue": 1.50, "firms": 1.15 },
+      "tourist": { "revenue": 1.55, "firms": 1.30 },
+      "working-residential": { "revenue": 0.30, "firms": 0.50 },
+      "industrial": { "revenue": 0.25, "firms": 0.20 }
+    },
+    "clothing_stores": {
+      "affluent-residential": { "revenue": 1.50, "firms": 1.10 },
+      "central-business": { "revenue": 1.35, "firms": 1.20 },
+      "tourist": { "revenue": 1.40, "firms": 1.35 },
+      "working-residential": { "revenue": 0.70, "firms": 1.05 },
+      "industrial": { "revenue": 0.45, "firms": 0.40 }
+    },
+    "grocery_stores": {
+      "mid-residential": { "revenue": 1.10, "firms": 1.05 },
+      "working-residential": { "revenue": 0.95, "firms": 1.15 },
+      "affluent-residential": { "revenue": 1.30, "firms": 0.95 },
+      "central-business": { "revenue": 1.05, "firms": 0.85 },
+      "tourist": { "revenue": 0.90, "firms": 0.80 }
+    },
+    "hairdressers_beauty": {
+      "affluent-residential": { "revenue": 1.45, "firms": 1.05 },
+      "central-business": { "revenue": 1.30, "firms": 1.15 },
+      "mid-residential": { "revenue": 1.00, "firms": 1.00 },
+      "working-residential": { "revenue": 0.75, "firms": 1.10 },
+      "industrial": { "revenue": 0.55, "firms": 0.45 }
+    },
+    "legal_services": {
+      "central-business": { "revenue": 1.65, "firms": 1.50 },
+      "affluent-residential": { "revenue": 1.20, "firms": 1.05 },
+      "academic": { "revenue": 1.10, "firms": 1.05 },
+      "working-residential": { "revenue": 0.55, "firms": 0.60 },
+      "industrial": { "revenue": 0.50, "firms": 0.45 }
+    },
+    "management_consulting": {
+      "central-business": { "revenue": 1.70, "firms": 1.55 },
+      "affluent-residential": { "revenue": 1.20, "firms": 1.05 },
+      "academic": { "revenue": 1.15, "firms": 1.20 },
+      "working-residential": { "revenue": 0.45, "firms": 0.45 },
+      "industrial": { "revenue": 0.40, "firms": 0.35 }
+    },
+    "accounting_bookkeeping": {
+      "central-business": { "revenue": 1.50, "firms": 1.40 },
+      "mid-residential": { "revenue": 1.05, "firms": 1.10 },
+      "industrial": { "revenue": 0.85, "firms": 0.85 }
+    },
+    "software_development": {
+      "central-business": { "revenue": 1.55, "firms": 1.45 },
+      "academic": { "revenue": 1.35, "firms": 1.50 },
+      "mixed-urban": { "revenue": 1.20, "firms": 1.25 },
+      "industrial": { "revenue": 0.65, "firms": 0.55 },
+      "working-residential": { "revenue": 0.55, "firms": 0.50 }
+    },
+    "custom_software_contract": {
+      "central-business": { "revenue": 1.50, "firms": 1.45 },
+      "academic": { "revenue": 1.35, "firms": 1.55 },
+      "mixed-urban": { "revenue": 1.20, "firms": 1.30 }
+    },
+    "marketing_design": {
+      "central-business": { "revenue": 1.55, "firms": 1.45 },
+      "mixed-urban": { "revenue": 1.30, "firms": 1.40 },
+      "tourist": { "revenue": 1.10, "firms": 1.20 }
+    },
+    "real_estate_agencies": {
+      "affluent-residential": { "revenue": 1.55, "firms": 1.25 },
+      "central-business": { "revenue": 1.40, "firms": 1.25 },
+      "tourist": { "revenue": 1.30, "firms": 1.30 },
+      "working-residential": { "revenue": 0.70, "firms": 0.85 }
+    },
+    "residential_construction": {
+      "affluent-residential": { "revenue": 1.40, "firms": 1.10 },
+      "mid-residential": { "revenue": 1.10, "firms": 1.10 },
+      "working-residential": { "revenue": 0.90, "firms": 1.15 },
+      "industrial": { "revenue": 1.05, "firms": 0.95 }
+    },
+    "specialty_trades": {
+      "affluent-residential": { "revenue": 1.25, "firms": 1.00 },
+      "mid-residential": { "revenue": 1.05, "firms": 1.10 },
+      "working-residential": { "revenue": 0.95, "firms": 1.20 },
+      "industrial": { "revenue": 1.15, "firms": 1.10 }
+    },
+    "auto_repair_shops": {
+      "working-residential": { "revenue": 1.05, "firms": 1.25 },
+      "industrial": { "revenue": 1.15, "firms": 1.25 },
+      "mid-residential": { "revenue": 1.00, "firms": 1.05 },
+      "central-business": { "revenue": 0.75, "firms": 0.65 }
+    },
+    "fabricated_metal_mfg": {
+      "industrial": { "revenue": 1.35, "firms": 1.50 },
+      "central-business": { "revenue": 0.35, "firms": 0.20 },
+      "affluent-residential": { "revenue": 0.20, "firms": 0.10 }
+    },
+    "food_beverage_mfg": {
+      "industrial": { "revenue": 1.40, "firms": 1.50 },
+      "working-residential": { "revenue": 1.05, "firms": 1.10 },
+      "central-business": { "revenue": 0.45, "firms": 0.30 }
+    },
+    "textile_apparel_mfg": {
+      "industrial": { "revenue": 1.30, "firms": 1.45 },
+      "working-residential": { "revenue": 1.05, "firms": 1.20 },
+      "affluent-residential": { "revenue": 0.30, "firms": 0.15 }
+    },
+    "wholesale_food": {
+      "industrial": { "revenue": 1.35, "firms": 1.40 },
+      "central-business": { "revenue": 0.85, "firms": 0.75 }
+    },
+    "trucking_freight": {
+      "industrial": { "revenue": 1.40, "firms": 1.45 },
+      "central-business": { "revenue": 0.55, "firms": 0.40 }
+    },
+    "veterinary_pet_care": {
+      "affluent-residential": { "revenue": 1.40, "firms": 1.15 },
+      "mid-residential": { "revenue": 1.05, "firms": 1.10 },
+      "working-residential": { "revenue": 0.70, "firms": 0.85 }
+    }
+  }
+}
