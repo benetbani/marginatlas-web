@@ -58,6 +58,7 @@ import {
 import { HeroBenchmark } from "@/components/HeroBenchmark";
 import { DistributionVisual } from "@/components/DistributionVisual";
 import { NetProfitSummary } from "@/components/NetProfitSummary";
+import { CellFallbackBanner } from "@/components/CellFallbackBanner";
 
 type IndustryMarginRow = { gross_margin: number; operating_margin: number; asset_intensity?: number };
 const INDUSTRY_MARGINS = industryMarginsJson as unknown as {
@@ -428,6 +429,18 @@ export default async function CellPage({
         <span>Show numbers in:</span>
         <CurrencySwitcher />
       </div>
+
+      {/* Plan v24 Block 3 — substitution disclosure. Renders only when
+          the PARENT_FALLBACK_MAP walked from the requested industry to
+          a different one, so the user knows the numbers are from a
+          comparable category, not direct measurement. */}
+      {requestedIndustry && cell.industry_name && requestedIndustry.name.toLowerCase() !== cell.industry_name.toLowerCase() ? (
+        <CellFallbackBanner
+          requestedIndustryName={requestedIndustry.name}
+          actualIndustryName={cell.industry_name}
+          actualIndustryHref={cell.industry_id ? `/industries/${cell.industry_id.replace(/_/g, "-")}` : null}
+        />
+      ) : null}
 
       {/* Plan v23 Part 3 — narrative now reads as editorial prose. Drop
          cap on the first paragraph, looser line-height, max-w-prose. */}
