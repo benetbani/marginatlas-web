@@ -113,7 +113,11 @@ async function usCellsSitemap(): Promise<MetadataRoute.Sitemap> {
 }
 
 async function regionalCellsSitemap(): Promise<MetadataRoute.Sitemap> {
-  const cells = await getTopRegionalCells(20000);
+  // Plan v26 follow-up: 20000 limit hit Supabase statement timeout
+  // and emptied the shard. PostgREST caps per-request rows at 1000,
+  // so we use that cap and keep the quality_score ordering so the
+  // downstream filter (score100to10 >= 4) keeps the right rows.
+  const cells = await getTopRegionalCells(1000);
   return cells
     .filter((c) => score100to10(c.quality_score) >= 4)
     .map((c) => regionalCellUrl(c))
