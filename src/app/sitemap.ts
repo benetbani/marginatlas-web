@@ -18,7 +18,6 @@
 import type { MetadataRoute } from "next";
 import { getTopCells, getTopRegionalCells, slugify, regionalCellUrl } from "@/lib/cells";
 import { COUNTRIES, SECTORS_ORDERED } from "@/lib/taxonomy";
-import { score100to10 } from "@/components/QualityDots";
 import { hasRegionalCoverage } from "@/lib/coverage/regional";
 import { getAdmin1Regions } from "@/lib/coverage/admin1";
 import { isPathSuppressed } from "@/lib/quality/thin_pages";
@@ -119,7 +118,9 @@ async function regionalCellsSitemap(): Promise<MetadataRoute.Sitemap> {
   // downstream filter (score100to10 >= 4) keeps the right rows.
   const cells = await getTopRegionalCells(1000);
   return cells
-    .filter((c) => score100to10(c.quality_score) >= 4)
+    // Plan v26 P8 — standardized on the native 0-100 scale. quality_score
+    // >= 40 corresponds to the old `score100to10(...) >= 4` filter.
+    .filter((c) => (c.quality_score ?? 0) >= 40)
     .map((c) => regionalCellUrl(c))
     .filter((u) => u.length > 0)
     // Plan v24 Block 5 — same suppression for the international cells.

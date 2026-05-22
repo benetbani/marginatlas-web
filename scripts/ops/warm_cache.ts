@@ -10,6 +10,8 @@
  *
  * Honors the 600MB RAM cap (D-055); peak observed under 30MB.
  */
+export {}; // module marker — keeps top-level const out of global scope
+
 const args = process.argv.slice(2);
 function arg(name: string, def: string): string {
   const i = args.indexOf(name);

@@ -1,0 +1,1302 @@
+{
+  "generated_at": "2026-05-22T15:52:14.920Z",
+  "schema": "plan_v26_p3_expanded",
+  "entries": [
+    {
+      "country": "US",
+      "geo_id": "US-55-123",
+      "industry_id": "property_leasing",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DE60",
+      "industry_id": "textile_apparel_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRY5",
+      "industry_id": "wood_paper_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "US",
+      "geo_id": "US-02-070",
+      "industry_id": "fishing_aquaculture",
+      "decision": "suppress"
+    },
+    {
+      "country": "US",
+      "geo_id": "US-02-198",
+      "industry_id": "fishing_aquaculture",
+      "decision": "suppress"
+    },
+    {
+      "country": "US",
+      "geo_id": "US-02-070",
+      "industry_id": "sports_fitness",
+      "decision": "suppress"
+    },
+    {
+      "country": "US",
+      "geo_id": "US-02-060",
+      "industry_id": "auto_repair_shops",
+      "decision": "suppress"
+    },
+    {
+      "country": "ES",
+      "geo_id": "ES51",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRC2",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRD",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DEB2",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DEB3",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DED",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DED2",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DED5",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DEF",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DEF0",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DEG",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DEG0",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRB",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRB0",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRC",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRC1",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRE2",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRI",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRI1",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRK",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRM",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRM0",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRY",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRE",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRE1",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRF1",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRF2",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRY1",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRY2",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRY3",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "PL",
+      "geo_id": "PL61",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "PL",
+      "geo_id": "PL62",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "PL",
+      "geo_id": "PL63",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "PL",
+      "geo_id": "PL82",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "PL",
+      "geo_id": "PL84",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "PT",
+      "geo_id": "PT15",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "PT",
+      "geo_id": "PT17",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "SE",
+      "geo_id": "SE1",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "SE",
+      "geo_id": "SE12",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "SE",
+      "geo_id": "SE21",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "SI",
+      "geo_id": "SI0",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "SI",
+      "geo_id": "SI03",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "SI",
+      "geo_id": "SI04",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "HR",
+      "geo_id": "HR02",
+      "industry_id": "oil_gas_extraction",
+      "decision": "suppress"
+    },
+    {
+      "country": "HR",
+      "geo_id": "HR06",
+      "industry_id": "oil_gas_extraction",
+      "decision": "suppress"
+    },
+    {
+      "country": "US",
+      "geo_id": "US-08-053",
+      "industry_id": "hotels_lodging",
+      "decision": "suppress"
+    },
+    {
+      "country": "AT",
+      "geo_id": "AT11",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "AT",
+      "geo_id": "AT13",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "AT",
+      "geo_id": "AT21",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "AT",
+      "geo_id": "AT22",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "AT",
+      "geo_id": "AT32",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "AT",
+      "geo_id": "AT34",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DE22",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DE3",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DE30",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DE27",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DE6",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DE60",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DE7",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DE73",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DE8",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DE80",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DE91",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DE93",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FI",
+      "geo_id": "FI1",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FI",
+      "geo_id": "FI19",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FI",
+      "geo_id": "FI1B",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DEA1",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DEA2",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DEA3",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DEA4",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DEA5",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DEB1",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRH",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRH0",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRI3",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRJ",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRD1",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRD2",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "AT",
+      "geo_id": "AT33",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DE92",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DE94",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "US",
+      "geo_id": "US-39-123",
+      "industry_id": "passenger_transport",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRY5",
+      "industry_id": "media_publishing",
+      "decision": "suppress"
+    },
+    {
+      "country": "MT",
+      "geo_id": "MT0",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "MT",
+      "geo_id": "MT00",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "NL",
+      "geo_id": "NL12",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "NL",
+      "geo_id": "NL13",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "NL",
+      "geo_id": "NL2",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "NL",
+      "geo_id": "NL21",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "NL",
+      "geo_id": "NL22",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "NL",
+      "geo_id": "NL34",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "NL",
+      "geo_id": "NL4",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "NL",
+      "geo_id": "NL42",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DE6",
+      "industry_id": "textile_apparel_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRL0",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRL",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRJ1",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRF3",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DE2",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRK2",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRK1",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "DE",
+      "geo_id": "DE21",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "FR",
+      "geo_id": "FRJ2",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "CH",
+      "geo_id": "CH-CITY-lugano",
+      "industry_id": "grocery_stores",
+      "decision": "suppress"
+    },
+    {
+      "country": "MC",
+      "geo_id": "MC-CITY-monaco",
+      "industry_id": "electricity_gas_utilities",
+      "decision": "suppress"
+    },
+    {
+      "country": "CH",
+      "geo_id": "CH-CITY-lugano",
+      "industry_id": "veterinary_pet_care",
+      "decision": "suppress"
+    },
+    {
+      "country": "LI",
+      "geo_id": "LI-CITY-vaduz",
+      "industry_id": "grocery_stores",
+      "decision": "suppress"
+    },
+    {
+      "country": "MC",
+      "geo_id": "MC-CITY-monaco",
+      "industry_id": "broadcasting_telecom",
+      "decision": "suppress"
+    },
+    {
+      "country": "LI",
+      "geo_id": "LI-CITY-schaan",
+      "industry_id": "grocery_stores",
+      "decision": "suppress"
+    },
+    {
+      "country": "LI",
+      "geo_id": "LI-CITY-vaduz",
+      "industry_id": "electricity_gas_utilities",
+      "decision": "suppress"
+    },
+    {
+      "country": "LI",
+      "geo_id": "LI-CITY-schaan",
+      "industry_id": "electricity_gas_utilities",
+      "decision": "suppress"
+    },
+    {
+      "country": "LI",
+      "geo_id": "LIE",
+      "industry_id": "furniture_other_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "CH",
+      "geo_id": "CHE",
+      "industry_id": "veterinary_pet_care",
+      "decision": "suppress"
+    },
+    {
+      "country": "MC",
+      "geo_id": "MCO",
+      "industry_id": "electrical_equipment_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "MC",
+      "geo_id": "MCO",
+      "industry_id": "grocery_stores",
+      "decision": "suppress"
+    },
+    {
+      "country": "CH",
+      "geo_id": "CHE",
+      "industry_id": "electronics_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "MC",
+      "geo_id": "MCO",
+      "industry_id": "trucking_freight",
+      "decision": "suppress"
+    },
+    {
+      "country": "CH",
+      "geo_id": "CHE",
+      "industry_id": "textile_apparel_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "CH",
+      "geo_id": "CHE",
+      "industry_id": "furniture_other_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "CH",
+      "geo_id": "CHE",
+      "industry_id": "metal_products_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "QA",
+      "geo_id": "QAT",
+      "industry_id": "furniture_other_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "AD",
+      "geo_id": "AND",
+      "industry_id": "textile_apparel_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "QA",
+      "geo_id": "QAT",
+      "industry_id": "chemical_pharma_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "SA",
+      "geo_id": "SAU",
+      "industry_id": "broadcasting_telecom",
+      "decision": "suppress"
+    },
+    {
+      "country": "CH",
+      "geo_id": "CHE",
+      "industry_id": "travel_agencies",
+      "decision": "suppress"
+    },
+    {
+      "country": "CH",
+      "geo_id": "CHE",
+      "industry_id": "office_support",
+      "decision": "suppress"
+    },
+    {
+      "country": "QA",
+      "geo_id": "QAT",
+      "industry_id": "software_development",
+      "decision": "suppress"
+    },
+    {
+      "country": "SA",
+      "geo_id": "SAU",
+      "industry_id": "other_transport_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "LI",
+      "geo_id": "LIE",
+      "industry_id": "plastics_rubber_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "QA",
+      "geo_id": "QAT",
+      "industry_id": "grocery_stores",
+      "decision": "suppress"
+    },
+    {
+      "country": "SM",
+      "geo_id": "SMR",
+      "industry_id": "postal_courier",
+      "decision": "suppress"
+    },
+    {
+      "country": "AD",
+      "geo_id": "AND",
+      "industry_id": "electronics_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "AD",
+      "geo_id": "AND",
+      "industry_id": "wood_paper_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "CH",
+      "geo_id": "CHE",
+      "industry_id": "cleaning_services",
+      "decision": "suppress"
+    },
+    {
+      "country": "QA",
+      "geo_id": "QAT",
+      "industry_id": "electrical_equipment_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "CH",
+      "geo_id": "CHE",
+      "industry_id": "water_waste",
+      "decision": "suppress"
+    },
+    {
+      "country": "QA",
+      "geo_id": "QAT",
+      "industry_id": "banking",
+      "decision": "suppress"
+    },
+    {
+      "country": "QA",
+      "geo_id": "QAT",
+      "industry_id": "trucking_freight",
+      "decision": "suppress"
+    },
+    {
+      "country": "QA",
+      "geo_id": "QAT",
+      "industry_id": "civil_engineering",
+      "decision": "suppress"
+    },
+    {
+      "country": "AD",
+      "geo_id": "AND",
+      "industry_id": "wholesale_food",
+      "decision": "suppress"
+    },
+    {
+      "country": "QA",
+      "geo_id": "QAT",
+      "industry_id": "plastics_rubber_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "QA",
+      "geo_id": "QAT",
+      "industry_id": "restaurants",
+      "decision": "suppress"
+    },
+    {
+      "country": "SM",
+      "geo_id": "SMR",
+      "industry_id": "hotels_lodging",
+      "decision": "suppress"
+    },
+    {
+      "country": "MC",
+      "geo_id": "MCO",
+      "industry_id": "other_transport_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "LI",
+      "geo_id": "LIE",
+      "industry_id": "other_transport_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "SA",
+      "geo_id": "SAU",
+      "industry_id": "postal_courier",
+      "decision": "suppress"
+    },
+    {
+      "country": "AD",
+      "geo_id": "AND",
+      "industry_id": "auto_dealers_gas",
+      "decision": "suppress"
+    },
+    {
+      "country": "QA",
+      "geo_id": "QAT",
+      "industry_id": "media_publishing",
+      "decision": "suppress"
+    },
+    {
+      "country": "CH",
+      "geo_id": "CHE",
+      "industry_id": "marketing_design",
+      "decision": "suppress"
+    },
+    {
+      "country": "UY",
+      "geo_id": "URY",
+      "industry_id": "grocery_stores",
+      "decision": "suppress"
+    },
+    {
+      "country": "BB",
+      "geo_id": "BBS",
+      "industry_id": "grocery_stores",
+      "decision": "suppress"
+    },
+    {
+      "country": "AD",
+      "geo_id": "AND",
+      "industry_id": "metal_products_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "MC",
+      "geo_id": "MCO",
+      "industry_id": "it_services_hosting",
+      "decision": "suppress"
+    },
+    {
+      "country": "NE",
+      "geo_id": "NER",
+      "industry_id": "veterinary_pet_care",
+      "decision": "suppress"
+    },
+    {
+      "country": "AD",
+      "geo_id": "AND",
+      "industry_id": "specialty_trades",
+      "decision": "suppress"
+    },
+    {
+      "country": "SA",
+      "geo_id": "SAU",
+      "industry_id": "electricity_gas_utilities",
+      "decision": "suppress"
+    },
+    {
+      "country": "JO",
+      "geo_id": "JOR",
+      "industry_id": "veterinary_pet_care",
+      "decision": "suppress"
+    },
+    {
+      "country": "SA",
+      "geo_id": "SAU",
+      "industry_id": "motor_vehicles_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "UY",
+      "geo_id": "URY",
+      "industry_id": "veterinary_pet_care",
+      "decision": "suppress"
+    },
+    {
+      "country": "FJ",
+      "geo_id": "FJI",
+      "industry_id": "veterinary_pet_care",
+      "decision": "suppress"
+    },
+    {
+      "country": "SA",
+      "geo_id": "SAU",
+      "industry_id": "food_beverage_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "SA",
+      "geo_id": "SAU",
+      "industry_id": "it_services_hosting",
+      "decision": "suppress"
+    },
+    {
+      "country": "QA",
+      "geo_id": "QAT",
+      "industry_id": "warehousing_storage",
+      "decision": "suppress"
+    },
+    {
+      "country": "UY",
+      "geo_id": "URY",
+      "industry_id": "software_development",
+      "decision": "suppress"
+    },
+    {
+      "country": "SA",
+      "geo_id": "SAU",
+      "industry_id": "oil_gas_extraction",
+      "decision": "suppress"
+    },
+    {
+      "country": "BB",
+      "geo_id": "BBS",
+      "industry_id": "chemical_pharma_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "UY",
+      "geo_id": "URY",
+      "industry_id": "furniture_other_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "SA",
+      "geo_id": "SAU",
+      "industry_id": "travel_agencies",
+      "decision": "suppress"
+    },
+    {
+      "country": "SA",
+      "geo_id": "SAU",
+      "industry_id": "hotels_lodging",
+      "decision": "suppress"
+    },
+    {
+      "country": "NE",
+      "geo_id": "NER",
+      "industry_id": "auto_dealers_gas",
+      "decision": "suppress"
+    },
+    {
+      "country": "UY",
+      "geo_id": "URY",
+      "industry_id": "restaurants",
+      "decision": "suppress"
+    },
+    {
+      "country": "UY",
+      "geo_id": "URY",
+      "industry_id": "travel_agencies",
+      "decision": "suppress"
+    },
+    {
+      "country": "UY",
+      "geo_id": "URY",
+      "industry_id": "plastics_rubber_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "BB",
+      "geo_id": "BBS",
+      "industry_id": "restaurants",
+      "decision": "suppress"
+    },
+    {
+      "country": "BB",
+      "geo_id": "BBS",
+      "industry_id": "electrical_equipment_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "UY",
+      "geo_id": "URY",
+      "industry_id": "electrical_equipment_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "SA",
+      "geo_id": "SAU",
+      "industry_id": "real_estate_agencies",
+      "decision": "suppress"
+    },
+    {
+      "country": "MC",
+      "geo_id": "MCO",
+      "industry_id": "mining_quarrying",
+      "decision": "suppress"
+    },
+    {
+      "country": "BB",
+      "geo_id": "BBS",
+      "industry_id": "civil_engineering",
+      "decision": "suppress"
+    },
+    {
+      "country": "UY",
+      "geo_id": "URY",
+      "industry_id": "water_waste",
+      "decision": "suppress"
+    },
+    {
+      "country": "LI",
+      "geo_id": "LIE",
+      "industry_id": "management_consulting",
+      "decision": "suppress"
+    },
+    {
+      "country": "UY",
+      "geo_id": "URY",
+      "industry_id": "media_publishing",
+      "decision": "suppress"
+    },
+    {
+      "country": "BB",
+      "geo_id": "BBS",
+      "industry_id": "trucking_freight",
+      "decision": "suppress"
+    },
+    {
+      "country": "LI",
+      "geo_id": "LIE",
+      "industry_id": "banking",
+      "decision": "suppress"
+    },
+    {
+      "country": "MC",
+      "geo_id": "MCO",
+      "industry_id": "banking",
+      "decision": "suppress"
+    },
+    {
+      "country": "UY",
+      "geo_id": "URY",
+      "industry_id": "trucking_freight",
+      "decision": "suppress"
+    },
+    {
+      "country": "UY",
+      "geo_id": "URY",
+      "industry_id": "office_support",
+      "decision": "suppress"
+    },
+    {
+      "country": "SA",
+      "geo_id": "SAU",
+      "industry_id": "office_support",
+      "decision": "suppress"
+    },
+    {
+      "country": "LI",
+      "geo_id": "LIE",
+      "industry_id": "engineering_architecture",
+      "decision": "suppress"
+    },
+    {
+      "country": "MC",
+      "geo_id": "MCO",
+      "industry_id": "water_waste",
+      "decision": "suppress"
+    },
+    {
+      "country": "LI",
+      "geo_id": "LIE",
+      "industry_id": "water_waste",
+      "decision": "suppress"
+    },
+    {
+      "country": "UY",
+      "geo_id": "URY",
+      "industry_id": "banking",
+      "decision": "suppress"
+    },
+    {
+      "country": "SA",
+      "geo_id": "SAU",
+      "industry_id": "management_consulting",
+      "decision": "suppress"
+    },
+    {
+      "country": "SA",
+      "geo_id": "SAU",
+      "industry_id": "cleaning_services",
+      "decision": "suppress"
+    },
+    {
+      "country": "UY",
+      "geo_id": "URY",
+      "industry_id": "cleaning_services",
+      "decision": "suppress"
+    },
+    {
+      "country": "MC",
+      "geo_id": "MCO",
+      "industry_id": "management_consulting",
+      "decision": "suppress"
+    },
+    {
+      "country": "MC",
+      "geo_id": "MCO",
+      "industry_id": "travel_agencies",
+      "decision": "suppress"
+    },
+    {
+      "country": "LI",
+      "geo_id": "LIE",
+      "industry_id": "broadcasting_telecom",
+      "decision": "suppress"
+    },
+    {
+      "country": "AE",
+      "geo_id": "ARE",
+      "industry_id": "broadcasting_telecom",
+      "decision": "suppress"
+    },
+    {
+      "country": "FJ",
+      "geo_id": "FJI",
+      "industry_id": "restaurants",
+      "decision": "suppress"
+    },
+    {
+      "country": "UY",
+      "geo_id": "URY",
+      "industry_id": "marketing_design",
+      "decision": "suppress"
+    },
+    {
+      "country": "BB",
+      "geo_id": "BBS",
+      "industry_id": "warehousing_storage",
+      "decision": "suppress"
+    },
+    {
+      "country": "UY",
+      "geo_id": "URY",
+      "industry_id": "warehousing_storage",
+      "decision": "suppress"
+    },
+    {
+      "country": "FJ",
+      "geo_id": "FJI",
+      "industry_id": "plastics_rubber_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "FJ",
+      "geo_id": "FJI",
+      "industry_id": "software_development",
+      "decision": "suppress"
+    },
+    {
+      "country": "LI",
+      "geo_id": "LIE",
+      "industry_id": "textile_apparel_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "FJ",
+      "geo_id": "FJI",
+      "industry_id": "furniture_other_mfg",
+      "decision": "suppress"
+    },
+    {
+      "country": "FJ",
+      "geo_id": "FJI",
+      "industry_id": "media_publishing",
+      "decision": "suppress"
+    }
+  ]
+}

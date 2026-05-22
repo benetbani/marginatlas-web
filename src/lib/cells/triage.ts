@@ -12,27 +12,26 @@
  * Loaded once at module init. Honest about the file being missing —
  * dev environments without the triage JSON get zero suppressions.
  */
-// Plan v24 Block 11 — JSON-import the triage decisions instead of
-// reading via node:fs. The previous fs-based load chained through
-// cells.ts into the Edge runtime OG route, which webpack rejected as
-// "Reading from node:fs is not handled by plugins". Vercel's build
-// has been failing for that reason. The JSON import works in both
-// Node and Edge runtimes (webpack inlines the JSON at build time).
-import triageJson from "../../../data/quality/cell_triage_v1.json";
+// Plan v24 Block 11 — JSON-import the triage decisions (was previously
+// fs-read which broke the Edge runtime build).
+//
+// Plan v26 P4 — use the SLIMMED file (cell_triage_slim_v1.json) that
+// contains only suppress + override entries. The full file had 6156
+// entries × ~450 bytes each = 2.8 MB; the slim version has 119
+// actionable entries × ~130 bytes = 15.7 KB. The original 2.8 MB
+// import was the root cause of the /og/cell Edge bundle hitting the
+// 1 MB Vercel Hobby cap. The slim file is small enough that bundling
+// it into every server function is irrelevant.
+import triageJson from "../../../data/quality/cell_triage_slim_v1.json";
 
+// Plan v26 P4 — slim file shape. Only fields the runtime needs.
 type TriageEntry = {
-  key: string;
   country: string;
   geo_id: string;
   industry_id: string;
-  field: string;
-  value: number;
-  severity: number;
-  decision: "suppress" | "override" | "keep" | "review";
-  decided_by: "auto" | "founder";
-  reasoning: string;
+  decision: "suppress" | "override";
+  field?: string;
   override_value?: number;
-  timestamp: string;
 };
 
 type CellShape = {
@@ -57,12 +56,12 @@ function load(): LoadedTriage {
   if (cache) return cache;
   const suppressed = new Set<string>();
   const overrides = new Map<string, Array<{ field: string; value: number }>>();
-  const entries = (triageJson as { entries?: TriageEntry[] }).entries ?? [];
-  for (const e of entries) {
+  const raw = (triageJson as unknown as { entries?: TriageEntry[] }).entries ?? [];
+  for (const e of raw) {
     const triple = `${e.country}|${e.geo_id}|${e.industry_id}`;
     if (e.decision === "suppress") {
       suppressed.add(triple);
-    } else if (e.decision === "override" && e.override_value != null) {
+    } else if (e.decision === "override" && e.override_value != null && e.field) {
       if (!overrides.has(triple)) overrides.set(triple, []);
       overrides.get(triple)!.push({ field: e.field, value: e.override_value });
     }
