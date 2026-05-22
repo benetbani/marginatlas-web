@@ -1,0 +1,82 @@
+{
+  "forceDynamic": [
+    {
+      "file": "./src/app/admin/anomalies/page.tsx",
+      "line": 12
+    },
+    {
+      "file": "./src/app/admin/review/page.tsx",
+      "line": 15
+    },
+    {
+      "file": "./src/app/status/page.tsx",
+      "line": 10
+    }
+  ],
+  "deps": [
+    {
+      "name": "next",
+      "sizeMB": 133.16667461395264
+    },
+    {
+      "name": "@phosphor-icons/react",
+      "sizeMB": 31.49739933013916
+    },
+    {
+      "name": "typescript",
+      "sizeMB": 22.53061866760254
+    },
+    {
+      "name": "react-dom",
+      "sizeMB": 6.9803361892700195
+    },
+    {
+      "name": "tailwindcss",
+      "sizeMB": 5.331116676330566
+    },
+    {
+      "name": "@sentry/nextjs",
+      "sizeMB": 2.7226181030273438
+    },
+    {
+      "name": "@types/node",
+      "sizeMB": 2.3145885467529297
+    },
+    {
+      "name": "simple-statistics",
+      "sizeMB": 1.1298656463623047
+    },
+    {
+      "name": "@supabase/supabase-js",
+      "sizeMB": 0.4610738754272461
+    },
+    {
+      "name": "@types/react",
+      "sizeMB": 0.4213380813598633
+    },
+    {
+      "name": "postcss",
+      "sizeMB": 0.1960926055908203
+    },
+    {
+      "name": "autoprefixer",
+      "sizeMB": 0.1898508071899414
+    },
+    {
+      "name": "react",
+      "sizeMB": 0.16365432739257812
+    },
+    {
+      "name": "gray-matter",
+      "sizeMB": 0.03683185577392578
+    },
+    {
+      "name": "@types/react-dom",
+      "sizeMB": 0.03644275665283203
+    }
+  ],
+  "build": {
+    "routes": [],
+    "shared": 1485.1748046875
+  }
+}

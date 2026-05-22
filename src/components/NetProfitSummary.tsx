@@ -53,7 +53,7 @@ export function NetProfitSummary({
           <div className="text-xs md:text-sm uppercase tracking-[0.18em] text-cocoa-700/60 font-semibold mb-2">
             Take-home
           </div>
-          <div className="font-display text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-atlas-700 leading-none">
+          <div className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-atlas-700 leading-none">
             <Money usd={takeHome} />
           </div>
           <div className="mt-2 text-sm text-cocoa-700/70 italic">

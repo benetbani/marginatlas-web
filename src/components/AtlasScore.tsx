@@ -60,7 +60,7 @@ export function AtlasScore({ cell }: { cell: CellLike }) {
         <Tooltip text="A 0-100 composite score reflecting how attractive this cell looks on four signals: firm count, spread between typical and top firms, wage level, and data quality. Higher is generally better: but read the underlying numbers; the score is a starting point, not a verdict." />
       </div>
       <div className="flex items-baseline gap-4">
-        <div className="text-5xl font-semibold text-ink-900 tabular-nums">{score}</div>
+        <div className="text-4xl md:text-5xl font-semibold text-ink-900 tabular-nums">{score}</div>
         <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${tier.tone}`}>
           {tier.label}
         </div>

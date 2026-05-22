@@ -200,9 +200,9 @@ export function CalculatorForm({ countries, industries }: Props) {
             Your percentile
           </div>
           <div className="mt-1 flex items-baseline gap-2">
-            <div className="text-5xl font-bold text-atlas-700 tabular-nums">
+            <div className="text-4xl md:text-5xl font-bold text-atlas-700 tabular-nums">
               {pct}
-              <span className="text-2xl font-medium">th</span>
+              <span className="text-xl md:text-2xl font-medium">th</span>
             </div>
             <div className="text-sm text-ink-700">
               out of comparable {result.industry_name?.toLowerCase()} firms in{" "}
