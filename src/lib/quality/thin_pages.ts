@@ -10,8 +10,11 @@
  * Source data is never mutated; the suppression is a pure render-layer
  * decision and can be re-derived from a fresh audit run.
  */
-import { readFileSync, existsSync } from "node:fs";
-import { resolve } from "node:path";
+// Plan v24 Block 11 — JSON-import the suppression list. The previous
+// fs-based load chained through cells.ts into the Edge runtime, which
+// webpack rejected. The JSON import is inlined at build time and works
+// in both Node and Edge runtimes.
+import thinPagesJson from "../../../data/quality/thin_pages_v1.json";
 
 type ThinPagesFile = {
   generated_at: string;
@@ -22,20 +25,11 @@ let cache: { set: Set<string>; generatedAt: string } | null = null;
 
 function load(): { set: Set<string>; generatedAt: string } {
   if (cache) return cache;
-  const path = resolve(process.cwd(), "data", "quality", "thin_pages_v1.json");
-  if (!existsSync(path)) {
-    cache = { set: new Set(), generatedAt: "" };
-    return cache;
-  }
-  try {
-    const parsed = JSON.parse(readFileSync(path, "utf-8")) as ThinPagesFile;
-    cache = {
-      set: new Set((parsed.paths || []).map((p) => p.toLowerCase())),
-      generatedAt: parsed.generated_at || "",
-    };
-  } catch {
-    cache = { set: new Set(), generatedAt: "" };
-  }
+  const parsed = thinPagesJson as ThinPagesFile;
+  cache = {
+    set: new Set((parsed.paths || []).map((p) => p.toLowerCase())),
+    generatedAt: parsed.generated_at || "",
+  };
   return cache;
 }
 

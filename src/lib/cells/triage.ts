@@ -12,8 +12,13 @@
  * Loaded once at module init. Honest about the file being missing —
  * dev environments without the triage JSON get zero suppressions.
  */
-import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+// Plan v24 Block 11 — JSON-import the triage decisions instead of
+// reading via node:fs. The previous fs-based load chained through
+// cells.ts into the Edge runtime OG route, which webpack rejected as
+// "Reading from node:fs is not handled by plugins". Vercel's build
+// has been failing for that reason. The JSON import works in both
+// Node and Edge runtimes (webpack inlines the JSON at build time).
+import triageJson from "../../../data/quality/cell_triage_v1.json";
 
 type TriageEntry = {
   key: string;
@@ -39,8 +44,6 @@ type CellShape = {
   [k: string]: unknown;
 };
 
-const TRIAGE_PATH = resolve(process.cwd(), "data", "quality", "cell_triage_v1.json");
-
 type LoadedTriage = {
   // (country, geoId, industryId) → keep-the-cell flag (true if any field is suppressed)
   suppressed: Set<string>;
@@ -54,20 +57,15 @@ function load(): LoadedTriage {
   if (cache) return cache;
   const suppressed = new Set<string>();
   const overrides = new Map<string, Array<{ field: string; value: number }>>();
-  try {
-    const raw = readFileSync(TRIAGE_PATH, "utf-8");
-    const data = JSON.parse(raw) as { entries: TriageEntry[] };
-    for (const e of data.entries) {
-      const triple = `${e.country}|${e.geo_id}|${e.industry_id}`;
-      if (e.decision === "suppress") {
-        suppressed.add(triple);
-      } else if (e.decision === "override" && e.override_value != null) {
-        if (!overrides.has(triple)) overrides.set(triple, []);
-        overrides.get(triple)!.push({ field: e.field, value: e.override_value });
-      }
+  const entries = (triageJson as { entries?: TriageEntry[] }).entries ?? [];
+  for (const e of entries) {
+    const triple = `${e.country}|${e.geo_id}|${e.industry_id}`;
+    if (e.decision === "suppress") {
+      suppressed.add(triple);
+    } else if (e.decision === "override" && e.override_value != null) {
+      if (!overrides.has(triple)) overrides.set(triple, []);
+      overrides.get(triple)!.push({ field: e.field, value: e.override_value });
     }
-  } catch {
-    // No triage file — zero suppressions, zero overrides
   }
   cache = { suppressed, overrides };
   return cache;

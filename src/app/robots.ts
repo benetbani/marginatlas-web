@@ -43,7 +43,17 @@ export default function robots(): MetadataRoute.Robots {
         crawlDelay: 2,
       },
     ],
-    sitemap: "https://www.marginatlas.com/sitemap.xml",
+    // Plan v24 Block 11 — Next 15's generateSitemaps emits per-id
+    // sub-sitemaps at /sitemap/[id].xml, not the conventional
+    // /sitemap.xml. List every shard explicitly so crawlers can
+    // discover the full URL inventory.
+    sitemap: [
+      "https://www.marginatlas.com/sitemap/0.xml",
+      "https://www.marginatlas.com/sitemap/1.xml",
+      "https://www.marginatlas.com/sitemap/2.xml",
+      "https://www.marginatlas.com/sitemap/3.xml",
+      "https://www.marginatlas.com/sitemap/4.xml",
+    ],
     host: "https://www.marginatlas.com",
   };
 }
