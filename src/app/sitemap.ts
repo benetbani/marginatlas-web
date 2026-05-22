@@ -34,11 +34,18 @@ export default async function sitemap({
 }: {
   id: number;
 }): Promise<MetadataRoute.Sitemap> {
-  if (id === 0) return staticAndContainersSitemap();
-  if (id === 1) return usCellsSitemap();
-  if (id === 2) return regionalCellsSitemap();
-  if (id === 3) return coverageScorecardSitemap();
-  if (id === 4) return regionIndustryHubsSitemap();
+  // Plan v24 Block 11 — Next 15's metadata-route system passes `id` as
+  // a STRING ("0", "1", ...) even when generateSitemaps returned numeric
+  // ids. Strict-equality checks against numbers silently fell through
+  // to the empty array, which is why every shard was 110 bytes before
+  // this fix. Coerce defensively so the dispatcher works for both
+  // numeric and stringified ids.
+  const numId = typeof id === "string" ? parseInt(id, 10) : id;
+  if (numId === 0) return staticAndContainersSitemap();
+  if (numId === 1) return usCellsSitemap();
+  if (numId === 2) return regionalCellsSitemap();
+  if (numId === 3) return coverageScorecardSitemap();
+  if (numId === 4) return regionIndustryHubsSitemap();
   return [];
 }
 

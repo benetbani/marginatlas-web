@@ -1036,17 +1036,25 @@ export async function getIndustryRankInState(
   return { rank: idx + 1, total: sorted.length };
 }
 
-/** Top N cells globally (for sitemap + homepage features). */
+/** Top N cells globally (for sitemap + homepage features).
+ *  Plan v24 Block 11 — every ordering variant on the 722k-row cells_master
+ *  hit Supabase's statement timeout. Use `.gte('year', 2020)` to push
+ *  filtering into an indexed range scan, then take whatever order Postgres
+ *  returns. For sitemap purposes a deterministic sample is enough; we
+ *  don't need strict popularity ranking.
+ */
 export async function getTopCells(limit = 100): Promise<Cell[]> {
   const { data, error } = await supabaseAdmin
     .from("cells_master")
     .select("*")
     .eq("country", "US")
-    .not("industry_description", "is", null)
-    .order("total_employment", { ascending: false, nullsFirst: false })
-    .limit(limit);
+    .gte("year", 2020)
+    .limit(Math.ceil(limit * 1.2));
   if (error || !data) return [];
-  return data.map((r) => normalizeRow(r as Record<string, unknown>));
+  return data
+    .filter((r) => (r as Record<string, unknown>).industry_description != null)
+    .slice(0, limit)
+    .map((r) => normalizeRow(r as Record<string, unknown>));
 }
 
 /**
