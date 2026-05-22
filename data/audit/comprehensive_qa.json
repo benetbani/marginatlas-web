@@ -1,0 +1,1129 @@
+{
+  "generated_at": "2026-05-22T18:48:54.299Z",
+  "base": "https://www.marginatlas.com",
+  "total": 112,
+  "passed": 107,
+  "failed": 5,
+  "results": [
+    {
+      "id": "A1",
+      "category": "A. Routing",
+      "description": "Homepage 200",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 756,
+      "note": ""
+    },
+    {
+      "id": "A2",
+      "category": "A. Routing",
+      "description": "/industries 200",
+      "url": "/industries",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 585,
+      "note": ""
+    },
+    {
+      "id": "A3",
+      "category": "A. Routing",
+      "description": "/industries/restaurants 200",
+      "url": "/industries/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 4040,
+      "note": ""
+    },
+    {
+      "id": "A4",
+      "category": "A. Routing",
+      "description": "/us 200",
+      "url": "/us",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 394,
+      "note": ""
+    },
+    {
+      "id": "A5",
+      "category": "A. Routing",
+      "description": "/de 200",
+      "url": "/de",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 375,
+      "note": ""
+    },
+    {
+      "id": "A6",
+      "category": "A. Routing",
+      "description": "US state cell 200",
+      "url": "/us/california/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 14451,
+      "note": ""
+    },
+    {
+      "id": "A7",
+      "category": "A. Routing",
+      "description": "German city cell 200",
+      "url": "/de/frankfurt/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 3888,
+      "note": ""
+    },
+    {
+      "id": "A8",
+      "category": "A. Routing",
+      "description": "French city cell 200",
+      "url": "/fr/lyon/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 1337,
+      "note": ""
+    },
+    {
+      "id": "A9",
+      "category": "A. Routing",
+      "description": "Neighborhood cell 200",
+      "url": "/us/new-york/manhattan/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 2058,
+      "note": ""
+    },
+    {
+      "id": "A10",
+      "category": "A. Routing",
+      "description": "Force-synthesis cell 200",
+      "url": "/xx/yy/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 9340,
+      "note": ""
+    },
+    {
+      "id": "A11",
+      "category": "A. Routing",
+      "description": "Sector page 200",
+      "url": "/sectors/food_drink",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 543,
+      "note": ""
+    },
+    {
+      "id": "A12",
+      "category": "A. Routing",
+      "description": "/world 200",
+      "url": "/world",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 558,
+      "note": ""
+    },
+    {
+      "id": "A13",
+      "category": "A. Routing",
+      "description": "/coverage 200",
+      "url": "/coverage",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 449,
+      "note": ""
+    },
+    {
+      "id": "A14",
+      "category": "A. Routing",
+      "description": "/og/cell returns 200",
+      "url": "/og/cell?country=us&geo=california&industry=restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 3189,
+      "note": ""
+    },
+    {
+      "id": "A15",
+      "category": "A. Routing",
+      "description": "/admin/data-quality 200",
+      "url": "/admin/data-quality",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 570,
+      "note": ""
+    },
+    {
+      "id": "B1",
+      "category": "B. Content",
+      "description": "Homepage has hero question",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 156,
+      "note": ""
+    },
+    {
+      "id": "B2",
+      "category": "B. Content",
+      "description": "Homepage has at least 6 featured tiles",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 96,
+      "note": ""
+    },
+    {
+      "id": "B3",
+      "category": "B. Content",
+      "description": "Homepage has no 'Click for details' placeholder",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 89,
+      "note": ""
+    },
+    {
+      "id": "B4",
+      "category": "B. Content",
+      "description": "/industries has Popular section",
+      "url": "/industries",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 108,
+      "note": ""
+    },
+    {
+      "id": "B5",
+      "category": "B. Content",
+      "description": "/industries has By sector section",
+      "url": "/industries",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 89,
+      "note": ""
+    },
+    {
+      "id": "B6",
+      "category": "B. Content",
+      "description": "/industries has A-Z section",
+      "url": "/industries",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 89,
+      "note": ""
+    },
+    {
+      "id": "B7",
+      "category": "B. Content",
+      "description": "/industries shows sector emojis",
+      "url": "/industries",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 85,
+      "note": ""
+    },
+    {
+      "id": "B8",
+      "category": "B. Content",
+      "description": "Cell page has h1",
+      "url": "/us/california/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 102,
+      "note": ""
+    },
+    {
+      "id": "B9",
+      "category": "B. Content",
+      "description": "Cell page has revenue tiles",
+      "url": "/us/california/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 85,
+      "note": ""
+    },
+    {
+      "id": "B10",
+      "category": "B. Content",
+      "description": "Cell page has distribution visual",
+      "url": "/us/california/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 95,
+      "note": ""
+    },
+    {
+      "id": "B11",
+      "category": "B. Content",
+      "description": "Cell page has profit waterfall section",
+      "url": "/us/california/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 86,
+      "note": ""
+    },
+    {
+      "id": "B12",
+      "category": "B. Content",
+      "description": "Frankfurt page shows 'Frankfurt am Main' label",
+      "url": "/de/frankfurt/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 85,
+      "note": ""
+    },
+    {
+      "id": "B13",
+      "category": "B. Content",
+      "description": "Lyon page shows Lyon label",
+      "url": "/fr/lyon/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 98,
+      "note": ""
+    },
+    {
+      "id": "B14",
+      "category": "B. Content",
+      "description": "Synth cell shows Estimated badge",
+      "url": "/xx/yy/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 86,
+      "note": ""
+    },
+    {
+      "id": "B15",
+      "category": "B. Content",
+      "description": "Neighborhood page shows character chip",
+      "url": "/us/new-york/manhattan/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 1193,
+      "note": ""
+    },
+    {
+      "id": "B16",
+      "category": "B. Content",
+      "description": "Country page lists industries",
+      "url": "/us",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 85,
+      "note": ""
+    },
+    {
+      "id": "B17",
+      "category": "B. Content",
+      "description": "Coverage page renders",
+      "url": "/coverage",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 92,
+      "note": ""
+    },
+    {
+      "id": "B18",
+      "category": "B. Content",
+      "description": "World page renders",
+      "url": "/world",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 87,
+      "note": ""
+    },
+    {
+      "id": "B19",
+      "category": "B. Content",
+      "description": "Sector page renders sector name",
+      "url": "/sectors/food_drink",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 96,
+      "note": ""
+    },
+    {
+      "id": "B20",
+      "category": "B. Content",
+      "description": "Admin dashboard has table inventory",
+      "url": "/admin/data-quality",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 185,
+      "note": ""
+    },
+    {
+      "id": "C1",
+      "category": "C. Consistency",
+      "description": "Header brand 'Margin Atlas' on all pages",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 192,
+      "note": ""
+    },
+    {
+      "id": "C2",
+      "category": "C. Consistency",
+      "description": "Cell page has header brand",
+      "url": "/us/california/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 115,
+      "note": ""
+    },
+    {
+      "id": "C3",
+      "category": "C. Consistency",
+      "description": "Footer present on cell page",
+      "url": "/us/california/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 279,
+      "note": ""
+    },
+    {
+      "id": "C4",
+      "category": "C. Consistency",
+      "description": "Tesseract Research credit in footer (homepage)",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 192,
+      "note": ""
+    },
+    {
+      "id": "C5",
+      "category": "C. Consistency",
+      "description": "$ formatting present (not blank)",
+      "url": "/us/california/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 146,
+      "note": ""
+    },
+    {
+      "id": "C6",
+      "category": "C. Consistency",
+      "description": "Currency symbol consistent on country page",
+      "url": "/us",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 85,
+      "note": ""
+    },
+    {
+      "id": "C7",
+      "category": "C. Consistency",
+      "description": "No em-dashes in homepage user-visible text",
+      "url": "/",
+      "pass": false,
+      "status": 200,
+      "duration_ms": 102,
+      "note": "assertion returned false"
+    },
+    {
+      "id": "C8",
+      "category": "C. Consistency",
+      "description": "No source-agency names leak in homepage",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 98,
+      "note": ""
+    },
+    {
+      "id": "C9",
+      "category": "C. Consistency",
+      "description": "No source-agency names leak in cell page",
+      "url": "/us/california/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 88,
+      "note": ""
+    },
+    {
+      "id": "C10",
+      "category": "C. Consistency",
+      "description": "/industries doesn't link to /us/california",
+      "url": "/industries",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 100,
+      "note": ""
+    },
+    {
+      "id": "D1",
+      "category": "D. Data sanity",
+      "description": "California restaurants revenue is plausible ($30K-$5M)",
+      "url": "/us/california/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 90,
+      "note": ""
+    },
+    {
+      "id": "D2",
+      "category": "D. Data sanity",
+      "description": "Frankfurt restaurants revenue is plausible",
+      "url": "/de/frankfurt/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 97,
+      "note": ""
+    },
+    {
+      "id": "D3",
+      "category": "D. Data sanity",
+      "description": "Wage per employee is plausible ($3K-$200K)",
+      "url": "/us/california/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 132,
+      "note": ""
+    },
+    {
+      "id": "D4",
+      "category": "D. Data sanity",
+      "description": "Bottom 10% is below typical",
+      "url": "/us/california/restaurants",
+      "pass": false,
+      "status": 200,
+      "duration_ms": 93,
+      "note": "assertion returned false"
+    },
+    {
+      "id": "D5",
+      "category": "D. Data sanity",
+      "description": "Frankfurt page doesn't show 'Hessen' in title",
+      "url": "/de/frankfurt/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 89,
+      "note": ""
+    },
+    {
+      "id": "D6",
+      "category": "D. Data sanity",
+      "description": "Manhattan revenue differs from city avg (multiplier applied)",
+      "url": "/us/new-york/manhattan/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 2429,
+      "note": ""
+    },
+    {
+      "id": "D7",
+      "category": "D. Data sanity",
+      "description": "Synth cell uses positive revenue",
+      "url": "/xx/yy/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 110,
+      "note": ""
+    },
+    {
+      "id": "D8",
+      "category": "D. Data sanity",
+      "description": "Profit waterfall percentages are 0-100",
+      "url": "/us/california/restaurants",
+      "pass": false,
+      "status": 200,
+      "duration_ms": 88,
+      "note": "assertion returned false"
+    },
+    {
+      "id": "D9",
+      "category": "D. Data sanity",
+      "description": "Across-states strip has multiple states",
+      "url": "/us/california/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 88,
+      "note": ""
+    },
+    {
+      "id": "D10",
+      "category": "D. Data sanity",
+      "description": "Page doesn't say 'NaN' or 'undefined' anywhere visible",
+      "url": "/us/california/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 87,
+      "note": ""
+    },
+    {
+      "id": "D11",
+      "category": "D. Data sanity",
+      "description": "Cross-country chart doesn't include Liechtenstein",
+      "url": "/de/frankfurt/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 88,
+      "note": ""
+    },
+    {
+      "id": "D12",
+      "category": "D. Data sanity",
+      "description": "Synthesized cells include disclosure",
+      "url": "/xx/yy/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 92,
+      "note": ""
+    },
+    {
+      "id": "E1",
+      "category": "E. SEO",
+      "description": "Homepage has <title>",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 87,
+      "note": ""
+    },
+    {
+      "id": "E2",
+      "category": "E. SEO",
+      "description": "Homepage has meta description",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 110,
+      "note": ""
+    },
+    {
+      "id": "E3",
+      "category": "E. SEO",
+      "description": "Homepage has canonical link",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 90,
+      "note": ""
+    },
+    {
+      "id": "E4",
+      "category": "E. SEO",
+      "description": "Homepage has og:title",
+      "url": "/",
+      "pass": false,
+      "status": 200,
+      "duration_ms": 90,
+      "note": "assertion returned false"
+    },
+    {
+      "id": "E5",
+      "category": "E. SEO",
+      "description": "Homepage has Organization JSON-LD",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 120,
+      "note": ""
+    },
+    {
+      "id": "E6",
+      "category": "E. SEO",
+      "description": "Cell page has dataset JSON-LD",
+      "url": "/us/california/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 90,
+      "note": ""
+    },
+    {
+      "id": "E7",
+      "category": "E. SEO",
+      "description": "Cell page has BreadcrumbList JSON-LD",
+      "url": "/us/california/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 86,
+      "note": ""
+    },
+    {
+      "id": "E8",
+      "category": "E. SEO",
+      "description": "Cell page has robots meta = index, follow",
+      "url": "/us/california/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 106,
+      "note": ""
+    },
+    {
+      "id": "E9",
+      "category": "E. SEO",
+      "description": "Admin dashboard is noindex",
+      "url": "/admin/data-quality",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 95,
+      "note": ""
+    },
+    {
+      "id": "E10",
+      "category": "E. SEO",
+      "description": "Robots.txt is text/plain",
+      "url": "/robots.txt",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 292,
+      "note": ""
+    },
+    {
+      "id": "E11",
+      "category": "E. SEO",
+      "description": "Robots.txt mentions sitemap",
+      "url": "/robots.txt",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 71,
+      "note": ""
+    },
+    {
+      "id": "E12",
+      "category": "E. SEO",
+      "description": "Country page has proper title",
+      "url": "/us",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 79,
+      "note": ""
+    },
+    {
+      "id": "E13",
+      "category": "E. SEO",
+      "description": "Industry page has proper title",
+      "url": "/industries/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 83,
+      "note": ""
+    },
+    {
+      "id": "E14",
+      "category": "E. SEO",
+      "description": "Cell page title includes city / state name",
+      "url": "/us/california/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 128,
+      "note": ""
+    },
+    {
+      "id": "E15",
+      "category": "E. SEO",
+      "description": "OG image URL points to /og/cell",
+      "url": "/us/california/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 104,
+      "note": ""
+    },
+    {
+      "id": "F1",
+      "category": "F. A11y",
+      "description": "Homepage has lang attribute",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 115,
+      "note": ""
+    },
+    {
+      "id": "F2",
+      "category": "F. A11y",
+      "description": "Cell page has lang attribute",
+      "url": "/us/california/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 93,
+      "note": ""
+    },
+    {
+      "id": "F3",
+      "category": "F. A11y",
+      "description": "Buttons have type attribute",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 81,
+      "note": ""
+    },
+    {
+      "id": "F4",
+      "category": "F. A11y",
+      "description": "Header has navigation landmark",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 101,
+      "note": ""
+    },
+    {
+      "id": "F5",
+      "category": "F. A11y",
+      "description": "Main landmark present",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 108,
+      "note": ""
+    },
+    {
+      "id": "F6",
+      "category": "F. A11y",
+      "description": "Skip-to-content or similar (if present)",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 73,
+      "note": ""
+    },
+    {
+      "id": "F7",
+      "category": "F. A11y",
+      "description": "Color is not the only indicator (CSS check skipped — runtime)",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 161,
+      "note": ""
+    },
+    {
+      "id": "F8",
+      "category": "F. A11y",
+      "description": "Buttons in nav have text content (not icon-only)",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 153,
+      "note": ""
+    },
+    {
+      "id": "G1",
+      "category": "G. Performance",
+      "description": "Homepage response under 5 seconds",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 98,
+      "note": ""
+    },
+    {
+      "id": "G2",
+      "category": "G. Performance",
+      "description": "Homepage HTML size under 500 KB",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 91,
+      "note": ""
+    },
+    {
+      "id": "G3",
+      "category": "G. Performance",
+      "description": "Cell page HTML size under 500 KB",
+      "url": "/us/california/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 94,
+      "note": ""
+    },
+    {
+      "id": "G4",
+      "category": "G. Performance",
+      "description": "Homepage uses font-display: swap (next/font)",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 112,
+      "note": ""
+    },
+    {
+      "id": "G5",
+      "category": "G. Performance",
+      "description": "Cache-Control header on homepage (cdn cacheable)",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 79,
+      "note": ""
+    },
+    {
+      "id": "G6",
+      "category": "G. Performance",
+      "description": "Cache-Control header on cell page",
+      "url": "/us/california/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 86,
+      "note": ""
+    },
+    {
+      "id": "G7",
+      "category": "G. Performance",
+      "description": "Speed Insights script wired",
+      "url": "/",
+      "pass": false,
+      "status": 200,
+      "duration_ms": 96,
+      "note": "assertion returned false"
+    },
+    {
+      "id": "G8",
+      "category": "G. Performance",
+      "description": "Images use lazy or async loading (where present)",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 109,
+      "note": ""
+    },
+    {
+      "id": "H1",
+      "category": "H. Links",
+      "description": "Homepage has >= 20 internal links",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 111,
+      "note": ""
+    },
+    {
+      "id": "H2",
+      "category": "H. Links",
+      "description": "Cell page has breadcrumb",
+      "url": "/us/california/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 95,
+      "note": ""
+    },
+    {
+      "id": "H3",
+      "category": "H. Links",
+      "description": "Cell page has >= 12 outgoing internal links",
+      "url": "/us/california/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 90,
+      "note": ""
+    },
+    {
+      "id": "H4",
+      "category": "H. Links",
+      "description": "/industries page links to actual industry pages",
+      "url": "/industries",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 90,
+      "note": ""
+    },
+    {
+      "id": "H5",
+      "category": "H. Links",
+      "description": "Country page links to industries",
+      "url": "/us",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 102,
+      "note": ""
+    },
+    {
+      "id": "H6",
+      "category": "H. Links",
+      "description": "Neighborhood page links to sibling neighborhoods",
+      "url": "/us/new-york/manhattan/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 627,
+      "note": ""
+    },
+    {
+      "id": "H7",
+      "category": "H. Links",
+      "description": "Footer has navigation links",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 80,
+      "note": ""
+    },
+    {
+      "id": "H8",
+      "category": "H. Links",
+      "description": "Cell page links to country (back-link)",
+      "url": "/us/california/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 92,
+      "note": ""
+    },
+    {
+      "id": "H9",
+      "category": "H. Links",
+      "description": "Neighborhood page links to city",
+      "url": "/us/new-york/manhattan/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 763,
+      "note": ""
+    },
+    {
+      "id": "H10",
+      "category": "H. Links",
+      "description": "/industries Popular section has >= 8 links",
+      "url": "/industries",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 84,
+      "note": ""
+    },
+    {
+      "id": "I1",
+      "category": "I. Sitemap",
+      "description": "Sitemap shard 0 > 1 KB",
+      "url": "/sitemap/0.xml",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 435,
+      "note": ""
+    },
+    {
+      "id": "I2",
+      "category": "I. Sitemap",
+      "description": "Sitemap shard 1 > 1 KB",
+      "url": "/sitemap/1.xml",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 552,
+      "note": ""
+    },
+    {
+      "id": "I3",
+      "category": "I. Sitemap",
+      "description": "Sitemap shard 2 > 1 KB",
+      "url": "/sitemap/2.xml",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 430,
+      "note": ""
+    },
+    {
+      "id": "I4",
+      "category": "I. Sitemap",
+      "description": "Sitemap shard 3 > 1 KB",
+      "url": "/sitemap/3.xml",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 409,
+      "note": ""
+    },
+    {
+      "id": "I5",
+      "category": "I. Sitemap",
+      "description": "Sitemap shard 4 > 1 KB",
+      "url": "/sitemap/4.xml",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 410,
+      "note": ""
+    },
+    {
+      "id": "I6",
+      "category": "I. Sitemap",
+      "description": "Sitemap shard 5 > 1 KB",
+      "url": "/sitemap/5.xml",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 518,
+      "note": ""
+    },
+    {
+      "id": "I7",
+      "category": "I. Sitemap",
+      "description": "Sitemap returns XML content-type",
+      "url": "/sitemap/0.xml",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 85,
+      "note": ""
+    },
+    {
+      "id": "I8",
+      "category": "I. Sitemap",
+      "description": "Robots.txt references sitemap URLs",
+      "url": "/robots.txt",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 62,
+      "note": ""
+    },
+    {
+      "id": "J1",
+      "category": "J. Mobile",
+      "description": "Viewport meta present",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 139,
+      "note": ""
+    },
+    {
+      "id": "J2",
+      "category": "J. Mobile",
+      "description": "Mobile-tag responsive classes (md:, lg:) used",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 84,
+      "note": ""
+    },
+    {
+      "id": "J3",
+      "category": "J. Mobile",
+      "description": "Hero text scales (h1 has size class)",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 125,
+      "note": ""
+    },
+    {
+      "id": "J4",
+      "category": "J. Mobile",
+      "description": "Hero on cell page is responsive",
+      "url": "/us/california/restaurants",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 103,
+      "note": ""
+    },
+    {
+      "id": "J5",
+      "category": "J. Mobile",
+      "description": "Grid uses responsive cols",
+      "url": "/industries",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 89,
+      "note": ""
+    },
+    {
+      "id": "J6",
+      "category": "J. Mobile",
+      "description": "No fixed pixel widths visible (px-300, px-400)",
+      "url": "/",
+      "pass": true,
+      "status": 200,
+      "duration_ms": 99,
+      "note": ""
+    }
+  ]
+}

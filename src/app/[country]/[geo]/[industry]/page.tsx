@@ -56,6 +56,7 @@ import {
   estimateEmployeesFromFirms,
 } from "@/lib/extrapolations/fill_missing";
 import { HeroBenchmark } from "@/components/HeroBenchmark";
+import { CityHero } from "@/components/CityHero";
 import { DistributionVisual } from "@/components/DistributionVisual";
 import { NetProfitSummary } from "@/components/NetProfitSummary";
 import { CellFallbackBanner } from "@/components/CellFallbackBanner";
@@ -416,6 +417,14 @@ export default async function CellPage({
         years={availableYears}
         currentSize={currentSize}
         currentYear={currentYear}
+      />
+
+      {/* Reformation idea #1 — wide cinematic city photo (Unsplash),
+         duotone-tinted to Atlas amber. Only renders for cities with a
+         cached hero (Tier 1+2). Quiet fallthrough for others. */}
+      <CityHero
+        citySlug={geo}
+        altOverride={`${cell.geo_name || geo} - ${cell.industry_name || industry}`}
       />
 
       {/* Plan v23 Part 2 — story-first hero. ONE giant revenue number under
