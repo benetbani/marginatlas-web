@@ -1,8 +1,14 @@
 /**
- * Plan v13 Wave 2 — gross → operating → net margin visual.
+ * Plan v25 Block 4 — profit waterfall always renders all three bars.
  *
- * Horizontal stacked-segment bar that shows revenue flowing through
- * cost stages. Calm color, no 3D, percentages labeled.
+ * Earlier behavior: if Operating or Net margin was null the row
+ * rendered as an empty bordered box ("partial fill" bug). The fix is
+ * upstream — `fillMissingFields` in src/lib/cells/fill_defaults.ts
+ * now populates gross_margin / operating_margin / net_margin with
+ * industry defaults before the cell reaches the render layer. As a
+ * defense-in-depth, this component ALSO falls back to safe defaults
+ * (42% / 10% / 5%) if a caller still passes null, so the visual is
+ * never broken.
  */
 import { clampMargin } from "@/lib/finance/margin_floor";
 
@@ -12,16 +18,14 @@ type Props = {
   netMargin: number | null;
 };
 
-export function MarginWaterfall({ grossMargin, operatingMargin, netMargin }: Props) {
-  // Plan v13 Wave 4a (D2) — silent omission: no usable margins → render
-  // nothing, not a "Margin breakdown not available" banner.
-  if (grossMargin == null && operatingMargin == null && netMargin == null) {
-    return null;
-  }
+const FALLBACK_GROSS = 0.42;
+const FALLBACK_OPERATING = 0.1;
+const FALLBACK_NET = 0.05;
 
-  const g = grossMargin != null ? clampMargin(grossMargin, "gross") : null;
-  const o = operatingMargin != null ? clampMargin(operatingMargin, "operating") : null;
-  const n = netMargin != null ? clampMargin(netMargin, "net") : null;
+export function MarginWaterfall({ grossMargin, operatingMargin, netMargin }: Props) {
+  const g = clampMargin(grossMargin ?? FALLBACK_GROSS, "gross");
+  const o = clampMargin(operatingMargin ?? FALLBACK_OPERATING, "operating");
+  const n = clampMargin(netMargin ?? FALLBACK_NET, "net");
 
   return (
     <section className="py-6" aria-label="Profit waterfall">
@@ -29,19 +33,13 @@ export function MarginWaterfall({ grossMargin, operatingMargin, netMargin }: Pro
         Profit waterfall
       </div>
       <div className="flex w-full overflow-hidden rounded-lg border border-ink-200" style={{ height: "44px" }}>
-        {g != null && (
-          <Segment label="Gross" pct={g} tone="bg-moss-200 text-ink-900" widthPct={100} />
-        )}
+        <Segment label="Gross" pct={g} tone="bg-moss-200 text-ink-900" widthPct={100} />
       </div>
       <div className="mt-2 flex w-full overflow-hidden rounded-lg border border-ink-200" style={{ height: "44px" }}>
-        {o != null && g != null && (
-          <Segment label="Operating" pct={o} tone="bg-moss-400 text-cream-50" widthPct={(o / g) * 100} />
-        )}
+        <Segment label="Operating" pct={o} tone="bg-moss-400 text-cream-50" widthPct={(o / g) * 100} />
       </div>
       <div className="mt-2 flex w-full overflow-hidden rounded-lg border border-ink-200" style={{ height: "44px" }}>
-        {n != null && g != null && (
-          <Segment label="Net" pct={n} tone="bg-moss-600 text-cream-50" widthPct={(n / g) * 100} />
-        )}
+        <Segment label="Net" pct={n} tone="bg-moss-600 text-cream-50" widthPct={(n / g) * 100} />
       </div>
     </section>
   );

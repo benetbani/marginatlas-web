@@ -59,6 +59,7 @@ import { HeroBenchmark } from "@/components/HeroBenchmark";
 import { DistributionVisual } from "@/components/DistributionVisual";
 import { NetProfitSummary } from "@/components/NetProfitSummary";
 import { CellFallbackBanner } from "@/components/CellFallbackBanner";
+import { EstimatedBadge } from "@/components/EstimatedBadge";
 
 type IndustryMarginRow = { gross_margin: number; operating_margin: number; asset_intensity?: number };
 const INDUSTRY_MARGINS = industryMarginsJson as unknown as {
@@ -274,7 +275,9 @@ export default async function CellPage({
 
   const url = `https://www.marginatlas.com/${country}/${geo}/${industry}`;
   return (
-    <div className="xl:flex xl:gap-6">
+    // Plan v25 Block 9 — wider gap between content and right TOC.
+    // Was xl:gap-6 (24px). Founder: "shift more to the right".
+    <div className="xl:flex xl:gap-16">
       <div className="xl:flex-1 xl:min-w-0">
       <CellDataset
         url={url}
@@ -441,6 +444,16 @@ export default async function CellPage({
           actualIndustryHref={cell.industry_id ? `/industries/${cell.industry_id.replace(/_/g, "-")}` : null}
         />
       ) : null}
+
+      {/* Plan v25 Block 11 — synthetic-cell disclosure. Renders when
+          `is_synthetic` is set, indicating the numbers come from
+          country+industry baselines (synthesizeCell), not measured
+          data. */}
+      <EstimatedBadge
+        isSynthetic={cell.is_synthetic === true}
+        industryName={cell.industry_name}
+        geoName={cell.geo_name}
+      />
 
       {/* Plan v23 Part 3 — narrative now reads as editorial prose. Drop
          cap on the first paragraph, looser line-height, max-w-prose. */}

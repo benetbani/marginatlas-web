@@ -35,6 +35,11 @@ import {
   DEFAULT_REVENUE_BOUNDS,
   classifyValue,
 } from "./qa/smb_bounds";
+import {
+  synthesizeCell,
+  fillMissingFields,
+  enforceSanity,
+} from "./cells/fill_defaults";
 
 export type Cell = {
   // identity
@@ -66,11 +71,23 @@ export type Cell = {
   rev_p75?: number | null;
   rev_p90?: number | null;
   payroll_per_employee?: number | null;
+  // Plan v25 Block 1 — derived profit fields. Populated by synthesizeCell
+  // and fillMissingFields so the render layer never has to recompute.
+  gross_margin?: number | null;
+  operating_margin?: number | null;
+  net_margin?: number | null;
+  gross_profit?: number | null;
+  operating_profit?: number | null;
+  net_profit?: number | null;
   // quality
   quality_score?: number | null;
   coverage_tier?: string | null;
   coverage_source?: string | null;
   currency?: string | null;
+  // Plan v25 Block 1 — synthesis marker. True when the cell was produced
+  // by synthesizeCell() rather than a real DB lookup. Render layer reads
+  // this to badge the page as "Estimated".
+  is_synthetic?: boolean;
 };
 
 // US state FIPS code → human name → URL slug
@@ -398,29 +415,78 @@ export type CellSelector = {
   year?: number | null;
 };
 
-/** Resolve a (country / geo / industry) URL slug to a single best-fit cell. */
+/**
+ * Resolve a (country / geo / industry) URL slug to a single best-fit
+ * cell. Plan v25 Block 3: ALWAYS returns a Cell. If the existing
+ * regional → extrapolated → sector chain misses, a synthesized cell
+ * is produced from country + industry defaults so the page always
+ * renders fully. Synthesized cells carry `is_synthetic = true` and a
+ * 1-dot quality tier so the UI can badge them clearly.
+ */
 export async function getCellBySlug(
   countrySlug: string,
   geoSlug: string,
   industrySlug: string,
   selector: CellSelector = {}
-): Promise<Cell | null> {
+): Promise<Cell> {
   const country = countrySlug.toUpperCase();
+  const real = await getCellBySlugRaw(country, geoSlug, industrySlug, selector);
+  if (real) {
+    // Real data — fill any missing fields with defaults, then enforce
+    // common-sense math so the rendered numbers add up.
+    return enforceSanity(fillMissingFields(real));
+  }
+  // No real data. Synthesize from country + industry baselines.
+  const synthesized = synthesizeCell(country, industrySlug, {
+    geoSlug,
+    geoName: geoNameFromSlug(country, geoSlug),
+    year: selector.year || undefined,
+  });
+  return enforceSanity(synthesized);
+}
 
+/**
+ * Best-effort human label for a geo slug when we don't have a real
+ * cell row to read geo_name from. Used by synthesizeCell to render a
+ * sensible hero (e.g. "Frankfurt am Main" instead of "DE71").
+ */
+function geoNameFromSlug(country: string, geoSlug: string): string | undefined {
+  const manualLabel = MANUAL_DISPLAY_LABEL[country]?.[geoSlug.toLowerCase()];
+  if (manualLabel) return manualLabel;
+  const friendlyLabel =
+    CITY_FRIENDLY_DISPLAY_LABEL[country]?.[geoSlug.toLowerCase()];
+  if (friendlyLabel) return friendlyLabel;
+  // US state slug
+  const usState = SLUG_TO_GEO_ID[geoSlug.toLowerCase()];
+  if (usState) return GEO_ID_TO_NAME[usState];
+  return undefined;
+}
+
+/**
+ * Internal: the raw lookup chain (no synthesis). Returns null on miss.
+ * Used by getCellBySlug above.
+ */
+async function getCellBySlugRaw(
+  country: string,
+  geoSlug: string,
+  industrySlug: string,
+  selector: CellSelector,
+): Promise<Cell | null> {
   // Non-US: regional_cells (sub-national) first, then extrapolated_cells,
-  // then sector-average fallback (CC.7) so we don't 404 on legitimate
-  // unmapped industries.
+  // then sector-average fallback (CC.7).
   if (country !== "US") {
     const regional = await getRegionalCell(country, geoSlug, industrySlug, selector);
     if (regional) return regional;
     const extrap = await getExtrapolatedCell(country, industrySlug, selector);
     if (extrap) return extrap;
-    return getSectorFallbackCell(country, industrySlug, selector);
+    const sector = await getSectorFallbackCell(country, industrySlug, selector);
+    if (sector) return sector;
+    return null;
   }
 
-  // US: try state-level cells_master first; if the geoSlug isn't a state slug,
-  // it's likely a county or city geo_id (e.g. "us-06-037", "us-city-new-york")
-  // and lives in regional_cells.
+  // US: state-level cells_master first; if the geoSlug isn't a state
+  // slug, it's likely a county or city geo_id (e.g. "us-06-037",
+  // "us-city-new-york") and lives in regional_cells.
   const geoId = SLUG_TO_GEO_ID[geoSlug.toLowerCase()];
   if (!geoId) {
     const regional = await getRegionalCell("US", geoSlug, industrySlug, selector);
@@ -429,12 +495,9 @@ export async function getCellBySlug(
   }
 
   // First try friendly industry slug → industry_id → matching NAICS-3 prefix.
-  // Sub-niche industries (parent_id set) resolve up to the parent's NAICS-3,
-  // since the sub-niche itself isn't in the raw US cell data.
   const rawInd = slugToIndustry(industrySlug);
   const ind = resolveToMeasuredIndustry(rawInd);
   if (ind && (ind.naics_3 || []).length) {
-    // Build OR-list of NAICS-3 prefixes
     const naics3Prefixes = (ind.naics_3 || []).map((n) => `${n}%`);
     let q = supabaseAdmin
       .from("cells_master")
@@ -454,7 +517,7 @@ export async function getCellBySlug(
     }
   }
 
-  // Fallback: fuzzy industry_description search
+  // Fallback: fuzzy industry_description search.
   const fuzzy = industrySlug.replace(/-/g, "%");
   let q2 = supabaseAdmin
     .from("cells_master")

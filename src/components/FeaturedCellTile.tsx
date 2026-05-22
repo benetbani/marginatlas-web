@@ -13,6 +13,7 @@
  */
 
 import { getCellBySlug, type Cell } from "@/lib/cells";
+import { synthesizeCell } from "@/lib/cells/fill_defaults";
 import { CountryFlag } from "@/components/CountryFlag";
 import { getFeaturedSnapshot, findSnapshotCell } from "@/lib/snapshots";
 import { IndustryIcon } from "@/components/icons/IndustryIcon";
@@ -65,6 +66,13 @@ export async function FeaturedCellTile({ spec }: { spec: FeaturedTileSpec }) {
     const cell = await fetchCellWithTimeout(spec.iso2.toLowerCase(), spec.geo, spec.industry);
     revenue = cell?.revenue_per_firm ?? null;
   }
+  // Plan v25 Block 6 — never render "Click for details". If the snapshot
+  // and timeout-bounded lookup both miss, synthesize a country+industry
+  // baseline so every featured tile shows a number.
+  if (revenue == null) {
+    const synth = synthesizeCell(spec.iso2, spec.industry);
+    revenue = synth.revenue_per_firm ?? null;
+  }
   const href = `/${spec.iso2.toLowerCase()}/${spec.geo}/${spec.industry}`;
 
   return (
@@ -95,11 +103,7 @@ export async function FeaturedCellTile({ spec }: { spec: FeaturedTileSpec }) {
             Typical revenue
           </div>
           <div className="text-2xl font-semibold text-ink-900 tabular-nums min-h-[2rem]">
-            {fmtMoney(revenue) || (
-              <span className="text-base font-medium text-cocoa-700/60">
-                Click for details
-              </span>
-            )}
+            {fmtMoney(revenue)}
           </div>
         </div>
       </div>

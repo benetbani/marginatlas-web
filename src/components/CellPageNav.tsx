@@ -70,7 +70,9 @@ export function CellPageNav() {
   return (
     <nav
       aria-label="Page sections"
-      className="hidden xl:block sticky top-[120px] self-start ml-6 w-[180px] shrink-0 text-xs"
+      // Plan v25 Block 9 — wider left margin (was ml-6) so the TOC sits
+      // further from the main content per founder direction.
+      className="hidden xl:block sticky top-[120px] self-start ml-4 w-[180px] shrink-0 text-xs"
     >
       <div className="text-[10px] uppercase tracking-wider text-ink-700/50 font-semibold pl-3 mb-2">
         On this page

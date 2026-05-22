@@ -1,10 +1,13 @@
 /**
- * Plan v23 Part 2 — collapsed net-profit waterfall.
+ * Plan v25 Block 4 — net-profit waterfall, expanded by default.
  *
- * Replaces the previous full waterfall with a SINGLE-LINE summary
- * ("Owner take-home: $89K") + an expand affordance that reveals the
- * full waterfall on click. Per founder: stop slapping the visitor
- * with numbers; reveal them when asked.
+ * Previous behavior (Plan v23 Part 2): collapsed by default, expand on
+ * click. The founder explicitly reversed this: "the profit estimation
+ * with those beautiful graphics should not be hidden behind the
+ * breakdown. It should be visible on each page."
+ *
+ * Behavior now: waterfall renders open by default. The toggle button
+ * is kept so users can still collapse it.
  *
  * Client component because it owns the expanded/collapsed state.
  */
@@ -33,7 +36,8 @@ export function NetProfitSummary({
   payroll,
   takeHome,
 }: Props) {
-  const [open, setOpen] = useState(false);
+  // Plan v25 Block 4 — open by default per founder direction.
+  const [open, setOpen] = useState(true);
 
   if (!takeHome || takeHome <= 0 || !grossRevenue || grossRevenue <= 0) {
     return null;
@@ -65,7 +69,7 @@ export function NetProfitSummary({
           onClick={() => setOpen(!open)}
           className="font-display text-base md:text-lg text-atlas-700 hover:text-atlas-900 italic border-b border-atlas-200 hover:border-atlas-500 pb-0.5 transition-colors"
         >
-          {open ? "Hide the breakdown" : "See where every dollar goes →"}
+          {open ? "Hide the breakdown" : "Show where every dollar goes →"}
         </button>
       </div>
 

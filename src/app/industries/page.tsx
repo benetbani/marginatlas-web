@@ -13,6 +13,7 @@ import {
   industryToSlug,
   isDefaultVisible,
 } from "@/lib/taxonomy";
+import { sectorIcon } from "@/lib/taxonomy/sector_icons";
 
 export const revalidate = 86400;
 
@@ -68,7 +69,7 @@ export default function IndustriesIndex() {
           {POPULAR.map((p) => (
             <Link
               key={p.id}
-              href={`/us/california/${industryToSlug(p.id)}`}
+              href={`/industries/${industryToSlug(p.id)}`}
               className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-cream-100 border border-parchment hover:border-atlas-500 hover:bg-white transition text-sm text-ink-900"
             >
               <span className="text-xl leading-none">{p.glyph}</span>
@@ -95,7 +96,8 @@ export default function IndustriesIndex() {
             return (
               <div key={s.id}>
                 <div className="flex items-baseline justify-between gap-3 mb-2">
-                  <h3 className="text-base font-semibold text-ink-900">
+                  <h3 className="text-base font-semibold text-ink-900 flex items-center gap-2">
+                    <span aria-hidden className="text-lg leading-none">{sectorIcon(s.id)}</span>
                     {s.name}
                   </h3>
                   <Link
@@ -109,7 +111,7 @@ export default function IndustriesIndex() {
                   {inds.map((ind) => (
                     <Link
                       key={ind.id}
-                      href={`/us/california/${industryToSlug(ind.id)}`}
+                      href={`/industries/${industryToSlug(ind.id)}`}
                       className="inline-flex px-2.5 py-1 rounded-full bg-white border border-ink-200 text-xs text-ink-900 hover:border-atlas-500 hover:bg-atlas-50 transition"
                     >
                       {ind.name}
@@ -129,8 +131,9 @@ export default function IndustriesIndex() {
         </h2>
         <p className="text-sm text-ink-700/70 mb-5">
           {INDUSTRIES.filter(isDefaultVisible).length} default-visible
-          industries. Each opens California as a sample geography: switch
-          to any country from the country picker on the benchmark page.
+          industries. Each opens its worldwide benchmark page: typical
+          revenue, employment, and how the industry varies country by
+          country.
         </p>
         <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-1.5 text-sm">
           {[...INDUSTRIES]
@@ -139,7 +142,7 @@ export default function IndustriesIndex() {
             .map((ind) => (
               <Link
                 key={ind.id}
-                href={`/us/california/${industryToSlug(ind.id)}`}
+                href={`/industries/${industryToSlug(ind.id)}`}
                 className="text-ink-900 hover:text-atlas-700 truncate"
               >
                 {ind.name}

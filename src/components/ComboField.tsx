@@ -72,7 +72,24 @@ export function ComboField({
     return () => document.removeEventListener("mousedown", onDoc);
   }, []);
 
-  // Keyboard nav
+  // Plan v25 Block 8 — commit on Enter (or blur) even when nothing is
+  // focused. Founder reported "Show me the numbers" button unclickable
+  // on Berlin nightclubs — root cause was ComboField never committing
+  // a typed value to state unless the user explicitly clicked an
+  // option. Now: pressing Enter or blurring auto-selects the top match
+  // when the query is non-empty and the filtered list has at least one
+  // entry, so typed input always lands somewhere usable.
+  function commitTopMatch() {
+    if (!q || filtered.length === 0) return;
+    const candidate = focusIdx >= 0 ? filtered[focusIdx] : filtered[0];
+    if (candidate) {
+      onChange(candidate.value);
+      setOpen(false);
+      setQuery("");
+      setFocusIdx(-1);
+    }
+  }
+
   function onKey(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === "ArrowDown") {
       e.preventDefault();
@@ -81,14 +98,13 @@ export function ComboField({
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
       setFocusIdx((i) => Math.max(i - 1, 0));
-    } else if (e.key === "Enter" && focusIdx >= 0) {
-      e.preventDefault();
-      const opt = filtered[focusIdx];
-      if (opt) {
-        onChange(opt.value);
-        setOpen(false);
-        setQuery("");
-        setFocusIdx(-1);
+    } else if (e.key === "Enter") {
+      // Commit the focused option, or fall back to the top match for
+      // the current query. Only block default if we actually commit
+      // — otherwise allow the form's normal Enter-to-submit behavior.
+      if (focusIdx >= 0 || (q && filtered.length > 0)) {
+        e.preventDefault();
+        commitTopMatch();
       }
     } else if (e.key === "Escape") {
       setOpen(false);
@@ -132,6 +148,12 @@ export function ComboField({
           }}
           onFocus={() => !disabled && setOpen(true)}
           onKeyDown={onKey}
+          onBlur={() => {
+            // Auto-commit the top match if the user typed something but
+            // never picked an option. Fixes the Berlin-nightclubs button
+            // (founder QA, 2026-05-22).
+            commitTopMatch();
+          }}
           placeholder={placeholder}
           disabled={disabled}
           className="flex-1 bg-transparent outline-none text-sm font-medium text-ink-900 placeholder:text-cocoa-700/40 placeholder:font-normal"
