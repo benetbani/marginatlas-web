@@ -39,6 +39,11 @@ import { sectorIcon } from "@/lib/taxonomy/sector_icons";
 
 export const revalidate = 21600;
 export const dynamicParams = true;
+// Plan v26 follow-up — Vercel Hobby defaults serverless function timeout
+// to 10s, but cold-start cells_master queries on US can take 13-15s
+// before warm-up. Raise to 60s (Hobby ceiling) so cold starts don't
+// drop the request. After the index migration this returns to <2s.
+export const maxDuration = 60;
 
 type Params = {
   country: string;

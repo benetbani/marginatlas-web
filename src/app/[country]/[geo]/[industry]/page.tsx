@@ -82,6 +82,11 @@ function lookupIndustryMargin(industryId: string | null | undefined): IndustryMa
 // fills the edge cache and subsequent hits serve from CDN.
 export const revalidate = 21600;
 export const dynamicParams = true;
+// Plan v26 follow-up — raise function timeout from 10s default to 60s
+// so cold-start cells_master queries don't drop the request. After the
+// index migration on regional_cells / cells_master this returns to <2s
+// per request and the override becomes irrelevant.
+export const maxDuration = 60;
 
 type Params = { country: string; geo: string; industry: string };
 
