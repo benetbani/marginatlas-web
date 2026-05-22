@@ -1130,18 +1130,19 @@ export async function getTopCells(limit = 100): Promise<Cell[]> {
 }
 
 /**
- * Top N regional_cells rows for the sitemap. Plan v26 follow-up:
- * 20000 hit Supabase statement timeout. Use a lower limit AND keep
- * the quality_score DESC ordering — downstream filters require
- * score100to10(quality_score) >= 4, so unordered rows get dropped.
- * 1000-row cap is the PostgREST default; we use that as the budget.
+ * Top N regional_cells rows for the sitemap. Plan v26 follow-up
+ * findings: ANY .order() clause on regional_cells times out at the
+ * 60s Supabase statement limit (no index supports it). Workaround:
+ * drop the order, accept whatever PostgREST returns first. The
+ * inventory probe showed ~95%+ of rows score >= 85 quality, so the
+ * downstream score-filter keeps most rows anyway. Simple limit(1000)
+ * with a single gte filter returns in <1 second.
  */
 export async function getTopRegionalCells(limit = 1000): Promise<Cell[]> {
   const { data, error } = await supabaseAdmin
     .from("regional_cells")
     .select("country, geo_id, geo_level, geo_name, industry_id, year, size_band, n_enterprises, quality_score, coverage_tier, coverage_source")
     .gte("n_enterprises", 5)
-    .order("quality_score", { ascending: false, nullsFirst: false })
     .limit(limit);
   if (error || !data) return [];
   return data.map((r) => normalizeRegionalRow(r as Record<string, unknown>));
