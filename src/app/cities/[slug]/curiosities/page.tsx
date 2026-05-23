@@ -1,5 +1,5 @@
 /**
- * Plan v27 Lane C.4 — curiosities page for a city.
+ * Plan v27 Lane C.4 - curiosities page for a city.
  *
  * Route: /cities/[slug]/curiosities
  *
@@ -43,7 +43,7 @@ const FACTORS = (countryFactorsJson as { default_fallback: CountryFactors; count
 const BASELINES = (countryBaselineJson as unknown as { default_fallback: CountryBaseline; countries: Record<string, CountryBaseline> });
 
 export async function generateStaticParams() {
-  // Plan v30 hotfix — Tier 1 only at build; Tier 2+3 on-demand.
+  // Plan v30 hotfix - Tier 1 only at build; Tier 2+3 on-demand.
   return CITIES.filter((c) => c.tier === 1).map((c) => ({ slug: c.slug }));
 }
 
@@ -57,7 +57,7 @@ export async function generateMetadata({
   if (!city) return { title: "City not found | Margin Atlas" };
   return {
     title: `${city.name} curiosities | Margin Atlas`,
-    description: `What stands out about small business in ${city.name} — six anchor facts.`,
+    description: `What stands out about small business in ${city.name} - six anchor facts.`,
   };
 }
 
@@ -112,22 +112,22 @@ export default async function CuriositiesPage({
     {
       tag: "Density signal",
       title: `${city.pop_m.toFixed(1)}M people, $${city.gdp_b.toFixed(0)}B metro GDP`,
-      body: `${city.name} concentrates about $${(gdpPerCapitaCity / 1000).toFixed(0)}K of GDP per resident. ${gdpPerCapitaCity >= 50000 ? "That density supports premium professional services and a dense small-business cluster." : gdpPerCapitaCity >= 20000 ? "That density supports a healthy mix of services and retail." : "That density tilts the business mix toward staples — food, retail, repair — over premium services."}`,
+      body: `${city.name} concentrates about $${(gdpPerCapitaCity / 1000).toFixed(0)}K of GDP per resident. ${gdpPerCapitaCity >= 50000 ? "That density supports premium professional services and a dense small-business cluster." : gdpPerCapitaCity >= 20000 ? "That density supports a healthy mix of services and retail." : "That density tilts the business mix toward staples - food, retail, repair - over premium services."}`,
     },
     {
       tag: "Governance",
       title: `Cleaner-than-average governance: ${cf.cpi_score >= 60 ? "yes" : cf.cpi_score >= 40 ? "middling" : "no"}`,
-      body: `On the international corruption-perception scale (0-100, higher is cleaner), ${countryName} scores ${cf.cpi_score}. ${cf.cpi_score >= 60 ? "Reported small-business revenue tracks true revenue closely; benchmarks here are reliable." : cf.cpi_score >= 40 ? "Reported revenue tracks reasonably well; some shadow-economy adjustment is appropriate for construction and real estate." : "Significant shadow-economy effects — actual SMB revenue likely exceeds reported figures, particularly in construction, real estate, and retail."}`,
+      body: `On the international corruption-perception scale (0-100, higher is cleaner), ${countryName} scores ${cf.cpi_score}. ${cf.cpi_score >= 60 ? "Reported small-business revenue tracks true revenue closely; benchmarks here are reliable." : cf.cpi_score >= 40 ? "Reported revenue tracks reasonably well; some shadow-economy adjustment is appropriate for construction and real estate." : "Significant shadow-economy effects - actual SMB revenue likely exceeds reported figures, particularly in construction, real estate, and retail."}`,
     },
     {
       tag: "Urban concentration",
       title: `${cf.urbanization_pct >= 80 ? "Highly urban" : cf.urbanization_pct >= 60 ? "Mostly urban" : cf.urbanization_pct >= 40 ? "Mixed" : "Mostly rural"} country (${cf.urbanization_pct}%)`,
-      body: `${cf.urbanization_pct}% of ${countryName} lives in cities. ${cf.urbanization_pct >= 80 ? `Urban industries — software, professional services, finance — earn well above the national average in ${city.name}.` : cf.urbanization_pct >= 60 ? `Urban industries earn moderately above national; rural-anchored sectors (agriculture, forestry) thin out in the metro.` : `Rural-anchored industries remain meaningful; ${city.name} pulls demand from a wider hinterland than headcount suggests.`}`,
+      body: `${cf.urbanization_pct}% of ${countryName} lives in cities. ${cf.urbanization_pct >= 80 ? `Urban industries - software, professional services, finance - earn well above the national average in ${city.name}.` : cf.urbanization_pct >= 60 ? `Urban industries earn moderately above national; rural-anchored sectors (agriculture, forestry) thin out in the metro.` : `Rural-anchored industries remain meaningful; ${city.name} pulls demand from a wider hinterland than headcount suggests.`}`,
     },
     {
       tag: "Wealth tier",
       title: `Z-score vs global median: ${city.wealth_z >= 0 ? "+" : ""}${city.wealth_z.toFixed(1)}`,
-      body: `${city.name} sits ${Math.abs(city.wealth_z).toFixed(1)} standard deviations ${city.wealth_z >= 0 ? "above" : "below"} the global median for cities of comparable scale. ${city.wealth_z >= 2 ? "It's in the top decile of world cities by per-resident productivity." : city.wealth_z >= 1 ? "It's clearly above average — a wealth-concentrated metro." : city.wealth_z >= 0 ? "It's an average global city by per-resident output." : "It runs below the global median; small-business revenue is correspondingly compressed."}`,
+      body: `${city.name} sits ${Math.abs(city.wealth_z).toFixed(1)} standard deviations ${city.wealth_z >= 0 ? "above" : "below"} the global median for cities of comparable scale. ${city.wealth_z >= 2 ? "It's in the top decile of world cities by per-resident productivity." : city.wealth_z >= 1 ? "It's clearly above average - a wealth-concentrated metro." : city.wealth_z >= 0 ? "It's an average global city by per-resident output." : "It runs below the global median; small-business revenue is correspondingly compressed."}`,
     },
   ];
 

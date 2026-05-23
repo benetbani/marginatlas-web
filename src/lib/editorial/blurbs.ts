@@ -1,9 +1,9 @@
 /**
- * Plan v28 Lane D — editorial voice layer.
+ * Plan v28 Lane D - editorial voice layer.
  *
  * The "site feels like a dump" critique fix. Templated voice that
  * surfaces on cell pages, country pages, and the homepage. Each blurb
- * is one paragraph — calm, declarative, no marketing language.
+ * is one paragraph - calm, declarative, no marketing language.
  *
  * Selection logic: takes (industryId, countryIso2, sector_id) and
  * looks up the most specific blurb available. Falls back from
@@ -12,9 +12,9 @@
 
 type Blurb = string;
 
-// Industry-level character notes. One per industry — these are the
+// Industry-level character notes. One per industry - these are the
 // editorial "voice" of the site.
-// Plan v30 — rewritten for the 18-year-old test. No "operating margins",
+// Plan v30 - rewritten for the 18-year-old test. No "operating margins",
 // no "capital intensity", no "EBITDA". One sentence each in plain English.
 // What does this business actually look like for a normal owner?
 const INDUSTRY_VOICE: Record<string, Blurb> = {
@@ -30,11 +30,11 @@ const INDUSTRY_VOICE: Record<string, Blurb> = {
   plumbing_hvac: "Trades like plumbing and electrical have quietly become some of the best small businesses to run. Fewer young people are entering, so existing operators can raise prices. Steady service calls beat one-off installs.",
 };
 
-// Sector × continent voice — fallback when no industry-specific blurb exists.
+// Sector × continent voice - fallback when no industry-specific blurb exists.
 const SECTOR_BY_CONTINENT: Record<string, Record<string, Blurb>> = {
   food_drink: {
     NA: "North American food service has been reshaped by delivery economics. Independent operators outside the top 50 metros have benefited from local-loyalty as customers rotate away from chain experiences.",
-    EU: "European food culture sustains a denser small-operator economy than most regions. Margins are tight but failure rates are lower — landlords, regulations, and customer habits all favor incumbents.",
+    EU: "European food culture sustains a denser small-operator economy than most regions. Margins are tight but failure rates are lower - landlords, regulations, and customer habits all favor incumbents.",
     Asia: "Asian food economies are bimodal: a vast number of micro-operators (street stalls, family restaurants) and a corporate tail of franchised concepts. The space between is thin.",
     SA: "South American food service runs on family operations. The numbers below capture the formal sector; informal operators add a multiple of activity that doesn't appear in any registry.",
     Africa: "African food service is dominated by informal operators. The benchmarks capture the formal-registered tier; the actual category is much larger.",
@@ -50,7 +50,7 @@ const SECTOR_BY_CONTINENT: Record<string, Record<string, Blurb>> = {
   },
   retail_shops: {
     NA: "North American independent retail has consolidated since the pandemic. The survivors run tighter inventory and a meaningful online channel.",
-    EU: "European independent retail has more institutional support than North American — protected rents in some cities, anchor-tenant programs in others. Margins are similar; survival is better.",
+    EU: "European independent retail has more institutional support than North American - protected rents in some cities, anchor-tenant programs in others. Margins are similar; survival is better.",
     Asia: "Asian retail is dense and diverse. Tier-1 cities run hot on premium concepts; tier-2 and tier-3 cities run on traditional general-merchandise stores.",
     SA: "South American retail combines a thin formal sector with very large informal markets. The benchmarks capture the formal tier.",
     Africa: "African retail is dominated by informal markets and small kiosks. Formal retail is a small but growing share of total commerce.",

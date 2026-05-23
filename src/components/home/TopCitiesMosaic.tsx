@@ -1,11 +1,11 @@
 /**
- * Plan v27 Lane C.1 — top-200 cities homepage mosaic.
+ * Plan v27 Lane C.1 - top-200 cities homepage mosaic.
  *
  * Replaces the flat alphabetical CityPicker with a continent-grouped
  * card grid. Each card shows the city hero (Unsplash, where cached),
  * country flag, and a deep-link to the metropolis sub-page.
  *
- * Server component — zero client cost. Tab switching is plain anchor
+ * Server component - zero client cost. Tab switching is plain anchor
  * links to /cities/[continent], so we don't pay client-JS for
  * filtering.
  *
@@ -150,7 +150,7 @@ export function TopCitiesMosaic({ limit = 16 }: Props) {
             </div>
             {cities.length > limit && (
               <div className="mt-4 text-sm text-cocoa-700/70">
-                + {cities.length - limit} more —{" "}
+                + {cities.length - limit} more  - {" "}
                 <a
                   href="/cities"
                   className="text-atlas-700 font-medium underline decoration-atlas-300 hover:decoration-atlas-700 underline-offset-2"

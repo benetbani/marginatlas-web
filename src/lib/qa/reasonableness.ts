@@ -1,5 +1,5 @@
 /**
- * Plan v28 Lane B — server-side reasonableness check.
+ * Plan v28 Lane B - server-side reasonableness check.
  *
  * Catches "obvious unit error" anomalies that slip past the simple
  * SMB bounds: aggregate-vs-per-firm confusion, currency confusion
@@ -25,10 +25,10 @@ export type ReasonablenessIssue = {
   values?: Record<string, number | string>;
 };
 
-const ABSOLUTE_REVENUE_CEILING_PER_FIRM = 60_000_000; // $60M — above this is corporate, not SMB
-const ABSOLUTE_REVENUE_FLOOR_PER_FIRM = 5_000; // $5K — below this is not a real business
-const ABSOLUTE_WAGE_CEILING = 250_000; // $250K — above this is C-suite, not SMB employee median
-const ABSOLUTE_WAGE_FLOOR = 1_200; // $1.2K/yr — below this is probably annual not monthly
+const ABSOLUTE_REVENUE_CEILING_PER_FIRM = 60_000_000; // $60M - above this is corporate, not SMB
+const ABSOLUTE_REVENUE_FLOOR_PER_FIRM = 5_000; // $5K - below this is not a real business
+const ABSOLUTE_WAGE_CEILING = 250_000; // $250K - above this is C-suite, not SMB employee median
+const ABSOLUTE_WAGE_FLOOR = 1_200; // $1.2K/yr - below this is probably annual not monthly
 
 export function checkReasonableness(input: ReasonablenessInput): ReasonablenessIssue[] {
   const issues: ReasonablenessIssue[] = [];

@@ -1,5 +1,5 @@
 /**
- * Plan v27 Lane D — knowledge base article registry.
+ * Plan v27 Lane D - knowledge base article registry.
  *
  * 60 evergreen pages in three families:
  *   Family A: "How much does X make?" (20)
@@ -16,7 +16,7 @@
  *   - relatedIndustryIds for deep-link block to Atlas benchmarks
  *   - relatedSlugs      cross-links to other learn pages
  *
- * Bodies are deterministic editorial — no LLM at render time. No
+ * Bodies are deterministic editorial - no LLM at render time. No
  * citations in body (R-002).
  */
 
@@ -58,7 +58,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     headlineNumber: { value: "$600K", label: "Median annual revenue" },
     body: [
       "Coffee shops sit lower on the revenue scale than restaurants because the average ticket is smaller. The math is volume-driven: a busy independent shop sells 250-450 drinks a day at $4-7 each, plus a tail of pastries and retail beans. Annual revenue lands between $400K and $900K for most independents.",
-      "Cost of goods runs lighter than restaurants (typically 18-25%) but labor is heavier — a coffee shop is a service business that lives or dies on barista quality. Rent matters more than for almost any other small business because foot traffic is everything.",
+      "Cost of goods runs lighter than restaurants (typically 18-25%) but labor is heavier - a coffee shop is a service business that lives or dies on barista quality. Rent matters more than for almost any other small business because foot traffic is everything.",
       "A coffee shop crosses into healthy territory above roughly $550K. Below that, owners are usually subsidizing the business with their own time.",
     ],
     relatedIndustryIds: ["coffee_shops"],
@@ -72,7 +72,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     oneLineAnswer: "An independent retail bakery typically takes in $450K-$950K in annual revenue.",
     headlineNumber: { value: "$650K", label: "Median annual revenue" },
     body: [
-      "A retail bakery is a hybrid: it's a kitchen running at restaurant cost-of-goods discipline, paired with a storefront running at coffee-shop traffic patterns. The median lands near $650K, but the spread is wide — wholesale-heavy bakeries that supply restaurants can clear $1-2M, while pure-storefront neighborhood bakeries often run $350-500K.",
+      "A retail bakery is a hybrid: it's a kitchen running at restaurant cost-of-goods discipline, paired with a storefront running at coffee-shop traffic patterns. The median lands near $650K, but the spread is wide - wholesale-heavy bakeries that supply restaurants can clear $1-2M, while pure-storefront neighborhood bakeries often run $350-500K.",
       "Margins are tightest at the small end because flour, butter, and dairy are commodities. Specialty bakeries (sourdough, gluten-free, ethnic specialties) tend to command higher per-unit prices and run healthier.",
       "The healthiest bakeries pair retail with one of three additions: catering, wholesale to local cafés, or a coffee program. Pure retail-only bakeries are the toughest model.",
     ],
@@ -87,7 +87,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     oneLineAnswer: "An owner-operated food truck typically takes in $250K-$500K in annual revenue.",
     headlineNumber: { value: "$340K", label: "Median annual revenue" },
     body: [
-      "Food trucks are the smallest format in food service: lower revenue, but also lower fixed cost. A solo or two-person food truck typically posts $250-500K in annual revenue, with the median near $340K. The cost base is small — fuel, commissary fees, food cost, and one or two labor lines.",
+      "Food trucks are the smallest format in food service: lower revenue, but also lower fixed cost. A solo or two-person food truck typically posts $250-500K in annual revenue, with the median near $340K. The cost base is small - fuel, commissary fees, food cost, and one or two labor lines.",
       "Weather and seasonality drive the variance more than for any restaurant. In cities with a long winter, food trucks lose three to four months of meaningful revenue. In year-round-warm climates, they post 30-50% more.",
       "The math works at half the revenue of a restaurant because the fixed cost is a fraction. A food truck clearing $300K can pay its owner-operator a working wage; a restaurant at the same revenue cannot.",
     ],
@@ -103,7 +103,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     headlineNumber: { value: "$260K", label: "Median annual revenue" },
     body: [
       "A barbershop's revenue scales almost linearly with chair count. A solo-operator shop runs $80-150K. A 3-chair shop with two contractors typically posts $200-350K. A larger 5-7 chair operation in a dense urban area can clear $500-700K.",
-      "Cost of goods is negligible (under 5%). Labor is the line that matters — most barbershops run on a booth-rental model where stylists are independent contractors paying $200-400/week for a chair. That keeps the owner's revenue lean but the model stable.",
+      "Cost of goods is negligible (under 5%). Labor is the line that matters - most barbershops run on a booth-rental model where stylists are independent contractors paying $200-400/week for a chair. That keeps the owner's revenue lean but the model stable.",
       "Barbershops are one of the highest-margin small businesses by category, with a clean owner take-home percentage when the chair-rental model is used.",
     ],
     relatedIndustryIds: ["hair_salons"],
@@ -133,7 +133,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     headlineNumber: { value: "$290K", label: "Median annual revenue" },
     body: [
       "Nail salons run on tighter per-service revenue than hair salons but at higher throughput. A typical shop runs 8-12 stations and processes 30-50 clients a day. Revenue lands between $200-450K for most.",
-      "The category is competitive — densely-packed in urban areas, with prices held down by tight margins. Salons that succeed usually differentiate on either a premium experience (luxury upgrades, dedicated rooms) or speed (express manicure formats).",
+      "The category is competitive - densely-packed in urban areas, with prices held down by tight margins. Salons that succeed usually differentiate on either a premium experience (luxury upgrades, dedicated rooms) or speed (express manicure formats).",
       "Owner take-home tends to be lower than barbershops because labor is the full-time payroll model, not chair rental.",
     ],
     relatedIndustryIds: ["hair_salons"],
@@ -148,7 +148,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     headlineNumber: { value: "$580K", label: "Median annual revenue" },
     body: [
       "A day spa runs at a higher revenue tier than salons because the per-service ticket is larger (facials, massage, body treatments) and add-on retail is substantial. Most independents land in the $400-900K range.",
-      "Labor is the dominant cost — typically 38-48% of revenue — because spa services don't scale: one therapist serves one client at a time. Real estate matters less than for cafés because clients book ahead.",
+      "Labor is the dominant cost - typically 38-48% of revenue - because spa services don't scale: one therapist serves one client at a time. Real estate matters less than for cafés because clients book ahead.",
       "Spas paired with a medical aesthetics arm (injectables, laser) can run materially higher revenue, but those are a different category with different licensing requirements.",
     ],
     relatedIndustryIds: ["hair_salons"],
@@ -163,7 +163,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     headlineNumber: { value: "$850K", label: "Median annual revenue, small firms" },
     body: [
       "Small law firms run a wide revenue band because everything scales with the lawyers' billable rate and practice mix. A solo practitioner in transactional or estate work typically clears $300-500K. A 3-5 lawyer firm in litigation or corporate runs $1-2M. Boutique IP or M&A shops can clear well above that.",
-      "Cost of goods is essentially zero — legal services don't have a material input cost. The cost structure is people: lawyers, paralegals, and support staff, typically 55-65% of revenue.",
+      "Cost of goods is essentially zero - legal services don't have a material input cost. The cost structure is people: lawyers, paralegals, and support staff, typically 55-65% of revenue.",
       "Owner partners take home a much larger share of revenue than in most service businesses because the leverage on knowledge-work output is high.",
     ],
     relatedIndustryIds: ["law_offices"],
@@ -178,7 +178,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     headlineNumber: { value: "$700K", label: "Median annual revenue, small firms" },
     body: [
       "Accounting firms run a similar revenue profile to law firms but with a different seasonality and a lower per-hour rate. A solo CPA typically clears $250-400K. A 3-5 person firm with a stable client book can run $800K-1.5M.",
-      "The economics improve substantially when a firm has a recurring monthly book — bookkeeping, fractional CFO work, or multi-year tax engagements. Project-only firms run on tax-season peaks and quieter middle months.",
+      "The economics improve substantially when a firm has a recurring monthly book - bookkeeping, fractional CFO work, or multi-year tax engagements. Project-only firms run on tax-season peaks and quieter middle months.",
       "Most small firms are owner-operated; the partner draw is roughly 35-50% of revenue.",
     ],
     relatedIndustryIds: ["accounting_services"],
@@ -208,7 +208,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     headlineNumber: { value: "$1.0M", label: "Median annual revenue, primary care" },
     body: [
       "A single-doctor primary-care practice typically posts $700K-1.5M in annual revenue. Specialties run materially higher: a dermatology or orthopedics practice can clear $2-5M per doctor.",
-      "The cost structure is dominated by staff (medical assistants, billers, front desk) and electronic-health-record systems. Insurance reimbursement is the binding constraint on revenue — the practice can't simply raise prices.",
+      "The cost structure is dominated by staff (medical assistants, billers, front desk) and electronic-health-record systems. Insurance reimbursement is the binding constraint on revenue - the practice can't simply raise prices.",
       "Owner take-home depends heavily on payer mix. Practices weighted toward Medicare and Medicaid earn less per visit than those with strong commercial insurance.",
     ],
     relatedIndustryIds: ["medical_offices"],
@@ -252,7 +252,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     oneLineAnswer: "An independent bookstore typically takes in $400K-$1.1M in annual revenue.",
     headlineNumber: { value: "$580K", label: "Median annual revenue" },
     body: [
-      "An independent bookstore runs on thin margins — books carry standard 40-45% gross margin, but rent and staff eat most of that. A typical neighborhood bookstore lands at $400-700K. Larger flagship stores with strong event programming clear $1M+.",
+      "An independent bookstore runs on thin margins - books carry standard 40-45% gross margin, but rent and staff eat most of that. A typical neighborhood bookstore lands at $400-700K. Larger flagship stores with strong event programming clear $1M+.",
       "Sideline products (cards, journals, gifts, café) often run double the margin of books and are what makes the difference between a bookstore that pays the rent and one that doesn't.",
       "The healthiest independent bookstores combine three things: a strong curation reputation, a regular event program that builds community, and a meaningful non-book retail line.",
     ],
@@ -267,9 +267,9 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     oneLineAnswer: "An independent vintage clothing store typically takes in $200K-$650K in annual revenue.",
     headlineNumber: { value: "$340K", label: "Median annual revenue" },
     body: [
-      "Vintage and curated thrift stores run a tight category because the cost of goods is genuinely variable — owners sourcing inventory at estate sales, flea markets, or wholesalers. Revenue lands in the $200-650K range.",
+      "Vintage and curated thrift stores run a tight category because the cost of goods is genuinely variable - owners sourcing inventory at estate sales, flea markets, or wholesalers. Revenue lands in the $200-650K range.",
       "Margins are healthier than mainstream apparel retail because the cost of goods is often below 20%. The constraint is sourcing time, not margin.",
-      "Online sales (Etsy, Depop, Instagram) are now a meaningful share of revenue for most stores — typically 20-40% of total — and have a different cost structure than the storefront.",
+      "Online sales (Etsy, Depop, Instagram) are now a meaningful share of revenue for most stores - typically 20-40% of total - and have a different cost structure than the storefront.",
     ],
     relatedIndustryIds: ["specialty_retail"],
     relatedSlugs: ["how-much-does-a-bookstore-make", "retail-margin"],
@@ -299,7 +299,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     body: [
       "A solo plumber with a single truck typically clears $200-400K. A 2-3 truck operation with one or two journeymen runs $700K-1.5M. Larger plumbing companies with a service-and-installation split can clear several million.",
       "Service work (calls, repairs) carries higher margins than new-construction installation. The healthiest plumbing businesses are heavy on service and use installation as a secondary revenue line.",
-      "Owner take-home in trades is among the strongest of any SMB category — well-run plumbing businesses often clear 25-35% net margin.",
+      "Owner take-home in trades is among the strongest of any SMB category - well-run plumbing businesses often clear 25-35% net margin.",
     ],
     relatedIndustryIds: ["plumbing_hvac"],
     relatedSlugs: ["how-much-does-an-electrician-make", "how-much-does-an-hvac-business-make"],
@@ -314,7 +314,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     body: [
       "Solo electricians clear $200-400K. Small electrical contractors with a handful of journeymen run $750K-1.6M. Commercial electricians clear more per project but have longer payment cycles than residential.",
       "Solar, EV-charger installation, and smart-home work have all opened higher-margin specialties in the past five years. Electricians with these specialties run materially higher revenue per truck than purely traditional shops.",
-      "The category is supply-constrained — fewer licensed electricians are coming up than retiring. Pricing power has shifted toward existing operators.",
+      "The category is supply-constrained - fewer licensed electricians are coming up than retiring. Pricing power has shifted toward existing operators.",
     ],
     relatedIndustryIds: ["plumbing_hvac"],
     relatedSlugs: ["how-much-does-a-plumber-make", "how-much-does-an-hvac-business-make"],
@@ -327,7 +327,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     oneLineAnswer: "A small HVAC business (1-3 trucks) typically takes in $500K-$1.8M in annual revenue.",
     headlineNumber: { value: "$900K", label: "Median annual revenue" },
     body: [
-      "HVAC runs at the higher end of the trades because the unit ticket is large — installations are $5-15K, and maintenance contracts add steady recurring revenue. Solo operators clear $250-450K; 3-truck shops run $1-1.8M.",
+      "HVAC runs at the higher end of the trades because the unit ticket is large - installations are $5-15K, and maintenance contracts add steady recurring revenue. Solo operators clear $250-450K; 3-truck shops run $1-1.8M.",
       "Maintenance contracts (typically $200-500/year per home) are the strategic asset. They smooth seasonal cash flow and generate the service calls that lead to higher-ticket installation work.",
       "The seasonality is more extreme than plumbing or electrical: summer cooling and winter heating spikes, with the shoulder seasons being lean. Healthy HVAC businesses use the shoulders for maintenance contract work.",
     ],
@@ -345,7 +345,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     headlineNumber: { value: "4-8%", label: "Healthy net profit margin" },
     body: [
       "Restaurant profit margins are notoriously tight. The math: food costs eat 28-34% of revenue, labor 28-36%, occupancy 8-12%, and everything else (utilities, insurance, POS, marketing, supplies) another 15-20%. What's left at the bottom is the net margin.",
-      "A 4-8% net profit margin is the healthy band. A restaurant clearing 4% on $1M of revenue earns the owner $40K — which only works if the owner draws a separate working wage. Above 8% is exceptional and usually requires either a strong bar program, a tight cost discipline, or above-average pricing power.",
+      "A 4-8% net profit margin is the healthy band. A restaurant clearing 4% on $1M of revenue earns the owner $40K - which only works if the owner draws a separate working wage. Above 8% is exceptional and usually requires either a strong bar program, a tight cost discipline, or above-average pricing power.",
       "Below 3% is unsustainable because the variance in any given month exceeds the margin. A bad month wipes out a good month. Restaurants in that band typically don't survive a downturn.",
     ],
     relatedIndustryIds: ["restaurants"],
@@ -360,7 +360,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     headlineNumber: { value: "5-12%", label: "Healthy net profit margin" },
     body: [
       "Coffee shops can run materially better margins than restaurants because cost of goods is lighter (18-25% vs 30%+). The trade-off: smaller absolute revenue, so a healthy margin produces a smaller dollar number.",
-      "A coffee shop clearing 8% on $600K of revenue earns the owner $48K. A coffee shop clearing 12% on the same revenue earns $72K — the difference is usually in retail attachment (beans, gear, baked goods) and pricing discipline.",
+      "A coffee shop clearing 8% on $600K of revenue earns the owner $48K. A coffee shop clearing 12% on the same revenue earns $72K - the difference is usually in retail attachment (beans, gear, baked goods) and pricing discipline.",
       "Multi-location coffee operators run leaner per-shop margins (typically 5-8%) because they carry overhead the single-shop doesn't, but they make it up on volume.",
     ],
     relatedIndustryIds: ["coffee_shops"],
@@ -389,7 +389,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     oneLineAnswer: "A healthy SaaS business runs a 70-85% gross margin.",
     headlineNumber: { value: "70-85%", label: "Healthy gross margin" },
     body: [
-      "SaaS gross margins are the highest of any standard business category because the marginal cost of one more user is essentially zero. The cost of goods is hosting, support, and payment processing — typically 15-30% of revenue.",
+      "SaaS gross margins are the highest of any standard business category because the marginal cost of one more user is essentially zero. The cost of goods is hosting, support, and payment processing - typically 15-30% of revenue.",
       "Below 70% gross margin, a SaaS business has a structural problem: either too much manual service per customer (so it's actually a services business pretending to be software) or hosting costs eating too much (typically a sign the unit economics need rework).",
       "Above 85% is exceptional and usually only sustained by businesses that have negligible support costs because the product is self-serve.",
     ],
@@ -406,7 +406,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     body: [
       "Agency economics are dominated by people cost. Labor (salaries, benefits, contractor pay) typically eats 55-65% of revenue. Rent, software, and overhead take another 8-15%. What's left is the agency's net margin.",
       "Above 25% is rare and usually means an agency has a high billable-utilization rate (over 75%) or a project-pricing model that captures value rather than billing hours.",
-      "Below 15% is usually a sign of underpricing or low utilization. The fix is almost always raising rates rather than cutting costs — agencies that try to grow into profitability rarely make it.",
+      "Below 15% is usually a sign of underpricing or low utilization. The fix is almost always raising rates rather than cutting costs - agencies that try to grow into profitability rarely make it.",
     ],
     relatedIndustryIds: ["marketing_agencies", "creative_design"],
     relatedSlugs: ["professional-services-margin", "what-is-a-revenue-benchmark"],
@@ -420,7 +420,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     headlineNumber: { value: "8-15%", label: "Healthy net profit margin" },
     body: [
       "Construction margins are project-by-project and depend heavily on whether the business carries materials cost or passes it through. Cost-plus contracts protect margin; fixed-price contracts can compress or expand it based on execution.",
-      "An 8-15% net margin on full project revenue (including pass-through materials) is healthy. Some businesses run the math on labor margin instead — that band is typically 25-40%, which is what most operators benchmark against internally.",
+      "An 8-15% net margin on full project revenue (including pass-through materials) is healthy. Some businesses run the math on labor margin instead - that band is typically 25-40%, which is what most operators benchmark against internally.",
       "The killer in construction is bid pricing under uncertainty. Healthy businesses build in a 5-10% contingency on materials and timeline and refuse to bid below that band.",
     ],
     relatedIndustryIds: ["construction_residential"],
@@ -436,7 +436,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     body: [
       "Retail gross margins (the spread between wholesale cost and retail price) typically run 40-55% for apparel and gifts, 30-40% for books and groceries, and 50-65% for cosmetics and beauty. Net margin after rent, staff, and operations lands at 5-12% for the healthiest stores.",
       "Inventory management is the single biggest lever. A store that turns inventory four times a year is roughly twice as efficient as one that turns it twice a year, even at the same gross margin.",
-      "The strongest small retail stores combine a tight curated selection with a meaningful online channel — typically 20-40% of total revenue — which makes the storefront an experience rather than the only sales surface.",
+      "The strongest small retail stores combine a tight curated selection with a meaningful online channel - typically 20-40% of total revenue - which makes the storefront an experience rather than the only sales surface.",
     ],
     relatedIndustryIds: ["specialty_retail"],
     relatedSlugs: ["how-much-does-a-bookstore-make", "ecommerce-profit-margin"],
@@ -449,7 +449,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     oneLineAnswer: "A healthy small professional services firm runs a 15-30% net profit margin, with owner draws on top.",
     headlineNumber: { value: "15-30%", label: "Healthy net profit margin" },
     body: [
-      "Professional services — law, accounting, consulting, design — run on people cost. Labor typically eats 50-65% of revenue. Real estate is 5-10%. Software, insurance, and overhead another 5-10%. What's left is net margin plus owner draw.",
+      "Professional services - law, accounting, consulting, design - run on people cost. Labor typically eats 50-65% of revenue. Real estate is 5-10%. Software, insurance, and overhead another 5-10%. What's left is net margin plus owner draw.",
       "The cleaner way to read these businesses is on owner-comp-plus-net-margin combined. A well-run small firm where the partner draws a market salary AND retains 15-20% as net margin is doing very well.",
       "Underperforming firms usually have a labor utilization problem: too many people for the billable hours, or the wrong mix of senior-to-junior staff.",
     ],
@@ -481,7 +481,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     body: [
       "Gym economics are dominated by rent and labor. A typical boutique gym runs 18-25% on real estate, 30-40% on labor (including teachers and front desk), and 5-10% on equipment lease and maintenance.",
       "The 10-20% net margin band is achievable when membership pricing reflects the local market and the gym runs a meaningful personal-training program (which carries materially higher margins than the base membership).",
-      "Below 10% usually means underpricing — gym owners often anchor on the big-box gym chain price ($20-30/month) when the boutique format supports $80-180/month.",
+      "Below 10% usually means underpricing - gym owners often anchor on the big-box gym chain price ($20-30/month) when the boutique format supports $80-180/month.",
     ],
     relatedIndustryIds: ["fitness_centers"],
     relatedSlugs: ["how-much-does-a-gym-make", "how-much-does-a-yoga-studio-make"],
@@ -524,7 +524,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     oneLineAnswer: "A healthy specialty food production business runs a 10-20% net profit margin.",
     headlineNumber: { value: "10-20%", label: "Healthy net profit margin" },
     body: [
-      "Specialty food production — sauces, jams, chocolate, baked goods sold wholesale or DTC — runs higher margins than restaurants because the volume is industrial and the cost structure is fixed.",
+      "Specialty food production - sauces, jams, chocolate, baked goods sold wholesale or DTC - runs higher margins than restaurants because the volume is industrial and the cost structure is fixed.",
       "Direct-to-consumer brands run higher margins (15-25%) but pay heavily for customer acquisition. Wholesale brands run lower margins (8-15%) but have stable repeat orders from distributors.",
       "The healthiest specialty food businesses operate both channels: DTC for brand-building and margin, wholesale for stable volume.",
     ],
@@ -541,7 +541,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     body: [
       "Veterinary practices run economics similar to small medical practices but with no insurance reimbursement layer compressing prices. That makes for healthier and more stable margins.",
       "A single-doctor practice typically clears $700K-1.2M in revenue with a 12-20% net margin. Multi-doctor practices and those with surgical specialties run higher revenue per doctor.",
-      "Inventory (food, medications, retail) is a meaningful profit center for healthy practices — typically 15-25% of revenue, with retail margins much better than at a human pharmacy.",
+      "Inventory (food, medications, retail) is a meaningful profit center for healthy practices - typically 15-25% of revenue, with retail margins much better than at a human pharmacy.",
     ],
     relatedIndustryIds: ["veterinary_clinics"],
     relatedSlugs: ["how-much-does-a-medical-practice-make", "professional-services-margin"],
@@ -556,7 +556,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     body: [
       "Dog grooming is one of the higher-margin small businesses by category. Cost of goods is minimal (shampoo, towels, equipment depreciation), labor is the main expense, and the per-service ticket has steadily increased over the past decade.",
       "A single-groomer salon clears $80-150K. A 2-3 groomer shop runs $250-450K. Net margins in the 18-30% band are achievable because the owner is usually one of the groomers.",
-      "Mobile grooming is a smaller-revenue but higher-margin variant — no real estate, premium pricing, and a tight clientele.",
+      "Mobile grooming is a smaller-revenue but higher-margin variant - no real estate, premium pricing, and a tight clientele.",
     ],
     relatedIndustryIds: ["pet_grooming"],
     relatedSlugs: ["how-much-does-a-barbershop-make", "veterinary-practice-margin"],
@@ -615,7 +615,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     headlineNumber: { value: "60-80%", label: "Effective margin" },
     body: [
       "A solo freelance developer runs on a near-zero cost base (laptop, software, internet, occasional contractor fees), so the headline gross margin is enormous. The real constraint is utilization: how many of the year's working hours are billable.",
-      "A freelancer billing 25 hours a week year-round at $100/hour clears around $130K. Billing 35 hours/week clears $180K. The difference is not pricing — it's sales pipeline and discipline.",
+      "A freelancer billing 25 hours a week year-round at $100/hour clears around $130K. Billing 35 hours/week clears $180K. The difference is not pricing - it's sales pipeline and discipline.",
       "The healthiest freelance developer businesses transition from time-and-materials billing to fixed-bid or retainer engagements as they get senior, which decouples revenue from hours.",
     ],
     relatedIndustryIds: ["software_dev_services"],
@@ -628,10 +628,10 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     family: "C",
     title: "What is a revenue benchmark?",
     question: "What is a revenue benchmark and how do I use one?",
-    oneLineAnswer: "A revenue benchmark is the typical annual revenue for businesses of a given size in a given industry and geography — useful as a sanity check, not as a target.",
+    oneLineAnswer: "A revenue benchmark is the typical annual revenue for businesses of a given size in a given industry and geography - useful as a sanity check, not as a target.",
     body: [
-      "A revenue benchmark answers a specific question: 'what does the middle firm in this category actually take in?' It's not the average and it's not the best-in-class — it's the middle. Half of firms are below it, half are above.",
-      "Benchmarks are most useful as a sanity check. If you're running a coffee shop and your annual revenue is $250K when the median for your city is $600K, something is structurally off — pricing, traffic, or category mix. If you're at $1.4M when the median is $600K, you're outperforming on something worth understanding.",
+      "A revenue benchmark answers a specific question: 'what does the middle firm in this category actually take in?' It's not the average and it's not the best-in-class - it's the middle. Half of firms are below it, half are above.",
+      "Benchmarks are most useful as a sanity check. If you're running a coffee shop and your annual revenue is $250K when the median for your city is $600K, something is structurally off - pricing, traffic, or category mix. If you're at $1.4M when the median is $600K, you're outperforming on something worth understanding.",
       "Benchmarks are least useful as targets. The middle is descriptive, not prescriptive. The best operators in any category are several multiples above the median, and they usually got there by doing something the median doesn't.",
     ],
     relatedIndustryIds: [],
@@ -642,9 +642,9 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     question: "How is small-business revenue measured?",
     family: "C",
     title: "How is small-business revenue measured?",
-    oneLineAnswer: "Small-business revenue is measured several ways — gross sales, tax-filed receipts, or industry-survey estimates — and each method produces a slightly different number.",
+    oneLineAnswer: "Small-business revenue is measured several ways - gross sales, tax-filed receipts, or industry-survey estimates - and each method produces a slightly different number.",
     body: [
-      "There are three main ways SMB revenue gets measured. First, gross sales reported on tax filings — the most authoritative source, but available with a 1-2 year lag and rolled up to coarse industry codes. Second, industry surveys and trade-association reports — more current, but typically reflect the firms willing to share data, which skews to mid-size and above. Third, derived estimates from establishment counts, employee counts, and industry-average per-employee revenue.",
+      "There are three main ways SMB revenue gets measured. First, gross sales reported on tax filings - the most authoritative source, but available with a 1-2 year lag and rolled up to coarse industry codes. Second, industry surveys and trade-association reports - more current, but typically reflect the firms willing to share data, which skews to mid-size and above. Third, derived estimates from establishment counts, employee counts, and industry-average per-employee revenue.",
       "Atlas combines all three. Where official filings are available, those anchor the numbers. Where they're not, survey data and derived estimates fill in. Every page shows a coverage tier that tells you which kind of source is anchoring the figure.",
       "The variance between methods is usually 10-25%. For a coffee shop, the question 'how much revenue' has a range, not a point. That's why benchmarks should be read as a band, not as a single figure.",
     ],
@@ -673,8 +673,8 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     oneLineAnswer: "Coverage tier tells you what kind of source is behind the number: measured, regional, estimated, or modeled.",
     body: [
       "Every page in Atlas displays a coverage chip near the headline number. The four tiers, in order of confidence: Measured (green) means the figures come from direct measurement of firms in that geography and industry. Regional (blue) means a broader benchmark from a higher level (state, country) is applied to this specific cell. Estimated (amber) means the figure is computed from country-level economic indicators (GDP per capita, governance, urbanization) combined with global industry averages. Modeled (gray) means there's no underlying observation; the number is a transparent model output.",
-      "What you should do with each tier: Measured numbers can be cited and compared directly. Regional numbers are strong directional signals — fine for general planning, not for precise modeling. Estimated and Modeled numbers are orientation, useful to set a range, not a single point.",
-      "Atlas covers the global SMB universe, so most pages outside the largest economies sit at Estimated or Modeled. The transparency about which tier you're reading is the point — the number is honest about what it can claim.",
+      "What you should do with each tier: Measured numbers can be cited and compared directly. Regional numbers are strong directional signals - fine for general planning, not for precise modeling. Estimated and Modeled numbers are orientation, useful to set a range, not a single point.",
+      "Atlas covers the global SMB universe, so most pages outside the largest economies sit at Estimated or Modeled. The transparency about which tier you're reading is the point - the number is honest about what it can claim.",
     ],
     relatedIndustryIds: [],
     relatedSlugs: ["how-smb-revenue-is-measured", "what-is-a-revenue-benchmark"],
@@ -684,10 +684,10 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     family: "C",
     title: "How to read percentile bands",
     question: "How do I read the p10, p25, p75, p90 percentile bands?",
-    oneLineAnswer: "Percentile bands show the spread of firms within a category — the p25 to p75 range covers the middle 50% of businesses.",
+    oneLineAnswer: "Percentile bands show the spread of firms within a category - the p25 to p75 range covers the middle 50% of businesses.",
     body: [
-      "The median tells you where the middle firm sits. The percentile bands — p10, p25, p75, p90 — tell you how wide the spread is.",
-      "P25 to p75 is the interquartile range: the middle 50% of firms. If a restaurant category has p25 = $700K and p75 = $1.4M, half of all restaurants in that category land in that band. P10 and p90 mark the outer edges — what the smallest and largest firms look like, ignoring the very extreme outliers.",
+      "The median tells you where the middle firm sits. The percentile bands - p10, p25, p75, p90 - tell you how wide the spread is.",
+      "P25 to p75 is the interquartile range: the middle 50% of firms. If a restaurant category has p25 = $700K and p75 = $1.4M, half of all restaurants in that category land in that band. P10 and p90 mark the outer edges - what the smallest and largest firms look like, ignoring the very extreme outliers.",
       "Useful rule of thumb: if you're benchmarking your own business, find the percentile you fall into. Above p75 you're outperforming the category. Below p25 you have a structural issue worth investigating.",
     ],
     relatedIndustryIds: [],
@@ -698,10 +698,10 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     family: "C",
     title: "How to read revenue benchmarks",
     question: "How do I read revenue benchmarks correctly?",
-    oneLineAnswer: "Read the median as a sanity check, the percentile bands as the realistic spread, and the coverage tier as the confidence level — together they tell you what the number means.",
+    oneLineAnswer: "Read the median as a sanity check, the percentile bands as the realistic spread, and the coverage tier as the confidence level - together they tell you what the number means.",
     body: [
-      "A revenue benchmark page has three layers worth understanding. The headline number is the median — the middle firm. Around it are the percentile bands showing the spread (typically p25 to p75 covers half of firms). Above that is the coverage chip showing how the number was produced.",
-      "How to use these together: if you're checking whether your business is healthy, look at the percentile you fall into. If you're sizing an opportunity, use the median × number of firms to estimate the market. If you're comparing across cities or countries, check that both benchmarks are at the same coverage tier — comparing a Measured number to a Modeled one is misleading.",
+      "A revenue benchmark page has three layers worth understanding. The headline number is the median - the middle firm. Around it are the percentile bands showing the spread (typically p25 to p75 covers half of firms). Above that is the coverage chip showing how the number was produced.",
+      "How to use these together: if you're checking whether your business is healthy, look at the percentile you fall into. If you're sizing an opportunity, use the median × number of firms to estimate the market. If you're comparing across cities or countries, check that both benchmarks are at the same coverage tier - comparing a Measured number to a Modeled one is misleading.",
       "The thing most people miss: benchmarks describe a steady-state market. A new business in year one will usually run materially below the median. A mature business in year five should be at or above it.",
     ],
     relatedIndustryIds: [],
@@ -712,10 +712,10 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     family: "C",
     title: "SMB vs large-business benchmarks",
     question: "Why are SMB benchmarks different from large-business benchmarks?",
-    oneLineAnswer: "Small-business and large-business economics are structurally different — averaging across both produces numbers that describe neither.",
+    oneLineAnswer: "Small-business and large-business economics are structurally different - averaging across both produces numbers that describe neither.",
     body: [
       "An industry's revenue distribution is bimodal: a long tail of small businesses (often under $5M revenue) and a much shorter head of large corporations (often above $50M). The two groups have different cost structures, different pricing power, and different growth trajectories.",
-      "If you average across the whole industry, you get a number that's pulled up by the large corporations and is misleading for a small business. Atlas benchmarks SMBs specifically — typically firms with under 100 employees and under $50M in revenue — so the figures are comparable to what a small operator actually sees.",
+      "If you average across the whole industry, you get a number that's pulled up by the large corporations and is misleading for a small business. Atlas benchmarks SMBs specifically - typically firms with under 100 employees and under $50M in revenue - so the figures are comparable to what a small operator actually sees.",
       "The exception: a few categories (manufacturing, biotech, telecom) are dominated by large corporations and don't have a meaningful SMB segment. Atlas flags those categories with a 'mixed' or 'corp-only' tag so you know what you're reading.",
     ],
     relatedIndustryIds: [],
@@ -726,11 +726,11 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     family: "C",
     title: "What is a size band?",
     question: "What does 'small', 'medium', 'large' mean in benchmarks?",
-    oneLineAnswer: "Size bands group businesses by employee count or revenue scale — typically small (1-20 employees), medium (20-100), and large (100+).",
+    oneLineAnswer: "Size bands group businesses by employee count or revenue scale - typically small (1-20 employees), medium (20-100), and large (100+).",
     body: [
       "Size bands matter because revenue scales with firm size. A 'small' restaurant might post $400-800K; a 'medium' restaurant with multiple locations might post $2-5M. Without size bands, the median is misleading.",
       "Atlas typically uses three bands: small (the owner-operator and immediate-team format), medium (the expanded multi-location or multi-team format), and large (the corporate-scale format). Each band shows its own median and percentile spread.",
-      "What this means in practice: if you're a solo founder or a 5-person team, the 'small' band is your peer group. The 'medium' band describes where you might land after several years of growth. The 'large' band is a different category of business with different economics — useful for context, but not for direct comparison.",
+      "What this means in practice: if you're a solo founder or a 5-person team, the 'small' band is your peer group. The 'medium' band describes where you might land after several years of growth. The 'large' band is a different category of business with different economics - useful for context, but not for direct comparison.",
     ],
     relatedIndustryIds: [],
     relatedSlugs: ["how-to-read-percentile-bands", "smb-vs-large-business-benchmarks"],
@@ -740,10 +740,10 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     family: "C",
     title: "Currency and benchmarks",
     question: "Why are non-US benchmarks shown in dollars?",
-    oneLineAnswer: "Atlas shows all benchmarks in USD for comparability across countries — every country page lists the local currency separately so conversion is one click away.",
+    oneLineAnswer: "Atlas shows all benchmarks in USD for comparability across countries - every country page lists the local currency separately so conversion is one click away.",
     body: [
       "A restaurant in Tokyo that posts ¥120M and a restaurant in New York that posts $1.1M are roughly the same size, but presenting one in yen and the other in dollars makes the comparison hard. Atlas converts everything to USD using a representative annual exchange rate.",
-      "Every country page shows the local currency code at the top of the page. For more precise comparison, divide the USD figure by the country's purchasing power parity (PPP) adjustment factor — a dollar buys more in Bangladesh than in Switzerland, and benchmarks should be read with that in mind.",
+      "Every country page shows the local currency code at the top of the page. For more precise comparison, divide the USD figure by the country's purchasing power parity (PPP) adjustment factor - a dollar buys more in Bangladesh than in Switzerland, and benchmarks should be read with that in mind.",
       "Practical takeaway: use the USD figure for cross-country comparison; use the local currency mental model for local planning.",
     ],
     relatedIndustryIds: [],
@@ -758,7 +758,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     body: [
       "A traditional small business is constrained by physical capacity (chairs, tables, trucks, hours). A SaaS business is constrained by acquisition cost and churn. That makes the revenue benchmark a different animal: SaaS at $1M ARR is a 5-person team; SaaS at $10M ARR might still be a 20-person team.",
       "Atlas separates SaaS from traditional software services for this reason. A SaaS benchmark page will show ARR (annual recurring revenue) instead of project revenue, and the percentile spread is much wider than for service businesses.",
-      "If you're benchmarking a SaaS business, look at the ARR figure plus the implied gross margin (typically 70-85% — see the SaaS gross margin page). If you're benchmarking a services business that calls itself SaaS, look at the service business benchmark instead.",
+      "If you're benchmarking a SaaS business, look at the ARR figure plus the implied gross margin (typically 70-85% - see the SaaS gross margin page). If you're benchmarking a services business that calls itself SaaS, look at the service business benchmark instead.",
     ],
     relatedIndustryIds: ["software_dev_services"],
     relatedSlugs: ["saas-gross-margin", "freelance-developer-margin"],
@@ -782,7 +782,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     family: "C",
     title: "What is establishment count?",
     question: "What does the establishment count on a benchmark page mean?",
-    oneLineAnswer: "Establishment count is the number of distinct business locations operating in a geography and industry — useful for sizing the local market and competition.",
+    oneLineAnswer: "Establishment count is the number of distinct business locations operating in a geography and industry - useful for sizing the local market and competition.",
     body: [
       "Establishment count answers: how many of these are there? If a city has 1,200 coffee shops, the per-resident density tells you whether you're entering a saturated market or an underserved one.",
       "Atlas displays establishment counts where available. Combined with the median revenue, you can estimate the total market size: 1,200 coffee shops × $600K median = roughly $720M in city-wide coffee revenue.",
@@ -796,11 +796,11 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     family: "C",
     title: "How employment numbers work",
     question: "How are employment numbers calculated on benchmark pages?",
-    oneLineAnswer: "Employment numbers reflect typical full-time-equivalent employees per firm — including the owner-operator where they work in the business.",
+    oneLineAnswer: "Employment numbers reflect typical full-time-equivalent employees per firm - including the owner-operator where they work in the business.",
     body: [
       "When a benchmark page shows '6.2 employees per firm,' that means the typical firm in this category has between five and seven people on payroll, counted as full-time equivalents. A business with three full-time and four half-time employees would count as five FTE.",
       "The owner-operator is usually counted in this number for small businesses, which is why even one-person businesses don't typically show '0' employees. The category 'self-employed, no employees' is a separate filing distinction.",
-      "Combined with median revenue, this gives you revenue per employee — a useful productivity benchmark across cities and across firm sizes within the same category.",
+      "Combined with median revenue, this gives you revenue per employee - a useful productivity benchmark across cities and across firm sizes within the same category.",
     ],
     relatedIndustryIds: [],
     relatedSlugs: ["what-is-establishment-count", "smb-vs-large-business-benchmarks"],
@@ -810,11 +810,11 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     family: "C",
     title: "How wage data relates to revenue",
     question: "How does the median wage on a benchmark page relate to revenue?",
-    oneLineAnswer: "Median wage shows what the typical employee in this category earns — useful for estimating labor cost as a percentage of revenue.",
+    oneLineAnswer: "Median wage shows what the typical employee in this category earns - useful for estimating labor cost as a percentage of revenue.",
     body: [
       "A restaurant benchmark page that shows $1.1M median revenue and 12 median FTE at a $34K median wage tells you the labor line is roughly $408K, or 37% of revenue. That matches the industry-typical 28-36% range for restaurants and confirms the benchmark is internally consistent.",
       "Use this calculation to sanity-check any benchmark. If revenue ÷ (employees × wage) lands outside the normal labor-cost range for the category, one of the three numbers is probably off.",
-      "Wage numbers are typically gross — before payroll taxes and benefits. The fully-loaded cost to the employer is usually 18-30% higher than the gross wage.",
+      "Wage numbers are typically gross - before payroll taxes and benefits. The fully-loaded cost to the employer is usually 18-30% higher than the gross wage.",
     ],
     relatedIndustryIds: [],
     relatedSlugs: ["how-employment-numbers-work", "what-is-a-revenue-benchmark"],
@@ -824,10 +824,10 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     family: "C",
     title: "Why extrapolated data still matters",
     question: "Why does Atlas show extrapolated data instead of leaving cells blank?",
-    oneLineAnswer: "A defensible estimate is more useful than a blank page — but only when you can see clearly what's measured and what's estimated.",
+    oneLineAnswer: "A defensible estimate is more useful than a blank page - but only when you can see clearly what's measured and what's estimated.",
     body: [
       "If Atlas only showed cells where direct measurements exist, most of the world map would be blank. The largest economies have full coverage, but small countries and niche industries don't. A blank page tells the user nothing.",
-      "Instead, Atlas estimates the missing cells from country-level economic indicators (GDP per capita, governance, urbanization) combined with global industry averages. The result is a number — bounded, sanity-checked, and clearly labeled as estimated.",
+      "Instead, Atlas estimates the missing cells from country-level economic indicators (GDP per capita, governance, urbanization) combined with global industry averages. The result is a number - bounded, sanity-checked, and clearly labeled as estimated.",
       "The coverage chip on every page is the contract: it tells you whether the number was measured or estimated, so you can decide how much weight to give it. An estimated number is a useful starting point; treating it as a precise measurement would be a mistake.",
     ],
     relatedIndustryIds: [],

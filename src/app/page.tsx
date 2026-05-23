@@ -36,7 +36,7 @@ function ToneBand({ tone, children }: { tone: string; children: React.ReactNode 
 export const revalidate = 86400; // 1 day
 
 /**
- * Plan v16 Block E — founder-specified set, 3×3 symmetric grid. Every tuple
+ * Plan v16 Block E - founder-specified set, 3×3 symmetric grid. Every tuple
  * must resolve in the data layer; FeaturedCellTile returns null on miss,
  * which would break the grid, so any tuple here must be pre-validated.
  * Tiles use measured parent industries (no sub-niches) per Plan v4 Step 16.
@@ -56,7 +56,7 @@ const FEATURED: FeaturedTileSpec[] = [
 ];
 
 /**
- * Plan v15 Block 3 — blog rail. Pulls live posts when available, falls
+ * Plan v15 Block 3 - blog rail. Pulls live posts when available, falls
  * back to curated placeholders so the rail always shows six cards.
  */
 const BLOG_FALLBACK: BlogPost[] = [
@@ -135,7 +135,7 @@ export default function HomePage() {
       <ToneBand tone="home-hero">
         <section className="pt-8 pb-10 md:pt-12 md:pb-14 lg:pt-14 lg:pb-16">
           <div className="max-w-4xl">
-            {/* Plan v19 Block E — bigger, bolder eyebrow. */}
+            {/* Plan v19 Block E - bigger, bolder eyebrow. */}
             <div className="text-sm md:text-base font-bold uppercase tracking-[0.12em] text-atlas-700 mb-4 md:mb-5">
               № 1 site for tracking small to medium business benchmarks globally
             </div>
@@ -149,7 +149,7 @@ export default function HomePage() {
                   />
                 </span>
               </span>
-              {/* Plan v19 Block D — question mark anchored to a fixed-width
+              {/* Plan v19 Block D - question mark anchored to a fixed-width
                   container. City name centers within. Short cities sit
                   centered with whitespace either side; long cities expand
                   but never reach the bookends. The `?` never moves. */}
@@ -172,7 +172,7 @@ export default function HomePage() {
         </section>
       </ToneBand>
 
-      {/* Primary navigator — lifted into the hero band per Plan v16 Block B5.
+      {/* Primary navigator - lifted into the hero band per Plan v16 Block B5.
           Required fields are country, category, industry; everything else
           is optional. */}
       <ToneBand tone="home-navigator">
@@ -181,7 +181,7 @@ export default function HomePage() {
         </section>
       </ToneBand>
 
-      {/* Plan v21 Block 5 — image-card explore section replaces the
+      {/* Plan v21 Block 5 - image-card explore section replaces the
           pair of compact CTAs. Two big symmetric cards, full-bleed
           background image, click the whole card. */}
       <ToneBand tone="home-featured">
@@ -190,7 +190,7 @@ export default function HomePage() {
         </section>
       </ToneBand>
 
-      {/* Plan v16 Block D — top cities band. "Coming soon" chip and
+      {/* Plan v16 Block D - top cities band. "Coming soon" chip and
           "coming this summer" copy were removed per founder direction.
           The map visual sits to the right of a commitment statement. */}
       <ToneBand tone="home-cities-placeholder">
@@ -238,7 +238,7 @@ export default function HomePage() {
         </section>
       </ToneBand>
 
-      {/* Plan v19 Block H — Did You Know surprise facts. Two rotating
+      {/* Plan v19 Block H - Did You Know surprise facts. Two rotating
           curated factoids about unexpected SMB economics. Sits between
           the FEATURED grid and the global coverage strip. */}
       <ToneBand tone="home-blog-rail">
@@ -272,23 +272,23 @@ export default function HomePage() {
         </div>
       </ToneBand>
 
-      {/* Plan v30 follow-up — interactive world map. Click a country
+      {/* Plan v30 follow-up - interactive world map. Click a country
           to open its small-business landscape. Framing is "covers the
-          whole world" — the founder explicitly wants no country count. */}
+          whole world" - the founder explicitly wants no country count. */}
       <ToneBand tone="home-city-picker">
         <div id="pick-a-country" className="scroll-mt-20">
           <WorldMapSection />
         </div>
       </ToneBand>
 
-      {/* Plan v30 prompt 4 output — three editorial blocks (Atlas
+      {/* Plan v30 prompt 4 output - three editorial blocks (Atlas
           questions, methodology pipeline, audience archetypes). Adds
           editorial spine to the homepage without replacing the
-          existing hero — the hero swap is deferred for a visual
+          existing hero - the hero swap is deferred for a visual
           review. */}
       <HomepageEditorialBlocks />
 
-      {/* Pick a city: Plan v27 Lane C.1 — continent-grouped city mosaic
+      {/* Pick a city: Plan v27 Lane C.1 - continent-grouped city mosaic
           below the country map. */}
       <ToneBand tone="home-city-picker">
         <div id="pick-a-city" className="scroll-mt-20">
@@ -317,7 +317,7 @@ export default function HomePage() {
         </section>
       </ToneBand>
 
-      {/* Plan v16 Block C — methodology relocated below the fold and
+      {/* Plan v16 Block C - methodology relocated below the fold and
           rewritten in marketing voice. Earlier copy named source agencies
           and gave away too much; this version positions capability
           (machine-learning aggregation, on-the-ground correspondents,
@@ -363,7 +363,7 @@ export default function HomePage() {
         </section>
       </ToneBand>
 
-      {/* Plan v15 Block 3 — blog rail. */}
+      {/* Plan v15 Block 3 - blog rail. */}
       <ToneBand tone="home-blog-rail">
         <section className="py-12 md:py-16">
           <div className="flex items-baseline justify-between gap-4 flex-wrap mb-6 md:mb-8">

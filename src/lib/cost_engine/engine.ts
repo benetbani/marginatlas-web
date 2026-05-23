@@ -1,5 +1,5 @@
 /**
- * Plan v29 Phase 3-4 — Cost Structure Engine v2.
+ * Plan v29 Phase 3-4 - Cost Structure Engine v2.
  *
  * For any (country, industry, size_band, gross_revenue) tuple, computes
  * a fully decomposed 13-line waterfall where each line carries:
@@ -9,13 +9,13 @@
  *   - confidence rating A/B/C/D
  *
  * Engine architecture:
- *   1. Look up Country Economic Profile (CEP) — 196 countries.
- *   2. Look up Industry Cost Profile (ICP) — keyed by sector_id.
+ *   1. Look up Country Economic Profile (CEP) - 196 countries.
+ *   2. Look up Industry Cost Profile (ICP) - keyed by sector_id.
  *   3. Compute per-line modifiers from (CEP × ICP) interactions.
  *   4. Apply per-line clamps and produce waterfall.
  *   5. Aggregate per-page confidence score.
  *
- * Universal terms only — never use country-specific tax names in UI text.
+ * Universal terms only - never use country-specific tax names in UI text.
  * R-002 compliant.
  */
 import { getCountryProfile } from "@/lib/economic_profile";
@@ -212,7 +212,7 @@ export function estimateCostStructure(input: {
   const cogsUsd = rev * cogsShare;
   const grossProfit = rev - cogsUsd;
 
-  // Labor — derive from labor SHARE (country-adjusted), not from fixed
+  // Labor - derive from labor SHARE (country-adjusted), not from fixed
   // employee count. The intuition: revenue is already country-scaled
   // (upstream extrapolation accounts for GDP/wage levels); labor share
   // should stay within the industry's typical band regardless of country.
@@ -259,7 +259,7 @@ export function estimateCostStructure(input: {
   const rawNet = opProfit - taxUsd;
   const rawMargin = rev > 0 ? rawNet / rev : 0;
 
-  // Margin clamp — both ceiling and floor.
+  // Margin clamp - both ceiling and floor.
   // Below the typical_low band, the model is over-deducting overhead
   // (common in high-cost cities). Clamp UP to typical_low; flag for audit.
   // Above the hard_cap, the model is over-crediting profit. Clamp DOWN.
@@ -285,7 +285,7 @@ export function estimateCostStructure(input: {
     flagged = true;
   }
 
-  // Provenance strings (universal terms — no country-specific tax names)
+  // Provenance strings (universal terms - no country-specific tax names)
   const cogsProv = icp.cogs_import_dependency > 0.4
     ? `${(cogsShare * 100).toFixed(0)}% of revenue. ${cep.name}'s import dependency (${(cep.imports_pct_of_gdp * 100).toFixed(0)}% of GDP) raises input costs for this category.`
     : `${(cogsShare * 100).toFixed(0)}% of revenue. Typical for this industry; ${cep.name} sources most inputs locally.`;
@@ -355,8 +355,8 @@ export function estimateCostStructure(input: {
     line: d.line,
     vs_global_share_pp: Math.round(d.diff_pp * 10) / 10,
     reason: d.diff_pp > 0
-      ? `${(Math.abs(d.diff_pp)).toFixed(1)}pp higher than the global industry mean — driven by ${cep.name}'s economic profile`
-      : `${(Math.abs(d.diff_pp)).toFixed(1)}pp lower than the global industry mean — ${cep.name}'s structural advantage in this line`,
+      ? `${(Math.abs(d.diff_pp)).toFixed(1)}pp higher than the global industry mean - driven by ${cep.name}'s economic profile`
+      : `${(Math.abs(d.diff_pp)).toFixed(1)}pp lower than the global industry mean - ${cep.name}'s structural advantage in this line`,
   }));
 
   const result: CostStructureResult = {
