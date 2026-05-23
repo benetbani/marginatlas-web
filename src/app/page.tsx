@@ -10,7 +10,7 @@ import { CityPicker } from "@/components/CityPicker";
 import { TopCitiesMosaic } from "@/components/home/TopCitiesMosaic";
 import { WorldMapSection } from "@/components/home/WorldMapSection";
 import HomepageEditorialBlocks from "@/components/HomepageEditorialBlocks";
-import LondonRoadmap from "@/components/v2/LondonRoadmap";
+import Image from "next/image";
 import { CitiesDotsMap } from "@/components/CitiesDotsMap";
 import { QualityLegend } from "@/components/QualityLegend";
 import { RotatingWord } from "@/components/RotatingWord";
@@ -200,16 +200,15 @@ export default function HomePage() {
         </section>
       </ToneBand>
 
-      {/* Plan v31 — London roadmap takes over the "Top 100 cities, drilled
-          to the neighborhood" slot. Stylistic SVG built by Claude Design
-          per founder brief; neighborhoods like Mayfair, Soho, Westminster
-          render in vermillion over a neutral block-fabric. Communicates
-          the neighborhood-resolution promise at a glance. */}
+      {/* Plan v31 — cities section anchored by a stylized cartographic
+          rendering of central London. Vermillion-tinted streets, green
+          parks, black Thames. Crops to a horizontal letterbox so the
+          dense central area always shows. */}
       <ToneBand tone="home-cities-placeholder">
         <section className="py-10 md:py-14">
-          <div className="rounded-2xl bg-cream-50 border-2 border-ink-200 px-6 py-8 md:px-10 md:py-10">
-            <div className="grid md:grid-cols-[1fr_minmax(0,520px)] gap-8 md:gap-10 items-center">
-              <div>
+          <div className="rounded-2xl bg-white border-2 border-ink-200 overflow-hidden">
+            <div className="grid md:grid-cols-[1fr_minmax(0,640px)] gap-0 items-stretch">
+              <div className="px-6 py-8 md:px-10 md:py-12">
                 <div className="text-xs uppercase tracking-wide text-atlas-700 font-semibold mb-3">
                   Top 200 cities
                 </div>
@@ -217,8 +216,9 @@ export default function HomePage() {
                   Drilled to the neighborhood
                 </h2>
                 <p className="mt-3 md:mt-4 max-w-xl text-base md:text-lg text-cocoa-700 leading-relaxed">
-                  Manhattan blocks. Central Tokyo wards. Paris arrondissements. The
-                  same benchmarks at neighborhood resolution, rolling out city by city.
+                  Manhattan blocks. Central Tokyo wards. Paris arrondissements.
+                  The same benchmarks at neighborhood resolution, rolling out
+                  city by city.
                 </p>
                 <a
                   href="/cities"
@@ -227,8 +227,15 @@ export default function HomePage() {
                   Browse cities <span aria-hidden>→</span>
                 </a>
               </div>
-              <div>
-                <LondonRoadmap />
+              <div className="relative aspect-[4/3] md:aspect-auto md:min-h-[360px]">
+                <Image
+                  src="/london-cities.png"
+                  alt="Stylized cartographic rendering of central London showing parks, streets, and the Thames"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 640px"
+                  className="object-cover object-center"
+                  priority={false}
+                />
               </div>
             </div>
           </div>
