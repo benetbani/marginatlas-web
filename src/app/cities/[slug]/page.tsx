@@ -206,7 +206,7 @@ export default async function CityPage({
               {scheme.neighborhoods.map((n) => (
                 <Link
                   key={n.slug}
-                  href={`/${city.iso2.toLowerCase()}/${city.slug}/${n.slug}/restaurants`}
+                  href={`/${city.iso2.toLowerCase()}/${city.slug}/${n.slug}`}
                   className="group block rounded-xl border border-parchment hover:border-atlas-500 bg-cream-50 p-3 transition-colors"
                 >
                   <div className="font-medium text-sm text-ink-900 group-hover:text-atlas-700 leading-tight">

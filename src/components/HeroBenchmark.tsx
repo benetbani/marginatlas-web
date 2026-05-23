@@ -66,9 +66,9 @@ export function HeroBenchmark({
           <div className="text-xs md:text-sm uppercase tracking-[0.18em] text-cocoa-700/60 font-semibold mb-2">
             A typical one earns about
           </div>
-          <div className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-medium tracking-tight text-ink-900 leading-[0.95]">
+          <div className="font-display text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight text-ink-900 leading-[0.95]">
             <Money usd={revenue} />
-            <span className="text-3xl md:text-5xl text-atlas-700 align-baseline ml-2 font-display italic">
+            <span className="text-xl md:text-2xl text-atlas-700 align-baseline ml-2 font-display italic">
               a year
             </span>
           </div>

@@ -133,7 +133,7 @@ export default function HomePage() {
         is the primary call-to-action and sits directly under the hero copy.
       */}
       <ToneBand tone="home-hero">
-        <section className="pt-8 pb-10 md:pt-12 md:pb-14 lg:pt-14 lg:pb-16">
+        <section className="pt-4 pb-6 md:pt-6 md:pb-8 lg:pt-8 lg:pb-10">
           <div className="max-w-4xl">
             {/* Plan v19 Block E - bigger, bolder eyebrow. */}
             <div className="text-sm md:text-base font-bold uppercase tracking-[0.12em] text-atlas-700 mb-4 md:mb-5">
@@ -176,7 +176,7 @@ export default function HomePage() {
           Required fields are country, category, industry; everything else
           is optional. */}
       <ToneBand tone="home-navigator">
-        <section className="pt-2 pb-10 md:pb-14">
+        <section className="pt-1 pb-4 md:pb-6">
           <NavigatorForm />
         </section>
       </ToneBand>
@@ -199,27 +199,13 @@ export default function HomePage() {
         </section>
       </ToneBand>
 
-      {/* Plan v16 Block D - top cities band. "Coming soon" chip and
-          "coming this summer" copy were removed per founder direction.
-          The map visual sits to the right of a commitment statement. */}
-      <ToneBand tone="home-cities-placeholder">
-        <section className="py-10 md:py-14">
-          <div className="rounded-md bg-cream-100 border border-parchment border-l-4 border-l-atlas-600 px-6 py-8 md:px-10 md:py-10">
-            <div className="grid md:grid-cols-[1fr_minmax(0,420px)] gap-8 md:gap-10 items-center">
-              <div>
-                <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight text-ink-900">
-                  Top 100 cities, drilled to the neighborhood
-                </h2>
-                <p className="mt-3 md:mt-4 max-w-xl text-base md:text-lg text-ink-800 leading-relaxed">
-                  Manhattan blocks. Central Tokyo wards. Paris arrondissements. The
-                  same benchmarks at neighborhood resolution, rolling out city by city.
-                </p>
-              </div>
-              <CitiesDotsMap />
-            </div>
-          </div>
-        </section>
-      </ToneBand>
+      {/* Plan v31 hotfix — removed the "Top 100 cities... every corner
+          of the world" placeholder band with CitiesDotsMap. Per founder:
+          "this section is just too big, shows nothing, should be
+          removed." The neighborhood-resolution story now lives in the
+          richer city-mosaic section further down and in the metropolis
+          pages themselves. Coming soon: stylistic London-roadmap visual
+          to replace this slot per the design-prompt brief. */}
 
       {/* Featured benchmarks. Plan v16 Block E: 9 tiles in 3×3 symmetric grid. */}
       <ToneBand tone="home-featured">
@@ -289,13 +275,11 @@ export default function HomePage() {
           review. */}
       <HomepageEditorialBlocks />
 
-      {/* Pick a city: Plan v27 Lane C.1 - continent-grouped city mosaic
-          below the country map. */}
-      <ToneBand tone="home-city-picker">
-        <div id="pick-a-city" className="scroll-mt-20">
-          <TopCitiesMosaic limit={12} />
-        </div>
-      </ToneBand>
+      {/* Plan v31 hotfix — bottom TopCitiesMosaic removed. Per founder:
+          "you have just the dumps so many cities in a section which is
+          called top 200 cities of the world. That's not a smart choice...
+          remove that because it's just a dump." The top mosaic up near
+          the world map already shows the curated city set. */}
 
       {/* Quality legend: Plan v8 Track S.7 */}
       <ToneBand tone="home-quality">

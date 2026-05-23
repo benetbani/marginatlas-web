@@ -187,7 +187,7 @@ export function NavigatorForm() {
         e.preventDefault();
         submit();
       }}
-      className="rounded-3xl bg-white p-6 md:p-8 lg:p-10 border border-parchment shadow-[0_1px_2px_rgba(76,39,18,0.04),_0_8px_32px_rgba(76,39,18,0.06)]"
+      className="rounded-2xl bg-white p-6 md:p-8 lg:p-10 border-2 border-ink-200 hover:border-ink-300 transition-colors shadow-[0_1px_3px_rgba(0,0,0,0.05),_0_4px_16px_rgba(0,0,0,0.04)]"
     >
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         <ComboField

@@ -200,18 +200,22 @@ export default function DenseCellHero(props: DenseCellHeroProps) {
               className="flex items-baseline gap-1 sm:gap-2"
               aria-label={`Typical annual revenue: ${fmtRevenue(typicalRevenue)} a year`}
             >
-              <span className="font-display font-medium tabular-nums leading-none text-3xl sm:text-5xl text-ink-900">
+              {/* Plan v31 hotfix - shrunk from text-7xl giant to text-5xl
+                  per founder critique: "the gigantic numbers should be
+                  removed from all pages." Still the visual anchor, just
+                  not screen-dominating. */}
+              <span className="font-display font-medium tabular-nums leading-none text-2xl sm:text-3xl text-ink-900">
                 {rev.sign}
               </span>
-              <span className="font-display font-medium tabular-nums leading-none text-5xl sm:text-7xl text-ink-900 tracking-tight">
+              <span className="font-display font-medium tabular-nums leading-none text-4xl sm:text-5xl text-ink-900 tracking-tight">
                 {rev.num}
               </span>
               {rev.suffix && (
-                <span className="font-display font-medium tabular-nums leading-none text-3xl sm:text-5xl text-ink-900">
+                <span className="font-display font-medium tabular-nums leading-none text-2xl sm:text-3xl text-ink-900">
                   {rev.suffix}
                 </span>
               )}
-              <span className="font-display italic font-normal leading-none text-base sm:text-2xl text-cocoa-700 ml-1 sm:ml-2.5 whitespace-nowrap">
+              <span className="font-display italic font-normal leading-none text-sm sm:text-lg text-cocoa-700 ml-1 sm:ml-2 whitespace-nowrap">
                 a year
               </span>
             </div>

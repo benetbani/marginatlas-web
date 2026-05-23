@@ -110,7 +110,7 @@ export default async function NeighborhoodHub({
           return (
             <Link
               key={n.slug}
-              href={`/${city.iso2.toLowerCase()}/${city.slug}/${n.slug}/${headline.industry}`}
+              href={`/${city.iso2.toLowerCase()}/${city.slug}/${n.slug}`}
               className="group block rounded-2xl border border-parchment hover:border-atlas-500 bg-white p-5 md:p-6 transition-colors"
             >
               <div className="flex items-start justify-between gap-4 mb-3">
