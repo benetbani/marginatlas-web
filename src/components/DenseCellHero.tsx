@@ -261,7 +261,7 @@ export default function DenseCellHero(props: DenseCellHeroProps) {
                     background: "#A55C00",
                     transform: "translateX(-50%)",
                     borderRadius: 2,
-                    boxShadow: "0 0 0 2px #FEF9F0",
+                    boxShadow: "0 0 0 2px #FFFFFF",
                   }}
                   aria-hidden="true"
                 />

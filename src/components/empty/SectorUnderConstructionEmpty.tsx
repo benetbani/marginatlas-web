@@ -43,7 +43,7 @@ export default function SectorUnderConstructionEmpty({
 
   // Inline hatch background — diagonal stripes of parchment over cream-100.
   const hatchedBg: React.CSSProperties = {
-    backgroundColor: "#F8F2E4",
+    backgroundColor: "#F5F5F5",
     backgroundImage:
       "repeating-linear-gradient(135deg, transparent 0px, transparent 14px, rgba(232, 221, 199, 0.5) 14px, rgba(232, 221, 199, 0.5) 15px)",
   };

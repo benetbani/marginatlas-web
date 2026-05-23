@@ -63,7 +63,7 @@ export function CitiesDotsMap() {
         <line x1="400" y1="0" x2="400" y2="320" />
       </g>
       {/* faint continent suggestion: rough archipelagos of small dots */}
-      <g fill="#E5DDCB">
+      <g fill="#DDDDDD">
         {Array.from({ length: 90 }).map((_, i) => {
           // pseudo-random scatter biased to a continental belt
           const seed = (i * 9301 + 49297) % 233280;

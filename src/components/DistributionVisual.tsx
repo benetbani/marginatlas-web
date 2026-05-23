@@ -102,7 +102,7 @@ export function DistributionVisual({ p10, p50, p90, maxValue }: Props) {
               background: "#A55C00",
               transform: "translateX(-50%)",
               borderRadius: 2,
-              boxShadow: "0 0 0 2px #FEFBF6",
+              boxShadow: "0 0 0 2px #FFFFFF",
             }}
             title={`Typical: $${mid.toLocaleString()}`}
             aria-hidden="true"

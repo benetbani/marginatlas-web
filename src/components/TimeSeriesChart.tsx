@@ -105,9 +105,9 @@ export function TimeSeriesChart({
       >
         <defs>
           <linearGradient id="ts-fill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#FBBF24" stopOpacity="0.55" />
-            <stop offset="50%" stopColor="#D97706" stopOpacity="0.22" />
-            <stop offset="100%" stopColor="#EEE6D2" stopOpacity="0.08" />
+            <stop offset="0%" stopColor="#F87850" stopOpacity="0.55" />
+            <stop offset="50%" stopColor="#D73A14" stopOpacity="0.22" />
+            <stop offset="100%" stopColor="#EAEAEA" stopOpacity="0.08" />
           </linearGradient>
         </defs>
 
@@ -119,7 +119,7 @@ export function TimeSeriesChart({
               x2={W - padR}
               y1={y(v)}
               y2={y(v)}
-              stroke="#E8DDC7"
+              stroke="#DDDDDD"
               strokeWidth="1"
               strokeDasharray="2,3"
             />
@@ -127,7 +127,7 @@ export function TimeSeriesChart({
               x={padL - 8}
               y={y(v) + 4}
               fontSize="10"
-              fill="#78350F"
+              fill="#3A3A3A"
               textAnchor="end"
               fontFamily="ui-sans-serif, system-ui, sans-serif"
             >
@@ -145,7 +145,7 @@ export function TimeSeriesChart({
         <path
           d={linePath}
           fill="none"
-          stroke="#C2410C"
+          stroke="#B82F0F"
           strokeWidth="2"
           strokeLinejoin="round"
           strokeLinecap="round"
@@ -158,7 +158,7 @@ export function TimeSeriesChart({
             cx={x(p.year)}
             cy={y(p.v)}
             r="3"
-            fill="#C2410C"
+            fill="#B82F0F"
             stroke="#FAFAF7"
             strokeWidth="1.5"
           />
@@ -171,7 +171,7 @@ export function TimeSeriesChart({
             x={x(p.year)}
             y={H - 8}
             fontSize="10"
-            fill="#78350F"
+            fill="#3A3A3A"
             textAnchor="middle"
             fontFamily="ui-sans-serif, system-ui, sans-serif"
           >
@@ -184,7 +184,7 @@ export function TimeSeriesChart({
           x={x(last.year) + 6}
           y={y(last.v) - 8}
           fontSize="11"
-          fill="#1A1A1A"
+          fill="#000000"
           fontWeight="600"
           fontFamily="ui-sans-serif, system-ui, sans-serif"
           textAnchor="end"

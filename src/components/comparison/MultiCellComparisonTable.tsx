@@ -47,7 +47,7 @@ type SortKey = "country" | "city" | "industry" | "revenue" | "margin" | "wage" |
 const COVERAGE_DOT: Record<Coverage, string> = {
   measured: "#10B981",
   regional: "#0EA5E9",
-  estimated: "#F59E0B",
+  estimated: "#E94E20",
   modeled: "#A8A29E",
 };
 

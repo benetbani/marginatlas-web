@@ -7,13 +7,13 @@
  */
 
 :root {
-  --cream-50:  #FEFBF6;
-  --cream-100: #F8F2E4;
-  --parchment: #E8DDC7;
-  --atlas-500: #D97706;
-  --atlas-700: #9A3412;
-  --cocoa-700: #78350F;
-  --ink-900:   #1A1A1A;
+  --cream-50:  #FFFFFF;
+  --cream-100: #F5F5F5;
+  --parchment: #DDDDDD;
+  --atlas-500: #D73A14;
+  --atlas-700: #952509;
+  --cocoa-700: #3A3A3A;
+  --ink-900:   #000000;
 }
 
 /* Subtle dot-grid backdrop — used behind editorial sections. */

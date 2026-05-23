@@ -33,7 +33,7 @@ export function SectorMasterMenu() {
               key={s.id}
               href={`/sectors/${s.id}`}
               className="group relative overflow-hidden rounded-2xl border border-parchment hover:border-atlas-600 transition-all p-4 flex flex-col gap-3"
-              style={{ backgroundColor: s.header_color || "#F8F2E4" }}
+              style={{ backgroundColor: s.header_color || "#F5F5F5" }}
             >
               <div className="flex items-start justify-between gap-2">
                 {/* Plan v19 Block F — Phosphor icon replaces emoji */}

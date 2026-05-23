@@ -67,7 +67,7 @@ export async function GET(request: Request) {
           width: "100%",
           display: "flex",
           flexDirection: "column",
-          background: "linear-gradient(135deg, #FAF6EF 0%, #F5EEDF 100%)",
+          background: "linear-gradient(135deg, #FAFAFA 0%, #F0F0F0 100%)",
           padding: "72px",
           fontFamily: "sans-serif",
           color: "#2A1810",
@@ -79,7 +79,7 @@ export async function GET(request: Request) {
               display: "flex",
               width: 36,
               height: 36,
-              background: "#C2410C",
+              background: "#B82F0F",
               borderRadius: 6,
             }}
           />
@@ -121,7 +121,7 @@ export async function GET(request: Request) {
               padding: "20px 28px",
               background: "rgba(255,255,255,0.7)",
               borderRadius: 16,
-              borderLeft: "6px solid #C2410C",
+              borderLeft: "6px solid #B82F0F",
               alignSelf: "flex-start",
             }}
           >
@@ -132,7 +132,7 @@ export async function GET(request: Request) {
               style={{
                 fontSize: 60,
                 fontWeight: 700,
-                color: "#C2410C",
+                color: "#B82F0F",
                 lineHeight: 1.1,
                 marginTop: 4,
               }}

@@ -69,10 +69,10 @@ export default function RootLayout({
           <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
             <a href="/" className="flex items-center gap-2 font-semibold text-lg tracking-tight">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <rect x="3" y="3" width="7" height="7" rx="1.5" fill="#C2410C" />
-                <rect x="14" y="3" width="7" height="7" rx="1.5" fill="#D97706" opacity="0.7" />
-                <rect x="3" y="14" width="7" height="7" rx="1.5" fill="#D97706" opacity="0.7" />
-                <rect x="14" y="14" width="7" height="7" rx="1.5" fill="#F59E0B" opacity="0.45" />
+                <rect x="3" y="3" width="7" height="7" rx="1.5" fill="#B82F0F" />
+                <rect x="14" y="3" width="7" height="7" rx="1.5" fill="#D73A14" opacity="0.7" />
+                <rect x="3" y="14" width="7" height="7" rx="1.5" fill="#D73A14" opacity="0.7" />
+                <rect x="14" y="14" width="7" height="7" rx="1.5" fill="#E94E20" opacity="0.45" />
               </svg>
               <span className="text-ink-900">Margin Atlas</span>
             </a>
@@ -101,10 +101,10 @@ export default function RootLayout({
           <div className="max-w-7xl mx-auto px-6 py-12">
             <div className="flex items-center gap-2 font-semibold text-ink-900 mb-8">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <rect x="3" y="3" width="7" height="7" rx="1.5" fill="#C2410C" />
-                <rect x="14" y="3" width="7" height="7" rx="1.5" fill="#D97706" opacity="0.7" />
-                <rect x="3" y="14" width="7" height="7" rx="1.5" fill="#D97706" opacity="0.7" />
-                <rect x="14" y="14" width="7" height="7" rx="1.5" fill="#F59E0B" opacity="0.45" />
+                <rect x="3" y="3" width="7" height="7" rx="1.5" fill="#B82F0F" />
+                <rect x="14" y="3" width="7" height="7" rx="1.5" fill="#D73A14" opacity="0.7" />
+                <rect x="3" y="14" width="7" height="7" rx="1.5" fill="#D73A14" opacity="0.7" />
+                <rect x="14" y="14" width="7" height="7" rx="1.5" fill="#E94E20" opacity="0.45" />
               </svg>
               Margin Atlas
             </div>

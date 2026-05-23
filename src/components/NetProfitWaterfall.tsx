@@ -173,7 +173,7 @@ function WaterfallBar({ w }: { w: Waterfall }) {
     { label: "Pay + employer taxes", value: w.payroll + w.employer_social, color: "#C19A6B" },
     { label: "Rent, insurance, other", value: w.fixed_costs.total, color: "#A0826D" },
     { label: "Tax", value: w.corporate_income_tax, color: "#7F5539" },
-    { label: "Profit kept", value: Math.max(w.net_profit, 0), color: "#C2410C" },
+    { label: "Profit kept", value: Math.max(w.net_profit, 0), color: "#B82F0F" },
   ];
   const totalPositive = segments.reduce((s, x) => s + Math.max(x.value, 0), 0);
   if (totalPositive <= 0) return null;

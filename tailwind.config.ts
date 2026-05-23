@@ -69,14 +69,19 @@ const config: Config = {
           700: "#991B1B",  // text for negative YoY
           900: "#450A0A",
         },
-        // Cocoa — deep text / borders (alternative to pure graphite)
+        // Plan v31 starter v3 — cocoa was the warm "cream brown" body
+        // text token. Founder feedback: that warm cocoa was still
+        // pulling Substack feel into the page on every text element
+        // that used text-cocoa-700/80, border-cocoa-300, etc. Replaced
+        // with neutral grays from the picker. ~120 components shift
+        // automatically without per-file edits.
         cocoa: {
-          50:  "#FBF7F2",
-          100: "#F2E8DC",
-          300: "#C9B59A",
-          500: "#A1856A",
-          700: "#78350F",  // section dividers, deep card borders
-          900: "#451A03",  // footer text, attribution lines
+          50:  "#FAFAFA",  // was #FBF7F2 warm
+          100: "#F0F0F0",  // was #F2E8DC warm
+          300: "#BBBBBB",  // was #C9B59A warm sand
+          500: "#737373",  // was #A1856A warm mid
+          700: "#3A3A3A",  // was #78350F warm dark — now picker slot 4
+          900: "#171717",  // was #451A03 — now near black
         },
         // Sparse deep teal — single signature data accent, used <5% of surface
         teal: {

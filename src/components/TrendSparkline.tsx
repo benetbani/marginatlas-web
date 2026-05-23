@@ -46,7 +46,7 @@ export function TrendSparkline({ industryId, width = 120, height = 32 }: Props) 
     dir.label === "rising"
       ? "#15803d" // moss-700 (Atlas green)
       : dir.label === "softening"
-        ? "#c2410c" // clay-700
+        ? "#B82F0F" // clay-700
         : "#78716c"; // cocoa-500
 
   const last = points[points.length - 1];

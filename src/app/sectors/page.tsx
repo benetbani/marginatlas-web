@@ -29,7 +29,7 @@ export default function SectorsIndex() {
               key={s.id}
               href={`/sectors/${s.id}`}
               className="group rounded-2xl border border-parchment hover:border-atlas-600 p-4 flex flex-col gap-3 transition-all"
-              style={{ backgroundColor: s.header_color || "#F8F2E4" }}
+              style={{ backgroundColor: s.header_color || "#F5F5F5" }}
             >
               <div className="flex items-start justify-between">
                 {/* Plan v19 Block F — Phosphor icon replaces emoji */}

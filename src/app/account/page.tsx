@@ -367,7 +367,7 @@ function Toggle({ defaultOn, ariaLabel }: { defaultOn?: boolean; ariaLabel?: str
         width: 40,
         height: 22,
         borderRadius: 999,
-        background: on ? "#D97706" : "#E8DDC7",
+        background: on ? "#D73A14" : "#DDDDDD",
         padding: 2,
         transition: "background 160ms ease",
       }}

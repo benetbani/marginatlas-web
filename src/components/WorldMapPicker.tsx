@@ -39,18 +39,21 @@ import { ISO_NUMERIC_TO_ALPHA2 } from "@/lib/iso-codes";
 
 const GEO_URL = "https://unpkg.com/world-atlas@2/countries-110m.json";
 
-// Plan v31 starter v2 — map color palette locked to founder picker:
-// white bg, vermillion accent, black text, neutral gray borders.
+// Plan v31 starter v3 — map borders pronounced per founder feedback
+// ("the borders between countries should be pronounced. Right now,
+// they don't exist"). Stroke darkened from #DDDDDD (near-invisible
+// on a white bg) to #3A3A3A (graphite — clearly readable). Stroke
+// width also bumped (see Geography style below from 0.5 to 0.8).
 const COLORS = {
   bg: "#FFFFFF",
   parchment: "#DDDDDD",
   amber: "#D73A14",        // vermillion on hover
   amberActive: "#B82F0F",  // pressed state
   atlas700: "#952509",     // selected country fill (deep vermillion)
-  stroke: "#DDDDDD",       // country borders (neutral)
+  stroke: "#3A3A3A",       // PRONOUNCED country borders (graphite)
   cocoa700: "#3A3A3A",     // text (slot 4 in picker)
   cocoa900: "#000000",     // tooltip background (pure black)
-  disputedStroke: "#BBBBBB",
+  disputedStroke: "#737373",
 };
 
 const ANTARCTICA_ID = "010";
@@ -246,19 +249,21 @@ export default function WorldMapPicker({ onSelect, className }: WorldMapPickerPr
                       default: {
                         fill: fillFor(iso2, numId),
                         stroke: isDisputed ? COLORS.disputedStroke : COLORS.stroke,
-                        strokeWidth: isDisputed ? 0.4 : 0.5,
+                        strokeWidth: isDisputed ? 0.6 : 0.9,
                         strokeDasharray: isDisputed ? "1.5 1.5" : undefined,
                         opacity: isAntarctica ? 0.55 : 1,
                         outline: "none",
                         cursor: clickable ? "pointer" : "default",
                         transition: "fill 140ms ease-out",
+                        vectorEffect: "non-scaling-stroke",
                       },
                       hover: {
                         fill: fillFor(iso2, numId),
                         stroke: COLORS.stroke,
-                        strokeWidth: 0.5,
+                        strokeWidth: 1.1,
                         outline: "none",
                         cursor: clickable ? "pointer" : "default",
+                        vectorEffect: "non-scaling-stroke",
                       },
                       pressed: {
                         fill: fillFor(iso2, numId),

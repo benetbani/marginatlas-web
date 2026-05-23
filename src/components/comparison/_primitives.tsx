@@ -354,7 +354,7 @@ export function DivergentBars({
                     className="h-2.5 rounded-l-sm"
                     style={{
                       width: `${wA}%`,
-                      background: aWins ? "#9A3412" : "#D97706",
+                      background: aWins ? "#952509" : "#D73A14",
                       opacity: aWins ? 1 : 0.65,
                     }}
                   />
@@ -365,7 +365,7 @@ export function DivergentBars({
                     className="h-2.5 rounded-r-sm"
                     style={{
                       width: `${wB}%`,
-                      background: !aWins ? "#9A3412" : "#D97706",
+                      background: !aWins ? "#952509" : "#D73A14",
                       opacity: !aWins ? 1 : 0.65,
                     }}
                   />

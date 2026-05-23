@@ -7,9 +7,9 @@
 
 @layer base {
   :root {
-    --background: #FEFBF6;   /* cream-50 — warmer page background */
-    --foreground: #1A1A1A;
-    --hero-fade: #F8F2E4;    /* cream-100 — soft warm wash under hero */
+    --background: #FFFFFF;   /* cream-50 — warmer page background */
+    --foreground: #000000;
+    --hero-fade: #F5F5F5;    /* cream-100 — soft warm wash under hero */
   }
 
   html {
@@ -142,7 +142,7 @@
 @layer components {
   /* Brand name treatment — burnt amber gradient, used sparingly */
   .gradient-name {
-    background: linear-gradient(90deg, #F59E0B 0%, #D97706 50%, #C2410C 100%);
+    background: linear-gradient(90deg, #E94E20 0%, #D73A14 50%, #B82F0F 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -152,7 +152,7 @@
   /* Card surface — paper-feel, warm shadow, parchment border */
   .card {
     @apply bg-white rounded-2xl p-6;
-    border: 1px solid #E8DDC7; /* parchment */
+    border: 1px solid #DDDDDD; /* parchment */
     box-shadow:
       0 1px 2px rgba(76, 39, 18, 0.04),
       0 0 0 1px rgba(76, 39, 18, 0.02);
@@ -168,14 +168,14 @@
   /* Variant: cream surface for "interior" cards within already-cream sections */
   .card-cream {
     @apply rounded-2xl p-6;
-    background: #F8F2E4;       /* cream-100 */
-    border: 1px solid #E8DDC7; /* parchment */
+    background: #F5F5F5;       /* cream-100 */
+    border: 1px solid #DDDDDD; /* parchment */
   }
 
   /* Variant: warm sub-divider for sections that need a soft separator */
   .hairline {
     height: 1px;
-    background: linear-gradient(90deg, transparent 0%, #E8DDC7 50%, transparent 100%);
+    background: linear-gradient(90deg, transparent 0%, #DDDDDD 50%, transparent 100%);
   }
 
   /* Subtle pill — for category labels, badges, tier ratings */

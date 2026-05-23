@@ -56,10 +56,10 @@ export default function CityComparisonPageV2({
 }: CityComparisonPageV2Props) {
   const aPhoto = cityA.photoUrl
     ? `url(${JSON.stringify(cityA.photoUrl)}) center/cover no-repeat`
-    : cityA.photoGradient ?? "linear-gradient(135deg, #9A3412 0%, #1A1A1A 100%)";
+    : cityA.photoGradient ?? "linear-gradient(135deg, #952509 0%, #000000 100%)";
   const bPhoto = cityB.photoUrl
     ? `url(${JSON.stringify(cityB.photoUrl)}) center/cover no-repeat`
-    : cityB.photoGradient ?? "linear-gradient(135deg, #78350F 0%, #1A1A1A 100%)";
+    : cityB.photoGradient ?? "linear-gradient(135deg, #3A3A3A 0%, #000000 100%)";
 
   return (
     <article>

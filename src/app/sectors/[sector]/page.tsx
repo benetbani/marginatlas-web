@@ -86,7 +86,7 @@ export default async function SectorPage({ params }: { params: Promise<Params> }
         <div className="flex items-start gap-5">
           <div
             className="shrink-0 hidden md:flex items-center justify-center w-24 h-24 rounded-3xl border border-parchment text-atlas-700"
-            style={{ backgroundColor: s.header_color || "#F8F2E4" }}
+            style={{ backgroundColor: s.header_color || "#F5F5F5" }}
             aria-hidden
           >
             <SectorIcon sectorId={s.id} size={48} weight="duotone" />

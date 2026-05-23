@@ -61,7 +61,7 @@ export default function LeadMagnetPage() {
               <div
                 className="rounded-md aspect-[3/4] flex flex-col p-6 sm:p-8 text-cream-50"
                 style={{
-                  background: "linear-gradient(160deg, #9A3412 0%, #78350F 100%)",
+                  background: "linear-gradient(160deg, #952509 0%, #3A3A3A 100%)",
                   boxShadow: "0 1px 2px rgba(26,26,26,0.1), 0 30px 60px rgba(26,26,26,0.22)",
                   border: "1px solid rgba(254, 251, 246, 0.08)",
                 }}
@@ -175,7 +175,7 @@ function Distribution() {
           className="flex-1 rounded-sm"
           style={{
             height: `${b}%`,
-            background: i === 5 ? "#9A3412" : "#D97706",
+            background: i === 5 ? "#952509" : "#D73A14",
             opacity: i === 5 ? 1 : 0.7,
           }}
         />
@@ -186,12 +186,12 @@ function Distribution() {
 
 function Waterfall() {
   const lines = [
-    { label: "Revenue", w: "100%", c: "#9A3412" },
-    { label: "Food",    w: "32%",  c: "#9A3412" },
-    { label: "Labor",   w: "30%",  c: "#D97706" },
+    { label: "Revenue", w: "100%", c: "#952509" },
+    { label: "Food",    w: "32%",  c: "#952509" },
+    { label: "Labor",   w: "30%",  c: "#D73A14" },
     { label: "Rent",    w: "9%",   c: "#E8A23A" },
     { label: "Other",   w: "17%",  c: "#B8A57A" },
-    { label: "Profit",  w: "12%",  c: "#1A1A1A", profit: true },
+    { label: "Profit",  w: "12%",  c: "#000000", profit: true },
   ];
   return (
     <ul className="space-y-1.5">
@@ -233,7 +233,7 @@ function Ranges() {
             <span
               aria-hidden="true"
               className="absolute inset-y-0 rounded-full"
-              style={{ left: `${r.l}%`, width: `${r.h - r.l}%`, background: "#D97706", opacity: 0.7 }}
+              style={{ left: `${r.l}%`, width: `${r.h - r.l}%`, background: "#D73A14", opacity: 0.7 }}
             />
             <span
               aria-hidden="true"
@@ -243,7 +243,7 @@ function Ranges() {
                 top: -2,
                 bottom: -2,
                 width: 2,
-                background: "#9A3412",
+                background: "#952509",
                 borderRadius: 2,
                 transform: "translateX(-50%)",
               }}
