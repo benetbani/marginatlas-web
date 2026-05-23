@@ -17,6 +17,7 @@ import cityListJson from "../../../../../data/cities/city_list_v1.json";
 import neighborhoodsJson from "../../../../../data/cities/neighborhoods_v1.json";
 import { CountryFlag } from "@/components/CountryFlag";
 import { COUNTRIES } from "@/lib/taxonomy";
+import { getNeighborhoodFlavor } from "@/lib/cities/neighborhood_flavor";
 
 export const revalidate = 43200;
 
@@ -101,30 +102,46 @@ export default async function NeighborhoodHub({
         character and headline small-business industry.
       </p>
 
-      <div className="space-y-3">
+      <div className="space-y-4">
         {scheme.neighborhoods.map((n) => {
           const headline = CHARACTER_HEADLINE[n.character] || { industry: "restaurants", name: "Restaurants" };
+          // Plan v30 Lane 2 — surface deep flavor data when populated.
+          const flavor = getNeighborhoodFlavor(slug, n.slug);
           return (
             <Link
               key={n.slug}
               href={`/${city.iso2.toLowerCase()}/${city.slug}/${n.slug}/${headline.industry}`}
               className="group block rounded-2xl border border-parchment hover:border-atlas-500 bg-white p-5 md:p-6 transition-colors"
             >
-              <div className="flex items-start justify-between gap-4">
+              <div className="flex items-start justify-between gap-4 mb-3">
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-3 mb-2">
+                  <div className="flex items-center gap-3 mb-2 flex-wrap">
                     <h2 className="font-display text-xl md:text-2xl font-medium tracking-tight text-ink-900 group-hover:text-atlas-700 transition-colors">
                       {n.name}
                     </h2>
                     <span className="text-[10px] uppercase tracking-wide font-semibold text-cocoa-700/60 bg-cream-100 border border-parchment rounded-full px-2 py-0.5">
                       {n.character.replace(/-/g, " ")}
                     </span>
+                    {flavor && (
+                      <>
+                        <span className="text-[10px] uppercase tracking-wide font-semibold text-atlas-700 bg-atlas-50 border border-atlas-200 rounded-full px-2 py-0.5">
+                          {flavor.price_tier}
+                        </span>
+                        <span className="text-[10px] uppercase tracking-wide font-semibold text-cocoa-700/60 bg-cream-100 border border-parchment rounded-full px-2 py-0.5">
+                          walks {flavor.walkability}
+                        </span>
+                      </>
+                    )}
                   </div>
-                  {n.description && (
+                  {flavor ? (
+                    <p className="text-sm md:text-base text-cocoa-700/90 max-w-2xl leading-relaxed">
+                      {flavor.character_paragraph}
+                    </p>
+                  ) : n.description ? (
                     <p className="text-sm text-cocoa-700/80 max-w-2xl leading-relaxed">
                       {n.description}
                     </p>
-                  )}
+                  ) : null}
                 </div>
                 <div className="hidden md:block text-right shrink-0">
                   <div className="text-[10px] uppercase tracking-wide text-cocoa-700/60 font-semibold mb-1">
@@ -135,6 +152,22 @@ export default async function NeighborhoodHub({
                   </div>
                 </div>
               </div>
+              {flavor && (
+                <div className="border-t border-parchment pt-3 mt-3 grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                  <div>
+                    <div className="text-[10px] uppercase tracking-wide text-cocoa-700/60 font-semibold mb-1">
+                      Food
+                    </div>
+                    <div className="text-cocoa-700">{flavor.food_scene}</div>
+                  </div>
+                  <div>
+                    <div className="text-[10px] uppercase tracking-wide text-cocoa-700/60 font-semibold mb-1">
+                      Don&apos;t miss
+                    </div>
+                    <div className="text-cocoa-700">{flavor.dont_miss}</div>
+                  </div>
+                </div>
+              )}
             </Link>
           );
         })}

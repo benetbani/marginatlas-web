@@ -98,12 +98,12 @@ export function NetProfitWaterfall({
 
       <div className="mt-3 rounded-lg bg-cream-100 border border-parchment p-3 text-xs text-ink-800 leading-relaxed">
         <strong className="text-ink-900">Estimate only, not financial or tax advice.</strong>{" "}
-        COGS pulled from industry-typical gross margin. Payroll inferred from
-        operating margin when not measured. Fixed costs from city and country
-        commercial rent, property tax, and per-country operating-cost calibration.
-        Corporate income tax uses combined federal and sub-regional rate where
-        available. Actual figures vary materially by business model, scale,
-        and execution.
+        Cost of goods is pulled from typical industry numbers. Pay is
+        worked out from the typical labor share when it isn&apos;t measured
+        directly. Rent, insurance, and utilities use city-and-country
+        averages. Tax uses the combined national plus regional rate
+        where we have it. Real numbers vary a lot by how the business
+        is run.
       </div>
 
       {/* Visual bar */}
@@ -118,7 +118,7 @@ export function NetProfitWaterfall({
         <Row label="Estimated payroll" value={fmtMoney(-w.payroll)} muted />
         <Row label="Employer social contributions" value={fmtMoney(-w.employer_social)} muted />
         <Divider />
-        <Row label="Operating profit (EBITDA proxy)" value={fmtMoney(w.operating_profit)} />
+        <Row label="Profit before rent and taxes" value={fmtMoney(w.operating_profit)} />
         <Row label="Rent" value={fmtMoney(-w.fixed_costs.rent)} muted />
         <Row label="Property tax" value={fmtMoney(-w.fixed_costs.property_tax)} muted />
         <Row label="Insurance and licensing" value={fmtMoney(-w.fixed_costs.insurance)} muted />
@@ -169,11 +169,11 @@ function Divider() {
 
 function WaterfallBar({ w }: { w: Waterfall }) {
   const segments: Array<{ label: string; value: number; color: string }> = [
-    { label: "COGS", value: w.cogs, color: "#D5C4A1" },
-    { label: "Payroll + social", value: w.payroll + w.employer_social, color: "#C19A6B" },
-    { label: "Fixed costs", value: w.fixed_costs.total, color: "#A0826D" },
-    { label: "Corporate tax", value: w.corporate_income_tax, color: "#7F5539" },
-    { label: "Net profit", value: Math.max(w.net_profit, 0), color: "#C2410C" },
+    { label: "Cost of goods", value: w.cogs, color: "#D5C4A1" },
+    { label: "Pay + employer taxes", value: w.payroll + w.employer_social, color: "#C19A6B" },
+    { label: "Rent, insurance, other", value: w.fixed_costs.total, color: "#A0826D" },
+    { label: "Tax", value: w.corporate_income_tax, color: "#7F5539" },
+    { label: "Profit kept", value: Math.max(w.net_profit, 0), color: "#C2410C" },
   ];
   const totalPositive = segments.reduce((s, x) => s + Math.max(x.value, 0), 0);
   if (totalPositive <= 0) return null;

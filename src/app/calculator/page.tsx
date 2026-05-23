@@ -69,10 +69,10 @@ export default function CalculatorPage() {
       </section>
 
       <p className="mt-8 text-xs text-ink-700/60 max-w-2xl">
-        The calculator uses the same benchmark data that powers the rest of the
-        atlas. It does not collect or store the revenue number you enter;
-        the percentile is computed in your browser from the
-        p10/p25/p50/p75/p90 spread.
+        The calculator uses the same benchmark data that powers the rest
+        of the atlas. It does not collect or store the revenue number you
+        enter; the comparison is computed in your browser using the
+        bottom-10%, typical, and top-10% values for this industry and place.
       </p>
     </div>
   );

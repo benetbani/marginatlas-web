@@ -1,0 +1,341 @@
+{
+  "version": "1.0.0",
+  "anchor": "Plan v30 Lane 2 — deep neighborhood flavor data. For each neighborhood: one-paragraph character, signature small businesses, food scene, demographic skew (income tier + age skew + tourist density), walkability, history note, price tier, and a single 'don't-miss' detail. Used by /cities/{slug}/neighborhoods and the cell-page editorial layer. Universal English everywhere (R-002).",
+  "convention": "Keyed by city_slug then neighborhood_slug. Both slugs must match data/cities/neighborhoods_v1.json. Every entry contains the same 8 fields; nullable strings instead of missing keys.",
+  "field_meanings": {
+    "character_paragraph": "2-3 sentence editorial summary. What does it feel like to walk here?",
+    "signature_businesses": "3-5 small business categories that define this neighborhood economically",
+    "food_scene": "One sentence on the food culture",
+    "demographic_skew": "Compact tag like 'affluent professional' or 'working family' or 'student' or 'tourist-heavy'",
+    "walkability": "high | moderate | low",
+    "history_note": "One sentence on what shaped this neighborhood",
+    "price_tier": "luxury | expensive | mid | affordable | budget",
+    "dont_miss": "One concrete detail that makes this neighborhood specific, not generic"
+  },
+  "neighborhoods": {
+    "new-york": {
+      "manhattan": {
+        "character_paragraph": "Manhattan is the dense vertical core of New York: glass towers next to brownstones, a different street rhythm every six blocks. The southern half runs on finance and law; the northern half on culture, healthcare, and academic life. The whole island walks faster than any other place in America.",
+        "signature_businesses": ["law offices", "specialty restaurants", "boutique fashion", "fitness studios", "art galleries"],
+        "food_scene": "Every cuisine on earth in a 10-block radius; pizza slice on every corner; dollar dumplings in Chinatown next to $400 tasting menus.",
+        "demographic_skew": "affluent professional, dense international",
+        "walkability": "high",
+        "history_note": "Settled as a Dutch trading post in 1624, the grid was imposed in 1811 and shaped everything that followed.",
+        "price_tier": "luxury",
+        "dont_miss": "The 30-block stretch of Madison and Fifth Avenue holds the densest concentration of luxury retail in the world."
+      },
+      "brooklyn": {
+        "character_paragraph": "Brooklyn was a city of its own until 1898 and still acts like one. North Brooklyn (Williamsburg, Greenpoint) is the creative-class anchor; south Brooklyn (Bay Ridge, Bensonhurst) is family Italian and Chinese; central is brownstone Brooklyn, with the most expensive non-Manhattan zip codes in the country.",
+        "signature_businesses": ["independent coffee", "specialty food shops", "design studios", "vintage retail", "craft food production"],
+        "food_scene": "The American food trend incubator: bagels, pizza, smash burgers, natural wine, ramen — most modern American food fashions started in Brooklyn first.",
+        "demographic_skew": "creative-class mixed, with strong ethnic enclaves",
+        "walkability": "high",
+        "history_note": "Annexed by New York in 1898 after a contested vote; the borough has spent a century arguing about whether that was a mistake.",
+        "price_tier": "expensive",
+        "dont_miss": "The Brooklyn waterfront skyline view of Manhattan is the single most-photographed urban view in America."
+      },
+      "queens": {
+        "character_paragraph": "Queens is the most ethnically diverse county in the United States. Walk twenty blocks and the dominant language changes three times. The borough runs on small immigrant-owned businesses and the city's two major airports.",
+        "signature_businesses": ["immigrant-owned restaurants", "specialty grocers", "car repair", "small manufacturing", "transport services"],
+        "food_scene": "The best regional cuisine in America: real Sichuan in Flushing, Colombian in Jackson Heights, Greek in Astoria, Bukharan Jewish in Forest Hills.",
+        "demographic_skew": "diverse middle-income, heavy first-generation immigrant",
+        "walkability": "moderate",
+        "history_note": "The 1964 World's Fair in Flushing Meadows put Queens on the map; the airport expansions in the 1970s defined its modern economy.",
+        "price_tier": "mid",
+        "dont_miss": "Flushing has the second-largest Chinatown in the United States and arguably the best Chinese food in the country."
+      },
+      "bronx": {
+        "character_paragraph": "The Bronx is the only borough on the mainland. It was burned and abandoned in the 1970s, then slowly rebuilt; today it has Latin American food, hip-hop heritage, Yankee Stadium, and the largest urban park in the city.",
+        "signature_businesses": ["family restaurants", "auto repair", "value retail", "construction trades", "small healthcare clinics"],
+        "food_scene": "Dominican, Puerto Rican, and the original Italian-American cooking on Arthur Avenue (the real Little Italy).",
+        "demographic_skew": "working-class Latin American, lower-income",
+        "walkability": "moderate",
+        "history_note": "Hip-hop was invented at 1520 Sedgwick Avenue in 1973; the Bronx is the genre's birthplace.",
+        "price_tier": "affordable",
+        "dont_miss": "Arthur Avenue in Belmont is the Italian neighborhood Manhattan's Little Italy stopped being decades ago."
+      },
+      "staten-island": {
+        "character_paragraph": "Staten Island is the suburb the rest of the city forgets it has. Reachable by a free ferry with the best Manhattan skyline view in the city. Single-family homes, Italian-American demographics, and a politics distinct from the rest of New York.",
+        "signature_businesses": ["family restaurants", "home services", "auto repair", "garden centers", "local retail"],
+        "food_scene": "The most authentic Italian-American food in New York; pizza scholars argue Staten Island has the best square pizza in the country.",
+        "demographic_skew": "Italian-American working/middle class",
+        "walkability": "low",
+        "history_note": "The Verrazzano Bridge in 1964 changed the borough from rural to suburban almost overnight.",
+        "price_tier": "mid",
+        "dont_miss": "The Staten Island Ferry is free, runs every 15 minutes, and gives you a 25-minute view of New York harbor that costs $40 on a tourist boat."
+      }
+    },
+    "london": {
+      "central-london": {
+        "character_paragraph": "Central London is the City + Westminster: financial services, government, and the densest tourist circuit in Europe. The streets are medieval, the institutions are ancient, the businesses are global. The square mile of the City employs over 500,000 people most of whom don't live there.",
+        "signature_businesses": ["banking", "law firms", "luxury hotels", "private clubs", "high-end restaurants"],
+        "food_scene": "Every cuisine catered for international clients; the highest concentration of Michelin stars in the UK; pubs that have served since the 1700s.",
+        "demographic_skew": "wealthy professional, transient workforce, heavy tourist",
+        "walkability": "high",
+        "history_note": "The Romans founded Londinium in 47 AD; the City's mile-wide footprint hasn't moved much since.",
+        "price_tier": "luxury",
+        "dont_miss": "The City of London is technically a separate jurisdiction from the rest of London with its own police force and a Lord Mayor older than the modern monarchy."
+      },
+      "east-london": {
+        "character_paragraph": "East London was the historically working-class side: docks, then garment industry, then post-industrial decline, now creative regeneration. Shoreditch is the design hub; Hackney is the family-with-bikes hub; Whitechapel still carries its East End immigrant history.",
+        "signature_businesses": ["design studios", "independent coffee", "craft beer", "vintage retail", "small food production"],
+        "food_scene": "Bangladeshi on Brick Lane, Turkish in Dalston, Vietnamese in Hackney, modern British everywhere; the food market scene (Maltby Street, Broadway Market) reinvented itself here.",
+        "demographic_skew": "creative-class mixed with long-standing immigrant communities",
+        "walkability": "high",
+        "history_note": "The Docklands collapsed in the 1970s; Canary Wharf was built in the 1980s as a financial second center; the 2012 Olympics finished the regeneration of Stratford and Hackney.",
+        "price_tier": "expensive",
+        "dont_miss": "Brick Lane curry houses are the spiritual home of British-Bangladeshi food and have been since the 1970s."
+      },
+      "west-london": {
+        "character_paragraph": "West London is the wealth: Kensington, Chelsea, Knightsbridge, Notting Hill. It's quieter than central, residential, with the highest property prices in Europe. Embassies, museums, and the kind of restaurants where the wine list is longer than the menu.",
+        "signature_businesses": ["luxury retail", "private medical", "international schools", "fine dining", "art and antiques"],
+        "food_scene": "International fine dining for global wealth; Lebanese on Edgware Road; the original gastropub scene started here in the 1990s.",
+        "demographic_skew": "international wealth, established old money",
+        "walkability": "high",
+        "history_note": "The Royal Borough of Kensington and Chelsea was created in 1965 by merging two boroughs; the area has been London's wealth center since the 1820s.",
+        "price_tier": "luxury",
+        "dont_miss": "Portobello Road on a Saturday is the largest antiques market in the world."
+      },
+      "north-london": {
+        "character_paragraph": "North London is the residential and intellectual side: Camden, Islington, Hampstead, Highgate. It's where the journalists, academics, and media class lived from the 1960s onward, and still largely do. Greener and lower-rise than the rest of central London.",
+        "signature_businesses": ["independent bookshops", "pubs and gastropubs", "private tutoring", "psychotherapy practices", "design and media"],
+        "food_scene": "Strong neighborhood restaurant culture; the gastropub was invented here at The Eagle in Farringdon in 1991; great Mediterranean food in Crouch End and Islington.",
+        "demographic_skew": "middle-class professional, media and academic",
+        "walkability": "high",
+        "history_note": "Hampstead has been a literary and intellectual neighborhood since Keats lived there in the 1820s.",
+        "price_tier": "expensive",
+        "dont_miss": "Hampstead Heath is 320 hectares of wild parkland inside London; the swimming ponds have been operating since 1893."
+      },
+      "south-london": {
+        "character_paragraph": "South London is changing fastest: Brixton's Caribbean center, Peckham's African market reborn as a foodie magnet, Clapham's young-professional density, Brixton-to-Croydon stretching the city's edge. Less tourist, more local, more affordable than north of the river.",
+        "signature_businesses": ["independent restaurants", "music venues", "barbershops", "small grocery", "fitness studios"],
+        "food_scene": "Caribbean in Brixton, Nigerian in Peckham, modern British everywhere; the Sunday-roast scene is concentrated here.",
+        "demographic_skew": "mixed working-class with rapid young-professional in-migration",
+        "walkability": "moderate",
+        "history_note": "The Windrush generation of Caribbean immigrants settled here in the 1950s and 60s and shaped Brixton's character permanently.",
+        "price_tier": "mid",
+        "dont_miss": "Brixton Village market on a Saturday is one of the best low-cost meals in London."
+      }
+    },
+    "paris": {
+      "right-bank": {
+        "character_paragraph": "The Right Bank is the commercial and tourist Paris: Champs-Élysées, the Louvre, Opera, Galeries Lafayette. Wider boulevards, taller buildings, more shopping, more tourists. Most of Paris's office space and luxury retail is here.",
+        "signature_businesses": ["luxury retail", "hotel groups", "patisseries", "fashion houses", "banks"],
+        "food_scene": "Tourist-priced bistros on the boulevards; brilliant patisseries on the side streets; the densest concentration of Michelin stars in France.",
+        "demographic_skew": "wealthy resident, heavy tourist, business",
+        "walkability": "high",
+        "history_note": "Baron Haussmann's 1853 redesign created the wide boulevards and the Beaux-Arts apartment blocks that define the look today.",
+        "price_tier": "luxury",
+        "dont_miss": "The Galerie Vivienne is a covered passage from 1823, the most elegant of Paris's 19th-century shopping arcades."
+      },
+      "left-bank": {
+        "character_paragraph": "The Left Bank is the literary, academic, and bohemian Paris: Saint-Germain, Latin Quarter, Montparnasse. The Sorbonne is here, the publishing houses, the cafés where Sartre and Hemingway worked. Smaller buildings, narrower streets, more bookshops per square kilometer than anywhere else in Europe.",
+        "signature_businesses": ["bookshops", "cafés", "publishing houses", "art galleries", "academic services"],
+        "food_scene": "Classic bistros that survived the centuries; great Lebanese on rue Saint-André-des-Arts; the best falafel in Paris in the Marais nearby.",
+        "demographic_skew": "academic, literary, established cultural class",
+        "walkability": "high",
+        "history_note": "The Sorbonne dates to 1257; the Latin Quarter is named for the medieval university Latin that was spoken there.",
+        "price_tier": "expensive",
+        "dont_miss": "Shakespeare and Company at 37 rue de la Bûcherie has been the English-language bookshop home since the 1950s, replacing the original Sylvia Beach shop that hosted James Joyce."
+      },
+      "marais": {
+        "character_paragraph": "The Marais is the hip historic Paris: 17th-century mansions converted to design boutiques, the old Jewish quarter, a strong gay village, and the most concentrated falafel street in Europe. Smaller and denser than the rest of central Paris.",
+        "signature_businesses": ["design boutiques", "small museums", "kosher bakeries", "queer-owned bars", "vintage clothing"],
+        "food_scene": "Rue des Rosiers for falafel; the surrounding streets for natural wine bars and Japanese bistros.",
+        "demographic_skew": "creative-class mixed, queer community, tourist-heavy",
+        "walkability": "high",
+        "history_note": "The Marais was the aristocratic quarter in the 17th century, then a working-class Jewish neighborhood from the 1880s; gentrification began with Malraux's preservation law in 1962.",
+        "price_tier": "expensive",
+        "dont_miss": "Place des Vosges from 1612 is the oldest planned square in Paris and arguably the most elegant residential square in Europe."
+      },
+      "montmartre": {
+        "character_paragraph": "Montmartre is the highest point in Paris and the only neighborhood where the streets follow the medieval winding pattern rather than Haussmann's grid. The artistic community of Picasso, Modigliani, Toulouse-Lautrec is gone but the neighborhood is still defiantly small-village in the middle of the city.",
+        "signature_businesses": ["art galleries", "wine bars", "small restaurants", "vintage retail", "tourist services"],
+        "food_scene": "Tourist-trap restaurants on the main streets; excellent neighborhood bistros two blocks away.",
+        "demographic_skew": "mixed, with heavy tourist by day",
+        "walkability": "moderate (the hill)",
+        "history_note": "Montmartre was a separate village outside Paris until 1860; the Sacré-Cœur basilica was built 1875-1914 as penance for the Paris Commune of 1871.",
+        "price_tier": "expensive",
+        "dont_miss": "The last working vineyard in Paris, the Clos Montmartre, produces about 1,000 bottles a year on the north slope of the hill."
+      }
+    },
+    "tokyo": {
+      "central-tokyo": {
+        "character_paragraph": "Central Tokyo is the business and government core: Marunouchi, Otemachi, Nihonbashi, Ginza. Sober glass towers next to traditional department stores. The Imperial Palace is here, surrounded by the most expensive real estate in Japan.",
+        "signature_businesses": ["financial services", "luxury department stores", "specialty kissaten coffee shops", "high-end Japanese cuisine", "corporate law firms"],
+        "food_scene": "The densest concentration of Michelin stars on earth; classic Japanese department-store basement food halls; salaryman lunch culture at its peak.",
+        "demographic_skew": "salaryman and government workforce, very low residential density",
+        "walkability": "high",
+        "history_note": "The current Imperial Palace stands on the site of Edo Castle, the seat of the Tokugawa Shogunate from 1603 to 1868.",
+        "price_tier": "luxury",
+        "dont_miss": "Ginza Six's basement food hall is a cathedral of Japanese regional cuisine; the wagashi sweets section alone justifies the trip."
+      },
+      "shibuya-shinjuku": {
+        "character_paragraph": "Shibuya-Shinjuku is the youth and entertainment Tokyo: world's busiest train stations, the Scramble Crossing, neon, karaoke, izakaya alleyways, Golden Gai. Shinjuku has government offices and the Tokyo metropolitan government; Shibuya has fashion, music, and the global tech and startup scene.",
+        "signature_businesses": ["fashion retail", "izakaya restaurants", "karaoke venues", "music and entertainment", "small-format tech offices"],
+        "food_scene": "Every conceivable cuisine; the highest density of izakaya in Tokyo; the best ramen and tonkatsu in the city is two blocks off the main streets.",
+        "demographic_skew": "youth-heavy by day, transient by night",
+        "walkability": "high",
+        "history_note": "Shibuya was rural until the 1930s; the area's rise as a youth center began with the opening of Shibuya 109 in 1979.",
+        "price_tier": "expensive",
+        "dont_miss": "Omoide Yokocho near Shinjuku station is a single alley of tiny yakitori bars and ramen shops that hasn't changed since the post-war black market days of the 1940s."
+      },
+      "shitamachi": {
+        "character_paragraph": "The shitamachi ('low town') is the traditional working-class Tokyo: Asakusa, Yanaka, Ueno. Older buildings, smaller streets, family-run shops that have been in the same family for centuries. Tokyo's old soul, slower-paced than the rest of the city.",
+        "signature_businesses": ["small craft shops", "traditional sweets", "neighborhood restaurants", "family-run inns (ryokan)", "religious supplies for nearby temples"],
+        "food_scene": "Old-school sushi, soba, tempura made by third-generation families; the original Tokyo working-class cooking before Tokyo was fancy.",
+        "demographic_skew": "long-established working-class, aging population, tourist-heavy at landmarks",
+        "walkability": "high",
+        "history_note": "The shitamachi survived the 1923 earthquake better than uptown, then was firebombed in 1945; what stands today was largely rebuilt in the late 1940s.",
+        "price_tier": "mid",
+        "dont_miss": "Yanaka Ginza is a small shopping street where you can buy the same fish cake from the same family that's been making it since the 1940s."
+      },
+      "western-tokyo": {
+        "character_paragraph": "Western Tokyo is the residential middle-class belt: Setagaya, Suginami, Kichijoji. Quieter, more family-oriented, the best parks. Where most Tokyo residents actually live, but tourists rarely visit.",
+        "signature_businesses": ["neighborhood restaurants", "convenience services", "private schools", "small clinics", "specialty bookshops"],
+        "food_scene": "The best mid-priced neighborhood izakaya; great bakeries; Kichijoji has consistently the most-loved restaurant scene outside central Tokyo.",
+        "demographic_skew": "professional middle-class, families with children",
+        "walkability": "moderate",
+        "history_note": "Kichijoji has won 'most desirable place to live in Tokyo' in residents' polls more than any other district, every year since the 1990s.",
+        "price_tier": "mid",
+        "dont_miss": "Inokashira Park in Kichijoji is the best spring cherry-blossom viewing in Tokyo that isn't packed with tourists."
+      },
+      "bay-area": {
+        "character_paragraph": "Tokyo's Bay Area is the new Tokyo: Odaiba, Ariake, Tsukiji, Toyosu. Built on reclaimed land over the past 30 years; the wholesale fish market, the new convention centers, and Tokyo's most experimental architecture all live here.",
+        "signature_businesses": ["wholesale food", "conventions and events", "tech and media offices", "logistics", "modern hotels"],
+        "food_scene": "Toyosu fish market is the world's largest seafood market; the sushi restaurants inside it are open from 5 AM and have no equal anywhere.",
+        "demographic_skew": "young professional, recent arrival to Tokyo",
+        "walkability": "moderate (large blocks)",
+        "history_note": "Most of this neighborhood was open ocean before the 1980s; Tsukiji market opened in 1935 and moved to Toyosu in 2018.",
+        "price_tier": "expensive",
+        "dont_miss": "A 5 AM tuna auction visit at Toyosu followed by sushi for breakfast is one of the best experiences a tourist can have in Tokyo."
+      }
+    },
+    "berlin": {
+      "mitte": {
+        "character_paragraph": "Mitte is the historic and political center: the Brandenburg Gate, the government quarter, Museum Island. After the wall fell in 1989 the area between East and West turned into Berlin's design and gallery hub; today it's the most polished part of Berlin but still less expensive than equivalent neighborhoods in other capitals.",
+        "signature_businesses": ["design studios", "art galleries", "boutique hotels", "modern German restaurants", "consulting and media"],
+        "food_scene": "Modern Berlin cuisine, Vietnamese (Berlin has one of the largest Vietnamese communities in Western Europe), Israeli, and the original currywurst.",
+        "demographic_skew": "creative-class, international, professional",
+        "walkability": "high",
+        "history_note": "Mitte was East Berlin; the entire neighborhood between the wall and Alexanderplatz was rebuilt as the showcase of the GDR in the 1960s, then reinvented after 1990.",
+        "price_tier": "expensive",
+        "dont_miss": "The Hackesche Höfe (1906) is the largest set of connected courtyards in Germany, an Art Nouveau mixed-use complex of shops, theatres, and apartments."
+      },
+      "kreuzberg": {
+        "character_paragraph": "Kreuzberg is the Turkish, Lebanese, and punk-rock Berlin: cheap rents historically, immigrant kebab culture, squat houses turned into bars, and the most political street art scene in the country. The neighborhood has gentrified faster than any other in Berlin but has fought it harder too.",
+        "signature_businesses": ["kebab shops", "Turkish bakeries", "small music venues", "bars and clubs", "small printing and design"],
+        "food_scene": "The döner kebab was invented at Kreuzberg's Kotbusser Tor in 1972; Turkish bakeries on every corner; the best mid-priced restaurant scene in Berlin.",
+        "demographic_skew": "Turkish-German mixed with creative-class arrivals",
+        "walkability": "high",
+        "history_note": "Kreuzberg was cut off from East Berlin by the wall on three sides from 1961-1989; the isolation kept rents low and attracted students, artists, and Turkish guest workers.",
+        "price_tier": "mid",
+        "dont_miss": "The Berlin Wall East Side Gallery is a 1.3km stretch of the original wall painted by 118 artists in 1990; it runs through Friedrichshain just across the river from Kreuzberg."
+      },
+      "prenzlauer-berg": {
+        "character_paragraph": "Prenzlauer Berg is the family Berlin: pre-war apartment blocks survived the war intact, then 1990s squatters cleaned them up, then 2000s families moved in. Now it has the highest birth rate of any Berlin neighborhood, the best ice cream shops, and impeccable playgrounds.",
+        "signature_businesses": ["specialty children's retail", "ice cream", "neighborhood cafés", "bookshops", "family restaurants"],
+        "food_scene": "The strongest weekend brunch culture in Berlin; great Vietnamese; small Italian restaurants.",
+        "demographic_skew": "young families, established middle-class professional",
+        "walkability": "high",
+        "history_note": "Prenzlauer Berg survived WWII bombing better than other Berlin neighborhoods; the wide pre-war streets and ornate buildings remained mostly intact.",
+        "price_tier": "expensive",
+        "dont_miss": "Kollwitzplatz on a Saturday morning has the best farmers' market in Berlin; the cheese stall has lines starting at 9 AM."
+      },
+      "charlottenburg": {
+        "character_paragraph": "Charlottenburg is West Berlin's elegant residential heart: the City West of the old West Berlin, KaDeWe department store, Kurfürstendamm boulevard. Quieter and more formal than the East; old money, established professionals, the original 1950s West German consumer culture.",
+        "signature_businesses": ["luxury retail", "private medical practices", "law firms", "fine dining", "art and antiques"],
+        "food_scene": "Classic German restaurants that survived; the best Persian and Lebanese in Berlin; the original KaDeWe basement food hall.",
+        "demographic_skew": "established middle and upper-middle class, older",
+        "walkability": "high",
+        "history_note": "Charlottenburg was an independent city until 1920; Kurfürstendamm was developed as the showcase of West Berlin during the Cold War to compete with East Berlin's Karl-Marx-Allee.",
+        "price_tier": "expensive",
+        "dont_miss": "KaDeWe's sixth floor is one of Europe's great food halls, designed in 1907 and still operating in roughly its original layout."
+      }
+    },
+    "mexico-city": {
+      "polanco": {
+        "character_paragraph": "Polanco is the wealthiest neighborhood in Mexico: high-rise apartments, embassies, the densest concentration of high-end restaurants in Latin America, the city's branded luxury retail. Built in the 1940s for Lebanese-Mexican wealth that had outgrown the historic center.",
+        "signature_businesses": ["luxury retail", "fine dining", "private medical", "corporate offices", "embassies"],
+        "food_scene": "Pujol and Quintonil are within a kilometer of each other (both in the world's top 20 restaurants); modern Mexican cuisine started in Polanco in the late 1990s.",
+        "demographic_skew": "wealthy Mexican, diplomatic",
+        "walkability": "high",
+        "history_note": "Polanco was farmland until the 1940s; the Lebanese-Mexican community settled there after moving up from the historic Centro neighborhood; the area's architecture is mostly 1940s-1960s Mexican modernist.",
+        "price_tier": "luxury",
+        "dont_miss": "Avenida Presidente Masaryk is the most expensive shopping street in Latin America."
+      },
+      "condesa": {
+        "character_paragraph": "Condesa is the bohemian creative neighborhood of Mexico City: art deco and Bauhaus apartment buildings around two oval parks, tree-lined streets, the best restaurant scene per square meter in the city. Came back to life in the 2000s after decades of decline post the 1985 earthquake.",
+        "signature_businesses": ["independent restaurants", "specialty coffee", "design studios", "small fashion boutiques", "craft cocktail bars"],
+        "food_scene": "The Mexico City restaurant scene's center of gravity: Mexican modernist cooking, Italian, Japanese, the city's best taquerías for late-night eating.",
+        "demographic_skew": "creative professional, established expat community",
+        "walkability": "high",
+        "history_note": "Condesa was developed in the 1900s-1920s on the former site of a horse racetrack; the oval-shaped Parque España preserves the racetrack outline.",
+        "price_tier": "expensive",
+        "dont_miss": "Parque México and Parque España are connected by Avenida Amsterdam, a perfect oval walking street built on the old racetrack."
+      },
+      "centro": {
+        "character_paragraph": "El Centro Histórico is colonial-era Mexico City: the Zócalo (the main square, one of the largest urban squares in the world), the Cathedral, the Templo Mayor Aztec ruins. After decades of decline the historic center is being slowly restored. Still gritty, still real.",
+        "signature_businesses": ["family restaurants", "small specialty retail", "religious supplies", "wholesale fabric and crafts", "traditional cantinas"],
+        "food_scene": "Cantinas that opened in the 1850s and haven't changed the menu since; the best mole in Mexico City at small family restaurants; street tacos at every corner.",
+        "demographic_skew": "working-class with rapid mid-class return",
+        "walkability": "high",
+        "history_note": "The Centro Histórico sits on top of Tenochtitlan, the Aztec capital destroyed by Cortés in 1521 and rebuilt as the colonial capital of New Spain.",
+        "price_tier": "affordable",
+        "dont_miss": "Cantina La Opera on Cinco de Mayo has been operating since 1876; there is a bullet hole in the ceiling, said to be from Pancho Villa."
+      },
+      "roma": {
+        "character_paragraph": "Roma (Norte and Sur) is the next-Condesa neighborhood: art deco apartments, smaller streets, the under-30 creative-class hub of Mexico City. The Alfonso Cuarón film 'Roma' (2018) was set here. Used to be the wealthiest neighborhood in the city in the 1920s, then declined, now back.",
+        "signature_businesses": ["independent coffee", "design and architecture studios", "small art galleries", "modern Mexican restaurants", "natural wine bars"],
+        "food_scene": "The center of modern Mexican cooking under 35: small chef-driven restaurants, mezcal bars, the best coffee scene in Mexico City.",
+        "demographic_skew": "young creative-class, design and tech",
+        "walkability": "high",
+        "history_note": "Roma was the wealth center 1900-1940 before being overtaken by Polanco; the 1985 earthquake destroyed many of its buildings and triggered decades of decline before the 2000s revival.",
+        "price_tier": "mid",
+        "dont_miss": "Plaza Río de Janeiro has a replica of Michelangelo's David in the center; the surrounding blocks are the densest art deco architecture in Latin America."
+      }
+    },
+    "shenzhen": {
+      "futian": {
+        "character_paragraph": "Futian is the central business and government district of Shenzhen: the new city hall, the city's stock exchange, the financial district, the consulates. Polished high-rises, big parks, and the best subway-station access in the city.",
+        "signature_businesses": ["financial services", "tech offices", "consulting", "international hotels", "high-end Chinese cuisine"],
+        "food_scene": "The corporate-lunch belt: Cantonese, Sichuan, Hunan, Japanese, and the highest density of Western fine dining in Shenzhen.",
+        "demographic_skew": "professional and government workforce, international",
+        "walkability": "high",
+        "history_note": "Futian was farmland and small villages until 1980 when Shenzhen was designated a Special Economic Zone; the entire central district was built from scratch between 1985 and 2010.",
+        "price_tier": "expensive",
+        "dont_miss": "The Shenzhen Civic Center is a single building 800 meters long shaped like a roof tile; it's one of the largest civic buildings in the world."
+      },
+      "nanshan": {
+        "character_paragraph": "Nanshan is the tech district of Shenzhen: Tencent's headquarters, the Shenzhen Bay tech park, OCT (Overseas Chinese Town) creative cluster. Younger and more international than Futian; this is where the Chinese tech boom of the 2010s actually happened.",
+        "signature_businesses": ["software companies", "hardware startups", "design studios", "creative agencies", "international restaurants"],
+        "food_scene": "International street food scene around the universities; great Korean and Japanese around Coastal City mall; small Sichuan and Hunan in the older blocks.",
+        "demographic_skew": "young tech professional, heavy international",
+        "walkability": "high",
+        "history_note": "Tencent moved its headquarters to Nanshan in 1998; the surrounding area developed around it; the OCT-LOFT creative cluster was a converted factory complex from 2000 onward.",
+        "price_tier": "expensive",
+        "dont_miss": "The Shenzhen Talent Park along Houhai Bay is a 14-hectare landscaped park dedicated to the city's tech engineers; the bay-side promenade is the city's best evening walk."
+      },
+      "luohu": {
+        "character_paragraph": "Luohu is the original Shenzhen: the border crossing with Hong Kong, the city's first commercial street (Dongmen), the older population, and most of the city's old wholesale markets. Less polished than Futian but where Shenzhen actually started.",
+        "signature_businesses": ["wholesale electronics", "Hong Kong-related services", "older restaurants", "small specialty retail", "traditional Chinese medicine"],
+        "food_scene": "The most authentic Hong Kong-Cantonese food in mainland China (proximity to the border); the original Shenzhen street-food scene; Dongmen has the city's best dim sum.",
+        "demographic_skew": "older mixed population, lower-middle to middle class",
+        "walkability": "high",
+        "history_note": "The Luohu border crossing has been the main land entry from Hong Kong to mainland China since the 1950s; the entire Shenzhen Special Economic Zone was originally focused on Luohu.",
+        "price_tier": "mid",
+        "dont_miss": "The Huaqiangbei electronics market is the largest electronics wholesale market in the world; a single building can carry every component for a modern smartphone."
+      },
+      "bao-an": {
+        "character_paragraph": "Bao'an is the manufacturing and airport district: the airport itself, much of the city's factory and warehouse footprint, and a large working-class residential belt. Less polished than the central districts, but this is the manufacturing engine that built modern Shenzhen.",
+        "signature_businesses": ["manufacturing and assembly", "logistics", "wholesale", "worker-housing services", "transport"],
+        "food_scene": "Hunan, Sichuan, and Hubei restaurants serving the migrant-worker population; the best regional Chinese cooking in Shenzhen at honest prices.",
+        "demographic_skew": "migrant working-class, factory workforce",
+        "walkability": "moderate",
+        "history_note": "Bao'an was the original county that Shenzhen was carved out of in 1979; the airport opened in 1991 and the modern district shape followed.",
+        "price_tier": "affordable",
+        "dont_miss": "Shajing oysters from Bao'an's coastline have been harvested for over 1,000 years; the city's best oyster restaurants are in Shajing."
+      }
+    }
+  }
+}

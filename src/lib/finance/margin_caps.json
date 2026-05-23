@@ -11,11 +11,11 @@
   },
   "sectors": {
     "hospitality": {
-      "typical_low": 0.05,
-      "typical_high": 0.15,
-      "investigate": 0.18,
-      "hard_cap": 0.20,
-      "notes": "Hotels, restaurants are NOT high-margin businesses."
+      "typical_low": 0.04,
+      "typical_high": 0.12,
+      "investigate": 0.15,
+      "hard_cap": 0.17,
+      "notes": "Plan v30 audit — hospitality margins tightened. SMB hotels realistically clear 5-10% net; hostels 8-12% net. Hard cap 17% catches any slip and visibly clamps."
     },
     "food_drink": {
       "typical_low": 0.03,

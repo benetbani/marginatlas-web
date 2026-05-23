@@ -83,7 +83,7 @@ export function generateFAQs(
     const opPct = (clampMargin(margins.operating_margin, "operating") * 100).toFixed(0);
     faqs.push({
       question: `What are the typical cost structures for ${ind} in ${loc}?`,
-      answer: `${ind.charAt(0).toUpperCase() + ind.slice(1)} in ${loc} typically run a ${grossPct}% gross margin and around ${opPct}% operating margin before taxes. Cost of goods, labor, and rent are the largest line items.`,
+      answer: `${ind.charAt(0).toUpperCase() + ind.slice(1)} in ${loc} typically keep about ${grossPct}% after the cost of goods, and around ${opPct}% before tax. The biggest line items are materials, paying the team, and rent.`,
     });
   }
 

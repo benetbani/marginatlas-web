@@ -284,9 +284,9 @@ export default function DenseCellHero(props: DenseCellHeroProps) {
             <span className="ml-1">median wage</span>
           </span>
           <span aria-hidden="true" className="text-parchment">·</span>
-          <span aria-label={`${fmtPct(netMargin)} net margin`}>
+          <span aria-label={`${fmtPct(netMargin)} profit kept`}>
             <span className="tabular-nums font-semibold text-ink-900">{fmtPct(netMargin)}</span>
-            <span className="ml-1">net margin</span>
+            <span className="ml-1">profit kept</span>
           </span>
           <span aria-hidden="true" className="text-parchment">·</span>
           <span aria-label={`Atlas Score ${atlasScore} out of 100`}>

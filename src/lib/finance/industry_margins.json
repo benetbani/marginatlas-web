@@ -686,11 +686,11 @@
       "notes": "Service-only; minimal overhead."
     },
     "trucking_freight": {
-      "gross_margin": 0.2,
-      "operating_margin": 0.07,
-      "net_margin": 0.0455,
+      "gross_margin": 0.32,
+      "operating_margin": 0.075,
+      "net_margin": 0.045,
       "asset_intensity": 0.6,
-      "notes": "Fuel + truck capex heavy."
+      "notes": "Plan v30 audit — gross margin 0.20 was actually net-of-line-haul; true revenue-minus-fuel-and-variable gross is 30-45%. Net margin band 3-7% is correct for owner-operator and small fleet."
     },
     "warehousing_storage": {
       "gross_margin": 0.4,
@@ -700,18 +700,18 @@
       "notes": "Property-heavy business."
     },
     "hotels_lodging": {
-      "gross_margin": 0.7,
-      "operating_margin": 0.18,
-      "net_margin": 0.099,
+      "gross_margin": 0.65,
+      "operating_margin": 0.12,
+      "net_margin": 0.075,
       "asset_intensity": 1.2,
-      "notes": "Building + furnishings dominate."
+      "notes": "Plan v30 audit — SMB independent hotels run 8-15% operating margin, not 18%. Net 5-10% is the realistic band; 18% was branded-chain data mis-applied to independents."
     },
     "hostels": {
-      "gross_margin": 0.72,
-      "operating_margin": 0.2,
-      "net_margin": 0.11,
+      "gross_margin": 0.68,
+      "operating_margin": 0.14,
+      "net_margin": 0.085,
       "asset_intensity": 0.85,
-      "notes": "Lower per-bed economics; high occupancy."
+      "notes": "Plan v30 audit — hostels run slightly better than hotels (lower service intensity, dorm rate efficiency) but 20% operating was unrealistic. 12-16% op is the achievable band; 8-12% net for well-run urban hostels."
     },
     "guest_houses": {
       "gross_margin": 0.72,
@@ -728,11 +728,11 @@
       "notes": "Land + utilities heavy; seasonal."
     },
     "software_development": {
-      "gross_margin": 0.82,
-      "operating_margin": 0.2,
-      "net_margin": 0.144,
+      "gross_margin": 0.78,
+      "operating_margin": 0.15,
+      "net_margin": 0.105,
       "asset_intensity": 0.05,
-      "notes": "Labor + cloud; minimal physical capex."
+      "notes": "Plan v30 audit — SMB software service firms (not product SaaS) run 12-18% operating margin. 20% was top-decile; 15% is the realistic median across body-shop, custom dev, and small product firms."
     },
     "it_services_hosting": {
       "gross_margin": 0.55,
@@ -1350,9 +1350,9 @@
       "source_url": "https://www.ibisworld.com/united-states/industry/couriers-local-delivery-services/1950/"
     },
     "courier_messenger": {
-      "gross_margin": 0.22,
-      "operating_margin": 0.07,
-      "net_margin": 0.04,
+      "gross_margin": 0.30,
+      "operating_margin": 0.06,
+      "net_margin": 0.035,
       "asset_intensity": 0.4,
       "notes": "Cloned from postal_courier during Wave 4b split. IBISWorld couriers + local delivery: industry profit share ~8.5% revenue 2026. SMB local courier 3-8% net; gross 15-25%. Fleet + fuel intensive.",
       "source_url": "https://www.ibisworld.com/united-states/industry/couriers-local-delivery-services/1950/"

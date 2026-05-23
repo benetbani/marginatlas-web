@@ -14,17 +14,20 @@ type Blurb = string;
 
 // Industry-level character notes. One per industry — these are the
 // editorial "voice" of the site.
+// Plan v30 — rewritten for the 18-year-old test. No "operating margins",
+// no "capital intensity", no "EBITDA". One sentence each in plain English.
+// What does this business actually look like for a normal owner?
 const INDUSTRY_VOICE: Record<string, Blurb> = {
-  restaurants: "Restaurants run thin. The middle firm in this category clears low single-digit margins after rent, labor, and food cost; the operators who do well are usually the ones who pay attention to a third revenue line beyond the table — bar, catering, or a tight delivery channel.",
-  coffee_shops: "Coffee economics live or die on traffic density. The same cup of coffee in a high-foot-traffic location can support a healthy business; a hundred meters off the main street it can't. The healthiest independent coffee shops layer retail attachment (bags, equipment, light food) on top of the cup.",
-  hair_salons: "Salons run a chair-rental model more often than a payroll model — it keeps the owner's cost variable and the operators independent. Retail product attachment is the line that separates a salon that pays the rent from one that pays its owner a real wage.",
-  hotels_lodging: "Hospitality is a capital-heavy business with thin operating margins. The headline revenue is usually larger than the operator takes home; financing terms and seasonality drive the bottom line more than nightly rate. Boutique formats outperform commodity ones.",
-  law_firms: "Small law firms run on partner leverage and practice mix. Transactional and litigation books look different at the same revenue level. Owner draw is typically a larger share of revenue than in any other professional service.",
-  software_dev_services: "Small software shops scale on people, not product. Margins compress as headcount grows; the highest-margin engagements are usually senior solo operators or 3-5 person teams with a tight specialty.",
-  construction_residential: "Residential construction lives on bid discipline and cash flow. The headline revenue includes pass-through materials cost; the operator's real margin is what's left on labor and overhead. Cost-plus contracts protect margin; fixed-price contracts test it.",
-  fitness_centers: "Boutique formats have eaten into the traditional gym category. The healthiest independent operators charge $80-180 per month per member, not $20-30, and run smaller spaces with denser member relationships.",
-  bakeries_pastries: "A retail bakery is a hybrid: kitchen discipline behind the counter, foot-traffic economics in front of it. Specialty positioning (sourdough, gluten-free, ethnic) supports the price points the commodity bakery cannot.",
-  plumbing_hvac: "The trades have been quietly the strongest small business category of the last decade. Pricing power has tilted to operators because fewer licensed tradespeople are entering than retiring. Service work outperforms new-construction installation.",
+  restaurants: "Most restaurants barely break even. Rent, staff, and food eat almost everything. The ones that do well usually add a second thing on top of the meals: a bar, a catering side, or a steady takeaway flow.",
+  coffee_shops: "A coffee shop lives or dies on foot traffic. The same shop a few minutes off the main street earns half as much. Strong shops sell more than coffee: beans, baked goods, light food, and gear.",
+  hair_salons: "Most salons rent out chairs to independent stylists rather than employing them. It keeps costs flexible. The salons that pay the owner a real wage also sell shampoo, conditioner, and tools.",
+  hotels_lodging: "Running a hotel is expensive: the building, the staff, and the slow months when no one books. The advertised revenue is much bigger than what the owner actually keeps. Boutique hotels do better than basic ones.",
+  law_firms: "Small law firms are pure people-businesses. A handful of lawyers handle work for steady clients. Most of the money becomes the partners' pay, not the firm's profit.",
+  software_dev_services: "Small software shops grow by hiring, and the profit per person drops as the team grows. The most profitable ones stay small, sell to a specific industry, and pick clients carefully.",
+  construction_residential: "Construction looks bigger than it is: the headline price covers materials that get passed straight to the supplier. What the builder really keeps is the work on top. Bidding carefully matters more than anything else.",
+  fitness_centers: "The old big-box gym at $20 a month is fading. The healthy operators today are small studios charging $100+ a month for yoga, Pilates, or CrossFit, where members know each other.",
+  bakeries_pastries: "A bakery is two businesses at once: a kitchen that has to run cleanly, and a shop counter that depends on people walking by. Specialty bakeries (sourdough, gluten-free, ethnic) charge more and do better than generic ones.",
+  plumbing_hvac: "Trades like plumbing and electrical have quietly become some of the best small businesses to run. Fewer young people are entering, so existing operators can raise prices. Steady service calls beat one-off installs.",
 };
 
 // Sector × continent voice — fallback when no industry-specific blurb exists.

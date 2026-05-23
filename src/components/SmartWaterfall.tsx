@@ -23,20 +23,20 @@ type Props = {
 };
 
 const LINE_ORDER: Array<{ key: keyof ReturnType<typeof estimateCostStructure>["lines"]; label: string; isSubtotal?: boolean; sign: "+" | "-" | "=" }> = [
-  { key: "gross_revenue", label: "Gross revenue", sign: "+" },
-  { key: "cogs", label: "Cost of goods sold", sign: "-" },
-  { key: "gross_profit", label: "Gross profit", isSubtotal: true, sign: "=" },
-  { key: "direct_labor", label: "Direct labor", sign: "-" },
-  { key: "employer_social", label: "Employer social contributions", sign: "-" },
-  { key: "rent", label: "Rent and occupancy", sign: "-" },
+  { key: "gross_revenue", label: "Total revenue", sign: "+" },
+  { key: "cogs", label: "Cost of goods", sign: "-" },
+  { key: "gross_profit", label: "After cost of goods", isSubtotal: true, sign: "=" },
+  { key: "direct_labor", label: "Pay for the team", sign: "-" },
+  { key: "employer_social", label: "Employer taxes on pay", sign: "-" },
+  { key: "rent", label: "Rent", sign: "-" },
   { key: "energy", label: "Energy and utilities", sign: "-" },
-  { key: "marketing", label: "Marketing and sales", sign: "-" },
-  { key: "software_tech", label: "Software and tech", sign: "-" },
+  { key: "marketing", label: "Marketing", sign: "-" },
+  { key: "software_tech", label: "Software and tools", sign: "-" },
   { key: "insurance", label: "Insurance", sign: "-" },
-  { key: "other_overhead", label: "Other overhead", sign: "-" },
-  { key: "operating_profit", label: "Operating profit", isSubtotal: true, sign: "=" },
-  { key: "corporate_tax", label: "Corporate income tax", sign: "-" },
-  { key: "net_profit", label: "Net profit", isSubtotal: true, sign: "=" },
+  { key: "other_overhead", label: "Other costs", sign: "-" },
+  { key: "operating_profit", label: "Profit before tax", isSubtotal: true, sign: "=" },
+  { key: "corporate_tax", label: "Tax on profit", sign: "-" },
+  { key: "net_profit", label: "Profit kept", isSubtotal: true, sign: "=" },
 ];
 
 const CONFIDENCE_COLOR: Record<"A" | "B" | "C" | "D", string> = {
