@@ -62,6 +62,7 @@ import { LocalContextCard } from "@/components/LocalContextCard";
 import { TrendSparkline } from "@/components/TrendSparkline";
 import { DistributionVisual } from "@/components/DistributionVisual";
 import { NetProfitSummary } from "@/components/NetProfitSummary";
+import { SmartWaterfall } from "@/components/SmartWaterfall";
 import { CellFallbackBanner } from "@/components/CellFallbackBanner";
 import { EstimatedBadge } from "@/components/EstimatedBadge";
 import { CoverageIndicator, deriveCoverageTier } from "@/components/CoverageIndicator";
@@ -591,6 +592,19 @@ export default async function CellPage({
           />
         </div>
       </section>
+
+      {/* Plan v29 Phase 4+7 — Smart Waterfall with per-line provenance,
+          confidence ratings, and "what changes here" sidebar. Reads from
+          the 196-country Country Economic Profile + Industry Cost Profile
+          + Industry × Country modifier matrix. */}
+      {cell.revenue_per_firm && cell.revenue_per_firm > 0 && cell.industry_id ? (
+        <SmartWaterfall
+          iso2={country.toUpperCase()}
+          industryId={cell.industry_id}
+          sizeBand="medium"
+          grossRevenue={cell.revenue_per_firm}
+        />
+      ) : null}
 
       {/* Plan v23 Part 2 — single visual distribution band replaces the
          previous tile-grid + log-normal-curve combo. One image to look

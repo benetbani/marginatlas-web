@@ -1,0 +1,256 @@
+{
+  "version": "1.0.0",
+  "anchor": "Plan v29 Phase 2 — Industry Cost Profile (ICP). Per-SECTOR cost-line shares + flex parameters, used by the cost-structure engine to decompose every (industry, country) into a defensible waterfall. Cost shares are global-baseline (US/EU-anchored, internal-only); the modifier matrix flexes each line by country profile. Universal terms only (R-002).",
+  "convention": "All shares are decimals of revenue. cogs_share + labor_share + rent_share + energy_share + marketing_share + software_share + insurance_share + other_overhead_share + (typical net margin) = ~1.0. Industry-specific overrides take priority over sector defaults. flex parameters control how each line responds to country economic factors (see modifier matrix).",
+  "default_fallback": {
+    "cogs_share": 0.42,
+    "labor_share": 0.32,
+    "rent_share": 0.05,
+    "energy_share": 0.015,
+    "marketing_share": 0.03,
+    "software_share": 0.015,
+    "insurance_share": 0.015,
+    "other_overhead_share": 0.04,
+    "cogs_import_dependency": 0.3,
+    "labor_skill_intensity": 0.5,
+    "rent_location_dependency": 0.5,
+    "energy_intensity": 0.3,
+    "capital_intensity": 0.4,
+    "productivity_elasticity": 1.0,
+    "sqm_per_fte": 18,
+    "typical_employees_small": 4,
+    "typical_employees_medium": 18,
+    "typical_employees_large": 70,
+    "smb_friendly": "yes",
+    "net_margin_typical_low": 0.04,
+    "net_margin_typical_high": 0.12,
+    "net_margin_hard_cap": 0.20
+  },
+  "sectors": {
+    "food_drink": {
+      "cogs_share": 0.32, "labor_share": 0.32, "rent_share": 0.08, "energy_share": 0.025,
+      "marketing_share": 0.025, "software_share": 0.012, "insurance_share": 0.018, "other_overhead_share": 0.04,
+      "cogs_import_dependency": 0.25, "labor_skill_intensity": 0.35, "rent_location_dependency": 0.85,
+      "energy_intensity": 0.6, "capital_intensity": 0.35, "productivity_elasticity": 0.75,
+      "sqm_per_fte": 22, "typical_employees_small": 6, "typical_employees_medium": 16, "typical_employees_large": 45,
+      "smb_friendly": "yes",
+      "net_margin_typical_low": 0.03, "net_margin_typical_high": 0.10, "net_margin_hard_cap": 0.14
+    },
+    "hospitality": {
+      "cogs_share": 0.18, "labor_share": 0.36, "rent_share": 0.08, "energy_share": 0.06,
+      "marketing_share": 0.045, "software_share": 0.015, "insurance_share": 0.022, "other_overhead_share": 0.05,
+      "cogs_import_dependency": 0.30, "labor_skill_intensity": 0.40, "rent_location_dependency": 0.75,
+      "energy_intensity": 0.7, "capital_intensity": 1.2, "productivity_elasticity": 0.85,
+      "sqm_per_fte": 35, "typical_employees_small": 8, "typical_employees_medium": 28, "typical_employees_large": 85,
+      "smb_friendly": "yes",
+      "net_margin_typical_low": 0.05, "net_margin_typical_high": 0.15, "net_margin_hard_cap": 0.20
+    },
+    "beauty_wellness": {
+      "cogs_share": 0.08, "labor_share": 0.45, "rent_share": 0.10, "energy_share": 0.012,
+      "marketing_share": 0.03, "software_share": 0.01, "insurance_share": 0.015, "other_overhead_share": 0.04,
+      "cogs_import_dependency": 0.35, "labor_skill_intensity": 0.55, "rent_location_dependency": 0.80,
+      "energy_intensity": 0.2, "capital_intensity": 0.25, "productivity_elasticity": 0.70,
+      "sqm_per_fte": 14, "typical_employees_small": 3, "typical_employees_medium": 9, "typical_employees_large": 25,
+      "smb_friendly": "yes",
+      "net_margin_typical_low": 0.10, "net_margin_typical_high": 0.22, "net_margin_hard_cap": 0.30
+    },
+    "retail_shops": {
+      "cogs_share": 0.55, "labor_share": 0.18, "rent_share": 0.07, "energy_share": 0.015,
+      "marketing_share": 0.04, "software_share": 0.015, "insurance_share": 0.012, "other_overhead_share": 0.04,
+      "cogs_import_dependency": 0.55, "labor_skill_intensity": 0.30, "rent_location_dependency": 0.90,
+      "energy_intensity": 0.3, "capital_intensity": 0.35, "productivity_elasticity": 0.85,
+      "sqm_per_fte": 28, "typical_employees_small": 3, "typical_employees_medium": 9, "typical_employees_large": 28,
+      "smb_friendly": "yes",
+      "net_margin_typical_low": 0.04, "net_margin_typical_high": 0.12, "net_margin_hard_cap": 0.16
+    },
+    "professional_services": {
+      "cogs_share": 0.04, "labor_share": 0.55, "rent_share": 0.06, "energy_share": 0.008,
+      "marketing_share": 0.025, "software_share": 0.04, "insurance_share": 0.025, "other_overhead_share": 0.05,
+      "cogs_import_dependency": 0.15, "labor_skill_intensity": 0.90, "rent_location_dependency": 0.35,
+      "energy_intensity": 0.1, "capital_intensity": 0.10, "productivity_elasticity": 1.30,
+      "sqm_per_fte": 12, "typical_employees_small": 3, "typical_employees_medium": 12, "typical_employees_large": 45,
+      "smb_friendly": "yes",
+      "net_margin_typical_low": 0.12, "net_margin_typical_high": 0.25, "net_margin_hard_cap": 0.32
+    },
+    "creative_media": {
+      "cogs_share": 0.10, "labor_share": 0.50, "rent_share": 0.05, "energy_share": 0.008,
+      "marketing_share": 0.05, "software_share": 0.06, "insurance_share": 0.015, "other_overhead_share": 0.05,
+      "cogs_import_dependency": 0.20, "labor_skill_intensity": 0.80, "rent_location_dependency": 0.45,
+      "energy_intensity": 0.1, "capital_intensity": 0.18, "productivity_elasticity": 1.25,
+      "sqm_per_fte": 13, "typical_employees_small": 4, "typical_employees_medium": 14, "typical_employees_large": 50,
+      "smb_friendly": "yes",
+      "net_margin_typical_low": 0.10, "net_margin_typical_high": 0.20, "net_margin_hard_cap": 0.28
+    },
+    "software_tech": {
+      "cogs_share": 0.08, "labor_share": 0.52, "rent_share": 0.04, "energy_share": 0.006,
+      "marketing_share": 0.08, "software_share": 0.06, "insurance_share": 0.012, "other_overhead_share": 0.04,
+      "cogs_import_dependency": 0.10, "labor_skill_intensity": 0.95, "rent_location_dependency": 0.30,
+      "energy_intensity": 0.1, "capital_intensity": 0.08, "productivity_elasticity": 1.45,
+      "sqm_per_fte": 11, "typical_employees_small": 5, "typical_employees_medium": 18, "typical_employees_large": 80,
+      "smb_friendly": "yes",
+      "net_margin_typical_low": 0.08, "net_margin_typical_high": 0.22, "net_margin_hard_cap": 0.28
+    },
+    "construction": {
+      "cogs_share": 0.42, "labor_share": 0.30, "rent_share": 0.02, "energy_share": 0.02,
+      "marketing_share": 0.015, "software_share": 0.012, "insurance_share": 0.035, "other_overhead_share": 0.05,
+      "cogs_import_dependency": 0.20, "labor_skill_intensity": 0.55, "rent_location_dependency": 0.20,
+      "energy_intensity": 0.5, "capital_intensity": 0.55, "productivity_elasticity": 0.95,
+      "sqm_per_fte": 22, "typical_employees_small": 6, "typical_employees_medium": 25, "typical_employees_large": 90,
+      "smb_friendly": "yes",
+      "net_margin_typical_low": 0.08, "net_margin_typical_high": 0.18, "net_margin_hard_cap": 0.25
+    },
+    "trades_home": {
+      "cogs_share": 0.30, "labor_share": 0.36, "rent_share": 0.025, "energy_share": 0.025,
+      "marketing_share": 0.025, "software_share": 0.012, "insurance_share": 0.035, "other_overhead_share": 0.05,
+      "cogs_import_dependency": 0.25, "labor_skill_intensity": 0.55, "rent_location_dependency": 0.20,
+      "energy_intensity": 0.5, "capital_intensity": 0.35, "productivity_elasticity": 0.90,
+      "sqm_per_fte": 22, "typical_employees_small": 3, "typical_employees_medium": 12, "typical_employees_large": 40,
+      "smb_friendly": "yes",
+      "net_margin_typical_low": 0.10, "net_margin_typical_high": 0.22, "net_margin_hard_cap": 0.30
+    },
+    "repair": {
+      "cogs_share": 0.32, "labor_share": 0.32, "rent_share": 0.06, "energy_share": 0.025,
+      "marketing_share": 0.025, "software_share": 0.012, "insurance_share": 0.022, "other_overhead_share": 0.05,
+      "cogs_import_dependency": 0.40, "labor_skill_intensity": 0.50, "rent_location_dependency": 0.45,
+      "energy_intensity": 0.4, "capital_intensity": 0.30, "productivity_elasticity": 0.85,
+      "sqm_per_fte": 28, "typical_employees_small": 3, "typical_employees_medium": 10, "typical_employees_large": 30,
+      "smb_friendly": "yes",
+      "net_margin_typical_low": 0.10, "net_margin_typical_high": 0.22, "net_margin_hard_cap": 0.30
+    },
+    "health_clinics": {
+      "cogs_share": 0.15, "labor_share": 0.45, "rent_share": 0.07, "energy_share": 0.015,
+      "marketing_share": 0.025, "software_share": 0.04, "insurance_share": 0.035, "other_overhead_share": 0.06,
+      "cogs_import_dependency": 0.30, "labor_skill_intensity": 0.85, "rent_location_dependency": 0.45,
+      "energy_intensity": 0.25, "capital_intensity": 0.65, "productivity_elasticity": 1.10,
+      "sqm_per_fte": 22, "typical_employees_small": 5, "typical_employees_medium": 16, "typical_employees_large": 55,
+      "smb_friendly": "yes",
+      "net_margin_typical_low": 0.10, "net_margin_typical_high": 0.20, "net_margin_hard_cap": 0.28
+    },
+    "education_instruction": {
+      "cogs_share": 0.06, "labor_share": 0.48, "rent_share": 0.07, "energy_share": 0.012,
+      "marketing_share": 0.04, "software_share": 0.025, "insurance_share": 0.015, "other_overhead_share": 0.04,
+      "cogs_import_dependency": 0.15, "labor_skill_intensity": 0.80, "rent_location_dependency": 0.55,
+      "energy_intensity": 0.15, "capital_intensity": 0.20, "productivity_elasticity": 1.00,
+      "sqm_per_fte": 16, "typical_employees_small": 3, "typical_employees_medium": 10, "typical_employees_large": 40,
+      "smb_friendly": "yes",
+      "net_margin_typical_low": 0.15, "net_margin_typical_high": 0.28, "net_margin_hard_cap": 0.36
+    },
+    "events_entertainment": {
+      "cogs_share": 0.22, "labor_share": 0.32, "rent_share": 0.06, "energy_share": 0.025,
+      "marketing_share": 0.05, "software_share": 0.018, "insurance_share": 0.022, "other_overhead_share": 0.05,
+      "cogs_import_dependency": 0.30, "labor_skill_intensity": 0.50, "rent_location_dependency": 0.60,
+      "energy_intensity": 0.35, "capital_intensity": 0.50, "productivity_elasticity": 0.90,
+      "sqm_per_fte": 25, "typical_employees_small": 4, "typical_employees_medium": 14, "typical_employees_large": 45,
+      "smb_friendly": "yes",
+      "net_margin_typical_low": 0.08, "net_margin_typical_high": 0.18, "net_margin_hard_cap": 0.25
+    },
+    "cultural": {
+      "cogs_share": 0.32, "labor_share": 0.28, "rent_share": 0.09, "energy_share": 0.018,
+      "marketing_share": 0.035, "software_share": 0.012, "insurance_share": 0.018, "other_overhead_share": 0.045,
+      "cogs_import_dependency": 0.45, "labor_skill_intensity": 0.50, "rent_location_dependency": 0.75,
+      "energy_intensity": 0.25, "capital_intensity": 0.30, "productivity_elasticity": 0.85,
+      "sqm_per_fte": 24, "typical_employees_small": 3, "typical_employees_medium": 10, "typical_employees_large": 30,
+      "smb_friendly": "yes",
+      "net_margin_typical_low": 0.05, "net_margin_typical_high": 0.15, "net_margin_hard_cap": 0.20
+    },
+    "pet_services": {
+      "cogs_share": 0.10, "labor_share": 0.42, "rent_share": 0.07, "energy_share": 0.012,
+      "marketing_share": 0.03, "software_share": 0.015, "insurance_share": 0.022, "other_overhead_share": 0.04,
+      "cogs_import_dependency": 0.30, "labor_skill_intensity": 0.55, "rent_location_dependency": 0.55,
+      "energy_intensity": 0.2, "capital_intensity": 0.20, "productivity_elasticity": 0.85,
+      "sqm_per_fte": 15, "typical_employees_small": 2, "typical_employees_medium": 8, "typical_employees_large": 22,
+      "smb_friendly": "yes",
+      "net_margin_typical_low": 0.15, "net_margin_typical_high": 0.28, "net_margin_hard_cap": 0.35
+    },
+    "real_estate": {
+      "cogs_share": 0.05, "labor_share": 0.40, "rent_share": 0.05, "energy_share": 0.008,
+      "marketing_share": 0.08, "software_share": 0.035, "insurance_share": 0.025, "other_overhead_share": 0.05,
+      "cogs_import_dependency": 0.10, "labor_skill_intensity": 0.75, "rent_location_dependency": 0.50,
+      "energy_intensity": 0.1, "capital_intensity": 0.20, "productivity_elasticity": 1.25,
+      "sqm_per_fte": 14, "typical_employees_small": 3, "typical_employees_medium": 10, "typical_employees_large": 35,
+      "smb_friendly": "yes",
+      "net_margin_typical_low": 0.10, "net_margin_typical_high": 0.22, "net_margin_hard_cap": 0.30
+    },
+    "transport_small": {
+      "cogs_share": 0.28, "labor_share": 0.32, "rent_share": 0.025, "energy_share": 0.12,
+      "marketing_share": 0.02, "software_share": 0.018, "insurance_share": 0.045, "other_overhead_share": 0.05,
+      "cogs_import_dependency": 0.30, "labor_skill_intensity": 0.40, "rent_location_dependency": 0.15,
+      "energy_intensity": 1.0, "capital_intensity": 0.65, "productivity_elasticity": 0.90,
+      "sqm_per_fte": 30, "typical_employees_small": 3, "typical_employees_medium": 12, "typical_employees_large": 45,
+      "smb_friendly": "yes",
+      "net_margin_typical_low": 0.05, "net_margin_typical_high": 0.14, "net_margin_hard_cap": 0.20
+    },
+    "manufacturing_artisan": {
+      "cogs_share": 0.45, "labor_share": 0.25, "rent_share": 0.04, "energy_share": 0.04,
+      "marketing_share": 0.025, "software_share": 0.018, "insurance_share": 0.025, "other_overhead_share": 0.05,
+      "cogs_import_dependency": 0.40, "labor_skill_intensity": 0.60, "rent_location_dependency": 0.25,
+      "energy_intensity": 0.7, "capital_intensity": 0.85, "productivity_elasticity": 1.10,
+      "sqm_per_fte": 32, "typical_employees_small": 6, "typical_employees_medium": 22, "typical_employees_large": 75,
+      "smb_friendly": "yes",
+      "net_margin_typical_low": 0.05, "net_margin_typical_high": 0.14, "net_margin_hard_cap": 0.20
+    },
+    "heavy_industry": {
+      "cogs_share": 0.55, "labor_share": 0.20, "rent_share": 0.03, "energy_share": 0.06,
+      "marketing_share": 0.018, "software_share": 0.018, "insurance_share": 0.035, "other_overhead_share": 0.05,
+      "cogs_import_dependency": 0.50, "labor_skill_intensity": 0.60, "rent_location_dependency": 0.15,
+      "energy_intensity": 1.2, "capital_intensity": 1.25, "productivity_elasticity": 1.20,
+      "sqm_per_fte": 45, "typical_employees_small": 12, "typical_employees_medium": 45, "typical_employees_large": 160,
+      "smb_friendly": "mixed",
+      "net_margin_typical_low": 0.04, "net_margin_typical_high": 0.12, "net_margin_hard_cap": 0.18
+    },
+    "mining_energy": {
+      "cogs_share": 0.40, "labor_share": 0.22, "rent_share": 0.015, "energy_share": 0.08,
+      "marketing_share": 0.012, "software_share": 0.022, "insurance_share": 0.045, "other_overhead_share": 0.05,
+      "cogs_import_dependency": 0.40, "labor_skill_intensity": 0.55, "rent_location_dependency": 0.05,
+      "energy_intensity": 1.3, "capital_intensity": 1.80, "productivity_elasticity": 1.30,
+      "sqm_per_fte": 80, "typical_employees_small": 12, "typical_employees_medium": 50, "typical_employees_large": 220,
+      "smb_friendly": "mixed",
+      "net_margin_typical_low": 0.08, "net_margin_typical_high": 0.20, "net_margin_hard_cap": 0.28
+    },
+    "farming_food_production": {
+      "cogs_share": 0.55, "labor_share": 0.22, "rent_share": 0.018, "energy_share": 0.035,
+      "marketing_share": 0.012, "software_share": 0.012, "insurance_share": 0.018, "other_overhead_share": 0.04,
+      "cogs_import_dependency": 0.20, "labor_skill_intensity": 0.30, "rent_location_dependency": 0.10,
+      "energy_intensity": 0.6, "capital_intensity": 1.40, "productivity_elasticity": 0.85,
+      "sqm_per_fte": 250, "typical_employees_small": 3, "typical_employees_medium": 12, "typical_employees_large": 40,
+      "smb_friendly": "yes",
+      "net_margin_typical_low": 0.03, "net_margin_typical_high": 0.10, "net_margin_hard_cap": 0.16
+    },
+    "telecom_broadcasting": {
+      "cogs_share": 0.30, "labor_share": 0.28, "rent_share": 0.04, "energy_share": 0.05,
+      "marketing_share": 0.06, "software_share": 0.05, "insurance_share": 0.025, "other_overhead_share": 0.05,
+      "cogs_import_dependency": 0.35, "labor_skill_intensity": 0.75, "rent_location_dependency": 0.30,
+      "energy_intensity": 0.8, "capital_intensity": 1.10, "productivity_elasticity": 1.25,
+      "sqm_per_fte": 16, "typical_employees_small": 6, "typical_employees_medium": 25, "typical_employees_large": 90,
+      "smb_friendly": "mixed",
+      "net_margin_typical_low": 0.06, "net_margin_typical_high": 0.15, "net_margin_hard_cap": 0.20
+    },
+    "finance_corp": {
+      "cogs_share": 0.05, "labor_share": 0.50, "rent_share": 0.06, "energy_share": 0.008,
+      "marketing_share": 0.04, "software_share": 0.07, "insurance_share": 0.025, "other_overhead_share": 0.05,
+      "cogs_import_dependency": 0.10, "labor_skill_intensity": 0.90, "rent_location_dependency": 0.45,
+      "energy_intensity": 0.1, "capital_intensity": 0.15, "productivity_elasticity": 1.40,
+      "sqm_per_fte": 13, "typical_employees_small": 4, "typical_employees_medium": 16, "typical_employees_large": 65,
+      "smb_friendly": "yes",
+      "net_margin_typical_low": 0.12, "net_margin_typical_high": 0.25, "net_margin_hard_cap": 0.34
+    },
+    "higher_ed_hospitals": {
+      "cogs_share": 0.22, "labor_share": 0.50, "rent_share": 0.06, "energy_share": 0.025,
+      "marketing_share": 0.015, "software_share": 0.025, "insurance_share": 0.025, "other_overhead_share": 0.05,
+      "cogs_import_dependency": 0.20, "labor_skill_intensity": 0.85, "rent_location_dependency": 0.40,
+      "energy_intensity": 0.4, "capital_intensity": 0.90, "productivity_elasticity": 1.10,
+      "sqm_per_fte": 22, "typical_employees_small": 30, "typical_employees_medium": 150, "typical_employees_large": 600,
+      "smb_friendly": "no",
+      "net_margin_typical_low": 0.03, "net_margin_typical_high": 0.10, "net_margin_hard_cap": 0.16
+    },
+    "other_local": {
+      "cogs_share": 0.32, "labor_share": 0.32, "rent_share": 0.055, "energy_share": 0.015,
+      "marketing_share": 0.028, "software_share": 0.018, "insurance_share": 0.018, "other_overhead_share": 0.045,
+      "cogs_import_dependency": 0.30, "labor_skill_intensity": 0.50, "rent_location_dependency": 0.45,
+      "energy_intensity": 0.3, "capital_intensity": 0.30, "productivity_elasticity": 0.95,
+      "sqm_per_fte": 18, "typical_employees_small": 3, "typical_employees_medium": 11, "typical_employees_large": 38,
+      "smb_friendly": "yes",
+      "net_margin_typical_low": 0.06, "net_margin_typical_high": 0.16, "net_margin_hard_cap": 0.22
+    }
+  }
+}
