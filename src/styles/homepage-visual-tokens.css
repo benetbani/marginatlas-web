@@ -1,0 +1,120 @@
+/**
+ * Atlas Homepage Visual Tokens
+ * ============================
+ *
+ * Quiet decorative primitives used by HomepageHero and HomepageEditorialBlocks.
+ * Imported once in globals.css. Plan v30 — visual identity package.
+ */
+
+:root {
+  --cream-50:  #FEFBF6;
+  --cream-100: #F8F2E4;
+  --parchment: #E8DDC7;
+  --atlas-500: #D97706;
+  --atlas-700: #9A3412;
+  --cocoa-700: #78350F;
+  --ink-900:   #1A1A1A;
+}
+
+/* Subtle dot-grid backdrop — used behind editorial sections. */
+.atlas-dot-grid {
+  background-color: var(--cream-50);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><circle cx='4' cy='4' r='1' fill='%23A55C00' fill-opacity='0.12'/></svg>");
+}
+
+/* Slightly denser variant for the homepage hero. */
+.atlas-dot-grid-dense {
+  background-color: var(--cream-50);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><circle cx='4' cy='4' r='1' fill='%23A55C00' fill-opacity='0.18'/></svg>");
+}
+
+/* Horizontal rule with a small amber diamond in the middle. */
+.atlas-rule {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+.atlas-rule::before,
+.atlas-rule::after {
+  content: "";
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--parchment);
+}
+.atlas-rule__mark {
+  width: 6px;
+  height: 6px;
+  background: var(--atlas-500);
+  transform: rotate(45deg);
+  flex: 0 0 auto;
+  border-radius: 1px;
+}
+
+/* Soft amber glow behind hero callouts. Use absolute-positioned. */
+.atlas-spotlight {
+  position: absolute;
+  pointer-events: none;
+  background: radial-gradient(
+    closest-side,
+    rgba(244, 216, 171, 0.55) 0%,
+    rgba(244, 216, 171, 0.25) 40%,
+    rgba(254, 249, 240, 0) 75%
+  );
+  filter: blur(2px);
+}
+
+/* Vertical amber accent line on the left edge — used for editorial quotes. */
+.atlas-editorial-line {
+  position: relative;
+  padding-left: 1.25rem;
+}
+.atlas-editorial-line::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.25rem;
+  bottom: 0.25rem;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--atlas-500);
+}
+
+/* Pipeline diagram (three cards connected by a hairline). */
+.atlas-pipeline {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: stretch;
+  position: relative;
+}
+.atlas-pipeline-step {
+  position: relative;
+}
+.atlas-pipeline-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 28px;
+  right: -0.5rem;
+  width: 1rem;
+  height: 1px;
+  background: var(--atlas-500);
+  opacity: 0.5;
+}
+@media (max-width: 640px) {
+  .atlas-pipeline {
+    grid-template-columns: 1fr;
+  }
+  .atlas-pipeline-step:not(:last-child)::after {
+    display: none;
+  }
+}
+
+/* Rotating-word fade-in / fade-out. */
+.atlas-rotator__word {
+  opacity: 0;
+  transition: opacity 360ms ease-out;
+}
+.atlas-rotator__word--active {
+  opacity: 1;
+}

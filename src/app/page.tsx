@@ -9,6 +9,7 @@ import { AskWidget } from "@/components/AskWidget";
 import { CityPicker } from "@/components/CityPicker";
 import { TopCitiesMosaic } from "@/components/home/TopCitiesMosaic";
 import { WorldMapSection } from "@/components/home/WorldMapSection";
+import HomepageEditorialBlocks from "@/components/HomepageEditorialBlocks";
 import { CitiesDotsMap } from "@/components/CitiesDotsMap";
 import { QualityLegend } from "@/components/QualityLegend";
 import { RotatingWord } from "@/components/RotatingWord";
@@ -279,6 +280,13 @@ export default function HomePage() {
           <WorldMapSection />
         </div>
       </ToneBand>
+
+      {/* Plan v30 prompt 4 output — three editorial blocks (Atlas
+          questions, methodology pipeline, audience archetypes). Adds
+          editorial spine to the homepage without replacing the
+          existing hero — the hero swap is deferred for a visual
+          review. */}
+      <HomepageEditorialBlocks />
 
       {/* Pick a city: Plan v27 Lane C.1 — continent-grouped city mosaic
           below the country map. */}
