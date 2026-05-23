@@ -57,6 +57,7 @@ import {
 } from "@/lib/extrapolations/fill_missing";
 import { HeroBenchmark } from "@/components/HeroBenchmark";
 import DenseCellHero from "@/components/DenseCellHero";
+import MobileCellHero from "@/components/mobile/MobileCellHero";
 import { CityHero } from "@/components/CityHero";
 import { ComparableCitiesRibbon } from "@/components/ComparableCitiesRibbon";
 import { LocalContextCard } from "@/components/LocalContextCard";
@@ -468,24 +469,47 @@ export default async function CellPage({
         const heroCoverageTier = deriveCoverageTier(cell);
         const atlasScore = Math.max(0, Math.min(100, Math.round(cell.quality_score ?? 60)));
         return typical > 0 ? (
-          <DenseCellHero
-            industryName={industryName}
-            industrySubniches={subniches}
-            sectorId={cell.sector_id || "other_local"}
-            sectorLabel={(cell.sector_name || "Industry").toUpperCase()}
-            iso2={country.toUpperCase()}
-            countryName={iso2ToName(country) || country.toUpperCase()}
-            geoName={cell.geo_name || iso2ToName(country) || country.toUpperCase()}
-            question={question}
-            typicalRevenue={typical}
-            p10Revenue={p10}
-            p90Revenue={p90}
-            employees={empPerFirm}
-            medianWage={cell.payroll_per_employee ?? 30000}
-            netMargin={computedNetMargin ?? 0.08}
-            atlasScore={atlasScore}
-            coverageTier={heroCoverageTier}
-          />
+          <>
+            {/* Plan v30 Bundle 1 — mobile-specific hero rendered below md;
+                desktop DenseCellHero rendered from md up. Both compiled,
+                Tailwind shows/hides per viewport. */}
+            <div className="md:hidden">
+              <MobileCellHero
+                sectorId={cell.sector_id || "other_local"}
+                sectorLabel={(cell.sector_name || "Industry").toUpperCase()}
+                geoName={cell.geo_name || iso2ToName(country) || country.toUpperCase()}
+                countryName={iso2ToName(country) || country.toUpperCase()}
+                question={question}
+                industrySubniches={subniches}
+                typicalRevenue={typical}
+                p10Revenue={p10}
+                p90Revenue={p90}
+                coverageTier={heroCoverageTier}
+                pickCountryHref="/world"
+                browseIndustriesHref="/sectors"
+              />
+            </div>
+            <div className="hidden md:block">
+              <DenseCellHero
+                industryName={industryName}
+                industrySubniches={subniches}
+                sectorId={cell.sector_id || "other_local"}
+                sectorLabel={(cell.sector_name || "Industry").toUpperCase()}
+                iso2={country.toUpperCase()}
+                countryName={iso2ToName(country) || country.toUpperCase()}
+                geoName={cell.geo_name || iso2ToName(country) || country.toUpperCase()}
+                question={question}
+                typicalRevenue={typical}
+                p10Revenue={p10}
+                p90Revenue={p90}
+                employees={empPerFirm}
+                medianWage={cell.payroll_per_employee ?? 30000}
+                netMargin={computedNetMargin ?? 0.08}
+                atlasScore={atlasScore}
+                coverageTier={heroCoverageTier}
+              />
+            </div>
+          </>
         ) : (
           // Fallback to the legacy hero if revenue is missing entirely.
           <HeroBenchmark
