@@ -10,6 +10,7 @@ import { CityPicker } from "@/components/CityPicker";
 import { TopCitiesMosaic } from "@/components/home/TopCitiesMosaic";
 import { WorldMapSection } from "@/components/home/WorldMapSection";
 import HomepageEditorialBlocks from "@/components/HomepageEditorialBlocks";
+import LondonRoadmap from "@/components/v2/LondonRoadmap";
 import { CitiesDotsMap } from "@/components/CitiesDotsMap";
 import { QualityLegend } from "@/components/QualityLegend";
 import { RotatingWord } from "@/components/RotatingWord";
@@ -199,13 +200,40 @@ export default function HomePage() {
         </section>
       </ToneBand>
 
-      {/* Plan v31 hotfix — removed the "Top 100 cities... every corner
-          of the world" placeholder band with CitiesDotsMap. Per founder:
-          "this section is just too big, shows nothing, should be
-          removed." The neighborhood-resolution story now lives in the
-          richer city-mosaic section further down and in the metropolis
-          pages themselves. Coming soon: stylistic London-roadmap visual
-          to replace this slot per the design-prompt brief. */}
+      {/* Plan v31 — London roadmap takes over the "Top 100 cities, drilled
+          to the neighborhood" slot. Stylistic SVG built by Claude Design
+          per founder brief; neighborhoods like Mayfair, Soho, Westminster
+          render in vermillion over a neutral block-fabric. Communicates
+          the neighborhood-resolution promise at a glance. */}
+      <ToneBand tone="home-cities-placeholder">
+        <section className="py-10 md:py-14">
+          <div className="rounded-2xl bg-cream-50 border-2 border-ink-200 px-6 py-8 md:px-10 md:py-10">
+            <div className="grid md:grid-cols-[1fr_minmax(0,520px)] gap-8 md:gap-10 items-center">
+              <div>
+                <div className="text-xs uppercase tracking-wide text-atlas-700 font-semibold mb-3">
+                  Top 200 cities
+                </div>
+                <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight text-ink-900">
+                  Drilled to the neighborhood
+                </h2>
+                <p className="mt-3 md:mt-4 max-w-xl text-base md:text-lg text-cocoa-700 leading-relaxed">
+                  Manhattan blocks. Central Tokyo wards. Paris arrondissements. The
+                  same benchmarks at neighborhood resolution, rolling out city by city.
+                </p>
+                <a
+                  href="/cities"
+                  className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-atlas-700 hover:text-atlas-500 transition-colors"
+                >
+                  Browse cities <span aria-hidden>→</span>
+                </a>
+              </div>
+              <div>
+                <LondonRoadmap />
+              </div>
+            </div>
+          </div>
+        </section>
+      </ToneBand>
 
       {/* Featured benchmarks. Plan v16 Block E: 9 tiles in 3×3 symmetric grid. */}
       <ToneBand tone="home-featured">
