@@ -33,7 +33,6 @@ import {
   ComposableMap,
   Geographies,
   Geography,
-  Marker,
 } from "react-simple-maps";
 import { ISO_NUMERIC_TO_ALPHA2 } from "@/lib/iso-codes";
 
@@ -54,32 +53,9 @@ const COLORS = {
 const ANTARCTICA_ID = "010";
 const DISPUTED_ISO_NUMERIC = new Set<string>(["732"]); // Western Sahara
 
-type LonLat = [number, number];
-
-type OverlayDot = {
-  iso2: string;
-  name: string;
-  coords: LonLat;
-};
-
-// Sovereign micro-states plus the five non-sovereigns the product treats as
-// first-class. Rendered as small pins so they are visible and tappable at
-// 110m resolution.
-const OVERLAY_DOTS: OverlayDot[] = [
-  { iso2: "MC", name: "Monaco",        coords: [7.42, 43.74] },
-  { iso2: "VA", name: "Vatican City",  coords: [12.45, 41.90] },
-  { iso2: "SM", name: "San Marino",    coords: [12.45, 43.94] },
-  { iso2: "LI", name: "Liechtenstein", coords: [9.55, 47.17] },
-  { iso2: "AD", name: "Andorra",       coords: [1.52, 42.51] },
-  { iso2: "MT", name: "Malta",         coords: [14.50, 35.90] },
-  { iso2: "BH", name: "Bahrain",       coords: [50.55, 26.07] },
-  { iso2: "SG", name: "Singapore",     coords: [103.82, 1.35] },
-  { iso2: "MV", name: "Maldives",      coords: [73.50, 4.18] },
-  { iso2: "HK", name: "Hong Kong",     coords: [114.17, 22.32] },
-  { iso2: "MO", name: "Macau",         coords: [113.55, 22.20] },
-  { iso2: "PR", name: "Puerto Rico",   coords: [-66.59, 18.22] },
-  { iso2: "PS", name: "Palestine",     coords: [35.24, 31.95] },
-];
+// Plan v30 hotfix — OverlayDot type + OVERLAY_DOTS removed.
+// The dots were rendering as "strange cities" on a political map per
+// founder feedback. Micro-states remain reachable via /world list.
 
 export type WorldMapPickerProps = {
   onSelect: (iso2: string) => void;
@@ -140,10 +116,9 @@ export default function WorldMapPicker({ onSelect, className }: WorldMapPickerPr
 
   // Alphabetical tab cycle, sovereign-ish entries only.
   const tabOrder = useMemo(() => {
-    const fromDots = OVERLAY_DOTS.map((d) => ({ iso2: d.iso2, name: d.name }));
     const fromMap = Object.values(ISO_NUMERIC_TO_ALPHA2).map((a2) => ({ iso2: a2, name: a2 }));
     const seen = new Map<string, { iso2: string; name: string }>();
-    [...fromDots, ...fromMap].forEach((c) => { if (!seen.has(c.iso2)) seen.set(c.iso2, c); });
+    fromMap.forEach((c) => { if (!seen.has(c.iso2)) seen.set(c.iso2, c); });
     return [...seen.values()].sort((a, b) => a.name.localeCompare(b.name));
   }, []);
 
@@ -201,9 +176,9 @@ export default function WorldMapPicker({ onSelect, className }: WorldMapPickerPr
 
         <ComposableMap
           projection="geoNaturalEarth1"
-          projectionConfig={{ scale: 165 }}
+          projectionConfig={{ scale: 215, center: [10, 22] }}
           width={980}
-          height={520}
+          height={440}
           style={{ width: "100%", height: "auto", background: "transparent", outline: "none" }}
           role="application"
           aria-label="World map. Use arrow keys to move between countries, Enter to select."
@@ -227,6 +202,8 @@ export default function WorldMapPicker({ onSelect, className }: WorldMapPickerPr
                     aria-label={clickable ? name : undefined}
                     aria-hidden={!clickable || undefined}
                     onMouseEnter={clickable ? (e) => enterTooltip(iso2!, name, e) : undefined}
+                    onMouseLeave={clickable ? () => setHovered(null) : undefined}
+                    onMouseMove={clickable ? (e) => enterTooltip(iso2!, name, e) : undefined}
                     onMouseDown={clickable ? () => setActive(iso2) : undefined}
                     onMouseUp={clickable ? () => setActive(null) : undefined}
                     onClick={clickable ? () => handlePick(iso2) : undefined}
@@ -260,44 +237,11 @@ export default function WorldMapPicker({ onSelect, className }: WorldMapPickerPr
             }
           </Geographies>
 
-          {OVERLAY_DOTS.map((d) => {
-            const isSel = selected === d.iso2;
-            const isHov = hovered?.iso2 === d.iso2;
-            const isAct = active === d.iso2;
-            const fill = isSel
-              ? COLORS.atlas700
-              : isAct
-                ? COLORS.amberActive
-                : isHov
-                  ? COLORS.amber
-                  : COLORS.cocoa700;
-            return (
-              <Marker key={d.iso2} coordinates={d.coords}>
-                <g
-                  data-iso2={d.iso2}
-                  role="button"
-                  tabIndex={-1}
-                  aria-label={d.name}
-                  onMouseEnter={(e) => enterTooltip(d.iso2, d.name, e)}
-                  onMouseDown={() => setActive(d.iso2)}
-                  onMouseUp={() => setActive(null)}
-                  onClick={() => handlePick(d.iso2)}
-                  onFocus={() => setFocusIso(d.iso2)}
-                  style={{ cursor: "pointer", outline: "none" }}
-                >
-                  {/* Invisible hit target, 9px radius => ~18px tap area */}
-                  <circle r={9} fill="transparent" />
-                  <circle
-                    r={isHov || isSel || isAct ? 3.4 : 2.4}
-                    fill={fill}
-                    stroke={COLORS.bg}
-                    strokeWidth={0.8}
-                    style={{ transition: "r 120ms ease, fill 140ms ease", pointerEvents: "none" }}
-                  />
-                </g>
-              </Marker>
-            );
-          })}
+          {/* Plan v30 hotfix — micro-state overlay dots removed. Founder
+              feedback: "it has some strange cities printed on it, which
+              is exactly the thing we surely didn't want." The map is
+              clean now; Monaco, Vatican, Singapore, etc. remain selectable
+              via the country list / search fallback. */}
         </ComposableMap>
 
         {hovered && (

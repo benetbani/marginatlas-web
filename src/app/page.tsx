@@ -238,6 +238,16 @@ export default function HomePage() {
         </section>
       </ToneBand>
 
+      {/* Plan v30 hotfix - world map moved directly below the FEATURED
+          tile grid per founder direction. Was previously buried mid-page
+          after the Ask widget; now sits where a curious visitor sees it
+          right after the first impression. */}
+      <ToneBand tone="home-city-picker">
+        <div id="pick-a-country" className="scroll-mt-20">
+          <WorldMapSection />
+        </div>
+      </ToneBand>
+
       {/* Plan v19 Block H - Did You Know surprise facts. Two rotating
           curated factoids about unexpected SMB economics. Sits between
           the FEATURED grid and the global coverage strip. */}
@@ -272,14 +282,6 @@ export default function HomePage() {
         </div>
       </ToneBand>
 
-      {/* Plan v30 follow-up - interactive world map. Click a country
-          to open its small-business landscape. Framing is "covers the
-          whole world" - the founder explicitly wants no country count. */}
-      <ToneBand tone="home-city-picker">
-        <div id="pick-a-country" className="scroll-mt-20">
-          <WorldMapSection />
-        </div>
-      </ToneBand>
 
       {/* Plan v30 prompt 4 output - three editorial blocks (Atlas
           questions, methodology pipeline, audience archetypes). Adds
