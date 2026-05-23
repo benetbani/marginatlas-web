@@ -43,7 +43,8 @@ const FACTORS = (countryFactorsJson as { default_fallback: CountryFactors; count
 const BASELINES = (countryBaselineJson as unknown as { default_fallback: CountryBaseline; countries: Record<string, CountryBaseline> });
 
 export async function generateStaticParams() {
-  return CITIES.filter((c) => c.tier <= 2).map((c) => ({ slug: c.slug }));
+  // Plan v30 hotfix — Tier 1 only at build; Tier 2+3 on-demand.
+  return CITIES.filter((c) => c.tier === 1).map((c) => ({ slug: c.slug }));
 }
 
 export async function generateMetadata({

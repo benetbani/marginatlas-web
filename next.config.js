@@ -1,8 +1,14 @@
 /** @type {import('next').NextConfig} */
-const { withSentryConfig } = require("@sentry/nextjs");
+// Plan v30 hotfix — Sentry import removed from next.config.js entirely.
+// Was being required at top-level which pulled @sentry/nextjs (~50MB
+// resolved) into every build, contributing to the OOM that killed
+// every Vercel deploy. Sentry runtime instrumentation lives in
+// src/instrumentation.ts and runs at request-time, not build-time.
+// const { withSentryConfig } = require("@sentry/nextjs");
 
 const nextConfig = {
   reactStrictMode: true,
+
 
   // Strip the `X-Powered-By: Next.js` header — small but standard
   // security hardening. Removes a free fingerprint for opportunistic
@@ -28,9 +34,6 @@ const nextConfig = {
     ],
   },
 
-  experimental: {
-    // Future: add typed routes when stable
-  },
 };
 
 // Sentry build wrapper: uploads source maps + injects the SDK.

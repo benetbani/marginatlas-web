@@ -105,24 +105,17 @@ type Params = { country: string; geo: string; industry: string };
  * Supabase cost; subsequent visitors get edge-cached responses.
  */
 export async function generateStaticParams(): Promise<Params[]> {
-  try {
-    const top = await getTopCells(200);
-    const seen = new Set<string>();
-    const params: Params[] = [];
-    for (const c of top) {
-      if (!c.geo_name || !c.industry_id) continue;
-      const country = c.country.toLowerCase();
-      const geo = slugify(c.geo_name);
-      const ind = industryToSlug(c.industry_id);
-      const key = `${country}/${geo}/${ind}`;
-      if (seen.has(key)) continue;
-      seen.add(key);
-      params.push({ country, geo, industry: ind });
-    }
-    return params;
-  } catch {
-    return [];
-  }
+  // Plan v30 hotfix — return empty array. Cell pages are NOT
+  // pre-rendered at build time anymore; they render on-demand via
+  // ISR (revalidate=21600 above keeps them cached for 6h after first
+  // hit). Returning 200+ static cells here was the single biggest
+  // contributor to the build-worker OOM that killed every Vercel
+  // deploy since the new bundles landed.
+  //
+  // Trade-off: first visitor to each cell hits a 1-3s cold render;
+  // every subsequent visitor reads from the edge cache. Acceptable
+  // given the alternative is no deploys at all.
+  return [];
 }
 
 export async function generateMetadata({

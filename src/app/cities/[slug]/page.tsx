@@ -69,8 +69,11 @@ const HEADLINE_INDUSTRIES = [
 ];
 
 export async function generateStaticParams() {
-  // Pre-render Tier 1+2 cities; Tier 3 lazy.
-  return CITIES.filter((c) => c.tier <= 2).map((c) => ({ slug: c.slug }));
+  // Plan v30 hotfix — pre-render Tier 1 only at build (~20 cities).
+  // Tier 2+3 land on-demand via ISR. Was Tier 1+2 (90+ pages) which
+  // contributed to the build-worker OOM that killed every Vercel
+  // deploy since the new bundles landed.
+  return CITIES.filter((c) => c.tier === 1).map((c) => ({ slug: c.slug }));
 }
 
 export async function generateMetadata({

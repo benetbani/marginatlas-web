@@ -97,7 +97,9 @@ async function staticAndContainersSitemap(): Promise<MetadataRoute.Sitemap> {
 }
 
 async function usCellsSitemap(): Promise<MetadataRoute.Sitemap> {
-  const cells = await getTopCells(5000);
+  // Plan v30 hotfix — was 5000, dropped to 500 to reduce build memory.
+  // Was contributing to OOM at the very end of static gen.
+  const cells = await getTopCells(500);
   return cells
     .filter((c) => c.geo_name && (c.industry_description || c.naics_6))
     .map((c) => {
@@ -119,7 +121,8 @@ async function regionalCellsSitemap(): Promise<MetadataRoute.Sitemap> {
   // and emptied the shard. PostgREST caps per-request rows at 1000,
   // so we use that cap and keep the quality_score ordering so the
   // downstream filter (score100to10 >= 4) keeps the right rows.
-  const cells = await getTopRegionalCells(1000);
+  // Plan v30 hotfix — dropped from 1000 to 300 to reduce build memory.
+  const cells = await getTopRegionalCells(300);
   return cells
     // Plan v26 P8 — standardized on the native 0-100 scale. quality_score
     // >= 40 corresponds to the old `score100to10(...) >= 4` filter.
