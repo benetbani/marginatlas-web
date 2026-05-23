@@ -1,20 +1,30 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Cormorant_Garamond } from "next/font/google";
+import { Newsreader, Inter } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Organization } from "@/components/StructuredData";
 import { HeaderSearch } from "@/components/HeaderSearch";
 
-// Plan v14 6b: editorial display serif for hero headlines + other broadsheet
-// moments. Mirrors the wordmark vibe and pushes the homepage hero out of the
-// Inter-everywhere SaaS lane. Loaded via next/font so it self-hosts with
-// font-display: swap; falls through to Georgia/serif when offline.
-const cormorant = Cormorant_Garamond({
+// Plan v30 Phase 3 — typography reset.
+// Newsreader: warm, bookish editorial serif designed for screen reading.
+// Used for H1/H2/H3 and the single hero number per page.
+// Inter: clean, neutral sans for body text + ALL numbers in tables, stats,
+// and waterfall lines (with tabular-nums enabled). Replaces Cormorant
+// Garamond which read too thin at large sizes and was unreadable on
+// 7-digit dollar numbers.
+const newsreader = Newsreader({
   subsets: ["latin"],
-  weight: ["500", "600"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
   variable: "--font-display",
+  style: ["normal", "italic"],
+});
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-sans",
 });
 
 export const metadata: Metadata = {
@@ -43,7 +53,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={cormorant.variable}>
+    <html lang="en" className={`${newsreader.variable} ${inter.variable}`}>
       <body className="min-h-screen bg-cream-50 text-ink-900 font-sans">
         {/* Microsoft Clarity — heatmaps + session recordings, free forever.
             The src URL is Clarity's loader; it injects the actual tracking

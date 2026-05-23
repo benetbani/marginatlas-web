@@ -224,6 +224,26 @@
     { "slug": "jerusalem", "name": "Jerusalem", "iso2": "IL", "continent": "MENA", "tier": 3, "pop_m": 1.1, "gdp_b": 35, "wealth_z": 1.6 },
     { "slug": "amman", "name": "Amman", "iso2": "JO", "continent": "MENA", "tier": 3, "pop_m": 4.5, "gdp_b": 30, "wealth_z": 0.4 },
     { "slug": "beirut", "name": "Beirut", "iso2": "LB", "continent": "MENA", "tier": 3, "pop_m": 2.5, "gdp_b": 25, "wealth_z": 0.4 },
-    { "slug": "tehran", "name": "Tehran", "iso2": "IR", "continent": "MENA", "tier": 3, "pop_m": 14.0, "gdp_b": 120, "wealth_z": 0.3 }
+    { "slug": "tehran", "name": "Tehran", "iso2": "IR", "continent": "MENA", "tier": 3, "pop_m": 14.0, "gdp_b": 120, "wealth_z": 0.3 },
+    { "slug": "charlotte", "name": "Charlotte", "iso2": "US", "continent": "NA", "tier": 2, "pop_m": 2.7, "gdp_b": 220, "wealth_z": 1.9 },
+    { "slug": "nashville", "name": "Nashville", "iso2": "US", "continent": "NA", "tier": 2, "pop_m": 2.0, "gdp_b": 160, "wealth_z": 1.8 },
+    { "slug": "indianapolis", "name": "Indianapolis", "iso2": "US", "continent": "NA", "tier": 2, "pop_m": 2.1, "gdp_b": 160, "wealth_z": 1.7 },
+    { "slug": "columbus", "name": "Columbus", "iso2": "US", "continent": "NA", "tier": 2, "pop_m": 2.2, "gdp_b": 150, "wealth_z": 1.7 },
+    { "slug": "baltimore", "name": "Baltimore", "iso2": "US", "continent": "NA", "tier": 2, "pop_m": 2.8, "gdp_b": 210, "wealth_z": 1.9 },
+    { "slug": "pittsburgh", "name": "Pittsburgh", "iso2": "US", "continent": "NA", "tier": 2, "pop_m": 2.3, "gdp_b": 160, "wealth_z": 1.7 },
+    { "slug": "milwaukee", "name": "Milwaukee", "iso2": "US", "continent": "NA", "tier": 2, "pop_m": 1.6, "gdp_b": 110, "wealth_z": 1.6 },
+    { "slug": "cincinnati", "name": "Cincinnati", "iso2": "US", "continent": "NA", "tier": 2, "pop_m": 2.3, "gdp_b": 160, "wealth_z": 1.7 },
+    { "slug": "cleveland", "name": "Cleveland", "iso2": "US", "continent": "NA", "tier": 3, "pop_m": 2.1, "gdp_b": 140, "wealth_z": 1.5 },
+    { "slug": "kansas-city", "name": "Kansas City", "iso2": "US", "continent": "NA", "tier": 2, "pop_m": 2.2, "gdp_b": 150, "wealth_z": 1.7 },
+    { "slug": "st-louis", "name": "St. Louis", "iso2": "US", "continent": "NA", "tier": 2, "pop_m": 2.8, "gdp_b": 180, "wealth_z": 1.6 },
+    { "slug": "sacramento", "name": "Sacramento", "iso2": "US", "continent": "NA", "tier": 2, "pop_m": 2.4, "gdp_b": 170, "wealth_z": 1.8 },
+    { "slug": "salt-lake-city", "name": "Salt Lake City", "iso2": "US", "continent": "NA", "tier": 3, "pop_m": 1.3, "gdp_b": 110, "wealth_z": 1.8 },
+    { "slug": "raleigh", "name": "Raleigh", "iso2": "US", "continent": "NA", "tier": 2, "pop_m": 1.5, "gdp_b": 130, "wealth_z": 1.9 },
+    { "slug": "new-orleans", "name": "New Orleans", "iso2": "US", "continent": "NA", "tier": 3, "pop_m": 1.3, "gdp_b": 80, "wealth_z": 1.3 },
+    { "slug": "memphis", "name": "Memphis", "iso2": "US", "continent": "NA", "tier": 3, "pop_m": 1.3, "gdp_b": 80, "wealth_z": 1.3 },
+    { "slug": "louisville", "name": "Louisville", "iso2": "US", "continent": "NA", "tier": 3, "pop_m": 1.3, "gdp_b": 85, "wealth_z": 1.4 },
+    { "slug": "oklahoma-city", "name": "Oklahoma City", "iso2": "US", "continent": "NA", "tier": 3, "pop_m": 1.5, "gdp_b": 90, "wealth_z": 1.4 },
+    { "slug": "buffalo", "name": "Buffalo", "iso2": "US", "continent": "NA", "tier": 3, "pop_m": 1.1, "gdp_b": 65, "wealth_z": 1.3 },
+    { "slug": "richmond", "name": "Richmond", "iso2": "US", "continent": "NA", "tier": 3, "pop_m": 1.3, "gdp_b": 95, "wealth_z": 1.6 }
   ]
 }

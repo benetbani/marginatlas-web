@@ -46,68 +46,67 @@ export function DistributionVisual({ p10, p50, p90, maxValue }: Props) {
         much wider than people assume.
       </p>
 
-      <div className="mt-8 md:mt-10 max-w-4xl">
-        {/* The bands */}
-        <div className="relative h-24 md:h-28 rounded-2xl overflow-hidden border border-parchment flex">
-          <div
-            className="bg-cream-200 flex items-center justify-center text-[10px] md:text-xs uppercase tracking-wider text-cocoa-700/70 font-semibold"
-            style={{ width: `${bandLo}%` }}
-            title={`Bottom 10% earn around $${lo.toLocaleString()}`}
-          >
-            <span className="hidden md:block">Bottom 10%</span>
+      {/* Plan v30 Phase 5.1 — thinner, centered, values aligned to band positions */}
+      <div className="mt-8 md:mt-10 mx-auto max-w-4xl">
+        {/* Value labels above the band, aligned to their positions */}
+        <div className="relative h-12 mb-2">
+          <div className="absolute left-0 top-0 text-left">
+            <div className="text-[10px] uppercase tracking-wider text-cocoa-700/60 font-semibold">
+              Bottom 10%
+            </div>
+            <div className="font-display text-lg md:text-2xl text-ink-900 tabular-nums leading-none mt-1">
+              <Money usd={lo} />
+            </div>
           </div>
           <div
-            className="bg-atlas-100 flex items-center justify-center text-xs md:text-sm text-atlas-900 font-medium relative"
-            style={{ width: `${bandMid}%` }}
-            title={`The middle 80% earn between $${lo.toLocaleString()} and $${hi.toLocaleString()}`}
+            className="absolute top-0"
+            style={{ left: `${midPos}%`, transform: "translateX(-50%)" }}
           >
-            <span>The middle 80%</span>
-          </div>
-          <div
-            className="bg-atlas-300 flex items-center justify-center text-[10px] md:text-xs uppercase tracking-wider text-atlas-900 font-semibold"
-            style={{ width: `${bandHi}%` }}
-            title={`Top 10% earn above $${hi.toLocaleString()}`}
-          >
-            <span className="hidden md:block">Top 10%</span>
-          </div>
-          {/* Typical marker */}
-          <div
-            className="absolute top-0 bottom-0 border-l-2 border-atlas-700"
-            style={{ left: `${midPos}%` }}
-            title={`Typical: $${mid.toLocaleString()}`}
-          >
-            <div className="absolute -top-6 left-0 -translate-x-1/2 text-[10px] uppercase tracking-wider text-atlas-700 font-bold whitespace-nowrap">
+            <div className="text-[10px] uppercase tracking-wider text-atlas-700 font-bold text-center">
               Typical
+            </div>
+            <div className="font-display text-lg md:text-2xl text-ink-900 tabular-nums leading-none mt-1 text-center">
+              <Money usd={mid} />
+            </div>
+          </div>
+          <div className="absolute right-0 top-0 text-right">
+            <div className="text-[10px] uppercase tracking-wider text-cocoa-700/60 font-semibold">
+              Top 10%
+            </div>
+            <div className="font-display text-lg md:text-2xl text-ink-900 tabular-nums leading-none mt-1">
+              <Money usd={hi} />
             </div>
           </div>
         </div>
 
-        {/* Anchor labels under the bands */}
-        <div className="mt-3 grid grid-cols-3 gap-4 text-sm md:text-base">
-          <div>
-            <div className="text-xs uppercase tracking-wider text-cocoa-700/60 font-semibold">
-              Bottom 10% earn around
-            </div>
-            <div className="font-display text-2xl md:text-3xl text-ink-900 tabular-nums mt-1">
-              <Money usd={lo} />
-            </div>
-          </div>
-          <div className="text-center">
-            <div className="text-xs uppercase tracking-wider text-atlas-700 font-bold">
-              Typical
-            </div>
-            <div className="font-display text-2xl md:text-3xl text-ink-900 tabular-nums mt-1">
-              <Money usd={mid} />
-            </div>
-          </div>
-          <div className="text-right">
-            <div className="text-xs uppercase tracking-wider text-cocoa-700/60 font-semibold">
-              Top 10% earn above
-            </div>
-            <div className="font-display text-2xl md:text-3xl text-ink-900 tabular-nums mt-1">
-              <Money usd={hi} />
-            </div>
-          </div>
+        {/* The band — slim, 24px tall, gradient amber center */}
+        <div className="relative h-6 rounded-full border border-parchment bg-parchment">
+          <div
+            className="absolute inset-y-0 rounded-full"
+            style={{
+              left: `${bandLo}%`,
+              right: `${bandHi}%`,
+              background: "linear-gradient(90deg, #EFE0BD 0%, rgba(212,119,6,0.7) 50%, #EFE0BD 100%)",
+            }}
+            title={`The middle 80% earn between $${lo.toLocaleString()} and $${hi.toLocaleString()}`}
+            aria-hidden="true"
+          />
+          {/* Typical marker — thin vertical line with halo */}
+          <div
+            className="absolute"
+            style={{
+              left: `${midPos}%`,
+              top: -4,
+              bottom: -4,
+              width: 3,
+              background: "#A55C00",
+              transform: "translateX(-50%)",
+              borderRadius: 2,
+              boxShadow: "0 0 0 2px #FEFBF6",
+            }}
+            title={`Typical: $${mid.toLocaleString()}`}
+            aria-hidden="true"
+          />
         </div>
       </div>
     </section>

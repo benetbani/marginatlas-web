@@ -30,6 +30,7 @@ import { HeroBenchmark } from "@/components/HeroBenchmark";
 // Plan v30 Phase 1 — MarginWaterfall import removed
 import { DistributionVisual } from "@/components/DistributionVisual";
 import { NetProfitSummary } from "@/components/NetProfitSummary";
+import { SmartWaterfall } from "@/components/SmartWaterfall";
 import { CoverageIndicator } from "@/components/CoverageIndicator";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { CountryFlag } from "@/components/CountryFlag";
@@ -208,11 +209,18 @@ export default async function NeighborhoodCellPage({
           takeHome={profit?.net_profit ?? null}
         />
 
-        {/* Plan v30 Phase 1 — legacy MarginWaterfall removed here too;
-            neighborhood pages don't render the full SmartWaterfall yet
-            (it's wired into the cell page only); keep the page clean
-            for now and add the smart engine to neighborhood pages in
-            Phase 4. */}
+        {/* Plan v30 quick-win — SmartWaterfall now on neighborhood pages
+            too. Same 13-line decomposition + provenance tooltips +
+            "what changes here" sidebar as the city-level cell page. */}
+        {cell.revenue_per_firm && cell.revenue_per_firm > 0 ? (
+          <SmartWaterfall
+            iso2={country.toUpperCase()}
+            industryId={ind.id}
+            sizeBand="small"
+            grossRevenue={cell.revenue_per_firm}
+            cityTier={1}
+          />
+        ) : null}
 
         {/* Distribution */}
         <DistributionVisual

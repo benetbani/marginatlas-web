@@ -231,6 +231,206 @@
         { "slug": "business-bay", "name": "Business Bay", "character": "central-business" },
         { "slug": "jumeirah", "name": "Jumeirah", "character": "affluent-residential" }
       ]
+    },
+    "charlotte": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "uptown", "name": "Uptown", "character": "central-business" },
+        { "slug": "south-end", "name": "South End", "character": "mixed-urban" },
+        { "slug": "noda", "name": "NoDa", "character": "mixed-urban" },
+        { "slug": "ballantyne", "name": "Ballantyne", "character": "affluent-residential" },
+        { "slug": "university-area", "name": "University Area", "character": "academic" }
+      ]
+    },
+    "nashville": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "downtown", "name": "Downtown", "character": "tourist" },
+        { "slug": "east-nashville", "name": "East Nashville", "character": "mixed-urban" },
+        { "slug": "12-south", "name": "12 South", "character": "affluent-residential" },
+        { "slug": "midtown", "name": "Midtown", "character": "mixed-urban" },
+        { "slug": "germantown", "name": "Germantown", "character": "mixed-urban" }
+      ]
+    },
+    "indianapolis": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "downtown", "name": "Downtown", "character": "central-business" },
+        { "slug": "broad-ripple", "name": "Broad Ripple", "character": "mixed-urban" },
+        { "slug": "fountain-square", "name": "Fountain Square", "character": "mixed-urban" },
+        { "slug": "mass-ave", "name": "Mass Ave", "character": "mixed-urban" },
+        { "slug": "carmel", "name": "Carmel", "character": "affluent-residential" }
+      ]
+    },
+    "columbus": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "downtown", "name": "Downtown", "character": "central-business" },
+        { "slug": "short-north", "name": "Short North", "character": "mixed-urban" },
+        { "slug": "german-village", "name": "German Village", "character": "affluent-residential" },
+        { "slug": "ohio-state", "name": "Ohio State Area", "character": "academic" },
+        { "slug": "upper-arlington", "name": "Upper Arlington", "character": "affluent-residential" }
+      ]
+    },
+    "baltimore": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "inner-harbor", "name": "Inner Harbor", "character": "tourist" },
+        { "slug": "fells-point", "name": "Fells Point", "character": "mixed-urban" },
+        { "slug": "federal-hill", "name": "Federal Hill", "character": "affluent-residential" },
+        { "slug": "hampden", "name": "Hampden", "character": "mixed-urban" },
+        { "slug": "canton", "name": "Canton", "character": "affluent-residential" }
+      ]
+    },
+    "pittsburgh": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "downtown", "name": "Downtown", "character": "central-business" },
+        { "slug": "strip-district", "name": "Strip District", "character": "mixed-urban" },
+        { "slug": "lawrenceville", "name": "Lawrenceville", "character": "mixed-urban" },
+        { "slug": "shadyside", "name": "Shadyside", "character": "affluent-residential" },
+        { "slug": "south-side", "name": "South Side", "character": "mixed-urban" }
+      ]
+    },
+    "milwaukee": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "downtown", "name": "Downtown", "character": "central-business" },
+        { "slug": "third-ward", "name": "Third Ward", "character": "mixed-urban" },
+        { "slug": "walker-point", "name": "Walker's Point", "character": "mixed-urban" },
+        { "slug": "bay-view", "name": "Bay View", "character": "mid-residential" },
+        { "slug": "east-side", "name": "East Side", "character": "academic" }
+      ]
+    },
+    "cincinnati": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "downtown", "name": "Downtown", "character": "central-business" },
+        { "slug": "over-the-rhine", "name": "Over-the-Rhine", "character": "mixed-urban" },
+        { "slug": "hyde-park", "name": "Hyde Park", "character": "affluent-residential" },
+        { "slug": "northside", "name": "Northside", "character": "mixed-urban" },
+        { "slug": "mt-adams", "name": "Mount Adams", "character": "affluent-residential" }
+      ]
+    },
+    "cleveland": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "downtown", "name": "Downtown", "character": "central-business" },
+        { "slug": "ohio-city", "name": "Ohio City", "character": "mixed-urban" },
+        { "slug": "tremont", "name": "Tremont", "character": "mixed-urban" },
+        { "slug": "university-circle", "name": "University Circle", "character": "academic" },
+        { "slug": "lakewood", "name": "Lakewood", "character": "mid-residential" }
+      ]
+    },
+    "kansas-city": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "downtown", "name": "Downtown", "character": "central-business" },
+        { "slug": "crossroads", "name": "Crossroads Arts District", "character": "mixed-urban" },
+        { "slug": "westport", "name": "Westport", "character": "mixed-urban" },
+        { "slug": "plaza", "name": "Country Club Plaza", "character": "affluent-residential" },
+        { "slug": "river-market", "name": "River Market", "character": "mixed-urban" }
+      ]
+    },
+    "st-louis": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "downtown", "name": "Downtown", "character": "central-business" },
+        { "slug": "central-west-end", "name": "Central West End", "character": "affluent-residential" },
+        { "slug": "the-hill", "name": "The Hill", "character": "mid-residential" },
+        { "slug": "soulard", "name": "Soulard", "character": "mixed-urban" },
+        { "slug": "clayton", "name": "Clayton", "character": "affluent-residential" }
+      ]
+    },
+    "sacramento": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "midtown", "name": "Midtown", "character": "mixed-urban" },
+        { "slug": "downtown", "name": "Downtown", "character": "central-business" },
+        { "slug": "east-sacramento", "name": "East Sacramento", "character": "affluent-residential" },
+        { "slug": "land-park", "name": "Land Park", "character": "affluent-residential" },
+        { "slug": "natomas", "name": "Natomas", "character": "mid-residential" }
+      ]
+    },
+    "salt-lake-city": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "downtown", "name": "Downtown", "character": "central-business" },
+        { "slug": "sugar-house", "name": "Sugar House", "character": "mixed-urban" },
+        { "slug": "the-avenues", "name": "The Avenues", "character": "affluent-residential" },
+        { "slug": "9th-and-9th", "name": "9th and 9th", "character": "mixed-urban" },
+        { "slug": "park-city", "name": "Park City", "character": "tourist" }
+      ]
+    },
+    "raleigh": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "downtown", "name": "Downtown", "character": "central-business" },
+        { "slug": "north-hills", "name": "North Hills", "character": "affluent-residential" },
+        { "slug": "five-points", "name": "Five Points", "character": "mid-residential" },
+        { "slug": "cameron-village", "name": "Cameron Village", "character": "mid-residential" },
+        { "slug": "research-triangle", "name": "Research Triangle", "character": "academic" }
+      ]
+    },
+    "new-orleans": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "french-quarter", "name": "French Quarter", "character": "tourist" },
+        { "slug": "garden-district", "name": "Garden District", "character": "affluent-residential" },
+        { "slug": "marigny-bywater", "name": "Marigny / Bywater", "character": "mixed-urban" },
+        { "slug": "uptown", "name": "Uptown", "character": "affluent-residential" },
+        { "slug": "treme", "name": "Tremé", "character": "mid-residential" }
+      ]
+    },
+    "memphis": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "downtown", "name": "Downtown", "character": "central-business" },
+        { "slug": "midtown", "name": "Midtown", "character": "mixed-urban" },
+        { "slug": "cooper-young", "name": "Cooper-Young", "character": "mixed-urban" },
+        { "slug": "germantown", "name": "Germantown", "character": "affluent-residential" },
+        { "slug": "south-main", "name": "South Main", "character": "mixed-urban" }
+      ]
+    },
+    "louisville": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "downtown", "name": "Downtown", "character": "central-business" },
+        { "slug": "nulu", "name": "NuLu", "character": "mixed-urban" },
+        { "slug": "highlands", "name": "The Highlands", "character": "mixed-urban" },
+        { "slug": "st-matthews", "name": "St. Matthews", "character": "affluent-residential" },
+        { "slug": "germantown", "name": "Germantown", "character": "mid-residential" }
+      ]
+    },
+    "oklahoma-city": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "downtown", "name": "Downtown", "character": "central-business" },
+        { "slug": "bricktown", "name": "Bricktown", "character": "tourist" },
+        { "slug": "midtown", "name": "Midtown", "character": "mixed-urban" },
+        { "slug": "plaza-district", "name": "Plaza District", "character": "mixed-urban" },
+        { "slug": "nichols-hills", "name": "Nichols Hills", "character": "affluent-residential" }
+      ]
+    },
+    "buffalo": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "downtown", "name": "Downtown", "character": "central-business" },
+        { "slug": "allentown", "name": "Allentown", "character": "mixed-urban" },
+        { "slug": "elmwood-village", "name": "Elmwood Village", "character": "mid-residential" },
+        { "slug": "north-buffalo", "name": "North Buffalo", "character": "mid-residential" },
+        { "slug": "larkinville", "name": "Larkinville", "character": "mixed-urban" }
+      ]
+    },
+    "richmond": {
+      "scheme": "α-macro",
+      "neighborhoods": [
+        { "slug": "downtown", "name": "Downtown", "character": "central-business" },
+        { "slug": "the-fan", "name": "The Fan", "character": "academic" },
+        { "slug": "scotts-addition", "name": "Scott's Addition", "character": "mixed-urban" },
+        { "slug": "carytown", "name": "Carytown", "character": "mixed-urban" },
+        { "slug": "church-hill", "name": "Church Hill", "character": "mid-residential" }
+      ]
     }
   }
 }

@@ -600,8 +600,13 @@ export default async function CellPage({
          Plan v14 A.1 (T-A1.4): legacy id="typical-firm" renamed to canonical
          "tax-and-cost-panel": section hosts PostTaxToggle +
          NetProfitWaterfall + MarginWaterfall. */}
-      <section id="tax-and-cost-panel" className={`py-6 grid md:grid-cols-[1fr_2fr] gap-4 ${getToneClass("tax-and-cost-panel")}`}>
-        <AtlasScore cell={cell} />
+      {/* Plan v30 quick-win — AtlasScore demoted from full card to
+          single-row chip-style strip. Frees the left rail; ATLAS
+          composite score still visible but no longer dominating. */}
+      <section id="tax-and-cost-panel" className={`py-6 ${getToneClass("tax-and-cost-panel")}`}>
+        <div className="mb-4">
+          <AtlasScore cell={cell} />
+        </div>
         <div>
           <TypicalFirmCard cell={cell} currencySymbol="$" />
           <PostTaxToggle
@@ -747,12 +752,46 @@ export default async function CellPage({
       {/* Send a correction */}
       <CorrectionForm cellUrl={`/${country}/${geo}/${industry}`} />
 
-      {/* About the data link */}
-      <section className="py-6 text-sm text-ink-700/70">
-        <a href="/about-data" className="hover:text-atlas-600 underline">
-          About how to read these numbers →
-        </a>
-      </section>
+      {/* Plan v30 quick-win — knowledge base footer link. Maps the
+          industry to a relevant /learn/ article so visitors can dive
+          deeper into the category context. */}
+      {cell.industry_id ? (
+        <section className="py-8 border-t border-parchment mt-4">
+          <div className="text-xs uppercase tracking-wide text-atlas-700 font-semibold mb-2">
+            Read more
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <a
+              href={`/learn/how-much-does-a-${(cell.industry_name || cell.industry_id).toLowerCase().replace(/s$/, "").replace(/\s+/g, "-").replace(/-+/g, "-")}-make`}
+              className="block rounded-lg border border-parchment bg-cream-50 hover:bg-cream-100 p-4 transition-colors"
+            >
+              <div className="text-sm font-semibold text-ink-900">
+                How much does a {(cell.industry_name || "business").toLowerCase().replace(/s$/, "")} make?
+              </div>
+              <div className="text-xs text-cocoa-700/70 mt-1">
+                Read the explainer →
+              </div>
+            </a>
+            <a
+              href="/about-data"
+              className="block rounded-lg border border-parchment bg-cream-50 hover:bg-cream-100 p-4 transition-colors"
+            >
+              <div className="text-sm font-semibold text-ink-900">
+                How to read these numbers
+              </div>
+              <div className="text-xs text-cocoa-700/70 mt-1">
+                Open the data guide →
+              </div>
+            </a>
+          </div>
+        </section>
+      ) : (
+        <section className="py-6 text-sm text-ink-700/70">
+          <a href="/about-data" className="hover:text-atlas-600 underline">
+            About how to read these numbers →
+          </a>
+        </section>
+      )}
       </div>
       <CellPageNav />
     </div>

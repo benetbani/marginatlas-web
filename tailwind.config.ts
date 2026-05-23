@@ -91,7 +91,11 @@ const config: Config = {
         atlasPulse: "atlasPulse 1800ms ease-in-out infinite",
       },
       fontFamily: {
+        // Plan v30 Phase 3 typography reset — Inter via next/font for
+        // every sans-serif use (body text, numbers in tables, stats,
+        // waterfall lines). Tabular-nums enabled where numbers render.
         sans: [
+          "var(--font-sans)",
           "Inter",
           "ui-sans-serif",
           "system-ui",
@@ -101,14 +105,13 @@ const config: Config = {
           "sans-serif",
         ],
         serif: [
-          "Tiempos",
+          "var(--font-display)",
           "Georgia",
           "ui-serif",
           "serif",
         ],
-        // Plan v14 6b: editorial display serif loaded via next/font in
-        // src/app/layout.tsx. CSS variable resolves to Cormorant Garamond at
-        // runtime; falls through to Georgia when the variable is unset.
+        // Newsreader via next/font — warm bookish editorial serif used
+        // for H1/H2/H3 and the single hero number per page.
         display: [
           "var(--font-display)",
           "Georgia",
