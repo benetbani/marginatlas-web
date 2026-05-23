@@ -27,7 +27,7 @@ import {
   applyNeighborhoodMultiplier,
 } from "@/lib/cities/neighborhoods";
 import { HeroBenchmark } from "@/components/HeroBenchmark";
-import { MarginWaterfall } from "@/components/MarginWaterfall";
+// Plan v30 Phase 1 — MarginWaterfall import removed
 import { DistributionVisual } from "@/components/DistributionVisual";
 import { NetProfitSummary } from "@/components/NetProfitSummary";
 import { CoverageIndicator } from "@/components/CoverageIndicator";
@@ -208,12 +208,11 @@ export default async function NeighborhoodCellPage({
           takeHome={profit?.net_profit ?? null}
         />
 
-        {/* Profit waterfall — always-rendered after Plan v25 Block 4 */}
-        <MarginWaterfall
-          grossMargin={cell.gross_margin ?? null}
-          operatingMargin={cell.operating_margin ?? null}
-          netMargin={cell.net_margin ?? null}
-        />
+        {/* Plan v30 Phase 1 — legacy MarginWaterfall removed here too;
+            neighborhood pages don't render the full SmartWaterfall yet
+            (it's wired into the cell page only); keep the page clean
+            for now and add the smart engine to neighborhood pages in
+            Phase 4. */}
 
         {/* Distribution */}
         <DistributionVisual

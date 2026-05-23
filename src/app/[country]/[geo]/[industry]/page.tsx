@@ -19,7 +19,7 @@ import { iso2ToName } from "@/lib/countries";
 import { CountryFlag } from "@/components/CountryFlag";
 import { RevenueTiles } from "@/components/RevenueTiles";
 import { RevenueDistribution } from "@/components/RevenueDistribution";
-import { MarginWaterfall } from "@/components/MarginWaterfall";
+// Plan v30 Phase 1 — MarginWaterfall import removed; redundant with SmartWaterfall
 import { Tooltip } from "@/components/Tooltip";
 import { DimensionSwitcher } from "@/components/DimensionSwitcher";
 import { TypicalFirmCard } from "@/components/TypicalFirmCard";
@@ -27,7 +27,7 @@ import { PostTaxToggle } from "@/components/PostTaxToggle";
 import { NetProfitWaterfall } from "@/components/NetProfitWaterfall";
 import { AcrossStatesStrip } from "@/components/AcrossStatesStrip";
 import { CellPageNav } from "@/components/CellPageNav";
-import { CellActions } from "@/components/CellActions";
+// Plan v30 Phase 1 — CellActions import removed (save/copy/CSV/embed buttons stripped)
 import { AtlasScore } from "@/components/AtlasScore";
 import { SmartImage } from "@/components/SmartImage";
 import { AtlasHeroImage } from "@/components/AtlasHeroImage";
@@ -59,7 +59,7 @@ import { HeroBenchmark } from "@/components/HeroBenchmark";
 import { CityHero } from "@/components/CityHero";
 import { ComparableCitiesRibbon } from "@/components/ComparableCitiesRibbon";
 import { LocalContextCard } from "@/components/LocalContextCard";
-import { TrendSparkline } from "@/components/TrendSparkline";
+// Plan v30 Phase 1 — TrendSparkline import removed; synthesized 5-year trend was too speculative
 import { DistributionVisual } from "@/components/DistributionVisual";
 import { NetProfitSummary } from "@/components/NetProfitSummary";
 import { SmartWaterfall } from "@/components/SmartWaterfall";
@@ -385,14 +385,10 @@ export default async function CellPage({
         </div>
       )}
 
-      {/* Actions: save / copy link / CSV / embed */}
-      <CellActions
-        country={country}
-        geo={geo}
-        industry={industry}
-        industryName={cell.industry_name || industry.replace(/-/g, " ")}
-        geoName={cell.geo_name || geo}
-      />
+      {/* Plan v30 Phase 1 — CellActions (save / copy link / CSV / embed)
+          removed. These features were shipped before the underlying data
+          was trustworthy; reintroduce only when there's a defensible
+          export and a working auth path for saved cells. */}
 
       {/* Breadcrumb */}
       <nav className="text-sm text-ink-700/70 mb-4">
@@ -447,20 +443,15 @@ export default async function CellPage({
         revenue={cell.revenue_per_firm ?? null}
         currencySymbol="$"
       />
-      {/* Currency switcher + trend sparkline under the hero, quiet */}
+      {/* Plan v30 Phase 1 — currency switcher only. The 5-year trend
+          sparkline was removed: applying a synthesized CAGR to revenue
+          gives the wrong impression of measured forecasting. Revive
+          only when the trend model is calibrated against real data. */}
       <div className="bg-cream-100 pb-6 md:pb-8 -mt-2 flex items-center gap-4 flex-wrap text-xs text-cocoa-700/70">
         <div className="flex items-center gap-2">
           <span>Show numbers in:</span>
           <CurrencySwitcher />
         </div>
-        {/* Reformation idea #3 — synthesized 5-year trajectory.
-            Industry-typical CAGR; clearly labelled as estimate. */}
-        {cell.industry_id ? (
-          <div className="flex items-center gap-2">
-            <span>5-yr trend:</span>
-            <TrendSparkline industryId={cell.industry_id} />
-          </div>
-        ) : null}
       </div>
 
       {/* Plan v24 Block 3 — substitution disclosure. Renders only when
@@ -581,15 +572,10 @@ export default async function CellPage({
             }
             takeHome={netTakeHome}
           />
-          {/* Plan v13 Wave 2: profit waterfall integrity visual.
-             Gross + operating from industry lookup, net from the
-             estimateNetProfit() call above. All three pass through
-             clampMargin inside the component. */}
-          <MarginWaterfall
-            grossMargin={marginRow.gross_margin ?? null}
-            operatingMargin={marginRow.operating_margin ?? null}
-            netMargin={computedNetMargin}
-          />
+          {/* Plan v30 Phase 1 — legacy MarginWaterfall removed. It only
+              surfaced a single gross-margin band, which was redundant
+              and confusing alongside the SmartWaterfall below that
+              decomposes every cost line with provenance. */}
         </div>
       </section>
 
