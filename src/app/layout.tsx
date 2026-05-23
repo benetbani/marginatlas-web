@@ -90,7 +90,10 @@ export default function RootLayout({
             </div>
           </div>
         </header>
-        <main className="max-w-7xl mx-auto px-6 py-10">{children}</main>
+        {/* Plan v31 starter — top padding reduced from py-10 to py-4 so
+            the first frame (navigator + world map) sits higher on the
+            page without the wasted gap the founder flagged. */}
+        <main className="max-w-7xl mx-auto px-6 pt-4 pb-10">{children}</main>
         {/* Plan v30 Bundle 5 — site-wide newsletter signup bar; calm,
             non-aggressive, slim. Sits above the main footer. */}
         <FooterNewsletterBar />

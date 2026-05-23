@@ -39,16 +39,19 @@ import { ISO_NUMERIC_TO_ALPHA2 } from "@/lib/iso-codes";
 
 const GEO_URL = "https://unpkg.com/world-atlas@2/countries-110m.json";
 
+// Plan v31 starter — map color palette synced to the brick-red site
+// shift. Hover state is true brick (was burnt amber); the base fill
+// is a near-white neutral matching the new page background.
 const COLORS = {
-  bg: "#FEF9F0",
-  parchment: "#F4EAD5",
-  amber: "#D47706",
-  amberActive: "#8C4D00",
-  atlas700: "#A55C00",
-  stroke: "#EAD9B5",
-  cocoa700: "#5A3A1A",
-  cocoa900: "#2A1A08",
-  disputedStroke: "#E2C997",
+  bg: "#FAFAFA",
+  parchment: "#E5E5E4",
+  amber: "#B91C1C",        // brick red on hover (was burnt amber)
+  amberActive: "#7F1D1D",  // pressed state
+  atlas700: "#7F1D1D",     // selected country fill (deep brick)
+  stroke: "#D6D5D3",       // country borders (neutral gray)
+  cocoa700: "#404040",     // text (neutral dark)
+  cocoa900: "#171717",     // tooltip background
+  disputedStroke: "#C7C6C4",
 };
 
 const ANTARCTICA_ID = "010";

@@ -10,17 +10,10 @@ import { WorldMapClient } from "./WorldMapClient";
 
 export function WorldMapSection() {
   return (
-    <section className="py-12 md:py-16">
-      <div className="text-xs uppercase tracking-wide text-atlas-600 font-semibold mb-2">
+    <section className="pt-2 pb-8 md:pt-2 md:pb-10">
+      <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mb-4 max-w-3xl">
         Pick a country
-      </div>
-      <h2 className="font-display text-3xl md:text-5xl font-medium tracking-tight text-ink-900 mb-3 max-w-3xl">
-        Anywhere on the map
       </h2>
-      <p className="text-base md:text-lg text-cocoa-700/80 mb-8 max-w-2xl">
-        Click your country to open its small-business landscape.
-        Atlas covers the whole world.
-      </p>
       <WorldMapClient />
     </section>
   );

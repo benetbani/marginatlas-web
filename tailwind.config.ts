@@ -20,29 +20,35 @@ const config: Config = {
           800: "#27272A",
           900: "#1A1A1A",  // rich graphite — text primary
         },
-        // Primary spine — burnt amber + a wider stop range
+        // Plan v31 starter — atlas accent shifted from burnt amber to brick
+        // red. Founder direction: "terracotta but shifted more to red...
+        // some sort of dark brick color with a red tint." This single
+        // token change ripples across every cell page, button, link,
+        // sector chip, waterfall accent, and the world map highlight.
         atlas: {
-          50: "#FEF7ED",   // lightest amber wash for hero gradients
-          100: "#FDE9CC",  // subtle highlight background
-          200: "#FDBA74",  // light amber
-          300: "#FBBF24",  // tertiary chips, callout fills
-          400: "#F59E0B",  // mid amber
-          500: "#D97706",  // primary accent — burnt amber (unchanged)
-          600: "#C2410C",  // deeper terracotta (unchanged)
-          700: "#9A3412",  // headline accents
-          800: "#7C2D12",  // deep amber for hover-pressed
-          900: "#5C1E0B",  // darkest amber, footer accents
+          50:  "#FEF2F2",  // pale wash (replaces #FEF7ED amber wash)
+          100: "#FEE2E2",  // subtle highlight
+          200: "#FECACA",  // light brick
+          300: "#FCA5A5",  // tertiary chips
+          400: "#EF4444",  // mid brick
+          500: "#B91C1C",  // PRIMARY ACCENT — true brick red (was burnt amber #D97706)
+          600: "#991B1B",  // deeper brick (hover-pressed)
+          700: "#7F1D1D",  // headline accents (was #9A3412)
+          800: "#681414",  // deepest brick
+          900: "#450A0A",  // darkest, footer accents
         },
-        // Sand / parchment layers — replace flat white-on-white
+        // Plan v31 starter — cream becomes the SURFACE color, not the
+        // page background. New page bg is pure off-white below.
+        // These tokens kept for back-compat; cards still use them.
         cream: {
-          50:  "#FEFBF6",  // warmer page background
-          100: "#F8F2E4",  // primary card surfaces
-          200: "#EEE6D2",  // hover surface on tiles
-          300: "#E8DDC7",  // soft borders
-          400: "#D9C9A8",
-          500: "#C2AE85",
+          50:  "#FAFAFA",  // page background — neutral warm-tinted white
+          100: "#F5F5F4",  // primary card surfaces (lighter than before)
+          200: "#EEEDEC",  // hover surface on tiles
+          300: "#E5E5E4",  // soft borders
+          400: "#D6D5D3",
+          500: "#A8A7A4",
         },
-        parchment: "#E8DDC7", // alias used for coverage badges + borders
+        parchment: "#E5E5E4", // border token — neutral gray, no warm tint
         // Moss — positive deltas (replaces harsh emerald)
         moss: {
           50:  "#F7FCE8",
