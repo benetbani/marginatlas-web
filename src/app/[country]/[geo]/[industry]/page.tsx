@@ -234,12 +234,26 @@ export default async function CellPage({
   // lookup, net comes from estimateNetProfit() so it reflects the
   // sub-regional tax + fixed-cost adjustments. clampMargin is applied
   // inside the MarginWaterfall component as a defensive floor.
+  //
+  // Plan v30 Phase 2 — unit-detection fix. cell.n_employees can be either
+  // total employees across all firms in the region (so divide by
+  // n_enterprises for per-firm) OR already per-firm (some data sources).
+  // Detect by the ratio: if n_employees < n_enterprises, it's already
+  // per-firm. Using the wrong unit drives payroll to near-zero, which
+  // inflated net margin past the cap on hospitality pages.
   const marginRow = lookupIndustryMargin(cell.industry_id);
   const grossRevenueForMargin = cell.revenue_per_firm ?? cell.rev_p50 ?? null;
-  const payrollForMargin =
-    cell.payroll_per_employee != null && cell.n_employees != null && cell.n_enterprises
-      ? (cell.payroll_per_employee * cell.n_employees) / cell.n_enterprises
-      : null;
+  let payrollForMargin: number | null = null;
+  if (cell.payroll_per_employee != null && cell.n_employees != null) {
+    const empPerFirm =
+      cell.n_enterprises && cell.n_enterprises > 0
+        ? cell.n_employees < cell.n_enterprises
+          ? cell.n_employees // already per-firm
+          : cell.n_employees / cell.n_enterprises
+        : cell.n_employees;
+    const effectiveEmpPerFirm = Math.max(1, empPerFirm);
+    payrollForMargin = cell.payroll_per_employee * effectiveEmpPerFirm;
+  }
   const netProfitResult =
     grossRevenueForMargin && grossRevenueForMargin > 0
       ? estimateNetProfit({

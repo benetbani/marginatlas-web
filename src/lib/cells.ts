@@ -316,9 +316,15 @@ export async function getRegionalCell(
   // override geo_name to the canonical display label. /es/barcelona renders
   // 'Barcelona' regardless of whatever the DB row has for that field.
   // Plan v24 Block 4 — manual map wins. /de/frankfurt → "Frankfurt am Main".
+  // Plan v30 Phase 2 — popular-name override fires FIRST so /it/lazio
+  // renders "Rome", /it/lombardia renders "Milan", etc. across every code
+  // path including the regional-cell hit (was previously only applied
+  // at the end of getCellBySlug + in geoNameFromSlug, so admin1 slugs
+  // with real data slipped through).
+  const popularName = getPopularPlaceName(c, geoSlug);
   const manualLabel = MANUAL_DISPLAY_LABEL[c]?.[geoSlug.toLowerCase()];
   const friendlyLabel =
-    manualLabel || CITY_FRIENDLY_DISPLAY_LABEL[c]?.[geoSlug.toLowerCase()];
+    popularName || manualLabel || CITY_FRIENDLY_DISPLAY_LABEL[c]?.[geoSlug.toLowerCase()];
   if (friendlyLabel) cell.geo_name = friendlyLabel;
   return cell;
 }
@@ -345,9 +351,10 @@ export async function getRegionalCellVariants(
     .order("n_enterprises", { ascending: false, nullsFirst: false })
     .limit(50);
   if (error || !data) return [];
+  const popularName = getPopularPlaceName(c, geoSlug);
   const manualLabel = MANUAL_DISPLAY_LABEL[c]?.[geoSlug.toLowerCase()];
   const friendlyLabel =
-    manualLabel || CITY_FRIENDLY_DISPLAY_LABEL[c]?.[geoSlug.toLowerCase()];
+    popularName || manualLabel || CITY_FRIENDLY_DISPLAY_LABEL[c]?.[geoSlug.toLowerCase()];
   return data
     .map((r) => {
       const row = r as Record<string, unknown>;

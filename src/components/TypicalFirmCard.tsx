@@ -20,13 +20,36 @@ type CellLike = {
 };
 
 export function TypicalFirmCard({ cell, currencySymbol = "$" }: { cell: CellLike; currencySymbol?: string }) {
-  // Plan v13 Wave 1 — firm-count display and the derived avg-employees-per-firm
-  // were removed because the underlying n_enterprises field is unreliable.
-  // Per-employee metrics are taken straight from the wage/revenue fields.
-  const empPerFirm =
-    cell.n_employees && cell.n_enterprises ? cell.n_employees / cell.n_enterprises : null;
-  const revPerEmployee =
+  // Plan v30 Phase 2 — unit-detection fix. Different data sources use
+  // different conventions for cell.n_employees: some give the TOTAL
+  // employees across the region (so divide by n_enterprises to get
+  // per-firm), others give a per-firm average already. We detect which
+  // by checking the ratio: if n_employees < n_enterprises, it's almost
+  // certainly already per-firm (you don't get fewer total employees
+  // than enterprises). Clamp the result to ≥ 1 (no fractional people).
+  // This fixes the $2.9B / $101M-per-employee bug.
+  const rawEmp = cell.n_employees ?? 0;
+  const rawEnt = cell.n_enterprises ?? 0;
+  let empPerFirm: number | null = null;
+  if (rawEmp > 0) {
+    if (rawEnt > 0) {
+      const ratio = rawEmp / rawEnt;
+      // If the ratio is sub-1, n_employees is already per-firm scale.
+      // Use n_employees directly. Otherwise treat n_employees as total
+      // and divide.
+      empPerFirm = ratio < 1 ? rawEmp : ratio;
+    } else {
+      empPerFirm = rawEmp;
+    }
+    empPerFirm = Math.max(1, empPerFirm);
+  }
+  const rawRevPerEmp =
     cell.revenue_per_firm && empPerFirm && empPerFirm > 0 ? cell.revenue_per_firm / empPerFirm : null;
+  // Plan v30 Phase 2 — hard sanity ceiling. Revenue per employee above
+  // $500K is essentially never an SMB benchmark. Anything above this
+  // band signals a unit error upstream; suppress the cell rather than
+  // render an absurd number.
+  const revPerEmployee = rawRevPerEmp != null && rawRevPerEmp <= 500_000 ? rawRevPerEmp : null;
   const wage = cell.payroll_per_employee ?? null;
   const grossSpread =
     revPerEmployee != null && wage != null ? revPerEmployee - wage : null;
