@@ -6,6 +6,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Organization } from "@/components/StructuredData";
 import { HeaderSearch } from "@/components/HeaderSearch";
 import { FooterNewsletterBar } from "@/components/newsletter/NewsletterSignupVariants";
+import { LogoWordmark } from "@/components/brand/LogoWordmark";
 
 // Plan v30 Phase 3 — typography reset.
 // Newsreader: warm, bookish editorial serif designed for screen reading.
@@ -67,14 +68,8 @@ export default function RootLayout({
         <Organization />
         <header className="border-b border-ink-200 bg-cream-50 sticky top-0 z-10">
           <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <a href="/" className="flex items-center gap-2 font-semibold text-lg tracking-tight">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <rect x="3" y="3" width="7" height="7" rx="1.5" fill="#B82F0F" />
-                <rect x="14" y="3" width="7" height="7" rx="1.5" fill="#D73A14" opacity="0.7" />
-                <rect x="3" y="14" width="7" height="7" rx="1.5" fill="#D73A14" opacity="0.7" />
-                <rect x="14" y="14" width="7" height="7" rx="1.5" fill="#E94E20" opacity="0.45" />
-              </svg>
-              <span className="text-ink-900">Margin Atlas</span>
+            <a href="/" aria-label="Margin Atlas home" className="inline-flex items-center">
+              <LogoWordmark size={26} labeled={false} />
             </a>
             <div className="flex items-center gap-2">
               <nav className="text-sm text-ink-800 hidden md:flex">
@@ -99,14 +94,8 @@ export default function RootLayout({
         <FooterNewsletterBar />
         <footer className="border-t border-ink-200 bg-ink-100">
           <div className="max-w-7xl mx-auto px-6 py-12">
-            <div className="flex items-center gap-2 font-semibold text-ink-900 mb-8">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <rect x="3" y="3" width="7" height="7" rx="1.5" fill="#B82F0F" />
-                <rect x="14" y="3" width="7" height="7" rx="1.5" fill="#D73A14" opacity="0.7" />
-                <rect x="3" y="14" width="7" height="7" rx="1.5" fill="#D73A14" opacity="0.7" />
-                <rect x="14" y="14" width="7" height="7" rx="1.5" fill="#E94E20" opacity="0.45" />
-              </svg>
-              Margin Atlas
+            <div className="mb-8">
+              <LogoWordmark size={22} labeled />
             </div>
             <div className="grid md:grid-cols-5 gap-8 text-sm text-ink-700">
               <div>
