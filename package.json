@@ -25,15 +25,19 @@
     "@sentry/nextjs": "^10.53.1",
     "@supabase/supabase-js": "^2.45.0",
     "@types/pg": "^8.20.0",
+    "@types/react-simple-maps": "^3.0.6",
     "@vercel/speed-insights": "^2.0.0",
     "gray-matter": "^4.0.3",
     "next": "^15.5.18",
     "pg": "^8.21.0",
+    "prop-types": "^15.8.1",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
+    "react-simple-maps": "^3.0.0",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
-    "simple-statistics": "^7.8.9"
+    "simple-statistics": "^7.8.9",
+    "world-atlas": "^2.0.2"
   },
   "devDependencies": {
     "@types/node": "^22",

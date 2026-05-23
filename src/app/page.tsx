@@ -8,6 +8,7 @@ import { TaxOverlayTeaser } from "@/components/TaxOverlayTeaser";
 import { AskWidget } from "@/components/AskWidget";
 import { CityPicker } from "@/components/CityPicker";
 import { TopCitiesMosaic } from "@/components/home/TopCitiesMosaic";
+import { WorldMapSection } from "@/components/home/WorldMapSection";
 import { CitiesDotsMap } from "@/components/CitiesDotsMap";
 import { QualityLegend } from "@/components/QualityLegend";
 import { RotatingWord } from "@/components/RotatingWord";
@@ -270,9 +271,17 @@ export default function HomePage() {
         </div>
       </ToneBand>
 
-      {/* Pick a city: Plan v27 Lane C.1 — replace flat CityPicker with
-          continent-grouped TopCitiesMosaic. CityPicker still imported
-          and available at /world for the dense alphabetical list. */}
+      {/* Plan v30 follow-up — interactive world map. Click a country
+          to open its small-business landscape. Framing is "covers the
+          whole world" — the founder explicitly wants no country count. */}
+      <ToneBand tone="home-city-picker">
+        <div id="pick-a-country" className="scroll-mt-20">
+          <WorldMapSection />
+        </div>
+      </ToneBand>
+
+      {/* Pick a city: Plan v27 Lane C.1 — continent-grouped city mosaic
+          below the country map. */}
       <ToneBand tone="home-city-picker">
         <div id="pick-a-city" className="scroll-mt-20">
           <TopCitiesMosaic limit={12} />
