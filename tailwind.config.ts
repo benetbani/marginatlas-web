@@ -78,6 +78,18 @@ const config: Config = {
           700: "#0F766E",
         },
       },
+      keyframes: {
+        // Plan v30 Phase 3 — calm pulse for LoadingSkeleton. Slower
+        // than tailwind's default animate-pulse; smaller opacity range
+        // so the page doesn't feel jittery during loads.
+        atlasPulse: {
+          "0%,100%": { opacity: "0.55" },
+          "50%": { opacity: "0.85" },
+        },
+      },
+      animation: {
+        atlasPulse: "atlasPulse 1800ms ease-in-out infinite",
+      },
       fontFamily: {
         sans: [
           "Inter",

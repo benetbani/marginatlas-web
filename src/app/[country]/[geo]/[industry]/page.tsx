@@ -56,6 +56,7 @@ import {
   estimateEmployeesFromFirms,
 } from "@/lib/extrapolations/fill_missing";
 import { HeroBenchmark } from "@/components/HeroBenchmark";
+import DenseCellHero from "@/components/DenseCellHero";
 import { CityHero } from "@/components/CityHero";
 import { ComparableCitiesRibbon } from "@/components/ComparableCitiesRibbon";
 import { LocalContextCard } from "@/components/LocalContextCard";
@@ -443,20 +444,62 @@ export default async function CellPage({
         altOverride={`${cell.geo_name || geo} - ${cell.industry_name || industry}`}
       />
 
-      {/* Plan v23 Part 2 — story-first hero. ONE giant revenue number under
-          the question-form headline. Replaces the previous grid-with-image
-          layout. The right-side hero image moves to a band lower on the
-          page so the typography can breathe. */}
-      <HeroBenchmark
-        iso2={country.toUpperCase()}
-        countryName={iso2ToName(country) || country.toUpperCase()}
-        geoName={cell.geo_name || iso2ToName(country) || country.toUpperCase()}
-        industryName={cell.industry_name || "businesses"}
-        industryExamples={cell.industry_examples}
-        sectorName={cell.sector_name || null}
-        revenue={cell.revenue_per_firm ?? null}
-        currencySymbol="$"
-      />
+      {/* Plan v30 Phase 4 — DenseCellHero. Replaces the previous
+          HeroBenchmark with a tight first frame packing every key data
+          point above the fold. Coverage chip, sector tag, headline
+          question, hero number, percentile band, and one-liner stats
+          all in ~55vh on desktop and ~100vh on mobile. */}
+      {(() => {
+        const industryName = cell.industry_name || industry.replace(/-/g, " ");
+        const subniches = (cell.industry_examples ?? []).slice(0, 4).join(" · ") || industryName;
+        const question = `How much does a ${industryName.toLowerCase().replace(/s$/, "")} make in ${cell.geo_name || iso2ToName(country) || country.toUpperCase()}?`;
+        const typical = cell.revenue_per_firm ?? cell.rev_p50 ?? 0;
+        const p10 = cell.rev_p10 ?? typical * 0.32;
+        const p90 = cell.rev_p90 ?? typical * 2.6;
+        // Employee count: handle unit-detection (Plan v30 Phase 2).
+        let empPerFirm = 1;
+        if (cell.n_employees && cell.n_employees > 0) {
+          if (cell.n_enterprises && cell.n_enterprises > 0 && cell.n_employees >= cell.n_enterprises) {
+            empPerFirm = Math.max(1, Math.round(cell.n_employees / cell.n_enterprises));
+          } else {
+            empPerFirm = Math.max(1, Math.round(cell.n_employees));
+          }
+        }
+        const heroCoverageTier = deriveCoverageTier(cell);
+        const atlasScore = Math.max(0, Math.min(100, Math.round(cell.quality_score ?? 60)));
+        return typical > 0 ? (
+          <DenseCellHero
+            industryName={industryName}
+            industrySubniches={subniches}
+            sectorId={cell.sector_id || "other_local"}
+            sectorLabel={(cell.sector_name || "Industry").toUpperCase()}
+            iso2={country.toUpperCase()}
+            countryName={iso2ToName(country) || country.toUpperCase()}
+            geoName={cell.geo_name || iso2ToName(country) || country.toUpperCase()}
+            question={question}
+            typicalRevenue={typical}
+            p10Revenue={p10}
+            p90Revenue={p90}
+            employees={empPerFirm}
+            medianWage={cell.payroll_per_employee ?? 30000}
+            netMargin={computedNetMargin ?? 0.08}
+            atlasScore={atlasScore}
+            coverageTier={heroCoverageTier}
+          />
+        ) : (
+          // Fallback to the legacy hero if revenue is missing entirely.
+          <HeroBenchmark
+            iso2={country.toUpperCase()}
+            countryName={iso2ToName(country) || country.toUpperCase()}
+            geoName={cell.geo_name || iso2ToName(country) || country.toUpperCase()}
+            industryName={industryName}
+            industryExamples={cell.industry_examples}
+            sectorName={cell.sector_name || null}
+            revenue={cell.revenue_per_firm ?? null}
+            currencySymbol="$"
+          />
+        );
+      })()}
       {/* Plan v30 Phase 1 — currency switcher only. The 5-year trend
           sparkline was removed: applying a synthesized CAGR to revenue
           gives the wrong impression of measured forecasting. Revive
