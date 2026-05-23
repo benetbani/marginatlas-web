@@ -33,6 +33,7 @@ import {
   ComposableMap,
   Geographies,
   Geography,
+  ZoomableGroup,
 } from "react-simple-maps";
 import { ISO_NUMERIC_TO_ALPHA2 } from "@/lib/iso-codes";
 
@@ -102,16 +103,40 @@ export default function WorldMapPicker({ onSelect, className }: WorldMapPickerPr
     }, 300);
   }, [onSelect]);
 
-  const moveTooltip = (evt: React.MouseEvent) => {
-    if (!hovered || !wrapRef.current) return;
-    const rect = wrapRef.current.getBoundingClientRect();
-    setHovered({ ...hovered, x: evt.clientX - rect.left, y: evt.clientY - rect.top });
-  };
-
-  const enterTooltip = (iso2: string, name: string, evt: React.MouseEvent) => {
+  // Plan v30 hotfix v2 — hover detection via elementFromPoint on the
+  // wrapper, bypassing react-simple-maps's internal event handling
+  // entirely. The previous per-Geography onMouseEnter approach was
+  // failing because the Geography component's hover/pressed style
+  // overrides intercepted event propagation in non-deterministic ways,
+  // causing the tooltip to fixate on the first country hovered.
+  // elementFromPoint reads the topmost element under the cursor at
+  // every mousemove and walks up looking for a [data-iso2] attribute.
+  // Always accurate; works across all browsers; no event-ordering races.
+  const handleMouseMove = (evt: React.MouseEvent) => {
     if (!wrapRef.current) return;
     const rect = wrapRef.current.getBoundingClientRect();
-    setHovered({ iso2, name, x: evt.clientX - rect.left, y: evt.clientY - rect.top });
+    const x = evt.clientX - rect.left;
+    const y = evt.clientY - rect.top;
+    const el = document.elementFromPoint(evt.clientX, evt.clientY) as Element | null;
+    const path = el?.closest("[data-iso2]") as HTMLElement | null;
+    const iso2 = path?.getAttribute("data-iso2");
+    const name = path?.getAttribute("data-name") || iso2 || "";
+    if (iso2) {
+      setHovered((prev) =>
+        prev?.iso2 === iso2 ? { iso2, name, x, y } : { iso2, name, x, y }
+      );
+    } else if (hovered) {
+      setHovered(null);
+    }
+  };
+
+  // Click handler also uses elementFromPoint so it doesn't depend on
+  // Geography's onClick firing reliably.
+  const handleClick = (evt: React.MouseEvent) => {
+    const el = document.elementFromPoint(evt.clientX, evt.clientY) as Element | null;
+    const path = el?.closest("[data-iso2]") as HTMLElement | null;
+    const iso2 = path?.getAttribute("data-iso2");
+    if (iso2) handlePick(iso2);
   };
 
   // Alphabetical tab cycle, sovereign-ish entries only.
@@ -156,8 +181,9 @@ export default function WorldMapPicker({ onSelect, className }: WorldMapPickerPr
     <div
       ref={wrapRef}
       className={`w-full select-none mx-auto max-w-5xl ${className ?? ""}`}
-      onMouseMove={moveTooltip}
+      onMouseMove={handleMouseMove}
       onMouseLeave={() => setHovered(null)}
+      onClick={handleClick}
       onKeyDown={onKeyDown}
     >
       <div className="relative rounded-xl">
@@ -176,13 +202,24 @@ export default function WorldMapPicker({ onSelect, className }: WorldMapPickerPr
 
         <ComposableMap
           projection="geoNaturalEarth1"
-          projectionConfig={{ scale: 215, center: [10, 22] }}
+          projectionConfig={{ scale: 175 }}
           width={980}
-          height={440}
+          height={470}
           style={{ width: "100%", height: "auto", background: "transparent", outline: "none" }}
           role="application"
           aria-label="World map. Use arrow keys to move between countries, Enter to select."
         >
+          {/* Plan v30 hotfix v2 — ZoomableGroup restored. Scroll-wheel
+              zooms, click-and-drag pans. Initial view centered slightly
+              north so Antarctica is mostly out of frame without an
+              aggressive crop. Users can zoom in further if they need
+              detail on a specific region. */}
+          <ZoomableGroup
+            center={[10, 15]}
+            zoom={1}
+            minZoom={0.85}
+            maxZoom={6}
+          >
           <Geographies geography={GEO_URL}>
             {({ geographies }: { geographies: GeoFeature[] }) =>
               geographies.map((geo) => {
@@ -197,16 +234,11 @@ export default function WorldMapPicker({ onSelect, className }: WorldMapPickerPr
                     key={geo.rsmKey}
                     geography={geo}
                     data-iso2={iso2 ?? undefined}
+                    data-name={name}
                     role={clickable ? "button" : undefined}
                     tabIndex={clickable ? -1 : undefined}
                     aria-label={clickable ? name : undefined}
                     aria-hidden={!clickable || undefined}
-                    onMouseEnter={clickable ? (e) => enterTooltip(iso2!, name, e) : undefined}
-                    onMouseLeave={clickable ? () => setHovered(null) : undefined}
-                    onMouseMove={clickable ? (e) => enterTooltip(iso2!, name, e) : undefined}
-                    onMouseDown={clickable ? () => setActive(iso2) : undefined}
-                    onMouseUp={clickable ? () => setActive(null) : undefined}
-                    onClick={clickable ? () => handlePick(iso2) : undefined}
                     onFocus={clickable ? () => setFocusIso(iso2) : undefined}
                     style={{
                       default: {
@@ -237,11 +269,8 @@ export default function WorldMapPicker({ onSelect, className }: WorldMapPickerPr
             }
           </Geographies>
 
-          {/* Plan v30 hotfix — micro-state overlay dots removed. Founder
-              feedback: "it has some strange cities printed on it, which
-              is exactly the thing we surely didn't want." The map is
-              clean now; Monaco, Vatican, Singapore, etc. remain selectable
-              via the country list / search fallback. */}
+          {/* Micro-state overlay dots removed earlier. Map is clean. */}
+          </ZoomableGroup>
         </ComposableMap>
 
         {hovered && (
@@ -259,9 +288,6 @@ export default function WorldMapPicker({ onSelect, className }: WorldMapPickerPr
         )}
       </div>
 
-      <p className="mt-4 text-xs tracking-wide" style={{ color: COLORS.cocoa700 }}>
-        Hover a country &middot; Tap on mobile &middot; Covers the whole world
-      </p>
     </div>
   );
 }

@@ -181,6 +181,15 @@ export default function HomePage() {
         </section>
       </ToneBand>
 
+      {/* Plan v30 hotfix v3 - world map moved to the absolute top of
+          the page, directly under the hero + navigator form. Founder
+          wants it "just below the actual table at the start". */}
+      <ToneBand tone="home-city-picker">
+        <div id="pick-a-country" className="scroll-mt-20">
+          <WorldMapSection />
+        </div>
+      </ToneBand>
+
       {/* Plan v21 Block 5 - image-card explore section replaces the
           pair of compact CTAs. Two big symmetric cards, full-bleed
           background image, click the whole card. */}
@@ -236,16 +245,6 @@ export default function HomePage() {
             ))}
           </div>
         </section>
-      </ToneBand>
-
-      {/* Plan v30 hotfix - world map moved directly below the FEATURED
-          tile grid per founder direction. Was previously buried mid-page
-          after the Ask widget; now sits where a curious visitor sees it
-          right after the first impression. */}
-      <ToneBand tone="home-city-picker">
-        <div id="pick-a-country" className="scroll-mt-20">
-          <WorldMapSection />
-        </div>
       </ToneBand>
 
       {/* Plan v19 Block H - Did You Know surprise facts. Two rotating
