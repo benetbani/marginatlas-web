@@ -5,6 +5,7 @@ import { Newsreader, Inter } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Organization } from "@/components/StructuredData";
 import { HeaderSearch } from "@/components/HeaderSearch";
+import { FooterNewsletterBar } from "@/components/newsletter/NewsletterSignupVariants";
 
 // Plan v30 Phase 3 — typography reset.
 // Newsreader: warm, bookish editorial serif designed for screen reading.
@@ -90,6 +91,9 @@ export default function RootLayout({
           </div>
         </header>
         <main className="max-w-7xl mx-auto px-6 py-10">{children}</main>
+        {/* Plan v30 Bundle 5 — site-wide newsletter signup bar; calm,
+            non-aggressive, slim. Sits above the main footer. */}
+        <FooterNewsletterBar />
         <footer className="border-t border-ink-200 bg-ink-100">
           <div className="max-w-7xl mx-auto px-6 py-12">
             <div className="flex items-center gap-2 font-semibold text-ink-900 mb-8">
