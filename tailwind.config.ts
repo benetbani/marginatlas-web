@@ -10,45 +10,47 @@ const config: Config = {
         // cool colors except a single sparse deep teal. Aquamarine is
         // reserved for the founder's other product and never appears here.
         ink: {
-          50: "#FAFAF7",   // warm off-white — original page bg (kept for back-compat)
-          100: "#F0F0EA",  // soft warm gray — alt background
-          200: "#E5E5E0",  // borders, dividers
-          300: "#D4D4CE",
+          50: "#FAFAFA",   // off-white (kept for back-compat, was warm)
+          100: "#F0F0F0",  // soft gray — alt background (was warm)
+          200: "#E5E5E5",  // borders, dividers (was warm)
+          300: "#D4D4D4",
           500: "#737373",
           600: "#525252",
-          700: "#3F3F3D",
-          800: "#27272A",
-          900: "#1A1A1A",  // rich graphite — text primary
+          700: "#3A3A3A",  // matches picker slot 4
+          800: "#1A1A1A",
+          900: "#000000",  // PURE BLACK — text primary (was #1A1A1A)
         },
-        // Plan v31 starter — atlas accent shifted from burnt amber to brick
-        // red. Founder direction: "terracotta but shifted more to red...
-        // some sort of dark brick color with a red tint." This single
-        // token change ripples across every cell page, button, link,
-        // sector chip, waterfall accent, and the world map highlight.
+        // Plan v31 starter v2 — palette locked from founder color-picker
+        // screenshot. Five colors: pure white, near-white surface,
+        // vermillion accent (#D73A14), dark gray, black. SaaS-modern,
+        // not editorial-warm.
         atlas: {
-          50:  "#FEF2F2",  // pale wash (replaces #FEF7ED amber wash)
-          100: "#FEE2E2",  // subtle highlight
-          200: "#FECACA",  // light brick
-          300: "#FCA5A5",  // tertiary chips
-          400: "#EF4444",  // mid brick
-          500: "#B91C1C",  // PRIMARY ACCENT — true brick red (was burnt amber #D97706)
-          600: "#991B1B",  // deeper brick (hover-pressed)
-          700: "#7F1D1D",  // headline accents (was #9A3412)
-          800: "#681414",  // deepest brick
-          900: "#450A0A",  // darkest, footer accents
+          50:  "#FFF1ED",  // pale wash
+          100: "#FED7C6",  // subtle highlight background
+          200: "#FCAA8B",  // light vermillion
+          300: "#F87850",  // tertiary chips
+          400: "#E94E20",  // mid vermillion
+          500: "#D73A14",  // PRIMARY ACCENT — vermillion (from color picker)
+          600: "#B82F0F",  // hover-pressed
+          700: "#952509",  // headline accents
+          800: "#6F1A06",  // deepest
+          900: "#491004",  // darkest, footer accents
         },
-        // Plan v31 starter — cream becomes the SURFACE color, not the
-        // page background. New page bg is pure off-white below.
-        // These tokens kept for back-compat; cards still use them.
+        // cream tokens become pure-white-to-light-gray surfaces.
+        // cream.50 = page background; cream.100 = card surface;
+        // cream.300 = borders. All from the picker's neutral track.
         cream: {
-          50:  "#FAFAFA",  // page background — neutral warm-tinted white
-          100: "#F5F5F4",  // primary card surfaces (lighter than before)
-          200: "#EEEDEC",  // hover surface on tiles
-          300: "#E5E5E4",  // soft borders
-          400: "#D6D5D3",
-          500: "#A8A7A4",
+          50:  "#FFFFFF",  // page background — PURE WHITE
+          100: "#F5F5F5",  // primary card surfaces (slot 2 in picker)
+          200: "#EAEAEA",  // hover surface on tiles
+          300: "#DDDDDD",  // soft borders
+          400: "#BBBBBB",
+          500: "#888888",
         },
-        parchment: "#E5E5E4", // border token — neutral gray, no warm tint
+        parchment: "#DDDDDD", // border token — neutral gray
+        // Dark gray secondary slot from the picker — surfaces a calmer
+        // text tone for muted labels and secondary chrome.
+        graphite: "#3A3A3A",
         // Moss — positive deltas (replaces harsh emerald)
         moss: {
           50:  "#F7FCE8",
