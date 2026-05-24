@@ -8,6 +8,10 @@
 import { supabaseAdmin } from "./supabase";
 import { applyCurrencyCorrection, CURRENCY_FX_CORRECTIONS } from "./qa/currency_corrections";
 import {
+  applyPlausibilitySuppression,
+  getCatastropheCeiling,
+} from "./qa/plausibility_suppression";
+import {
   rollForward,
   INFLATION_TARGET_YEAR,
 } from "./stats/inflation";
@@ -271,7 +275,7 @@ function normalizeRegionalRow(r: Record<string, unknown>): Cell {
   // Plan v32 Phase 0 — apply render-time currency correction for the
   // 2,298 local-currency-as-USD cells flagged by the May 2026 audit.
   // No-op for countries not on the correction list.
-  return applyCurrencyCorrection(applyRollforward(applyTaxonomy(cell)));
+  return applyPlausibilitySuppression(applyCurrencyCorrection(applyRollforward(applyTaxonomy(cell))));
 }
 
 /**
@@ -420,7 +424,7 @@ function normalizeRow(r: Record<string, unknown>): Cell {
     currency: (r.currency as string) || "USD",
   };
   // Plan v32 Phase 0 — render-time currency correction (see note above).
-  return applyCurrencyCorrection(applyRollforward(applyTaxonomy(cell)));
+  return applyPlausibilitySuppression(applyCurrencyCorrection(applyRollforward(applyTaxonomy(cell))));
 }
 
 export type CellSelector = {
@@ -753,16 +757,22 @@ export async function getTopIndustriesForCountry(
     const rev = rawRev * fxScale;
     if (!seen.has(id) || (seen.get(id) || 0) < rev) seen.set(id, rev);
   }
+  // Plan v32 Phase 1 — apply plausibility suppression at row level too.
+  // Same logic as applyPlausibilitySuppression: if the post-FX value
+  // exceeds the industry's catastrophe ceiling, null it out instead of
+  // surfacing "$1.8B per firm" on the country at-a-glance row.
   const rows: TopIndustryRow[] = [];
   for (const [id, rev] of seen.entries()) {
     const ind = INDUSTRY_BY_ID[id];
     if (!ind) continue;
     const a = ind.audience || "smb_friendly";
     if (a !== "smb_core" && a !== "smb_friendly") continue;
+    const ceiling = getCatastropheCeiling(id);
+    const cleaned = rev > 0 && rev <= ceiling ? rev : null;
     rows.push({
       industry_id: id,
       industry_name: ind.name,
-      revenue_per_firm: rev,
+      revenue_per_firm: cleaned,
       n_enterprises: null,
     });
   }
@@ -1000,7 +1010,7 @@ export async function getExtrapolatedCell(
   // Plan v32 Phase 0 — render-time currency correction. extrapolated_cells
   // also receives values from the same ingestion pipeline that produced
   // the local-currency-as-USD cells, so the correction applies here too.
-  return applyCurrencyCorrection(applyRollforward(applyTaxonomy(cell)));
+  return applyPlausibilitySuppression(applyCurrencyCorrection(applyRollforward(applyTaxonomy(cell))));
 }
 
 /**
