@@ -89,23 +89,29 @@ data. No fancy features, just the working chain.
 - **Auth + tier read.** Wire the existing Supabase Auth to a
   `tier` column on the user. Server-side helper: `getViewerTier()`
   returns `"free" | "pro" | "professional"`.
-- **The first three gates.** Three render-time treatments:
-  - Decile distribution chart: free shows median bar only; Pro shows
-    the full 10-25-50-75-90 spread.
-  - Cost stack: free shows the top 3 lines (rent + payroll + COGS);
-    Pro shows all 8 lines plus the operating profit number.
-  - Setup costs: free shows the total estimate only; Pro shows the
+- **The first three gates** (per the locked decision: free is
+  intentionally more generous than the original spec):
+  - Decile distribution chart: **free shows the 10th, 50th, and
+    90th percentiles** (low + middle + high); Pro adds the 25th
+    and 75th (the full quartile shape inside the spread).
+  - Cost stack: free shows total operating cost + the three biggest
+    lines (rent + payroll + COGS) summed; Pro shows the full 8-line
+    itemization with per-line %, plus operating profit number.
+  - Setup costs: free shows the two grand totals (registration
+    and capital fit-out) and the payback months; Pro shows the
     itemized box-1 + box-2 breakdown.
-  - All three implemented as `if (viewer === "free")` branches in the
-    existing components. No new components.
+  - All three as `if (viewer === "free")` branches in existing
+    components. No new components.
 - **The gate UI.** A small inline "Pro" pill + a blurred-content
   treatment (`backdrop-filter: blur(6px)` + a "Show me with Pro" CTA
   overlay). Editorial-toned, not SaaS-spammy. Follows the May 24
   research recommendations.
-- **Pricing page updates.** Replace placeholder $19 Pro with $39.
-  Update feature matrix to reflect the actual gates. Trial: 7 days,
-  card required.
-- **Acceptance criteria for Week 1:** I can pay $39 on the live site,
+- **Pricing page updates.** Replace placeholder $19 Pro with $37.
+  Replace placeholder $79 Team with $77 (rename Team → Professional).
+  Update feature matrix to reflect the actual gates. **No trial. No
+  money-back.** Single line on the pricing page: "Charged immediately.
+  Cancel from your account any time."
+- **Acceptance criteria for Week 1:** I can pay $37 on the live site,
   receive a confirmation email, return to any cell page, and see
   full decile + cost stack + setup-cost detail that a non-paying
   visitor cannot see.
@@ -264,35 +270,20 @@ Things that are tempting but distract from the thesis:
 
 ---
 
-## Open questions for the founder before Day 1
+## Decisions locked (founder, 2026-05-24)
 
-If any of these answers are "I don't know yet," that's fine — but
-they need answers by Day 1 of the sprint.
+| Question | Decision |
+|---|---|
+| **Base pricing** | $37/mo Pro, $77/mo Pro+ (Professional). Monthly only for now. No annual pricing yet. |
+| **Free trial** | None. Founder explicit: trials misdirect intent and front-load conversion that wouldn't otherwise happen. Stripe checkout charges immediately. |
+| **Money-back guarantee** | None. Founder: "it's just the data." |
+| **Stripe account** | Existing Tesseract Research account, with two new Products inside it (Pro $37, Pro+ $77). Marginatlas.com gets its own statement descriptor and product page. No new Stripe account. |
+| **Email platform** | Existing ConvertKit account. New Sender + Form for marginatlas.com once `hello@marginatlas.com` is set up (DNS + sender verification). |
+| **Free tier generosity** | More generous than the original recommendation. Free shows median + top decile + bottom decile (so visitors see the full top/bottom of the distribution, not just the middle). Pro unlocks deeper resolution: the 25th + 75th percentiles, the full cost stack itemization, the setup-cost itemization, time-series tail, city-level cuts, sub-industry variants, exports, comparison-with-more-than-2-cells. |
+| **Sub-industry approval** | Ship as researched. Founder: "go with whatever you can do." |
+| **Annual pricing** | Defer. Revisit after first 60 days of monthly conversion data. |
 
-1. **Pricing commitment.** $39/mo as base. Annual $390 (~2 months
-   free)? Or $419 (10% off)? I'll default to $390 if no answer.
-2. **Trial mechanic.** 7-day with card required (higher conversion
-   to paid, lower trial start rate) or 14-day no card (higher trial
-   starts, lower conversion to paid)? Default: 7-day card required.
-3. **Stripe account.** Do you already have one for Tesseract
-   Research? If yes, I'll wire that. If no, set one up first
-   (15 minutes); I'll do the rest.
-4. **Email platform.** Klaviyo, ConvertKit, Loops, Beehiiv, Mailchimp,
-   Substack? I'll default to ConvertKit (good developer API, fair
-   pricing, won't fight us on editorial tone). Tell me if you
-   already have a preference.
-5. **Money-back guarantee.** Per the research, 30-day money-back
-   beats 7-day trial for buyer confidence in editorial brands. Add
-   a 30-day money-back at the same time as the 7-day trial? My
-   recommendation: yes.
-6. **Gate aggressiveness.** Free tier shows decile median (one
-   number) or median + adjacent bars (three numbers)? Default: just
-   the median bar so the Pro unlock has obvious value. If you want
-   to be more generous, default to top 3 + bottom 3 visible and
-   middle 4 gated.
-7. **Sub-industry approval.** When research for a (variant × country)
-   completes, do you want to review each before data_ready flips on,
-   or trust the methodology and ship?
+These are baked into the sprint plan that follows.
 
 ---
 
