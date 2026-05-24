@@ -6,6 +6,7 @@
  * via the local taxonomy.ts module — no DB migration required.
  */
 import { supabaseAdmin } from "./supabase";
+import { applyCurrencyCorrection, CURRENCY_FX_CORRECTIONS } from "./qa/currency_corrections";
 import {
   rollForward,
   INFLATION_TARGET_YEAR,
@@ -267,7 +268,10 @@ function normalizeRegionalRow(r: Record<string, unknown>): Cell {
     coverage_source: (r.coverage_source as string) || "National business statistics",
     currency: (r.currency as string) || "USD",
   };
-  return applyRollforward(applyTaxonomy(cell));
+  // Plan v32 Phase 0 — apply render-time currency correction for the
+  // 2,298 local-currency-as-USD cells flagged by the May 2026 audit.
+  // No-op for countries not on the correction list.
+  return applyCurrencyCorrection(applyRollforward(applyTaxonomy(cell)));
 }
 
 /**
@@ -415,7 +419,8 @@ function normalizeRow(r: Record<string, unknown>): Cell {
     coverage_source: r.coverage_source as string | null,
     currency: (r.currency as string) || "USD",
   };
-  return applyRollforward(applyTaxonomy(cell));
+  // Plan v32 Phase 0 — render-time currency correction (see note above).
+  return applyCurrencyCorrection(applyRollforward(applyTaxonomy(cell)));
 }
 
 export type CellSelector = {
@@ -737,10 +742,15 @@ export async function getTopIndustriesForCountry(
     .order("predicted_rev_per_firm", { ascending: false, nullsFirst: false })
     .limit(200);
   if (error || !data) return [];
+  // Plan v32 Phase 0 — apply currency correction at the row level here
+  // since these rows never flow through normalizeRegionalRow (they go
+  // straight from the DB into TopIndustryRow). Same FX map.
+  const fxScale = CURRENCY_FX_CORRECTIONS[country] ? 1 / CURRENCY_FX_CORRECTIONS[country] : 1;
   const seen = new Map<string, number>();
   for (const r of data) {
     const id = r.industry_id as string;
-    const rev = (r.predicted_rev_per_firm as number) || 0;
+    const rawRev = (r.predicted_rev_per_firm as number) || 0;
+    const rev = rawRev * fxScale;
     if (!seen.has(id) || (seen.get(id) || 0) < rev) seen.set(id, rev);
   }
   const rows: TopIndustryRow[] = [];
@@ -987,7 +997,10 @@ export async function getExtrapolatedCell(
     coverage_source: (r.coverage_source as string) || "Estimated from regional patterns",
     currency: "USD",
   };
-  return applyRollforward(applyTaxonomy(cell));
+  // Plan v32 Phase 0 — render-time currency correction. extrapolated_cells
+  // also receives values from the same ingestion pipeline that produced
+  // the local-currency-as-USD cells, so the correction applies here too.
+  return applyCurrencyCorrection(applyRollforward(applyTaxonomy(cell)));
 }
 
 /**
