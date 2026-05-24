@@ -40,7 +40,16 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import { CellWarningChips } from "@/components/CellWarningChips";
 // Plan v13 Wave 4a (D2) — EmptyStateCard import removed; we degrade silently now.
 // import { EmptyStateCard } from "@/components/EmptyStateCard";
-import { CorrectionForm } from "@/components/CorrectionForm";
+// Plan v32 perf — CorrectionForm is a heavy client form at the very
+// bottom of every cell page. Maybe 0.1% of visitors ever click "Send a
+// correction"; meanwhile its JS shipped with every cell page load.
+// Dynamic import code-splits it into its own chunk that only loads if
+// the section is reached. No visible behavior change.
+import dynamic from "next/dynamic";
+const CorrectionForm = dynamic(
+  () => import("@/components/CorrectionForm").then((m) => ({ default: m.CorrectionForm })),
+  { loading: () => null },
+);
 import { CurrencySwitcher } from "@/components/CurrencySwitcher";
 import { Money } from "@/components/Money";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
@@ -108,22 +117,53 @@ export const maxDuration = 60;
 type Params = { country: string; geo: string; industry: string };
 
 /**
- * Plan v22 Block D1 — pre-render the top 200 highest-traffic cells at
- * build time. Doubled from 100. First visitors to these URLs pay no
- * Supabase cost; subsequent visitors get edge-cached responses.
+ * Plan v32 perf — pre-render a curated ~20 highest-traffic cells at
+ * build time. The v30 hotfix removed pre-rendering entirely to fix
+ * an OOM during build. Vercel Pro + Supabase Pro now have enough
+ * headroom to safely pre-render a small focused set without
+ * triggering OOM. Everything else still ISR on demand.
+ *
+ * Selection rules:
+ *   1. The six FEATURED tiles on the homepage (must be fast on
+ *      homepage click-through).
+ *   2. The most-likely top organic traffic targets: California /
+ *      NYC / Texas / Florida restaurants, top EU countries
+ *      restaurants, GB cafes, top pilot industries on California.
+ *
+ * Each pre-rendered URL serves instantly from the edge CDN with
+ * zero Supabase round-trip on first visit. Every other cell is
+ * ISR via revalidate above; first visit triggers a 1-3s render,
+ * subsequent visits cached.
  */
 export async function generateStaticParams(): Promise<Params[]> {
-  // Plan v30 hotfix — return empty array. Cell pages are NOT
-  // pre-rendered at build time anymore; they render on-demand via
-  // ISR (revalidate=21600 above keeps them cached for 6h after first
-  // hit). Returning 200+ static cells here was the single biggest
-  // contributor to the build-worker OOM that killed every Vercel
-  // deploy since the new bundles landed.
-  //
-  // Trade-off: first visitor to each cell hits a 1-3s cold render;
-  // every subsequent visitor reads from the edge cache. Acceptable
-  // given the alternative is no deploys at all.
-  return [];
+  return [
+    // The 6 FEATURED tiles from the homepage. Kept in sync manually
+    // with src/app/page.tsx FEATURED array.
+    { country: "us", geo: "california", industry: "software-development" },
+    { country: "gb", geo: "gb",         industry: "legal-services" },
+    { country: "de", geo: "de21",       industry: "fabricated-metal-mfg" },
+    { country: "es", geo: "es511",      industry: "restaurants" },
+    { country: "mx", geo: "mx-roo",     industry: "hotels-lodging" },
+    { country: "us", geo: "california", industry: "restaurants" },
+
+    // Top US states x highest-traffic industries.
+    { country: "us", geo: "new-york",   industry: "restaurants" },
+    { country: "us", geo: "texas",      industry: "restaurants" },
+    { country: "us", geo: "florida",    industry: "restaurants" },
+    { country: "us", geo: "california", industry: "cafes-coffee" },
+    { country: "us", geo: "california", industry: "hairdressers-beauty" },
+    { country: "us", geo: "california", industry: "auto-repair-shops" },
+    { country: "us", geo: "california", industry: "hotels-lodging" },
+    { country: "us", geo: "california", industry: "legal-services" },
+
+    // Top non-US countries x restaurants (cross-country compare destinations).
+    { country: "gb", geo: "gb",         industry: "restaurants" },
+    { country: "gb", geo: "gb",         industry: "cafes-coffee" },
+    { country: "de", geo: "de",         industry: "restaurants" },
+    { country: "fr", geo: "fr",         industry: "restaurants" },
+    { country: "it", geo: "it",         industry: "restaurants" },
+    { country: "jp", geo: "jp",         industry: "restaurants" },
+  ];
 }
 
 export async function generateMetadata({

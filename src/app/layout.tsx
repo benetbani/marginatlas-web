@@ -1,5 +1,16 @@
 import "./globals.css";
 import type { Metadata } from "next";
+
+// Plan v32 perf — pin all server-rendered routes to Frankfurt. Supabase
+// project lives in eu-west-1 (per the dashboard banner); Vercel default
+// is iad1 (US East). Every Supabase query was eating ~80-150ms of
+// transatlantic round-trip latency. Pinning Vercel to fra1 (Frankfurt)
+// puts the function 10-30ms from the DB. With 4 queries per cell page
+// that's roughly 300-600ms shaved off the cold-render time.
+//
+// Override per-route by re-exporting preferredRegion at the page level.
+export const preferredRegion = "fra1";
+
 import Script from "next/script";
 import { Newsreader, Inter } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
