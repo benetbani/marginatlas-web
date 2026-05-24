@@ -481,6 +481,476 @@ export const CITY_CHARACTERS: CityCharacter[] = [
     surprise:
       "Italy's regional VAT and labour rules vary significantly between Lombardy (Milan) and southern regions. Operators expanding from one to the other often discover the same business model has materially different unit economics.",
   },
+
+  {
+    geo_id: "PT-CITY-lisbon",
+    display_name: "Lisbon",
+    country_iso2: "PT",
+    economic_identity:
+      "Lisbon's small-business economy was reshaped twice in a decade: first by the post-2014 tourism boom that quadrupled short-term rentals and pushed restaurants and cafes into tourism dependence, then by the post-2020 tech and remote-worker influx that pulled rents up sharply across previously affordable districts. Independent local businesses now operate in a city with German prices and Portuguese wages, a structural squeeze that defines almost every operating decision.",
+    defining_industries: [
+      "restaurants",
+      "cafes_coffee",
+      "hotels_lodging",
+      "hairdressers_beauty",
+      "real_estate_agencies",
+    ],
+    cost_quirks:
+      "Wages are the lowest in Western Europe (a server earns EUR 850-1,100 net per month) but rent in central districts has tripled since 2015. The result: payroll runs ~20-25% of revenue (low by EU standards), but rent runs 12-18% (higher than most of southern Europe). Tourist-zone restaurants compete on price with locals who have been priced out of those neighborhoods entirely.",
+    owner_archetype:
+      "Increasingly mixed: long-established Portuguese family businesses in residential districts, foreign-owned (French, Italian, Brazilian, American, British) tourism-dependent businesses in the central Pombaline grid.",
+    neighborhoods: [
+      {
+        name: "Baixa & Chiado",
+        blurb:
+          "Almost entirely tourist-driven. Restaurants run on lunch tour groups and dinner couples; few year-round local customers. Highest rent per square meter in Portugal.",
+        defining_industries: ["restaurants", "cafes_coffee", "clothing_stores"],
+      },
+      {
+        name: "Alfama & Mouraria",
+        blurb:
+          "Tourist + Airbnb economy with pockets of older Portuguese residents. Fado restaurants, miradouro cafes, souvenir shops. Tight medieval streets limit space and force micro-formats.",
+        defining_industries: ["restaurants", "cafes_coffee"],
+      },
+      {
+        name: "Principe Real & Bairro Alto",
+        blurb:
+          "Most cosmopolitan independent-retail district. Boutique fashion, specialty bookstores, third-wave coffee. Higher disposable-income foreign residents anchor demand.",
+        defining_industries: ["cafes_coffee", "clothing_stores", "restaurants"],
+      },
+      {
+        name: "Marvila & Beato",
+        blurb:
+          "Industrial heritage converted to creative spaces. Craft breweries, design studios, coworking. Rent climbing but still affordable by central-Lisbon standards.",
+        defining_industries: ["cafes_coffee", "restaurants", "bars_nightclubs"],
+      },
+    ],
+    surprise:
+      "Portugal's RNAL (short-term rental register) creates a parallel commercial-property economy. Many storefronts in central Lisbon are worth more as ground-floor apartments converted to tourist rentals than as commercial leases, creating long-term structural pressure on retail viability.",
+  },
+
+  {
+    geo_id: "ES-CITY-barcelona",
+    display_name: "Barcelona",
+    country_iso2: "ES",
+    economic_identity:
+      "Barcelona runs a small-business economy uniquely shaped by tourism + dense urbanism + a politically active local government. Catalonia's regional autonomy gives the city distinct labour and consumer protections vs the rest of Spain; the Ada Colau administration's 2016-2023 policies (short-term-rental moratorium, terrace restrictions, retail-protection zones) reshaped what could open where. Independent businesses outside the tourist core remain unusually resilient.",
+    defining_industries: [
+      "restaurants",
+      "cafes_coffee",
+      "clothing_stores",
+      "hotels_lodging",
+      "hairdressers_beauty",
+    ],
+    cost_quirks:
+      "Wages are mid-range for Western Europe (kitchen wages EUR 1,100-1,500 net). Rent is the highest in Spain in central districts but lower than Lisbon's central core. The big cost line nobody models well: terrace fees + sidewalk-occupation taxes for restaurants and cafes can add EUR 5K-25K/year per location.",
+    owner_archetype:
+      "Catalan family businesses (multi-generational restaurants, panaderias) and increasingly Argentinian, Italian, French, and Latin American entrepreneurs running independent restaurants and cafes.",
+    neighborhoods: [
+      {
+        name: "El Born & Gothic Quarter",
+        blurb:
+          "Highest tourist density in Spain. Tapas bars, boutique hotels, fashion retail. Restrictive licensing means new establishments rare; existing licenses trade as part of business sales.",
+        defining_industries: ["restaurants", "clothing_stores", "hotels_lodging"],
+      },
+      {
+        name: "Gracia",
+        blurb:
+          "Distinctive bohemian-residential character. Independent cafes, vintage stores, family restaurants, small theaters. Lower rent than the tourist core; strong local customer loyalty.",
+        defining_industries: ["cafes_coffee", "restaurants", "clothing_stores"],
+      },
+      {
+        name: "Eixample",
+        blurb:
+          "Office-worker lunch trade by day, residential by night. Mid-tier restaurants, dental clinics, hairdressers, gyms. Most balanced economy in the city.",
+        defining_industries: ["restaurants", "dental_practices", "sports_fitness"],
+      },
+      {
+        name: "Poblenou",
+        blurb:
+          "Former industrial district now in the 22@ tech zone. Coworking, third-wave cafes, casual restaurants serving tech workers. Rapid rent growth since 2015.",
+        defining_industries: ["cafes_coffee", "restaurants"],
+      },
+    ],
+    surprise:
+      "Barcelona's restaurant terraces operate under both city and municipal-district rules; the same operator on opposite sides of a single street can face different chair limits and operating hours. Veteran operators choose addresses partly on which district's specific terrace regulation favors their format.",
+  },
+
+  {
+    geo_id: "NL-CITY-amsterdam",
+    display_name: "Amsterdam",
+    country_iso2: "NL",
+    economic_identity:
+      "Amsterdam is dense, regulated, and increasingly expensive. The historic canal-ring layout limits commercial footprint; the city's strict zoning differentiates 'living' streets (limited retail) from 'shopping' streets (concentrated commerce). Add the highest VAT in the EU at 21% on most goods, and the resulting economy strongly favors high-margin, design-led, low-footprint formats.",
+    defining_industries: [
+      "restaurants",
+      "cafes_coffee",
+      "hotels_lodging",
+      "clothing_stores",
+      "bars_nightclubs",
+    ],
+    cost_quirks:
+      "Dutch labour costs include some of the highest employer-side contributions in Europe (~30% on top of gross wages). Rent in De Negen Straatjes and the Jordaan is among the highest per square meter in continental Europe. Compensating: high disposable-income customers, English-language ease for international staff, fast business registration (1 day at the KvK).",
+    owner_archetype:
+      "Dutch-trained operators alongside an unusually international cohort (British, German, French, increasingly American). Most independent restaurant owners came up through Dutch culinary school + 5+ years in established kitchens.",
+    neighborhoods: [
+      {
+        name: "Jordaan",
+        blurb:
+          "Boutique retail + cafes + casual restaurants in historic narrow buildings. Strong residential customer base supports independent businesses; tourist overflow on weekends.",
+        defining_industries: ["restaurants", "cafes_coffee", "clothing_stores"],
+      },
+      {
+        name: "De Pijp",
+        blurb:
+          "Most lively independent-restaurant cluster. Albert Cuyp market anchors the area. International + Dutch-resident customer mix; mid-tier prices.",
+        defining_industries: ["restaurants", "cafes_coffee", "grocery_stores"],
+      },
+      {
+        name: "Zuidas",
+        blurb:
+          "Financial-business district. Weekday-only lunch + after-work trade. International chains dominate; few genuinely independent restaurants survive.",
+        defining_industries: ["restaurants", "legal_services"],
+      },
+      {
+        name: "Noord",
+        blurb:
+          "Former industrial waterfront across the IJ. Craft breweries, art-collective spaces, casual restaurants. Lower rent + rapid demographic shift; the next 5 years will define what survives.",
+        defining_industries: ["cafes_coffee", "restaurants", "bars_nightclubs"],
+      },
+    ],
+    surprise:
+      "Amsterdam's 'horeca' license is tied to the specific premises, not the operator. Buying an existing license-holding business often costs more than the business itself, because licenses for restaurants in central canal-ring buildings are functionally capped.",
+  },
+
+  {
+    geo_id: "MX-CITY-mexico-city",
+    display_name: "Mexico City",
+    country_iso2: "MX",
+    economic_identity:
+      "Mexico City's small-business economy is among the most stratified globally. The same metropolitan area contains Polanco luxury retail (price points comparable to Madrid or Miami) and 30 minutes away, neighborhood economies running on USD 4 average tickets. Informal economy (street vendors, market stalls, unregistered shops) accounts for an estimated 30-40% of total small-business activity by transaction count.",
+    defining_industries: [
+      "restaurants",
+      "cafes_coffee",
+      "grocery_stores",
+      "auto_repair_shops",
+      "hairdressers_beauty",
+    ],
+    cost_quirks:
+      "Wages are very low relative to peer megacities (a server earns USD 350-600/month). Rent varies 20-50x between Tlalpan and Polanco. Informal operating means many businesses don't pay VAT, payroll taxes, or registration fees, which creates a structural disadvantage for formally registered businesses competing on the same street.",
+    owner_archetype:
+      "Either multi-generational Mexican families running neighborhood businesses, or returnees from the US with cross-border experience setting up modern formats, or international (Argentinian, Colombian, Spanish) operators in the more cosmopolitan districts.",
+    neighborhoods: [
+      {
+        name: "Polanco",
+        blurb:
+          "Premium retail, fine dining, luxury hospitality. Customer base is Mexican upper class + corporate expats + tourists. Operating costs and customer expectations both 5-10x the city average.",
+        defining_industries: ["restaurants", "clothing_stores", "hotels_lodging"],
+      },
+      {
+        name: "Roma & Condesa",
+        blurb:
+          "Most concentrated cosmopolitan independent scene in Latin America. Third-wave coffee, gastro-restaurants, designer boutiques. Strong cohort of foreign residents lifting price points.",
+        defining_industries: ["cafes_coffee", "restaurants", "clothing_stores"],
+      },
+      {
+        name: "Coyoacan",
+        blurb:
+          "Historic residential district. Independent restaurants, panaderias, libraries, museums. Tourist + local-resident mix; mid-tier price points.",
+        defining_industries: ["restaurants", "cafes_coffee"],
+      },
+      {
+        name: "Iztapalapa",
+        blurb:
+          "One of the largest delegations by population. Dense neighborhood retail: bodegas, taquerias, auto-repair shops, beauty salons. Cash-heavy, high transaction velocity, thin margins.",
+        defining_industries: ["restaurants", "grocery_stores", "auto_repair_shops"],
+      },
+    ],
+    surprise:
+      "Mexico City's elevation (2,240m / 7,350 ft) genuinely affects commercial-kitchen operation. Yeasted-bread bakeries proof faster, deep-fryers boil oil at lower temperature, espresso extraction is harder to dial in. Operators expanding from coastal Mexico often discover their recipes need rebuilding.",
+  },
+
+  {
+    geo_id: "BR-CITY-sao-paulo",
+    display_name: "Sao Paulo",
+    country_iso2: "BR",
+    economic_identity:
+      "Sao Paulo runs the most internally diverse small-business economy in Latin America. The metropolitan area encompasses Brazilian-Italian neighborhoods (Bixiga, Bras), Brazilian-Japanese (Liberdade), Brazilian-Korean (Bom Retiro), Brazilian-Lebanese (downtown), each with distinct food and retail traditions. Sao Paulo accounts for an outsized share of national premium retail; outside the wealthier Western and Southern zones, the economy looks closer to other Brazilian metros.",
+    defining_industries: [
+      "restaurants",
+      "cafes_coffee",
+      "hairdressers_beauty",
+      "clothing_stores",
+      "grocery_stores",
+    ],
+    cost_quirks:
+      "Brazilian payroll burden is among the highest in the world: total labour cost runs ~1.7-1.8x gross wage when all encargos sociais are added. Compensating: cost of materials is low for domestically sourced inputs (food, basic retail); imported goods carry substantial tariffs and currency-exposed pricing. Rent in Jardins / Itaim Bibi is high; in Lapa or Mooca, very moderate.",
+    owner_archetype:
+      "Multi-generational immigrant-family businesses (Italian, Japanese, Lebanese descent) plus a growing cohort of professionalized restaurant + cafe entrepreneurs in the wealthier zones.",
+    neighborhoods: [
+      {
+        name: "Jardins (Cerqueira Cesar, Jardim Paulista)",
+        blurb:
+          "Premium retail + fine dining + boutique hotels. Highest disposable-income customer base in Latin America. Restaurants here regularly carry Sao Paulo's representative on World's 50 Best lists.",
+        defining_industries: ["restaurants", "clothing_stores", "hairdressers_beauty"],
+      },
+      {
+        name: "Vila Madalena",
+        blurb:
+          "Bohemian-creative district. Independent bars, casual restaurants, art galleries, vintage shops. Weekend-night-heavy revenue; quiet weekdays.",
+        defining_industries: ["restaurants", "bars_nightclubs", "cafes_coffee"],
+      },
+      {
+        name: "Liberdade",
+        blurb:
+          "Japanese / Korean / Chinese diaspora district. Specialty grocers, ramen shops, Korean BBQ, Asian beauty salons. Distinct from rest of city in customer base and product mix.",
+        defining_industries: ["restaurants", "grocery_stores", "hairdressers_beauty"],
+      },
+      {
+        name: "Itaim Bibi & Faria Lima",
+        blurb:
+          "Financial + corporate district. Weekday lunch + after-work + happy hour. Premium pricing on finance-worker customer base.",
+        defining_industries: ["restaurants", "cafes_coffee", "bars_nightclubs"],
+      },
+    ],
+    surprise:
+      "Brazilian Simples Nacional simplified tax regime caps annual revenue at BRL 4.8M (~USD 950K). Many growing small businesses deliberately split into two legal entities to stay under the cap; crossing it triggers a punitive jump in effective tax rate that makes scaling discontinuously expensive.",
+  },
+
+  {
+    geo_id: "TH-CITY-bangkok",
+    display_name: "Bangkok",
+    country_iso2: "TH",
+    economic_identity:
+      "Bangkok's small-business economy is split between an enormous informal street-economy (street-food, motorcycle-taxi, sidewalk-vendor) and a fast-growing formal mid-market that has built rapidly around shopping malls and BTS / MRT station nodes. The mall-anchored model is dominant for retail and casual dining; the street economy serves locals at price points the formal economy can't reach.",
+    defining_industries: [
+      "restaurants",
+      "cafes_coffee",
+      "hotels_lodging",
+      "hairdressers_beauty",
+      "clothing_stores",
+    ],
+    cost_quirks:
+      "Wages are very low (a server in a mall restaurant earns THB 12,000-18,000/month, USD 340-510). Mall rents are high (often 15-25% of revenue + GTV-linked variable rent). Foreign-ownership restrictions (Thai majority required for many license types) shape who can own what; nominee structures are common but legally risky.",
+    owner_archetype:
+      "Thai-owned independents alongside an unusually large cohort of foreign-married Thais holding the license on behalf of foreign partners, plus international hotel + restaurant groups.",
+    neighborhoods: [
+      {
+        name: "Sukhumvit (Asoke, Phrom Phong, Thong Lor)",
+        blurb:
+          "Mid-to-premium-tier restaurants, third-wave cafes, boutique hotels, beauty clinics. Customer base: Thai middle-upper class + expats + medical tourists. Highest rent corridor in the city.",
+        defining_industries: ["restaurants", "cafes_coffee", "hairdressers_beauty"],
+      },
+      {
+        name: "Siam & Chitlom",
+        blurb:
+          "Mall-anchored retail + dining. Almost entirely chain-operated; independents push out by the rent + rotation model. Customer base is Bangkokian shoppers + tourists.",
+        defining_industries: ["clothing_stores", "restaurants"],
+      },
+      {
+        name: "Chinatown (Yaowarat)",
+        blurb:
+          "Densest street-food and traditional Chinese-Thai retail. Gold shops, dried-seafood wholesalers, all-night noodle stalls. Mostly multi-generational family operations.",
+        defining_industries: ["restaurants", "grocery_stores"],
+      },
+      {
+        name: "Ari & Phaya Thai",
+        blurb:
+          "Younger residential-creative district. Independent cafes, casual restaurants, small fashion boutiques. Lower rent than Sukhumvit + younger Bangkokian customer base.",
+        defining_industries: ["cafes_coffee", "restaurants", "clothing_stores"],
+      },
+    ],
+    surprise:
+      "Bangkok's MRT and BTS station catchment areas create dramatic property-value cliffs: rent for a unit 50m from a station entrance can be double the rent of an identical unit 250m away. Most modern retail leases negotiate explicit station-proximity premiums.",
+  },
+
+  {
+    geo_id: "IN-CITY-mumbai",
+    display_name: "Mumbai",
+    country_iso2: "IN",
+    economic_identity:
+      "Mumbai is shaped by extreme land scarcity (it sits on a narrow peninsula) and by India's most diversified small-business economy. The same city contains both India's highest-priced real estate (South Mumbai) and the world's largest informal slum economy (Dharavi, employing hundreds of thousands in micro-businesses). Formal-economy small businesses cluster around suburban railway corridors; informal economy operates between and below them.",
+    defining_industries: [
+      "restaurants",
+      "cafes_coffee",
+      "clothing_stores",
+      "auto_repair_shops",
+      "grocery_stores",
+    ],
+    cost_quirks:
+      "Wages are very low (a server earns INR 12,000-22,000/month, USD 145-265) but commercial rent in Bandra, Lower Parel, BKC is among the highest in Asia. GST compliance adds substantial paperwork burden disproportionately affecting small operators. Power outages still occur and most established small businesses budget for generator + invertor capital.",
+    owner_archetype:
+      "Multi-generational community-anchored family businesses (Gujarati, Marwari, Parsi, Maharashtrian, Catholic Goan, Muslim communities each with distinct retail clusters), plus a growing cohort of urban returnees from US/UK opening modernized formats.",
+    neighborhoods: [
+      {
+        name: "South Mumbai (Colaba, Fort, Marine Drive)",
+        blurb:
+          "Premium retail + heritage hospitality + offices. Customer base: corporate + tourist + diplomatic. Most internationalized district in Mumbai.",
+        defining_industries: ["restaurants", "hotels_lodging", "clothing_stores"],
+      },
+      {
+        name: "Bandra West",
+        blurb:
+          "Bollywood + creative + affluent residential. Boutique fashion, gastropubs, third-wave cafes, designer salons. Highest premium per square foot for boutique commercial in India.",
+        defining_industries: ["restaurants", "cafes_coffee", "hairdressers_beauty"],
+      },
+      {
+        name: "Andheri (East + West)",
+        blurb:
+          "Massive mixed-use suburban district. Lokhandwala for retail and dining; SEEPZ for IT-corporate lunch trade. Mid-tier pricing; very high foot traffic.",
+        defining_industries: ["restaurants", "cafes_coffee", "clothing_stores"],
+      },
+      {
+        name: "Lower Parel & BKC",
+        blurb:
+          "Former mill district turned corporate financial hub. Weekday-corporate lunch trade dominates. Premium tower rents but limited consumer base outside business hours.",
+        defining_industries: ["restaurants", "cafes_coffee", "legal_services"],
+      },
+    ],
+    surprise:
+      "Mumbai's commercial property market includes 'pagri' (key money) leases dating from rent-control law: monthly rent might be INR 200 (USD 2.50) on a Fort heritage building unit, but the pagri sale price changes hands for crores (tens of millions of rupees / hundreds of thousands of USD). Many businesses occupy commercial space purely on these legacy structures.",
+  },
+
+  {
+    geo_id: "TR-CITY-istanbul",
+    display_name: "Istanbul",
+    country_iso2: "TR",
+    economic_identity:
+      "Istanbul's small-business economy operates against one of the most volatile major-economy currencies in the world. The Turkish lira lost over 80% of its USD value from 2018-2024, which means: anything imported is wildly expensive, exporters are unusually profitable, savings cannot reliably be held in lira. Many small businesses operate dual pricing (lira for locals, EUR/USD for tourists) to manage the exposure.",
+    defining_industries: [
+      "restaurants",
+      "cafes_coffee",
+      "clothing_stores",
+      "hairdressers_beauty",
+      "hotels_lodging",
+    ],
+    cost_quirks:
+      "Domestic labour is cheap in lira terms (a server earns TRY 25,000-40,000/month, USD 750-1,200 at current rates). Rent in Beyoglu, Nisantasi, Bebek is high in USD-equivalent because landlords increasingly index leases to inflation or foreign currency. Energy and gas costs are very high; cold-chain logistics are expensive.",
+    owner_archetype:
+      "Multi-generational Turkish family businesses + a growing cohort of Russian, Iranian, Syrian, and Ukrainian owners (post-2014 + post-2022 migrations) operating restaurants, boutiques, and import-export.",
+    neighborhoods: [
+      {
+        name: "Beyoglu (Istiklal, Galata, Karakoy)",
+        blurb:
+          "Historic European-side commercial spine. Restaurants, music venues, cafes, boutique hotels. Heavy tourist traffic; gradual gentrification of Karakoy in the past decade.",
+        defining_industries: ["restaurants", "cafes_coffee", "hotels_lodging"],
+      },
+      {
+        name: "Kadikoy & Moda",
+        blurb:
+          "Asian-side bohemian-creative district. Independent restaurants, bookstores, third-wave coffee, music venues. Strong local-customer base; less tourist-dependent.",
+        defining_industries: ["cafes_coffee", "restaurants", "bars_nightclubs"],
+      },
+      {
+        name: "Nisantasi & Tesvikiye",
+        blurb:
+          "Premium retail + dining + medical / aesthetic clinics. Customer base: Turkish upper class + Gulf medical tourists + Russian residents. Premium pricing.",
+        defining_industries: ["clothing_stores", "restaurants", "hairdressers_beauty"],
+      },
+      {
+        name: "Fatih (historic peninsula)",
+        blurb:
+          "Mass-tourism Sultanahmet + working-class residential. Hotels, souvenir shops, traditional restaurants, neighborhood services. Two parallel economies (tourist + local) coexisting.",
+        defining_industries: ["hotels_lodging", "restaurants", "grocery_stores"],
+      },
+    ],
+    surprise:
+      "Turkish minimum wage has been adjusted by 50-100% in single steps multiple times since 2021 to keep pace with inflation. Many small businesses set internal wages 20-40% above minimum specifically to anchor them above the next minimum-wage hike, which is otherwise structurally cannibalizing.",
+  },
+
+  {
+    geo_id: "AR-CITY-buenos-aires",
+    display_name: "Buenos Aires",
+    country_iso2: "AR",
+    economic_identity:
+      "Buenos Aires runs one of the most paradoxical small-business economies on the planet: an unusually well-educated workforce, dense European-style commercial streets, and a sophisticated restaurant + culture scene, all operating against decades of macroeconomic instability (inflation, currency controls, devaluation cycles). Most independent operators run dual pricing (peso for locals, USD for tourists or USD-earning expats); savings stay in USD physical cash, not banks.",
+    defining_industries: [
+      "restaurants",
+      "cafes_coffee",
+      "clothing_stores",
+      "hairdressers_beauty",
+      "real_estate_agencies",
+    ],
+    cost_quirks:
+      "Wages are very low in USD terms but compress to mid-tier in peso-real-purchasing-power. Rent is moderate by global-capital standards. Imported goods (kitchen equipment, salon products, technology) cost 2-3x global market price because of import taxes and currency controls. Cash-economy operating is common; formal accounting and tax compliance vary widely.",
+    owner_archetype:
+      "Argentinian operators with multi-generational small-business heritage; many Italian and Spanish surnames reflecting late-19th-century immigration. A meaningful cohort of expat operators (Venezuelan, Colombian, Brazilian) post-2015.",
+    neighborhoods: [
+      {
+        name: "Palermo (Soho + Hollywood)",
+        blurb:
+          "Most cosmopolitan independent district in Latin America. Designer fashion, gastronomy, third-wave coffee, craft cocktails, boutique hotels. Premium pricing on tourist + expat customer base.",
+        defining_industries: ["restaurants", "cafes_coffee", "clothing_stores"],
+      },
+      {
+        name: "Recoleta",
+        blurb:
+          "Old-money premium residential + boutique retail + traditional cafes. Customer base: affluent porteno families + tourists for the cemetery. Stable premium pricing.",
+        defining_industries: ["restaurants", "cafes_coffee", "hairdressers_beauty"],
+      },
+      {
+        name: "San Telmo",
+        blurb:
+          "Historic colonial district; antique markets, tango bars, casual restaurants. Tourist-heavy by day, locals by night. Older buildings + lower rent than Palermo.",
+        defining_industries: ["restaurants", "cafes_coffee", "clothing_stores"],
+      },
+      {
+        name: "Belgrano & Chinatown",
+        blurb:
+          "Residential middle-class + Asian diaspora district. Independent restaurants, specialty grocers, Asian beauty salons. Moderate prices; resident-driven foot traffic.",
+        defining_industries: ["restaurants", "grocery_stores", "hairdressers_beauty"],
+      },
+    ],
+    surprise:
+      "Argentina's currency controls historically created multiple official exchange rates simultaneously (oficial, blue, MEP, CCL). A restaurant accepting tourist USD might quote a menu priced at a different effective USD rate than what the central bank publishes. Most independent operators track multiple rates daily.",
+  },
+
+  {
+    geo_id: "HK-CITY-hong-kong",
+    display_name: "Hong Kong",
+    country_iso2: "HK",
+    economic_identity:
+      "Hong Kong has the most extreme commercial real-estate cost structure in the world. Retail rent in Causeway Bay was historically the highest globally; even after the 2020-2023 reset, central-district rents remain at levels that force a binary outcome on small businesses (premium-margin survives; mid-market does not). The city's ultra-vertical retail, ground-floor sticker prices in the millions of HKD per month, and lease security via assignments (not month-to-month) are unique constraints.",
+    defining_industries: [
+      "restaurants",
+      "cafes_coffee",
+      "hotels_lodging",
+      "legal_services",
+      "real_estate_agencies",
+    ],
+    cost_quirks:
+      "Wages mid-range globally (a server earns HKD 16,000-22,000/month, USD 2,050-2,800), but rent in Central, Causeway Bay, Tsim Sha Tsui regularly exceeds 30% of revenue. Compensating: very low corporate tax (8.25% on first HKD 2M profit, 16.5% above), generally fast license processing for most categories, dense walkable customer base.",
+    owner_archetype:
+      "Multi-generational Hong Kong Chinese family businesses (often Cantonese-speaking, Hakka-origin, or Chiu Chow-origin) dominate traditional retail; international and mainland Chinese operators dominate premium F&B and luxury retail.",
+    neighborhoods: [
+      {
+        name: "Central & Sheung Wan",
+        blurb:
+          "Finance + corporate + premium dining + luxury retail. Independents survive only at the top of the market (Michelin-starred restaurants, premium specialty retail) or in vertical retail upper floors.",
+        defining_industries: ["restaurants", "legal_services", "cafes_coffee"],
+      },
+      {
+        name: "Causeway Bay & Wan Chai",
+        blurb:
+          "Highest density of mid-market retail and dining. Cha chaan teng cafes, Hong Kong-style noodle shops, beauty clinics, fashion boutiques. Tourist + local Hong Kong customer base.",
+        defining_industries: ["restaurants", "clothing_stores", "hairdressers_beauty"],
+      },
+      {
+        name: "Mong Kok & Yau Ma Tei",
+        blurb:
+          "Densest commercial district per square meter on the planet. Markets, street food, electronics retail, dim-sum parlors. Foot traffic is enormous; transaction value is moderate.",
+        defining_industries: ["restaurants", "clothing_stores", "grocery_stores"],
+      },
+      {
+        name: "Tsim Sha Tsui",
+        blurb:
+          "Premium tourism + Kowloon corporate. Luxury hotels, high-end dining, boutique retail. Customer base heavily mainland Chinese + international tourist.",
+        defining_industries: ["hotels_lodging", "restaurants", "clothing_stores"],
+      },
+    ],
+    surprise:
+      "Hong Kong commercial leases routinely include a 'good guy guarantee' from the personal director of the operating company. If the business closes, the director's personal assets are exposed even if the company is dissolved. Most experienced operators negotiate this down to a 6-12-month cap.",
+  },
 ];
 
 /** Lookup helper. Returns null when the city has no entry. */
