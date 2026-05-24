@@ -82,6 +82,12 @@ import { EditorialNote } from "@/components/EditorialNote";
 import { SubIndustryPicker } from "@/components/sections/SubIndustryPicker";
 import { SetupCostBlock } from "@/components/sections/SetupCostBlock";
 import { AnnualCostStack } from "@/components/sections/AnnualCostStack";
+// Plan v32 Sprint G Tier-1 features. Each self-suppresses when its
+// supporting data is absent (industries without operating-units data,
+// without failure-modes coverage, without setup_costs).
+import { TangibleUnits } from "@/components/sections/TangibleUnits";
+import { FailureModes } from "@/components/sections/FailureModes";
+import { IfYouOpenedToday } from "@/components/sections/IfYouOpenedToday";
 
 type IndustryMarginRow = { gross_margin: number; operating_margin: number; asset_intensity?: number };
 const INDUSTRY_MARGINS = industryMarginsJson as unknown as {
@@ -614,6 +620,12 @@ export default async function CellPage({
         iso2={country.toUpperCase()}
       />
 
+      {/* Plan v32 Sprint G Tier-1 — "If you opened today" composition.
+         Computes literal calendar dates for opening, first revenue,
+         break-even, payback. Self-suppresses when setup_costs is
+         absent (consultants etc.). */}
+      <IfYouOpenedToday cell={cell} />
+
       {/* Plan v32 Sprint G — setup-cost block. Two boxes (registration
          + capital fit-out) shown above the revenue tiles. Renders only
          when the cell has setup_costs populated; consultants and
@@ -671,6 +683,10 @@ export default async function CellPage({
           </section>
         );
       })()}
+
+      {/* Plan v32 Sprint G Tier-1 — tangible units. Translates revenue
+         into daily transactions + average ticket + texture note. */}
+      <TangibleUnits cell={cell} />
 
       {/* Plan v32 Sprint G — annual cost stack. Eight-line breakdown of
          what the typical firm in this cell pays per year (rent, payroll,
@@ -791,6 +807,12 @@ export default async function CellPage({
         industrySlug={industry}
         industryName={cell.industry_name || undefined}
       />
+
+      {/* Plan v32 Sprint G Tier-1 — "Why these businesses fail" panel.
+         Five specific failure modes per industry; sourced from SBA
+         survival data + industry trade press. Self-suppresses for
+         industries without curated entries. */}
+      <FailureModes cell={cell} />
 
       {/* Comparable cells.
          Plan v14 A.1 (T-A1.4): legacy id="comparable" renamed to canonical
