@@ -91,9 +91,13 @@ function lookupIndustryMargin(industryId: string | null | undefined): IndustryMa
 // DYNAMIC_SERVER_USAGE classification that R-003 caused and restores
 // edge caching: Vercel was overriding our middleware Cache-Control
 // header with `private, no-cache, no-store` because of force-dynamic.
-// Now the route is ISR-friendly with a 6h revalidate, so first hit
+// Plan v32 perf — revalidate bumped from 6h to 24h. Cell data does
+// not change hourly; bumping reduces ISR cold-start frequency by 4x
+// and saves Supabase round-trips. After bulk cost-stack imports the
+// data is even more stable so this is safe.
+// Now the route is ISR-friendly with a 24h revalidate, so first hit
 // fills the edge cache and subsequent hits serve from CDN.
-export const revalidate = 21600;
+export const revalidate = 86400;
 export const dynamicParams = true;
 // Plan v26 follow-up — raise function timeout from 10s default to 60s
 // so cold-start cells_master queries don't drop the request. After the

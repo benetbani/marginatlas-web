@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useTransition } from "react";
 import { ComboField, type ComboOption } from "./ComboField";
 import {
   COUNTRIES,
@@ -36,6 +36,11 @@ function readClientGate(): Gate {
 
 export function NavigatorForm() {
   const router = useRouter();
+  // Plan v32 — wrap navigation in useTransition so the submit button
+  // can show a loading state. Without this, router.push fires silently
+  // and the user sees zero visual feedback while Next.js fetches the
+  // new cell page (which can take 1-5 seconds on a cold ISR cache).
+  const [isPending, startTransition] = useTransition();
   const [country, setCountry] = useState("US");
   const [region, setRegion] = useState("");
   const [subdivision, setSubdivision] = useState("");
@@ -160,7 +165,9 @@ export function NavigatorForm() {
       // Los Angeles County). Otherwise stay at the region level.
       const targetGeo = subdivision || r;
       const path = `/${cc}/${targetGeo}/${indSlug}`;
-      router.push(path);
+      startTransition(() => {
+        router.push(path);
+      });
     } catch (err) {
       // Defensive fallback: hard navigation if the router push throws.
       if (typeof window !== "undefined") {
@@ -173,7 +180,9 @@ export function NavigatorForm() {
 
   function surpriseMe() {
     try {
-      router.push("/random");
+      startTransition(() => {
+        router.push("/random");
+      });
     } catch {
       if (typeof window !== "undefined") {
         window.location.href = "/random";
@@ -260,15 +269,29 @@ export function NavigatorForm() {
           <button
             type="button"
             onClick={surpriseMe}
-            className="px-6 py-4 rounded-xl bg-cream-100 hover:bg-cream-200 text-ink-900 text-base font-medium border border-parchment transition"
+            disabled={isPending}
+            aria-busy={isPending}
+            className="px-6 py-4 rounded-xl bg-cream-100 hover:bg-cream-200 text-ink-900 text-base font-medium border border-parchment transition disabled:opacity-70 disabled:cursor-wait"
           >
             Surprise me ✦
           </button>
           <button
             type="submit"
-            className="px-8 py-4 rounded-xl bg-atlas-500 hover:bg-atlas-600 active:bg-atlas-700 text-cream-50 font-semibold text-base shadow-sm transition"
+            disabled={isPending}
+            aria-busy={isPending}
+            className="px-8 py-4 rounded-xl bg-atlas-500 hover:bg-atlas-600 active:bg-atlas-700 text-cream-50 font-semibold text-base shadow-sm transition disabled:opacity-80 disabled:cursor-wait inline-flex items-center gap-2"
           >
-            Show me the numbers →
+            {isPending ? (
+              <>
+                <span
+                  aria-hidden="true"
+                  className="inline-block w-4 h-4 border-2 border-cream-50/40 border-t-cream-50 rounded-full animate-spin"
+                />
+                Loading the numbers...
+              </>
+            ) : (
+              <>Show me the numbers →</>
+            )}
           </button>
         </div>
       </div>
