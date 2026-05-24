@@ -135,9 +135,11 @@ export default function HomePage() {
       <ToneBand tone="home-hero">
         <section className="pt-4 pb-6 md:pt-6 md:pb-8 lg:pt-8 lg:pb-10">
           <div className="max-w-4xl">
-            {/* Plan v19 Block E - bigger, bolder eyebrow. */}
-            <div className="text-sm md:text-base font-bold uppercase tracking-[0.12em] text-atlas-700 mb-4 md:mb-5">
-              № 1 site for tracking small to medium business benchmarks globally
+            {/* Plan v32 (audit Sprint A2) — eyebrow rewritten. The previous
+               "№ 1 site for tracking..." was an unprovable marketing claim
+               on an editorial site. Replaced with a quiet positioning line. */}
+            <div className="text-sm md:text-base font-semibold uppercase tracking-[0.16em] text-atlas-700 mb-4 md:mb-5">
+              Worldwide small-business benchmarks
             </div>
             <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-ink-900 leading-[1.08] flex flex-col">
               <span className="block w-full">
@@ -188,6 +190,15 @@ export default function HomePage() {
         <div id="pick-a-country" className="scroll-mt-20">
           <WorldMapSection />
         </div>
+      </ToneBand>
+
+      {/* Plan v32 (audit Sprint A3) — SectorMasterMenu lifted from 8th
+         scroll position to immediately under the world map. The three
+         primary navigation paths (map / sector / featured cells) now
+         cluster early in the page instead of being interrupted by
+         tertiary content. */}
+      <ToneBand tone="home-sectors">
+        <SectorMasterMenu />
       </ToneBand>
 
       {/* Plan v21 Block 5 - image-card explore section replaces the
@@ -279,10 +290,9 @@ export default function HomePage() {
           the flag chips and the headline overlapped with messaging upstream
           on the page; removed per founder direction. */}
 
-      {/* Sector master menu: Plan v4.0 Step 13 */}
-      <ToneBand tone="home-sectors">
-        <SectorMasterMenu />
-      </ToneBand>
+      {/* Plan v32 (audit Sprint A3) — SectorMasterMenu lifted upstream
+         to sit right under the world map. The old mount here is removed
+         to avoid double-rendering it. */}
 
       {/* Cell of the week: Plan v4.0 Step 19 */}
       <ToneBand tone="home-cell-of-the-week">
@@ -320,53 +330,38 @@ export default function HomePage() {
         <QualityLegend />
       </ToneBand>
 
-      {/* Stats strip */}
-      <ToneBand tone="home-stats">
-        <section className="py-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-          {[
-            ["Worldwide", "every country covered"],
-            ["Every SMB industry", "from cafés to manufacturing"],
-            ["Free", "to browse"],
-          ].map(([n, label]) => (
-            <div key={label} className="rounded-2xl bg-cream-100 border border-parchment p-5">
-              <div className="text-3xl font-semibold text-ink-900 tabular-nums">{n}</div>
-              <div className="text-sm text-cocoa-700/80 mt-1">{label}</div>
-            </div>
-          ))}
-        </section>
-      </ToneBand>
+      {/* Plan v32 (audit Sprint A1) — Stats strip removed. The three
+         tiles ("Worldwide", "Every SMB industry", "Free") were
+         marketing copy formatted as numerical cards. Founder rule:
+         cards that don't carry numbers should not look like numerical
+         cards. The trust message they were trying to carry is already
+         covered by the "From the notebook" rail and the footer copy. */}
 
-      {/* Plan v16 Block C - methodology relocated below the fold and
-          rewritten in marketing voice. Earlier copy named source agencies
-          and gave away too much; this version positions capability
-          (machine-learning aggregation, on-the-ground correspondents,
-          modern quantitative methodologies) without naming providers. */}
+      {/* Plan v32 (audit Sprint A4) — methodology paragraph rewritten.
+         Dropped the "Built differently than what you've seen before"
+         comparison (unprovable, defensive). Dropped the "machine-learning
+         aggregation over hundreds of public and closely-held data streams"
+         jargon. Two paragraphs instead of three. Plainer voice. */}
       <ToneBand tone="home-methodology">
         <section className="py-12 md:py-16">
           <div className="max-w-3xl">
             <div className="text-xs font-semibold uppercase tracking-[0.18em] text-atlas-700 mb-3">
-              How we build numbers you can trust
+              How the numbers get here
             </div>
             <h2 className="font-display text-3xl md:text-4xl font-medium tracking-tight text-ink-900">
-              Built differently than what you&apos;ve seen before
+              Real data, standardized for cross-country reading.
             </h2>
             <div className="mt-5 md:mt-6 space-y-4 text-base md:text-lg text-ink-800 leading-relaxed">
               <p>
-                Atlas combines machine-learning aggregation over hundreds of public
-                and closely-held data streams with direct access to filings most
-                aggregators never see, and on-the-ground correspondents in territories
-                that don&apos;t publish to the open web.
+                Atlas pulls from official small-business statistics, primary
+                filings, and on-the-ground correspondents in places that
+                don&apos;t publish to the open web. Inflation and purchasing-power
+                overlays keep every figure current, never years out of date.
               </p>
               <p>
-                Every benchmark is cross-validated against the most recent quantitative
-                methodologies in applied industry economics. Inflation and purchasing-power
-                overlays keep every figure current to today, never years out of date.
-              </p>
-              <p>
-                Each benchmark carries a quality grade A through D telling you exactly
-                how directly it was sourced, how thinly the sample was sliced, and how
-                much modeling sits between the underlying signal and the figure on the
-                page. No black boxes, no surprises.
+                Every benchmark carries a quality grade A through D, so you
+                always know how directly it was sourced and how much modeling
+                sits between the underlying signal and the number on the page.
               </p>
             </div>
             <div className="mt-6 md:mt-7">

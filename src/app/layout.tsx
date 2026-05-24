@@ -96,59 +96,63 @@ export default function RootLayout({
         {/* Plan v30 Bundle 5 — site-wide newsletter signup bar; calm,
             non-aggressive, slim. Sits above the main footer. */}
         <FooterNewsletterBar />
-        <footer className="border-t border-ink-200 bg-ink-100">
+        {/* Plan v32 — footer carries the dark Atlas paper pattern. Editorial
+           anchor at the end of every page; the cream→dark transition under
+           the parchment newsletter strip reads as a soft drop into a
+           dedicated metadata band. */}
+        <footer className="atlas-paper-dark border-t border-ink-800">
           <div className="max-w-7xl mx-auto px-6 py-12">
             <div className="mb-8">
-              <LogoWordmark size={22} labeled />
+              <LogoWordmark size={22} labeled tone="dark" />
             </div>
-            <div className="grid md:grid-cols-5 gap-8 text-sm text-ink-700">
+            <div className="grid md:grid-cols-5 gap-8 text-sm text-white/80">
               <div>
-                <div className="font-semibold text-ink-900 mb-3 text-xs uppercase tracking-wide">Browse</div>
+                <div className="font-semibold text-white mb-3 text-xs uppercase tracking-wide">Browse</div>
                 <ul className="space-y-2 text-xs">
-                  <li><a href="/browse" className="hover:text-atlas-600">The whole world</a></li>
-                  <li><a href="/industries" className="hover:text-atlas-600">All industries</a></li>
-                  <li><a href="/world" className="hover:text-atlas-600">World map</a></li>
-                  <li><a href="/sectors/manufacturing" className="hover:text-atlas-600">Sectors</a></li>
+                  <li><a href="/browse" className="hover:text-atlas-500">The whole world</a></li>
+                  <li><a href="/industries" className="hover:text-atlas-500">All industries</a></li>
+                  <li><a href="/world" className="hover:text-atlas-500">World map</a></li>
+                  <li><a href="/sectors/manufacturing" className="hover:text-atlas-500">Sectors</a></li>
                 </ul>
               </div>
               <div>
-                <div className="font-semibold text-ink-900 mb-3 text-xs uppercase tracking-wide">Use</div>
+                <div className="font-semibold text-white mb-3 text-xs uppercase tracking-wide">Use</div>
                 <ul className="space-y-2 text-xs">
-                  <li><a href="/calculator" className="hover:text-atlas-600">Where do I sit?</a></li>
-                  <li><a href="/compare" className="hover:text-atlas-600">Compare snapshots</a></li>
-                  <li><a href="/#ask-atlas" className="hover:text-atlas-600">Ask Atlas</a></li>
-                  <li><a href="/#newsletter" className="hover:text-atlas-600">Newsletter</a></li>
+                  <li><a href="/calculator" className="hover:text-atlas-500">Where do I sit?</a></li>
+                  <li><a href="/compare" className="hover:text-atlas-500">Compare snapshots</a></li>
+                  <li><a href="/#ask-atlas" className="hover:text-atlas-500">Ask Atlas</a></li>
+                  <li><a href="/#newsletter" className="hover:text-atlas-500">Newsletter</a></li>
                 </ul>
               </div>
               <div>
-                <div className="font-semibold text-ink-900 mb-3 text-xs uppercase tracking-wide">Learn</div>
+                <div className="font-semibold text-white mb-3 text-xs uppercase tracking-wide">Learn</div>
                 <ul className="space-y-2 text-xs">
-                  <li><a href="/about-data" className="hover:text-atlas-600">About the data</a></li>
-                  <li><a href="/blog" className="hover:text-atlas-600">Blog</a></li>
-                  <li><a href="/about-data#tax" className="hover:text-atlas-600">Tax overlay guide</a></li>
-                  <li><a href="/about-data#glossary" className="hover:text-atlas-600">Glossary</a></li>
+                  <li><a href="/about-data" className="hover:text-atlas-500">About the data</a></li>
+                  <li><a href="/blog" className="hover:text-atlas-500">Blog</a></li>
+                  <li><a href="/about-data#tax" className="hover:text-atlas-500">Tax overlay guide</a></li>
+                  <li><a href="/about-data#glossary" className="hover:text-atlas-500">Glossary</a></li>
                 </ul>
               </div>
               <div>
-                <div className="font-semibold text-ink-900 mb-3 text-xs uppercase tracking-wide">Trust</div>
+                <div className="font-semibold text-white mb-3 text-xs uppercase tracking-wide">Trust</div>
                 <ul className="space-y-2 text-xs">
-                  <li><a href="/about-data#quality" className="hover:text-atlas-600">Quality methodology</a></li>
-                  <li><a href="/about-data#sources" className="hover:text-atlas-600">Sources</a></li>
-                  <li><a href="/coverage" className="hover:text-atlas-600">Coverage report</a></li>
-                  <li><a href="/about-data#contact" className="hover:text-atlas-600">Contact</a></li>
+                  <li><a href="/about-data#quality" className="hover:text-atlas-500">Quality methodology</a></li>
+                  <li><a href="/about-data#sources" className="hover:text-atlas-500">Sources</a></li>
+                  <li><a href="/coverage" className="hover:text-atlas-500">Coverage report</a></li>
+                  <li><a href="/about-data#contact" className="hover:text-atlas-500">Contact</a></li>
                 </ul>
               </div>
               <div>
-                <div className="font-semibold text-ink-900 mb-3 text-xs uppercase tracking-wide">Atlas</div>
+                <div className="font-semibold text-white mb-3 text-xs uppercase tracking-wide">Atlas</div>
                 <ul className="space-y-2 text-xs">
-                  <li><a href="/pricing" className="hover:text-atlas-600">Pricing</a></li>
-                  <li><a href="/status" className="hover:text-atlas-600">Status</a></li>
-                  <li><a href="/api" className="hover:text-atlas-600">API</a></li>
-                  <li className="text-ink-500">v1.18.0</li>
+                  <li><a href="/pricing" className="hover:text-atlas-500">Pricing</a></li>
+                  <li><a href="/status" className="hover:text-atlas-500">Status</a></li>
+                  <li><a href="/api" className="hover:text-atlas-500">API</a></li>
+                  <li className="text-white/40">v1.18.0</li>
                 </ul>
               </div>
             </div>
-            <div className="mt-10 pt-6 border-t border-ink-200/60 flex flex-wrap items-center justify-between gap-3 text-xs text-ink-600">
+            <div className="mt-10 pt-6 border-t border-white/15 flex flex-wrap items-center justify-between gap-3 text-xs text-white/60">
               <span>© Tesseract Research · marginatlas.com</span>
               <span>Covering small businesses worldwide · free to browse</span>
             </div>

@@ -1,5 +1,3 @@
-import { SmartImage } from "@/components/SmartImage";
-
 export const revalidate = 86400;
 
 export const metadata = {
@@ -10,22 +8,16 @@ export const metadata = {
 export default function AboutDataPage() {
   return (
     <article className="max-w-2xl">
-      <div className="mb-8 hidden md:block">
-        {/* Image placeholder ABOUT-1: distribution shapes infographic */}
-        <SmartImage
-          alt="Distribution shapes illustration"
-          glyph="📈"
-          caption="The spread"
-          aspectRatio={3}
-          rounded="xl"
-        />
-      </div>
+      {/* Plan v32 (audit Sprint A5) — decorative placeholder image at the
+         top removed (founder rule: no decorative images on overview
+         pages). Stale "40+ countries" copy updated to reflect the real
+         coverage. */}
       <h1 className="text-4xl font-semibold tracking-tight text-ink-900">
         About the data
       </h1>
       <p className="mt-4 text-lg text-ink-800 leading-relaxed">
-        Margin Atlas brings together small-business benchmarks across 40+
-        countries: revenue, employment, wages, and the spread between the
+        Margin Atlas brings together small-business benchmarks across every
+        country: revenue, employment, wages, and the spread between the
         smallest and largest firms in every industry.
       </p>
 

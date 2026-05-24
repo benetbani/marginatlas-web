@@ -15,22 +15,33 @@ export type LogoWordmarkProps = {
   className?: string;
   /** If true, the whole thing is wrapped in an aria-label "Margin Atlas". */
   labeled?: boolean;
+  /**
+   * Plan v32 — tone variant. "light" (default) is the header treatment:
+   * black "Margin" + vermillion "Atlas" on a light surface. "dark" is
+   * the footer treatment: white "Margin" + vermillion "Atlas" on the
+   * graphite atlas-paper-dark surface.
+   */
+  tone?: "light" | "dark";
 };
 
 export function LogoWordmark({
   size = 28,
   className,
   labeled = true,
+  tone = "light",
 }: LogoWordmarkProps) {
   const textSize = Math.round(size * 0.95);
+  const isDark = tone === "dark";
   return (
     <span
       role={labeled ? "img" : undefined}
       aria-label={labeled ? "Margin Atlas" : undefined}
-      className={`inline-flex items-center gap-2.5 ${className ?? ""}`}
+      className={`inline-flex items-center gap-2.5 ${
+        isDark ? "text-white" : "text-ink-900"
+      } ${className ?? ""}`}
     >
       <LogoMark size={size} color="currentColor" />
-      {/* Thin vertical divider — two stacked dots in graphite */}
+      {/* Thin vertical divider — two stacked dots in current colour */}
       <span
         aria-hidden="true"
         className="flex flex-col gap-0.5"
@@ -44,7 +55,7 @@ export function LogoWordmark({
         className="font-display font-medium leading-none tracking-tight"
         style={{ fontSize: textSize }}
       >
-        <span className="text-ink-900">Margin</span>{" "}
+        <span className={isDark ? "text-white" : "text-ink-900"}>Margin</span>{" "}
         <span className="text-atlas-500">Atlas</span>
       </span>
     </span>
