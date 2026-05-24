@@ -99,7 +99,14 @@ export default function RootLayout({
                 <a href="/calculator" className="hover:text-atlas-600 transition-colors">Calculator</a>
                 <a href="/compare" className="hover:text-atlas-600 transition-colors">Compare</a>
                 <a href="/blog" className="hover:text-atlas-600 transition-colors">Blog</a>
-                <a href="/pricing" className="hover:text-atlas-600 transition-colors">Pricing</a>
+                {/* Plan v32 — pricing promoted to button-style CTA so
+                   it's visually distinct from the rest of the nav. */}
+                <a
+                  href="/pricing"
+                  className="ml-1 inline-flex items-center px-3.5 py-1.5 rounded-full bg-ink-900 text-cream-50 text-sm font-semibold hover:bg-atlas-700 transition-colors"
+                >
+                  Pricing
+                </a>
               </nav>
               <HeaderSearch />
             </div>
