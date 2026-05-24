@@ -284,6 +284,16 @@ function normalizeRegionalRow(r: Record<string, unknown>): Cell {
     coverage_tier: (r.coverage_tier as string) || "P",
     coverage_source: (r.coverage_source as string) || "National business statistics",
     currency: (r.currency as string) || "USD",
+    // Plan v32 Sprint G — deepening fields. Pulled directly from the
+    // new nullable columns. Empty for cells that haven't been deepened.
+    sub_industry: r.sub_industry_id
+      ? {
+          sub_industry_id: r.sub_industry_id as string,
+          source_kind: ((r.sub_industry_source_kind as string) || "primary") as "primary" | "modeled",
+        }
+      : undefined,
+    cost_stack: (r.cost_stack as CostStack | null) ?? undefined,
+    setup_costs: (r.setup_costs as SetupCosts | null) ?? undefined,
   };
   // Plan v32 Phase 0 — apply render-time currency correction for the
   // 2,298 local-currency-as-USD cells flagged by the May 2026 audit.
@@ -435,6 +445,15 @@ function normalizeRow(r: Record<string, unknown>): Cell {
     coverage_tier: r.coverage_tier as string | null,
     coverage_source: r.coverage_source as string | null,
     currency: (r.currency as string) || "USD",
+    // Plan v32 Sprint G — deepening fields.
+    sub_industry: r.sub_industry_id
+      ? {
+          sub_industry_id: r.sub_industry_id as string,
+          source_kind: ((r.sub_industry_source_kind as string) || "primary") as "primary" | "modeled",
+        }
+      : undefined,
+    cost_stack: (r.cost_stack as CostStack | null) ?? undefined,
+    setup_costs: (r.setup_costs as SetupCosts | null) ?? undefined,
   };
   // Plan v32 Phase 0 — render-time currency correction (see note above).
   return applyPlausibilitySuppression(applyCurrencyCorrection(applyRollforward(applyTaxonomy(cell))));

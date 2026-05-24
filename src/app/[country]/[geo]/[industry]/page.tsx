@@ -67,6 +67,12 @@ import { CellFallbackBanner } from "@/components/CellFallbackBanner";
 import { EstimatedBadge } from "@/components/EstimatedBadge";
 import { CoverageIndicator, deriveCoverageTier } from "@/components/CoverageIndicator";
 import { EditorialNote } from "@/components/EditorialNote";
+// Plan v32 Sprint G — industry deepening sections. All three self-suppress
+// when their data isn't on the cell, so they're safe to mount before any
+// cell has been deepened (Phase 1 will populate the data).
+import { SubIndustryPicker } from "@/components/sections/SubIndustryPicker";
+import { SetupCostBlock } from "@/components/sections/SetupCostBlock";
+import { AnnualCostStack } from "@/components/sections/AnnualCostStack";
 
 type IndustryMarginRow = { gross_margin: number; operating_margin: number; asset_intensity?: number };
 const INDUSTRY_MARGINS = industryMarginsJson as unknown as {
@@ -550,6 +556,11 @@ export default async function CellPage({
         />
       </section>
 
+      {/* Plan v32 Sprint G — sub-industry picker. Renders only when the
+         parent industry has at least one data_ready variant. Otherwise
+         returns null and the page reads as before. */}
+      <SubIndustryPicker cell={cell} />
+
       {/* Plan v28 Lane D — editorial voice. One paragraph of context
           between the headline and the data so the page reads like a
           narrative, not just a dump. */}
@@ -558,6 +569,12 @@ export default async function CellPage({
         sectorId={cell.sector_id}
         iso2={country.toUpperCase()}
       />
+
+      {/* Plan v32 Sprint G — setup-cost block. Two boxes (registration
+         + capital fit-out) shown above the revenue tiles. Renders only
+         when the cell has setup_costs populated; consultants and
+         single-shape independents naturally suppress themselves. */}
+      <SetupCostBlock cell={cell} />
 
       {/* Plan v23 Part 3 — narrative now reads as editorial prose. Drop
          cap on the first paragraph, looser line-height, max-w-prose. */}
@@ -610,6 +627,11 @@ export default async function CellPage({
           </section>
         );
       })()}
+
+      {/* Plan v32 Sprint G — annual cost stack. Eight-line breakdown of
+         what the typical firm in this cell pays per year (rent, payroll,
+         COGS, etc.). Suppressed when cost_stack is absent. */}
+      <AnnualCostStack cell={cell} />
 
       {/* Atlas Score + Typical-firm biography card.
          Plan v14 A.1 (T-A1.4): legacy id="typical-firm" renamed to canonical
