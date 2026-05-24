@@ -10,6 +10,7 @@ import {
   INDUSTRIES,
   INDUSTRY_BY_ID,
   SECTOR_BY_ID,
+  COUNTRIES,
   industryToSlug,
   slugToIndustry,
   resolveToMeasuredIndustry,
@@ -182,29 +183,43 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
         )}
       </section>
 
-      {/* 5. top-countries: countries ranked by median revenue per firm.
-         Plan v13 Wave 4a (D2): silent omission when ranking is empty. */}
+      {/*
+        * 5. top-countries: countries ranked by median revenue per firm.
+        * Plan v32 hotfix: display strictly uses COUNTRIES taxonomy
+        * lookup for the country name. Some prior code paths were
+        * leaking US state names ("California") into geo_name when the
+        * row was a regional aggregate; that surfaced under a "Top
+        * countries" header which was a catastrophic mislabel.
+        */}
       {topCountries.length > 0 && (
         <section id="top-countries" className={`py-8 ${getToneClass("top-countries")}`}>
           <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
             Top countries for {ind.name.toLowerCase()}
           </h2>
           <div className="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {topCountries.slice(0, 9).map((c) => {
-              const iso2 = c.country.toUpperCase();
-              return (
-                <a
-                  key={iso2}
-                  href={`/${iso2.toLowerCase()}`}
-                  className="flex items-center gap-3 px-4 py-3 rounded-xl border border-cream-300 bg-white hover:border-atlas-600 hover:shadow-[0_6px_18px_rgba(120,53,15,0.08)] transition"
-                >
-                  <CountryFlag iso2={iso2} className="w-6" />
-                  <span className="text-sm font-semibold text-ink-900">
-                    {c.geo_name || iso2}
-                  </span>
-                </a>
-              );
-            })}
+            {topCountries
+              .filter((c) => {
+                const iso2 = (c.country || "").toUpperCase();
+                return iso2.length === 2 && COUNTRIES.some((x) => x.code === iso2);
+              })
+              .slice(0, 9)
+              .map((c) => {
+                const iso2 = c.country.toUpperCase();
+                const countryRow = COUNTRIES.find((x) => x.code === iso2);
+                const countryName = countryRow?.name ?? iso2;
+                return (
+                  <a
+                    key={iso2}
+                    href={`/${iso2.toLowerCase()}`}
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl border border-cream-300 bg-white hover:border-atlas-600 hover:shadow-[0_6px_18px_rgba(120,53,15,0.08)] transition"
+                  >
+                    <CountryFlag iso2={iso2} className="w-6" />
+                    <span className="text-sm font-semibold text-ink-900">
+                      {countryName}
+                    </span>
+                  </a>
+                );
+              })}
           </div>
         </section>
       )}

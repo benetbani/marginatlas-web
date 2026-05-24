@@ -123,7 +123,22 @@ export default function WorldMapPicker({ onSelect, className }: WorldMapPickerPr
   }, []);
   const handleMoveEnd = useCallback(
     (pos: { coordinates: [number, number]; zoom: number }) => {
-      setCenter(pos.coordinates);
+      // Plan v32 hotfix — clamp the pan extent so the map can't be
+      // dragged off-screen. Earth coordinates wrap, but for the user
+      // experience we want the map to stay inside a bounding box
+      // around the initial centered view. Effective pan budget
+      // shrinks as zoom grows (zoomed-in pans more freely; globe view
+      // basically can't pan at all).
+      const panBudget = Math.max(0, (pos.zoom - 1) * 60); // degrees
+      const clampedX = Math.max(
+        INITIAL_CENTER[0] - panBudget,
+        Math.min(INITIAL_CENTER[0] + panBudget, pos.coordinates[0]),
+      );
+      const clampedY = Math.max(
+        INITIAL_CENTER[1] - panBudget * 0.6,
+        Math.min(INITIAL_CENTER[1] + panBudget * 0.6, pos.coordinates[1]),
+      );
+      setCenter([clampedX, clampedY]);
       setZoom(pos.zoom);
     },
     []
@@ -235,7 +250,11 @@ export default function WorldMapPicker({ onSelect, className }: WorldMapPickerPr
       onClick={handleClick}
       onKeyDown={onKeyDown}
     >
-      <div className="relative rounded-xl">
+      {/* Plan v32 hotfix — visible frame around the map + overflow
+         hidden so the map can't paint outside its container. Combined
+         with the pan clamp in handleMoveEnd, the map stays inside
+         this box regardless of user gestures. */}
+      <div className="relative rounded-xl border border-ink-200 bg-white overflow-hidden">
         {!loaded && (
           <div
             className="absolute inset-0 rounded-xl overflow-hidden"

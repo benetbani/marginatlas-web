@@ -55,15 +55,29 @@ function countryName(iso2: string): string {
 
 export default async function WorldPage() {
   const report = getCoverageReport();
-  const byIso2 = new Map(report?.countries.map((c) => [c.iso2, c]) || []);
+  // Plan v32 hotfix — only allow REAL ISO2 country codes (from the
+  // COUNTRIES taxonomy). The coverage report leaked ISO3 codes (BDI,
+  // AFG, ZWE) and World Bank regional aggregates (AFE, EUU, WLD,
+  // IBD, etc.) which were rendering as "countries" on /world. Build
+  // the lookup map from the intersection so only real countries can
+  // render below.
+  const VALID_ISO2 = new Set(COUNTRIES.map((c) => c.code));
+  const byIso2 = new Map(
+    (report?.countries || [])
+      .filter((c) => VALID_ISO2.has(c.iso2))
+      .map((c) => [c.iso2, c]),
+  );
 
-  const covered = (iso2: string) => byIso2.has(iso2) && (byIso2.get(iso2)!.regional_cells + byIso2.get(iso2)!.extrapolated_cells) > 0;
+  const covered = (iso2: string) =>
+    byIso2.has(iso2) &&
+    (byIso2.get(iso2)!.regional_cells + byIso2.get(iso2)!.extrapolated_cells) > 0;
 
-  // Build "Rest of world" bucket from any covered country not placed yet
+  // Build "Rest of world" bucket from any covered country not placed yet.
+  // Uses the filtered byIso2 (real ISO2 only) so it can't reintroduce
+  // the ISO3 / aggregate codes.
   const placed = new Set(Object.values(REGIONS).flat());
-  const rest = (report?.countries || [])
-    .filter((c) => !placed.has(c.iso2))
-    .map((c) => c.iso2)
+  const rest = Array.from(byIso2.keys())
+    .filter((iso2) => !placed.has(iso2))
     .sort();
 
   const allRegions: Array<[string, string[]]> = [

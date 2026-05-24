@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, useMemo, useEffect, useTransition } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { ComboField, type ComboOption } from "./ComboField";
 import {
   COUNTRIES,
@@ -36,11 +36,15 @@ function readClientGate(): Gate {
 
 export function NavigatorForm() {
   const router = useRouter();
-  // Plan v32 — wrap navigation in useTransition so the submit button
-  // can show a loading state. Without this, router.push fires silently
-  // and the user sees zero visual feedback while Next.js fetches the
-  // new cell page (which can take 1-5 seconds on a cold ISR cache).
-  const [isPending, startTransition] = useTransition();
+  // Plan v32 hotfix — startTransition was suppressing Next.js's
+  // built-in loading.tsx skeleton, leaving the user staring at the
+  // homepage with a spinner for many seconds (looks like the button
+  // is broken). Drop startTransition entirely; use a plain isLoading
+  // flag that clears on a brief timeout so the button itself still
+  // gives instant feedback. The actual page transition is then
+  // handled by Next.js with the loading.tsx skeleton, which is
+  // what we wanted from the start.
+  const [isLoading, setIsLoading] = useState(false);
   const [country, setCountry] = useState("US");
   const [region, setRegion] = useState("");
   const [subdivision, setSubdivision] = useState("");
@@ -165,9 +169,12 @@ export function NavigatorForm() {
       // Los Angeles County). Otherwise stay at the region level.
       const targetGeo = subdivision || r;
       const path = `/${cc}/${targetGeo}/${indSlug}`;
-      startTransition(() => {
-        router.push(path);
-      });
+      setIsLoading(true);
+      router.push(path);
+      // Safety: clear the loading flag after 3s in case the user
+      // never navigates away (back-button etc.). The actual
+      // navigation UI is handled by Next.js loading.tsx.
+      window.setTimeout(() => setIsLoading(false), 3000);
     } catch (err) {
       // Defensive fallback: hard navigation if the router push throws.
       if (typeof window !== "undefined") {
@@ -180,9 +187,9 @@ export function NavigatorForm() {
 
   function surpriseMe() {
     try {
-      startTransition(() => {
-        router.push("/random");
-      });
+      setIsLoading(true);
+      router.push("/random");
+      window.setTimeout(() => setIsLoading(false), 3000);
     } catch {
       if (typeof window !== "undefined") {
         window.location.href = "/random";
@@ -269,19 +276,19 @@ export function NavigatorForm() {
           <button
             type="button"
             onClick={surpriseMe}
-            disabled={isPending}
-            aria-busy={isPending}
+            disabled={isLoading}
+            aria-busy={isLoading}
             className="px-6 py-4 rounded-xl bg-cream-100 hover:bg-cream-200 text-ink-900 text-base font-medium border border-parchment transition disabled:opacity-70 disabled:cursor-wait"
           >
             Surprise me ✦
           </button>
           <button
             type="submit"
-            disabled={isPending}
-            aria-busy={isPending}
+            disabled={isLoading}
+            aria-busy={isLoading}
             className="px-8 py-4 rounded-xl bg-atlas-500 hover:bg-atlas-600 active:bg-atlas-700 text-cream-50 font-semibold text-base shadow-sm transition disabled:opacity-80 disabled:cursor-wait inline-flex items-center gap-2"
           >
-            {isPending ? (
+            {isLoading ? (
               <>
                 <span
                   aria-hidden="true"

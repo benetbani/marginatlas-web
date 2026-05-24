@@ -55,6 +55,19 @@ function revenueCatastropheCeiling(industryId: string | null | undefined): numbe
 }
 
 /**
+ * Catastrophic LOW floor: a real small business operating at <10% of the
+ * industry's lower bound isn't a viable benchmark — it's a hobby, a
+ * micro-operator that doesn't represent the category, or a data
+ * artifact. Suppress so the page renders "-" instead of e.g. "$5K
+ * typical Mexican art gallery."
+ */
+function revenueCatastropheFloor(industryId: string | null | undefined): number {
+  if (!industryId) return DEFAULT_REVENUE_BOUNDS.lo / 10;
+  const bounds = REVENUE_PER_FIRM_BOUNDS[industryId] ?? DEFAULT_REVENUE_BOUNDS;
+  return bounds.lo / 10;
+}
+
+/**
  * Apply suppression in place. Returns the cell with catastrophically
  * implausible values replaced with null. Other values pass through.
  *
@@ -64,8 +77,12 @@ function revenueCatastropheCeiling(industryId: string | null | undefined): numbe
 export function applyPlausibilitySuppression(cell: Cell): Cell {
   const out: Cell = { ...cell };
   const ceiling = revenueCatastropheCeiling(cell.industry_id);
+  const floor = revenueCatastropheFloor(cell.industry_id);
 
-  // Revenue fields — every percentile + the headline
+  // Revenue fields — every percentile + the headline. Suppress both
+  // catastrophically high values (wrong-aggregation) and catastrophically
+  // low values (non-viable micro-operator that misrepresents the
+  // category benchmark).
   for (const field of [
     "revenue_per_firm",
     "rev_p10",
@@ -75,7 +92,7 @@ export function applyPlausibilitySuppression(cell: Cell): Cell {
     "rev_p90",
   ] as const) {
     const v = out[field];
-    if (typeof v === "number" && v > ceiling) {
+    if (typeof v === "number" && (v > ceiling || v < floor)) {
       out[field] = null;
     }
   }

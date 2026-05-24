@@ -81,20 +81,26 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
         <Organization />
-        <header className="border-b border-ink-200 bg-cream-50 sticky top-0 z-10">
-          <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        {/* Plan v32 hotfix — header now 50% taller, logo larger,
+           nav items more spread out + larger font. Removed the
+           bottom border (was reading as an orphan line below the
+           header). The pattern background under it provides the
+           visual separation. */}
+        <header className="bg-cream-50 sticky top-0 z-10">
+          <div className="max-w-7xl mx-auto px-6 py-6 md:py-7 flex items-center justify-between">
             <a href="/" aria-label="Margin Atlas home" className="inline-flex items-center">
-              <LogoWordmark size={26} labeled={false} />
+              <LogoWordmark size={32} labeled={false} />
             </a>
-            <div className="flex items-center gap-2">
-              <nav className="text-sm text-ink-800 hidden md:flex">
-                <a href="/browse" className="hover:text-atlas-600 mx-2 transition-colors">Browse</a>
-                <a href="/industries" className="hover:text-atlas-600 mx-2 transition-colors">Industries</a>
-                <a href="/world" className="hover:text-atlas-600 mx-2 transition-colors">World map</a>
-                <a href="/calculator" className="hover:text-atlas-600 mx-2 transition-colors">Calculator</a>
-                <a href="/compare" className="hover:text-atlas-600 mx-2 transition-colors">Compare</a>
-                <a href="/coverage" className="hover:text-atlas-600 mx-2 transition-colors">Coverage</a>
-                <a href="/pricing" className="hover:text-atlas-600 mx-2 transition-colors">Pricing</a>
+            <div className="flex items-center gap-5 md:gap-6">
+              <nav className="text-base text-ink-800 hidden md:flex items-center gap-5">
+                <a href="/browse" className="hover:text-atlas-600 transition-colors">Browse</a>
+                <a href="/industries" className="hover:text-atlas-600 transition-colors">Industries</a>
+                <a href="/world" className="hover:text-atlas-600 transition-colors">World</a>
+                <a href="/cities" className="hover:text-atlas-600 transition-colors">Cities</a>
+                <a href="/calculator" className="hover:text-atlas-600 transition-colors">Calculator</a>
+                <a href="/compare" className="hover:text-atlas-600 transition-colors">Compare</a>
+                <a href="/blog" className="hover:text-atlas-600 transition-colors">Blog</a>
+                <a href="/pricing" className="hover:text-atlas-600 transition-colors">Pricing</a>
               </nav>
               <HeaderSearch />
             </div>
