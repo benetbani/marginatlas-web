@@ -89,10 +89,12 @@ export default function RootLayout({
             </div>
           </div>
         </header>
-        {/* Plan v31 starter — top padding reduced from py-10 to py-4 so
-            the first frame (navigator + world map) sits higher on the
-            page without the wasted gap the founder flagged. */}
-        <main className="max-w-7xl mx-auto px-6 pt-4 pb-10">{children}</main>
+        {/* Plan v31/v32 — top padding reduced (pt-4) so the first frame sits
+            high on the page. Bottom padding removed entirely (was pb-10):
+            each terminal section already has its own py-12/py-16, and
+            the extra 40px on main was creating a visible dead-zone before
+            the FooterNewsletterBar that read as "unfinished." */}
+        <main className="max-w-7xl mx-auto px-6 pt-4">{children}</main>
         {/* Plan v30 Bundle 5 — site-wide newsletter signup bar; calm,
             non-aggressive, slim. Sits above the main footer. */}
         <FooterNewsletterBar />

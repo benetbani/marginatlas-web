@@ -89,3 +89,57 @@
   pointer-events: none;
   z-index: -1;
 }
+
+/* ====================================================================
+   Pattern variations (Plan v32, from Margin Atlas v16). Each has a
+   documented use case. All paths are absolute so they resolve from
+   any nested route.
+   ==================================================================== */
+
+/* .atlas-grid — dotted measurement grid for data-heavy sections. */
+.atlas-grid {
+  background-color: var(--atlas-paper-bg);
+  background-image: url("/atlas-grid.svg");
+  background-repeat: repeat;
+  background-size: 40px 40px;
+}
+
+/* .atlas-columns — newsprint vertical rules for editorial copy. */
+.atlas-columns {
+  background-color: var(--atlas-paper-bg);
+  background-image: url("/atlas-columns.svg");
+  background-repeat: repeat;
+  background-size: 60px 60px;
+}
+
+/* .atlas-pinstripe — diagonal financial pinstripe for premium / pricing. */
+.atlas-pinstripe {
+  background-color: var(--atlas-paper-bg);
+  background-image: url("/atlas-pinstripe.svg");
+  background-repeat: repeat;
+  background-size: 12px 12px;
+}
+
+/* .atlas-crosshatch — pencilled crosshatch for commentary / blog covers. */
+.atlas-crosshatch {
+  background-color: var(--atlas-paper-bg);
+  background-image: url("/atlas-crosshatch.svg");
+  background-repeat: repeat;
+  background-size: 14px 14px;
+}
+
+/* .atlas-accent — sparse vermillion micro-dots for premium / opt-in surfaces. */
+.atlas-accent {
+  background-color: #FFFFFF;
+  background-image: url("/atlas-accent.svg");
+  background-repeat: repeat;
+  background-size: 80px 80px;
+}
+
+/* .atlas-rosette — larger compass dingbat at 160px rhythm for hero panels. */
+.atlas-rosette {
+  background-color: var(--atlas-paper-bg);
+  background-image: url("/atlas-rosette.svg");
+  background-repeat: repeat;
+  background-size: 160px 160px;
+}

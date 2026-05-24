@@ -92,52 +92,9 @@ async function runChecks(): Promise<Check[]> {
     );
   }
 
-  checks.push(
-    (async () => {
-      const r = await checkUrl("https://www.marginatlas.com/api/ask", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ question: "ping" }),
-      });
-      return {
-        name: "/api/ask",
-        description: "Ask Atlas backend",
-        ...r,
-      };
-    })()
-  );
-
-  checks.push(
-    (async () => {
-      const r = await checkUrl("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: {
-          "x-api-key": process.env.ANTHROPIC_API_KEY || "ping",
-          "anthropic-version": "2023-06-01",
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "claude-haiku-4-5-20251001",
-          max_tokens: 1,
-          messages: [{ role: "user", content: "." }],
-        }),
-        timeoutMs: 8000,
-      });
-      // Anthropic returns 401 on bad key, 200 on success, 400 if model unsupported.
-      // Either way, the API is reachable — treat 2xx/4xx as "up".
-      const reachable =
-        r.result === "up" ||
-        r.result === "degraded" ||
-        (r.detail && r.detail.startsWith("HTTP 4"));
-      return {
-        name: "Anthropic API",
-        description: "Upstream for Ask Atlas",
-        result: reachable ? ("up" as const) : r.result,
-        detail: r.detail,
-        latencyMs: r.latencyMs,
-      };
-    })()
-  );
+  // Plan v32 Sprint B — Ask Atlas + Anthropic API checks removed from
+  // status page along with the /ask route and AskWidget. No AI-flavored
+  // services are currently part of the user-visible product.
 
   return Promise.all(checks);
 }

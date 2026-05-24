@@ -68,7 +68,7 @@ function useNewsletterSubmit(source: Source, endpoint: string) {
 export function FooterNewsletterBar({ endpoint = "/api/newsletter" }: Props) {
   const { status, email, setEmail, submit } = useNewsletterSubmit("footer", endpoint);
   return (
-    <div className="w-full bg-parchment">
+    <div id="newsletter" className="w-full bg-parchment scroll-mt-20">
       <form
         onSubmit={submit}
         className="mx-auto max-w-6xl px-6 h-14 flex items-center gap-3 sm:gap-5 flex-wrap sm:flex-nowrap"

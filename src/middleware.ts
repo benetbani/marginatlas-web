@@ -226,7 +226,6 @@ const CACHEABLE_PATTERNS: RegExp[] = [
   /^\/sectors($|\/[a-z0-9_-]+$)/,
   /^\/world$/,
   /^\/pricing$/,
-  /^\/ask$/,
   /^\/calculator$/,
   /^\/status$/,
   /^\/methodology$/,

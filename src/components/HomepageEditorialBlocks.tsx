@@ -238,11 +238,14 @@ function BlockC() {
 export default function HomepageEditorialBlocks({
   questions,
 }: { questions?: AtlasQuestion[] } = {}) {
+  // Plan v32 Sprint B — Block C ("Who uses Atlas" / audience archetypes)
+  // removed from the default composition. The four-tile audience grid
+  // reads as SaaS-landing-page muscle, not editorial. Still exported
+  // as a named export below if a future page wants to reuse it.
   return (
     <>
       <BlockA questions={questions} />
       <BlockB />
-      <BlockC />
     </>
   );
 }

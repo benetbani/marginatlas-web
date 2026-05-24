@@ -47,7 +47,18 @@ export type IndustrySection = (typeof INDUSTRY_PAGE_SECTIONS)[number];
  * Replaces the "every section a cream card" monotony with alternating
  * backgrounds + light section-type accents.
  */
-export type SectionTone = "ink-dark" | "cream-50" | "white" | "cream-100" | "moss-tinted";
+export type SectionTone =
+  | "ink-dark"
+  | "cream-50"
+  | "white"
+  | "cream-100"
+  | "moss-tinted"
+  // Plan v32 — "paper" is intentionally transparent. The section adds NO
+  // background of its own so the body's atlas-paper pattern shows
+  // through. Use for sections that should feel like part of the page
+  // surface (the world map, the featured grid where the cards are
+  // meant to pop off the patterned page).
+  | "paper";
 
 export const SECTION_TONES: Record<string, SectionTone> = {
   // Cell page. Plan v19 Block C — switched from ink-dark cinematic to
@@ -82,27 +93,35 @@ export const SECTION_TONES: Record<string, SectionTone> = {
   // cream-100 paper (was ink-dark cinematic video frame). The slight
   // warmth distinguishes it from the cream-50 body and the cream-50
   // navigator section directly below, preserving the alternation.
+  // Plan v32 — homepage tone map rewritten after the Sprint B kill round.
+  // Old half of the entries (cell-of-the-week, tax-overlay, ask, quality,
+  // stats, recently-added, spotlight, primary-ctas, what-youll-see,
+  // whats-hot, methodology, global-coverage) are dead sections kept here
+  // as deliberate no-ops in case the route revives. Active sections
+  // alternate paper (let pattern show through, cards pop) and white
+  // (clean band that hides the pattern) for visual rhythm.
   "home-hero": "cream-100",
-  "home-navigator": "cream-50",
+  "home-navigator": "paper",
+  "home-city-picker": "paper",
+  "home-sectors": "white",
+  "home-cities-placeholder": "paper",
   "home-featured": "white",
+  "home-blog-rail": "paper",
+
+  // Legacy / dead routes — kept defined for safety.
   "home-global-coverage": "cream-100",
   "home-recently-added": "white",
   "home-spotlight": "white",
-  "home-sectors": "cream-100",
   "home-cell-of-the-week": "white",
   "home-tax-overlay": "cream-50",
   "home-ask": "cream-50",
-  "home-city-picker": "white",
   "home-quality": "cream-100",
   "home-stats": "white",
   "home-what-youll-see": "cream-50",
   "home-whats-hot": "white",
   "home-newsletter": "cream-100",
-  // Plan v15 Block 3 — homepage restructure additions
   "home-primary-ctas": "white",
   "home-methodology": "cream-50",
-  "home-cities-placeholder": "white",
-  "home-blog-rail": "cream-50",
 };
 
 export const TONE_CLASSES: Record<SectionTone, string> = {
@@ -115,6 +134,11 @@ export const TONE_CLASSES: Record<SectionTone, string> = {
   "white": "bg-white",
   "cream-100": "bg-cream-100",
   "moss-tinted": "bg-moss-50",
+  // Plan v32 — "paper" applies no background, so the body's atlas-paper
+  // pattern is visible through the section. Cards on top of a paper
+  // section pop off the patterned surface; cards on top of a white
+  // or cream section sit on a clean band.
+  "paper": "",
 };
 
 export function getToneClass(sectionId: string): string {

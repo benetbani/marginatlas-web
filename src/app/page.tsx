@@ -1,20 +1,10 @@
 import { NavigatorForm } from "@/components/NavigatorForm";
-import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { FeaturedCellTile, type FeaturedTileSpec } from "@/components/FeaturedCellTile";
 import { SectorMasterMenu } from "@/components/SectorMasterMenu";
-import { CellOfTheWeek } from "@/components/CellOfTheWeek";
-import { TaxOverlayTeaser } from "@/components/TaxOverlayTeaser";
-import { AskWidget } from "@/components/AskWidget";
-import { CityPicker } from "@/components/CityPicker";
-import { TopCitiesMosaic } from "@/components/home/TopCitiesMosaic";
 import { WorldMapSection } from "@/components/home/WorldMapSection";
 import HomepageEditorialBlocks from "@/components/HomepageEditorialBlocks";
 import Image from "next/image";
-import { CitiesDotsMap } from "@/components/CitiesDotsMap";
-import { QualityLegend } from "@/components/QualityLegend";
 import { RotatingWord } from "@/components/RotatingWord";
-import { DidYouKnow } from "@/components/DidYouKnow";
-import { ExploreCards } from "@/components/ExploreCards";
 import { HERO_CITIES, HERO_BUSINESSES } from "@/lib/hero-words";
 import { getToneClass } from "@/lib/page-layout/section-order";
 import { getAllPosts, type BlogPost } from "@/lib/blog";
@@ -201,14 +191,10 @@ export default function HomePage() {
         <SectorMasterMenu />
       </ToneBand>
 
-      {/* Plan v21 Block 5 - image-card explore section replaces the
-          pair of compact CTAs. Two big symmetric cards, full-bleed
-          background image, click the whole card. */}
-      <ToneBand tone="home-featured">
-        <section className="py-8 md:py-10">
-          <ExploreCards />
-        </section>
-      </ToneBand>
+      {/* Plan v32 Sprint B — ExploreCards removed. Was using Pexels stock
+         photos (founder rule: no stock imagery), and the "By geography"
+         + "By line of work" CTAs duplicate the World map + Sector menu
+         that sit directly above. */}
 
       {/* Plan v31 — cities section anchored by a stylized cartographic
           rendering of central London. Vermillion-tinted streets, green
@@ -216,7 +202,7 @@ export default function HomePage() {
           dense central area always shows. */}
       <ToneBand tone="home-cities-placeholder">
         <section className="py-10 md:py-14">
-          <div className="rounded-2xl bg-white border-2 border-ink-200 overflow-hidden">
+          <div className="rounded-2xl bg-white border border-ink-200 overflow-hidden">
             <div className="grid md:grid-cols-[1fr_minmax(0,640px)] gap-0 items-stretch">
               <div className="px-6 py-8 md:px-10 md:py-12">
                 <div className="text-xs uppercase tracking-wide text-atlas-700 font-semibold mb-3">
@@ -278,38 +264,21 @@ export default function HomePage() {
         </section>
       </ToneBand>
 
-      {/* Plan v19 Block H - Did You Know surprise facts. Two rotating
-          curated factoids about unexpected SMB economics. Sits between
-          the FEATURED grid and the global coverage strip. */}
-      <ToneBand tone="home-blog-rail">
-        <DidYouKnow />
-      </ToneBand>
-
-      {/* Plan v31 - Founder removed GlobalCoverageStrip ("Small businesses,
-          every corner of the world"). Section was carrying stale errors in
-          the flag chips and the headline overlapped with messaging upstream
-          on the page; removed per founder direction. */}
-
-      {/* Plan v32 (audit Sprint A3) — SectorMasterMenu lifted upstream
-         to sit right under the world map. The old mount here is removed
-         to avoid double-rendering it. */}
-
-      {/* Cell of the week: Plan v4.0 Step 19 */}
-      <ToneBand tone="home-cell-of-the-week">
-        <CellOfTheWeek />
-      </ToneBand>
-
-      {/* Tax overlay teaser: Plan v8 Track S.6 */}
-      <ToneBand tone="home-tax-overlay">
-        <TaxOverlayTeaser />
-      </ToneBand>
-
-      {/* Ask Atlas widget: Plan v8 Track S.5 (live after key in Vercel) */}
-      <ToneBand tone="home-ask">
-        <div id="ask-atlas" className="scroll-mt-20">
-          <AskWidget />
-        </div>
-      </ToneBand>
+      {/*
+        * Plan v32 Sprint B kill round, five sections removed in one pass:
+        *  - DidYouKnow: rotating factoid card. The blog rail covers
+        *    the same editorial-curiosity slot more usefully.
+        *  - CellOfTheWeek: was rendering a malformed headline
+        *    ("United-States flag, then in") with no city, plus an
+        *    unwanted vermillion corner gradient.
+        *  - TaxOverlayTeaser: teases a feature instead of showing data.
+        *  - AskWidget: would require live LLM infrastructure that
+        *    isn't ready. Founder explicit: remove.
+        *  - SectorMasterMenu duplicate mount: already lifted upstream
+        *    under the world map in Sprint A3.
+        * GlobalCoverageStrip was killed earlier (v31). Every remaining
+        * section earns its place.
+        */}
 
 
       {/* Plan v30 prompt 4 output - three editorial blocks (Atlas
@@ -319,16 +288,14 @@ export default function HomePage() {
           review. */}
       <HomepageEditorialBlocks />
 
-      {/* Plan v31 hotfix — bottom TopCitiesMosaic removed. Per founder:
-          "you have just the dumps so many cities in a section which is
-          called top 200 cities of the world. That's not a smart choice...
-          remove that because it's just a dump." The top mosaic up near
-          the world map already shows the curated city set. */}
+      {/* Plan v31 hotfix — bottom TopCitiesMosaic removed (founder: "just
+         a dump"). The top mosaic up near the world map already shows the
+         curated city set. */}
 
-      {/* Quality legend: Plan v8 Track S.7 */}
-      <ToneBand tone="home-quality">
-        <QualityLegend />
-      </ToneBand>
+      {/* Plan v32 Sprint B — QualityLegend removed from the homepage. The
+         legend is useful in context (next to a coverage chip on a cell
+         page) but on the homepage it's a lecture before any context. The
+         vocabulary lives at /about-data#coverage. */}
 
       {/* Plan v32 (audit Sprint A1) — Stats strip removed. The three
          tiles ("Worldwide", "Every SMB industry", "Free") were
@@ -337,45 +304,10 @@ export default function HomePage() {
          cards. The trust message they were trying to carry is already
          covered by the "From the notebook" rail and the footer copy. */}
 
-      {/* Plan v32 (audit Sprint A4) — methodology paragraph rewritten.
-         Dropped the "Built differently than what you've seen before"
-         comparison (unprovable, defensive). Dropped the "machine-learning
-         aggregation over hundreds of public and closely-held data streams"
-         jargon. Two paragraphs instead of three. Plainer voice. */}
-      <ToneBand tone="home-methodology">
-        <section className="py-12 md:py-16">
-          <div className="max-w-3xl">
-            <div className="text-xs font-semibold uppercase tracking-[0.18em] text-atlas-700 mb-3">
-              How the numbers get here
-            </div>
-            <h2 className="font-display text-3xl md:text-4xl font-medium tracking-tight text-ink-900">
-              Real data, standardized for cross-country reading.
-            </h2>
-            <div className="mt-5 md:mt-6 space-y-4 text-base md:text-lg text-ink-800 leading-relaxed">
-              <p>
-                Atlas pulls from official small-business statistics, primary
-                filings, and on-the-ground correspondents in places that
-                don&apos;t publish to the open web. Inflation and purchasing-power
-                overlays keep every figure current, never years out of date.
-              </p>
-              <p>
-                Every benchmark carries a quality grade A through D, so you
-                always know how directly it was sourced and how much modeling
-                sits between the underlying signal and the number on the page.
-              </p>
-            </div>
-            <div className="mt-6 md:mt-7">
-              <a
-                href="/about-data"
-                className="inline-flex items-center gap-1.5 text-atlas-700 hover:text-atlas-900 font-medium text-base border-b border-atlas-200 hover:border-atlas-500 pb-0.5 transition-colors"
-              >
-                Read the full methodology
-                <span aria-hidden="true">→</span>
-              </a>
-            </div>
-          </div>
-        </section>
-      </ToneBand>
+      {/* Plan v32 Sprint B — homepage methodology paragraph removed. The
+         3-step pipeline inside HomepageEditorialBlocks (Block B) directly
+         above carries the same message visually; the paragraph form
+         duplicated it. /about-data remains the canonical long version. */}
 
       {/* Plan v15 Block 3 - blog rail. */}
       <ToneBand tone="home-blog-rail">
@@ -415,12 +347,13 @@ export default function HomePage() {
         </section>
       </ToneBand>
 
-      {/* Newsletter signup */}
-      <ToneBand tone="home-newsletter">
-        <section id="newsletter" className="py-10 scroll-mt-20">
-          <NewsletterSignup />
-        </section>
-      </ToneBand>
+      {/* Plan v32 Sprint B — homepage NewsletterSignup card removed.
+         The page already ends with the FooterNewsletterBar (the
+         parchment strip above the dark footer), so having a full card
+         AND a bar back-to-back read as two pleas in a row. The bar
+         is calmer and global; the card was duplicative. The /#newsletter
+         anchor (linked from the footer) now points the user to the bar
+         via the existing #newsletter id on the bar element. */}
     </div>
   );
 }
