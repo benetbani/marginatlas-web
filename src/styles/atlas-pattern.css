@@ -1,0 +1,44 @@
+/* Three Atlas paper surfaces: .atlas-paper for sections, .atlas-paper-dim for
+   subtler use, .atlas-paper-card for card interiors with masked edge fade. */
+
+:root {
+  --atlas-paper-bg: #FAFAFA;
+  --atlas-pattern-url: url("/atlas-pattern.svg");
+}
+
+/* ---- Section-grade Atlas paper ---- */
+.atlas-paper {
+  background-color: var(--atlas-paper-bg);
+  background-image: var(--atlas-pattern-url);
+  background-repeat: repeat;
+  background-size: 80px 80px;
+}
+
+/* ---- Dimmer variant: 50% pattern density via white overlay ---- */
+.atlas-paper-dim {
+  background-color: var(--atlas-paper-bg);
+  background-image:
+    linear-gradient(rgba(250, 250, 250, 0.5), rgba(250, 250, 250, 0.5)),
+    var(--atlas-pattern-url);
+  background-repeat: no-repeat, repeat;
+  background-size: 100% 100%, 80px 80px;
+}
+
+/* ---- Card variant: smaller stars, fades at edges, pattern on a layer below content ---- */
+.atlas-paper-card {
+  position: relative;
+  background-color: var(--atlas-paper-bg);
+  isolation: isolate;
+}
+.atlas-paper-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--atlas-pattern-url);
+  background-repeat: repeat;
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 45%, transparent 95%);
+          mask-image: radial-gradient(ellipse at center, #000 45%, transparent 95%);
+  pointer-events: none;
+  z-index: -1;
+}

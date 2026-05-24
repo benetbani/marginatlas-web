@@ -5,6 +5,12 @@
 /* Plan v30 — homepage visual tokens (dot grid, spotlight, editorial line, pipeline, rotator). */
 @import "../styles/homepage-visual-tokens.css";
 
+/* Plan v31 — Atlas paper pattern (tiny 4-point compass stars on a
+   neutral light gray repeat). Three utility classes: .atlas-paper
+   for sections, .atlas-paper-dim for subtler use, .atlas-paper-card
+   for card interiors with edge-fade mask. */
+@import "../styles/atlas-pattern.css";
+
 @layer base {
   :root {
     --background: #FFFFFF;   /* cream-50 — warmer page background */

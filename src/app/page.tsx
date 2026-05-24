@@ -3,7 +3,6 @@ import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { FeaturedCellTile, type FeaturedTileSpec } from "@/components/FeaturedCellTile";
 import { SectorMasterMenu } from "@/components/SectorMasterMenu";
 import { CellOfTheWeek } from "@/components/CellOfTheWeek";
-import { GlobalCoverageStrip } from "@/components/GlobalCoverageStrip";
 import { TaxOverlayTeaser } from "@/components/TaxOverlayTeaser";
 import { AskWidget } from "@/components/AskWidget";
 import { CityPicker } from "@/components/CityPicker";
@@ -275,10 +274,10 @@ export default function HomePage() {
         <DidYouKnow />
       </ToneBand>
 
-      {/* Global coverage strip: Plan v8 Track S.2 */}
-      <ToneBand tone="home-global-coverage">
-        <GlobalCoverageStrip />
-      </ToneBand>
+      {/* Plan v31 - Founder removed GlobalCoverageStrip ("Small businesses,
+          every corner of the world"). Section was carrying stale errors in
+          the flag chips and the headline overlapped with messaging upstream
+          on the page; removed per founder direction. */}
 
       {/* Sector master menu: Plan v4.0 Step 13 */}
       <ToneBand tone="home-sectors">
