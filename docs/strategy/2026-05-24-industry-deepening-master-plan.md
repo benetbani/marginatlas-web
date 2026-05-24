@@ -662,51 +662,60 @@ public-facing pages).
 
 ---
 
-## Open questions for the founder
+## Decisions (founder confirmed 2026-05-24)
 
-These need answers before Phase 1 starts:
+All eight open questions resolved before Phase 0 execution started:
 
-1. **Researcher budget.** Phase 1 needs ~80 hours of researcher time
-   (5 industries × 2 countries × 8 hours each). At freelancer rates
-   (~$50/hr for an entry researcher, ~$120/hr for a domain expert),
-   that's $4K-$10K for Phase 1 alone. Total Phase 1-4 researcher cost
-   estimate is $40K-$100K. Is that in scope?
+1. **Researcher budget: zero outside researchers.** Founder + agent do
+   the work together. Paid subscriptions OK only when ROI is obvious
+   and pre-approved. Candidate paid sources to evaluate later (NOT
+   purchased now):
+   - Statista premium individual (~$1K/yr) — likely worth it for the
+     cost-stack lines on common industries
+   - IBISWorld pay-per-report (~$1K each) — probably worth it for the
+     5 pilot industries × 2 reports each
+   - Bureau van Dijk Orbis subset — likely too expensive
+   - Trade-association memberships per country (varies, $200-$2000/yr)
+   - All FREE: US FDD database (FTC), Eurostat SBS, country NSO portals
+   This collapses the Phase 1-4 cost estimate from $40K-$100K to
+   roughly $2K-$10K total in subscriptions across the whole 18 months.
 
-2. **Pro tier pricing & feature line-up.** The May 24 monetization
-   research recommended $29-$39 for Pro. The deepening is the Pro
-   tier's flagship content. Do we commit to that price now and shape
-   features accordingly, or stay flexible?
+2. **Pro tier pricing: $39/month for now.** Locked enough to design
+   features against; not so locked that we can't adjust at launch.
 
-3. **Pilot countries.** The proposed pilot 5 (US, UK, DE, FR, IT)
-   covers Anglo + German + Latin Europe. Add Spain or Japan to the
-   pilot, or stay tight?
+3. **Pilot countries: expanded set.** Original 5 (US, UK, DE, FR, IT)
+   plus founder additions (ES, JP, AE, SG, CH). Stretch list of 30
+   pilot countries acceptable; first wave of 10 above. Adding UAE +
+   Singapore expands the geographic coverage into MENA and Southeast
+   Asia, which the original Anglo + EU sample missed.
 
-4. **The 30-industry split list.** Should I produce a per-industry
-   1-pager (definition, proposed variants, source candidates,
-   estimated researcher hours) for the full 30 before Phase 1 starts,
-   so you can approve/reject each, or trust the framework and let
-   Phase 1 expose the issues?
+4. **Split-list approval process: Phase 1 exposes issues.** No
+   per-industry 1-pagers up front. Trust the framework, ship the
+   first 5 industries, let real data acquisition tell us which splits
+   were wrong.
 
-5. **Sub-industry data fabrication policy.** Hard line: do we ship a
-   sub-industry variant that has *no* primary-source data and is
-   purely extrapolated from the parent? Recommendation: no — that's
-   the whole point of the deepening. But it might leave gaps if
-   primary data is thin. Confirm.
+5. **Sub-industry fabrication policy: hard no.** A sub-industry
+   variant ships only when real primary-source data exists for it.
+   Variants with only parent-extrapolated data stay hidden. Prebuild
+   gate enforces this (see Phase 0f).
 
-6. **Where the local-name flavor layer is sourced from.** Researcher
-   manual list is the right answer, but we could also crowd-source it
-   from country reviewers / native speakers / paid translators.
-   What's the right channel?
+6. **Local-name flavor sourcing: web search + crowdsourced.** Founder
+   + agent populate the obvious ones from web searches (Italian
+   "trattoria", Japanese "izakaya", Turkish "kebapci"). Add a small
+   inline UI later for native speakers to suggest corrections; review
+   queue handles them. No paid translators.
 
-7. **Section ordering and visibility on mobile.** A page with 10
-   sections is fine on desktop and exhausting on mobile. Should the
-   mobile layout collapse most sections behind expanders, or render
-   them inline?
+7. **Mobile section behavior: expanders.** Sliver of each section
+   visible by default (title + a teaser line); user taps to expand.
+   Not collapsed-to-zero, not all-inline. Founder explicit.
 
-8. **Versioning of the cost stack.** When source data refreshes
-   quarterly, do we keep history (every cell has a history of cost
-   stacks) or overwrite (cell shows only the latest)? History costs
-   storage but enables time-series; overwrite is simpler.
+8. **Cost-stack versioning: overwrite (no history).** Latest values
+   only. Simpler schema, less storage, no time-series risk-of-staleness.
+   If we later want time-series, we can introduce versioning as an
+   additive schema change.
+
+These decisions are baked into the Phase 0 code and SQL migrations
+that ship alongside this plan.
 
 ---
 

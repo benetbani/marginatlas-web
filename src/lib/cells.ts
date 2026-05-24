@@ -11,6 +11,12 @@ import {
   applyPlausibilitySuppression,
   getCatastropheCeiling,
 } from "./qa/plausibility_suppression";
+import type {
+  SubIndustryRef,
+  CostStack,
+  SetupCosts,
+  LocalAlias,
+} from "./types/deepening";
 import {
   rollForward,
   INFLATION_TARGET_YEAR,
@@ -94,6 +100,13 @@ export type Cell = {
   // by synthesizeCell() rather than a real DB lookup. Render layer reads
   // this to badge the page as "Estimated".
   is_synthetic?: boolean;
+  // Plan v32 Sprint G — deepening fields. All optional; populated by
+  // the Phase 1 data acquisition. When absent, the corresponding
+  // sections suppress themselves. See src/lib/types/deepening.ts.
+  sub_industry?: SubIndustryRef;
+  cost_stack?: CostStack;
+  setup_costs?: SetupCosts;
+  local_alias?: LocalAlias;
 };
 
 // US state FIPS code → human name → URL slug
