@@ -19,6 +19,10 @@ import { iso2ToName } from "@/lib/countries";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
 import { fmtMoney } from "@/lib/format/money";
 import { getNeighborhoodsForCity } from "@/lib/cities/neighborhoods";
+// Plan v32 Sprint G — city character. Renders only when this geo has
+// a hand-curated entry in src/lib/places/city_character.ts. Self-suppresses
+// for cities without entries (most cities in v1).
+import { CityCharacter } from "@/components/sections/CityCharacter";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -102,6 +106,11 @@ export default async function RegionLandingPage({
           industry below to drill in.
         </p>
       </section>
+
+      {/* Plan v32 Sprint G — city character panel. Renders only for
+         hand-curated cities (NYC, LA, London, Paris, Tokyo, etc.).
+         For other geos this is a no-op so the page reads as before. */}
+      <CityCharacter geoId={`${iso2}-CITY-${geo.toLowerCase()}`} countryIso2={iso2} />
 
       {/* Plan v26 Phase B.4.4 — neighborhoods (when this geo is a
          city with a neighborhood scheme in neighborhoods_v1.json).
