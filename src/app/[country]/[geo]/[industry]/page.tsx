@@ -30,8 +30,6 @@ import { CellPageNav } from "@/components/CellPageNav";
 // Plan v30 Phase 1 — CellActions import removed (save/copy/CSV/embed buttons stripped)
 import { AtlasScore } from "@/components/AtlasScore";
 import { SmartImage } from "@/components/SmartImage";
-import { AtlasHeroImage } from "@/components/AtlasHeroImage";
-import { pickCellHeroImage } from "@/lib/images";
 import { AudienceCaveat } from "@/components/AudienceCaveat";
 import { AcrossCountriesStrip } from "@/components/AcrossCountriesStrip";
 import { SECTOR_BY_ID, INDUSTRY_BY_ID, slugToIndustry, resolveToMeasuredIndustry } from "@/lib/taxonomy";

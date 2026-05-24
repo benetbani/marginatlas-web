@@ -15,11 +15,9 @@ import {
   industryToSlug,
 } from "@/lib/taxonomy";
 import { CountryFlag } from "@/components/CountryFlag";
-import { AtlasHeroImage } from "@/components/AtlasHeroImage";
-import { pickCountryHeroImage } from "@/lib/images";
 import { CountryCityShortcuts } from "@/components/CountryCityShortcuts";
 import { CountryStatsStrip } from "@/components/CountryStatsStrip";
-import { CountryQualitySummary } from "@/components/CountryQualitySummary";
+import { CountryAtAGlance } from "@/components/CountryAtAGlance";
 import { hasRegionalCoverage } from "@/lib/coverage/regional";
 import { getAdmin1Regions } from "@/lib/coverage/admin1";
 import { COUNTRY_PAGE_SECTIONS, getToneClass } from "@/lib/page-layout/section-order";
@@ -34,60 +32,9 @@ export const dynamicParams = true;
 
 type Params = { country: string };
 
-const COUNTRY_SIGNATURE: Record<string, { line: string; glyph: string }> = {
-  US: { line: "America's small-business heartland: restaurants, real estate, software.", glyph: "🏬" },
-  CA: { line: "Skilled trades, residential construction, and craft food across vast geography.", glyph: "🏗️" },
-  AU: { line: "Cafés, hospitality, and small specialty trades from Sydney to Perth.", glyph: "☕" },
-  DE: { line: "The Mittelstand: small to mid-size manufacturing and precision trades.", glyph: "🏭" },
-  FR: { line: "Boutique food, fashion, cosmetics, and design at every scale.", glyph: "💄" },
-  IT: { line: "Family-owned fashion, boutique food, and artisan craft.", glyph: "👗" },
-  ES: { line: "Tourism, hospitality, and family hotels across coast and city.", glyph: "🏨" },
-  NL: { line: "Small services, design studios, and craft food in compact cities.", glyph: "🚲" },
-  PL: { line: "Skilled trades, small manufacturing, and growing services.", glyph: "🔧" },
-  SE: { line: "Design studios, software shops, and small consultancies.", glyph: "🪑" },
-  CH: { line: "Watches, precision instruments, boutique services.", glyph: "⌚" },
-  NO: { line: "Maritime craft, fjord-side hospitality, small-scale fisheries.", glyph: "🐟" },
-  FI: { line: "Design, software, and forestry-adjacent small business.", glyph: "🌲" },
-  DK: { line: "Design, cycling, food craft, and small services.", glyph: "🚲" },
-  GB: { line: "Boutique services, indie retail, hospitality, creative agencies.", glyph: "🛍️" },
-  JP: { line: "Family-run restaurants, ateliers, and precision craft trades.", glyph: "🍣" },
-  BR: { line: "Restaurants, craft beverages, fashion, agriculture.", glyph: "🍺" },
-  IN: { line: "IT services, custom software, retail, family workshops.", glyph: "⚙️" },
-  SG: { line: "Boutique hospitality, food, services, and IT firms.", glyph: "🍜" },
-  AR: { line: "Restaurants, agriculture, leather goods, small retail.", glyph: "🥩" },
-  AL: { line: "Cafés, hospitality on the Adriatic coast, small-batch agriculture, family-run construction.", glyph: "☕" },
-  AD: { line: "Mountain hospitality, retail, financial services, ski tourism.", glyph: "🏔️" },
-  AZ: { line: "Caspian energy services, hospitality in Baku, agriculture, retail.", glyph: "🌊" },
-  GE: { line: "Tbilisi hospitality, wine, IT services, family-run trades.", glyph: "🍷" },
-  IL: { line: "Software, security, biotech, boutique hospitality.", glyph: "🚀" },
-  KZ: { line: "Oil services, agriculture, retail, Almaty professional services.", glyph: "🛢️" },
-  LI: { line: "Precision manufacturing, financial services, niche family firms.", glyph: "🏔️" },
-  MC: { line: "Hospitality, luxury retail, financial services.", glyph: "🎰" },
-  MX: { line: "Restaurants, small manufacturing, retail, construction, professional services.", glyph: "🌮" },
-  RU: { line: "Restaurants, retail, IT services, construction, agriculture across vast geography.", glyph: "🏛️" },
-  SM: { line: "Tourism, retail, small-batch manufacturing.", glyph: "🏰" },
-  // CC.3 — country-specific glyph + signature for newer additions
-  CN: { line: "Restaurants, manufacturing, retail, services across China's massive metros.", glyph: "🐉" },
-  KR: { line: "Cafés, design, software, family-run hospitality.", glyph: "🎴" },
-  TH: { line: "Restaurants, hospitality, craft trades, cottage manufacturing.", glyph: "🍜" },
-  VN: { line: "Cafés, restaurants, light manufacturing, fast-growing services.", glyph: "🍜" },
-  ID: { line: "Restaurants, retail, craft trades, hospitality across the archipelago.", glyph: "🏝️" },
-  PH: { line: "Restaurants, hospitality, business services, retail.", glyph: "🍱" },
-  MY: { line: "Restaurants, hospitality, small manufacturing, professional services.", glyph: "🍜" },
-  PK: { line: "Textiles, retail, restaurants, family-run manufacturing.", glyph: "🧵" },
-  BD: { line: "Textiles, restaurants, retail, small manufacturing.", glyph: "🧵" },
-  EG: { line: "Restaurants, hospitality, retail, family-run trades.", glyph: "🏺" },
-  NG: { line: "Restaurants, retail, hospitality, small manufacturing in Lagos and beyond.", glyph: "🌍" },
-  ZA: { line: "Restaurants, hospitality, retail, professional services.", glyph: "🦓" },
-  KE: { line: "Restaurants, hospitality, retail, agribusiness.", glyph: "🦁" },
-  AE: { line: "Hospitality, retail, professional services, luxury food.", glyph: "🐪" },
-  SA: { line: "Hospitality, retail, restaurants, family-run trades.", glyph: "🕌" },
-  TR: { line: "Restaurants, retail, hospitality, family-run small manufacturing.", glyph: "🥙" },
-  CL: { line: "Restaurants, vineyards, retail, hospitality.", glyph: "🍷" },
-  CO: { line: "Cafés, restaurants, retail, hospitality.", glyph: "☕" },
-  PE: { line: "Restaurants, hospitality, retail, craft trades.", glyph: "🦙" },
-  NZ: { line: "Cafés, hospitality, small farms, design studios.", glyph: "🥝" },
-};
+// Plan v32 — COUNTRY_SIGNATURE removed alongside the hero photo. The
+// per-country tagline is now sourced from getCountryAnchor(), and the
+// signature glyph is no longer used anywhere on the country page.
 
 // Plan v16: cap build-time static generation to the top 25 countries
 // by traffic potential (G7 + major emerging markets + key SMB hubs).
@@ -125,10 +72,6 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
   if (!meta) notFound();
 
   const topIndustries = await getTopIndustriesForCountry(iso2, 18);
-  const sig = COUNTRY_SIGNATURE[iso2] || {
-    line: "Small-business benchmarks across this country.",
-    glyph: "🏬",
-  };
   // Plan v13 Wave 1 — countries with only city-level data (e.g. Argentina)
   // must not advertise a sub-regional view. The flag is plumbed here so
   // any future Regions tab/section can be wrapped with `{showRegions ? ... : null}`.
@@ -162,44 +105,34 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
         so sister country pages always have identical structure.
       */}
 
-      {/* 1. hero: Plan v15 Block 4 — cream-100 surface to match the rest of
-         the site (the previous ink-dark wrapper felt like an error when
-         every other page is cream). Tagline now reads from the editorial
-         style-guide anchor lookup. The coverage tier chip was removed from
-         the hero; coverage detail still lives in the CountryQualitySummary
-         section just below. */}
-      <section id="hero" className="py-8 px-6 md:px-8 bg-cream-100">
-        <header className="lg:grid lg:grid-cols-[1.4fr_1fr] lg:gap-10 lg:items-center">
-          <div>
-            <div className="text-xs uppercase tracking-wide text-ink-700/70 font-medium">
-              Country
-            </div>
-            <h1 className="mt-2 text-4xl md:text-6xl font-semibold tracking-tight text-ink-900 flex items-center gap-3 flex-wrap">
-              <span className="inline-flex pl-1">
-                <CountryFlag iso2={iso2} className="w-12 md:w-16" />
-              </span>
-              <span>{meta.name}</span>
-            </h1>
-            <p className="mt-4 text-lg text-ink-700 max-w-2xl leading-relaxed">
-              {getCountryAnchor(iso2, meta.name)}
-            </p>
-          </div>
-          <div className="hidden lg:block mt-6 lg:mt-0">
-            {/* Plan v12 IM9: real country hero photo when manifest has one. */}
-            <AtlasHeroImage
-              image={pickCountryHeroImage(iso2)}
-              alt={`${meta.name}: country atlas hero`}
-              glyph={sig.glyph}
-              aspectRatio={1.5}
-            />
-          </div>
-        </header>
+      {/* 1. hero: Plan v32 — photo removed (founder flagged photos as
+         unprofessional). Hero now carries information, not decoration:
+         compact title + tagline + a 5-stat at-a-glance row so the first
+         frame tells the user the depth of coverage, the scale of typical
+         businesses, the local SMB sector mix, and the after-CIT owner
+         take in one glance. No background colour: the section sits on
+         the site-wide atlas-paper pattern from layout.tsx. */}
+      <section id="hero" className="pt-2 pb-6">
+        <div className="text-xs uppercase tracking-wide text-atlas-700 font-semibold">
+          Country
+        </div>
+        <h1 className="mt-2 text-3xl md:text-5xl font-semibold tracking-tight text-ink-900 flex items-center gap-3 flex-wrap">
+          <span className="inline-flex pl-1">
+            <CountryFlag iso2={iso2} className="w-10 md:w-14" />
+          </span>
+          <span>{meta.name}</span>
+        </h1>
+        <p className="mt-3 text-base md:text-lg text-ink-700 max-w-3xl leading-relaxed">
+          {getCountryAnchor(iso2, meta.name)}
+        </p>
+
+        <CountryAtAGlance iso2={iso2} topIndustries={topIndustries} />
       </section>
 
-      {/* 2. country-stats: Track FF.2 headline stats + quality scorecard */}
+      {/* 2. country-stats: Track FF.2 tax overlay tiles. The standalone
+         quality-summary card was rolled up into the at-a-glance above. */}
       <section id="country-stats" className={`py-6 ${getToneClass("country-stats")}`}>
         <CountryStatsStrip iso2={iso2} />
-        <CountryQualitySummary iso2={iso2} />
       </section>
 
       {/* 3. industry-mix-grid: top SMB-relevant industries (silent omission if empty) */}

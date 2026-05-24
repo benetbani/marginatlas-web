@@ -5,36 +5,11 @@
  * score leaked into the UI (D-107 + R-002 lockdown). Server-rendered;
  * regional grouping kept.
  */
-import fs from "node:fs";
-import path from "node:path";
 import Link from "next/link";
 import { COUNTRIES } from "@/lib/taxonomy";
+import { getCoverageReport } from "@/lib/quality/coverage-report";
 
 export const revalidate = 21600; // 6 hours
-
-type CoverageReport = {
-  countries: Array<{
-    iso2: string;
-    regional_cells: number;
-    extrapolated_cells: number;
-    avg_quality_10: number;
-  }>;
-};
-
-function loadReport(): CoverageReport | null {
-  const candidates = [
-    path.resolve(process.cwd(), "data/quality/coverage_v2.json"),
-    path.resolve(process.cwd(), "delivery/quality/coverage_v2.json"),
-  ];
-  for (const p of candidates) {
-    try {
-      return JSON.parse(fs.readFileSync(p, "utf-8")) as CoverageReport;
-    } catch {
-      continue;
-    }
-  }
-  return null;
-}
 
 export const metadata = {
   title: "World map: Margin Atlas",
@@ -79,7 +54,7 @@ function countryName(iso2: string): string {
 }
 
 export default async function WorldPage() {
-  const report = loadReport();
+  const report = getCoverageReport();
   const byIso2 = new Map(report?.countries.map((c) => [c.iso2, c]) || []);
 
   const covered = (iso2: string) => byIso2.has(iso2) && (byIso2.get(iso2)!.regional_cells + byIso2.get(iso2)!.extrapolated_cells) > 0;
@@ -136,16 +111,17 @@ export default async function WorldPage() {
         );
       })}
 
-      <section className="mt-12 p-6 rounded-2xl bg-cream-100 border border-parchment">
+      <section className="mt-12 p-6 rounded-2xl bg-white border border-ink-200">
         <h2 className="text-lg font-semibold text-ink-900">
-          Want a country we don&apos;t cover yet?
+          Looking for a specific country?
         </h2>
-        <p className="mt-1 text-sm text-ink-800">
-          Send a note via{" "}
+        <p className="mt-1 text-sm text-ink-700">
+          Open the full{" "}
           <Link href="/coverage" className="text-atlas-700 hover:text-atlas-900">
-            the coverage report
-          </Link>
-          . Countries with multiple requests jump the queue.
+            coverage page
+          </Link>{" "}
+          for a sortable view of every country, with benchmark depth and
+          industry count side-by-side.
         </p>
       </section>
     </div>
