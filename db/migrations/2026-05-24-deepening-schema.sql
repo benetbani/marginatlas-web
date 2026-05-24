@@ -84,13 +84,24 @@ ALTER TABLE extrapolated_cells
   ADD COLUMN IF NOT EXISTS setup_costs JSONB;
 
 -- 6. Quick lookup indexes on sub_industry_id (used by variant-chip
---    queries on cell pages)
+--    queries on cell pages).
+--
+-- Note on column choice:
+--   regional_cells     -> industry_id    (friendly taxonomy id, e.g. "restaurants")
+--   extrapolated_cells -> industry_id    (same friendly id)
+--   cells_master       -> naics_6        (US source table; the friendly
+--                                         industry_id is derived at read
+--                                         time in src/lib/cells.ts, so the
+--                                         physical column is naics_6).
+--
+-- The index columns differ by table to match what physically exists.
+
 CREATE INDEX IF NOT EXISTS idx_regional_cells_sub_industry
   ON regional_cells (industry_id, sub_industry_id)
   WHERE sub_industry_id IS NOT NULL;
 
 CREATE INDEX IF NOT EXISTS idx_cells_master_sub_industry
-  ON cells_master (industry_id, sub_industry_id)
+  ON cells_master (naics_6, sub_industry_id)
   WHERE sub_industry_id IS NOT NULL;
 
 CREATE INDEX IF NOT EXISTS idx_extrapolated_cells_sub_industry
