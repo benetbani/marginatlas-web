@@ -1,9 +1,13 @@
 /* Three Atlas paper surfaces: .atlas-paper for sections, .atlas-paper-dim for
-   subtler use, .atlas-paper-card for card interiors with masked edge fade. */
+   subtler use, .atlas-paper-card for card interiors with masked edge fade.
+   Dark mirror variants below (atlas-paper-dark*) for sections rendered on a
+   graphite #3A3A3A surface with white text. */
 
 :root {
   --atlas-paper-bg: #FAFAFA;
+  --atlas-paper-bg-dark: #3A3A3A;
   --atlas-pattern-url: url("/atlas-pattern.svg");
+  --atlas-pattern-url-dark: url("/atlas-pattern-dark.svg");
 }
 
 /* ---- Section-grade Atlas paper ---- */
@@ -35,6 +39,49 @@
   position: absolute;
   inset: 0;
   background-image: var(--atlas-pattern-url);
+  background-repeat: repeat;
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 45%, transparent 95%);
+          mask-image: radial-gradient(ellipse at center, #000 45%, transparent 95%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ====================================================================
+   Dark surface variants. Use on sections where text is expected to be
+   white. Background is the palette graphite (#3A3A3A); the pattern
+   marks render as a very faint white via opacity in the SVG.
+   ==================================================================== */
+
+.atlas-paper-dark {
+  background-color: var(--atlas-paper-bg-dark);
+  background-image: var(--atlas-pattern-url-dark);
+  background-repeat: repeat;
+  background-size: 80px 80px;
+  color: #FFFFFF;
+}
+
+.atlas-paper-dark-dim {
+  background-color: var(--atlas-paper-bg-dark);
+  background-image:
+    linear-gradient(rgba(58, 58, 58, 0.5), rgba(58, 58, 58, 0.5)),
+    var(--atlas-pattern-url-dark);
+  background-repeat: no-repeat, repeat;
+  background-size: 100% 100%, 80px 80px;
+  color: #FFFFFF;
+}
+
+.atlas-paper-dark-card {
+  position: relative;
+  background-color: var(--atlas-paper-bg-dark);
+  color: #FFFFFF;
+  isolation: isolate;
+}
+.atlas-paper-dark-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--atlas-pattern-url-dark);
   background-repeat: repeat;
   background-size: 64px 64px;
   -webkit-mask-image: radial-gradient(ellipse at center, #000 45%, transparent 95%);

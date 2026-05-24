@@ -37,6 +37,16 @@ import {
 } from "react-simple-maps";
 import { ISO_NUMERIC_TO_ALPHA2 } from "@/lib/iso-codes";
 
+// Plan v32 hotfix — Kosovo has no `id` in world-atlas@2's countries-110m
+// TopoJSON (Natural Earth tags it as a disputed territory and omits the
+// numeric ISO code entirely). "N. Cyprus" and "Somaliland" are in the
+// same boat, so a blanket "missing id => Kosovo" rule would mis-tag
+// them. Name-based fallback covers Kosovo only and leaves the others
+// non-clickable, which matches their political status.
+const NAME_FALLBACK_ISO2: Record<string, string> = {
+  "Kosovo": "XK",
+};
+
 const GEO_URL = "https://unpkg.com/world-atlas@2/countries-110m.json";
 
 // Plan v31 starter v3 — map borders pronounced per founder feedback
@@ -76,6 +86,15 @@ type GeoFeature = {
 
 type Tooltip = { iso2: string; name: string; x: number; y: number } | null;
 
+// Plan v32 — visible zoom controls. Scroll/pinch still work; these buttons
+// are the explicit UI for users who don't know the gesture is supported.
+// minZoom locked at 1 (globe view) so users can't zoom past the starting
+// state into the unattractive over-cropped layout.
+const MIN_ZOOM = 1;
+const MAX_ZOOM = 6;
+const ZOOM_STEP = 1.5;
+const INITIAL_CENTER: [number, number] = [10, 15];
+
 export default function WorldMapPicker({ onSelect, className }: WorldMapPickerProps) {
   const [hovered, setHovered] = useState<Tooltip>(null);
   const [active, setActive] = useState<string | null>(null);
@@ -83,7 +102,32 @@ export default function WorldMapPicker({ onSelect, className }: WorldMapPickerPr
   const [focusIso, setFocusIso] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [errored, setErrored] = useState(false);
+  const [zoom, setZoom] = useState<number>(MIN_ZOOM);
+  const [center, setCenter] = useState<[number, number]>(INITIAL_CENTER);
   const wrapRef = useRef<HTMLDivElement | null>(null);
+
+  const zoomIn = useCallback(() => {
+    setZoom((z) => Math.min(MAX_ZOOM, z * ZOOM_STEP));
+  }, []);
+  const zoomOut = useCallback(() => {
+    setZoom((z) => {
+      const next = z / ZOOM_STEP;
+      // Snap back to globe view when stepping out from a slightly-zoomed
+      // state so users always land on a clean composition.
+      if (next <= MIN_ZOOM * 1.05) {
+        setCenter(INITIAL_CENTER);
+        return MIN_ZOOM;
+      }
+      return next;
+    });
+  }, []);
+  const handleMoveEnd = useCallback(
+    (pos: { coordinates: [number, number]; zoom: number }) => {
+      setCenter(pos.coordinates);
+      setZoom(pos.zoom);
+    },
+    []
+  );
 
   // Probe the TopoJSON so we can render skeleton and fallback states.
   useEffect(() => {
@@ -214,26 +258,33 @@ export default function WorldMapPicker({ onSelect, className }: WorldMapPickerPr
           role="application"
           aria-label="World map. Use arrow keys to move between countries, Enter to select."
         >
-          {/* Plan v30 hotfix v2 — ZoomableGroup restored. Scroll-wheel
-              zooms, click-and-drag pans. Initial view centered slightly
-              north so Antarctica is mostly out of frame without an
-              aggressive crop. Users can zoom in further if they need
-              detail on a specific region. */}
+          {/* Plan v32 — ZoomableGroup is now controlled so the bottom-right
+              +/- buttons can drive zoom in tandem with scroll/pinch. minZoom
+              raised to 1 (globe view); the user can no longer zoom out past
+              the starting composition. onMoveEnd keeps state in sync when
+              the user pans or zooms with mouse/touch. */}
           <ZoomableGroup
-            center={[10, 15]}
-            zoom={1}
-            minZoom={0.85}
-            maxZoom={6}
+            center={center}
+            zoom={zoom}
+            minZoom={MIN_ZOOM}
+            maxZoom={MAX_ZOOM}
+            onMoveEnd={handleMoveEnd}
           >
           <Geographies geography={GEO_URL}>
             {({ geographies }: { geographies: GeoFeature[] }) =>
               geographies.map((geo) => {
                 const numId = String(geo.id ?? "").padStart(3, "0");
-                const iso2 = ISO_NUMERIC_TO_ALPHA2[numId] ?? null;
+                const name = geo.properties?.name ?? "";
+                // First try the numeric id; if id is missing (Kosovo and a
+                // couple of disputed territories) fall back to a tiny
+                // name-based map.
+                const iso2 =
+                  ISO_NUMERIC_TO_ALPHA2[numId] ??
+                  NAME_FALLBACK_ISO2[name] ??
+                  null;
                 const isAntarctica = numId === ANTARCTICA_ID;
                 const isDisputed = DISPUTED_ISO_NUMERIC.has(numId);
                 const clickable = !!iso2 && !isAntarctica && !isDisputed;
-                const name = geo.properties?.name ?? "";
                 return (
                   <Geography
                     key={geo.rsmKey}
@@ -293,6 +344,31 @@ export default function WorldMapPicker({ onSelect, className }: WorldMapPickerPr
             {hovered.name}
           </div>
         )}
+
+        {/* Plan v32 — visible zoom controls, bottom-right of the map.
+            Stacked +/- buttons. Minus is disabled at globe view since the
+            map can't zoom out further; founder rule: never show the
+            unattractive over-cropped state. */}
+        <div className="absolute bottom-3 right-3 flex flex-col rounded-md overflow-hidden shadow-sm border border-ink-200 bg-white">
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); zoomIn(); }}
+            disabled={zoom >= MAX_ZOOM}
+            aria-label="Zoom in"
+            className="w-8 h-8 flex items-center justify-center text-ink-900 hover:bg-ink-100 disabled:opacity-40 disabled:cursor-not-allowed text-base font-semibold border-b border-ink-200 transition-colors"
+          >
+            +
+          </button>
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); zoomOut(); }}
+            disabled={zoom <= MIN_ZOOM}
+            aria-label="Zoom out"
+            className="w-8 h-8 flex items-center justify-center text-ink-900 hover:bg-ink-100 disabled:opacity-40 disabled:cursor-not-allowed text-base font-semibold transition-colors"
+          >
+            −
+          </button>
+        </div>
       </div>
 
     </div>

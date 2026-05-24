@@ -106,7 +106,11 @@ export const SECTION_TONES: Record<string, SectionTone> = {
 };
 
 export const TONE_CLASSES: Record<SectionTone, string> = {
-  "ink-dark": "bg-ink-900 text-cream-50",
+  // Plan v32 — ink-dark now renders the Atlas paper pattern at 10% white
+  // on a graphite #3A3A3A surface. Mirrors the light atlas-paper used on
+  // the page body. Set on any section meant to be visually heavy: the
+  // colour swap + the pattern do all the work, no extra utilities needed.
+  "ink-dark": "atlas-paper-dark",
   "cream-50": "bg-cream-50",
   "white": "bg-white",
   "cream-100": "bg-cream-100",
