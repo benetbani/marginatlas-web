@@ -122,16 +122,18 @@ export default function HomePage() {
         text-link CTAs were removed (founder explicit). The navigator form
         is the primary call-to-action and sits directly under the hero copy.
       */}
+      {/* Plan v32 hotfix — hero + navigator unified into a single
+         band so they read as one section (founder: the table was
+         visually divided from the title above it). Eyebrow + H1 +
+         subtitle all center-aligned. H1 mobile sizes capped to keep
+         it on 2 lines (was wrapping to 3 on narrow screens). */}
       <ToneBand tone="home-hero">
-        <section className="pt-4 pb-6 md:pt-6 md:pb-8 lg:pt-8 lg:pb-10">
-          <div className="max-w-4xl">
-            {/* Plan v32 (audit Sprint A2) — eyebrow rewritten. The previous
-               "№ 1 site for tracking..." was an unprovable marketing claim
-               on an editorial site. Replaced with a quiet positioning line. */}
+        <section className="pt-6 pb-4 md:pt-10 md:pb-6 lg:pt-12">
+          <div className="max-w-4xl mx-auto text-center">
             <div className="text-sm md:text-base font-semibold uppercase tracking-[0.16em] text-atlas-700 mb-4 md:mb-5">
               Worldwide small-business benchmarks
             </div>
-            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-ink-900 leading-[1.08] flex flex-col">
+            <h1 className="font-display text-[1.7rem] sm:text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight text-ink-900 leading-[1.1] flex flex-col items-center">
               <span className="block w-full">
                 How much does a{" "}
                 <span className="text-atlas-600">
@@ -141,13 +143,9 @@ export default function HomePage() {
                   />
                 </span>
               </span>
-              {/* Plan v19 Block D - question mark anchored to a fixed-width
-                  container. City name centers within. Short cities sit
-                  centered with whitespace either side; long cities expand
-                  but never reach the bookends. The `?` never moves. */}
-              <span className="block w-full whitespace-nowrap">
+              <span className="block w-full whitespace-nowrap mt-1 md:mt-2">
                 make in
-                <span className="inline-block min-w-[12ch] px-3 md:px-4 text-center text-atlas-600 align-baseline">
+                <span className="inline-block min-w-[10ch] md:min-w-[12ch] px-2 md:px-4 text-center text-atlas-600 align-baseline">
                   <RotatingWord
                     words={HERO_CITIES as unknown as string[]}
                     interval={2000}
@@ -157,19 +155,16 @@ export default function HomePage() {
                 <span className="text-ink-900">?</span>
               </span>
             </h1>
-            <p className="mt-4 md:mt-5 max-w-2xl text-base md:text-lg text-ink-800 leading-relaxed">
+            <p className="mt-4 md:mt-5 max-w-2xl mx-auto text-base md:text-lg text-ink-800 leading-relaxed">
               Revenue, margins, and what they actually mean, for the businesses behind every street.
             </p>
           </div>
-        </section>
-      </ToneBand>
-
-      {/* Primary navigator - lifted into the hero band per Plan v16 Block B5.
-          Required fields are country, category, industry; everything else
-          is optional. */}
-      <ToneBand tone="home-navigator">
-        <section className="pt-1 pb-4 md:pb-6">
-          <NavigatorForm />
+          {/* Navigator sits inside the same band immediately under the
+             hero copy. Tightened top spacing so it reads as one
+             continuous section, not two stacked. */}
+          <div className="mt-6 md:mt-8 max-w-5xl mx-auto">
+            <NavigatorForm />
+          </div>
         </section>
       </ToneBand>
 

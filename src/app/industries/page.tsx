@@ -1,19 +1,25 @@
 /**
- * /industries — top-level industry directory page.
+ * /industries — top-level industry directory.
  *
- * Mirror of /browse but pivoted around industries: alphabetical index,
- * sector grouping, plus a curated "popular industries" strip. Adds a
- * meaningful third entry path alongside countries and sectors.
+ * Plan v32 hotfix. Founder feedback: the previous page was ugly except
+ * for the A-Z section. Restructured into three clear blocks:
+ *
+ *   1. Hero (center-aligned, consistent with home)
+ *   2. Sector grid (same compact cards as the homepage SectorMasterMenu,
+ *      so the visual language is consistent across the site)
+ *   3. A-Z list (kept; founder explicit: this part is good)
+ *
+ * The 'Popular industries' middle section is removed (duplicates the
+ * homepage navigator and the Featured grid). The 'By sector' pill cloud
+ * is replaced with the compact card grid used elsewhere.
  */
 import Link from "next/link";
 import {
   INDUSTRIES,
-  INDUSTRIES_BY_SECTOR,
-  SECTORS_ORDERED,
   industryToSlug,
   isDefaultVisible,
 } from "@/lib/taxonomy";
-import { sectorIcon } from "@/lib/taxonomy/sector_icons";
+import { SectorMasterMenu } from "@/components/SectorMasterMenu";
 
 export const revalidate = 86400;
 
@@ -24,130 +30,57 @@ export const metadata = {
   alternates: { canonical: "/industries" },
 };
 
-const POPULAR: Array<{ id: string; label: string; glyph: string }> = [
-  { id: "restaurants", label: "Restaurants", glyph: "🍽️" },
-  { id: "cafes_coffee", label: "Cafés & coffee shops", glyph: "☕" },
-  { id: "legal_services", label: "Legal services", glyph: "⚖️" },
-  { id: "software_development", label: "Software development", glyph: "💻" },
-  { id: "residential_construction", label: "Residential construction", glyph: "🏗️" },
-  { id: "real_estate_agencies", label: "Real estate agencies", glyph: "🏘️" },
-  { id: "management_consulting", label: "Management consulting", glyph: "💼" },
-  { id: "marketing_design", label: "Marketing & design", glyph: "🎨" },
-  { id: "grocery_stores", label: "Grocery stores", glyph: "🛒" },
-  { id: "metal_products_mfg", label: "Metal products mfg", glyph: "⚙️" },
-  { id: "auto_repair_shops", label: "Auto repair", glyph: "🔧" },
-  { id: "hotels_lodging", label: "Hotels & lodging", glyph: "🏨" },
-];
-
 export default function IndustriesIndex() {
-  const visibleSectors = SECTORS_ORDERED.filter(
-    (s) => (INDUSTRIES_BY_SECTOR[s.id] || []).some(isDefaultVisible)
+  const visibleIndustries = INDUSTRIES.filter(isDefaultVisible).sort((a, b) =>
+    a.name.localeCompare(b.name),
   );
 
   return (
-    <div className="py-10">
-      <header className="max-w-3xl">
-        <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
+    <div>
+      {/* Hero */}
+      <section className="py-10 md:py-14 text-center">
+        <div className="text-xs font-semibold uppercase tracking-[0.16em] text-atlas-700 mb-3">
           Industries
         </div>
-        <h1 className="mt-2 text-4xl md:text-5xl font-semibold tracking-tight text-ink-900">
-          Every industry we cover
+        <h1 className="font-display text-3xl md:text-5xl font-medium tracking-tight text-ink-900 leading-tight max-w-3xl mx-auto">
+          Every kind of small business we cover
         </h1>
-        <p className="mt-3 text-lg text-ink-800/80">
-          Pick an industry to see how it earns worldwide: typical
-          revenue, employment, after-tax owner take-home, and where
-          every business lands from bottom 10% to top 10%.
+        <p className="mt-4 max-w-2xl mx-auto text-base md:text-lg text-ink-800 leading-relaxed">
+          Pick an industry to see how it earns worldwide: typical revenue,
+          employment, after-tax owner take-home, and where every business
+          lands from bottom 10% to top 10%.
         </p>
-      </header>
+      </section>
 
-      {/* Popular */}
-      <section className="mt-10">
-        <h2 className="text-xl md:text-2xl font-semibold text-ink-900 mb-3">
-          Popular industries
-        </h2>
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-          {POPULAR.map((p) => (
+      {/* Sector grid — same component used on the homepage so the
+         visual language stays consistent across the site. */}
+      <SectorMasterMenu />
+
+      {/* A-Z list — founder-approved as-is. */}
+      <section className="py-10 md:py-14 border-t border-ink-100">
+        <div className="text-center mb-6 md:mb-8">
+          <div className="text-xs font-semibold uppercase tracking-[0.16em] text-atlas-700">
+            All industries
+          </div>
+          <h2 className="mt-2 font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900">
+            {visibleIndustries.length} industries, A to Z
+          </h2>
+          <p className="mt-2 text-sm md:text-base text-ink-700 max-w-2xl mx-auto">
+            Each name opens its worldwide benchmark page: typical revenue,
+            employment, and how the industry varies country by country.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-6 gap-y-2 text-sm max-w-6xl mx-auto">
+          {visibleIndustries.map((ind) => (
             <Link
-              key={p.id}
-              href={`/industries/${industryToSlug(p.id)}`}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-cream-100 border border-parchment hover:border-atlas-500 hover:bg-white transition text-sm text-ink-900"
+              key={ind.id}
+              href={`/industries/${industryToSlug(ind.id)}`}
+              className="text-ink-900 hover:text-atlas-700 transition-colors truncate py-1"
             >
-              <span className="text-xl leading-none">{p.glyph}</span>
-              <span className="flex-1 font-medium">{p.label}</span>
-              <span className="text-atlas-600">→</span>
+              {ind.name}
             </Link>
           ))}
-        </div>
-      </section>
-
-      {/* By sector */}
-      <section className="mt-12">
-        <h2 className="text-xl md:text-2xl font-semibold text-ink-900 mb-3">
-          By sector
-        </h2>
-        <p className="text-sm text-ink-700/70 mb-5">
-          Click a sector for the full list of industries inside, or jump
-          straight to a specific industry below.
-        </p>
-        <div className="space-y-8">
-          {visibleSectors.map((s) => {
-            const inds = (INDUSTRIES_BY_SECTOR[s.id] || []).filter(isDefaultVisible);
-            if (inds.length === 0) return null;
-            return (
-              <div key={s.id}>
-                <div className="flex items-baseline justify-between gap-3 mb-2">
-                  <h3 className="text-base font-semibold text-ink-900 flex items-center gap-2">
-                    <span aria-hidden className="text-lg leading-none">{sectorIcon(s.id)}</span>
-                    {s.name}
-                  </h3>
-                  <Link
-                    href={`/sectors/${s.id}`}
-                    className="text-xs text-atlas-700 hover:text-atlas-900 font-medium"
-                  >
-                    Sector page →
-                  </Link>
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {inds.map((ind) => (
-                    <Link
-                      key={ind.id}
-                      href={`/industries/${industryToSlug(ind.id)}`}
-                      className="inline-flex px-2.5 py-1 rounded-full bg-white border border-ink-200 text-xs text-ink-900 hover:border-atlas-500 hover:bg-atlas-50 transition"
-                    >
-                      {ind.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* Alphabetical */}
-      <section className="mt-12">
-        <h2 className="text-xl md:text-2xl font-semibold text-ink-900 mb-3">
-          A-Z
-        </h2>
-        <p className="text-sm text-ink-700/70 mb-5">
-          {INDUSTRIES.filter(isDefaultVisible).length} default-visible
-          industries. Each opens its worldwide benchmark page: typical
-          revenue, employment, and how the industry varies country by
-          country.
-        </p>
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-1.5 text-sm">
-          {[...INDUSTRIES]
-            .filter(isDefaultVisible)
-            .sort((a, b) => a.name.localeCompare(b.name))
-            .map((ind) => (
-              <Link
-                key={ind.id}
-                href={`/industries/${industryToSlug(ind.id)}`}
-                className="text-ink-900 hover:text-atlas-700 truncate"
-              >
-                {ind.name}
-              </Link>
-            ))}
         </div>
       </section>
     </div>

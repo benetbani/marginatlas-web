@@ -38,7 +38,7 @@ const DEFAULT_QUESTIONS: AtlasQuestion[] = [
 
 function BlockA({ questions = DEFAULT_QUESTIONS }: { questions?: AtlasQuestion[] }) {
   return (
-    <section aria-labelledby="block-a-h2" className="w-full bg-cream-50">
+    <section aria-labelledby="block-a-h2" className="w-full bg-white">
       <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
         <p className="text-xs uppercase tracking-[0.22em] font-semibold text-atlas-700">
           What you can ask Atlas
@@ -111,7 +111,7 @@ const STEPS: Step[] = [
 
 function BlockB() {
   return (
-    <section aria-labelledby="block-b-h2" className="w-full atlas-dot-grid">
+    <section aria-labelledby="block-b-h2" className="w-full bg-cream-50">
       <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
         <p className="text-xs uppercase tracking-[0.22em] font-semibold text-atlas-700">
           How the numbers are built

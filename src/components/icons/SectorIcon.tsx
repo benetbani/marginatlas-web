@@ -30,6 +30,13 @@ import {
   Sparkle,
   Mountains,
   CellTower,
+  // Plan v32 hotfix — additional icons so every sector gets a
+  // distinct mark. Previously heavy_industry shared Factory with
+  // manufacturing_artisan, finance_corp shared Bank with cultural,
+  // higher_ed_hospitals shared Stethoscope with health_clinics.
+  GearSix,
+  ChartLineUp,
+  Hospital,
 } from "@phosphor-icons/react/dist/ssr";
 
 // Phosphor exports `Icon` type but it expects a constrained IconWeight
@@ -57,12 +64,13 @@ const SECTOR_ICONS: Record<string, any> = {
   events_entertainment: Confetti,
   cultural: Bank,
   other_local: Sparkle,
-  // Pro-only sectors
+  // Pro-only sectors. v32 hotfix — every icon below now distinct
+  // from the visible 20-sector set above.
   mining_energy: Mountains,
-  heavy_industry: Factory,
-  finance_corp: Bank,
+  heavy_industry: GearSix,        // was Factory (duplicate of manufacturing_artisan)
+  finance_corp: ChartLineUp,      // was Bank (duplicate of cultural)
   telecom_broadcasting: CellTower,
-  higher_ed_hospitals: Stethoscope,
+  higher_ed_hospitals: Hospital,  // was Stethoscope (duplicate of health_clinics)
 };
 
 type Props = {
