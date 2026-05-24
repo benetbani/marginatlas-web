@@ -41,6 +41,16 @@ const INDUSTRY_TO_NAICS: Record<string, string[]> = {
   barbershops: ["812111"],
   auto_repair_shops: ["811111", "811112", "811118"],
   hotels_lodging: ["721110"],
+  dental_practices: ["621210"],
+  doctors_clinics: ["621111", "621112"],
+  legal_services: ["541110"],
+  accounting_tax: ["541211", "541219"],
+  real_estate_agencies: ["531210"],
+  residential_construction: ["236115", "236116", "236117", "236118"],
+  grocery_stores: ["445110"],
+  clothing_stores: ["458110"],
+  sports_fitness: ["713940"],
+  veterinary_pet_care: ["541940"],
 };
 
 // Per-country construction / cost-of-doing-business multipliers

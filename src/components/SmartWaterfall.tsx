@@ -13,6 +13,8 @@
  */
 import { estimateCostStructure } from "@/lib/cost_engine/engine";
 import { fmtMoney } from "@/lib/format/money";
+import type { CostStack } from "@/lib/types/deepening";
+import { getCityRentMultiplier } from "@/lib/qa/city_rent_multipliers";
 
 type Props = {
   iso2: string;
@@ -20,7 +22,123 @@ type Props = {
   sizeBand?: "small" | "medium" | "large";
   grossRevenue: number;
   cityTier?: 1 | 2 | 3;
+  // Plan v32 Sprint G — when a cell has a populated cost_stack (from
+  // Phase 1 deepening), the waterfall overrides the heuristic engine's
+  // line values with the sourced numbers. The engine still computes the
+  // tax + net-profit math from those overrides.
+  costStackOverride?: CostStack | null;
+  // Cell's geo_id, used to apply city-level rent multipliers (London,
+  // NYC, Tokyo etc. pay materially more rent than the country average).
+  geoId?: string | null;
 };
+
+/** Map the 8-line CostStack onto the 11-line waterfall engine lines.
+ *  payroll_total is split 80/20 between direct_labor and
+ *  employer_social (employer-side contributions average ~20% of wages
+ *  across the pilot countries — closer to 14% in the UK, ~28% in
+ *  France, ~15% in the US once FICA + state UI + unemployment are
+ *  rolled in). Country-specific split deferred to Phase 2. */
+function overrideLinesFromCostStack(
+  baseLines: ReturnType<typeof estimateCostStructure>["lines"],
+  stack: CostStack,
+  grossRevenue: number,
+  cityRentMult: number = 1,
+): ReturnType<typeof estimateCostStructure>["lines"] {
+  const splitWages = 0.8;
+  const splitEmployerSocial = 0.2;
+
+  function withValue(
+    base: ReturnType<typeof estimateCostStructure>["lines"][keyof ReturnType<typeof estimateCostStructure>["lines"]],
+    usd: number | undefined,
+  ): ReturnType<typeof estimateCostStructure>["lines"][keyof ReturnType<typeof estimateCostStructure>["lines"]] {
+    if (usd == null || !isFinite(usd)) return base;
+    return {
+      ...base,
+      usd,
+      share_of_revenue: grossRevenue > 0 ? usd / grossRevenue : 0,
+      confidence: stack.grade === "A" ? "A" : stack.grade === "B" ? "B" : "C",
+      provenance: `From this cell's sourced cost stack (grade ${stack.grade ?? "C"}, refreshed ${stack.refreshed_at ?? "unknown date"}).`,
+    };
+  }
+
+  const cogs = withValue(baseLines.cogs, stack.cost_of_goods_sold);
+  const direct_labor = withValue(
+    baseLines.direct_labor,
+    stack.payroll_total != null ? stack.payroll_total * splitWages : undefined,
+  );
+  const employer_social = withValue(
+    baseLines.employer_social,
+    stack.payroll_total != null ? stack.payroll_total * splitEmployerSocial : undefined,
+  );
+  // Scale rent by the city-level multiplier (London 2.2x, NYC 2.5x, etc.).
+  // The cost_stack stored on the cell is country-level by default; we
+  // boost it at render time when the cell is a known expensive city.
+  const rent = withValue(
+    baseLines.rent,
+    stack.rent_occupancy != null ? stack.rent_occupancy * cityRentMult : undefined,
+  );
+  const energy = withValue(baseLines.energy, stack.utilities);
+  const marketing = withValue(baseLines.marketing, stack.marketing_acquisition);
+  const insurance = withValue(baseLines.insurance, stack.insurance_professional);
+  // equipment_maintenance + regulatory_licensing fold into other_overhead;
+  // software_tech keeps its engine estimate.
+  const otherCombined =
+    (stack.equipment_maintenance ?? 0) + (stack.regulatory_licensing ?? 0);
+  const other_overhead = withValue(
+    baseLines.other_overhead,
+    otherCombined > 0 ? otherCombined : undefined,
+  );
+
+  // Recompute subtotals
+  const gross_revenue = baseLines.gross_revenue;
+  const gross_profit_usd = gross_revenue.usd - cogs.usd;
+  const operating_profit_usd =
+    gross_profit_usd -
+    direct_labor.usd -
+    employer_social.usd -
+    rent.usd -
+    energy.usd -
+    marketing.usd -
+    baseLines.software_tech.usd -
+    insurance.usd -
+    other_overhead.usd;
+  const corporate_tax_usd = baseLines.corporate_tax.usd > 0
+    ? operating_profit_usd * baseLines.corporate_tax.share_of_revenue / (baseLines.operating_profit.share_of_revenue || 1)
+    : 0;
+  const net_profit_usd = operating_profit_usd - corporate_tax_usd;
+
+  return {
+    ...baseLines,
+    cogs,
+    direct_labor,
+    employer_social,
+    rent,
+    energy,
+    marketing,
+    insurance,
+    other_overhead,
+    gross_profit: {
+      ...baseLines.gross_profit,
+      usd: gross_profit_usd,
+      share_of_revenue: grossRevenue > 0 ? gross_profit_usd / grossRevenue : 0,
+    },
+    operating_profit: {
+      ...baseLines.operating_profit,
+      usd: operating_profit_usd,
+      share_of_revenue: grossRevenue > 0 ? operating_profit_usd / grossRevenue : 0,
+    },
+    corporate_tax: {
+      ...baseLines.corporate_tax,
+      usd: corporate_tax_usd,
+      share_of_revenue: grossRevenue > 0 ? corporate_tax_usd / grossRevenue : 0,
+    },
+    net_profit: {
+      ...baseLines.net_profit,
+      usd: net_profit_usd,
+      share_of_revenue: grossRevenue > 0 ? net_profit_usd / grossRevenue : 0,
+    },
+  };
+}
 
 const LINE_ORDER: Array<{ key: keyof ReturnType<typeof estimateCostStructure>["lines"]; label: string; isSubtotal?: boolean; sign: "+" | "-" | "=" }> = [
   { key: "gross_revenue", label: "Total revenue", sign: "+" },
@@ -46,16 +164,28 @@ const CONFIDENCE_COLOR: Record<"A" | "B" | "C" | "D", string> = {
   D: "bg-stone-400",
 };
 
-export function SmartWaterfall({ iso2, industryId, sizeBand = "medium", grossRevenue, cityTier = 2 }: Props) {
+export function SmartWaterfall({ iso2, industryId, sizeBand = "medium", grossRevenue, cityTier = 2, costStackOverride, geoId }: Props) {
   if (!grossRevenue || grossRevenue <= 0) return null;
 
-  const result = estimateCostStructure({
+  const cityRentMult = getCityRentMultiplier(geoId);
+
+  const baseResult = estimateCostStructure({
     iso2,
     industryId,
     sizeBand,
     grossRevenue,
     cityTier,
   });
+
+  // Plan v32 Sprint G — if the cell ships with a real cost_stack,
+  // swap the sourced lines into the engine's structure. The engine
+  // still owns the tax math; we just override the cost lines.
+  // City rent multiplier additionally boosts the rent line for
+  // known expensive metros (London, NYC, Tokyo, etc.).
+  const usedOverride = !!costStackOverride;
+  const result = usedOverride
+    ? { ...baseResult, lines: overrideLinesFromCostStack(baseResult.lines, costStackOverride!, grossRevenue, cityRentMult) }
+    : baseResult;
 
   return (
     <section className="py-12 md:py-16">

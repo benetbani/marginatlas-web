@@ -692,6 +692,8 @@ export default async function CellPage({
           industryId={cell.industry_id}
           sizeBand="medium"
           grossRevenue={cell.revenue_per_firm}
+          costStackOverride={cell.cost_stack ?? null}
+          geoId={cell.geo_id ?? null}
         />
       ) : null}
 
