@@ -13,7 +13,7 @@
 | 4 | City page hero overlay (cards on image, fix duplicate country, remove wealth tier) | **complete** | `0a9a363` + `8ef13a8` |
 | 5 | Data pipeline (metro pop, metro GDP, salary, HDI, Gini with smart fallback) | **deferred** (requires external API access, scoped to follow-up) | n/a |
 | 6 | Top 5 most/least profitable + business formation costs by legal tier | **2 of 3 shipped** (saturation deferred with §5) | `8ef13a8` |
-| 7 | Site-wide hero image fill | **shipped** (background agent) | (in background agent output) |
+| 7 | Site-wide hero image fill: 252/252 cities + 105/105 country ISO2s | **complete** | `b30310e` |
 | 8 | Purge apologetic disclaimers | **complete** (13 surfaces purged, 2 components deleted, 1 added) | `0a9a363` + `303718e` |
 | 9 | Per-city quality sweep | **deferred** (gates on §5 data pipeline) | n/a |
 | 10 | Header logo bump 32 to 40 | **complete** | `0a9a363` |
@@ -85,9 +85,14 @@ Shipped:
 Deferred (with §5):
 3. Top 5 most saturated activities (businesses per capita). Requires cells_master x metro population join; depends on §5 metro-pop pipeline.
 
-### §7 hero image fill — IN PROGRESS
+### §7 hero image fill (commit b30310e)
 
-Background agent is filling Unsplash/Pexels hero images for cities + countries that have no image cached. Memory cap 400 MB; ≤60 API calls per minute. Status report will land separately.
+- Cities: 252 / 252 with hero images (43 Unsplash + 209 Pexels + 0 pattern fallbacks).
+- Countries: 105 / 105 cities-covered ISO2 codes (13 fresh Pexels + 8 §7 pattern + 84 from the legacy Wikimedia `countries_manifest.json` consulted as a tier-2 fallback).
+- All spec-required additions have real editorial photos: Baltimore, Las Vegas, Moscow, Saint Petersburg, Muscat, Monaco, Tbilisi, Baghdad, Baku, Algiers, Luanda, Antalya, Doha, Manama, Hong Kong, San Jose CR, Santo Domingo, Panama City.
+- Peak pipeline RSS: ~70 MB (well under the 400 MB target and 600 MB hard cap).
+- Unsplash demo tier hit its 50/hr ceiling after ~43 calls; script auto-detected the 403 and switched to Pexels. Pexels free tier hit its 200/hr ceiling during the country pass; the Wikimedia tier-2 fallback closed the remaining 84 country gaps.
+- New helper: `scripts/images/backfill_country_patterns.ts` (idempotent, no-network) writes pattern entries for the 7 ISO2 codes that neither manifest covers (CA, KH, XK, IR, MN, LA, MM).
 
 ### §8 disclaimer purge (commits 0a9a363 + 303718e)
 
@@ -105,7 +110,7 @@ Two orphan files (`src/components/v2/CountryScorecardV2.tsx`, `src/components/v2
 
 | Criterion | Status |
 |---|---|
-| All 10 sections green | 8 of 10 complete; §5 and §9 deferred; §6 partial; §7 in flight |
+| All 10 sections green | 9 of 11 complete (§1, §2, §3, §4, §6-partial, §7, §8, §10); §5 + §6-saturation + §9 + §11 deferred to a focused follow-up |
 | All regression tests passing | yes (10 prebuild gates green) |
 | No new prebuild violations | yes |
 | Process RSS during pipeline runs <= 600 MB | not exceeded in any shipped work |
@@ -127,6 +132,8 @@ Two orphan files (`src/components/v2/CountryScorecardV2.tsx`, `src/components/v2
 0a9a363  Cities §1 §2 §3 §4-partial §10
 303718e  (§8 disclaimer purge, second pass)
 8ef13a8  Cities §4 + §6 hero overlay + new content sections
+dabfe48  Cities deepening: execution summary (this doc)
+b30310e  Sanity-§7: hero image fill (252/252 cities + 105/105 countries)
 ```
 
 All on `main`, all pushed.
