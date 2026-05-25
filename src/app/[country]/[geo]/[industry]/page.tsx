@@ -5,7 +5,6 @@ import {
   getComparableCells,
   getTopCells,
   getSameIndustryAcrossStates,
-  getSameIndustryAcrossCountries,
   getNudgeNeighbor,
   cellUrl,
   slugify,
@@ -16,7 +15,6 @@ import {
   withBudget,
 } from "@/lib/cells";
 import { INDUSTRIES, industryToSlug } from "@/lib/taxonomy";
-import { purifyCountries } from "@/lib/geo/is_sovereign_country";
 import { iso2ToName } from "@/lib/countries";
 import { CountryFlag } from "@/components/CountryFlag";
 import { RevenueTiles } from "@/components/RevenueTiles";
@@ -33,7 +31,6 @@ import { CellPageNav } from "@/components/CellPageNav";
 import { AtlasScore } from "@/components/AtlasScore";
 import { SmartImage } from "@/components/SmartImage";
 import { AudienceCaveat } from "@/components/AudienceCaveat";
-import { AcrossCountriesStrip } from "@/components/AcrossCountriesStrip";
 import { SECTOR_BY_ID, INDUSTRY_BY_ID, slugToIndustry, resolveToMeasuredIndustry } from "@/lib/taxonomy";
 import { CellDataset, Breadcrumbs } from "@/components/StructuredData";
 import { RelatedIndustriesStrip } from "@/components/RelatedIndustriesStrip";
@@ -261,7 +258,11 @@ export default async function CellPage({
   // Every one wrapped in withBudget so a single slow query cannot hang the
   // entire page render.
   const isUsCell = country.toLowerCase() === "us";
-  const [comparables, acrossStates, acrossCountries, nudge] = await Promise.all([
+  // Country-page rebuild §8 (2026-05-25): the cross-country fetch was
+  // dropped because AcrossCountriesStrip no longer renders. Within-US
+  // state comparison stays (same currency, same wage scale, real
+  // Census coverage). Comparable-cells stays (peer-city ribbon).
+  const [comparables, acrossStates, nudge] = await Promise.all([
     withBudget(
       getComparableCells(cell.geo_name || "", cell.naics_6 || undefined, 6),
       [],
@@ -276,21 +277,8 @@ export default async function CellPage({
           "getSameIndustryAcrossStates",
         )
       : Promise.resolve([]),
-    isUsCell
-      ? Promise.resolve([])
-      : withBudget(
-          getSameIndustryAcrossCountries(industry, country, 10),
-          [],
-          4_000,
-          "getSameIndustryAcrossCountries",
-        ),
     withBudget(getNudgeNeighbor(cell), null, 4_000, "getNudgeNeighbor"),
   ]);
-
-  // v34 sanity sweep §5: purify the across-countries cells (filter to
-  // sovereign ISO2, dedupe). Prevents the city/state contamination and
-  // duplicate-country bugs the founder reported.
-  const acrossCountriesPure = purifyCountries(acrossCountries, (c) => c.country);
 
   // Build region + industry option lists for switcher
   const regions = listUsStates();
@@ -819,20 +807,19 @@ export default async function CellPage({
          The 10/10 confidence score and ★★★★★ rating exposed engineering
          provenance the founder explicitly said never to display. */}
 
-      {/* Same industry across states (US) or countries (non-US) */}
+      {/* Same activity across US states. Within-country comparison
+         only: same currency, same wage scale, same Census source.
+         Country-page rebuild §8 (2026-05-25): cross-country
+         AcrossCountriesStrip was removed because the inter-country
+         revenue dispersion is dominated by wrong-aggregation tails
+         (India carpenters $11.6M next to Germany at $118K). The
+         within-US version is preserved. */}
       <div id="across-states" />
       {isUsCell && (
         <AcrossStatesStrip
           industryName={cell.industry_name || industry.replace(/-/g, " ")}
           currentGeoName={cell.geo_name || geo}
           cells={acrossStates}
-        />
-      )}
-      {!isUsCell && (
-        <AcrossCountriesStrip
-          industryName={cell.industry_name || industry.replace(/-/g, " ")}
-          currentCountryName={cell.geo_name || geo}
-          cells={acrossCountriesPure}
         />
       )}
 

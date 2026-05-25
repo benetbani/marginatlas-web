@@ -5,19 +5,13 @@ import {
   resolveSector,
   visibleIndustriesInSector,
   visibleSectors,
-  type Industry,
 } from "@/lib/taxonomy";
-import { getCellBySlug } from "@/lib/cells";
-import { SectorAcrossWorld } from "@/components/SectorAcrossWorld";
 import { SectorIcon } from "@/components/icons/SectorIcon";
-import { fmtMoney } from "@/lib/format/money";
 import { MoreDepthBanner } from "@/components/monetization";
 
 export const revalidate = 86400;
 // Plan v16: defer cold sectors to on-demand rendering so the build
-// doesn't time out on quickStat fan-out (6 Supabase calls per sector
-// × 20 sectors = 120 build-time queries). Top sectors pre-render;
-// the rest are dynamicParams=true.
+// doesn't time out. Top sectors pre-render; rest via dynamicParams.
 export const dynamicParams = true;
 
 type Params = { sector: string };
@@ -48,17 +42,13 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   };
 }
 
-async function quickStat(ind: Industry): Promise<number | null> {
-  // Use California as a global anchor for the headline number on the sector
-  // landing. The user-visible tile routes to the industry landing page,
-  // never directly to California (see industry tiles below).
-  try {
-    const c = await getCellBySlug("us", "california", industryToSlug(ind.id));
-    return c?.revenue_per_firm ?? null;
-  } catch {
-    return null;
-  }
-}
+// Country-page rebuild §8 (2026-05-25): the SectorAcrossWorld bar
+// chart was removed because the cross-country revenue dispersion is
+// dominated by the wrong-aggregation tail (India carpenters showing
+// $11.6M alongside Germany at $118K). Global averages are also
+// removed from the preview tiles below: a single anchor cell's
+// revenue (previously California restaurants) does not generalize
+// across countries and reads as authoritative when it is not.
 
 export default async function SectorPage({ params }: { params: Promise<Params> }) {
   const { sector } = await params;
@@ -69,9 +59,10 @@ export default async function SectorPage({ params }: { params: Promise<Params> }
   const visible = visibleIndustriesInSector(s.id, { revealCorp: isPro });
   const otherSectors = visibleSectors({ revealCorp: isPro }).filter((x) => x.id !== s.id).slice(0, 8);
 
-  // Fetch a quick stat for the first 6 industries (parallel)
+  // Top 6 industries to feature at the top of the page. Names + examples
+  // only — no global revenue number. The user clicks through to the
+  // industry page to see country-specific data.
   const previewIndustries = visible.slice(0, 6);
-  const previewStats = await Promise.all(previewIndustries.map(quickStat));
 
   return (
     <div>
@@ -108,20 +99,22 @@ export default async function SectorPage({ params }: { params: Promise<Params> }
               </p>
             )}
             <p className="mt-2 text-sm text-cocoa-700/70">
-              {visible.length} small-business industries · Browse below
+              {visible.length} small-business activities. Browse below.
             </p>
           </div>
         </div>
       </header>
 
-      {/* Preview cells with quick stats */}
+      {/* Featured activities. Tile shows activity name + a few examples
+         and links to the activity page where country-specific data
+         lives. No global typical-revenue number — see §8 rebuild note. */}
       {previewIndustries.length > 0 && (
         <section className="py-4">
           <h2 className="text-lg font-semibold text-ink-900 mb-3">
-            Top industries here
+            Featured activities here
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {previewIndustries.map((ind, i) => (
+            {previewIndustries.map((ind) => (
               <a
                 key={ind.id}
                 href={`/industries/${industryToSlug(ind.id)}`}
@@ -129,15 +122,10 @@ export default async function SectorPage({ params }: { params: Promise<Params> }
               >
                 <div className="font-semibold text-ink-900">{ind.name}</div>
                 <div className="text-xs text-cocoa-700/70 line-clamp-2">
-                  {(ind.examples || []).slice(0, 3).join(" · ")}
+                  {(ind.examples || []).slice(0, 4).join(" - ")}
                 </div>
-                <div className="mt-auto pt-2 border-t border-cocoa-700/10 flex items-baseline justify-between">
-                  <span className="text-[10px] uppercase tracking-wider text-cocoa-700/60">
-                    Typical
-                  </span>
-                  <span className="text-base font-semibold text-ink-900 tabular-nums">
-                    {fmtMoney(previewStats[i])}
-                  </span>
+                <div className="mt-1 text-[11px] text-atlas-700 font-medium">
+                  Open the benchmark &rarr;
                 </div>
               </a>
             ))}
@@ -145,13 +133,10 @@ export default async function SectorPage({ params }: { params: Promise<Params> }
         </section>
       )}
 
-      {/* FF.3: same sector across 12 countries */}
-      <SectorAcrossWorld sectorName={s.name} industries={visible} />
-
       {/* v34 Phase C sector-page lock: deep comparison across the
          whole sector is a Premium feature (Part 5.1). */}
       <MoreDepthBanner
-        headline={`Compare every industry in ${s.name} side by side, with all quartiles.`}
+        headline={`Compare every activity in ${s.name} side by side, with all quartiles.`}
         tier="premium"
         entry="sector_deep_comparison"
       />
@@ -159,7 +144,7 @@ export default async function SectorPage({ params }: { params: Promise<Params> }
       {/* Full industry list */}
       <section className="py-8">
         <h2 className="text-lg font-semibold text-ink-900 mb-3">
-          All industries in {s.name}
+          All activities in {s.name}
         </h2>
         <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
           {visible.map((ind) => (

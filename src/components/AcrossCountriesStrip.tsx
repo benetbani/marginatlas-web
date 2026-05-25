@@ -1,4 +1,10 @@
 /**
+ * DEPRECATED (Country-page rebuild §8, 2026-05-25): not mounted anywhere.
+ * Removed from the cell page because cross-country revenue dispersion
+ * is dominated by wrong-aggregation tails. The within-US version
+ * (AcrossStatesStrip) survives. File kept for one cycle; safe to
+ * delete in the next cleanup pass.
+ *
  * AcrossCountriesStrip — shows the same industry across other countries.
  * Used on non-US cell pages and country landing pages. Bar length is the
  * predicted typical revenue relative to the top country in the strip.

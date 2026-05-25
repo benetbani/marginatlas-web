@@ -1,4 +1,11 @@
 /**
+ * DEPRECATED (Country-page rebuild §8, 2026-05-25): not mounted anywhere.
+ * Removed from /sectors/[sector]/page.tsx because the cross-country
+ * dispersion is dominated by wrong-aggregation tails (founder feedback:
+ * India carpenters $11.6M next to Germany at $118K is "very idiotic").
+ * File kept for one cycle so any external reference fails on import,
+ * not at runtime; safe to delete in the next cleanup pass.
+ *
  * SectorAcrossWorld (FF.3) — strip showing the same representative industry
  * across 10-12 countries on a sector page.
  *

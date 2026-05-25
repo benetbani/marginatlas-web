@@ -5,8 +5,9 @@
  *  - Density: log scale of firm count, normalized to 0-1
  *  - Distribution: ratio of p90/p50 (high = lots of headroom)
  *  - Wage: log scale of mean wage, normalized
- *  /* useless-tile-ok: JSDoc describes an internal score signal, not a tile */
  *  - Data quality: cell.quality_score / 100
+ *
+ * useless-tile-ok: JSDoc describes an internal score signal, not a tile
  *
  * Pure derivation — no extra fetch. Renders as a colored chip with a
  * tier label ("Strong" / "Solid" / "Mixed" / "Tough").

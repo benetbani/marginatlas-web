@@ -2,9 +2,10 @@
  * CountryStatsStrip — "Cost of doing business" strip.
  *
  * Country-page rebuild §2 (2026-05-25): replaced the corporate-form
- * /* useless-tile-ok: JSDoc names the removed tile, not rendered */
  * tax overlay (Corporate income tax / Employer social rate / Owner
  * take vs pre-tax / Rate source) with four facts an SMB operator
+ *
+ * useless-tile-ok: JSDoc names the removed tile, not rendered
  * actually faces day to day:
  *
  *   1. Headline VAT/GST (the sales-tax cost on every customer order)
@@ -16,9 +17,10 @@
  * Per founder direction: "Corporate income tax" is the wrong frame
  * for most small businesses. Most SMBs are sole proprietors,
  * simplified-regime taxpayers, or pass-through entities. The
- * /* useless-tile-ok: JSDoc names the removed tile and its values, not rendered */
  * "Rate source" tile (Country-specific / Regional benchmark fallback)
  * is internal data-quality metadata and was removed entirely.
+ *
+ * useless-tile-ok: JSDoc names the removed tile and its values, not rendered
  *
  * Server component, no client JS.
  */

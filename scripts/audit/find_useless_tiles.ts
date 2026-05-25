@@ -129,6 +129,23 @@ function whitelistReason(lines: string[], lineIdx: number): string {
 const files: string[] = [];
 for (const d of SCAN_DIRS) walk(d, files);
 
+// Track which lines are inside a JSDoc block opener (slash-star-star).
+// JSDoc is documentation about a function or component; it routinely
+// mentions removed tile labels in "this replaces X" context. Matches
+// inside JSDoc are skipped entirely.
+function jsdocLineMask(text: string): boolean[] {
+  const lines = text.split(/\r?\n/);
+  const mask: boolean[] = new Array(lines.length).fill(false);
+  let inside = false;
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (!inside && /\/\*\*/.test(line)) inside = true;
+    if (inside) mask[i] = true;
+    if (inside && /\*\//.test(line)) inside = false;
+  }
+  return mask;
+}
+
 const hits: Hit[] = [];
 for (const file of files) {
   let text: string;
@@ -138,7 +155,9 @@ for (const file of files) {
     continue;
   }
   const lines = text.split(/\r?\n/);
+  const docMask = jsdocLineMask(text);
   for (let i = 0; i < lines.length; i++) {
+    if (docMask[i]) continue;
     const line = lines[i];
     for (const rule of RULES) {
       const m = line.match(rule.regex);

@@ -29,13 +29,14 @@ export const COUNTRY_PAGE_SECTIONS = [
   "related-countries",
 ] as const;
 
+// Country-page rebuild §8 (2026-05-25): industry-tiles, revenue-
+// distribution, top-countries, and top-cities-for-industry sections
+// were removed because they depend on a global cross-country revenue
+// aggregate that is dominated by wrong-aggregation tails. The page
+// now hands users off to the country page for real revenue data.
 export const INDUSTRY_PAGE_SECTIONS = [
   "hero",
-  "industry-tiles",
-  "revenue-distribution",
   "margin-waterfall",
-  "top-countries",
-  "top-cities-for-industry",
 ] as const;
 
 export type CellSection = (typeof CELL_PAGE_SECTIONS)[number];
