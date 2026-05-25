@@ -1,0 +1,87 @@
+{
+  "version": "1.0.0",
+  "anchor": "Cities sec 6 founder revision. Per-country business formation costs by legal tier. Global category names first (Sole Trader, LLC, Joint-Stock); local term in parentheses where the country uses a distinct name. Cost figures in local-currency USD-equivalent for reference (refined per-country as we add depth). setup_days is a typical online filing turnaround for the registered office. This seed covers the 14 highest-traffic countries; the rest fall through to an empty-state on the city page.",
+  "tier_definitions": {
+    "Freelancer": "Self-employed without a separate legal entity. Personal income tax applies. Personal liability is unlimited.",
+    "Sole Trader": "Registered as a personal business name; some countries require this above a revenue threshold. Personal liability is still unlimited unless paired with limited-liability vehicles.",
+    "LLC": "Limited Liability Company. Personal liability shielded; profits flow through or are taxed at corporate rate depending on jurisdiction.",
+    "Joint-Stock": "Stock-issuing company with separate legal personality. Heavier reporting; typical for businesses planning to raise capital."
+  },
+  "countries": {
+    "US": [
+      { "tier": "Sole Trader", "local_term": "Sole Proprietorship", "setup_cost_usd": 50, "setup_days": 1 },
+      { "tier": "LLC", "local_term": "LLC", "setup_cost_usd": 300, "setup_days": 7 },
+      { "tier": "Joint-Stock", "local_term": "Inc. / C-Corp", "setup_cost_usd": 800, "setup_days": 14 }
+    ],
+    "GB": [
+      { "tier": "Sole Trader", "local_term": "Sole Trader", "setup_cost_usd": 0, "setup_days": 1 },
+      { "tier": "LLC", "local_term": "Limited Company (Ltd)", "setup_cost_usd": 20, "setup_days": 1 },
+      { "tier": "Joint-Stock", "local_term": "Public Limited Company (Plc)", "setup_cost_usd": 100, "setup_days": 7 }
+    ],
+    "DE": [
+      { "tier": "Freelancer", "local_term": "Freiberufler", "setup_cost_usd": 0, "setup_days": 7 },
+      { "tier": "Sole Trader", "local_term": "Einzelunternehmen", "setup_cost_usd": 50, "setup_days": 7 },
+      { "tier": "LLC", "local_term": "UG (haftungsbeschrankt)", "setup_cost_usd": 300, "setup_days": 14 },
+      { "tier": "LLC", "local_term": "GmbH", "setup_cost_usd": 1500, "setup_days": 21 },
+      { "tier": "Joint-Stock", "local_term": "AG", "setup_cost_usd": 12000, "setup_days": 60 }
+    ],
+    "FR": [
+      { "tier": "Freelancer", "local_term": "Micro-entrepreneur (auto-entrepreneur)", "setup_cost_usd": 0, "setup_days": 7 },
+      { "tier": "Sole Trader", "local_term": "Entreprise Individuelle (EI)", "setup_cost_usd": 50, "setup_days": 7 },
+      { "tier": "LLC", "local_term": "SARL / EURL", "setup_cost_usd": 250, "setup_days": 14 },
+      { "tier": "Joint-Stock", "local_term": "SAS / SA", "setup_cost_usd": 500, "setup_days": 21 }
+    ],
+    "ES": [
+      { "tier": "Freelancer", "local_term": "Autonomo", "setup_cost_usd": 100, "setup_days": 14 },
+      { "tier": "LLC", "local_term": "Sociedad Limitada (SL)", "setup_cost_usd": 600, "setup_days": 21 },
+      { "tier": "Joint-Stock", "local_term": "Sociedad Anonima (SA)", "setup_cost_usd": 3500, "setup_days": 30 }
+    ],
+    "IT": [
+      { "tier": "Freelancer", "local_term": "Partita IVA (regime forfettario)", "setup_cost_usd": 50, "setup_days": 14 },
+      { "tier": "Sole Trader", "local_term": "Ditta Individuale", "setup_cost_usd": 200, "setup_days": 14 },
+      { "tier": "LLC", "local_term": "S.r.l.s. (simplified)", "setup_cost_usd": 200, "setup_days": 14 },
+      { "tier": "LLC", "local_term": "S.r.l.", "setup_cost_usd": 2500, "setup_days": 30 },
+      { "tier": "Joint-Stock", "local_term": "S.p.A.", "setup_cost_usd": 12000, "setup_days": 60 }
+    ],
+    "NL": [
+      { "tier": "Sole Trader", "local_term": "Eenmanszaak / ZZP", "setup_cost_usd": 100, "setup_days": 1 },
+      { "tier": "LLC", "local_term": "BV", "setup_cost_usd": 800, "setup_days": 14 },
+      { "tier": "Joint-Stock", "local_term": "NV", "setup_cost_usd": 5000, "setup_days": 30 }
+    ],
+    "JP": [
+      { "tier": "Sole Trader", "local_term": "Kojin Jigyo", "setup_cost_usd": 0, "setup_days": 1 },
+      { "tier": "LLC", "local_term": "Godo Kaisha (GK)", "setup_cost_usd": 600, "setup_days": 14 },
+      { "tier": "Joint-Stock", "local_term": "Kabushiki Kaisha (KK)", "setup_cost_usd": 2200, "setup_days": 21 }
+    ],
+    "BR": [
+      { "tier": "Freelancer", "local_term": "MEI (Microempreendedor Individual)", "setup_cost_usd": 0, "setup_days": 1 },
+      { "tier": "Sole Trader", "local_term": "Empresario Individual", "setup_cost_usd": 100, "setup_days": 14 },
+      { "tier": "LLC", "local_term": "Sociedade Limitada (Ltda)", "setup_cost_usd": 600, "setup_days": 30 },
+      { "tier": "Joint-Stock", "local_term": "S.A.", "setup_cost_usd": 5000, "setup_days": 60 }
+    ],
+    "MX": [
+      { "tier": "Freelancer", "local_term": "Persona Fisica con Actividad Empresarial", "setup_cost_usd": 50, "setup_days": 7 },
+      { "tier": "LLC", "local_term": "S. de R.L. de C.V.", "setup_cost_usd": 800, "setup_days": 21 },
+      { "tier": "Joint-Stock", "local_term": "S.A. de C.V.", "setup_cost_usd": 1500, "setup_days": 30 }
+    ],
+    "IN": [
+      { "tier": "Sole Trader", "local_term": "Sole Proprietorship", "setup_cost_usd": 50, "setup_days": 7 },
+      { "tier": "LLC", "local_term": "Private Limited Company (Pvt Ltd)", "setup_cost_usd": 200, "setup_days": 14 },
+      { "tier": "LLC", "local_term": "LLP", "setup_cost_usd": 150, "setup_days": 14 },
+      { "tier": "Joint-Stock", "local_term": "Public Limited Company", "setup_cost_usd": 600, "setup_days": 30 }
+    ],
+    "CA": [
+      { "tier": "Sole Trader", "local_term": "Sole Proprietorship", "setup_cost_usd": 60, "setup_days": 7 },
+      { "tier": "LLC", "local_term": "Federal / Provincial Corporation", "setup_cost_usd": 250, "setup_days": 7 }
+    ],
+    "AU": [
+      { "tier": "Sole Trader", "local_term": "Sole Trader (ABN)", "setup_cost_usd": 0, "setup_days": 1 },
+      { "tier": "LLC", "local_term": "Proprietary Limited Company (Pty Ltd)", "setup_cost_usd": 400, "setup_days": 7 }
+    ],
+    "CH": [
+      { "tier": "Sole Trader", "local_term": "Einzelunternehmen / Raison individuelle", "setup_cost_usd": 250, "setup_days": 14 },
+      { "tier": "LLC", "local_term": "GmbH / Sarl", "setup_cost_usd": 1000, "setup_days": 21 },
+      { "tier": "Joint-Stock", "local_term": "AG / SA", "setup_cost_usd": 2500, "setup_days": 30 }
+    ]
+  }
+}

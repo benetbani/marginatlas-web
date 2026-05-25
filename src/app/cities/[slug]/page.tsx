@@ -25,6 +25,8 @@ import { CountryFlag } from "@/components/CountryFlag";
 import { COUNTRIES } from "@/lib/taxonomy";
 import { MoreDepthBanner } from "@/components/monetization";
 import { ComparableCitiesRibbon } from "@/components/ComparableCitiesRibbon";
+import { TopProfitableActivities } from "@/components/cities/TopProfitableActivities";
+import { BusinessFormationCosts } from "@/components/cities/BusinessFormationCosts";
 import { CoverageIndicator } from "@/components/CoverageIndicator";
 
 export const revalidate = 43200; // 12 hours
@@ -112,8 +114,12 @@ export default async function CityPage({
 
   return (
     <article className="pb-16">
-      {/* Hero */}
-      <section className="relative w-full aspect-[21/9] md:aspect-[21/8] overflow-hidden bg-stone-100 mb-8 md:mb-12">
+      {/* Cities §4 founder layout: hero image full-bleed, cards
+         overlaid at the bottom. City name in bottom-LEFT, stat cards
+         in bottom-CENTER + bottom-RIGHT. The image stays as the
+         dominant visual but the page does not waste the whole first
+         frame on it alone. */}
+      <section className="relative w-full h-[480px] md:h-[600px] overflow-hidden bg-stone-100 mb-8 md:mb-12">
         {hero ? (
           <>
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -123,42 +129,52 @@ export default async function CityPage({
               className="w-full h-full object-cover"
               style={{ filter: "contrast(1.06) saturate(0.88)" }}
             />
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background:
-                  "linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(212,119,6,0.22) 100%)",
-                mixBlendMode: "multiply",
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/40" />
+            {/* Heavier bottom gradient so the overlaid cards have
+               enough contrast against any photograph. */}
+            <div className="absolute inset-0 bg-gradient-to-t from-ink-900/85 via-ink-900/35 to-transparent" />
           </>
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-cream-100 via-parchment to-cocoa-100" />
         )}
-        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12 text-white">
-          <div className="flex items-center gap-2 text-xs md:text-sm uppercase tracking-wide font-semibold mb-2 opacity-90">
-            <CountryFlag iso2={city.iso2} className="w-4" />
-            <span>{countryName}</span>
+
+        {/* Bottom overlay grid: city name (left) + stat cards (center + right) */}
+        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 items-end">
+            {/* Left: city name + country */}
+            <div className="text-white">
+              <div className="flex items-center gap-2 text-xs md:text-sm uppercase tracking-wide font-semibold mb-2 opacity-90">
+                <CountryFlag iso2={city.iso2} className="w-5" />
+                <span>{countryName}</span>
+              </div>
+              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight">
+                {city.name}
+              </h1>
+            </div>
+
+            {/* Center: metro population */}
+            <div className="bg-cream-50/95 backdrop-blur-sm border border-parchment rounded-xl px-4 py-3 shadow-md">
+              <div className="text-[10px] uppercase tracking-wide text-cocoa-700/70 font-semibold mb-1">
+                Metro population
+              </div>
+              <div className="font-display text-2xl md:text-3xl font-medium text-ink-900 tabular-nums">
+                {city.pop_m.toFixed(1)}M
+              </div>
+            </div>
+
+            {/* Right: metro GDP */}
+            <div className="bg-cream-50/95 backdrop-blur-sm border border-parchment rounded-xl px-4 py-3 shadow-md">
+              <div className="text-[10px] uppercase tracking-wide text-cocoa-700/70 font-semibold mb-1">
+                Metro GDP
+              </div>
+              <div className="font-display text-2xl md:text-3xl font-medium text-ink-900 tabular-nums">
+                ${city.gdp_b.toFixed(0)}B
+              </div>
+            </div>
           </div>
-          <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight">
-            {city.name}
-          </h1>
         </div>
       </section>
 
       <div className="max-w-6xl mx-auto px-4 md:px-6">
-        {/* Meta strip. Cities §4 founder revision:
-           - removed duplicate Country tile (country is already in the
-             hero overlay above; rendering it twice is a bug)
-           - removed Wealth tier tile (no purpose per founder)
-           - Cities §5 pipeline will add: average gross salary, HDI, Gini
-             once the data pipeline lands. For now we show only the two
-             trustworthy metrics. */}
-        <section className="grid grid-cols-2 md:grid-cols-2 gap-3 md:gap-4 mb-10">
-          <MetaTile label="Metro population" value={`${city.pop_m.toFixed(1)}M`} />
-          <MetaTile label="Metro GDP" value={`$${city.gdp_b.toFixed(0)}B`} />
-        </section>
 
         {/* Sanity-§8: apologetic expanded CoverageIndicator banner
             replaced with a quiet inline methodology link. */}
@@ -168,6 +184,15 @@ export default async function CityPage({
             variant="compact"
           />
         </section>
+
+        {/* Cities sec 6: top 5 most / least profitable activities. */}
+        <TopProfitableActivities countryIso2={city.iso2} />
+
+        {/* Cities sec 6: business formation costs by legal tier. */}
+        <BusinessFormationCosts
+          countryIso2={city.iso2}
+          countryName={countryName}
+        />
 
         {/* Industry mosaic */}
         <section className="mb-12 md:mb-16">
