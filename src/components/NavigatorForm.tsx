@@ -142,8 +142,16 @@ export function NavigatorForm() {
 
   function submit() {
     try {
+      // Defensive: the button is disabled when !industry, but if the
+      // form is somehow submitted anyway (Enter key, programmatic),
+      // fall through to /random instead of doing nothing silently.
+      // Alerts read as "the button is broken" — never use them here.
       if (!industry) {
-        alert("Pick an industry to find the data you're looking for.");
+        // eslint-disable-next-line no-console
+        console.warn("NavigatorForm: submit without industry; routing to /random");
+        setIsLoading(true);
+        router.push("/random");
+        window.setTimeout(() => setIsLoading(false), 3000);
         return;
       }
       const cc = country.toLowerCase();
@@ -269,8 +277,20 @@ export function NavigatorForm() {
         />
       </div>
       <div className="mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        {/* Help text adapts to state: when industry is missing, point at
+           the field so the user knows WHY the primary button is dimmed.
+           Founder feedback (2026-05-25): clicking a dead-looking button
+           reads as broken; the disabled state must be self-explanatory. */}
         <p className="text-xs text-cocoa-700/70">
-          Try: restaurants in California · cafés in Italy · plumbers in Texas · clothing boutiques in France
+          {!industry ? (
+            <span className="text-clay-700 font-medium">
+              Pick an industry to continue, or hit Surprise me.
+            </span>
+          ) : (
+            <>
+              Try: restaurants in California &middot; cafés in Italy &middot; plumbers in Texas
+            </>
+          )}
         </p>
         <div className="flex items-center gap-3">
           <button
@@ -284,9 +304,11 @@ export function NavigatorForm() {
           </button>
           <button
             type="submit"
-            disabled={isLoading}
+            disabled={isLoading || !industry}
             aria-busy={isLoading}
-            className="px-8 py-4 rounded-xl bg-atlas-500 hover:bg-atlas-600 active:bg-atlas-700 text-cream-50 font-semibold text-base shadow-sm transition disabled:opacity-80 disabled:cursor-wait inline-flex items-center gap-2"
+            aria-disabled={isLoading || !industry}
+            title={!industry ? "Pick an industry first" : undefined}
+            className="px-8 py-4 rounded-xl bg-atlas-500 hover:bg-atlas-600 active:bg-atlas-700 text-cream-50 font-semibold text-base shadow-sm transition disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center gap-2"
           >
             {isLoading ? (
               <>
@@ -297,7 +319,7 @@ export function NavigatorForm() {
                 Loading the numbers...
               </>
             ) : (
-              <>Show me the numbers →</>
+              <>Show me the numbers &rarr;</>
             )}
           </button>
         </div>
