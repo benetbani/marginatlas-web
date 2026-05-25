@@ -1,112 +1,134 @@
 /**
  * CountryAtAGlance — dense 5-stat row that sits directly under the
- * country page hero. Replaces the old AtlasHeroImage photo, which the
- * founder removed in v32: the first frame must carry information, not
- * decorate it. Every stat here is computed from data already loaded by
- * the parent page (no extra DB calls).
+ * country page hero. Country-page rebuild §1 (2026-05-25): replaced
+ * the old count-of-things tiles ("44 industries covered", "Cities
+ * ranked 0", "Median typical revenue", "Top SMB sector", "Owner take
+ * after CIT") with five facts a person evaluating starting a small
+ * business actually wants:
+ *
+ *   1. Nominal GDP per capita (customer purchasing-power ceiling)
+ *   2. Average monthly salary (employee cost AND customer affordability)
+ *   3. Net wealth per adult (customer savings depth)
+ *   4. Self-employment share (competitive density of local SMB market)
+ *   5. Days to start a business (first operational question)
+ *
+ * Each tile shows the number + a guiding word in the dark-red-to-
+ * dark-green gradient (or neutral atlas-brown for size descriptors).
+ * Data fields come from src/lib/economics/country_metrics.ts.
+ *
+ * Server component, no client JS.
  */
 
 import Link from "next/link";
+import {
+  getCountryEconomicsSnapshot,
+  fmtGdpPerCapita,
+  fmtSalaryMonthly,
+  fmtWealthPerAdult,
+  fmtPct,
+  fmtDays,
+} from "@/lib/economics/country_metrics";
+import { getGuidingWord, type Metric } from "@/lib/cities/guiding_word";
 import type { TopIndustryRow } from "@/lib/cells";
-import { SECTOR_BY_ID, INDUSTRY_BY_ID } from "@/lib/taxonomy";
-import { getCitiesForCountry } from "@/lib/cities";
-import { getCountryTaxRates } from "@/lib/tax";
-import { getCountryCoverage } from "@/lib/quality/coverage-report";
-import { getAdmin1Regions } from "@/lib/coverage/admin1";
-import { fmtMoney } from "@/lib/format/money";
 
 type Props = {
   iso2: string;
-  topIndustries: TopIndustryRow[];
+  /**
+   * Kept for backward compat with the country page's import shape;
+   * no longer consumed since the §1 rebuild dropped the "top sector"
+   * and "median typical revenue" tiles.
+   */
+  topIndustries?: TopIndustryRow[];
 };
 
-function median(nums: number[]): number | null {
-  if (nums.length === 0) return null;
-  const sorted = [...nums].sort((a, b) => a - b);
-  const mid = Math.floor(sorted.length / 2);
-  if (sorted.length % 2 === 0) return (sorted[mid - 1] + sorted[mid]) / 2;
-  return sorted[mid];
-}
+type Tile = {
+  label: string;
+  value: string;
+  metric: Metric | null;
+  rawForGuidingWord: number | null;
+};
 
-export function CountryAtAGlance({ iso2, topIndustries }: Props) {
+export function CountryAtAGlance({ iso2 }: Props) {
   const code = iso2.toUpperCase();
-  const coverage = getCountryCoverage(code);
-  const cities = getCitiesForCountry(code);
-  const regions = getAdmin1Regions(code);
-  const rates = getCountryTaxRates(code);
+  const snap = getCountryEconomicsSnapshot(code);
 
-  const industriesCovered = coverage?.industries ?? topIndustries.length;
-  const revenues = topIndustries
-    .map((i) => i.revenue_per_firm)
-    .filter((r): r is number => r != null && r > 0);
-  const medianRev = median(revenues);
-
-  const topInd = topIndustries[0];
-  const topSector = topInd
-    ? SECTOR_BY_ID[INDUSTRY_BY_ID[topInd.industry_id]?.sector_id ?? ""] ?? null
-    : null;
-
-  const ownerTakePct = 1 - rates.cit;
-
-  const tiles: Array<{ label: string; value: string; sub?: string }> = [
+  const tiles: Tile[] = [
     {
-      label: "Industries covered",
-      value: String(industriesCovered),
-      sub: industriesCovered === 1 ? "small-business benchmark" : "small-business benchmarks",
+      label: "GDP per capita",
+      value: fmtGdpPerCapita(snap.gdpPerCapita),
+      metric: "gdp_per_capita_usd_yr",
+      rawForGuidingWord: snap.gdpPerCapita,
     },
     {
-      label: "Cities ranked",
-      value: String(cities.length),
-      sub: regions.length > 0 ? `${regions.length} region${regions.length === 1 ? "" : "s"}` : undefined,
+      label: "Avg salary / mo",
+      value: fmtSalaryMonthly(snap.avgMonthlySalary),
+      metric: "gross_salary_usd_mo",
+      rawForGuidingWord: snap.avgMonthlySalary,
     },
     {
-      label: "Median typical revenue",
-      value: medianRev != null ? fmtMoney(medianRev) : "n/a",
-      sub: "across top industries",
+      label: "Net wealth / adult",
+      value: fmtWealthPerAdult(snap.netWealthPerAdult),
+      metric: "net_wealth_usd_adult",
+      rawForGuidingWord: snap.netWealthPerAdult,
     },
     {
-      label: "Top SMB sector",
-      value: topSector?.name ?? topInd?.industry_name ?? "Varied",
-      sub: topInd?.industry_name ?? undefined,
+      label: "Self-employed",
+      value: fmtPct(snap.selfEmploymentPct),
+      metric: "self_employment_pct",
+      rawForGuidingWord: snap.selfEmploymentPct,
     },
     {
-      label: "Owner take after CIT",
-      value: `${(ownerTakePct * 100).toFixed(0)}%`,
-      sub: `${(rates.cit * 100).toFixed(1)}% corporate income tax`,
+      label: "Days to start",
+      value: fmtDays(snap.daysToStart),
+      metric: "days_to_start",
+      rawForGuidingWord: snap.daysToStart,
     },
   ];
 
   return (
     <section className="mt-6">
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-        {tiles.map((t) => (
-          <div
-            key={t.label}
-            className="bg-white border border-ink-200 rounded-xl px-4 py-3"
-          >
-            <div className="text-[10px] uppercase tracking-wide text-ink-700/70 font-medium">
-              {t.label}
-            </div>
-            <div className="mt-1 text-xl md:text-2xl font-semibold text-ink-900 tabular-nums leading-tight truncate">
-              {t.value}
-            </div>
-            {t.sub && (
-              <div className="mt-0.5 text-[11px] text-ink-700/70 truncate">
-                {t.sub}
+        {tiles.map((t) => {
+          const guiding =
+            t.metric != null && t.rawForGuidingWord != null
+              ? getGuidingWord(t.metric, t.rawForGuidingWord)
+              : null;
+          return (
+            <div
+              key={t.label}
+              className="bg-white border border-ink-200 rounded-xl px-4 py-3"
+            >
+              <div className="text-[10px] uppercase tracking-wide text-ink-700/70 font-medium">
+                {t.label}
               </div>
-            )}
-          </div>
-        ))}
+              <div className="mt-1 text-xl md:text-2xl font-semibold text-ink-900 tabular-nums leading-tight truncate">
+                {t.value}
+              </div>
+              {guiding && guiding.word ? (
+                <div
+                  className="mt-0.5 text-[11px] font-medium truncate"
+                  style={{ color: guiding.color }}
+                >
+                  {guiding.word}
+                </div>
+              ) : (
+                <div className="mt-0.5 text-[11px] text-ink-700/40 truncate">
+                  not yet measured
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
       <div className="mt-3 flex items-center justify-between text-xs">
         <span className="text-ink-700/60">
-          Snapshot of the whole country page. Scroll for the full picture.
+          Snapshot of the country page. Scroll for activities, cities, and regions.
         </span>
         <Link
-          href={`/coverage/${code.toLowerCase()}`}
+          href={`/methodology`}
           className="text-atlas-700 hover:text-atlas-900 font-medium whitespace-nowrap"
         >
-          Full scorecard →
+          How we measure →
         </Link>
       </div>
     </section>

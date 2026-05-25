@@ -23,7 +23,13 @@ export type Metric =
   | "gini"
   | "cost_of_living_index"
   | "unemployment_pct"
-  | "tourist_arrivals_m";
+  | "tourist_arrivals_m"
+  // Country-page rebuild (2026-05-25): metrics for the new 5-tile hero.
+  | "gdp_per_capita_usd_yr"
+  | "net_wealth_usd_adult"
+  | "self_employment_pct"
+  | "days_to_start"
+  | "inflation_pct_yoy";
 
 // Gradient stops in HSL for interpolation, 0.0 = "very bad" to 1.0 = "very good".
 const GRADIENT_STOPS: Array<[number, string]> = [
@@ -125,6 +131,71 @@ const SPECS: Record<Metric, Spec> = {
       { upTo: 85, word: "moderate", goodness: 0.5 },
       { upTo: 120, word: "expensive", goodness: 0.25 },
       { upTo: Infinity, word: "very expensive", goodness: 0 },
+    ],
+  },
+
+  // Country-page rebuild metrics.
+  //
+  // GDP per capita: customer purchasing-power ceiling. Higher = better
+  // for an operator entering the market.
+  gdp_per_capita_usd_yr: {
+    breaks: [
+      { upTo: 3000, word: "very low", goodness: 0 },
+      { upTo: 10000, word: "low", goodness: 0.25 },
+      { upTo: 25000, word: "middle", goodness: 0.5 },
+      { upTo: 50000, word: "high", goodness: 0.75 },
+      { upTo: Infinity, word: "very high", goodness: 1.0 },
+    ],
+  },
+
+  // Net wealth per adult (median, USD). Tells the operator how much
+  // savings the local customer base actually has.
+  net_wealth_usd_adult: {
+    breaks: [
+      { upTo: 3000, word: "very thin", goodness: 0 },
+      { upTo: 15000, word: "thin", goodness: 0.25 },
+      { upTo: 50000, word: "moderate", goodness: 0.5 },
+      { upTo: 120000, word: "deep", goodness: 0.75 },
+      { upTo: Infinity, word: "very deep", goodness: 1.0 },
+    ],
+  },
+
+  // Self-employment share: neutral size descriptors describing market
+  // density. Not strictly good/bad: high means many solo operators
+  // (saturated), low means concentrated employer market.
+  self_employment_pct: {
+    neutral: true,
+    breaks: [
+      { upTo: 10, word: "concentrated", goodness: 0 },
+      { upTo: 20, word: "balanced", goodness: 0 },
+      { upTo: 35, word: "fragmented", goodness: 0 },
+      { upTo: 55, word: "dense", goodness: 0 },
+      { upTo: Infinity, word: "saturated", goodness: 0 },
+    ],
+  },
+
+  // Days to start a business: lower = better (INVERTED).
+  days_to_start: {
+    inverted: true,
+    breaks: [
+      { upTo: 1, word: "instant", goodness: 1.0 },
+      { upTo: 7, word: "quick", goodness: 0.75 },
+      { upTo: 21, word: "moderate", goodness: 0.5 },
+      { upTo: 60, word: "slow", goodness: 0.25 },
+      { upTo: Infinity, word: "very slow", goodness: 0 },
+    ],
+  },
+
+  // Inflation, year-over-year: moderate is best for SMBs. Both very low
+  // (deflationary) and very high (hyperinflationary) are bad.
+  inflation_pct_yoy: {
+    breaks: [
+      { upTo: 0, word: "deflation", goodness: 0 },
+      { upTo: 2, word: "very low", goodness: 0.5 },
+      { upTo: 5, word: "stable", goodness: 1.0 },
+      { upTo: 10, word: "elevated", goodness: 0.5 },
+      { upTo: 25, word: "high", goodness: 0.25 },
+      { upTo: Infinity, word: "runaway", goodness: 0 },
     ],
   },
 };
