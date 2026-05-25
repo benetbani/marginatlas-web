@@ -26,6 +26,14 @@ const ROOT = process.cwd();
 const CELLS = resolve(ROOT, "src/lib/cells.ts");
 const FX = resolve(ROOT, "src/lib/qa/currency_corrections.ts");
 const SUP = resolve(ROOT, "src/lib/qa/plausibility_suppression.ts");
+// Country-page rebuild (2026-05-25): the pure aggregation helper used by
+// getTopIndustriesForCountry's non-US path was split into its own file so
+// it could be unit-tested without booting Supabase. The render-guard now
+// concatenates both files when checking the "at-a-glance row" wiring.
+const TOP_IND_AGG = resolve(
+  ROOT,
+  "src/lib/cells/top_industries_aggregation.ts",
+);
 
 const errors: string[] = [];
 
@@ -84,19 +92,28 @@ if (!supSrc.includes("REVENUE_PER_FIRM_BOUNDS")) {
 }
 
 // 5. getTopIndustriesForCountry (country-page at-a-glance) must apply
-// both fixes at the row level since its rows skip normalize*.
+// both fixes at the row level since its rows skip normalize*. Country-
+// page rebuild (2026-05-25) moved the pure aggregation into
+// top_industries_aggregation.ts; scan that file too.
 if (cellsSrc.includes("getTopIndustriesForCountry")) {
-  const fnStart = cellsSrc.indexOf("getTopIndustriesForCountry");
-  // Look for both calls anywhere after the fn declaration
-  const after = cellsSrc.slice(fnStart);
-  if (!after.includes("CURRENCY_FX_CORRECTIONS")) {
+  const aggSrc = read(TOP_IND_AGG);
+  const combined = cellsSrc + "\n" + aggSrc;
+  if (!combined.includes("CURRENCY_FX_CORRECTIONS")) {
     errors.push(
-      "src/lib/cells.ts: getTopIndustriesForCountry no longer references CURRENCY_FX_CORRECTIONS; at-a-glance row regressed",
+      "src/lib/cells.ts + top_industries_aggregation.ts: CURRENCY_FX_CORRECTIONS not referenced; at-a-glance row FX correction regressed",
     );
   }
-  if (!after.includes("getCatastropheCeiling")) {
+  // Country-page rebuild: the function now uses
+  // countryPagePlausibilityCeiling (industry.hi * 3) which is tighter
+  // than the site-wide getCatastropheCeiling (industry.hi * 10). Accept
+  // either: the requirement is that SOME plausibility ceiling is applied
+  // at the row level before aggregation.
+  if (
+    !combined.includes("countryPagePlausibilityCeiling") &&
+    !combined.includes("getCatastropheCeiling")
+  ) {
     errors.push(
-      "src/lib/cells.ts: getTopIndustriesForCountry no longer calls getCatastropheCeiling; at-a-glance can leak $1.8B-style values",
+      "src/lib/cells.ts + top_industries_aggregation.ts: no per-row plausibility ceiling applied; at-a-glance can leak wrong-aggregation values",
     );
   }
 }

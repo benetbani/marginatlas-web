@@ -4,7 +4,54 @@ const config: Config = {
   content: ["./src/**/*.{ts,tsx,js,jsx,mdx}"],
   theme: {
     extend: {
+      // Section 1 visual upgrade: shadcn semantic tokens added as
+      // Tailwind colors so primitives can use bg-background, bg-card,
+      // bg-primary, etc. Values are RGB triplets in CSS variables on
+      // :root inside globals.css, retokenized to atlas. These names
+      // (background, foreground, card, primary, secondary, muted,
+      // accent, destructive, border, input, ring) do not collide with
+      // any existing atlas-*, cream-*, ink-*, cocoa-*, clay-*, moss-*
+      // tokens, so call-site classes like bg-atlas-700, text-ink-900,
+      // border-parchment, etc. resolve unchanged.
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 0.25rem)",
+        sm: "calc(var(--radius) - 0.5rem)",
+      },
       colors: {
+        background: "rgb(var(--background) / <alpha-value>)",
+        foreground: "rgb(var(--foreground) / <alpha-value>)",
+        card: {
+          DEFAULT: "rgb(var(--card) / <alpha-value>)",
+          foreground: "rgb(var(--card-foreground) / <alpha-value>)",
+        },
+        popover: {
+          DEFAULT: "rgb(var(--popover) / <alpha-value>)",
+          foreground: "rgb(var(--popover-foreground) / <alpha-value>)",
+        },
+        primary: {
+          DEFAULT: "rgb(var(--primary) / <alpha-value>)",
+          foreground: "rgb(var(--primary-foreground) / <alpha-value>)",
+        },
+        secondary: {
+          DEFAULT: "rgb(var(--secondary) / <alpha-value>)",
+          foreground: "rgb(var(--secondary-foreground) / <alpha-value>)",
+        },
+        muted: {
+          DEFAULT: "rgb(var(--muted) / <alpha-value>)",
+          foreground: "rgb(var(--muted-foreground) / <alpha-value>)",
+        },
+        accent: {
+          DEFAULT: "rgb(var(--accent) / <alpha-value>)",
+          foreground: "rgb(var(--accent-foreground) / <alpha-value>)",
+        },
+        destructive: {
+          DEFAULT: "rgb(var(--destructive) / <alpha-value>)",
+          foreground: "rgb(var(--destructive-foreground) / <alpha-value>)",
+        },
+        border: "rgb(var(--border) / <alpha-value>)",
+        input: "rgb(var(--input) / <alpha-value>)",
+        ring: "rgb(var(--ring) / <alpha-value>)",
         // Margin Atlas palette — warm-earth-tone family.
         // Expanded Plan v3.0: more in-family tones for richer surfaces, no
         // cool colors except a single sparse deep teal. Aquamarine is
@@ -99,9 +146,21 @@ const config: Config = {
           "0%,100%": { opacity: "0.55" },
           "50%": { opacity: "0.85" },
         },
+        // Section 1 visual upgrade: shadcn Accordion expand/collapse.
+        // Standard shadcn keyframes; consumed by the Accordion primitive.
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
       },
       animation: {
         atlasPulse: "atlasPulse 1800ms ease-in-out infinite",
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
       fontFamily: {
         // Plan v30 Phase 3 typography reset — Inter via next/font for
@@ -134,7 +193,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 };
 
 export default config;

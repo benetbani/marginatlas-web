@@ -9,7 +9,6 @@ import { supabaseAdmin } from "./supabase";
 import { applyCurrencyCorrection, CURRENCY_FX_CORRECTIONS } from "./qa/currency_corrections";
 import {
   applyPlausibilitySuppression,
-  getCatastropheCeiling,
 } from "./qa/plausibility_suppression";
 import type {
   SubIndustryRef,
@@ -741,15 +740,33 @@ export function listUsStates(): { name: string; slug: string }[] {
 /**
  * Top industries for a country — used by the country landing page.
  * For US: queries cells_master, groups by NAICS-3 prefix → industry_id.
- * For non-US: queries extrapolated_cells, groups by industry_id.
+ * For non-US: queries extrapolated_cells, groups by industry_id and takes
+ * the MEDIAN per industry after pre-filtering wrong-aggregation outliers.
  * Returns up to `limit` industries ordered by relevant size signal.
+ *
+ * Country-page rebuild §3 (2026-05-25): the non-US path previously ordered
+ * by `predicted_rev_per_firm DESC` and kept the MAX revenue per industry.
+ * This surfaced the tail of wrong-aggregation rows (whole-sector revenue
+ * masquerading as per-firm) and made every low-coverage country page lie
+ * by 1-2 orders of magnitude (e.g. "software dev in Albania $43M"). The
+ * pure aggregation helper lives in ./cells/top_industries_aggregation.ts
+ * so the unit test can exercise it without booting Supabase.
  */
-export type TopIndustryRow = {
-  industry_id: string;
-  industry_name: string;
-  revenue_per_firm: number | null;
-  n_enterprises: number | null;
+// Import aggregation helper + types from the sub-module. Re-exported below
+// so existing callers of `import { TopIndustryRow } from "@/lib/cells"`
+// keep working.
+import {
+  aggregateExtrapolatedByIndustry,
+  countryPagePlausibilityCeiling,
+  type TopIndustryRow,
+  type ExtrapolatedRow,
+} from "./cells/top_industries_aggregation";
+
+export {
+  aggregateExtrapolatedByIndustry,
+  countryPagePlausibilityCeiling,
 };
+export type { TopIndustryRow, ExtrapolatedRow };
 
 export async function getTopIndustriesForCountry(
   iso2: string,
@@ -793,47 +810,20 @@ export async function getTopIndustriesForCountry(
     return rows.slice(0, limit);
   }
 
-  // Non-US: query extrapolated_cells
+  // Non-US: query extrapolated_cells. Pull a wide slate (500 rows) so
+  // there are enough samples per industry to compute a stable median.
+  // Order by quality_score so the top of the slate is the most
+  // trustworthy rows, not the highest-revenue rows.
   const iso3 = iso2ToIso3(country);
   if (!iso3) return [];
   const { data, error } = await supabaseAdmin
     .from("extrapolated_cells")
-    .select("industry_id, predicted_rev_per_firm")
+    .select("industry_id, predicted_rev_per_firm, quality_score")
     .eq("country_iso3", iso3)
-    .order("predicted_rev_per_firm", { ascending: false, nullsFirst: false })
-    .limit(200);
+    .order("quality_score", { ascending: false, nullsFirst: false })
+    .limit(500);
   if (error || !data) return [];
-  // Plan v32 Phase 0 — apply currency correction at the row level here
-  // since these rows never flow through normalizeRegionalRow (they go
-  // straight from the DB into TopIndustryRow). Same FX map.
-  const fxScale = CURRENCY_FX_CORRECTIONS[country] ? 1 / CURRENCY_FX_CORRECTIONS[country] : 1;
-  const seen = new Map<string, number>();
-  for (const r of data) {
-    const id = r.industry_id as string;
-    const rawRev = (r.predicted_rev_per_firm as number) || 0;
-    const rev = rawRev * fxScale;
-    if (!seen.has(id) || (seen.get(id) || 0) < rev) seen.set(id, rev);
-  }
-  // Plan v32 Phase 1 — apply plausibility suppression at row level too.
-  // Same logic as applyPlausibilitySuppression: if the post-FX value
-  // exceeds the industry's catastrophe ceiling, null it out instead of
-  // surfacing "$1.8B per firm" on the country at-a-glance row.
-  const rows: TopIndustryRow[] = [];
-  for (const [id, rev] of seen.entries()) {
-    const ind = INDUSTRY_BY_ID[id];
-    if (!ind) continue;
-    const a = ind.audience || "smb_friendly";
-    if (a !== "smb_core" && a !== "smb_friendly") continue;
-    const ceiling = getCatastropheCeiling(id);
-    const cleaned = rev > 0 && rev <= ceiling ? rev : null;
-    rows.push({
-      industry_id: id,
-      industry_name: ind.name,
-      revenue_per_firm: cleaned,
-      n_enterprises: null,
-    });
-  }
-  return rows.slice(0, limit);
+  return aggregateExtrapolatedByIndustry(data as ExtrapolatedRow[], country, limit);
 }
 
 /**
