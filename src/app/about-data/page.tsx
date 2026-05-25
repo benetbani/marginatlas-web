@@ -55,7 +55,7 @@ export default function AboutDataPage() {
           <li><span className="text-atlas-500">★★</span><span className="text-ink-300">☆☆☆</span>. Extrapolated from regional patterns.</li>
         </ul>
         <p className="mt-3 text-sm text-ink-700">
-          Benchmarks with weaker ratings carry a clear "Estimated" label so you know what you're looking at.
+          Every benchmark page carries a "How we know this" link beside the headline number so the source and method are one click away.
         </p>
       </section>
 

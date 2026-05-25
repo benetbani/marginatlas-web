@@ -212,8 +212,8 @@ export default async function ComparisonPage({
             Ten industries, side by side
           </h2>
           <p className="text-sm text-cocoa-700/80 mb-6 max-w-2xl">
-            Estimated median revenue per firm. Bars share a scale so the
-            relative size between cities is readable.
+            Median revenue per firm. Bars share a scale so the relative
+            size between cities is readable.
           </p>
           <div className="space-y-2">
             {industryEstimates.map((ind) => {
