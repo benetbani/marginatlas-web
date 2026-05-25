@@ -13,6 +13,7 @@ import {
   type Gate,
 } from "@/lib/taxonomy";
 import { getRegionsForCountry, getSubdivisionsForRegion } from "@/lib/regions/regions-by-country";
+import { getDefaultRegionForCountry } from "@/lib/regions/default_region_by_country";
 import { CITIES_BY_STATE } from "@/lib/cities/city_aliases_generated";
 // Plan v13 Wave 4a — emoji flagFromIso2 removed from dropdown labels
 // (ComboField input is a plain text field and can't host the SVG CountryFlag
@@ -147,20 +148,27 @@ export function NavigatorForm() {
         return;
       }
       const cc = country.toLowerCase();
-      // Resolve region slug. If the user didn't pick one explicitly, use
-      // the first option for that country (which is always present per
-      // getRegionsForCountry — country-level fallback as last resort).
+      // Resolve region slug. v34 sanity sweep §7: if the user did not pick
+      // a region, use the curated default for that country (the largest
+      // economy or best-data region). This is a deliberate departure from
+      // the previous "first alphabetical region" behavior which landed US
+      // users on Alabama (low traffic, low data quality).
       let r = region;
       if (!r) {
-        const opts = regionOptions;
-        const firstWithValue = opts.find((o) => o.value);
-        if (firstWithValue) {
-          r = firstWithValue.value;
-        } else if (cc === "us") {
-          r = "california";
+        const curated = getDefaultRegionForCountry(country);
+        if (curated) {
+          r = curated;
         } else {
-          const countryName = COUNTRIES.find((c) => c.code === country)?.name || country;
-          r = countryName.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+          const opts = regionOptions;
+          const firstWithValue = opts.find((o) => o.value);
+          if (firstWithValue) {
+            r = firstWithValue.value;
+          } else if (cc === "us") {
+            r = "california";
+          } else {
+            const countryName = COUNTRIES.find((c) => c.code === country)?.name || country;
+            r = countryName.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+          }
         }
       }
       const indSlug = industryToSlug(industry);
