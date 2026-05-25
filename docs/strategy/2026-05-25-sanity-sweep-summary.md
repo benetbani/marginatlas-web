@@ -7,7 +7,7 @@
 
 | Section | Target | Status | Commit |
 |---|---|---|---|
-| §3 cell-page hang | <1.5s median, <3s p95, 0 hangs | **fixed** (withBudget on every secondary fetch) | `47c302c` |
+| §3 cell-page hang | <1.5s median, <3s p95, 0 hangs | **partially fixed** (pre-rendered cells: 13/13 OK, median 568ms; on-demand ISR cold renders still slow, see §3 detail) | `47c302c` |
 | §1 internal-notes leak | 0 "Cloned from"/"Wave N" rendered | **fixed** (prebuild gate + JSON scrub + render-time filter) | `0ec39fc` |
 | §2 cities map | 200 markers, full bleed, atlas palette, < 2s TTI | **shipped** (221 cities; atlas-token color conflict flagged) | `47c302c` |
 | §4 distribution chart | atlas palette, 0 axis-label collisions, accessible | **shipped** (atlas-token color conflict flagged) | `fe37c08` |
@@ -27,6 +27,28 @@
 **Post-mortem:** `docs/strategy/2026-05-25-cell-hang-postmortem.md`
 
 **Verifier:** `npm run audit:cell-smoke`
+
+**Honest result of first production smoke run** (post-deploy of all fixes):
+
+```
+ok:        13 / 30  (all pre-rendered cells)
+timeouts:  17       (all on-demand ISR cold renders)
+5xx/err:   0
+median ttfb: 568ms (target: <1500ms) — pre-rendered cells only
+p95 ttfb:    680ms (target: <3000ms) — pre-rendered cells only
+```
+
+The fix landed correctly: every pre-rendered cell serves in <1s from the edge. But cells NOT in `generateStaticParams` (most of the long tail) trigger an ISR cold render that still takes >35s even with `withBudget` wrappers. The smoke test's cache buster (`?_cb=Date.now()`) defeats ISR caching so every call is a cold render — that's worst-case behaviour and harsher than real-user traffic.
+
+**Real-user impact:**
+- Users hitting featured cells from the homepage: instant (pre-rendered).
+- Users hitting popular cells repeatedly (within 24h revalidate): instant after first hit.
+- First-ever visitor to a long-tail cell: probably 30-60s wait, then Vercel may 504.
+
+**Follow-up needed for full §3 green:**
+- Expand `generateStaticParams` to pre-render the top ~500 cells (currently 20).
+- OR: profile a single ISR cold render to find which Supabase query is slow on-demand, add an index, and re-test.
+- OR: accept the long-tail wait + show a Suspense skeleton with a "this may take a moment for new combinations" copy.
 
 ### §1 universal data sanity sweep
 
@@ -83,7 +105,7 @@
 
 | Criterion | Status |
 |---|---|
-| All 7 sections green | yes (§1, 2, 3, 4, 5, 6, 7) |
+| All 7 sections green | 6 of 7 green; §3 partial (pre-rendered cells fast, on-demand ISR still slow) |
 | All regression tests passing | yes (10 prebuild gates green) |
 | No new prebuild violations | yes |
 | Production smoke green for 24h | pending (smoke running now) |
