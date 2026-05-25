@@ -28,6 +28,7 @@
 import { getSmbRegime, getVatRow } from "@/lib/tax/smb_effective_rates";
 import { getCountryEconomicsSnapshot, fmtDays, fmtPct } from "@/lib/economics/country_metrics";
 import { getGuidingWord, type Metric } from "@/lib/cities/guiding_word";
+import { StatCard } from "@/components/ui/stat-card";
 
 type Props = {
   iso2: string;
@@ -96,30 +97,20 @@ export function CountryStatsStrip({ iso2 }: Props) {
             t.metric != null && t.rawForGuidingWord != null
               ? getGuidingWord(t.metric, t.rawForGuidingWord)
               : null;
+          // Prefer guiding word when present; fall back to t.sub
+          // (which carries the regime name or "headline rate" hint).
+          const sub = guiding?.word || t.sub;
+          const subColor = guiding?.color;
           return (
-            <div
+            <StatCard
               key={t.label}
-              className="atlas-card-soft p-4"
-            >
-              <div className="text-xs uppercase tracking-wide text-ink-700/70 font-medium truncate">
-                {t.label}
-              </div>
-              <div className="mt-1 text-2xl font-semibold tabular-nums text-ink-900 leading-tight">
-                {t.value}
-              </div>
-              {guiding && guiding.word ? (
-                <div
-                  className="mt-0.5 text-[11px] font-medium truncate"
-                  style={{ color: guiding.color }}
-                >
-                  {guiding.word}
-                </div>
-              ) : t.sub ? (
-                <div className="mt-0.5 text-[11px] text-ink-700/70 truncate">
-                  {t.sub}
-                </div>
-              ) : null}
-            </div>
+              label={t.label}
+              value={t.value}
+              sub={sub}
+              subColor={subColor}
+              variant="soft"
+              size="lg"
+            />
           );
         })}
       </div>

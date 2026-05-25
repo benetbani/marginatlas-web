@@ -32,6 +32,7 @@ import {
 } from "@/lib/economics/country_metrics";
 import { getGuidingWord, type Metric } from "@/lib/cities/guiding_word";
 import type { TopIndustryRow } from "@/lib/cells";
+import { StatCard } from "@/components/ui/stat-card";
 
 type Props = {
   iso2: string;
@@ -96,29 +97,15 @@ export function CountryAtAGlance({ iso2 }: Props) {
               ? getGuidingWord(t.metric, t.rawForGuidingWord)
               : null;
           return (
-            <div
+            <StatCard
               key={t.label}
-              className="atlas-card-band px-4 py-3"
-            >
-              <div className="text-[10px] uppercase tracking-wide text-ink-700/70 font-medium">
-                {t.label}
-              </div>
-              <div className="mt-1 text-xl md:text-2xl font-semibold text-ink-900 tabular-nums leading-tight truncate">
-                {t.value}
-              </div>
-              {guiding && guiding.word ? (
-                <div
-                  className="mt-0.5 text-[11px] font-medium truncate"
-                  style={{ color: guiding.color }}
-                >
-                  {guiding.word}
-                </div>
-              ) : (
-                <div className="mt-0.5 text-[11px] text-ink-700/40 truncate">
-                  not yet measured
-                </div>
-              )}
-            </div>
+              label={t.label}
+              value={t.value}
+              sub={guiding?.word}
+              subColor={guiding?.color}
+              /* useless-tile-ok: legitimate empty-state copy for missing data */
+              emptyLabel="not yet measured"
+            />
           );
         })}
       </div>

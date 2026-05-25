@@ -147,6 +147,15 @@ export default function CitiesWorldMap({ cities }: Props) {
           onMoveEnd={handleMoveEnd}
           minZoom={1}
           maxZoom={4}
+          /* 2026-05-26: clamp pan to the SVG viewport. d3-zoom
+             enforces this DURING the drag, so the user cannot
+             physically move continents past the map's edge.
+             At zoom=1 the extent equals the view (no pan); at
+             zoom>1 the user pans within the visible globe only. */
+          translateExtent={[
+            [0, 0],
+            [1100, 600],
+          ]}
         >
           <Geographies geography={GEO_URL}>
             {({ geographies }: { geographies: GeoFeature[] }) =>

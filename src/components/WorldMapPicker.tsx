@@ -288,6 +288,16 @@ export default function WorldMapPicker({ onSelect, className }: WorldMapPickerPr
             minZoom={MIN_ZOOM}
             maxZoom={MAX_ZOOM}
             onMoveEnd={handleMoveEnd}
+            /* 2026-05-26: clamp pan to the SVG viewport so the user
+               can never drag continents off-screen. d3-zoom enforces
+               this DURING the drag, not after, so there is no rubber-
+               band correction; the map simply stops. At zoom=1 the
+               extent equals the view, so pan is impossible until the
+               user zooms in. */
+            translateExtent={[
+              [0, 0],
+              [980, 470],
+            ]}
           >
           <Geographies geography={GEO_URL}>
             {({ geographies }: { geographies: GeoFeature[] }) =>
