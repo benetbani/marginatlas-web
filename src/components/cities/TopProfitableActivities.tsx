@@ -1,17 +1,23 @@
 /**
- * TopProfitableActivities (Cities sec 6).
+ * TopProfitableActivities (CitiesFix2 sec 8 + 9 founder rev).
  *
- * Two side-by-side ranked lists for a city page:
- *   - top 5 most profitable activities (highest net margin)
- *   - top 5 least profitable activities (lowest net margin)
+ * Two side-by-side ranked lists:
+ *   - top 5 most profitable activities
+ *   - top 5 least profitable activities
  *
- * Data source: src/lib/finance/industry_margins.json (global per-industry
- * net margins). Per founder, margins do not vary materially by city,
- * so the rankings are surfaced on the city page with a footer note that
- * the data is industry-level.
+ * Hard fixes per founder feedback:
+ *   - DROP sole-practitioner-by-design activities (consultants,
+ *     freelancers, sole-traders). Their nominally high margins come
+ *     from having no employees, no overhead, no inventory. Including
+ *     them at the top of the list is misleading.
+ *   - DROP activities that fall through to the default 3% margin.
+ *     Showing every loss-making activity at 3% is unrealistic. We
+ *     only rank activities with real measured net margins from
+ *     industry_margins.json.
  *
- * Server component, no client JS. Self-suppresses if the margins file
- * is empty.
+ * Data source: src/lib/finance/industry_margins.json (explicit per
+ * industry net margins; we drop any entry that does not have a
+ * margin set or that falls back to the default).
  */
 
 import industryMarginsJson from "@/lib/finance/industry_margins.json";
@@ -21,6 +27,7 @@ type Row = {
   gross_margin?: number;
   operating_margin?: number;
   net_margin?: number;
+  notes?: string;
 };
 
 type MarginsFile = {
@@ -29,6 +36,34 @@ type MarginsFile = {
 };
 
 const FILE = industryMarginsJson as unknown as MarginsFile;
+
+// CitiesFix2 sec 8: activities to drop because they are sole-practitioner
+// by design. Their margins are arithmetically high (no overhead) but
+// not directly comparable to activities that require staff, premises,
+// or inventory. Ranking them at the top of "most profitable" misleads.
+const SOLE_PRACTITIONER_BLOCKLIST = new Set<string>([
+  "freelance_consultants",
+  "management_consulting",
+  "personal_trainers",
+  "personal_coaching",
+  "tutoring_education",
+  "tutors_test_prep",
+  "freelance_designers",
+  "freelance_developers",
+  "translators_interpreters",
+  "writers_journalists",
+  "independent_artists",
+  "music_teachers_private",
+  "yoga_instructors_solo",
+  "real_estate_solo_agents",
+  "notaries_solo",
+  "tax_preparers_solo",
+]);
+
+// Name-pattern filter as a second line of defense (catches solo activities
+// not in the explicit blocklist).
+const SOLO_NAME_PATTERN =
+  /\b(consult|freelance|independent|sole[\s-]?trader|solo|contractor|gig|coach|tutor|personal[\s-]?train)/i;
 
 type Ranked = {
   id: string;
@@ -42,8 +77,19 @@ function buildRankings(): Ranked[] {
   for (const [id, row] of Object.entries(FILE.industries || {})) {
     const net = row?.net_margin;
     if (typeof net !== "number" || !isFinite(net)) continue;
+
     const ind = INDUSTRY_BY_ID[id];
     if (!ind) continue;
+
+    // CitiesFix2 sec 8: drop sole-practitioner-by-design rows.
+    if (SOLE_PRACTITIONER_BLOCKLIST.has(id)) continue;
+    if (SOLO_NAME_PATTERN.test(id)) continue;
+    if (SOLO_NAME_PATTERN.test(ind.name)) continue;
+
+    // CitiesFix2 sec 8: drop corp_only and mixed_caution (smb-only ranking).
+    const audience = ind.audience || "smb_friendly";
+    if (audience !== "smb_core" && audience !== "smb_friendly") continue;
+
     rows.push({
       id,
       name: ind.name,
@@ -57,7 +103,6 @@ function buildRankings(): Ranked[] {
 
 function formatPct(n: number): string {
   if (!isFinite(n)) return "-";
-  // n is already a fraction (0.12 = 12%) per the existing file convention.
   return `${(n * 100).toFixed(1)}%`;
 }
 
@@ -81,10 +126,10 @@ export function TopProfitableActivities({
         What earns and what bleeds
       </h2>
       <p className="text-sm md:text-base text-cocoa-700/80 mb-6 max-w-2xl">
-        Net profit margin ranges, by industry. Margins are industry-level
-        (consistent across geographies, with light local variation). The
-        list on the left ends up with what most generously rewards the
-        operator; the list on the right tends to grind.
+        Net profit margin by activity. Sole-practitioner activities
+        (consulting, freelance work, solo training) are excluded so
+        the ranking reflects businesses with real overhead. Activities
+        without a measured margin are not shown.
       </p>
       <div className="grid md:grid-cols-2 gap-6">
         <RankedList

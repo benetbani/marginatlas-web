@@ -108,7 +108,7 @@ export function CompareToMeClient() {
             Your firm
           </div>
           <div>
-            <label className="text-xs text-ink-700/70 mb-1 block">Industry</label>
+            <label className="text-xs text-ink-700/70 mb-1 block">Activity</label>
             <ComboField
               id="cm-industry"
               label=""

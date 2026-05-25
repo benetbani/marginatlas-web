@@ -33,8 +33,12 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate"
+      },
+      "cost_of_living_index": 3.0,
+      "unemployment_pct": 2.4
     },
     {
       "slug": "abu-dhabi",
@@ -51,8 +55,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 64.2,
+      "unemployment_pct": 2.6,
+      "tourist_arrivals_m": 3.4
     },
     {
       "slug": "abuja",
@@ -69,8 +79,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 1.2,
+      "unemployment_pct": 5.0,
+      "tourist_arrivals_m": 0.1
     },
     {
       "slug": "accra",
@@ -87,8 +103,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 2.7,
+      "unemployment_pct": 4.7,
+      "tourist_arrivals_m": 0.1
     },
     {
       "slug": "addis-ababa",
@@ -105,8 +127,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 1.3,
+      "unemployment_pct": 3.5,
+      "tourist_arrivals_m": 0.1
     },
     {
       "slug": "adelaide",
@@ -123,8 +151,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 71.8,
+      "unemployment_pct": 3.6,
+      "tourist_arrivals_m": 0.9
     },
     {
       "slug": "ahmedabad",
@@ -141,8 +175,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 3.0,
+      "unemployment_pct": 4.2,
+      "tourist_arrivals_m": 1.1
     },
     {
       "slug": "alexandria",
@@ -159,8 +199,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 3.7,
+      "unemployment_pct": 7.4,
+      "tourist_arrivals_m": 1.8
     },
     {
       "slug": "algiers",
@@ -177,8 +223,12 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate"
+      },
+      "cost_of_living_index": 7.4,
+      "unemployment_pct": 11.8
     },
     {
       "slug": "almaty",
@@ -195,8 +245,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 15.7,
+      "unemployment_pct": 4.8,
+      "tourist_arrivals_m": 1.1
     },
     {
       "slug": "amman",
@@ -213,8 +269,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 5.1,
+      "unemployment_pct": 21.1,
+      "tourist_arrivals_m": 0.8
     },
     {
       "slug": "amsterdam",
@@ -231,8 +293,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "CBS 2023",
         "hdi": "CBS 2023",
-        "gini": "CBS 2023"
-      }
+        "gini": "CBS 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 75.0,
+      "unemployment_pct": 4.0,
+      "tourist_arrivals_m": 9.0
     },
     {
       "slug": "ankara",
@@ -249,8 +317,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 17.7,
+      "unemployment_pct": 9.8,
+      "tourist_arrivals_m": 7.0
     },
     {
       "slug": "antalya",
@@ -267,8 +341,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 17.7,
+      "unemployment_pct": 9.8,
+      "tourist_arrivals_m": 7.0
     },
     {
       "slug": "athens",
@@ -285,8 +365,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "ELSTAT 2023",
         "hdi": "ELSTAT 2023",
-        "gini": "ELSTAT 2023"
-      }
+        "gini": "ELSTAT 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 50.0,
+      "unemployment_pct": 11.1,
+      "tourist_arrivals_m": 6.0
     },
     {
       "slug": "atlanta",
@@ -303,8 +389,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
         "hdi": "BLS metro QCEW + ACS",
-        "gini": "BLS metro QCEW + ACS"
-      }
+        "gini": "BLS metro QCEW + ACS",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 70.0,
+      "unemployment_pct": 3.2,
+      "tourist_arrivals_m": 13.4
     },
     {
       "slug": "auckland",
@@ -321,8 +413,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Stats NZ 2023",
         "hdi": "Stats NZ 2023",
-        "gini": "Stats NZ 2023"
-      }
+        "gini": "Stats NZ 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 70.0,
+      "unemployment_pct": 4.0,
+      "tourist_arrivals_m": 1.8
     },
     {
       "slug": "austin",
@@ -339,8 +437,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 108.0,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 13.4
     },
     {
       "slug": "baghdad",
@@ -355,8 +459,14 @@
       "hdi": 0.693,
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-1 bump",
-        "hdi": "Extrapolated from country HDI + tier-1 bump"
-      }
+        "hdi": "Extrapolated from country HDI + tier-1 bump",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-1 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-1 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 8.8,
+      "unemployment_pct": 14.2,
+      "tourist_arrivals_m": 0.1
     },
     {
       "slug": "baku",
@@ -373,8 +483,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 9.3,
+      "unemployment_pct": 5.7,
+      "tourist_arrivals_m": 0.5
     },
     {
       "slug": "baltimore",
@@ -391,8 +507,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
         "hdi": "BLS metro QCEW + ACS",
-        "gini": "BLS metro QCEW + ACS"
-      }
+        "gini": "BLS metro QCEW + ACS",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 72.0,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 13.4
     },
     {
       "slug": "bandung",
@@ -409,8 +531,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 5.5,
+      "unemployment_pct": 5.3,
+      "tourist_arrivals_m": 1.4
     },
     {
       "slug": "bangalore",
@@ -427,8 +555,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 3.4,
+      "unemployment_pct": 4.2,
+      "tourist_arrivals_m": 1.8
     },
     {
       "slug": "bangkok",
@@ -445,8 +579,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "NSO Thailand 2023",
         "hdi": "NSO Thailand 2023",
-        "gini": "NSO Thailand 2023"
-      }
+        "gini": "NSO Thailand 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 45.0,
+      "unemployment_pct": 1.0,
+      "tourist_arrivals_m": 22.0
     },
     {
       "slug": "barcelona",
@@ -463,8 +603,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-1 bump",
         "hdi": "Extrapolated from country HDI + tier-1 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-1 hub premium",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 51.0,
+      "unemployment_pct": 9.6,
+      "tourist_arrivals_m": 12.0
     },
     {
       "slug": "basel",
@@ -481,8 +627,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 115.6,
+      "unemployment_pct": 2.0,
+      "tourist_arrivals_m": 1.5
     },
     {
       "slug": "beijing",
@@ -499,8 +651,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "NBS China 2023",
         "hdi": "NBS China 2023",
-        "gini": "NBS China 2023"
-      }
+        "gini": "NBS China 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 52.0,
+      "unemployment_pct": 5.1,
+      "tourist_arrivals_m": 4.0
     },
     {
       "slug": "beirut",
@@ -513,8 +671,14 @@
       "wealth_z": 0.4,
       "avg_gross_salary_usd_year": 1600.0,
       "sources": {
-        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump"
-      }
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 3.9,
+      "unemployment_pct": 11.6,
+      "tourist_arrivals_m": 0.2
     },
     {
       "slug": "belgrade",
@@ -529,8 +693,14 @@
       "hdi": 0.807,
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
-        "hdi": "Extrapolated from country HDI + tier-3 bump"
-      }
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 15.2,
+      "unemployment_pct": 9.5,
+      "tourist_arrivals_m": 0.2
     },
     {
       "slug": "belo-horizonte",
@@ -547,8 +717,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 11.5,
+      "unemployment_pct": 7.5,
+      "tourist_arrivals_m": 0.8
     },
     {
       "slug": "berlin",
@@ -565,8 +741,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Destatis 2023",
         "hdi": "Destatis 2023",
-        "gini": "Destatis 2023"
-      }
+        "gini": "Destatis 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 65.0,
+      "unemployment_pct": 9.0,
+      "tourist_arrivals_m": 6.0
     },
     {
       "slug": "bern",
@@ -583,8 +765,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 115.6,
+      "unemployment_pct": 2.0,
+      "tourist_arrivals_m": 1.5
     },
     {
       "slug": "birmingham",
@@ -601,8 +789,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 68.0,
+      "unemployment_pct": 4.0,
+      "tourist_arrivals_m": 7.4
     },
     {
       "slug": "bogota",
@@ -619,8 +813,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "DANE 2023",
         "hdi": "DANE 2023",
-        "gini": "DANE 2023"
-      }
+        "gini": "DANE 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 38.0,
+      "unemployment_pct": 10.8,
+      "tourist_arrivals_m": 1.5
     },
     {
       "slug": "boston",
@@ -637,8 +837,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
         "hdi": "BLS metro QCEW + ACS",
-        "gini": "BLS metro QCEW + ACS"
-      }
+        "gini": "BLS metro QCEW + ACS",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 85.0,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 3.0
     },
     {
       "slug": "brasilia",
@@ -655,8 +861,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 11.5,
+      "unemployment_pct": 7.5,
+      "tourist_arrivals_m": 0.8
     },
     {
       "slug": "bratislava",
@@ -673,8 +885,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 28.9,
+      "unemployment_pct": 5.8,
+      "tourist_arrivals_m": 0.8
     },
     {
       "slug": "brisbane",
@@ -691,8 +909,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 71.8,
+      "unemployment_pct": 3.6,
+      "tourist_arrivals_m": 0.9
     },
     {
       "slug": "bristol",
@@ -709,8 +933,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 59.2,
+      "unemployment_pct": 4.0,
+      "tourist_arrivals_m": 4.6
     },
     {
       "slug": "brussels",
@@ -727,8 +957,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Statbel 2023",
         "hdi": "Statbel 2023",
-        "gini": "Statbel 2023"
-      }
+        "gini": "Statbel 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 65.0,
+      "unemployment_pct": 5.6,
+      "tourist_arrivals_m": 1.9
     },
     {
       "slug": "bucharest",
@@ -745,8 +981,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "INS Romania 2023",
         "hdi": "INS Romania 2023",
-        "gini": "INS Romania 2023"
-      }
+        "gini": "INS Romania 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 42.0,
+      "unemployment_pct": 5.4,
+      "tourist_arrivals_m": 0.5
     },
     {
       "slug": "budapest",
@@ -763,8 +1005,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "KSH 2023",
         "hdi": "KSH 2023",
-        "gini": "KSH 2023"
-      }
+        "gini": "KSH 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 42.0,
+      "unemployment_pct": 4.1,
+      "tourist_arrivals_m": 2.0
     },
     {
       "slug": "buenos-aires",
@@ -781,8 +1029,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "INDEC 2023",
         "hdi": "INDEC 2023",
-        "gini": "INDEC 2023"
-      }
+        "gini": "INDEC 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 38.0,
+      "unemployment_pct": 7.5,
+      "tourist_arrivals_m": 3.0
     },
     {
       "slug": "buffalo",
@@ -799,8 +1053,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 93.9,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 8.4
     },
     {
       "slug": "busan",
@@ -817,8 +1077,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 46.3,
+      "unemployment_pct": 2.8,
+      "tourist_arrivals_m": 2.2
     },
     {
       "slug": "cairo",
@@ -835,8 +1101,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "CAPMAS Egypt 2023",
         "hdi": "CAPMAS Egypt 2023",
-        "gini": "CAPMAS Egypt 2023"
-      }
+        "gini": "CAPMAS Egypt 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 28.0,
+      "unemployment_pct": 7.5,
+      "tourist_arrivals_m": 4.5
     },
     {
       "slug": "calgary",
@@ -853,8 +1125,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 60.4,
+      "unemployment_pct": 5.5,
+      "tourist_arrivals_m": 2.2
     },
     {
       "slug": "cali",
@@ -871,8 +1149,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 8.8,
+      "unemployment_pct": 10.3,
+      "tourist_arrivals_m": 0.7
     },
     {
       "slug": "canberra",
@@ -889,8 +1173,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 71.8,
+      "unemployment_pct": 3.6,
+      "tourist_arrivals_m": 0.9
     },
     {
       "slug": "cape-town",
@@ -907,8 +1197,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 8.0,
+      "unemployment_pct": 32.9,
+      "tourist_arrivals_m": 1.7
     },
     {
       "slug": "caracas",
@@ -923,8 +1219,14 @@
       "gini": 44.8,
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 4.7,
+      "unemployment_pct": 6.0,
+      "tourist_arrivals_m": 0.1
     },
     {
       "slug": "casablanca",
@@ -941,8 +1243,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 4.6,
+      "unemployment_pct": 13.0,
+      "tourist_arrivals_m": 1.8
     },
     {
       "slug": "cebu",
@@ -959,8 +1267,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 4.4,
+      "unemployment_pct": 4.4,
+      "tourist_arrivals_m": 0.7
     },
     {
       "slug": "charlotte",
@@ -977,8 +1291,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 108.0,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 13.4
     },
     {
       "slug": "chengdu",
@@ -995,8 +1315,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 14.8,
+      "unemployment_pct": 5.2,
+      "tourist_arrivals_m": 1.6
     },
     {
       "slug": "chennai",
@@ -1013,8 +1339,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 3.0,
+      "unemployment_pct": 4.2,
+      "tourist_arrivals_m": 1.1
     },
     {
       "slug": "chiang-mai",
@@ -1031,8 +1363,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 8.2,
+      "unemployment_pct": 1.1,
+      "tourist_arrivals_m": 3.5
     },
     {
       "slug": "chicago",
@@ -1049,8 +1387,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
         "hdi": "BLS metro QCEW + ACS",
-        "gini": "BLS metro QCEW + ACS"
-      }
+        "gini": "BLS metro QCEW + ACS",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 75.0,
+      "unemployment_pct": 4.5,
+      "tourist_arrivals_m": 2.5
     },
     {
       "slug": "chisinau",
@@ -1065,8 +1409,14 @@
       "hdi": 0.768,
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
-        "hdi": "Extrapolated from country HDI + tier-3 bump"
-      }
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 8.4,
+      "unemployment_pct": 3.0,
+      "tourist_arrivals_m": 0.0
     },
     {
       "slug": "chongqing",
@@ -1083,8 +1433,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 14.8,
+      "unemployment_pct": 5.2,
+      "tourist_arrivals_m": 1.6
     },
     {
       "slug": "christchurch",
@@ -1101,8 +1457,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 54.7,
+      "unemployment_pct": 4.0,
+      "tourist_arrivals_m": 0.4
     },
     {
       "slug": "cincinnati",
@@ -1119,8 +1481,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 108.0,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 13.4
     },
     {
       "slug": "cleveland",
@@ -1137,8 +1505,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 93.9,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 8.4
     },
     {
       "slug": "cologne",
@@ -1155,8 +1529,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 71.7,
+      "unemployment_pct": 3.0,
+      "tourist_arrivals_m": 7.0
     },
     {
       "slug": "colombo",
@@ -1171,8 +1551,14 @@
       "hdi": 0.785,
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
-        "hdi": "Extrapolated from country HDI + tier-3 bump"
-      }
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 5.0,
+      "unemployment_pct": 5.0,
+      "tourist_arrivals_m": 0.2
     },
     {
       "slug": "columbus",
@@ -1189,8 +1575,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 108.0,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 13.4
     },
     {
       "slug": "copenhagen",
@@ -1207,8 +1599,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Statistics Denmark 2023",
         "hdi": "Statistics Denmark 2023",
-        "gini": "Statistics Denmark 2023"
-      }
+        "gini": "Statistics Denmark 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 80.0,
+      "unemployment_pct": 5.1,
+      "tourist_arrivals_m": 3.5
     },
     {
       "slug": "cordoba",
@@ -1225,8 +1623,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 15.5,
+      "unemployment_pct": 7.7,
+      "tourist_arrivals_m": 0.8
     },
     {
       "slug": "daegu",
@@ -1243,8 +1647,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 40.3,
+      "unemployment_pct": 2.8,
+      "tourist_arrivals_m": 1.4
     },
     {
       "slug": "dakar",
@@ -1261,8 +1671,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 2.0,
+      "unemployment_pct": 3.6,
+      "tourist_arrivals_m": 0.2
     },
     {
       "slug": "dallas",
@@ -1279,8 +1695,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
         "hdi": "BLS metro QCEW + ACS",
-        "gini": "BLS metro QCEW + ACS"
-      }
+        "gini": "BLS metro QCEW + ACS",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 70.0,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 13.4
     },
     {
       "slug": "dar-es-salaam",
@@ -1297,8 +1719,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 1.3,
+      "unemployment_pct": 2.8,
+      "tourist_arrivals_m": 0.2
     },
     {
       "slug": "delhi",
@@ -1315,8 +1743,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "MoSPI India 2023",
         "hdi": "MoSPI India 2023",
-        "gini": "MoSPI India 2023"
-      }
+        "gini": "MoSPI India 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-1 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 28.0,
+      "unemployment_pct": 8.0,
+      "tourist_arrivals_m": 3.0
     },
     {
       "slug": "denver",
@@ -1333,8 +1767,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
         "hdi": "BLS metro QCEW + ACS",
-        "gini": "BLS metro QCEW + ACS"
-      }
+        "gini": "BLS metro QCEW + ACS",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 75.0,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 13.4
     },
     {
       "slug": "detroit",
@@ -1351,8 +1791,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 93.9,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 8.4
     },
     {
       "slug": "dhaka",
@@ -1369,8 +1815,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 2.9,
+      "unemployment_pct": 5.2,
+      "tourist_arrivals_m": 0.0
     },
     {
       "slug": "doha",
@@ -1387,8 +1839,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "PSA Qatar 2023",
         "hdi": "PSA Qatar 2023",
-        "gini": "PSA Qatar 2023"
-      }
+        "gini": "PSA Qatar 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 70.0,
+      "unemployment_pct": 0.1,
+      "tourist_arrivals_m": 4.0
     },
     {
       "slug": "dongguan",
@@ -1405,8 +1863,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 14.8,
+      "unemployment_pct": 5.2,
+      "tourist_arrivals_m": 1.6
     },
     {
       "slug": "dubai",
@@ -1423,8 +1887,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "FCSC UAE 2023",
         "hdi": "FCSC UAE 2023",
-        "gini": "FCSC UAE 2023"
-      }
+        "gini": "FCSC UAE 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 78.0,
+      "unemployment_pct": 0.3,
+      "tourist_arrivals_m": 16.7
     },
     {
       "slug": "dublin",
@@ -1441,8 +1911,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "CSO Ireland 2023",
         "hdi": "CSO Ireland 2023",
-        "gini": "CSO Ireland 2023"
-      }
+        "gini": "CSO Ireland 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 78.0,
+      "unemployment_pct": 4.3,
+      "tourist_arrivals_m": 5.5
     },
     {
       "slug": "durban",
@@ -1459,8 +1935,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 7.0,
+      "unemployment_pct": 32.9,
+      "tourist_arrivals_m": 1.1
     },
     {
       "slug": "dusseldorf",
@@ -1477,8 +1959,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 62.3,
+      "unemployment_pct": 3.0,
+      "tourist_arrivals_m": 4.4
     },
     {
       "slug": "edinburgh",
@@ -1495,8 +1983,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 68.0,
+      "unemployment_pct": 4.0,
+      "tourist_arrivals_m": 7.4
     },
     {
       "slug": "florence",
@@ -1513,8 +2007,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 44.9,
+      "unemployment_pct": 7.7,
+      "tourist_arrivals_m": 7.1
     },
     {
       "slug": "fortaleza",
@@ -1531,8 +2031,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 11.5,
+      "unemployment_pct": 7.5,
+      "tourist_arrivals_m": 0.8
     },
     {
       "slug": "frankfurt",
@@ -1549,8 +2055,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 71.7,
+      "unemployment_pct": 3.0,
+      "tourist_arrivals_m": 7.0
     },
     {
       "slug": "fukuoka",
@@ -1567,8 +2079,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 36.1,
+      "unemployment_pct": 2.6,
+      "tourist_arrivals_m": 3.1
     },
     {
       "slug": "geneva",
@@ -1585,8 +2103,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 132.9,
+      "unemployment_pct": 2.0,
+      "tourist_arrivals_m": 2.4
     },
     {
       "slug": "glasgow",
@@ -1603,8 +2127,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 59.2,
+      "unemployment_pct": 4.0,
+      "tourist_arrivals_m": 4.6
     },
     {
       "slug": "guangzhou",
@@ -1621,8 +2151,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 17.0,
+      "unemployment_pct": 5.2,
+      "tourist_arrivals_m": 2.6
     },
     {
       "slug": "haifa",
@@ -1639,8 +2175,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 60.2,
+      "unemployment_pct": 3.9,
+      "tourist_arrivals_m": 0.4
     },
     {
       "slug": "hamburg",
@@ -1657,8 +2199,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 71.7,
+      "unemployment_pct": 3.0,
+      "tourist_arrivals_m": 7.0
     },
     {
       "slug": "hangzhou",
@@ -1675,8 +2223,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 14.8,
+      "unemployment_pct": 5.2,
+      "tourist_arrivals_m": 1.6
     },
     {
       "slug": "hanoi",
@@ -1693,8 +2247,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 5.2,
+      "unemployment_pct": 2.3,
+      "tourist_arrivals_m": 1.6
     },
     {
       "slug": "helsinki",
@@ -1711,8 +2271,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Statistics Finland 2023",
         "hdi": "Statistics Finland 2023",
-        "gini": "Statistics Finland 2023"
-      }
+        "gini": "Statistics Finland 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 70.0,
+      "unemployment_pct": 7.1,
+      "tourist_arrivals_m": 0.8
     },
     {
       "slug": "hiroshima",
@@ -1729,8 +2295,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 36.1,
+      "unemployment_pct": 2.6,
+      "tourist_arrivals_m": 3.1
     },
     {
       "slug": "ho-chi-minh-city",
@@ -1747,8 +2319,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 5.2,
+      "unemployment_pct": 2.3,
+      "tourist_arrivals_m": 1.6
     },
     {
       "slug": "hong-kong",
@@ -1765,8 +2343,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "C&SD 2023",
         "hdi": "C&SD 2023",
-        "gini": "C&SD 2023"
-      }
+        "gini": "C&SD 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 88.0,
+      "unemployment_pct": 2.9,
+      "tourist_arrivals_m": 27.5
     },
     {
       "slug": "honolulu",
@@ -1783,8 +2367,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 93.9,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 8.4
     },
     {
       "slug": "houston",
@@ -1801,8 +2391,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
         "hdi": "BLS metro QCEW + ACS",
-        "gini": "BLS metro QCEW + ACS"
-      }
+        "gini": "BLS metro QCEW + ACS",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 70.0,
+      "unemployment_pct": 4.2,
+      "tourist_arrivals_m": 13.4
     },
     {
       "slug": "hyderabad",
@@ -1819,8 +2415,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 3.4,
+      "unemployment_pct": 4.2,
+      "tourist_arrivals_m": 1.8
     },
     {
       "slug": "incheon",
@@ -1837,8 +2439,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 40.3,
+      "unemployment_pct": 2.8,
+      "tourist_arrivals_m": 1.4
     },
     {
       "slug": "indianapolis",
@@ -1855,8 +2463,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 108.0,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 13.4
     },
     {
       "slug": "istanbul",
@@ -1873,8 +2487,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "TurkStat 2023",
         "hdi": "TurkStat 2023",
-        "gini": "TurkStat 2023"
-      }
+        "gini": "TurkStat 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 38.0,
+      "unemployment_pct": 11.4,
+      "tourist_arrivals_m": 17.0
     },
     {
       "slug": "izmir",
@@ -1891,8 +2511,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 17.7,
+      "unemployment_pct": 9.8,
+      "tourist_arrivals_m": 7.0
     },
     {
       "slug": "jaipur",
@@ -1909,8 +2535,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 3.0,
+      "unemployment_pct": 4.2,
+      "tourist_arrivals_m": 1.1
     },
     {
       "slug": "jakarta",
@@ -1927,8 +2559,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 6.3,
+      "unemployment_pct": 5.3,
+      "tourist_arrivals_m": 2.2
     },
     {
       "slug": "jeddah",
@@ -1945,8 +2583,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 39.0,
+      "unemployment_pct": 4.9,
+      "tourist_arrivals_m": 3.4
     },
     {
       "slug": "johannesburg",
@@ -1963,8 +2607,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Stats SA 2023",
         "hdi": "Stats SA 2023",
-        "gini": "Stats SA 2023"
-      }
+        "gini": "Stats SA 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 42.0,
+      "unemployment_pct": 32.0,
+      "tourist_arrivals_m": 1.7
     },
     {
       "slug": "kansas-city",
@@ -1981,8 +2631,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 108.0,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 13.4
     },
     {
       "slug": "kaohsiung",
@@ -1993,7 +2649,10 @@
       "pop_m": 2.8,
       "gdp_b": 110,
       "wealth_z": 1.7,
-      "sources": {}
+      "sources": {
+        "unemployment_pct": "National unemployment rate"
+      },
+      "unemployment_pct": 3.4
     },
     {
       "slug": "karachi",
@@ -2010,8 +2669,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 1.9,
+      "unemployment_pct": 6.3,
+      "tourist_arrivals_m": 0.2
     },
     {
       "slug": "kathmandu",
@@ -2026,8 +2691,14 @@
       "hdi": 0.606,
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
-        "hdi": "Extrapolated from country HDI + tier-3 bump"
-      }
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 1.6,
+      "unemployment_pct": 11.0,
+      "tourist_arrivals_m": 0.1
     },
     {
       "slug": "kobe",
@@ -2044,8 +2715,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 36.1,
+      "unemployment_pct": 2.6,
+      "tourist_arrivals_m": 3.1
     },
     {
       "slug": "kolkata",
@@ -2062,8 +2739,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 3.0,
+      "unemployment_pct": 4.2,
+      "tourist_arrivals_m": 1.1
     },
     {
       "slug": "krakow",
@@ -2080,8 +2763,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 27.9,
+      "unemployment_pct": 2.8,
+      "tourist_arrivals_m": 2.1
     },
     {
       "slug": "kuala-lumpur",
@@ -2098,8 +2787,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 15.2,
+      "unemployment_pct": 3.5,
+      "tourist_arrivals_m": 10.0
     },
     {
       "slug": "kuwait-city",
@@ -2112,8 +2807,12 @@
       "wealth_z": 2.0,
       "avg_gross_salary_usd_year": 14700.0,
       "sources": {
-        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump"
-      }
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate"
+      },
+      "cost_of_living_index": 36.4,
+      "unemployment_pct": 2.1
     },
     {
       "slug": "kyiv",
@@ -2130,8 +2829,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Ukrstat 2023",
         "hdi": "Ukrstat 2023",
-        "gini": "Ukrstat 2023"
-      }
+        "gini": "Ukrstat 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 38.0,
+      "unemployment_pct": 6.0,
+      "tourist_arrivals_m": 0.0
     },
     {
       "slug": "kyoto",
@@ -2148,8 +2853,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 36.1,
+      "unemployment_pct": 2.6,
+      "tourist_arrivals_m": 3.1
     },
     {
       "slug": "lagos",
@@ -2166,8 +2877,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "NBS Nigeria 2023",
         "hdi": "NBS Nigeria 2023",
-        "gini": "NBS Nigeria 2023"
-      }
+        "gini": "NBS Nigeria 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 32.0,
+      "unemployment_pct": 5.5,
+      "tourist_arrivals_m": 0.1
     },
     {
       "slug": "lahore",
@@ -2184,8 +2901,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 1.6,
+      "unemployment_pct": 6.3,
+      "tourist_arrivals_m": 0.1
     },
     {
       "slug": "las-vegas",
@@ -2202,8 +2925,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
         "hdi": "BLS metro QCEW + ACS",
-        "gini": "BLS metro QCEW + ACS"
-      }
+        "gini": "BLS metro QCEW + ACS",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 70.0,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 6.0
     },
     {
       "slug": "leeds",
@@ -2220,8 +2949,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 59.2,
+      "unemployment_pct": 4.0,
+      "tourist_arrivals_m": 4.6
     },
     {
       "slug": "leipzig",
@@ -2238,8 +2973,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 62.3,
+      "unemployment_pct": 3.0,
+      "tourist_arrivals_m": 4.4
     },
     {
       "slug": "lima",
@@ -2256,8 +2997,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "INEI Peru 2023",
         "hdi": "INEI Peru 2023",
-        "gini": "INEI Peru 2023"
-      }
+        "gini": "INEI Peru 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 38.0,
+      "unemployment_pct": 7.4,
+      "tourist_arrivals_m": 1.2
     },
     {
       "slug": "lisbon",
@@ -2274,8 +3021,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "INE Portugal 2023",
         "hdi": "INE Portugal 2023",
-        "gini": "INE Portugal 2023"
-      }
+        "gini": "INE Portugal 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 55.0,
+      "unemployment_pct": 6.5,
+      "tourist_arrivals_m": 5.0
     },
     {
       "slug": "ljubljana",
@@ -2292,8 +3045,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 38.1,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 0.7
     },
     {
       "slug": "london",
@@ -2310,8 +3069,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "ONS ASHE 2023",
         "hdi": "ONS ASHE 2023",
-        "gini": "ONS ASHE 2023"
-      }
+        "gini": "ONS ASHE 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 84.0,
+      "unemployment_pct": 5.4,
+      "tourist_arrivals_m": 16.0
     },
     {
       "slug": "los-angeles",
@@ -2328,8 +3093,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
         "hdi": "BLS metro QCEW + ACS",
-        "gini": "BLS metro QCEW + ACS"
-      }
+        "gini": "BLS metro QCEW + ACS",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 80.0,
+      "unemployment_pct": 5.2,
+      "tourist_arrivals_m": 9.0
     },
     {
       "slug": "louisville",
@@ -2346,8 +3117,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 93.9,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 8.4
     },
     {
       "slug": "luanda",
@@ -2364,8 +3141,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 3.4,
+      "unemployment_pct": 9.0,
+      "tourist_arrivals_m": 0.1
     },
     {
       "slug": "lyon",
@@ -2382,8 +3165,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 58.9,
+      "unemployment_pct": 7.4,
+      "tourist_arrivals_m": 20.0
     },
     {
       "slug": "madrid",
@@ -2400,8 +3189,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "INE 2023",
         "hdi": "INE 2023",
-        "gini": "INE 2023"
-      }
+        "gini": "INE 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 56.0,
+      "unemployment_pct": 11.4,
+      "tourist_arrivals_m": 7.5
     },
     {
       "slug": "manama",
@@ -2418,8 +3213,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 32.9,
+      "unemployment_pct": 1.5,
+      "tourist_arrivals_m": 1.4
     },
     {
       "slug": "manchester",
@@ -2436,8 +3237,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 68.0,
+      "unemployment_pct": 4.0,
+      "tourist_arrivals_m": 7.4
     },
     {
       "slug": "manila",
@@ -2454,8 +3261,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 5.1,
+      "unemployment_pct": 4.4,
+      "tourist_arrivals_m": 1.1
     },
     {
       "slug": "marseille",
@@ -2472,8 +3285,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 58.9,
+      "unemployment_pct": 7.4,
+      "tourist_arrivals_m": 20.0
     },
     {
       "slug": "medellin",
@@ -2490,8 +3309,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 8.8,
+      "unemployment_pct": 10.3,
+      "tourist_arrivals_m": 0.7
     },
     {
       "slug": "melbourne",
@@ -2508,8 +3333,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "ABS 2023",
         "hdi": "ABS 2023",
-        "gini": "ABS 2023"
-      }
+        "gini": "ABS 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 72.0,
+      "unemployment_pct": 4.1,
+      "tourist_arrivals_m": 2.5
     },
     {
       "slug": "memphis",
@@ -2526,8 +3357,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 93.9,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 8.4
     },
     {
       "slug": "mexico-city",
@@ -2544,8 +3381,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "INEGI 2023",
         "hdi": "INEGI 2023",
-        "gini": "INEGI 2023"
-      }
+        "gini": "INEGI 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 40.0,
+      "unemployment_pct": 3.6,
+      "tourist_arrivals_m": 12.0
     },
     {
       "slug": "miami",
@@ -2562,8 +3405,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
         "hdi": "BLS metro QCEW + ACS",
-        "gini": "BLS metro QCEW + ACS"
-      }
+        "gini": "BLS metro QCEW + ACS",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 78.0,
+      "unemployment_pct": 2.6,
+      "tourist_arrivals_m": 7.5
     },
     {
       "slug": "milan",
@@ -2580,8 +3429,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-1 bump",
         "hdi": "Extrapolated from country HDI + tier-1 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-1 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-1 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 58.3,
+      "unemployment_pct": 7.7,
+      "tourist_arrivals_m": 19.0
     },
     {
       "slug": "milwaukee",
@@ -2598,8 +3453,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 108.0,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 13.4
     },
     {
       "slug": "minneapolis",
@@ -2616,8 +3477,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 93.9,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 8.4
     },
     {
       "slug": "minsk",
@@ -2634,8 +3501,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 10.6,
+      "unemployment_pct": 3.5,
+      "tourist_arrivals_m": 0.1
     },
     {
       "slug": "monaco",
@@ -2652,8 +3525,12 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 320.0,
+      "tourist_arrivals_m": 0.1
     },
     {
       "slug": "montevideo",
@@ -2670,8 +3547,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 26.6,
+      "unemployment_pct": 8.3,
+      "tourist_arrivals_m": 0.4
     },
     {
       "slug": "montreal",
@@ -2688,8 +3571,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Stats Canada 2023",
         "hdi": "Stats Canada 2023",
-        "gini": "Stats Canada 2023"
-      }
+        "gini": "Stats Canada 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 65.0,
+      "unemployment_pct": 5.5,
+      "tourist_arrivals_m": 3.6
     },
     {
       "slug": "moscow",
@@ -2706,8 +3595,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Rosstat 2023",
         "hdi": "Rosstat 2023",
-        "gini": "Rosstat 2023"
-      }
+        "gini": "Rosstat 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 45.0,
+      "unemployment_pct": 2.8,
+      "tourist_arrivals_m": 5.5
     },
     {
       "slug": "mumbai",
@@ -2724,8 +3619,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "MoSPI India 2023",
         "hdi": "MoSPI India 2023",
-        "gini": "MoSPI India 2023"
-      }
+        "gini": "MoSPI India 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-1 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 32.0,
+      "unemployment_pct": 5.4,
+      "tourist_arrivals_m": 3.0
     },
     {
       "slug": "munich",
@@ -2742,8 +3643,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 71.7,
+      "unemployment_pct": 3.0,
+      "tourist_arrivals_m": 7.0
     },
     {
       "slug": "muscat",
@@ -2760,8 +3667,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 22.5,
+      "unemployment_pct": 1.7,
+      "tourist_arrivals_m": 0.4
     },
     {
       "slug": "nagoya",
@@ -2778,8 +3691,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 41.5,
+      "unemployment_pct": 2.6,
+      "tourist_arrivals_m": 5.0
     },
     {
       "slug": "nairobi",
@@ -2796,8 +3715,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 2.7,
+      "unemployment_pct": 5.7,
+      "tourist_arrivals_m": 0.4
     },
     {
       "slug": "nanjing",
@@ -2814,8 +3739,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 14.8,
+      "unemployment_pct": 5.2,
+      "tourist_arrivals_m": 1.6
     },
     {
       "slug": "nantes",
@@ -2832,8 +3763,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 51.2,
+      "unemployment_pct": 7.4,
+      "tourist_arrivals_m": 12.5
     },
     {
       "slug": "naples",
@@ -2850,8 +3787,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 51.6,
+      "unemployment_pct": 7.7,
+      "tourist_arrivals_m": 11.4
     },
     {
       "slug": "nashville",
@@ -2868,8 +3811,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 108.0,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 13.4
     },
     {
       "slug": "new-orleans",
@@ -2886,8 +3835,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 93.9,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 8.4
     },
     {
       "slug": "new-york",
@@ -2904,8 +3859,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
         "hdi": "BLS metro QCEW + ACS",
-        "gini": "BLS metro QCEW + ACS"
-      }
+        "gini": "BLS metro QCEW + ACS",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 100.0,
+      "unemployment_pct": 4.5,
+      "tourist_arrivals_m": 13.5
     },
     {
       "slug": "nice",
@@ -2922,8 +3883,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 51.2,
+      "unemployment_pct": 7.4,
+      "tourist_arrivals_m": 12.5
     },
     {
       "slug": "nicosia",
@@ -2940,8 +3907,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 43.0,
+      "unemployment_pct": 6.3,
+      "tourist_arrivals_m": 0.5
     },
     {
       "slug": "oklahoma-city",
@@ -2958,8 +3931,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 93.9,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 8.4
     },
     {
       "slug": "orlando",
@@ -2976,8 +3955,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 93.9,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 8.4
     },
     {
       "slug": "osaka",
@@ -2994,8 +3979,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 41.5,
+      "unemployment_pct": 2.6,
+      "tourist_arrivals_m": 5.0
     },
     {
       "slug": "oslo",
@@ -3012,8 +4003,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "SSB 2023",
         "hdi": "SSB 2023",
-        "gini": "SSB 2023"
-      }
+        "gini": "SSB 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 85.0,
+      "unemployment_pct": 3.6,
+      "tourist_arrivals_m": 1.2
     },
     {
       "slug": "panama-city",
@@ -3030,8 +4027,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 21.3,
+      "unemployment_pct": 9.4,
+      "tourist_arrivals_m": 0.3
     },
     {
       "slug": "paris",
@@ -3048,8 +4051,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "INSEE 2023",
         "hdi": "INSEE 2023",
-        "gini": "INSEE 2023"
-      }
+        "gini": "INSEE 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 78.0,
+      "unemployment_pct": 7.1,
+      "tourist_arrivals_m": 19.0
     },
     {
       "slug": "perth",
@@ -3066,8 +4075,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 71.8,
+      "unemployment_pct": 3.6,
+      "tourist_arrivals_m": 0.9
     },
     {
       "slug": "philadelphia",
@@ -3084,8 +4099,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 108.0,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 13.4
     },
     {
       "slug": "phnom-penh",
@@ -3100,8 +4121,14 @@
       "hdi": 0.605,
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
-        "hdi": "Extrapolated from country HDI + tier-3 bump"
-      }
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 2.9,
+      "unemployment_pct": 2.7,
+      "tourist_arrivals_m": 0.8
     },
     {
       "slug": "phoenix",
@@ -3118,8 +4145,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
         "hdi": "BLS metro QCEW + ACS",
-        "gini": "BLS metro QCEW + ACS"
-      }
+        "gini": "BLS metro QCEW + ACS",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 70.0,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 13.4
     },
     {
       "slug": "pittsburgh",
@@ -3136,8 +4169,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 108.0,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 13.4
     },
     {
       "slug": "podgorica",
@@ -3152,8 +4191,14 @@
       "hdi": 0.841,
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
-        "hdi": "Extrapolated from country HDI + tier-3 bump"
-      }
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 14.7,
+      "unemployment_pct": 14.9,
+      "tourist_arrivals_m": 0.3
     },
     {
       "slug": "portland",
@@ -3170,8 +4215,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 93.9,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 8.4
     },
     {
       "slug": "porto",
@@ -3188,8 +4239,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 32.5,
+      "unemployment_pct": 6.5,
+      "tourist_arrivals_m": 3.4
     },
     {
       "slug": "porto-alegre",
@@ -3206,8 +4263,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 11.5,
+      "unemployment_pct": 7.5,
+      "tourist_arrivals_m": 0.8
     },
     {
       "slug": "prague",
@@ -3224,8 +4287,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "CZSO 2023",
         "hdi": "CZSO 2023",
-        "gini": "CZSO 2023"
-      }
+        "gini": "CZSO 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 50.0,
+      "unemployment_pct": 2.7,
+      "tourist_arrivals_m": 7.0
     },
     {
       "slug": "pristina",
@@ -3240,8 +4309,14 @@
       "hdi": 0.767,
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
-        "hdi": "Extrapolated from country HDI + tier-3 bump"
-      }
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 7.8,
+      "unemployment_pct": 11.5,
+      "tourist_arrivals_m": 0.0
     },
     {
       "slug": "pune",
@@ -3258,8 +4333,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 3.0,
+      "unemployment_pct": 4.2,
+      "tourist_arrivals_m": 1.1
     },
     {
       "slug": "quito",
@@ -3276,8 +4357,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 7.6,
+      "unemployment_pct": 4.0,
+      "tourist_arrivals_m": 0.2
     },
     {
       "slug": "raleigh",
@@ -3294,8 +4381,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 108.0,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 13.4
     },
     {
       "slug": "recife",
@@ -3312,8 +4405,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 11.5,
+      "unemployment_pct": 7.5,
+      "tourist_arrivals_m": 0.8
     },
     {
       "slug": "reykjavik",
@@ -3330,8 +4429,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 95.6,
+      "unemployment_pct": 3.4,
+      "tourist_arrivals_m": 0.3
     },
     {
       "slug": "richmond",
@@ -3348,8 +4453,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 93.9,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 8.4
     },
     {
       "slug": "riga",
@@ -3366,8 +4477,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 26.0,
+      "unemployment_pct": 6.4,
+      "tourist_arrivals_m": 0.2
     },
     {
       "slug": "rio-de-janeiro",
@@ -3384,8 +4501,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 13.2,
+      "unemployment_pct": 7.5,
+      "tourist_arrivals_m": 2.5
     },
     {
       "slug": "riyadh",
@@ -3402,8 +4525,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "GASTAT 2023",
         "hdi": "GASTAT 2023",
-        "gini": "GASTAT 2023"
-      }
+        "gini": "GASTAT 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 50.0,
+      "unemployment_pct": 4.9,
+      "tourist_arrivals_m": 5.4
     },
     {
       "slug": "rome",
@@ -3420,8 +4549,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "ISTAT 2023",
         "hdi": "ISTAT 2023",
-        "gini": "ISTAT 2023"
-      }
+        "gini": "ISTAT 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 60.0,
+      "unemployment_pct": 7.0,
+      "tourist_arrivals_m": 10.0
     },
     {
       "slug": "rosario",
@@ -3438,8 +4573,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 15.5,
+      "unemployment_pct": 7.7,
+      "tourist_arrivals_m": 0.8
     },
     {
       "slug": "rotterdam",
@@ -3456,8 +4597,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 75.0,
+      "unemployment_pct": 3.6,
+      "tourist_arrivals_m": 2.5
     },
     {
       "slug": "sacramento",
@@ -3474,8 +4621,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 108.0,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 13.4
     },
     {
       "slug": "saint-petersburg",
@@ -3492,8 +4645,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Rosstat 2023",
         "hdi": "Rosstat 2023",
-        "gini": "Rosstat 2023"
-      }
+        "gini": "Rosstat 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 40.0,
+      "unemployment_pct": 1.6,
+      "tourist_arrivals_m": 3.4
     },
     {
       "slug": "salt-lake-city",
@@ -3510,8 +4669,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 93.9,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 8.4
     },
     {
       "slug": "salvador",
@@ -3528,8 +4693,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 11.5,
+      "unemployment_pct": 7.5,
+      "tourist_arrivals_m": 0.8
     },
     {
       "slug": "san-antonio",
@@ -3546,8 +4717,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 93.9,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 8.4
     },
     {
       "slug": "san-diego",
@@ -3564,8 +4741,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 108.0,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 13.4
     },
     {
       "slug": "san-francisco",
@@ -3582,8 +4765,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
         "hdi": "BLS metro QCEW + ACS",
-        "gini": "BLS metro QCEW + ACS"
-      }
+        "gini": "BLS metro QCEW + ACS",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 100.0,
+      "unemployment_pct": 3.6,
+      "tourist_arrivals_m": 4.5
     },
     {
       "slug": "san-jose",
@@ -3600,8 +4789,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
         "hdi": "BLS metro QCEW + ACS",
-        "gini": "BLS metro QCEW + ACS"
-      }
+        "gini": "BLS metro QCEW + ACS",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 105.0,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 13.4
     },
     {
       "slug": "san-jose-cr",
@@ -3618,8 +4813,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 20.7,
+      "unemployment_pct": 9.8,
+      "tourist_arrivals_m": 0.3
     },
     {
       "slug": "santiago",
@@ -3636,8 +4837,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "INE Chile 2023",
         "hdi": "INE Chile 2023",
-        "gini": "INE Chile 2023"
-      }
+        "gini": "INE Chile 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 50.0,
+      "unemployment_pct": 7.6,
+      "tourist_arrivals_m": 0.8
     },
     {
       "slug": "santo-domingo",
@@ -3654,8 +4861,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 12.1,
+      "unemployment_pct": 5.8,
+      "tourist_arrivals_m": 1.0
     },
     {
       "slug": "sao-paulo",
@@ -3672,8 +4885,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "IBGE 2023",
         "hdi": "IBGE 2023",
-        "gini": "IBGE 2023"
-      }
+        "gini": "IBGE 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 42.0,
+      "unemployment_pct": 7.8,
+      "tourist_arrivals_m": 4.0
     },
     {
       "slug": "sapporo",
@@ -3690,8 +4909,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 36.1,
+      "unemployment_pct": 2.6,
+      "tourist_arrivals_m": 3.1
     },
     {
       "slug": "sarajevo",
@@ -3706,8 +4931,14 @@
       "hdi": 0.784,
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
-        "hdi": "Extrapolated from country HDI + tier-3 bump"
-      }
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 10.4,
+      "unemployment_pct": 13.2,
+      "tourist_arrivals_m": 0.2
     },
     {
       "slug": "seattle",
@@ -3724,8 +4955,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
         "hdi": "BLS metro QCEW + ACS",
-        "gini": "BLS metro QCEW + ACS"
-      }
+        "gini": "BLS metro QCEW + ACS",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 88.0,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 13.4
     },
     {
       "slug": "sendai",
@@ -3742,8 +4979,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 36.1,
+      "unemployment_pct": 2.6,
+      "tourist_arrivals_m": 3.1
     },
     {
       "slug": "seoul",
@@ -3760,8 +5003,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "KOSIS 2023",
         "hdi": "KOSIS 2023",
-        "gini": "KOSIS 2023"
-      }
+        "gini": "KOSIS 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 70.0,
+      "unemployment_pct": 4.1,
+      "tourist_arrivals_m": 11.0
     },
     {
       "slug": "seville",
@@ -3778,8 +5027,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 39.3,
+      "unemployment_pct": 12.1,
+      "tourist_arrivals_m": 10.6
     },
     {
       "slug": "shanghai",
@@ -3796,8 +5051,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "NBS China 2023",
         "hdi": "NBS China 2023",
-        "gini": "NBS China 2023"
-      }
+        "gini": "NBS China 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 55.0,
+      "unemployment_pct": 5.6,
+      "tourist_arrivals_m": 8.0
     },
     {
       "slug": "shenzhen",
@@ -3814,8 +5075,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 17.0,
+      "unemployment_pct": 5.2,
+      "tourist_arrivals_m": 2.6
     },
     {
       "slug": "singapore",
@@ -3832,8 +5099,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "MOM Singapore 2023",
         "hdi": "MOM Singapore 2023",
-        "gini": "MOM Singapore 2023"
-      }
+        "gini": "MOM Singapore 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 92.0,
+      "unemployment_pct": 1.9,
+      "tourist_arrivals_m": 13.5
     },
     {
       "slug": "skopje",
@@ -3848,8 +5121,14 @@
       "hdi": 0.775,
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
-        "hdi": "Extrapolated from country HDI + tier-3 bump"
-      }
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 10.3,
+      "unemployment_pct": 14.4,
+      "tourist_arrivals_m": 0.1
     },
     {
       "slug": "sofia",
@@ -3866,8 +5145,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "NSI 2023",
         "hdi": "NSI 2023",
-        "gini": "NSI 2023"
-      }
+        "gini": "NSI 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 40.0,
+      "unemployment_pct": 4.2,
+      "tourist_arrivals_m": 1.2
     },
     {
       "slug": "st-louis",
@@ -3884,8 +5169,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 108.0,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 13.4
     },
     {
       "slug": "stockholm",
@@ -3902,8 +5193,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "SCB 2023",
         "hdi": "SCB 2023",
-        "gini": "SCB 2023"
-      }
+        "gini": "SCB 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 70.0,
+      "unemployment_pct": 6.7,
+      "tourist_arrivals_m": 3.0
     },
     {
       "slug": "stuttgart",
@@ -3920,8 +5217,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 71.7,
+      "unemployment_pct": 3.0,
+      "tourist_arrivals_m": 7.0
     },
     {
       "slug": "surabaya",
@@ -3938,8 +5241,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 5.5,
+      "unemployment_pct": 5.3,
+      "tourist_arrivals_m": 1.4
     },
     {
       "slug": "surat",
@@ -3956,8 +5265,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 3.0,
+      "unemployment_pct": 4.2,
+      "tourist_arrivals_m": 1.1
     },
     {
       "slug": "sydney",
@@ -3974,8 +5289,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "ABS 2023",
         "hdi": "ABS 2023",
-        "gini": "ABS 2023"
-      }
+        "gini": "ABS 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 78.0,
+      "unemployment_pct": 3.8,
+      "tourist_arrivals_m": 3.5
     },
     {
       "slug": "taipei",
@@ -3986,7 +5307,10 @@
       "pop_m": 7.0,
       "gdp_b": 320,
       "wealth_z": 1.8,
-      "sources": {}
+      "sources": {
+        "unemployment_pct": "National unemployment rate"
+      },
+      "unemployment_pct": 3.4
     },
     {
       "slug": "tallinn",
@@ -4003,8 +5327,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 34.9,
+      "unemployment_pct": 6.5,
+      "tourist_arrivals_m": 0.4
     },
     {
       "slug": "tampa",
@@ -4021,8 +5351,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 93.9,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 8.4
     },
     {
       "slug": "tbilisi",
@@ -4039,8 +5375,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 10.3,
+      "unemployment_pct": 16.4,
+      "tourist_arrivals_m": 0.9
     },
     {
       "slug": "tehran",
@@ -4057,8 +5399,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 5.8,
+      "unemployment_pct": 9.0,
+      "tourist_arrivals_m": 0.6
     },
     {
       "slug": "tel-aviv",
@@ -4075,8 +5423,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 69.2,
+      "unemployment_pct": 3.9,
+      "tourist_arrivals_m": 0.6
     },
     {
       "slug": "tianjin",
@@ -4093,8 +5447,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 14.8,
+      "unemployment_pct": 5.2,
+      "tourist_arrivals_m": 1.6
     },
     {
       "slug": "tirana",
@@ -4109,8 +5469,14 @@
       "hdi": 0.794,
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
-        "hdi": "Extrapolated from country HDI + tier-3 bump"
-      }
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 12.6,
+      "unemployment_pct": 11.1,
+      "tourist_arrivals_m": 0.9
     },
     {
       "slug": "tokyo",
@@ -4127,8 +5493,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "MHLW Japan 2023",
         "hdi": "MHLW Japan 2023",
-        "gini": "MHLW Japan 2023"
-      }
+        "gini": "MHLW Japan 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 70.0,
+      "unemployment_pct": 2.5,
+      "tourist_arrivals_m": 11.0
     },
     {
       "slug": "toronto",
@@ -4145,8 +5517,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Stats Canada 2023",
         "hdi": "Stats Canada 2023",
-        "gini": "Stats Canada 2023"
-      }
+        "gini": "Stats Canada 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 72.0,
+      "unemployment_pct": 6.5,
+      "tourist_arrivals_m": 3.5
     },
     {
       "slug": "toulouse",
@@ -4163,8 +5541,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 51.2,
+      "unemployment_pct": 7.4,
+      "tourist_arrivals_m": 12.5
     },
     {
       "slug": "tunis",
@@ -4181,8 +5565,12 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate"
+      },
+      "cost_of_living_index": 4.6,
+      "unemployment_pct": 16.0
     },
     {
       "slug": "turin",
@@ -4199,8 +5587,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 51.6,
+      "unemployment_pct": 7.7,
+      "tourist_arrivals_m": 11.4
     },
     {
       "slug": "ulaanbaatar",
@@ -4215,8 +5609,14 @@
       "hdi": 0.746,
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
-        "hdi": "Extrapolated from country HDI + tier-3 bump"
-      }
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 7.5,
+      "unemployment_pct": 5.5,
+      "tourist_arrivals_m": 0.1
     },
     {
       "slug": "valencia",
@@ -4233,8 +5633,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 39.3,
+      "unemployment_pct": 12.1,
+      "tourist_arrivals_m": 10.6
     },
     {
       "slug": "valletta",
@@ -4251,8 +5657,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 48.8,
+      "unemployment_pct": 2.7,
+      "tourist_arrivals_m": 0.4
     },
     {
       "slug": "valparaiso",
@@ -4269,8 +5681,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 18.6,
+      "unemployment_pct": 8.5,
+      "tourist_arrivals_m": 0.5
     },
     {
       "slug": "vancouver",
@@ -4287,8 +5705,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Stats Canada 2023",
         "hdi": "Stats Canada 2023",
-        "gini": "Stats Canada 2023"
-      }
+        "gini": "Stats Canada 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "Local stats office (city-level)",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 78.0,
+      "unemployment_pct": 5.8,
+      "tourist_arrivals_m": 3.5
     },
     {
       "slug": "vienna",
@@ -4305,8 +5729,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Statistik Austria 2023",
         "hdi": "Statistik Austria 2023",
-        "gini": "Statistik Austria 2023"
-      }
+        "gini": "Statistik Austria 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "UNWTO / national tourism authority"
+      },
+      "cost_of_living_index": 65.0,
+      "unemployment_pct": 5.1,
+      "tourist_arrivals_m": 7.5
     },
     {
       "slug": "vientiane",
@@ -4321,8 +5751,14 @@
       "hdi": 0.625,
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
-        "hdi": "Extrapolated from country HDI + tier-3 bump"
-      }
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 2.4,
+      "unemployment_pct": 0.6,
+      "tourist_arrivals_m": 0.4
     },
     {
       "slug": "vilnius",
@@ -4339,8 +5775,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 32.6,
+      "unemployment_pct": 6.9,
+      "tourist_arrivals_m": 0.2
     },
     {
       "slug": "warsaw",
@@ -4357,8 +5799,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "GUS 2023",
         "hdi": "GUS 2023",
-        "gini": "GUS 2023"
-      }
+        "gini": "GUS 2023",
+        "cost_of_living_index": "Numbeo COL (city-level)",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 45.0,
+      "unemployment_pct": 2.8,
+      "tourist_arrivals_m": 3.4
     },
     {
       "slug": "washington-dc",
@@ -4375,8 +5823,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 108.0,
+      "unemployment_pct": 3.7,
+      "tourist_arrivals_m": 13.4
     },
     {
       "slug": "wellington",
@@ -4393,8 +5847,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 54.7,
+      "unemployment_pct": 4.0,
+      "tourist_arrivals_m": 0.4
     },
     {
       "slug": "wuhan",
@@ -4411,8 +5871,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 14.8,
+      "unemployment_pct": 5.2,
+      "tourist_arrivals_m": 1.6
     },
     {
       "slug": "xian",
@@ -4429,8 +5895,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 14.8,
+      "unemployment_pct": 5.2,
+      "tourist_arrivals_m": 1.6
     },
     {
       "slug": "yangon",
@@ -4445,8 +5917,14 @@
       "hdi": 0.607,
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
-        "hdi": "Extrapolated from country HDI + tier-3 bump"
-      }
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 1.5,
+      "unemployment_pct": 1.8,
+      "tourist_arrivals_m": 0.0
     },
     {
       "slug": "yokohama",
@@ -4463,8 +5941,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 41.5,
+      "unemployment_pct": 2.6,
+      "tourist_arrivals_m": 5.0
     },
     {
       "slug": "zagreb",
@@ -4481,8 +5965,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
         "hdi": "Extrapolated from country HDI + tier-3 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-3 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-3 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 26.7,
+      "unemployment_pct": 6.1,
+      "tourist_arrivals_m": 2.2
     },
     {
       "slug": "zurich",
@@ -4499,8 +5989,14 @@
       "sources": {
         "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
         "hdi": "Extrapolated from country HDI + tier-2 bump",
-        "gini": "National Gini (city-level not available)"
-      }
+        "gini": "National Gini (city-level not available)",
+        "cost_of_living_index": "Extrapolated from country GDP/capita with tier-2 hub premium",
+        "unemployment_pct": "National unemployment rate",
+        "tourist_arrivals_m": "Extrapolated from country arrivals / tier-2 divisor (3/5/8)"
+      },
+      "cost_of_living_index": 132.9,
+      "unemployment_pct": 2.0,
+      "tourist_arrivals_m": 2.4
     }
   ]
 }

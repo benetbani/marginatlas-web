@@ -99,8 +99,69 @@ COUNTRY_GINI: dict[str, float] = {
 }
 
 # ---------------------------------------------------------------------------
+# Country unemployment rate (World Bank, latest year ~2023). Used as
+# fallback for cities; major capitals get city-specific values in the
+# hand-curated table below.
+# ---------------------------------------------------------------------------
+COUNTRY_UNEMPLOYMENT: dict[str, float] = {
+    "US": 3.7, "GB": 4.0, "DE": 3.0, "FR": 7.4, "ES": 12.1, "IT": 7.7,
+    "NL": 3.6, "BE": 5.6, "AT": 5.1, "CH": 2.0, "SE": 7.6, "NO": 3.6,
+    "DK": 5.1, "FI": 7.1, "IS": 3.4, "IE": 4.3, "PT": 6.5, "GR": 11.1,
+    "PL": 2.8, "CZ": 2.7, "SK": 5.8, "HU": 4.1, "RO": 5.4, "BG": 4.2,
+    "HR": 6.1, "SI": 3.7, "EE": 6.5, "LT": 6.9, "LV": 6.4, "MT": 2.7,
+    "CY": 6.3, "LU": 5.2, "RS": 9.5, "BA": 13.2, "AL": 11.1, "MK": 14.4,
+    "ME": 14.9, "XK": 11.5, "RU": 3.1, "BY": 3.5, "UA": 8.5, "MD": 3.0,
+    "TR": 9.8, "AZ": 5.7, "AM": 13.5, "GE": 16.4, "KZ": 4.8,
+    "JP": 2.6, "KR": 2.8, "CN": 5.2, "HK": 2.9, "SG": 1.9, "TW": 3.4,
+    "IN": 4.2, "BD": 5.2, "PK": 6.3, "LK": 5.0, "NP": 11.0, "ID": 5.3,
+    "MY": 3.5, "TH": 1.1, "VN": 2.3, "PH": 4.4, "MM": 1.8, "KH": 2.7,
+    "AU": 3.6, "NZ": 4.0,
+    "CA": 5.5, "MX": 2.7, "BR": 7.5, "AR": 7.7, "CL": 8.5, "CO": 10.3,
+    "PE": 5.8, "EC": 4.0, "VE": 6.0, "DO": 5.8, "GT": 2.5, "PA": 9.4,
+    "CR": 9.8, "UY": 8.3, "BO": 4.5, "PY": 6.5,
+    "EG": 7.4, "MA": 13.0, "TN": 16.0, "DZ": 11.8, "NG": 5.0, "KE": 5.7,
+    "ZA": 32.9, "GH": 4.7, "ET": 3.5, "TZ": 2.8, "UG": 2.9, "SN": 3.6,
+    "CI": 2.4, "CM": 3.7, "ZW": 10.0, "AO": 9.0, "MZ": 3.7, "RW": 1.0,
+    "AE": 2.6, "SA": 4.9, "QA": 0.2, "BH": 1.5, "OM": 1.7, "KW": 2.1,
+    "JO": 21.1, "LB": 11.6, "IR": 9.0, "IQ": 14.2, "SY": 13.5, "IL": 3.9,
+    "MN": 5.5, "AF": 14.4, "LA": 0.6, "PG": 3.6,
+}
+
+# Country international tourist arrivals (millions, latest UNWTO ~2023).
+# City-tier division: tier-1 = country / 3, tier-2 = country / 5,
+# tier-3 = country / 8 per founder guidance.
+COUNTRY_ARRIVALS_M: dict[str, float] = {
+    "FR": 100.0, "ES": 85.0, "US": 67.0, "IT": 57.0, "TR": 56.0,
+    "MX": 42.0, "DE": 35.0, "GB": 37.0, "AT": 31.0, "GR": 32.0,
+    "JP": 25.0, "PT": 27.0, "CA": 18.0, "NL": 20.0, "HK": 34.0,
+    "PL": 17.0, "TH": 28.0, "MY": 20.0, "RU": 17.0, "HR": 18.0,
+    "CN": 13.0, "AE": 17.0, "SA": 27.0, "EG": 14.0, "MA": 14.0,
+    "ID": 11.0, "DK": 12.0, "CZ": 11.0, "AR": 6.5, "VN": 12.5,
+    "SG": 13.5, "KR": 11.0, "IN": 9.0, "ZA": 8.5, "DO": 8.0,
+    "PE": 2.2, "CO": 5.2, "CL": 4.0, "PA": 2.5, "CR": 2.5,
+    "BR": 6.4, "AU": 7.0, "NZ": 3.0, "FI": 3.8, "SE": 7.5,
+    "NO": 6.0, "IE": 7.3, "BE": 9.5, "CH": 12.0, "HU": 16.0,
+    "RO": 2.7, "BG": 9.4, "RS": 1.7, "BA": 1.3, "AL": 7.5,
+    "MK": 1.0, "ME": 2.5, "XK": 0.3, "BY": 0.4, "UA": 0.1,
+    "MD": 0.2, "AZ": 2.7, "AM": 2.1, "GE": 7.0, "KZ": 9.0,
+    "IS": 2.2, "LU": 1.0, "MT": 3.0, "CY": 4.0, "EE": 3.4,
+    "LT": 1.5, "LV": 1.6, "SI": 5.7, "SK": 6.5,
+    "MC": 0.6, "QA": 4.0, "BH": 11.0, "OM": 3.5, "JO": 6.4,
+    "LB": 1.7, "IR": 4.5, "IL": 3.0,
+    "NG": 0.6, "KE": 2.0, "GH": 1.2, "ET": 0.9, "TZ": 1.8,
+    "UG": 1.3, "SN": 1.6, "CM": 1.0, "ZW": 1.3, "AO": 0.6, "MZ": 1.4,
+    "VE": 0.4, "EC": 1.5, "BO": 0.9, "UY": 3.5, "PY": 1.2,
+    "GT": 2.0, "HN": 0.6, "NI": 1.0,
+    "BD": 0.3, "PK": 1.0, "LK": 1.5, "NP": 1.0, "MM": 0.2, "KH": 6.6,
+    "MN": 0.6, "PG": 0.2, "PH": 5.5, "LA": 3.5,
+    "AF": 0.0, "IQ": 0.2, "SY": 0.0,
+}
+
+
+# ---------------------------------------------------------------------------
 # Hand-curated city-level metrics for the highest-traffic cities.
-# Each row: (slug, avg_gross_salary_usd_year, hdi, gini, sources_note)
+# Each row: (slug, avg_gross_salary_usd_year, hdi, gini, sources_note,
+#            cost_of_living_idx_nyc100, unemployment_pct, tourism_m)
 # Numbers are 2022-2024 vintage where possible. Sources: national stats
 # offices, OECD Regions, UN-Habitat, Numbeo, regional ONS releases.
 # ---------------------------------------------------------------------------
@@ -188,6 +249,65 @@ HAND_CURATED: list[tuple] = [
 ]
 
 
+# Hand-curated cost-of-living index (Numbeo, NYC = 100).
+COL_BY_CITY: dict[str, float] = {
+    "new-york": 100.0, "los-angeles": 80.0, "san-francisco": 100.0,
+    "chicago": 75.0, "boston": 85.0, "seattle": 88.0, "washington": 88.0,
+    "houston": 70.0, "dallas": 70.0, "atlanta": 70.0, "miami": 78.0,
+    "denver": 75.0, "phoenix": 70.0, "baltimore": 72.0, "las-vegas": 70.0,
+    "san-jose": 105.0,
+    "london": 84.0, "paris": 78.0, "berlin": 65.0, "madrid": 56.0,
+    "rome": 60.0, "lisbon": 55.0, "athens": 50.0, "vienna": 65.0,
+    "amsterdam": 75.0, "brussels": 65.0, "copenhagen": 80.0,
+    "stockholm": 70.0, "oslo": 85.0, "helsinki": 70.0, "dublin": 78.0,
+    "warsaw": 45.0, "prague": 50.0, "budapest": 42.0, "sofia": 40.0,
+    "bucharest": 42.0, "moscow": 45.0, "saint-petersburg": 40.0,
+    "kyiv": 38.0,
+    "tokyo": 70.0, "hong-kong": 88.0, "singapore": 92.0, "seoul": 70.0,
+    "shanghai": 55.0, "beijing": 52.0, "mumbai": 32.0, "delhi": 28.0,
+    "bangkok": 45.0, "dubai": 78.0, "istanbul": 38.0,
+    "mexico-city": 40.0, "sao-paulo": 42.0, "buenos-aires": 38.0,
+    "santiago": 50.0, "bogota": 38.0, "lima": 38.0,
+    "sydney": 78.0, "melbourne": 72.0, "auckland": 70.0,
+    "toronto": 72.0, "vancouver": 78.0, "montreal": 65.0,
+    "doha": 70.0, "riyadh": 50.0, "johannesburg": 42.0,
+    "cairo": 28.0, "lagos": 32.0,
+}
+
+# Hand-curated city-specific unemployment rate (where local stats publish).
+CITY_UNEMPLOYMENT: dict[str, float] = {
+    "new-york": 4.5, "los-angeles": 5.2, "san-francisco": 3.6,
+    "chicago": 4.5, "houston": 4.2, "miami": 2.6, "atlanta": 3.2,
+    "london": 5.4, "paris": 7.1, "berlin": 9.0, "madrid": 11.4,
+    "rome": 7.0, "barcelona": 9.6, "amsterdam": 4.0, "stockholm": 6.7,
+    "moscow": 2.8, "saint-petersburg": 1.6, "kyiv": 6.0,
+    "tokyo": 2.5, "seoul": 4.1, "shanghai": 5.6, "beijing": 5.1,
+    "mumbai": 5.4, "delhi": 8.0, "bangkok": 1.0, "istanbul": 11.4,
+    "mexico-city": 3.6, "sao-paulo": 7.8, "buenos-aires": 7.5,
+    "santiago": 7.6, "bogota": 10.8, "lima": 7.4,
+    "sydney": 3.8, "melbourne": 4.1, "toronto": 6.5, "vancouver": 5.8,
+    "dubai": 0.3, "doha": 0.1, "johannesburg": 32.0, "cairo": 7.5,
+    "lagos": 5.5,
+}
+
+# Hand-curated city tourism (annual international arrivals, millions).
+CITY_TOURISM_M: dict[str, float] = {
+    "new-york": 13.5, "los-angeles": 9.0, "san-francisco": 4.5,
+    "miami": 7.5, "las-vegas": 6.0, "chicago": 2.5, "boston": 3.0,
+    "london": 16.0, "paris": 19.0, "rome": 10.0, "barcelona": 12.0,
+    "madrid": 7.5, "berlin": 6.0, "amsterdam": 9.0, "vienna": 7.5,
+    "prague": 7.0, "lisbon": 5.0, "athens": 6.0, "dublin": 5.5,
+    "stockholm": 3.0, "copenhagen": 3.5, "moscow": 5.5, "istanbul": 17.0,
+    "tokyo": 11.0, "hong-kong": 27.5, "singapore": 13.5, "seoul": 11.0,
+    "shanghai": 8.0, "beijing": 4.0, "bangkok": 22.0, "kuala-lumpur": 10.0,
+    "dubai": 16.7, "doha": 4.0, "cairo": 4.5,
+    "mexico-city": 12.0, "cancun": 8.0, "rio-de-janeiro": 2.5,
+    "sao-paulo": 4.0, "buenos-aires": 3.0, "lima": 1.2, "bogota": 1.5,
+    "sydney": 3.5, "melbourne": 2.5, "auckland": 1.8,
+    "toronto": 3.5, "vancouver": 3.5,
+}
+
+
 def load_wb_gdp() -> dict[str, float]:
     """Return latest-year GDP per capita (USD) per iso2 from the brain CSV."""
     out: dict[str, tuple[int, float]] = {}
@@ -239,6 +359,37 @@ def extrapolate_hdi(iso2: str, tier: int) -> float | None:
 
 def extrapolate_gini(iso2: str) -> float | None:
     return COUNTRY_GINI.get(iso2)
+
+
+def extrapolate_cost_of_living(iso2: str, tier: int, wb_gdp: dict[str, float]) -> float | None:
+    """COL index relative to NYC = 100. For cities we have no city-level
+    Numbeo data, derive from country GDP/capita with a tier bump for
+    capital / global-hub cities (they trend more expensive than the
+    country average)."""
+    gdp = wb_gdp.get(iso2)
+    if gdp is None:
+        return None
+    # NYC GDP per capita ~ $90K, NYC COL = 100. Linear scale.
+    base = (gdp / 90000) * 100
+    if tier == 1:
+        base *= 1.3  # global hub premium
+    elif tier == 2:
+        base *= 1.15
+    return round(base, 1)
+
+
+def extrapolate_unemployment(iso2: str) -> float | None:
+    return COUNTRY_UNEMPLOYMENT.get(iso2)
+
+
+def extrapolate_tourism(iso2: str, tier: int) -> float | None:
+    """Per founder guidance: tier 1 = country / 3, tier 2 = country / 5,
+    tier 3 = country / 8."""
+    country = COUNTRY_ARRIVALS_M.get(iso2)
+    if country is None:
+        return None
+    divisor = 3 if tier == 1 else 5 if tier == 2 else 8
+    return round(country / divisor, 1)
 
 
 def load_list() -> tuple[list[dict], dict]:
@@ -309,6 +460,46 @@ def main() -> None:
                 n_extrap += 1
             elif filled > 0:
                 n_partial += 1
+
+        # CitiesFix2 sec 6: 3 new metrics. Hand-curated for the cities
+        # where we have city-level numbers; smart fallback otherwise.
+
+        # Cost of living (NYC = 100)
+        col = COL_BY_CITY.get(slug)
+        if col is not None:
+            c["cost_of_living_index"] = col
+            sources["cost_of_living_index"] = "Numbeo COL (city-level)"
+        else:
+            col_e = extrapolate_cost_of_living(iso2, tier, wb_gdp)
+            if col_e is not None:
+                c["cost_of_living_index"] = col_e
+                sources["cost_of_living_index"] = (
+                    f"Extrapolated from country GDP/capita with tier-{tier} hub premium"
+                )
+
+        # Unemployment %
+        u = CITY_UNEMPLOYMENT.get(slug)
+        if u is not None:
+            c["unemployment_pct"] = u
+            sources["unemployment_pct"] = "Local stats office (city-level)"
+        else:
+            u_e = extrapolate_unemployment(iso2)
+            if u_e is not None:
+                c["unemployment_pct"] = u_e
+                sources["unemployment_pct"] = "National unemployment rate"
+
+        # Annual international tourist arrivals (millions)
+        t = CITY_TOURISM_M.get(slug)
+        if t is not None:
+            c["tourist_arrivals_m"] = t
+            sources["tourist_arrivals_m"] = "UNWTO / national tourism authority"
+        else:
+            t_e = extrapolate_tourism(iso2, tier)
+            if t_e is not None:
+                c["tourist_arrivals_m"] = t_e
+                sources["tourist_arrivals_m"] = (
+                    f"Extrapolated from country arrivals / tier-{tier} divisor (3/5/8)"
+                )
 
         c["sources"] = sources
 

@@ -107,11 +107,11 @@ export default async function RegionIndustriesPage({
           {regionName}
         </Link>
         <span className="mx-2">/</span>
-        <span>Industries</span>
+        <span>Activities</span>
       </nav>
 
       <h1 className="text-3xl md:text-4xl font-semibold text-ink-900 mb-3">
-        Small business industries in {regionName}
+        Small business activities in {regionName}
       </h1>
       <p className="text-ink-800 max-w-2xl mb-8">
         Benchmarks for the typical small business across {regionName},{" "}

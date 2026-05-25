@@ -133,7 +133,12 @@ export default function HomePage() {
             <div className="text-sm md:text-base font-semibold uppercase tracking-[0.16em] text-atlas-700 mb-4 md:mb-5">
               Worldwide small-business benchmarks
             </div>
-            <h1 className="font-display text-[1.7rem] sm:text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight text-ink-900 leading-[1.1] flex flex-col items-center">
+            {/* CitiesFix2 sec 1: tighten H1 on mobile so it never wraps
+               to 3 rows. text-balance keeps the line break clean. The
+               rotating-word containers now reserve the widest-word
+               width internally (CitiesFix2 sec 2), so the static text
+               around them does not move horizontally. */}
+            <h1 className="font-display text-[1.5rem] sm:text-2xl md:text-5xl lg:text-6xl font-medium tracking-tight text-ink-900 leading-[1.1] text-balance flex flex-col items-center">
               <span className="block w-full">
                 How much does a{" "}
                 <span className="text-atlas-600">
@@ -143,9 +148,9 @@ export default function HomePage() {
                   />
                 </span>
               </span>
-              <span className="block w-full whitespace-nowrap mt-1 md:mt-2">
-                make in
-                <span className="inline-block min-w-[10ch] md:min-w-[12ch] px-2 md:px-4 text-center text-atlas-600 align-baseline">
+              <span className="block w-full mt-1 md:mt-2">
+                make in{" "}
+                <span className="text-atlas-600">
                   <RotatingWord
                     words={HERO_CITIES as unknown as string[]}
                     interval={2000}

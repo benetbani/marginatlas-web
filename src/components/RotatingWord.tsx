@@ -63,11 +63,20 @@ export function RotatingWord({
       ? "translate-y-0 opacity-100"
       : "translate-y-2 opacity-0";
 
+  // CitiesFix2 sec 2: pick the widest candidate word once and use it as
+  // the spacer so the static prefix and suffix never move horizontally
+  // while the word rotates. The active word renders absolutely on top
+  // of the invisible spacer.
+  const widest = words.reduce((a, b) => (b.length > a.length ? b : a), "");
+
   return (
-    <span
-      className={`inline-block transition-all duration-300 ease-out ${transform} ${className}`}
-    >
-      {words[index]}
+    <span className={`relative inline-block align-baseline ${className}`}>
+      <span className="invisible">{widest}</span>
+      <span
+        className={`absolute left-1/2 -translate-x-1/2 inline-block transition-all duration-300 ease-out ${transform}`}
+      >
+        {words[index]}
+      </span>
     </span>
   );
 }

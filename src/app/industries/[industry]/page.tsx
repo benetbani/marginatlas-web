@@ -131,7 +131,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
       <nav className="text-sm text-ink-700/70 mb-4">
         <a href="/" className="hover:text-atlas-600">Home</a>
         <span className="mx-2">/</span>
-        <a href="/industries" className="hover:text-atlas-600">Industries</a>
+        <a href="/industries" className="hover:text-atlas-600">Activities</a>
         <span className="mx-2">/</span>
         <span>{ind.name}</span>
       </nav>

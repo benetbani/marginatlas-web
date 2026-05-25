@@ -20,13 +20,13 @@ export function SectorMasterMenu() {
     <section className="py-10 md:py-14">
       <div className="text-center mb-6 md:mb-8">
         <div className="text-xs font-semibold uppercase tracking-[0.16em] text-atlas-700">
-          Browse by category
+          Browse by sector
         </div>
         <h2 className="mt-2 font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900">
           Pick the kind of business
         </h2>
         <p className="mt-2 text-sm md:text-base text-ink-700 max-w-xl mx-auto">
-          Twenty categories. Click any to see every industry inside it.
+          Twenty sectors. Click any to see every activity inside it.
         </p>
       </div>
 

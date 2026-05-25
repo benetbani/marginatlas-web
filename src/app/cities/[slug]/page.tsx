@@ -29,6 +29,7 @@ import { TopProfitableActivities } from "@/components/cities/TopProfitableActivi
 import { MostSaturatedActivities } from "@/components/cities/MostSaturatedActivities";
 import { BusinessFormationCosts } from "@/components/cities/BusinessFormationCosts";
 import { CoverageIndicator } from "@/components/CoverageIndicator";
+import { getGuidingWord, type Metric } from "@/lib/cities/guiding_word";
 
 export const revalidate = 43200; // 12 hours
 
@@ -41,10 +42,14 @@ type City = {
   pop_m: number; // metro population in millions
   gdp_b: number; // metro GDP in USD billions
   wealth_z: number; // legacy field, not rendered
-  // Founder-spec city metrics (enriched by scripts/data/cities/enrich_city_metrics.py)
+  // CitiesFix v1 metrics (enriched by scripts/data/cities/enrich_city_metrics.py)
   avg_gross_salary_usd_year?: number; // metro average gross salary, USD per year
   hdi?: number; // city HDI (0-1), with country-bump fallback
   gini?: number; // Gini coefficient, city-level when available else national
+  // CitiesFix2 sec 6: the 3 new metrics
+  cost_of_living_index?: number; // Numbeo COL, NYC = 100
+  unemployment_pct?: number;
+  tourist_arrivals_m?: number;
   sources?: Record<string, string>;
 };
 
@@ -143,49 +148,95 @@ export default async function CityPage({
           <div className="w-full h-full bg-gradient-to-br from-cream-100 via-parchment to-cocoa-100" />
         )}
 
-        {/* Bottom overlay: city name (bottom-left) + 5 city-specific
-           stat cards in a horizontal strip (bottom-center / right).
-           All values are CITY-LEVEL (not country) per founder spec. */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8">
+        {/* CitiesFix2 sec 6: 8 city stat cards overlaid on the image.
+           City name + country bottom-left; 8 cards in a tight strip.
+           Each card has a colored guiding word (sec 7).
+           Salary is per MONTH, not per year (founder spec). */}
+        <div className="absolute bottom-0 left-0 right-0 p-3 md:p-6">
           <div className="max-w-7xl mx-auto">
             {/* City name + country block, bottom-left */}
-            <div className="text-white mb-4 md:mb-5">
+            <div className="text-white mb-3 md:mb-4">
               <div className="flex items-center gap-2 text-xs md:text-sm uppercase tracking-wide font-semibold mb-1.5 opacity-90">
                 <CountryFlag iso2={city.iso2} className="w-5" />
                 <span>{countryName}</span>
               </div>
-              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-none">
+              <h1
+                className="font-display text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-tight text-balance"
+                style={{ overflowWrap: "anywhere", hyphens: "auto" }}
+              >
                 {city.name}
               </h1>
             </div>
 
-            {/* Stat-card strip overlaid on the image. 2 cols mobile,
-               5 cols desktop. Order: metro pop, metro GDP, gross
-               salary, HDI, Gini. */}
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-3">
+            {/* 8-card strip: 2 cols mobile, 4 cols tablet, 8 cols desktop. */}
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-1.5 md:gap-2">
               <StatOverlayCard
-                label="Metro population"
+                label="Metro pop"
                 value={`${city.pop_m.toFixed(1)}M`}
+                metric="metro_pop_m"
+                rawValue={city.pop_m}
               />
               <StatOverlayCard
                 label="Metro GDP"
                 value={`$${city.gdp_b.toFixed(0)}B`}
+                metric="metro_gdp_b"
+                rawValue={city.gdp_b}
               />
               <StatOverlayCard
-                label="Gross salary"
+                label="Salary / mo"
                 value={
                   city.avg_gross_salary_usd_year
-                    ? `$${(city.avg_gross_salary_usd_year / 1000).toFixed(0)}K/yr`
+                    ? `$${Math.round(city.avg_gross_salary_usd_year / 12 / 100) * 100}`
                     : "-"
+                }
+                metric="gross_salary_usd_mo"
+                rawValue={
+                  city.avg_gross_salary_usd_year
+                    ? city.avg_gross_salary_usd_year / 12
+                    : null
                 }
               />
               <StatOverlayCard
                 label="HDI"
                 value={city.hdi != null ? city.hdi.toFixed(3) : "-"}
+                metric="hdi"
+                rawValue={city.hdi ?? null}
               />
               <StatOverlayCard
                 label="Gini"
                 value={city.gini != null ? city.gini.toFixed(1) : "-"}
+                metric="gini"
+                rawValue={city.gini ?? null}
+              />
+              <StatOverlayCard
+                label="Cost of living"
+                value={
+                  city.cost_of_living_index != null
+                    ? city.cost_of_living_index.toFixed(0)
+                    : "-"
+                }
+                metric="cost_of_living_index"
+                rawValue={city.cost_of_living_index ?? null}
+              />
+              <StatOverlayCard
+                label="Unemployment"
+                value={
+                  city.unemployment_pct != null
+                    ? `${city.unemployment_pct.toFixed(1)}%`
+                    : "-"
+                }
+                metric="unemployment_pct"
+                rawValue={city.unemployment_pct ?? null}
+              />
+              <StatOverlayCard
+                label="Tourism / yr"
+                value={
+                  city.tourist_arrivals_m != null
+                    ? `${city.tourist_arrivals_m.toFixed(1)}M`
+                    : "-"
+                }
+                metric="tourist_arrivals_m"
+                rawValue={city.tourist_arrivals_m ?? null}
               />
             </div>
           </div>
@@ -347,18 +398,42 @@ export default async function CityPage({
   );
 }
 
-/** Stat card overlaid on the hero image. Compact, semi-transparent
- * so the photo behind stays visible, but solid enough to be legible
- * over any background. */
-function StatOverlayCard({ label, value }: { label: string; value: string }) {
+/** Stat card overlaid on the hero image (CitiesFix2 sec 6 + 7).
+ * Tight padding, semi-transparent backdrop, three lines:
+ *   1. label   (tiny uppercase)
+ *   2. value   (tabular)
+ *   3. guiding word (colored on the red-to-green gradient per metric)
+ *
+ * When rawValue is null (data missing) the guiding line is hidden. */
+function StatOverlayCard({
+  label,
+  value,
+  metric,
+  rawValue,
+}: {
+  label: string;
+  value: string;
+  metric: Metric;
+  rawValue: number | null;
+}) {
+  const guiding =
+    rawValue != null ? getGuidingWord(metric, rawValue) : null;
   return (
-    <div className="bg-cream-50/95 backdrop-blur-sm border border-parchment rounded-xl px-3 py-2.5 md:px-4 md:py-3 shadow-md">
-      <div className="text-[9px] md:text-[10px] uppercase tracking-wide text-cocoa-700/70 font-semibold mb-0.5 md:mb-1">
+    <div className="bg-cream-50/95 backdrop-blur-sm border border-parchment rounded-lg px-2 py-1.5 md:px-2.5 md:py-2 shadow-md">
+      <div className="text-[8px] md:text-[9px] uppercase tracking-wide text-cocoa-700/70 font-semibold">
         {label}
       </div>
-      <div className="font-display text-lg md:text-2xl font-medium text-ink-900 tabular-nums leading-none">
+      <div className="font-display text-base md:text-xl font-medium text-ink-900 tabular-nums leading-tight">
         {value}
       </div>
+      {guiding && guiding.word ? (
+        <div
+          className="text-[9px] md:text-[10px] font-semibold leading-none"
+          style={{ color: guiding.color }}
+        >
+          {guiding.word}
+        </div>
+      ) : null}
     </div>
   );
 }

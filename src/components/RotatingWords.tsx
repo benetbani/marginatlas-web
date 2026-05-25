@@ -37,23 +37,30 @@ export default function RotatingWords({
     return () => clearTimeout(t);
   }, [words.length, cadenceMs, startOffsetMs]);
 
+  // CitiesFix2 sec 2: pick the widest candidate word ONCE and use it as
+  // the spacer so the surrounding text never shifts horizontally. The
+  // previous spacer used `words[i]` which changed width each cycle and
+  // pushed the static prefix around on every rotation.
+  const widest = words.reduce((a, b) => (b.length > a.length ? b : a), "");
+
   return (
     <span
       aria-hidden="true"
       className="relative inline-block align-baseline text-atlas-700"
-      style={{ minWidth: "6ch" }}
     >
       {words.map((w, idx) => (
         <span
           key={w}
-          className={`atlas-rotator__word absolute left-0 ${idx === i ? "atlas-rotator__word--active" : "opacity-0"}`}
+          className={`atlas-rotator__word absolute left-1/2 -translate-x-1/2 ${idx === i ? "atlas-rotator__word--active" : "opacity-0"}`}
           style={{ pointerEvents: "none" }}
         >
           {w}
         </span>
       ))}
-      {/* Spacer to reserve width */}
-      <span className="invisible">{words[i]}</span>
+      {/* Static spacer renders the WIDEST candidate so the container
+         width never changes as words rotate. invisible keeps the
+         layout slot reserved without rendering text. */}
+      <span className="invisible">{widest}</span>
     </span>
   );
 }

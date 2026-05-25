@@ -24,9 +24,9 @@ import { SectorMasterMenu } from "@/components/SectorMasterMenu";
 export const revalidate = 86400;
 
 export const metadata = {
-  title: "All industries: Margin Atlas",
+  title: "All activities: Margin Atlas",
   description:
-    "Every industry covered in Margin Atlas. Pick one to see how it earns across the whole world.",
+    "Every activity covered in Margin Atlas. Pick one to see how it earns across the whole world.",
   alternates: { canonical: "/industries" },
 };
 
@@ -40,13 +40,13 @@ export default function IndustriesIndex() {
       {/* Hero */}
       <section className="py-10 md:py-14 text-center">
         <div className="text-xs font-semibold uppercase tracking-[0.16em] text-atlas-700 mb-3">
-          Industries
+          Activities
         </div>
         <h1 className="font-display text-3xl md:text-5xl font-medium tracking-tight text-ink-900 leading-tight max-w-3xl mx-auto">
           Every kind of small business we cover
         </h1>
         <p className="mt-4 max-w-2xl mx-auto text-base md:text-lg text-ink-800 leading-relaxed">
-          Pick an industry to see how it earns worldwide: typical revenue,
+          Pick an activity to see how it earns worldwide: typical revenue,
           employment, after-tax owner take-home, and where every business
           lands from bottom 10% to top 10%.
         </p>
@@ -60,14 +60,14 @@ export default function IndustriesIndex() {
       <section className="py-10 md:py-14 border-t border-ink-100">
         <div className="text-center mb-6 md:mb-8">
           <div className="text-xs font-semibold uppercase tracking-[0.16em] text-atlas-700">
-            All industries
+            All activities
           </div>
           <h2 className="mt-2 font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900">
-            {visibleIndustries.length} industries, A to Z
+            {visibleIndustries.length} activities, A to Z
           </h2>
           <p className="mt-2 text-sm md:text-base text-ink-700 max-w-2xl mx-auto">
             Each name opens its worldwide benchmark page: typical revenue,
-            employment, and how the industry varies country by country.
+            employment, and how the activity varies country by country.
           </p>
         </div>
 

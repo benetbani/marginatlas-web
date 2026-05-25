@@ -96,7 +96,7 @@ export default function RootLayout({
             <div className="flex items-center gap-5 md:gap-6">
               <nav className="text-base text-ink-800 hidden md:flex items-center gap-5">
                 <a href="/world" className="hover:text-atlas-600 transition-colors">World</a>
-                <a href="/industries" className="hover:text-atlas-600 transition-colors">Industries</a>
+                <a href="/industries" className="hover:text-atlas-600 transition-colors">Activities</a>
                 <a href="/cities" className="hover:text-atlas-600 transition-colors">Cities</a>
                 <a href="/calculator" className="hover:text-atlas-600 transition-colors">Calculator</a>
                 <a href="/compare" className="hover:text-atlas-600 transition-colors">Compare</a>
@@ -137,7 +137,7 @@ export default function RootLayout({
                 <div className="font-semibold text-white mb-3 text-xs uppercase tracking-wide">Browse</div>
                 <ul className="space-y-2 text-xs">
                   <li><a href="/browse" className="hover:text-atlas-500">The whole world</a></li>
-                  <li><a href="/industries" className="hover:text-atlas-500">All industries</a></li>
+                  <li><a href="/industries" className="hover:text-atlas-500">All activities</a></li>
                   <li><a href="/world" className="hover:text-atlas-500">World map</a></li>
                   <li><a href="/sectors/manufacturing" className="hover:text-atlas-500">Sectors</a></li>
                 </ul>

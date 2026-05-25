@@ -108,7 +108,7 @@ export function NavigatorForm() {
   // Sector options — curated display order, NOT alphabetical (Plan v4.0)
   const sectorOptions: ComboOption[] = useMemo(
     () =>
-      [{ value: "", label: "Any category" } as ComboOption].concat(
+      [{ value: "", label: "Any sector" } as ComboOption].concat(
         visibleSectors(gate).map((s) => ({
           value: s.id,
           label: `${s.icon || ""}  ${s.name}`.trim(),
@@ -249,18 +249,18 @@ export function NavigatorForm() {
         />
         <ComboField
           id="sector"
-          label="Category"
+          label="Sector"
           options={sectorOptions}
           value={sector}
           onChange={(v) => {
             setSector(v);
             setIndustry("");
           }}
-          tooltip="Broad small-business category. Pick one to narrow the industry list below."
+          tooltip="Broad small-business sector. Pick one to narrow the activity list below."
         />
         <ComboField
           id="industry"
-          label="Industry"
+          label="Activity"
           required
           options={industryOptions}
           value={industry}

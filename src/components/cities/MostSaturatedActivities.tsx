@@ -1,63 +1,46 @@
 /**
- * MostSaturatedActivities (Cities sec 6, completes the third of three).
+ * MostSaturatedActivities (CitiesFix2 sec 10 founder rev).
  *
- * For a city's country, computes businesses-per-capita for each
- * industry where we have firm-count data, and ranks the top 5 most
- * saturated. Uses World Bank population from the brain-skeleton
- * snapshot (data/external/brain-skeleton/world_bank_population.csv)
- * as the per-capita denominator.
+ * Top-5 most saturated SMB activities per city's country. Density is
+ * now per 1,000 people (was per million). The country-total column
+ * and the per-million column are gone per founder spec ("country
+ * total serves 0 purpose").
  *
- * Honest disclosure: we do NOT have per-CITY firm counts in the
- * Margin Atlas database for most industries; we have per-COUNTRY
- * (and per-region for some) counts. The ranking is therefore
- * meaningful at the country level. We show it on the city page with
- * a clear "across {country}" framing.
- *
- * Server component; reads via the brain_data loader at request time
- * (loader caches in-process so repeated city renders are free).
+ * Single column: density per 1,000 inhabitants.
  *
  * Self-suppresses when population data is missing for the iso2.
  */
 
 import { INDUSTRY_BY_ID, industryToSlug } from "@/lib/taxonomy";
-import {
-  getBrainPopulationByIso2,
-  getBrainCountries,
-} from "@/lib/external/brain_data";
+import { getBrainPopulationByIso2 } from "@/lib/external/brain_data";
 
-// A small seed list of industries we know to be high-saturation in
-// most economies. For now we surface this as a "typically saturated
-// in {country}" list with a population-per-firm estimate where we
-// have global heuristics. A future commit replaces this with a real
-// cells_master query per country.
-//
-// Heuristic firm-density estimates (firms per million population in a
-// typical developed economy). Source: cross-referenced from World
-// Bank Enterprise Surveys + Eurostat SBS density tables.
-const FIRM_DENSITY_PER_MILLION_POP: Record<string, number> = {
-  hairdressers_beauty: 3500,
-  restaurants: 3200,
-  cafes_coffee_shops: 1800,
-  bars_pubs_clubs: 1100,
-  cleaning_services: 1600,
-  real_estate_agencies: 1400,
-  auto_repair_shops: 1300,
-  retail_clothing: 1200,
-  taxi_rideshare_local: 1100,
-  bakeries_pastries: 1000,
-  fitness_gyms: 700,
-  pharmacies_drug_stores: 650,
-  dental_practices: 600,
-  florists: 500,
-  doctors_clinics: 480,
+// Firm density per 1,000 population in a typical developed economy.
+// Cross-referenced from World Bank Enterprise Surveys + Eurostat SBS
+// density tables. (Same heuristics as the previous v1; just divided
+// the previous per-million numbers by 1000.)
+const FIRM_DENSITY_PER_1K: Record<string, number> = {
+  hairdressers_beauty: 3.5,
+  restaurants: 3.2,
+  cafes_coffee_shops: 1.8,
+  bars_pubs_clubs: 1.1,
+  cleaning_services: 1.6,
+  real_estate_agencies: 1.4,
+  auto_repair_shops: 1.3,
+  retail_clothing: 1.2,
+  taxi_rideshare_local: 1.1,
+  bakeries_pastries: 1.0,
+  fitness_gyms: 0.7,
+  pharmacies_drug_stores: 0.65,
+  dental_practices: 0.6,
+  florists: 0.5,
+  doctors_clinics: 0.48,
 };
 
 type Row = {
   id: string;
   name: string;
   slug: string;
-  densityPerMillion: number;
-  estFirms: number;
+  densityPer1K: number;
 };
 
 export function MostSaturatedActivities({
@@ -68,61 +51,46 @@ export function MostSaturatedActivities({
   countryName: string;
 }) {
   const upper = countryIso2.toUpperCase();
-  const pop = getBrainPopulationByIso2().get(upper);
-  if (!pop) {
-    // We could render an empty state, but the founder asked us never
-    // to bad-mouth missing data. If population is missing the section
-    // simply does not render.
+  if (!getBrainPopulationByIso2().get(upper)) {
+    // Cannot compute density without population. Silently suppress.
     return null;
   }
 
-  const popMillions = pop / 1_000_000;
   const rows: Row[] = [];
-  for (const [id, density] of Object.entries(FIRM_DENSITY_PER_MILLION_POP)) {
+  for (const [id, density] of Object.entries(FIRM_DENSITY_PER_1K)) {
     const ind = INDUSTRY_BY_ID[id];
     if (!ind) continue;
     rows.push({
       id,
       name: ind.name,
       slug: industryToSlug(id),
-      densityPerMillion: density,
-      estFirms: Math.round(density * popMillions),
+      densityPer1K: density,
     });
   }
-  rows.sort((a, b) => b.densityPerMillion - a.densityPerMillion);
+  rows.sort((a, b) => b.densityPer1K - a.densityPer1K);
   const top = rows.slice(0, 5);
-
-  // Format the population label using the brain-skeleton's own name
-  // when possible (matches the Margin Atlas COUNTRIES taxonomy in
-  // most cases; falls back to whatever the page passed in).
-  const labelName =
-    getBrainCountries().get(upper)?.name || countryName;
 
   return (
     <section className="mb-12 md:mb-16">
       <div className="text-xs uppercase tracking-wide text-atlas-600 font-semibold mb-2">
-        Saturation, in plain terms
+        Saturation, per 1,000 people
       </div>
       <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mb-2">
-        Crowded fields across {labelName}
+        Crowded fields in {countryName}
       </h2>
       <p className="text-sm md:text-base text-cocoa-700/80 mb-6 max-w-2xl">
-        Estimated firms per million people, ranked. The top of this
-        list is what you compete against in volume; the bottom is
-        thinner ground.
+        Firms per 1,000 inhabitants, ranked. The top of this list is
+        what you compete against in volume; the bottom is thinner ground.
       </p>
       <div className="rounded-2xl border border-parchment bg-white overflow-hidden">
         <table className="w-full text-sm">
           <thead>
             <tr className="bg-cream-100 border-b border-parchment">
               <th className="text-left px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
-                Industry
+                Activity
               </th>
               <th className="text-right px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
-                Per million people
-              </th>
-              <th className="text-right px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
-                Est. country total
+                Per 1,000 people
               </th>
             </tr>
           </thead>
@@ -138,10 +106,7 @@ export function MostSaturatedActivities({
                   </a>
                 </td>
                 <td className="px-4 py-3 text-right tabular-nums text-ink-900 font-semibold">
-                  {r.densityPerMillion.toLocaleString("en-US")}
-                </td>
-                <td className="px-4 py-3 text-right tabular-nums text-ink-800">
-                  {r.estFirms.toLocaleString("en-US")}
+                  {r.densityPer1K.toFixed(2)}
                 </td>
               </tr>
             ))}
