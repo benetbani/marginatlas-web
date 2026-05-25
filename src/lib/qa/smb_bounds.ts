@@ -70,6 +70,56 @@ export const REVENUE_PER_FIRM_BOUNDS: Record<string, SmbBounds> = {
   // Fitness
   fitness_gyms: { lo: 50_000, hi: 8_000_000, reason: "Boutique studio to mid-sized gym" },
   sports_fitness: { lo: 50_000, hi: 8_000_000, reason: "Same range" },
+
+  // v34 sanity sweep section 6: bounds extended to cover the highest
+  // traffic industries that were rendering implausible numbers (cleaning
+  // services at $37M, auto dealers with bad ranges). All bounds reflect
+  // SMB-physical per-firm revenue, NOT aggregate sector revenue.
+
+  // Cleaning + facilities
+  cleaning_services: { lo: 20_000, hi: 1_500_000, reason: "Cleaning services typically $50K-$800K per firm. Aggregate sector at the country level can be billions; that does NOT belong on a per-firm chart." },
+  janitorial_services: { lo: 30_000, hi: 2_000_000, reason: "Janitorial $80K-$1M per firm" },
+  landscaping_lawn: { lo: 30_000, hi: 2_000_000, reason: "Landscaping $80K-$1M per firm" },
+  pest_control: { lo: 50_000, hi: 3_000_000, reason: "Pest control $150K-$1.5M per firm" },
+
+  // Auto + transport
+  auto_dealers: { lo: 300_000, hi: 50_000_000, reason: "Auto dealers $1M-$30M per firm; capital-intensive inventory" },
+  gas_stations: { lo: 150_000, hi: 10_000_000, reason: "Gas stations $500K-$5M per firm" },
+  auto_parts_retail: { lo: 80_000, hi: 5_000_000, reason: "Auto parts $200K-$2M" },
+  taxi_rideshare_local: { lo: 30_000, hi: 1_500_000, reason: "Independent operator small fleet" },
+
+  // Hospitality + tourism
+  bed_breakfast_lodging: { lo: 30_000, hi: 2_000_000, reason: "B&B $80K-$800K per firm" },
+  travel_agencies: { lo: 40_000, hi: 5_000_000, reason: "Travel agencies $100K-$2M" },
+  event_planning: { lo: 30_000, hi: 3_000_000, reason: "Event planners $80K-$1.5M" },
+
+  // Retail (broader)
+  bookstores: { lo: 30_000, hi: 2_000_000, reason: "Bookstores $80K-$1M" },
+  hardware_stores: { lo: 80_000, hi: 8_000_000, reason: "Hardware $200K-$4M" },
+  florists: { lo: 30_000, hi: 1_500_000, reason: "Florists $80K-$800K" },
+  pharmacies_drug_stores: { lo: 200_000, hi: 15_000_000, reason: "Pharmacies $500K-$8M; prescription drug volume drives the high end" },
+
+  // Education + childcare
+  childcare_daycare: { lo: 30_000, hi: 2_500_000, reason: "Daycare $80K-$1M per firm" },
+  tutoring_education: { lo: 20_000, hi: 1_500_000, reason: "Tutoring/test prep $50K-$800K" },
+  language_schools: { lo: 50_000, hi: 5_000_000, reason: "Language schools $150K-$2M" },
+
+  // Other high-traffic
+  insurance_brokers: { lo: 50_000, hi: 10_000_000, reason: "Insurance brokers $150K-$5M (commission-driven)" },
+  it_services_consulting: { lo: 60_000, hi: 15_000_000, reason: "IT consulting $150K-$5M" },
+  marketing_agencies: { lo: 50_000, hi: 15_000_000, reason: "Marketing agencies $100K-$5M" },
+  graphic_design: { lo: 30_000, hi: 3_000_000, reason: "Graphic design $80K-$1.5M" },
+  photography_studios: { lo: 20_000, hi: 1_500_000, reason: "Photography $50K-$800K" },
+  printing_services: { lo: 80_000, hi: 8_000_000, reason: "Printing $200K-$3M" },
+  electricians: { lo: 50_000, hi: 5_000_000, reason: "Electricians $100K-$2M" },
+  plumbers: { lo: 50_000, hi: 5_000_000, reason: "Plumbers $100K-$2M" },
+  hvac_contractors: { lo: 80_000, hi: 8_000_000, reason: "HVAC $200K-$3M" },
+  roofing_contractors: { lo: 80_000, hi: 5_000_000, reason: "Roofing $200K-$2M" },
+  painting_contractors: { lo: 40_000, hi: 3_000_000, reason: "Painting $80K-$1.5M" },
+  carpentry_contractors: { lo: 40_000, hi: 3_000_000, reason: "Carpentry $80K-$1.5M" },
+  car_washes: { lo: 50_000, hi: 3_000_000, reason: "Car washes $150K-$1.5M" },
+  laundromats: { lo: 30_000, hi: 1_500_000, reason: "Laundromats $80K-$800K" },
+  dry_cleaning: { lo: 30_000, hi: 2_000_000, reason: "Dry cleaning $80K-$1M" },
 };
 
 export const DEFAULT_REVENUE_BOUNDS: SmbBounds = {

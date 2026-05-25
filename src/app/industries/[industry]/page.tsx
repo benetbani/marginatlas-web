@@ -17,6 +17,7 @@ import {
 } from "@/lib/taxonomy";
 import { getSameIndustryAcrossCountries } from "@/lib/cells";
 import { purifyCountries } from "@/lib/geo/is_sovereign_country";
+import { REVENUE_PER_FIRM_BOUNDS, DEFAULT_REVENUE_BOUNDS } from "@/lib/qa/smb_bounds";
 import { CountryFlag } from "@/components/CountryFlag";
 import { RevenueTiles } from "@/components/RevenueTiles";
 import { RevenueDistribution } from "@/components/RevenueDistribution";
@@ -96,7 +97,15 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
   // The extrapolated_cells data set doesn't carry p10/p90 percentiles, so we
   // approximate with min / median / max of country-level medians as a proxy
   // for the global cross-country spread. This is a deliberately conservative
-  // empty state — the real cross-country distribution will replace it later.
+  // empty state, the real cross-country distribution will replace it later.
+  //
+  // v34 sanity sweep §6: enforce per-industry plausibility bounds at the
+  // render layer. Any country-level median outside [lo/5, hi*2] is dropped
+  // BEFORE the aggregate is computed. Fixes the cleaning_services $37M bug
+  // and any future case where extrapolated_cells has a wrong-scale row.
+  const indBounds = REVENUE_PER_FIRM_BOUNDS[ind.id] ?? DEFAULT_REVENUE_BOUNDS;
+  const aggLo = indBounds.lo / 5;
+  const aggHi = indBounds.hi * 2;
   let aggP10: number | null = null;
   let aggP50: number | null = null;
   let aggP90: number | null = null;
@@ -104,6 +113,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
     const vals = topCountries
       .map((c) => c.revenue_per_firm ?? c.rev_p50 ?? null)
       .filter((v): v is number => v != null && v > 0)
+      .filter((v) => v >= aggLo && v <= aggHi)
       .sort((a, b) => a - b);
     if (vals.length >= 3) {
       const pick = (q: number) => vals[Math.floor((vals.length - 1) * q)];
