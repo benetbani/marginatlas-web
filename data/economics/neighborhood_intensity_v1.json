@@ -1,6 +1,6 @@
 {
-  "version": "1.0.0",
-  "anchor": "Phase 1 seed for the commuter + tourism + anomaly-tag framework. See docs/strategy/2026-05-25-COMMUTER-TOURISM-NEIGHBORHOOD-FRAMEWORK.md for the full spec. Keyed by city_slug.neighborhood_slug. Numbers are approximations from public stats offices (US LEHD, UK ONS, FR INSEE Mobilités) plus city tourism boards (NYCgo, Visit London, Atout France). Refresh annually.",
+  "version": "1.1.0",
+  "anchor": "Phase 1b + Phase 3 expansion of the commuter+tourism+anomaly-tag framework. See docs/strategy/2026-05-25-COMMUTER-TOURISM-NEIGHBORHOOD-FRAMEWORK.md. Keyed by city_slug.neighborhood_slug. Numbers approximated from public stats offices (US LEHD, UK ONS, FR INSEE, JP e-Stat, DE Destatis) plus city tourism boards. Refresh annually.",
   "convention": {
     "commuter_intensity": "daytime_population / nighttime_residential_population",
     "tourism_intensity": "annual_visitors_per_resident (overnight + day-trippers)",
@@ -25,19 +25,64 @@
     "residential_only": "Default - no special tags apply"
   },
   "neighborhoods": {
-    "new-york.manhattan": {
-      "commuter_intensity": 3.8,
-      "tourism_intensity": 35,
-      "tags": ["financial_cbd", "tourist_zone", "transit_hub", "luxury_district"],
+    "new-york.manhattan-fidi": {
+      "commuter_intensity": 6.2,
+      "tourism_intensity": 18,
+      "tags": ["financial_cbd", "tourist_zone", "transit_hub"],
       "primary_tag": "financial_cbd",
       "year": 2023,
+      "source_quality": "A",
+      "notes": "Wall Street + Battery + South Street Seaport. 410K daytime workers / 66K residents."
+    },
+    "new-york.manhattan-midtown": {
+      "commuter_intensity": 4.7,
+      "tourism_intensity": 65,
+      "tags": ["tourist_zone", "transit_hub", "financial_cbd", "nightlife_zone"],
+      "primary_tag": "tourist_zone",
+      "year": 2023,
+      "source_quality": "A",
+      "notes": "Times Square + Theater District + Midtown East. ~50M annual visitors."
+    },
+    "new-york.manhattan-ues": {
+      "commuter_intensity": 1.3,
+      "tourism_intensity": 12,
+      "tags": ["luxury_district", "embassy_quarter"],
+      "primary_tag": "luxury_district",
+      "year": 2023,
+      "source_quality": "A",
+      "notes": "Upper East Side. Museum Mile, Madison Ave luxury retail, UN-adjacent embassies."
+    },
+    "new-york.manhattan-uws": {
+      "commuter_intensity": 1.1,
+      "tourism_intensity": 6,
+      "tags": ["luxury_district", "university_district"],
+      "primary_tag": "luxury_district",
+      "year": 2023,
       "source_quality": "B",
-      "notes": "Composite — Manhattan as a whole. Real intra-borough variance is huge (FiDi 6.2 vs Harlem 0.7). Future v2 splits into 4-6 sub-zones."
+      "notes": "Upper West Side. Columbia U adjacent, Central Park, Lincoln Center."
+    },
+    "new-york.manhattan-soho-tribeca": {
+      "commuter_intensity": 2.0,
+      "tourism_intensity": 28,
+      "tags": ["tourist_zone", "luxury_district"],
+      "primary_tag": "tourist_zone",
+      "year": 2023,
+      "source_quality": "B",
+      "notes": "SoHo + TriBeCa. Designer flagships, premium residential conversions, high tourism."
+    },
+    "new-york.manhattan-harlem": {
+      "commuter_intensity": 0.7,
+      "tourism_intensity": 4,
+      "tags": ["gentrifying_edge"],
+      "primary_tag": "gentrifying_edge",
+      "year": 2023,
+      "source_quality": "B",
+      "notes": "Harlem. Historic Black NYC, restaurants reviving along Frederick Douglass Blvd."
     },
     "new-york.brooklyn": {
       "commuter_intensity": 0.9,
       "tourism_intensity": 4.5,
-      "tags": ["residential_only", "gentrifying_edge"],
+      "tags": ["gentrifying_edge"],
       "primary_tag": "gentrifying_edge",
       "year": 2023,
       "source_quality": "B",
@@ -46,11 +91,11 @@
     "new-york.queens": {
       "commuter_intensity": 0.7,
       "tourism_intensity": 1.8,
-      "tags": ["residential_only", "transit_hub"],
+      "tags": ["transit_hub"],
       "primary_tag": "residential_only",
       "year": 2023,
       "source_quality": "B",
-      "notes": "JFK + LaGuardia drive transit_hub tag; Astoria is gentrifying but smaller share of borough."
+      "notes": "JFK + LaGuardia drive transit_hub tag."
     },
     "new-york.bronx": {
       "commuter_intensity": 0.5,
@@ -68,28 +113,46 @@
       "year": 2023,
       "source_quality": "B"
     },
-    "london.central-london": {
-      "commuter_intensity": 4.2,
-      "tourism_intensity": 28,
-      "tags": ["financial_cbd", "tourist_zone", "transit_hub", "luxury_district"],
+    "london.city-of-london": {
+      "commuter_intensity": 8.1,
+      "tourism_intensity": 22,
+      "tags": ["financial_cbd", "tourist_zone", "transit_hub"],
       "primary_tag": "financial_cbd",
       "year": 2023,
       "source_quality": "A",
-      "notes": "City of London + Westminster + Camden. The City alone has commuter_intensity ~8."
+      "notes": "Square Mile. 545K daytime, 8K residents. UK financial center."
+    },
+    "london.west-end": {
+      "commuter_intensity": 2.8,
+      "tourism_intensity": 45,
+      "tags": ["tourist_zone", "luxury_district", "transit_hub", "nightlife_zone"],
+      "primary_tag": "tourist_zone",
+      "year": 2023,
+      "source_quality": "A",
+      "notes": "Soho + Covent Garden + Mayfair + Oxford St. Premier tourism + luxury retail zone."
+    },
+    "london.south-bank": {
+      "commuter_intensity": 1.9,
+      "tourism_intensity": 24,
+      "tags": ["tourist_zone", "transit_hub"],
+      "primary_tag": "tourist_zone",
+      "year": 2023,
+      "source_quality": "A",
+      "notes": "Southbank Centre + Borough Market + London Bridge."
     },
     "london.north-london": {
       "commuter_intensity": 1.2,
       "tourism_intensity": 6,
-      "tags": ["residential_only", "nightlife_zone"],
+      "tags": ["nightlife_zone"],
       "primary_tag": "nightlife_zone",
       "year": 2023,
       "source_quality": "B",
-      "notes": "Islington + Camden Town + Hampstead — creative + residential mix."
+      "notes": "Islington + Camden Town + Hampstead."
     },
     "london.south-london": {
       "commuter_intensity": 0.9,
       "tourism_intensity": 3,
-      "tags": ["residential_only", "gentrifying_edge"],
+      "tags": ["gentrifying_edge"],
       "primary_tag": "residential_only",
       "year": 2023,
       "source_quality": "B"
@@ -101,7 +164,7 @@
       "primary_tag": "tech_corridor",
       "year": 2023,
       "source_quality": "A",
-      "notes": "Shoreditch + Hackney + Stratford — Tech City + Olympic regeneration."
+      "notes": "Shoreditch + Hackney + Stratford. Tech City + Olympic regeneration."
     },
     "london.west-london": {
       "commuter_intensity": 1.4,
@@ -110,34 +173,43 @@
       "primary_tag": "luxury_district",
       "year": 2023,
       "source_quality": "A",
-      "notes": "Kensington + Chelsea + Mayfair — premium residential, embassies, designer retail."
+      "notes": "Kensington + Chelsea + Mayfair. Premium residential + embassies + designer retail."
     },
-    "paris.right-bank-central": {
-      "commuter_intensity": 3.6,
-      "tourism_intensity": 32,
-      "tags": ["tourist_zone", "luxury_district", "transit_hub", "financial_cbd"],
+    "paris.louvre-marais": {
+      "commuter_intensity": 3.0,
+      "tourism_intensity": 55,
+      "tags": ["tourist_zone", "luxury_district", "transit_hub"],
       "primary_tag": "tourist_zone",
       "year": 2023,
       "source_quality": "A",
-      "notes": "1st-4th arrondissements - Louvre, Marais, Les Halles. Louvre alone draws 9M tourists/year."
+      "notes": "1st-4th arr. Louvre alone draws 9M tourists/year; Le Marais boutiques."
     },
-    "paris.left-bank-central": {
+    "paris.champs-opera": {
+      "commuter_intensity": 4.2,
+      "tourism_intensity": 38,
+      "tags": ["financial_cbd", "luxury_district", "tourist_zone", "transit_hub"],
+      "primary_tag": "financial_cbd",
+      "year": 2023,
+      "source_quality": "A",
+      "notes": "8th-9th arr. CAC 40 HQs along Champs-Élysées, Opéra Garnier."
+    },
+    "paris.saint-germain-latin": {
       "commuter_intensity": 1.8,
       "tourism_intensity": 18,
       "tags": ["university_district", "tourist_zone", "luxury_district"],
       "primary_tag": "university_district",
       "year": 2023,
       "source_quality": "A",
-      "notes": "5th-7th arrondissements - Sorbonne, Latin Quarter, Saint-Germain."
+      "notes": "5th-7th arr. Sorbonne + Saint-Germain + Invalides."
     },
     "paris.north-periphery": {
       "commuter_intensity": 0.9,
       "tourism_intensity": 6,
-      "tags": ["residential_only", "gentrifying_edge"],
+      "tags": ["gentrifying_edge"],
       "primary_tag": "residential_only",
       "year": 2023,
       "source_quality": "B",
-      "notes": "18th-20th arrondissements - Montmartre tourism in 18th but mostly residential."
+      "notes": "18th-20th arr. Montmartre tourism in 18th but mostly residential."
     },
     "paris.south-periphery": {
       "commuter_intensity": 1.4,
@@ -146,15 +218,320 @@
       "primary_tag": "tech_corridor",
       "year": 2023,
       "source_quality": "B",
-      "notes": "13th-15th arrondissements - Station F, university campuses."
+      "notes": "13th-15th arr. Station F, university campuses."
+    },
+    "tokyo.central": {
+      "commuter_intensity": 5.4,
+      "tourism_intensity": 8,
+      "tags": ["financial_cbd", "luxury_district", "transit_hub"],
+      "primary_tag": "financial_cbd",
+      "year": 2023,
+      "source_quality": "A",
+      "notes": "Chiyoda + Chuo + Minato. Marunouchi finance, Ginza luxury, Roppongi."
+    },
+    "tokyo.west": {
+      "commuter_intensity": 2.1,
+      "tourism_intensity": 12,
+      "tags": ["tourist_zone", "nightlife_zone", "transit_hub"],
+      "primary_tag": "nightlife_zone",
+      "year": 2023,
+      "source_quality": "A",
+      "notes": "Shinjuku + Shibuya + Harajuku. Tourism, nightlife, retail."
+    },
+    "tokyo.north": {
+      "commuter_intensity": 1.1,
+      "tourism_intensity": 3,
+      "tags": ["university_district"],
+      "primary_tag": "university_district",
+      "year": 2023,
+      "source_quality": "B",
+      "notes": "Toshima + Bunkyo. Tokyo Univ, Waseda area."
+    },
+    "tokyo.east": {
+      "commuter_intensity": 0.7,
+      "tourism_intensity": 4,
+      "tags": ["industrial_park", "residential_only"],
+      "primary_tag": "residential_only",
+      "year": 2023,
+      "source_quality": "B",
+      "notes": "Sumida + Koto + Edogawa. Traditional small workshops, Asakusa tourism."
+    },
+    "tokyo.south": {
+      "commuter_intensity": 1.4,
+      "tourism_intensity": 2,
+      "tags": ["industrial_park", "transit_hub"],
+      "primary_tag": "transit_hub",
+      "year": 2023,
+      "source_quality": "B",
+      "notes": "Shinagawa + Ota. Haneda Airport corridor, Shinagawa station."
+    },
+    "berlin.mitte-central": {
+      "commuter_intensity": 2.8,
+      "tourism_intensity": 18,
+      "tags": ["tourist_zone", "tech_corridor", "transit_hub"],
+      "primary_tag": "tourist_zone",
+      "year": 2023,
+      "source_quality": "A",
+      "notes": "Mitte + Friedrichshain-Kreuzberg. Government, startups, tourism."
+    },
+    "berlin.west": {
+      "commuter_intensity": 1.3,
+      "tourism_intensity": 6,
+      "tags": ["luxury_district", "embassy_quarter"],
+      "primary_tag": "luxury_district",
+      "year": 2023,
+      "source_quality": "B",
+      "notes": "Charlottenburg + Wilmersdorf. Established residential + premium retail."
+    },
+    "berlin.east": {
+      "commuter_intensity": 1.0,
+      "tourism_intensity": 4,
+      "tags": ["gentrifying_edge", "nightlife_zone"],
+      "primary_tag": "gentrifying_edge",
+      "year": 2023,
+      "source_quality": "B",
+      "notes": "Prenzlauer Berg + Lichtenberg. Gentrified mid-residential, creative."
+    },
+    "berlin.outer": {
+      "commuter_intensity": 0.6,
+      "tourism_intensity": 1,
+      "tags": ["industrial_park", "residential_only"],
+      "primary_tag": "residential_only",
+      "year": 2023,
+      "source_quality": "B"
+    },
+    "hong-kong.central-admiralty": {
+      "commuter_intensity": 6.5,
+      "tourism_intensity": 28,
+      "tags": ["financial_cbd", "luxury_district", "tourist_zone", "transit_hub"],
+      "primary_tag": "financial_cbd",
+      "year": 2023,
+      "source_quality": "A",
+      "notes": "Central + Admiralty. APAC finance hub, premium retail, MTR central."
+    },
+    "hong-kong.wan-chai-causeway-bay": {
+      "commuter_intensity": 2.4,
+      "tourism_intensity": 22,
+      "tags": ["financial_cbd", "tourist_zone", "transit_hub", "nightlife_zone"],
+      "primary_tag": "tourist_zone",
+      "year": 2023,
+      "source_quality": "A",
+      "notes": "Wan Chai + Causeway Bay. Convention centre, dense retail, nightlife."
+    },
+    "hong-kong.kowloon-tsim-sha-tsui": {
+      "commuter_intensity": 1.6,
+      "tourism_intensity": 24,
+      "tags": ["tourist_zone", "transit_hub", "nightlife_zone"],
+      "primary_tag": "tourist_zone",
+      "year": 2023,
+      "source_quality": "B",
+      "notes": "Tsim Sha Tsui. Star Ferry terminus, dense retail + tourism."
+    },
+    "hong-kong.new-territories": {
+      "commuter_intensity": 0.6,
+      "tourism_intensity": 1,
+      "tags": ["residential_only"],
+      "primary_tag": "residential_only",
+      "year": 2023,
+      "source_quality": "B"
+    },
+    "hong-kong.outlying-islands": {
+      "commuter_intensity": 0.4,
+      "tourism_intensity": 3,
+      "tags": ["tourist_zone", "residential_only"],
+      "primary_tag": "tourist_zone",
+      "year": 2023,
+      "source_quality": "C",
+      "notes": "Lantau, Lamma, Cheung Chau. Light tourism + small residential."
+    },
+    "singapore.central-area": {
+      "commuter_intensity": 5.8,
+      "tourism_intensity": 32,
+      "tags": ["financial_cbd", "free_economic_zone", "luxury_district", "tourist_zone"],
+      "primary_tag": "financial_cbd",
+      "year": 2023,
+      "source_quality": "A",
+      "notes": "CBD + Marina Bay. Singapore's financial centre + tourism core."
+    },
+    "singapore.orchard-bukit-timah": {
+      "commuter_intensity": 2.4,
+      "tourism_intensity": 28,
+      "tags": ["luxury_district", "tourist_zone", "transit_hub", "embassy_quarter"],
+      "primary_tag": "luxury_district",
+      "year": 2023,
+      "source_quality": "A",
+      "notes": "Orchard Road + Bukit Timah. Premier shopping + embassies + luxury residential."
+    },
+    "singapore.east-changi": {
+      "commuter_intensity": 1.0,
+      "tourism_intensity": 8,
+      "tags": ["transit_hub", "industrial_park"],
+      "primary_tag": "transit_hub",
+      "year": 2023,
+      "source_quality": "B",
+      "notes": "Changi area. Airport corridor + light industrial."
+    },
+    "singapore.west-jurong": {
+      "commuter_intensity": 0.9,
+      "tourism_intensity": 1,
+      "tags": ["industrial_park", "residential_only"],
+      "primary_tag": "industrial_park",
+      "year": 2023,
+      "source_quality": "B",
+      "notes": "Jurong industrial estate + HDB residential."
+    },
+    "singapore.north-woodlands": {
+      "commuter_intensity": 0.6,
+      "tourism_intensity": 0.5,
+      "tags": ["residential_only"],
+      "primary_tag": "residential_only",
+      "year": 2023,
+      "source_quality": "B"
+    },
+    "mumbai.south-mumbai": {
+      "commuter_intensity": 3.2,
+      "tourism_intensity": 6,
+      "tags": ["financial_cbd", "luxury_district", "tourist_zone"],
+      "primary_tag": "financial_cbd",
+      "year": 2023,
+      "source_quality": "B",
+      "notes": "Nariman Point + Colaba + Fort. India's pre-BKC financial centre."
+    },
+    "mumbai.bandra-west": {
+      "commuter_intensity": 2.6,
+      "tourism_intensity": 4,
+      "tags": ["financial_cbd", "luxury_district", "tech_corridor"],
+      "primary_tag": "financial_cbd",
+      "year": 2023,
+      "source_quality": "B",
+      "notes": "Bandra West + BKC. Modern financial hub, premium residential."
+    },
+    "mumbai.andheri-west": {
+      "commuter_intensity": 1.6,
+      "tourism_intensity": 3,
+      "tags": ["tech_corridor", "transit_hub"],
+      "primary_tag": "tech_corridor",
+      "year": 2023,
+      "source_quality": "B",
+      "notes": "Andheri + SEEPZ. IT and ITeS corridor."
+    },
+    "mumbai.suburbs-east": {
+      "commuter_intensity": 0.6,
+      "tourism_intensity": 1,
+      "tags": ["residential_only", "industrial_park"],
+      "primary_tag": "residential_only",
+      "year": 2023,
+      "source_quality": "C"
+    },
+    "mumbai.navi-mumbai": {
+      "commuter_intensity": 0.7,
+      "tourism_intensity": 0.5,
+      "tags": ["residential_only", "tech_corridor"],
+      "primary_tag": "residential_only",
+      "year": 2023,
+      "source_quality": "C",
+      "notes": "Planned satellite city. New IT + residential."
+    },
+    "sao-paulo.centro-historico": {
+      "commuter_intensity": 4.1,
+      "tourism_intensity": 5,
+      "tags": ["financial_cbd", "transit_hub"],
+      "primary_tag": "financial_cbd",
+      "year": 2023,
+      "source_quality": "B",
+      "notes": "Centro Histórico + Sé. Original CBD, declining but still daytime-heavy."
+    },
+    "sao-paulo.avenida-paulista-jardins": {
+      "commuter_intensity": 3.6,
+      "tourism_intensity": 8,
+      "tags": ["financial_cbd", "luxury_district", "transit_hub"],
+      "primary_tag": "financial_cbd",
+      "year": 2023,
+      "source_quality": "B",
+      "notes": "Paulista + Jardins. Modern São Paulo CBD, premium residential."
+    },
+    "sao-paulo.vila-olimpia-itaim": {
+      "commuter_intensity": 2.4,
+      "tourism_intensity": 3,
+      "tags": ["financial_cbd", "luxury_district", "tech_corridor"],
+      "primary_tag": "tech_corridor",
+      "year": 2023,
+      "source_quality": "B",
+      "notes": "Vila Olímpia + Itaim Bibi + Pinheiros. Premium residential + tech offices."
+    },
+    "sao-paulo.north-zona-norte": {
+      "commuter_intensity": 0.6,
+      "tourism_intensity": 1,
+      "tags": ["residential_only", "industrial_park"],
+      "primary_tag": "residential_only",
+      "year": 2023,
+      "source_quality": "C"
+    },
+    "sao-paulo.east-zona-leste": {
+      "commuter_intensity": 0.5,
+      "tourism_intensity": 0.5,
+      "tags": ["residential_only", "industrial_park"],
+      "primary_tag": "residential_only",
+      "year": 2023,
+      "source_quality": "C"
+    },
+    "dubai.downtown-dubai": {
+      "commuter_intensity": 4.5,
+      "tourism_intensity": 35,
+      "tags": ["financial_cbd", "luxury_district", "tourist_zone"],
+      "primary_tag": "tourist_zone",
+      "year": 2023,
+      "source_quality": "A",
+      "notes": "Downtown Dubai + Burj + Dubai Mall. Tourism + luxury retail + corporate."
+    },
+    "dubai.business-bay": {
+      "commuter_intensity": 5.2,
+      "tourism_intensity": 18,
+      "tags": ["financial_cbd", "free_economic_zone", "tech_corridor"],
+      "primary_tag": "free_economic_zone",
+      "year": 2023,
+      "source_quality": "A",
+      "notes": "Business Bay + DIFC adjacent. UAE financial free zone."
+    },
+    "dubai.dubai-marina": {
+      "commuter_intensity": 1.7,
+      "tourism_intensity": 28,
+      "tags": ["luxury_district", "tourist_zone", "nightlife_zone"],
+      "primary_tag": "tourist_zone",
+      "year": 2023,
+      "source_quality": "A",
+      "notes": "Dubai Marina + JBR adjacent. Expat + tourism dense."
+    },
+    "dubai.jumeirah": {
+      "commuter_intensity": 1.2,
+      "tourism_intensity": 22,
+      "tags": ["luxury_district", "tourist_zone", "embassy_quarter"],
+      "primary_tag": "luxury_district",
+      "year": 2023,
+      "source_quality": "B",
+      "notes": "Jumeirah Beach + Palm. Premium residential, consulates, Burj Al Arab."
+    },
+    "dubai.deira-bur-dubai": {
+      "commuter_intensity": 1.4,
+      "tourism_intensity": 12,
+      "tags": ["tourist_zone", "transit_hub"],
+      "primary_tag": "tourist_zone",
+      "year": 2023,
+      "source_quality": "B",
+      "notes": "Old Deira + Bur Dubai. Traditional souks, gold + spice markets."
     }
   },
   "city_defaults": {
     "new-york": { "commuter_intensity": 1.5, "tourism_intensity": 8 },
     "london": { "commuter_intensity": 1.6, "tourism_intensity": 10 },
     "paris": { "commuter_intensity": 1.8, "tourism_intensity": 18 },
-    "tokyo": { "commuter_intensity": 1.4, "tourism_intensity": 3 },
+    "tokyo": { "commuter_intensity": 1.5, "tourism_intensity": 4 },
     "berlin": { "commuter_intensity": 1.2, "tourism_intensity": 5 },
+    "hong-kong": { "commuter_intensity": 2.0, "tourism_intensity": 12 },
+    "singapore": { "commuter_intensity": 1.8, "tourism_intensity": 14 },
+    "mumbai": { "commuter_intensity": 1.4, "tourism_intensity": 2 },
+    "sao-paulo": { "commuter_intensity": 1.6, "tourism_intensity": 3 },
+    "dubai": { "commuter_intensity": 2.0, "tourism_intensity": 18 },
     "default": { "commuter_intensity": 1.0, "tourism_intensity": 2 }
   }
 }

@@ -26,6 +26,11 @@ import {
   getNeighborhood,
   applyNeighborhoodMultiplier,
 } from "@/lib/cities/neighborhoods";
+import {
+  getNeighborhoodMultiplier,
+  hasNeighborhoodIntensity,
+  tagLabel,
+} from "@/lib/economics/neighborhood_multipliers";
 import { HeroBenchmark } from "@/components/HeroBenchmark";
 // Plan v30 Phase 1 — MarginWaterfall import removed
 import { DistributionVisual } from "@/components/DistributionVisual";
@@ -148,10 +153,68 @@ export default async function NeighborhoodCellPage({
   const allNeighborhoods = getNeighborhoodsForCity(city) || [];
   const siblings = allNeighborhoods.filter((n) => n.slug !== nb.slug).slice(0, 4);
 
+  // Phase 4 (2026-05-25): commuter + tourism + anomaly-tag multiplier
+  // breakdown for this neighborhood-activity pair. Only renders when
+  // the neighborhood has curated intensity data; silent otherwise.
+  const fwHasData = hasNeighborhoodIntensity(city, neighborhood);
+  const fwMult = fwHasData
+    ? getNeighborhoodMultiplier(city, neighborhood, ind.id)
+    : null;
+
   return (
     <div className="xl:flex xl:gap-16">
       <div className="xl:flex-1 xl:min-w-0">
         <Breadcrumb items={breadcrumbs} />
+
+        {/* Phase 4 neighborhood framework panel. Surfaces when curated
+           intensity data exists for this neighborhood (NYC, London,
+           Paris, Tokyo, Berlin, HK, Singapore, Mumbai, São Paulo,
+           Dubai for now). Silent otherwise. */}
+        {fwMult && (
+          <section className="atlas-card p-4 md:p-5 mb-6 flex flex-col md:flex-row md:items-center justify-between gap-3">
+            <div className="flex-1 min-w-0">
+              <div className="text-[10px] uppercase tracking-[0.16em] text-atlas-700 font-semibold mb-1.5">
+                Neighborhood adjustment for {ind.name.toLowerCase()}
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {fwMult.appliedTags
+                  .filter((t) => t !== "residential_only")
+                  .map((t) => (
+                    <span
+                      key={t}
+                      className="text-[10px] uppercase tracking-wide font-semibold text-atlas-700 bg-atlas-50 border border-atlas-200 rounded-full px-2 py-0.5"
+                    >
+                      {tagLabel(t)}
+                    </span>
+                  ))}
+              </div>
+            </div>
+            <div className="md:text-right shrink-0">
+              <div
+                className="font-display text-2xl font-semibold tabular-nums leading-none"
+                style={{
+                  color:
+                    fwMult.final > 1.15
+                      ? "#14532D"
+                      : fwMult.final > 1.0
+                        ? "#16A34A"
+                        : fwMult.final > 0.85
+                          ? "#CA8A04"
+                          : "#7F1D1D",
+                }}
+              >
+                {Math.round((fwMult.final - 1) * 100) >= 0 ? "+" : ""}
+                {Math.round((fwMult.final - 1) * 100)}%
+              </div>
+              <div className="text-[10px] text-cocoa-700/55 tabular-nums mt-1">
+                vs {cityName} baseline &middot; commuter{" "}
+                {fwMult.commuter.toFixed(2)}× &middot; tourism{" "}
+                {fwMult.tourism.toFixed(2)}× &middot; tags{" "}
+                {fwMult.tags.toFixed(2)}×
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Hero */}
         <HeroBenchmark

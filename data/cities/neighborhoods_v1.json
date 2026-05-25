@@ -5,9 +5,14 @@
   "default_scheme_for_tier1_and_tier2": "α-macro with 5 cardinal zones — only when no canonical division is recorded below.",
   "cities": {
     "new-york": {
-      "scheme": "α-macro",
+      "scheme": "α-macro+fine",
       "neighborhoods": [
-        { "slug": "manhattan", "name": "Manhattan", "character": "central-business", "description": "Financial and corporate density; high commute volume; iconic central business district." },
+        { "slug": "manhattan-fidi", "name": "Manhattan, FiDi", "character": "central-business", "description": "Wall Street + Financial District. Banks, law firms, corporate HQs. Almost no residents." },
+        { "slug": "manhattan-midtown", "name": "Manhattan, Midtown", "character": "central-business", "description": "Midtown East + Midtown West. Office towers, theatres, hotels, transit. Tourist + commuter spike." },
+        { "slug": "manhattan-ues", "name": "Manhattan, Upper East Side", "character": "affluent-residential", "description": "Premium residential, Museum Mile, embassies, luxury retail on Madison Ave." },
+        { "slug": "manhattan-uws", "name": "Manhattan, Upper West Side", "character": "affluent-residential", "description": "Established residential, Central Park west, Lincoln Center, Columbia U adjacent." },
+        { "slug": "manhattan-soho-tribeca", "name": "Manhattan, SoHo / TriBeCa", "character": "mixed-urban", "description": "Cast-iron architecture, designer flagships, tourist destination, high net worth residential." },
+        { "slug": "manhattan-harlem", "name": "Manhattan, Harlem", "character": "working-residential", "description": "Historic Black Manhattan, gentrifying edge, restaurants reviving along Frederick Douglass Blvd." },
         { "slug": "brooklyn", "name": "Brooklyn", "character": "mixed-urban", "description": "Mixed residential, creative industries, growing tech and food scenes." },
         { "slug": "queens", "name": "Queens", "character": "mid-residential", "description": "Diverse mid-class residential; airport-anchored services; small manufacturing." },
         { "slug": "bronx", "name": "The Bronx", "character": "working-residential", "description": "Working-class residential; value retail; small-trade economy." },
@@ -15,9 +20,11 @@
       ]
     },
     "london": {
-      "scheme": "α-macro",
+      "scheme": "α-macro+fine",
       "neighborhoods": [
-        { "slug": "central-london", "name": "Central London", "character": "central-business", "description": "City of London, Westminster, Camden — financial core and government." },
+        { "slug": "city-of-london", "name": "City of London", "character": "central-business", "description": "Square Mile financial district. Banks, insurance, legal. Commuter intensity ~8x." },
+        { "slug": "west-end", "name": "West End", "character": "tourist", "description": "Soho, Covent Garden, Mayfair, Oxford St. Tourism, theatre, luxury retail, embassies." },
+        { "slug": "south-bank", "name": "South Bank", "character": "tourist", "description": "Southbank Centre, Borough Market, London Bridge. Cultural + tourist + workplace mix." },
         { "slug": "north-london", "name": "North London", "character": "mid-residential", "description": "Islington, Camden Town, Hampstead — creative, residential, hospitality." },
         { "slug": "south-london", "name": "South London", "character": "mid-residential", "description": "Lambeth, Southwark, Greenwich — mixed residential and emerging business." },
         { "slug": "east-london", "name": "East London", "character": "mixed-urban", "description": "Tower Hamlets, Hackney, Stratford — tech, creative, and rapid regeneration." },
@@ -25,12 +32,13 @@
       ]
     },
     "paris": {
-      "scheme": "α-macro",
+      "scheme": "α-macro+fine",
       "neighborhoods": [
-        { "slug": "right-bank-central", "name": "Right Bank, Central", "character": "central-business", "description": "1st-4th arrondissements; Louvre, Marais, Les Halles — heritage center and luxury retail." },
-        { "slug": "left-bank-central", "name": "Left Bank, Central", "character": "affluent-residential", "description": "5th-7th arrondissements; Latin Quarter, Saint-Germain — academic, cultural, premium." },
-        { "slug": "north-periphery", "name": "North Periphery", "character": "mixed-urban", "description": "18th-20th arrondissements and outer ring — diverse residential and small commerce." },
-        { "slug": "south-periphery", "name": "South Periphery", "character": "mid-residential", "description": "13th-15th arrondissements; tech and university campuses." }
+        { "slug": "louvre-marais", "name": "Louvre / Marais", "character": "tourist", "description": "1st-4th arrondissements. Louvre 9M tourists/year, Marais boutiques, Les Halles transit." },
+        { "slug": "champs-opera", "name": "Champs-Élysées / Opéra", "character": "central-business", "description": "8th-9th. Luxury retail, French corporate HQs, Opéra Garnier, tourism." },
+        { "slug": "saint-germain-latin", "name": "Saint-Germain / Latin Quarter", "character": "affluent-residential", "description": "5th-7th arrondissements. Sorbonne, Saint-Germain editorial life, Invalides." },
+        { "slug": "north-periphery", "name": "North Periphery", "character": "mixed-urban", "description": "18th-20th arrondissements and outer ring. Montmartre tourism + working residential mix." },
+        { "slug": "south-periphery", "name": "South Periphery", "character": "mid-residential", "description": "13th-15th arrondissements. Station F, university campuses, tech corridor." }
       ]
     },
     "tokyo": {
