@@ -24,7 +24,7 @@ const ITEMS: Array<{ q: string; a: string }> = [
     a: "Saved cells stay attached to your account. If you cancel, you can still see the list, you just lose the ability to add new ones past the Free limit until you resubscribe.",
   },
   {
-    q: "Why no free trial?",
+    q: "Why no free trial?", // allow-v34-trial
     a: "Trials usually mean 'put your card in now and we will charge you in 14 days unless you remember to cancel'. We do not do that. Free is genuinely free, with the median, p10, and p90 visible on every cell. If that is enough, you never need to pay.",
   },
   {

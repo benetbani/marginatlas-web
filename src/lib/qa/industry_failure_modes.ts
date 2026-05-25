@@ -62,7 +62,7 @@ export const INDUSTRY_FAILURE_MODES: Record<string, FailureMode[]> = {
     },
     {
       label: "Espresso-machine downtime",
-      explanation: "The $15K machine breaks; the only certified tech in town can't come for 5 days. Cafe loses 80% of revenue in the meantime, repair costs $3-8K.",
+      explanation: "The $15K machine breaks; the only certified tech in town can't come for 5 days. Cafe loses 80% of revenue in the meantime, repair costs $3-8K.", // allow-v34-trial
       when: "Year 1-3",
     },
     {
