@@ -28,7 +28,10 @@ type SmokeResult = {
 const args = process.argv.slice(2);
 const baseArg = args.find((a) => a.startsWith("--base="));
 const BASE = baseArg ? baseArg.slice("--base=".length) : "https://www.marginatlas.com";
-const TIMEOUT_MS = 10_000;
+// Smoke timeout has to be > cell page primary fetch timeout (25s in
+// getCellBySlug) + secondary budget (5s) = 30s, with a small buffer.
+// Otherwise cells that legitimately render in 28s look like hangs.
+const TIMEOUT_MS = 35_000;
 
 // Build 30 representative cell URLs. Mix of:
 //   - the 6 homepage-featured cells
