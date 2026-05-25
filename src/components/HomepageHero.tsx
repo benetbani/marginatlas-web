@@ -63,10 +63,15 @@ export default function HomepageHero(_props?: HomepageHeroProps) {
           A global atlas of small business
         </p>
 
-        {/* H1 with rotators. The full sentence is announced once via SR-only. */}
+        {/* H1 with rotators. The full sentence is announced once via SR-only.
+            Country-page rebuild §6 (2026-05-25): mobile font-size capped
+            at text-3xl (was text-[40px]) so the line never wraps mid-
+            rotator at 320-414px viewports. text-balance + hyphens-auto
+            give the browser room to break cleanly between words. */}
         <h1
           id="atlas-hero-h1"
-          className="font-display mt-5 sm:mt-6 text-[40px] sm:text-[64px] leading-[1.04] tracking-[-0.02em] font-semibold text-balance text-ink-900 max-w-4xl"
+          className="font-display mt-5 sm:mt-6 text-3xl sm:text-5xl md:text-6xl leading-[1.04] tracking-[-0.02em] font-semibold text-balance text-ink-900 max-w-4xl"
+          style={{ hyphens: "auto", overflowWrap: "anywhere" }}
         >
           <span className="sr-only">{heroSr}</span>
           <span aria-hidden="true">How much does a </span>

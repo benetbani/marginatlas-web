@@ -135,16 +135,20 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
         <CountryStatsStrip iso2={iso2} />
       </section>
 
-      {/* 3. industry-mix-grid: top SMB-relevant industries (silent omission if empty) */}
+      {/* 3. industry-mix-grid: top activities in this country. Country-page
+         rebuild §5 (2026-05-25): retitled to "What people actually run" to
+         describe what the section actually is (a curated index of the
+         densest local SMB activities), not a "biggest revenue" leaderboard.
+         Section reads only if §3 returned >= 1 plausible activity. */}
       {topIndustries.length > 0 && (
         <section id="industry-mix-grid" className={getToneClass("industry-mix-grid")}>
           <div className="py-8">
             <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
-              Top small-business industries in {meta.name}
+              What people actually run in {meta.name}
             </h2>
             <p className="mt-1 text-sm text-ink-700/70">
-              Most-covered SMB categories. Click any tile for the full benchmark:
-              where every business lands, time series, neighbors.
+              Activities ranked by how often they show up in the local small-business
+              mix. Click any tile for the full benchmark.
             </p>
             <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {topIndustries.map((ind) => {
@@ -160,7 +164,7 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
                   >
                     <div className="flex items-center gap-2 text-[10px] uppercase tracking-wider text-atlas-700 font-semibold">
                       {sector && <span aria-hidden>{sector.icon}</span>}
-                      <span>{sector?.name || "Industry"}</span>
+                      <span>{sector?.name || "Activity"}</span>
                     </div>
                     <div className="mt-1 text-sm font-semibold text-ink-900">
                       {ind.industry_name}
@@ -189,8 +193,11 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
       </section>
 
       {/* 5. regions: Plan v13 Wave 4d. Admin-1 sub-region navigation list
-         for all 194 countries with admin1 data. Silent omission for SG (the
-         single country with no admin1 entries) per Wave 4a (D2). */}
+         for all 194 countries with admin1 data. Country-page rebuild §4
+         (2026-05-25): tile chrome bumped to match the activities grid so
+         the region tile READS as clickable (was visually subdued, founder
+         flagged "regions are not even clickable" though the Link element
+         was always present). */}
       {regions.length > 0 ? (
         <section id="regions" className={`py-8 ${getToneClass("regions")}`}>
           <div className="text-xs uppercase tracking-wide text-atlas-700 font-semibold mb-3">
@@ -201,9 +208,15 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
               <Link
                 key={r.admin1_code}
                 href={`/${iso2.toLowerCase()}/${r.slug}`}
-                className="px-3 py-2 rounded-lg border border-parchment hover:border-atlas-400 hover:bg-cream-100 text-ink-900 transition"
+                className="group flex items-center justify-between gap-2 px-4 py-3 rounded-xl border border-cream-300 bg-white hover:border-atlas-600 hover:shadow-[0_6px_18px_rgba(120,53,15,0.08)] text-ink-900 transition"
               >
-                {r.name}
+                <span className="font-medium">{r.name}</span>
+                <span
+                  aria-hidden="true"
+                  className="text-atlas-700 opacity-50 group-hover:opacity-100 transition-opacity"
+                >
+                  &rarr;
+                </span>
               </Link>
             ))}
           </div>
