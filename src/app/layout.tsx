@@ -98,7 +98,7 @@ export default function RootLayout({
                 <a href="/countries" className="hover:text-atlas-600 transition-colors">Countries</a>
                 <a href="/industries" className="hover:text-atlas-600 transition-colors">Activities</a>
                 <a href="/cities" className="hover:text-atlas-600 transition-colors">Cities</a>
-                <a href="/calculator" className="hover:text-atlas-600 transition-colors">Calculator</a>
+                <a href="/decide" className="hover:text-atlas-600 transition-colors">Decide</a>
                 <a href="/compare" className="hover:text-atlas-600 transition-colors">Compare</a>
                 <a href="/blog" className="hover:text-atlas-600 transition-colors">Blog</a>
                 {/* Plan v32 — pricing promoted to button-style CTA so

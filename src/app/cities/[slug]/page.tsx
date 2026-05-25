@@ -288,6 +288,45 @@ export default async function CityPage({
           countryName={countryName}
         />
 
+        {/* Decision wizard CTA. Phase 2 framework discoverability. */}
+        <section className="mb-12 md:mb-16">
+          <div className="atlas-card p-5 md:p-7 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex-1 min-w-0">
+              <div className="text-[10px] uppercase tracking-[0.16em] text-atlas-700 font-semibold mb-2">
+                Decision wizard
+              </div>
+              <h2 className="font-display text-xl md:text-2xl font-semibold text-ink-900 leading-tight mb-1.5">
+                Where in {city.name} should you open?
+              </h2>
+              <p className="text-sm text-cocoa-700/80 max-w-xl leading-relaxed">
+                Pick any activity. Atlas ranks every neighborhood by
+                expected net margin, weighing commuter density, tourism,
+                anomaly zones, and rent drag.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-2 shrink-0">
+              <Link
+                href={`/decide/restaurants/${city.slug}`}
+                className="px-4 py-2.5 rounded-full bg-atlas-700 hover:bg-atlas-800 text-cream-50 text-sm font-semibold shadow-sm transition text-center whitespace-nowrap"
+              >
+                Restaurants &rarr;
+              </Link>
+              <Link
+                href={`/decide/pharmacies-drug-stores/${city.slug}`}
+                className="px-4 py-2.5 rounded-full bg-white hover:bg-cream-100 border border-ink-200 hover:border-atlas-700 text-ink-900 text-sm font-semibold transition text-center whitespace-nowrap"
+              >
+                Pharmacies &rarr;
+              </Link>
+              <Link
+                href={`/decide`}
+                className="px-4 py-2.5 rounded-full bg-white hover:bg-cream-100 border border-ink-200 hover:border-atlas-700 text-ink-900 text-sm font-semibold transition text-center whitespace-nowrap"
+              >
+                Other activity
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* Industry mosaic */}
         <section className="mb-12 md:mb-16">
           <div className="text-xs uppercase tracking-wide text-atlas-600 font-semibold mb-2">
