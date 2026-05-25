@@ -43,5 +43,14 @@ export const OPEN_PAYWALL_EVENT = "atlas:open-paywall";
 
 export function openPaywall(detail: OpenPaywallDetail): void {
   if (typeof window === "undefined") return;
+  // v34 Phase H: fire analytics inside openPaywall so EVERY lock
+  // primitive emits the same event automatically. Importing inline
+  // avoids a circular dep and keeps the analytics layer optional.
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  import("./analytics").then((mod) => {
+    mod.trackLockClick(detail.entry, detail.tier);
+  }).catch(() => {
+    // Analytics is non-essential; never throw.
+  });
   window.dispatchEvent(new CustomEvent(OPEN_PAYWALL_EVENT, { detail }));
 }

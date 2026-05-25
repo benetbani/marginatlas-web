@@ -43,6 +43,11 @@ import {
   DISMISS_LABEL,
   PRICING_HREF,
 } from "./paywall_copy";
+import {
+  trackPaywallOpen,
+  trackPaywallCta,
+  trackPaywallDismiss,
+} from "./analytics";
 
 type ModalState = {
   open: boolean;
@@ -60,7 +65,10 @@ export function PaywallModalRoot() {
   const [state, setState] = useState<ModalState>(INITIAL);
 
   const close = useCallback(() => {
-    setState((s) => ({ ...s, open: false }));
+    setState((s) => {
+      if (s.open) trackPaywallDismiss(s.entry);
+      return { ...s, open: false };
+    });
   }, []);
 
   // Listen for atlas:open-paywall on window.
@@ -69,6 +77,7 @@ export function PaywallModalRoot() {
     const handler = (e: Event) => {
       const detail = (e as CustomEvent<OpenPaywallDetail>).detail;
       if (!detail) return;
+      trackPaywallOpen(detail.entry, detail.tier);
       setState({
         open: true,
         entry: detail.entry,
@@ -158,10 +167,15 @@ export function PaywallModalRoot() {
         {/* Two-tier comparison. Basic on the left (recommended highlight),
            Premium on the right. */}
         <div className="px-6 mt-4 grid sm:grid-cols-2 gap-3">
-          <TierCard tier="basic" highlighted={state.highlightedTier === "basic"} />
+          <TierCard
+            tier="basic"
+            highlighted={state.highlightedTier === "basic"}
+            entry={state.entry}
+          />
           <TierCard
             tier="premium"
             highlighted={state.highlightedTier === "premium"}
+            entry={state.entry}
           />
         </div>
 
@@ -197,9 +211,11 @@ export function PaywallModalRoot() {
 function TierCard({
   tier,
   highlighted,
+  entry,
 }: {
   tier: PaywallTier;
   highlighted: boolean;
+  entry: PaywallEntryPoint;
 }) {
   const spec = TIERS[tier];
   const wrapperClasses = [
@@ -233,6 +249,7 @@ function TierCard({
       </p>
       <a
         href={PRICING_HREF}
+        onClick={() => trackPaywallCta(entry, tier)}
         className={[
           "mt-3 inline-flex w-full justify-center items-center",
           "px-4 py-2.5 rounded-full text-sm font-semibold transition-colors",

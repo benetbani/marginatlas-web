@@ -24,6 +24,15 @@ export { MoreDepthBanner } from "./MoreDepthBanner";
 export type { MoreDepthBannerProps } from "./MoreDepthBanner";
 
 export {
+  trackLockClick,
+  trackPaywallOpen,
+  trackPaywallCta,
+  trackPaywallDismiss,
+  trackEmailSignup,
+} from "./analytics";
+export type { V34Event } from "./analytics";
+
+export {
   openPaywall,
   OPEN_PAYWALL_EVENT,
 } from "./events";
