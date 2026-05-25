@@ -40,6 +40,35 @@ function phaseAPrimitivesShipped(): boolean {
   );
 }
 
+/** Phase B check: is PaywallModalRoot mounted in the layout? If so,
+ * every page inherits the modal as its trust-copy carrier
+ * (Methodology + cancel-anytime) by default. */
+function phaseBModalMounted(): boolean {
+  if (
+    !existsSync(resolve(ROOT, "components/monetization/PaywallModalRoot.tsx"))
+  ) {
+    return false;
+  }
+  const layout = readIfExists("app/layout.tsx");
+  if (!layout) return false;
+  return (
+    layout.includes("PaywallModalRoot") &&
+    /<PaywallModalRoot\s*\/?>/.test(layout)
+  );
+}
+
+function gateB_default(): GateResult {
+  if (phaseBModalMounted()) {
+    return {
+      status: "GREEN",
+      message:
+        "PaywallModalRoot mounted in layout.tsx; trust copy " +
+        "(Methodology + cancel-anytime) inherited by every page",
+    };
+  }
+  return pending("Phase B modal not yet mounted in layout");
+}
+
 function gateA_default(pageSource: string | null): GateResult {
   if (!phaseAPrimitivesShipped()) {
     return pending("Phase A primitives not yet on disk");
@@ -60,7 +89,7 @@ function stub(pageId: string, pagePattern: string, pageSource: string | null = n
     pagePattern,
     gates: {
       A_lock_primitives: gateA_default(pageSource),
-      B_trust_copy: pending(),
+      B_trust_copy: gateB_default(),
       C_no_orphan_locks: pending(),
       D_no_leaked_values: pending(),
       E_four_thing_reveal: pending(),

@@ -18,6 +18,7 @@ import { Organization } from "@/components/StructuredData";
 import { HeaderSearch } from "@/components/HeaderSearch";
 import { FooterNewsletterBar } from "@/components/newsletter/NewsletterSignupVariants";
 import { LogoWordmark } from "@/components/brand/LogoWordmark";
+import { PaywallModalRoot } from "@/components/monetization";
 
 // Plan v30 Phase 3 — typography reset.
 // Newsreader: warm, bookish editorial serif designed for screen reading.
@@ -187,6 +188,10 @@ export default function RootLayout({
            INP captured per route. Free on Hobby. View in Vercel
            dashboard → Speed Insights. */}
         <SpeedInsights />
+        {/* Plan v34 Phase B — paywall modal mounted once at the layout
+           level. Listens for the atlas:open-paywall custom event from
+           any lock primitive on any page. */}
+        <PaywallModalRoot />
       </body>
     </html>
   );

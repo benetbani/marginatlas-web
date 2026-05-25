@@ -27,3 +27,15 @@ export type {
   PaywallTier,
   OpenPaywallDetail,
 } from "./events";
+
+export { PaywallModalRoot } from "./PaywallModalRoot";
+export {
+  TIERS,
+  MODAL_HEADLINES,
+  CANCEL_ANYTIME_BLOCK,
+  METHODOLOGY_LABEL,
+  METHODOLOGY_HREF,
+  PRIMARY_CTA,
+  PRICING_HREF,
+} from "./paywall_copy";
+export type { TierSpec } from "./paywall_copy";
