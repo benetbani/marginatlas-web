@@ -20,6 +20,9 @@ export type { GhostBarProps } from "./GhostBar";
 
 export { QuartileMarkers } from "./QuartileMarkers";
 
+export { MoreDepthBanner } from "./MoreDepthBanner";
+export type { MoreDepthBannerProps } from "./MoreDepthBanner";
+
 export {
   openPaywall,
   OPEN_PAYWALL_EVENT,

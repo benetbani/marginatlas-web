@@ -22,6 +22,7 @@ import { RevenueDistribution } from "@/components/RevenueDistribution";
 import { MarginWaterfall } from "@/components/MarginWaterfall";
 import industryMarginsJson from "@/lib/finance/industry_margins.json";
 import { INDUSTRY_PAGE_SECTIONS, getToneClass } from "@/lib/page-layout/section-order";
+import { MoreDepthBanner } from "@/components/monetization";
 
 void INDUSTRY_PAGE_SECTIONS;
 
@@ -152,6 +153,14 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
             p10={aggP10}
             p50={aggP50}
             p90={aggP90}
+          />
+          {/* v34 Phase C: industry page banner. Per Part 5.1, p25/p75
+             column LockPills + TruncatedTease for regions > 10 are
+             the locked surfaces here. */}
+          <MoreDepthBanner
+            headline="See lower-mid and upper-mid quartiles for every region in this industry."
+            tier="basic"
+            entry="industry_topregions_p25_p75"
           />
         </section>
       )}

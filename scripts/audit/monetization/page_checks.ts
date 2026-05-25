@@ -121,8 +121,8 @@ export function checkIndustry(): PageCheckResult {
 }
 
 export function checkCity(): PageCheckResult {
-  const src = readIfExists("app/cities/[city]/page.tsx");
-  return stub("city", "/cities/{city}", src);
+  const src = readIfExists("app/cities/[slug]/page.tsx");
+  return stub("city", "/cities/{slug}", src);
 }
 
 export function checkWorld(): PageCheckResult {

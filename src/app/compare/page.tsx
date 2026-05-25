@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { CompareClient } from "./CompareClient";
+import { MoreDepthBanner } from "@/components/monetization";
 
 export const metadata = {
   title: "Compare snapshots | Margin Atlas",
@@ -18,6 +19,15 @@ export default function ComparePage() {
           revenue, employment, and wages.
         </p>
       </header>
+      {/* v34 Phase C — Compare side-by-side is a Premium feature
+         (Part 4.1). The compare tool stays visible as a preview;
+         the banner directs to the paywall. Phase D will swap to
+         the full BlurredOverlay gating once Stripe is wired. */}
+      <MoreDepthBanner
+        headline="Side by side comparison of every quartile is a Premium feature."
+        tier="premium"
+        entry="compare_side_by_side"
+      />
       <Suspense fallback={<div className="text-sm text-ink-700">Loading…</div>}>
         <CompareClient />
       </Suspense>

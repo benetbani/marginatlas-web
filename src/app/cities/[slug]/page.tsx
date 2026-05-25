@@ -23,6 +23,7 @@ import neighborhoodsJson from "../../../../data/cities/neighborhoods_v1.json";
 import { getCityHero } from "@/lib/images/city_heroes";
 import { CountryFlag } from "@/components/CountryFlag";
 import { COUNTRIES } from "@/lib/taxonomy";
+import { MoreDepthBanner } from "@/components/monetization";
 import { ComparableCitiesRibbon } from "@/components/ComparableCitiesRibbon";
 import { CoverageIndicator } from "@/components/CoverageIndicator";
 
@@ -188,6 +189,13 @@ export default async function CityPage({
               </Link>
             ))}
           </div>
+          {/* v34 Phase C city-page lock: depth on quartiles + the
+             full list of industries beyond the headline ten. */}
+          <MoreDepthBanner
+            headline={`See every industry covered in ${city.name}, plus lower-mid and upper-mid quartiles per cell.`}
+            tier="basic"
+            entry="city_truncated_industries"
+          />
         </section>
 
         {/* Neighborhood mini-strip */}

@@ -11,6 +11,7 @@ import { getCellBySlug } from "@/lib/cells";
 import { SectorAcrossWorld } from "@/components/SectorAcrossWorld";
 import { SectorIcon } from "@/components/icons/SectorIcon";
 import { fmtMoney } from "@/lib/format/money";
+import { MoreDepthBanner } from "@/components/monetization";
 
 export const revalidate = 86400;
 // Plan v16: defer cold sectors to on-demand rendering so the build
@@ -146,6 +147,14 @@ export default async function SectorPage({ params }: { params: Promise<Params> }
 
       {/* FF.3: same sector across 12 countries */}
       <SectorAcrossWorld sectorName={s.name} industries={visible} />
+
+      {/* v34 Phase C sector-page lock: deep comparison across the
+         whole sector is a Premium feature (Part 5.1). */}
+      <MoreDepthBanner
+        headline={`Compare every industry in ${s.name} side by side, with all quartiles.`}
+        tier="premium"
+        entry="sector_deep_comparison"
+      />
 
       {/* Full industry list */}
       <section className="py-8">

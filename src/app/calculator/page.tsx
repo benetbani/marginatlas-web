@@ -8,6 +8,7 @@
 import Link from "next/link";
 import { COUNTRIES, INDUSTRIES, industryToSlug, isDefaultVisible } from "@/lib/taxonomy";
 import { CalculatorForm } from "@/components/CalculatorForm";
+import { MoreDepthBanner } from "@/components/monetization";
 
 export const revalidate = 86400;
 
@@ -45,6 +46,14 @@ export default function CalculatorPage() {
           industries={industries}
         />
       </div>
+
+      {/* v34 Phase C — calculator result panel shows the percentile
+         to free users; Basic unlocks the full p25/p75 bracket position. */}
+      <MoreDepthBanner
+        headline="See the full p25 and p75 bracket position for your result."
+        tier="basic"
+        entry="calculator_brackets"
+      />
 
       <section className="mt-12 grid sm:grid-cols-2 gap-3 text-sm">
         <Link
