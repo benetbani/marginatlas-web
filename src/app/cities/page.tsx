@@ -194,7 +194,10 @@ export default function CitiesHub() {
                       className="mb-5"
                       style={{ breakInside: "avoid", pageBreakInside: "avoid" }}
                     >
-                      <h3 className="flex items-baseline gap-2.5 mb-1.5">
+                      <h3
+                        className="flex items-baseline gap-2.5 mb-1.5"
+                        data-typography="custom"
+                      >
                         <CountryFlag
                           iso2={iso2}
                           className="w-7 shrink-0 translate-y-[2px]"
