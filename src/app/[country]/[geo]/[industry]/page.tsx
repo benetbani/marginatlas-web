@@ -89,6 +89,7 @@ import { AnnualCostStack } from "@/components/sections/AnnualCostStack";
 // without failure-modes coverage, without setup_costs).
 import { TangibleUnits } from "@/components/sections/TangibleUnits";
 import { FailureModes } from "@/components/sections/FailureModes";
+import { InlineMidArticle } from "@/components/newsletter/NewsletterSignupVariants";
 import { IfYouOpenedToday } from "@/components/sections/IfYouOpenedToday";
 
 type IndustryMarginRow = { gross_margin: number; operating_margin: number; asset_intensity?: number };
@@ -832,6 +833,13 @@ export default async function CellPage({
          survival data + industry trade press. Self-suppresses for
          industries without curated entries. */}
       <FailureModes cell={cell} />
+
+      {/* v34 Phase G: inline email capture after the failure-modes
+         section. High-intent placement: users who scrolled this far
+         are reading carefully. Posts to /api/newsletter (Supabase
+         newsletter_signups table). Sender swap to ConvertKit happens
+         in a follow-up once Tesseract Research sender is configured. */}
+      <InlineMidArticle />
 
       {/* Comparable cells.
          Plan v14 A.1 (T-A1.4): legacy id="comparable" renamed to canonical
