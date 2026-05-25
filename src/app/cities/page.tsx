@@ -117,10 +117,16 @@ export default function CitiesHub() {
       <h1 className="font-display text-4xl md:text-5xl font-medium tracking-tight text-ink-900 mb-3">
         Cities of the world
       </h1>
-      <p className="text-base md:text-lg text-cocoa-700/80 mb-10 max-w-2xl">
+      <p className="text-base md:text-lg text-cocoa-700/80 mb-8 max-w-2xl">
         Each city opens to a hero, an industry mosaic, neighborhoods
         (where covered), curiosities, and sister-city comparisons.
       </p>
+
+      {/* Founder spec 2026-05-25: the entire cities content (map +
+         every continent block) sits on ONE big white card so the
+         body paper pattern stops fighting the dense text. Warm
+         cocoa shadow seats the card on the page. */}
+      <div className="rounded-2xl bg-white border border-[rgba(76,39,18,0.10)] shadow-[0_2px_4px_rgba(76,39,18,0.05),_0_12px_28px_rgba(76,39,18,0.06)] px-4 md:px-8 py-6 md:py-10">
 
       {/* Cities §1: geographic map anchors the page, one marker per
           covered city, each linking to its city page. */}
@@ -202,31 +208,29 @@ export default function CitiesHub() {
                           </span>
                         )}
                       </h3>
-                      {/* Cities flow horizontally as a paragraph of links,
-                          separated by middots. Each city name is kept
-                          on one line via whitespace-nowrap so multi-
-                          word names ("Kansas City", "New York", "San
-                          Francisco") never split mid-name. The line
-                          itself wraps freely between cities, at the
-                          middot. */}
-                      <p className="text-sm text-ink-800 leading-[1.65]">
+                      {/* Cities flow horizontally as a paragraph of bold
+                          links separated by middots. Each link is its
+                          OWN whitespace-nowrap element; the middot is
+                          a plain text node with surrounding spaces, so
+                          the browser has a real break opportunity
+                          between links. This fixes the "Sapporo /
+                          Cebu" overlap from the previous build, where
+                          adjacent whitespace-nowrap spans with no
+                          space-character between them rendered as a
+                          single unbreakable line in some browsers. */}
+                      <p className="text-sm text-ink-800 leading-[1.7]">
                         {cities.map((c, idx) => (
-                          <span
-                            key={c.slug}
-                            className="whitespace-nowrap"
-                          >
+                          <span key={c.slug}>
                             <Link
                               href={`/cities/${c.slug}`}
-                              className="hover:text-atlas-700 transition-colors"
+                              className="font-semibold text-ink-900 hover:text-atlas-700 transition-colors"
+                              style={{ whiteSpace: "nowrap" }}
                             >
                               {c.name}
                             </Link>
                             {idx < cities.length - 1 ? (
-                              <span
-                                aria-hidden="true"
-                                className="mx-1.5 text-cocoa-700/35"
-                              >
-                                &middot;
+                              <span aria-hidden="true" className="text-cocoa-700/35">
+                                {" · "}
                               </span>
                             ) : null}
                           </span>
@@ -240,6 +244,9 @@ export default function CitiesHub() {
           </section>
         );
       })}
+
+      {/* Close the big white card wrapper. */}
+      </div>
     </article>
   );
 }

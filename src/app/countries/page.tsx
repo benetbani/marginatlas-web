@@ -130,11 +130,15 @@ export default function CountriesHub() {
       <h1 className="font-display text-4xl md:text-5xl font-medium tracking-tight text-ink-900 mb-3">
         Every country we cover
       </h1>
-      <p className="text-base md:text-lg text-cocoa-700/80 mb-10 max-w-2xl">
+      <p className="text-base md:text-lg text-cocoa-700/80 mb-8 max-w-2xl">
         {totalCountries} countries grouped by continent. Open any country
         to see its small-business hero, top activities, regions, and the
         cities inside.
       </p>
+
+      {/* Same big white card chrome as /cities. Whole index sits on one
+         seated card so the body paper pattern stops fighting dense text. */}
+      <div className="rounded-2xl bg-white border border-[rgba(76,39,18,0.10)] shadow-[0_2px_4px_rgba(76,39,18,0.05),_0_12px_28px_rgba(76,39,18,0.06)] px-4 md:px-8 py-6 md:py-10">
 
       {CONTINENT_ORDER.map((continent) => {
         const list = grouped.get(continent);
@@ -188,6 +192,9 @@ export default function CountriesHub() {
           </section>
         );
       })}
+
+      {/* Close the big white card wrapper. */}
+      </div>
     </article>
   );
 }
