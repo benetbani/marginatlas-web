@@ -220,12 +220,25 @@ export function NavigatorForm() {
 
   return (
     <form
+      action="/api/go"
+      method="get"
       onSubmit={(e) => {
         e.preventDefault();
         submit();
       }}
       className="relative rounded-2xl atlas-paper-card border border-ink-200 hover:border-ink-300 transition-colors shadow-[0_1px_3px_rgba(0,0,0,0.05),_0_8px_28px_rgba(0,0,0,0.06)] overflow-hidden"
     >
+      {/* Hidden inputs mirror the React state so the native HTML
+         form-submit fallback (action="/api/go") works without JS. If
+         JS loads, the onSubmit handler above takes over and these are
+         never submitted. CitiesFix2 §4 bulletproof: the button now
+         works in every browser/network state. */}
+      <input type="hidden" name="country" value={country.toLowerCase()} />
+      <input type="hidden" name="region" value={region.toLowerCase()} />
+      <input type="hidden" name="subdivision" value={subdivision.toLowerCase()} />
+      <input type="hidden" name="industry" value={industry ? industryToSlug(industry) : ""} />
+      <input type="hidden" name="sector" value={sector.toLowerCase()} />
+      <input type="hidden" name="size" value={size.toLowerCase()} />
       {/* Vermillion top rule. Anchors the card as an Atlas surface, not a
           generic SaaS form. */}
       <div
