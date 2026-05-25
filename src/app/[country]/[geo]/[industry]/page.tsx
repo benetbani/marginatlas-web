@@ -70,8 +70,11 @@ import { ComparableCitiesRibbon } from "@/components/ComparableCitiesRibbon";
 import { LocalContextCard } from "@/components/LocalContextCard";
 // Plan v30 Phase 1 — TrendSparkline import removed; synthesized 5-year trend was too speculative
 import { DistributionVisual } from "@/components/DistributionVisual";
-import { QuartileMarkers } from "@/components/monetization";
-import { gateValue } from "@/lib/monetization/viewer_tier";
+// v34 Phase C reverted 2026-05-25: QuartileMarkers + gateValue temporarily
+// removed pending diagnosis of cell-page load failure. Re-add once the
+// root cause is found and isolated.
+// import { QuartileMarkers } from "@/components/monetization";
+// import { gateValue } from "@/lib/monetization/viewer_tier";
 import { NetProfitSummary } from "@/components/NetProfitSummary";
 import { SmartWaterfall } from "@/components/SmartWaterfall";
 import { CellFallbackBanner } from "@/components/CellFallbackBanner";
@@ -89,7 +92,8 @@ import { AnnualCostStack } from "@/components/sections/AnnualCostStack";
 // without failure-modes coverage, without setup_costs).
 import { TangibleUnits } from "@/components/sections/TangibleUnits";
 import { FailureModes } from "@/components/sections/FailureModes";
-import { InlineMidArticle } from "@/components/newsletter/NewsletterSignupVariants";
+// v34 Phase G reverted: InlineMidArticle temporarily removed.
+// import { InlineMidArticle } from "@/components/newsletter/NewsletterSignupVariants";
 import { IfYouOpenedToday } from "@/components/sections/IfYouOpenedToday";
 
 type IndustryMarginRow = { gross_margin: number; operating_margin: number; asset_intensity?: number };
@@ -765,23 +769,8 @@ export default async function CellPage({
           p50={cell.rev_p50 ?? null}
           p90={cell.rev_p90 ?? null}
         />
-        {/* v34 Phase C — first lock-primitive mount on the cell page.
-           Five-marker strip below the distribution band: p10/p50/p90
-           visible to free users, p25/p75 redacted with the v34
-           dotted-underline glyph. Clicking either opens the paywall
-           modal at the cell_distribution_p25_p75 entry point.
-
-           CRITICAL Gate D (no leakage): p25/p75 are gated server-side
-           via gateValue() before they cross the RSC boundary. Free
-           viewers never receive the values in any form (props, data
-           attrs, aria, JSON). */}
-        <QuartileMarkers
-          p10={cell.rev_p10 ?? null}
-          p25={gateValue(cell.rev_p25 ?? null, "basic")}
-          p50={cell.rev_p50 ?? null}
-          p75={gateValue(cell.rev_p75 ?? null, "basic")}
-          p90={cell.rev_p90 ?? null}
-        />
+        {/* v34 Phase C QuartileMarkers reverted 2026-05-25 pending
+           diagnosis of cell-page load failure. */}
       </section>
 
       {/* Reformation idea #5 — local cost-of-living context anchor.
@@ -839,7 +828,7 @@ export default async function CellPage({
          are reading carefully. Posts to /api/newsletter (Supabase
          newsletter_signups table). Sender swap to ConvertKit happens
          in a follow-up once Tesseract Research sender is configured. */}
-      <InlineMidArticle />
+      {/* <InlineMidArticle /> reverted with v34 Phase G */}
 
       {/* Comparable cells.
          Plan v14 A.1 (T-A1.4): legacy id="comparable" renamed to canonical
