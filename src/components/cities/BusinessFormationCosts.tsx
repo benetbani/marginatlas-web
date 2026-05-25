@@ -19,6 +19,7 @@ type TierRow = {
   local_term: string;
   setup_cost_usd: number;
   setup_days: number;
+  complexity_score?: number;
 };
 
 type FormationFile = {
@@ -39,6 +40,42 @@ function formatDays(days: number): string {
   if (days <= 7) return `${days} days`;
   if (days <= 30) return `${Math.round(days / 7)} weeks`;
   return `${Math.round(days / 30)} months`;
+}
+
+/**
+ * Render the complexity score as five small dots (filled vs empty).
+ * 1 = trivial online filing; 5 = lawyer, notary, multiple agencies, weeks.
+ */
+function ComplexityDots({ score }: { score: number | undefined }) {
+  if (!score || score < 1) return null;
+  const clamped = Math.max(1, Math.min(5, Math.round(score)));
+  const label =
+    clamped <= 1
+      ? "Trivial"
+      : clamped === 2
+        ? "Light"
+        : clamped === 3
+          ? "Moderate"
+          : clamped === 4
+            ? "Heavy"
+            : "Very heavy";
+  return (
+    <span
+      className="inline-flex items-center gap-0.5 ml-2 align-middle"
+      title={`Complexity: ${label} (${clamped} of 5)`}
+      aria-label={`Complexity ${clamped} of 5: ${label}`}
+    >
+      {[1, 2, 3, 4, 5].map((i) => (
+        <span
+          key={i}
+          className={
+            "inline-block w-1.5 h-1.5 rounded-full " +
+            (i <= clamped ? "bg-atlas-600" : "bg-parchment")
+          }
+        />
+      ))}
+    </span>
+  );
 }
 
 export function BusinessFormationCosts({
@@ -81,6 +118,9 @@ export function BusinessFormationCosts({
                 <th className="text-right px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
                   Time
                 </th>
+                <th className="text-left px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
+                  Complexity
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -100,6 +140,9 @@ export function BusinessFormationCosts({
                   </td>
                   <td className="px-4 py-3 text-right tabular-nums text-ink-800">
                     {formatDays(row.setup_days)}
+                  </td>
+                  <td className="px-4 py-3 text-left">
+                    <ComplexityDots score={row.complexity_score} />
                   </td>
                 </tr>
               ))}
