@@ -1281,7 +1281,7 @@
       "operating_margin": 0.05,
       "net_margin": 0.03,
       "asset_intensity": 0.45,
-      "notes": "Cloned from auto_dealers_gas during Wave 4b split. Volume model; thin per-unit margin.",
+      "notes": "",
       "floor_applied": true
     },
     "gas_stations": {
@@ -1289,7 +1289,7 @@
       "operating_margin": 0.05,
       "net_margin": 0.03,
       "asset_intensity": 0.45,
-      "notes": "Cloned from auto_dealers_gas during Wave 4b split. Volume model; thin per-unit margin.",
+      "notes": "",
       "floor_applied": true
     },
     "food_mfg": {
@@ -1297,64 +1297,64 @@
       "operating_margin": 0.11,
       "net_margin": 0.0715,
       "asset_intensity": 0.55,
-      "notes": "Cloned from food_beverage_mfg during Wave 4b split. Plant + equipment. Commodity input volatility."
+      "notes": ""
     },
     "beverage_mfg": {
       "gross_margin": 0.32,
       "operating_margin": 0.11,
       "net_margin": 0.0715,
       "asset_intensity": 0.55,
-      "notes": "Cloned from food_beverage_mfg during Wave 4b split. Plant + equipment. Commodity input volatility."
+      "notes": ""
     },
     "furniture_stores": {
       "gross_margin": 0.42,
       "operating_margin": 0.08,
       "net_margin": 0.052,
       "asset_intensity": 0.3,
-      "notes": "Cloned from furniture_home_stores during Wave 4b split. Showroom + delivery."
+      "notes": ""
     },
     "building_garden_stores": {
       "gross_margin": 0.42,
       "operating_margin": 0.08,
       "net_margin": 0.052,
       "asset_intensity": 0.3,
-      "notes": "Cloned from furniture_home_stores during Wave 4b split. Showroom + delivery."
+      "notes": ""
     },
     "transit_ground_passenger": {
       "gross_margin": 0.25,
       "operating_margin": 0.07,
       "net_margin": 0.0455,
       "asset_intensity": 0.55,
-      "notes": "Cloned from passenger_transport during Wave 4b split. Vehicle + driver heavy."
+      "notes": ""
     },
     "scenic_sightseeing_transport": {
       "gross_margin": 0.25,
       "operating_margin": 0.07,
       "net_margin": 0.0455,
       "asset_intensity": 0.55,
-      "notes": "Cloned from passenger_transport during Wave 4b split. Vehicle + driver heavy."
+      "notes": ""
     },
     "transport_support": {
       "gross_margin": 0.25,
       "operating_margin": 0.07,
       "net_margin": 0.0455,
       "asset_intensity": 0.55,
-      "notes": "Cloned from passenger_transport during Wave 4b split. Vehicle + driver heavy."
+      "notes": ""
     },
     "postal_service": {
       "gross_margin": 0.22,
       "operating_margin": 0.07,
       "net_margin": 0.04,
       "asset_intensity": 0.4,
-      "notes": "Cloned from postal_courier during Wave 4b split. IBISWorld couriers + local delivery: industry profit share ~8.5% revenue 2026. SMB local courier 3-8% net; gross 15-25%. Fleet + fuel intensive.",
+      "notes": "",
       "source_url": "https://www.ibisworld.com/united-states/industry/couriers-local-delivery-services/1950/"
     },
     "courier_messenger": {
-      "gross_margin": 0.30,
+      "gross_margin": 0.3,
       "operating_margin": 0.06,
       "net_margin": 0.035,
       "asset_intensity": 0.4,
-      "notes": "Cloned from postal_courier during Wave 4b split. IBISWorld couriers + local delivery: industry profit share ~8.5% revenue 2026. SMB local courier 3-8% net; gross 15-25%. Fleet + fuel intensive.",
+      "notes": "",
       "source_url": "https://www.ibisworld.com/united-states/industry/couriers-local-delivery-services/1950/"
     },
     "real_estate_leasing": {
@@ -1362,98 +1362,98 @@
       "operating_margin": 0.3,
       "net_margin": 0.165,
       "asset_intensity": 2.5,
-      "notes": "Cloned from property_leasing during Wave 4b split. Owned property dominates asset base."
+      "notes": ""
     },
     "equipment_rental": {
       "gross_margin": 0.75,
       "operating_margin": 0.3,
       "net_margin": 0.165,
       "asset_intensity": 2.5,
-      "notes": "Cloned from property_leasing during Wave 4b split. Owned property dominates asset base."
+      "notes": ""
     },
     "textiles_fabric_mfg": {
       "gross_margin": 0.35,
       "operating_margin": 0.07,
       "net_margin": 0.0455,
       "asset_intensity": 0.4,
-      "notes": "Cloned from textile_apparel_mfg during Plan v14 Phase A.3 split. Labor-intensive; commoditized."
+      "notes": ""
     },
     "apparel_mfg": {
       "gross_margin": 0.35,
       "operating_margin": 0.07,
       "net_margin": 0.0455,
       "asset_intensity": 0.4,
-      "notes": "Cloned from textile_apparel_mfg during Plan v14 Phase A.3 split. Labor-intensive; commoditized."
+      "notes": ""
     },
     "news_periodical_publishing": {
       "gross_margin": 0.65,
       "operating_margin": 0.1,
       "net_margin": 0.072,
       "asset_intensity": 0.1,
-      "notes": "Cloned from media_publishing during Plan v14 Phase A.3 split. Ad-driven; thin margins."
+      "notes": ""
     },
     "motion_picture_recording": {
       "gross_margin": 0.65,
       "operating_margin": 0.1,
       "net_margin": 0.072,
       "asset_intensity": 0.1,
-      "notes": "Cloned from media_publishing during Plan v14 Phase A.3 split. Ad-driven; thin margins."
+      "notes": ""
     },
     "wood_products_mfg": {
       "gross_margin": 0.3,
       "operating_margin": 0.08,
       "net_margin": 0.052,
       "asset_intensity": 0.65,
-      "notes": "Cloned from wood_paper_mfg during Plan v14 Phase A.3 split. Mill + heavy equipment."
+      "notes": ""
     },
     "paper_mfg": {
       "gross_margin": 0.3,
       "operating_margin": 0.08,
       "net_margin": 0.052,
       "asset_intensity": 0.65,
-      "notes": "Cloned from wood_paper_mfg during Plan v14 Phase A.3 split. Mill + heavy equipment."
+      "notes": ""
     },
     "furniture_mfg": {
       "gross_margin": 0.3,
       "operating_margin": 0.07,
       "net_margin": 0.0455,
       "asset_intensity": 0.5,
-      "notes": "Cloned from furniture_other_mfg during Plan v14 Phase A.3 split. Mass-market thin margins."
+      "notes": ""
     },
     "misc_mfg": {
       "gross_margin": 0.3,
       "operating_margin": 0.07,
       "net_margin": 0.0455,
       "asset_intensity": 0.5,
-      "notes": "Cloned from furniture_other_mfg during Plan v14 Phase A.3 split. Mass-market thin margins."
+      "notes": ""
     },
     "fabricated_metal_mfg": {
       "gross_margin": 0.28,
       "operating_margin": 0.08,
       "net_margin": 0.052,
       "asset_intensity": 0.7,
-      "notes": "Cloned from metal_products_mfg during Plan v14 Phase A.3 split. CNC + raw metal commodity exposure."
+      "notes": ""
     },
     "primary_metal_mfg": {
       "gross_margin": 0.28,
       "operating_margin": 0.08,
       "net_margin": 0.052,
       "asset_intensity": 0.7,
-      "notes": "Cloned from metal_products_mfg during Plan v14 Phase A.3 split. CNC + raw metal commodity exposure."
+      "notes": ""
     },
     "grain_farming": {
       "gross_margin": 0.3,
       "operating_margin": 0.1,
       "net_margin": 0.055,
       "asset_intensity": 1.2,
-      "notes": "Cloned from crop_farming during Plan v14 Phase A.3 split. High asset intensity (land, equipment). Thin margins; weather risk."
+      "notes": ""
     },
     "vegetable_fruit_farming": {
       "gross_margin": 0.3,
       "operating_margin": 0.1,
       "net_margin": 0.055,
       "asset_intensity": 1.2,
-      "notes": "Cloned from crop_farming during Plan v14 Phase A.3 split. High asset intensity (land, equipment). Thin margins; weather risk."
+      "notes": ""
     }
   }
 }

@@ -200,7 +200,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
           operatingMargin={margin.operating_margin}
           netMargin={margin.net_margin}
         />
-        {margin.notes && (
+        {margin.notes && !/Cloned from|Wave \d|To-?Do|Fix-?Me/i.test(margin.notes) && ( // allow-internal-note
           <p className="mt-2 text-xs text-ink-700/60 italic max-w-2xl">
             {margin.notes}
           </p>

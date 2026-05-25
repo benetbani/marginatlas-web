@@ -15,13 +15,14 @@
     "verify:edge-sizes": "npx tsx scripts/verify_edge_function_sizes.ts",
     "verify:monetization-coverage": "npx tsx scripts/verify_monetization_coverage.ts",
     "verify:v34-research-rules": "npx tsx scripts/verify_v34_research_rules.ts",
+    "verify:no-internal-notes": "npx tsx scripts/verify_no_internal_notes.ts",
     "audit:inventory": "npx tsx scripts/audit/enumerate_urls.ts",
     "audit:probe": "npx tsx scripts/audit/probe_urls.ts",
     "audit:report": "npx tsx scripts/audit/report.ts",
     "audit:reality": "npx tsx scripts/audit/v24_v25_reality_audit.ts",
     "audit:monetization": "npx tsx scripts/audit/monetization/run_coverage.ts",
     "audit:cell-smoke": "npx tsx scripts/audit/cell_page_smoke.ts",
-    "prebuild": "npx tsx scripts/verify_taxonomy.ts && npx tsx scripts/verify_no_em_dashes.ts && npx tsx scripts/verify_no_source_agencies.ts && npx tsx scripts/audit/find_dead_links.ts --strict && npx tsx scripts/verify_featured_tiles.ts && npx tsx scripts/verify_render_guards.ts && npx tsx scripts/verify_deepening.ts && npx tsx scripts/verify_monetization_coverage.ts && npx tsx scripts/verify_v34_research_rules.ts",
+    "prebuild": "npx tsx scripts/verify_taxonomy.ts && npx tsx scripts/verify_no_em_dashes.ts && npx tsx scripts/verify_no_source_agencies.ts && npx tsx scripts/audit/find_dead_links.ts --strict && npx tsx scripts/verify_featured_tiles.ts && npx tsx scripts/verify_render_guards.ts && npx tsx scripts/verify_deepening.ts && npx tsx scripts/verify_monetization_coverage.ts && npx tsx scripts/verify_v34_research_rules.ts && npx tsx scripts/verify_no_internal_notes.ts",
     "postbuild": "npx tsx scripts/verify_edge_function_sizes.ts"
   },
   "dependencies": {
