@@ -1,6 +1,11 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+// Plan v34 hotfix: founder reported the button still doesn't work even
+// after the previous fixes. Removing next/navigation router entirely.
+// All navigation is now plain window.location.href. Slightly slower
+// (full page load instead of SPA transition) but BULLETPROOF: it
+// cannot be eaten by hydration glitches, blocked transitions, route
+// boundaries, or stale chunks. The user clicks, the browser navigates.
 import { useState, useMemo, useEffect } from "react";
 import { ComboField, type ComboOption } from "./ComboField";
 import {
@@ -35,15 +40,7 @@ function readClientGate(): Gate {
 }
 
 export function NavigatorForm() {
-  const router = useRouter();
-  // Plan v32 hotfix — startTransition was suppressing Next.js's
-  // built-in loading.tsx skeleton, leaving the user staring at the
-  // homepage with a spinner for many seconds (looks like the button
-  // is broken). Drop startTransition entirely; use a plain isLoading
-  // flag that clears on a brief timeout so the button itself still
-  // gives instant feedback. The actual page transition is then
-  // handled by Next.js with the loading.tsx skeleton, which is
-  // what we wanted from the start.
+  // No router. Hard navigation via window.location.href. See file header.
   const [isLoading, setIsLoading] = useState(false);
   const [country, setCountry] = useState("US");
   const [region, setRegion] = useState("");
@@ -140,86 +137,42 @@ export function NavigatorForm() {
     []
   );
 
-  function submit() {
-    try {
-      // The button is ALWAYS clickable. If the user clicks without
-      // picking an industry, route to /random — at least it does
-      // something visible. Alerts and disabled states both read as
-      // "broken" (founder feedback, 2026-05-25).
-      if (!industry) {
-        setIsLoading(true);
-        // Hard nav as the bulletproof fallback — never trust router.push
-        // alone if the user is in a bad state. router.push fires too,
-        // so whichever wins, the user moves.
-        router.push("/random");
-        window.setTimeout(() => {
-          if (typeof window !== "undefined" && window.location.pathname === "/") {
-            window.location.href = "/random";
-          }
-          setIsLoading(false);
-        }, 600);
-        return;
+  // Compute the destination URL from current state. Pure function:
+  // no state mutation, no side effects. Easy to test.
+  function destination(): string {
+    if (!industry) return "/random";
+    const cc = country.toLowerCase();
+    let r = region;
+    if (!r) {
+      const opts = regionOptions;
+      const firstWithValue = opts.find((o) => o.value);
+      if (firstWithValue) {
+        r = firstWithValue.value;
+      } else if (cc === "us") {
+        r = "california";
+      } else {
+        const countryName = COUNTRIES.find((c) => c.code === country)?.name || country;
+        r = countryName.toLowerCase().replace(/[^a-z0-9]+/g, "-");
       }
-      const cc = country.toLowerCase();
-      // Resolve region slug. If the user didn't pick one explicitly, use
-      // the first option for that country (which is always present per
-      // getRegionsForCountry — country-level fallback as last resort).
-      let r = region;
-      if (!r) {
-        const opts = regionOptions;
-        const firstWithValue = opts.find((o) => o.value);
-        if (firstWithValue) {
-          r = firstWithValue.value;
-        } else if (cc === "us") {
-          r = "california";
-        } else {
-          const countryName = COUNTRIES.find((c) => c.code === country)?.name || country;
-          r = countryName.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-        }
-      }
-      const indSlug = industryToSlug(industry);
-      // Plan v21 Block 3 — if a subdivision is selected, navigate to
-      // that finer-grained URL (e.g. `/us/us-06-037/restaurants` for
-      // Los Angeles County). Otherwise stay at the region level.
-      const targetGeo = subdivision || r;
-      const path = `/${cc}/${targetGeo}/${indSlug}`;
-      setIsLoading(true);
-      router.push(path);
-      // Bulletproof: if the SPA push didn't move us off `/` within
-      // 600ms, hard-navigate. This catches stuck navigations from
-      // hydration glitches, blocked transitions, or stale chunks.
-      window.setTimeout(() => {
-        if (typeof window !== "undefined" && window.location.pathname === "/") {
-          window.location.href = path;
-        }
-        setIsLoading(false);
-      }, 600);
-    } catch (err) {
-      // Defensive fallback: hard navigation if the router push throws.
-      if (typeof window !== "undefined") {
-        // eslint-disable-next-line no-console
-        console.error("NavigatorForm submit failed", err);
-        window.location.href = "/random";
-      }
+    }
+    const indSlug = industryToSlug(industry);
+    const targetGeo = subdivision || r;
+    return `/${cc}/${targetGeo}/${indSlug}`;
+  }
+
+  function navigateTo(path: string) {
+    setIsLoading(true);
+    if (typeof window !== "undefined") {
+      window.location.href = path;
     }
   }
 
+  function submit() {
+    navigateTo(destination());
+  }
+
   function surpriseMe() {
-    try {
-      setIsLoading(true);
-      router.push("/random");
-      // Same bulletproof pattern as submit().
-      window.setTimeout(() => {
-        if (typeof window !== "undefined" && window.location.pathname === "/") {
-          window.location.href = "/random";
-        }
-        setIsLoading(false);
-      }, 600);
-    } catch {
-      if (typeof window !== "undefined") {
-        window.location.href = "/random";
-      }
-    }
+    navigateTo("/random");
   }
 
   return (
