@@ -129,6 +129,35 @@ export const DEFAULT_REVENUE_BOUNDS: SmbBounds = {
 };
 
 /**
+ * Brain-skeleton informal-share adjustment.
+ *
+ * In countries where a large share of the economy is informal (Bolivia
+ * 60%+, Nigeria 50%+, etc.), the per-firm revenue measured in formal
+ * statistics is systematically biased LOW: the smallest, cash-only,
+ * unregistered firms never show up. Widening the lower bound for
+ * those countries prevents us from suppressing a legitimately tiny
+ * formal-sector firm as "implausible".
+ *
+ * Multiplier formula: 1 + (informalPct / 100). A country at 40%
+ * informal gets a 1.4x downward widening on its lower bound.
+ *
+ * Source: data/external/brain-skeleton/informal_share.csv (latest year
+ * per country). Read via getBrainInformalShareByIso2().
+ */
+export function widenBoundsForInformality(
+  bounds: SmbBounds,
+  informalPct: number | null,
+): SmbBounds {
+  if (informalPct == null || informalPct <= 10) return bounds;
+  const widen = 1 + informalPct / 100;
+  return {
+    lo: bounds.lo / widen,
+    hi: bounds.hi,
+    reason: `${bounds.reason} (lower bound widened ${widen.toFixed(2)}x for ${informalPct.toFixed(0)}% informal economy)`,
+  };
+}
+
+/**
  * Payroll per employee — annual USD. Should reflect realistic wages
  * across the income spectrum. Bounded by the lowest-wage developing
  * economies (~$3K/year) and the highest-wage roles (~$200K/year for

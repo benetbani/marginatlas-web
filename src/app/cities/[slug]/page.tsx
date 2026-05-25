@@ -26,7 +26,9 @@ import { COUNTRIES } from "@/lib/taxonomy";
 import { MoreDepthBanner } from "@/components/monetization";
 import { ComparableCitiesRibbon } from "@/components/ComparableCitiesRibbon";
 import { TopProfitableActivities } from "@/components/cities/TopProfitableActivities";
+import { MostSaturatedActivities } from "@/components/cities/MostSaturatedActivities";
 import { BusinessFormationCosts } from "@/components/cities/BusinessFormationCosts";
+import { getBrainCountrySnapshot } from "@/lib/external/brain_data";
 import { CoverageIndicator } from "@/components/CoverageIndicator";
 
 export const revalidate = 43200; // 12 hours
@@ -111,6 +113,9 @@ export default async function CityPage({
       : undefined;
   const countryName = COUNTRIES.find((c) => c.code === city.iso2)?.name || city.iso2;
   const scheme = NEIGHBORHOODS[city.slug];
+  // Brain-skeleton enrichment: pull country-level macro context for the
+  // sub-card under the hero. Falls back gracefully when missing.
+  const brain = getBrainCountrySnapshot(city.iso2);
 
   return (
     <article className="pb-16">
@@ -176,6 +181,42 @@ export default async function CityPage({
 
       <div className="max-w-6xl mx-auto px-4 md:px-6">
 
+        {/* Brain-skeleton country-context strip. Surfaces the
+           macro figures (national population, GDP per capita,
+           informal-economy share) sourced from the brain pipeline.
+           Quiet styling so the city stays the focus. Self-suppresses
+           when brain data is missing. */}
+        {brain && (
+          <section
+            className="mb-8 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4"
+            aria-label={`Country context for ${countryName}`}
+          >
+            {brain.populationLatest != null && (
+              <BrainTile
+                label={`${countryName} population`}
+                value={formatPopulation(brain.populationLatest)}
+              />
+            )}
+            {brain.gdpPerCapitaUsdLatest != null && (
+              <BrainTile
+                label="GDP per capita"
+                value={`$${formatThousands(
+                  Math.round(brain.gdpPerCapitaUsdLatest),
+                )}`}
+              />
+            )}
+            {brain.informalSharePct != null && (
+              <BrainTile
+                label="Informal economy"
+                value={`${brain.informalSharePct.toFixed(0)}% of GDP`}
+              />
+            )}
+            {brain.incomeGroup && (
+              <BrainTile label="Income group" value={brain.incomeGroup} />
+            )}
+          </section>
+        )}
+
         {/* Sanity-§8: apologetic expanded CoverageIndicator banner
             replaced with a quiet inline methodology link. */}
         <section className="mb-10">
@@ -187,6 +228,12 @@ export default async function CityPage({
 
         {/* Cities sec 6: top 5 most / least profitable activities. */}
         <TopProfitableActivities countryIso2={city.iso2} />
+
+        {/* Cities sec 6: top 5 most saturated activities (brain population). */}
+        <MostSaturatedActivities
+          countryIso2={city.iso2}
+          countryName={countryName}
+        />
 
         {/* Cities sec 6: business formation costs by legal tier. */}
         <BusinessFormationCosts
@@ -313,4 +360,30 @@ function MetaTile({ label, value }: { label: string; value: string }) {
       </div>
     </div>
   );
+}
+
+// Brain-skeleton context tile. Quieter than MetaTile because the
+// country-context strip is a secondary band under the hero overlay.
+function BrainTile({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-xl border border-parchment bg-cream-50 p-3">
+      <div className="text-[10px] uppercase tracking-wide text-cocoa-700/60 font-semibold mb-1">
+        {label}
+      </div>
+      <div className="font-display text-base md:text-lg font-medium text-ink-900 tabular-nums leading-tight">
+        {value}
+      </div>
+    </div>
+  );
+}
+
+function formatPopulation(n: number): string {
+  if (n >= 1_000_000_000) return `${(n / 1_000_000_000).toFixed(2)}B`;
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1_000) return `${(n / 1_000).toFixed(0)}K`;
+  return `${n}`;
+}
+
+function formatThousands(n: number): string {
+  return n.toLocaleString("en-US");
 }
