@@ -131,12 +131,15 @@ export default function CitiesHub() {
         <CitiesWorldMap cities={MAP_CITIES} />
       </section>
 
-      {/* Cities list — founder spec 2026-05-25: countries laid out
-          in a compact horizontal grid (2 cols mobile, 3 cols tablet,
-          4 cols desktop), so most countries take one cell and cities
-          of the same country sit clustered immediately below their
-          flag. Eliminates the gigantic vertical white space the
-          previous full-row-per-country layout created. */}
+      {/* Cities list - founder revision 2026-05-25 (round 2).
+          Round 1 used a grid; round 2 keeps countries as paragraph
+          blocks where cities flow horizontally (separated by middots)
+          and the WHOLE LIST of country blocks packs into a CSS
+          multi-column layout. break-inside: avoid keeps each country
+          intact within a column. The result: US (45 cities) becomes
+          a wrapping paragraph that consumes vertical space ONLY
+          where needed, and smaller countries pack next to it without
+          forcing staircase whitespace. Encyclopedia index pattern. */}
       {CONTINENT_ORDER.map((continent) => {
         const byCountry = grouped.get(continent);
         if (!byCountry) return null;
@@ -155,38 +158,76 @@ export default function CitiesHub() {
                 &middot; {totalCities} cities
               </span>
             </h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-5">
-              {sortedCountries.map((countryName) => {
-                const cities = byCountry.get(countryName)!;
-                const iso2 = cities[0]?.iso2 || "";
-                return (
-                  <div key={countryName} className="min-w-0">
-                    <h3 className="flex items-center gap-2 mb-1.5">
-                      <CountryFlag iso2={iso2} className="w-5 shrink-0" />
-                      <span className="font-display text-sm md:text-base font-semibold text-ink-900 truncate">
-                        {countryName}
-                      </span>
-                      {cities.length > 1 && (
-                        <span className="text-[10px] font-normal text-cocoa-700/50 tabular-nums shrink-0">
-                          {cities.length}
+            <div
+              className="gap-x-8"
+              style={{
+                columnGap: "2rem",
+                columnCount: 1,
+                columnFill: "balance",
+              }}
+            >
+              {/* Responsive column count via inline media queries on a
+                  style element would need a JS path. Instead use a
+                  class that resolves to column-count via globals. The
+                  inline style above sets the mobile default (1 col),
+                  and the data-attribute below is what desktop CSS keys
+                  off to bump to 2 or 3 columns. */}
+              <style>
+                {`
+                  @media (min-width: 640px) { .atlas-cities-columns { column-count: 2; } }
+                  @media (min-width: 1024px) { .atlas-cities-columns { column-count: 3; } }
+                `}
+              </style>
+              <div className="atlas-cities-columns" style={{ columnGap: "2.5rem", columnFill: "balance" }}>
+                {sortedCountries.map((countryName) => {
+                  const cities = byCountry.get(countryName)!;
+                  const iso2 = cities[0]?.iso2 || "";
+                  return (
+                    <article
+                      key={countryName}
+                      className="mb-5"
+                      style={{ breakInside: "avoid", pageBreakInside: "avoid" }}
+                    >
+                      <h3 className="flex items-baseline gap-2.5 mb-1.5">
+                        <CountryFlag
+                          iso2={iso2}
+                          className="w-7 shrink-0 translate-y-[2px]"
+                        />
+                        <span className="font-display text-base md:text-lg font-semibold text-ink-900">
+                          {countryName}
                         </span>
-                      )}
-                    </h3>
-                    <ul className="space-y-0.5">
-                      {cities.map((c) => (
-                        <li key={c.slug} className="leading-tight">
-                          <Link
-                            href={`/cities/${c.slug}`}
-                            className="text-sm text-ink-800 hover:text-atlas-700 transition-colors"
-                          >
-                            {c.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                );
-              })}
+                        {cities.length > 1 && (
+                          <span className="text-[11px] font-normal text-cocoa-700/55 tabular-nums">
+                            {cities.length}
+                          </span>
+                        )}
+                      </h3>
+                      {/* Cities flow horizontally as a paragraph of links,
+                          separated by middots. Wraps naturally. */}
+                      <p className="text-sm text-ink-800 leading-[1.65]">
+                        {cities.map((c, idx) => (
+                          <span key={c.slug}>
+                            <Link
+                              href={`/cities/${c.slug}`}
+                              className="hover:text-atlas-700 transition-colors"
+                            >
+                              {c.name}
+                            </Link>
+                            {idx < cities.length - 1 ? (
+                              <span
+                                aria-hidden="true"
+                                className="mx-1.5 text-cocoa-700/35"
+                              >
+                                &middot;
+                              </span>
+                            ) : null}
+                          </span>
+                        ))}
+                      </p>
+                    </article>
+                  );
+                })}
+              </div>
             </div>
           </section>
         );
