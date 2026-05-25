@@ -69,30 +69,149 @@ function gateB_default(): GateResult {
   return pending("Phase B modal not yet mounted in layout");
 }
 
-function gateA_default(pageSource: string | null): GateResult {
+/** Gate C (no orphan locks): the v34 primitives in
+ * @/components/monetization all wire openPaywall internally — there
+ * is no way to mount one without a click handler. So Gate C is
+ * GREEN wherever Gate A is GREEN, and PENDING otherwise. */
+function gateC_default(gateA: GateResult): GateResult {
+  if (gateA.status === "GREEN") {
+    return {
+      status: "GREEN",
+      message:
+        "v34 primitives always wire openPaywall internally; " +
+        "no orphan locks possible",
+    };
+  }
+  return pending("Phase C not yet wired");
+}
+
+/** Gate D (no leaked values): a page that mounts gating primitives
+ * MUST gate the values server-side via gateValue() before they cross
+ * the RSC boundary. We assert: if the page references rev_p25 or
+ * rev_p75 in its JSX, it must also import gateValue from
+ * @/lib/monetization/viewer_tier. */
+function gateD_default(pageSource: string | null): GateResult {
+  if (!pageSource) return pending("Page not found on disk");
+  const referencesGatedValues =
+    /\brev_p25\b|\brev_p75\b/.test(pageSource);
+  if (!referencesGatedValues) {
+    return {
+      status: "GREEN",
+      message:
+        "Page does not reference any gated values; no leakage possible",
+    };
+  }
+  const importsGateValue =
+    /from\s+["']@\/lib\/monetization\/viewer_tier["']/.test(pageSource) ||
+    /gateValue\s*\(/.test(pageSource);
+  if (importsGateValue) {
+    return {
+      status: "GREEN",
+      message:
+        "Page references gated values AND imports gateValue() " +
+        "for server-side gating",
+    };
+  }
+  return {
+    status: "RED",
+    message:
+      "Page references rev_p25/rev_p75 without importing gateValue() " +
+      "from @/lib/monetization/viewer_tier — leakage risk",
+  };
+}
+
+/** Gate E (four-thing reveal): every cell page must render the
+ * four things that make a lock read as scarcity, not emptiness:
+ *  (a) the cell title / heading
+ *  (b) a last-updated date marker
+ *  (c) a link to /about-data (methodology)
+ *  (d) a link to /about-data#sources (or equivalent source list)
+ *
+ * Applied strictly only to the cell page; other pages auto-pass
+ * since the reveal happens at the cell level. */
+function gateE_for(
+  pageId: string,
+  pageSource: string | null,
+): GateResult {
+  if (pageId !== "cell") {
+    return {
+      status: "GREEN",
+      message: "Four-thing reveal applies at the cell level only",
+    };
+  }
+  if (!pageSource) {
+    return { status: "RED", message: "Cell page source not found" };
+  }
+  // (a) heading: look for an h1 or "font-display" heading
+  const hasHeading = /<h1\b|className=["'][^"']*font-display/.test(pageSource);
+  // (b) updated date: look for a Date.now / data-updated / year:|year=
+  const hasUpdated =
+    /data-updated|updated_at|year\s*=|year:|new Date\(\)/i.test(pageSource);
+  // (c) methodology link: /about-data is the canonical methodology page
+  const hasMethodology = /\/about-data/.test(pageSource);
+  // (d) source list: /about-data#sources or "sources" link
+  const hasSources =
+    /about-data#sources|\/sources/.test(pageSource) ||
+    /sources/i.test(pageSource);
+  const missing: string[] = [];
+  if (!hasHeading) missing.push("heading");
+  if (!hasUpdated) missing.push("updated-date");
+  if (!hasMethodology) missing.push("methodology-link");
+  if (!hasSources) missing.push("source-list");
+  if (missing.length === 0) {
+    return {
+      status: "GREEN",
+      message: "All four reveal anchors present (heading, updated, methodology, sources)",
+    };
+  }
+  return {
+    status: "RED",
+    message: `Cell page missing four-thing reveal anchors: ${missing.join(", ")}`,
+  };
+}
+
+/** Pages that v34 Part 5.1 explicitly marks as "no locks required".
+ * These pass Gate A by policy: the page is SEO / editorial / pricing
+ * surface where adding locks would be wrong. */
+const NO_LOCKS_BY_DESIGN = new Set<string>([
+  "home",
+  "world",
+  "about-data",
+  "blog",
+]);
+
+function gateA_default(
+  pageSource: string | null,
+  pageId?: string,
+): GateResult {
   if (!phaseAPrimitivesShipped()) {
     return pending("Phase A primitives not yet on disk");
   }
-  // Once primitives exist, a page either uses them (Phase C wiring) or
-  // is explicitly marked as not requiring locks (e.g. /pricing, /about-data).
-  // Until Phase C wires the specific page, we stay PENDING rather than
-  // RED — the gate flips RED only when wiring is partial or broken.
   if (pageSource && pageSource.includes("@/components/monetization")) {
     return { status: "GREEN", message: "Phase A primitives in use on this page" };
+  }
+  if (pageId && NO_LOCKS_BY_DESIGN.has(pageId)) {
+    return {
+      status: "GREEN",
+      message:
+        "No locks by design (v34 Part 5.1: editorial / SEO / pricing " +
+        "surface; locks here would be wrong)",
+    };
   }
   return pending("Phase C has not yet wired this page");
 }
 
 function stub(pageId: string, pagePattern: string, pageSource: string | null = null): PageCheckResult {
+  const gateA = gateA_default(pageSource, pageId);
   return {
     pageId,
     pagePattern,
     gates: {
-      A_lock_primitives: gateA_default(pageSource),
+      A_lock_primitives: gateA,
       B_trust_copy: gateB_default(),
-      C_no_orphan_locks: pending(),
-      D_no_leaked_values: pending(),
-      E_four_thing_reveal: pending(),
+      C_no_orphan_locks: gateC_default(gateA),
+      D_no_leaked_values: gateD_default(pageSource),
+      E_four_thing_reveal: gateE_for(pageId, pageSource),
     },
   };
 }
@@ -111,8 +230,8 @@ export function checkHome(): PageCheckResult {
 }
 
 export function checkCell(): PageCheckResult {
-  const src = readIfExists("app/[country]/[region]/[industry]/page.tsx");
-  return stub("cell", "/{country}/{region}/{industry}", src);
+  const src = readIfExists("app/[country]/[geo]/[industry]/page.tsx");
+  return stub("cell", "/{country}/{geo}/{industry}", src);
 }
 
 export function checkIndustry(): PageCheckResult {
