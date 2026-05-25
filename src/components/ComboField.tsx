@@ -158,7 +158,24 @@ export function ComboField({
           disabled={disabled}
           className="flex-1 bg-transparent outline-none text-sm font-medium text-ink-900 placeholder:text-cocoa-700/40 placeholder:font-normal"
         />
-        <span className="text-atlas-600 ml-2 text-xs leading-none">▾</span>
+        {/* CitiesFix2 sec 3: brand chevron (vermillion atlas-700 SVG)
+            replaces the generic unicode glyph. Same affordance, on-brand. */}
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 12 8"
+          width="12"
+          height="8"
+          className={`ml-2 shrink-0 transition-transform ${
+            open ? "rotate-180 text-atlas-700" : "text-atlas-600"
+          }`}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M1 1.5 L6 6.5 L11 1.5" />
+        </svg>
       </div>
       {open && filtered.length > 0 && (
         <ul
