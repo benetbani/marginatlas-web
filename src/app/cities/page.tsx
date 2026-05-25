@@ -131,12 +131,15 @@ export default function CitiesHub() {
         <CitiesWorldMap cities={MAP_CITIES} />
       </section>
 
-      {/* Cities §3 founder structure: continent header, then country
-          sub-header, then 5-column city list (bigger flags). */}
+      {/* Cities list — founder spec 2026-05-25: countries laid out
+          in a compact horizontal grid (2 cols mobile, 3 cols tablet,
+          4 cols desktop), so most countries take one cell and cities
+          of the same country sit clustered immediately below their
+          flag. Eliminates the gigantic vertical white space the
+          previous full-row-per-country layout created. */}
       {CONTINENT_ORDER.map((continent) => {
         const byCountry = grouped.get(continent);
         if (!byCountry) return null;
-        // Sort country names alphabetically within the continent.
         const sortedCountries = [...byCountry.keys()].sort((a, b) =>
           a.localeCompare(b),
         );
@@ -145,37 +148,42 @@ export default function CitiesHub() {
           0,
         );
         return (
-          <section key={continent} className="mb-14">
-            <h2 className="font-display text-2xl md:text-3xl font-semibold tracking-tight text-ink-900 mb-6 pb-2 border-b-2 border-parchment">
+          <section key={continent} className="mb-12">
+            <h2 className="font-display text-2xl md:text-3xl font-semibold tracking-tight text-ink-900 mb-5 pb-2 border-b-2 border-parchment">
               {continent}{" "}
               <span className="text-sm font-normal text-cocoa-700/60 tabular-nums">
                 &middot; {totalCities} cities
               </span>
             </h2>
-            <div className="space-y-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-5">
               {sortedCountries.map((countryName) => {
                 const cities = byCountry.get(countryName)!;
                 const iso2 = cities[0]?.iso2 || "";
                 return (
-                  <div key={countryName}>
-                    <h3 className="flex items-center gap-2 font-display text-base md:text-lg font-semibold text-ink-900 mb-3">
-                      <CountryFlag iso2={iso2} className="w-6 shrink-0" />
-                      <span>{countryName}</span>
-                      <span className="text-xs font-normal text-cocoa-700/50 tabular-nums">
-                        &middot; {cities.length}
+                  <div key={countryName} className="min-w-0">
+                    <h3 className="flex items-center gap-2 mb-1.5">
+                      <CountryFlag iso2={iso2} className="w-5 shrink-0" />
+                      <span className="font-display text-sm md:text-base font-semibold text-ink-900 truncate">
+                        {countryName}
                       </span>
+                      {cities.length > 1 && (
+                        <span className="text-[10px] font-normal text-cocoa-700/50 tabular-nums shrink-0">
+                          {cities.length}
+                        </span>
+                      )}
                     </h3>
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-4 gap-y-1.5 pl-8">
+                    <ul className="space-y-0.5">
                       {cities.map((c) => (
-                        <Link
-                          key={c.slug}
-                          href={`/cities/${c.slug}`}
-                          className="flex items-center gap-2 py-1 text-sm text-ink-800 hover:text-atlas-700 transition-colors"
-                        >
-                          <span className="truncate">{c.name}</span>
-                        </Link>
+                        <li key={c.slug} className="leading-tight">
+                          <Link
+                            href={`/cities/${c.slug}`}
+                            className="text-sm text-ink-800 hover:text-atlas-700 transition-colors"
+                          >
+                            {c.name}
+                          </Link>
+                        </li>
                       ))}
-                    </div>
+                    </ul>
                   </div>
                 );
               })}

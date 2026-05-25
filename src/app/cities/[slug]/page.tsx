@@ -148,95 +148,93 @@ export default async function CityPage({
           <div className="w-full h-full bg-gradient-to-br from-cream-100 via-parchment to-cocoa-100" />
         )}
 
-        {/* CitiesFix2 sec 6: 8 city stat cards overlaid on the image.
-           City name + country bottom-left; 8 cards in a tight strip.
-           Each card has a colored guiding word (sec 7).
-           Salary is per MONTH, not per year (founder spec). */}
-        <div className="absolute bottom-0 left-0 right-0 p-3 md:p-6">
-          <div className="max-w-7xl mx-auto">
-            {/* City name + country block, bottom-left */}
-            <div className="text-white mb-3 md:mb-4">
-              <div className="flex items-center gap-2 text-xs md:text-sm uppercase tracking-wide font-semibold mb-1.5 opacity-90">
+        {/* Founder layout 2026-05-25: city name bottom-LEFT, 8-cell
+           data TABLE (4 cols, 2 rows) bottom-RIGHT. The cells share
+           one outer border and hairline dividers, not 8 separate
+           rounded cards. Reads like a broadsheet market table sitting
+           on a photograph, not a row of utility chips. */}
+        <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-end">
+            {/* LEFT: city name + country + flag (5 of 12 cols on md+) */}
+            <div className="text-white md:col-span-5">
+              <div className="flex items-center gap-2 text-xs md:text-sm uppercase tracking-[0.18em] font-semibold mb-2 opacity-90">
                 <CountryFlag iso2={city.iso2} className="w-5" />
                 <span>{countryName}</span>
               </div>
               <h1
-                className="font-display text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-tight text-balance"
-                style={{ overflowWrap: "anywhere", hyphens: "auto" }}
+                className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.04]"
+                style={{ whiteSpace: "nowrap" }}
               >
                 {city.name}
               </h1>
             </div>
 
-            {/* 8-card strip: 2 cols mobile, 4 cols tablet, 8 cols desktop. */}
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-1.5 md:gap-2">
-              <StatOverlayCard
-                label="Metro pop"
-                value={`${city.pop_m.toFixed(1)}M`}
-                metric="metro_pop_m"
-                rawValue={city.pop_m}
-              />
-              <StatOverlayCard
-                label="Metro GDP"
-                value={`$${city.gdp_b.toFixed(0)}B`}
-                metric="metro_gdp_b"
-                rawValue={city.gdp_b}
-              />
-              <StatOverlayCard
-                label="Salary / mo"
-                value={
-                  city.avg_gross_salary_usd_year
-                    ? `$${Math.round(city.avg_gross_salary_usd_year / 12 / 100) * 100}`
-                    : "-"
-                }
-                metric="gross_salary_usd_mo"
-                rawValue={
-                  city.avg_gross_salary_usd_year
-                    ? city.avg_gross_salary_usd_year / 12
-                    : null
-                }
-              />
-              <StatOverlayCard
-                label="HDI"
-                value={city.hdi != null ? city.hdi.toFixed(3) : "-"}
-                metric="hdi"
-                rawValue={city.hdi ?? null}
-              />
-              <StatOverlayCard
-                label="Gini"
-                value={city.gini != null ? city.gini.toFixed(1) : "-"}
-                metric="gini"
-                rawValue={city.gini ?? null}
-              />
-              <StatOverlayCard
-                label="Cost of living"
-                value={
-                  city.cost_of_living_index != null
-                    ? city.cost_of_living_index.toFixed(0)
-                    : "-"
-                }
-                metric="cost_of_living_index"
-                rawValue={city.cost_of_living_index ?? null}
-              />
-              <StatOverlayCard
-                label="Unemployment"
-                value={
-                  city.unemployment_pct != null
-                    ? `${city.unemployment_pct.toFixed(1)}%`
-                    : "-"
-                }
-                metric="unemployment_pct"
-                rawValue={city.unemployment_pct ?? null}
-              />
-              <StatOverlayCard
-                label="Tourism / yr"
-                value={
-                  city.tourist_arrivals_m != null
-                    ? `${city.tourist_arrivals_m.toFixed(1)}M`
-                    : "-"
-                }
-                metric="tourist_arrivals_m"
-                rawValue={city.tourist_arrivals_m ?? null}
+            {/* RIGHT: 4-col x 2-row unified data table (7 of 12 cols on md+) */}
+            <div className="md:col-span-7">
+              <CityStatTable
+                cards={[
+                  {
+                    label: "Metro pop",
+                    value: `${city.pop_m.toFixed(1)}M`,
+                    metric: "metro_pop_m",
+                    rawValue: city.pop_m,
+                  },
+                  {
+                    label: "Metro GDP",
+                    value: `$${city.gdp_b.toFixed(0)}B`,
+                    metric: "metro_gdp_b",
+                    rawValue: city.gdp_b,
+                  },
+                  {
+                    label: "Salary / mo",
+                    value: city.avg_gross_salary_usd_year
+                      ? `$${Math.round(city.avg_gross_salary_usd_year / 12 / 100) * 100}`
+                      : "-",
+                    metric: "gross_salary_usd_mo",
+                    rawValue: city.avg_gross_salary_usd_year
+                      ? city.avg_gross_salary_usd_year / 12
+                      : null,
+                  },
+                  {
+                    label: "HDI",
+                    value: city.hdi != null ? city.hdi.toFixed(3) : "-",
+                    metric: "hdi",
+                    rawValue: city.hdi ?? null,
+                  },
+                  {
+                    label: "Gini",
+                    value: city.gini != null ? city.gini.toFixed(1) : "-",
+                    metric: "gini",
+                    rawValue: city.gini ?? null,
+                  },
+                  {
+                    label: "Cost of living",
+                    value:
+                      city.cost_of_living_index != null
+                        ? city.cost_of_living_index.toFixed(0)
+                        : "-",
+                    metric: "cost_of_living_index",
+                    rawValue: city.cost_of_living_index ?? null,
+                  },
+                  {
+                    label: "Unemployment",
+                    value:
+                      city.unemployment_pct != null
+                        ? `${city.unemployment_pct.toFixed(1)}%`
+                        : "-",
+                    metric: "unemployment_pct",
+                    rawValue: city.unemployment_pct ?? null,
+                  },
+                  {
+                    label: "Tourism / yr",
+                    value:
+                      city.tourist_arrivals_m != null
+                        ? `${city.tourist_arrivals_m.toFixed(1)}M`
+                        : "-",
+                    metric: "tourist_arrivals_m",
+                    rawValue: city.tourist_arrivals_m ?? null,
+                  },
+                ]}
               />
             </div>
           </div>
@@ -398,42 +396,58 @@ export default async function CityPage({
   );
 }
 
-/** Stat card overlaid on the hero image (CitiesFix2 sec 6 + 7).
- * Tight padding, semi-transparent backdrop, three lines:
- *   1. label   (tiny uppercase)
- *   2. value   (tabular)
- *   3. guiding word (colored on the red-to-green gradient per metric)
- *
- * When rawValue is null (data missing) the guiding line is hidden. */
-function StatOverlayCard({
-  label,
-  value,
-  metric,
-  rawValue,
-}: {
+/** City stat TABLE overlaid on the hero image. Founder spec 2026-05-25:
+ * NOT 8 separate utility cards with rounded corners. ONE unified table,
+ * 4 columns x 2 rows, with a single outer border and hairline dividers
+ * between cells. Reads like a broadsheet market table sitting on the
+ * photograph. Bigger labels, bigger values, guiding word in color. */
+type StatCard = {
   label: string;
   value: string;
   metric: Metric;
   rawValue: number | null;
-}) {
-  const guiding =
-    rawValue != null ? getGuidingWord(metric, rawValue) : null;
+};
+
+function CityStatTable({ cards }: { cards: StatCard[] }) {
   return (
-    <div className="bg-cream-50/95 backdrop-blur-sm border border-parchment rounded-lg px-2 py-1.5 md:px-2.5 md:py-2 shadow-md">
-      <div className="text-[8px] md:text-[9px] uppercase tracking-wide text-cocoa-700/70 font-semibold">
-        {label}
+    <div className="rounded-lg overflow-hidden bg-cream-50/95 backdrop-blur-sm shadow-[0_8px_24px_rgba(0,0,0,0.18)] ring-1 ring-cocoa-700/15">
+      <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-cocoa-700/12">
+        {cards.slice(0, 4).map((c) => (
+          <StatTableCell key={c.label} card={c} />
+        ))}
       </div>
-      <div className="font-display text-base md:text-xl font-medium text-ink-900 tabular-nums leading-tight">
-        {value}
+      <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-cocoa-700/12 border-t border-cocoa-700/12">
+        {cards.slice(4, 8).map((c) => (
+          <StatTableCell key={c.label} card={c} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function StatTableCell({ card }: { card: StatCard }) {
+  const guiding =
+    card.rawValue != null ? getGuidingWord(card.metric, card.rawValue) : null;
+  return (
+    <div className="px-3 py-2.5 md:px-4 md:py-3">
+      <div className="text-[10px] md:text-[11px] uppercase tracking-[0.1em] text-cocoa-700/70 font-semibold leading-none mb-1.5">
+        {card.label}
+      </div>
+      <div className="font-display text-xl md:text-2xl font-medium text-ink-900 tabular-nums leading-none">
+        {card.value}
       </div>
       {guiding && guiding.word ? (
         <div
-          className="text-[9px] md:text-[10px] font-semibold leading-none"
+          className="mt-1.5 text-[11px] md:text-xs font-semibold leading-none"
           style={{ color: guiding.color }}
         >
           {guiding.word}
         </div>
-      ) : null}
+      ) : (
+        <div className="mt-1.5 text-[11px] md:text-xs text-cocoa-700/40 leading-none">
+          not measured
+        </div>
+      )}
     </div>
   );
 }

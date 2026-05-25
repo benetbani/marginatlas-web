@@ -20,8 +20,11 @@ import RotatingWords from "./RotatingWords";
 // (WorldMapSection) rather than nested inside the hero. Removed the
 // lazy import to drop dead code.
 
-const INDUSTRY_WORDS = ["restaurant", "law firm", "bakery", "software studio"];
-const CITY_WORDS     = ["Tokyo", "Lagos", "Berlin", "São Paulo"];
+// Rotator candidates: short, similar widths so the reserved slot stays
+// compact. "software studio" was too long (15 chars) and forced the
+// reserved slot to consume half the line.
+const INDUSTRY_WORDS = ["restaurant", "coffee shop", "law firm", "bakery"];
+const CITY_WORDS     = ["Tokyo", "Lagos", "Berlin", "Madrid"];
 
 // Plan v30 — qualitative editorial strip. Replaces the original
 // numeric totals strip ("196 countries, 223 industries...") per
@@ -63,22 +66,37 @@ export default function HomepageHero(_props?: HomepageHeroProps) {
           A global atlas of small business
         </p>
 
-        {/* H1 with rotators. The full sentence is announced once via SR-only.
-            Country-page rebuild §6 (2026-05-25): mobile font-size capped
-            at text-3xl (was text-[40px]) so the line never wraps mid-
-            rotator at 320-414px viewports. text-balance + hyphens-auto
-            give the browser room to break cleanly between words. */}
+        {/* H1: two locked lines.
+            - Line 1: "How much does a [INDUSTRY]"
+            - Line 2: "make in [CITY]?"
+            Each line is display:block + whitespace-nowrap, so the row
+            count is exactly 2 regardless of which words are rotating.
+            Only the two rotators change; nothing else moves.
+            text-balance, overflow-wrap, and hyphens are deliberately
+            NOT used here. Those rules were the cause of "coffee shop"
+            and "New York" splitting mid-word in the earlier build. */}
         <h1
           id="atlas-hero-h1"
-          className="font-display mt-5 sm:mt-6 text-3xl sm:text-5xl md:text-6xl leading-[1.04] tracking-[-0.02em] font-semibold text-balance text-ink-900 max-w-4xl"
-          style={{ hyphens: "auto", overflowWrap: "anywhere" }}
+          className="font-display mt-5 sm:mt-6 text-[28px] sm:text-5xl md:text-6xl leading-[1.06] tracking-[-0.02em] font-semibold text-ink-900"
         >
           <span className="sr-only">{heroSr}</span>
-          <span aria-hidden="true">How much does a </span>
-          <RotatingWords words={INDUSTRY_WORDS} cadenceMs={2400} ariaSrText="businesses" />
-          <span aria-hidden="true"> make in </span>
-          <RotatingWords words={CITY_WORDS} cadenceMs={2400} startOffsetMs={1200} ariaSrText="cities" />
-          <span aria-hidden="true">?</span>
+          <span
+            aria-hidden="true"
+            className="block"
+            style={{ whiteSpace: "nowrap" }}
+          >
+            How much does a{" "}
+            <RotatingWords words={INDUSTRY_WORDS} cadenceMs={2400} ariaSrText="businesses" />
+          </span>
+          <span
+            aria-hidden="true"
+            className="block"
+            style={{ whiteSpace: "nowrap" }}
+          >
+            make in{" "}
+            <RotatingWords words={CITY_WORDS} cadenceMs={2400} startOffsetMs={1200} ariaSrText="cities" />
+            <span>?</span>
+          </span>
         </h1>
 
         {/* Subtitle, max 18 words */}
