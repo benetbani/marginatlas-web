@@ -70,6 +70,8 @@ import { ComparableCitiesRibbon } from "@/components/ComparableCitiesRibbon";
 import { LocalContextCard } from "@/components/LocalContextCard";
 // Plan v30 Phase 1 — TrendSparkline import removed; synthesized 5-year trend was too speculative
 import { DistributionVisual } from "@/components/DistributionVisual";
+import { QuartileMarkers } from "@/components/monetization";
+import { gateValue } from "@/lib/monetization/viewer_tier";
 import { NetProfitSummary } from "@/components/NetProfitSummary";
 import { SmartWaterfall } from "@/components/SmartWaterfall";
 import { CellFallbackBanner } from "@/components/CellFallbackBanner";
@@ -760,6 +762,23 @@ export default async function CellPage({
         <DistributionVisual
           p10={cell.rev_p10 ?? null}
           p50={cell.rev_p50 ?? null}
+          p90={cell.rev_p90 ?? null}
+        />
+        {/* v34 Phase C — first lock-primitive mount on the cell page.
+           Five-marker strip below the distribution band: p10/p50/p90
+           visible to free users, p25/p75 redacted with the v34
+           dotted-underline glyph. Clicking either opens the paywall
+           modal at the cell_distribution_p25_p75 entry point.
+
+           CRITICAL Gate D (no leakage): p25/p75 are gated server-side
+           via gateValue() before they cross the RSC boundary. Free
+           viewers never receive the values in any form (props, data
+           attrs, aria, JSON). */}
+        <QuartileMarkers
+          p10={cell.rev_p10 ?? null}
+          p25={gateValue(cell.rev_p25 ?? null, "basic")}
+          p50={cell.rev_p50 ?? null}
+          p75={gateValue(cell.rev_p75 ?? null, "basic")}
           p90={cell.rev_p90 ?? null}
         />
       </section>

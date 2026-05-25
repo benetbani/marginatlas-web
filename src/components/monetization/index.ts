@@ -18,6 +18,8 @@ export type { RedactedNumberProps } from "./RedactedNumber";
 export { GhostBar } from "./GhostBar";
 export type { GhostBarProps } from "./GhostBar";
 
+export { QuartileMarkers } from "./QuartileMarkers";
+
 export {
   openPaywall,
   OPEN_PAYWALL_EVENT,
