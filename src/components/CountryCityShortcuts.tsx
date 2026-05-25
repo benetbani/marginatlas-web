@@ -71,7 +71,7 @@ export async function CountryCityShortcuts({
             <Link
               key={city.id}
               href={href}
-              className="block px-4 py-3 rounded-xl border border-cream-300 bg-white hover:border-atlas-600 hover:shadow-[0_6px_18px_rgba(120,53,15,0.08)] transition"
+              className="atlas-card block px-4 py-3"
             >
               <div className="flex items-center justify-between gap-2">
                 <div className="text-sm font-semibold text-ink-900">

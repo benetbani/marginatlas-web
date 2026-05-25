@@ -161,7 +161,7 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
                   <a
                     key={ind.industry_id}
                     href={`/${iso2.toLowerCase()}/${geo}/${slug}`}
-                    className="block px-4 py-3 rounded-xl border border-cream-300 bg-white hover:border-atlas-600 hover:shadow-[0_6px_18px_rgba(120,53,15,0.08)] transition"
+                    className="atlas-card block px-4 py-3"
                   >
                     <div className="flex items-center gap-2 text-[10px] uppercase tracking-wider text-atlas-700 font-semibold">
                       {sector && <span aria-hidden>{sector.icon}</span>}
@@ -209,7 +209,7 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
               <Link
                 key={r.admin1_code}
                 href={`/${iso2.toLowerCase()}/${r.slug}`}
-                className="group flex items-center justify-between gap-2 px-4 py-3 rounded-xl border border-cream-300 bg-white hover:border-atlas-600 hover:shadow-[0_6px_18px_rgba(120,53,15,0.08)] text-ink-900 transition"
+                className="atlas-card group flex items-center justify-between gap-2 px-4 py-3 text-ink-900"
               >
                 <span className="font-medium">{r.name}</span>
                 <span

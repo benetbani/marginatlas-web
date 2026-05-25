@@ -118,7 +118,7 @@ export default async function SectorPage({ params }: { params: Promise<Params> }
               <a
                 key={ind.id}
                 href={`/industries/${industryToSlug(ind.id)}`}
-                className="rounded-2xl bg-white border border-parchment p-4 hover:border-atlas-600 hover:shadow-[0_6px_20px_rgba(120,53,15,0.08)] transition-all flex flex-col gap-2"
+                className="atlas-card p-4 flex flex-col gap-2"
               >
                 <div className="font-semibold text-ink-900">{ind.name}</div>
                 <div className="text-xs text-cocoa-700/70 line-clamp-2">

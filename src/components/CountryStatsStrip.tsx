@@ -99,7 +99,7 @@ export function CountryStatsStrip({ iso2 }: Props) {
           return (
             <div
               key={t.label}
-              className="p-4 rounded-xl bg-cream-100 border border-parchment"
+              className="atlas-card-soft p-4"
             >
               <div className="text-xs uppercase tracking-wide text-ink-700/70 font-medium truncate">
                 {t.label}

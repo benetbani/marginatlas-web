@@ -98,7 +98,7 @@ export function CountryAtAGlance({ iso2 }: Props) {
           return (
             <div
               key={t.label}
-              className="bg-white border border-ink-200 rounded-xl px-4 py-3"
+              className="atlas-card-band px-4 py-3"
             >
               <div className="text-[10px] uppercase tracking-wide text-ink-700/70 font-medium">
                 {t.label}

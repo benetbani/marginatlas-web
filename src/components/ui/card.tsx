@@ -1,25 +1,41 @@
 // shadcn Card, atlas skin. Section 1 of master visual upgrade.
-// Card uses bg-card (cream-100 #F5F5F5) with parchment border, no dark
-// variants. CardTitle defaults to font-display (Newsreader, the editorial
-// serif) per Atlas typography ladder. Interior padding p-6 matches the
-// existing .card utility in globals.css. No em-dashes in non-comment lines.
+// Frontend-design pass 2026-05-25: rebased onto the .atlas-card utility
+// from globals.css so the shadcn primitive and every hand-rolled card on
+// the site share the same surface, hairline, shadow, and editorial hover
+// gesture (2px vermillion top edge fades in, 1px lift). Variant prop
+// added so callers can opt into .atlas-card-soft (secondary content) or
+// .atlas-card-band (cards sitting on a solid white section). The default
+// is the canonical white-paper article-card. CardTitle stays font-display.
+// No em-dashes in non-comment lines.
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-const Card = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "rounded-2xl border border-parchment bg-card text-card-foreground shadow-sm",
-      className
-    )}
-    {...props}
-  />
-));
+type CardVariant = "default" | "soft" | "band";
+
+const VARIANT_CLASS: Record<CardVariant, string> = {
+  default: "atlas-card",
+  soft: "atlas-card-soft",
+  band: "atlas-card-band",
+};
+
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: CardVariant;
+}
+
+const Card = React.forwardRef<HTMLDivElement, CardProps>(
+  ({ className, variant = "default", ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn(
+        VARIANT_CLASS[variant],
+        "text-card-foreground",
+        className
+      )}
+      {...props}
+    />
+  )
+);
 Card.displayName = "Card";
 
 const CardHeader = React.forwardRef<

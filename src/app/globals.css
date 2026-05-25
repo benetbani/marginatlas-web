@@ -47,6 +47,46 @@
        (html background, body gradient). Kept alongside the RGB triplets
        to preserve unchanged visual output. */
     --hero-fade: #F5F5F5;            /* cream-100, soft wash under hero */
+
+    /* ==========================================================================
+       Atlas card + elevation system (2026-05-25, /frontend-design pass).
+       One canonical surface for every card on the site. The site lives on
+       warm cream paper; cards are white articles laid on the paper, with a
+       warm cocoa-tinted shadow (not gray — warm shadow on warm paper). Hover
+       lifts the card and reveals a 2px vermillion top edge, like a magazine
+       page being picked up. Editorial, not glassy.
+
+       Every card across the site should read from these tokens. Components
+       that still write ad-hoc bg-white + border-parchment will keep rendering
+       — but as call sites migrate to .atlas-card the look unifies.
+       ========================================================================== */
+
+    /* Card surfaces */
+    --atlas-surface-paper: #FAFAFA;          /* body paper, warm cream */
+    --atlas-surface-card: #FFFFFF;           /* canonical card surface */
+    --atlas-surface-card-soft: #FBF8F2;      /* secondary card within a card section */
+    --atlas-surface-band: #FFFFFF;           /* solid white section band, no pattern */
+
+    /* Hairlines — barely visible warm-ink, not gray */
+    --atlas-hairline: rgba(76, 39, 18, 0.08);
+    --atlas-hairline-strong: rgba(76, 39, 18, 0.14);
+    --atlas-hairline-vermillion: rgba(149, 37, 9, 0.30);
+
+    /* Elevation scale — warm cocoa-tinted shadows, never gray.
+       1 = card at rest. 2 = card hover. 3 = modal / popover / sticky. */
+    --atlas-elev-1:
+      0 1px 2px rgba(76, 39, 18, 0.04),
+      0 2px 8px rgba(76, 39, 18, 0.03);
+    --atlas-elev-2:
+      0 2px 4px rgba(76, 39, 18, 0.05),
+      0 12px 28px rgba(120, 53, 15, 0.08);
+    --atlas-elev-3:
+      0 4px 8px rgba(76, 39, 18, 0.06),
+      0 24px 56px rgba(120, 53, 15, 0.12);
+
+    /* Section alternation tones used by getToneClass + .section-band */
+    --atlas-tone-paper: var(--atlas-surface-paper);
+    --atlas-tone-band: var(--atlas-surface-band);
   }
 
   html {
@@ -54,19 +94,29 @@
     color: rgb(var(--foreground));
   }
 
-  /* Subtle warm gradient under the top of every page, gives the page a sense
-     of depth without competing with content. Fades to background by 600px. */
+  /* Page surface: warm paper with a barely-visible compass pattern at the
+     top edge fading to clean cream by 800px. The pattern reads as paper
+     texture, not as decorative dots. Cards sit on this surface; their
+     warm shadows do the seating work. */
   body {
     font-feature-settings: "ss01" on, "cv11" on;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    background-image: linear-gradient(
-      180deg,
-      var(--hero-fade) 0%,
-      rgb(var(--background)) 600px
-    );
-    background-attachment: scroll;
-    background-repeat: no-repeat;
+    background-color: var(--atlas-surface-paper);
+    background-image:
+      linear-gradient(
+        180deg,
+        rgba(244, 230, 211, 0.55) 0%,
+        rgba(250, 250, 250, 0) 800px
+      ),
+      radial-gradient(
+        circle at 1px 1px,
+        rgba(149, 37, 9, 0.05) 1px,
+        transparent 0
+      );
+    background-size: auto, 22px 22px;
+    background-attachment: scroll, scroll;
+    background-repeat: no-repeat, repeat;
     /* Plan v14 A.1 (T-A1.2) — kill the brief horizontal scrollbar that the
        homepage hero's full-bleed trick (`-mx-[50vw] w-screen`) can introduce
        on viewports with a vertical scrollbar. `w-screen` resolves to 100vw,
@@ -186,33 +236,132 @@
     white-space: nowrap;
   }
 
-  /* Card surface — paper-feel, warm shadow, parchment border */
+  /* ==========================================================================
+     ATLAS CARD SYSTEM — one canonical surface, three variants.
+
+     .atlas-card        Canonical white article-card laid on paper.
+     .atlas-card-soft   Secondary card within a card section.
+     .atlas-card-band   Lighter touch for cards sitting on a solid white band.
+
+     Hover behavior: a 2px vermillion top edge fades in, the card lifts 1px,
+     shadow deepens warmly. Editorial gesture — magazine page being picked
+     up. No 4-sided border-color flash, no glass-blur, no ring.
+     ========================================================================== */
+
+  .atlas-card {
+    position: relative;
+    background: var(--atlas-surface-card);
+    border-radius: 1rem; /* rounded-2xl */
+    border: 1px solid var(--atlas-hairline);
+    box-shadow: var(--atlas-elev-1);
+    transition:
+      box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 220ms ease-out,
+      transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Vermillion top edge that appears on hover — like dog-earing a page. */
+  .atlas-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 1rem;
+    right: 1rem;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgb(var(--primary) / 0) 10%,
+      rgb(var(--primary) / 0.85) 50%,
+      rgb(var(--primary) / 0) 90%,
+      transparent 100%
+    );
+    border-radius: 1px;
+    opacity: 0;
+    transition: opacity 220ms ease-out;
+    pointer-events: none;
+  }
+
+  /* Hover state — applies to <a>, <button>, and elements explicitly marked. */
+  a.atlas-card:hover,
+  button.atlas-card:hover,
+  .atlas-card.is-hover {
+    border-color: var(--atlas-hairline-strong);
+    box-shadow: var(--atlas-elev-2);
+    transform: translateY(-1px);
+  }
+  a.atlas-card:hover::before,
+  button.atlas-card:hover::before,
+  .atlas-card.is-hover::before {
+    opacity: 1;
+  }
+
+  /* Soft variant — for "secondary content within a primary card section",
+     e.g., a footnote panel inside a card, or a Premium teaser block. The
+     surface is a quiet warm cream that hangs together with the body paper
+     but reads as a distinct callout. No top-edge accent on hover. */
+  .atlas-card-soft {
+    background: var(--atlas-surface-card-soft);
+    border-radius: 1rem;
+    border: 1px solid var(--atlas-hairline);
+    box-shadow: none;
+  }
+
+  /* Band variant — for cards sitting on a solid white section background.
+     Slightly lighter shadow because the surrounding contrast does the
+     seating work. Still uses the top-edge hover accent. */
+  .atlas-card-band {
+    position: relative;
+    background: var(--atlas-surface-card);
+    border-radius: 1rem;
+    border: 1px solid var(--atlas-hairline);
+    box-shadow:
+      0 1px 1px rgba(76, 39, 18, 0.03);
+    transition:
+      box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 220ms ease-out,
+      transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  a.atlas-card-band:hover,
+  button.atlas-card-band:hover,
+  .atlas-card-band.is-hover {
+    border-color: var(--atlas-hairline-strong);
+    box-shadow: var(--atlas-elev-1);
+    transform: translateY(-1px);
+  }
+
+  /* Section bands — alternating between paper (body) and solid white.
+     Drop these on a section wrapper to override the body background for
+     a data-dense range of the page. */
+  .section-band-paper {
+    background: transparent; /* body paper shows through */
+  }
+  .section-band-white {
+    background: var(--atlas-surface-band);
+  }
+
+  /* ----------------------------------------------------------
+     Backward compatibility: .card and .card-cream are kept as
+     aliases of the new tokens so existing call sites continue
+     rendering. Components migrate to .atlas-card lazily.
+     ---------------------------------------------------------- */
   .card {
-    @apply bg-white rounded-2xl p-6;
-    border: 1px solid #DDDDDD; /* parchment */
-    box-shadow:
-      0 1px 2px rgba(76, 39, 18, 0.04),
-      0 0 0 1px rgba(76, 39, 18, 0.02);
+    @apply atlas-card p-6;
   }
 
-  .card:hover {
-    box-shadow:
-      0 6px 18px rgba(120, 53, 15, 0.08),
-      0 0 0 1px rgba(217, 119, 6, 0.18);
-    transition: box-shadow 0.18s ease, border-color 0.18s ease;
-  }
-
-  /* Variant: cream surface for "interior" cards within already-cream sections */
   .card-cream {
-    @apply rounded-2xl p-6;
-    background: #F5F5F5;       /* cream-100 */
-    border: 1px solid #DDDDDD; /* parchment */
+    @apply atlas-card-soft p-6;
   }
 
   /* Variant: warm sub-divider for sections that need a soft separator */
   .hairline {
     height: 1px;
-    background: linear-gradient(90deg, transparent 0%, #DDDDDD 50%, transparent 100%);
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--atlas-hairline-strong) 50%,
+      transparent 100%
+    );
   }
 
   /* Subtle pill — for category labels, badges, tier ratings */
