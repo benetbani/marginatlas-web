@@ -18,6 +18,11 @@ import neighborhoodsJson from "../../../../../data/cities/neighborhoods_v1.json"
 import { CountryFlag } from "@/components/CountryFlag";
 import { COUNTRIES } from "@/lib/taxonomy";
 import { getNeighborhoodFlavor } from "@/lib/cities/neighborhood_flavor";
+import {
+  getNeighborhoodMultiplier,
+  hasNeighborhoodIntensity,
+  tagLabel,
+} from "@/lib/economics/neighborhood_multipliers";
 
 export const revalidate = 43200;
 
@@ -99,7 +104,8 @@ export default async function NeighborhoodHub({
       </h1>
       <p className="text-base md:text-lg text-cocoa-700/80 mb-10 max-w-2xl">
         {scheme.neighborhoods.length} sub-areas, each with its own
-        character and headline small-business industry.
+        character, anomaly tags, and revenue adjustment for a small
+        business opening here vs the city baseline.
       </p>
 
       <div className="space-y-4">
@@ -107,6 +113,21 @@ export default async function NeighborhoodHub({
           const headline = CHARACTER_HEADLINE[n.character] || { industry: "restaurants", name: "Restaurants" };
           // Plan v30 Lane 2 — surface deep flavor data when populated.
           const flavor = getNeighborhoodFlavor(slug, n.slug);
+          // Phase 1 commuter+tourism+tag framework (2026-05-25): the
+          // multiplier breakdown for a default activity (restaurants
+          // — the most universal SMB benchmark). Future versions
+          // expose an activity selector here.
+          const mult = getNeighborhoodMultiplier(slug, n.slug, "restaurants");
+          const hasIntensity = hasNeighborhoodIntensity(slug, n.slug);
+          const multPct = Math.round((mult.final - 1) * 100);
+          const multColor =
+            mult.final > 1.15
+              ? "#14532D"
+              : mult.final > 1.0
+                ? "#16A34A"
+                : mult.final > 0.85
+                  ? "#CA8A04"
+                  : "#7F1D1D";
           return (
             <Link
               key={n.slug}
@@ -122,15 +143,23 @@ export default async function NeighborhoodHub({
                     <span className="text-[10px] uppercase tracking-wide font-semibold text-cocoa-700/60 bg-cream-100 border border-parchment rounded-full px-2 py-0.5">
                       {n.character.replace(/-/g, " ")}
                     </span>
+                    {/* Anomaly tags from the new framework. */}
+                    {hasIntensity &&
+                      mult.appliedTags
+                        .filter((t) => t !== "residential_only")
+                        .slice(0, 3)
+                        .map((t) => (
+                          <span
+                            key={t}
+                            className="text-[10px] uppercase tracking-wide font-semibold text-atlas-700 bg-atlas-50 border border-atlas-200 rounded-full px-2 py-0.5"
+                          >
+                            {tagLabel(t)}
+                          </span>
+                        ))}
                     {flavor && (
-                      <>
-                        <span className="text-[10px] uppercase tracking-wide font-semibold text-atlas-700 bg-atlas-50 border border-atlas-200 rounded-full px-2 py-0.5">
-                          {flavor.price_tier}
-                        </span>
-                        <span className="text-[10px] uppercase tracking-wide font-semibold text-cocoa-700/60 bg-cream-100 border border-parchment rounded-full px-2 py-0.5">
-                          walks {flavor.walkability}
-                        </span>
-                      </>
+                      <span className="text-[10px] uppercase tracking-wide font-semibold text-cocoa-700/60 bg-cream-100 border border-parchment rounded-full px-2 py-0.5">
+                        walks {flavor.walkability}
+                      </span>
                     )}
                   </div>
                   {flavor ? (
@@ -143,12 +172,31 @@ export default async function NeighborhoodHub({
                     </p>
                   ) : null}
                 </div>
-                <div className="hidden md:block text-right shrink-0">
-                  <div className="text-[10px] uppercase tracking-wide text-cocoa-700/60 font-semibold mb-1">
-                    Headline
-                  </div>
-                  <div className="text-sm font-medium text-atlas-700">
-                    {headline.name} →
+                <div className="hidden md:flex flex-col items-end gap-3 shrink-0">
+                  {hasIntensity && (
+                    <div className="text-right">
+                      <div className="text-[10px] uppercase tracking-wide text-cocoa-700/60 font-semibold mb-1">
+                        Restaurant revenue vs city
+                      </div>
+                      <div
+                        className="font-display text-xl font-semibold tabular-nums leading-none"
+                        style={{ color: multColor }}
+                      >
+                        {multPct >= 0 ? "+" : ""}
+                        {multPct}%
+                      </div>
+                      <div className="text-[10px] text-cocoa-700/55 mt-1 tabular-nums">
+                        commuter {mult.commuter.toFixed(2)}× | tourism {mult.tourism.toFixed(2)}× | tags {mult.tags.toFixed(2)}×
+                      </div>
+                    </div>
+                  )}
+                  <div className="text-right">
+                    <div className="text-[10px] uppercase tracking-wide text-cocoa-700/60 font-semibold mb-1">
+                      Headline
+                    </div>
+                    <div className="text-sm font-medium text-atlas-700">
+                      {headline.name} →
+                    </div>
                   </div>
                 </div>
               </div>

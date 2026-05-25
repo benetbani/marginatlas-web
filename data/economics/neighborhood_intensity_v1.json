@@ -1,0 +1,160 @@
+{
+  "version": "1.0.0",
+  "anchor": "Phase 1 seed for the commuter + tourism + anomaly-tag framework. See docs/strategy/2026-05-25-COMMUTER-TOURISM-NEIGHBORHOOD-FRAMEWORK.md for the full spec. Keyed by city_slug.neighborhood_slug. Numbers are approximations from public stats offices (US LEHD, UK ONS, FR INSEE Mobilités) plus city tourism boards (NYCgo, Visit London, Atout France). Refresh annually.",
+  "convention": {
+    "commuter_intensity": "daytime_population / nighttime_residential_population",
+    "tourism_intensity": "annual_visitors_per_resident (overnight + day-trippers)",
+    "tags": "array of anomaly tags from the 13-tag system",
+    "primary_tag": "the most decision-relevant tag for badge display",
+    "source_quality": "A = block-level stats, B = district-level, C = estimate from city tier"
+  },
+  "tag_definitions": {
+    "financial_cbd": "Banking + corporate HQ density; lunch + B2B services dominate",
+    "tourist_zone": "Annual tourist count > 10x resident pop",
+    "luxury_district": "Median household wealth top decile + retail rent top 5%",
+    "free_economic_zone": "Special tax + customs regime",
+    "university_district": "Full-time students > 15% of resident pop",
+    "industrial_park": "Manufacturing payroll > 50% of district",
+    "tech_corridor": "Software/IT payroll density + high tertiary education",
+    "embassy_quarter": "Foreign mission + expat consulate density",
+    "medical_cluster": "Hospital + clinic density > 25% of payroll",
+    "transit_hub": "Daily transit pop > 200K",
+    "gentrifying_edge": "Rents climbing >10% YoY for 3+ years",
+    "nightlife_zone": "Bar + club density top 5%, weekend foot 2x weekday",
+    "religious_pilgrimage": "Annual pilgrim count > 100K AND > 10x resident pop",
+    "residential_only": "Default - no special tags apply"
+  },
+  "neighborhoods": {
+    "new-york.manhattan": {
+      "commuter_intensity": 3.8,
+      "tourism_intensity": 35,
+      "tags": ["financial_cbd", "tourist_zone", "transit_hub", "luxury_district"],
+      "primary_tag": "financial_cbd",
+      "year": 2023,
+      "source_quality": "B",
+      "notes": "Composite — Manhattan as a whole. Real intra-borough variance is huge (FiDi 6.2 vs Harlem 0.7). Future v2 splits into 4-6 sub-zones."
+    },
+    "new-york.brooklyn": {
+      "commuter_intensity": 0.9,
+      "tourism_intensity": 4.5,
+      "tags": ["residential_only", "gentrifying_edge"],
+      "primary_tag": "gentrifying_edge",
+      "year": 2023,
+      "source_quality": "B",
+      "notes": "Williamsburg + DUMBO gentrifying; Bushwick + Brownsville pure residential."
+    },
+    "new-york.queens": {
+      "commuter_intensity": 0.7,
+      "tourism_intensity": 1.8,
+      "tags": ["residential_only", "transit_hub"],
+      "primary_tag": "residential_only",
+      "year": 2023,
+      "source_quality": "B",
+      "notes": "JFK + LaGuardia drive transit_hub tag; Astoria is gentrifying but smaller share of borough."
+    },
+    "new-york.bronx": {
+      "commuter_intensity": 0.5,
+      "tourism_intensity": 0.3,
+      "tags": ["residential_only"],
+      "primary_tag": "residential_only",
+      "year": 2023,
+      "source_quality": "B"
+    },
+    "new-york.staten-island": {
+      "commuter_intensity": 0.4,
+      "tourism_intensity": 0.2,
+      "tags": ["residential_only"],
+      "primary_tag": "residential_only",
+      "year": 2023,
+      "source_quality": "B"
+    },
+    "london.central-london": {
+      "commuter_intensity": 4.2,
+      "tourism_intensity": 28,
+      "tags": ["financial_cbd", "tourist_zone", "transit_hub", "luxury_district"],
+      "primary_tag": "financial_cbd",
+      "year": 2023,
+      "source_quality": "A",
+      "notes": "City of London + Westminster + Camden. The City alone has commuter_intensity ~8."
+    },
+    "london.north-london": {
+      "commuter_intensity": 1.2,
+      "tourism_intensity": 6,
+      "tags": ["residential_only", "nightlife_zone"],
+      "primary_tag": "nightlife_zone",
+      "year": 2023,
+      "source_quality": "B",
+      "notes": "Islington + Camden Town + Hampstead — creative + residential mix."
+    },
+    "london.south-london": {
+      "commuter_intensity": 0.9,
+      "tourism_intensity": 3,
+      "tags": ["residential_only", "gentrifying_edge"],
+      "primary_tag": "residential_only",
+      "year": 2023,
+      "source_quality": "B"
+    },
+    "london.east-london": {
+      "commuter_intensity": 1.6,
+      "tourism_intensity": 4,
+      "tags": ["tech_corridor", "gentrifying_edge"],
+      "primary_tag": "tech_corridor",
+      "year": 2023,
+      "source_quality": "A",
+      "notes": "Shoreditch + Hackney + Stratford — Tech City + Olympic regeneration."
+    },
+    "london.west-london": {
+      "commuter_intensity": 1.4,
+      "tourism_intensity": 8,
+      "tags": ["luxury_district", "embassy_quarter"],
+      "primary_tag": "luxury_district",
+      "year": 2023,
+      "source_quality": "A",
+      "notes": "Kensington + Chelsea + Mayfair — premium residential, embassies, designer retail."
+    },
+    "paris.right-bank-central": {
+      "commuter_intensity": 3.6,
+      "tourism_intensity": 32,
+      "tags": ["tourist_zone", "luxury_district", "transit_hub", "financial_cbd"],
+      "primary_tag": "tourist_zone",
+      "year": 2023,
+      "source_quality": "A",
+      "notes": "1st-4th arrondissements - Louvre, Marais, Les Halles. Louvre alone draws 9M tourists/year."
+    },
+    "paris.left-bank-central": {
+      "commuter_intensity": 1.8,
+      "tourism_intensity": 18,
+      "tags": ["university_district", "tourist_zone", "luxury_district"],
+      "primary_tag": "university_district",
+      "year": 2023,
+      "source_quality": "A",
+      "notes": "5th-7th arrondissements - Sorbonne, Latin Quarter, Saint-Germain."
+    },
+    "paris.north-periphery": {
+      "commuter_intensity": 0.9,
+      "tourism_intensity": 6,
+      "tags": ["residential_only", "gentrifying_edge"],
+      "primary_tag": "residential_only",
+      "year": 2023,
+      "source_quality": "B",
+      "notes": "18th-20th arrondissements - Montmartre tourism in 18th but mostly residential."
+    },
+    "paris.south-periphery": {
+      "commuter_intensity": 1.4,
+      "tourism_intensity": 3,
+      "tags": ["tech_corridor", "university_district"],
+      "primary_tag": "tech_corridor",
+      "year": 2023,
+      "source_quality": "B",
+      "notes": "13th-15th arrondissements - Station F, university campuses."
+    }
+  },
+  "city_defaults": {
+    "new-york": { "commuter_intensity": 1.5, "tourism_intensity": 8 },
+    "london": { "commuter_intensity": 1.6, "tourism_intensity": 10 },
+    "paris": { "commuter_intensity": 1.8, "tourism_intensity": 18 },
+    "tokyo": { "commuter_intensity": 1.4, "tourism_intensity": 3 },
+    "berlin": { "commuter_intensity": 1.2, "tourism_intensity": 5 },
+    "default": { "commuter_intensity": 1.0, "tourism_intensity": 2 }
+  }
+}
