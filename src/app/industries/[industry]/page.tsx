@@ -16,6 +16,7 @@ import {
   resolveToMeasuredIndustry,
 } from "@/lib/taxonomy";
 import { getSameIndustryAcrossCountries } from "@/lib/cells";
+import { purifyCountries } from "@/lib/geo/is_sovereign_country";
 import { CountryFlag } from "@/components/CountryFlag";
 import { RevenueTiles } from "@/components/RevenueTiles";
 import { RevenueDistribution } from "@/components/RevenueDistribution";
@@ -83,9 +84,13 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
   const sector = ind ? SECTOR_BY_ID[ind.sector_id] : null;
   const margin = lookupIndustryMargin(ind.id);
 
-  // "Top countries" by revenue-per-firm proxy via extrapolated_cells —
+  // "Top countries" by revenue-per-firm proxy via extrapolated_cells,
   // pass an empty exclude so we get the global ranking.
-  const topCountries = await getSameIndustryAcrossCountries(industry, "", 10);
+  // v34 sanity sweep §5: purify (filter to sovereigns + dedupe by iso2)
+  // before any downstream use. Fixes the "Denmark x3" bug on auto_dealers
+  // and the city/state contamination on every industry page.
+  const topCountriesRaw = await getSameIndustryAcrossCountries(industry, "", 20);
+  const topCountries = purifyCountries(topCountriesRaw, (c) => c.country).slice(0, 10);
 
   // Aggregate percentiles across geographies for industry-tiles + distribution.
   // The extrapolated_cells data set doesn't carry p10/p90 percentiles, so we
@@ -206,29 +211,23 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
             Top countries for {ind.name.toLowerCase()}
           </h2>
           <div className="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {topCountries
-              .filter((c) => {
-                const iso2 = (c.country || "").toUpperCase();
-                return iso2.length === 2 && COUNTRIES.some((x) => x.code === iso2);
-              })
-              .slice(0, 9)
-              .map((c) => {
-                const iso2 = c.country.toUpperCase();
-                const countryRow = COUNTRIES.find((x) => x.code === iso2);
-                const countryName = countryRow?.name ?? iso2;
-                return (
-                  <a
-                    key={iso2}
-                    href={`/${iso2.toLowerCase()}`}
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl border border-cream-300 bg-white hover:border-atlas-600 hover:shadow-[0_6px_18px_rgba(120,53,15,0.08)] transition"
-                  >
-                    <CountryFlag iso2={iso2} className="w-6" />
-                    <span className="text-sm font-semibold text-ink-900">
-                      {countryName}
-                    </span>
-                  </a>
-                );
-              })}
+            {topCountries.slice(0, 9).map((c) => {
+              const iso2 = c.country.toUpperCase();
+              const countryRow = COUNTRIES.find((x) => x.code === iso2);
+              const countryName = countryRow?.name ?? iso2;
+              return (
+                <a
+                  key={iso2}
+                  href={`/${iso2.toLowerCase()}`}
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl border border-cream-300 bg-white hover:border-atlas-600 hover:shadow-[0_6px_18px_rgba(120,53,15,0.08)] transition"
+                >
+                  <CountryFlag iso2={iso2} className="w-6" />
+                  <span className="text-sm font-semibold text-ink-900">
+                    {countryName}
+                  </span>
+                </a>
+              );
+            })}
           </div>
         </section>
       )}

@@ -17,17 +17,26 @@ type Props = {
   industries: Industry[];
 };
 
+// v34 sanity sweep §5 country/city contamination purge.
+// Every entry below is labelled with the COUNTRY name. The geo slug
+// is whatever has the best data quality for that country (often a
+// big city or state proxy when country-level data is missing) but
+// the visible name is always the sovereign country. NEVER mix.
+//
+// Was (pre-fix): name = "California", "Madrid", "São Paulo", "Mexico City"
+// rendered alongside "Netherlands", "Italy" etc. Catastrophic trust hit
+// (founder feedback 2026-05-25).
 const COUNTRIES_TO_SAMPLE: { iso2: string; geo: string; name: string }[] = [
-  { iso2: "US", geo: "california", name: "California" },
+  { iso2: "US", geo: "california", name: "United States" },
   { iso2: "GB", geo: "gb", name: "United Kingdom" },
   { iso2: "DE", geo: "germany", name: "Germany" },
   { iso2: "FR", geo: "france", name: "France" },
-  { iso2: "ES", geo: "madrid", name: "Madrid" },
+  { iso2: "ES", geo: "madrid", name: "Spain" },
   { iso2: "IT", geo: "italy", name: "Italy" },
   { iso2: "NL", geo: "netherlands", name: "Netherlands" },
   { iso2: "JP", geo: "japan", name: "Japan" },
-  { iso2: "BR", geo: "br-sp", name: "São Paulo" },
-  { iso2: "MX", geo: "mx-cmx", name: "Mexico City" },
+  { iso2: "BR", geo: "br-sp", name: "Brazil" },
+  { iso2: "MX", geo: "mx-cmx", name: "Mexico" },
   { iso2: "AU", geo: "australia", name: "Australia" },
   { iso2: "IN", geo: "india", name: "India" },
 ];

@@ -16,6 +16,7 @@ import {
   withBudget,
 } from "@/lib/cells";
 import { INDUSTRIES, industryToSlug } from "@/lib/taxonomy";
+import { purifyCountries } from "@/lib/geo/is_sovereign_country";
 import { iso2ToName } from "@/lib/countries";
 import { CountryFlag } from "@/components/CountryFlag";
 import { RevenueTiles } from "@/components/RevenueTiles";
@@ -284,6 +285,11 @@ export default async function CellPage({
         ),
     withBudget(getNudgeNeighbor(cell), null, 4_000, "getNudgeNeighbor"),
   ]);
+
+  // v34 sanity sweep §5: purify the across-countries cells (filter to
+  // sovereign ISO2, dedupe). Prevents the city/state contamination and
+  // duplicate-country bugs the founder reported.
+  const acrossCountriesPure = purifyCountries(acrossCountries, (c) => c.country);
 
   // Build region + industry option lists for switcher
   const regions = listUsStates();
@@ -829,7 +835,7 @@ export default async function CellPage({
         <AcrossCountriesStrip
           industryName={cell.industry_name || industry.replace(/-/g, " ")}
           currentCountryName={cell.geo_name || geo}
-          cells={acrossCountries}
+          cells={acrossCountriesPure}
         />
       )}
 
