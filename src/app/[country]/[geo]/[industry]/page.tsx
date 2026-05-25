@@ -13,6 +13,7 @@ import {
   distinctYears,
   buildTimeSeries,
   listUsStates,
+  withBudget,
 } from "@/lib/cells";
 import { INDUSTRIES, industryToSlug } from "@/lib/taxonomy";
 import { iso2ToName } from "@/lib/countries";
@@ -234,29 +235,54 @@ export default async function CellPage({
   const currentSize: string | null = null;
   const currentYear: number | null = null;
 
+  // v34 sanity §3 cell-page hang fix. Every secondary fetch is now
+  // wrapped in withBudget(). If any Supabase query is slow, the page
+  // still renders with empty data for that section instead of hanging
+  // the whole route until Vercel kills it at maxDuration=60s.
   const [cell, variants] = await Promise.all([
     getCellBySlug(country, geo, industry, {
       sizeBand: currentSize,
       year: currentYear,
     }),
-    getCellVariants(country, geo, industry),
+    withBudget(getCellVariants(country, geo, industry), [], 5_000, "getCellVariants"),
   ]);
   if (!cell) notFound();
   const availableSizes = distinctSizeBands(variants);
   const availableYears = distinctYears(variants);
   const timeSeries = buildTimeSeries(variants);
 
-  // YoY change for headline stats — compares current year to prior year on the
+  // YoY change for headline stats. Compares current year to prior year on the
   // same series.
   const yoy = computeYoY(timeSeries, cell.year);
 
   // Fan out the remaining data fetches concurrently. None block the others.
+  // Every one wrapped in withBudget so a single slow query cannot hang the
+  // entire page render.
   const isUsCell = country.toLowerCase() === "us";
   const [comparables, acrossStates, acrossCountries, nudge] = await Promise.all([
-    getComparableCells(cell.geo_name || "", cell.naics_6 || undefined, 6),
-    isUsCell ? getSameIndustryAcrossStates(industry, cell.geo_id, 10) : Promise.resolve([]),
-    isUsCell ? Promise.resolve([]) : getSameIndustryAcrossCountries(industry, country, 10),
-    getNudgeNeighbor(cell),
+    withBudget(
+      getComparableCells(cell.geo_name || "", cell.naics_6 || undefined, 6),
+      [],
+      4_000,
+      "getComparableCells",
+    ),
+    isUsCell
+      ? withBudget(
+          getSameIndustryAcrossStates(industry, cell.geo_id, 10),
+          [],
+          4_000,
+          "getSameIndustryAcrossStates",
+        )
+      : Promise.resolve([]),
+    isUsCell
+      ? Promise.resolve([])
+      : withBudget(
+          getSameIndustryAcrossCountries(industry, country, 10),
+          [],
+          4_000,
+          "getSameIndustryAcrossCountries",
+        ),
+    withBudget(getNudgeNeighbor(cell), null, 4_000, "getNudgeNeighbor"),
   ]);
 
   // Build region + industry option lists for switcher

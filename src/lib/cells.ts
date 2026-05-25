@@ -481,6 +481,12 @@ export type CellSelector = {
  * timeout never fires.
  */
 const CELL_LOOKUP_BUDGET_MS = 25_000;
+// v34 sanity §3 cell-page hang fix. Every secondary fetch on the cell
+// page must complete in under SECONDARY_BUDGET_MS or fall back to an
+// empty default. Without this guard, a single slow Supabase query
+// would block the entire page render until Vercel kills the function
+// at maxDuration=60s, which is exactly the symptom the founder saw.
+const SECONDARY_BUDGET_MS = 4_000;
 
 async function withTimeout<T>(p: Promise<T>, ms: number): Promise<T | null> {
   let to: ReturnType<typeof setTimeout> | null = null;
@@ -492,6 +498,25 @@ async function withTimeout<T>(p: Promise<T>, ms: number): Promise<T | null> {
   } finally {
     if (to) clearTimeout(to);
   }
+}
+
+/** v34 sanity §3 helper: wrap a fetch with a tight budget, returning
+ * a caller-supplied default value on timeout (NOT null) so the caller
+ * can keep its return type. Logs a single warn so a chronically slow
+ * query is visible in production logs. */
+export async function withBudget<T>(
+  p: Promise<T>,
+  defaultValue: T,
+  ms = SECONDARY_BUDGET_MS,
+  label = "secondary-fetch",
+): Promise<T> {
+  const result = await withTimeout(p, ms);
+  if (result === null) {
+    // eslint-disable-next-line no-console
+    console.warn(`[cells] ${label} exceeded ${ms}ms budget, falling back`);
+    return defaultValue;
+  }
+  return result;
 }
 
 export async function getCellBySlug(
