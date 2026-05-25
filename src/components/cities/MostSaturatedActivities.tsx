@@ -13,6 +13,7 @@
 
 import { INDUSTRY_BY_ID, industryToSlug } from "@/lib/taxonomy";
 import { getBrainPopulationByIso2 } from "@/lib/external/brain_data";
+import { BarList } from "@/components/ui/bar-list";
 
 // Firm density per 1,000 population in a typical developed economy.
 // Cross-referenced from World Bank Enterprise Surveys + Eurostat SBS
@@ -82,36 +83,24 @@ export function MostSaturatedActivities({
         Firms per 1,000 inhabitants, ranked. The top of this list is
         what you compete against in volume; the bottom is thinner ground.
       </p>
-      <div className="rounded-2xl border border-parchment bg-white overflow-hidden">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="bg-cream-100 border-b border-parchment">
-              <th className="text-left px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
-                Activity
-              </th>
-              <th className="text-right px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
-                Per 1,000 people
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {top.map((r) => (
-              <tr key={r.id} className="border-t border-parchment">
-                <td className="px-4 py-3 text-ink-900 font-medium">
-                  <a
-                    href={`/${countryIso2.toLowerCase()}/${countryIso2.toLowerCase()}/${r.slug}`}
-                    className="hover:text-atlas-700 transition-colors"
-                  >
-                    {r.name}
-                  </a>
-                </td>
-                <td className="px-4 py-3 text-right tabular-nums text-ink-900 font-semibold">
-                  {r.densityPer1K.toFixed(2)}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="atlas-card px-4 py-3 md:px-5 md:py-4">
+        <div className="flex items-baseline justify-between mb-2">
+          <span className="text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
+            Activity
+          </span>
+          <span className="text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
+            Per 1,000 people
+          </span>
+        </div>
+        <BarList
+          data={top.map((r) => ({
+            name: r.name,
+            value: r.densityPer1K,
+            href: `/${countryIso2.toLowerCase()}/${countryIso2.toLowerCase()}/${r.slug}`,
+          }))}
+          sortOrder="desc"
+          valueFormatter={(n) => n.toFixed(2)}
+        />
       </div>
     </section>
   );

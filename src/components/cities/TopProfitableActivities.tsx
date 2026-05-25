@@ -22,6 +22,7 @@
 
 import industryMarginsJson from "@/lib/finance/industry_margins.json";
 import { INDUSTRY_BY_ID, industryToSlug } from "@/lib/taxonomy";
+import { BarList } from "@/components/ui/bar-list";
 
 type Row = {
   gross_margin?: number;
@@ -136,11 +137,13 @@ export function TopProfitableActivities({
           title="Most profitable"
           rows={top5}
           countryIso2={countryIso2}
+          tone="high"
         />
         <RankedList
           title="Least profitable"
           rows={bottom5}
           countryIso2={countryIso2}
+          tone="low"
         />
       </div>
     </section>
@@ -151,31 +154,34 @@ function RankedList({
   title,
   rows,
   countryIso2,
+  /**
+   * "high" = top performers (green bars to signal "good").
+   * "low"  = bottom performers (atlas red-amber to signal "warning").
+   */
+  tone,
 }: {
   title: string;
   rows: Ranked[];
   countryIso2: string;
+  tone: "high" | "low";
 }) {
+  const color = tone === "high" ? "rgb(22 101 52)" /* deep green */ : "rgb(149 37 9)" /* atlas-700 */;
   return (
-    <div className="rounded-2xl border border-parchment bg-white p-4 md:p-5">
+    <div className="atlas-card p-4 md:p-5">
       <div className="text-[11px] uppercase tracking-wide text-cocoa-700/70 font-semibold mb-3">
         {title}
       </div>
-      <ul className="space-y-1.5">
-        {rows.map((r) => (
-          <li key={r.id}>
-            <a
-              href={`/${countryIso2.toLowerCase()}/${countryIso2.toLowerCase()}/${r.slug}`}
-              className="flex items-baseline justify-between gap-3 py-1.5 px-2 -mx-2 rounded-md hover:bg-cream-100 transition-colors"
-            >
-              <span className="text-sm text-ink-900 truncate">{r.name}</span>
-              <span className="text-sm font-semibold text-ink-900 tabular-nums whitespace-nowrap">
-                {formatPct(r.netMargin)}
-              </span>
-            </a>
-          </li>
-        ))}
-      </ul>
+      <BarList
+        data={rows.map((r) => ({
+          name: r.name,
+          value: r.netMargin,
+          href: `/${countryIso2.toLowerCase()}/${countryIso2.toLowerCase()}/${r.slug}`,
+        }))}
+        valueFormatter={formatPct}
+        color={color}
+        sortOrder={tone === "high" ? "desc" : "asc"}
+        size="compact"
+      />
     </div>
   );
 }
