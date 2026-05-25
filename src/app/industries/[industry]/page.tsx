@@ -31,6 +31,7 @@ import {
 import { MarginWaterfall } from "@/components/MarginWaterfall";
 import industryMarginsJson from "@/lib/finance/industry_margins.json";
 import { INDUSTRY_PAGE_SECTIONS, getToneClass } from "@/lib/page-layout/section-order";
+import { getIndustryHero } from "@/lib/images/industry_heroes";
 
 void INDUSTRY_PAGE_SECTIONS;
 
@@ -87,6 +88,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
 
   const sector = ind ? SECTOR_BY_ID[ind.sector_id] : null;
   const margin = lookupIndustryMargin(ind.id);
+  const hero = getIndustryHero(ind.id);
 
   void INDUSTRY_BY_ID;
 
@@ -101,22 +103,62 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
         <span>{ind.name}</span>
       </nav>
 
-      {/* 1. hero */}
-      <section id="hero" className={`py-8 ${getToneClass("hero")}`}>
-        <header>
-          <div className="text-xs uppercase tracking-wide text-cream-300/80 font-medium">
-            {sector ? sector.name : "Activity"}
+      {/* 1. hero. Founder direction 2026-05-25: each activity surfaces
+         a representative photograph from the curated industries
+         manifest. When an image is available the hero is a full-bleed
+         photo with the activity name overlaid bottom-left, otherwise
+         it falls back to the legacy ink-dark editorial frame. */}
+      {hero ? (
+        <section
+          id="hero"
+          className="relative w-full h-[320px] md:h-[480px] overflow-hidden bg-ink-900 mb-8 -mx-4 md:-mx-6 rounded-none md:rounded-xl"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={hero.url}
+            alt={hero.alt}
+            className="w-full h-full object-cover"
+            style={{ filter: "contrast(1.04) saturate(0.92)" }}
+            loading="eager"
+          />
+          {/* Dark gradient for text legibility against any photograph. */}
+          <div className="absolute inset-0 bg-gradient-to-t from-ink-900/90 via-ink-900/35 to-ink-900/15" />
+          <div className="absolute inset-x-0 bottom-0 p-6 md:p-10">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-xs md:text-sm uppercase tracking-[0.18em] text-cream-200/85 font-semibold mb-2">
+                {sector ? sector.name : "Activity"}
+              </div>
+              <h1
+                className="font-display text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.04] text-cream-50"
+                style={{ whiteSpace: "normal" }}
+              >
+                {ind.name}
+              </h1>
+              {ind.examples && ind.examples.length > 0 && (
+                <p className="mt-3 text-base md:text-lg text-cream-200/85 max-w-2xl leading-relaxed">
+                  {ind.examples.slice(0, 4).join(" - ")}
+                </p>
+              )}
+            </div>
           </div>
-          <h1 className="mt-2 text-4xl md:text-6xl font-semibold tracking-tight text-cream-50">
-            {ind.name}
-          </h1>
-          {ind.examples && ind.examples.length > 0 && (
-            <p className="mt-4 text-lg text-cream-200/85 max-w-2xl leading-relaxed">
-              {ind.examples.slice(0, 4).join(" - ")}
-            </p>
-          )}
-        </header>
-      </section>
+        </section>
+      ) : (
+        <section id="hero" className={`py-8 ${getToneClass("hero")}`}>
+          <header>
+            <div className="text-xs uppercase tracking-wide text-cream-300/80 font-medium">
+              {sector ? sector.name : "Activity"}
+            </div>
+            <h1 className="mt-2 text-4xl md:text-6xl font-semibold tracking-tight text-cream-50">
+              {ind.name}
+            </h1>
+            {ind.examples && ind.examples.length > 0 && (
+              <p className="mt-4 text-lg text-cream-200/85 max-w-2xl leading-relaxed">
+                {ind.examples.slice(0, 4).join(" - ")}
+              </p>
+            )}
+          </header>
+        </section>
+      )}
 
       {/* 2. margin-waterfall: cost-structure margins from the curated
          industry_margins.json table. These ratios are stable across
