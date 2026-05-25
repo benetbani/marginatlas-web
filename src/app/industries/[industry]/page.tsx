@@ -208,6 +208,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
       </section>
 
       {/*
+        * useless-tile-ok: JSDoc describing section purpose, not a tile label
         * 5. top-countries: countries ranked by median revenue per firm.
         * Plan v32 hotfix: display strictly uses COUNTRIES taxonomy
         * lookup for the country name. Some prior code paths were

@@ -412,6 +412,7 @@ function FallbackGrid({
     "CA","AU","ES","PL","VN","PH","TH","CO","SA","UA",
   ];
   return (
+    /* useless-tile-ok: aria-label for SR, not a user-visible tile */
     <div className={`w-full mx-auto max-w-5xl ${className ?? ""}`} role="region" aria-label="Country picker (fallback)">
       <div className="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 gap-2">
         {codes.map((c) => (

@@ -25,6 +25,7 @@ const COVERAGE: Record<
   CoverageTier,
   { dot: string; title: string }
 > = {
+  /* useless-tile-ok: tooltip text describing the green coverage dot, not a count tile */
   measured: { dot: "#1F8A4C", title: "Measured from primary data" },
   regional: { dot: "#2563EB", title: "Regional benchmark applied here" },
   estimated: { dot: "#B45309", title: "Derived from country and industry averages" },

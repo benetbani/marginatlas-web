@@ -94,6 +94,7 @@ type Step = {
 const STEPS: Step[] = [
   {
     icon: Database,
+    /* useless-tile-ok: methodology-tier label, not a count-of-things tile */
     title: "Measured primary data",
     explain: "Audited filings and operator surveys feed cells where the sample is large enough.",
   },

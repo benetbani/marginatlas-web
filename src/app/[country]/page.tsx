@@ -146,6 +146,7 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
             <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
               What people actually run in {meta.name}
             </h2>
+            {/* useless-tile-ok: subtitle describes the ranking criterion, not a count of things we cover */}
             <p className="mt-1 text-sm text-ink-700/70">
               Activities ranked by how often they show up in the local small-business
               mix. Click any tile for the full benchmark.

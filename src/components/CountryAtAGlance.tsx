@@ -1,6 +1,7 @@
 /**
  * CountryAtAGlance — dense 5-stat row that sits directly under the
  * country page hero. Country-page rebuild §1 (2026-05-25): replaced
+ * /* useless-tile-ok: JSDoc names the removed tile, not rendered */
  * the old count-of-things tiles ("44 industries covered", "Cities
  * ranked 0", "Median typical revenue", "Top SMB sector", "Owner take
  * after CIT") with five facts a person evaluating starting a small

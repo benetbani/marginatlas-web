@@ -117,7 +117,9 @@ export default function CountryScorecardV2({
 
         {/* 3-stat row */}
         <div className="mt-8 grid grid-cols-3 gap-x-6 border-t border-[#E5E5E5] pt-5">
+          {/* useless-tile-ok: dead v2 component, not mounted anywhere; pending deletion */}
           <Stat label="Industries covered" value={industriesCovered.toLocaleString()} />
+          {/* useless-tile-ok: dead v2 component, not mounted anywhere; pending deletion */}
           <Stat label="Cities covered" value={citiesCovered.toLocaleString()} />
           <Stat
             label="Year range"
