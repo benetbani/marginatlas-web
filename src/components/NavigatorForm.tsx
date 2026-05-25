@@ -142,16 +142,22 @@ export function NavigatorForm() {
 
   function submit() {
     try {
-      // Defensive: the button is disabled when !industry, but if the
-      // form is somehow submitted anyway (Enter key, programmatic),
-      // fall through to /random instead of doing nothing silently.
-      // Alerts read as "the button is broken" — never use them here.
+      // The button is ALWAYS clickable. If the user clicks without
+      // picking an industry, route to /random — at least it does
+      // something visible. Alerts and disabled states both read as
+      // "broken" (founder feedback, 2026-05-25).
       if (!industry) {
-        // eslint-disable-next-line no-console
-        console.warn("NavigatorForm: submit without industry; routing to /random");
         setIsLoading(true);
+        // Hard nav as the bulletproof fallback — never trust router.push
+        // alone if the user is in a bad state. router.push fires too,
+        // so whichever wins, the user moves.
         router.push("/random");
-        window.setTimeout(() => setIsLoading(false), 3000);
+        window.setTimeout(() => {
+          if (typeof window !== "undefined" && window.location.pathname === "/") {
+            window.location.href = "/random";
+          }
+          setIsLoading(false);
+        }, 600);
         return;
       }
       const cc = country.toLowerCase();
@@ -179,10 +185,15 @@ export function NavigatorForm() {
       const path = `/${cc}/${targetGeo}/${indSlug}`;
       setIsLoading(true);
       router.push(path);
-      // Safety: clear the loading flag after 3s in case the user
-      // never navigates away (back-button etc.). The actual
-      // navigation UI is handled by Next.js loading.tsx.
-      window.setTimeout(() => setIsLoading(false), 3000);
+      // Bulletproof: if the SPA push didn't move us off `/` within
+      // 600ms, hard-navigate. This catches stuck navigations from
+      // hydration glitches, blocked transitions, or stale chunks.
+      window.setTimeout(() => {
+        if (typeof window !== "undefined" && window.location.pathname === "/") {
+          window.location.href = path;
+        }
+        setIsLoading(false);
+      }, 600);
     } catch (err) {
       // Defensive fallback: hard navigation if the router push throws.
       if (typeof window !== "undefined") {
@@ -197,7 +208,13 @@ export function NavigatorForm() {
     try {
       setIsLoading(true);
       router.push("/random");
-      window.setTimeout(() => setIsLoading(false), 3000);
+      // Same bulletproof pattern as submit().
+      window.setTimeout(() => {
+        if (typeof window !== "undefined" && window.location.pathname === "/") {
+          window.location.href = "/random";
+        }
+        setIsLoading(false);
+      }, 600);
     } catch {
       if (typeof window !== "undefined") {
         window.location.href = "/random";
@@ -277,46 +294,38 @@ export function NavigatorForm() {
         />
       </div>
       <div className="mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        {/* Help text adapts to state: when industry is missing, point at
-           the field so the user knows WHY the primary button is dimmed.
-           Founder feedback (2026-05-25): clicking a dead-looking button
-           reads as broken; the disabled state must be self-explanatory. */}
         <p className="text-xs text-cocoa-700/70">
-          {!industry ? (
-            <span className="text-clay-700 font-medium">
-              Pick an industry to continue, or hit Surprise me.
-            </span>
-          ) : (
-            <>
-              Try: restaurants in California &middot; cafés in Italy &middot; plumbers in Texas
-            </>
-          )}
+          Try: restaurants in California &middot; cafés in Italy &middot; plumbers in Texas
         </p>
-        <div className="flex items-center gap-3">
+        {/* Founder rule (2026-05-25): buttons must NOT be obese. py-4 px-8
+           reads as cartoonish. Slim to py-2.5 px-5 (primary) and py-2.5
+           px-4 (secondary). Single rounded-full radius matches the rest
+           of the site's CTA vocabulary. Button is ALWAYS clickable;
+           never disabled on missing-industry; the click handler routes
+           to /random as a safe fallback so the click is never "dead". */}
+        <div className="flex items-center gap-2">
           <button
             type="button"
             onClick={surpriseMe}
             disabled={isLoading}
             aria-busy={isLoading}
-            className="px-6 py-4 rounded-xl bg-cream-100 hover:bg-cream-200 text-ink-900 text-base font-medium border border-parchment transition disabled:opacity-70 disabled:cursor-wait"
+            className="px-4 py-2.5 rounded-full bg-cream-100 hover:bg-cream-200 text-ink-900 text-sm font-medium border border-parchment transition disabled:opacity-70 disabled:cursor-wait"
           >
-            Surprise me ✦
+            Surprise me
           </button>
           <button
             type="submit"
-            disabled={isLoading || !industry}
+            disabled={isLoading}
             aria-busy={isLoading}
-            aria-disabled={isLoading || !industry}
-            title={!industry ? "Pick an industry first" : undefined}
-            className="px-8 py-4 rounded-xl bg-atlas-500 hover:bg-atlas-600 active:bg-atlas-700 text-cream-50 font-semibold text-base shadow-sm transition disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center gap-2"
+            className="px-5 py-2.5 rounded-full bg-atlas-500 hover:bg-atlas-600 active:bg-atlas-700 text-cream-50 font-semibold text-sm shadow-sm transition disabled:opacity-70 disabled:cursor-wait inline-flex items-center gap-2"
           >
             {isLoading ? (
               <>
                 <span
                   aria-hidden="true"
-                  className="inline-block w-4 h-4 border-2 border-cream-50/40 border-t-cream-50 rounded-full animate-spin"
+                  className="inline-block w-3.5 h-3.5 border-2 border-cream-50/40 border-t-cream-50 rounded-full animate-spin"
                 />
-                Loading the numbers...
+                Loading...
               </>
             ) : (
               <>Show me the numbers &rarr;</>
