@@ -1,19 +1,24 @@
 /**
- * Sanity §7 - country hero image lookup.
+ * Sanity Section 7 - country hero image lookup.
  *
- * Mirrors city_heroes.ts but keyed by ISO2 country code. Reads from
- * data/images/country_heroes_v1.json which is populated by
- * scripts/images/import_unsplash.ts.
+ * Mirrors city_heroes.ts but keyed by ISO2 country code.
  *
- * The file may not exist on first checkout (the script writes it the
- * first time it runs). Guarded so build does not break.
+ * Two-tier lookup:
+ *   1. data/images/country_heroes_v1.json - the §7 Pexels/Unsplash fill
+ *      (added in this commit for countries not covered by the legacy
+ *      Wikimedia manifest, plus pattern-card fallbacks for the long
+ *      tail where neither editorial source had a usable image).
+ *   2. data/images/countries_manifest.json - the legacy Wikimedia
+ *      manifest (126 countries) built by build_country_industry_images
+ *      and friends. Used as a fallback so we get instant coverage for
+ *      every country already present there.
  *
- * Honors 600 MB RAM cap - JSON file is small (<100 KB).
+ * The file may not exist on first checkout (the §7 file is generated).
+ * Both loaders are guarded so build does not break.
+ *
+ * Honors 600 MB RAM cap - manifests are small (<200 KB combined).
  */
 
-// We import via require-on-load (try/catch) because the file is generated
-// and may not exist on a fresh clone. Using a static `import` would crash
-// the build when the JSON is missing.
 import type { CityHeroVariant } from "./city_heroes";
 
 export type CountryHero = {
@@ -30,7 +35,7 @@ export type CountryHero = {
   photographer_url: string;
   download_location: string;
   variant: CityHeroVariant;
-  source: "unsplash" | "pexels" | "pattern";
+  source: "unsplash" | "pexels" | "pattern" | "wikimedia";
   source_url: string;
 };
 
@@ -38,13 +43,26 @@ type CountryHeroesFile = {
   heroes?: Array<Partial<CountryHero> & { country_iso2?: string; iso2?: string; slug?: string; name?: string }>;
 };
 
+type LegacyManifestEntry = {
+  url: string;
+  source?: string;
+  attribution?: string;
+  license?: string;
+  width?: number | null;
+  height?: number | null;
+  description?: string | null;
+};
+
 let CACHE: Record<string, CountryHero> | undefined;
 
 function loadHeroes(): Record<string, CountryHero> {
   if (CACHE) return CACHE;
   const map: Record<string, CountryHero> = {};
+
+  // Tier 1: load the new §7 file. Pattern entries land here too so
+  // pattern fallbacks win over the legacy Wikimedia entry only when we
+  // explicitly chose pattern for that country.
   try {
-    // Dynamic require so missing file does not break build.
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const data = require("../../../data/images/country_heroes_v1.json") as CountryHeroesFile;
     for (const h of data.heroes || []) {
@@ -64,15 +82,58 @@ function loadHeroes(): Record<string, CountryHero> {
         photographer_url: h.photographer_url || "",
         download_location: h.download_location || "",
         variant: (h.variant as CityHeroVariant) || "photo",
-        source: (h.source as "unsplash" | "pexels" | "pattern") || "unsplash",
+        source: (h.source as CountryHero["source"]) || "unsplash",
         source_url: h.source_url || "",
       };
     }
   } catch {
-    // file missing or unreadable; return empty map
+    // file missing or unreadable
   }
+
+  // Tier 2: layer the legacy Wikimedia manifest UNDER tier 1 (only fill
+  // ISO2 slots that don't already have a real photo). Pattern fallbacks
+  // from tier 1 are over-ridden here because a real Wikimedia photo is
+  // better than a pattern card.
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const legacy = require("../../../data/images/countries_manifest.json") as Record<
+      string,
+      LegacyManifestEntry[]
+    >;
+    for (const [iso2Raw, arr] of Object.entries(legacy)) {
+      const iso2 = iso2Raw.toUpperCase();
+      const entry = arr && arr[0];
+      if (!entry || !entry.url) continue;
+      const existing = map[iso2];
+      if (existing && existing.variant === "photo") continue; // tier-1 photo wins
+      // Pattern from tier 1, or unknown: use legacy
+      map[iso2] = {
+        country_iso2: iso2,
+        country_name: existing?.country_name || iso2,
+        image_url_full: entry.url,
+        image_url_regular: entry.url,
+        image_url_small: entry.url,
+        image_url_thumb: entry.url,
+        alt: entry.description || `${iso2} landscape`,
+        photographer_name: stripHtml(entry.attribution || "Wikimedia Commons"),
+        photographer_username: "",
+        photographer_url: "https://commons.wikimedia.org/",
+        download_location: "",
+        variant: "photo",
+        source: "wikimedia",
+        source_url: entry.url,
+      };
+    }
+  } catch {
+    // legacy missing; tier 1 stands alone
+  }
+
   CACHE = map;
   return map;
+}
+
+function stripHtml(s: string): string {
+  return s.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim().slice(0, 120);
 }
 
 /**
@@ -80,8 +141,9 @@ function loadHeroes(): Record<string, CountryHero> {
  * Returns undefined if no hero is cached for that country.
  *
  * Note: the returned record may have variant="pattern" if no editorial
- * image was found. Callers that render <img> should branch on variant
- * and render their pattern-card component for the pattern case.
+ * image was found in either tier. Callers that render <img> should
+ * branch on variant and render their pattern-card component for the
+ * pattern case.
  */
 export function getCountryHero(iso2: string | null | undefined): CountryHero | undefined {
   if (!iso2) return undefined;
