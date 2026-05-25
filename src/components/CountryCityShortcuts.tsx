@@ -93,11 +93,7 @@ export async function CountryCityShortcuts({
                   Open for full numbers →
                 </div>
               )}
-              {city.data_status === "extrapolated" && (
-                <div className="mt-1.5 text-[10px] uppercase tracking-wider text-cocoa-700/60">
-                  Estimated
-                </div>
-              )}
+              {/* Sanity-§8: apologetic "Estimated" pill removed. */}
             </Link>
           );
         })}

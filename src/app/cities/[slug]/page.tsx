@@ -100,7 +100,13 @@ export default async function CityPage({
   const city = CITIES_BY_SLUG.get(slug);
   if (!city) notFound();
 
-  const hero = getCityHero(city.slug);
+  const heroRecord = getCityHero(city.slug);
+  // Sanity §7 — only render the <img> when we have a real photo. Pattern
+  // fallbacks (variant=pattern) drop to the cream/cocoa gradient block.
+  const hero =
+    heroRecord && heroRecord.variant !== "pattern" && heroRecord.image_url_full
+      ? heroRecord
+      : undefined;
   const countryName = COUNTRIES.find((c) => c.code === city.iso2)?.name || city.iso2;
   const scheme = NEIGHBORHOODS[city.slug];
 
@@ -142,21 +148,24 @@ export default async function CityPage({
       </section>
 
       <div className="max-w-6xl mx-auto px-4 md:px-6">
-        {/* Meta strip */}
-        <section className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-10">
-          <MetaTile label="Country" value={countryName} />
+        {/* Meta strip. Cities §4 founder revision:
+           - removed duplicate Country tile (country is already in the
+             hero overlay above; rendering it twice is a bug)
+           - removed Wealth tier tile (no purpose per founder)
+           - Cities §5 pipeline will add: average gross salary, HDI, Gini
+             once the data pipeline lands. For now we show only the two
+             trustworthy metrics. */}
+        <section className="grid grid-cols-2 md:grid-cols-2 gap-3 md:gap-4 mb-10">
           <MetaTile label="Metro population" value={`${city.pop_m.toFixed(1)}M`} />
           <MetaTile label="Metro GDP" value={`$${city.gdp_b.toFixed(0)}B`} />
-          <MetaTile label="Wealth tier" value={city.wealth_z >= 2 ? "Top" : city.wealth_z >= 1 ? "Upper" : city.wealth_z >= 0 ? "Mid" : "Emerging"} />
         </section>
 
-        {/* Coverage chip */}
+        {/* Sanity-§8: apologetic expanded CoverageIndicator banner
+            replaced with a quiet inline methodology link. */}
         <section className="mb-10">
           <CoverageIndicator
             tier={city.tier === 1 ? "regional" : "estimated"}
-            variant="expanded"
-            industryName="local small business"
-            geoName={city.name}
+            variant="compact"
           />
         </section>
 

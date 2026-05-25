@@ -3,6 +3,7 @@
 // right gets a subtle duotone instead of swallowing the whole first frame.
 
 import * as React from "react";
+import { HowWeKnowThis } from "@/components/HowWeKnowThis";
 
 type CoverageTier = "measured" | "regional" | "estimated";
 
@@ -20,10 +21,12 @@ interface CityHeroV2Props {
   coverageTier: CoverageTier;
 }
 
-const COVERAGE: Record<CoverageTier, { dot: string; label: string }> = {
-  measured: { dot: "#1F8A4C", label: "Measured" },
-  regional: { dot: "#2563EB", label: "Regional" },
-  estimated: { dot: "#B45309", label: "Estimated" },
+// Sanity-§8: apologetic "Estimated" label removed. Quiet dot stays
+// as a trust signal; the inline link below opens methodology.
+const COVERAGE: Record<CoverageTier, { dot: string; anchor: string }> = {
+  measured: { dot: "#1F8A4C", anchor: "measured" },
+  regional: { dot: "#2563EB", anchor: "regional" },
+  estimated: { dot: "#B45309", anchor: "estimated" },
 };
 
 function iso2ToFlag(iso: string): string {
@@ -163,15 +166,13 @@ export default function CityHeroV2({
                   {formatMoney(typicalRevenueUsd)}
                 </span>
               </div>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span
                   aria-hidden="true"
                   className="inline-block w-1.5 h-1.5 rounded-full"
                   style={{ backgroundColor: cov.dot }}
                 />
-                <span className="font-sans text-[10px] uppercase tracking-wide text-[#3A3A3A]">
-                  {cov.label}
-                </span>
+                <HowWeKnowThis anchor={cov.anchor} />
               </div>
             </div>
           </div>

@@ -80,7 +80,8 @@ import { DistributionVisual } from "@/components/DistributionVisual";
 import { NetProfitSummary } from "@/components/NetProfitSummary";
 import { SmartWaterfall } from "@/components/SmartWaterfall";
 import { CellFallbackBanner } from "@/components/CellFallbackBanner";
-import { EstimatedBadge } from "@/components/EstimatedBadge";
+// Sanity-§8: EstimatedBadge purged; CoverageIndicator stays for its
+// compact (HowWeKnowThis) variant only.
 import { CoverageIndicator, deriveCoverageTier } from "@/components/CoverageIndicator";
 import { EditorialNote } from "@/components/EditorialNote";
 // Plan v32 Sprint G — industry deepening sections. All three self-suppress
@@ -633,16 +634,12 @@ export default async function CellPage({
         />
       ) : null}
 
-      {/* Plan v27 Lane B — universal coverage indicator. Replaces the
-          old EstimatedBadge; communicates one of four tiers (measured /
-          regional / estimated / modeled) with a single vocabulary. */}
+      {/* Sanity-§8 — apologetic expanded CoverageIndicator banner
+          removed. We now surface only a quiet inline methodology link
+          via the compact variant; the hero already shows a coverage
+          dot, so an additional banner reads as apology. */}
       <section className="py-2">
-        <CoverageIndicator
-          tier={deriveCoverageTier(cell)}
-          variant="expanded"
-          industryName={cell.industry_name}
-          geoName={cell.geo_name}
-        />
+        <CoverageIndicator tier={deriveCoverageTier(cell)} variant="compact" />
       </section>
 
       {/* Plan v32 Sprint G — sub-industry picker. Renders only when the

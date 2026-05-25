@@ -94,7 +94,13 @@ export function TopCitiesMosaic({ limit = 16 }: Props) {
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-4">
               {shown.map((c) => {
-                const hero = getCityHero(c.slug);
+                const heroRecord = getCityHero(c.slug);
+                // Sanity §7 — pattern-fallback variants render the
+                // initial-letter gradient block, same as cache-miss.
+                const hero =
+                  heroRecord && heroRecord.variant !== "pattern" && heroRecord.image_url_small
+                    ? heroRecord
+                    : undefined;
                 return (
                   <a
                     key={c.slug}

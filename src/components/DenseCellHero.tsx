@@ -22,6 +22,7 @@ import {
   FirstAid, Code,
 } from "@phosphor-icons/react/dist/ssr";
 import type { Icon as PhIcon } from "@phosphor-icons/react";
+import { HowWeKnowThis } from "./HowWeKnowThis";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -63,29 +64,15 @@ const SECTOR_ICONS: Record<string, PhIcon> = {
 };
 
 // ---------------------------------------------------------------------------
-// Coverage chip metadata
+// Coverage anchor metadata. Sanity-§8 removed the user-visible
+// "Estimated" / "Modeled" pill labels; we keep the anchor so the
+// inline HowWeKnowThis link can deep-link to the right section.
 // ---------------------------------------------------------------------------
-const COVERAGE_META: Record<CoverageTier, { label: string; dotClass: string; aria: string }> = {
-  measured: {
-    label: "Measured",
-    dotClass: "bg-emerald-500 ring-emerald-500/20",
-    aria: "Measured benchmark, observed directly from a representative sample of firms.",
-  },
-  regional: {
-    label: "Regional",
-    dotClass: "bg-sky-500 ring-sky-500/20",
-    aria: "Regional benchmark, measured at a larger geography and applied here.",
-  },
-  estimated: {
-    label: "Estimated",
-    dotClass: "bg-amber-500 ring-amber-500/20",
-    aria: "Estimated benchmark, derived from country and industry averages.",
-  },
-  modeled: {
-    label: "Modeled",
-    dotClass: "bg-stone-400 ring-stone-400/20",
-    aria: "Modeled benchmark, synthesized from peer cells where direct data is sparse.",
-  },
+const COVERAGE_ANCHOR: Record<CoverageTier, string> = {
+  measured: "measured",
+  regional: "regional",
+  estimated: "estimated",
+  modeled: "modeled",
 };
 
 // ---------------------------------------------------------------------------
@@ -136,7 +123,7 @@ export default function DenseCellHero(props: DenseCellHeroProps) {
   } = props;
 
   const SectorIcon = SECTOR_ICONS[sectorId] ?? Briefcase;
-  const cov = COVERAGE_META[coverageTier];
+  const covAnchor = COVERAGE_ANCHOR[coverageTier];
 
   // Log-positioned typical marker on the percentile band.
   const typicalPos = (() => {
@@ -166,14 +153,8 @@ export default function DenseCellHero(props: DenseCellHeroProps) {
             <span aria-hidden="true" className="text-parchment">·</span>
             <span>{countryName.toUpperCase()}</span>
           </div>
-          <span
-            role="status"
-            aria-label={cov.aria}
-            className="inline-flex items-center gap-1.5 rounded-full border border-parchment bg-white/60 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-cocoa-700"
-          >
-            <span className={`h-1.5 w-1.5 rounded-full ring-2 ${cov.dotClass}`} aria-hidden="true" />
-            {cov.label}
-          </span>
+          <HowWeKnowThis anchor={covAnchor} />
+
         </div>
 
         {/* Row 2: H1 */}

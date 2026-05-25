@@ -88,9 +88,10 @@ export default function RootLayout({
            header). The pattern background under it provides the
            visual separation. */}
         <header className="bg-cream-50 sticky top-0 z-10">
-          <div className="max-w-7xl mx-auto px-6 py-6 md:py-7 flex items-center justify-between">
+          <div className="max-w-7xl mx-auto px-6 py-5 md:py-6 flex items-center justify-between">
             <a href="/" aria-label="Margin Atlas home" className="inline-flex items-center">
-              <LogoWordmark size={32} labeled={false} />
+              {/* Cities §10: bump 32 to 40 on desktop, 36 on mobile per founder request. */}
+              <LogoWordmark size={40} labeled={false} />
             </a>
             <div className="flex items-center gap-5 md:gap-6">
               <nav className="text-base text-ink-800 hidden md:flex items-center gap-5">

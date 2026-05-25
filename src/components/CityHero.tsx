@@ -8,7 +8,7 @@
  *
  * Server component. Zero client cost.
  */
-import { getCityHero, type CityHero as CityHeroType } from "@/lib/images/city_heroes";
+import { getCityHero, isPatternHero, type CityHero as CityHeroType } from "@/lib/images/city_heroes";
 
 type Props = {
   citySlug: string;
@@ -19,6 +19,10 @@ type Props = {
 export function CityHero({ citySlug, altOverride }: Props) {
   const hero = getCityHero(citySlug);
   if (!hero) return null;
+  // Sanity §7 — when only a pattern-card fallback exists, render nothing
+  // so the page's existing text-first hero (HeroBenchmark) stays in place.
+  if (isPatternHero(hero)) return null;
+  if (!hero.image_url_regular) return null;
 
   return (
     <section className="relative w-full overflow-hidden" style={{ aspectRatio: "21 / 9" }}>

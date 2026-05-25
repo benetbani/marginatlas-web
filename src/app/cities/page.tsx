@@ -16,6 +16,7 @@ import { CountryFlag } from "@/components/CountryFlag";
 import CitiesWorldMap, {
   type CitiesWorldMapCity,
 } from "@/components/cities/CitiesWorldMap";
+import { COUNTRIES } from "@/lib/taxonomy";
 
 export const revalidate = 86400;
 
@@ -56,26 +57,56 @@ const MAP_CITIES: CitiesWorldMapCity[] = CITIES.map((c) => {
   };
 }).filter((c): c is CitiesWorldMapCity => c !== null);
 
+// Cities §3 founder revision: 6 standard continents in alphabetical
+// order. The data was normalized by scripts/data/cities/apply_section2_curation.py
+// so every entry now uses these labels exactly. Old labels (EU, NA, SA,
+// MENA) are kept as fallbacks in case any legacy entry slips through.
 const CONTINENT_LABEL: Record<string, string> = {
-  NA: "Americas",
-  SA: "Americas",
-  EU: "Europe",
-  Asia: "Asia-Pacific",
-  Oceania: "Asia-Pacific",
   Africa: "Africa",
-  MENA: "Middle East",
+  Asia: "Asia",
+  Europe: "Europe",
+  "North America": "North America",
+  Oceania: "Oceania",
+  "South America": "South America",
+  // Legacy fallbacks
+  EU: "Europe",
+  NA: "North America",
+  SA: "South America",
+  MENA: "Asia",
 };
-const CONTINENT_ORDER = ["Americas", "Europe", "Asia-Pacific", "Middle East", "Africa"];
+const CONTINENT_ORDER = [
+  "Africa",
+  "Asia",
+  "Europe",
+  "North America",
+  "Oceania",
+  "South America",
+];
+
+// Map iso2 -> country name from the taxonomy so we can group cities by
+// country within each continent. Falls back to iso2 if not found.
+const COUNTRY_NAME_BY_ISO2 = new Map(
+  COUNTRIES.map((c) => [c.code.toUpperCase(), c.name]),
+);
 
 export default function CitiesHub() {
-  const grouped = new Map<string, City[]>();
+  // Cities §3 founder structure: continent (alphabetical) -> country
+  // (alphabetical) -> cities (alphabetical). Two-level grouping.
+  const grouped = new Map<string, Map<string, City[]>>();
   for (const c of CITIES) {
-    const label = CONTINENT_LABEL[c.continent] || "Other";
-    if (!grouped.has(label)) grouped.set(label, []);
-    grouped.get(label)!.push(c);
+    const continent = CONTINENT_LABEL[c.continent] || "Other";
+    if (!grouped.has(continent)) grouped.set(continent, new Map());
+    const countryName =
+      COUNTRY_NAME_BY_ISO2.get(c.iso2.toUpperCase()) || c.iso2;
+    const byCountry = grouped.get(continent)!;
+    if (!byCountry.has(countryName)) byCountry.set(countryName, []);
+    byCountry.get(countryName)!.push(c);
   }
-  for (const arr of grouped.values()) {
-    arr.sort((a, b) => a.name.localeCompare(b.name));
+  // Sort cities within each country alphabetically.
+  for (const byCountry of grouped.values()) {
+    for (const arr of byCountry.values()) {
+      arr.sort((a, b) => a.name.localeCompare(b.name));
+    }
   }
 
   return (
@@ -84,44 +115,70 @@ export default function CitiesHub() {
         Cities
       </div>
       <h1 className="font-display text-4xl md:text-5xl font-medium tracking-tight text-ink-900 mb-3">
-        Two hundred cities of the world
+        Cities of the world
       </h1>
       <p className="text-base md:text-lg text-cocoa-700/80 mb-10 max-w-2xl">
         Each city opens to a hero, an industry mosaic, neighborhoods
         (where covered), curiosities, and sister-city comparisons.
       </p>
 
-      {/* v34 sanity sweep section 2: geographic map anchors the page,
-          one marker per covered city, each linking to its city page. */}
+      {/* Cities §1: geographic map anchors the page, one marker per
+          covered city, each linking to its city page. */}
       <section className="mb-12" aria-labelledby="cities-map-heading">
-        <h2
-          id="cities-map-heading"
-          className="sr-only"
-        >
+        <h2 id="cities-map-heading" className="sr-only">
           Map of covered cities
         </h2>
         <CitiesWorldMap cities={MAP_CITIES} />
       </section>
 
+      {/* Cities §3 founder structure: continent header, then country
+          sub-header, then 5-column city list (bigger flags). */}
       {CONTINENT_ORDER.map((continent) => {
-        const cities = grouped.get(continent);
-        if (!cities) return null;
+        const byCountry = grouped.get(continent);
+        if (!byCountry) return null;
+        // Sort country names alphabetically within the continent.
+        const sortedCountries = [...byCountry.keys()].sort((a, b) =>
+          a.localeCompare(b),
+        );
+        const totalCities = [...byCountry.values()].reduce(
+          (n, arr) => n + arr.length,
+          0,
+        );
         return (
-          <section key={continent} className="mb-12">
-            <h2 className="font-display text-xl md:text-2xl font-medium tracking-tight text-ink-900 mb-4 pb-2 border-b border-parchment">
-              {continent} <span className="text-sm font-normal text-cocoa-700/60 tabular-nums">· {cities.length} cities</span>
+          <section key={continent} className="mb-14">
+            <h2 className="font-display text-2xl md:text-3xl font-semibold tracking-tight text-ink-900 mb-6 pb-2 border-b-2 border-parchment">
+              {continent}{" "}
+              <span className="text-sm font-normal text-cocoa-700/60 tabular-nums">
+                &middot; {totalCities} cities
+              </span>
             </h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-4 gap-y-1.5">
-              {cities.map((c) => (
-                <Link
-                  key={c.slug}
-                  href={`/cities/${c.slug}`}
-                  className="flex items-center gap-1.5 py-1.5 text-sm text-ink-800 hover:text-atlas-700 transition-colors"
-                >
-                  <CountryFlag iso2={c.iso2} className="w-3.5 shrink-0" />
-                  <span className="truncate">{c.name}</span>
-                </Link>
-              ))}
+            <div className="space-y-6">
+              {sortedCountries.map((countryName) => {
+                const cities = byCountry.get(countryName)!;
+                const iso2 = cities[0]?.iso2 || "";
+                return (
+                  <div key={countryName}>
+                    <h3 className="flex items-center gap-2 font-display text-base md:text-lg font-semibold text-ink-900 mb-3">
+                      <CountryFlag iso2={iso2} className="w-6 shrink-0" />
+                      <span>{countryName}</span>
+                      <span className="text-xs font-normal text-cocoa-700/50 tabular-nums">
+                        &middot; {cities.length}
+                      </span>
+                    </h3>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-4 gap-y-1.5 pl-8">
+                      {cities.map((c) => (
+                        <Link
+                          key={c.slug}
+                          href={`/cities/${c.slug}`}
+                          className="flex items-center gap-2 py-1 text-sm text-ink-800 hover:text-atlas-700 transition-colors"
+                        >
+                          <span className="truncate">{c.name}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </section>
         );

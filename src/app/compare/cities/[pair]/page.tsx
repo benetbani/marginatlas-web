@@ -108,8 +108,18 @@ export default async function ComparisonPage({
   const b = CITIES_BY_SLUG.get(p.right);
   if (!a || !b) notFound();
 
-  const aHero = getCityHero(a.slug);
-  const bHero = getCityHero(b.slug);
+  const aHeroRecord = getCityHero(a.slug);
+  const bHeroRecord = getCityHero(b.slug);
+  // Sanity §7 — pattern-fallback variants don't have a usable photo URL;
+  // treat them as absent so the gradient block renders instead of a broken img.
+  const aHero =
+    aHeroRecord && aHeroRecord.variant !== "pattern" && aHeroRecord.image_url_full
+      ? aHeroRecord
+      : undefined;
+  const bHero =
+    bHeroRecord && bHeroRecord.variant !== "pattern" && bHeroRecord.image_url_full
+      ? bHeroRecord
+      : undefined;
   const aCountry = COUNTRIES.find((c) => c.code === a.iso2)?.name || a.iso2;
   const bCountry = COUNTRIES.find((c) => c.code === b.iso2)?.name || b.iso2;
   const aCb = BASELINES.countries[a.iso2] || BASELINES.default_fallback;

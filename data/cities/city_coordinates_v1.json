@@ -3,232 +3,1265 @@
   "anchor": "v34 sanity sweep section 2, cities map. Latitude and longitude for the 200 cities in city_list_v1.json. Coordinates target the metropolitan center, within roughly 50 km of true position per master prompt target 2.5. Sourced from common public references (Wikipedia city infoboxes, OpenStreetMap).",
   "convention": "slug matches city_list_v1.json slug. lat and lon are decimal degrees, WGS84. Positive lat is north, positive lon is east.",
   "coordinates": [
-    { "slug": "new-york", "lat": 40.7128, "lon": -74.0060 },
-    { "slug": "los-angeles", "lat": 34.0522, "lon": -118.2437 },
-    { "slug": "chicago", "lat": 41.8781, "lon": -87.6298 },
-    { "slug": "houston", "lat": 29.7604, "lon": -95.3698 },
-    { "slug": "phoenix", "lat": 33.4484, "lon": -112.0740 },
-    { "slug": "philadelphia", "lat": 39.9526, "lon": -75.1652 },
-    { "slug": "san-antonio", "lat": 29.4241, "lon": -98.4936 },
-    { "slug": "san-diego", "lat": 32.7157, "lon": -117.1611 },
-    { "slug": "dallas", "lat": 32.7767, "lon": -96.7970 },
-    { "slug": "san-jose", "lat": 37.3382, "lon": -121.8863 },
-    { "slug": "austin", "lat": 30.2672, "lon": -97.7431 },
-    { "slug": "san-francisco", "lat": 37.7749, "lon": -122.4194 },
-    { "slug": "seattle", "lat": 47.6062, "lon": -122.3321 },
-    { "slug": "boston", "lat": 42.3601, "lon": -71.0589 },
-    { "slug": "miami", "lat": 25.7617, "lon": -80.1918 },
-    { "slug": "denver", "lat": 39.7392, "lon": -104.9903 },
-    { "slug": "atlanta", "lat": 33.7490, "lon": -84.3880 },
-    { "slug": "portland", "lat": 45.5152, "lon": -122.6784 },
-    { "slug": "las-vegas", "lat": 36.1699, "lon": -115.1398 },
-    { "slug": "washington-dc", "lat": 38.9072, "lon": -77.0369 },
-    { "slug": "detroit", "lat": 42.3314, "lon": -83.0458 },
-    { "slug": "minneapolis", "lat": 44.9778, "lon": -93.2650 },
-    { "slug": "tampa", "lat": 27.9506, "lon": -82.4572 },
-    { "slug": "orlando", "lat": 28.5383, "lon": -81.3792 },
-    { "slug": "honolulu", "lat": 21.3069, "lon": -157.8583 },
-    { "slug": "toronto", "lat": 43.6532, "lon": -79.3832 },
-    { "slug": "montreal", "lat": 45.5019, "lon": -73.5674 },
-    { "slug": "vancouver", "lat": 49.2827, "lon": -123.1207 },
-    { "slug": "calgary", "lat": 51.0447, "lon": -114.0719 },
-    { "slug": "mexico-city", "lat": 19.4326, "lon": -99.1332 },
-    { "slug": "charlotte", "lat": 35.2271, "lon": -80.8431 },
-    { "slug": "nashville", "lat": 36.1627, "lon": -86.7816 },
-    { "slug": "indianapolis", "lat": 39.7684, "lon": -86.1581 },
-    { "slug": "columbus", "lat": 39.9612, "lon": -82.9988 },
-    { "slug": "baltimore", "lat": 39.2904, "lon": -76.6122 },
-    { "slug": "pittsburgh", "lat": 40.4406, "lon": -79.9959 },
-    { "slug": "milwaukee", "lat": 43.0389, "lon": -87.9065 },
-    { "slug": "cincinnati", "lat": 39.1031, "lon": -84.5120 },
-    { "slug": "cleveland", "lat": 41.4993, "lon": -81.6944 },
-    { "slug": "kansas-city", "lat": 39.0997, "lon": -94.5786 },
-    { "slug": "st-louis", "lat": 38.6270, "lon": -90.1994 },
-    { "slug": "sacramento", "lat": 38.5816, "lon": -121.4944 },
-    { "slug": "salt-lake-city", "lat": 40.7608, "lon": -111.8910 },
-    { "slug": "raleigh", "lat": 35.7796, "lon": -78.6382 },
-    { "slug": "new-orleans", "lat": 29.9511, "lon": -90.0715 },
-    { "slug": "memphis", "lat": 35.1495, "lon": -90.0490 },
-    { "slug": "louisville", "lat": 38.2527, "lon": -85.7585 },
-    { "slug": "oklahoma-city", "lat": 35.4676, "lon": -97.5164 },
-    { "slug": "buffalo", "lat": 42.8864, "lon": -78.8784 },
-    { "slug": "richmond", "lat": 37.5407, "lon": -77.4360 },
-
-    { "slug": "london", "lat": 51.5074, "lon": -0.1278 },
-    { "slug": "birmingham", "lat": 52.4862, "lon": -1.8904 },
-    { "slug": "manchester", "lat": 53.4808, "lon": -2.2426 },
-    { "slug": "leeds", "lat": 53.8008, "lon": -1.5491 },
-    { "slug": "edinburgh", "lat": 55.9533, "lon": -3.1883 },
-    { "slug": "glasgow", "lat": 55.8642, "lon": -4.2518 },
-    { "slug": "bristol", "lat": 51.4545, "lon": -2.5879 },
-    { "slug": "paris", "lat": 48.8566, "lon": 2.3522 },
-    { "slug": "lyon", "lat": 45.7640, "lon": 4.8357 },
-    { "slug": "marseille", "lat": 43.2965, "lon": 5.3698 },
-    { "slug": "toulouse", "lat": 43.6047, "lon": 1.4442 },
-    { "slug": "nice", "lat": 43.7102, "lon": 7.2620 },
-    { "slug": "nantes", "lat": 47.2184, "lon": -1.5536 },
-    { "slug": "berlin", "lat": 52.5200, "lon": 13.4050 },
-    { "slug": "hamburg", "lat": 53.5511, "lon": 9.9937 },
-    { "slug": "munich", "lat": 48.1351, "lon": 11.5820 },
-    { "slug": "cologne", "lat": 50.9375, "lon": 6.9603 },
-    { "slug": "frankfurt", "lat": 50.1109, "lon": 8.6821 },
-    { "slug": "stuttgart", "lat": 48.7758, "lon": 9.1829 },
-    { "slug": "dusseldorf", "lat": 51.2277, "lon": 6.7735 },
-    { "slug": "leipzig", "lat": 51.3397, "lon": 12.3731 },
-    { "slug": "rome", "lat": 41.9028, "lon": 12.4964 },
-    { "slug": "milan", "lat": 45.4642, "lon": 9.1900 },
-    { "slug": "naples", "lat": 40.8518, "lon": 14.2681 },
-    { "slug": "turin", "lat": 45.0703, "lon": 7.6869 },
-    { "slug": "florence", "lat": 43.7696, "lon": 11.2558 },
-    { "slug": "madrid", "lat": 40.4168, "lon": -3.7038 },
-    { "slug": "barcelona", "lat": 41.3851, "lon": 2.1734 },
-    { "slug": "valencia", "lat": 39.4699, "lon": -0.3763 },
-    { "slug": "seville", "lat": 37.3891, "lon": -5.9845 },
-    { "slug": "amsterdam", "lat": 52.3676, "lon": 4.9041 },
-    { "slug": "rotterdam", "lat": 51.9244, "lon": 4.4777 },
-    { "slug": "brussels", "lat": 50.8503, "lon": 4.3517 },
-    { "slug": "zurich", "lat": 47.3769, "lon": 8.5417 },
-    { "slug": "geneva", "lat": 46.2044, "lon": 6.1432 },
-    { "slug": "basel", "lat": 47.5596, "lon": 7.5886 },
-    { "slug": "vienna", "lat": 48.2082, "lon": 16.3738 },
-    { "slug": "stockholm", "lat": 59.3293, "lon": 18.0686 },
-    { "slug": "oslo", "lat": 59.9139, "lon": 10.7522 },
-    { "slug": "copenhagen", "lat": 55.6761, "lon": 12.5683 },
-    { "slug": "helsinki", "lat": 60.1699, "lon": 24.9384 },
-    { "slug": "dublin", "lat": 53.3498, "lon": -6.2603 },
-    { "slug": "lisbon", "lat": 38.7223, "lon": -9.1393 },
-    { "slug": "porto", "lat": 41.1579, "lon": -8.6291 },
-    { "slug": "warsaw", "lat": 52.2297, "lon": 21.0122 },
-    { "slug": "krakow", "lat": 50.0647, "lon": 19.9450 },
-    { "slug": "prague", "lat": 50.0755, "lon": 14.4378 },
-    { "slug": "budapest", "lat": 47.4979, "lon": 19.0402 },
-    { "slug": "athens", "lat": 37.9838, "lon": 23.7275 },
-    { "slug": "monaco", "lat": 43.7384, "lon": 7.4246 },
-    { "slug": "vaduz", "lat": 47.1410, "lon": 9.5209 },
-
-    { "slug": "tokyo", "lat": 35.6762, "lon": 139.6503 },
-    { "slug": "osaka", "lat": 34.6937, "lon": 135.5023 },
-    { "slug": "yokohama", "lat": 35.4437, "lon": 139.6380 },
-    { "slug": "nagoya", "lat": 35.1815, "lon": 136.9066 },
-    { "slug": "sapporo", "lat": 43.0642, "lon": 141.3469 },
-    { "slug": "fukuoka", "lat": 33.5904, "lon": 130.4017 },
-    { "slug": "kobe", "lat": 34.6901, "lon": 135.1956 },
-    { "slug": "kyoto", "lat": 35.0116, "lon": 135.7681 },
-    { "slug": "hiroshima", "lat": 34.3853, "lon": 132.4553 },
-    { "slug": "sendai", "lat": 38.2682, "lon": 140.8694 },
-    { "slug": "shanghai", "lat": 31.2304, "lon": 121.4737 },
-    { "slug": "beijing", "lat": 39.9042, "lon": 116.4074 },
-    { "slug": "guangzhou", "lat": 23.1291, "lon": 113.2644 },
-    { "slug": "shenzhen", "lat": 22.5431, "lon": 114.0579 },
-    { "slug": "chongqing", "lat": 29.5630, "lon": 106.5516 },
-    { "slug": "tianjin", "lat": 39.3434, "lon": 117.3616 },
-    { "slug": "wuhan", "lat": 30.5928, "lon": 114.3055 },
-    { "slug": "chengdu", "lat": 30.5728, "lon": 104.0668 },
-    { "slug": "hangzhou", "lat": 30.2741, "lon": 120.1551 },
-    { "slug": "nanjing", "lat": 32.0603, "lon": 118.7969 },
-    { "slug": "xian", "lat": 34.3416, "lon": 108.9398 },
-    { "slug": "dongguan", "lat": 23.0207, "lon": 113.7518 },
-    { "slug": "seoul", "lat": 37.5665, "lon": 126.9780 },
-    { "slug": "busan", "lat": 35.1796, "lon": 129.0756 },
-    { "slug": "incheon", "lat": 37.4563, "lon": 126.7052 },
-    { "slug": "daegu", "lat": 35.8714, "lon": 128.6014 },
-    { "slug": "taipei", "lat": 25.0330, "lon": 121.5654 },
-    { "slug": "kaohsiung", "lat": 22.6273, "lon": 120.3014 },
-    { "slug": "hong-kong", "lat": 22.3193, "lon": 114.1694 },
-    { "slug": "singapore", "lat": 1.3521, "lon": 103.8198 },
-    { "slug": "mumbai", "lat": 19.0760, "lon": 72.8777 },
-    { "slug": "delhi", "lat": 28.7041, "lon": 77.1025 },
-    { "slug": "bangalore", "lat": 12.9716, "lon": 77.5946 },
-    { "slug": "hyderabad", "lat": 17.3850, "lon": 78.4867 },
-    { "slug": "ahmedabad", "lat": 23.0225, "lon": 72.5714 },
-    { "slug": "chennai", "lat": 13.0827, "lon": 80.2707 },
-    { "slug": "kolkata", "lat": 22.5726, "lon": 88.3639 },
-    { "slug": "pune", "lat": 18.5204, "lon": 73.8567 },
-    { "slug": "jaipur", "lat": 26.9124, "lon": 75.7873 },
-    { "slug": "surat", "lat": 21.1702, "lon": 72.8311 },
-    { "slug": "jakarta", "lat": -6.2088, "lon": 106.8456 },
-    { "slug": "surabaya", "lat": -7.2575, "lon": 112.7521 },
-    { "slug": "bandung", "lat": -6.9175, "lon": 107.6191 },
-    { "slug": "manila", "lat": 14.5995, "lon": 120.9842 },
-    { "slug": "cebu", "lat": 10.3157, "lon": 123.8854 },
-    { "slug": "bangkok", "lat": 13.7563, "lon": 100.5018 },
-    { "slug": "chiang-mai", "lat": 18.7883, "lon": 98.9853 },
-    { "slug": "ho-chi-minh-city", "lat": 10.8231, "lon": 106.6297 },
-    { "slug": "hanoi", "lat": 21.0285, "lon": 105.8542 },
-    { "slug": "kuala-lumpur", "lat": 3.1390, "lon": 101.6869 },
-    { "slug": "dhaka", "lat": 23.8103, "lon": 90.4125 },
-    { "slug": "karachi", "lat": 24.8607, "lon": 67.0011 },
-    { "slug": "lahore", "lat": 31.5204, "lon": 74.3587 },
-    { "slug": "colombo", "lat": 6.9271, "lon": 79.8612 },
-    { "slug": "almaty", "lat": 43.2220, "lon": 76.8512 },
-    { "slug": "ulaanbaatar", "lat": 47.8864, "lon": 106.9057 },
-    { "slug": "kathmandu", "lat": 27.7172, "lon": 85.3240 },
-    { "slug": "yangon", "lat": 16.8409, "lon": 96.1735 },
-    { "slug": "phnom-penh", "lat": 11.5564, "lon": 104.9282 },
-    { "slug": "vientiane", "lat": 17.9757, "lon": 102.6331 },
-
-    { "slug": "sao-paulo", "lat": -23.5505, "lon": -46.6333 },
-    { "slug": "rio-de-janeiro", "lat": -22.9068, "lon": -43.1729 },
-    { "slug": "brasilia", "lat": -15.7975, "lon": -47.8919 },
-    { "slug": "salvador", "lat": -12.9714, "lon": -38.5014 },
-    { "slug": "fortaleza", "lat": -3.7172, "lon": -38.5433 },
-    { "slug": "belo-horizonte", "lat": -19.9167, "lon": -43.9345 },
-    { "slug": "recife", "lat": -8.0476, "lon": -34.8770 },
-    { "slug": "porto-alegre", "lat": -30.0346, "lon": -51.2177 },
-    { "slug": "buenos-aires", "lat": -34.6037, "lon": -58.3816 },
-    { "slug": "cordoba", "lat": -31.4201, "lon": -64.1888 },
-    { "slug": "rosario", "lat": -32.9442, "lon": -60.6505 },
-    { "slug": "santiago", "lat": -33.4489, "lon": -70.6693 },
-    { "slug": "valparaiso", "lat": -33.0472, "lon": -71.6127 },
-    { "slug": "bogota", "lat": 4.7110, "lon": -74.0721 },
-    { "slug": "medellin", "lat": 6.2442, "lon": -75.5812 },
-    { "slug": "cali", "lat": 3.4516, "lon": -76.5320 },
-    { "slug": "lima", "lat": -12.0464, "lon": -77.0428 },
-    { "slug": "montevideo", "lat": -34.9011, "lon": -56.1645 },
-    { "slug": "caracas", "lat": 10.4806, "lon": -66.9036 },
-    { "slug": "quito", "lat": -0.1807, "lon": -78.4678 },
-
-    { "slug": "johannesburg", "lat": -26.2041, "lon": 28.0473 },
-    { "slug": "cape-town", "lat": -33.9249, "lon": 18.4241 },
-    { "slug": "durban", "lat": -29.8587, "lon": 31.0218 },
-    { "slug": "lagos", "lat": 6.5244, "lon": 3.3792 },
-    { "slug": "abuja", "lat": 9.0765, "lon": 7.3986 },
-    { "slug": "cairo", "lat": 30.0444, "lon": 31.2357 },
-    { "slug": "alexandria", "lat": 31.2001, "lon": 29.9187 },
-    { "slug": "nairobi", "lat": -1.2921, "lon": 36.8219 },
-    { "slug": "casablanca", "lat": 33.5731, "lon": -7.5898 },
-    { "slug": "accra", "lat": 5.6037, "lon": -0.1870 },
-    { "slug": "addis-ababa", "lat": 9.0320, "lon": 38.7469 },
-    { "slug": "dar-es-salaam", "lat": -6.7924, "lon": 39.2083 },
-    { "slug": "dakar", "lat": 14.7167, "lon": -17.4677 },
-    { "slug": "tunis", "lat": 36.8065, "lon": 10.1815 },
-    { "slug": "abidjan", "lat": 5.3600, "lon": -4.0083 },
-
-    { "slug": "sydney", "lat": -33.8688, "lon": 151.2093 },
-    { "slug": "melbourne", "lat": -37.8136, "lon": 144.9631 },
-    { "slug": "brisbane", "lat": -27.4698, "lon": 153.0251 },
-    { "slug": "perth", "lat": -31.9505, "lon": 115.8605 },
-    { "slug": "adelaide", "lat": -34.9285, "lon": 138.6007 },
-    { "slug": "canberra", "lat": -35.2809, "lon": 149.1300 },
-    { "slug": "auckland", "lat": -36.8485, "lon": 174.7633 },
-    { "slug": "wellington", "lat": -41.2865, "lon": 174.7762 },
-    { "slug": "christchurch", "lat": -43.5321, "lon": 172.6362 },
-    { "slug": "suva", "lat": -18.1416, "lon": 178.4419 },
-
-    { "slug": "istanbul", "lat": 41.0082, "lon": 28.9784 },
-    { "slug": "ankara", "lat": 39.9334, "lon": 32.8597 },
-    { "slug": "izmir", "lat": 38.4237, "lon": 27.1428 },
-    { "slug": "riyadh", "lat": 24.7136, "lon": 46.6753 },
-    { "slug": "jeddah", "lat": 21.4858, "lon": 39.1925 },
-    { "slug": "dubai", "lat": 25.2048, "lon": 55.2708 },
-    { "slug": "abu-dhabi", "lat": 24.4539, "lon": 54.3773 },
-    { "slug": "doha", "lat": 25.2854, "lon": 51.5310 },
-    { "slug": "kuwait-city", "lat": 29.3759, "lon": 47.9774 },
-    { "slug": "manama", "lat": 26.2235, "lon": 50.5876 },
-    { "slug": "tel-aviv", "lat": 32.0853, "lon": 34.7818 },
-    { "slug": "jerusalem", "lat": 31.7683, "lon": 35.2137 },
-    { "slug": "amman", "lat": 31.9454, "lon": 35.9284 },
-    { "slug": "beirut", "lat": 33.8938, "lon": 35.5018 },
-    { "slug": "tehran", "lat": 35.6892, "lon": 51.3890 }
+    {
+      "slug": "abidjan",
+      "lat": 5.36,
+      "lon": -4.0083
+    },
+    {
+      "slug": "abu-dhabi",
+      "lat": 24.4539,
+      "lon": 54.3773
+    },
+    {
+      "slug": "abuja",
+      "lat": 9.0765,
+      "lon": 7.3986
+    },
+    {
+      "slug": "accra",
+      "lat": 5.6037,
+      "lon": -0.187
+    },
+    {
+      "slug": "addis-ababa",
+      "lat": 9.032,
+      "lon": 38.7469
+    },
+    {
+      "slug": "adelaide",
+      "lat": -34.9285,
+      "lon": 138.6007
+    },
+    {
+      "slug": "ahmedabad",
+      "lat": 23.0225,
+      "lon": 72.5714
+    },
+    {
+      "slug": "alexandria",
+      "lat": 31.2001,
+      "lon": 29.9187
+    },
+    {
+      "slug": "algiers",
+      "lat": 36.7372,
+      "lon": 3.0866
+    },
+    {
+      "slug": "almaty",
+      "lat": 43.222,
+      "lon": 76.8512
+    },
+    {
+      "slug": "amman",
+      "lat": 31.9454,
+      "lon": 35.9284
+    },
+    {
+      "slug": "amsterdam",
+      "lat": 52.3676,
+      "lon": 4.9041
+    },
+    {
+      "slug": "ankara",
+      "lat": 39.9334,
+      "lon": 32.8597
+    },
+    {
+      "slug": "antalya",
+      "lat": 36.8841,
+      "lon": 30.7056
+    },
+    {
+      "slug": "athens",
+      "lat": 37.9838,
+      "lon": 23.7275
+    },
+    {
+      "slug": "atlanta",
+      "lat": 33.749,
+      "lon": -84.388
+    },
+    {
+      "slug": "auckland",
+      "lat": -36.8485,
+      "lon": 174.7633
+    },
+    {
+      "slug": "austin",
+      "lat": 30.2672,
+      "lon": -97.7431
+    },
+    {
+      "slug": "baghdad",
+      "lat": 33.3152,
+      "lon": 44.3661
+    },
+    {
+      "slug": "baku",
+      "lat": 40.4093,
+      "lon": 49.8671
+    },
+    {
+      "slug": "baltimore",
+      "lat": 39.2904,
+      "lon": -76.6122
+    },
+    {
+      "slug": "bandung",
+      "lat": -6.9175,
+      "lon": 107.6191
+    },
+    {
+      "slug": "bangalore",
+      "lat": 12.9716,
+      "lon": 77.5946
+    },
+    {
+      "slug": "bangkok",
+      "lat": 13.7563,
+      "lon": 100.5018
+    },
+    {
+      "slug": "barcelona",
+      "lat": 41.3851,
+      "lon": 2.1734
+    },
+    {
+      "slug": "basel",
+      "lat": 47.5596,
+      "lon": 7.5886
+    },
+    {
+      "slug": "beijing",
+      "lat": 39.9042,
+      "lon": 116.4074
+    },
+    {
+      "slug": "beirut",
+      "lat": 33.8938,
+      "lon": 35.5018
+    },
+    {
+      "slug": "belgrade",
+      "lat": 44.7866,
+      "lon": 20.4489
+    },
+    {
+      "slug": "belo-horizonte",
+      "lat": -19.9167,
+      "lon": -43.9345
+    },
+    {
+      "slug": "berlin",
+      "lat": 52.52,
+      "lon": 13.405
+    },
+    {
+      "slug": "bern",
+      "lat": 46.948,
+      "lon": 7.4474
+    },
+    {
+      "slug": "birmingham",
+      "lat": 52.4862,
+      "lon": -1.8904
+    },
+    {
+      "slug": "bogota",
+      "lat": 4.711,
+      "lon": -74.0721
+    },
+    {
+      "slug": "boston",
+      "lat": 42.3601,
+      "lon": -71.0589
+    },
+    {
+      "slug": "brasilia",
+      "lat": -15.7975,
+      "lon": -47.8919
+    },
+    {
+      "slug": "bratislava",
+      "lat": 48.1486,
+      "lon": 17.1077
+    },
+    {
+      "slug": "brisbane",
+      "lat": -27.4698,
+      "lon": 153.0251
+    },
+    {
+      "slug": "bristol",
+      "lat": 51.4545,
+      "lon": -2.5879
+    },
+    {
+      "slug": "brussels",
+      "lat": 50.8503,
+      "lon": 4.3517
+    },
+    {
+      "slug": "bucharest",
+      "lat": 44.4268,
+      "lon": 26.1025
+    },
+    {
+      "slug": "budapest",
+      "lat": 47.4979,
+      "lon": 19.0402
+    },
+    {
+      "slug": "buenos-aires",
+      "lat": -34.6037,
+      "lon": -58.3816
+    },
+    {
+      "slug": "buffalo",
+      "lat": 42.8864,
+      "lon": -78.8784
+    },
+    {
+      "slug": "busan",
+      "lat": 35.1796,
+      "lon": 129.0756
+    },
+    {
+      "slug": "cairo",
+      "lat": 30.0444,
+      "lon": 31.2357
+    },
+    {
+      "slug": "calgary",
+      "lat": 51.0447,
+      "lon": -114.0719
+    },
+    {
+      "slug": "cali",
+      "lat": 3.4516,
+      "lon": -76.532
+    },
+    {
+      "slug": "canberra",
+      "lat": -35.2809,
+      "lon": 149.13
+    },
+    {
+      "slug": "cape-town",
+      "lat": -33.9249,
+      "lon": 18.4241
+    },
+    {
+      "slug": "caracas",
+      "lat": 10.4806,
+      "lon": -66.9036
+    },
+    {
+      "slug": "casablanca",
+      "lat": 33.5731,
+      "lon": -7.5898
+    },
+    {
+      "slug": "cebu",
+      "lat": 10.3157,
+      "lon": 123.8854
+    },
+    {
+      "slug": "charlotte",
+      "lat": 35.2271,
+      "lon": -80.8431
+    },
+    {
+      "slug": "chengdu",
+      "lat": 30.5728,
+      "lon": 104.0668
+    },
+    {
+      "slug": "chennai",
+      "lat": 13.0827,
+      "lon": 80.2707
+    },
+    {
+      "slug": "chiang-mai",
+      "lat": 18.7883,
+      "lon": 98.9853
+    },
+    {
+      "slug": "chicago",
+      "lat": 41.8781,
+      "lon": -87.6298
+    },
+    {
+      "slug": "chisinau",
+      "lat": 47.0105,
+      "lon": 28.8638
+    },
+    {
+      "slug": "chongqing",
+      "lat": 29.563,
+      "lon": 106.5516
+    },
+    {
+      "slug": "christchurch",
+      "lat": -43.5321,
+      "lon": 172.6362
+    },
+    {
+      "slug": "cincinnati",
+      "lat": 39.1031,
+      "lon": -84.512
+    },
+    {
+      "slug": "cleveland",
+      "lat": 41.4993,
+      "lon": -81.6944
+    },
+    {
+      "slug": "cologne",
+      "lat": 50.9375,
+      "lon": 6.9603
+    },
+    {
+      "slug": "colombo",
+      "lat": 6.9271,
+      "lon": 79.8612
+    },
+    {
+      "slug": "columbus",
+      "lat": 39.9612,
+      "lon": -82.9988
+    },
+    {
+      "slug": "copenhagen",
+      "lat": 55.6761,
+      "lon": 12.5683
+    },
+    {
+      "slug": "cordoba",
+      "lat": -31.4201,
+      "lon": -64.1888
+    },
+    {
+      "slug": "daegu",
+      "lat": 35.8714,
+      "lon": 128.6014
+    },
+    {
+      "slug": "dakar",
+      "lat": 14.7167,
+      "lon": -17.4677
+    },
+    {
+      "slug": "dallas",
+      "lat": 32.7767,
+      "lon": -96.797
+    },
+    {
+      "slug": "dar-es-salaam",
+      "lat": -6.7924,
+      "lon": 39.2083
+    },
+    {
+      "slug": "delhi",
+      "lat": 28.7041,
+      "lon": 77.1025
+    },
+    {
+      "slug": "denver",
+      "lat": 39.7392,
+      "lon": -104.9903
+    },
+    {
+      "slug": "detroit",
+      "lat": 42.3314,
+      "lon": -83.0458
+    },
+    {
+      "slug": "dhaka",
+      "lat": 23.8103,
+      "lon": 90.4125
+    },
+    {
+      "slug": "doha",
+      "lat": 25.2854,
+      "lon": 51.531
+    },
+    {
+      "slug": "dongguan",
+      "lat": 23.0207,
+      "lon": 113.7518
+    },
+    {
+      "slug": "dubai",
+      "lat": 25.2048,
+      "lon": 55.2708
+    },
+    {
+      "slug": "dublin",
+      "lat": 53.3498,
+      "lon": -6.2603
+    },
+    {
+      "slug": "durban",
+      "lat": -29.8587,
+      "lon": 31.0218
+    },
+    {
+      "slug": "dusseldorf",
+      "lat": 51.2277,
+      "lon": 6.7735
+    },
+    {
+      "slug": "edinburgh",
+      "lat": 55.9533,
+      "lon": -3.1883
+    },
+    {
+      "slug": "florence",
+      "lat": 43.7696,
+      "lon": 11.2558
+    },
+    {
+      "slug": "fortaleza",
+      "lat": -3.7172,
+      "lon": -38.5433
+    },
+    {
+      "slug": "frankfurt",
+      "lat": 50.1109,
+      "lon": 8.6821
+    },
+    {
+      "slug": "fukuoka",
+      "lat": 33.5904,
+      "lon": 130.4017
+    },
+    {
+      "slug": "geneva",
+      "lat": 46.2044,
+      "lon": 6.1432
+    },
+    {
+      "slug": "glasgow",
+      "lat": 55.8642,
+      "lon": -4.2518
+    },
+    {
+      "slug": "guangzhou",
+      "lat": 23.1291,
+      "lon": 113.2644
+    },
+    {
+      "slug": "haifa",
+      "lat": 32.794,
+      "lon": 34.9896
+    },
+    {
+      "slug": "hamburg",
+      "lat": 53.5511,
+      "lon": 9.9937
+    },
+    {
+      "slug": "hangzhou",
+      "lat": 30.2741,
+      "lon": 120.1551
+    },
+    {
+      "slug": "hanoi",
+      "lat": 21.0285,
+      "lon": 105.8542
+    },
+    {
+      "slug": "helsinki",
+      "lat": 60.1699,
+      "lon": 24.9384
+    },
+    {
+      "slug": "hiroshima",
+      "lat": 34.3853,
+      "lon": 132.4553
+    },
+    {
+      "slug": "ho-chi-minh-city",
+      "lat": 10.8231,
+      "lon": 106.6297
+    },
+    {
+      "slug": "hong-kong",
+      "lat": 22.3193,
+      "lon": 114.1694
+    },
+    {
+      "slug": "honolulu",
+      "lat": 21.3069,
+      "lon": -157.8583
+    },
+    {
+      "slug": "houston",
+      "lat": 29.7604,
+      "lon": -95.3698
+    },
+    {
+      "slug": "hyderabad",
+      "lat": 17.385,
+      "lon": 78.4867
+    },
+    {
+      "slug": "incheon",
+      "lat": 37.4563,
+      "lon": 126.7052
+    },
+    {
+      "slug": "indianapolis",
+      "lat": 39.7684,
+      "lon": -86.1581
+    },
+    {
+      "slug": "istanbul",
+      "lat": 41.0082,
+      "lon": 28.9784
+    },
+    {
+      "slug": "izmir",
+      "lat": 38.4237,
+      "lon": 27.1428
+    },
+    {
+      "slug": "jaipur",
+      "lat": 26.9124,
+      "lon": 75.7873
+    },
+    {
+      "slug": "jakarta",
+      "lat": -6.2088,
+      "lon": 106.8456
+    },
+    {
+      "slug": "jeddah",
+      "lat": 21.4858,
+      "lon": 39.1925
+    },
+    {
+      "slug": "johannesburg",
+      "lat": -26.2041,
+      "lon": 28.0473
+    },
+    {
+      "slug": "kansas-city",
+      "lat": 39.0997,
+      "lon": -94.5786
+    },
+    {
+      "slug": "kaohsiung",
+      "lat": 22.6273,
+      "lon": 120.3014
+    },
+    {
+      "slug": "karachi",
+      "lat": 24.8607,
+      "lon": 67.0011
+    },
+    {
+      "slug": "kathmandu",
+      "lat": 27.7172,
+      "lon": 85.324
+    },
+    {
+      "slug": "kobe",
+      "lat": 34.6901,
+      "lon": 135.1956
+    },
+    {
+      "slug": "kolkata",
+      "lat": 22.5726,
+      "lon": 88.3639
+    },
+    {
+      "slug": "krakow",
+      "lat": 50.0647,
+      "lon": 19.945
+    },
+    {
+      "slug": "kuala-lumpur",
+      "lat": 3.139,
+      "lon": 101.6869
+    },
+    {
+      "slug": "kuwait-city",
+      "lat": 29.3759,
+      "lon": 47.9774
+    },
+    {
+      "slug": "kyiv",
+      "lat": 50.4501,
+      "lon": 30.5234
+    },
+    {
+      "slug": "kyoto",
+      "lat": 35.0116,
+      "lon": 135.7681
+    },
+    {
+      "slug": "lagos",
+      "lat": 6.5244,
+      "lon": 3.3792
+    },
+    {
+      "slug": "lahore",
+      "lat": 31.5204,
+      "lon": 74.3587
+    },
+    {
+      "slug": "las-vegas",
+      "lat": 36.1699,
+      "lon": -115.1398
+    },
+    {
+      "slug": "leeds",
+      "lat": 53.8008,
+      "lon": -1.5491
+    },
+    {
+      "slug": "leipzig",
+      "lat": 51.3397,
+      "lon": 12.3731
+    },
+    {
+      "slug": "lima",
+      "lat": -12.0464,
+      "lon": -77.0428
+    },
+    {
+      "slug": "lisbon",
+      "lat": 38.7223,
+      "lon": -9.1393
+    },
+    {
+      "slug": "ljubljana",
+      "lat": 46.0569,
+      "lon": 14.5058
+    },
+    {
+      "slug": "london",
+      "lat": 51.5074,
+      "lon": -0.1278
+    },
+    {
+      "slug": "los-angeles",
+      "lat": 34.0522,
+      "lon": -118.2437
+    },
+    {
+      "slug": "louisville",
+      "lat": 38.2527,
+      "lon": -85.7585
+    },
+    {
+      "slug": "luanda",
+      "lat": -8.839,
+      "lon": 13.2894
+    },
+    {
+      "slug": "lyon",
+      "lat": 45.764,
+      "lon": 4.8357
+    },
+    {
+      "slug": "madrid",
+      "lat": 40.4168,
+      "lon": -3.7038
+    },
+    {
+      "slug": "manama",
+      "lat": 26.2235,
+      "lon": 50.5876
+    },
+    {
+      "slug": "manchester",
+      "lat": 53.4808,
+      "lon": -2.2426
+    },
+    {
+      "slug": "manila",
+      "lat": 14.5995,
+      "lon": 120.9842
+    },
+    {
+      "slug": "marseille",
+      "lat": 43.2965,
+      "lon": 5.3698
+    },
+    {
+      "slug": "medellin",
+      "lat": 6.2442,
+      "lon": -75.5812
+    },
+    {
+      "slug": "melbourne",
+      "lat": -37.8136,
+      "lon": 144.9631
+    },
+    {
+      "slug": "memphis",
+      "lat": 35.1495,
+      "lon": -90.049
+    },
+    {
+      "slug": "mexico-city",
+      "lat": 19.4326,
+      "lon": -99.1332
+    },
+    {
+      "slug": "miami",
+      "lat": 25.7617,
+      "lon": -80.1918
+    },
+    {
+      "slug": "milan",
+      "lat": 45.4642,
+      "lon": 9.19
+    },
+    {
+      "slug": "milwaukee",
+      "lat": 43.0389,
+      "lon": -87.9065
+    },
+    {
+      "slug": "minneapolis",
+      "lat": 44.9778,
+      "lon": -93.265
+    },
+    {
+      "slug": "minsk",
+      "lat": 53.9006,
+      "lon": 27.559
+    },
+    {
+      "slug": "monaco",
+      "lat": 43.7384,
+      "lon": 7.4246
+    },
+    {
+      "slug": "montevideo",
+      "lat": -34.9011,
+      "lon": -56.1645
+    },
+    {
+      "slug": "montreal",
+      "lat": 45.5019,
+      "lon": -73.5674
+    },
+    {
+      "slug": "moscow",
+      "lat": 55.7558,
+      "lon": 37.6173
+    },
+    {
+      "slug": "mumbai",
+      "lat": 19.076,
+      "lon": 72.8777
+    },
+    {
+      "slug": "munich",
+      "lat": 48.1351,
+      "lon": 11.582
+    },
+    {
+      "slug": "muscat",
+      "lat": 23.5859,
+      "lon": 58.4059
+    },
+    {
+      "slug": "nagoya",
+      "lat": 35.1815,
+      "lon": 136.9066
+    },
+    {
+      "slug": "nairobi",
+      "lat": -1.2921,
+      "lon": 36.8219
+    },
+    {
+      "slug": "nanjing",
+      "lat": 32.0603,
+      "lon": 118.7969
+    },
+    {
+      "slug": "nantes",
+      "lat": 47.2184,
+      "lon": -1.5536
+    },
+    {
+      "slug": "naples",
+      "lat": 40.8518,
+      "lon": 14.2681
+    },
+    {
+      "slug": "nashville",
+      "lat": 36.1627,
+      "lon": -86.7816
+    },
+    {
+      "slug": "new-orleans",
+      "lat": 29.9511,
+      "lon": -90.0715
+    },
+    {
+      "slug": "new-york",
+      "lat": 40.7128,
+      "lon": -74.006
+    },
+    {
+      "slug": "nice",
+      "lat": 43.7102,
+      "lon": 7.262
+    },
+    {
+      "slug": "nicosia",
+      "lat": 35.1856,
+      "lon": 33.3823
+    },
+    {
+      "slug": "oklahoma-city",
+      "lat": 35.4676,
+      "lon": -97.5164
+    },
+    {
+      "slug": "orlando",
+      "lat": 28.5383,
+      "lon": -81.3792
+    },
+    {
+      "slug": "osaka",
+      "lat": 34.6937,
+      "lon": 135.5023
+    },
+    {
+      "slug": "oslo",
+      "lat": 59.9139,
+      "lon": 10.7522
+    },
+    {
+      "slug": "panama-city",
+      "lat": 8.9824,
+      "lon": -79.5199
+    },
+    {
+      "slug": "paris",
+      "lat": 48.8566,
+      "lon": 2.3522
+    },
+    {
+      "slug": "perth",
+      "lat": -31.9505,
+      "lon": 115.8605
+    },
+    {
+      "slug": "philadelphia",
+      "lat": 39.9526,
+      "lon": -75.1652
+    },
+    {
+      "slug": "phnom-penh",
+      "lat": 11.5564,
+      "lon": 104.9282
+    },
+    {
+      "slug": "phoenix",
+      "lat": 33.4484,
+      "lon": -112.074
+    },
+    {
+      "slug": "pittsburgh",
+      "lat": 40.4406,
+      "lon": -79.9959
+    },
+    {
+      "slug": "podgorica",
+      "lat": 42.4304,
+      "lon": 19.2594
+    },
+    {
+      "slug": "portland",
+      "lat": 45.5152,
+      "lon": -122.6784
+    },
+    {
+      "slug": "porto",
+      "lat": 41.1579,
+      "lon": -8.6291
+    },
+    {
+      "slug": "porto-alegre",
+      "lat": -30.0346,
+      "lon": -51.2177
+    },
+    {
+      "slug": "prague",
+      "lat": 50.0755,
+      "lon": 14.4378
+    },
+    {
+      "slug": "pristina",
+      "lat": 42.6629,
+      "lon": 21.1655
+    },
+    {
+      "slug": "pune",
+      "lat": 18.5204,
+      "lon": 73.8567
+    },
+    {
+      "slug": "quito",
+      "lat": -0.1807,
+      "lon": -78.4678
+    },
+    {
+      "slug": "raleigh",
+      "lat": 35.7796,
+      "lon": -78.6382
+    },
+    {
+      "slug": "recife",
+      "lat": -8.0476,
+      "lon": -34.877
+    },
+    {
+      "slug": "reykjavik",
+      "lat": 64.1466,
+      "lon": -21.9426
+    },
+    {
+      "slug": "richmond",
+      "lat": 37.5407,
+      "lon": -77.436
+    },
+    {
+      "slug": "riga",
+      "lat": 56.9496,
+      "lon": 24.1052
+    },
+    {
+      "slug": "rio-de-janeiro",
+      "lat": -22.9068,
+      "lon": -43.1729
+    },
+    {
+      "slug": "riyadh",
+      "lat": 24.7136,
+      "lon": 46.6753
+    },
+    {
+      "slug": "rome",
+      "lat": 41.9028,
+      "lon": 12.4964
+    },
+    {
+      "slug": "rosario",
+      "lat": -32.9442,
+      "lon": -60.6505
+    },
+    {
+      "slug": "rotterdam",
+      "lat": 51.9244,
+      "lon": 4.4777
+    },
+    {
+      "slug": "sacramento",
+      "lat": 38.5816,
+      "lon": -121.4944
+    },
+    {
+      "slug": "saint-petersburg",
+      "lat": 59.9311,
+      "lon": 30.3609
+    },
+    {
+      "slug": "salt-lake-city",
+      "lat": 40.7608,
+      "lon": -111.891
+    },
+    {
+      "slug": "salvador",
+      "lat": -12.9714,
+      "lon": -38.5014
+    },
+    {
+      "slug": "san-antonio",
+      "lat": 29.4241,
+      "lon": -98.4936
+    },
+    {
+      "slug": "san-diego",
+      "lat": 32.7157,
+      "lon": -117.1611
+    },
+    {
+      "slug": "san-francisco",
+      "lat": 37.7749,
+      "lon": -122.4194
+    },
+    {
+      "slug": "san-jose",
+      "lat": 37.3382,
+      "lon": -121.8863
+    },
+    {
+      "slug": "san-jose-cr",
+      "lat": 9.9281,
+      "lon": -84.0907
+    },
+    {
+      "slug": "santiago",
+      "lat": -33.4489,
+      "lon": -70.6693
+    },
+    {
+      "slug": "santo-domingo",
+      "lat": 18.4861,
+      "lon": -69.9312
+    },
+    {
+      "slug": "sao-paulo",
+      "lat": -23.5505,
+      "lon": -46.6333
+    },
+    {
+      "slug": "sapporo",
+      "lat": 43.0642,
+      "lon": 141.3469
+    },
+    {
+      "slug": "sarajevo",
+      "lat": 43.8563,
+      "lon": 18.4131
+    },
+    {
+      "slug": "seattle",
+      "lat": 47.6062,
+      "lon": -122.3321
+    },
+    {
+      "slug": "sendai",
+      "lat": 38.2682,
+      "lon": 140.8694
+    },
+    {
+      "slug": "seoul",
+      "lat": 37.5665,
+      "lon": 126.978
+    },
+    {
+      "slug": "seville",
+      "lat": 37.3891,
+      "lon": -5.9845
+    },
+    {
+      "slug": "shanghai",
+      "lat": 31.2304,
+      "lon": 121.4737
+    },
+    {
+      "slug": "shenzhen",
+      "lat": 22.5431,
+      "lon": 114.0579
+    },
+    {
+      "slug": "singapore",
+      "lat": 1.3521,
+      "lon": 103.8198
+    },
+    {
+      "slug": "skopje",
+      "lat": 41.9981,
+      "lon": 21.4254
+    },
+    {
+      "slug": "sofia",
+      "lat": 42.6977,
+      "lon": 23.3219
+    },
+    {
+      "slug": "st-louis",
+      "lat": 38.627,
+      "lon": -90.1994
+    },
+    {
+      "slug": "stockholm",
+      "lat": 59.3293,
+      "lon": 18.0686
+    },
+    {
+      "slug": "stuttgart",
+      "lat": 48.7758,
+      "lon": 9.1829
+    },
+    {
+      "slug": "surabaya",
+      "lat": -7.2575,
+      "lon": 112.7521
+    },
+    {
+      "slug": "surat",
+      "lat": 21.1702,
+      "lon": 72.8311
+    },
+    {
+      "slug": "sydney",
+      "lat": -33.8688,
+      "lon": 151.2093
+    },
+    {
+      "slug": "taipei",
+      "lat": 25.033,
+      "lon": 121.5654
+    },
+    {
+      "slug": "tallinn",
+      "lat": 59.437,
+      "lon": 24.7536
+    },
+    {
+      "slug": "tampa",
+      "lat": 27.9506,
+      "lon": -82.4572
+    },
+    {
+      "slug": "tbilisi",
+      "lat": 41.7151,
+      "lon": 44.8271
+    },
+    {
+      "slug": "tehran",
+      "lat": 35.6892,
+      "lon": 51.389
+    },
+    {
+      "slug": "tel-aviv",
+      "lat": 32.0853,
+      "lon": 34.7818
+    },
+    {
+      "slug": "tianjin",
+      "lat": 39.3434,
+      "lon": 117.3616
+    },
+    {
+      "slug": "tirana",
+      "lat": 41.3275,
+      "lon": 19.8187
+    },
+    {
+      "slug": "tokyo",
+      "lat": 35.6762,
+      "lon": 139.6503
+    },
+    {
+      "slug": "toronto",
+      "lat": 43.6532,
+      "lon": -79.3832
+    },
+    {
+      "slug": "toulouse",
+      "lat": 43.6047,
+      "lon": 1.4442
+    },
+    {
+      "slug": "tunis",
+      "lat": 36.8065,
+      "lon": 10.1815
+    },
+    {
+      "slug": "turin",
+      "lat": 45.0703,
+      "lon": 7.6869
+    },
+    {
+      "slug": "ulaanbaatar",
+      "lat": 47.8864,
+      "lon": 106.9057
+    },
+    {
+      "slug": "valencia",
+      "lat": 39.4699,
+      "lon": -0.3763
+    },
+    {
+      "slug": "valletta",
+      "lat": 35.8989,
+      "lon": 14.5146
+    },
+    {
+      "slug": "valparaiso",
+      "lat": -33.0472,
+      "lon": -71.6127
+    },
+    {
+      "slug": "vancouver",
+      "lat": 49.2827,
+      "lon": -123.1207
+    },
+    {
+      "slug": "vienna",
+      "lat": 48.2082,
+      "lon": 16.3738
+    },
+    {
+      "slug": "vientiane",
+      "lat": 17.9757,
+      "lon": 102.6331
+    },
+    {
+      "slug": "vilnius",
+      "lat": 54.6872,
+      "lon": 25.2797
+    },
+    {
+      "slug": "warsaw",
+      "lat": 52.2297,
+      "lon": 21.0122
+    },
+    {
+      "slug": "washington-dc",
+      "lat": 38.9072,
+      "lon": -77.0369
+    },
+    {
+      "slug": "wellington",
+      "lat": -41.2865,
+      "lon": 174.7762
+    },
+    {
+      "slug": "wuhan",
+      "lat": 30.5928,
+      "lon": 114.3055
+    },
+    {
+      "slug": "xian",
+      "lat": 34.3416,
+      "lon": 108.9398
+    },
+    {
+      "slug": "yangon",
+      "lat": 16.8409,
+      "lon": 96.1735
+    },
+    {
+      "slug": "yokohama",
+      "lat": 35.4437,
+      "lon": 139.638
+    },
+    {
+      "slug": "zagreb",
+      "lat": 45.815,
+      "lon": 15.9819
+    },
+    {
+      "slug": "zurich",
+      "lat": 47.3769,
+      "lon": 8.5417
+    }
   ]
 }

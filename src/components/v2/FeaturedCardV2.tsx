@@ -19,13 +19,15 @@ interface FeaturedCardV2Props {
   href: string;
 }
 
+// Sanity-§8: apologetic "Estimated" label removed. We keep the
+// small colored dot as a quiet trust signal (and tooltip via title).
 const COVERAGE: Record<
   CoverageTier,
-  { dot: string; label: string }
+  { dot: string; title: string }
 > = {
-  measured: { dot: "#1F8A4C", label: "Measured" },
-  regional: { dot: "#2563EB", label: "Regional" },
-  estimated: { dot: "#B45309", label: "Estimated" },
+  measured: { dot: "#1F8A4C", title: "Measured from primary data" },
+  regional: { dot: "#2563EB", title: "Regional benchmark applied here" },
+  estimated: { dot: "#B45309", title: "Derived from country and industry averages" },
 };
 
 function formatRevenue(n: number): { prefix: string; value: string; suffix: string } {
@@ -123,16 +125,13 @@ export default function FeaturedCardV2({
           </span>
         </div>
 
-        {/* Row 5: coverage chip, right aligned */}
-        <div className="flex items-center gap-1.5 pb-[2px] shrink-0">
+        {/* Row 5: quiet coverage dot (Sanity-§8). No apologetic label. */}
+        <div className="flex items-center pb-[2px] shrink-0" title={cov.title}>
           <span
-            aria-hidden="true"
+            aria-label={cov.title}
             className="inline-block w-1.5 h-1.5 rounded-full"
             style={{ backgroundColor: cov.dot }}
           />
-          <span className="font-sans text-[10px] uppercase tracking-wide text-[#3A3A3A]">
-            {cov.label}
-          </span>
         </div>
       </div>
     </a>

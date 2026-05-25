@@ -20,6 +20,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ForkKnife } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
+import { HowWeKnowThis } from "@/components/HowWeKnowThis";
 
 export type MobileCellHeroProps = {
   sectorId: string;
@@ -38,14 +39,13 @@ export type MobileCellHeroProps = {
   browseIndustriesHref?: string;
 };
 
-const COVERAGE_META: Record<
-  MobileCellHeroProps["coverageTier"],
-  { label: string; dotClass: string; ariaLabel: string }
-> = {
-  measured:  { label: "Measured",  dotClass: "bg-emerald-500 ring-emerald-500/20", ariaLabel: "Measured benchmark coverage" },
-  regional:  { label: "Regional",  dotClass: "bg-sky-500 ring-sky-500/20",         ariaLabel: "Regional benchmark coverage" },
-  estimated: { label: "Estimated", dotClass: "bg-amber-500 ring-amber-500/20",     ariaLabel: "Estimated benchmark coverage" },
-  modeled:   { label: "Modeled",   dotClass: "bg-stone-400 ring-stone-400/20",     ariaLabel: "Modeled benchmark coverage" },
+// Sanity-§8: apologetic Estimated / Modeled pill labels removed.
+// Only the methodology anchor remains so the inline link can deep-link.
+const COVERAGE_ANCHOR: Record<MobileCellHeroProps["coverageTier"], string> = {
+  measured: "measured",
+  regional: "regional",
+  estimated: "estimated",
+  modeled: "modeled",
 };
 
 function splitRevenue(n: number): { sign: string; num: string; suffix: "" | "K" | "M" } {
@@ -88,7 +88,7 @@ export default function MobileCellHero({
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const cov = COVERAGE_META[coverageTier];
+  const covAnchor = COVERAGE_ANCHOR[coverageTier];
   const rev = splitRevenue(typicalRevenue);
 
   return (
@@ -110,14 +110,10 @@ export default function MobileCellHero({
           {question}
         </h1>
 
-        {/* Coverage chip — below H1 */}
-        <div
-          className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-parchment bg-white/70 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-cocoa-700"
-          role="status"
-          aria-label={cov.ariaLabel}
-        >
-          <span className={`h-1.5 w-1.5 rounded-full ring-2 ${cov.dotClass}`} aria-hidden="true" />
-          {cov.label}
+        {/* Sanity-§8 — apologetic coverage chip replaced with a quiet
+            methodology link under the H1. */}
+        <div className="mt-3">
+          <HowWeKnowThis anchor={covAnchor} />
         </div>
 
         {/* Subniches */}
