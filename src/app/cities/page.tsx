@@ -203,10 +203,18 @@ export default function CitiesHub() {
                         )}
                       </h3>
                       {/* Cities flow horizontally as a paragraph of links,
-                          separated by middots. Wraps naturally. */}
+                          separated by middots. Each city name is kept
+                          on one line via whitespace-nowrap so multi-
+                          word names ("Kansas City", "New York", "San
+                          Francisco") never split mid-name. The line
+                          itself wraps freely between cities, at the
+                          middot. */}
                       <p className="text-sm text-ink-800 leading-[1.65]">
                         {cities.map((c, idx) => (
-                          <span key={c.slug}>
+                          <span
+                            key={c.slug}
+                            className="whitespace-nowrap"
+                          >
                             <Link
                               href={`/cities/${c.slug}`}
                               className="hover:text-atlas-700 transition-colors"
