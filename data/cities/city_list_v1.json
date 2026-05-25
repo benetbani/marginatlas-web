@@ -26,7 +26,15 @@
       "tier": 3,
       "pop_m": 5.6,
       "gdp_b": 30,
-      "wealth_z": 0.2
+      "wealth_z": 0.2,
+      "avg_gross_salary_usd_year": 1200.0,
+      "hdi": 0.539,
+      "gini": 35.3,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "abu-dhabi",
@@ -36,7 +44,15 @@
       "tier": 2,
       "pop_m": 1.5,
       "gdp_b": 280,
-      "wealth_z": 2.5
+      "wealth_z": 2.5,
+      "avg_gross_salary_usd_year": 27100.0,
+      "hdi": 0.947,
+      "gini": 26.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "abuja",
@@ -46,7 +62,15 @@
       "tier": 3,
       "pop_m": 3.5,
       "gdp_b": 25,
-      "wealth_z": 0.1
+      "wealth_z": 0.1,
+      "avg_gross_salary_usd_year": 500.0,
+      "hdi": 0.553,
+      "gini": 35.1,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "accra",
@@ -56,7 +80,15 @@
       "tier": 3,
       "pop_m": 2.6,
       "gdp_b": 20,
-      "wealth_z": 0.3
+      "wealth_z": 0.3,
+      "avg_gross_salary_usd_year": 1100.0,
+      "hdi": 0.616,
+      "gini": 43.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "addis-ababa",
@@ -66,7 +98,15 @@
       "tier": 3,
       "pop_m": 5.5,
       "gdp_b": 25,
-      "wealth_z": 0.0
+      "wealth_z": 0.0,
+      "avg_gross_salary_usd_year": 500.0,
+      "hdi": 0.503,
+      "gini": 35.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "adelaide",
@@ -76,7 +116,15 @@
       "tier": 3,
       "pop_m": 1.4,
       "gdp_b": 80,
-      "wealth_z": 1.9
+      "wealth_z": 1.9,
+      "avg_gross_salary_usd_year": 29100.0,
+      "hdi": 0.951,
+      "gini": 34.3,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "ahmedabad",
@@ -86,7 +134,15 @@
       "tier": 3,
       "pop_m": 8.4,
       "gdp_b": 85,
-      "wealth_z": 0.5
+      "wealth_z": 0.5,
+      "avg_gross_salary_usd_year": 1200.0,
+      "hdi": 0.649,
+      "gini": 35.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "alexandria",
@@ -96,7 +152,15 @@
       "tier": 3,
       "pop_m": 5.4,
       "gdp_b": 40,
-      "wealth_z": 0.1
+      "wealth_z": 0.1,
+      "avg_gross_salary_usd_year": 1500.0,
+      "hdi": 0.733,
+      "gini": 31.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "algiers",
@@ -106,7 +170,15 @@
       "tier": 2,
       "pop_m": 4.5,
       "gdp_b": 90,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 3100.0,
+      "hdi": 0.755,
+      "gini": 27.6,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "almaty",
@@ -116,7 +188,15 @@
       "tier": 3,
       "pop_m": 2.1,
       "gdp_b": 35,
-      "wealth_z": 0.8
+      "wealth_z": 0.8,
+      "avg_gross_salary_usd_year": 6400.0,
+      "hdi": 0.807,
+      "gini": 27.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "amman",
@@ -126,7 +206,15 @@
       "tier": 3,
       "pop_m": 4.5,
       "gdp_b": 30,
-      "wealth_z": 0.4
+      "wealth_z": 0.4,
+      "avg_gross_salary_usd_year": 2100.0,
+      "hdi": 0.741,
+      "gini": 33.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "amsterdam",
@@ -136,7 +224,15 @@
       "tier": 2,
       "pop_m": 2.5,
       "gdp_b": 170,
-      "wealth_z": 2.2
+      "wealth_z": 2.2,
+      "avg_gross_salary_usd_year": 62000,
+      "hdi": 0.955,
+      "gini": 27.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "CBS 2023",
+        "hdi": "CBS 2023",
+        "gini": "CBS 2023"
+      }
     },
     {
       "slug": "ankara",
@@ -146,7 +242,15 @@
       "tier": 3,
       "pop_m": 5.7,
       "gdp_b": 65,
-      "wealth_z": 0.5
+      "wealth_z": 0.5,
+      "avg_gross_salary_usd_year": 7200.0,
+      "hdi": 0.843,
+      "gini": 41.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "antalya",
@@ -156,7 +260,15 @@
       "tier": 3,
       "pop_m": 2.6,
       "gdp_b": 35,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 7200.0,
+      "hdi": 0.843,
+      "gini": 41.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "athens",
@@ -166,7 +278,15 @@
       "tier": 3,
       "pop_m": 3.7,
       "gdp_b": 100,
-      "wealth_z": 1.3
+      "wealth_z": 1.3,
+      "avg_gross_salary_usd_year": 28000,
+      "hdi": 0.905,
+      "gini": 33.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "ELSTAT 2023",
+        "hdi": "ELSTAT 2023",
+        "gini": "ELSTAT 2023"
+      }
     },
     {
       "slug": "atlanta",
@@ -176,7 +296,15 @@
       "tier": 2,
       "pop_m": 6.1,
       "gdp_b": 410,
-      "wealth_z": 1.9
+      "wealth_z": 1.9,
+      "avg_gross_salary_usd_year": 68000,
+      "hdi": 0.92,
+      "gini": 48.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
+        "hdi": "BLS metro QCEW + ACS",
+        "gini": "BLS metro QCEW + ACS"
+      }
     },
     {
       "slug": "auckland",
@@ -186,7 +314,15 @@
       "tier": 2,
       "pop_m": 1.7,
       "gdp_b": 100,
-      "wealth_z": 1.9
+      "wealth_z": 1.9,
+      "avg_gross_salary_usd_year": 58000,
+      "hdi": 0.94,
+      "gini": 32.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Stats NZ 2023",
+        "hdi": "Stats NZ 2023",
+        "gini": "Stats NZ 2023"
+      }
     },
     {
       "slug": "austin",
@@ -196,7 +332,15 @@
       "tier": 2,
       "pop_m": 2.5,
       "gdp_b": 220,
-      "wealth_z": 2.1
+      "wealth_z": 2.1,
+      "avg_gross_salary_usd_year": 45600.0,
+      "hdi": 0.937,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "baghdad",
@@ -206,7 +350,13 @@
       "tier": 1,
       "pop_m": 8.5,
       "gdp_b": 110,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 4100.0,
+      "hdi": 0.693,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-1 bump",
+        "hdi": "Extrapolated from country HDI + tier-1 bump"
+      }
     },
     {
       "slug": "baku",
@@ -216,7 +366,15 @@
       "tier": 2,
       "pop_m": 2.4,
       "gdp_b": 65,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 3900.0,
+      "hdi": 0.77,
+      "gini": 26.6,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "baltimore",
@@ -226,7 +384,15 @@
       "tier": 2,
       "pop_m": 2.8,
       "gdp_b": 210,
-      "wealth_z": 1.9
+      "wealth_z": 1.9,
+      "avg_gross_salary_usd_year": 72000,
+      "hdi": 0.92,
+      "gini": 47.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
+        "hdi": "BLS metro QCEW + ACS",
+        "gini": "BLS metro QCEW + ACS"
+      }
     },
     {
       "slug": "bandung",
@@ -236,7 +402,15 @@
       "tier": 3,
       "pop_m": 8.6,
       "gdp_b": 60,
-      "wealth_z": 0.3
+      "wealth_z": 0.3,
+      "avg_gross_salary_usd_year": 2200.0,
+      "hdi": 0.718,
+      "gini": 37.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "bangalore",
@@ -246,7 +420,15 @@
       "tier": 2,
       "pop_m": 13.6,
       "gdp_b": 230,
-      "wealth_z": 0.6
+      "wealth_z": 0.6,
+      "avg_gross_salary_usd_year": 1500.0,
+      "hdi": 0.654,
+      "gini": 35.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "bangkok",
@@ -256,7 +438,15 @@
       "tier": 2,
       "pop_m": 17.5,
       "gdp_b": 380,
-      "wealth_z": 0.7
+      "wealth_z": 0.7,
+      "avg_gross_salary_usd_year": 18000,
+      "hdi": 0.84,
+      "gini": 35.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "NSO Thailand 2023",
+        "hdi": "NSO Thailand 2023",
+        "gini": "NSO Thailand 2023"
+      }
     },
     {
       "slug": "barcelona",
@@ -266,7 +456,15 @@
       "tier": 1,
       "pop_m": 5.6,
       "gdp_b": 240,
-      "wealth_z": 1.8
+      "wealth_z": 1.8,
+      "avg_gross_salary_usd_year": 23800.0,
+      "hdi": 0.931,
+      "gini": 33.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-1 bump",
+        "hdi": "Extrapolated from country HDI + tier-1 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "basel",
@@ -276,7 +474,15 @@
       "tier": 3,
       "pop_m": 0.8,
       "gdp_b": 80,
-      "wealth_z": 2.9
+      "wealth_z": 2.9,
+      "avg_gross_salary_usd_year": 46800.0,
+      "hdi": 0.972,
+      "gini": 33.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "beijing",
@@ -286,7 +492,15 @@
       "tier": 1,
       "pop_m": 21.7,
       "gdp_b": 670,
-      "wealth_z": 1.4
+      "wealth_z": 1.4,
+      "avg_gross_salary_usd_year": 24000,
+      "hdi": 0.84,
+      "gini": 38.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "NBS China 2023",
+        "hdi": "NBS China 2023",
+        "gini": "NBS China 2023"
+      }
     },
     {
       "slug": "beirut",
@@ -296,7 +510,11 @@
       "tier": 3,
       "pop_m": 2.5,
       "gdp_b": 25,
-      "wealth_z": 0.4
+      "wealth_z": 0.4,
+      "avg_gross_salary_usd_year": 1600.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump"
+      }
     },
     {
       "slug": "belgrade",
@@ -306,7 +524,13 @@
       "tier": 3,
       "pop_m": 1.7,
       "gdp_b": 50,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 6200.0,
+      "hdi": 0.807,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump"
+      }
     },
     {
       "slug": "belo-horizonte",
@@ -316,7 +540,15 @@
       "tier": 3,
       "pop_m": 5.9,
       "gdp_b": 90,
-      "wealth_z": 0.5
+      "wealth_z": 0.5,
+      "avg_gross_salary_usd_year": 4600.0,
+      "hdi": 0.765,
+      "gini": 52.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "berlin",
@@ -326,7 +558,15 @@
       "tier": 1,
       "pop_m": 4.7,
       "gdp_b": 200,
-      "wealth_z": 1.9
+      "wealth_z": 1.9,
+      "avg_gross_salary_usd_year": 54000,
+      "hdi": 0.945,
+      "gini": 31.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "Destatis 2023",
+        "hdi": "Destatis 2023",
+        "gini": "Destatis 2023"
+      }
     },
     {
       "slug": "bern",
@@ -336,7 +576,15 @@
       "tier": 3,
       "pop_m": 0.4,
       "gdp_b": 30,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 46800.0,
+      "hdi": 0.972,
+      "gini": 33.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "birmingham",
@@ -346,7 +594,15 @@
       "tier": 2,
       "pop_m": 2.7,
       "gdp_b": 130,
-      "wealth_z": 1.6
+      "wealth_z": 1.6,
+      "avg_gross_salary_usd_year": 28800.0,
+      "hdi": 0.95,
+      "gini": 35.1,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "bogota",
@@ -356,7 +612,15 @@
       "tier": 2,
       "pop_m": 11.0,
       "gdp_b": 150,
-      "wealth_z": 0.5
+      "wealth_z": 0.5,
+      "avg_gross_salary_usd_year": 15000,
+      "hdi": 0.795,
+      "gini": 51.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "DANE 2023",
+        "hdi": "DANE 2023",
+        "gini": "DANE 2023"
+      }
     },
     {
       "slug": "boston",
@@ -366,7 +630,15 @@
       "tier": 2,
       "pop_m": 4.9,
       "gdp_b": 500,
-      "wealth_z": 2.3
+      "wealth_z": 2.3,
+      "avg_gross_salary_usd_year": 94000,
+      "hdi": 0.94,
+      "gini": 47.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
+        "hdi": "BLS metro QCEW + ACS",
+        "gini": "BLS metro QCEW + ACS"
+      }
     },
     {
       "slug": "brasilia",
@@ -376,7 +648,15 @@
       "tier": 3,
       "pop_m": 4.7,
       "gdp_b": 90,
-      "wealth_z": 0.8
+      "wealth_z": 0.8,
+      "avg_gross_salary_usd_year": 4600.0,
+      "hdi": 0.765,
+      "gini": 52.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "bratislava",
@@ -386,7 +666,15 @@
       "tier": 3,
       "pop_m": 0.65,
       "gdp_b": 35,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 11700.0,
+      "hdi": 0.86,
+      "gini": 24.1,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "brisbane",
@@ -396,7 +684,15 @@
       "tier": 3,
       "pop_m": 2.6,
       "gdp_b": 170,
-      "wealth_z": 2.0
+      "wealth_z": 2.0,
+      "avg_gross_salary_usd_year": 29100.0,
+      "hdi": 0.951,
+      "gini": 34.3,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "bristol",
@@ -406,7 +702,15 @@
       "tier": 3,
       "pop_m": 1.2,
       "gdp_b": 50,
-      "wealth_z": 1.7
+      "wealth_z": 1.7,
+      "avg_gross_salary_usd_year": 24000.0,
+      "hdi": 0.945,
+      "gini": 35.1,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "brussels",
@@ -416,7 +720,15 @@
       "tier": 2,
       "pop_m": 2.1,
       "gdp_b": 130,
-      "wealth_z": 2.1
+      "wealth_z": 2.1,
+      "avg_gross_salary_usd_year": 59000,
+      "hdi": 0.95,
+      "gini": 26.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Statbel 2023",
+        "hdi": "Statbel 2023",
+        "gini": "Statbel 2023"
+      }
     },
     {
       "slug": "bucharest",
@@ -426,7 +738,15 @@
       "tier": 2,
       "pop_m": 2.4,
       "gdp_b": 130,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 24000,
+      "hdi": 0.85,
+      "gini": 32.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "INS Romania 2023",
+        "hdi": "INS Romania 2023",
+        "gini": "INS Romania 2023"
+      }
     },
     {
       "slug": "budapest",
@@ -436,7 +756,15 @@
       "tier": 3,
       "pop_m": 3.0,
       "gdp_b": 90,
-      "wealth_z": 1.4
+      "wealth_z": 1.4,
+      "avg_gross_salary_usd_year": 25000,
+      "hdi": 0.87,
+      "gini": 29.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "KSH 2023",
+        "hdi": "KSH 2023",
+        "gini": "KSH 2023"
+      }
     },
     {
       "slug": "buenos-aires",
@@ -446,7 +774,15 @@
       "tier": 2,
       "pop_m": 15.4,
       "gdp_b": 220,
-      "wealth_z": 0.5
+      "wealth_z": 0.5,
+      "avg_gross_salary_usd_year": 16000,
+      "hdi": 0.87,
+      "gini": 41.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "INDEC 2023",
+        "hdi": "INDEC 2023",
+        "gini": "INDEC 2023"
+      }
     },
     {
       "slug": "buffalo",
@@ -456,7 +792,15 @@
       "tier": 3,
       "pop_m": 1.1,
       "gdp_b": 65,
-      "wealth_z": 1.3
+      "wealth_z": 1.3,
+      "avg_gross_salary_usd_year": 38000.0,
+      "hdi": 0.932,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "busan",
@@ -466,7 +810,15 @@
       "tier": 2,
       "pop_m": 3.4,
       "gdp_b": 100,
-      "wealth_z": 1.7
+      "wealth_z": 1.7,
+      "avg_gross_salary_usd_year": 19600.0,
+      "hdi": 0.939,
+      "gini": 31.4,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "cairo",
@@ -476,7 +828,15 @@
       "tier": 2,
       "pop_m": 22.0,
       "gdp_b": 180,
-      "wealth_z": 0.1
+      "wealth_z": 0.1,
+      "avg_gross_salary_usd_year": 9000,
+      "hdi": 0.735,
+      "gini": 32.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "CAPMAS Egypt 2023",
+        "hdi": "CAPMAS Egypt 2023",
+        "gini": "CAPMAS Egypt 2023"
+      }
     },
     {
       "slug": "calgary",
@@ -486,7 +846,15 @@
       "tier": 3,
       "pop_m": 1.6,
       "gdp_b": 100,
-      "wealth_z": 1.7
+      "wealth_z": 1.7,
+      "avg_gross_salary_usd_year": 24500.0,
+      "hdi": 0.94,
+      "gini": 31.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "cali",
@@ -496,7 +864,15 @@
       "tier": 3,
       "pop_m": 2.9,
       "gdp_b": 30,
-      "wealth_z": 0.3
+      "wealth_z": 0.3,
+      "avg_gross_salary_usd_year": 3600.0,
+      "hdi": 0.763,
+      "gini": 51.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "canberra",
@@ -506,7 +882,15 @@
       "tier": 3,
       "pop_m": 0.5,
       "gdp_b": 40,
-      "wealth_z": 2.3
+      "wealth_z": 2.3,
+      "avg_gross_salary_usd_year": 29100.0,
+      "hdi": 0.951,
+      "gini": 34.3,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "cape-town",
@@ -516,7 +900,15 @@
       "tier": 2,
       "pop_m": 4.8,
       "gdp_b": 65,
-      "wealth_z": 0.5
+      "wealth_z": 0.5,
+      "avg_gross_salary_usd_year": 3400.0,
+      "hdi": 0.727,
+      "gini": 63.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "caracas",
@@ -526,7 +918,13 @@
       "tier": 3,
       "pop_m": 3.0,
       "gdp_b": 30,
-      "wealth_z": 0.0
+      "wealth_z": 0.0,
+      "avg_gross_salary_usd_year": 1900.0,
+      "gini": 44.8,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "casablanca",
@@ -536,7 +934,15 @@
       "tier": 3,
       "pop_m": 4.4,
       "gdp_b": 50,
-      "wealth_z": 0.4
+      "wealth_z": 0.4,
+      "avg_gross_salary_usd_year": 1900.0,
+      "hdi": 0.703,
+      "gini": 39.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "cebu",
@@ -546,7 +952,15 @@
       "tier": 3,
       "pop_m": 3.0,
       "gdp_b": 40,
-      "wealth_z": 0.4
+      "wealth_z": 0.4,
+      "avg_gross_salary_usd_year": 1800.0,
+      "hdi": 0.715,
+      "gini": 40.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "charlotte",
@@ -556,7 +970,15 @@
       "tier": 2,
       "pop_m": 2.7,
       "gdp_b": 220,
-      "wealth_z": 1.9
+      "wealth_z": 1.9,
+      "avg_gross_salary_usd_year": 45600.0,
+      "hdi": 0.937,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "chengdu",
@@ -566,7 +988,15 @@
       "tier": 3,
       "pop_m": 20.9,
       "gdp_b": 310,
-      "wealth_z": 0.9
+      "wealth_z": 0.9,
+      "avg_gross_salary_usd_year": 6000.0,
+      "hdi": 0.793,
+      "gini": 38.2,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "chennai",
@@ -576,7 +1006,15 @@
       "tier": 3,
       "pop_m": 11.5,
       "gdp_b": 120,
-      "wealth_z": 0.5
+      "wealth_z": 0.5,
+      "avg_gross_salary_usd_year": 1200.0,
+      "hdi": 0.649,
+      "gini": 35.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "chiang-mai",
@@ -586,7 +1024,15 @@
       "tier": 3,
       "pop_m": 1.2,
       "gdp_b": 15,
-      "wealth_z": 0.5
+      "wealth_z": 0.5,
+      "avg_gross_salary_usd_year": 3300.0,
+      "hdi": 0.808,
+      "gini": 35.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "chicago",
@@ -596,7 +1042,15 @@
       "tier": 1,
       "pop_m": 9.5,
       "gdp_b": 770,
-      "wealth_z": 2.0
+      "wealth_z": 2.0,
+      "avg_gross_salary_usd_year": 72000,
+      "hdi": 0.93,
+      "gini": 48.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
+        "hdi": "BLS metro QCEW + ACS",
+        "gini": "BLS metro QCEW + ACS"
+      }
     },
     {
       "slug": "chisinau",
@@ -606,7 +1060,13 @@
       "tier": 3,
       "pop_m": 0.7,
       "gdp_b": 8,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 3400.0,
+      "hdi": 0.768,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump"
+      }
     },
     {
       "slug": "chongqing",
@@ -616,7 +1076,15 @@
       "tier": 3,
       "pop_m": 32.0,
       "gdp_b": 400,
-      "wealth_z": 0.8
+      "wealth_z": 0.8,
+      "avg_gross_salary_usd_year": 6000.0,
+      "hdi": 0.793,
+      "gini": 38.2,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "christchurch",
@@ -626,7 +1094,15 @@
       "tier": 3,
       "pop_m": 0.4,
       "gdp_b": 25,
-      "wealth_z": 1.8
+      "wealth_z": 1.8,
+      "avg_gross_salary_usd_year": 22100.0,
+      "hdi": 0.944,
+      "gini": 32.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "cincinnati",
@@ -636,7 +1112,15 @@
       "tier": 2,
       "pop_m": 2.3,
       "gdp_b": 160,
-      "wealth_z": 1.7
+      "wealth_z": 1.7,
+      "avg_gross_salary_usd_year": 45600.0,
+      "hdi": 0.937,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "cleveland",
@@ -646,7 +1130,15 @@
       "tier": 3,
       "pop_m": 2.1,
       "gdp_b": 140,
-      "wealth_z": 1.5
+      "wealth_z": 1.5,
+      "avg_gross_salary_usd_year": 38000.0,
+      "hdi": 0.932,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "cologne",
@@ -656,7 +1148,15 @@
       "tier": 2,
       "pop_m": 3.6,
       "gdp_b": 140,
-      "wealth_z": 1.9
+      "wealth_z": 1.9,
+      "avg_gross_salary_usd_year": 30300.0,
+      "hdi": 0.96,
+      "gini": 31.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "colombo",
@@ -666,7 +1166,13 @@
       "tier": 3,
       "pop_m": 5.6,
       "gdp_b": 30,
-      "wealth_z": 0.4
+      "wealth_z": 0.4,
+      "avg_gross_salary_usd_year": 2000.0,
+      "hdi": 0.785,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump"
+      }
     },
     {
       "slug": "columbus",
@@ -676,7 +1182,15 @@
       "tier": 2,
       "pop_m": 2.2,
       "gdp_b": 150,
-      "wealth_z": 1.7
+      "wealth_z": 1.7,
+      "avg_gross_salary_usd_year": 45600.0,
+      "hdi": 0.937,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "copenhagen",
@@ -686,7 +1200,15 @@
       "tier": 2,
       "pop_m": 2.0,
       "gdp_b": 110,
-      "wealth_z": 2.4
+      "wealth_z": 2.4,
+      "avg_gross_salary_usd_year": 72000,
+      "hdi": 0.96,
+      "gini": 28.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "Statistics Denmark 2023",
+        "hdi": "Statistics Denmark 2023",
+        "gini": "Statistics Denmark 2023"
+      }
     },
     {
       "slug": "cordoba",
@@ -696,7 +1218,15 @@
       "tier": 3,
       "pop_m": 1.6,
       "gdp_b": 25,
-      "wealth_z": 0.4
+      "wealth_z": 0.4,
+      "avg_gross_salary_usd_year": 6300.0,
+      "hdi": 0.854,
+      "gini": 40.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "daegu",
@@ -706,7 +1236,15 @@
       "tier": 3,
       "pop_m": 2.4,
       "gdp_b": 65,
-      "wealth_z": 1.6
+      "wealth_z": 1.6,
+      "avg_gross_salary_usd_year": 16300.0,
+      "hdi": 0.934,
+      "gini": 31.4,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "dakar",
@@ -716,7 +1254,15 @@
       "tier": 3,
       "pop_m": 4.0,
       "gdp_b": 18,
-      "wealth_z": 0.2
+      "wealth_z": 0.2,
+      "avg_gross_salary_usd_year": 800.0,
+      "hdi": 0.535,
+      "gini": 38.1,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "dallas",
@@ -726,7 +1272,15 @@
       "tier": 2,
       "pop_m": 7.6,
       "gdp_b": 620,
-      "wealth_z": 2.0
+      "wealth_z": 2.0,
+      "avg_gross_salary_usd_year": 70000,
+      "hdi": 0.925,
+      "gini": 47.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
+        "hdi": "BLS metro QCEW + ACS",
+        "gini": "BLS metro QCEW + ACS"
+      }
     },
     {
       "slug": "dar-es-salaam",
@@ -736,7 +1290,15 @@
       "tier": 3,
       "pop_m": 7.0,
       "gdp_b": 25,
-      "wealth_z": 0.0
+      "wealth_z": 0.0,
+      "avg_gross_salary_usd_year": 500.0,
+      "hdi": 0.537,
+      "gini": 40.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "delhi",
@@ -746,7 +1308,15 @@
       "tier": 1,
       "pop_m": 32.0,
       "gdp_b": 370,
-      "wealth_z": 0.3
+      "wealth_z": 0.3,
+      "avg_gross_salary_usd_year": 10000,
+      "hdi": 0.685,
+      "gini": 35.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "MoSPI India 2023",
+        "hdi": "MoSPI India 2023",
+        "gini": "MoSPI India 2023"
+      }
     },
     {
       "slug": "denver",
@@ -756,7 +1326,15 @@
       "tier": 2,
       "pop_m": 3.0,
       "gdp_b": 240,
-      "wealth_z": 2.0
+      "wealth_z": 2.0,
+      "avg_gross_salary_usd_year": 76000,
+      "hdi": 0.93,
+      "gini": 46.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
+        "hdi": "BLS metro QCEW + ACS",
+        "gini": "BLS metro QCEW + ACS"
+      }
     },
     {
       "slug": "detroit",
@@ -766,7 +1344,15 @@
       "tier": 3,
       "pop_m": 4.4,
       "gdp_b": 280,
-      "wealth_z": 1.6
+      "wealth_z": 1.6,
+      "avg_gross_salary_usd_year": 38000.0,
+      "hdi": 0.932,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "dhaka",
@@ -776,7 +1362,15 @@
       "tier": 3,
       "pop_m": 22.4,
       "gdp_b": 130,
-      "wealth_z": 0.0
+      "wealth_z": 0.0,
+      "avg_gross_salary_usd_year": 1200.0,
+      "hdi": 0.675,
+      "gini": 32.4,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "doha",
@@ -786,7 +1380,15 @@
       "tier": 3,
       "pop_m": 2.4,
       "gdp_b": 200,
-      "wealth_z": 2.6
+      "wealth_z": 2.6,
+      "avg_gross_salary_usd_year": 85000,
+      "hdi": 0.89,
+      "gini": 41.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "PSA Qatar 2023",
+        "hdi": "PSA Qatar 2023",
+        "gini": "PSA Qatar 2023"
+      }
     },
     {
       "slug": "dongguan",
@@ -796,7 +1398,15 @@
       "tier": 3,
       "pop_m": 10.5,
       "gdp_b": 140,
-      "wealth_z": 0.8
+      "wealth_z": 0.8,
+      "avg_gross_salary_usd_year": 6000.0,
+      "hdi": 0.793,
+      "gini": 38.2,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "dubai",
@@ -806,7 +1416,15 @@
       "tier": 1,
       "pop_m": 3.6,
       "gdp_b": 110,
-      "wealth_z": 1.8
+      "wealth_z": 1.8,
+      "avg_gross_salary_usd_year": 58000,
+      "hdi": 0.955,
+      "gini": 27.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "FCSC UAE 2023",
+        "hdi": "FCSC UAE 2023",
+        "gini": "FCSC UAE 2023"
+      }
     },
     {
       "slug": "dublin",
@@ -816,7 +1434,15 @@
       "tier": 2,
       "pop_m": 1.5,
       "gdp_b": 150,
-      "wealth_z": 2.6
+      "wealth_z": 2.6,
+      "avg_gross_salary_usd_year": 68000,
+      "hdi": 0.955,
+      "gini": 30.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "CSO Ireland 2023",
+        "hdi": "CSO Ireland 2023",
+        "gini": "CSO Ireland 2023"
+      }
     },
     {
       "slug": "durban",
@@ -826,7 +1452,15 @@
       "tier": 3,
       "pop_m": 3.7,
       "gdp_b": 40,
-      "wealth_z": 0.4
+      "wealth_z": 0.4,
+      "avg_gross_salary_usd_year": 2800.0,
+      "hdi": 0.722,
+      "gini": 63.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "dusseldorf",
@@ -836,7 +1470,15 @@
       "tier": 3,
       "pop_m": 3.6,
       "gdp_b": 130,
-      "wealth_z": 2.0
+      "wealth_z": 2.0,
+      "avg_gross_salary_usd_year": 25200.0,
+      "hdi": 0.955,
+      "gini": 31.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "edinburgh",
@@ -846,7 +1488,15 @@
       "tier": 2,
       "pop_m": 0.6,
       "gdp_b": 45,
-      "wealth_z": 1.9
+      "wealth_z": 1.9,
+      "avg_gross_salary_usd_year": 28800.0,
+      "hdi": 0.95,
+      "gini": 35.1,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "florence",
@@ -856,7 +1506,15 @@
       "tier": 3,
       "pop_m": 1.5,
       "gdp_b": 55,
-      "wealth_z": 1.7
+      "wealth_z": 1.7,
+      "avg_gross_salary_usd_year": 18200.0,
+      "hdi": 0.911,
+      "gini": 35.2,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "fortaleza",
@@ -866,7 +1524,15 @@
       "tier": 3,
       "pop_m": 4.1,
       "gdp_b": 40,
-      "wealth_z": 0.3
+      "wealth_z": 0.3,
+      "avg_gross_salary_usd_year": 4600.0,
+      "hdi": 0.765,
+      "gini": 52.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "frankfurt",
@@ -876,7 +1542,15 @@
       "tier": 2,
       "pop_m": 5.8,
       "gdp_b": 230,
-      "wealth_z": 2.2
+      "wealth_z": 2.2,
+      "avg_gross_salary_usd_year": 30300.0,
+      "hdi": 0.96,
+      "gini": 31.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "fukuoka",
@@ -886,7 +1560,15 @@
       "tier": 3,
       "pop_m": 2.6,
       "gdp_b": 100,
-      "wealth_z": 1.8
+      "wealth_z": 1.8,
+      "avg_gross_salary_usd_year": 14600.0,
+      "hdi": 0.925,
+      "gini": 32.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "geneva",
@@ -896,7 +1578,15 @@
       "tier": 2,
       "pop_m": 1.0,
       "gdp_b": 120,
-      "wealth_z": 3.0
+      "wealth_z": 3.0,
+      "avg_gross_salary_usd_year": 56200.0,
+      "hdi": 0.977,
+      "gini": 33.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "glasgow",
@@ -906,7 +1596,15 @@
       "tier": 3,
       "pop_m": 1.7,
       "gdp_b": 70,
-      "wealth_z": 1.5
+      "wealth_z": 1.5,
+      "avg_gross_salary_usd_year": 24000.0,
+      "hdi": 0.945,
+      "gini": 35.1,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "guangzhou",
@@ -916,7 +1614,15 @@
       "tier": 2,
       "pop_m": 14.0,
       "gdp_b": 440,
-      "wealth_z": 1.3
+      "wealth_z": 1.3,
+      "avg_gross_salary_usd_year": 7200.0,
+      "hdi": 0.798,
+      "gini": 38.2,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "haifa",
@@ -926,7 +1632,15 @@
       "tier": 3,
       "pop_m": 1.1,
       "gdp_b": 45,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 24400.0,
+      "hdi": 0.92,
+      "gini": 38.6,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "hamburg",
@@ -936,7 +1650,15 @@
       "tier": 2,
       "pop_m": 5.4,
       "gdp_b": 200,
-      "wealth_z": 2.0
+      "wealth_z": 2.0,
+      "avg_gross_salary_usd_year": 30300.0,
+      "hdi": 0.96,
+      "gini": 31.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "hangzhou",
@@ -946,7 +1668,15 @@
       "tier": 3,
       "pop_m": 12.2,
       "gdp_b": 280,
-      "wealth_z": 1.3
+      "wealth_z": 1.3,
+      "avg_gross_salary_usd_year": 6000.0,
+      "hdi": 0.793,
+      "gini": 38.2,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "hanoi",
@@ -956,7 +1686,15 @@
       "tier": 3,
       "pop_m": 8.0,
       "gdp_b": 50,
-      "wealth_z": 0.3
+      "wealth_z": 0.3,
+      "avg_gross_salary_usd_year": 2100.0,
+      "hdi": 0.731,
+      "gini": 36.8,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "helsinki",
@@ -966,7 +1704,15 @@
       "tier": 2,
       "pop_m": 1.5,
       "gdp_b": 80,
-      "wealth_z": 2.1
+      "wealth_z": 2.1,
+      "avg_gross_salary_usd_year": 56000,
+      "hdi": 0.95,
+      "gini": 27.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Statistics Finland 2023",
+        "hdi": "Statistics Finland 2023",
+        "gini": "Statistics Finland 2023"
+      }
     },
     {
       "slug": "hiroshima",
@@ -976,7 +1722,15 @@
       "tier": 3,
       "pop_m": 1.2,
       "gdp_b": 45,
-      "wealth_z": 1.8
+      "wealth_z": 1.8,
+      "avg_gross_salary_usd_year": 14600.0,
+      "hdi": 0.925,
+      "gini": 32.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "ho-chi-minh-city",
@@ -986,7 +1740,15 @@
       "tier": 3,
       "pop_m": 9.0,
       "gdp_b": 80,
-      "wealth_z": 0.4
+      "wealth_z": 0.4,
+      "avg_gross_salary_usd_year": 2100.0,
+      "hdi": 0.731,
+      "gini": 36.8,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "hong-kong",
@@ -996,7 +1758,15 @@
       "tier": 1,
       "pop_m": 7.5,
       "gdp_b": 410,
-      "wealth_z": 2.5
+      "wealth_z": 2.5,
+      "avg_gross_salary_usd_year": 65000,
+      "hdi": 0.96,
+      "gini": 54.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "C&SD 2023",
+        "hdi": "C&SD 2023",
+        "gini": "C&SD 2023"
+      }
     },
     {
       "slug": "honolulu",
@@ -1006,7 +1776,15 @@
       "tier": 3,
       "pop_m": 1.0,
       "gdp_b": 80,
-      "wealth_z": 2.0
+      "wealth_z": 2.0,
+      "avg_gross_salary_usd_year": 38000.0,
+      "hdi": 0.932,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "houston",
@@ -1016,7 +1794,15 @@
       "tier": 2,
       "pop_m": 7.3,
       "gdp_b": 600,
-      "wealth_z": 2.0
+      "wealth_z": 2.0,
+      "avg_gross_salary_usd_year": 68000,
+      "hdi": 0.92,
+      "gini": 49.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
+        "hdi": "BLS metro QCEW + ACS",
+        "gini": "BLS metro QCEW + ACS"
+      }
     },
     {
       "slug": "hyderabad",
@@ -1026,7 +1812,15 @@
       "tier": 2,
       "pop_m": 10.5,
       "gdp_b": 100,
-      "wealth_z": 0.5
+      "wealth_z": 0.5,
+      "avg_gross_salary_usd_year": 1500.0,
+      "hdi": 0.654,
+      "gini": 35.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "incheon",
@@ -1036,7 +1830,15 @@
       "tier": 3,
       "pop_m": 3.0,
       "gdp_b": 85,
-      "wealth_z": 1.7
+      "wealth_z": 1.7,
+      "avg_gross_salary_usd_year": 16300.0,
+      "hdi": 0.934,
+      "gini": 31.4,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "indianapolis",
@@ -1046,7 +1848,15 @@
       "tier": 2,
       "pop_m": 2.1,
       "gdp_b": 160,
-      "wealth_z": 1.7
+      "wealth_z": 1.7,
+      "avg_gross_salary_usd_year": 45600.0,
+      "hdi": 0.937,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "istanbul",
@@ -1056,7 +1866,15 @@
       "tier": 2,
       "pop_m": 16.0,
       "gdp_b": 260,
-      "wealth_z": 0.7
+      "wealth_z": 0.7,
+      "avg_gross_salary_usd_year": 20000,
+      "hdi": 0.875,
+      "gini": 42.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "TurkStat 2023",
+        "hdi": "TurkStat 2023",
+        "gini": "TurkStat 2023"
+      }
     },
     {
       "slug": "izmir",
@@ -1066,7 +1884,15 @@
       "tier": 3,
       "pop_m": 4.4,
       "gdp_b": 50,
-      "wealth_z": 0.5
+      "wealth_z": 0.5,
+      "avg_gross_salary_usd_year": 7200.0,
+      "hdi": 0.843,
+      "gini": 41.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "jaipur",
@@ -1076,7 +1902,15 @@
       "tier": 3,
       "pop_m": 4.0,
       "gdp_b": 40,
-      "wealth_z": 0.4
+      "wealth_z": 0.4,
+      "avg_gross_salary_usd_year": 1200.0,
+      "hdi": 0.649,
+      "gini": 35.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "jakarta",
@@ -1086,7 +1920,15 @@
       "tier": 2,
       "pop_m": 34.5,
       "gdp_b": 280,
-      "wealth_z": 0.4
+      "wealth_z": 0.4,
+      "avg_gross_salary_usd_year": 2700.0,
+      "hdi": 0.723,
+      "gini": 37.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "jeddah",
@@ -1096,7 +1938,15 @@
       "tier": 3,
       "pop_m": 4.7,
       "gdp_b": 80,
-      "wealth_z": 1.1
+      "wealth_z": 1.1,
+      "avg_gross_salary_usd_year": 15800.0,
+      "hdi": 0.88,
+      "gini": 45.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "johannesburg",
@@ -1106,7 +1956,15 @@
       "tier": 2,
       "pop_m": 6.2,
       "gdp_b": 90,
-      "wealth_z": 0.5
+      "wealth_z": 0.5,
+      "avg_gross_salary_usd_year": 22000,
+      "hdi": 0.73,
+      "gini": 63.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "Stats SA 2023",
+        "hdi": "Stats SA 2023",
+        "gini": "Stats SA 2023"
+      }
     },
     {
       "slug": "kansas-city",
@@ -1116,7 +1974,15 @@
       "tier": 2,
       "pop_m": 2.2,
       "gdp_b": 150,
-      "wealth_z": 1.7
+      "wealth_z": 1.7,
+      "avg_gross_salary_usd_year": 45600.0,
+      "hdi": 0.937,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "kaohsiung",
@@ -1126,7 +1992,8 @@
       "tier": 3,
       "pop_m": 2.8,
       "gdp_b": 110,
-      "wealth_z": 1.7
+      "wealth_z": 1.7,
+      "sources": {}
     },
     {
       "slug": "karachi",
@@ -1136,7 +2003,15 @@
       "tier": 2,
       "pop_m": 17.0,
       "gdp_b": 130,
-      "wealth_z": 0.2
+      "wealth_z": 0.2,
+      "avg_gross_salary_usd_year": 800.0,
+      "hdi": 0.554,
+      "gini": 31.6,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "kathmandu",
@@ -1146,7 +2021,13 @@
       "tier": 3,
       "pop_m": 2.8,
       "gdp_b": 9,
-      "wealth_z": 0.0
+      "wealth_z": 0.0,
+      "avg_gross_salary_usd_year": 700.0,
+      "hdi": 0.606,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump"
+      }
     },
     {
       "slug": "kobe",
@@ -1156,7 +2037,15 @@
       "tier": 3,
       "pop_m": 1.5,
       "gdp_b": 60,
-      "wealth_z": 1.9
+      "wealth_z": 1.9,
+      "avg_gross_salary_usd_year": 14600.0,
+      "hdi": 0.925,
+      "gini": 32.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "kolkata",
@@ -1166,7 +2055,15 @@
       "tier": 3,
       "pop_m": 15.7,
       "gdp_b": 150,
-      "wealth_z": 0.3
+      "wealth_z": 0.3,
+      "avg_gross_salary_usd_year": 1200.0,
+      "hdi": 0.649,
+      "gini": 35.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "krakow",
@@ -1176,7 +2073,15 @@
       "tier": 3,
       "pop_m": 1.5,
       "gdp_b": 45,
-      "wealth_z": 1.3
+      "wealth_z": 1.3,
+      "avg_gross_salary_usd_year": 11300.0,
+      "hdi": 0.886,
+      "gini": 30.2,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "kuala-lumpur",
@@ -1186,7 +2091,15 @@
       "tier": 2,
       "pop_m": 8.2,
       "gdp_b": 150,
-      "wealth_z": 1.0
+      "wealth_z": 1.0,
+      "avg_gross_salary_usd_year": 6400.0,
+      "hdi": 0.817,
+      "gini": 41.1,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "kuwait-city",
@@ -1196,7 +2109,11 @@
       "tier": 3,
       "pop_m": 3.1,
       "gdp_b": 130,
-      "wealth_z": 2.0
+      "wealth_z": 2.0,
+      "avg_gross_salary_usd_year": 14700.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump"
+      }
     },
     {
       "slug": "kyiv",
@@ -1206,7 +2123,15 @@
       "tier": 2,
       "pop_m": 3.0,
       "gdp_b": 70,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 14000,
+      "hdi": 0.79,
+      "gini": 25.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Ukrstat 2023",
+        "hdi": "Ukrstat 2023",
+        "gini": "Ukrstat 2023"
+      }
     },
     {
       "slug": "kyoto",
@@ -1216,7 +2141,15 @@
       "tier": 3,
       "pop_m": 1.5,
       "gdp_b": 55,
-      "wealth_z": 1.8
+      "wealth_z": 1.8,
+      "avg_gross_salary_usd_year": 14600.0,
+      "hdi": 0.925,
+      "gini": 32.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "lagos",
@@ -1226,7 +2159,15 @@
       "tier": 2,
       "pop_m": 21.3,
       "gdp_b": 130,
-      "wealth_z": 0.0
+      "wealth_z": 0.0,
+      "avg_gross_salary_usd_year": 8000,
+      "hdi": 0.56,
+      "gini": 35.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "NBS Nigeria 2023",
+        "hdi": "NBS Nigeria 2023",
+        "gini": "NBS Nigeria 2023"
+      }
     },
     {
       "slug": "lahore",
@@ -1236,7 +2177,15 @@
       "tier": 3,
       "pop_m": 14.0,
       "gdp_b": 80,
-      "wealth_z": 0.2
+      "wealth_z": 0.2,
+      "avg_gross_salary_usd_year": 700.0,
+      "hdi": 0.549,
+      "gini": 31.6,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "las-vegas",
@@ -1246,7 +2195,15 @@
       "tier": 3,
       "pop_m": 2.3,
       "gdp_b": 130,
-      "wealth_z": 1.6
+      "wealth_z": 1.6,
+      "avg_gross_salary_usd_year": 58000,
+      "hdi": 0.89,
+      "gini": 45.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
+        "hdi": "BLS metro QCEW + ACS",
+        "gini": "BLS metro QCEW + ACS"
+      }
     },
     {
       "slug": "leeds",
@@ -1256,7 +2213,15 @@
       "tier": 3,
       "pop_m": 1.9,
       "gdp_b": 90,
-      "wealth_z": 1.6
+      "wealth_z": 1.6,
+      "avg_gross_salary_usd_year": 24000.0,
+      "hdi": 0.945,
+      "gini": 35.1,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "leipzig",
@@ -1266,7 +2231,15 @@
       "tier": 3,
       "pop_m": 1.1,
       "gdp_b": 35,
-      "wealth_z": 1.5
+      "wealth_z": 1.5,
+      "avg_gross_salary_usd_year": 25200.0,
+      "hdi": 0.955,
+      "gini": 31.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "lima",
@@ -1276,7 +2249,15 @@
       "tier": 2,
       "pop_m": 11.0,
       "gdp_b": 150,
-      "wealth_z": 0.4
+      "wealth_z": 0.4,
+      "avg_gross_salary_usd_year": 14000,
+      "hdi": 0.795,
+      "gini": 40.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "INEI Peru 2023",
+        "hdi": "INEI Peru 2023",
+        "gini": "INEI Peru 2023"
+      }
     },
     {
       "slug": "lisbon",
@@ -1286,7 +2267,15 @@
       "tier": 2,
       "pop_m": 2.9,
       "gdp_b": 90,
-      "wealth_z": 1.5
+      "wealth_z": 1.5,
+      "avg_gross_salary_usd_year": 32000,
+      "hdi": 0.89,
+      "gini": 33.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "INE Portugal 2023",
+        "hdi": "INE Portugal 2023",
+        "gini": "INE Portugal 2023"
+      }
     },
     {
       "slug": "ljubljana",
@@ -1296,7 +2285,15 @@
       "tier": 3,
       "pop_m": 0.55,
       "gdp_b": 25,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 15400.0,
+      "hdi": 0.931,
+      "gini": 24.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "london",
@@ -1306,7 +2303,15 @@
       "tier": 1,
       "pop_m": 14.3,
       "gdp_b": 1000,
-      "wealth_z": 2.3
+      "wealth_z": 2.3,
+      "avg_gross_salary_usd_year": 70000,
+      "hdi": 0.952,
+      "gini": 36.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "ONS ASHE 2023",
+        "hdi": "ONS ASHE 2023",
+        "gini": "ONS ASHE 2023"
+      }
     },
     {
       "slug": "los-angeles",
@@ -1316,7 +2321,15 @@
       "tier": 1,
       "pop_m": 13.2,
       "gdp_b": 1100,
-      "wealth_z": 2.1
+      "wealth_z": 2.1,
+      "avg_gross_salary_usd_year": 78000,
+      "hdi": 0.935,
+      "gini": 49.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
+        "hdi": "BLS metro QCEW + ACS",
+        "gini": "BLS metro QCEW + ACS"
+      }
     },
     {
       "slug": "louisville",
@@ -1326,7 +2339,15 @@
       "tier": 3,
       "pop_m": 1.3,
       "gdp_b": 85,
-      "wealth_z": 1.4
+      "wealth_z": 1.4,
+      "avg_gross_salary_usd_year": 38000.0,
+      "hdi": 0.932,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "luanda",
@@ -1336,7 +2357,15 @@
       "tier": 2,
       "pop_m": 8.3,
       "gdp_b": 80,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 1400.0,
+      "hdi": 0.601,
+      "gini": 51.3,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "lyon",
@@ -1346,7 +2375,15 @@
       "tier": 2,
       "pop_m": 2.3,
       "gdp_b": 110,
-      "wealth_z": 1.7
+      "wealth_z": 1.7,
+      "avg_gross_salary_usd_year": 24900.0,
+      "hdi": 0.92,
+      "gini": 32.4,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "madrid",
@@ -1356,7 +2393,15 @@
       "tier": 1,
       "pop_m": 6.9,
       "gdp_b": 320,
-      "wealth_z": 1.8
+      "wealth_z": 1.8,
+      "avg_gross_salary_usd_year": 43000,
+      "hdi": 0.92,
+      "gini": 33.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "INE 2023",
+        "hdi": "INE 2023",
+        "gini": "INE 2023"
+      }
     },
     {
       "slug": "manama",
@@ -1366,7 +2411,15 @@
       "tier": 3,
       "pop_m": 1.6,
       "gdp_b": 40,
-      "wealth_z": 1.5
+      "wealth_z": 1.5,
+      "avg_gross_salary_usd_year": 13300.0,
+      "hdi": 0.893,
+      "gini": 28.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "manchester",
@@ -1376,7 +2429,15 @@
       "tier": 2,
       "pop_m": 2.8,
       "gdp_b": 130,
-      "wealth_z": 1.7
+      "wealth_z": 1.7,
+      "avg_gross_salary_usd_year": 28800.0,
+      "hdi": 0.95,
+      "gini": 35.1,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "manila",
@@ -1386,7 +2447,15 @@
       "tier": 2,
       "pop_m": 14.4,
       "gdp_b": 250,
-      "wealth_z": 0.4
+      "wealth_z": 0.4,
+      "avg_gross_salary_usd_year": 2200.0,
+      "hdi": 0.72,
+      "gini": 40.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "marseille",
@@ -1396,7 +2465,15 @@
       "tier": 2,
       "pop_m": 1.7,
       "gdp_b": 70,
-      "wealth_z": 1.5
+      "wealth_z": 1.5,
+      "avg_gross_salary_usd_year": 24900.0,
+      "hdi": 0.92,
+      "gini": 32.4,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "medellin",
@@ -1406,7 +2483,15 @@
       "tier": 3,
       "pop_m": 4.0,
       "gdp_b": 50,
-      "wealth_z": 0.4
+      "wealth_z": 0.4,
+      "avg_gross_salary_usd_year": 3600.0,
+      "hdi": 0.763,
+      "gini": 51.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "melbourne",
@@ -1416,7 +2501,15 @@
       "tier": 2,
       "pop_m": 5.0,
       "gdp_b": 310,
-      "wealth_z": 2.0
+      "wealth_z": 2.0,
+      "avg_gross_salary_usd_year": 65000,
+      "hdi": 0.945,
+      "gini": 34.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "ABS 2023",
+        "hdi": "ABS 2023",
+        "gini": "ABS 2023"
+      }
     },
     {
       "slug": "memphis",
@@ -1426,7 +2519,15 @@
       "tier": 3,
       "pop_m": 1.3,
       "gdp_b": 80,
-      "wealth_z": 1.3
+      "wealth_z": 1.3,
+      "avg_gross_salary_usd_year": 38000.0,
+      "hdi": 0.932,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "mexico-city",
@@ -1436,7 +2537,15 @@
       "tier": 1,
       "pop_m": 22.0,
       "gdp_b": 470,
-      "wealth_z": 0.3
+      "wealth_z": 0.3,
+      "avg_gross_salary_usd_year": 22000,
+      "hdi": 0.83,
+      "gini": 45.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "INEGI 2023",
+        "hdi": "INEGI 2023",
+        "gini": "INEGI 2023"
+      }
     },
     {
       "slug": "miami",
@@ -1446,7 +2555,15 @@
       "tier": 2,
       "pop_m": 6.2,
       "gdp_b": 380,
-      "wealth_z": 1.8
+      "wealth_z": 1.8,
+      "avg_gross_salary_usd_year": 62000,
+      "hdi": 0.91,
+      "gini": 49.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
+        "hdi": "BLS metro QCEW + ACS",
+        "gini": "BLS metro QCEW + ACS"
+      }
     },
     {
       "slug": "milan",
@@ -1456,7 +2573,15 @@
       "tier": 1,
       "pop_m": 4.4,
       "gdp_b": 220,
-      "wealth_z": 2.0
+      "wealth_z": 2.0,
+      "avg_gross_salary_usd_year": 27300.0,
+      "hdi": 0.926,
+      "gini": 35.2,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-1 bump",
+        "hdi": "Extrapolated from country HDI + tier-1 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "milwaukee",
@@ -1466,7 +2591,15 @@
       "tier": 2,
       "pop_m": 1.6,
       "gdp_b": 110,
-      "wealth_z": 1.6
+      "wealth_z": 1.6,
+      "avg_gross_salary_usd_year": 45600.0,
+      "hdi": 0.937,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "minneapolis",
@@ -1476,7 +2609,15 @@
       "tier": 3,
       "pop_m": 3.7,
       "gdp_b": 280,
-      "wealth_z": 2.0
+      "wealth_z": 2.0,
+      "avg_gross_salary_usd_year": 38000.0,
+      "hdi": 0.932,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "minsk",
@@ -1486,7 +2627,15 @@
       "tier": 2,
       "pop_m": 2.0,
       "gdp_b": 35,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 4500.0,
+      "hdi": 0.811,
+      "gini": 25.3,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "monaco",
@@ -1496,7 +2645,15 @@
       "tier": 3,
       "pop_m": 0.04,
       "gdp_b": 10,
-      "wealth_z": 4.0
+      "wealth_z": 4.0,
+      "avg_gross_salary_usd_year": 129600.0,
+      "hdi": 0.959,
+      "gini": 25.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "montevideo",
@@ -1506,7 +2663,15 @@
       "tier": 3,
       "pop_m": 2.0,
       "gdp_b": 35,
-      "wealth_z": 0.9
+      "wealth_z": 0.9,
+      "avg_gross_salary_usd_year": 10800.0,
+      "hdi": 0.835,
+      "gini": 40.6,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "montreal",
@@ -1516,7 +2681,15 @@
       "tier": 2,
       "pop_m": 4.4,
       "gdp_b": 220,
-      "wealth_z": 1.6
+      "wealth_z": 1.6,
+      "avg_gross_salary_usd_year": 56000,
+      "hdi": 0.935,
+      "gini": 31.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Stats Canada 2023",
+        "hdi": "Stats Canada 2023",
+        "gini": "Stats Canada 2023"
+      }
     },
     {
       "slug": "moscow",
@@ -1526,7 +2699,15 @@
       "tier": 1,
       "pop_m": 12.5,
       "gdp_b": 850,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 25000,
+      "hdi": 0.87,
+      "gini": 37.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "Rosstat 2023",
+        "hdi": "Rosstat 2023",
+        "gini": "Rosstat 2023"
+      }
     },
     {
       "slug": "mumbai",
@@ -1536,7 +2717,15 @@
       "tier": 1,
       "pop_m": 22.0,
       "gdp_b": 350,
-      "wealth_z": 0.4
+      "wealth_z": 0.4,
+      "avg_gross_salary_usd_year": 12000,
+      "hdi": 0.7,
+      "gini": 36.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "MoSPI India 2023",
+        "hdi": "MoSPI India 2023",
+        "gini": "MoSPI India 2023"
+      }
     },
     {
       "slug": "munich",
@@ -1546,7 +2735,15 @@
       "tier": 2,
       "pop_m": 6.0,
       "gdp_b": 280,
-      "wealth_z": 2.2
+      "wealth_z": 2.2,
+      "avg_gross_salary_usd_year": 30300.0,
+      "hdi": 0.96,
+      "gini": 31.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "muscat",
@@ -1556,7 +2753,15 @@
       "tier": 3,
       "pop_m": 1.6,
       "gdp_b": 50,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 9100.0,
+      "hdi": 0.824,
+      "gini": 30.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "nagoya",
@@ -1566,7 +2771,15 @@
       "tier": 2,
       "pop_m": 10.0,
       "gdp_b": 400,
-      "wealth_z": 1.9
+      "wealth_z": 1.9,
+      "avg_gross_salary_usd_year": 17500.0,
+      "hdi": 0.93,
+      "gini": 32.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "nairobi",
@@ -1576,7 +2789,15 @@
       "tier": 2,
       "pop_m": 5.4,
       "gdp_b": 50,
-      "wealth_z": 0.2
+      "wealth_z": 0.2,
+      "avg_gross_salary_usd_year": 1200.0,
+      "hdi": 0.611,
+      "gini": 38.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "nanjing",
@@ -1586,7 +2807,15 @@
       "tier": 3,
       "pop_m": 9.4,
       "gdp_b": 230,
-      "wealth_z": 1.2
+      "wealth_z": 1.2,
+      "avg_gross_salary_usd_year": 6000.0,
+      "hdi": 0.793,
+      "gini": 38.2,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "nantes",
@@ -1596,7 +2825,15 @@
       "tier": 3,
       "pop_m": 1.0,
       "gdp_b": 40,
-      "wealth_z": 1.7
+      "wealth_z": 1.7,
+      "avg_gross_salary_usd_year": 20700.0,
+      "hdi": 0.915,
+      "gini": 32.4,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "naples",
@@ -1606,7 +2843,15 @@
       "tier": 2,
       "pop_m": 3.1,
       "gdp_b": 95,
-      "wealth_z": 1.3
+      "wealth_z": 1.3,
+      "avg_gross_salary_usd_year": 21800.0,
+      "hdi": 0.916,
+      "gini": 35.2,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "nashville",
@@ -1616,7 +2861,15 @@
       "tier": 2,
       "pop_m": 2.0,
       "gdp_b": 160,
-      "wealth_z": 1.8
+      "wealth_z": 1.8,
+      "avg_gross_salary_usd_year": 45600.0,
+      "hdi": 0.937,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "new-orleans",
@@ -1626,7 +2879,15 @@
       "tier": 3,
       "pop_m": 1.3,
       "gdp_b": 80,
-      "wealth_z": 1.3
+      "wealth_z": 1.3,
+      "avg_gross_salary_usd_year": 38000.0,
+      "hdi": 0.932,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "new-york",
@@ -1636,7 +2897,15 @@
       "tier": 1,
       "pop_m": 20.1,
       "gdp_b": 2100,
-      "wealth_z": 2.4
+      "wealth_z": 2.4,
+      "avg_gross_salary_usd_year": 96000,
+      "hdi": 0.94,
+      "gini": 51.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
+        "hdi": "BLS metro QCEW + ACS",
+        "gini": "BLS metro QCEW + ACS"
+      }
     },
     {
       "slug": "nice",
@@ -1646,7 +2915,15 @@
       "tier": 3,
       "pop_m": 1.0,
       "gdp_b": 40,
-      "wealth_z": 1.7
+      "wealth_z": 1.7,
+      "avg_gross_salary_usd_year": 20700.0,
+      "hdi": 0.915,
+      "gini": 32.4,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "nicosia",
@@ -1656,7 +2933,15 @@
       "tier": 3,
       "pop_m": 0.33,
       "gdp_b": 12,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 17400.0,
+      "hdi": 0.912,
+      "gini": 31.2,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "oklahoma-city",
@@ -1666,7 +2951,15 @@
       "tier": 3,
       "pop_m": 1.5,
       "gdp_b": 90,
-      "wealth_z": 1.4
+      "wealth_z": 1.4,
+      "avg_gross_salary_usd_year": 38000.0,
+      "hdi": 0.932,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "orlando",
@@ -1676,7 +2969,15 @@
       "tier": 3,
       "pop_m": 2.7,
       "gdp_b": 170,
-      "wealth_z": 1.7
+      "wealth_z": 1.7,
+      "avg_gross_salary_usd_year": 38000.0,
+      "hdi": 0.932,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "osaka",
@@ -1686,7 +2987,15 @@
       "tier": 2,
       "pop_m": 19.2,
       "gdp_b": 750,
-      "wealth_z": 2.0
+      "wealth_z": 2.0,
+      "avg_gross_salary_usd_year": 17500.0,
+      "hdi": 0.93,
+      "gini": 32.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "oslo",
@@ -1696,7 +3005,15 @@
       "tier": 2,
       "pop_m": 1.6,
       "gdp_b": 110,
-      "wealth_z": 2.5
+      "wealth_z": 2.5,
+      "avg_gross_salary_usd_year": 76000,
+      "hdi": 0.97,
+      "gini": 27.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "SSB 2023",
+        "hdi": "SSB 2023",
+        "gini": "SSB 2023"
+      }
     },
     {
       "slug": "panama-city",
@@ -1706,7 +3023,15 @@
       "tier": 3,
       "pop_m": 1.9,
       "gdp_b": 55,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 8600.0,
+      "hdi": 0.825,
+      "gini": 49.8,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "paris",
@@ -1716,7 +3041,15 @@
       "tier": 1,
       "pop_m": 12.3,
       "gdp_b": 950,
-      "wealth_z": 2.2
+      "wealth_z": 2.2,
+      "avg_gross_salary_usd_year": 58000,
+      "hdi": 0.93,
+      "gini": 33.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "INSEE 2023",
+        "hdi": "INSEE 2023",
+        "gini": "INSEE 2023"
+      }
     },
     {
       "slug": "perth",
@@ -1726,7 +3059,15 @@
       "tier": 3,
       "pop_m": 2.2,
       "gdp_b": 140,
-      "wealth_z": 2.0
+      "wealth_z": 2.0,
+      "avg_gross_salary_usd_year": 29100.0,
+      "hdi": 0.951,
+      "gini": 34.3,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "philadelphia",
@@ -1736,7 +3077,15 @@
       "tier": 2,
       "pop_m": 6.2,
       "gdp_b": 480,
-      "wealth_z": 1.9
+      "wealth_z": 1.9,
+      "avg_gross_salary_usd_year": 45600.0,
+      "hdi": 0.937,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "phnom-penh",
@@ -1746,7 +3095,13 @@
       "tier": 3,
       "pop_m": 2.3,
       "gdp_b": 12,
-      "wealth_z": 0.3
+      "wealth_z": 0.3,
+      "avg_gross_salary_usd_year": 1200.0,
+      "hdi": 0.605,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump"
+      }
     },
     {
       "slug": "phoenix",
@@ -1756,7 +3111,15 @@
       "tier": 2,
       "pop_m": 5.0,
       "gdp_b": 320,
-      "wealth_z": 1.8
+      "wealth_z": 1.8,
+      "avg_gross_salary_usd_year": 65000,
+      "hdi": 0.91,
+      "gini": 45.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
+        "hdi": "BLS metro QCEW + ACS",
+        "gini": "BLS metro QCEW + ACS"
+      }
     },
     {
       "slug": "pittsburgh",
@@ -1766,7 +3129,15 @@
       "tier": 2,
       "pop_m": 2.3,
       "gdp_b": 160,
-      "wealth_z": 1.7
+      "wealth_z": 1.7,
+      "avg_gross_salary_usd_year": 45600.0,
+      "hdi": 0.937,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "podgorica",
@@ -1776,7 +3147,13 @@
       "tier": 3,
       "pop_m": 0.19,
       "gdp_b": 4,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 6000.0,
+      "hdi": 0.841,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump"
+      }
     },
     {
       "slug": "portland",
@@ -1786,7 +3163,15 @@
       "tier": 3,
       "pop_m": 2.5,
       "gdp_b": 180,
-      "wealth_z": 1.9
+      "wealth_z": 1.9,
+      "avg_gross_salary_usd_year": 38000.0,
+      "hdi": 0.932,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "porto",
@@ -1796,7 +3181,15 @@
       "tier": 3,
       "pop_m": 1.7,
       "gdp_b": 45,
-      "wealth_z": 1.4
+      "wealth_z": 1.4,
+      "avg_gross_salary_usd_year": 13200.0,
+      "hdi": 0.879,
+      "gini": 33.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "porto-alegre",
@@ -1806,7 +3199,15 @@
       "tier": 3,
       "pop_m": 4.4,
       "gdp_b": 65,
-      "wealth_z": 0.6
+      "wealth_z": 0.6,
+      "avg_gross_salary_usd_year": 4600.0,
+      "hdi": 0.765,
+      "gini": 52.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "prague",
@@ -1816,7 +3217,15 @@
       "tier": 2,
       "pop_m": 2.7,
       "gdp_b": 110,
-      "wealth_z": 1.8
+      "wealth_z": 1.8,
+      "avg_gross_salary_usd_year": 34000,
+      "hdi": 0.905,
+      "gini": 25.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "CZSO 2023",
+        "hdi": "CZSO 2023",
+        "gini": "CZSO 2023"
+      }
     },
     {
       "slug": "pristina",
@@ -1826,7 +3235,13 @@
       "tier": 3,
       "pop_m": 0.5,
       "gdp_b": 5,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 3200.0,
+      "hdi": 0.767,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump"
+      }
     },
     {
       "slug": "pune",
@@ -1836,7 +3251,15 @@
       "tier": 3,
       "pop_m": 7.4,
       "gdp_b": 70,
-      "wealth_z": 0.5
+      "wealth_z": 0.5,
+      "avg_gross_salary_usd_year": 1200.0,
+      "hdi": 0.649,
+      "gini": 35.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "quito",
@@ -1846,7 +3269,15 @@
       "tier": 3,
       "pop_m": 2.8,
       "gdp_b": 40,
-      "wealth_z": 0.5
+      "wealth_z": 0.5,
+      "avg_gross_salary_usd_year": 3100.0,
+      "hdi": 0.77,
+      "gini": 45.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "raleigh",
@@ -1856,7 +3287,15 @@
       "tier": 2,
       "pop_m": 1.5,
       "gdp_b": 130,
-      "wealth_z": 1.9
+      "wealth_z": 1.9,
+      "avg_gross_salary_usd_year": 45600.0,
+      "hdi": 0.937,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "recife",
@@ -1866,7 +3305,15 @@
       "tier": 3,
       "pop_m": 4.1,
       "gdp_b": 45,
-      "wealth_z": 0.4
+      "wealth_z": 0.4,
+      "avg_gross_salary_usd_year": 4600.0,
+      "hdi": 0.765,
+      "gini": 52.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "reykjavik",
@@ -1876,7 +3323,15 @@
       "tier": 3,
       "pop_m": 0.25,
       "gdp_b": 22,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 38700.0,
+      "hdi": 0.964,
+      "gini": 26.1,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "richmond",
@@ -1886,7 +3341,15 @@
       "tier": 3,
       "pop_m": 1.3,
       "gdp_b": 95,
-      "wealth_z": 1.6
+      "wealth_z": 1.6,
+      "avg_gross_salary_usd_year": 38000.0,
+      "hdi": 0.932,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "riga",
@@ -1896,7 +3359,15 @@
       "tier": 3,
       "pop_m": 0.9,
       "gdp_b": 25,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 10500.0,
+      "hdi": 0.884,
+      "gini": 34.3,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "rio-de-janeiro",
@@ -1906,7 +3377,15 @@
       "tier": 2,
       "pop_m": 13.0,
       "gdp_b": 200,
-      "wealth_z": 0.5
+      "wealth_z": 0.5,
+      "avg_gross_salary_usd_year": 5600.0,
+      "hdi": 0.77,
+      "gini": 52.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "riyadh",
@@ -1916,7 +3395,15 @@
       "tier": 2,
       "pop_m": 7.7,
       "gdp_b": 180,
-      "wealth_z": 1.2
+      "wealth_z": 1.2,
+      "avg_gross_salary_usd_year": 42000,
+      "hdi": 0.88,
+      "gini": 46.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "GASTAT 2023",
+        "hdi": "GASTAT 2023",
+        "gini": "GASTAT 2023"
+      }
     },
     {
       "slug": "rome",
@@ -1926,7 +3413,15 @@
       "tier": 1,
       "pop_m": 4.3,
       "gdp_b": 170,
-      "wealth_z": 1.7
+      "wealth_z": 1.7,
+      "avg_gross_salary_usd_year": 42000,
+      "hdi": 0.915,
+      "gini": 34.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "ISTAT 2023",
+        "hdi": "ISTAT 2023",
+        "gini": "ISTAT 2023"
+      }
     },
     {
       "slug": "rosario",
@@ -1936,7 +3431,15 @@
       "tier": 3,
       "pop_m": 1.3,
       "gdp_b": 20,
-      "wealth_z": 0.4
+      "wealth_z": 0.4,
+      "avg_gross_salary_usd_year": 6300.0,
+      "hdi": 0.854,
+      "gini": 40.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "rotterdam",
@@ -1946,7 +3449,15 @@
       "tier": 3,
       "pop_m": 1.5,
       "gdp_b": 80,
-      "wealth_z": 2.0
+      "wealth_z": 2.0,
+      "avg_gross_salary_usd_year": 30400.0,
+      "hdi": 0.951,
+      "gini": 28.1,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "sacramento",
@@ -1956,7 +3467,15 @@
       "tier": 2,
       "pop_m": 2.4,
       "gdp_b": 170,
-      "wealth_z": 1.8
+      "wealth_z": 1.8,
+      "avg_gross_salary_usd_year": 45600.0,
+      "hdi": 0.937,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "saint-petersburg",
@@ -1966,7 +3485,15 @@
       "tier": 2,
       "pop_m": 5.4,
       "gdp_b": 200,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 21000,
+      "hdi": 0.86,
+      "gini": 37.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "Rosstat 2023",
+        "hdi": "Rosstat 2023",
+        "gini": "Rosstat 2023"
+      }
     },
     {
       "slug": "salt-lake-city",
@@ -1976,7 +3503,15 @@
       "tier": 3,
       "pop_m": 1.3,
       "gdp_b": 110,
-      "wealth_z": 1.8
+      "wealth_z": 1.8,
+      "avg_gross_salary_usd_year": 38000.0,
+      "hdi": 0.932,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "salvador",
@@ -1986,7 +3521,15 @@
       "tier": 3,
       "pop_m": 3.9,
       "gdp_b": 45,
-      "wealth_z": 0.4
+      "wealth_z": 0.4,
+      "avg_gross_salary_usd_year": 4600.0,
+      "hdi": 0.765,
+      "gini": 52.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "san-antonio",
@@ -1996,7 +3539,15 @@
       "tier": 3,
       "pop_m": 2.6,
       "gdp_b": 160,
-      "wealth_z": 1.6
+      "wealth_z": 1.6,
+      "avg_gross_salary_usd_year": 38000.0,
+      "hdi": 0.932,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "san-diego",
@@ -2006,7 +3557,15 @@
       "tier": 2,
       "pop_m": 3.3,
       "gdp_b": 270,
-      "wealth_z": 1.9
+      "wealth_z": 1.9,
+      "avg_gross_salary_usd_year": 45600.0,
+      "hdi": 0.937,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "san-francisco",
@@ -2016,7 +3575,15 @@
       "tier": 1,
       "pop_m": 4.7,
       "gdp_b": 670,
-      "wealth_z": 2.7
+      "wealth_z": 2.7,
+      "avg_gross_salary_usd_year": 125000,
+      "hdi": 0.955,
+      "gini": 53.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
+        "hdi": "BLS metro QCEW + ACS",
+        "gini": "BLS metro QCEW + ACS"
+      }
     },
     {
       "slug": "san-jose",
@@ -2026,7 +3593,15 @@
       "tier": 2,
       "pop_m": 2.0,
       "gdp_b": 360,
-      "wealth_z": 2.8
+      "wealth_z": 2.8,
+      "avg_gross_salary_usd_year": 135000,
+      "hdi": 0.96,
+      "gini": 47.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
+        "hdi": "BLS metro QCEW + ACS",
+        "gini": "BLS metro QCEW + ACS"
+      }
     },
     {
       "slug": "san-jose-cr",
@@ -2036,7 +3611,15 @@
       "tier": 3,
       "pop_m": 1.5,
       "gdp_b": 35,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 8400.0,
+      "hdi": 0.811,
+      "gini": 47.2,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "santiago",
@@ -2046,7 +3629,15 @@
       "tier": 2,
       "pop_m": 7.1,
       "gdp_b": 200,
-      "wealth_z": 1.1
+      "wealth_z": 1.1,
+      "avg_gross_salary_usd_year": 22000,
+      "hdi": 0.88,
+      "gini": 44.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "INE Chile 2023",
+        "hdi": "INE Chile 2023",
+        "gini": "INE Chile 2023"
+      }
     },
     {
       "slug": "santo-domingo",
@@ -2056,7 +3647,15 @@
       "tier": 3,
       "pop_m": 3.5,
       "gdp_b": 50,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 4900.0,
+      "hdi": 0.771,
+      "gini": 39.6,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "sao-paulo",
@@ -2066,7 +3665,15 @@
       "tier": 1,
       "pop_m": 22.4,
       "gdp_b": 480,
-      "wealth_z": 0.7
+      "wealth_z": 0.7,
+      "avg_gross_salary_usd_year": 18000,
+      "hdi": 0.81,
+      "gini": 52.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "IBGE 2023",
+        "hdi": "IBGE 2023",
+        "gini": "IBGE 2023"
+      }
     },
     {
       "slug": "sapporo",
@@ -2076,7 +3683,15 @@
       "tier": 3,
       "pop_m": 2.0,
       "gdp_b": 75,
-      "wealth_z": 1.8
+      "wealth_z": 1.8,
+      "avg_gross_salary_usd_year": 14600.0,
+      "hdi": 0.925,
+      "gini": 32.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "sarajevo",
@@ -2086,7 +3701,13 @@
       "tier": 3,
       "pop_m": 0.6,
       "gdp_b": 12,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 4200.0,
+      "hdi": 0.784,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump"
+      }
     },
     {
       "slug": "seattle",
@@ -2096,7 +3717,15 @@
       "tier": 2,
       "pop_m": 4.0,
       "gdp_b": 480,
-      "wealth_z": 2.4
+      "wealth_z": 2.4,
+      "avg_gross_salary_usd_year": 98000,
+      "hdi": 0.945,
+      "gini": 47.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "BLS metro QCEW + ACS",
+        "hdi": "BLS metro QCEW + ACS",
+        "gini": "BLS metro QCEW + ACS"
+      }
     },
     {
       "slug": "sendai",
@@ -2106,7 +3735,15 @@
       "tier": 3,
       "pop_m": 1.1,
       "gdp_b": 40,
-      "wealth_z": 1.8
+      "wealth_z": 1.8,
+      "avg_gross_salary_usd_year": 14600.0,
+      "hdi": 0.925,
+      "gini": 32.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "seoul",
@@ -2116,7 +3753,15 @@
       "tier": 1,
       "pop_m": 25.6,
       "gdp_b": 780,
-      "wealth_z": 1.8
+      "wealth_z": 1.8,
+      "avg_gross_salary_usd_year": 50000,
+      "hdi": 0.945,
+      "gini": 31.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "KOSIS 2023",
+        "hdi": "KOSIS 2023",
+        "gini": "KOSIS 2023"
+      }
     },
     {
       "slug": "seville",
@@ -2126,7 +3771,15 @@
       "tier": 3,
       "pop_m": 1.5,
       "gdp_b": 45,
-      "wealth_z": 1.3
+      "wealth_z": 1.3,
+      "avg_gross_salary_usd_year": 15900.0,
+      "hdi": 0.916,
+      "gini": 33.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "shanghai",
@@ -2136,7 +3789,15 @@
       "tier": 1,
       "pop_m": 28.5,
       "gdp_b": 800,
-      "wealth_z": 1.3
+      "wealth_z": 1.3,
+      "avg_gross_salary_usd_year": 25000,
+      "hdi": 0.84,
+      "gini": 38.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "NBS China 2023",
+        "hdi": "NBS China 2023",
+        "gini": "NBS China 2023"
+      }
     },
     {
       "slug": "shenzhen",
@@ -2146,7 +3807,15 @@
       "tier": 2,
       "pop_m": 17.5,
       "gdp_b": 480,
-      "wealth_z": 1.5
+      "wealth_z": 1.5,
+      "avg_gross_salary_usd_year": 7200.0,
+      "hdi": 0.798,
+      "gini": 38.2,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "singapore",
@@ -2156,7 +3825,15 @@
       "tier": 1,
       "pop_m": 5.9,
       "gdp_b": 500,
-      "wealth_z": 2.8
+      "wealth_z": 2.8,
+      "avg_gross_salary_usd_year": 72000,
+      "hdi": 0.955,
+      "gini": 39.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "MOM Singapore 2023",
+        "hdi": "MOM Singapore 2023",
+        "gini": "MOM Singapore 2023"
+      }
     },
     {
       "slug": "skopje",
@@ -2166,7 +3843,13 @@
       "tier": 3,
       "pop_m": 0.6,
       "gdp_b": 8,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 4200.0,
+      "hdi": 0.775,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump"
+      }
     },
     {
       "slug": "sofia",
@@ -2176,7 +3859,15 @@
       "tier": 3,
       "pop_m": 1.7,
       "gdp_b": 55,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 20000,
+      "hdi": 0.815,
+      "gini": 38.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "NSI 2023",
+        "hdi": "NSI 2023",
+        "gini": "NSI 2023"
+      }
     },
     {
       "slug": "st-louis",
@@ -2186,7 +3877,15 @@
       "tier": 2,
       "pop_m": 2.8,
       "gdp_b": 180,
-      "wealth_z": 1.6
+      "wealth_z": 1.6,
+      "avg_gross_salary_usd_year": 45600.0,
+      "hdi": 0.937,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "stockholm",
@@ -2196,7 +3895,15 @@
       "tier": 2,
       "pop_m": 2.4,
       "gdp_b": 130,
-      "wealth_z": 2.2
+      "wealth_z": 2.2,
+      "avg_gross_salary_usd_year": 64000,
+      "hdi": 0.96,
+      "gini": 29.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "SCB 2023",
+        "hdi": "SCB 2023",
+        "gini": "SCB 2023"
+      }
     },
     {
       "slug": "stuttgart",
@@ -2206,7 +3913,15 @@
       "tier": 2,
       "pop_m": 5.4,
       "gdp_b": 220,
-      "wealth_z": 2.2
+      "wealth_z": 2.2,
+      "avg_gross_salary_usd_year": 30300.0,
+      "hdi": 0.96,
+      "gini": 31.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "surabaya",
@@ -2216,7 +3931,15 @@
       "tier": 3,
       "pop_m": 9.5,
       "gdp_b": 80,
-      "wealth_z": 0.3
+      "wealth_z": 0.3,
+      "avg_gross_salary_usd_year": 2200.0,
+      "hdi": 0.718,
+      "gini": 37.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "surat",
@@ -2226,7 +3949,15 @@
       "tier": 3,
       "pop_m": 7.5,
       "gdp_b": 60,
-      "wealth_z": 0.4
+      "wealth_z": 0.4,
+      "avg_gross_salary_usd_year": 1200.0,
+      "hdi": 0.649,
+      "gini": 35.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "sydney",
@@ -2236,7 +3967,15 @@
       "tier": 1,
       "pop_m": 5.3,
       "gdp_b": 340,
-      "wealth_z": 2.1
+      "wealth_z": 2.1,
+      "avg_gross_salary_usd_year": 70000,
+      "hdi": 0.95,
+      "gini": 34.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "ABS 2023",
+        "hdi": "ABS 2023",
+        "gini": "ABS 2023"
+      }
     },
     {
       "slug": "taipei",
@@ -2246,7 +3985,8 @@
       "tier": 2,
       "pop_m": 7.0,
       "gdp_b": 320,
-      "wealth_z": 1.8
+      "wealth_z": 1.8,
+      "sources": {}
     },
     {
       "slug": "tallinn",
@@ -2256,7 +3996,15 @@
       "tier": 3,
       "pop_m": 0.55,
       "gdp_b": 22,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 14100.0,
+      "hdi": 0.904,
+      "gini": 31.8,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "tampa",
@@ -2266,7 +4014,15 @@
       "tier": 3,
       "pop_m": 3.3,
       "gdp_b": 180,
-      "wealth_z": 1.7
+      "wealth_z": 1.7,
+      "avg_gross_salary_usd_year": 38000.0,
+      "hdi": 0.932,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "tbilisi",
@@ -2276,7 +4032,15 @@
       "tier": 3,
       "pop_m": 1.5,
       "gdp_b": 35,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 4200.0,
+      "hdi": 0.819,
+      "gini": 35.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "tehran",
@@ -2286,7 +4050,15 @@
       "tier": 3,
       "pop_m": 14.0,
       "gdp_b": 120,
-      "wealth_z": 0.3
+      "wealth_z": 0.3,
+      "avg_gross_salary_usd_year": 2300.0,
+      "hdi": 0.785,
+      "gini": 40.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "tel-aviv",
@@ -2296,7 +4068,15 @@
       "tier": 2,
       "pop_m": 4.3,
       "gdp_b": 200,
-      "wealth_z": 2.1
+      "wealth_z": 2.1,
+      "avg_gross_salary_usd_year": 29300.0,
+      "hdi": 0.925,
+      "gini": 38.6,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "tianjin",
@@ -2306,7 +4086,15 @@
       "tier": 3,
       "pop_m": 13.5,
       "gdp_b": 240,
-      "wealth_z": 1.0
+      "wealth_z": 1.0,
+      "avg_gross_salary_usd_year": 6000.0,
+      "hdi": 0.793,
+      "gini": 38.2,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "tirana",
@@ -2316,7 +4104,13 @@
       "tier": 3,
       "pop_m": 0.9,
       "gdp_b": 12,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 5100.0,
+      "hdi": 0.794,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump"
+      }
     },
     {
       "slug": "tokyo",
@@ -2326,7 +4120,15 @@
       "tier": 1,
       "pop_m": 37.4,
       "gdp_b": 2000,
-      "wealth_z": 2.1
+      "wealth_z": 2.1,
+      "avg_gross_salary_usd_year": 55000,
+      "hdi": 0.94,
+      "gini": 32.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "MHLW Japan 2023",
+        "hdi": "MHLW Japan 2023",
+        "gini": "MHLW Japan 2023"
+      }
     },
     {
       "slug": "toronto",
@@ -2336,7 +4138,15 @@
       "tier": 2,
       "pop_m": 6.5,
       "gdp_b": 380,
-      "wealth_z": 1.8
+      "wealth_z": 1.8,
+      "avg_gross_salary_usd_year": 62000,
+      "hdi": 0.94,
+      "gini": 31.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Stats Canada 2023",
+        "hdi": "Stats Canada 2023",
+        "gini": "Stats Canada 2023"
+      }
     },
     {
       "slug": "toulouse",
@@ -2346,7 +4156,15 @@
       "tier": 3,
       "pop_m": 1.5,
       "gdp_b": 65,
-      "wealth_z": 1.7
+      "wealth_z": 1.7,
+      "avg_gross_salary_usd_year": 20700.0,
+      "hdi": 0.915,
+      "gini": 32.4,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "tunis",
@@ -2356,7 +4174,15 @@
       "tier": 3,
       "pop_m": 2.6,
       "gdp_b": 25,
-      "wealth_z": 0.4
+      "wealth_z": 0.4,
+      "avg_gross_salary_usd_year": 1900.0,
+      "hdi": 0.737,
+      "gini": 33.3,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "turin",
@@ -2366,7 +4192,15 @@
       "tier": 2,
       "pop_m": 2.3,
       "gdp_b": 90,
-      "wealth_z": 1.6
+      "wealth_z": 1.6,
+      "avg_gross_salary_usd_year": 21800.0,
+      "hdi": 0.916,
+      "gini": 35.2,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "ulaanbaatar",
@@ -2376,7 +4210,13 @@
       "tier": 3,
       "pop_m": 1.6,
       "gdp_b": 12,
-      "wealth_z": 0.5
+      "wealth_z": 0.5,
+      "avg_gross_salary_usd_year": 3000.0,
+      "hdi": 0.746,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump"
+      }
     },
     {
       "slug": "valencia",
@@ -2386,7 +4226,15 @@
       "tier": 3,
       "pop_m": 1.6,
       "gdp_b": 55,
-      "wealth_z": 1.4
+      "wealth_z": 1.4,
+      "avg_gross_salary_usd_year": 15900.0,
+      "hdi": 0.916,
+      "gini": 33.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "valletta",
@@ -2396,7 +4244,15 @@
       "tier": 3,
       "pop_m": 0.4,
       "gdp_b": 15,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 19800.0,
+      "hdi": 0.92,
+      "gini": 31.6,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "valparaiso",
@@ -2406,7 +4262,15 @@
       "tier": 3,
       "pop_m": 1.0,
       "gdp_b": 15,
-      "wealth_z": 0.7
+      "wealth_z": 0.7,
+      "avg_gross_salary_usd_year": 7500.0,
+      "hdi": 0.865,
+      "gini": 44.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "vancouver",
@@ -2416,7 +4280,15 @@
       "tier": 2,
       "pop_m": 2.8,
       "gdp_b": 170,
-      "wealth_z": 1.7
+      "wealth_z": 1.7,
+      "avg_gross_salary_usd_year": 60000,
+      "hdi": 0.94,
+      "gini": 32.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "Stats Canada 2023",
+        "hdi": "Stats Canada 2023",
+        "gini": "Stats Canada 2023"
+      }
     },
     {
       "slug": "vienna",
@@ -2426,7 +4298,15 @@
       "tier": 2,
       "pop_m": 2.9,
       "gdp_b": 140,
-      "wealth_z": 2.0
+      "wealth_z": 2.0,
+      "avg_gross_salary_usd_year": 58000,
+      "hdi": 0.94,
+      "gini": 30.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Statistik Austria 2023",
+        "hdi": "Statistik Austria 2023",
+        "gini": "Statistik Austria 2023"
+      }
     },
     {
       "slug": "vientiane",
@@ -2436,7 +4316,13 @@
       "tier": 3,
       "pop_m": 0.8,
       "gdp_b": 6,
-      "wealth_z": 0.3
+      "wealth_z": 0.3,
+      "avg_gross_salary_usd_year": 1000.0,
+      "hdi": 0.625,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump"
+      }
     },
     {
       "slug": "vilnius",
@@ -2446,7 +4332,15 @@
       "tier": 3,
       "pop_m": 0.6,
       "gdp_b": 25,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 13200.0,
+      "hdi": 0.884,
+      "gini": 34.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "warsaw",
@@ -2456,7 +4350,15 @@
       "tier": 2,
       "pop_m": 3.1,
       "gdp_b": 130,
-      "wealth_z": 1.5
+      "wealth_z": 1.5,
+      "avg_gross_salary_usd_year": 32000,
+      "hdi": 0.89,
+      "gini": 30.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "GUS 2023",
+        "hdi": "GUS 2023",
+        "gini": "GUS 2023"
+      }
     },
     {
       "slug": "washington-dc",
@@ -2466,7 +4368,15 @@
       "tier": 2,
       "pop_m": 6.4,
       "gdp_b": 600,
-      "wealth_z": 2.4
+      "wealth_z": 2.4,
+      "avg_gross_salary_usd_year": 45600.0,
+      "hdi": 0.937,
+      "gini": 41.5,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "wellington",
@@ -2476,7 +4386,15 @@
       "tier": 3,
       "pop_m": 0.4,
       "gdp_b": 30,
-      "wealth_z": 2.0
+      "wealth_z": 2.0,
+      "avg_gross_salary_usd_year": 22100.0,
+      "hdi": 0.944,
+      "gini": 32.0,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "wuhan",
@@ -2486,7 +4404,15 @@
       "tier": 3,
       "pop_m": 11.2,
       "gdp_b": 270,
-      "wealth_z": 1.0
+      "wealth_z": 1.0,
+      "avg_gross_salary_usd_year": 6000.0,
+      "hdi": 0.793,
+      "gini": 38.2,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "xian",
@@ -2496,7 +4422,15 @@
       "tier": 3,
       "pop_m": 13.0,
       "gdp_b": 160,
-      "wealth_z": 0.7
+      "wealth_z": 0.7,
+      "avg_gross_salary_usd_year": 6000.0,
+      "hdi": 0.793,
+      "gini": 38.2,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "yangon",
@@ -2506,7 +4440,13 @@
       "tier": 3,
       "pop_m": 5.7,
       "gdp_b": 18,
-      "wealth_z": 0.0
+      "wealth_z": 0.0,
+      "avg_gross_salary_usd_year": 600.0,
+      "hdi": 0.607,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump"
+      }
     },
     {
       "slug": "yokohama",
@@ -2516,7 +4456,15 @@
       "tier": 2,
       "pop_m": 3.8,
       "gdp_b": 200,
-      "wealth_z": 2.0
+      "wealth_z": 2.0,
+      "avg_gross_salary_usd_year": 17500.0,
+      "hdi": 0.93,
+      "gini": 32.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "zagreb",
@@ -2526,7 +4474,15 @@
       "tier": 3,
       "pop_m": 1.1,
       "gdp_b": 40,
-      "wealth_z": 0
+      "wealth_z": 0,
+      "avg_gross_salary_usd_year": 10800.0,
+      "hdi": 0.883,
+      "gini": 28.9,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-3 bump",
+        "hdi": "Extrapolated from country HDI + tier-3 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     },
     {
       "slug": "zurich",
@@ -2536,7 +4492,15 @@
       "tier": 2,
       "pop_m": 1.5,
       "gdp_b": 200,
-      "wealth_z": 3.0
+      "wealth_z": 3.0,
+      "avg_gross_salary_usd_year": 56200.0,
+      "hdi": 0.977,
+      "gini": 33.7,
+      "sources": {
+        "avg_gross_salary_usd_year": "Extrapolated from country GDP/capita * tier-2 bump",
+        "hdi": "Extrapolated from country HDI + tier-2 bump",
+        "gini": "National Gini (city-level not available)"
+      }
     }
   ]
 }
