@@ -591,6 +591,126 @@ export function getNeighborhoodRow(
   return FILE.neighborhoods[key(citySlug, neighborhoodSlug)] ?? null;
 }
 
+// ---------------------------------------------------------------------------
+// RENT multiplier per neighborhood tag.
+//
+// Independent of revenue: rent is largely set by the land market, not the
+// activity. Same tag set, single number per tag (no activity dimension).
+// Used by getNeighborhoodNetMargin to convert revenue uplift into actual
+// profit uplift. Honors the rent-dominates-tourism-revenue finding in the
+// commuter+tourism+anomaly framework strategy doc.
+// ---------------------------------------------------------------------------
+
+const TAG_RENT_MULTIPLIER: Record<NeighborhoodTag, number> = {
+  luxury_district: 2.6,
+  financial_cbd: 2.3,
+  tourist_zone: 1.9,
+  free_economic_zone: 1.6,
+  tech_corridor: 1.6,
+  transit_hub: 1.5,
+  embassy_quarter: 1.4,
+  medical_cluster: 1.3,
+  nightlife_zone: 1.3,
+  gentrifying_edge: 1.2,
+  university_district: 1.1,
+  religious_pilgrimage: 1.1,
+  industrial_park: 0.6,
+  residential_only: 1.0,
+};
+
+/**
+ * Composed rent multiplier across a tag set. Same sqrt(n) damping as
+ * revenue tags to reflect tag overlap. Clipped 0.5 - 3.0.
+ */
+export function rentMultiplier(tags: NeighborhoodTag[]): number {
+  let logSum = 0;
+  let nActive = 0;
+  for (const t of tags) {
+    const tm = TAG_RENT_MULTIPLIER[t] ?? 1.0;
+    if (tm !== 1.0) {
+      logSum += Math.log(tm);
+      nActive += 1;
+    }
+  }
+  if (nActive === 0) return 1.0;
+  const dampedLog = logSum / Math.sqrt(Math.max(1, nActive));
+  return clip(Math.exp(dampedLog), 0.5, 3.0);
+}
+
+// ---------------------------------------------------------------------------
+// Net margin composition: revenue uplift minus rent drag.
+// ---------------------------------------------------------------------------
+
+export type NetMarginBreakdown = {
+  /** Revenue multiplier vs city baseline (from getNeighborhoodMultiplier). */
+  revenueMultiplier: number;
+  /** Rent multiplier vs city baseline. */
+  rentMultiplier: number;
+  /** Baseline net margin (decimal, e.g. 0.10 = 10%) for the activity. */
+  baselineNetMargin: number;
+  /** Baseline rent occupancy share (decimal). */
+  baselineRentShare: number;
+  /** Effective net margin AT THIS NEIGHBORHOOD (decimal). */
+  neighborhoodNetMargin: number;
+  /** Profit multiplier vs city baseline (revenue uplift x margin compression). */
+  profitMultiplier: number;
+  /** Applied tags for explainability. */
+  appliedTags: NeighborhoodTag[];
+};
+
+/**
+ * Compute the neighborhood-adjusted net margin for an activity.
+ *
+ * Math:
+ *   neighborhoodRev = baselineRev * revenueMult
+ *   neighborhoodRent = baselineRent * rentMult
+ *   neighborhoodMargin = baseline - (rentShare * (rentMult - 1) / revenueMult)
+ *                        ^ rent uplift divided by revenue uplift; if revenue
+ *                          climbs proportionally with rent, margin stays;
+ *                          if rent outpaces revenue, margin compresses.
+ *   profitMult = (revenueMult * neighborhoodMargin) / baseline
+ *
+ * This is the actual "should I open here" answer — accounts for both
+ * revenue uplift AND rent drag, not just revenue. Net margins in the
+ * 8-20% range are typical SMB territory.
+ */
+export function getNeighborhoodNetMargin(
+  citySlug: string,
+  neighborhoodSlug: string,
+  activityId: string,
+  baselineNetMargin: number,
+  baselineRentShare: number,
+): NetMarginBreakdown {
+  const mult = getNeighborhoodMultiplier(citySlug, neighborhoodSlug, activityId);
+  const rentMult = rentMultiplier(mult.appliedTags);
+
+  // Effective rent share at the neighborhood: baseline rent share scaled by
+  // (rentMult / revenueMult). If rent and revenue both 2x, share unchanged.
+  // If rent 3x and revenue 1.5x, share doubles (margin gets crushed).
+  const effectiveRentShare =
+    (baselineRentShare * rentMult) / Math.max(0.5, mult.final);
+
+  const neighborhoodNetMargin = clip(
+    baselineNetMargin - (effectiveRentShare - baselineRentShare),
+    -0.20,
+    0.50,
+  );
+
+  const baselineProfit = baselineNetMargin; // per unit revenue
+  const neighborhoodProfit = mult.final * neighborhoodNetMargin;
+  const profitMult = baselineProfit > 0 ? neighborhoodProfit / baselineProfit : 1;
+
+  return {
+    revenueMultiplier: mult.final,
+    rentMultiplier: rentMult,
+    baselineNetMargin,
+    baselineRentShare,
+    neighborhoodNetMargin,
+    profitMultiplier: profitMult,
+    appliedTags: mult.appliedTags,
+  };
+}
+
 /** Human-readable label for a tag, suitable for chips. */
 export function tagLabel(tag: NeighborhoodTag): string {
   const labels: Record<NeighborhoodTag, string> = {
