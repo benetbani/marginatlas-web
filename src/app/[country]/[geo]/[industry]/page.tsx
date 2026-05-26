@@ -16,6 +16,7 @@ import {
 } from "@/lib/cells";
 import { INDUSTRIES, industryToSlug } from "@/lib/taxonomy";
 import { computeBreakeven, fmtAov, fmtOrders } from "@/lib/economics/breakeven";
+import { getCityTier } from "@/lib/cities/city_tier";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { iso2ToName } from "@/lib/countries";
 import { CountryFlag } from "@/components/CountryFlag";
@@ -763,10 +764,16 @@ export default async function CellPage({
              is more concrete than the abstract margin %. Computes
              from cell revenue + industry baselines + AOV table. */}
           {(() => {
+            // Wave 2 AOV city-tier (2026-05-26): when geo is a known
+            // city slug, scale AOV by the city's tier. When geo is a
+            // state/region (most US/EU cells), pass null and the AOV
+            // stays at the global baseline.
+            const cityTier = getCityTier(geo);
             const be = cell.industry_id
               ? computeBreakeven(
                   cell.industry_id,
                   cell.revenue_per_firm ?? cell.rev_p50 ?? null,
+                  cityTier,
                 )
               : null;
             if (!be) return null;
@@ -848,6 +855,15 @@ export default async function CellPage({
                   {fmtAov(be.aov).replace("$", "")} per order and a{" "}
                   {Math.round(be.grossMargin * 100)}% gross margin, how
                   many orders a day cover those costs?
+                  {be.cityTierMultiplier !== 1 ? (
+                    <>
+                      {" "}Order value is tier-adjusted for this metro
+                      ({be.cityTierMultiplier > 1 ? "+" : ""}
+                      {Math.round((be.cityTierMultiplier - 1) * 100)}%
+                      vs the global average of{" "}
+                      {fmtAov(be.baselineAov)}).
+                    </>
+                  ) : null}
                 </p>
               </section>
             );

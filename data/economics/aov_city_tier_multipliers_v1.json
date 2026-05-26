@@ -1,0 +1,26 @@
+{
+  "version": "1.0.0",
+  "anchor": "AOV city-tier multipliers. Scales the global per-activity AOV (data/economics/activity_aov_v1.json) up or down based on where the business sits in the urban hierarchy: tier-1 = top 20 mega-metros (NYC, London, Tokyo, Paris, Singapore, Hong Kong, San Francisco, etc.); tier-2 = next 50 major metros (Berlin, Madrid, São Paulo, Mumbai, etc.); tier-3 = the remaining ~130 cities + everything sub-metro. A Manhattan restaurant charges ~60% more per check than the global average for the activity, a Lagos restaurant ~30% less. Used by src/lib/economics/breakeven.ts to tighten the breakeven panel's typical-day AOV and orders-per-day numbers. Tier resolution comes from data/cities/city_list_v1.json when the geo slug is a known city; otherwise neutral (1.0).",
+  "convention": {
+    "unit": "scalar multiplier",
+    "neutral_default": 1.0,
+    "sector_lookup_default": "default"
+  },
+  "by_sector": {
+    "food_drink":            { "tier_1": 1.60, "tier_2": 1.00, "tier_3": 0.70 },
+    "retail_shops":          { "tier_1": 1.40, "tier_2": 1.00, "tier_3": 0.75 },
+    "beauty_wellness":       { "tier_1": 1.70, "tier_2": 1.00, "tier_3": 0.70 },
+    "professional_services": { "tier_1": 1.50, "tier_2": 1.00, "tier_3": 0.80 },
+    "software_tech":         { "tier_1": 1.20, "tier_2": 1.00, "tier_3": 0.90 },
+    "trades_home":           { "tier_1": 1.40, "tier_2": 1.00, "tier_3": 0.85 },
+    "hospitality":           { "tier_1": 1.80, "tier_2": 1.00, "tier_3": 0.65 },
+    "health_medical":        { "tier_1": 1.30, "tier_2": 1.00, "tier_3": 0.85 },
+    "pets":                  { "tier_1": 1.50, "tier_2": 1.00, "tier_3": 0.80 },
+    "education":             { "tier_1": 1.40, "tier_2": 1.00, "tier_3": 0.85 },
+    "transport":             { "tier_1": 1.20, "tier_2": 1.00, "tier_3": 0.90 },
+    "construction":          { "tier_1": 1.30, "tier_2": 1.00, "tier_3": 0.90 },
+    "manufacturing":         { "tier_1": 1.10, "tier_2": 1.00, "tier_3": 0.95 },
+    "real_estate":           { "tier_1": 2.00, "tier_2": 1.00, "tier_3": 0.55 },
+    "default":               { "tier_1": 1.40, "tier_2": 1.00, "tier_3": 0.80 }
+  }
+}
