@@ -30,6 +30,14 @@ export type IndustryBaseline = {
   insurance_professional: number;
   equipment_maintenance: number;
   regulatory_licensing: number;
+  /**
+   * ATO Phase 3 — motor vehicle (vehicle + fuel + maintenance +
+   * depreciation) as a fraction of revenue. Optional: present only
+   * for trades / transport / mobile services where the vehicle is a
+   * real operating line item. Office-based industries leave this
+   * undefined and the renderer fully suppresses the row.
+   */
+  motor_vehicle?: number;
   // Setup-cost USD baselines (US)
   setup_registration_usd: number;
   setup_capital_usd: number;
@@ -108,6 +116,7 @@ export const INDUSTRY_BASELINES: Record<string, IndustryBaseline> = {
     marketing_acquisition: 0.03,
     insurance_professional: 0.05, // liability heavy
     equipment_maintenance: 0.04, // lifts, diagnostic tools
+    motor_vehicle: 0.03, // shop trucks + tow + parts runs
     regulatory_licensing: 0.02,
     setup_registration_usd: 3500,
     setup_capital_usd: 200000, // lifts + diagnostic + tools + signage
@@ -214,7 +223,8 @@ export const INDUSTRY_BASELINES: Record<string, IndustryBaseline> = {
     utilities: 0.01,
     marketing_acquisition: 0.02,
     insurance_professional: 0.06, // GL + workers comp + bond
-    equipment_maintenance: 0.04, // tools, trucks, equipment
+    equipment_maintenance: 0.03, // tools, equipment (vehicles broken out separately)
+    motor_vehicle: 0.04, // crew trucks, vans, fuel, maintenance
     regulatory_licensing: 0.03, // contractor license + permits
     setup_registration_usd: 6000,
     setup_capital_usd: 150000, // trucks + tools + initial materials + office

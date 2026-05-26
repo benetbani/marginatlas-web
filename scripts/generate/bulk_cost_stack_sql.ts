@@ -82,6 +82,12 @@ function ratioToJsonbBuild(
   grade: "C" | "D",
   contextNote: string,
 ): string {
+  // ATO Phase 3 — motor_vehicle is conditional. Most industries leave
+  // it undefined (office-based work has no material vehicle line);
+  // trades and transport explicitly set it.
+  const motorLine = baseline.motor_vehicle
+    ? `\n  'motor_vehicle',          ROUND(${revColumn} * ${baseline.motor_vehicle}),`
+    : "";
   return `jsonb_build_object(
   'rent_occupancy',         ROUND(${revColumn} * ${baseline.rent_occupancy}),
   'payroll_total',          ROUND(${revColumn} * ${baseline.payroll_total}),
@@ -89,7 +95,7 @@ function ratioToJsonbBuild(
   'utilities',              ROUND(${revColumn} * ${baseline.utilities}),
   'marketing_acquisition',  ROUND(${revColumn} * ${baseline.marketing_acquisition}),
   'insurance_professional', ROUND(${revColumn} * ${baseline.insurance_professional}),
-  'equipment_maintenance',  ROUND(${revColumn} * ${baseline.equipment_maintenance}),
+  'equipment_maintenance',  ROUND(${revColumn} * ${baseline.equipment_maintenance}),${motorLine}
   'regulatory_licensing',   ROUND(${revColumn} * ${baseline.regulatory_licensing}),
   'refreshed_at',           '2026-05-24',
   'source_note',            '${baseline.source_note} ${contextNote}',

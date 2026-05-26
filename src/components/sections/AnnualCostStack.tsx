@@ -26,15 +26,20 @@ const LINES: Array<{ field: keyof CostStack; label: string; hint?: string }> = [
   { field: "marketing_acquisition", label: "Marketing & acquisition" },
   { field: "insurance_professional", label: "Insurance & professional services" },
   { field: "equipment_maintenance", label: "Equipment & maintenance" },
+  // ATO Phase 3 — vehicle, fuel, maintenance, depreciation. Suppressed
+  // automatically when the cost-stack value is absent or zero.
+  { field: "motor_vehicle", label: "Motor vehicle", hint: "Vehicle, fuel, maintenance, depreciation" },
   { field: "regulatory_licensing", label: "Regulatory & licensing" },
 ];
 
 export function AnnualCostStack({ cell }: Props) {
   const stack = cell.cost_stack;
   if (!stack) return null;
+  // ATO Phase 3 — exclude rows where the value is zero (motor_vehicle
+  // is zero for office-based industries; rendering "$0" is noise).
   const populated = LINES.filter((line) => {
     const v = stack[line.field];
-    return typeof v === "number" && isFinite(v);
+    return typeof v === "number" && isFinite(v) && v > 0;
   });
   if (populated.length === 0) return null;
 
@@ -69,13 +74,12 @@ export function AnnualCostStack({ cell }: Props) {
           <tbody>
             {LINES.map((line) => {
               const v = stack[line.field];
-              if (typeof v !== "number" || !isFinite(v)) {
-                return (
-                  <tr key={line.field} className="border-b border-ink-50 last:border-b-0">
-                    <td className="px-6 py-2.5 text-ink-400">{line.label}</td>
-                    <td className="px-6 py-2.5 text-right text-ink-300 tabular-nums">-</td>
-                  </tr>
-                );
+              // ATO Phase 3 — fully suppress rows with no data OR zero
+              // value. Motor vehicle is zero for office-based industries
+              // and rendering "$0" was noise; the line vanishes entirely
+              // when the industry doesn't have a real motor-vehicle cost.
+              if (typeof v !== "number" || !isFinite(v) || v <= 0) {
+                return null;
               }
               const share = total > 0 ? Math.round((v / total) * 100) : 0;
               return (
