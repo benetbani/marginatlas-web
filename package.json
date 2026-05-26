@@ -27,11 +27,12 @@
     "audit:cell-smoke": "npx tsx scripts/audit/cell_page_smoke.ts",
     "images:import-heroes": "npx tsx scripts/images/import_unsplash.ts",
     "verify:typography": "npx tsx scripts/verify_typography_consistency.ts",
-    "prebuild": "npx tsx scripts/verify_taxonomy.ts && npx tsx scripts/verify_no_em_dashes.ts && npx tsx scripts/verify_no_source_agencies.ts && npx tsx scripts/audit/find_dead_links.ts --strict && npx tsx scripts/verify_featured_tiles.ts && npx tsx scripts/verify_render_guards.ts && npx tsx scripts/verify_deepening.ts && npx tsx scripts/verify_monetization_coverage.ts && npx tsx scripts/verify_v34_research_rules.ts && npx tsx scripts/verify_no_internal_notes.ts && npx tsx tests/cells/top_industries_plausibility.test.ts && npx tsx scripts/audit/find_useless_tiles.ts && npx tsx scripts/verify_typography_consistency.ts && npx tsx scripts/verify_signature_quality.ts && npx tsx scripts/verify_cost_share_invariant.ts && npx tsx scripts/verify_key_benchmark_assignment.ts && npx tsx scripts/verify_comparative_voice.ts",
+    "prebuild": "npx tsx scripts/verify_taxonomy.ts && npx tsx scripts/verify_no_em_dashes.ts && npx tsx scripts/verify_no_source_agencies.ts && npx tsx scripts/audit/find_dead_links.ts --strict && npx tsx scripts/verify_featured_tiles.ts && npx tsx scripts/verify_render_guards.ts && npx tsx scripts/verify_deepening.ts && npx tsx scripts/verify_monetization_coverage.ts && npx tsx scripts/verify_v34_research_rules.ts && npx tsx scripts/verify_no_internal_notes.ts && npx tsx tests/cells/top_industries_plausibility.test.ts && npx tsx scripts/audit/find_useless_tiles.ts && npx tsx scripts/verify_typography_consistency.ts && npx tsx scripts/verify_signature_quality.ts && npx tsx scripts/verify_cost_share_invariant.ts && npx tsx scripts/verify_key_benchmark_assignment.ts && npx tsx scripts/verify_comparative_voice.ts && npx tsx scripts/verify_turnover_bands.ts",
     "verify:signature": "npx tsx scripts/verify_signature_quality.ts",
     "verify:cost-share-invariant": "npx tsx scripts/verify_cost_share_invariant.ts",
     "verify:key-benchmark": "npx tsx scripts/verify_key_benchmark_assignment.ts",
     "verify:comparative-voice": "npx tsx scripts/verify_comparative_voice.ts",
+    "verify:turnover-bands": "npx tsx scripts/verify_turnover_bands.ts",
     "postbuild": "npx tsx scripts/verify_edge_function_sizes.ts"
   },
   "dependencies": {

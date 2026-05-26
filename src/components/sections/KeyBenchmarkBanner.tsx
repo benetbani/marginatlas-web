@@ -23,6 +23,7 @@ import {
   type KeyBenchmark,
 } from "@/lib/cost_engine/engine";
 import { getComparativeLead } from "@/lib/content/comparative_narratives";
+import { TurnoverBandChip } from "@/components/TurnoverBandChip";
 
 type Props = {
   cell: Cell;
@@ -71,8 +72,11 @@ export function KeyBenchmarkBanner({ cell }: Props) {
       className="my-8 rounded-2xl border border-ink-200 bg-white overflow-hidden"
     >
       <div className="px-6 py-5 md:px-8 md:py-6">
-        <div className="text-xs font-semibold uppercase tracking-[0.16em] text-atlas-700 mb-2">
-          The one ratio to watch
+        <div className="flex items-center justify-between gap-3 mb-2 flex-wrap">
+          <div className="text-xs font-semibold uppercase tracking-[0.16em] text-atlas-700">
+            The one ratio to watch
+          </div>
+          <TurnoverBandChip cell={cell} />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 items-start">
           <div className="md:col-span-7">

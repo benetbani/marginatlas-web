@@ -106,6 +106,11 @@ export type Cell = {
   cost_stack?: CostStack;
   setup_costs?: SetupCosts;
   local_alias?: LocalAlias;
+  // ATO Phase 6 — turnover band classification derived from
+  // revenue_per_firm + industry's sector thresholds. Three values
+  // (small / medium / large) or "unknown". Computed at read time;
+  // not persisted. See src/lib/finance/turnover_band.ts.
+  turnover_band?: import("./finance/turnover_band").TurnoverBand;
 };
 
 // US state FIPS code → human name → URL slug
@@ -549,6 +554,14 @@ export async function getCellBySlug(
   // of "Frankfurt am Main". Applying it here covers every code path.
   const friendlyLabel = geoNameFromSlug(country, geoSlug);
   if (friendlyLabel) cell.geo_name = friendlyLabel;
+  // ATO Phase 6 — stamp the turnover band on the way out. Computed
+  // from revenue_per_firm + industry's parent-sector thresholds.
+  // Imported lazily to avoid pulling the band data file into every
+  // module that depends on cells.ts.
+  {
+    const { classifyTurnoverBand } = await import("./finance/turnover_band");
+    cell.turnover_band = classifyTurnoverBand(cell.revenue_per_firm ?? cell.rev_p50, cell.industry_id);
+  }
   return cell;
 }
 
