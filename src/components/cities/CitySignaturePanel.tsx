@@ -61,38 +61,54 @@ const FILE = signatureJson as { cities: Record<string, CitySignature> };
 // ---------------------------------------------------------------------------
 
 /**
- * Spectrum bar: 10 segments. Active segment gets the atlas-700 fill,
- * the rest stay parchment. "Closer to one side" — labels left + right.
+ * Spectrum bar — 2026-05-26 redesign per founder direction.
+ *
+ * One row per dimension:
+ *  - Left label (red tint) = the "Pakistan-like" / loose-traditional end
+ *  - Right label (blue tint) = the "US-like" / strict-modern end
+ *  - Track is a gradient red → neutral → blue
+ *  - The city's position is a bold vertical bar handle (looks like a
+ *    toggle switch dropped onto the track)
+ *
+ * `invert=true` flips the displayed position so that high data values
+ * land on the LEFT (used for acceptance_of_corruption: value 10 =
+ * tolerates = Pakistan-like = left side).
  */
 function SpectrumBar({
   value,
   leftLabel,
   rightLabel,
+  invert = false,
 }: {
   value: number; // 1-10
   leftLabel: string;
   rightLabel: string;
+  invert?: boolean;
 }) {
-  const v = Math.max(1, Math.min(10, Math.round(value)));
+  const v = Math.max(1, Math.min(10, value));
+  // Position 0% (left) ... 100% (right). Step 1-10 maps to ~5% ... 95%.
+  const displayed = invert ? 11 - v : v;
+  const positionPct = ((displayed - 1) / 9) * 90 + 5;
+
   return (
-    <div>
-      <div className="flex items-baseline justify-between text-[10px] uppercase tracking-wide text-cocoa-700/65 mb-1.5">
-        <span>{leftLabel}</span>
-        <span>{rightLabel}</span>
+    <div className="py-1">
+      <div className="flex items-baseline justify-between text-[11px] uppercase tracking-[0.08em] font-medium mb-2">
+        <span className="text-[#B23A2A]">{leftLabel}</span>
+        <span className="text-[#2A5BA8]">{rightLabel}</span>
       </div>
-      <div className="flex gap-[3px]">
-        {Array.from({ length: 10 }, (_, i) => {
-          const active = i + 1 === v;
-          return (
-            <div
-              key={i}
-              className={
-                "h-2 flex-1 rounded-sm " +
-                (active ? "bg-atlas-700" : "bg-cream-200")
-              }
-            />
-          );
-        })}
+      <div
+        className="relative h-3 rounded-full overflow-visible"
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(178,58,42,0.55) 0%, rgba(178,58,42,0.18) 30%, rgba(232,232,232,0.85) 50%, rgba(42,91,168,0.18) 70%, rgba(42,91,168,0.55) 100%)",
+        }}
+      >
+        {/* Switch handle: bold vertical bar like a dropped toggle. */}
+        <div
+          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 h-6 w-[6px] rounded-[3px] bg-ink-900 shadow-[0_2px_4px_rgba(0,0,0,0.18)]"
+          style={{ left: `${positionPct}%` }}
+          aria-hidden="true"
+        />
       </div>
     </div>
   );
@@ -243,17 +259,23 @@ export function CitySignaturePanel({
           </div>
         ) : null}
 
-        {/* Block 3: culture spectrums */}
-        <div className="md:col-span-7 atlas-card p-5 md:p-6">
-          <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700/65 mb-4">
+        {/* Block 3: culture spectrums.
+            Founder direction 2026-05-26: single column, full width.
+            Left = "Pakistan-like" / loose / traditional / red tint.
+            Right = "US-like" / strict / modern / blue tint.
+            The vertical handle marks where the city sits.
+            acceptance_of_corruption is inverted (value 10 = tolerates
+            = Pakistan-like = LEFT side). */}
+        <div className="md:col-span-7 atlas-card p-5 md:p-7">
+          <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700/65 mb-5">
             Culture, as locals feel it
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <div className="flex flex-col gap-5">
             <SpectrumBar value={sig.culture.punctuality} leftLabel="Loose on time" rightLabel="Strict on time" />
             <SpectrumBar value={sig.culture.openness_to_foreigners} leftLabel="Insular" rightLabel="Welcoming" />
             <SpectrumBar value={sig.culture.innovation} leftLabel="Tradition-bound" rightLabel="Embraces new ideas" />
             <SpectrumBar value={sig.culture.communication_directness} leftLabel="Indirect" rightLabel="Direct" />
-            <SpectrumBar value={sig.culture.acceptance_of_corruption} leftLabel="Rejects corruption" rightLabel="Tolerated" />
+            <SpectrumBar value={sig.culture.acceptance_of_corruption} leftLabel="Corruption tolerated" rightLabel="Rejects corruption" invert />
             <SpectrumBar value={sig.culture.ambition_chest_beating} leftLabel="Humble" rightLabel="Self-promoting" />
           </div>
         </div>
