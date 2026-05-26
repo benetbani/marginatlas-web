@@ -40,11 +40,12 @@ type Props = {
   cities: CitiesWorldMapCity[];
 };
 
-// Atlas palette. The codebase's actual atlas-700 token is vermillion,
-// NOT teal. Founder asked for the signature terracotta color so we use
-// the real atlas tokens here.
-const GEO_FILL = "#F5F0E6";        // cream-100, the page-background tone
-const GEO_STROKE = "#B2A48A";      // parchment border
+// Atlas palette. Founder direction 2026-05-26: continents render in
+// very light gray across all maps so the editorial markers (cities,
+// hover state) pop. Unified to ECECEC with both the homepage
+// WorldMapPicker for visual consistency.
+const GEO_FILL = "#ECECEC";        // very light gray
+const GEO_STROKE = "#C8C8C8";      // slightly darker gray border
 const MARKER_FILL = "#952509";     // atlas-700, vermillion
 const MARKER_STROKE = "#6F1A06";   // atlas-800, deeper vermillion
 const TOOLTIP_BG = "#FFFFFF";

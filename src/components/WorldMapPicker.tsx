@@ -56,7 +56,10 @@ const GEO_URL = "https://unpkg.com/world-atlas@2/countries-110m.json";
 // width also bumped (see Geography style below from 0.5 to 0.8).
 const COLORS = {
   bg: "#FFFFFF",
-  parchment: "#DDDDDD",
+  // Founder direction 2026-05-26: continents in very light gray for
+  // the atlas look (was "#DDDDDD" medium gray, too dark; was "#F5F0E6"
+  // warm cream on the cities map). Unified across all maps to ECECEC.
+  parchment: "#ECECEC",
   amber: "#D73A14",        // vermillion on hover
   amberActive: "#B82F0F",  // pressed state
   atlas700: "#952509",     // selected country fill (deep vermillion)

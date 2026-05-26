@@ -91,7 +91,8 @@
       "trade_openness_pct": 0.27,
       "urbanization_pct": 83,
       "median_age": 39,
-      "labor_force_participation_pct": 62.5
+      "labor_force_participation_pct": 62.5,
+      "gini": 41
     },
     "CN": {
       "iso2": "CN",
@@ -136,7 +137,8 @@
       "trade_openness_pct": 0.37,
       "urbanization_pct": 65,
       "median_age": 39,
-      "labor_force_participation_pct": 67.5
+      "labor_force_participation_pct": 67.5,
+      "gini": 38
     },
     "DE": {
       "iso2": "DE",
@@ -181,7 +183,8 @@
       "trade_openness_pct": 0.88,
       "urbanization_pct": 77,
       "median_age": 46,
-      "labor_force_participation_pct": 61.5
+      "labor_force_participation_pct": 61.5,
+      "gini": 31
     },
     "JP": {
       "iso2": "JP",
@@ -226,7 +229,8 @@
       "trade_openness_pct": 0.37,
       "urbanization_pct": 92,
       "median_age": 49,
-      "labor_force_participation_pct": 62.3
+      "labor_force_participation_pct": 62.3,
+      "gini": 33
     },
     "IN": {
       "iso2": "IN",
@@ -271,7 +275,8 @@
       "trade_openness_pct": 0.46,
       "urbanization_pct": 36,
       "median_age": 29,
-      "labor_force_participation_pct": 50
+      "labor_force_participation_pct": 50,
+      "gini": 33
     },
     "GB": {
       "iso2": "GB",
@@ -316,7 +321,8 @@
       "trade_openness_pct": 0.62,
       "urbanization_pct": 84,
       "median_age": 41,
-      "labor_force_participation_pct": 63.5
+      "labor_force_participation_pct": 63.5,
+      "gini": 35
     },
     "FR": {
       "iso2": "FR",
@@ -361,7 +367,8 @@
       "trade_openness_pct": 0.64,
       "urbanization_pct": 82,
       "median_age": 42,
-      "labor_force_participation_pct": 56
+      "labor_force_participation_pct": 56,
+      "gini": 32
     },
     "IT": {
       "iso2": "IT",
@@ -406,7 +413,8 @@
       "trade_openness_pct": 0.65,
       "urbanization_pct": 72,
       "median_age": 47,
-      "labor_force_participation_pct": 50.5
+      "labor_force_participation_pct": 50.5,
+      "gini": 35
     },
     "BR": {
       "iso2": "BR",
@@ -451,7 +459,8 @@
       "trade_openness_pct": 0.39,
       "urbanization_pct": 88,
       "median_age": 34,
-      "labor_force_participation_pct": 62
+      "labor_force_participation_pct": 62,
+      "gini": 52
     },
     "CA": {
       "iso2": "CA",
@@ -496,7 +505,8 @@
       "trade_openness_pct": 0.67,
       "urbanization_pct": 82,
       "median_age": 41,
-      "labor_force_participation_pct": 65.5
+      "labor_force_participation_pct": 65.5,
+      "gini": 33
     },
     "RU": {
       "iso2": "RU",
@@ -541,7 +551,8 @@
       "trade_openness_pct": 0.48,
       "urbanization_pct": 75,
       "median_age": 40,
-      "labor_force_participation_pct": 62
+      "labor_force_participation_pct": 62,
+      "gini": 36
     },
     "MX": {
       "iso2": "MX",
@@ -586,7 +597,8 @@
       "trade_openness_pct": 0.82,
       "urbanization_pct": 81,
       "median_age": 30,
-      "labor_force_participation_pct": 60.5
+      "labor_force_participation_pct": 60.5,
+      "gini": 45
     },
     "AU": {
       "iso2": "AU",
@@ -631,7 +643,8 @@
       "trade_openness_pct": 0.46,
       "urbanization_pct": 87,
       "median_age": 38,
-      "labor_force_participation_pct": 67
+      "labor_force_participation_pct": 67,
+      "gini": 34
     },
     "KR": {
       "iso2": "KR",
@@ -676,7 +689,8 @@
       "trade_openness_pct": 0.84,
       "urbanization_pct": 81,
       "median_age": 44,
-      "labor_force_participation_pct": 63.5
+      "labor_force_participation_pct": 63.5,
+      "gini": 31
     },
     "ES": {
       "iso2": "ES",
@@ -721,7 +735,8 @@
       "trade_openness_pct": 0.65,
       "urbanization_pct": 82,
       "median_age": 44,
-      "labor_force_participation_pct": 59
+      "labor_force_participation_pct": 59,
+      "gini": 34
     },
     "ID": {
       "iso2": "ID",
@@ -766,7 +781,8 @@
       "trade_openness_pct": 0.45,
       "urbanization_pct": 58,
       "median_age": 30,
-      "labor_force_participation_pct": 67.5
+      "labor_force_participation_pct": 67.5,
+      "gini": 38
     },
     "TR": {
       "iso2": "TR",
@@ -811,7 +827,8 @@
       "trade_openness_pct": 0.62,
       "urbanization_pct": 77,
       "median_age": 33,
-      "labor_force_participation_pct": 56
+      "labor_force_participation_pct": 56,
+      "gini": 42
     },
     "NL": {
       "iso2": "NL",
@@ -856,7 +873,8 @@
       "trade_openness_pct": 1.66,
       "urbanization_pct": 93,
       "median_age": 43,
-      "labor_force_participation_pct": 65
+      "labor_force_participation_pct": 65,
+      "gini": 28
     },
     "SA": {
       "iso2": "SA",
@@ -901,7 +919,8 @@
       "trade_openness_pct": 0.62,
       "urbanization_pct": 85,
       "median_age": 32,
-      "labor_force_participation_pct": 60
+      "labor_force_participation_pct": 60,
+      "gini": 46
     },
     "CH": {
       "iso2": "CH",
@@ -946,7 +965,8 @@
       "trade_openness_pct": 1.15,
       "urbanization_pct": 74,
       "median_age": 43,
-      "labor_force_participation_pct": 68
+      "labor_force_participation_pct": 68,
+      "gini": 33
     },
     "TW": {
       "iso2": "TW",
@@ -991,7 +1011,8 @@
       "trade_openness_pct": 1.05,
       "urbanization_pct": 80,
       "median_age": 43,
-      "labor_force_participation_pct": 59
+      "labor_force_participation_pct": 59,
+      "gini": 34
     },
     "PL": {
       "iso2": "PL",
@@ -1036,7 +1057,8 @@
       "trade_openness_pct": 1.06,
       "urbanization_pct": 60,
       "median_age": 42,
-      "labor_force_participation_pct": 58
+      "labor_force_participation_pct": 58,
+      "gini": 30
     },
     "AR": {
       "iso2": "AR",
@@ -1081,7 +1103,8 @@
       "trade_openness_pct": 0.32,
       "urbanization_pct": 92,
       "median_age": 32,
-      "labor_force_participation_pct": 61.5
+      "labor_force_participation_pct": 61.5,
+      "gini": 42
     },
     "BE": {
       "iso2": "BE",
@@ -1126,7 +1149,8 @@
       "trade_openness_pct": 1.72,
       "urbanization_pct": 98,
       "median_age": 42,
-      "labor_force_participation_pct": 56
+      "labor_force_participation_pct": 56,
+      "gini": 27
     },
     "SE": {
       "iso2": "SE",
@@ -1171,7 +1195,8 @@
       "trade_openness_pct": 0.96,
       "urbanization_pct": 88,
       "median_age": 41,
-      "labor_force_participation_pct": 64
+      "labor_force_participation_pct": 64,
+      "gini": 30
     },
     "IE": {
       "iso2": "IE",
@@ -1216,7 +1241,8 @@
       "trade_openness_pct": 2.2,
       "urbanization_pct": 65,
       "median_age": 39,
-      "labor_force_participation_pct": 62
+      "labor_force_participation_pct": 62,
+      "gini": 31
     },
     "AT": {
       "iso2": "AT",
@@ -1261,7 +1287,8 @@
       "trade_openness_pct": 1.12,
       "urbanization_pct": 59,
       "median_age": 44,
-      "labor_force_participation_pct": 61.5
+      "labor_force_participation_pct": 61.5,
+      "gini": 30
     },
     "NG": {
       "iso2": "NG",
@@ -1306,7 +1333,8 @@
       "trade_openness_pct": 0.34,
       "urbanization_pct": 54,
       "median_age": 19,
-      "labor_force_participation_pct": 56
+      "labor_force_participation_pct": 56,
+      "gini": 35
     },
     "IL": {
       "iso2": "IL",
@@ -1351,7 +1379,8 @@
       "trade_openness_pct": 0.6,
       "urbanization_pct": 93,
       "median_age": 30,
-      "labor_force_participation_pct": 64
+      "labor_force_participation_pct": 64,
+      "gini": 39
     },
     "NO": {
       "iso2": "NO",
@@ -1396,7 +1425,8 @@
       "trade_openness_pct": 0.72,
       "urbanization_pct": 83,
       "median_age": 39,
-      "labor_force_participation_pct": 64.5
+      "labor_force_participation_pct": 64.5,
+      "gini": 27
     },
     "AE": {
       "iso2": "AE",
@@ -1441,7 +1471,8 @@
       "trade_openness_pct": 1.69,
       "urbanization_pct": 88,
       "median_age": 33,
-      "labor_force_participation_pct": 79
+      "labor_force_participation_pct": 79,
+      "gini": 32
     },
     "SG": {
       "iso2": "SG",
@@ -1486,7 +1517,8 @@
       "trade_openness_pct": 3.2,
       "urbanization_pct": 100,
       "median_age": 43,
-      "labor_force_participation_pct": 70
+      "labor_force_participation_pct": 70,
+      "gini": 39
     },
     "DK": {
       "iso2": "DK",
@@ -1531,7 +1563,8 @@
       "trade_openness_pct": 1.04,
       "urbanization_pct": 88,
       "median_age": 42,
-      "labor_force_participation_pct": 64
+      "labor_force_participation_pct": 64,
+      "gini": 28
     },
     "PH": {
       "iso2": "PH",
@@ -1576,7 +1609,8 @@
       "trade_openness_pct": 0.62,
       "urbanization_pct": 48,
       "median_age": 26,
-      "labor_force_participation_pct": 60.5
+      "labor_force_participation_pct": 60.5,
+      "gini": 41
     },
     "EG": {
       "iso2": "EG",
@@ -1621,7 +1655,8 @@
       "trade_openness_pct": 0.4,
       "urbanization_pct": 43,
       "median_age": 24,
-      "labor_force_participation_pct": 42
+      "labor_force_participation_pct": 42,
+      "gini": 32
     },
     "CL": {
       "iso2": "CL",
@@ -1666,7 +1701,8 @@
       "trade_openness_pct": 0.62,
       "urbanization_pct": 88,
       "median_age": 36,
-      "labor_force_participation_pct": 60
+      "labor_force_participation_pct": 60,
+      "gini": 44
     },
     "VN": {
       "iso2": "VN",
@@ -1711,7 +1747,8 @@
       "trade_openness_pct": 1.85,
       "urbanization_pct": 39,
       "median_age": 32,
-      "labor_force_participation_pct": 70
+      "labor_force_participation_pct": 70,
+      "gini": 36
     },
     "MY": {
       "iso2": "MY",
@@ -1756,7 +1793,8 @@
       "trade_openness_pct": 1.3,
       "urbanization_pct": 78,
       "median_age": 31,
-      "labor_force_participation_pct": 68
+      "labor_force_participation_pct": 68,
+      "gini": 41
     },
     "CO": {
       "iso2": "CO",
@@ -1801,7 +1839,8 @@
       "trade_openness_pct": 0.4,
       "urbanization_pct": 82,
       "median_age": 31,
-      "labor_force_participation_pct": 63
+      "labor_force_participation_pct": 63,
+      "gini": 51
     },
     "ZA": {
       "iso2": "ZA",
@@ -1846,7 +1885,8 @@
       "trade_openness_pct": 0.59,
       "urbanization_pct": 68,
       "median_age": 28,
-      "labor_force_participation_pct": 58
+      "labor_force_participation_pct": 58,
+      "gini": 63
     },
     "CZ": {
       "iso2": "CZ",
@@ -1891,7 +1931,8 @@
       "trade_openness_pct": 1.55,
       "urbanization_pct": 74,
       "median_age": 43,
-      "labor_force_participation_pct": 60.5
+      "labor_force_participation_pct": 60.5,
+      "gini": 25
     },
     "PT": {
       "iso2": "PT",
@@ -1936,7 +1977,8 @@
       "trade_openness_pct": 0.92,
       "urbanization_pct": 67,
       "median_age": 47,
-      "labor_force_participation_pct": 59
+      "labor_force_participation_pct": 59,
+      "gini": 33
     },
     "HU": {
       "iso2": "HU",
@@ -1981,7 +2023,8 @@
       "trade_openness_pct": 1.65,
       "urbanization_pct": 73,
       "median_age": 43,
-      "labor_force_participation_pct": 60
+      "labor_force_participation_pct": 60,
+      "gini": 30
     },
     "RO": {
       "iso2": "RO",
@@ -2026,7 +2069,8 @@
       "trade_openness_pct": 1.02,
       "urbanization_pct": 55,
       "median_age": 43,
-      "labor_force_participation_pct": 56
+      "labor_force_participation_pct": 56,
+      "gini": 34
     },
     "TH": {
       "iso2": "TH",
@@ -2071,7 +2115,8 @@
       "trade_openness_pct": 1.15,
       "urbanization_pct": 53,
       "median_age": 41,
-      "labor_force_participation_pct": 67.5
+      "labor_force_participation_pct": 67.5,
+      "gini": 35
     },
     "PE": {
       "iso2": "PE",
@@ -2116,7 +2161,8 @@
       "trade_openness_pct": 0.42,
       "urbanization_pct": 79,
       "median_age": 30,
-      "labor_force_participation_pct": 73
+      "labor_force_participation_pct": 73,
+      "gini": 41
     },
     "HK": {
       "iso2": "HK",
@@ -2161,7 +2207,8 @@
       "trade_openness_pct": 3.85,
       "urbanization_pct": 100,
       "median_age": 45,
-      "labor_force_participation_pct": 61
+      "labor_force_participation_pct": 61,
+      "gini": 54
     },
     "NZ": {
       "iso2": "NZ",
@@ -2206,7 +2253,8 @@
       "trade_openness_pct": 0.58,
       "urbanization_pct": 87,
       "median_age": 38,
-      "labor_force_participation_pct": 70.5
+      "labor_force_participation_pct": 70.5,
+      "gini": 32
     },
     "FI": {
       "iso2": "FI",
@@ -2251,7 +2299,8 @@
       "trade_openness_pct": 0.83,
       "urbanization_pct": 86,
       "median_age": 43,
-      "labor_force_participation_pct": 60
+      "labor_force_participation_pct": 60,
+      "gini": 27
     },
     "GR": {
       "iso2": "GR",
@@ -2296,7 +2345,8 @@
       "trade_openness_pct": 0.85,
       "urbanization_pct": 80,
       "median_age": 45,
-      "labor_force_participation_pct": 53
+      "labor_force_participation_pct": 53,
+      "gini": 33
     },
     "AF": {
       "iso2": "AF",
@@ -2341,7 +2391,8 @@
       "trade_openness_pct": 0.873,
       "median_age": 28.9107,
       "labor_force_participation_pct": 58.3463,
-      "ease_of_doing_business_index": 52.8
+      "ease_of_doing_business_index": 52.8,
+      "gini": 33
     },
     "AL": {
       "iso2": "AL",
@@ -2386,7 +2437,8 @@
       "trade_openness_pct": 0.7411,
       "median_age": 41.2232,
       "labor_force_participation_pct": 59.5535,
-      "ease_of_doing_business_index": 60.8
+      "ease_of_doing_business_index": 60.8,
+      "gini": 30
     },
     "DZ": {
       "iso2": "DZ",
@@ -2431,7 +2483,8 @@
       "trade_openness_pct": 0.4408,
       "median_age": 25.6247,
       "labor_force_participation_pct": 44.7639,
-      "ease_of_doing_business_index": 59.6
+      "ease_of_doing_business_index": 59.6,
+      "gini": 28
     },
     "AD": {
       "iso2": "AD",
@@ -2476,7 +2529,8 @@
       "trade_openness_pct": 0.6394,
       "median_age": 42.2545,
       "labor_force_participation_pct": 56.1272,
-      "ease_of_doing_business_index": 76.4
+      "ease_of_doing_business_index": 76.4,
+      "gini": 30
     },
     "AO": {
       "iso2": "AO",
@@ -2521,7 +2575,8 @@
       "trade_openness_pct": 0.3523,
       "median_age": 19.441,
       "labor_force_participation_pct": 56.098,
-      "ease_of_doing_business_index": 58.8
+      "ease_of_doing_business_index": 58.8,
+      "gini": 51
     },
     "AG": {
       "iso2": "AG",
@@ -2566,7 +2621,8 @@
       "trade_openness_pct": 0.4932,
       "median_age": 34.529,
       "labor_force_participation_pct": 60.8096,
-      "ease_of_doing_business_index": 69.6
+      "ease_of_doing_business_index": 69.6,
+      "gini": 41
     },
     "AM": {
       "iso2": "AM",
@@ -2611,7 +2667,8 @@
       "trade_openness_pct": 0.7261,
       "median_age": 41.1965,
       "labor_force_participation_pct": 59.607,
-      "ease_of_doing_business_index": 64.8
+      "ease_of_doing_business_index": 64.8,
+      "gini": 27
     },
     "AZ": {
       "iso2": "AZ",
@@ -2656,7 +2713,8 @@
       "trade_openness_pct": 0.7169,
       "median_age": 41.1428,
       "labor_force_participation_pct": 59.7145,
-      "ease_of_doing_business_index": 54.8
+      "ease_of_doing_business_index": 54.8,
+      "gini": 27
     },
     "BS": {
       "iso2": "BS",
@@ -2701,7 +2759,8 @@
       "trade_openness_pct": 0.4886,
       "median_age": 34.3398,
       "labor_force_participation_pct": 60.73,
-      "ease_of_doing_business_index": 71.6
+      "ease_of_doing_business_index": 71.6,
+      "gini": 41
     },
     "BH": {
       "iso2": "BH",
@@ -2746,7 +2805,8 @@
       "trade_openness_pct": 0.6186,
       "median_age": 31.9497,
       "labor_force_participation_pct": 59.913,
-      "ease_of_doing_business_index": 67.2
+      "ease_of_doing_business_index": 67.2,
+      "gini": 40
     },
     "BD": {
       "iso2": "BD",
@@ -2791,7 +2851,8 @@
       "trade_openness_pct": 0.461,
       "median_age": 28.9994,
       "labor_force_participation_pct": 50.0212,
-      "ease_of_doing_business_index": 55.2
+      "ease_of_doing_business_index": 55.2,
+      "gini": 33
     },
     "BB": {
       "iso2": "BB",
@@ -2836,7 +2897,8 @@
       "trade_openness_pct": 0.4932,
       "median_age": 34.5291,
       "labor_force_participation_pct": 60.8095,
-      "ease_of_doing_business_index": 73.2
+      "ease_of_doing_business_index": 73.2,
+      "gini": 38
     },
     "BY": {
       "iso2": "BY",
@@ -2881,7 +2943,8 @@
       "trade_openness_pct": 0.7326,
       "median_age": 41.2013,
       "labor_force_participation_pct": 59.5974,
-      "ease_of_doing_business_index": 59.2
+      "ease_of_doing_business_index": 59.2,
+      "gini": 25
     },
     "BZ": {
       "iso2": "BZ",
@@ -2926,7 +2989,8 @@
       "trade_openness_pct": 0.4,
       "median_age": 30.9997,
       "labor_force_participation_pct": 63.0097,
-      "ease_of_doing_business_index": 66
+      "ease_of_doing_business_index": 66,
+      "gini": 53
     },
     "BJ": {
       "iso2": "BJ",
@@ -2971,7 +3035,8 @@
       "trade_openness_pct": 0.3658,
       "median_age": 19.9288,
       "labor_force_participation_pct": 56.2064,
-      "ease_of_doing_business_index": 63.2
+      "ease_of_doing_business_index": 63.2,
+      "gini": 42
     },
     "BT": {
       "iso2": "BT",
@@ -3016,7 +3081,8 @@
       "trade_openness_pct": 0.867,
       "median_age": 27.6994,
       "labor_force_participation_pct": 61.1962,
-      "ease_of_doing_business_index": 73.2
+      "ease_of_doing_business_index": 73.2,
+      "gini": 38
     },
     "BO": {
       "iso2": "BO",
@@ -3061,7 +3127,8 @@
       "trade_openness_pct": 0.4055,
       "median_age": 30.7226,
       "labor_force_participation_pct": 65.7768,
-      "ease_of_doing_business_index": 57.2
+      "ease_of_doing_business_index": 57.2,
+      "gini": 42
     },
     "BA": {
       "iso2": "BA",
@@ -3106,7 +3173,8 @@
       "trade_openness_pct": 0.7245,
       "median_age": 41.1844,
       "labor_force_participation_pct": 59.6312,
-      "ease_of_doing_business_index": 59.2
+      "ease_of_doing_business_index": 59.2,
+      "gini": 33
     },
     "BW": {
       "iso2": "BW",
@@ -3151,7 +3219,8 @@
       "trade_openness_pct": 0.5067,
       "median_age": 25.0018,
       "labor_force_participation_pct": 57.3337,
-      "ease_of_doing_business_index": 68.8
+      "ease_of_doing_business_index": 68.8,
+      "gini": 53
     },
     "BN": {
       "iso2": "BN",
@@ -3196,7 +3265,8 @@
       "trade_openness_pct": 0.694,
       "median_age": 45.8944,
       "labor_force_participation_pct": 61.7355,
-      "ease_of_doing_business_index": 69.6
+      "ease_of_doing_business_index": 69.6,
+      "gini": 38
     },
     "BG": {
       "iso2": "BG",
@@ -3241,7 +3311,8 @@
       "trade_openness_pct": 0.6903,
       "median_age": 41.1382,
       "labor_force_participation_pct": 59.7235,
-      "ease_of_doing_business_index": 62.8
+      "ease_of_doing_business_index": 62.8,
+      "gini": 39
     },
     "BF": {
       "iso2": "BF",
@@ -3286,7 +3357,8 @@
       "trade_openness_pct": 0.3575,
       "median_age": 19.6305,
       "labor_force_participation_pct": 56.1401,
-      "ease_of_doing_business_index": 62.4
+      "ease_of_doing_business_index": 62.4,
+      "gini": 35
     },
     "BI": {
       "iso2": "BI",
@@ -3331,7 +3403,8 @@
       "trade_openness_pct": 0.3569,
       "median_age": 19.6101,
       "labor_force_participation_pct": 56.1356,
-      "ease_of_doing_business_index": 54
+      "ease_of_doing_business_index": 54,
+      "gini": 39
     },
     "KH": {
       "iso2": "KH",
@@ -3376,7 +3449,8 @@
       "trade_openness_pct": 0.5456,
       "median_age": 28.9813,
       "labor_force_participation_pct": 51.7301,
-      "ease_of_doing_business_index": 54.8
+      "ease_of_doing_business_index": 54.8,
+      "gini": 36
     },
     "CM": {
       "iso2": "CM",
@@ -3421,7 +3495,8 @@
       "trade_openness_pct": 0.3553,
       "median_age": 19.5508,
       "labor_force_participation_pct": 56.1224,
-      "ease_of_doing_business_index": 56.4
+      "ease_of_doing_business_index": 56.4,
+      "gini": 47
     },
     "CV": {
       "iso2": "CV",
@@ -3466,7 +3541,8 @@
       "trade_openness_pct": 0.433,
       "median_age": 22.3475,
       "labor_force_participation_pct": 56.7439,
-      "ease_of_doing_business_index": 70.8
+      "ease_of_doing_business_index": 70.8,
+      "gini": 42
     },
     "CF": {
       "iso2": "CF",
@@ -3511,7 +3587,8 @@
       "trade_openness_pct": 0.3584,
       "median_age": 19.6633,
       "labor_force_participation_pct": 56.1474,
-      "ease_of_doing_business_index": 55.6
+      "ease_of_doing_business_index": 55.6,
+      "gini": 56
     },
     "TD": {
       "iso2": "TD",
@@ -3556,7 +3633,8 @@
       "trade_openness_pct": 0.3578,
       "median_age": 19.6404,
       "labor_force_participation_pct": 56.1423,
-      "ease_of_doing_business_index": 54
+      "ease_of_doing_business_index": 54,
+      "gini": 37
     },
     "KM": {
       "iso2": "KM",
@@ -3601,7 +3679,8 @@
       "trade_openness_pct": 0.3618,
       "median_age": 19.7846,
       "labor_force_participation_pct": 56.1743,
-      "ease_of_doing_business_index": 54
+      "ease_of_doing_business_index": 54,
+      "gini": 45
     },
     "CR": {
       "iso2": "CR",
@@ -3646,7 +3725,8 @@
       "trade_openness_pct": 0.5818,
       "median_age": 35.5071,
       "labor_force_participation_pct": 60.2047,
-      "ease_of_doing_business_index": 68
+      "ease_of_doing_business_index": 68,
+      "gini": 47
     },
     "CI": {
       "iso2": "CI",
@@ -3691,7 +3771,8 @@
       "trade_openness_pct": 0.3489,
       "median_age": 19.319,
       "labor_force_participation_pct": 56.0709,
-      "ease_of_doing_business_index": 60
+      "ease_of_doing_business_index": 60,
+      "gini": 37
     },
     "HR": {
       "iso2": "HR",
@@ -3736,7 +3817,8 @@
       "trade_openness_pct": 1.1188,
       "median_age": 42.8518,
       "labor_force_participation_pct": 57.238,
-      "ease_of_doing_business_index": 64.8
+      "ease_of_doing_business_index": 64.8,
+      "gini": 29
     },
     "CU": {
       "iso2": "CU",
@@ -3781,7 +3863,8 @@
       "trade_openness_pct": 0.4031,
       "median_age": 31.8685,
       "labor_force_participation_pct": 66.2091,
-      "ease_of_doing_business_index": 62.4
+      "ease_of_doing_business_index": 62.4,
+      "gini": 38
     },
     "CY": {
       "iso2": "CY",
@@ -3826,7 +3909,8 @@
       "trade_openness_pct": 0.894,
       "median_age": 44.3346,
       "labor_force_participation_pct": 57.6905,
-      "ease_of_doing_business_index": 68.4
+      "ease_of_doing_business_index": 68.4,
+      "gini": 32
     },
     "CD": {
       "iso2": "CD",
@@ -3871,7 +3955,8 @@
       "trade_openness_pct": 0.3579,
       "median_age": 19.6444,
       "labor_force_participation_pct": 56.1432,
-      "ease_of_doing_business_index": 54
+      "ease_of_doing_business_index": 54,
+      "gini": 42
     },
     "DJ": {
       "iso2": "DJ",
@@ -3916,7 +4001,8 @@
       "trade_openness_pct": 0.3784,
       "median_age": 20.3819,
       "labor_force_participation_pct": 56.3071,
-      "ease_of_doing_business_index": 58
+      "ease_of_doing_business_index": 58,
+      "gini": 41
     },
     "DM": {
       "iso2": "DM",
@@ -3961,7 +4047,8 @@
       "trade_openness_pct": 0.4105,
       "median_age": 30.8145,
       "labor_force_participation_pct": 68.7978,
-      "ease_of_doing_business_index": 68.4
+      "ease_of_doing_business_index": 68.4,
+      "gini": 46
     },
     "DO": {
       "iso2": "DO",
@@ -4006,7 +4093,8 @@
       "trade_openness_pct": 0.3956,
       "median_age": 33.1098,
       "labor_force_participation_pct": 63.8201,
-      "ease_of_doing_business_index": 60
+      "ease_of_doing_business_index": 60,
+      "gini": 39
     },
     "EC": {
       "iso2": "EC",
@@ -4051,7 +4139,8 @@
       "trade_openness_pct": 0.4021,
       "median_age": 30.8962,
       "labor_force_participation_pct": 64.0412,
-      "ease_of_doing_business_index": 59.6
+      "ease_of_doing_business_index": 59.6,
+      "gini": 46
     },
     "SV": {
       "iso2": "SV",
@@ -4096,7 +4185,8 @@
       "trade_openness_pct": 0.4008,
       "median_age": 30.96,
       "labor_force_participation_pct": 63.4034,
-      "ease_of_doing_business_index": 58
+      "ease_of_doing_business_index": 58,
+      "gini": 38
     },
     "GQ": {
       "iso2": "GQ",
@@ -4141,7 +4231,8 @@
       "trade_openness_pct": 0.5166,
       "median_age": 25.3566,
       "labor_force_participation_pct": 57.4126,
-      "ease_of_doing_business_index": 52.8
+      "ease_of_doing_business_index": 52.8,
+      "gini": 45
     },
     "EE": {
       "iso2": "EE",
@@ -4186,7 +4277,8 @@
       "trade_openness_pct": 1.1427,
       "median_age": 43.5303,
       "labor_force_participation_pct": 59.601,
-      "ease_of_doing_business_index": 76.4
+      "ease_of_doing_business_index": 76.4,
+      "gini": 30
     },
     "SZ": {
       "iso2": "SZ",
@@ -4231,7 +4323,8 @@
       "trade_openness_pct": 0.4329,
       "median_age": 22.3435,
       "labor_force_participation_pct": 56.743,
-      "ease_of_doing_business_index": 56.8
+      "ease_of_doing_business_index": 56.8,
+      "gini": 55
     },
     "ET": {
       "iso2": "ET",
@@ -4276,7 +4369,8 @@
       "trade_openness_pct": 0.36,
       "median_age": 19.7192,
       "labor_force_participation_pct": 56.1598,
-      "ease_of_doing_business_index": 60.8
+      "ease_of_doing_business_index": 60.8,
+      "gini": 35
     },
     "FJ": {
       "iso2": "FJ",
@@ -4321,7 +4415,8 @@
       "trade_openness_pct": 1.0823,
       "median_age": 35.4185,
       "labor_force_participation_pct": 68.0647,
-      "ease_of_doing_business_index": 66.8
+      "ease_of_doing_business_index": 66.8,
+      "gini": 36
     },
     "GA": {
       "iso2": "GA",
@@ -4366,7 +4461,8 @@
       "trade_openness_pct": 0.5198,
       "median_age": 25.4724,
       "labor_force_participation_pct": 57.4383,
-      "ease_of_doing_business_index": 57.2
+      "ease_of_doing_business_index": 57.2,
+      "gini": 39
     },
     "GM": {
       "iso2": "GM",
@@ -4411,7 +4507,8 @@
       "trade_openness_pct": 0.3577,
       "median_age": 19.6386,
       "labor_force_participation_pct": 56.1419,
-      "ease_of_doing_business_index": 61.2
+      "ease_of_doing_business_index": 61.2,
+      "gini": 36
     },
     "GE": {
       "iso2": "GE",
@@ -4456,7 +4553,8 @@
       "trade_openness_pct": 0.7273,
       "median_age": 41.1939,
       "labor_force_participation_pct": 59.6123,
-      "ease_of_doing_business_index": 67.2
+      "ease_of_doing_business_index": 67.2,
+      "gini": 35
     },
     "GH": {
       "iso2": "GH",
@@ -4501,7 +4599,8 @@
       "trade_openness_pct": 0.3401,
       "median_age": 19.0033,
       "labor_force_participation_pct": 56.0007,
-      "ease_of_doing_business_index": 62.8
+      "ease_of_doing_business_index": 62.8,
+      "gini": 44
     },
     "GD": {
       "iso2": "GD",
@@ -4546,7 +4645,8 @@
       "trade_openness_pct": 0.39,
       "median_age": 33.9964,
       "labor_force_participation_pct": 62.0073,
-      "ease_of_doing_business_index": 67.2
+      "ease_of_doing_business_index": 67.2,
+      "gini": 38
     },
     "GT": {
       "iso2": "GT",
@@ -4591,7 +4691,8 @@
       "trade_openness_pct": 0.401,
       "median_age": 30.9515,
       "labor_force_participation_pct": 63.4882,
-      "ease_of_doing_business_index": 55.2
+      "ease_of_doing_business_index": 55.2,
+      "gini": 49
     },
     "GN": {
       "iso2": "GN",
@@ -4636,7 +4737,8 @@
       "trade_openness_pct": 0.3618,
       "median_age": 19.7849,
       "labor_force_participation_pct": 56.1744,
-      "ease_of_doing_business_index": 57.2
+      "ease_of_doing_business_index": 57.2,
+      "gini": 33
     },
     "GW": {
       "iso2": "GW",
@@ -4681,7 +4783,8 @@
       "trade_openness_pct": 0.3577,
       "median_age": 19.6377,
       "labor_force_participation_pct": 56.1417,
-      "ease_of_doing_business_index": 54.8
+      "ease_of_doing_business_index": 54.8,
+      "gini": 35
     },
     "GY": {
       "iso2": "GY",
@@ -4726,7 +4829,8 @@
       "trade_openness_pct": 0.4932,
       "median_age": 34.5292,
       "labor_force_participation_pct": 60.8094,
-      "ease_of_doing_business_index": 62
+      "ease_of_doing_business_index": 62,
+      "gini": 45
     },
     "HT": {
       "iso2": "HT",
@@ -4771,7 +4875,8 @@
       "trade_openness_pct": 0.4033,
       "median_age": 30.8338,
       "labor_force_participation_pct": 64.6646,
-      "ease_of_doing_business_index": 52.8
+      "ease_of_doing_business_index": 52.8,
+      "gini": 41
     },
     "HN": {
       "iso2": "HN",
@@ -4816,7 +4921,8 @@
       "trade_openness_pct": 0.4043,
       "median_age": 30.7816,
       "labor_force_participation_pct": 65.1872,
-      "ease_of_doing_business_index": 54.8
+      "ease_of_doing_business_index": 54.8,
+      "gini": 48
     },
     "IS": {
       "iso2": "IS",
@@ -4861,7 +4967,8 @@
       "trade_openness_pct": 1.0654,
       "median_age": 41.0437,
       "labor_force_participation_pct": 64.4489,
-      "ease_of_doing_business_index": 74.8
+      "ease_of_doing_business_index": 74.8,
+      "gini": 26
     },
     "IR": {
       "iso2": "IR",
@@ -4906,7 +5013,8 @@
       "trade_openness_pct": 0.4408,
       "median_age": 25.6245,
       "labor_force_participation_pct": 44.7633,
-      "ease_of_doing_business_index": 55.6
+      "ease_of_doing_business_index": 55.6,
+      "gini": 41
     },
     "IQ": {
       "iso2": "IQ",
@@ -4951,7 +5059,8 @@
       "trade_openness_pct": 0.4408,
       "median_age": 25.624,
       "labor_force_participation_pct": 44.7626,
-      "ease_of_doing_business_index": 55.2
+      "ease_of_doing_business_index": 55.2,
+      "gini": 30
     },
     "JM": {
       "iso2": "JM",
@@ -4996,7 +5105,8 @@
       "trade_openness_pct": 0.4013,
       "median_age": 30.9366,
       "labor_force_participation_pct": 63.6369,
-      "ease_of_doing_business_index": 64
+      "ease_of_doing_business_index": 64,
+      "gini": 45
     },
     "JO": {
       "iso2": "JO",
@@ -5041,7 +5151,8 @@
       "trade_openness_pct": 0.4144,
       "median_age": 24.5743,
       "labor_force_participation_pct": 42.9769,
-      "ease_of_doing_business_index": 64.4
+      "ease_of_doing_business_index": 64.4,
+      "gini": 34
     },
     "KZ": {
       "iso2": "KZ",
@@ -5086,7 +5197,8 @@
       "trade_openness_pct": 0.5727,
       "median_age": 40.5073,
       "labor_force_participation_pct": 60.9853,
-      "ease_of_doing_business_index": 62
+      "ease_of_doing_business_index": 62,
+      "gini": 27
     },
     "KE": {
       "iso2": "KE",
@@ -5131,7 +5243,8 @@
       "trade_openness_pct": 0.3401,
       "median_age": 19.0027,
       "labor_force_participation_pct": 56.0006,
-      "ease_of_doing_business_index": 58.8
+      "ease_of_doing_business_index": 58.8,
+      "gini": 39
     },
     "KI": {
       "iso2": "KI",
@@ -5176,7 +5289,8 @@
       "trade_openness_pct": 1.0015,
       "median_age": 35.7952,
       "labor_force_participation_pct": 68.2014,
-      "ease_of_doing_business_index": 57.2
+      "ease_of_doing_business_index": 57.2,
+      "gini": 37
     },
     "XK": {
       "iso2": "XK",
@@ -5221,7 +5335,8 @@
       "trade_openness_pct": 0.722,
       "median_age": 41.1719,
       "labor_force_participation_pct": 59.6563,
-      "ease_of_doing_business_index": 62.8
+      "ease_of_doing_business_index": 62.8,
+      "gini": 29
     },
     "KW": {
       "iso2": "KW",
@@ -5266,7 +5381,8 @@
       "trade_openness_pct": 0.6199,
       "median_age": 32.0027,
       "labor_force_participation_pct": 59.9756,
-      "ease_of_doing_business_index": 64.4
+      "ease_of_doing_business_index": 64.4,
+      "gini": 41
     },
     "KG": {
       "iso2": "KG",
@@ -5311,7 +5427,8 @@
       "trade_openness_pct": 0.7212,
       "median_age": 41.1666,
       "labor_force_participation_pct": 59.6668,
-      "ease_of_doing_business_index": 56
+      "ease_of_doing_business_index": 56,
+      "gini": 29
     },
     "LA": {
       "iso2": "LA",
@@ -5356,7 +5473,8 @@
       "trade_openness_pct": 0.5115,
       "median_age": 28.9887,
       "labor_force_participation_pct": 51.0409,
-      "ease_of_doing_business_index": 57.2
+      "ease_of_doing_business_index": 57.2,
+      "gini": 39
     },
     "LV": {
       "iso2": "LV",
@@ -5401,7 +5519,8 @@
       "trade_openness_pct": 0.8544,
       "median_age": 44.9842,
       "labor_force_participation_pct": 53.0445,
-      "ease_of_doing_business_index": 70
+      "ease_of_doing_business_index": 70,
+      "gini": 34
     },
     "LB": {
       "iso2": "LB",
@@ -5446,7 +5565,8 @@
       "trade_openness_pct": 0.4071,
       "median_age": 24.2845,
       "labor_force_participation_pct": 42.484,
-      "ease_of_doing_business_index": 54.8
+      "ease_of_doing_business_index": 54.8,
+      "gini": 32
     },
     "LS": {
       "iso2": "LS",
@@ -5491,7 +5611,8 @@
       "trade_openness_pct": 0.3583,
       "median_age": 19.6596,
       "labor_force_participation_pct": 56.1466,
-      "ease_of_doing_business_index": 60.8
+      "ease_of_doing_business_index": 60.8,
+      "gini": 45
     },
     "LR": {
       "iso2": "LR",
@@ -5536,7 +5657,8 @@
       "trade_openness_pct": 0.3577,
       "median_age": 19.6393,
       "labor_force_participation_pct": 56.1421,
-      "ease_of_doing_business_index": 56
+      "ease_of_doing_business_index": 56,
+      "gini": 35
     },
     "LY": {
       "iso2": "LY",
@@ -5581,7 +5703,8 @@
       "trade_openness_pct": 0.4408,
       "median_age": 25.6244,
       "labor_force_participation_pct": 44.7633,
-      "ease_of_doing_business_index": 51.2
+      "ease_of_doing_business_index": 51.2,
+      "gini": 34
     },
     "LI": {
       "iso2": "LI",
@@ -5626,7 +5749,8 @@
       "trade_openness_pct": 1.3937,
       "median_age": 40.3729,
       "labor_force_participation_pct": 64.8126,
-      "ease_of_doing_business_index": 76.4
+      "ease_of_doing_business_index": 76.4,
+      "gini": 30
     },
     "LT": {
       "iso2": "LT",
@@ -5671,7 +5795,8 @@
       "trade_openness_pct": 1.1129,
       "median_age": 45.8663,
       "labor_force_participation_pct": 59.3534,
-      "ease_of_doing_business_index": 71.2
+      "ease_of_doing_business_index": 71.2,
+      "gini": 36
     },
     "LU": {
       "iso2": "LU",
@@ -5716,7 +5841,8 @@
       "trade_openness_pct": 1.4607,
       "median_age": 40.4193,
       "labor_force_participation_pct": 64.7484,
-      "ease_of_doing_business_index": 78.4
+      "ease_of_doing_business_index": 78.4,
+      "gini": 35
     },
     "MO": {
       "iso2": "MO",
@@ -5761,7 +5887,8 @@
       "trade_openness_pct": 2.9379,
       "median_age": 44.3644,
       "labor_force_participation_pct": 64.8347,
-      "ease_of_doing_business_index": 71.2
+      "ease_of_doing_business_index": 71.2,
+      "gini": 36
     },
     "MG": {
       "iso2": "MG",
@@ -5806,7 +5933,8 @@
       "trade_openness_pct": 0.3584,
       "median_age": 19.663,
       "labor_force_participation_pct": 56.1473,
-      "ease_of_doing_business_index": 56.4
+      "ease_of_doing_business_index": 56.4,
+      "gini": 42
     },
     "MW": {
       "iso2": "MW",
@@ -5851,7 +5979,8 @@
       "trade_openness_pct": 0.3583,
       "median_age": 19.659,
       "labor_force_participation_pct": 56.1464,
-      "ease_of_doing_business_index": 59.6
+      "ease_of_doing_business_index": 59.6,
+      "gini": 44
     },
     "MV": {
       "iso2": "MV",
@@ -5896,7 +6025,8 @@
       "trade_openness_pct": 1.131,
       "median_age": 32.7363,
       "labor_force_participation_pct": 67.8955,
-      "ease_of_doing_business_index": 61.6
+      "ease_of_doing_business_index": 61.6,
+      "gini": 31
     },
     "ML": {
       "iso2": "ML",
@@ -5941,7 +6071,8 @@
       "trade_openness_pct": 0.3577,
       "median_age": 19.6364,
       "labor_force_participation_pct": 56.1414,
-      "ease_of_doing_business_index": 57.2
+      "ease_of_doing_business_index": 57.2,
+      "gini": 36
     },
     "MT": {
       "iso2": "MT",
@@ -5986,7 +6117,8 @@
       "trade_openness_pct": 0.7854,
       "median_age": 44.8225,
       "labor_force_participation_pct": 56.469,
-      "ease_of_doing_business_index": 66.4
+      "ease_of_doing_business_index": 66.4,
+      "gini": 32
     },
     "MH": {
       "iso2": "MH",
@@ -6031,7 +6163,8 @@
       "trade_openness_pct": 1.0698,
       "median_age": 35.4796,
       "labor_force_participation_pct": 68.103,
-      "ease_of_doing_business_index": 58
+      "ease_of_doing_business_index": 58,
+      "gini": 35
     },
     "MR": {
       "iso2": "MR",
@@ -6076,7 +6209,8 @@
       "trade_openness_pct": 0.3401,
       "median_age": 19.002,
       "labor_force_participation_pct": 56.0004,
-      "ease_of_doing_business_index": 57.2
+      "ease_of_doing_business_index": 57.2,
+      "gini": 32
     },
     "MU": {
       "iso2": "MU",
@@ -6121,7 +6255,8 @@
       "trade_openness_pct": 0.515,
       "median_age": 25.3013,
       "labor_force_participation_pct": 57.4003,
-      "ease_of_doing_business_index": 66.4
+      "ease_of_doing_business_index": 66.4,
+      "gini": 36
     },
     "FM": {
       "iso2": "FM",
@@ -6166,7 +6301,8 @@
       "trade_openness_pct": 1.0455,
       "median_age": 35.5908,
       "labor_force_participation_pct": 68.1315,
-      "ease_of_doing_business_index": 58
+      "ease_of_doing_business_index": 58,
+      "gini": 40
     },
     "MD": {
       "iso2": "MD",
@@ -6211,7 +6347,8 @@
       "trade_openness_pct": 0.7204,
       "median_age": 41.1624,
       "labor_force_participation_pct": 59.6752,
-      "ease_of_doing_business_index": 63.2
+      "ease_of_doing_business_index": 63.2,
+      "gini": 26
     },
     "MC": {
       "iso2": "MC",
@@ -6256,7 +6393,8 @@
       "trade_openness_pct": 1.5784,
       "median_age": 40.0992,
       "labor_force_participation_pct": 64.2113,
-      "ease_of_doing_business_index": 76.4
+      "ease_of_doing_business_index": 76.4,
+      "gini": 30
     },
     "MN": {
       "iso2": "MN",
@@ -6301,7 +6439,8 @@
       "trade_openness_pct": 0.8379,
       "median_age": 29.7624,
       "labor_force_participation_pct": 66.8298,
-      "ease_of_doing_business_index": 59.2
+      "ease_of_doing_business_index": 59.2,
+      "gini": 33
     },
     "ME": {
       "iso2": "ME",
@@ -6346,7 +6485,8 @@
       "trade_openness_pct": 0.5869,
       "median_age": 40.524,
       "labor_force_participation_pct": 60.9519,
-      "ease_of_doing_business_index": 64.4
+      "ease_of_doing_business_index": 64.4,
+      "gini": 36
     },
     "MA": {
       "iso2": "MA",
@@ -6391,7 +6531,8 @@
       "trade_openness_pct": 0.4071,
       "median_age": 24.2837,
       "labor_force_participation_pct": 42.4826,
-      "ease_of_doing_business_index": 60.8
+      "ease_of_doing_business_index": 60.8,
+      "gini": 40
     },
     "MZ": {
       "iso2": "MZ",
@@ -6436,7 +6577,8 @@
       "trade_openness_pct": 0.3582,
       "median_age": 19.6571,
       "labor_force_participation_pct": 56.146,
-      "ease_of_doing_business_index": 56
+      "ease_of_doing_business_index": 56,
+      "gini": 54
     },
     "MM": {
       "iso2": "MM",
@@ -6481,7 +6623,8 @@
       "trade_openness_pct": 0.6399,
       "median_age": 28.961,
       "labor_force_participation_pct": 53.6365,
-      "ease_of_doing_business_index": 52.4
+      "ease_of_doing_business_index": 52.4,
+      "gini": 31
     },
     "NA": {
       "iso2": "NA",
@@ -6526,7 +6669,8 @@
       "trade_openness_pct": 0.4817,
       "median_age": 24.1005,
       "labor_force_participation_pct": 57.1334,
-      "ease_of_doing_business_index": 65.6
+      "ease_of_doing_business_index": 65.6,
+      "gini": 59
     },
     "NR": {
       "iso2": "NR",
@@ -6571,7 +6715,8 @@
       "trade_openness_pct": 1.0681,
       "median_age": 35.4862,
       "labor_force_participation_pct": 68.0966,
-      "ease_of_doing_business_index": 58
+      "ease_of_doing_business_index": 58,
+      "gini": 35
     },
     "NP": {
       "iso2": "NP",
@@ -6616,7 +6761,8 @@
       "trade_openness_pct": 0.5957,
       "median_age": 28.9705,
       "labor_force_participation_pct": 52.7425,
-      "ease_of_doing_business_index": 59.6
+      "ease_of_doing_business_index": 59.6,
+      "gini": 33
     },
     "NI": {
       "iso2": "NI",
@@ -6661,7 +6807,8 @@
       "trade_openness_pct": 0.4041,
       "median_age": 30.7912,
       "labor_force_participation_pct": 65.0907,
-      "ease_of_doing_business_index": 52.8
+      "ease_of_doing_business_index": 52.8,
+      "gini": 46
     },
     "NE": {
       "iso2": "NE",
@@ -6706,7 +6853,8 @@
       "trade_openness_pct": 0.3582,
       "median_age": 19.6573,
       "labor_force_participation_pct": 56.146,
-      "ease_of_doing_business_index": 58.4
+      "ease_of_doing_business_index": 58.4,
+      "gini": 32
     },
     "MK": {
       "iso2": "MK",
@@ -6751,7 +6899,8 @@
       "trade_openness_pct": 0.7245,
       "median_age": 41.1844,
       "labor_force_participation_pct": 59.6312,
-      "ease_of_doing_business_index": 62.8
+      "ease_of_doing_business_index": 62.8,
+      "gini": 33
     },
     "OM": {
       "iso2": "OM",
@@ -6796,7 +6945,8 @@
       "trade_openness_pct": 0.5748,
       "median_age": 30.8723,
       "labor_force_participation_pct": 54.2511,
-      "ease_of_doing_business_index": 63.2
+      "ease_of_doing_business_index": 63.2,
+      "gini": 40
     },
     "PK": {
       "iso2": "PK",
@@ -6841,7 +6991,8 @@
       "trade_openness_pct": 0.5971,
       "median_age": 28.9702,
       "labor_force_participation_pct": 52.7708,
-      "ease_of_doing_business_index": 56.8
+      "ease_of_doing_business_index": 56.8,
+      "gini": 30
     },
     "PW": {
       "iso2": "PW",
@@ -6886,7 +7037,8 @@
       "trade_openness_pct": 1.0712,
       "median_age": 35.4719,
       "labor_force_participation_pct": 68.0918,
-      "ease_of_doing_business_index": 70
+      "ease_of_doing_business_index": 70,
+      "gini": 35
     },
     "PS": {
       "iso2": "PS",
@@ -6931,7 +7083,8 @@
       "trade_openness_pct": 0.4057,
       "median_age": 24.2272,
       "labor_force_participation_pct": 42.3864,
-      "ease_of_doing_business_index": 58
+      "ease_of_doing_business_index": 58,
+      "gini": 33
     },
     "PA": {
       "iso2": "PA",
@@ -6976,7 +7129,8 @@
       "trade_openness_pct": 0.5966,
       "median_age": 35.7119,
       "labor_force_participation_pct": 60.1368,
-      "ease_of_doing_business_index": 59.2
+      "ease_of_doing_business_index": 59.2,
+      "gini": 49
     },
     "PG": {
       "iso2": "PG",
@@ -7021,7 +7175,8 @@
       "trade_openness_pct": 1.0346,
       "median_age": 35.6411,
       "labor_force_participation_pct": 68.1477,
-      "ease_of_doing_business_index": 58
+      "ease_of_doing_business_index": 58,
+      "gini": 42
     },
     "PY": {
       "iso2": "PY",
@@ -7066,7 +7221,8 @@
       "trade_openness_pct": 0.4013,
       "median_age": 30.9372,
       "labor_force_participation_pct": 63.6313,
-      "ease_of_doing_business_index": 58
+      "ease_of_doing_business_index": 58,
+      "gini": 45
     },
     "QA": {
       "iso2": "QA",
@@ -7111,7 +7267,8 @@
       "trade_openness_pct": 1.0625,
       "median_age": 31.6477,
       "labor_force_participation_pct": 69.5374,
-      "ease_of_doing_business_index": 69.2
+      "ease_of_doing_business_index": 69.2,
+      "gini": 41
     },
     "CG": {
       "iso2": "CG",
@@ -7156,7 +7313,8 @@
       "trade_openness_pct": 0.3441,
       "median_age": 19.1481,
       "labor_force_participation_pct": 56.0329,
-      "ease_of_doing_business_index": 53.6
+      "ease_of_doing_business_index": 53.6,
+      "gini": 49
     },
     "RW": {
       "iso2": "RW",
@@ -7201,7 +7359,8 @@
       "trade_openness_pct": 0.358,
       "median_age": 19.6495,
       "labor_force_participation_pct": 56.1443,
-      "ease_of_doing_business_index": 68.8
+      "ease_of_doing_business_index": 68.8,
+      "gini": 44
     },
     "KN": {
       "iso2": "KN",
@@ -7246,7 +7405,8 @@
       "trade_openness_pct": 0.4932,
       "median_age": 34.5291,
       "labor_force_participation_pct": 60.8095,
-      "ease_of_doing_business_index": 68.4
+      "ease_of_doing_business_index": 68.4,
+      "gini": 41
     },
     "LC": {
       "iso2": "LC",
@@ -7291,7 +7451,8 @@
       "trade_openness_pct": 0.3317,
       "median_age": 32.3343,
       "labor_force_participation_pct": 61.5843,
-      "ease_of_doing_business_index": 68
+      "ease_of_doing_business_index": 68,
+      "gini": 51
     },
     "VC": {
       "iso2": "VC",
@@ -7336,7 +7497,8 @@
       "trade_openness_pct": 0.4028,
       "median_age": 31.9408,
       "labor_force_participation_pct": 66.1374,
-      "ease_of_doing_business_index": 70
+      "ease_of_doing_business_index": 70,
+      "gini": 40
     },
     "WS": {
       "iso2": "WS",
@@ -7381,7 +7543,8 @@
       "trade_openness_pct": 1.0501,
       "median_age": 35.569,
       "labor_force_participation_pct": 68.1222,
-      "ease_of_doing_business_index": 62.4
+      "ease_of_doing_business_index": 62.4,
+      "gini": 38
     },
     "SM": {
       "iso2": "SM",
@@ -7426,7 +7589,8 @@
       "trade_openness_pct": 1.0605,
       "median_age": 42.9968,
       "labor_force_participation_pct": 62.2772,
-      "ease_of_doing_business_index": 76.4
+      "ease_of_doing_business_index": 76.4,
+      "gini": 30
     },
     "ST": {
       "iso2": "ST",
@@ -7471,7 +7635,8 @@
       "trade_openness_pct": 0.3494,
       "median_age": 19.337,
       "labor_force_participation_pct": 56.0749,
-      "ease_of_doing_business_index": 64
+      "ease_of_doing_business_index": 64,
+      "gini": 53
     },
     "SN": {
       "iso2": "SN",
@@ -7516,7 +7681,8 @@
       "trade_openness_pct": 0.3554,
       "median_age": 19.5531,
       "labor_force_participation_pct": 56.1229,
-      "ease_of_doing_business_index": 64
+      "ease_of_doing_business_index": 64,
+      "gini": 36
     },
     "RS": {
       "iso2": "RS",
@@ -7561,7 +7727,8 @@
       "trade_openness_pct": 0.5868,
       "median_age": 40.5237,
       "labor_force_participation_pct": 60.9524,
-      "ease_of_doing_business_index": 60
+      "ease_of_doing_business_index": 60,
+      "gini": 33
     },
     "SC": {
       "iso2": "SC",
@@ -7606,7 +7773,8 @@
       "trade_openness_pct": 0.5169,
       "median_age": 25.367,
       "labor_force_participation_pct": 57.4149,
-      "ease_of_doing_business_index": 74.4
+      "ease_of_doing_business_index": 74.4,
+      "gini": 32
     },
     "SL": {
       "iso2": "SL",
@@ -7651,7 +7819,8 @@
       "trade_openness_pct": 0.3584,
       "median_age": 19.6623,
       "labor_force_participation_pct": 56.1472,
-      "ease_of_doing_business_index": 59.2
+      "ease_of_doing_business_index": 59.2,
+      "gini": 36
     },
     "SK": {
       "iso2": "SK",
@@ -7696,7 +7865,8 @@
       "trade_openness_pct": 1.2146,
       "median_age": 44.0873,
       "labor_force_participation_pct": 56.1917,
-      "ease_of_doing_business_index": 65.6
+      "ease_of_doing_business_index": 65.6,
+      "gini": 24
     },
     "SI": {
       "iso2": "SI",
@@ -7741,7 +7911,8 @@
       "trade_openness_pct": 0.7375,
       "median_age": 43.9717,
       "labor_force_participation_pct": 58.9506,
-      "ease_of_doing_business_index": 68.4
+      "ease_of_doing_business_index": 68.4,
+      "gini": 24
     },
     "SB": {
       "iso2": "SB",
@@ -7786,7 +7957,8 @@
       "trade_openness_pct": 1.0202,
       "median_age": 35.7081,
       "labor_force_participation_pct": 68.1713,
-      "ease_of_doing_business_index": 63.2
+      "ease_of_doing_business_index": 63.2,
+      "gini": 37
     },
     "SO": {
       "iso2": "SO",
@@ -7831,7 +8003,8 @@
       "trade_openness_pct": 0.3582,
       "median_age": 19.6578,
       "labor_force_participation_pct": 56.1461,
-      "ease_of_doing_business_index": 49.6
+      "ease_of_doing_business_index": 49.6,
+      "gini": 36
     },
     "LK": {
       "iso2": "LK",
@@ -7876,7 +8049,8 @@
       "trade_openness_pct": 0.8674,
       "median_age": 27.6981,
       "labor_force_participation_pct": 61.2073,
-      "ease_of_doing_business_index": 58.8
+      "ease_of_doing_business_index": 58.8,
+      "gini": 39
     },
     "SD": {
       "iso2": "SD",
@@ -7921,7 +8095,8 @@
       "trade_openness_pct": 0.3582,
       "median_age": 19.6578,
       "labor_force_participation_pct": 56.1461,
-      "ease_of_doing_business_index": 54
+      "ease_of_doing_business_index": 54,
+      "gini": 35
     },
     "SR": {
       "iso2": "SR",
@@ -7966,7 +8141,8 @@
       "trade_openness_pct": 0.4013,
       "median_age": 30.9364,
       "labor_force_participation_pct": 63.6388,
-      "ease_of_doing_business_index": 62
+      "ease_of_doing_business_index": 62,
+      "gini": 40
     },
     "SY": {
       "iso2": "SY",
@@ -8011,7 +8187,8 @@
       "trade_openness_pct": 0.4066,
       "median_age": 24.2642,
       "labor_force_participation_pct": 42.4494,
-      "ease_of_doing_business_index": 50.8
+      "ease_of_doing_business_index": 50.8,
+      "gini": 36
     },
     "TJ": {
       "iso2": "TJ",
@@ -8056,7 +8233,8 @@
       "trade_openness_pct": 0.7212,
       "median_age": 41.1668,
       "labor_force_participation_pct": 59.6664,
-      "ease_of_doing_business_index": 53.6
+      "ease_of_doing_business_index": 53.6,
+      "gini": 34
     },
     "TZ": {
       "iso2": "TZ",
@@ -8101,7 +8279,8 @@
       "trade_openness_pct": 0.3611,
       "median_age": 19.758,
       "labor_force_participation_pct": 56.1684,
-      "ease_of_doing_business_index": 62.4
+      "ease_of_doing_business_index": 62.4,
+      "gini": 41
     },
     "TL": {
       "iso2": "TL",
@@ -8146,7 +8325,8 @@
       "trade_openness_pct": 0.5972,
       "median_age": 28.9702,
       "labor_force_participation_pct": 52.7734,
-      "ease_of_doing_business_index": 63.2
+      "ease_of_doing_business_index": 63.2,
+      "gini": 28
     },
     "TG": {
       "iso2": "TG",
@@ -8191,7 +8371,8 @@
       "trade_openness_pct": 0.3583,
       "median_age": 19.6588,
       "labor_force_participation_pct": 56.1464,
-      "ease_of_doing_business_index": 58.8
+      "ease_of_doing_business_index": 58.8,
+      "gini": 42
     },
     "TO": {
       "iso2": "TO",
@@ -8236,7 +8417,8 @@
       "trade_openness_pct": 1.069,
       "median_age": 35.4813,
       "labor_force_participation_pct": 68.0926,
-      "ease_of_doing_business_index": 64.8
+      "ease_of_doing_business_index": 64.8,
+      "gini": 38
     },
     "TT": {
       "iso2": "TT",
@@ -8281,7 +8463,8 @@
       "trade_openness_pct": 0.5304,
       "median_age": 34.9549,
       "labor_force_participation_pct": 60.5674,
-      "ease_of_doing_business_index": 62.8
+      "ease_of_doing_business_index": 62.8,
+      "gini": 40
     },
     "TN": {
       "iso2": "TN",
@@ -8326,7 +8509,8 @@
       "trade_openness_pct": 0.4071,
       "median_age": 24.2834,
       "labor_force_participation_pct": 42.4821,
-      "ease_of_doing_business_index": 61.6
+      "ease_of_doing_business_index": 61.6,
+      "gini": 33
     },
     "TM": {
       "iso2": "TM",
@@ -8371,7 +8555,8 @@
       "trade_openness_pct": 0.5129,
       "median_age": 40.1792,
       "labor_force_participation_pct": 61.6415,
-      "ease_of_doing_business_index": 52.8
+      "ease_of_doing_business_index": 52.8,
+      "gini": 38
     },
     "TV": {
       "iso2": "TV",
@@ -8416,7 +8601,8 @@
       "trade_openness_pct": 1.0687,
       "median_age": 35.4828,
       "labor_force_participation_pct": 68.0925,
-      "ease_of_doing_business_index": 58
+      "ease_of_doing_business_index": 58,
+      "gini": 39
     },
     "UG": {
       "iso2": "UG",
@@ -8461,7 +8647,8 @@
       "trade_openness_pct": 0.3582,
       "median_age": 19.656,
       "labor_force_participation_pct": 56.1458,
-      "ease_of_doing_business_index": 56.4
+      "ease_of_doing_business_index": 56.4,
+      "gini": 43
     },
     "UA": {
       "iso2": "UA",
@@ -8506,7 +8693,8 @@
       "trade_openness_pct": 0.722,
       "median_age": 41.1719,
       "labor_force_participation_pct": 59.6564,
-      "ease_of_doing_business_index": 60
+      "ease_of_doing_business_index": 60,
+      "gini": 26
     },
     "UY": {
       "iso2": "UY",
@@ -8551,7 +8739,8 @@
       "trade_openness_pct": 0.4932,
       "median_age": 34.5291,
       "labor_force_participation_pct": 60.8095,
-      "ease_of_doing_business_index": 76.4
+      "ease_of_doing_business_index": 76.4,
+      "gini": 39
     },
     "UZ": {
       "iso2": "UZ",
@@ -8596,7 +8785,8 @@
       "trade_openness_pct": 0.7213,
       "median_age": 41.1674,
       "labor_force_participation_pct": 59.6652,
-      "ease_of_doing_business_index": 59.2
+      "ease_of_doing_business_index": 59.2,
+      "gini": 31
     },
     "VU": {
       "iso2": "VU",
@@ -8641,7 +8831,8 @@
       "trade_openness_pct": 1.0358,
       "median_age": 35.6358,
       "labor_force_participation_pct": 68.1463,
-      "ease_of_doing_business_index": 65.2
+      "ease_of_doing_business_index": 65.2,
+      "gini": 38
     },
     "VE": {
       "iso2": "VE",
@@ -8686,7 +8877,8 @@
       "trade_openness_pct": 0.4055,
       "median_age": 30.7228,
       "labor_force_participation_pct": 65.7751,
-      "ease_of_doing_business_index": 51.2
+      "ease_of_doing_business_index": 51.2,
+      "gini": 43
     },
     "YE": {
       "iso2": "YE",
@@ -8731,7 +8923,8 @@
       "trade_openness_pct": 0.4066,
       "median_age": 24.2626,
       "labor_force_participation_pct": 42.4467,
-      "ease_of_doing_business_index": 51.2
+      "ease_of_doing_business_index": 51.2,
+      "gini": 37
     },
     "ZM": {
       "iso2": "ZM",
@@ -8776,7 +8969,8 @@
       "trade_openness_pct": 0.3611,
       "median_age": 19.7585,
       "labor_force_participation_pct": 56.1685,
-      "ease_of_doing_business_index": 59.2
+      "ease_of_doing_business_index": 59.2,
+      "gini": 57
     },
     "ZW": {
       "iso2": "ZW",
@@ -8821,7 +9015,8 @@
       "trade_openness_pct": 0.3554,
       "median_age": 19.5525,
       "labor_force_participation_pct": 56.1228,
-      "ease_of_doing_business_index": 54.4
+      "ease_of_doing_business_index": 54.4,
+      "gini": 50
     },
     "PR": {
       "iso2": "PR",
@@ -8866,7 +9061,8 @@
       "trade_openness_pct": 0.4893,
       "median_age": 34.3704,
       "labor_force_participation_pct": 60.7429,
-      "ease_of_doing_business_index": 70
+      "ease_of_doing_business_index": 70,
+      "gini": 36
     },
     "VA": {
       "iso2": "VA",
@@ -8911,7 +9107,8 @@
       "trade_openness_pct": 1.0704,
       "median_age": 42.9077,
       "labor_force_participation_pct": 56.8976,
-      "ease_of_doing_business_index": 74
+      "ease_of_doing_business_index": 74,
+      "gini": 30
     }
   }
 }
