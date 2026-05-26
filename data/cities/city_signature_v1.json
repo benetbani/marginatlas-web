@@ -1,0 +1,63 @@
+{
+  "version": "1.0.0",
+  "anchor": "Per-city signature data: demographics (% foreign-born, % foreign-owned firms), 3 signature sectors that characterise the city vs comparable metros (banks excluded — too generic), 6 cultural spectrum scores (1-10), and 5 government-and-institutions scores (0-10, business perspective). Curated per city; NYC ships first as the sample. Cultural spectrums are not 'good/bad', they are 'closer to one side', so the bar position tells the reader what the city's culture leans toward. Government scores are 0-10 where higher means better-for-business in all five dimensions.",
+  "convention": {
+    "foreign_born_pct": "Share of resident population that was not born in the country, 0-100",
+    "foreign_owned_pct": "Share of resident SMB firms with at least one foreign owner, 0-100",
+    "signature_sectors": "Three industries that characterise the city vs similar metros. NOT banks (too generic). Linked to industry slugs from the existing taxonomy.",
+    "culture": {
+      "punctuality": "1 = very loose, 10 = strict on time",
+      "openness_to_foreigners": "1 = closed/insular, 10 = highly welcoming",
+      "innovation": "1 = tradition-bound, 10 = embraces new ideas",
+      "communication_directness": "1 = highly indirect, 10 = highly direct",
+      "acceptance_of_corruption": "1 = strongly rejects, 10 = widely tolerated",
+      "ambition_chest_beating": "1 = humble/reserved, 10 = openly self-promoting"
+    },
+    "government": {
+      "tax_predictability": "0 = punitive/unexpected, 10 = clear and stable",
+      "low_bribery": "0 = widespread bribes, 10 = bribery rare",
+      "task_efficiency": "0 = nothing works, 10 = things get done",
+      "time_efficiency": "0 = months for any permit, 10 = same-day filing",
+      "judicial_impartiality": "0 = courts captured, 10 = fully impartial"
+    }
+  },
+  "cities": {
+    "new-york": {
+      "foreign_born_pct": 36,
+      "foreign_owned_pct": 12,
+      "signature_sectors": [
+        {
+          "label": "Advertising and media",
+          "industry_slug": "marketing-design",
+          "blurb": "Madison Avenue still anchors the global ad industry. Big networks, every major holding company, and a deep pool of creative agencies for film, print, and digital."
+        },
+        {
+          "label": "Fashion and garment design",
+          "industry_slug": "designer-fashion",
+          "blurb": "Garment District plus New York Fashion Week make the metro the US capital for fashion design, sample-making, and showroom-driven wholesale."
+        },
+        {
+          "label": "Broadway and live theater",
+          "industry_slug": "event-production",
+          "blurb": "Forty-one theaters, 14.5 million annual tickets. The world's reference market for staged production: writers, casting, set, lighting, and the ecosystem around it."
+        }
+      ],
+      "culture": {
+        "punctuality": 7,
+        "openness_to_foreigners": 9,
+        "innovation": 9,
+        "communication_directness": 9,
+        "acceptance_of_corruption": 2,
+        "ambition_chest_beating": 10
+      },
+      "government": {
+        "tax_predictability": 5,
+        "low_bribery": 9,
+        "task_efficiency": 6,
+        "time_efficiency": 5,
+        "judicial_impartiality": 9
+      },
+      "notes": "NYC-specific commercial-permit timelines drag time_efficiency; state + city taxes stack onto federal so the tax_predictability is moderate. Strong rule of law and very low bribery. Direct, ambitious culture as expected for the global archetype."
+    }
+  }
+}

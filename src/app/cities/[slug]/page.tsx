@@ -26,7 +26,11 @@ import { COUNTRIES } from "@/lib/taxonomy";
 import { MoreDepthBanner } from "@/components/monetization";
 import { ComparableCitiesRibbon } from "@/components/ComparableCitiesRibbon";
 // TopProfitableActivities + MostSaturatedActivities dropped per
-// founder direction 2026-05-26. See section-suggestions doc.
+// founder direction 2026-05-26. Replaced by CitySignaturePanel
+// (demographics + 3 signature sectors + culture spectrums +
+// government scores). NYC ships first; other cities show null
+// until their data is curated.
+import { CitySignaturePanel } from "@/components/cities/CitySignaturePanel";
 import { BusinessFormationCosts } from "@/components/cities/BusinessFormationCosts";
 import { CoverageIndicator } from "@/components/CoverageIndicator";
 import { getGuidingWord, type Metric } from "@/lib/cities/guiding_word";
@@ -275,10 +279,15 @@ export default async function CityPage({
 
         {/* Founder direction 2026-05-26: dropped TopProfitableActivities
             (most / least profitable, was sec 6) and MostSaturatedActivities
-            (most crowded fields). Replacements are being designed as
-            city-specific sections that are not overdone by other sites;
-            see docs/strategy/2026-05-26-city-page-section-suggestions.md
-            for the 20 candidate sections. */}
+            (most crowded fields). Replaced by the CitySignaturePanel
+            below (demographics + signature sectors + culture spectrums
+            + government scores). Renders null when the city has no
+            curated entry in city_signature_v1.json. */}
+        <CitySignaturePanel
+          citySlug={city.slug}
+          cityName={city.name}
+          iso2={city.iso2}
+        />
 
         {/* Cities sec 6: business formation costs by legal tier. */}
         <BusinessFormationCosts
