@@ -103,7 +103,7 @@ export const SECTION_TONES: Record<string, SectionTone> = {
   // (clean band that hides the pattern) for visual rhythm.
   "home-hero": "cream-100",
   "home-navigator": "paper",
-  "home-city-picker": "paper",
+  "home-city-picker": "ink-dark",
   "home-sectors": "white",
   "home-cities-placeholder": "paper",
   "home-featured": "white",
