@@ -10,7 +10,7 @@
       "openness_to_foreigners": "1 = closed/insular, 10 = highly welcoming",
       "innovation": "1 = tradition-bound, 10 = embraces new ideas",
       "communication_directness": "1 = highly indirect, 10 = highly direct",
-      "acceptance_of_corruption": "1 = strongly rejects, 10 = widely tolerated",
+      "corruption_rejection": "1 = corruption widely tolerated, 10 = strongly rejected (matches the bar's low-left/high-right direction)",
       "ambition_chest_beating": "1 = humble/reserved, 10 = openly self-promoting"
     },
     "government": {
@@ -99,7 +99,7 @@
         "openness_to_foreigners": 9,
         "innovation": 9,
         "communication_directness": 9,
-        "acceptance_of_corruption": 2,
+        "corruption_rejection": 9,
         "ambition_chest_beating": 10
       },
       "government": {

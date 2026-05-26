@@ -17,6 +17,7 @@
  * sample, then scale to the top 50 cities.
  */
 import signatureJson from "../../../data/cities/city_signature_v1.json";
+import countrySignatureJson from "../../../data/cities/country_signature_v1.json";
 import { INDUSTRIES, industryToSlug } from "@/lib/taxonomy";
 
 type SignatureSector = {
@@ -29,7 +30,7 @@ type Culture = {
   openness_to_foreigners: number;
   innovation: number;
   communication_directness: number;
-  acceptance_of_corruption: number;
+  corruption_rejection: number;
   ambition_chest_beating: number;
 };
 type Government = {
@@ -55,6 +56,24 @@ type CitySignature = {
 };
 
 const FILE = signatureJson as { cities: Record<string, CitySignature> };
+const COUNTRY_FILE = countrySignatureJson as { countries: Record<string, CitySignature> };
+
+/**
+ * Resolve a city's signature data. Priority:
+ *   1. Explicit city override in city_signature_v1.json
+ *   2. Country-level baseline from country_signature_v1.json
+ *   3. null (panel renders nothing)
+ *
+ * The country fallback strips `commercial_streets` (those are city-only).
+ */
+function resolveSignature(citySlug: string, iso2: string): CitySignature | null {
+  const city = FILE.cities[citySlug];
+  if (city) return city;
+  const country = COUNTRY_FILE.countries[iso2.toUpperCase()];
+  if (!country) return null;
+  // Country baseline doesn't have commercial_streets; ensure undefined.
+  return { ...country, commercial_streets: undefined };
+}
 
 // ---------------------------------------------------------------------------
 // Spectrum + score bars
@@ -166,7 +185,7 @@ export function CitySignaturePanel({
   cityName: string;
   iso2: string;
 }) {
-  const sig = FILE.cities[citySlug];
+  const sig = resolveSignature(citySlug, iso2);
   if (!sig) return null;
 
   return (
@@ -275,7 +294,7 @@ export function CitySignaturePanel({
             <SpectrumBar value={sig.culture.openness_to_foreigners} leftLabel="Insular" rightLabel="Welcoming" />
             <SpectrumBar value={sig.culture.innovation} leftLabel="Tradition-bound" rightLabel="Embraces new ideas" />
             <SpectrumBar value={sig.culture.communication_directness} leftLabel="Indirect" rightLabel="Direct" />
-            <SpectrumBar value={sig.culture.acceptance_of_corruption} leftLabel="Corruption tolerated" rightLabel="Rejects corruption" invert />
+            <SpectrumBar value={sig.culture.corruption_rejection} leftLabel="Corruption tolerated" rightLabel="Rejects corruption" />
             <SpectrumBar value={sig.culture.ambition_chest_beating} leftLabel="Humble" rightLabel="Self-promoting" />
           </div>
         </div>

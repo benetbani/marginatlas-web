@@ -23,6 +23,7 @@ import { getAdmin1Regions } from "@/lib/coverage/admin1";
 import { COUNTRY_PAGE_SECTIONS, getToneClass } from "@/lib/page-layout/section-order";
 import { getCountryAnchor } from "@/lib/content/country-anchors";
 import { fmtMoney } from "@/lib/format/money";
+import { CountrySignaturePanel } from "@/components/countries/CountrySignaturePanel";
 
 // Keep section-order constant referenced for type checking — sections render in this exact order below.
 void COUNTRY_PAGE_SECTIONS;
@@ -133,6 +134,13 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
          quality-summary card was rolled up into the at-a-glance above. */}
       <section id="country-stats" className={`py-6 ${getToneClass("country-stats")}`}>
         <CountryStatsStrip iso2={iso2} />
+      </section>
+
+      {/* 2.5. Country signature panel (demographics, signature sectors,
+          culture spectrum, government scores). Renders null when the
+          country has no entry in country_signature_v1.json. */}
+      <section className="py-6">
+        <CountrySignaturePanel iso2={iso2} countryName={meta.name} />
       </section>
 
       {/* 3. industry-mix-grid: top activities in this country. Country-page
