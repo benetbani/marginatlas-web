@@ -2,13 +2,12 @@
  * Reformation idea #1 — wide cinematic hero image at the top of cell
  * pages for Tier 1+2 cities, tinted to Atlas amber via CSS layers.
  *
- * Renders the photo from Unsplash with required attribution. If no
- * hero is cached for the city, returns null and the page falls back
- * to the existing text-only hero (HeroBenchmark).
- *
- * Server component. Zero client cost.
+ * Source policy 2026-05-26: Pexels-only. Pexels' license does not
+ * require attribution, so no photographer credit is rendered. If a
+ * city's hero is a pattern fallback (no curated photo), returns null
+ * and the page falls back to the existing text-only hero.
  */
-import { getCityHero, isPatternHero, type CityHero as CityHeroType } from "@/lib/images/city_heroes";
+import { getCityHero, isPatternHero } from "@/lib/images/city_heroes";
 
 type Props = {
   citySlug: string;
@@ -55,35 +54,6 @@ export function CityHero({ citySlug, altOverride }: Props) {
             "linear-gradient(180deg, rgba(255, 247, 230, 0) 0%, rgba(255, 247, 230, 0.95) 100%)",
         }}
       />
-      {/* Photographer credit, bottom-right, tiny */}
-      <PhotoCredit hero={hero} />
     </section>
-  );
-}
-
-function PhotoCredit({ hero }: { hero: CityHeroType }) {
-  const utm =
-    "?utm_source=margin_atlas&utm_medium=referral";
-  return (
-    <div className="absolute bottom-2 right-3 text-[10px] text-ink-900/70 tracking-wide">
-      Photo by{" "}
-      <a
-        href={`${hero.photographer_url}${utm}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="underline hover:text-atlas-700 transition-colors"
-      >
-        {hero.photographer_name}
-      </a>{" "}
-      on{" "}
-      <a
-        href={`https://unsplash.com${utm}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="underline hover:text-atlas-700 transition-colors"
-      >
-        Unsplash
-      </a>
-    </div>
   );
 }

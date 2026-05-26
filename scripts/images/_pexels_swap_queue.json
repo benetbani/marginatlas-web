@@ -1,0 +1,222 @@
+{
+  "generated_at": "2026-05-26",
+  "note": "Cities that lost their Unsplash hero. Each needs a Pexels (or other free + no-attribution) replacement to be re-curated.",
+  "count": 43,
+  "cities": [
+    {
+      "slug": "new-york",
+      "name": "New York",
+      "iso2": "US"
+    },
+    {
+      "slug": "los-angeles",
+      "name": "Los Angeles",
+      "iso2": "US"
+    },
+    {
+      "slug": "chicago",
+      "name": "Chicago",
+      "iso2": "US"
+    },
+    {
+      "slug": "houston",
+      "name": "Houston",
+      "iso2": "US"
+    },
+    {
+      "slug": "phoenix",
+      "name": "Phoenix",
+      "iso2": "US"
+    },
+    {
+      "slug": "philadelphia",
+      "name": "Philadelphia",
+      "iso2": "US"
+    },
+    {
+      "slug": "san-diego",
+      "name": "San Diego",
+      "iso2": "US"
+    },
+    {
+      "slug": "dallas",
+      "name": "Dallas",
+      "iso2": "US"
+    },
+    {
+      "slug": "san-jose",
+      "name": "San Jose",
+      "iso2": "US"
+    },
+    {
+      "slug": "austin",
+      "name": "Austin",
+      "iso2": "US"
+    },
+    {
+      "slug": "san-francisco",
+      "name": "San Francisco",
+      "iso2": "US"
+    },
+    {
+      "slug": "seattle",
+      "name": "Seattle",
+      "iso2": "US"
+    },
+    {
+      "slug": "boston",
+      "name": "Boston",
+      "iso2": "US"
+    },
+    {
+      "slug": "miami",
+      "name": "Miami",
+      "iso2": "US"
+    },
+    {
+      "slug": "denver",
+      "name": "Denver",
+      "iso2": "US"
+    },
+    {
+      "slug": "atlanta",
+      "name": "Atlanta",
+      "iso2": "US"
+    },
+    {
+      "slug": "washington-dc",
+      "name": "Washington, D.C.",
+      "iso2": "US"
+    },
+    {
+      "slug": "toronto",
+      "name": "Toronto",
+      "iso2": "CA"
+    },
+    {
+      "slug": "montreal",
+      "name": "Montreal",
+      "iso2": "CA"
+    },
+    {
+      "slug": "vancouver",
+      "name": "Vancouver",
+      "iso2": "CA"
+    },
+    {
+      "slug": "mexico-city",
+      "name": "Mexico City",
+      "iso2": "MX"
+    },
+    {
+      "slug": "london",
+      "name": "London",
+      "iso2": "GB"
+    },
+    {
+      "slug": "birmingham",
+      "name": "Birmingham",
+      "iso2": "GB"
+    },
+    {
+      "slug": "abidjan",
+      "name": "Abidjan",
+      "iso2": "CI"
+    },
+    {
+      "slug": "abu-dhabi",
+      "name": "Abu Dhabi",
+      "iso2": "AE"
+    },
+    {
+      "slug": "abuja",
+      "name": "Abuja",
+      "iso2": "NG"
+    },
+    {
+      "slug": "accra",
+      "name": "Accra",
+      "iso2": "GH"
+    },
+    {
+      "slug": "addis-ababa",
+      "name": "Addis Ababa",
+      "iso2": "ET"
+    },
+    {
+      "slug": "adelaide",
+      "name": "Adelaide",
+      "iso2": "AU"
+    },
+    {
+      "slug": "ahmedabad",
+      "name": "Ahmedabad",
+      "iso2": "IN"
+    },
+    {
+      "slug": "alexandria",
+      "name": "Alexandria",
+      "iso2": "EG"
+    },
+    {
+      "slug": "algiers",
+      "name": "Algiers",
+      "iso2": "DZ"
+    },
+    {
+      "slug": "almaty",
+      "name": "Almaty",
+      "iso2": "KZ"
+    },
+    {
+      "slug": "amman",
+      "name": "Amman",
+      "iso2": "JO"
+    },
+    {
+      "slug": "amsterdam",
+      "name": "Amsterdam",
+      "iso2": "NL"
+    },
+    {
+      "slug": "ankara",
+      "name": "Ankara",
+      "iso2": "TR"
+    },
+    {
+      "slug": "antalya",
+      "name": "Antalya",
+      "iso2": "TR"
+    },
+    {
+      "slug": "athens",
+      "name": "Athens",
+      "iso2": "GR"
+    },
+    {
+      "slug": "auckland",
+      "name": "Auckland",
+      "iso2": "NZ"
+    },
+    {
+      "slug": "baghdad",
+      "name": "Baghdad",
+      "iso2": "IQ"
+    },
+    {
+      "slug": "baku",
+      "name": "Baku",
+      "iso2": "AZ"
+    },
+    {
+      "slug": "baltimore",
+      "name": "Baltimore",
+      "iso2": "US"
+    },
+    {
+      "slug": "bandung",
+      "name": "Bandung",
+      "iso2": "ID"
+    }
+  ]
+}
