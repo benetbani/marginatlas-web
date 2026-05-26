@@ -42,6 +42,7 @@ import { iso2ToIso3, iso2ToName } from "../countries";
 import industryMarginsJson from "../finance/industry_margins.json";
 import countryBaselineJson from "./country_smb_baseline.json";
 import type { Cell } from "../cells";
+import { getIndustryAnchorRevenue } from "@/lib/economic_profile/industry_medians";
 
 type IndustryMarginRow = {
   gross_margin: number;
@@ -100,6 +101,15 @@ function lookupIndustryMargin(industryId: string): IndustryMarginRow {
  */
 function pickTypicalRevenue(industryId: string, iso2: string): number {
   const bounds = REVENUE_PER_FIRM_BOUNDS[industryId] || DEFAULT_REVENUE_BOUNDS;
+  // Goldmines Wave 3 — when a verified industry median exists for this
+  // (industry, country) pair, prefer it over the bounds-based synthesis.
+  // The verified medians come from data/quality/industry_medians_v1.json
+  // which was built as a cross-source check against extrapolated cells.
+  // Falls back to the synthesis when no verified median is available.
+  const verified = getIndustryAnchorRevenue(industryId, iso2);
+  if (verified != null && verified > 0) {
+    return Math.max(bounds.lo, Math.min(bounds.hi, verified));
+  }
   // Geometric mean is friendlier than arithmetic for a log-distributed range.
   const geoMid = Math.sqrt(bounds.lo * bounds.hi);
   // Scale by country multiplier.
