@@ -701,8 +701,12 @@ export default async function CellPage({
         const employeesEstimate =
           cell.n_employees ?? estimateEmployeesFromFirms(cell.industry_id, cell.n_enterprises);
         const employeesIsEstimate = cell.n_employees == null && employeesEstimate != null;
+        // Goldmines Wave 2 — pass the geo slug so cells in cities
+        // covered by city_wage_premium_v1 use city-specific wages
+        // instead of the country average. Cells in regions or states
+        // ignore the city lookup and fall back to country.
         const wageEstimate =
-          cell.payroll_per_employee ?? estimateWagePerEmployee(country, cell.industry_id);
+          cell.payroll_per_employee ?? estimateWagePerEmployee(country, cell.industry_id, geo);
         const wageIsEstimate = cell.payroll_per_employee == null && wageEstimate != null;
         return (
           <section id="revenue-tiles" className={`grid grid-cols-1 md:grid-cols-3 gap-4 py-6 ${getToneClass("revenue-tiles")}`}>

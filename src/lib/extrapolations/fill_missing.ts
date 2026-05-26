@@ -19,6 +19,7 @@
  * between the two sources for countries present in both.
  */
 import { getMedianAnnualWageUsd } from "@/lib/economic_profile/wages";
+import { resolveAnchorAnnualWageUsd } from "@/lib/economic_profile/city_wages";
 
 /**
  * Country median annual wage in USD — DELETED 2026-05-26 (goldmines
@@ -159,27 +160,37 @@ export const INDUSTRY_WAGE_MULTIPLIER: Record<string, number> = {
  * Best-effort wage estimate when cell.payroll_per_employee is null.
  * Returns null if neither country nor industry signal exists.
  *
- * Updated 2026-05-26 (goldmines Wave 1): now prefers the new
- * source-of-truth file (data/economics/median_monthly_wage_usd_v1.json)
- * over the legacy hardcoded COUNTRY_MEDIAN_WAGE_USD table. The
- * legacy table is retained as a fallback for countries not yet in
- * the JSON file. The verify_wage_source_consistency prebuild gate
- * enforces no drift between the two sources.
+ * Source priority (high to low):
+ *   1. City-level primary wage from city_wage_premium_v1.json
+ *      (when citySlug matches a known city, e.g. "new-york",
+ *      "san-francisco", "london"). Added in goldmines Wave 2.
+ *   2. Country-level primary wage from
+ *      median_monthly_wage_usd_v1.json. Wired in goldmines Wave 1.
+ *   3. null.
  *
- * Drift fix: this closes the 5-33% wage drift identified in the
- * 2026-05-26 data fidelity audit
+ * The legacy hardcoded COUNTRY_MEDIAN_WAGE_USD table was deleted in
+ * Wave 1; the JSON files cover strictly more entries.
+ *
+ * The citySlug parameter is optional for backward compatibility.
+ * Callers passing only (iso2, industryId) get the country-level
+ * fallback. Callers passing (iso2, industryId, citySlug) get the
+ * city-specific anchor when one exists.
+ *
+ * Drift fix history: 2026-05-26 data fidelity audit
  * (docs/strategy/2026-05-26-data-fidelity-audit.md).
  */
 export function estimateWagePerEmployee(
   iso2: string | null | undefined,
   industryId: string | null | undefined,
+  citySlug?: string | null,
 ): number | null {
   if (!iso2) return null;
   const iso = iso2.toUpperCase();
-  // Source-of-truth: data/economics/median_monthly_wage_usd_v1.json.
-  // The legacy hardcoded fallback table was deleted in goldmines
-  // Wave 1; the JSON covers strictly more countries.
-  const country = getMedianAnnualWageUsd(iso);
+  // City first, country fallback. resolveAnchorAnnualWageUsd handles
+  // the priority chain for us.
+  const country = citySlug
+    ? resolveAnchorAnnualWageUsd(iso, citySlug)
+    : getMedianAnnualWageUsd(iso);
   if (country == null) return null;
   const mult = (industryId && INDUSTRY_WAGE_MULTIPLIER[industryId]) || 0.8;
   return Math.round(country * mult);
