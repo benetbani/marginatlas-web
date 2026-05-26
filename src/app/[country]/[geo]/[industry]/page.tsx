@@ -60,6 +60,7 @@ import { clampMargin } from "@/lib/finance/margin_floor";
 import { generateFAQs } from "@/lib/seo/faq_generator";
 import { FAQSchema } from "@/components/FAQSchema";
 import { getCellNarrative } from "@/lib/content/narratives";
+import { getComparativeLead } from "@/lib/content/comparative_narratives";
 import {
   estimateWagePerEmployee,
   estimateEmployeesFromFirms,
@@ -661,16 +662,34 @@ export default async function CellPage({
       <SetupCostBlock cell={cell} />
 
       {/* Plan v23 Part 3 — narrative now reads as editorial prose. Drop
-         cap on the first paragraph, looser line-height, max-w-prose. */}
-      {narrative ? (
-        <section id="narrative" className={`py-12 md:py-16 ${getToneClass("narrative")}`}>
-          <div className="max-w-prose">
-            <p className="text-lg md:text-xl leading-[1.7] text-ink-900 whitespace-pre-line first-letter:font-display first-letter:text-6xl md:first-letter:text-7xl first-letter:float-left first-letter:mr-3 first-letter:leading-none first-letter:text-atlas-700">
-              {narrative}
-            </p>
-          </div>
-        </section>
-      ) : null}
+         cap on the first paragraph, looser line-height, max-w-prose.
+         Backend Phase 5 (2026-05-26): a comparative-voice lead is
+         prepended above the cached prose, sourced from the
+         comparative_narratives generator. The lead frames the section
+         in the new voice ("Watch your X. Typical range is Y to Z.");
+         the existing prose carries the wider context. The cached
+         JSON is not regenerated, existing editorial content is
+         preserved. */}
+      {(() => {
+        const lead = cell.industry_id ? getComparativeLead(cell.industry_id) : null;
+        if (!narrative && !lead) return null;
+        return (
+          <section id="narrative" className={`py-12 md:py-16 ${getToneClass("narrative")}`}>
+            <div className="max-w-prose">
+              {lead && (
+                <p className="text-base md:text-lg leading-[1.6] text-cocoa-700 mb-6 border-l-4 border-atlas-700 pl-4 italic">
+                  {lead.sentence}
+                </p>
+              )}
+              {narrative && (
+                <p className="text-lg md:text-xl leading-[1.7] text-ink-900 whitespace-pre-line first-letter:font-display first-letter:text-6xl md:first-letter:text-7xl first-letter:float-left first-letter:mr-3 first-letter:leading-none first-letter:text-atlas-700">
+                  {narrative}
+                </p>
+              )}
+            </div>
+          </section>
+        );
+      })()}
 
       {/* Plan v19 Block B — fill rule. Headline tiles fall back to
          extrapolations when source data is null. People-working uses
