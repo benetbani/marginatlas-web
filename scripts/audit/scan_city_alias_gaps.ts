@@ -35,9 +35,37 @@ const autoSrc = readFileSync(
 type Alias = { geo_id: string; label?: string };
 const MANUAL: Record<string, Record<string, Alias>> = {};
 
+// 2026-05-26 — scanner upgraded to handle both layouts of the
+// manual_city_aliases.ts source:
+//   - Multi-line per country: `XX: [\n  { ... },\n  { ... }\n],`
+//   - Single-line per country: `XX: [{ ... }, { ... }],`
+// The earlier scanner only matched the multi-line layout and was
+// silently missing 14 single-line countries (IS, LV, CR, BA, MK, BG,
+// EE, MN, MT, CL, LA, LT, MM, HR). Fix:
+//   1. Single-line: extract country + body via one regex per line.
+//   2. Multi-line: keep the state-machine for backwards compatibility.
+// Both paths populate MANUAL identically.
+const ALIAS_BODY_RE =
+  /\{\s*slug:\s*"([^"]+)"\s*,\s*geo_id:\s*"([^"]+)"(?:\s*,\s*label:\s*"([^"]+)")?\s*\}/g;
+
 let currentCountry: string | null = null;
 for (const line of manualSrc.split(/\r?\n/)) {
-  const countryMatch = line.match(/^\s{2}([A-Z]{2}):\s*\[/);
+  // Single-line layout: `  XX: [{ ... }, { ... }],`
+  const singleLineMatch = line.match(/^\s+([A-Z]{2}):\s*\[(.*)\],?\s*$/);
+  if (singleLineMatch) {
+    const [, country, body] = singleLineMatch;
+    MANUAL[country] ??= {};
+    ALIAS_BODY_RE.lastIndex = 0;
+    let m: RegExpExecArray | null;
+    while ((m = ALIAS_BODY_RE.exec(body)) !== null) {
+      const [, slug, geo_id, label] = m;
+      MANUAL[country][slug] = { geo_id, label };
+    }
+    continue;
+  }
+  // Multi-line layout: country header opens, aliases on following lines,
+  // closing bracket on its own line.
+  const countryMatch = line.match(/^\s{2}([A-Z]{2}):\s*\[\s*$/);
   if (countryMatch) {
     currentCountry = countryMatch[1];
     MANUAL[currentCountry] ??= {};
@@ -49,9 +77,8 @@ for (const line of manualSrc.split(/\r?\n/)) {
     continue;
   }
   if (!currentCountry) continue;
-  const aliasMatch = line.match(
-    /\{\s*slug:\s*"([^"]+)"\s*,\s*geo_id:\s*"([^"]+)"(?:\s*,\s*label:\s*"([^"]+)")?\s*\}/,
-  );
+  ALIAS_BODY_RE.lastIndex = 0;
+  const aliasMatch = ALIAS_BODY_RE.exec(line);
   if (aliasMatch) {
     const [, slug, geo_id, label] = aliasMatch;
     MANUAL[currentCountry][slug] = { geo_id, label };

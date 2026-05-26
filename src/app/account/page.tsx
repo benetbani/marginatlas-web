@@ -61,8 +61,45 @@ const TABS: Array<{ id: TabId; label: string; icon: PhIcon }> = [
 ];
 type TabId = "saved" | "watch" | "recent" | "alerts" | "billing" | "settings";
 
+/**
+ * 2026-05-26 — auth not wired yet. The dummy-data design preview is
+ * kept behind the NEXT_PUBLIC_ACCOUNT_PREVIEW flag so production
+ * doesn't leak placeholder personas. Default behaviour: render a
+ * "coming soon" placeholder.
+ */
+const SHOW_DESIGN_PREVIEW =
+  process.env.NEXT_PUBLIC_ACCOUNT_PREVIEW === "1";
+
 export default function AccountPage() {
-  // In production: read from your auth + data layer.
+  const [tab, setTab] = useState<TabId>("saved");
+
+  if (!SHOW_DESIGN_PREVIEW) {
+    return (
+      <article className="max-w-3xl mx-auto px-4 py-16 md:py-24 text-center">
+        <div className="text-xs font-semibold uppercase tracking-[0.18em] text-atlas-700 mb-3">
+          Account
+        </div>
+        <h1 className="font-display text-3xl md:text-5xl tracking-tight text-ink-900 leading-[1.1] mb-4">
+          Coming soon
+        </h1>
+        <p className="text-base md:text-lg text-cocoa-700 leading-relaxed mb-6 max-w-xl mx-auto">
+          Sign-in, saved cells, watchlist, and billing are in build.
+          Margin Atlas is fully usable without an account today; you
+          can browse, compare, and run the comparator with no
+          friction.
+        </p>
+        <a
+          href="/check"
+          className="inline-block px-4 py-2 rounded-lg bg-atlas-700 hover:bg-atlas-800 text-cream-50 text-sm font-semibold transition"
+        >
+          Open the comparator
+        </a>
+      </article>
+    );
+  }
+
+  // Design preview (NEXT_PUBLIC_ACCOUNT_PREVIEW=1). Dummy data; intended
+  // for local design work only.
   const account: Account = {
     name: "Anika López",
     email: "anika@example.com",
@@ -71,11 +108,9 @@ export default function AccountPage() {
     savedCap: 50,
     showOnboarding: true,
   };
-  const savedCells: Cell[] = [];   // → fetch from supabase
-  const watchlist:  WatchRow[] = []; // → fetch
-  const recent:     RecentRow[] = []; // → fetch
-
-  const [tab, setTab] = useState<TabId>("saved");
+  const savedCells: Cell[] = [];
+  const watchlist: WatchRow[] = [];
+  const recent: RecentRow[] = [];
 
   return (
     <article>
