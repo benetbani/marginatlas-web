@@ -25,8 +25,8 @@ import { CountryFlag } from "@/components/CountryFlag";
 import { COUNTRIES } from "@/lib/taxonomy";
 import { MoreDepthBanner } from "@/components/monetization";
 import { ComparableCitiesRibbon } from "@/components/ComparableCitiesRibbon";
-import { TopProfitableActivities } from "@/components/cities/TopProfitableActivities";
-import { MostSaturatedActivities } from "@/components/cities/MostSaturatedActivities";
+// TopProfitableActivities + MostSaturatedActivities dropped per
+// founder direction 2026-05-26. See section-suggestions doc.
 import { BusinessFormationCosts } from "@/components/cities/BusinessFormationCosts";
 import { CoverageIndicator } from "@/components/CoverageIndicator";
 import { getGuidingWord, type Metric } from "@/lib/cities/guiding_word";
@@ -273,14 +273,12 @@ export default async function CityPage({
           </p>
         )}
 
-        {/* Cities sec 6: top 5 most / least profitable activities. */}
-        <TopProfitableActivities countryIso2={city.iso2} />
-
-        {/* Cities sec 6: top 5 most saturated activities (brain population). */}
-        <MostSaturatedActivities
-          countryIso2={city.iso2}
-          countryName={countryName}
-        />
+        {/* Founder direction 2026-05-26: dropped TopProfitableActivities
+            (most / least profitable, was sec 6) and MostSaturatedActivities
+            (most crowded fields). Replacements are being designed as
+            city-specific sections that are not overdone by other sites;
+            see docs/strategy/2026-05-26-city-page-section-suggestions.md
+            for the 20 candidate sections. */}
 
         {/* Cities sec 6: business formation costs by legal tier. */}
         <BusinessFormationCosts

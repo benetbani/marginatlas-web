@@ -257,7 +257,9 @@ export default function WorldMapPicker({ onSelect, className }: WorldMapPickerPr
          hidden so the map can't paint outside its container. Combined
          with the pan clamp in handleMoveEnd, the map stays inside
          this box regardless of user gestures. */}
-      <div className="relative rounded-xl border border-ink-200 bg-white overflow-hidden">
+      {/* Atlas pattern (faint 4-point compass repeat) sits behind the
+          continents per founder direction 2026-05-26. */}
+      <div className="relative rounded-md border border-ink-200 atlas-paper overflow-hidden">
         {!loaded && (
           <div
             className="absolute inset-0 rounded-xl overflow-hidden"

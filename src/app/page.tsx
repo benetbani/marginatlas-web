@@ -49,42 +49,65 @@ const FEATURED: FeaturedTileSpec[] = [
  * Plan v15 Block 3 - blog rail. Pulls live posts when available, falls
  * back to curated placeholders so the rail always shows six cards.
  */
+// Fallback gradient cover for placeholder blog posts (per the
+// founder rule: every blog card must have an image).
+function placeholderImage(slug: string): BlogPost["image"] {
+  const palette = [
+    "linear-gradient(135deg, #952509 0%, #C97347 100%)",
+    "linear-gradient(135deg, #1F3D32 0%, #5B8770 100%)",
+    "linear-gradient(135deg, #3A3A3A 0%, #6E6E6E 100%)",
+    "linear-gradient(135deg, #4C2712 0%, #8B5E3C 100%)",
+    "linear-gradient(135deg, #5C3A0A 0%, #B07A2C 100%)",
+    "linear-gradient(135deg, #0F2A4A 0%, #2F5A8B 100%)",
+  ];
+  let h = 0;
+  for (let i = 0; i < slug.length; i++) h = (h * 31 + slug.charCodeAt(i)) & 0xfffffff;
+  const initial = (slug.replace(/[^a-z]/gi, "")[0] || "A").toUpperCase();
+  return { kind: "gradient" as const, gradient: palette[h % palette.length], initial };
+}
+
 const BLOG_FALLBACK: BlogPost[] = [
   {
     slug: "tokyo-vs-paris-bakery-margins",
     title: "Why bakery margins in Tokyo are half what they are in Paris",
     excerpt: "Rent per square meter, flour pricing, and a labor market that punishes scale.",
     date: "2026-05-12",
+    image: placeholderImage("tokyo-vs-paris-bakery-margins"),
   },
   {
     slug: "new-mid-market-services",
     title: "The new mid-market: services firms in 100-employee tiers",
     excerpt: "Where the headcount band stopped being a back-office detail and started shaping margin.",
     date: "2026-05-05",
+    image: placeholderImage("new-mid-market-services"),
   },
   {
     slug: "reading-eurostat-sbs",
     title: "How to read a European business-statistics release without getting lost",
     excerpt: "The three tables that matter and the four columns most analysts misread.",
     date: "2026-04-28",
+    image: placeholderImage("reading-eurostat-sbs"),
   },
   {
     slug: "ppp-vs-fx-for-margins",
     title: "PPP vs FX: which one belongs in a margin comparison",
     excerpt: "A short, opinionated case for using PPP when the question is about lived economics.",
     date: "2026-04-19",
+    image: placeholderImage("ppp-vs-fx-for-margins"),
   },
   {
     slug: "quality-grades-explained",
     title: "What a B-grade benchmark actually means",
     excerpt: "Every number on Atlas has a grade. Here's the rubric, in plain language.",
     date: "2026-04-10",
+    image: placeholderImage("quality-grades-explained"),
   },
   {
     slug: "establishment-vs-firm",
     title: "Establishment vs firm: the distinction that breaks comparisons",
     excerpt: "Two countries reporting the same NAICS code can be measuring two different things.",
     date: "2026-04-02",
+    image: placeholderImage("establishment-vs-firm"),
   },
 ];
 

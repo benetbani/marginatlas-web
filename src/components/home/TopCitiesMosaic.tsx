@@ -105,7 +105,7 @@ export function TopCitiesMosaic({ limit = 16 }: Props) {
                   <a
                     key={c.slug}
                     href={`/cities/${c.slug}`}
-                    className="group block rounded-xl overflow-hidden bg-white border border-parchment hover:border-atlas-500 transition-colors"
+                    className="group block rounded-md overflow-hidden bg-white border border-parchment hover:border-atlas-500 transition-colors"
                   >
                     <div className="relative aspect-[4/3] bg-stone-100">
                       {hero ? (

@@ -129,9 +129,12 @@ export default function CitiesWorldMap({ cities }: Props) {
   // at zoom 4 (browser ceil keeps it visible).
   const markerStroke = 0.8 / pos.zoom;
 
+  // Founder direction 2026-05-26: match the homepage map exactly —
+  // atlas paper pattern behind the continents, same border, same 6px
+  // radius. No bg-cream-100 (was visually different from the homepage).
   return (
     <div
-      className="relative w-full h-[320px] md:h-[600px] rounded-xl overflow-hidden border border-parchment bg-cream-100"
+      className="relative w-full h-[320px] md:h-[600px] rounded-md overflow-hidden border border-ink-200 atlas-paper"
       aria-label="World map showing covered cities"
       role="region"
     >

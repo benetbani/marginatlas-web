@@ -30,6 +30,29 @@ export default async function BlogPost({ params }: { params: Promise<Params> }) 
       <nav className="text-sm text-ink-700/70 mb-4">
         <a href="/blog" className="hover:text-atlas-600">← Back to all posts</a>
       </nav>
+      {/* Cover image — required by site convention (founder 2026-05-26).
+          When frontmatter has `image: /path/or/url.jpg`, render that;
+          otherwise show the deterministic gradient placeholder with
+          the post initial. Never renders empty. */}
+      {post.image.kind === "url" ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={post.image.src}
+          alt={post.image.alt}
+          className="w-full aspect-[16/9] object-cover rounded-md mb-6"
+        />
+      ) : (
+        <div
+          className="w-full aspect-[16/9] rounded-md mb-6 flex items-center justify-center"
+          style={{ background: post.image.gradient }}
+          aria-hidden="true"
+        >
+          <span className="font-display text-6xl md:text-7xl font-semibold text-white/85">
+            {post.image.initial}
+          </span>
+        </div>
+      )}
+
       <header className="py-6">
         <div className="text-xs text-ink-700/60">
           {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })} · {post.author}

@@ -69,8 +69,13 @@ export function RotatingWord({
   // of the invisible spacer.
   const widest = words.reduce((a, b) => (b.length > a.length ? b : a), "");
 
+  // Founder direction 2026-05-26: add tiny breathing room on both
+  // sides of the slot so longer cities (Mumbai, Shanghai) and longer
+  // businesses (restaurant) don't visually collide with the
+  // surrounding static text. 0.15em scales with the H1 font-size on
+  // both mobile and desktop, keeping the gap proportional.
   return (
-    <span className={`relative inline-block align-baseline ${className}`}>
+    <span className={`relative inline-block align-baseline ${className}`} style={{ paddingLeft: "0.15em", paddingRight: "0.15em" }}>
       <span className="invisible">{widest}</span>
       <span
         className={`absolute left-1/2 -translate-x-1/2 inline-block transition-all duration-300 ease-out ${transform}`}
