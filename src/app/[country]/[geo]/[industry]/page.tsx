@@ -15,6 +15,7 @@ import {
   withBudget,
 } from "@/lib/cells";
 import { INDUSTRIES, industryToSlug } from "@/lib/taxonomy";
+import { computeBreakeven, fmtAov, fmtOrders } from "@/lib/economics/breakeven";
 import { iso2ToName } from "@/lib/countries";
 import { CountryFlag } from "@/components/CountryFlag";
 import { RevenueTiles } from "@/components/RevenueTiles";
@@ -755,6 +756,82 @@ export default async function CellPage({
             }
             takeHome={netTakeHome}
           />
+
+          {/* Founder-spec AOV + breakeven panel (2026-05-26). The
+             operator question "how many sales a day to break even"
+             is more concrete than the abstract margin %. Computes
+             from cell revenue + industry baselines + AOV table. */}
+          {(() => {
+            const be = cell.industry_id
+              ? computeBreakeven(
+                  cell.industry_id,
+                  cell.revenue_per_firm ?? cell.rev_p50 ?? null,
+                )
+              : null;
+            if (!be) return null;
+            const coveragePct = Math.round((be.coverageRatio - 1) * 100);
+            const coverageColor =
+              be.coverageRatio >= 1.3
+                ? "#14532D"
+                : be.coverageRatio >= 1.0
+                  ? "#16A34A"
+                  : be.coverageRatio >= 0.7
+                    ? "#CA8A04"
+                    : "#7F1D1D";
+            return (
+              <section className="atlas-card p-4 md:p-5 mt-6">
+                <div className="text-[10px] uppercase tracking-[0.16em] text-atlas-700 font-semibold mb-3">
+                  Breakeven, in orders per day
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
+                  <div>
+                    <div className="text-[10px] uppercase tracking-wide text-cocoa-700/70 font-semibold">
+                      Avg order
+                    </div>
+                    <div className="font-display text-xl md:text-2xl font-semibold text-ink-900 tabular-nums leading-tight mt-1">
+                      {fmtAov(be.aov)}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-[10px] uppercase tracking-wide text-cocoa-700/70 font-semibold">
+                      Orders / day to break even
+                    </div>
+                    <div className="font-display text-xl md:text-2xl font-semibold text-atlas-700 tabular-nums leading-tight mt-1">
+                      {fmtOrders(be.breakevenOrdersDaily)}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-[10px] uppercase tracking-wide text-cocoa-700/70 font-semibold">
+                      Typical daily orders
+                    </div>
+                    <div className="font-display text-xl md:text-2xl font-semibold text-ink-900 tabular-nums leading-tight mt-1">
+                      {fmtOrders(be.currentOrdersDaily)}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-[10px] uppercase tracking-wide text-cocoa-700/70 font-semibold">
+                      Margin of safety
+                    </div>
+                    <div
+                      className="font-display text-xl md:text-2xl font-semibold tabular-nums leading-tight mt-1"
+                      style={{ color: coverageColor }}
+                    >
+                      {coveragePct >= 0 ? "+" : ""}
+                      {coveragePct}%
+                    </div>
+                  </div>
+                </div>
+                <p className="mt-3 text-xs text-cocoa-700/70 leading-relaxed">
+                  Breakeven holds fixed costs (rent + payroll + utilities
+                  + insurance + regulatory) constant at the typical
+                  revenue level and asks: at $
+                  {fmtAov(be.aov).replace("$", "")} per order and a{" "}
+                  {Math.round(be.grossMargin * 100)}% gross margin, how
+                  many orders a day cover those costs?
+                </p>
+              </section>
+            );
+          })()}
           {/* Plan v30 Phase 1 — legacy MarginWaterfall removed. It only
               surfaced a single gross-margin band, which was redundant
               and confusing alongside the SmartWaterfall below that
