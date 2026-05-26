@@ -25,6 +25,58 @@
     "new-york": {
       "foreign_born_pct": 36,
       "foreign_owned_pct": 12,
+      "commercial_streets": [
+        {
+          "name": "Fifth Avenue",
+          "area": "Midtown (49th-59th)",
+          "sells": "Luxury flagship: Tiffany, Bergdorf Goodman, Saks, Apple Cube. The most expensive retail real estate in the world."
+        },
+        {
+          "name": "Madison Avenue",
+          "area": "Upper East Side (60th-80th)",
+          "sells": "Luxury designers, bespoke tailoring, contemporary art galleries. Quieter than 5th Ave, much more bespoke."
+        },
+        {
+          "name": "SoHo",
+          "area": "Broadway to West Broadway",
+          "sells": "Brand flagships and contemporary fashion. Streetwear, denim, sneakers, beauty concept stores."
+        },
+        {
+          "name": "Times Square and Broadway",
+          "area": "42nd-49th",
+          "sells": "Destination retail at scale: M&M, Disney, Hard Rock. Plus 41 theaters anchoring live entertainment."
+        },
+        {
+          "name": "Garment District",
+          "area": "Seventh Avenue (Fashion Ave), 35th-40th",
+          "sells": "Wholesale fabric, trim suppliers, showrooms, sample-makers. The B2B back-end of US fashion."
+        },
+        {
+          "name": "Diamond District",
+          "area": "47th Street, Fifth to Sixth Ave",
+          "sells": "Diamonds and jewelry, retail and wholesale. One of the most concentrated jewelry markets globally."
+        },
+        {
+          "name": "Williamsburg (Bedford Avenue)",
+          "area": "Brooklyn, North 4th-9th",
+          "sells": "Independent fashion, craft goods, vintage, third-wave coffee. The reference market for hipster retail."
+        },
+        {
+          "name": "Flatiron and Union Square",
+          "area": "14th-23rd",
+          "sells": "Modern lifestyle brands, tech-adjacent retail, the Greenmarket farmers market, and Eataly food hall."
+        },
+        {
+          "name": "Canal Street and Chinatown",
+          "area": "Lower Manhattan",
+          "sells": "Asian groceries and fish markets, jewelry, Manhattan's densest food block. Hong Kong-style street commerce."
+        },
+        {
+          "name": "Restaurant Row",
+          "area": "46th Street between 8th and 9th",
+          "sells": "Pre-theater restaurants. Italian, French, steakhouses concentrated for the Broadway crowd."
+        }
+      ],
       "signature_sectors": [
         {
           "label": "Advertising and media",

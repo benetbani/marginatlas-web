@@ -39,9 +39,15 @@ type Government = {
   time_efficiency: number;
   judicial_impartiality: number;
 };
+type CommercialStreet = {
+  name: string;
+  area: string;
+  sells: string;
+};
 type CitySignature = {
   foreign_born_pct: number;
   foreign_owned_pct: number;
+  commercial_streets?: CommercialStreet[];
   signature_sectors: SignatureSector[];
   culture: Culture;
   government: Government;
@@ -209,6 +215,33 @@ export function CitySignaturePanel({
             ))}
           </div>
         </div>
+
+        {/* Block 2.5: commercial streets and zones. Sits between
+            "what the city is about" (signature sectors) and "how
+            the city feels" (culture). The thematic bridge: where
+            the city's commerce physically happens. */}
+        {sig.commercial_streets && sig.commercial_streets.length > 0 ? (
+          <div className="md:col-span-12 atlas-card p-5 md:p-6">
+            <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700/65 mb-4">
+              Where commerce happens
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-x-5 gap-y-5">
+              {sig.commercial_streets.map((s) => (
+                <div key={s.name}>
+                  <div className="font-display text-base font-semibold text-ink-900 leading-tight">
+                    {s.name}
+                  </div>
+                  <div className="text-[11px] text-cocoa-700/60 uppercase tracking-wide mt-0.5">
+                    {s.area}
+                  </div>
+                  <p className="mt-2 text-sm text-cocoa-700/85 leading-relaxed">
+                    {s.sells}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : null}
 
         {/* Block 3: culture spectrums */}
         <div className="md:col-span-7 atlas-card p-5 md:p-6">
