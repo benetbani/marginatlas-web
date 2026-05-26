@@ -101,7 +101,24 @@ type SectorICP = {
   net_margin_typical_low: number;
   net_margin_typical_high: number;
   net_margin_hard_cap: number;
+  // ATO Phase 1 — added 2026-05-26. motor_vehicle_share is carved out
+  // of other_overhead_share for sectors where vehicles are a real line
+  // item (trades, transport, construction). key_benchmark designates
+  // the ONE ratio that should be surfaced as the headline answer to
+  // "am I normal?" for this sector. See:
+  //   docs/strategy/2026-05-26-ato-framework-execution-plan.md
+  motor_vehicle_share: number;
+  key_benchmark: KeyBenchmark;
+  key_benchmark_rationale: string;
 };
+
+/** Designation of which single ratio to surface as the headline benchmark. */
+export type KeyBenchmark =
+  | "cogs"
+  | "labor"
+  | "rent"
+  | "motor_vehicle"
+  | "total_expenses";
 
 const ICP = icpJson as unknown as ICPFile;
 

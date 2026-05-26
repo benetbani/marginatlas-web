@@ -1,0 +1,42 @@
+{
+  "version": "1.0.0",
+  "anchor": "ATO Phase 1 — per-sector turnover bands in USD per year, adopted from the ATO Small Business Benchmarks framework. Each sector gets three bands: small / medium / large. Country-level conversion uses each country's PPP factor at render time. Phase 1 ships six sentinel sectors with realistic per-sector thresholds; Phase 6 will populate all 25 sectors and override at the industry-id level where needed.",
+  "convention": "Bands are inclusive of the lower bound, exclusive of the upper. The third (large) band has no upper bound (null = open-ended). Currency: USD per year. PPP-adjusted at render time per country.",
+  "default_bands": {
+    "small": { "min_usd": 0, "max_usd": 300000 },
+    "medium": { "min_usd": 300000, "max_usd": 1000000 },
+    "large": { "min_usd": 1000000, "max_usd": null }
+  },
+  "by_sector": {
+    "food_drink": {
+      "small": { "min_usd": 0, "max_usd": 350000 },
+      "medium": { "min_usd": 350000, "max_usd": 1200000 },
+      "large": { "min_usd": 1200000, "max_usd": null }
+    },
+    "hospitality": {
+      "small": { "min_usd": 0, "max_usd": 500000 },
+      "medium": { "min_usd": 500000, "max_usd": 2500000 },
+      "large": { "min_usd": 2500000, "max_usd": null }
+    },
+    "beauty_wellness": {
+      "small": { "min_usd": 0, "max_usd": 150000 },
+      "medium": { "min_usd": 150000, "max_usd": 500000 },
+      "large": { "min_usd": 500000, "max_usd": null }
+    },
+    "retail_shops": {
+      "small": { "min_usd": 0, "max_usd": 400000 },
+      "medium": { "min_usd": 400000, "max_usd": 1500000 },
+      "large": { "min_usd": 1500000, "max_usd": null }
+    },
+    "professional_services": {
+      "small": { "min_usd": 0, "max_usd": 500000 },
+      "medium": { "min_usd": 500000, "max_usd": 2000000 },
+      "large": { "min_usd": 2000000, "max_usd": null }
+    },
+    "trades_home": {
+      "small": { "min_usd": 0, "max_usd": 200000 },
+      "medium": { "min_usd": 200000, "max_usd": 750000 },
+      "large": { "min_usd": 750000, "max_usd": null }
+    }
+  }
+}

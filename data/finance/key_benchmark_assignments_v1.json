@@ -1,0 +1,114 @@
+{
+  "version": "1.0.0",
+  "anchor": "ATO Phase 1 — per-sector designation of the ONE ratio operators should watch as their headline benchmark. Adopted from the ATO Small Business Benchmarks framework (atogovau Benchmarks A-Z). For every sector we pick one of cogs / labor / rent / motor_vehicle / total_expenses. The picker rule: cogs_share >= 0.25 -> cogs; labor_share >= 0.40 -> labor; else -> total_expenses. Two exceptions: transport_small -> motor_vehicle (the vehicle is the business), hospitality -> total_expenses (split fixed/variable cost makes any single ratio noisy).",
+  "convention": "Source of truth for key_benchmark assignments. Mirrored into industry_cost_profile_v1.json for the cost-engine's convenience; this file is canonical.",
+  "key_benchmark_definitions": {
+    "cogs": "Cost of sales (variable inputs ex-labour) as a percentage of revenue. The variable cost moves directly with sales, making it the most accurate predictor of true turnover.",
+    "labor": "Total labour cost (wages + benefits + payroll tax) as a percentage of revenue. The most useful gauge for service businesses where people ARE the product.",
+    "rent": "Lease and occupancy cost as a percentage of revenue. Only chosen for businesses where location density is a dominant pricing factor.",
+    "motor_vehicle": "Vehicle, fuel, maintenance, depreciation as a percentage of revenue. Used for transport businesses where the vehicle IS the operational unit.",
+    "total_expenses": "Sum of all operating expenses as a percentage of revenue. The fallback when no single line dominates the cost structure."
+  },
+  "assignments_by_sector": {
+    "food_drink": {
+      "key_benchmark": "cogs",
+      "rationale": "Food and beverage cost moves directly with sales. The most predictive ratio for true turnover."
+    },
+    "hospitality": {
+      "key_benchmark": "total_expenses",
+      "rationale": "Hotels and lodging carry split fixed and variable cost; total expense vs revenue is the cleanest read."
+    },
+    "beauty_wellness": {
+      "key_benchmark": "labor",
+      "rationale": "Stylists and therapists ARE the product. Labour share against revenue is the right gauge."
+    },
+    "retail_shops": {
+      "key_benchmark": "cogs",
+      "rationale": "Inventory cost tracks revenue directly. The classic retail benchmark."
+    },
+    "professional_services": {
+      "key_benchmark": "labor",
+      "rationale": "Lawyers, accountants, consultants sell time. Labour share answers whether you are charging enough."
+    },
+    "creative_media": {
+      "key_benchmark": "labor",
+      "rationale": "Designers, agencies, production houses bill labour. The labour ratio is the leverage gauge."
+    },
+    "software_tech": {
+      "key_benchmark": "labor",
+      "rationale": "Engineering payroll is the dominant line. Labour vs revenue is the unit-economics signal."
+    },
+    "construction": {
+      "key_benchmark": "cogs",
+      "rationale": "Materials and subcontractor passthrough drive the P&L. Cost of sales is the most accurate predictor."
+    },
+    "trades_home": {
+      "key_benchmark": "total_expenses",
+      "rationale": "Mixed materials and labour; total expense vs revenue captures both sides cleanly."
+    },
+    "repair": {
+      "key_benchmark": "total_expenses",
+      "rationale": "Parts plus labour in a roughly equal mix. Total expense is the most stable benchmark."
+    },
+    "health_clinics": {
+      "key_benchmark": "labor",
+      "rationale": "Practitioner payroll dominates the cost stack. Labour vs revenue gauges practice efficiency."
+    },
+    "education_instruction": {
+      "key_benchmark": "labor",
+      "rationale": "Instructor cost is the operational lever. Labour-to-revenue tracks teaching utilisation."
+    },
+    "events_entertainment": {
+      "key_benchmark": "total_expenses",
+      "rationale": "Event costs are project-based and volatile. Total expense vs revenue is the cleanest aggregate."
+    },
+    "cultural": {
+      "key_benchmark": "total_expenses",
+      "rationale": "Galleries, museums, performing arts run mixed economics. Total expense is the most stable cut."
+    },
+    "pet_services": {
+      "key_benchmark": "labor",
+      "rationale": "Groomers, trainers, walkers are paid for time. Labour vs revenue is the throughput gauge."
+    },
+    "real_estate": {
+      "key_benchmark": "total_expenses",
+      "rationale": "Commission economics make any single ratio noisy. Total expense vs revenue is the cleanest aggregate."
+    },
+    "transport_small": {
+      "key_benchmark": "motor_vehicle",
+      "rationale": "The vehicle IS the business. Motor vehicle share vs revenue is the central operational ratio."
+    },
+    "manufacturing_artisan": {
+      "key_benchmark": "cogs",
+      "rationale": "Raw materials are the dominant input. Cost of sales tracks the production economics directly."
+    },
+    "heavy_industry": {
+      "key_benchmark": "cogs",
+      "rationale": "Material throughput drives revenue. Cost of sales is the most accurate turnover predictor."
+    },
+    "mining_energy": {
+      "key_benchmark": "cogs",
+      "rationale": "Extracted material valued at sales prices. Cost of sales is the natural benchmark."
+    },
+    "farming_food_production": {
+      "key_benchmark": "cogs",
+      "rationale": "Crop and livestock input costs drive the P&L. Cost of sales is the most reliable yield indicator."
+    },
+    "telecom_broadcasting": {
+      "key_benchmark": "total_expenses",
+      "rationale": "Capex-heavy mixed economics. Total expense vs revenue is the cleanest single ratio."
+    },
+    "finance_corp": {
+      "key_benchmark": "labor",
+      "rationale": "Talent cost is the dominant lever. Labour vs revenue is the productivity benchmark."
+    },
+    "higher_ed_hospitals": {
+      "key_benchmark": "labor",
+      "rationale": "Faculty and clinician payroll dominate. Labour vs revenue tracks institutional efficiency."
+    },
+    "other_local": {
+      "key_benchmark": "total_expenses",
+      "rationale": "Mixed local services. Total expense vs revenue is the cleanest cross-industry benchmark."
+    }
+  }
+}
