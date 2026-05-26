@@ -16,6 +16,7 @@ import {
 } from "@/lib/cells";
 import { INDUSTRIES, industryToSlug } from "@/lib/taxonomy";
 import { computeBreakeven, fmtAov, fmtOrders } from "@/lib/economics/breakeven";
+import { ProgressBar } from "@/components/ui/progress-bar";
 import { iso2ToName } from "@/lib/countries";
 import { CountryFlag } from "@/components/CountryFlag";
 import { RevenueTiles } from "@/components/RevenueTiles";
@@ -819,6 +820,25 @@ export default async function CellPage({
                       {coveragePct >= 0 ? "+" : ""}
                       {coveragePct}%
                     </div>
+                    {/* Visual gauge: how far above breakeven (0% = at
+                        breakeven; bar fills to 100% at double breakeven).
+                        When under water, render an empty bar so the
+                        absence is loud. Tone tracks coveragePct. */}
+                    <ProgressBar
+                      className="mt-2"
+                      value={Math.max(0, coveragePct)}
+                      max={100}
+                      size="sm"
+                      tone={
+                        coveragePct >= 30
+                          ? "success"
+                          : coveragePct >= 0
+                            ? "default"
+                            : coveragePct >= -30
+                              ? "warning"
+                              : "danger"
+                      }
+                    />
                   </div>
                 </div>
                 <p className="mt-3 text-xs text-cocoa-700/70 leading-relaxed">

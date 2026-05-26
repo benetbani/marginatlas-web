@@ -1,45 +1,200 @@
 {
   "counters": {
-    "fixed-px-width": 1,
-    "large-text-no-mobile": 4,
-    "high-col-no-breakpoint": 1,
-    "tiny-tap-target": 0
+    "fixed-px-width": 0,
+    "large-text-no-mobile": 2,
+    "high-col-no-breakpoint": 12,
+    "tiny-tap-target": 0,
+    "nowrap-on-content": 14
   },
   "findings": [
     {
-      "type": "fixed-px-width",
-      "severity": "warn",
-      "file": "./src/app/admin/review/page.tsx",
-      "line": 467,
-      "snippet": "<td className=\"py-1.5 px-2 max-w-[420px] text-ink-700/85\">{r.notes}</td>"
+      "type": "nowrap-on-content",
+      "severity": "info",
+      "file": "./src/app/account/page.tsx",
+      "line": 108,
+      "snippet": "className={`inline-flex items-center gap-1.5 px-3 h-9 rounded-md text-sm font-semibold whitespace-nowrap ${"
+    },
+    {
+      "type": "nowrap-on-content",
+      "severity": "info",
+      "file": "./src/app/cities/[slug]/page.tsx",
+      "line": 310,
+      "snippet": "className=\"px-4 py-2.5 rounded-full bg-atlas-700 hover:bg-atlas-800 text-cream-50 text-sm font-semibold shadow-sm transition text-center whitespace-nowrap\""
+    },
+    {
+      "type": "nowrap-on-content",
+      "severity": "info",
+      "file": "./src/app/cities/[slug]/page.tsx",
+      "line": 316,
+      "snippet": "className=\"px-4 py-2.5 rounded-full bg-white hover:bg-cream-100 border border-ink-200 hover:border-atlas-700 text-ink-900 text-sm font-semibold transition text-"
+    },
+    {
+      "type": "nowrap-on-content",
+      "severity": "info",
+      "file": "./src/app/cities/[slug]/page.tsx",
+      "line": 322,
+      "snippet": "className=\"px-4 py-2.5 rounded-full bg-white hover:bg-cream-100 border border-ink-200 hover:border-atlas-700 text-ink-900 text-sm font-semibold transition text-"
+    },
+    {
+      "type": "high-col-no-breakpoint",
+      "severity": "info",
+      "file": "./src/app/download/2026-benchmarks/page.tsx",
+      "line": 199,
+      "snippet": "<li key={l.label} className=\"grid grid-cols-12 items-center gap-2 text-[11px]\">"
     },
     {
       "type": "large-text-no-mobile",
       "severity": "warn",
-      "file": "./src/components/AtlasScore.tsx",
-      "line": 63,
-      "snippet": "<div className=\"text-5xl font-semibold text-ink-900 tabular-nums\">{score}</div>"
-    },
-    {
-      "type": "large-text-no-mobile",
-      "severity": "warn",
-      "file": "./src/components/CalculatorForm.tsx",
-      "line": 203,
-      "snippet": "<div className=\"text-5xl font-bold text-atlas-700 tabular-nums\">"
+      "file": "./src/app/not-found.tsx",
+      "line": 29,
+      "snippet": "<p aria-hidden=\"true\" className=\"font-display text-6xl sm:text-7xl font-semibold text-atlas-700 leading-none\">"
     },
     {
       "type": "high-col-no-breakpoint",
       "severity": "info",
       "file": "./src/components/CalculatorForm.tsx",
-      "line": 212,
+      "line": 268,
       "snippet": "<div className=\"mt-4 grid grid-cols-5 gap-1 text-xs text-center\">"
     },
     {
-      "type": "large-text-no-mobile",
-      "severity": "warn",
-      "file": "./src/components/NetProfitSummary.tsx",
-      "line": 56,
-      "snippet": "<div className=\"font-display text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-atlas-700 leading-none\">"
+      "type": "high-col-no-breakpoint",
+      "severity": "info",
+      "file": "./src/components/comparison/CityComparisonPageV2.tsx",
+      "line": 144,
+      "snippet": "<div className=\"mt-2 grid grid-cols-12 items-center gap-2\">"
+    },
+    {
+      "type": "nowrap-on-content",
+      "severity": "info",
+      "file": "./src/components/comparison/MultiCellComparisonTable.tsx",
+      "line": 156,
+      "snippet": "<td className=\"px-3 py-2.5 whitespace-nowrap\">"
+    },
+    {
+      "type": "high-col-no-breakpoint",
+      "severity": "info",
+      "file": "./src/components/comparison/MultiCellComparisonTable.tsx",
+      "line": 200,
+      "snippet": "<div className=\"mt-3 grid grid-cols-4 gap-2 text-center\">"
+    },
+    {
+      "type": "high-col-no-breakpoint",
+      "severity": "info",
+      "file": "./src/components/comparison/_primitives.tsx",
+      "line": 237,
+      "snippet": "className={`grid grid-cols-12 items-center py-3 sm:py-4 ${divider ? \"border-b border-parchment\" : \"\"}`}"
+    },
+    {
+      "type": "high-col-no-breakpoint",
+      "severity": "info",
+      "file": "./src/components/comparison/_primitives.tsx",
+      "line": 321,
+      "snippet": "<div className=\"mt-8 grid grid-cols-12 items-center pb-2 border-b border-parchment\">"
+    },
+    {
+      "type": "high-col-no-breakpoint",
+      "severity": "info",
+      "file": "./src/components/comparison/_primitives.tsx",
+      "line": 341,
+      "snippet": "className={`grid grid-cols-12 items-center py-2.5 ${"
+    },
+    {
+      "type": "nowrap-on-content",
+      "severity": "info",
+      "file": "./src/components/CountryAtAGlance.tsx",
+      "line": 118,
+      "snippet": "className=\"text-atlas-700 hover:text-atlas-900 font-medium whitespace-nowrap\""
+    },
+    {
+      "type": "nowrap-on-content",
+      "severity": "info",
+      "file": "./src/components/DecideActivitySelector.tsx",
+      "line": 33,
+      "snippet": "<span className=\"text-cocoa-700/80 font-medium whitespace-nowrap\">"
+    },
+    {
+      "type": "nowrap-on-content",
+      "severity": "info",
+      "file": "./src/components/DenseCellHero.tsx",
+      "line": 199,
+      "snippet": "<span className=\"font-display italic font-normal leading-none text-sm sm:text-lg text-cocoa-700 ml-1 sm:ml-2 whitespace-nowrap\">"
+    },
+    {
+      "type": "nowrap-on-content",
+      "severity": "info",
+      "file": "./src/components/DistributionVisual.tsx",
+      "line": 233,
+      "snippet": "<div className=\"text-[10px] uppercase tracking-wider text-cocoa-700/60 font-semibold whitespace-nowrap\">"
+    },
+    {
+      "type": "nowrap-on-content",
+      "severity": "info",
+      "file": "./src/components/DistributionVisual.tsx",
+      "line": 250,
+      "snippet": "<div className=\"text-[10px] uppercase tracking-wider text-atlas-700 font-bold text-center whitespace-nowrap\">"
+    },
+    {
+      "type": "nowrap-on-content",
+      "severity": "info",
+      "file": "./src/components/DistributionVisual.tsx",
+      "line": 263,
+      "snippet": "<div className=\"text-[10px] uppercase tracking-wider text-cocoa-700/60 font-semibold whitespace-nowrap\">"
+    },
+    {
+      "type": "high-col-no-breakpoint",
+      "severity": "info",
+      "file": "./src/components/LoadingSkeleton.tsx",
+      "line": 82,
+      "snippet": "<div className=\"mt-10 grid grid-cols-12 gap-8 items-end\">"
+    },
+    {
+      "type": "high-col-no-breakpoint",
+      "severity": "info",
+      "file": "./src/components/LoadingSkeleton.tsx",
+      "line": 138,
+      "snippet": "className=\"grid grid-cols-12 gap-4 items-center py-3 border-b border-parchment last:border-b-0\""
+    },
+    {
+      "type": "high-col-no-breakpoint",
+      "severity": "info",
+      "file": "./src/components/mobile/MobileExpandableSection.tsx",
+      "line": 161,
+      "snippet": "className=\"w-full grid grid-cols-12 items-center gap-2 py-1.5 text-left\""
+    },
+    {
+      "type": "high-col-no-breakpoint",
+      "severity": "info",
+      "file": "./src/components/mobile/MobileShareSheet.tsx",
+      "line": 153,
+      "snippet": "<div className=\"grid grid-cols-4 gap-2\">"
+    },
+    {
+      "type": "high-col-no-breakpoint",
+      "severity": "info",
+      "file": "./src/components/monetization/QuartileMarkers.tsx",
+      "line": 90,
+      "snippet": "<div className=\"grid grid-cols-5 gap-2\">"
+    },
+    {
+      "type": "nowrap-on-content",
+      "severity": "info",
+      "file": "./src/components/monetization/TruncatedTease.tsx",
+      "line": 60,
+      "snippet": "<span className=\"text-atlas-700 font-semibold whitespace-nowrap\">"
+    },
+    {
+      "type": "nowrap-on-content",
+      "severity": "info",
+      "file": "./src/components/SectionDivider.tsx",
+      "line": 46,
+      "snippet": "<span className=\"text-[10px] uppercase tracking-[0.18em] font-semibold text-cocoa-700/70 whitespace-nowrap\">"
+    },
+    {
+      "type": "nowrap-on-content",
+      "severity": "info",
+      "file": "./src/components/sections/FailureModes.tsx",
+      "line": 66,
+      "snippet": "<div className=\"text-[11px] uppercase tracking-wide text-ink-500 font-medium whitespace-nowrap\">"
     },
     {
       "type": "large-text-no-mobile",

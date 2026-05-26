@@ -43,6 +43,7 @@ import {
 } from "@/lib/economics/neighborhood_multipliers";
 import { INDUSTRY_BASELINES } from "@/lib/qa/industry_baselines";
 import DecideActivitySelector from "@/components/DecideActivitySelector";
+import { ProgressBar } from "@/components/ui/progress-bar";
 
 export const revalidate = 43200;
 
@@ -271,6 +272,15 @@ export default async function DecideWizard({
             <h2 className="font-display text-xl md:text-2xl font-semibold text-ink-900 mb-5">
               Top 3 by net margin
             </h2>
+            {/* Max margin used to scale the per-card ProgressBar so the
+                visual comparison is honest: a 12% bar next to an 18% bar
+                actually looks 2/3 as long. */}
+            {(() => {
+              const maxMargin = Math.max(
+                0.01,
+                ...top3.map((r) => r.breakdown.neighborhoodNetMargin),
+              );
+              return (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {top3.map((r, idx) => {
                 const b = r.breakdown;
@@ -285,6 +295,14 @@ export default async function DecideWizard({
                       : b.neighborhoodNetMargin >= 0
                         ? "#CA8A04"
                         : "#7F1D1D";
+                const tone =
+                  b.neighborhoodNetMargin >= 0.15
+                    ? "success"
+                    : b.neighborhoodNetMargin >= 0.08
+                      ? "success"
+                      : b.neighborhoodNetMargin >= 0
+                        ? "warning"
+                        : "danger";
                 const rationale = rationaleFor(ind.id, b.appliedTags);
                 return (
                   <Link
@@ -303,6 +321,12 @@ export default async function DecideWizard({
                         {marginPct}%
                       </div>
                     </div>
+                    <ProgressBar
+                      value={Math.max(0, b.neighborhoodNetMargin)}
+                      max={maxMargin}
+                      size="sm"
+                      tone={tone}
+                    />
                     <h3 className="font-display text-lg font-semibold text-ink-900 leading-tight">
                       {r.neighborhood.name}
                     </h3>
@@ -331,6 +355,8 @@ export default async function DecideWizard({
                 );
               })}
             </div>
+              );
+            })()}
           </section>
 
           {/* Full ranking table */}

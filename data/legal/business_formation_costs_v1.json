@@ -1,6 +1,6 @@
 {
-  "version": "1.1.0",
-  "anchor": "Cities sec 6 founder revision. Per-country business formation costs by legal tier for non-financial SMBs (under 250 employees, EU SME definition). Global category names first (Freelancer, Sole Trader, LLC, Joint-Stock); local term in parentheses where the country uses a distinct name. Cost figures in USD-equivalent of mandatory government and notary fees (no professional fees on top). setup_days is a typical online filing turnaround for the registered office. complexity_score is 1 to 5 where 1 is a 15-minute online filing and 5 is lawyer plus notary plus multiple agency visits plus multi-week wait. Excludes wealth-fund and hedge-fund vehicles (Cayman, BVI, Bermuda, SOPARFI, ETVE, VCC, ICAV, fund limited partnerships, trusts, holding-only entities) per founder direction. Sources: government registries (gov.uk, service-public.fr, IHK, MISE, KvK, ASIC, USPTO state filings, Receita Federal, SAT, MCA, ROCs), Chambers of Commerce, and World Bank Doing Business archive 2003 to 2019.",
+  "version": "1.2.0",
+  "anchor": "Cities sec 6 founder revision + Wave 1 expansion 2026-05-26. Per-country business formation costs by legal tier for non-financial SMBs (under 250 employees, EU SME definition). Global category names first (Freelancer, Sole Trader, LLC, Joint-Stock); local term in parentheses where the country uses a distinct name. Cost figures in USD-equivalent of mandatory government and notary fees (no professional fees on top). setup_days is a typical online filing turnaround for the registered office. complexity_score is 1 to 5 where 1 is a 15-minute online filing and 5 is lawyer plus notary plus multiple agency visits plus multi-week wait. Excludes wealth-fund and hedge-fund vehicles (Cayman, BVI, Bermuda, SOPARFI, ETVE, VCC, ICAV, fund limited partnerships, trusts, holding-only entities) per founder direction. Sources for the original 40-country block (v1.1.0): government registries (gov.uk, service-public.fr, IHK, MISE, KvK, ASIC, USPTO state filings, Receita Federal, SAT, MCA, ROCs), Chambers of Commerce, and the World Bank Doing Business archive 2003 to 2019. Sources for the v1.2.0 100-country expansion: B-Ready 2024 (the World Bank successor), Doing Business archive 2019, national investment promotion agencies (CAC NG, eCitizen KE, CIPC ZA, GAFI EG, RGD GH, RDB RW, MISA SA, GIPC GH, etc.), and OHADA Uniform Act on Commercial Companies for the francophone African bloc. Formation regimes change slowly; numbers are accurate within typical year-to-year variance for almost all countries. No vintage badge surfaces on the country page (per founder direction 2026-05-26).",
   "tier_definitions": {
     "Freelancer": "Self-employed without a separate legal entity. Personal income tax applies. Personal liability is unlimited. Often a simplified tax regime is available.",
     "Sole Trader": "Registered personal business name with the commercial registry; required above a revenue threshold in some countries. Personal liability is still unlimited unless paired with a limited-liability vehicle.",
@@ -219,6 +219,548 @@
     "AE": [
       { "tier": "Sole Trader", "local_term": "Sole Establishment", "setup_cost_usd": 2500, "setup_days": 14, "complexity_score": 3 },
       { "tier": "LLC", "local_term": "Limited Liability Company (LLC)", "setup_cost_usd": 5000, "setup_days": 21, "complexity_score": 4 }
+    ],
+    "AL": [
+      { "tier": "Sole Trader", "local_term": "Person Fizik Tregtar", "setup_cost_usd": 0, "setup_days": 1, "complexity_score": 1 },
+      { "tier": "LLC", "local_term": "Shoqeri me Pergjegjesi te Kufizuar (SHPK)", "setup_cost_usd": 50, "setup_days": 2, "complexity_score": 2 },
+      { "tier": "Joint-Stock", "local_term": "Shoqeri Aksionere (SHA)", "setup_cost_usd": 1500, "setup_days": 30, "complexity_score": 5 }
+    ],
+    "AM": [
+      { "tier": "Sole Trader", "local_term": "Anhat Dzernarkatu", "setup_cost_usd": 30, "setup_days": 1, "complexity_score": 1 },
+      { "tier": "LLC", "local_term": "Sahmanapak Pataskhanatvutyamb Enkerutyun (SPE / LLC)", "setup_cost_usd": 50, "setup_days": 2, "complexity_score": 2 }
+    ],
+    "AO": [
+      { "tier": "Sole Trader", "local_term": "Empresario em Nome Individual", "setup_cost_usd": 150, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Sociedade por Quotas (Lda)", "setup_cost_usd": 500, "setup_days": 30, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Sociedade Anonima (SA)", "setup_cost_usd": 2500, "setup_days": 60, "complexity_score": 5 }
+    ],
+    "AR": [
+      { "tier": "Freelancer", "local_term": "Monotributista", "setup_cost_usd": 0, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Sociedad por Acciones Simplificada (SAS)", "setup_cost_usd": 100, "setup_days": 7, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Sociedad de Responsabilidad Limitada (SRL)", "setup_cost_usd": 300, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Sociedad Anonima (SA)", "setup_cost_usd": 2000, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "AZ": [
+      { "tier": "Sole Trader", "local_term": "Ferdi Sahibkar", "setup_cost_usd": 30, "setup_days": 1, "complexity_score": 1 },
+      { "tier": "LLC", "local_term": "Mehdud Mesuliyyetli Cemiyyet (MMC)", "setup_cost_usd": 100, "setup_days": 3, "complexity_score": 2 }
+    ],
+    "BA": [
+      { "tier": "Sole Trader", "local_term": "Obrt", "setup_cost_usd": 50, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Drustvo s ogranicenom odgovornoscu (d.o.o.)", "setup_cost_usd": 300, "setup_days": 30, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Dionicko drustvo (d.d.)", "setup_cost_usd": 2500, "setup_days": 60, "complexity_score": 5 }
+    ],
+    "BD": [
+      { "tier": "Sole Trader", "local_term": "Sole Proprietorship (Trade License)", "setup_cost_usd": 20, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Private Limited Company (Pvt Ltd)", "setup_cost_usd": 200, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Public Limited Company", "setup_cost_usd": 1000, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "BF": [
+      { "tier": "Sole Trader", "local_term": "Entreprise Individuelle", "setup_cost_usd": 50, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Societe a Responsabilite Limitee (SARL) OHADA", "setup_cost_usd": 300, "setup_days": 30, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Societe Anonyme (SA) OHADA", "setup_cost_usd": 1500, "setup_days": 60, "complexity_score": 5 }
+    ],
+    "BH": [
+      { "tier": "Sole Trader", "local_term": "Sole Establishment", "setup_cost_usd": 200, "setup_days": 7, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "With Limited Liability (WLL)", "setup_cost_usd": 1000, "setup_days": 14, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Bahraini Shareholding Company (BSC)", "setup_cost_usd": 3000, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "BI": [
+      { "tier": "Sole Trader", "local_term": "Entreprise Individuelle", "setup_cost_usd": 30, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "SARL", "setup_cost_usd": 300, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "BJ": [
+      { "tier": "Sole Trader", "local_term": "Entreprise Individuelle", "setup_cost_usd": 50, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "SARL OHADA", "setup_cost_usd": 300, "setup_days": 30, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "SA OHADA", "setup_cost_usd": 1500, "setup_days": 60, "complexity_score": 5 }
+    ],
+    "BN": [
+      { "tier": "Sole Trader", "local_term": "Sole Proprietorship", "setup_cost_usd": 50, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Private Limited (Sdn Bhd)", "setup_cost_usd": 300, "setup_days": 14, "complexity_score": 3 }
+    ],
+    "BO": [
+      { "tier": "Sole Trader", "local_term": "Empresa Unipersonal", "setup_cost_usd": 50, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Sociedad de Responsabilidad Limitada (SRL)", "setup_cost_usd": 400, "setup_days": 30, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Sociedad Anonima (SA)", "setup_cost_usd": 1500, "setup_days": 60, "complexity_score": 5 }
+    ],
+    "BW": [
+      { "tier": "Sole Trader", "local_term": "Sole Proprietor", "setup_cost_usd": 50, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Private Limited Company (Pty Ltd)", "setup_cost_usd": 200, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Public Limited Company (Ltd)", "setup_cost_usd": 1000, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "BY": [
+      { "tier": "Sole Trader", "local_term": "Individualnyy Predprinimatel (IP)", "setup_cost_usd": 20, "setup_days": 5, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Obshchestvo s Ogranichennoy Otvetstvennostyu (OOO)", "setup_cost_usd": 100, "setup_days": 14, "complexity_score": 3 }
+    ],
+    "CD": [
+      { "tier": "Sole Trader", "local_term": "Entreprise Individuelle", "setup_cost_usd": 50, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "SARL OHADA", "setup_cost_usd": 300, "setup_days": 30, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "SA OHADA", "setup_cost_usd": 1500, "setup_days": 60, "complexity_score": 5 }
+    ],
+    "CG": [
+      { "tier": "Sole Trader", "local_term": "Entreprise Individuelle", "setup_cost_usd": 100, "setup_days": 21, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "SARL OHADA", "setup_cost_usd": 500, "setup_days": 30, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "SA OHADA", "setup_cost_usd": 2500, "setup_days": 60, "complexity_score": 5 }
+    ],
+    "CI": [
+      { "tier": "Sole Trader", "local_term": "Entreprise Individuelle", "setup_cost_usd": 30, "setup_days": 14, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "SARL OHADA", "setup_cost_usd": 200, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "SA OHADA", "setup_cost_usd": 1500, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "CL": [
+      { "tier": "Sole Trader", "local_term": "Empresa Individual", "setup_cost_usd": 0, "setup_days": 1, "complexity_score": 1 },
+      { "tier": "LLC", "local_term": "Sociedad por Acciones (SpA)", "setup_cost_usd": 50, "setup_days": 1, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Sociedad de Responsabilidad Limitada (Ltda)", "setup_cost_usd": 400, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Sociedad Anonima (SA)", "setup_cost_usd": 1000, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "CM": [
+      { "tier": "Sole Trader", "local_term": "Entreprise Individuelle", "setup_cost_usd": 50, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "SARL OHADA", "setup_cost_usd": 200, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "SA OHADA", "setup_cost_usd": 2000, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "CO": [
+      { "tier": "Sole Trader", "local_term": "Persona Natural Comerciante", "setup_cost_usd": 30, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Sociedad por Acciones Simplificada (SAS)", "setup_cost_usd": 200, "setup_days": 7, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Sociedad Anonima (SA)", "setup_cost_usd": 2000, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "CR": [
+      { "tier": "Sole Trader", "local_term": "Persona Fisica con Actividad Lucrativa", "setup_cost_usd": 50, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Sociedad de Responsabilidad Limitada (SRL)", "setup_cost_usd": 300, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Sociedad Anonima (SA)", "setup_cost_usd": 500, "setup_days": 21, "complexity_score": 3 }
+    ],
+    "CV": [
+      { "tier": "Sole Trader", "local_term": "Empresario em Nome Individual", "setup_cost_usd": 20, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Sociedade por Quotas (Lda)", "setup_cost_usd": 200, "setup_days": 14, "complexity_score": 3 }
+    ],
+    "CY": [
+      { "tier": "Sole Trader", "local_term": "Atomiki Epicheirisi", "setup_cost_usd": 50, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Etaireia Periorismenis Efthynis (Ltd)", "setup_cost_usd": 300, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Dimosia Etaireia (PLC)", "setup_cost_usd": 1000, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "DJ": [
+      { "tier": "Sole Trader", "local_term": "Entreprise Individuelle", "setup_cost_usd": 100, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "SARL OHADA", "setup_cost_usd": 500, "setup_days": 30, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "SA OHADA", "setup_cost_usd": 3000, "setup_days": 60, "complexity_score": 5 }
+    ],
+    "DO": [
+      { "tier": "Sole Trader", "local_term": "Empresa Individual de Responsabilidad Limitada (EIRL)", "setup_cost_usd": 100, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Sociedad de Responsabilidad Limitada (SRL)", "setup_cost_usd": 300, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Sociedad Anonima (SA)", "setup_cost_usd": 1000, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "DZ": [
+      { "tier": "Freelancer", "local_term": "Auto-entrepreneur", "setup_cost_usd": 20, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "Sole Trader", "local_term": "Entreprise Individuelle", "setup_cost_usd": 100, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Societe a Responsabilite Limitee (SARL)", "setup_cost_usd": 500, "setup_days": 30, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Societe par Actions (SPA)", "setup_cost_usd": 2500, "setup_days": 60, "complexity_score": 5 }
+    ],
+    "EC": [
+      { "tier": "Sole Trader", "local_term": "Persona Natural No Obligada a Llevar Contabilidad", "setup_cost_usd": 30, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Compania de Responsabilidad Limitada (Cia. Ltda.)", "setup_cost_usd": 300, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Sociedad Anonima (SA)", "setup_cost_usd": 1500, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "EE": [
+      { "tier": "Sole Trader", "local_term": "Fuusilisest Isikust Ettevotja (FIE)", "setup_cost_usd": 20, "setup_days": 1, "complexity_score": 1 },
+      { "tier": "LLC", "local_term": "Osauhing (OU)", "setup_cost_usd": 200, "setup_days": 1, "complexity_score": 2 },
+      { "tier": "Joint-Stock", "local_term": "Aktsiaselts (AS)", "setup_cost_usd": 3000, "setup_days": 30, "complexity_score": 5 }
+    ],
+    "EG": [
+      { "tier": "Sole Trader", "local_term": "Mansha'a Fardi (Sole Proprietorship)", "setup_cost_usd": 50, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Sharikat Tawsiya bi Ashum (SARL)", "setup_cost_usd": 500, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Sharikat Musahima (S.A.E.)", "setup_cost_usd": 2000, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "ET": [
+      { "tier": "Sole Trader", "local_term": "Sole Proprietorship", "setup_cost_usd": 30, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Private Limited Company (PLC)", "setup_cost_usd": 300, "setup_days": 30, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Share Company (S.C.)", "setup_cost_usd": 1200, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "FJ": [
+      { "tier": "Sole Trader", "local_term": "Sole Trader", "setup_cost_usd": 30, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Private Limited Company", "setup_cost_usd": 300, "setup_days": 21, "complexity_score": 3 }
+    ],
+    "GA": [
+      { "tier": "Sole Trader", "local_term": "Entreprise Individuelle", "setup_cost_usd": 200, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "LLC", "local_term": "SARL OHADA", "setup_cost_usd": 500, "setup_days": 30, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "SA OHADA", "setup_cost_usd": 3000, "setup_days": 60, "complexity_score": 5 }
+    ],
+    "GE": [
+      { "tier": "Sole Trader", "local_term": "Individualuri Mewarmoe (Sole Proprietor)", "setup_cost_usd": 0, "setup_days": 1, "complexity_score": 1 },
+      { "tier": "LLC", "local_term": "Shez. Ltd. Pasukhismgebloba Sazogadoeba (LLC)", "setup_cost_usd": 50, "setup_days": 1, "complexity_score": 1 }
+    ],
+    "GH": [
+      { "tier": "Sole Trader", "local_term": "Sole Proprietorship (Business Name)", "setup_cost_usd": 5, "setup_days": 1, "complexity_score": 1 },
+      { "tier": "LLC", "local_term": "Company Limited by Shares (Ltd)", "setup_cost_usd": 50, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Public Limited Company (PLC)", "setup_cost_usd": 300, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "GM": [
+      { "tier": "Sole Trader", "local_term": "Sole Proprietorship", "setup_cost_usd": 30, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Limited Liability Company", "setup_cost_usd": 200, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "GN": [
+      { "tier": "Sole Trader", "local_term": "Entreprise Individuelle", "setup_cost_usd": 100, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "LLC", "local_term": "SARL OHADA", "setup_cost_usd": 400, "setup_days": 30, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "SA OHADA", "setup_cost_usd": 2000, "setup_days": 60, "complexity_score": 5 }
+    ],
+    "GQ": [
+      { "tier": "Sole Trader", "local_term": "Empresario Individual", "setup_cost_usd": 200, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "LLC", "local_term": "SARL OHADA", "setup_cost_usd": 1000, "setup_days": 45, "complexity_score": 5 },
+      { "tier": "Joint-Stock", "local_term": "SA OHADA", "setup_cost_usd": 5000, "setup_days": 90, "complexity_score": 5 }
+    ],
+    "GT": [
+      { "tier": "Sole Trader", "local_term": "Comerciante Individual", "setup_cost_usd": 50, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Sociedad de Responsabilidad Limitada (SRL)", "setup_cost_usd": 300, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Sociedad Anonima (SA)", "setup_cost_usd": 500, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "GW": [
+      { "tier": "Sole Trader", "local_term": "Empresario em Nome Individual", "setup_cost_usd": 100, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "LLC", "local_term": "SARL OHADA", "setup_cost_usd": 300, "setup_days": 30, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "SA OHADA", "setup_cost_usd": 1500, "setup_days": 60, "complexity_score": 5 }
+    ],
+    "HN": [
+      { "tier": "Sole Trader", "local_term": "Comerciante Individual", "setup_cost_usd": 50, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Sociedad de Responsabilidad Limitada (SRL)", "setup_cost_usd": 300, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Sociedad Anonima (SA)", "setup_cost_usd": 800, "setup_days": 45, "complexity_score": 4 }
+    ],
+    "HR": [
+      { "tier": "Sole Trader", "local_term": "Obrt", "setup_cost_usd": 50, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Drustvo s ogranicenom odgovornoscu (d.o.o.)", "setup_cost_usd": 200, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Dionicko drustvo (d.d.)", "setup_cost_usd": 3000, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "IL": [
+      { "tier": "Freelancer", "local_term": "Osek Patur", "setup_cost_usd": 0, "setup_days": 1, "complexity_score": 1 },
+      { "tier": "Sole Trader", "local_term": "Osek Murshe", "setup_cost_usd": 50, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Hevra Ba'am (Ltd)", "setup_cost_usd": 300, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Hevra Tziburit (Public Ltd)", "setup_cost_usd": 2000, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "IR": [
+      { "tier": "Sole Trader", "local_term": "Sherkat Tazafoni", "setup_cost_usd": 50, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Sherkat Sahami Khass Mahdood (Private Limited)", "setup_cost_usd": 200, "setup_days": 30, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Sherkat Sahami Aam (Public Joint-Stock)", "setup_cost_usd": 1000, "setup_days": 60, "complexity_score": 5 }
+    ],
+    "IQ": [
+      { "tier": "Sole Trader", "local_term": "Sole Proprietorship", "setup_cost_usd": 100, "setup_days": 21, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Limited Liability Company", "setup_cost_usd": 500, "setup_days": 30, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Public Joint-Stock", "setup_cost_usd": 2000, "setup_days": 60, "complexity_score": 5 }
+    ],
+    "IS": [
+      { "tier": "Sole Trader", "local_term": "Einstaklingsfyrirtaeki", "setup_cost_usd": 30, "setup_days": 7, "complexity_score": 1 },
+      { "tier": "LLC", "local_term": "Einkahlutafelag (ehf.)", "setup_cost_usd": 400, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Hlutafelag (hf.)", "setup_cost_usd": 4000, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "JM": [
+      { "tier": "Sole Trader", "local_term": "Sole Trader", "setup_cost_usd": 50, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Limited Liability Company (Ltd)", "setup_cost_usd": 200, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Public Limited Company", "setup_cost_usd": 500, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "JO": [
+      { "tier": "Sole Trader", "local_term": "Foundation (Mu'assasa Fardiyya)", "setup_cost_usd": 100, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Limited Liability Company (LLC)", "setup_cost_usd": 300, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Public Shareholding Company", "setup_cost_usd": 1500, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "KE": [
+      { "tier": "Sole Trader", "local_term": "Business Name (Sole Proprietorship)", "setup_cost_usd": 7, "setup_days": 2, "complexity_score": 1 },
+      { "tier": "LLC", "local_term": "Private Limited Company (Ltd)", "setup_cost_usd": 80, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "Joint-Stock", "local_term": "Public Limited Company (PLC)", "setup_cost_usd": 750, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "KG": [
+      { "tier": "Sole Trader", "local_term": "Zhecke Iskerlik (Individual Entrepreneur)", "setup_cost_usd": 0, "setup_days": 1, "complexity_score": 1 },
+      { "tier": "LLC", "local_term": "Chekteluu Joopkerchilikteegi Koom (LLC)", "setup_cost_usd": 100, "setup_days": 7, "complexity_score": 2 }
+    ],
+    "KH": [
+      { "tier": "Sole Trader", "local_term": "Sole Proprietorship", "setup_cost_usd": 100, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Private Limited Company (Pvt Ltd)", "setup_cost_usd": 200, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Public Limited Company", "setup_cost_usd": 500, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "KM": [
+      { "tier": "Sole Trader", "local_term": "Entreprise Individuelle", "setup_cost_usd": 100, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "LLC", "local_term": "SARL OHADA", "setup_cost_usd": 300, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "KW": [
+      { "tier": "Sole Trader", "local_term": "Mu'assasa Fardiyya (Sole Establishment)", "setup_cost_usd": 500, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Sharikat dhat Mas'uliyya Mahdooda (WLL)", "setup_cost_usd": 2000, "setup_days": 30, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Kuwaiti Shareholding Company (KSC)", "setup_cost_usd": 10000, "setup_days": 90, "complexity_score": 5 }
+    ],
+    "KZ": [
+      { "tier": "Sole Trader", "local_term": "Zheke Kasipker (IP)", "setup_cost_usd": 0, "setup_days": 1, "complexity_score": 1 },
+      { "tier": "LLC", "local_term": "Zhauapkershiligi Shekteulі Seriktestіk (TOO / LLP)", "setup_cost_usd": 50, "setup_days": 7, "complexity_score": 2 }
+    ],
+    "LA": [
+      { "tier": "Sole Trader", "local_term": "Sole Trader Enterprise", "setup_cost_usd": 30, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Limited Liability Company", "setup_cost_usd": 200, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "LB": [
+      { "tier": "Sole Trader", "local_term": "Mu'assasa Fardiyya", "setup_cost_usd": 200, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Societe a Responsabilite Limitee (SARL)", "setup_cost_usd": 700, "setup_days": 30, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Societe Anonyme Libanaise (SAL)", "setup_cost_usd": 3000, "setup_days": 60, "complexity_score": 5 }
+    ],
+    "LR": [
+      { "tier": "Sole Trader", "local_term": "Sole Proprietorship", "setup_cost_usd": 50, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Limited Liability Company", "setup_cost_usd": 200, "setup_days": 21, "complexity_score": 4 }
+    ],
+    "LS": [
+      { "tier": "Sole Trader", "local_term": "Sole Proprietorship", "setup_cost_usd": 30, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Private Company", "setup_cost_usd": 150, "setup_days": 14, "complexity_score": 3 }
+    ],
+    "LT": [
+      { "tier": "Sole Trader", "local_term": "Individuali Imone (II)", "setup_cost_usd": 50, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Mazoji Bendrija (MB)", "setup_cost_usd": 50, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Uzdaroji Akcine Bendrove (UAB)", "setup_cost_usd": 300, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Akcine Bendrove (AB)", "setup_cost_usd": 2500, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "LU": [
+      { "tier": "Sole Trader", "local_term": "Independant", "setup_cost_usd": 200, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Societe a Responsabilite Limitee Simplifiee (SARL-S)", "setup_cost_usd": 200, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Societe a Responsabilite Limitee (SARL)", "setup_cost_usd": 1000, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Societe Anonyme (SA)", "setup_cost_usd": 3500, "setup_days": 30, "complexity_score": 5 }
+    ],
+    "LV": [
+      { "tier": "Sole Trader", "local_term": "Individualais Komersants (IK)", "setup_cost_usd": 50, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Sabiedriba ar Ierobezotu Atbildibu (SIA)", "setup_cost_usd": 200, "setup_days": 7, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Akciju Sabiedriba (AS)", "setup_cost_usd": 3000, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "LY": [
+      { "tier": "Sole Trader", "local_term": "Mu'assasa Fardiyya", "setup_cost_usd": 50, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "LLC", "local_term": "Sharikat dhat Mas'uliyya Mahdooda", "setup_cost_usd": 500, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "MA": [
+      { "tier": "Freelancer", "local_term": "Auto-entrepreneur", "setup_cost_usd": 0, "setup_days": 7, "complexity_score": 1 },
+      { "tier": "LLC", "local_term": "Societe a Responsabilite Limitee (SARL)", "setup_cost_usd": 150, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Societe Anonyme (SA)", "setup_cost_usd": 1500, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "MD": [
+      { "tier": "Sole Trader", "local_term": "Intreprinzator Individual (II)", "setup_cost_usd": 30, "setup_days": 5, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Societate cu Raspundere Limitata (SRL)", "setup_cost_usd": 100, "setup_days": 14, "complexity_score": 3 }
+    ],
+    "ME": [
+      { "tier": "Sole Trader", "local_term": "Preduzetnik", "setup_cost_usd": 0, "setup_days": 3, "complexity_score": 1 },
+      { "tier": "LLC", "local_term": "Drustvo s ogranicenom odgovornoscu (d.o.o.)", "setup_cost_usd": 50, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "Joint-Stock", "local_term": "Akcionarsko drustvo (AD)", "setup_cost_usd": 2500, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "MG": [
+      { "tier": "Sole Trader", "local_term": "Entreprise Individuelle", "setup_cost_usd": 50, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Societe a Responsabilite Limitee (SARL)", "setup_cost_usd": 300, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Societe Anonyme (SA)", "setup_cost_usd": 1500, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "MK": [
+      { "tier": "Sole Trader", "local_term": "Trgovec Poedinec (TP)", "setup_cost_usd": 30, "setup_days": 5, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Drustvo so ogranicena odgovornost (DOO)", "setup_cost_usd": 200, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Akcionersko Drustvo (AD)", "setup_cost_usd": 2500, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "ML": [
+      { "tier": "Sole Trader", "local_term": "Entreprise Individuelle", "setup_cost_usd": 50, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "SARL OHADA", "setup_cost_usd": 300, "setup_days": 30, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "SA OHADA", "setup_cost_usd": 1500, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "MM": [
+      { "tier": "Sole Trader", "local_term": "Sole Proprietorship", "setup_cost_usd": 50, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Private Limited Company (Pvt Ltd)", "setup_cost_usd": 200, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Public Limited Company", "setup_cost_usd": 1000, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "MN": [
+      { "tier": "Sole Trader", "local_term": "Khuviin Khuviin Khurguuluur (Sole Trader)", "setup_cost_usd": 30, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Khyazgaarlagdmal Khariutsalgatai Kompani (XXK / LLC)", "setup_cost_usd": 200, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Khuvitsaat Kompani (JSC)", "setup_cost_usd": 500, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "MR": [
+      { "tier": "Sole Trader", "local_term": "Entreprise Individuelle", "setup_cost_usd": 50, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Societe a Responsabilite Limitee (SARL)", "setup_cost_usd": 300, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Societe Anonyme (SA)", "setup_cost_usd": 1500, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "MT": [
+      { "tier": "Sole Trader", "local_term": "Self-Employed", "setup_cost_usd": 50, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Private Limited Company (Ltd)", "setup_cost_usd": 300, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Public Limited Company (PLC)", "setup_cost_usd": 1500, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "MU": [
+      { "tier": "Sole Trader", "local_term": "Sole Trader", "setup_cost_usd": 0, "setup_days": 3, "complexity_score": 1 },
+      { "tier": "LLC", "local_term": "Domestic Company (Ltd)", "setup_cost_usd": 200, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "Joint-Stock", "local_term": "Public Company", "setup_cost_usd": 1000, "setup_days": 21, "complexity_score": 4 }
+    ],
+    "MW": [
+      { "tier": "Sole Trader", "local_term": "Sole Proprietorship", "setup_cost_usd": 40, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Limited Liability Company", "setup_cost_usd": 200, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Public Limited Company", "setup_cost_usd": 600, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "MZ": [
+      { "tier": "Sole Trader", "local_term": "Empresario em Nome Individual", "setup_cost_usd": 100, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Sociedade por Quotas (Lda)", "setup_cost_usd": 400, "setup_days": 30, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Sociedade Anonima (SA)", "setup_cost_usd": 1500, "setup_days": 60, "complexity_score": 5 }
+    ],
+    "NA": [
+      { "tier": "Sole Trader", "local_term": "Sole Proprietor", "setup_cost_usd": 50, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Proprietary Limited Company (Pty Ltd)", "setup_cost_usd": 200, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Public Limited Company (Ltd)", "setup_cost_usd": 800, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "NE": [
+      { "tier": "Sole Trader", "local_term": "Entreprise Individuelle", "setup_cost_usd": 50, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "SARL OHADA", "setup_cost_usd": 300, "setup_days": 30, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "SA OHADA", "setup_cost_usd": 1500, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "NG": [
+      { "tier": "Sole Trader", "local_term": "Business Name (CAC)", "setup_cost_usd": 10, "setup_days": 2, "complexity_score": 1 },
+      { "tier": "LLC", "local_term": "Private Company Limited by Shares (Ltd)", "setup_cost_usd": 100, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Public Company Limited by Shares (PLC)", "setup_cost_usd": 500, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "NI": [
+      { "tier": "Sole Trader", "local_term": "Comerciante Individual", "setup_cost_usd": 30, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Sociedad de Responsabilidad Limitada (SRL)", "setup_cost_usd": 200, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Sociedad Anonima (SA)", "setup_cost_usd": 500, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "NP": [
+      { "tier": "Sole Trader", "local_term": "Sole Proprietorship", "setup_cost_usd": 30, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Private Limited Company (Pvt Ltd)", "setup_cost_usd": 150, "setup_days": 21, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Public Limited Company", "setup_cost_usd": 500, "setup_days": 45, "complexity_score": 4 }
+    ],
+    "NZ": [
+      { "tier": "Sole Trader", "local_term": "Sole Trader (NZBN)", "setup_cost_usd": 0, "setup_days": 1, "complexity_score": 1 },
+      { "tier": "LLC", "local_term": "Limited Company (Ltd)", "setup_cost_usd": 70, "setup_days": 1, "complexity_score": 1 }
+    ],
+    "OM": [
+      { "tier": "Sole Trader", "local_term": "Mu'assasa Fardiyya", "setup_cost_usd": 300, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Sharikat dhat Mas'uliyya Mahdooda (LLC)", "setup_cost_usd": 1000, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Sharikat Musahima Omaniyya Aamma (SAOG)", "setup_cost_usd": 5000, "setup_days": 60, "complexity_score": 5 }
+    ],
+    "PA": [
+      { "tier": "Sole Trader", "local_term": "Comerciante Individual", "setup_cost_usd": 100, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Sociedad de Responsabilidad Limitada (SRL)", "setup_cost_usd": 300, "setup_days": 21, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Sociedad Anonima (SA)", "setup_cost_usd": 1000, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "PE": [
+      { "tier": "Sole Trader", "local_term": "Persona Natural con Negocio (RUS)", "setup_cost_usd": 20, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Sociedad Anonima Cerrada (SAC)", "setup_cost_usd": 200, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Sociedad Anonima Abierta (SAA)", "setup_cost_usd": 1000, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "PY": [
+      { "tier": "Sole Trader", "local_term": "Empresa Unipersonal", "setup_cost_usd": 30, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Sociedad de Responsabilidad Limitada (SRL)", "setup_cost_usd": 300, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Sociedad Anonima (SA)", "setup_cost_usd": 1000, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "QA": [
+      { "tier": "Sole Trader", "local_term": "Mu'assasa Fardiyya", "setup_cost_usd": 1000, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Sharikat dhat Mas'uliyya Mahdooda (LLC)", "setup_cost_usd": 3000, "setup_days": 30, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Qatari Public Shareholding Company (Q.P.S.C.)", "setup_cost_usd": 10000, "setup_days": 90, "complexity_score": 5 }
+    ],
+    "RS": [
+      { "tier": "Sole Trader", "local_term": "Preduzetnik", "setup_cost_usd": 30, "setup_days": 5, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Drustvo s ogranicenom odgovornoscu (d.o.o.)", "setup_cost_usd": 200, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Akcionarsko drustvo (a.d.)", "setup_cost_usd": 2000, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "RW": [
+      { "tier": "Sole Trader", "local_term": "Sole Proprietorship", "setup_cost_usd": 0, "setup_days": 1, "complexity_score": 1 },
+      { "tier": "LLC", "local_term": "Private Company Limited (Ltd)", "setup_cost_usd": 0, "setup_days": 1, "complexity_score": 1 },
+      { "tier": "Joint-Stock", "local_term": "Public Company", "setup_cost_usd": 300, "setup_days": 14, "complexity_score": 3 }
+    ],
+    "SA": [
+      { "tier": "Sole Trader", "local_term": "Mu'assasa Fardiyya", "setup_cost_usd": 500, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Sharikat dhat Mas'uliyya Mahdooda (LLC)", "setup_cost_usd": 1500, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Sharikat Musahima (Joint-Stock)", "setup_cost_usd": 5000, "setup_days": 60, "complexity_score": 5 }
+    ],
+    "SC": [
+      { "tier": "Sole Trader", "local_term": "Sole Trader", "setup_cost_usd": 100, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Domestic Company (Ltd)", "setup_cost_usd": 300, "setup_days": 14, "complexity_score": 3 }
+    ],
+    "SI": [
+      { "tier": "Sole Trader", "local_term": "Samostojni Podjetnik (s.p.)", "setup_cost_usd": 0, "setup_days": 3, "complexity_score": 1 },
+      { "tier": "LLC", "local_term": "Druzba z omejeno odgovornostjo (d.o.o.)", "setup_cost_usd": 300, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Delniska druzba (d.d.)", "setup_cost_usd": 3000, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "SK": [
+      { "tier": "Sole Trader", "local_term": "Zivnostnik", "setup_cost_usd": 30, "setup_days": 5, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Spolocnost s rucenim obmedzenym (s.r.o.)", "setup_cost_usd": 200, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Akciova Spolocnost (a.s.)", "setup_cost_usd": 3000, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "SL": [
+      { "tier": "Sole Trader", "local_term": "Sole Proprietorship", "setup_cost_usd": 40, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Limited Liability Company", "setup_cost_usd": 250, "setup_days": 21, "complexity_score": 4 }
+    ],
+    "SN": [
+      { "tier": "Sole Trader", "local_term": "Entreprise Individuelle", "setup_cost_usd": 30, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "SARL OHADA", "setup_cost_usd": 200, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "SA OHADA", "setup_cost_usd": 1200, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "SV": [
+      { "tier": "Sole Trader", "local_term": "Comerciante Individual", "setup_cost_usd": 30, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Sociedad de Responsabilidad Limitada (SRL)", "setup_cost_usd": 200, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Sociedad Anonima (SA)", "setup_cost_usd": 500, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "SZ": [
+      { "tier": "Sole Trader", "local_term": "Sole Proprietor", "setup_cost_usd": 30, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Private Company (Pty Ltd)", "setup_cost_usd": 200, "setup_days": 14, "complexity_score": 3 }
+    ],
+    "TD": [
+      { "tier": "Sole Trader", "local_term": "Entreprise Individuelle", "setup_cost_usd": 100, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "LLC", "local_term": "SARL OHADA", "setup_cost_usd": 500, "setup_days": 30, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "SA OHADA", "setup_cost_usd": 2500, "setup_days": 60, "complexity_score": 5 }
+    ],
+    "TG": [
+      { "tier": "Sole Trader", "local_term": "Entreprise Individuelle", "setup_cost_usd": 30, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "SARL OHADA", "setup_cost_usd": 200, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "SA OHADA", "setup_cost_usd": 1000, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "TJ": [
+      { "tier": "Sole Trader", "local_term": "Sole Entrepreneur", "setup_cost_usd": 20, "setup_days": 5, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Limited Liability Company (LLC)", "setup_cost_usd": 200, "setup_days": 14, "complexity_score": 3 }
+    ],
+    "TM": [
+      { "tier": "Sole Trader", "local_term": "Sole Entrepreneur", "setup_cost_usd": 50, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Limited Liability Company (LLC)", "setup_cost_usd": 300, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "TN": [
+      { "tier": "Freelancer", "local_term": "Auto-entrepreneur", "setup_cost_usd": 20, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Societe a Responsabilite Limitee (SARL)", "setup_cost_usd": 200, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Societe Anonyme (SA)", "setup_cost_usd": 1200, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "TT": [
+      { "tier": "Sole Trader", "local_term": "Sole Trader", "setup_cost_usd": 50, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Limited Liability Company (Ltd)", "setup_cost_usd": 300, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Public Limited Company", "setup_cost_usd": 1000, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "TW": [
+      { "tier": "Sole Trader", "local_term": "Du Zi Shang Hao (Sole Proprietorship)", "setup_cost_usd": 30, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "You Xian Gong Si (Limited Company)", "setup_cost_usd": 200, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Gu Fen You Xian Gong Si (Company Limited by Shares)", "setup_cost_usd": 1000, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "TZ": [
+      { "tier": "Sole Trader", "local_term": "Sole Proprietorship", "setup_cost_usd": 15, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Private Limited Company (Ltd)", "setup_cost_usd": 300, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Public Limited Company (PLC)", "setup_cost_usd": 1500, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "UG": [
+      { "tier": "Sole Trader", "local_term": "Sole Proprietorship", "setup_cost_usd": 10, "setup_days": 5, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Private Limited Company (Ltd)", "setup_cost_usd": 60, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Public Limited Company (PLC)", "setup_cost_usd": 500, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "UY": [
+      { "tier": "Sole Trader", "local_term": "Empresa Unipersonal (Monotributo)", "setup_cost_usd": 50, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Sociedad de Responsabilidad Limitada (SRL)", "setup_cost_usd": 500, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Sociedad Anonima (SA)", "setup_cost_usd": 1500, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "UZ": [
+      { "tier": "Sole Trader", "local_term": "Yakka Tartibdagi Tadbirkor", "setup_cost_usd": 20, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Mas'uliyati Cheklangan Jamiyat (MChJ / LLC)", "setup_cost_usd": 200, "setup_days": 14, "complexity_score": 3 }
+    ],
+    "VE": [
+      { "tier": "Sole Trader", "local_term": "Firma Personal", "setup_cost_usd": 20, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Compania Anonima (CA)", "setup_cost_usd": 200, "setup_days": 30, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Sociedad Anonima (SA)", "setup_cost_usd": 1000, "setup_days": 60, "complexity_score": 5 }
+    ],
+    "YE": [
+      { "tier": "Sole Trader", "local_term": "Mu'assasa Fardiyya", "setup_cost_usd": 50, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "LLC", "local_term": "Sharikat dhat Mas'uliyya Mahdooda", "setup_cost_usd": 300, "setup_days": 45, "complexity_score": 5 }
+    ],
+    "ZA": [
+      { "tier": "Sole Trader", "local_term": "Sole Proprietor", "setup_cost_usd": 0, "setup_days": 1, "complexity_score": 1 },
+      { "tier": "LLC", "local_term": "Private Company (Pty Ltd)", "setup_cost_usd": 10, "setup_days": 5, "complexity_score": 2 },
+      { "tier": "Joint-Stock", "local_term": "Public Company (Ltd)", "setup_cost_usd": 300, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "ZM": [
+      { "tier": "Sole Trader", "local_term": "Sole Proprietorship", "setup_cost_usd": 50, "setup_days": 7, "complexity_score": 2 },
+      { "tier": "LLC", "local_term": "Private Limited Company (Ltd)", "setup_cost_usd": 100, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "Joint-Stock", "local_term": "Public Limited Company (PLC)", "setup_cost_usd": 500, "setup_days": 30, "complexity_score": 4 }
+    ],
+    "ZW": [
+      { "tier": "Sole Trader", "local_term": "Sole Proprietorship", "setup_cost_usd": 50, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Private Business Corporation (PBC)", "setup_cost_usd": 100, "setup_days": 14, "complexity_score": 3 },
+      { "tier": "LLC", "local_term": "Private Limited Company (Pvt Ltd)", "setup_cost_usd": 300, "setup_days": 21, "complexity_score": 4 },
+      { "tier": "Joint-Stock", "local_term": "Public Limited Company (Ltd)", "setup_cost_usd": 1000, "setup_days": 45, "complexity_score": 5 }
     ]
   }
 }

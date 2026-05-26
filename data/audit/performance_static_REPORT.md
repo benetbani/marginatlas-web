@@ -1,6 +1,6 @@
 # Performance static audit (Plan v24 Block 12)
 
-Generated 2026-05-22T03:39:03.587Z.
+Generated 2026-05-26T01:44:24.924Z.
 
 ## Force-dynamic routes
 
@@ -22,23 +22,23 @@ did most of this).
 |---|---:|
 | next | 133.2 MB |
 | @phosphor-icons/react | 31.5 MB |
+| lucide-react | 28.8 MB |
 | typescript | 22.5 MB |
+| world-atlas | 7.8 MB |
 | react-dom | 7.0 MB |
 | tailwindcss | 5.3 MB |
-| @sentry/nextjs | 2.7 MB |
 | @types/node | 2.3 MB |
+| @sentry/nextjs | 2.0 MB |
 | simple-statistics | 1.1 MB |
-| @supabase/supabase-js | 0.5 MB |
+| tailwind-merge | 1.0 MB |
+| @supabase/supabase-js | 0.6 MB |
 | @types/react | 0.4 MB |
+| @vercel/speed-insights | 0.3 MB |
 | postcss | 0.2 MB |
-| autoprefixer | 0.2 MB |
-| react | 0.2 MB |
-| gray-matter | 0.0 MB |
-| @types/react-dom | 0.0 MB |
 
 ## Static chunks total
 
-Total `.next/static/chunks` size: **1485.2 KB**
+Total `.next/static/chunks` size: **1816.1 KB**
 
 (Detailed per-route First Load JS sizes are in the `next build`
 output; not parsed here.)

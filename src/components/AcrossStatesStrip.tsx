@@ -1,13 +1,19 @@
 /**
  * AcrossStatesStrip — horizontal "how this industry stacks up across the
- * country" view. Bar lengths are firm count (or revenue) relative to the
- * leader. Each row is a link to that state's cell page for the same
- * industry.
+ * country" view. Bar lengths are typical revenue per firm relative to the
+ * leader (the number rendered on the right). Each row links to that
+ * state's cell page for the same industry.
+ *
+ * Visual upgrade §3 (2026-05-26): migrated to BarList primitive. Old
+ * version had a bug: bar length was n_enterprises but the displayed
+ * number was revenue_per_firm — the bars and numbers told different
+ * stories. Now both match.
  */
 
 import type { Cell } from "@/lib/cells";
 import { cellUrl } from "@/lib/cells";
 import { fmtMoney } from "@/lib/format/money";
+import { BarList } from "@/components/ui/bar-list";
 
 type CellLike = Cell;
 
@@ -19,40 +25,31 @@ type Props = {
 
 export function AcrossStatesStrip({ industryName, currentGeoName, cells }: Props) {
   if (cells.length === 0) return null;
-  const maxN = Math.max(...cells.map((c) => c.n_enterprises || 0));
+  // Drop rows we cannot rank — no revenue, no bar.
+  const ranked = cells
+    .filter((c) => typeof c.revenue_per_firm === "number" && c.revenue_per_firm > 0)
+    .sort((a, b) => (b.revenue_per_firm || 0) - (a.revenue_per_firm || 0));
+  if (ranked.length === 0) return null;
+
   return (
     <section className="py-8">
       <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
         {industryName} across the country
       </h2>
       <p className="text-sm text-ink-700/70 mt-1">
-        How {currentGeoName} stacks up against the other states with the most
-        firms in this industry.
+        How {currentGeoName} stacks up against the other states. Bars and
+        numbers both show typical revenue per firm.
       </p>
-      <div className="mt-4 card">
-        <div className="space-y-1.5">
-          {cells.map((c) => {
-            const pct = maxN > 0 && c.n_enterprises ? Math.max(6, (c.n_enterprises / maxN) * 100) : 0;
-            return (
-              <a
-                key={c.geo_id}
-                href={cellUrl(c) || "#"}
-                className="grid grid-cols-[140px_1fr_auto] items-center gap-3 px-2 py-1.5 rounded hover:bg-ink-100/60 transition"
-              >
-                <div className="text-sm text-ink-900 truncate">{c.geo_name || c.geo_id}</div>
-                <div className="h-3 bg-cream-100/70 rounded overflow-hidden">
-                  <div
-                    className="h-full bg-atlas-500"
-                    style={{ width: `${pct}%`, transition: "width 0.4s ease" }}
-                  />
-                </div>
-                <div className="text-xs text-ink-700/60 tabular-nums text-right w-20">
-                  {fmtMoney(c.revenue_per_firm)}
-                </div>
-              </a>
-            );
-          })}
-        </div>
+      <div className="mt-4 atlas-card p-4 md:p-5">
+        <BarList
+          size="compact"
+          data={ranked.map((c) => ({
+            name: c.geo_name || c.geo_id,
+            value: c.revenue_per_firm || 0,
+            href: cellUrl(c) || undefined,
+          }))}
+          valueFormatter={(n) => fmtMoney(n)}
+        />
       </div>
     </section>
   );

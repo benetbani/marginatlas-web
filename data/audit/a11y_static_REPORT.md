@@ -1,8 +1,8 @@
 # Accessibility static audit (Plan v24 Block 10)
 
-Generated 2026-05-22T03:37:38.449Z.
+Generated 2026-05-26T01:47:49.346Z.
 
-Scanned 146 TS/TSX source files.
+Scanned 282 TS/TSX source files.
 
 ## Findings
 

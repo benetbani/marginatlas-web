@@ -36,7 +36,8 @@ type FindingType =
   | "fixed-px-width"
   | "large-text-no-mobile"
   | "high-col-no-breakpoint"
-  | "tiny-tap-target";
+  | "tiny-tap-target"
+  | "nowrap-on-content";
 
 type Finding = {
   type: FindingType;
@@ -59,9 +60,27 @@ function walk(dir: string, acc: string[] = []): string[] {
 function classifyLine(file: string, lineNo: number, line: string): Finding | null {
   const rel = file.replace(ROOT, ".").replace(/\\/g, "/");
 
+  // Skip pure comment lines (JSX or JS comments) — they describe code,
+  // they don't render.
+  const trimmed = line.trim();
+  if (
+    trimmed.startsWith("//") ||
+    trimmed.startsWith("*") ||
+    trimmed.startsWith("/*") ||
+    trimmed.startsWith("{/*")
+  ) {
+    return null;
+  }
+
+  // Skip the typography token registry — it defines the canonical sizes
+  // for the rest of the codebase, it's not a use site.
+  if (rel.endsWith("/lib/ui/typography.ts")) return null;
+
   // 1. Fixed px widths in arbitrary value classes
   // e.g. w-[800px], min-w-[1200px], style={{ width: "1024px" }}
-  const fixedPx = /(?:w-|min-w-|max-w-)\[(\d+)px\]/.exec(line);
+  // max-w- is intentionally excluded — it caps width on large screens
+  // but lets smaller screens use 100%, so it never breaks mobile.
+  const fixedPx = /(?:^|\s)(?:w-|min-w-)\[(\d+)px\]/.exec(line);
   if (fixedPx) {
     const n = parseInt(fixedPx[1], 10);
     if (n > 400) {
@@ -88,20 +107,20 @@ function classifyLine(file: string, lineNo: number, line: string): Finding | nul
     }
   }
 
-  // 2. Large text (text-5xl/6xl/7xl etc.) with NO smaller-text base or
-  // explicit mobile variant on the same className. The common safe
-  // pattern is `text-4xl md:text-6xl` — base (mobile) is small, larger
-  // for desktop. Warn only when the large size has no smaller text-N
-  // partner on the same line.
-  const largeTxt = /\btext-([5-9])xl\b/.exec(line) || /\btext-([1-9]\d)xl\b/.exec(line);
-  if (largeTxt) {
-    // Any smaller text-Nxl, text-Nrm, text-base, text-sm, text-xs on
-    // the same line counts as a mobile base. (Order: text-xs < text-sm <
-    // text-base < text-lg < text-xl < text-2xl < text-3xl < text-4xl.)
+  // 2. Large text (text-5xl/6xl/7xl etc.) where the unprefixed (mobile)
+  // base IS the large size. Safe pattern: `text-3xl md:text-5xl` — base
+  // is small, larger only on >=md. Warn when the large size appears
+  // without a breakpoint prefix AND no smaller base accompanies it.
+  // Mobile-only components (path contains /mobile/) are exempt.
+  if (!rel.includes("/mobile/")) {
+    // Match large sizes that appear WITHOUT a responsive prefix.
+    // Find any `text-Nxl` (N>=5) not preceded by `sm:`/`md:`/`lg:`/`xl:`/`2xl:`.
+    const largeMatches =
+      line.match(/(?<!:)\btext-(?:[5-9]|\d{2,})xl\b/g) || [];
+    // Mobile-base sizes that count as a safe small companion.
     const hasSmallerBase =
-      /\btext-(xs|sm|base|lg|xl|2xl|3xl|4xl)\b/.test(line) ||
-      /\b(sm|xs):text-/.test(line);
-    if (!hasSmallerBase) {
+      /(?<!:)\btext-(?:xs|sm|base|lg|xl|2xl|3xl|4xl)\b/.test(line);
+    if (largeMatches.length > 0 && !hasSmallerBase) {
       return {
         type: "large-text-no-mobile",
         severity: "warn",
@@ -143,6 +162,31 @@ function classifyLine(file: string, lineNo: number, line: string): Finding | nul
     };
   }
 
+  // 5. whitespace-nowrap on potentially long content. Tolerated when the
+  // line also contains `truncate` (clipping is intentional), `tabular-nums`
+  // (numbers are short), or small-text (`text-xs`, `text-[10/11px]`).
+  // Also tolerated on the canonical button/tabs primitives where the
+  // nowrap is the whole point of the variant.
+  if (/\bwhitespace-nowrap\b/.test(line)) {
+    // Skip when the nowrap class is not actually in a `className` attr —
+    // that means it's in a comment or string explanation, not a render.
+    if (!/className=/.test(line)) return null;
+    const tolerated =
+      /\b(truncate|tabular-nums|text-\[10px\]|text-\[11px\]|text-xs)\b/.test(line) ||
+      /sr-only/.test(line) ||
+      rel.endsWith("/ui/button.tsx") ||
+      rel.endsWith("/ui/tabs.tsx");
+    if (!tolerated) {
+      return {
+        type: "nowrap-on-content",
+        severity: "info",
+        file: rel,
+        line: lineNo,
+        snippet: line.trim().slice(0, 160),
+      };
+    }
+  }
+
   return null;
 }
 
@@ -172,6 +216,7 @@ function main() {
     "large-text-no-mobile": 0,
     "high-col-no-breakpoint": 0,
     "tiny-tap-target": 0,
+    "nowrap-on-content": 0,
   };
   for (const f of findings) counters[f.type]++;
 
@@ -190,6 +235,7 @@ function main() {
     "large-text-no-mobile": [],
     "high-col-no-breakpoint": [],
     "tiny-tap-target": [],
+    "nowrap-on-content": [],
   };
   for (const f of findings) byType[f.type].push(f);
 

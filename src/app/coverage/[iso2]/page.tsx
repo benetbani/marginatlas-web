@@ -8,6 +8,7 @@ import path from "node:path";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { COUNTRIES } from "@/lib/taxonomy";
+import { ProgressBar } from "@/components/ui/progress-bar";
 
 export const revalidate = 21600;
 
@@ -148,9 +149,20 @@ export default async function PerCountryCoverage({
               <h2 className="text-lg font-semibold text-ink-900 mb-3">
                 Confidence tier distribution
               </h2>
-              <ul className="space-y-1.5 text-sm">
+              <ul className="space-y-2.5 text-sm">
                 {tierEntries.map(([tier, count]) => {
                   const pct = totalCells > 0 ? (count / totalCells) * 100 : 0;
+                  // Tone: A = success (deep green), B = default (atlas),
+                  // C = warning (amber), D = muted. Reinforces the tier
+                  // semantic without needing the legend.
+                  const tone =
+                    tier === "A"
+                      ? "success"
+                      : tier === "C"
+                        ? "warning"
+                        : tier === "D"
+                          ? "muted"
+                          : "default";
                   return (
                     <li
                       key={tier}
@@ -159,12 +171,12 @@ export default async function PerCountryCoverage({
                       <span className="font-mono font-semibold text-ink-900">
                         {tier}
                       </span>
-                      <div className="h-2 bg-cream-100 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-atlas-500"
-                          style={{ width: `${pct}%` }}
-                        />
-                      </div>
+                      <ProgressBar
+                        value={pct}
+                        max={100}
+                        tone={tone}
+                        size="sm"
+                      />
                       <span className="text-right text-ink-800 tabular-nums">
                         {count.toLocaleString()}
                       </span>

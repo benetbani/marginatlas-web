@@ -136,8 +136,11 @@ export default function CityHeroV2({
             </div>
 
             {/* city name */}
+            {/* Mobile audit §6 fix (2026-05-26): added text-4xl base for
+                <=375px so long city names ("San Francisco", "Buenos Aires")
+                don't overflow the column at 320-375px viewports. */}
             <h1
-              className="mt-2 font-display text-5xl font-medium leading-[1.05] text-black"
+              className="mt-2 font-display text-4xl sm:text-5xl font-medium leading-[1.05] text-black"
               style={{ fontFamily: "Newsreader, serif" }}
             >
               {cityName}

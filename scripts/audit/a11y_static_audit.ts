@@ -64,6 +64,17 @@ function classifyLine(file: string, lineNo: number, line: string): Finding[] {
   const rel = file.replace(ROOT, ".").replace(/\\/g, "/");
   const out: Finding[] = [];
 
+  // Skip pure comment lines — `<img>` in a doc comment is not a render.
+  const trimmed = line.trim();
+  if (
+    trimmed.startsWith("//") ||
+    trimmed.startsWith("*") ||
+    trimmed.startsWith("/*") ||
+    trimmed.startsWith("{/*")
+  ) {
+    return out;
+  }
+
   // 1. <img> without alt= and not inside next/image which has alt prop
   // For Next's <Image> we expect `alt="..."` in props.
   // Match: <img ...> or <Image ...> on the line, check no alt= attribute.
@@ -119,20 +130,28 @@ function classifyLine(file: string, lineNo: number, line: string): Finding[] {
 
   // 4. Icon-only buttons (button with className but no children text on same line,
   // no aria-label). Detect <button>{...icon...}</button> pattern.
-  // Very crude — we check for <button> with className but no aria-label
-  // on the line, and no text-like inner content.
+  //
+  // Refined to avoid false positives:
+  //   - Multi-line buttons (no </button> on this line) are skipped —
+  //     we cannot tell what's inside from this line alone.
+  //   - Interpolated children ({foo}) are skipped — the interpolation
+  //     might inject a label.
+  // Only flag the obvious single-line icon-only button case.
   const btnTag = /<button\b([^>]*)>/.exec(line);
   if (btnTag) {
     const attrs = btnTag[1];
     const hasAriaLabel = /\baria-label(?:ledby)?\s*=/.test(attrs);
     if (!hasAriaLabel) {
-      // Check that the line OR a few characters after the tag contain
-      // recognisable visible text. We can't fully parse JSX with a regex.
-      // Look for any non-tag, non-curly text between this <button> and
-      // the </button> or end-of-line.
       const after = line.slice(btnTag.index + btnTag[0].length);
-      const hasText = /[A-Za-z]{3,}/.test(after.replace(/<[^>]+>/g, "").replace(/\{[^}]*\}/g, ""));
-      if (!hasText) {
+      const closesOnSameLine = /<\/button>/.test(after);
+      const hasInterpolation = /\{[^}]*\}/.test(after);
+      if (!closesOnSameLine || hasInterpolation) {
+        // We cannot determine inner content reliably; skip rather than
+        // surface a false positive.
+      } else {
+        const visibleText = after.replace(/<[^>]+>/g, "").trim();
+        const hasText = /[A-Za-z]{3,}/.test(visibleText);
+        if (!hasText) {
         // Likely icon-only button — needs aria-label.
         out.push({
           type: "icon-button-no-label",
@@ -141,6 +160,7 @@ function classifyLine(file: string, lineNo: number, line: string): Finding[] {
           line: lineNo,
           snippet: line.trim().slice(0, 160),
         });
+        }
       }
     }
   }

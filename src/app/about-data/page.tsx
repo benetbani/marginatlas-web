@@ -114,6 +114,22 @@ export default function AboutDataPage() {
       </section>
 
       <section className="mt-10">
+        <h2 className="text-xl font-semibold text-ink-900">Business formation data</h2>
+        <p className="mt-3 text-ink-800">
+          Setup cost and days-to-start figures cover 152 countries. Numbers
+          combine commercial registry filings, national investment promotion
+          agency guides, and international benchmarking archives. Formation
+          regimes change slowly: most countries' setup days have moved by
+          less than a week in the last decade.
+        </p>
+        <p className="mt-3 text-ink-800">
+          Costs are the mandatory government and notary fees in USD-equivalent.
+          Professional service fees (lawyers, accountants, registered office
+          rental) are not included.
+        </p>
+      </section>
+
+      <section className="mt-10">
         <h2 className="text-xl font-semibold text-ink-900">Updates</h2>
         <p className="mt-3 text-ink-800">
           The dataset is refreshed regularly. Each benchmark page indicates the recency of the underlying observation.

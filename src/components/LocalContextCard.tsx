@@ -11,8 +11,13 @@
  * Source: data/.../country_smb_baseline.json — already used by the
  * synthesis engine, so we're surfacing the same numbers that drive
  * estimated cells. Server component, zero client cost.
+ *
+ * Visual upgrade §3 (2026-05-26): 4 hand-rolled stat tiles migrated to
+ * the StatCard primitive so they match the rest of the site's stat
+ * rhythm.
  */
 import countryBaseline from "@/lib/cells/country_smb_baseline.json";
+import { StatCard } from "@/components/ui/stat-card";
 
 type Baseline = {
   payroll_per_employee_usd: number;
@@ -64,50 +69,38 @@ export function LocalContextCard({ iso2, countryName }: Props) {
         figures against the local economy.
       </p>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-        <div className="rounded-2xl border border-parchment bg-white p-5">
-          <div className="text-xs uppercase tracking-wide text-cocoa-700/60 font-semibold mb-2">
-            Median wage
-          </div>
-          <div className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 tabular-nums">
-            {fmtMoney(cb.payroll_per_employee_usd)}
-          </div>
-          <div className="text-xs text-cocoa-700/70 mt-2">
-            per employee, per year
-          </div>
-        </div>
-        <div className="rounded-2xl border border-parchment bg-white p-5">
-          <div className="text-xs uppercase tracking-wide text-cocoa-700/60 font-semibold mb-2">
-            Price tier
-          </div>
-          <div className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 tabular-nums">
-            {cb.revenue_multiplier.toFixed(2)}x
-          </div>
-          <div className="text-xs text-cocoa-700/70 mt-2">
-            vs global median
-          </div>
-        </div>
-        <div className="rounded-2xl border border-parchment bg-white p-5">
-          <div className="text-xs uppercase tracking-wide text-cocoa-700/60 font-semibold mb-2">
-            Currency
-          </div>
-          <div className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900">
-            {cb.currency} USD
-          </div>
-          <div className="text-xs text-cocoa-700/70 mt-2">
-            displayed in dollars
-          </div>
-        </div>
-        <div className="rounded-2xl border border-parchment bg-white p-5">
-          <div className="text-xs uppercase tracking-wide text-cocoa-700/60 font-semibold mb-2">
-            Market type
-          </div>
-          <div className="font-display text-base md:text-lg font-medium tracking-tight text-ink-900 leading-tight">
-            {tierLabel}
-          </div>
-          <div className="text-xs text-cocoa-700/70 mt-2">
-            for {countryName || upper}
-          </div>
-        </div>
+        <StatCard
+          variant="card"
+          size="lg"
+          label="Median wage"
+          value={fmtMoney(cb.payroll_per_employee_usd)}
+          sub="per employee, per year"
+        />
+        <StatCard
+          variant="card"
+          size="lg"
+          label="Price tier"
+          value={`${cb.revenue_multiplier.toFixed(2)}x`}
+          sub="vs global median"
+        />
+        <StatCard
+          variant="card"
+          size="lg"
+          label="Currency"
+          value={`${cb.currency} USD`}
+          sub="displayed in dollars"
+        />
+        <StatCard
+          variant="card"
+          size="lg"
+          label="Market type"
+          value={
+            <span className="text-base md:text-lg font-medium leading-tight normal-case tracking-normal">
+              {tierLabel}
+            </span>
+          }
+          sub={`for ${countryName || upper}`}
+        />
       </div>
     </section>
   );

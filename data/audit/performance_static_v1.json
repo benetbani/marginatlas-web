@@ -23,8 +23,16 @@
       "sizeMB": 31.49739933013916
     },
     {
+      "name": "lucide-react",
+      "sizeMB": 28.76217555999756
+    },
+    {
       "name": "typescript",
       "sizeMB": 22.53061866760254
+    },
+    {
+      "name": "world-atlas",
+      "sizeMB": 7.838848114013672
     },
     {
       "name": "react-dom",
@@ -35,48 +43,40 @@
       "sizeMB": 5.331116676330566
     },
     {
-      "name": "@sentry/nextjs",
-      "sizeMB": 2.7226181030273438
-    },
-    {
       "name": "@types/node",
       "sizeMB": 2.3145885467529297
+    },
+    {
+      "name": "@sentry/nextjs",
+      "sizeMB": 1.9983482360839844
     },
     {
       "name": "simple-statistics",
       "sizeMB": 1.1298656463623047
     },
     {
+      "name": "tailwind-merge",
+      "sizeMB": 0.9677753448486328
+    },
+    {
       "name": "@supabase/supabase-js",
-      "sizeMB": 0.4610738754272461
+      "sizeMB": 0.5933856964111328
     },
     {
       "name": "@types/react",
-      "sizeMB": 0.4213380813598633
+      "sizeMB": 0.4213838577270508
+    },
+    {
+      "name": "@vercel/speed-insights",
+      "sizeMB": 0.34967899322509766
     },
     {
       "name": "postcss",
       "sizeMB": 0.1960926055908203
-    },
-    {
-      "name": "autoprefixer",
-      "sizeMB": 0.1898508071899414
-    },
-    {
-      "name": "react",
-      "sizeMB": 0.16365432739257812
-    },
-    {
-      "name": "gray-matter",
-      "sizeMB": 0.03683185577392578
-    },
-    {
-      "name": "@types/react-dom",
-      "sizeMB": 0.03644275665283203
     }
   ],
   "build": {
     "routes": [],
-    "shared": 1485.1748046875
+    "shared": 1816.0849609375
   }
 }
