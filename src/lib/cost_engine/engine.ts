@@ -133,6 +133,83 @@ function getSectorICP(industryId: string): SectorICP {
   return ICP.sectors[sector] || ICP.default_fallback;
 }
 
+/**
+ * ATO Phase 2 helper. Returns the key-benchmark designation for an
+ * industry, plus the underlying share value and one-sentence
+ * rationale. Used by the cell-page KeyBenchmarkBanner.
+ *
+ * - `kb` is one of cogs / labor / rent / motor_vehicle / total_expenses.
+ * - `share` is the raw 0-1 cost-share for that ratio against revenue.
+ *   total_expenses is reported as the sum of all cost shares.
+ * - `range` is a fabricated +/- 4-percentage-point band around the
+ *   sector's typical, used to display "your typical range is X-Y%".
+ *   Phase 6 (turnover-band axis) will replace this with band-specific
+ *   ranges derived from observed quantiles.
+ */
+export function getKeyBenchmarkForIndustry(industryId: string): {
+  kb: KeyBenchmark;
+  share: number;
+  range: { low: number; high: number };
+  rationale: string;
+} {
+  const icp = getSectorICP(industryId);
+  const kb: KeyBenchmark = icp.key_benchmark;
+  const totalCostShare =
+    icp.cogs_share +
+    icp.labor_share +
+    icp.rent_share +
+    icp.energy_share +
+    icp.marketing_share +
+    icp.software_share +
+    icp.insurance_share +
+    icp.motor_vehicle_share +
+    icp.other_overhead_share;
+  let share: number;
+  switch (kb) {
+    case "cogs":
+      share = icp.cogs_share;
+      break;
+    case "labor":
+      share = icp.labor_share;
+      break;
+    case "rent":
+      share = icp.rent_share;
+      break;
+    case "motor_vehicle":
+      share = icp.motor_vehicle_share;
+      break;
+    case "total_expenses":
+      share = totalCostShare;
+      break;
+  }
+  // +/- 4pp band, clamped to [0, 1].
+  const halfWidth = 0.04;
+  const low = Math.max(0, share - halfWidth);
+  const high = Math.min(1, share + halfWidth);
+  return {
+    kb,
+    share,
+    range: { low, high },
+    rationale: icp.key_benchmark_rationale,
+  };
+}
+
+/** Display label for a KeyBenchmark value. */
+export function labelKeyBenchmark(kb: KeyBenchmark): string {
+  switch (kb) {
+    case "cogs":
+      return "Cost of sales";
+    case "labor":
+      return "Labour cost";
+    case "rent":
+      return "Rent";
+    case "motor_vehicle":
+      return "Motor vehicle";
+    case "total_expenses":
+      return "Total expenses";
+  }
+}
+
 // ============ Modifier functions ============
 
 const GLOBAL_GDP_REFERENCE = 35000;

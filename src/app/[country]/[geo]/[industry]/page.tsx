@@ -94,6 +94,7 @@ import { AnnualCostStack } from "@/components/sections/AnnualCostStack";
 // supporting data is absent (industries without operating-units data,
 // without failure-modes coverage, without setup_costs).
 import { TangibleUnits } from "@/components/sections/TangibleUnits";
+import { KeyBenchmarkBanner } from "@/components/sections/KeyBenchmarkBanner";
 import { FailureModes } from "@/components/sections/FailureModes";
 // v34 Phase G reverted: InlineMidArticle temporarily removed.
 // import { InlineMidArticle } from "@/components/newsletter/NewsletterSignupVariants";
@@ -710,6 +711,12 @@ export default async function CellPage({
           </section>
         );
       })()}
+
+      {/* ATO Phase 2 — Key Benchmark banner. Surfaces ONE ratio per
+         industry as the headline answer to "am I normal?". Sits at
+         the top of the body so the reader sees the headline ratio
+         before the distribution chart. */}
+      <KeyBenchmarkBanner cell={cell} />
 
       {/* Plan v32 Sprint G Tier-1 — tangible units. Translates revenue
          into daily transactions + average ticket + texture note. */}
