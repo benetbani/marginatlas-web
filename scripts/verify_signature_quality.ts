@@ -26,7 +26,7 @@ type Sig = {
 };
 
 const country = JSON.parse(fs.readFileSync(COUNTRY_PATH, "utf-8")) as { countries: Record<string, Sig> };
-const city = JSON.parse(fs.readFileSync(CITY_PATH, "utf-8")) as { cities: Record<string, Sig> };
+const city = JSON.parse(fs.readFileSync(CITY_PATH, "utf-8")) as { cities: Record<string, Partial<Sig>> };
 const profile = JSON.parse(fs.readFileSync(PROFILE_PATH, "utf-8")) as { countries: Record<string, { iso2: string }> };
 const cityList = JSON.parse(fs.readFileSync(CITY_LIST_PATH, "utf-8")) as { cities: Array<{ slug: string; iso2: string; tier: number }> };
 
@@ -115,16 +115,33 @@ for (const [slug, citySig] of Object.entries(city.cities)) {
   const countryBaseline = country.countries[iso];
   if (!countryBaseline) continue;
   cityOverrides++;
-  for (const f of CULTURE_FIELDS) {
-    const delta = Math.abs(citySig.culture[f] - countryBaseline.culture[f]);
-    if (delta > 3) {
-      warnCheck(`[city ${slug}] culture.${f} diverges ${delta} pts from country ${iso}`);
+  // Partial overrides are valid (e.g. commercial_streets only). Only
+  // run the divergence check on fields the city actually overrides.
+  if (citySig.culture) {
+    for (const f of CULTURE_FIELDS) {
+      const delta = Math.abs(citySig.culture[f] - countryBaseline.culture[f]);
+      if (delta > 3) {
+        warnCheck(`[city ${slug}] culture.${f} diverges ${delta} pts from country ${iso}`);
+      }
     }
   }
-  for (const f of GOVERNMENT_FIELDS) {
-    const delta = Math.abs(citySig.government[f] - countryBaseline.government[f]);
-    if (delta > 3) {
-      warnCheck(`[city ${slug}] government.${f} diverges ${delta} pts from country ${iso}`);
+  if (citySig.government) {
+    for (const f of GOVERNMENT_FIELDS) {
+      const delta = Math.abs(citySig.government[f] - countryBaseline.government[f]);
+      if (delta > 3) {
+        warnCheck(`[city ${slug}] government.${f} diverges ${delta} pts from country ${iso}`);
+      }
+    }
+  }
+  // Commercial streets sanity: each entry needs name + area + sells.
+  if (citySig.commercial_streets) {
+    for (const s of citySig.commercial_streets) {
+      if (!s.name || !s.area || !s.sells) {
+        failCheck(`[city ${slug}] commercial street missing required field`);
+      }
+    }
+    if (citySig.commercial_streets.length < 3) {
+      warnCheck(`[city ${slug}] only ${citySig.commercial_streets.length} commercial streets`);
     }
   }
 }

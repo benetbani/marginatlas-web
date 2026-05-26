@@ -55,24 +55,46 @@ type CitySignature = {
   notes?: string;
 };
 
-const FILE = signatureJson as { cities: Record<string, CitySignature> };
+// A city override may be partial: e.g. just commercial_streets while
+// inheriting culture / government / sectors from the country baseline.
+type PartialCitySignature = Partial<CitySignature>;
+
+const FILE = signatureJson as { cities: Record<string, PartialCitySignature> };
 const COUNTRY_FILE = countrySignatureJson as { countries: Record<string, CitySignature> };
 
 /**
  * Resolve a city's signature data. Priority:
- *   1. Explicit city override in city_signature_v1.json
- *   2. Country-level baseline from country_signature_v1.json
- *   3. null (panel renders nothing)
+ *   1. Country-level baseline from country_signature_v1.json (always
+ *      starts here so culture/gov/sectors are populated by default).
+ *   2. City override merges any non-undefined fields on top.
+ *   3. null (panel renders nothing) if neither country nor city has data.
  *
- * The country fallback strips `commercial_streets` (those are city-only).
+ * Partial overrides are supported — a city can ship just
+ * commercial_streets and inherit everything else from its country.
  */
 function resolveSignature(citySlug: string, iso2: string): CitySignature | null {
-  const city = FILE.cities[citySlug];
-  if (city) return city;
   const country = COUNTRY_FILE.countries[iso2.toUpperCase()];
-  if (!country) return null;
-  // Country baseline doesn't have commercial_streets; ensure undefined.
-  return { ...country, commercial_streets: undefined };
+  const city = FILE.cities[citySlug];
+  if (!country && !city) return null;
+  if (!country) {
+    // City-only entry. Must be complete on its own — narrow by hand.
+    const c = city as CitySignature;
+    if (!c.culture || !c.government || !c.signature_sectors) return null;
+    return c;
+  }
+  if (!city) {
+    return { ...country, commercial_streets: undefined };
+  }
+  // Merge: country baseline + per-field city overrides.
+  return {
+    foreign_born_pct: city.foreign_born_pct ?? country.foreign_born_pct,
+    foreign_owned_pct: city.foreign_owned_pct ?? country.foreign_owned_pct,
+    commercial_streets: city.commercial_streets,
+    signature_sectors: city.signature_sectors ?? country.signature_sectors,
+    culture: city.culture ?? country.culture,
+    government: city.government ?? country.government,
+    notes: city.notes ?? country.notes,
+  };
 }
 
 // ---------------------------------------------------------------------------
