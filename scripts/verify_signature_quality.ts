@@ -117,17 +117,25 @@ for (const [slug, citySig] of Object.entries(city.cities)) {
   cityOverrides++;
   // Partial overrides are valid (e.g. commercial_streets only). Only
   // run the divergence check on fields the city actually overrides.
+  // Nested partials: a city may override e.g. only openness_to_foreigners.
+  // Skip fields the city does NOT override.
   if (citySig.culture) {
+    const cc = citySig.culture as Record<string, number | undefined>;
     for (const f of CULTURE_FIELDS) {
-      const delta = Math.abs(citySig.culture[f] - countryBaseline.culture[f]);
+      const cv = cc[f];
+      if (typeof cv !== "number") continue;
+      const delta = Math.abs(cv - countryBaseline.culture[f]);
       if (delta > 3) {
         warnCheck(`[city ${slug}] culture.${f} diverges ${delta} pts from country ${iso}`);
       }
     }
   }
   if (citySig.government) {
+    const cg = citySig.government as Record<string, number | undefined>;
     for (const f of GOVERNMENT_FIELDS) {
-      const delta = Math.abs(citySig.government[f] - countryBaseline.government[f]);
+      const gv = cg[f];
+      if (typeof gv !== "number") continue;
+      const delta = Math.abs(gv - countryBaseline.government[f]);
       if (delta > 3) {
         warnCheck(`[city ${slug}] government.${f} diverges ${delta} pts from country ${iso}`);
       }

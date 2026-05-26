@@ -167,7 +167,13 @@
           "area": "Eixample / Les Corts",
           "sells": "Mid-market chain retail anchored by L'Illa Diagonal mall and El Corte Inglés."
         }
-      ]
+      ],
+      "foreign_born_pct": 23,
+      "foreign_owned_pct": 14,
+      "culture": {
+        "openness_to_foreigners": 8,
+        "innovation": 7
+      }
     },
     "beijing": {
       "commercial_streets": [
@@ -196,7 +202,9 @@
           "area": "Chaoyang",
           "sells": "China World Mall plus the SKP and SKP-S luxury complex. Top-tier global brand flagships."
         }
-      ]
+      ],
+      "foreign_born_pct": 3,
+      "foreign_owned_pct": 9
     },
     "berlin": {
       "commercial_streets": [
@@ -225,7 +233,15 @@
           "area": "Charlottenburg",
           "sells": "Concept mall with pop-up boxes for emerging brands. Sits opposite the Zoo."
         }
-      ]
+      ],
+      "foreign_born_pct": 24,
+      "foreign_owned_pct": 18,
+      "culture": {
+        "openness_to_foreigners": 8,
+        "punctuality": 7,
+        "innovation": 8
+      },
+      "notes": "Berlin runs looser and more open than the German country baseline."
     },
     "chicago": {
       "commercial_streets": [
@@ -254,7 +270,9 @@
           "area": "West Loop",
           "sells": "Restaurants, food halls, the Soho House, and tech-tenant office retail."
         }
-      ]
+      ],
+      "foreign_born_pct": 22,
+      "foreign_owned_pct": 11
     },
     "delhi": {
       "commercial_streets": [
@@ -283,7 +301,9 @@
           "area": "Central Delhi",
           "sells": "Mid-market clothing, sari shops, bridal jewellery, mobile-phone retail."
         }
-      ]
+      ],
+      "foreign_born_pct": 2,
+      "foreign_owned_pct": 11
     },
     "dubai": {
       "commercial_streets": [
@@ -312,7 +332,15 @@
           "area": "Jumeirah",
           "sells": "European-style outdoor retail district: boutiques, casual dining, design-conscious."
         }
-      ]
+      ],
+      "foreign_born_pct": 88,
+      "foreign_owned_pct": 48,
+      "culture": {
+        "openness_to_foreigners": 9,
+        "innovation": 8,
+        "ambition_chest_beating": 8
+      },
+      "notes": "Dubai's foreign-born share is the global high; openness reflects expat-majority demographics."
     },
     "hong-kong": {
       "commercial_streets": [
@@ -375,7 +403,14 @@
           "area": "West End",
           "sells": "Premium chains, beauty flagships, the Apple Market, theatre crowds."
         }
-      ]
+      ],
+      "foreign_born_pct": 40,
+      "foreign_owned_pct": 23,
+      "culture": {
+        "openness_to_foreigners": 9,
+        "innovation": 8,
+        "ambition_chest_beating": 7
+      }
     },
     "los-angeles": {
       "commercial_streets": [
@@ -404,7 +439,14 @@
           "area": "Beverly Hills border",
           "sells": "Paparazzi-favoured boutiques: Kitson legacy, The Ivy restaurant, celebrity-spotting commerce."
         }
-      ]
+      ],
+      "foreign_born_pct": 37,
+      "foreign_owned_pct": 14,
+      "culture": {
+        "openness_to_foreigners": 9,
+        "ambition_chest_beating": 9,
+        "innovation": 8
+      }
     },
     "madrid": {
       "commercial_streets": [
@@ -433,7 +475,9 @@
           "area": "Centro",
           "sells": "Iron-and-glass food market: tapas, jamón, vermouth, oysters. Tourist-anchored but real."
         }
-      ]
+      ],
+      "foreign_born_pct": 22,
+      "foreign_owned_pct": 14
     },
     "mexico-city": {
       "commercial_streets": [
@@ -462,7 +506,13 @@
           "area": "Cuajimalpa",
           "sells": "Corporate-tower mall (Centro Santa Fe), Mexico's largest. Office-worker retail at scale."
         }
-      ]
+      ],
+      "foreign_born_pct": 2,
+      "foreign_owned_pct": 14,
+      "culture": {
+        "openness_to_foreigners": 7,
+        "innovation": 6
+      }
     },
     "milan": {
       "commercial_streets": [
@@ -491,7 +541,14 @@
           "area": "Porta Venezia",
           "sells": "Mass-market fashion: one of Europe's longest commercial streets by linear retail."
         }
-      ]
+      ],
+      "foreign_born_pct": 20,
+      "foreign_owned_pct": 14,
+      "culture": {
+        "punctuality": 7,
+        "ambition_chest_beating": 7
+      },
+      "notes": "Milan runs more punctual and ambitious than Italian country baseline."
     },
     "moscow": {
       "commercial_streets": [
@@ -520,7 +577,9 @@
           "area": "Presnensky",
           "sells": "Wealthy-bohemian dining cluster, boutique cafés around the iconic pond."
         }
-      ]
+      ],
+      "foreign_born_pct": 13,
+      "foreign_owned_pct": 11
     },
     "mumbai": {
       "commercial_streets": [
@@ -549,7 +608,13 @@
           "area": "Bandra West",
           "sells": "Indie boutiques, beauty parlours, the Hill Road shoe market, sea-front restaurants."
         }
-      ]
+      ],
+      "foreign_born_pct": 1,
+      "foreign_owned_pct": 12,
+      "culture": {
+        "ambition_chest_beating": 7,
+        "communication_directness": 6
+      }
     },
     "paris": {
       "commercial_streets": [
@@ -578,7 +643,12 @@
           "area": "18th",
           "sells": "Tourist crêperies, painters' easels, the Place du Tertre, indie boutiques near Sacré-Cœur."
         }
-      ]
+      ],
+      "foreign_born_pct": 20,
+      "foreign_owned_pct": 16,
+      "culture": {
+        "openness_to_foreigners": 8
+      }
     },
     "rome": {
       "commercial_streets": [
@@ -607,7 +677,9 @@
           "area": "Rione Monti",
           "sells": "Independent fashion ateliers, vintage, the Sunday Mercato Monti craft market."
         }
-      ]
+      ],
+      "foreign_born_pct": 14,
+      "foreign_owned_pct": 12
     },
     "san-francisco": {
       "commercial_streets": [
@@ -636,7 +708,15 @@
           "area": "Pacific Heights",
           "sells": "Boutique fashion, the historic Fillmore jazz district below, neighbourhood luxury."
         }
-      ]
+      ],
+      "foreign_born_pct": 34,
+      "foreign_owned_pct": 22,
+      "culture": {
+        "innovation": 10,
+        "ambition_chest_beating": 10,
+        "openness_to_foreigners": 9
+      },
+      "notes": "SF / Bay Area runs hot on innovation and ambition vs US country baseline."
     },
     "sao-paulo": {
       "commercial_streets": [
@@ -665,7 +745,13 @@
           "area": "Centro",
           "sells": "Wholesale market street: textiles, costume jewellery, the Korean-Bolivian importer cluster."
         }
-      ]
+      ],
+      "foreign_born_pct": 3,
+      "foreign_owned_pct": 18,
+      "culture": {
+        "punctuality": 5,
+        "ambition_chest_beating": 7
+      }
     },
     "seoul": {
       "commercial_streets": [
@@ -694,7 +780,13 @@
           "area": "Jung-gu",
           "sells": "24-hour wholesale fashion district: garment buyers from across Asia trade overnight."
         }
-      ]
+      ],
+      "foreign_born_pct": 4,
+      "foreign_owned_pct": 7,
+      "culture": {
+        "ambition_chest_beating": 7,
+        "innovation": 8
+      }
     },
     "shanghai": {
       "commercial_streets": [
@@ -723,7 +815,15 @@
           "area": "Huangpu waterfront",
           "sells": "Colonial-era buildings repurposed as luxury (Three on the Bund, Bund 18). Hospitality-anchored retail."
         }
-      ]
+      ],
+      "foreign_born_pct": 5,
+      "foreign_owned_pct": 14,
+      "culture": {
+        "openness_to_foreigners": 6,
+        "innovation": 8,
+        "communication_directness": 5
+      },
+      "notes": "Shanghai is more international and direct than the Chinese country baseline."
     },
     "singapore": {
       "commercial_streets": [
@@ -781,7 +881,12 @@
           "area": "Inner Sydney",
           "sells": "Design ateliers, third-wave coffee, the Bourke Street Bakery flagship, restaurant density."
         }
-      ]
+      ],
+      "foreign_born_pct": 39,
+      "foreign_owned_pct": 22,
+      "culture": {
+        "openness_to_foreigners": 9
+      }
     },
     "tokyo": {
       "commercial_streets": [
@@ -815,7 +920,12 @@
           "area": "Taito",
           "sells": "Edo-era covered arcade to Sensoji Temple: kimono, sweets, fans, lacquerware. Tourist-heavy."
         }
-      ]
+      ],
+      "foreign_born_pct": 5,
+      "foreign_owned_pct": 7,
+      "culture": {
+        "openness_to_foreigners": 5
+      }
     },
     "amsterdam": {
       "commercial_streets": [
@@ -844,7 +954,13 @@
           "area": "De Pijp",
           "sells": "Six-day-a-week outdoor market: stroopwafels, raw herring, textiles, household goods."
         }
-      ]
+      ],
+      "foreign_born_pct": 40,
+      "foreign_owned_pct": 22,
+      "culture": {
+        "communication_directness": 9,
+        "openness_to_foreigners": 9
+      }
     },
     "bangkok": {
       "commercial_streets": [
@@ -873,7 +989,12 @@
           "area": "Samphanthawong",
           "sells": "Gold shops, traditional medicine, the famous nighttime street-food cluster."
         }
-      ]
+      ],
+      "foreign_born_pct": 8,
+      "foreign_owned_pct": 19,
+      "culture": {
+        "openness_to_foreigners": 7
+      }
     },
     "bogota": {
       "commercial_streets": [
@@ -902,7 +1023,9 @@
           "area": "Chicó",
           "sells": "Upmarket restaurants and boutique retail around the park: corporate-class lunch cluster."
         }
-      ]
+      ],
+      "foreign_born_pct": 1,
+      "foreign_owned_pct": 12
     },
     "boston": {
       "commercial_streets": [
@@ -931,7 +1054,13 @@
           "area": "South Boston",
           "sells": "New mixed-use district: Lululemon, L.L. Bean flagship, biotech-anchored office retail."
         }
-      ]
+      ],
+      "foreign_born_pct": 28,
+      "foreign_owned_pct": 16,
+      "culture": {
+        "innovation": 9,
+        "ambition_chest_beating": 8
+      }
     },
     "buenos-aires": {
       "commercial_streets": [
@@ -960,7 +1089,12 @@
           "area": "San Telmo",
           "sells": "Sunday antique fair, tango bars, cobblestone-lined design retail and used books."
         }
-      ]
+      ],
+      "foreign_born_pct": 13,
+      "foreign_owned_pct": 14,
+      "culture": {
+        "communication_directness": 7
+      }
     },
     "cairo": {
       "commercial_streets": [
@@ -989,7 +1123,9 @@
           "area": "Giza",
           "sells": "Mid-class chain retail, fast-food density, fashion arcades, and salon row."
         }
-      ]
+      ],
+      "foreign_born_pct": 3,
+      "foreign_owned_pct": 11
     },
     "cape-town": {
       "commercial_streets": [
@@ -1018,7 +1154,12 @@
           "area": "Sea Point",
           "sells": "Mid-market retail with kosher and Israeli food clusters, ocean-front bars."
         }
-      ]
+      ],
+      "foreign_born_pct": 12,
+      "foreign_owned_pct": 17,
+      "culture": {
+        "openness_to_foreigners": 7
+      }
     },
     "copenhagen": {
       "commercial_streets": [
@@ -1047,7 +1188,11 @@
           "area": "Nørreport",
           "sells": "Modern indoor food market: artisan butcher, smørrebrød, oysters, specialty grocers."
         }
-      ]
+      ],
+      "foreign_born_pct": 16,
+      "culture": {
+        "communication_directness": 9
+      }
     },
     "dublin": {
       "commercial_streets": [
@@ -1076,7 +1221,13 @@
           "area": "City Centre",
           "sells": "Bookshops (Hodges Figgis), boutique hotels, the Mansion House's neighbourhood retail."
         }
-      ]
+      ],
+      "foreign_born_pct": 28,
+      "foreign_owned_pct": 22,
+      "culture": {
+        "innovation": 8,
+        "openness_to_foreigners": 8
+      }
     },
     "istanbul": {
       "commercial_streets": [
@@ -1105,7 +1256,12 @@
           "area": "Kadıköy (Asian side)",
           "sells": "10 km of mid-luxury retail and restaurant-lined boulevard on the Anatolian side."
         }
-      ]
+      ],
+      "foreign_born_pct": 9,
+      "foreign_owned_pct": 14,
+      "culture": {
+        "openness_to_foreigners": 6
+      }
     },
     "jakarta": {
       "commercial_streets": [
@@ -1134,7 +1290,9 @@
           "area": "Central Jakarta",
           "sells": "Southeast Asia's largest textile wholesale market: garment-trade hub for the entire archipelago."
         }
-      ]
+      ],
+      "foreign_born_pct": 2,
+      "foreign_owned_pct": 13
     },
     "johannesburg": {
       "commercial_streets": [
@@ -1163,7 +1321,9 @@
           "area": "Northern Suburbs",
           "sells": "Tree-lined upmarket high street: restaurants, design boutiques, leafy residential commerce."
         }
-      ]
+      ],
+      "foreign_born_pct": 14,
+      "foreign_owned_pct": 18
     },
     "karachi": {
       "commercial_streets": [
@@ -1221,7 +1381,12 @@
           "area": "Mid Valley",
           "sells": "Family mid-market and luxury malls under one roof. Malaysia's busiest mall complex."
         }
-      ]
+      ],
+      "foreign_born_pct": 14,
+      "foreign_owned_pct": 22,
+      "culture": {
+        "openness_to_foreigners": 7
+      }
     },
     "lisbon": {
       "commercial_streets": [
@@ -1250,7 +1415,12 @@
           "area": "Misericórdia",
           "sells": "Embassy-row turned design district: concept stores, the Embaixada gallery-mall, ceramics ateliers."
         }
-      ]
+      ],
+      "foreign_born_pct": 22,
+      "foreign_owned_pct": 18,
+      "culture": {
+        "openness_to_foreigners": 8
+      }
     },
     "manila": {
       "commercial_streets": [
@@ -1279,7 +1449,9 @@
           "area": "City of Manila",
           "sells": "Wholesale clothing, accessories, toys. The Philippines' largest informal-economy retail zone."
         }
-      ]
+      ],
+      "foreign_born_pct": 1,
+      "foreign_owned_pct": 14
     },
     "melbourne": {
       "commercial_streets": [
@@ -1308,7 +1480,12 @@
           "area": "CBD north edge",
           "sells": "150-year-old open market: deli, produce, the Wednesday night summer-market food stalls."
         }
-      ]
+      ],
+      "foreign_born_pct": 36,
+      "foreign_owned_pct": 21,
+      "culture": {
+        "openness_to_foreigners": 9
+      }
     },
     "montreal": {
       "commercial_streets": [
@@ -1337,7 +1514,9 @@
           "area": "Plateau / Mile End",
           "sells": "Long anglo-franco-Jewish corridor: Schwartz's deli, design boutiques, dive bars, fashion."
         }
-      ]
+      ],
+      "foreign_born_pct": 24,
+      "foreign_owned_pct": 18
     },
     "munich": {
       "commercial_streets": [
@@ -1366,7 +1545,12 @@
           "area": "Altstadt",
           "sells": "Daily food market in the old town: cheese, charcuterie, fish, the beer garden at the centre."
         }
-      ]
+      ],
+      "foreign_born_pct": 28,
+      "foreign_owned_pct": 15,
+      "culture": {
+        "ambition_chest_beating": 6
+      }
     },
     "nairobi": {
       "commercial_streets": [
@@ -1395,7 +1579,12 @@
           "area": "Central Nairobi",
           "sells": "Matatu-anchored mass-market retail, the City Market, mobile-phone strips, banks."
         }
-      ]
+      ],
+      "foreign_born_pct": 4,
+      "foreign_owned_pct": 18,
+      "culture": {
+        "innovation": 6
+      }
     },
     "riyadh": {
       "commercial_streets": [
@@ -1424,7 +1613,12 @@
           "area": "Various",
           "sells": "Seasonal entertainment zones with pop-up retail launched under Vision 2030 reforms."
         }
-      ]
+      ],
+      "foreign_born_pct": 38,
+      "foreign_owned_pct": 22,
+      "culture": {
+        "openness_to_foreigners": 5
+      }
     },
     "toronto": {
       "commercial_streets": [
@@ -1453,7 +1647,13 @@
           "area": "Downtown core",
           "sells": "Canada's busiest mall (CF Eaton Centre) plus the surrounding Yonge Street mid-market retail."
         }
-      ]
+      ],
+      "foreign_born_pct": 47,
+      "foreign_owned_pct": 24,
+      "culture": {
+        "openness_to_foreigners": 10
+      },
+      "notes": "Toronto runs the highest foreign-born share of any major Western metro."
     },
     "vienna": {
       "commercial_streets": [
@@ -1482,7 +1682,9 @@
           "area": "Neubau",
           "sells": "Cobbled Biedermeier lanes: indie boutiques, the Christmas market in December, neighbourhood restaurants."
         }
-      ]
+      ],
+      "foreign_born_pct": 33,
+      "foreign_owned_pct": 18
     },
     "zurich": {
       "commercial_streets": [
@@ -1511,7 +1713,74 @@
           "area": "Kreis 8",
           "sells": "Lakeside upmarket retail: boutiques, design ateliers, neighbourhood restaurants along the Seestrasse."
         }
-      ]
+      ],
+      "foreign_born_pct": 32,
+      "foreign_owned_pct": 22
+    },
+    "miami": {
+      "foreign_born_pct": 58,
+      "foreign_owned_pct": 28,
+      "culture": {
+        "openness_to_foreigners": 10,
+        "punctuality": 5
+      },
+      "notes": "Latin-American gateway, highest foreign-born share of any US metro."
+    },
+    "bangalore": {
+      "foreign_born_pct": 1,
+      "foreign_owned_pct": 18,
+      "culture": {
+        "innovation": 8,
+        "communication_directness": 6
+      },
+      "notes": "Bangalore tech-belt runs higher on innovation than rural India."
+    },
+    "abu-dhabi": {
+      "foreign_born_pct": 80,
+      "foreign_owned_pct": 38
+    },
+    "doha": {
+      "foreign_born_pct": 80,
+      "foreign_owned_pct": 40
+    },
+    "tel-aviv": {
+      "foreign_born_pct": 30,
+      "foreign_owned_pct": 26,
+      "culture": {
+        "innovation": 10,
+        "communication_directness": 9,
+        "ambition_chest_beating": 9
+      },
+      "notes": "Tel Aviv runs hotter on innovation and directness than the Israeli country baseline."
+    },
+    "lima": {
+      "foreign_born_pct": 3,
+      "foreign_owned_pct": 12
+    },
+    "santiago": {
+      "foreign_born_pct": 14,
+      "foreign_owned_pct": 18
+    },
+    "lagos": {
+      "foreign_born_pct": 1,
+      "foreign_owned_pct": 14,
+      "culture": {
+        "ambition_chest_beating": 8
+      }
+    },
+    "auckland": {
+      "foreign_born_pct": 41,
+      "foreign_owned_pct": 24,
+      "culture": {
+        "openness_to_foreigners": 9
+      }
+    },
+    "vancouver": {
+      "foreign_born_pct": 42,
+      "foreign_owned_pct": 26,
+      "culture": {
+        "openness_to_foreigners": 9
+      }
     }
   }
 }

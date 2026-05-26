@@ -55,9 +55,19 @@ type CitySignature = {
   notes?: string;
 };
 
-// A city override may be partial: e.g. just commercial_streets while
-// inheriting culture / government / sectors from the country baseline.
-type PartialCitySignature = Partial<CitySignature>;
+// A city override may be partial in two dimensions: any top-level field
+// may be absent, AND any object field (culture / government) may itself
+// be partial. So Culture and Government are Partial<> on the nested
+// object as well as optional at the parent level.
+type PartialCitySignature = {
+  foreign_born_pct?: number;
+  foreign_owned_pct?: number;
+  commercial_streets?: CommercialStreet[];
+  signature_sectors?: SignatureSector[];
+  culture?: Partial<Culture>;
+  government?: Partial<Government>;
+  notes?: string;
+};
 
 const FILE = signatureJson as { cities: Record<string, PartialCitySignature> };
 const COUNTRY_FILE = countrySignatureJson as { countries: Record<string, CitySignature> };
@@ -85,14 +95,16 @@ function resolveSignature(citySlug: string, iso2: string): CitySignature | null 
   if (!city) {
     return { ...country, commercial_streets: undefined };
   }
-  // Merge: country baseline + per-field city overrides.
+  // Merge: country baseline + per-field city overrides. Nested objects
+  // (culture, government) are also merged field-by-field so a city can
+  // override e.g. only `openness_to_foreigners` and inherit the rest.
   return {
     foreign_born_pct: city.foreign_born_pct ?? country.foreign_born_pct,
     foreign_owned_pct: city.foreign_owned_pct ?? country.foreign_owned_pct,
     commercial_streets: city.commercial_streets,
     signature_sectors: city.signature_sectors ?? country.signature_sectors,
-    culture: city.culture ?? country.culture,
-    government: city.government ?? country.government,
+    culture: { ...country.culture, ...city.culture },
+    government: { ...country.government, ...city.government },
     notes: city.notes ?? country.notes,
   };
 }
