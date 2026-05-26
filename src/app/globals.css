@@ -248,10 +248,20 @@
      up. No 4-sided border-color flash, no glass-blur, no ring.
      ========================================================================== */
 
+  /* Founder direction 2026-05-26: tightened radius from rounded-2xl
+     (16px) to 6px across all three variants. Editorial-reference
+     look, not SaaS look. Card and background can never share the
+     same colour — the three variants are picked so:
+       atlas-card        = white #FFFFFF  → use on PAPER sections
+       atlas-card-soft   = warm cream     → use on WHITE sections
+       atlas-card-band   = off-white #FCFBF8 → use on WHITE sections
+                                              when the card should
+                                              feel lighter than the
+                                              cream soft variant */
   .atlas-card {
     position: relative;
     background: var(--atlas-surface-card);
-    border-radius: 1rem; /* rounded-2xl */
+    border-radius: 6px;
     border: 1px solid var(--atlas-hairline);
     box-shadow: var(--atlas-elev-1);
     transition:
@@ -260,13 +270,14 @@
       transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* Vermillion top edge that appears on hover — like dog-earing a page. */
+  /* Vermillion top edge that appears on hover — like dog-earing a page.
+     Inset reduced (1rem -> 0.5rem) to match the tighter 6px corner radius. */
   .atlas-card::before {
     content: "";
     position: absolute;
     top: 0;
-    left: 1rem;
-    right: 1rem;
+    left: 0.5rem;
+    right: 0.5rem;
     height: 2px;
     background: linear-gradient(
       90deg,
@@ -302,7 +313,7 @@
      but reads as a distinct callout. No top-edge accent on hover. */
   .atlas-card-soft {
     background: var(--atlas-surface-card-soft);
-    border-radius: 1rem;
+    border-radius: 6px;
     border: 1px solid var(--atlas-hairline);
     box-shadow: none;
   }
@@ -312,8 +323,12 @@
      seating work. Still uses the top-edge hover accent. */
   .atlas-card-band {
     position: relative;
-    background: var(--atlas-surface-card);
-    border-radius: 1rem;
+    /* Off-white #FCFBF8 so the card never collides with a pure
+       white section background. The 4-point delta from #FFFFFF is
+       enough to visually separate the surfaces without breaking
+       the calm reading rhythm. */
+    background: #FCFBF8;
+    border-radius: 6px;
     border: 1px solid var(--atlas-hairline);
     box-shadow:
       0 1px 1px rgba(76, 39, 18, 0.03);
