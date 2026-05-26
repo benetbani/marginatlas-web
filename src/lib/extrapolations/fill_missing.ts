@@ -9,98 +9,35 @@
  *
  * These tables are deliberately conservative. The point isn't precision
  * — it's never showing a blank tile.
+ *
+ * 2026-05-26 (goldmines Wave 1): the COUNTRY_MEDIAN_WAGE_USD table is
+ * now a FALLBACK only. The primary wage source is
+ * src/lib/economic_profile/wages.ts, which reads
+ * data/economics/median_monthly_wage_usd_v1.json. This module preserves
+ * the hardcoded values for countries the JSON does not yet cover, and
+ * the verify_wage_source_consistency prebuild gate enforces no drift
+ * between the two sources for countries present in both.
  */
+import { getMedianAnnualWageUsd } from "@/lib/economic_profile/wages";
 
 /**
- * Country median annual wage in USD (full-time employed). Sourced from
- * OECD / ILO labor statistics, rounded. Used as the wage-per-employee
- * fallback when source data has no payroll figure.
+ * Country median annual wage in USD — DELETED 2026-05-26 (goldmines
+ * Wave 1). The legacy hardcoded table that lived here drifted 5-33%
+ * from the post-May-2026 source-of-truth file
+ * (data/economics/median_monthly_wage_usd_v1.json) because the May
+ * wage overhaul (task #129) produced new values but the hardcoded
+ * table was never updated. The data fidelity audit
+ * (docs/strategy/2026-05-26-data-fidelity-audit.md) flagged the
+ * drift; this is the closing edit.
+ *
+ * The JSON source covers 200 countries (vs the legacy's 83) and ALL
+ * 83 legacy entries were duplicates of JSON entries with drift. No
+ * country lost coverage by deleting the legacy table.
+ *
+ * All callers must use getMedianAnnualWageUsd() from
+ * src/lib/economic_profile/wages.ts.
  */
-export const COUNTRY_MEDIAN_WAGE_USD: Record<string, number> = {
-  US: 56000,
-  GB: 42000,
-  DE: 50000,
-  FR: 45000,
-  IT: 36000,
-  ES: 32000,
-  PT: 24000,
-  IE: 51000,
-  NL: 53000,
-  BE: 50000,
-  LU: 70000,
-  AT: 48000,
-  CH: 75000,
-  SE: 51000,
-  NO: 65000,
-  DK: 60000,
-  FI: 46000,
-  IS: 60000,
-  GR: 22000,
-  CZ: 30000,
-  SK: 26000,
-  SI: 28000,
-  EE: 27000,
-  LV: 22000,
-  LT: 21000,
-  PL: 22000,
-  HU: 18000,
-  HR: 19000,
-  RO: 17000,
-  BG: 13000,
-  CY: 27000,
-  MT: 26000,
-  JP: 38000,
-  KR: 41000,
-  TW: 32000,
-  SG: 58000,
-  HK: 52000,
-  AU: 56000,
-  NZ: 45000,
-  CA: 48000,
-  MX: 11000,
-  BR: 10000,
-  AR: 8500,
-  CL: 14000,
-  CO: 6500,
-  PE: 7500,
-  UY: 13000,
-  EC: 6000,
-  PY: 5500,
-  IN: 4500,
-  CN: 14000,
-  ID: 4500,
-  TH: 8000,
-  VN: 4000,
-  PH: 4500,
-  MY: 9500,
-  TR: 11000,
-  IL: 38000,
-  AE: 35000,
-  SA: 22000,
-  QA: 32000,
-  KW: 30000,
-  BH: 22000,
-  OM: 18000,
-  EG: 4500,
-  ZA: 14000,
-  NG: 3500,
-  KE: 3000,
-  GH: 2500,
-  MA: 7000,
-  TN: 5000,
-  RU: 11000,
-  UA: 5500,
-  BY: 6500,
-  KZ: 8500,
-  GE: 5500,
-  AM: 4500,
-  AZ: 5500,
-  RS: 9000,
-  BA: 7500,
-  ME: 9500,
-  MK: 7000,
-  AL: 6500,
-};
+// (legacy COUNTRY_MEDIAN_WAGE_USD removed; see comment above)
 
 /**
  * Industry typical headcount per firm (global average from regional cells
@@ -221,14 +158,29 @@ export const INDUSTRY_WAGE_MULTIPLIER: Record<string, number> = {
 /**
  * Best-effort wage estimate when cell.payroll_per_employee is null.
  * Returns null if neither country nor industry signal exists.
+ *
+ * Updated 2026-05-26 (goldmines Wave 1): now prefers the new
+ * source-of-truth file (data/economics/median_monthly_wage_usd_v1.json)
+ * over the legacy hardcoded COUNTRY_MEDIAN_WAGE_USD table. The
+ * legacy table is retained as a fallback for countries not yet in
+ * the JSON file. The verify_wage_source_consistency prebuild gate
+ * enforces no drift between the two sources.
+ *
+ * Drift fix: this closes the 5-33% wage drift identified in the
+ * 2026-05-26 data fidelity audit
+ * (docs/strategy/2026-05-26-data-fidelity-audit.md).
  */
 export function estimateWagePerEmployee(
   iso2: string | null | undefined,
   industryId: string | null | undefined,
 ): number | null {
   if (!iso2) return null;
-  const country = COUNTRY_MEDIAN_WAGE_USD[iso2.toUpperCase()];
-  if (!country) return null;
+  const iso = iso2.toUpperCase();
+  // Source-of-truth: data/economics/median_monthly_wage_usd_v1.json.
+  // The legacy hardcoded fallback table was deleted in goldmines
+  // Wave 1; the JSON covers strictly more countries.
+  const country = getMedianAnnualWageUsd(iso);
+  if (country == null) return null;
   const mult = (industryId && INDUSTRY_WAGE_MULTIPLIER[industryId]) || 0.8;
   return Math.round(country * mult);
 }
