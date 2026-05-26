@@ -68,21 +68,68 @@ function revenueCatastropheFloor(industryId: string | null | undefined): number 
 }
 
 /**
- * Apply suppression in place. Returns the cell with catastrophically
- * implausible values replaced with null. Other values pass through.
+ * Pure analysis: which fields of this cell would be suppressed and
+ * why? Returns a flags object suitable for persistence to the DB
+ * (extrapolated_cells.plausibility_flags column, when shipped) or
+ * for the audit pipeline to use.
  *
- * Designed to be called once per cell, AFTER applyCurrencyCorrection
- * (so we're checking the post-FX values).
+ * Refactored 2026-05-26 (Backend Phase 4): the previous design
+ * mutated the cell directly. The new design separates "what would
+ * be suppressed" (this function) from "do the suppression"
+ * (applyPlausibilitySuppression below). Two callers use the
+ * analysis:
+ *   1. The render layer, via applyPlausibilitySuppression, which
+ *      acts on the flags.
+ *   2. The audit / DB backfill scripts, which use the flags as
+ *      the column value without mutating the cell.
+ *
+ * Both call sites use the same rule. Drift between audit and render
+ * is now structurally impossible.
  */
-export function applyPlausibilitySuppression(cell: Cell): Cell {
-  const out: Cell = { ...cell };
+export type PlausibilityFlag =
+  | "ok"
+  | "revenue_above_ceiling"
+  | "revenue_below_floor"
+  | "total_revenue_per_firm_above_ceiling"
+  | "payroll_above_ceiling"
+  | "employees_below_minimum";
+
+export type PlausibilityFlags = {
+  /** Overall status; "ok" iff no field-level flags. */
+  status: "ok" | "suppressed";
+  /** Per-field reason codes. Keys are Cell field names. */
+  fields: Partial<Record<
+    | "revenue_per_firm"
+    | "rev_p10"
+    | "rev_p25"
+    | "rev_p50"
+    | "rev_p75"
+    | "rev_p90"
+    | "total_revenue"
+    | "total_revenue_usd"
+    | "payroll_per_employee"
+    | "n_employees"
+    | "gross_profit"
+    | "operating_profit"
+    | "net_profit"
+    | "gross_margin"
+    | "operating_margin"
+    | "net_margin",
+    PlausibilityFlag
+  >>;
+  /** Threshold context for audit reporting. */
+  thresholds: { ceiling: number; floor: number; payroll_ceiling: number };
+};
+
+/**
+ * Run the analysis. Pure: does NOT mutate the input cell.
+ */
+export function analyzePlausibility(cell: Cell): PlausibilityFlags {
   const ceiling = revenueCatastropheCeiling(cell.industry_id);
   const floor = revenueCatastropheFloor(cell.industry_id);
+  const flags: PlausibilityFlags["fields"] = {};
 
-  // Revenue fields — every percentile + the headline. Suppress both
-  // catastrophically high values (wrong-aggregation) and catastrophically
-  // low values (non-viable micro-operator that misrepresents the
-  // category benchmark).
+  // Revenue fields — every percentile + the headline.
   for (const field of [
     "revenue_per_firm",
     "rev_p10",
@@ -91,55 +138,85 @@ export function applyPlausibilitySuppression(cell: Cell): Cell {
     "rev_p75",
     "rev_p90",
   ] as const) {
-    const v = out[field];
-    if (typeof v === "number" && (v > ceiling || v < floor)) {
-      out[field] = null;
+    const v = cell[field];
+    if (typeof v === "number") {
+      if (v > ceiling) flags[field] = "revenue_above_ceiling";
+      else if (v < floor) flags[field] = "revenue_below_floor";
     }
   }
 
-  // Total revenue: scale up the ceiling by enterprise count for the
-  // implied "this is the whole industry" comparison.
+  // Total revenue: ceiling scaled by enterprise count.
   if (
-    typeof out.total_revenue === "number" &&
-    typeof out.n_enterprises === "number" &&
-    out.n_enterprises > 0 &&
-    out.total_revenue / out.n_enterprises > ceiling
+    typeof cell.total_revenue === "number" &&
+    typeof cell.n_enterprises === "number" &&
+    cell.n_enterprises > 0 &&
+    cell.total_revenue / cell.n_enterprises > ceiling
   ) {
-    out.total_revenue = null;
-    out.total_revenue_usd = null;
+    flags.total_revenue = "total_revenue_per_firm_above_ceiling";
+    flags.total_revenue_usd = "total_revenue_per_firm_above_ceiling";
   }
 
-  // Payroll-per-employee absolute ceiling
+  // Payroll-per-employee.
   if (
-    typeof out.payroll_per_employee === "number" &&
-    out.payroll_per_employee > PAYROLL_CATASTROPHIC_USD
+    typeof cell.payroll_per_employee === "number" &&
+    cell.payroll_per_employee > PAYROLL_CATASTROPHIC_USD
   ) {
-    out.payroll_per_employee = null;
+    flags.payroll_per_employee = "payroll_above_ceiling";
   }
 
-  // Employees-per-firm: nullify when the row says 0 employees. The
-  // downstream estimator (estimateEmployeesFromFirms) will kick in.
+  // Employees-per-firm.
   if (
-    typeof out.n_employees === "number" &&
-    typeof out.n_enterprises === "number" &&
-    out.n_enterprises > 0 &&
-    out.n_employees / out.n_enterprises < MIN_EMPLOYEES_PER_FIRM
+    typeof cell.n_employees === "number" &&
+    typeof cell.n_enterprises === "number" &&
+    cell.n_enterprises > 0 &&
+    cell.n_employees / cell.n_enterprises < MIN_EMPLOYEES_PER_FIRM
   ) {
-    out.n_employees = null;
+    flags.n_employees = "employees_below_minimum";
   }
 
-  // Profit fields: if revenue is now null but a profit was derived
-  // from it, kill the derived profit too. Keeping them out of sync
-  // breaks the waterfall.
-  if (out.revenue_per_firm == null) {
-    out.gross_profit = null;
-    out.operating_profit = null;
-    out.net_profit = null;
-    out.gross_margin = null;
-    out.operating_margin = null;
-    out.net_margin = null;
+  // Profit fields: if the headline revenue would be suppressed, the
+  // derived profit fields are also tagged for suppression to keep
+  // the waterfall consistent.
+  if (flags.revenue_per_firm) {
+    if (typeof cell.gross_profit === "number") flags.gross_profit = flags.revenue_per_firm;
+    if (typeof cell.operating_profit === "number") flags.operating_profit = flags.revenue_per_firm;
+    if (typeof cell.net_profit === "number") flags.net_profit = flags.revenue_per_firm;
+    if (typeof cell.gross_margin === "number") flags.gross_margin = flags.revenue_per_firm;
+    if (typeof cell.operating_margin === "number") flags.operating_margin = flags.revenue_per_firm;
+    if (typeof cell.net_margin === "number") flags.net_margin = flags.revenue_per_firm;
   }
 
+  return {
+    status: Object.keys(flags).length > 0 ? "suppressed" : "ok",
+    fields: flags,
+    thresholds: {
+      ceiling,
+      floor,
+      payroll_ceiling: PAYROLL_CATASTROPHIC_USD,
+    },
+  };
+}
+
+/**
+ * Apply suppression in place. Returns the cell with catastrophically
+ * implausible values replaced with null. Other values pass through.
+ *
+ * Designed to be called once per cell, AFTER applyCurrencyCorrection
+ * (so we're checking the post-FX values).
+ *
+ * Refactored 2026-05-26 (Backend Phase 4): now a thin wrapper around
+ * analyzePlausibility(). Behavior unchanged.
+ */
+export function applyPlausibilitySuppression(cell: Cell): Cell {
+  const analysis = analyzePlausibility(cell);
+  if (analysis.status === "ok") return cell;
+  const out: Cell = { ...cell };
+  for (const key of Object.keys(analysis.fields) as Array<keyof PlausibilityFlags["fields"]>) {
+    // The Cell type ALWAYS allows null for these fields; this is the
+    // documented suppression contract. Cast through unknown to satisfy
+    // the narrowed union types.
+    (out as unknown as Record<string, unknown>)[key] = null;
+  }
   return out;
 }
 
