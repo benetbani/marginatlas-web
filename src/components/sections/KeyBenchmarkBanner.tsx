@@ -22,6 +22,7 @@ import {
   labelKeyBenchmark,
   type KeyBenchmark,
 } from "@/lib/cost_engine/engine";
+import { getComparativeLead } from "@/lib/content/comparative_narratives";
 
 type Props = {
   cell: Cell;
@@ -59,6 +60,10 @@ export function KeyBenchmarkBanner({ cell }: Props) {
   const { kb, range, rationale } = getKeyBenchmarkForIndustry(cell.industry_id);
   const label = labelKeyBenchmark(kb);
   const formula = ratioFormula(kb);
+  // ATO Phase 4 — comparative-voice lead. Replaces the descriptive
+  // rationale with a "Watch your X" imperative sentence that frames
+  // the benchmark as a deviation gauge, not a typical-firm portrait.
+  const lead = getComparativeLead(cell.industry_id);
 
   return (
     <section
@@ -78,7 +83,7 @@ export function KeyBenchmarkBanner({ cell }: Props) {
               {label} as a share of revenue
             </h3>
             <p className="text-sm md:text-base text-cocoa-700 leading-relaxed mb-2">
-              {rationale}
+              {lead ? lead.sentence : rationale}
             </p>
             <p className="text-xs text-cocoa-700/70">
               Formula: {formula}.
