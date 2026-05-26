@@ -47,6 +47,8 @@ type RecentRow = {
   flag: string;
   label: string;
   visitedAt: string;
+  /** Cell or page URL to navigate back to when the user clicks "Open". */
+  href: string;
 };
 
 const TABS: Array<{ id: TabId; label: string; icon: PhIcon }> = [
@@ -233,7 +235,7 @@ function Recent({ rows }: { rows: RecentRow[] }) {
                 <p className="text-xs text-cocoa-700">{r.visitedAt}</p>
               </div>
             </div>
-            <Link href="#" className="text-sm font-semibold text-atlas-700">Open</Link>
+            <Link href={r.href} className="text-sm font-semibold text-atlas-700">Open</Link>
           </li>
         ))}
       </ul>
