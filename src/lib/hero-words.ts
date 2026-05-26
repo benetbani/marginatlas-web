@@ -33,7 +33,7 @@ export const HERO_BUSINESSES = [
   "barber",
   "hotel",
   "restaurant",
-  "laundromat",
-  "tailor",
+  "boutique",
+  "butcher",
   "gym",
 ] as const;

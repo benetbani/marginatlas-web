@@ -131,7 +131,7 @@ export default function HomePage() {
         <section className="pt-6 pb-4 md:pt-10 md:pb-6 lg:pt-12">
           <div className="max-w-4xl mx-auto text-center">
             <div className="text-sm md:text-base font-semibold uppercase tracking-[0.16em] text-atlas-700 mb-4 md:mb-5">
-              Worldwide small-business benchmarks
+              The #1 small-business atlas in the world
             </div>
             {/* CitiesFix2 sec 1: tighten H1 on mobile so it never wraps
                to 3 rows. text-balance keeps the line break clean. The
@@ -157,7 +157,9 @@ export default function HomePage() {
                     offset={1000}
                   />
                 </span>
-                <span className="text-ink-900">?</span>
+                {/* Small left margin so longer cities like "Mumbai" /
+                    "Shanghai" don't visually collide with the ? mark. */}
+                <span className="text-ink-900 ml-1">?</span>
               </span>
             </h1>
             <p className="mt-4 md:mt-5 max-w-2xl mx-auto text-base md:text-lg text-ink-800 leading-relaxed">

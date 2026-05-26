@@ -30,10 +30,13 @@ export function SectorMasterMenu() {
         </p>
       </div>
 
-      {/* Founder direction 2026-05-26: icons doubled (was w-9 / size=20,
-          now w-16 / size=36). Card padding tuned so card height tracks
-          icon height for the "matched" effect. Grid tightened to
-          4-5-6 cols so the bigger tiles stay scannable. */}
+      {/* Founder direction 2026-05-26 (revised): cards are now vertical
+          tiles. The top portion is a placeholder background where the
+          eventual sector photo will live (a soft warm-cream gradient
+          with the icon as a subtle large watermark, so each card is
+          still distinguishable until photos arrive). The bottom of
+          each card is a white ribbon containing the sector name + the
+          "X activities" subtitle. */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
         {sectors.map((s) => {
           const industries = visibleIndustriesInSector(s.id, {});
@@ -41,17 +44,23 @@ export function SectorMasterMenu() {
             <a
               key={s.id}
               href={`/sectors/${s.id}`}
-              className="group flex items-center gap-4 rounded-xl border border-ink-200 bg-white hover:border-atlas-500 hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)] transition-all px-4 py-4 md:px-5 md:py-5"
+              className="group relative block rounded-xl overflow-hidden border border-ink-200 bg-cream-50 hover:border-atlas-500 hover:shadow-[0_6px_16px_rgba(0,0,0,0.08)] transition-all aspect-[4/3]"
             >
-              <div className="shrink-0 w-16 h-16 md:w-[72px] md:h-[72px] rounded-lg bg-cream-50 border border-parchment flex items-center justify-center text-atlas-700 group-hover:text-atlas-600 transition-colors">
-                <SectorIcon sectorId={s.id} size={36} weight="duotone" />
+              {/* Placeholder background. Will be swapped for a real
+                  sector photo once Pexels curation lands. */}
+              <div className="absolute inset-0 bg-gradient-to-br from-cream-50 via-cream-100 to-parchment" />
+              {/* Subtle large watermark icon — visible distinction per
+                  sector during the placeholder phase. */}
+              <div className="absolute inset-0 flex items-center justify-center text-atlas-700/15">
+                <SectorIcon sectorId={s.id} size={88} weight="duotone" />
               </div>
-              <div className="flex-1 min-w-0">
-                <div className="text-base md:text-lg font-semibold text-ink-900 leading-tight truncate group-hover:text-atlas-700 transition-colors">
+              {/* White ribbon at the bottom — title + activities count. */}
+              <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-ink-100 px-3 py-2.5 md:px-4 md:py-3">
+                <div className="text-sm md:text-base font-semibold text-ink-900 leading-tight truncate group-hover:text-atlas-700 transition-colors">
                   {s.name}
                 </div>
-                <div className="text-xs text-ink-500 tabular-nums leading-tight mt-1">
-                  {industries.length} industries
+                <div className="text-[11px] md:text-xs text-ink-500 tabular-nums leading-tight mt-0.5">
+                  {industries.length} activities
                 </div>
               </div>
             </a>
