@@ -23,6 +23,7 @@ import path from "node:path";
 
 const ROOT = process.cwd();
 const MEDIAN_PATH = path.resolve(ROOT, "data/economics/median_monthly_wage_usd_v1.json");
+const PREMIUM_PATH = path.resolve(ROOT, "data/economics/city_wage_premium_v1.json");
 const PROFILE_PATH = path.resolve(ROOT, "data/economic_indicators/country_profile_v2.json");
 const CITIES_PATH = path.resolve(ROOT, "data/cities/city_list_v1.json");
 
@@ -42,7 +43,11 @@ type CityEntry = {
 };
 type CityFile = { cities: CityEntry[] };
 
+type PremiumRow = { avg_monthly_wage_usd: number; source_quality: string };
+type PremiumFile = { cities: Record<string, PremiumRow> };
+
 const median = JSON.parse(fs.readFileSync(MEDIAN_PATH, "utf-8")) as MedianFile;
+const premium = JSON.parse(fs.readFileSync(PREMIUM_PATH, "utf-8")) as PremiumFile;
 const profile = JSON.parse(fs.readFileSync(PROFILE_PATH, "utf-8")) as ProfileFile;
 const cities = JSON.parse(fs.readFileSync(CITIES_PATH, "utf-8")) as CityFile;
 
@@ -81,10 +86,36 @@ for (const city of cities.cities) {
   if (!baseline || !city.avg_gross_salary_usd_year) continue;
   const baselineAnnual = baseline.median_monthly_wage_usd * 12;
   const ratio = city.avg_gross_salary_usd_year / baselineAnnual;
-  if (ratio < 0.6 || ratio > 1.7) {
-    warn(`[${iso2}.${city.slug}] city wage $${city.avg_gross_salary_usd_year} vs country baseline $${baselineAnnual} (ratio ${ratio.toFixed(2)})`);
+  // Anchored cities can stretch the band wider (Silicon Valley ~1.7x
+  // US national, Naples ~0.85x Italy national); unanchored fallback
+  // cities use a strict 0.9-1.5 band since they were derived from a
+  // single multiplier.
+  const isAnchored = !!premium.cities[city.slug];
+  // Anchored ceiling 2.5 — tech-hub premium cities like Bangalore,
+  // San Jose, Shenzhen genuinely pay 2-2.5x national average.
+  const lower = isAnchored ? 0.5 : 0.9;
+  const upper = isAnchored ? 2.5 : 1.5;
+  if (ratio < lower || ratio > upper) {
+    warn(`[${iso2}.${city.slug}] city wage $${city.avg_gross_salary_usd_year} vs country baseline $${baselineAnnual} (ratio ${ratio.toFixed(2)}, ${isAnchored ? "anchored" : "fallback"})`);
   }
 }
+
+console.log("\n=== City anchor coverage by country ===");
+const anchoredByCountry: Record<string, number> = {};
+const totalByCountry: Record<string, number> = {};
+for (const city of cities.cities) {
+  const iso2 = (city.iso2 || "").toUpperCase();
+  if (!iso2) continue;
+  totalByCountry[iso2] = (totalByCountry[iso2] || 0) + 1;
+  if (premium.cities[city.slug]) {
+    anchoredByCountry[iso2] = (anchoredByCountry[iso2] || 0) + 1;
+  }
+}
+const totalCities = cities.cities.length;
+const totalAnchored = Object.values(anchoredByCountry).reduce((a, b) => a + b, 0);
+console.log(`  Total cities:   ${totalCities}`);
+console.log(`  Anchored:       ${totalAnchored} (${((totalAnchored / totalCities) * 100).toFixed(0)}%)`);
+console.log(`  Fallback:       ${totalCities - totalAnchored}`);
 
 console.log("\n=== Country coverage ===");
 const profileIsos = Object.keys(profile.countries);

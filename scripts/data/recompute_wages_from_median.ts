@@ -31,6 +31,10 @@ const MEDIAN_PATH = path.resolve(
   ROOT,
   "data/economics/median_monthly_wage_usd_v1.json",
 );
+const CITY_PREMIUM_PATH = path.resolve(
+  ROOT,
+  "data/economics/city_wage_premium_v1.json",
+);
 const PROFILE_PATH = path.resolve(
   ROOT,
   "data/economic_indicators/country_profile_v2.json",
@@ -94,7 +98,11 @@ const TIER_WAGE_MULT: Record<number, number> = {
   3: 0.95,
 };
 
+type CityPremiumRow = { avg_monthly_wage_usd: number; source_quality: string; notes?: string };
+type CityPremiumFile = { cities: Record<string, CityPremiumRow> };
+
 const median = JSON.parse(fs.readFileSync(MEDIAN_PATH, "utf-8")) as MedianFile;
+const cityPremium = JSON.parse(fs.readFileSync(CITY_PREMIUM_PATH, "utf-8")) as CityPremiumFile;
 const profile = JSON.parse(fs.readFileSync(PROFILE_PATH, "utf-8")) as ProfileFile;
 const cities = JSON.parse(fs.readFileSync(CITIES_PATH, "utf-8")) as CityFile;
 
@@ -171,20 +179,45 @@ for (const [iso2, c] of Object.entries(profile.countries)) {
 }
 
 // ---- Pass 2: city overrides -------------------------------------------------
+// Priority order: per-city anchor > country baseline × tier multiplier.
 let citiesChanged = 0;
 let citiesSkipped = 0;
+let citiesFromAnchor = 0;
+let citiesFromFallback = 0;
 for (const city of cities.cities) {
-  const row = median.countries[(city.iso2 || "").toUpperCase()];
-  if (!row) {
+  const iso2 = (city.iso2 || "").toUpperCase();
+  const countryRow = median.countries[iso2];
+  if (!countryRow) {
     citiesSkipped++;
     continue;
   }
-  const tierMult = TIER_WAGE_MULT[city.tier] || 1.0;
-  const newAnnual = Math.round(row.median_monthly_wage_usd * 12 * tierMult);
+  const cityAnchor = cityPremium.cities[city.slug];
+  let newAnnual: number;
+  let provenance: string;
+  if (cityAnchor && cityAnchor.avg_monthly_wage_usd > 0) {
+    newAnnual = Math.round(cityAnchor.avg_monthly_wage_usd * 12);
+    provenance = `city_wage_premium_v1 (\$${cityAnchor.avg_monthly_wage_usd}/mo, tier-${cityAnchor.source_quality})`;
+    // City vs country ratio sanity (0.5 – 2.5).
+    const ratio = cityAnchor.avg_monthly_wage_usd / countryRow.median_monthly_wage_usd;
+    if (ratio < 0.5 || ratio > 2.5) {
+      issues.push({
+        iso2,
+        field: `city_${city.slug}_wage_ratio`,
+        value: ratio,
+        reason: `city wage ratio outside 0.5–2.5 vs country baseline`,
+      });
+    }
+    citiesFromAnchor++;
+  } else {
+    const tierMult = TIER_WAGE_MULT[city.tier] || 1.0;
+    newAnnual = Math.round(countryRow.median_monthly_wage_usd * 12 * tierMult);
+    provenance = `country_median_monthly_wage_v1 (\$${countryRow.median_monthly_wage_usd}/mo) * 12 * tier_${city.tier} multiplier (${tierMult})`;
+    citiesFromFallback++;
+  }
   if (city.avg_gross_salary_usd_year !== newAnnual) {
     city.avg_gross_salary_usd_year = newAnnual;
     if (!city.sources) city.sources = {};
-    city.sources.avg_gross_salary_usd_year = `country_median_monthly_wage_v1 (\$${row.median_monthly_wage_usd}/mo) * 12 * tier_${city.tier} multiplier (${tierMult})`;
+    city.sources.avg_gross_salary_usd_year = provenance;
     citiesChanged++;
   }
 }
@@ -194,6 +227,8 @@ console.log("\n=== Wage recompute ===");
 console.log(`  countries profile updated: ${profileChanged} / ${Object.keys(profile.countries).length}`);
 console.log(`  countries profile skipped: ${profileSkipped} (no median entry)`);
 console.log(`  cities updated:            ${citiesChanged} / ${cities.cities.length}`);
+console.log(`    of which per-city anchored:    ${citiesFromAnchor}`);
+console.log(`    of which country×tier fallback:${citiesFromFallback}`);
 console.log(`  cities skipped:            ${citiesSkipped} (no country median entry)`);
 
 if (issues.length > 0) {
