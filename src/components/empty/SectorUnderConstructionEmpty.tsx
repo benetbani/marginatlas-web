@@ -1,18 +1,22 @@
 /**
- * SectorUnderConstructionEmpty
- * ============================
+ * SectorUnderConstructionEmpty (legacy entry point)
+ * =================================================
  *
- * Used on /sectors/[sector] when the sector's data quality flag is
+ * Used on `/sectors/[sector]` when the sector's data quality flag is
  * "corp_only" (dominated by large corporates) or "mixed_caution" (long
  * tail mixed with a few industrial giants, so the median is misleading).
  *
- * Visually distinct from CellDataMissingEmpty: cream-100 with a faint
- * diagonal hatch so users learn that this is a category-level decision,
- * not a measurement gap.
+ * Visually distinct from CellDataMissingEmpty: hatched cream-100
+ * background so users learn this is a category-level decision, not a
+ * measurement gap.
+ *
+ * Design system Phase 2 refactor, 2026-05-27. Public API unchanged.
  */
 
 import Link from "next/link";
 import { WarningCircle, CaretRight } from "@phosphor-icons/react/dist/ssr";
+
+import { EmptyState } from "@/components/ui/empty-state";
 
 export type SectorReason = "corp_only" | "mixed_caution";
 
@@ -39,48 +43,27 @@ export default function SectorUnderConstructionEmpty({
   headingLevel = 2,
   className,
 }: SectorUnderConstructionEmptyProps) {
-  const Heading = (`h${headingLevel}`) as "h2" | "h3" | "h4";
-
-  // Inline hatch background — diagonal stripes of parchment over cream-100.
-  const hatchedBg: React.CSSProperties = {
-    backgroundColor: "#F5F5F5",
-    backgroundImage:
-      "repeating-linear-gradient(135deg, transparent 0px, transparent 14px, rgba(232, 221, 199, 0.5) 14px, rgba(232, 221, 199, 0.5) 15px)",
-  };
-
   return (
-    <div
-      className={[
-        "relative border border-parchment rounded-lg",
-        "pl-8 pr-6 py-8 sm:pl-10 sm:pr-8 sm:py-10",
-        "text-center mx-auto max-w-2xl",
-        className ?? "",
-      ].join(" ")}
-      style={hatchedBg}
-    >
-      <span aria-hidden="true" className="absolute top-4 bottom-4 left-3 w-[2px] rounded-full bg-atlas-500/85" />
-
-      <div className="flex justify-center text-atlas-700">
-        <WarningCircle size={24} weight="regular" aria-hidden="true" />
-      </div>
-
-      <Heading className="font-display mt-3 text-2xl font-semibold tracking-tight text-ink-900 leading-[1.2]">
-        {sectorName} is too mixed for clean SMB numbers.
-      </Heading>
-
-      <p className="font-display italic mt-2 text-base text-cocoa-700 text-balance leading-relaxed max-w-xl mx-auto">
-        {bodyText(sectorName, reason)}
-      </p>
-
-      <div className="mt-5">
+    <EmptyState
+      variant="hatched"
+      icon={<WarningCircle size={24} weight="regular" />}
+      title={`${sectorName} is too mixed for clean SMB numbers.`}
+      body={
+        <span className="font-display italic text-balance">
+          {bodyText(sectorName, reason)}
+        </span>
+      }
+      headingLevel={headingLevel}
+      action={
         <Link
           href={sectorsHref}
-          className="inline-flex items-center gap-1.5 text-sm font-semibold text-atlas-700 underline-offset-4 hover:underline"
+          className="inline-flex items-center gap-1.5 text-sm font-semibold text-atlas-700 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 rounded"
         >
           Browse other sectors
           <CaretRight size={14} aria-hidden="true" />
         </Link>
-      </div>
-    </div>
+      }
+      className={className}
+    />
   );
 }

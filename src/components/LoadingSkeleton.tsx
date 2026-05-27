@@ -1,19 +1,26 @@
 /**
- * LoadingSkeleton
- * ===============
+ * LoadingSkeleton (page-layout high-level skeleton)
+ * =================================================
  *
- * Calm loading placeholders for Atlas pages. Cream and parchment shapes
- * pulsing at a slow 1.8s cycle. No spinners, no progress bars.
+ * Calm loading placeholders for full page sections. Composes the
+ * canonical `ui/skeleton` primitive into the four canonical layouts
+ * Atlas uses during data fetch:
  *
- * Variants:
  *   - cell-page-hero  : matches DenseCellHero
  *   - card-grid       : 3x2 card grid (PeerCells fallback)
  *   - list            : 6-row table (RolePay fallback)
  *   - single-block    : one rounded block (generic chart fallback)
  *
- * Container is role="status" + aria-live="polite", with sr-only "Loading"
- * text so screen readers announce the wait.
+ * Container is role="status" + aria-live="polite" so screen readers
+ * announce the wait once, not per shape.
+ *
+ * Design system Phase 2 refactor, 2026-05-27. Public API unchanged;
+ * the internal shape primitives now come from ui/skeleton so any
+ * future token change (animation timing, base color) propagates
+ * here automatically.
  */
+import * as React from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export type LoadingSkeletonVariant =
   | "cell-page-hero"
@@ -28,30 +35,31 @@ export type LoadingSkeletonProps = {
   srLabel?: string;
 };
 
-const PULSE = "animate-[atlasPulse_1800ms_ease-in-out_infinite]";
-
-/* The pulse keyframes live in tailwind.config.ts:
-     keyframes: { atlasPulse: { "0%,100%": { opacity: "0.55" }, "50%": { opacity: "0.85" } } }
-   If you'd rather not add a token, swap `PULSE` to `animate-pulse opacity-70`.
-*/
-
-function Bar({ w = "100%", h = 12, className = "" }: { w?: string; h?: number; className?: string }) {
+// Wrapper that lets callers in this file size a Skeleton by inline
+// width/height (in px) without changing the underlying primitive's API.
+function Bar({
+  w = "100%",
+  h = 12,
+  className,
+  rounded,
+}: {
+  w?: string | number;
+  h?: number;
+  className?: string;
+  rounded?: "full" | "default";
+}) {
   return (
-    <span
-      aria-hidden="true"
-      className={`block rounded ${PULSE} ${className}`}
-      style={{ width: w, height: h, background: "#F4EAD5" }}
+    <Skeleton
+      variant="text"
+      width={w}
+      height={h}
+      className={`${rounded === "full" ? "rounded-full" : ""} ${className ?? ""}`.trim()}
     />
   );
 }
-function Block({ h = 120, className = "" }: { h?: number; className?: string }) {
-  return (
-    <span
-      aria-hidden="true"
-      className={`block w-full rounded-lg ${PULSE} ${className}`}
-      style={{ height: h, background: "#F4EAD5" }}
-    />
-  );
+
+function Block({ h = 120, className }: { h?: number; className?: string }) {
+  return <Skeleton variant="block" height={h} className={`w-full ${className ?? ""}`.trim()} />;
 }
 
 export default function LoadingSkeleton({
@@ -60,18 +68,14 @@ export default function LoadingSkeleton({
   srLabel = "Loading",
 }: LoadingSkeletonProps) {
   return (
-    <div
-      role="status"
-      aria-live="polite"
-      className={`w-full ${className ?? ""}`}
-    >
+    <div role="status" aria-live="polite" className={`w-full ${className ?? ""}`}>
       <span className="sr-only">{srLabel}</span>
 
       {variant === "cell-page-hero" && (
         <div className="mx-auto max-w-6xl px-6 py-10 sm:py-12">
           <div className="flex items-center justify-between gap-4">
             <Bar w="220px" h={14} />
-            <Bar w="100px" h={20} className="rounded-full" />
+            <Bar w="100px" h={20} rounded="full" />
           </div>
           <div className="mt-6 space-y-3">
             <Bar w="80%" h={36} />
@@ -82,7 +86,7 @@ export default function LoadingSkeleton({
           <div className="mt-10 grid grid-cols-12 gap-8 items-end">
             <div className="col-span-7 space-y-3">
               <Bar w="160px" h={12} />
-              <Bar w="60%"  h={84} />
+              <Bar w="60%" h={84} />
             </div>
             <div className="col-span-5 space-y-3">
               <div className="flex items-end justify-between gap-4">
@@ -90,7 +94,7 @@ export default function LoadingSkeleton({
                 <Bar w="22%" h={28} />
                 <Bar w="22%" h={28} />
               </div>
-              <Bar w="100%" h={24} className="rounded-full" />
+              <Bar w="100%" h={24} rounded="full" />
             </div>
           </div>
 
@@ -137,11 +141,21 @@ export default function LoadingSkeleton({
                 key={i}
                 className="grid grid-cols-12 gap-4 items-center py-3 border-b border-parchment last:border-b-0"
               >
-                <div className="col-span-3"><Bar w="80%" h={14} /></div>
-                <div className="col-span-1"><Bar w="40%" h={14} /></div>
-                <div className="col-span-5"><Bar h={10} className="rounded-full" /></div>
-                <div className="col-span-2"><Bar w="55%" h={14} className="ml-auto" /></div>
-                <div className="col-span-1"><Bar w="55%" h={14} className="ml-auto" /></div>
+                <div className="col-span-3">
+                  <Bar w="80%" h={14} />
+                </div>
+                <div className="col-span-1">
+                  <Bar w="40%" h={14} />
+                </div>
+                <div className="col-span-5">
+                  <Bar h={10} rounded="full" />
+                </div>
+                <div className="col-span-2">
+                  <Bar w="55%" h={14} className="ml-auto" />
+                </div>
+                <div className="col-span-1">
+                  <Bar w="55%" h={14} className="ml-auto" />
+                </div>
               </div>
             ))}
           </div>
