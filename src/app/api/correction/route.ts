@@ -2,15 +2,42 @@
  * POST /api/correction — accept a user-submitted correction note.
  *
  * Lands the note in Supabase table `corrections` for founder review.
- * No auth; rate-limited at the middleware layer. Returns 200 even when
- * the table is missing so the user-facing form never breaks the page.
+ *
+ * Hardened (2026-05-27 security pass):
+ *   - Per-IP rate limit (10 / min) — write endpoint, page-level
+ *     middleware deliberately excludes /api/* so without this each
+ *     IP could spam unboundedly.
+ *   - Email field is validated, not just length-capped: garbage
+ *     strings get nulled rather than persisted alongside legit notes.
+ *   - Response always shaped `{ok:true|false, error?}`; never echoes
+ *     back user-submitted content (closes a reflection vector).
+ *
+ * Returns 200 even when the corrections table is missing so the
+ * user-facing form never breaks the page.
  */
 import { NextRequest, NextResponse } from "next/server";
+import { checkRateLimit, clientIp } from "@/lib/rate_limit";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
+// Same shape as /api/newsletter — kept inline rather than shared
+// because the two endpoints have different validation needs over time.
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
 export async function POST(req: NextRequest) {
+  const ip = clientIp(req);
+  const rl = checkRateLimit("correction", ip, { limit: 10, windowMs: 60_000 });
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { ok: false, error: "too_many_requests" },
+      {
+        status: 429,
+        headers: { "Retry-After": String(rl.retryAfter) },
+      },
+    );
+  }
+
   let body: Record<string, unknown> | null = null;
   try {
     body = await req.json();
@@ -22,7 +49,9 @@ export async function POST(req: NextRequest) {
   }
   const cellUrl = typeof body.cellUrl === "string" ? body.cellUrl.slice(0, 500) : "";
   const message = typeof body.message === "string" ? body.message.slice(0, 2000) : "";
-  const email = typeof body.email === "string" ? body.email.slice(0, 200) : "";
+  const rawEmail = typeof body.email === "string" ? body.email.trim().slice(0, 254) : "";
+  // Null out malformed emails instead of persisting garbage.
+  const email = rawEmail && EMAIL_RE.test(rawEmail) ? rawEmail.toLowerCase() : "";
   if (!message || message.length < 10) {
     return NextResponse.json(
       { ok: false, error: "message_too_short" },

@@ -10,11 +10,20 @@
  *   - Empty-shard alarm if any sitemap shard < 1 KB
  *
  * Internal-only. Robots: noindex,nofollow at the layout level.
- * No auth gating for now; B-011 will lock /admin/* behind a
- * password.
+ *
+ * Auth: gated by `?key=<ADMIN_KEY>` env var, same pattern as the
+ * other admin routes (/admin/review, /admin/anomalies). Returns
+ * notFound() rather than 401 so the URL doesn't advertise its
+ * existence — anyone hitting it without the right key sees the
+ * site's 404 page. Use timingSafeEqualString to avoid leaking
+ * key length via response timing under repeated probing.
+ *
+ * Locked 2026-05-27 (security audit pass).
  */
 import { readFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
+import { notFound } from "next/navigation";
+import { timingSafeEqualString } from "@/lib/rate_limit";
 
 export const revalidate = 300;
 
@@ -72,7 +81,17 @@ function fmtPct(n: number | null | undefined): string {
   return `${(n * 100).toFixed(1)}%`;
 }
 
-export default function DataQualityDashboard() {
+export default async function DataQualityDashboard({
+  searchParams,
+}: {
+  searchParams: Promise<{ key?: string }>;
+}) {
+  const sp = await searchParams;
+  const required = process.env.ADMIN_KEY;
+  if (!required || !timingSafeEqualString(sp.key ?? "", required)) {
+    notFound();
+  }
+
   const inventory = loadJson<Inventory>("data/audit/backend_inventory.json");
   const triage = loadJson<Triage>("data/quality/cell_triage_slim_v1.json");
   const outliers = loadJson<CrossCountryOutliers>("data/quality/cross_country_outliers_v1.json");

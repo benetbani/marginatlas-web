@@ -11,6 +11,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { notFound } from "next/navigation";
 import { fmtMoney } from "@/lib/format/money";
+import { timingSafeEqualString } from "@/lib/rate_limit";
 
 export const dynamic = "force-dynamic";
 
@@ -220,7 +221,7 @@ export default async function ReviewQueue({
 }) {
   const sp = await searchParams;
   const required = process.env.ADMIN_KEY;
-  if (!required || sp.key !== required) {
+  if (!required || !timingSafeEqualString(sp.key ?? "", required)) {
     notFound();
   }
 

@@ -34,6 +34,53 @@ const nextConfig = {
     ],
   },
 
+  // Security headers applied to every response. Added 2026-05-27 in
+  // the security-audit pass. Notes:
+  //   - HSTS preload requires the domain be submitted at
+  //     hstspreload.org; the header alone tells browsers that have
+  //     already seen us to only use HTTPS going forward.
+  //   - X-Frame-Options DENY + frame-ancestors 'none' are belt+braces
+  //     for the same clickjacking protection (older browsers honor
+  //     the legacy header; modern ones honor the CSP).
+  //   - Permissions-Policy denies camera/microphone/geolocation/etc.
+  //     We never request these; making it explicit means a future
+  //     dependency that tries to use them gets blocked at the
+  //     browser, not silently allowed.
+  //   - Referrer-Policy strict-origin-when-cross-origin keeps the
+  //     full URL out of third-party referer headers (the cell URL
+  //     itself encodes the user's interest, which is mildly sensitive).
+  //   - X-Content-Type-Options nosniff prevents browsers from
+  //     re-classifying CSV / JSON responses as HTML and executing
+  //     them — relevant for /api/export-csv specifically.
+  // No Content-Security-Policy yet: we use inline scripts (Next.js
+  // RSC payload + Sentry init) and Tailwind injects inline styles;
+  // a strict CSP would need nonces threaded through every request,
+  // which is a separate piece of work.
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
+          },
+          { key: "X-Frame-Options", value: "DENY" },
+          {
+            key: "Content-Security-Policy",
+            value: "frame-ancestors 'none'",
+          },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()",
+          },
+        ],
+      },
+    ];
+  },
+
 };
 
 // Sentry build wrapper: uploads source maps + injects the SDK.

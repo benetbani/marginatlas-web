@@ -13,16 +13,39 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCellBySlug, getCellVariants, buildTimeSeries, slugify } from "@/lib/cells";
 import { industryToSlug } from "@/lib/taxonomy";
+import { checkRateLimit, clientIp } from "@/lib/rate_limit";
+
+// Slug shape — same as /api/go. Anything that doesn't match returns
+// 400 fast so a malformed param can't burn a Supabase round-trip.
+const SLUG_RE = /^[a-z0-9-]+$/;
 
 export async function GET(req: NextRequest) {
+  // Per-IP rate limit. Each call does a getCellBySlug (which can be
+  // a 500ms+ Supabase query) plus optionally getCellVariants. Without
+  // a cap, a script can pin function CPU on Vercel by looping this
+  // endpoint with `?history=1` and varying params to defeat the
+  // CDN cache.
+  const ip = clientIp(req);
+  const rl = checkRateLimit("export-csv", ip, { limit: 20, windowMs: 60_000 });
+  if (!rl.allowed) {
+    return new NextResponse("Too many requests", {
+      status: 429,
+      headers: { "Retry-After": String(rl.retryAfter) },
+    });
+  }
+
   const url = new URL(req.url);
   const country = (url.searchParams.get("country") || "").toLowerCase();
   const region = (url.searchParams.get("region") || "").toLowerCase();
   const industry = (url.searchParams.get("industry") || "").toLowerCase();
   const includeHistory = url.searchParams.get("history") === "1";
 
-  if (!country || !region || !industry) {
-    return new NextResponse("Missing country/region/industry", { status: 400 });
+  if (
+    !SLUG_RE.test(country) ||
+    !SLUG_RE.test(region) ||
+    !SLUG_RE.test(industry)
+  ) {
+    return new NextResponse("Missing or invalid country/region/industry", { status: 400 });
   }
   const cell = await getCellBySlug(country, region, industry);
   if (!cell) {
