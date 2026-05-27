@@ -1,0 +1,8388 @@
+{
+  "version": "1.0.0",
+  "source": "ATO Small Business Benchmarks A-Z",
+  "source_year": "2023-24",
+  "source_url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/small-business-benchmarks/benchmarks-a-z",
+  "parsed_at": "2026-05-27T01:00:11.373Z",
+  "industry_count": 96,
+  "industries": {
+    "air_conditioning_refrigeration_and_heating_services": {
+      "ato_name": "Air conditioning, refrigeration and heating services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43639",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 150000
+        },
+        {
+          "min_aud": 150001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.54,
+              "high": 0.73
+            },
+            {
+              "low": 0.65,
+              "high": 0.78
+            },
+            {
+              "low": 0.79,
+              "high": 0.89
+            }
+          ],
+          "averages": [
+            0.63,
+            0.72,
+            0.84
+          ]
+        },
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.26,
+              "high": 0.45
+            },
+            {
+              "low": 0.34,
+              "high": 0.49
+            },
+            {
+              "low": 0.41,
+              "high": 0.53
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.04,
+              "high": 0.08
+            },
+            {
+              "low": 0.03,
+              "high": 0.06
+            },
+            {
+              "low": 0.02,
+              "high": 0.03
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.07,
+              "high": 0.1
+            },
+            {
+              "low": 0.04,
+              "high": 0.06
+            },
+            {
+              "low": 0.02,
+              "high": 0.04
+            }
+          ]
+        }
+      }
+    },
+    "alarm_installation_services_fire_and_security": {
+      "ato_name": "Alarm installation services – fire and security",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43654",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 150000
+        },
+        {
+          "min_aud": 150001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.53,
+              "high": 0.71
+            },
+            {
+              "low": 0.59,
+              "high": 0.76
+            },
+            {
+              "low": 0.76,
+              "high": 0.87
+            }
+          ],
+          "averages": [
+            0.62,
+            0.67,
+            0.81
+          ]
+        },
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.2,
+              "high": 0.4
+            },
+            {
+              "low": 0.27,
+              "high": 0.41
+            },
+            {
+              "low": 0.31,
+              "high": 0.43
+            }
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.23,
+              "high": 0.39
+            },
+            {
+              "low": 0.17,
+              "high": 0.31
+            },
+            {
+              "low": 0.22,
+              "high": 0.36
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.06,
+              "high": 0.09
+            },
+            {
+              "low": 0.03,
+              "high": 0.06
+            },
+            {
+              "low": 0.02,
+              "high": 0.03
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.06,
+              "high": 0.1
+            },
+            {
+              "low": 0.05,
+              "high": 0.07
+            },
+            {
+              "low": 0.02,
+              "high": 0.04
+            }
+          ]
+        }
+      }
+    },
+    "architectural_services": {
+      "ato_name": "Architectural services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43655",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 135000,
+          "max_aud": 220000
+        },
+        {
+          "min_aud": 220001,
+          "max_aud": 400000
+        },
+        {
+          "min_aud": 400001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.29,
+              "high": 0.56
+            },
+            {
+              "low": 0.4,
+              "high": 0.65
+            },
+            {
+              "low": 0.61,
+              "high": 0.79
+            }
+          ],
+          "averages": [
+            0.42,
+            0.53,
+            0.7
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.05,
+              "high": 0.1
+            },
+            {
+              "low": 0.05,
+              "high": 0.08
+            },
+            {
+              "low": 0.04,
+              "high": 0.06
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.03,
+              "high": 0.05
+            },
+            {
+              "low": 0.02,
+              "high": 0.04
+            },
+            {
+              "low": 0.01,
+              "high": 0.02
+            }
+          ]
+        }
+      }
+    },
+    "automotive_electrical_services": {
+      "ato_name": "Automotive electrical services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43658",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 250000
+        },
+        {
+          "min_aud": 250001,
+          "max_aud": 750000
+        },
+        {
+          "min_aud": 750001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.28,
+              "high": 0.42
+            },
+            {
+              "low": 0.33,
+              "high": 0.43
+            },
+            {
+              "low": 0.37,
+              "high": 0.46
+            }
+          ],
+          "averages": [
+            0.35,
+            0.38,
+            0.41
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.58,
+              "high": 0.74
+            },
+            {
+              "low": 0.65,
+              "high": 0.8
+            },
+            {
+              "low": 0.79,
+              "high": 0.87
+            }
+          ],
+          "averages": [
+            0.66,
+            0.73,
+            0.83
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.19,
+              "high": 0.29
+            },
+            {
+              "low": 0.16,
+              "high": 0.25
+            },
+            {
+              "low": 0.2,
+              "high": 0.28
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.07,
+              "high": 0.12
+            },
+            {
+              "low": 0.05,
+              "high": 0.08
+            },
+            {
+              "low": 0.03,
+              "high": 0.05
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.05,
+              "high": 0.08
+            },
+            {
+              "low": 0.03,
+              "high": 0.05
+            },
+            {
+              "low": 0.02,
+              "high": 0.03
+            }
+          ]
+        }
+      }
+    },
+    "bakeries_and_hot_bread_shops": {
+      "ato_name": "Bakeries and hot bread shops",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43659",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 400000
+        },
+        {
+          "min_aud": 400001,
+          "max_aud": 750000
+        },
+        {
+          "min_aud": 750001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.31,
+              "high": 0.38
+            },
+            {
+              "low": 0.34,
+              "high": 0.39
+            },
+            {
+              "low": 0.29,
+              "high": 0.36
+            }
+          ],
+          "averages": [
+            0.34,
+            0.36,
+            0.33
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.69,
+              "high": 0.81
+            },
+            {
+              "low": 0.75,
+              "high": 0.86
+            },
+            {
+              "low": 0.82,
+              "high": 0.9
+            }
+          ],
+          "averages": [
+            0.75,
+            0.81,
+            0.86
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.14,
+              "high": 0.25
+            },
+            {
+              "low": 0.15,
+              "high": 0.28
+            },
+            {
+              "low": 0.25,
+              "high": 0.34
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.1,
+              "high": 0.17
+            },
+            {
+              "low": 0.08,
+              "high": 0.12
+            },
+            {
+              "low": 0.05,
+              "high": 0.08
+            }
+          ]
+        }
+      }
+    },
+    "beauty_services": {
+      "ato_name": "Beauty services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43661",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 200000
+        },
+        {
+          "min_aud": 200001,
+          "max_aud": 400000
+        },
+        {
+          "min_aud": 400001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.48,
+              "high": 0.69
+            },
+            {
+              "low": 0.69,
+              "high": 0.83
+            },
+            {
+              "low": 0.77,
+              "high": 0.88
+            }
+          ],
+          "averages": [
+            0.58,
+            0.76,
+            0.82
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.23,
+              "high": 0.35
+            },
+            {
+              "low": 0.25,
+              "high": 0.37
+            },
+            {
+              "low": 0.27,
+              "high": 0.39
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.13,
+              "high": 0.21
+            },
+            {
+              "low": 0.12,
+              "high": 0.19
+            },
+            {
+              "low": 0.09,
+              "high": 0.16
+            }
+          ]
+        }
+      }
+    },
+    "blocklaying_services": {
+      "ato_name": "Blocklaying services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43662",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 75000,
+          "max_aud": 155000
+        },
+        {
+          "min_aud": 155001,
+          "max_aud": 500000
+        },
+        {
+          "min_aud": 500001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.38,
+              "high": 0.57
+            },
+            {
+              "low": 0.58,
+              "high": 0.71
+            },
+            {
+              "low": 0.78,
+              "high": 0.88
+            }
+          ],
+          "averages": [
+            0.47,
+            0.65,
+            0.83
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.07,
+              "high": 0.1
+            },
+            {
+              "low": 0.06,
+              "high": 0.09
+            },
+            {
+              "low": 0.02,
+              "high": 0.04
+            }
+          ]
+        }
+      }
+    },
+    "book_retailing": {
+      "ato_name": "Book retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43663",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 250000
+        },
+        {
+          "min_aud": 250001,
+          "max_aud": 750000
+        },
+        {
+          "min_aud": 750001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.29,
+              "high": 0.51
+            },
+            {
+              "low": 0.45,
+              "high": 0.57
+            },
+            {
+              "low": 0.53,
+              "high": 0.56
+            }
+          ],
+          "averages": [
+            0.4,
+            0.51,
+            0.55
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.64,
+              "high": 0.82
+            },
+            {
+              "low": 0.75,
+              "high": 0.9
+            },
+            {
+              "low": 0.88,
+              "high": 0.93
+            }
+          ],
+          "averages": [
+            0.73,
+            0.82,
+            0.9
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.14,
+              "high": 0.19
+            },
+            {
+              "low": 0.09,
+              "high": 0.14
+            },
+            {
+              "low": 0.06,
+              "high": 0.11
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.02,
+              "high": 0.05
+            },
+            {
+              "low": 0.01,
+              "high": 0.02
+            },
+            {
+              "low": 0,
+              "high": 0.01
+            }
+          ]
+        }
+      }
+    },
+    "bottle_shops_and_liquor_retailing": {
+      "ato_name": "Bottle shops and liquor retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43823",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 500000
+        },
+        {
+          "min_aud": 500001,
+          "max_aud": 2000000
+        },
+        {
+          "min_aud": 2000001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.63,
+              "high": 0.74
+            },
+            {
+              "low": 0.69,
+              "high": 0.77
+            },
+            {
+              "low": 0.74,
+              "high": 0.79
+            }
+          ],
+          "averages": [
+            0.68,
+            0.73,
+            0.76
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.78,
+              "high": 0.89
+            },
+            {
+              "low": 0.9,
+              "high": 0.95
+            },
+            {
+              "low": 0.92,
+              "high": 0.95
+            }
+          ],
+          "averages": [
+            0.83,
+            0.93,
+            0.93
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.12,
+              "high": 0.18
+            },
+            {
+              "low": 0.08,
+              "high": 0.13
+            },
+            {
+              "low": 0.07,
+              "high": 0.1
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.06,
+              "high": 0.11
+            },
+            {
+              "low": 0.04,
+              "high": 0.07
+            },
+            {
+              "low": 0.03,
+              "high": 0.04
+            }
+          ]
+        }
+      }
+    },
+    "bricklaying_services": {
+      "ato_name": "Bricklaying services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43822",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 150000
+        },
+        {
+          "min_aud": 150001,
+          "max_aud": 350000
+        },
+        {
+          "min_aud": 350001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.29,
+              "high": 0.46
+            },
+            {
+              "low": 0.51,
+              "high": 0.68
+            },
+            {
+              "low": 0.7,
+              "high": 0.84
+            }
+          ],
+          "averages": [
+            0.38,
+            0.6,
+            0.77
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.23,
+              "high": 0.38
+            },
+            {
+              "low": 0.29,
+              "high": 0.43
+            },
+            {
+              "low": 0.35,
+              "high": 0.49
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.07,
+              "high": 0.11
+            },
+            {
+              "low": 0.05,
+              "high": 0.07
+            },
+            {
+              "low": 0.03,
+              "high": 0.04
+            }
+          ]
+        }
+      }
+    },
+    "cabinet_makers": {
+      "ato_name": "Cabinet makers",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43821",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 100000,
+          "max_aud": 300000
+        },
+        {
+          "min_aud": 300001,
+          "max_aud": 900000
+        },
+        {
+          "min_aud": 900001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.53,
+              "high": 0.71
+            },
+            {
+              "low": 0.72,
+              "high": 0.84
+            },
+            {
+              "low": 0.82,
+              "high": 0.9
+            }
+          ],
+          "averages": [
+            0.62,
+            0.78,
+            0.86
+          ]
+        },
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.21,
+              "high": 0.4
+            },
+            {
+              "low": 0.34,
+              "high": 0.45
+            },
+            {
+              "low": 0.38,
+              "high": 0.48
+            }
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.18,
+              "high": 0.3
+            },
+            {
+              "low": 0.16,
+              "high": 0.28
+            },
+            {
+              "low": 0.22,
+              "high": 0.32
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.07,
+              "high": 0.11
+            },
+            {
+              "low": 0.05,
+              "high": 0.07
+            },
+            {
+              "low": 0.03,
+              "high": 0.05
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.05,
+              "high": 0.08
+            },
+            {
+              "low": 0.03,
+              "high": 0.04
+            },
+            {
+              "low": 0.01,
+              "high": 0.02
+            }
+          ]
+        }
+      }
+    },
+    "cake_shops_and_patisseries": {
+      "ato_name": "Cake shops and patisseries",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43820",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 300000
+        },
+        {
+          "min_aud": 300001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.28,
+              "high": 0.37
+            },
+            {
+              "low": 0.3,
+              "high": 0.35
+            },
+            {
+              "low": 0.31,
+              "high": 0.37
+            }
+          ],
+          "averages": [
+            0.33,
+            0.33,
+            0.34
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.62,
+              "high": 0.79
+            },
+            {
+              "low": 0.78,
+              "high": 0.87
+            },
+            {
+              "low": 0.83,
+              "high": 0.91
+            }
+          ],
+          "averages": [
+            0.7,
+            0.83,
+            0.87
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.18,
+              "high": 0.27
+            },
+            {
+              "low": 0.18,
+              "high": 0.26
+            },
+            {
+              "low": 0.21,
+              "high": 0.28
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.11,
+              "high": 0.17
+            },
+            {
+              "low": 0.09,
+              "high": 0.15
+            },
+            {
+              "low": 0.07,
+              "high": 0.11
+            }
+          ]
+        }
+      }
+    },
+    "carpentry_services": {
+      "ato_name": "Carpentry services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43819",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 110000
+        },
+        {
+          "min_aud": 110001,
+          "max_aud": 400000
+        },
+        {
+          "min_aud": 400001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.32,
+              "high": 0.5
+            },
+            {
+              "low": 0.46,
+              "high": 0.66
+            },
+            {
+              "low": 0.76,
+              "high": 0.87
+            }
+          ],
+          "averages": [
+            0.41,
+            0.56,
+            0.81
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.24,
+              "high": 0.39
+            },
+            {
+              "low": 0.21,
+              "high": 0.35
+            },
+            {
+              "low": 0.27,
+              "high": 0.43
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.08,
+              "high": 0.12
+            },
+            {
+              "low": 0.05,
+              "high": 0.08
+            },
+            {
+              "low": 0.02,
+              "high": 0.04
+            }
+          ]
+        }
+      }
+    },
+    "carpet_laying_services": {
+      "ato_name": "Carpet laying services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43818",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 100000
+        },
+        {
+          "min_aud": 100001,
+          "max_aud": 250000
+        },
+        {
+          "min_aud": 250001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.32,
+              "high": 0.45
+            },
+            {
+              "low": 0.37,
+              "high": 0.55
+            },
+            {
+              "low": 0.6,
+              "high": 0.79
+            }
+          ],
+          "averages": [
+            0.39,
+            0.46,
+            0.7
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.26,
+              "high": 0.38
+            },
+            {
+              "low": 0.21,
+              "high": 0.34
+            },
+            {
+              "low": 0.26,
+              "high": 0.42
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.08,
+              "high": 0.11
+            },
+            {
+              "low": 0.06,
+              "high": 0.09
+            },
+            {
+              "low": 0.03,
+              "high": 0.05
+            }
+          ]
+        }
+      }
+    },
+    "catering_services": {
+      "ato_name": "Catering services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43816",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 200000
+        },
+        {
+          "min_aud": 200001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.31,
+              "high": 0.43
+            },
+            {
+              "low": 0.32,
+              "high": 0.41
+            },
+            {
+              "low": 0.31,
+              "high": 0.41
+            }
+          ],
+          "averages": [
+            0.37,
+            0.37,
+            0.36
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.6,
+              "high": 0.76
+            },
+            {
+              "low": 0.68,
+              "high": 0.83
+            },
+            {
+              "low": 0.81,
+              "high": 0.91
+            }
+          ],
+          "averages": [
+            0.68,
+            0.75,
+            0.86
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.19,
+              "high": 0.28
+            },
+            {
+              "low": 0.16,
+              "high": 0.27
+            },
+            {
+              "low": 0.23,
+              "high": 0.33
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.06,
+              "high": 0.12
+            },
+            {
+              "low": 0.06,
+              "high": 0.11
+            },
+            {
+              "low": 0.04,
+              "high": 0.08
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.04,
+              "high": 0.07
+            },
+            {
+              "low": 0.02,
+              "high": 0.05
+            },
+            {
+              "low": 0.01,
+              "high": 0.02
+            }
+          ]
+        }
+      }
+    },
+    "cement_rendering": {
+      "ato_name": "Cement rendering",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43813",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 150000
+        },
+        {
+          "min_aud": 150001,
+          "max_aud": 400000
+        },
+        {
+          "min_aud": 400001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0,
+              "high": 0
+            },
+            {
+              "low": 0,
+              "high": 0
+            },
+            {
+              "low": 0,
+              "high": 0
+            }
+          ],
+          "averages": [
+            0.45,
+            0.69,
+            0.82
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.2,
+              "high": 0.32
+            },
+            {
+              "low": 0.25,
+              "high": 0.38
+            },
+            {
+              "low": 0.32,
+              "high": 0.44
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.07,
+              "high": 0.11
+            },
+            {
+              "low": 0.05,
+              "high": 0.07
+            },
+            {
+              "low": 0.02,
+              "high": 0.04
+            }
+          ]
+        }
+      }
+    },
+    "chicken_shops": {
+      "ato_name": "Chicken shops",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43812",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 60000,
+          "max_aud": 250000
+        },
+        {
+          "min_aud": 250001,
+          "max_aud": 575000
+        },
+        {
+          "min_aud": 575001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.38,
+              "high": 0.46
+            },
+            {
+              "low": 0.41,
+              "high": 0.49
+            },
+            {
+              "low": 0.4,
+              "high": 0.48
+            }
+          ],
+          "averages": [
+            0.42,
+            0.45,
+            0.44
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.76,
+              "high": 0.87
+            },
+            {
+              "low": 0.81,
+              "high": 0.89
+            },
+            {
+              "low": 0.85,
+              "high": 0.93
+            }
+          ],
+          "averages": [
+            0.82,
+            0.85,
+            0.89
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.13,
+              "high": 0.2
+            },
+            {
+              "low": 0.1,
+              "high": 0.16
+            },
+            {
+              "low": 0.07,
+              "high": 0.11
+            }
+          ]
+        }
+      }
+    },
+    "child_care_services": {
+      "ato_name": "Child care services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43811",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 200000
+        },
+        {
+          "min_aud": 200001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.42,
+              "high": 0.59
+            },
+            {
+              "low": 0.6,
+              "high": 0.77
+            },
+            {
+              "low": 0.79,
+              "high": 0.88
+            }
+          ],
+          "averages": [
+            0.5,
+            0.69,
+            0.84
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.1,
+              "high": 0.16
+            },
+            {
+              "low": 0.07,
+              "high": 0.12
+            },
+            {
+              "low": 0.08,
+              "high": 0.12
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.04,
+              "high": 0.06
+            },
+            {
+              "low": 0.02,
+              "high": 0.04
+            },
+            {
+              "low": 0,
+              "high": 0.01
+            }
+          ]
+        }
+      }
+    },
+    "chiropractic_and_osteopathic_services": {
+      "ato_name": "Chiropractic and osteopathic services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43810",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 200000
+        },
+        {
+          "min_aud": 200001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.34,
+              "high": 0.52
+            },
+            {
+              "low": 0.54,
+              "high": 0.71
+            },
+            {
+              "low": 0.67,
+              "high": 0.82
+            }
+          ],
+          "averages": [
+            0.43,
+            0.62,
+            0.75
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.23,
+              "high": 0.4
+            },
+            {
+              "low": 0.21,
+              "high": 0.38
+            },
+            {
+              "low": 0.26,
+              "high": 0.45
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.13,
+              "high": 0.21
+            },
+            {
+              "low": 0.09,
+              "high": 0.14
+            },
+            {
+              "low": 0.06,
+              "high": 0.09
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.03,
+              "high": 0.05
+            },
+            {
+              "low": 0.02,
+              "high": 0.03
+            },
+            {
+              "low": 0.01,
+              "high": 0.02
+            }
+          ]
+        }
+      }
+    },
+    "cleaning_services_building_and_other_industrial": {
+      "ato_name": "Cleaning services – building and other industrial",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43801",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 115000
+        },
+        {
+          "min_aud": 115001,
+          "max_aud": 250000
+        },
+        {
+          "min_aud": 250001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.3,
+              "high": 0.53
+            },
+            {
+              "low": 0.46,
+              "high": 0.69
+            },
+            {
+              "low": 0.69,
+              "high": 0.85
+            }
+          ],
+          "averages": [
+            0.42,
+            0.57,
+            0.77
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.31,
+              "high": 0.48
+            },
+            {
+              "low": 0.29,
+              "high": 0.47
+            },
+            {
+              "low": 0.35,
+              "high": 0.56
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.07,
+              "high": 0.11
+            },
+            {
+              "low": 0.05,
+              "high": 0.09
+            },
+            {
+              "low": 0.03,
+              "high": 0.05
+            }
+          ]
+        }
+      }
+    },
+    "cleaning_services_carpet_rug_and_furniture_upholstery": {
+      "ato_name": "Cleaning services – carpet, rug and furniture upholstery",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43800",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 150000
+        },
+        {
+          "min_aud": 150001,
+          "max_aud": 300000
+        },
+        {
+          "min_aud": 300001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.37,
+              "high": 0.58
+            },
+            {
+              "low": 0.43,
+              "high": 0.61
+            },
+            {
+              "low": 0.6,
+              "high": 0.75
+            }
+          ],
+          "averages": [
+            0.48,
+            0.52,
+            0.68
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.09,
+              "high": 0.13
+            },
+            {
+              "low": 0.07,
+              "high": 0.1
+            },
+            {
+              "low": 0.05,
+              "high": 0.07
+            }
+          ]
+        }
+      }
+    },
+    "clothing_retailing": {
+      "ato_name": "Clothing retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43799",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 250000
+        },
+        {
+          "min_aud": 250001,
+          "max_aud": 500000
+        },
+        {
+          "min_aud": 500001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.39,
+              "high": 0.55
+            },
+            {
+              "low": 0.46,
+              "high": 0.58
+            },
+            {
+              "low": 0.48,
+              "high": 0.57
+            }
+          ],
+          "averages": [
+            0.47,
+            0.52,
+            0.53
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.72,
+              "high": 0.85
+            },
+            {
+              "low": 0.78,
+              "high": 0.88
+            },
+            {
+              "low": 0.83,
+              "high": 0.91
+            }
+          ],
+          "averages": [
+            0.78,
+            0.83,
+            0.87
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.14,
+              "high": 0.22
+            },
+            {
+              "low": 0.11,
+              "high": 0.19
+            },
+            {
+              "low": 0.12,
+              "high": 0.18
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.11,
+              "high": 0.19
+            },
+            {
+              "low": 0.08,
+              "high": 0.14
+            },
+            {
+              "low": 0.05,
+              "high": 0.1
+            }
+          ]
+        }
+      }
+    },
+    "coffee_shops": {
+      "ato_name": "Coffee shops",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43798",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 250000
+        },
+        {
+          "min_aud": 250001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.34,
+              "high": 0.42
+            },
+            {
+              "low": 0.35,
+              "high": 0.41
+            },
+            {
+              "low": 0.33,
+              "high": 0.38
+            }
+          ],
+          "averages": [
+            0.38,
+            0.38,
+            0.36
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.73,
+              "high": 0.86
+            },
+            {
+              "low": 0.81,
+              "high": 0.9
+            },
+            {
+              "low": 0.86,
+              "high": 0.93
+            }
+          ],
+          "averages": [
+            0.79,
+            0.86,
+            0.89
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.21,
+              "high": 0.32
+            },
+            {
+              "low": 0.21,
+              "high": 0.32
+            },
+            {
+              "low": 0.27,
+              "high": 0.35
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.1,
+              "high": 0.17
+            },
+            {
+              "low": 0.08,
+              "high": 0.14
+            },
+            {
+              "low": 0.06,
+              "high": 0.1
+            }
+          ]
+        }
+      }
+    },
+    "computer_retailing": {
+      "ato_name": "Computer retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43797",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 200000
+        },
+        {
+          "min_aud": 200001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.4,
+              "high": 0.57
+            },
+            {
+              "low": 0.43,
+              "high": 0.56
+            },
+            {
+              "low": 0.49,
+              "high": 0.65
+            }
+          ],
+          "averages": [
+            0.49,
+            0.5,
+            0.57
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.64,
+              "high": 0.8
+            },
+            {
+              "low": 0.7,
+              "high": 0.85
+            },
+            {
+              "low": 0.82,
+              "high": 0.91
+            }
+          ],
+          "averages": [
+            0.72,
+            0.78,
+            0.87
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.07,
+              "high": 0.14
+            },
+            {
+              "low": 0.06,
+              "high": 0.09
+            },
+            {
+              "low": 0.02,
+              "high": 0.04
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.04,
+              "high": 0.06
+            },
+            {
+              "low": 0.02,
+              "high": 0.03
+            },
+            {
+              "low": 0.01,
+              "high": 0.02
+            }
+          ]
+        }
+      }
+    },
+    "concreting_services": {
+      "ato_name": "Concreting services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43796",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 200000
+        },
+        {
+          "min_aud": 200001,
+          "max_aud": 500000
+        },
+        {
+          "min_aud": 500001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.38,
+              "high": 0.59
+            },
+            {
+              "low": 0.63,
+              "high": 0.77
+            },
+            {
+              "low": 0.76,
+              "high": 0.87
+            }
+          ],
+          "averages": [
+            0.48,
+            0.7,
+            0.81
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.07,
+              "high": 0.12
+            },
+            {
+              "low": 0.05,
+              "high": 0.08
+            },
+            {
+              "low": 0.03,
+              "high": 0.05
+            }
+          ]
+        }
+      }
+    },
+    "courier_services": {
+      "ato_name": "Courier services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43794",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 100000
+        },
+        {
+          "min_aud": 100001,
+          "max_aud": 300000
+        },
+        {
+          "min_aud": 300001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.42,
+              "high": 0.58
+            },
+            {
+              "low": 0.48,
+              "high": 0.71
+            },
+            {
+              "low": 0.76,
+              "high": 0.89
+            }
+          ],
+          "averages": [
+            0.5,
+            0.59,
+            0.82
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.15,
+              "high": 0.23
+            },
+            {
+              "low": 0.14,
+              "high": 0.21
+            },
+            {
+              "low": 0.07,
+              "high": 0.17
+            }
+          ]
+        }
+      }
+    },
+    "delicatessen": {
+      "ato_name": "Delicatessen",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43792",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 250000
+        },
+        {
+          "min_aud": 250001,
+          "max_aud": 500000
+        },
+        {
+          "min_aud": 500001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.4,
+              "high": 0.57
+            },
+            {
+              "low": 0.46,
+              "high": 0.56
+            },
+            {
+              "low": 0.52,
+              "high": 0.63
+            }
+          ],
+          "averages": [
+            0.49,
+            0.51,
+            0.58
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.76,
+              "high": 0.87
+            },
+            {
+              "low": 0.8,
+              "high": 0.89
+            },
+            {
+              "low": 0.86,
+              "high": 0.93
+            }
+          ],
+          "averages": [
+            0.82,
+            0.85,
+            0.9
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.09,
+              "high": 0.18
+            },
+            {
+              "low": 0.09,
+              "high": 0.14
+            },
+            {
+              "low": 0.05,
+              "high": 0.09
+            }
+          ]
+        }
+      }
+    },
+    "delivery_services": {
+      "ato_name": "Delivery services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43791",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 90000
+        },
+        {
+          "min_aud": 90001,
+          "max_aud": 210000
+        },
+        {
+          "min_aud": 210001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.38,
+              "high": 0.56
+            },
+            {
+              "low": 0.48,
+              "high": 0.66
+            },
+            {
+              "low": 0.66,
+              "high": 0.82
+            }
+          ],
+          "averages": [
+            0.47,
+            0.57,
+            0.74
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.14,
+              "high": 0.21
+            },
+            {
+              "low": 0.14,
+              "high": 0.21
+            },
+            {
+              "low": 0.09,
+              "high": 0.2
+            }
+          ]
+        }
+      }
+    },
+    "dental_specialists": {
+      "ato_name": "Dental specialists",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43790",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 300000
+        },
+        {
+          "min_aud": 300001,
+          "max_aud": 900000
+        },
+        {
+          "min_aud": 900001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0,
+              "high": 0
+            },
+            {
+              "low": 0,
+              "high": 0
+            },
+            {
+              "low": 0,
+              "high": 0
+            }
+          ],
+          "averages": [
+            0.54,
+            0.67,
+            0.66
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.08,
+              "high": 0.12
+            },
+            {
+              "low": 0.08,
+              "high": 0.12
+            },
+            {
+              "low": 0.04,
+              "high": 0.07
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.02,
+              "high": 0.04
+            },
+            {
+              "low": 0.01,
+              "high": 0.02
+            },
+            {
+              "low": 0,
+              "high": 0.01
+            }
+          ]
+        }
+      }
+    },
+    "dental_surgeons_general": {
+      "ato_name": "Dental surgeons – general",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43789",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 435000
+        },
+        {
+          "min_aud": 435001,
+          "max_aud": 815000
+        },
+        {
+          "min_aud": 815001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.55,
+              "high": 0.67
+            },
+            {
+              "low": 0.65,
+              "high": 0.73
+            },
+            {
+              "low": 0.67,
+              "high": 0.8
+            }
+          ],
+          "averages": [
+            0.61,
+            0.69,
+            0.73
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.25,
+              "high": 0.41
+            },
+            {
+              "low": 0.24,
+              "high": 0.37
+            },
+            {
+              "low": 0.23,
+              "high": 0.37
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.09,
+              "high": 0.15
+            },
+            {
+              "low": 0.07,
+              "high": 0.1
+            },
+            {
+              "low": 0.04,
+              "high": 0.07
+            }
+          ]
+        }
+      }
+    },
+    "discount_and_variety_stores": {
+      "ato_name": "Discount and variety stores",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43788",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 250000
+        },
+        {
+          "min_aud": 250001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.42,
+              "high": 0.53
+            },
+            {
+              "low": 0.47,
+              "high": 0.52
+            },
+            {
+              "low": 0.47,
+              "high": 0.55
+            }
+          ],
+          "averages": [
+            0.47,
+            0.49,
+            0.51
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.79,
+              "high": 0.88
+            },
+            {
+              "low": 0.83,
+              "high": 0.92
+            },
+            {
+              "low": 0.86,
+              "high": 0.93
+            }
+          ],
+          "averages": [
+            0.83,
+            0.87,
+            0.89
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.2,
+              "high": 0.3
+            },
+            {
+              "low": 0.19,
+              "high": 0.25
+            },
+            {
+              "low": 0.12,
+              "high": 0.21
+            }
+          ]
+        }
+      }
+    },
+    "domestic_appliance_repair_and_maintenance": {
+      "ato_name": "Domestic appliance repair and maintenance",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43787",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 150000
+        },
+        {
+          "min_aud": 150001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.48,
+              "high": 0.67
+            },
+            {
+              "low": 0.59,
+              "high": 0.76
+            },
+            {
+              "low": 0.77,
+              "high": 0.88
+            }
+          ],
+          "averages": [
+            0.58,
+            0.67,
+            0.82
+          ]
+        },
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.2,
+              "high": 0.35
+            },
+            {
+              "low": 0.29,
+              "high": 0.42
+            },
+            {
+              "low": 0.36,
+              "high": 0.48
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.06,
+              "high": 0.12
+            },
+            {
+              "low": 0.04,
+              "high": 0.08
+            },
+            {
+              "low": 0.02,
+              "high": 0.04
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.07,
+              "high": 0.11
+            },
+            {
+              "low": 0.05,
+              "high": 0.07
+            },
+            {
+              "low": 0.03,
+              "high": 0.04
+            }
+          ]
+        }
+      }
+    },
+    "driving_schools_and_instructors": {
+      "ato_name": "Driving schools and instructors",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43786",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 75000
+        },
+        {
+          "min_aud": 75001,
+          "max_aud": 165000
+        },
+        {
+          "min_aud": 165001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.32,
+              "high": 0.45
+            },
+            {
+              "low": 0.34,
+              "high": 0.5
+            },
+            {
+              "low": 0.51,
+              "high": 0.7
+            }
+          ],
+          "averages": [
+            0.38,
+            0.42,
+            0.61
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.16,
+              "high": 0.22
+            },
+            {
+              "low": 0.12,
+              "high": 0.18
+            },
+            {
+              "low": 0.06,
+              "high": 0.14
+            }
+          ]
+        }
+      }
+    },
+    "electrical_and_electronic_product_retailing": {
+      "ato_name": "Electrical and electronic product retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43785",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 750000
+        },
+        {
+          "min_aud": 750001,
+          "max_aud": 2000000
+        },
+        {
+          "min_aud": 2000001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.44,
+              "high": 0.61
+            },
+            {
+              "low": 0.54,
+              "high": 0.67
+            },
+            {
+              "low": 0.59,
+              "high": 0.73
+            }
+          ],
+          "averages": [
+            0.53,
+            0.6,
+            0.66
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.71,
+              "high": 0.87
+            },
+            {
+              "low": 0.83,
+              "high": 0.92
+            },
+            {
+              "low": 0.89,
+              "high": 0.95
+            }
+          ],
+          "averages": [
+            0.79,
+            0.87,
+            0.92
+          ]
+        }
+      }
+    },
+    "electrical_services": {
+      "ato_name": "Electrical services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43784",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 200000
+        },
+        {
+          "min_aud": 200001,
+          "max_aud": 500000
+        },
+        {
+          "min_aud": 500001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.51,
+              "high": 0.68
+            },
+            {
+              "low": 0.59,
+              "high": 0.75
+            },
+            {
+              "low": 0.75,
+              "high": 0.86
+            }
+          ],
+          "averages": [
+            0.59,
+            0.67,
+            0.81
+          ]
+        },
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.22,
+              "high": 0.34
+            },
+            {
+              "low": 0.26,
+              "high": 0.36
+            },
+            {
+              "low": 0.3,
+              "high": 0.41
+            }
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.21,
+              "high": 0.35
+            },
+            {
+              "low": 0.17,
+              "high": 0.3
+            },
+            {
+              "low": 0.23,
+              "high": 0.34
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.06,
+              "high": 0.1
+            },
+            {
+              "low": 0.04,
+              "high": 0.07
+            },
+            {
+              "low": 0.03,
+              "high": 0.04
+            }
+          ]
+        }
+      }
+    },
+    "fence_construction": {
+      "ato_name": "Fence construction",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43782",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 250000
+        },
+        {
+          "min_aud": 250001,
+          "max_aud": 400000
+        },
+        {
+          "min_aud": 400001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.59,
+              "high": 0.71
+            },
+            {
+              "low": 0.66,
+              "high": 0.77
+            },
+            {
+              "low": 0.75,
+              "high": 0.85
+            }
+          ],
+          "averages": [
+            0.65,
+            0.72,
+            0.8
+          ]
+        },
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.27,
+              "high": 0.45
+            },
+            {
+              "low": 0.33,
+              "high": 0.47
+            },
+            {
+              "low": 0.38,
+              "high": 0.49
+            }
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.16,
+              "high": 0.25
+            },
+            {
+              "low": 0.14,
+              "high": 0.23
+            },
+            {
+              "low": 0.16,
+              "high": 0.26
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.06,
+              "high": 0.09
+            },
+            {
+              "low": 0.04,
+              "high": 0.07
+            },
+            {
+              "low": 0.03,
+              "high": 0.05
+            }
+          ]
+        }
+      }
+    },
+    "fish_and_chips_shops": {
+      "ato_name": "Fish and chips shops",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43781",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 250000
+        },
+        {
+          "min_aud": 250001,
+          "max_aud": 500000
+        },
+        {
+          "min_aud": 500001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.43,
+              "high": 0.49
+            },
+            {
+              "low": 0.45,
+              "high": 0.51
+            },
+            {
+              "low": 0.44,
+              "high": 0.5
+            }
+          ],
+          "averages": [
+            0.46,
+            0.48,
+            0.47
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.79,
+              "high": 0.86
+            },
+            {
+              "low": 0.8,
+              "high": 0.89
+            },
+            {
+              "low": 0.81,
+              "high": 0.9
+            }
+          ],
+          "averages": [
+            0.83,
+            0.84,
+            0.86
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.12,
+              "high": 0.17
+            },
+            {
+              "low": 0.09,
+              "high": 0.13
+            },
+            {
+              "low": 0.05,
+              "high": 0.09
+            }
+          ]
+        }
+      }
+    },
+    "fish_and_seafood_retailing_fresh": {
+      "ato_name": "Fish and seafood retailing – fresh",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43780",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 500000
+        },
+        {
+          "min_aud": 500001,
+          "max_aud": 1000000
+        },
+        {
+          "min_aud": 1000001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.58,
+              "high": 0.69
+            },
+            {
+              "low": 0.57,
+              "high": 0.67
+            },
+            {
+              "low": 0.63,
+              "high": 0.73
+            }
+          ],
+          "averages": [
+            0.63,
+            0.62,
+            0.68
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.76,
+              "high": 0.88
+            },
+            {
+              "low": 0.85,
+              "high": 0.92
+            },
+            {
+              "low": 0.9,
+              "high": 0.94
+            }
+          ],
+          "averages": [
+            0.82,
+            0.88,
+            0.92
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.06,
+              "high": 0.1
+            },
+            {
+              "low": 0.06,
+              "high": 0.09
+            },
+            {
+              "low": 0.04,
+              "high": 0.07
+            }
+          ]
+        }
+      }
+    },
+    "floor_covering_retailing": {
+      "ato_name": "Floor covering retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43779",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 800000
+        },
+        {
+          "min_aud": 800001,
+          "max_aud": 2000000
+        },
+        {
+          "min_aud": 2000001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.35,
+              "high": 0.54
+            },
+            {
+              "low": 0.48,
+              "high": 0.6
+            },
+            {
+              "low": 0.51,
+              "high": 0.64
+            }
+          ],
+          "averages": [
+            0.44,
+            0.54,
+            0.57
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.66,
+              "high": 0.83
+            },
+            {
+              "low": 0.85,
+              "high": 0.93
+            },
+            {
+              "low": 0.88,
+              "high": 0.93
+            }
+          ],
+          "averages": [
+            0.75,
+            0.89,
+            0.9
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.06,
+              "high": 0.11
+            },
+            {
+              "low": 0.05,
+              "high": 0.07
+            },
+            {
+              "low": 0.03,
+              "high": 0.05
+            }
+          ]
+        }
+      }
+    },
+    "florists": {
+      "ato_name": "Florists",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43778",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 300000
+        },
+        {
+          "min_aud": 300001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.4,
+              "high": 0.51
+            },
+            {
+              "low": 0.43,
+              "high": 0.5
+            },
+            {
+              "low": 0.45,
+              "high": 0.53
+            }
+          ],
+          "averages": [
+            0.45,
+            0.47,
+            0.49
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.68,
+              "high": 0.82
+            },
+            {
+              "low": 0.78,
+              "high": 0.88
+            },
+            {
+              "low": 0.83,
+              "high": 0.91
+            }
+          ],
+          "averages": [
+            0.75,
+            0.83,
+            0.87
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.13,
+              "high": 0.23
+            },
+            {
+              "low": 0.14,
+              "high": 0.22
+            },
+            {
+              "low": 0.16,
+              "high": 0.23
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.08,
+              "high": 0.14
+            },
+            {
+              "low": 0.07,
+              "high": 0.11
+            },
+            {
+              "low": 0.04,
+              "high": 0.08
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.03,
+              "high": 0.05
+            },
+            {
+              "low": 0.02,
+              "high": 0.03
+            },
+            {
+              "low": 0.01,
+              "high": 0.02
+            }
+          ]
+        }
+      }
+    },
+    "footwear_retailing": {
+      "ato_name": "Footwear retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43777",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 180000
+        },
+        {
+          "min_aud": 180001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.4,
+              "high": 0.59
+            },
+            {
+              "low": 0.51,
+              "high": 0.59
+            },
+            {
+              "low": 0.48,
+              "high": 0.56
+            }
+          ],
+          "averages": [
+            0.49,
+            0.55,
+            0.52
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.66,
+              "high": 0.82
+            },
+            {
+              "low": 0.78,
+              "high": 0.87
+            },
+            {
+              "low": 0.84,
+              "high": 0.91
+            }
+          ],
+          "averages": [
+            0.74,
+            0.82,
+            0.87
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.11,
+              "high": 0.19
+            },
+            {
+              "low": 0.08,
+              "high": 0.14
+            },
+            {
+              "low": 0.06,
+              "high": 0.1
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.03,
+              "high": 0.05
+            },
+            {
+              "low": 0.02,
+              "high": 0.03
+            },
+            {
+              "low": 0,
+              "high": 0.01
+            }
+          ]
+        }
+      }
+    },
+    "fruit_and_vegetable_retailing": {
+      "ato_name": "Fruit and vegetable retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43776",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 450000
+        },
+        {
+          "min_aud": 450001,
+          "max_aud": 1100000
+        },
+        {
+          "min_aud": 1100001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.58,
+              "high": 0.71
+            },
+            {
+              "low": 0.65,
+              "high": 0.73
+            },
+            {
+              "low": 0.69,
+              "high": 0.76
+            }
+          ],
+          "averages": [
+            0.64,
+            0.69,
+            0.72
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.78,
+              "high": 0.88
+            },
+            {
+              "low": 0.87,
+              "high": 0.92
+            },
+            {
+              "low": 0.92,
+              "high": 0.96
+            }
+          ],
+          "averages": [
+            0.83,
+            0.89,
+            0.94
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.11,
+              "high": 0.18
+            },
+            {
+              "low": 0.08,
+              "high": 0.13
+            },
+            {
+              "low": 0.08,
+              "high": 0.13
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.06,
+              "high": 0.11
+            },
+            {
+              "low": 0.05,
+              "high": 0.09
+            },
+            {
+              "low": 0.04,
+              "high": 0.06
+            }
+          ]
+        }
+      }
+    },
+    "fuel_retailing": {
+      "ato_name": "Fuel retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43775",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 75000,
+          "max_aud": 500000
+        },
+        {
+          "min_aud": 500001,
+          "max_aud": 2000000
+        },
+        {
+          "min_aud": 2000001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.65,
+              "high": 0.79
+            },
+            {
+              "low": 0.67,
+              "high": 0.81
+            },
+            {
+              "low": 0.79,
+              "high": 0.88
+            }
+          ],
+          "averages": [
+            0.72,
+            0.74,
+            0.83
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.79,
+              "high": 0.91
+            },
+            {
+              "low": 0.91,
+              "high": 0.96
+            },
+            {
+              "low": 0.96,
+              "high": 0.98
+            }
+          ],
+          "averages": [
+            0.85,
+            0.94,
+            0.97
+          ]
+        }
+      }
+    },
+    "furniture_removalists": {
+      "ato_name": "Furniture removalists",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43774",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 125000
+        },
+        {
+          "min_aud": 125001,
+          "max_aud": 525000
+        },
+        {
+          "min_aud": 525001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.43,
+              "high": 0.65
+            },
+            {
+              "low": 0.6,
+              "high": 0.79
+            },
+            {
+              "low": 0.78,
+              "high": 0.89
+            }
+          ],
+          "averages": [
+            0.54,
+            0.7,
+            0.84
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.12,
+              "high": 0.2
+            },
+            {
+              "low": 0.09,
+              "high": 0.16
+            },
+            {
+              "low": 0.06,
+              "high": 0.12
+            }
+          ]
+        }
+      }
+    },
+    "furniture_retailing": {
+      "ato_name": "Furniture retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43773",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 500000
+        },
+        {
+          "min_aud": 500001,
+          "max_aud": 1000000
+        },
+        {
+          "min_aud": 1000001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.42,
+              "high": 0.55
+            },
+            {
+              "low": 0.47,
+              "high": 0.57
+            },
+            {
+              "low": 0.52,
+              "high": 0.58
+            }
+          ],
+          "averages": [
+            0.48,
+            0.52,
+            0.55
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.73,
+              "high": 0.86
+            },
+            {
+              "low": 0.81,
+              "high": 0.91
+            },
+            {
+              "low": 0.87,
+              "high": 0.95
+            }
+          ],
+          "averages": [
+            0.8,
+            0.86,
+            0.91
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.11,
+              "high": 0.19
+            },
+            {
+              "low": 0.08,
+              "high": 0.14
+            },
+            {
+              "low": 0.07,
+              "high": 0.11
+            }
+          ]
+        }
+      }
+    },
+    "garden_supplies_retailing": {
+      "ato_name": "Garden supplies retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43772",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 250000
+        },
+        {
+          "min_aud": 250001,
+          "max_aud": 750000
+        },
+        {
+          "min_aud": 750001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.34,
+              "high": 0.5
+            },
+            {
+              "low": 0.39,
+              "high": 0.53
+            },
+            {
+              "low": 0.46,
+              "high": 0.56
+            }
+          ],
+          "averages": [
+            0.42,
+            0.46,
+            0.51
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.67,
+              "high": 0.83
+            },
+            {
+              "low": 0.74,
+              "high": 0.88
+            },
+            {
+              "low": 0.84,
+              "high": 0.92
+            }
+          ],
+          "averages": [
+            0.75,
+            0.81,
+            0.88
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.08,
+              "high": 0.14
+            },
+            {
+              "low": 0.05,
+              "high": 0.09
+            },
+            {
+              "low": 0.03,
+              "high": 0.06
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.04,
+              "high": 0.07
+            },
+            {
+              "low": 0.02,
+              "high": 0.04
+            },
+            {
+              "low": 0.02,
+              "high": 0.04
+            }
+          ]
+        }
+      }
+    },
+    "gift_stores": {
+      "ato_name": "Gift stores",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43771",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 150000
+        },
+        {
+          "min_aud": 150001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.44,
+              "high": 0.56
+            },
+            {
+              "low": 0.46,
+              "high": 0.55
+            },
+            {
+              "low": 0.48,
+              "high": 0.56
+            }
+          ],
+          "averages": [
+            0.5,
+            0.5,
+            0.52
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.77,
+              "high": 0.85
+            },
+            {
+              "low": 0.79,
+              "high": 0.88
+            },
+            {
+              "low": 0.84,
+              "high": 0.92
+            }
+          ],
+          "averages": [
+            0.81,
+            0.83,
+            0.88
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.13,
+              "high": 0.23
+            },
+            {
+              "low": 0.1,
+              "high": 0.18
+            },
+            {
+              "low": 0.07,
+              "high": 0.15
+            }
+          ]
+        }
+      }
+    },
+    "glazing_services": {
+      "ato_name": "Glazing services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43769",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 200000
+        },
+        {
+          "min_aud": 200001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.46,
+              "high": 0.65
+            },
+            {
+              "low": 0.62,
+              "high": 0.76
+            },
+            {
+              "low": 0.77,
+              "high": 0.88
+            }
+          ],
+          "averages": [
+            0.56,
+            0.69,
+            0.83
+          ]
+        },
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.19,
+              "high": 0.36
+            },
+            {
+              "low": 0.28,
+              "high": 0.44
+            },
+            {
+              "low": 0.36,
+              "high": 0.47
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.04,
+              "high": 0.08
+            },
+            {
+              "low": 0.04,
+              "high": 0.07
+            },
+            {
+              "low": 0.03,
+              "high": 0.04
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.07,
+              "high": 0.1
+            },
+            {
+              "low": 0.04,
+              "high": 0.06
+            },
+            {
+              "low": 0.02,
+              "high": 0.04
+            }
+          ]
+        }
+      }
+    },
+    "grocery_retailing_and_convenience_stores": {
+      "ato_name": "Grocery retailing and convenience stores",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43768",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 300000
+        },
+        {
+          "min_aud": 300001,
+          "max_aud": 950000
+        },
+        {
+          "min_aud": 950001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.59,
+              "high": 0.71
+            },
+            {
+              "low": 0.64,
+              "high": 0.73
+            },
+            {
+              "low": 0.71,
+              "high": 0.77
+            }
+          ],
+          "averages": [
+            0.65,
+            0.69,
+            0.74
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.82,
+              "high": 0.9
+            },
+            {
+              "low": 0.88,
+              "high": 0.94
+            },
+            {
+              "low": 0.92,
+              "high": 0.96
+            }
+          ],
+          "averages": [
+            0.86,
+            0.91,
+            0.94
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.1,
+              "high": 0.15
+            },
+            {
+              "low": 0.07,
+              "high": 0.11
+            },
+            {
+              "low": 0.03,
+              "high": 0.06
+            }
+          ]
+        }
+      }
+    },
+    "hairdressers": {
+      "ato_name": "Hairdressers",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43767",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 150000
+        },
+        {
+          "min_aud": 150001,
+          "max_aud": 300000
+        },
+        {
+          "min_aud": 300001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.4,
+              "high": 0.57
+            },
+            {
+              "low": 0.58,
+              "high": 0.75
+            },
+            {
+              "low": 0.75,
+              "high": 0.86
+            }
+          ],
+          "averages": [
+            0.48,
+            0.67,
+            0.8
+          ]
+        },
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.12,
+              "high": 0.18
+            },
+            {
+              "low": 0.11,
+              "high": 0.16
+            },
+            {
+              "low": 0.12,
+              "high": 0.16
+            }
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.23,
+              "high": 0.36
+            },
+            {
+              "low": 0.25,
+              "high": 0.37
+            },
+            {
+              "low": 0.32,
+              "high": 0.44
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.14,
+              "high": 0.21
+            },
+            {
+              "low": 0.11,
+              "high": 0.17
+            },
+            {
+              "low": 0.08,
+              "high": 0.13
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.03,
+              "high": 0.05
+            },
+            {
+              "low": 0.02,
+              "high": 0.03
+            },
+            {
+              "low": 0.01,
+              "high": 0.02
+            }
+          ]
+        }
+      }
+    },
+    "hardware_and_building_supplies_retailing": {
+      "ato_name": "Hardware and building supplies retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43766",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 400000
+        },
+        {
+          "min_aud": 400001,
+          "max_aud": 1000000
+        },
+        {
+          "min_aud": 1000001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.47,
+              "high": 0.63
+            },
+            {
+              "low": 0.56,
+              "high": 0.66
+            },
+            {
+              "low": 0.61,
+              "high": 0.69
+            }
+          ],
+          "averages": [
+            0.55,
+            0.61,
+            0.65
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.72,
+              "high": 0.84
+            },
+            {
+              "low": 0.82,
+              "high": 0.91
+            },
+            {
+              "low": 0.87,
+              "high": 0.93
+            }
+          ],
+          "averages": [
+            0.78,
+            0.86,
+            0.9
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.15,
+              "high": 0.23
+            },
+            {
+              "low": 0.1,
+              "high": 0.19
+            },
+            {
+              "low": 0.1,
+              "high": 0.15
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.07,
+              "high": 0.12
+            },
+            {
+              "low": 0.05,
+              "high": 0.08
+            },
+            {
+              "low": 0.03,
+              "high": 0.05
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.03,
+              "high": 0.05
+            },
+            {
+              "low": 0.01,
+              "high": 0.03
+            },
+            {
+              "low": 0.01,
+              "high": 0.02
+            }
+          ]
+        }
+      }
+    },
+    "health_and_fitness_centres": {
+      "ato_name": "Health and fitness centres",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43765",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 175000
+        },
+        {
+          "min_aud": 175001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0,
+              "high": 0
+            },
+            {
+              "low": 0,
+              "high": 0
+            },
+            {
+              "low": 0,
+              "high": 0
+            }
+          ],
+          "averages": [
+            0.52,
+            0.76,
+            0.79
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.21,
+              "high": 0.36
+            },
+            {
+              "low": 0.22,
+              "high": 0.35
+            },
+            {
+              "low": 0.19,
+              "high": 0.33
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.14,
+              "high": 0.23
+            },
+            {
+              "low": 0.15,
+              "high": 0.23
+            },
+            {
+              "low": 0.13,
+              "high": 0.19
+            }
+          ]
+        }
+      }
+    },
+    "health_food_retailing": {
+      "ato_name": "Health food retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43763",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 400000
+        },
+        {
+          "min_aud": 400001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.48,
+              "high": 0.64
+            },
+            {
+              "low": 0.55,
+              "high": 0.64
+            },
+            {
+              "low": 0.57,
+              "high": 0.65
+            }
+          ],
+          "averages": [
+            0.56,
+            0.59,
+            0.61
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.73,
+              "high": 0.89
+            },
+            {
+              "low": 0.86,
+              "high": 0.92
+            },
+            {
+              "low": 0.87,
+              "high": 0.94
+            }
+          ],
+          "averages": [
+            0.81,
+            0.89,
+            0.9
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.07,
+              "high": 0.13
+            },
+            {
+              "low": 0.06,
+              "high": 0.1
+            },
+            {
+              "low": 0.05,
+              "high": 0.09
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.02,
+              "high": 0.04
+            },
+            {
+              "low": 0.01,
+              "high": 0.02
+            },
+            {
+              "low": 0,
+              "high": 0.01
+            }
+          ]
+        }
+      }
+    },
+    "homewares_retailing": {
+      "ato_name": "Homewares retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43762",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 250000
+        },
+        {
+          "min_aud": 250001,
+          "max_aud": 900000
+        },
+        {
+          "min_aud": 900001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.41,
+              "high": 0.55
+            },
+            {
+              "low": 0.47,
+              "high": 0.56
+            },
+            {
+              "low": 0.49,
+              "high": 0.6
+            }
+          ],
+          "averages": [
+            0.48,
+            0.52,
+            0.55
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.72,
+              "high": 0.85
+            },
+            {
+              "low": 0.81,
+              "high": 0.91
+            },
+            {
+              "low": 0.86,
+              "high": 0.93
+            }
+          ],
+          "averages": [
+            0.79,
+            0.86,
+            0.9
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.15,
+              "high": 0.2
+            },
+            {
+              "low": 0.11,
+              "high": 0.19
+            },
+            {
+              "low": 0.12,
+              "high": 0.18
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.11,
+              "high": 0.2
+            },
+            {
+              "low": 0.09,
+              "high": 0.18
+            },
+            {
+              "low": 0.05,
+              "high": 0.12
+            }
+          ]
+        }
+      }
+    },
+    "ice_cream_retailing": {
+      "ato_name": "Ice-cream retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43760",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 275000
+        },
+        {
+          "min_aud": 275001,
+          "max_aud": 475000
+        },
+        {
+          "min_aud": 475001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.26,
+              "high": 0.33
+            },
+            {
+              "low": 0.28,
+              "high": 0.34
+            },
+            {
+              "low": 0.27,
+              "high": 0.35
+            }
+          ],
+          "averages": [
+            0.3,
+            0.31,
+            0.32
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.69,
+              "high": 0.82
+            },
+            {
+              "low": 0.83,
+              "high": 0.91
+            },
+            {
+              "low": 0.8,
+              "high": 0.89
+            }
+          ],
+          "averages": [
+            0.76,
+            0.87,
+            0.85
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.1,
+              "high": 0.18
+            },
+            {
+              "low": 0.12,
+              "high": 0.15
+            },
+            {
+              "low": 0.08,
+              "high": 0.13
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.05,
+              "high": 0.09
+            },
+            {
+              "low": 0.02,
+              "high": 0.03
+            },
+            {
+              "low": 0.01,
+              "high": 0.02
+            }
+          ]
+        }
+      }
+    },
+    "kebab_shops": {
+      "ato_name": "Kebab shops",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43759",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 170000
+        },
+        {
+          "min_aud": 170001,
+          "max_aud": 300000
+        },
+        {
+          "min_aud": 300001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.38,
+              "high": 0.47
+            },
+            {
+              "low": 0.41,
+              "high": 0.47
+            },
+            {
+              "low": 0.43,
+              "high": 0.49
+            }
+          ],
+          "averages": [
+            0.44,
+            0.44,
+            0.46
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.77,
+              "high": 0.84
+            },
+            {
+              "low": 0.81,
+              "high": 0.89
+            },
+            {
+              "low": 0.84,
+              "high": 0.91
+            }
+          ],
+          "averages": [
+            0.81,
+            0.85,
+            0.88
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.14,
+              "high": 0.19
+            },
+            {
+              "low": 0.12,
+              "high": 0.18
+            },
+            {
+              "low": 0.08,
+              "high": 0.14
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.03,
+              "high": 0.05
+            },
+            {
+              "low": 0.02,
+              "high": 0.03
+            },
+            {
+              "low": 0.01,
+              "high": 0.02
+            }
+          ]
+        }
+      }
+    },
+    "landscape_construction": {
+      "ato_name": "Landscape construction",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43758",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 200000
+        },
+        {
+          "min_aud": 200001,
+          "max_aud": 500000
+        },
+        {
+          "min_aud": 500001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.46,
+              "high": 0.64
+            },
+            {
+              "low": 0.63,
+              "high": 0.77
+            },
+            {
+              "low": 0.76,
+              "high": 0.86
+            }
+          ],
+          "averages": [
+            0.55,
+            0.7,
+            0.81
+          ]
+        },
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.15,
+              "high": 0.3
+            },
+            {
+              "low": 0.24,
+              "high": 0.36
+            },
+            {
+              "low": 0.27,
+              "high": 0.38
+            }
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.18,
+              "high": 0.29
+            },
+            {
+              "low": 0.17,
+              "high": 0.28
+            },
+            {
+              "low": 0.24,
+              "high": 0.34
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.07,
+              "high": 0.11
+            },
+            {
+              "low": 0.04,
+              "high": 0.07
+            },
+            {
+              "low": 0.03,
+              "high": 0.05
+            }
+          ]
+        }
+      }
+    },
+    "laundry_and_dry_cleaning_services": {
+      "ato_name": "Laundry and dry-cleaning services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43757",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 150000
+        },
+        {
+          "min_aud": 150001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.62,
+              "high": 0.76
+            },
+            {
+              "low": 0.63,
+              "high": 0.79
+            },
+            {
+              "low": 0.75,
+              "high": 0.87
+            }
+          ],
+          "averages": [
+            0.69,
+            0.71,
+            0.81
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.21,
+              "high": 0.33
+            },
+            {
+              "low": 0.14,
+              "high": 0.22
+            },
+            {
+              "low": 0.07,
+              "high": 0.13
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.04,
+              "high": 0.07
+            },
+            {
+              "low": 0.03,
+              "high": 0.05
+            },
+            {
+              "low": 0.02,
+              "high": 0.03
+            }
+          ]
+        }
+      }
+    },
+    "lawn_mower_retailing": {
+      "ato_name": "Lawn mower retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43756",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 550000
+        },
+        {
+          "min_aud": 550001,
+          "max_aud": 1450000
+        },
+        {
+          "min_aud": 1450001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.48,
+              "high": 0.62
+            },
+            {
+              "low": 0.59,
+              "high": 0.64
+            },
+            {
+              "low": 0.64,
+              "high": 0.69
+            }
+          ],
+          "averages": [
+            0.55,
+            0.62,
+            0.67
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.75,
+              "high": 0.83
+            },
+            {
+              "low": 0.85,
+              "high": 0.91
+            },
+            {
+              "low": 0.89,
+              "high": 0.94
+            }
+          ],
+          "averages": [
+            0.79,
+            0.88,
+            0.91
+          ]
+        }
+      }
+    },
+    "lawn_mowing_and_garden_services": {
+      "ato_name": "Lawn mowing and garden services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43747",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 90000
+        },
+        {
+          "min_aud": 90001,
+          "max_aud": 175000
+        },
+        {
+          "min_aud": 175001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.36,
+              "high": 0.51
+            },
+            {
+              "low": 0.41,
+              "high": 0.58
+            },
+            {
+              "low": 0.58,
+              "high": 0.74
+            }
+          ],
+          "averages": [
+            0.43,
+            0.49,
+            0.66
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.25,
+              "high": 0.37
+            },
+            {
+              "low": 0.2,
+              "high": 0.32
+            },
+            {
+              "low": 0.24,
+              "high": 0.37
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.09,
+              "high": 0.14
+            },
+            {
+              "low": 0.07,
+              "high": 0.11
+            },
+            {
+              "low": 0.05,
+              "high": 0.08
+            }
+          ]
+        }
+      }
+    },
+    "machinery_and_equipment_repairs_and_maintenance": {
+      "ato_name": "Machinery and equipment repairs and maintenance",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43746",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 200000
+        },
+        {
+          "min_aud": 200001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.47,
+              "high": 0.68
+            },
+            {
+              "low": 0.54,
+              "high": 0.76
+            },
+            {
+              "low": 0.77,
+              "high": 0.87
+            }
+          ],
+          "averages": [
+            0.57,
+            0.65,
+            0.82
+          ]
+        },
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.17,
+              "high": 0.35
+            },
+            {
+              "low": 0.19,
+              "high": 0.39
+            },
+            {
+              "low": 0.31,
+              "high": 0.49
+            }
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.22,
+              "high": 0.38
+            },
+            {
+              "low": 0.19,
+              "high": 0.36
+            },
+            {
+              "low": 0.19,
+              "high": 0.34
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.06,
+              "high": 0.11
+            },
+            {
+              "low": 0.04,
+              "high": 0.08
+            },
+            {
+              "low": 0.02,
+              "high": 0.04
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.06,
+              "high": 0.1
+            },
+            {
+              "low": 0.04,
+              "high": 0.07
+            },
+            {
+              "low": 0.02,
+              "high": 0.04
+            }
+          ]
+        }
+      }
+    },
+    "manchester_and_other_textile_goods_retailing": {
+      "ato_name": "Manchester and other textile goods retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43744",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 150000
+        },
+        {
+          "min_aud": 150001,
+          "max_aud": 500000
+        },
+        {
+          "min_aud": 500001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.38,
+              "high": 0.53
+            },
+            {
+              "low": 0.42,
+              "high": 0.54
+            },
+            {
+              "low": 0.46,
+              "high": 0.56
+            }
+          ],
+          "averages": [
+            0.46,
+            0.48,
+            0.51
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.64,
+              "high": 0.83
+            },
+            {
+              "low": 0.74,
+              "high": 0.86
+            },
+            {
+              "low": 0.81,
+              "high": 0.9
+            }
+          ],
+          "averages": [
+            0.74,
+            0.8,
+            0.85
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.1,
+              "high": 0.17
+            },
+            {
+              "low": 0.08,
+              "high": 0.14
+            },
+            {
+              "low": 0.04,
+              "high": 0.08
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.04,
+              "high": 0.06
+            },
+            {
+              "low": 0.02,
+              "high": 0.03
+            },
+            {
+              "low": 0.01,
+              "high": 0.02
+            }
+          ]
+        }
+      }
+    },
+    "meat_and_poultry_retailing_fresh": {
+      "ato_name": "Meat and poultry retailing – fresh",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43741",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 450000
+        },
+        {
+          "min_aud": 450001,
+          "max_aud": 850000
+        },
+        {
+          "min_aud": 850001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.56,
+              "high": 0.66
+            },
+            {
+              "low": 0.6,
+              "high": 0.68
+            },
+            {
+              "low": 0.61,
+              "high": 0.69
+            }
+          ],
+          "averages": [
+            0.61,
+            0.64,
+            0.65
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.81,
+              "high": 0.9
+            },
+            {
+              "low": 0.85,
+              "high": 0.91
+            },
+            {
+              "low": 0.87,
+              "high": 0.93
+            }
+          ],
+          "averages": [
+            0.85,
+            0.88,
+            0.9
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.05,
+              "high": 0.09
+            },
+            {
+              "low": 0.04,
+              "high": 0.08
+            },
+            {
+              "low": 0.03,
+              "high": 0.06
+            }
+          ]
+        }
+      }
+    },
+    "motor_vehicle_parts_and_batteries_retailing": {
+      "ato_name": "Motor vehicle parts and batteries retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43737",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 400000
+        },
+        {
+          "min_aud": 400001,
+          "max_aud": 1250000
+        },
+        {
+          "min_aud": 1250001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.42,
+              "high": 0.61
+            },
+            {
+              "low": 0.5,
+              "high": 0.62
+            },
+            {
+              "low": 0.55,
+              "high": 0.64
+            }
+          ],
+          "averages": [
+            0.51,
+            0.56,
+            0.6
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.69,
+              "high": 0.85
+            },
+            {
+              "low": 0.8,
+              "high": 0.9
+            },
+            {
+              "low": 0.86,
+              "high": 0.92
+            }
+          ],
+          "averages": [
+            0.77,
+            0.85,
+            0.89
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.14,
+              "high": 0.24
+            },
+            {
+              "low": 0.11,
+              "high": 0.18
+            },
+            {
+              "low": 0.11,
+              "high": 0.16
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.07,
+              "high": 0.12
+            },
+            {
+              "low": 0.05,
+              "high": 0.07
+            },
+            {
+              "low": 0.03,
+              "high": 0.05
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.03,
+              "high": 0.06
+            },
+            {
+              "low": 0.02,
+              "high": 0.03
+            },
+            {
+              "low": 0.01,
+              "high": 0.02
+            }
+          ]
+        }
+      }
+    },
+    "motor_vehicle_retail_new_and_used": {
+      "ato_name": "Motor vehicle retail - new and used",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43734",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 75000,
+          "max_aud": 500000
+        },
+        {
+          "min_aud": 500001,
+          "max_aud": 1500000
+        },
+        {
+          "min_aud": 1500001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.6,
+              "high": 0.78
+            },
+            {
+              "low": 0.67,
+              "high": 0.82
+            },
+            {
+              "low": 0.76,
+              "high": 0.85
+            }
+          ],
+          "averages": [
+            0.69,
+            0.75,
+            0.81
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.75,
+              "high": 0.89
+            },
+            {
+              "low": 0.87,
+              "high": 0.93
+            },
+            {
+              "low": 0.91,
+              "high": 0.96
+            }
+          ],
+          "averages": [
+            0.82,
+            0.9,
+            0.94
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.06,
+              "high": 0.11
+            },
+            {
+              "low": 0.04,
+              "high": 0.07
+            },
+            {
+              "low": 0.02,
+              "high": 0.03
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.02,
+              "high": 0.05
+            },
+            {
+              "low": 0.01,
+              "high": 0.03
+            },
+            {
+              "low": 0,
+              "high": 0.01
+            }
+          ]
+        }
+      }
+    },
+    "musical_instruments_retail": {
+      "ato_name": "Musical instruments retail",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43731",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 285000
+        },
+        {
+          "min_aud": 285001,
+          "max_aud": 765000
+        },
+        {
+          "min_aud": 765001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.4,
+              "high": 0.55
+            },
+            {
+              "low": 0.51,
+              "high": 0.63
+            },
+            {
+              "low": 0.57,
+              "high": 0.68
+            }
+          ],
+          "averages": [
+            0.48,
+            0.57,
+            0.63
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.58,
+              "high": 0.83
+            },
+            {
+              "low": 0.81,
+              "high": 0.87
+            },
+            {
+              "low": 0.87,
+              "high": 0.93
+            }
+          ],
+          "averages": [
+            0.71,
+            0.84,
+            0.9
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.1,
+              "high": 0.13
+            },
+            {
+              "low": 0.06,
+              "high": 0.09
+            },
+            {
+              "low": 0.04,
+              "high": 0.07
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.03,
+              "high": 0.05
+            },
+            {
+              "low": 0.01,
+              "high": 0.03
+            },
+            {
+              "low": 0,
+              "high": 0.01
+            }
+          ]
+        }
+      }
+    },
+    "newsagents": {
+      "ato_name": "Newsagents",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43706",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 500000
+        },
+        {
+          "min_aud": 500001,
+          "max_aud": 1000000
+        },
+        {
+          "min_aud": 1000001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.42,
+              "high": 0.59
+            },
+            {
+              "low": 0.47,
+              "high": 0.62
+            },
+            {
+              "low": 0.55,
+              "high": 0.81
+            }
+          ],
+          "averages": [
+            0.5,
+            0.55,
+            0.68
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.77,
+              "high": 0.88
+            },
+            {
+              "low": 0.83,
+              "high": 0.91
+            },
+            {
+              "low": 0.89,
+              "high": 0.95
+            }
+          ],
+          "averages": [
+            0.82,
+            0.87,
+            0.92
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.09,
+              "high": 0.16
+            },
+            {
+              "low": 0.07,
+              "high": 0.14
+            },
+            {
+              "low": 0.04,
+              "high": 0.09
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.02,
+              "high": 0.03
+            },
+            {
+              "low": 0.01,
+              "high": 0.02
+            },
+            {
+              "low": 0,
+              "high": 0.01
+            }
+          ]
+        }
+      }
+    },
+    "painting_services": {
+      "ato_name": "Painting services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43705",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 150000
+        },
+        {
+          "min_aud": 150001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.36,
+              "high": 0.51
+            },
+            {
+              "low": 0.54,
+              "high": 0.71
+            },
+            {
+              "low": 0.74,
+              "high": 0.86
+            }
+          ],
+          "averages": [
+            0.43,
+            0.63,
+            0.8
+          ]
+        },
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.13,
+              "high": 0.19
+            },
+            {
+              "low": 0.14,
+              "high": 0.21
+            },
+            {
+              "low": 0.14,
+              "high": 0.21
+            }
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.22,
+              "high": 0.35
+            },
+            {
+              "low": 0.26,
+              "high": 0.4
+            },
+            {
+              "low": 0.36,
+              "high": 0.49
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.07,
+              "high": 0.11
+            },
+            {
+              "low": 0.04,
+              "high": 0.06
+            },
+            {
+              "low": 0.02,
+              "high": 0.04
+            }
+          ]
+        }
+      }
+    },
+    "panel_beating_and_smash_repairs": {
+      "ato_name": "Panel beating and smash repairs",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43704",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 150000
+        },
+        {
+          "min_aud": 150001,
+          "max_aud": 300000
+        },
+        {
+          "min_aud": 300001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.46,
+              "high": 0.67
+            },
+            {
+              "low": 0.51,
+              "high": 0.73
+            },
+            {
+              "low": 0.73,
+              "high": 0.86
+            }
+          ],
+          "averages": [
+            0.57,
+            0.62,
+            0.8
+          ]
+        },
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.17,
+              "high": 0.31
+            },
+            {
+              "low": 0.19,
+              "high": 0.35
+            },
+            {
+              "low": 0.34,
+              "high": 0.45
+            }
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.21,
+              "high": 0.33
+            },
+            {
+              "low": 0.18,
+              "high": 0.29
+            },
+            {
+              "low": 0.2,
+              "high": 0.29
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.12,
+              "high": 0.19
+            },
+            {
+              "low": 0.09,
+              "high": 0.15
+            },
+            {
+              "low": 0.04,
+              "high": 0.07
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.05,
+              "high": 0.08
+            },
+            {
+              "low": 0.04,
+              "high": 0.06
+            },
+            {
+              "low": 0.01,
+              "high": 0.03
+            }
+          ]
+        }
+      }
+    },
+    "pest_control_services": {
+      "ato_name": "Pest control services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43703",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 150000
+        },
+        {
+          "min_aud": 150001,
+          "max_aud": 400000
+        },
+        {
+          "min_aud": 400001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.43,
+              "high": 0.62
+            },
+            {
+              "low": 0.45,
+              "high": 0.66
+            },
+            {
+              "low": 0.64,
+              "high": 0.81
+            }
+          ],
+          "averages": [
+            0.52,
+            0.55,
+            0.73
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.28,
+              "high": 0.4
+            },
+            {
+              "low": 0.2,
+              "high": 0.38
+            },
+            {
+              "low": 0.25,
+              "high": 0.38
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.09,
+              "high": 0.13
+            },
+            {
+              "low": 0.06,
+              "high": 0.09
+            },
+            {
+              "low": 0.05,
+              "high": 0.07
+            }
+          ]
+        }
+      }
+    },
+    "pets_and_pet_supply_retailing": {
+      "ato_name": "Pets and pet supply retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43702",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 250000
+        },
+        {
+          "min_aud": 250001,
+          "max_aud": 750000
+        },
+        {
+          "min_aud": 750001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.3,
+              "high": 0.54
+            },
+            {
+              "low": 0.39,
+              "high": 0.55
+            },
+            {
+              "low": 0.54,
+              "high": 0.64
+            }
+          ],
+          "averages": [
+            0.42,
+            0.47,
+            0.59
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.55,
+              "high": 0.79
+            },
+            {
+              "low": 0.8,
+              "high": 0.88
+            },
+            {
+              "low": 0.85,
+              "high": 0.93
+            }
+          ],
+          "averages": [
+            0.67,
+            0.84,
+            0.89
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.1,
+              "high": 0.18
+            },
+            {
+              "low": 0.07,
+              "high": 0.13
+            },
+            {
+              "low": 0.04,
+              "high": 0.07
+            }
+          ]
+        }
+      }
+    },
+    "pharmacy": {
+      "ato_name": "Pharmacy",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43701",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 400000,
+          "max_aud": 1500000
+        },
+        {
+          "min_aud": 1500001,
+          "max_aud": 3500000
+        },
+        {
+          "min_aud": 3500001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.61,
+              "high": 0.67
+            },
+            {
+              "low": 0.63,
+              "high": 0.67
+            },
+            {
+              "low": 0.66,
+              "high": 0.7
+            }
+          ],
+          "averages": [
+            0.64,
+            0.65,
+            0.68
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.86,
+              "high": 0.92
+            },
+            {
+              "low": 0.87,
+              "high": 0.93
+            },
+            {
+              "low": 0.89,
+              "high": 0.94
+            }
+          ],
+          "averages": [
+            0.89,
+            0.9,
+            0.92
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.1,
+              "high": 0.15
+            },
+            {
+              "low": 0.1,
+              "high": 0.14
+            },
+            {
+              "low": 0.1,
+              "high": 0.13
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.03,
+              "high": 0.05
+            },
+            {
+              "low": 0.03,
+              "high": 0.04
+            },
+            {
+              "low": 0.02,
+              "high": 0.04
+            }
+          ]
+        }
+      }
+    },
+    "physiotherapy_services": {
+      "ato_name": "Physiotherapy services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43698",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 75000,
+          "max_aud": 240000
+        },
+        {
+          "min_aud": 240001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.29,
+              "high": 0.5
+            },
+            {
+              "low": 0.52,
+              "high": 0.73
+            },
+            {
+              "low": 0.73,
+              "high": 0.84
+            }
+          ],
+          "averages": [
+            0.4,
+            0.63,
+            0.78
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.24,
+              "high": 0.44
+            },
+            {
+              "low": 0.29,
+              "high": 0.45
+            },
+            {
+              "low": 0.41,
+              "high": 0.52
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.1,
+              "high": 0.16
+            },
+            {
+              "low": 0.09,
+              "high": 0.13
+            },
+            {
+              "low": 0.06,
+              "high": 0.09
+            }
+          ]
+        }
+      }
+    },
+    "picture_framing_retailing": {
+      "ato_name": "Picture framing retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43696",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 55000,
+          "max_aud": 140000
+        },
+        {
+          "min_aud": 140001,
+          "max_aud": 260000
+        },
+        {
+          "min_aud": 260001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.26,
+              "high": 0.34
+            },
+            {
+              "low": 0.25,
+              "high": 0.33
+            },
+            {
+              "low": 0.26,
+              "high": 0.31
+            }
+          ],
+          "averages": [
+            0.3,
+            0.29,
+            0.28
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.56,
+              "high": 0.73
+            },
+            {
+              "low": 0.6,
+              "high": 0.76
+            },
+            {
+              "low": 0.69,
+              "high": 0.84
+            }
+          ],
+          "averages": [
+            0.65,
+            0.69,
+            0.76
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.15,
+              "high": 0.22
+            },
+            {
+              "low": 0.12,
+              "high": 0.18
+            },
+            {
+              "low": 0.1,
+              "high": 0.14
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.03,
+              "high": 0.05
+            },
+            {
+              "low": 0.03,
+              "high": 0.04
+            },
+            {
+              "low": 0.01,
+              "high": 0.03
+            }
+          ]
+        }
+      }
+    },
+    "pizza_shops_takeaway": {
+      "ato_name": "Pizza shops - takeaway",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43694",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 150000
+        },
+        {
+          "min_aud": 150001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.33,
+              "high": 0.44
+            },
+            {
+              "low": 0.38,
+              "high": 0.44
+            },
+            {
+              "low": 0.34,
+              "high": 0.41
+            }
+          ],
+          "averages": [
+            0.39,
+            0.41,
+            0.38
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.75,
+              "high": 0.84
+            },
+            {
+              "low": 0.8,
+              "high": 0.89
+            },
+            {
+              "low": 0.87,
+              "high": 0.94
+            }
+          ],
+          "averages": [
+            0.79,
+            0.84,
+            0.9
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.07,
+              "high": 0.15
+            },
+            {
+              "low": 0.07,
+              "high": 0.12
+            },
+            {
+              "low": 0.04,
+              "high": 0.07
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.03,
+              "high": 0.05
+            },
+            {
+              "low": 0.02,
+              "high": 0.03
+            },
+            {
+              "low": 0.01,
+              "high": 0.02
+            }
+          ]
+        }
+      }
+    },
+    "plastering_and_ceiling_services": {
+      "ato_name": "Plastering and ceiling services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43693",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 300000
+        },
+        {
+          "min_aud": 300001,
+          "max_aud": 1000000
+        },
+        {
+          "min_aud": 1000001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.35,
+              "high": 0.55
+            },
+            {
+              "low": 0.68,
+              "high": 0.82
+            },
+            {
+              "low": 0.84,
+              "high": 0.93
+            }
+          ],
+          "averages": [
+            0.45,
+            0.75,
+            0.88
+          ]
+        },
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.12,
+              "high": 0.22
+            },
+            {
+              "low": 0.19,
+              "high": 0.29
+            },
+            {
+              "low": 0.24,
+              "high": 0.33
+            }
+          ]
+        }
+      }
+    },
+    "plumbing_services": {
+      "ato_name": "Plumbing services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43692",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 150000
+        },
+        {
+          "min_aud": 150001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.5,
+              "high": 0.66
+            },
+            {
+              "low": 0.59,
+              "high": 0.74
+            },
+            {
+              "low": 0.75,
+              "high": 0.86
+            }
+          ],
+          "averages": [
+            0.58,
+            0.66,
+            0.8
+          ]
+        },
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.2,
+              "high": 0.33
+            },
+            {
+              "low": 0.26,
+              "high": 0.35
+            },
+            {
+              "low": 0.29,
+              "high": 0.38
+            }
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.21,
+              "high": 0.34
+            },
+            {
+              "low": 0.16,
+              "high": 0.27
+            },
+            {
+              "low": 0.23,
+              "high": 0.33
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.07,
+              "high": 0.11
+            },
+            {
+              "low": 0.05,
+              "high": 0.07
+            },
+            {
+              "low": 0.03,
+              "high": 0.05
+            }
+          ]
+        }
+      }
+    },
+    "printing": {
+      "ato_name": "Printing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43690",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 200000
+        },
+        {
+          "min_aud": 200001,
+          "max_aud": 500000
+        },
+        {
+          "min_aud": 500001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.26,
+              "high": 0.43
+            },
+            {
+              "low": 0.3,
+              "high": 0.43
+            },
+            {
+              "low": 0.33,
+              "high": 0.46
+            }
+          ],
+          "averages": [
+            0.34,
+            0.36,
+            0.4
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.64,
+              "high": 0.81
+            },
+            {
+              "low": 0.72,
+              "high": 0.84
+            },
+            {
+              "low": 0.8,
+              "high": 0.89
+            }
+          ],
+          "averages": [
+            0.72,
+            0.78,
+            0.84
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.22,
+              "high": 0.34
+            },
+            {
+              "low": 0.18,
+              "high": 0.29
+            },
+            {
+              "low": 0.19,
+              "high": 0.28
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.08,
+              "high": 0.14
+            },
+            {
+              "low": 0.07,
+              "high": 0.11
+            },
+            {
+              "low": 0.04,
+              "high": 0.06
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.04,
+              "high": 0.06
+            },
+            {
+              "low": 0.02,
+              "high": 0.04
+            },
+            {
+              "low": 0.01,
+              "high": 0.02
+            }
+          ]
+        }
+      }
+    },
+    "printing_support_services": {
+      "ato_name": "Printing support services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43688",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 300000
+        },
+        {
+          "min_aud": 300001,
+          "max_aud": 900000
+        },
+        {
+          "min_aud": 900001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.59,
+              "high": 0.79
+            },
+            {
+              "low": 0.68,
+              "high": 0.83
+            },
+            {
+              "low": 0.81,
+              "high": 0.9
+            }
+          ],
+          "averages": [
+            0.69,
+            0.76,
+            0.86
+          ]
+        },
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.26,
+              "high": 0.44
+            },
+            {
+              "low": 0.3,
+              "high": 0.44
+            },
+            {
+              "low": 0.35,
+              "high": 0.51
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.07,
+              "high": 0.13
+            },
+            {
+              "low": 0.06,
+              "high": 0.09
+            },
+            {
+              "low": 0.04,
+              "high": 0.06
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.04,
+              "high": 0.06
+            },
+            {
+              "low": 0.02,
+              "high": 0.03
+            },
+            {
+              "low": 0.01,
+              "high": 0.02
+            }
+          ]
+        }
+      }
+    },
+    "pubs_taverns_and_bars": {
+      "ato_name": "Pubs, taverns and bars",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43685",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 100000,
+          "max_aud": 750000
+        },
+        {
+          "min_aud": 750001,
+          "max_aud": 2500000
+        },
+        {
+          "min_aud": 2500001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.34,
+              "high": 0.46
+            },
+            {
+              "low": 0.33,
+              "high": 0.41
+            },
+            {
+              "low": 0.31,
+              "high": 0.42
+            }
+          ],
+          "averages": [
+            0.4,
+            0.37,
+            0.37
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.78,
+              "high": 0.9
+            },
+            {
+              "low": 0.86,
+              "high": 0.93
+            },
+            {
+              "low": 0.87,
+              "high": 0.94
+            }
+          ],
+          "averages": [
+            0.84,
+            0.89,
+            0.91
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.18,
+              "high": 0.28
+            },
+            {
+              "low": 0.23,
+              "high": 0.32
+            },
+            {
+              "low": 0.2,
+              "high": 0.27
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.09,
+              "high": 0.14
+            },
+            {
+              "low": 0.06,
+              "high": 0.1
+            },
+            {
+              "low": 0.06,
+              "high": 0.09
+            }
+          ]
+        }
+      }
+    },
+    "restaurants": {
+      "ato_name": "Restaurants",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43683",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 500000
+        },
+        {
+          "min_aud": 500001,
+          "max_aud": 2000000
+        },
+        {
+          "min_aud": 2000001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.32,
+              "high": 0.39
+            },
+            {
+              "low": 0.32,
+              "high": 0.38
+            },
+            {
+              "low": 0.31,
+              "high": 0.36
+            }
+          ],
+          "averages": [
+            0.35,
+            0.35,
+            0.34
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.79,
+              "high": 0.89
+            },
+            {
+              "low": 0.84,
+              "high": 0.93
+            },
+            {
+              "low": 0.88,
+              "high": 0.94
+            }
+          ],
+          "averages": [
+            0.84,
+            0.88,
+            0.91
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.18,
+              "high": 0.3
+            },
+            {
+              "low": 0.23,
+              "high": 0.32
+            },
+            {
+              "low": 0.27,
+              "high": 0.34
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.11,
+              "high": 0.17
+            },
+            {
+              "low": 0.08,
+              "high": 0.12
+            },
+            {
+              "low": 0.06,
+              "high": 0.09
+            }
+          ]
+        }
+      }
+    },
+    "road_freight_transport_services": {
+      "ato_name": "Road freight transport services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43681",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 200000
+        },
+        {
+          "min_aud": 200001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.52,
+              "high": 0.71
+            },
+            {
+              "low": 0.63,
+              "high": 0.8
+            },
+            {
+              "low": 0.78,
+              "high": 0.89
+            }
+          ],
+          "averages": [
+            0.61,
+            0.72,
+            0.84
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.25,
+              "high": 0.37
+            },
+            {
+              "low": 0.18,
+              "high": 0.31
+            },
+            {
+              "low": 0.21,
+              "high": 0.32
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.14,
+              "high": 0.25
+            },
+            {
+              "low": 0.12,
+              "high": 0.28
+            },
+            {
+              "low": 0.05,
+              "high": 0.26
+            }
+          ]
+        }
+      }
+    },
+    "roofing_services": {
+      "ato_name": "Roofing services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43680",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 325000
+        },
+        {
+          "min_aud": 325001,
+          "max_aud": 900000
+        },
+        {
+          "min_aud": 900001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.43,
+              "high": 0.63
+            },
+            {
+              "low": 0.65,
+              "high": 0.8
+            },
+            {
+              "low": 0.8,
+              "high": 0.89
+            }
+          ],
+          "averages": [
+            0.53,
+            0.72,
+            0.84
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.2,
+              "high": 0.33
+            },
+            {
+              "low": 0.22,
+              "high": 0.35
+            },
+            {
+              "low": 0.23,
+              "high": 0.33
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.06,
+              "high": 0.1
+            },
+            {
+              "low": 0.04,
+              "high": 0.06
+            },
+            {
+              "low": 0.02,
+              "high": 0.03
+            }
+          ]
+        }
+      }
+    },
+    "sports_camping_and_fishing_retailing": {
+      "ato_name": "Sports, camping and fishing retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43679",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 250000
+        },
+        {
+          "min_aud": 250001,
+          "max_aud": 750000
+        },
+        {
+          "min_aud": 750001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.45,
+              "high": 0.62
+            },
+            {
+              "low": 0.53,
+              "high": 0.63
+            },
+            {
+              "low": 0.58,
+              "high": 0.66
+            }
+          ],
+          "averages": [
+            0.54,
+            0.58,
+            0.62
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.68,
+              "high": 0.84
+            },
+            {
+              "low": 0.78,
+              "high": 0.88
+            },
+            {
+              "low": 0.86,
+              "high": 0.92
+            }
+          ],
+          "averages": [
+            0.76,
+            0.83,
+            0.89
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.14,
+              "high": 0.22
+            },
+            {
+              "low": 0.11,
+              "high": 0.19
+            },
+            {
+              "low": 0.1,
+              "high": 0.16
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.07,
+              "high": 0.14
+            },
+            {
+              "low": 0.06,
+              "high": 0.1
+            },
+            {
+              "low": 0.04,
+              "high": 0.06
+            }
+          ]
+        }
+      }
+    },
+    "sports_and_physical_recreation_instruction": {
+      "ato_name": "Sports and physical recreation instruction",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43677",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 150000
+        },
+        {
+          "min_aud": 150001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.36,
+              "high": 0.58
+            },
+            {
+              "low": 0.56,
+              "high": 0.75
+            },
+            {
+              "low": 0.71,
+              "high": 0.85
+            }
+          ],
+          "averages": [
+            0.47,
+            0.65,
+            0.78
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.11,
+              "high": 0.2
+            },
+            {
+              "low": 0.09,
+              "high": 0.18
+            },
+            {
+              "low": 0.07,
+              "high": 0.13
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.05,
+              "high": 0.08
+            },
+            {
+              "low": 0.02,
+              "high": 0.04
+            },
+            {
+              "low": 0.01,
+              "high": 0.02
+            }
+          ]
+        }
+      }
+    },
+    "stationery_goods_retailing": {
+      "ato_name": "Stationery goods retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43676",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 250000
+        },
+        {
+          "min_aud": 250001,
+          "max_aud": 750000
+        },
+        {
+          "min_aud": 750001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.39,
+              "high": 0.58
+            },
+            {
+              "low": 0.47,
+              "high": 0.57
+            },
+            {
+              "low": 0.52,
+              "high": 0.63
+            }
+          ],
+          "averages": [
+            0.49,
+            0.52,
+            0.58
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.66,
+              "high": 0.82
+            },
+            {
+              "low": 0.81,
+              "high": 0.88
+            },
+            {
+              "low": 0.86,
+              "high": 0.93
+            }
+          ],
+          "averages": [
+            0.74,
+            0.84,
+            0.9
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.08,
+              "high": 0.13
+            },
+            {
+              "low": 0.06,
+              "high": 0.11
+            },
+            {
+              "low": 0.03,
+              "high": 0.06
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.03,
+              "high": 0.04
+            },
+            {
+              "low": 0.01,
+              "high": 0.03
+            },
+            {
+              "low": 0.01,
+              "high": 0.02
+            }
+          ]
+        }
+      }
+    },
+    "takeaway_food_services": {
+      "ato_name": "Takeaway food services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43675",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 200000
+        },
+        {
+          "min_aud": 200001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.34,
+              "high": 0.42
+            },
+            {
+              "low": 0.36,
+              "high": 0.43
+            },
+            {
+              "low": 0.35,
+              "high": 0.41
+            }
+          ],
+          "averages": [
+            0.38,
+            0.39,
+            0.38
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.69,
+              "high": 0.82
+            },
+            {
+              "low": 0.76,
+              "high": 0.87
+            },
+            {
+              "low": 0.84,
+              "high": 0.93
+            }
+          ],
+          "averages": [
+            0.76,
+            0.82,
+            0.89
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.16,
+              "high": 0.26
+            },
+            {
+              "low": 0.15,
+              "high": 0.24
+            },
+            {
+              "low": 0.19,
+              "high": 0.27
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.1,
+              "high": 0.17
+            },
+            {
+              "low": 0.1,
+              "high": 0.15
+            },
+            {
+              "low": 0.07,
+              "high": 0.12
+            }
+          ]
+        }
+      }
+    },
+    "tiling_services_floor_and_wall": {
+      "ato_name": "Tiling services – floor and wall",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43673",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 150000
+        },
+        {
+          "min_aud": 150001,
+          "max_aud": 600000
+        },
+        {
+          "min_aud": 600001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.36,
+              "high": 0.52
+            },
+            {
+              "low": 0.53,
+              "high": 0.71
+            },
+            {
+              "low": 0.79,
+              "high": 0.9
+            }
+          ],
+          "averages": [
+            0.44,
+            0.62,
+            0.84
+          ]
+        },
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.12,
+              "high": 0.19
+            },
+            {
+              "low": 0.14,
+              "high": 0.21
+            },
+            {
+              "low": 0.15,
+              "high": 0.25
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.07,
+              "high": 0.11
+            },
+            {
+              "low": 0.05,
+              "high": 0.07
+            },
+            {
+              "low": 0.02,
+              "high": 0.03
+            }
+          ]
+        }
+      }
+    },
+    "timber_floor_sanding": {
+      "ato_name": "Timber floor sanding",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43672",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 100000
+        },
+        {
+          "min_aud": 100001,
+          "max_aud": 200000
+        },
+        {
+          "min_aud": 200001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.42,
+              "high": 0.56
+            },
+            {
+              "low": 0.44,
+              "high": 0.62
+            },
+            {
+              "low": 0.59,
+              "high": 0.78
+            }
+          ],
+          "averages": [
+            0.49,
+            0.53,
+            0.68
+          ]
+        },
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.17,
+              "high": 0.26
+            },
+            {
+              "low": 0.19,
+              "high": 0.27
+            },
+            {
+              "low": 0.2,
+              "high": 0.28
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.07,
+              "high": 0.12
+            },
+            {
+              "low": 0.06,
+              "high": 0.09
+            },
+            {
+              "low": 0.04,
+              "high": 0.06
+            }
+          ]
+        }
+      }
+    },
+    "tobacco_retailing": {
+      "ato_name": "Tobacco retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43671",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 100000,
+          "max_aud": 700000
+        },
+        {
+          "min_aud": 700001,
+          "max_aud": 1500000
+        },
+        {
+          "min_aud": 1500001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.66,
+              "high": 0.78
+            },
+            {
+              "low": 0.78,
+              "high": 0.86
+            },
+            {
+              "low": 0.86,
+              "high": 0.9
+            }
+          ],
+          "averages": [
+            0.72,
+            0.82,
+            0.88
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.84,
+              "high": 0.93
+            },
+            {
+              "low": 0.91,
+              "high": 0.95
+            },
+            {
+              "low": 0.94,
+              "high": 0.97
+            }
+          ],
+          "averages": [
+            0.88,
+            0.93,
+            0.96
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.06,
+              "high": 0.08
+            },
+            {
+              "low": 0.04,
+              "high": 0.06
+            },
+            {
+              "low": 0.02,
+              "high": 0.03
+            }
+          ]
+        }
+      }
+    },
+    "towing_services": {
+      "ato_name": "Towing services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43670",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 200000
+        },
+        {
+          "min_aud": 200001,
+          "max_aud": 500000
+        },
+        {
+          "min_aud": 500001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.55,
+              "high": 0.7
+            },
+            {
+              "low": 0.61,
+              "high": 0.78
+            },
+            {
+              "low": 0.73,
+              "high": 0.86
+            }
+          ],
+          "averages": [
+            0.63,
+            0.69,
+            0.79
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.21,
+              "high": 0.35
+            },
+            {
+              "low": 0.16,
+              "high": 0.28
+            },
+            {
+              "low": 0.21,
+              "high": 0.32
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.06,
+              "high": 0.11
+            },
+            {
+              "low": 0.04,
+              "high": 0.08
+            },
+            {
+              "low": 0.03,
+              "high": 0.06
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.19,
+              "high": 0.3
+            },
+            {
+              "low": 0.13,
+              "high": 0.24
+            },
+            {
+              "low": 0.1,
+              "high": 0.2
+            }
+          ]
+        }
+      }
+    },
+    "toy_and_game_retailing": {
+      "ato_name": "Toy and game retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43669",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 150000
+        },
+        {
+          "min_aud": 150001,
+          "max_aud": 550000
+        },
+        {
+          "min_aud": 550001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.47,
+              "high": 0.63
+            },
+            {
+              "low": 0.51,
+              "high": 0.65
+            },
+            {
+              "low": 0.56,
+              "high": 0.64
+            }
+          ],
+          "averages": [
+            0.55,
+            0.58,
+            0.6
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.76,
+              "high": 0.85
+            },
+            {
+              "low": 0.77,
+              "high": 0.89
+            },
+            {
+              "low": 0.85,
+              "high": 0.92
+            }
+          ],
+          "averages": [
+            0.8,
+            0.83,
+            0.88
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.09,
+              "high": 0.16
+            },
+            {
+              "low": 0.08,
+              "high": 0.13
+            },
+            {
+              "low": 0.05,
+              "high": 0.08
+            }
+          ]
+        }
+      }
+    },
+    "tutoring_and_coaching": {
+      "ato_name": "Tutoring and coaching",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43668",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 50000,
+          "max_aud": 300000
+        },
+        {
+          "min_aud": 300001,
+          "max_aud": 800000
+        },
+        {
+          "min_aud": 800001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.31,
+              "high": 0.63
+            },
+            {
+              "low": 0.57,
+              "high": 0.8
+            },
+            {
+              "low": 0.69,
+              "high": 0.87
+            }
+          ],
+          "averages": [
+            0.47,
+            0.69,
+            0.78
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.26,
+              "high": 0.43
+            },
+            {
+              "low": 0.25,
+              "high": 0.41
+            },
+            {
+              "low": 0.25,
+              "high": 0.43
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.08,
+              "high": 0.16
+            },
+            {
+              "low": 0.06,
+              "high": 0.11
+            },
+            {
+              "low": 0.03,
+              "high": 0.09
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.03,
+              "high": 0.06
+            },
+            {
+              "low": 0.01,
+              "high": 0.02
+            },
+            {
+              "low": 0,
+              "high": 0.01
+            }
+          ]
+        }
+      }
+    },
+    "tyre_retailing": {
+      "ato_name": "Tyre retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43667",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 1000000
+        },
+        {
+          "min_aud": 1000001,
+          "max_aud": 2500000
+        },
+        {
+          "min_aud": 2500001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.57,
+              "high": 0.67
+            },
+            {
+              "low": 0.58,
+              "high": 0.65
+            },
+            {
+              "low": 0.61,
+              "high": 0.68
+            }
+          ],
+          "averages": [
+            0.62,
+            0.62,
+            0.64
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.83,
+              "high": 0.91
+            },
+            {
+              "low": 0.88,
+              "high": 0.93
+            },
+            {
+              "low": 0.9,
+              "high": 0.94
+            }
+          ],
+          "averages": [
+            0.87,
+            0.91,
+            0.92
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.11,
+              "high": 0.17
+            },
+            {
+              "low": 0.12,
+              "high": 0.16
+            },
+            {
+              "low": 0.12,
+              "high": 0.16
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.05,
+              "high": 0.07
+            },
+            {
+              "low": 0.03,
+              "high": 0.05
+            },
+            {
+              "low": 0.03,
+              "high": 0.04
+            }
+          ]
+        }
+      }
+    },
+    "veterinary_services": {
+      "ato_name": "Veterinary services",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43666",
+      "description": "",
+      "key_benchmark": "total_expenses",
+      "bands": [
+        {
+          "min_aud": 100000,
+          "max_aud": 300000
+        },
+        {
+          "min_aud": 300001,
+          "max_aud": 800000
+        },
+        {
+          "min_aud": 800001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.44,
+              "high": 0.67
+            },
+            {
+              "low": 0.55,
+              "high": 0.77
+            },
+            {
+              "low": 0.74,
+              "high": 0.84
+            }
+          ],
+          "averages": [
+            0.55,
+            0.66,
+            0.79
+          ]
+        },
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.18,
+              "high": 0.28
+            },
+            {
+              "low": 0.2,
+              "high": 0.27
+            },
+            {
+              "low": 0.21,
+              "high": 0.25
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.06,
+              "high": 0.11
+            },
+            {
+              "low": 0.05,
+              "high": 0.08
+            },
+            {
+              "low": 0.03,
+              "high": 0.05
+            }
+          ]
+        }
+      }
+    },
+    "watch_and_jewellery_retailing": {
+      "ato_name": "Watch and jewellery retailing",
+      "last_updated": "16 March 2026",
+      "qc_id": "QC43664",
+      "description": "",
+      "key_benchmark": "cost_of_sales",
+      "bands": [
+        {
+          "min_aud": 65000,
+          "max_aud": 250000
+        },
+        {
+          "min_aud": 250001,
+          "max_aud": 750000
+        },
+        {
+          "min_aud": 750001,
+          "max_aud": null
+        }
+      ],
+      "ratios": {
+        "cost_of_sales": {
+          "ranges": [
+            {
+              "low": 0.3,
+              "high": 0.44
+            },
+            {
+              "low": 0.37,
+              "high": 0.5
+            },
+            {
+              "low": 0.44,
+              "high": 0.56
+            }
+          ],
+          "averages": [
+            0.37,
+            0.43,
+            0.5
+          ]
+        },
+        "total_expenses": {
+          "ranges": [
+            {
+              "low": 0.65,
+              "high": 0.79
+            },
+            {
+              "low": 0.73,
+              "high": 0.85
+            },
+            {
+              "low": 0.82,
+              "high": 0.91
+            }
+          ],
+          "averages": [
+            0.72,
+            0.79,
+            0.87
+          ]
+        },
+        "labour": {
+          "ranges": [
+            {
+              "low": 0.15,
+              "high": 0.26
+            },
+            {
+              "low": 0.13,
+              "high": 0.21
+            },
+            {
+              "low": 0.12,
+              "high": 0.2
+            }
+          ]
+        },
+        "rent": {
+          "ranges": [
+            {
+              "low": 0.09,
+              "high": 0.19
+            },
+            {
+              "low": 0.07,
+              "high": 0.14
+            },
+            {
+              "low": 0.05,
+              "high": 0.1
+            }
+          ]
+        },
+        "motor_vehicle": {
+          "ranges": [
+            {
+              "low": 0.03,
+              "high": 0.05
+            },
+            {
+              "low": 0.01,
+              "high": 0.02
+            },
+            {
+              "low": 0,
+              "high": 0.01
+            }
+          ]
+        }
+      }
+    }
+  }
+}
