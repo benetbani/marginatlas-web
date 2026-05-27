@@ -321,6 +321,20 @@ All four shipping refactors:
 - pass the existing 24-gate prebuild
 - add 1 new gate (layering), bringing the chain to 25
 
+### Follow-up pass (2026-05-27 evening, same date)
+
+After the four above shipped clean, the deferred strategies D, E, H, and a partial F were executed in sequence:
+
+- **D shipped**: `docs/architecture/README.md` written. Three-layer diagram, cell-page render flow, where-things-live table.
+- **E shipped**: `scripts/prebuild_all.ts` is a worker-pool runner (concurrency=6 default). `package.json` `prebuild` script now invokes it. Wall-clock dropped from ~60s serial to ~28s parallel for 25 gates. Old serial chain preserved as `prebuild:serial` for debugging.
+- **H shipped**: `scripts/strip_plan_comments.ts` codemod swept src/lib, src/app, src/components. 117 files touched, 240 PM-prefix strips, 1 line dropped. Two "v34 Phase X reverted" sites were manually preserved (the date / revert info is engineering-substantive). Codemod is idempotent.
+- **F partially shipped**: `cells/geo.ts` (174 lines) and `cells/time_series.ts` (58 lines) extracted. `cells.ts` dropped from 1,321 → 1,146 lines. Re-exports preserve every call site. The remaining 3 modules (`lookup.ts`, `synthesis.ts`, `variants.ts`) were deferred because the variant + lookup functions share a dense web of private helpers (`applyRollforward`, `applyTaxonomy`, `normalizeRow`, `normalizeRegionalRow`) that would also need an `_internal.ts` module. The "careful upgrade" constraint argued for stopping at the two clean extractions rather than starting the deeply-coupled split this session.
+
+State after the follow-up pass:
+- 5 of 8 strategies fully shipped (A, B, C, G, D, E, H)
+- 1 partially shipped (F, ~14% of cells.ts size reduction)
+- 0 deferred
+
 ---
 
 ## Part 5 — Why this isn't every refactor I could do

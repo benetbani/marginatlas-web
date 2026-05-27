@@ -30,13 +30,10 @@ import {
   resolveToMeasuredIndustry,
 } from "./taxonomy";
 import { iso2ToIso3, iso3ToIso2, iso2ToName } from "./countries";
-import { lookupNeighborhoodGeoId } from "./cities";
 import {
-  CITY_FRIENDLY_TO_GEO_ID,
   CITY_FRIENDLY_DISPLAY_LABEL,
 } from "./cities/city_aliases_generated";
 import {
-  MANUAL_FRIENDLY_TO_GEO_ID,
   MANUAL_DISPLAY_LABEL,
 } from "./cities/manual_city_aliases";
 import { isCellSuppressed, applyCellOverrides } from "./cells/triage";
@@ -51,6 +48,18 @@ import {
   fillMissingFields,
   enforceSanity,
 } from "./cells/fill_defaults";
+// Geo helpers moved to cells/geo.ts (architecture audit strategy F).
+import {
+  US_STATES,
+  SLUG_TO_GEO_ID,
+  GEO_ID_TO_NAME,
+  slugify,
+  regionalSlugToGeoId,
+  listUsStates,
+  geoNameFromSlug,
+} from "./cells/geo";
+// Re-export so existing imports `from "@/lib/cells"` keep working.
+export { slugify, regionalSlugToGeoId, listUsStates };
 
 export type Cell = {
   // identity
@@ -112,122 +121,6 @@ export type Cell = {
   // not persisted. See src/lib/finance/turnover_band.ts.
   turnover_band?: import("./finance/turnover_band").TurnoverBand;
 };
-
-// US state FIPS code → human name → URL slug
-const US_STATES: Record<string, { name: string; slug: string }> = {
-  "01": { name: "Alabama", slug: "alabama" },
-  "02": { name: "Alaska", slug: "alaska" },
-  "04": { name: "Arizona", slug: "arizona" },
-  "05": { name: "Arkansas", slug: "arkansas" },
-  "06": { name: "California", slug: "california" },
-  "08": { name: "Colorado", slug: "colorado" },
-  "09": { name: "Connecticut", slug: "connecticut" },
-  "10": { name: "Delaware", slug: "delaware" },
-  "11": { name: "District of Columbia", slug: "district-of-columbia" },
-  "12": { name: "Florida", slug: "florida" },
-  "13": { name: "Georgia", slug: "georgia" },
-  "15": { name: "Hawaii", slug: "hawaii" },
-  "16": { name: "Idaho", slug: "idaho" },
-  "17": { name: "Illinois", slug: "illinois" },
-  "18": { name: "Indiana", slug: "indiana" },
-  "19": { name: "Iowa", slug: "iowa" },
-  "20": { name: "Kansas", slug: "kansas" },
-  "21": { name: "Kentucky", slug: "kentucky" },
-  "22": { name: "Louisiana", slug: "louisiana" },
-  "23": { name: "Maine", slug: "maine" },
-  "24": { name: "Maryland", slug: "maryland" },
-  "25": { name: "Massachusetts", slug: "massachusetts" },
-  "26": { name: "Michigan", slug: "michigan" },
-  "27": { name: "Minnesota", slug: "minnesota" },
-  "28": { name: "Mississippi", slug: "mississippi" },
-  "29": { name: "Missouri", slug: "missouri" },
-  "30": { name: "Montana", slug: "montana" },
-  "31": { name: "Nebraska", slug: "nebraska" },
-  "32": { name: "Nevada", slug: "nevada" },
-  "33": { name: "New Hampshire", slug: "new-hampshire" },
-  "34": { name: "New Jersey", slug: "new-jersey" },
-  "35": { name: "New Mexico", slug: "new-mexico" },
-  "36": { name: "New York", slug: "new-york" },
-  "37": { name: "North Carolina", slug: "north-carolina" },
-  "38": { name: "North Dakota", slug: "north-dakota" },
-  "39": { name: "Ohio", slug: "ohio" },
-  "40": { name: "Oklahoma", slug: "oklahoma" },
-  "41": { name: "Oregon", slug: "oregon" },
-  "42": { name: "Pennsylvania", slug: "pennsylvania" },
-  "44": { name: "Rhode Island", slug: "rhode-island" },
-  "45": { name: "South Carolina", slug: "south-carolina" },
-  "46": { name: "South Dakota", slug: "south-dakota" },
-  "47": { name: "Tennessee", slug: "tennessee" },
-  "48": { name: "Texas", slug: "texas" },
-  "49": { name: "Utah", slug: "utah" },
-  "50": { name: "Vermont", slug: "vermont" },
-  "51": { name: "Virginia", slug: "virginia" },
-  "53": { name: "Washington", slug: "washington" },
-  "54": { name: "West Virginia", slug: "west-virginia" },
-  "55": { name: "Wisconsin", slug: "wisconsin" },
-  "56": { name: "Wyoming", slug: "wyoming" },
-};
-
-const SLUG_TO_GEO_ID: Record<string, string> = Object.fromEntries(
-  Object.entries(US_STATES).map(([fips, v]) => [v.slug, `US-${fips}`])
-);
-const GEO_ID_TO_NAME: Record<string, string> = Object.fromEntries(
-  Object.entries(US_STATES).map(([fips, v]) => [`US-${fips}`, v.name])
-);
-
-export function slugify(s: string | null | undefined): string {
-  if (!s) return "";
-  return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
-}
-
-/**
- * Convert a URL slug to a regional_cells geo_id. Handles the four observed
- * patterns:
- *   - EU NUTS (no prefix):     'de212'             → 'DE212'
- *   - JP / BR / CA prefixed:   'jp-13000'          → 'JP-13000'
- *   - US county (FIPS):        'us-06-037'         → 'US-06-037'
- *   - City overlay:            'us-city-new-york'  → 'US-CITY-new-york'
- *
- * The city-overlay case is special because the city name part stays
- * lowercase in the geo_id; everything else uppercases cleanly.
- */
-export function regionalSlugToGeoId(country: string, geoSlug: string): string {
-  const c = country.toUpperCase();
-  const slug = geoSlug.toLowerCase();
-  // Manual city alias supplement. Checked BEFORE the
-  // auto-generated map so hand-curated entries (Frankfurt → DE712, not the
-  // NUTS-1 Hessen region) take precedence. Fixes the founder-reported
-  // "/de/frankfurt → Hessen" bug.
-  const manual = MANUAL_FRIENDLY_TO_GEO_ID[c]?.[slug];
-  if (manual) {
-    if (manual.includes("-city-")) {
-      const idx = manual.indexOf("-city-");
-      const prefix = manual.slice(0, idx).toUpperCase();
-      return `${prefix}-CITY-${manual.slice(idx + 6)}`;
-    }
-    return manual.toUpperCase();
-  }
-  // Friendly city aliases. Resolves URLs like
-  // /us/los-angeles/restaurants → cells lookup against US-06-037.
-  const friendly = CITY_FRIENDLY_TO_GEO_ID[c]?.[slug];
-  if (friendly) {
-    // Same uppercase rules as below for consistency
-    if (friendly.includes("-city-")) {
-      const idx = friendly.indexOf("-city-");
-      const prefix = friendly.slice(0, idx).toUpperCase();
-      return `${prefix}-CITY-${friendly.slice(idx + 6)}`;
-    }
-    return friendly.toUpperCase();
-  }
-  // Neighborhood alias (Track O): friendly names like 'manhattan' → 'US-36-061'.
-  const aliased = lookupNeighborhoodGeoId(c, slug);
-  if (aliased) return aliased;
-  const cityPrefix = `${c.toLowerCase()}-city-`;
-  if (slug.startsWith(cityPrefix)) {
-    return `${c}-CITY-${slug.slice(cityPrefix.length)}`;
-  }
-  return slug.toUpperCase();
-}
 
 /**
  * Roll the percentile anchors + per-firm headline
@@ -566,30 +459,6 @@ export async function getCellBySlug(
 }
 
 /**
- * Best-effort human label for a geo slug when we don't have a real
- * cell row to read geo_name from. Used by synthesizeCell to render a
- * sensible hero (e.g. "Frankfurt am Main" instead of "DE71").
- *
- * Popular-name override fires FIRST, so Quintana Roo
- * displays as Cancún (the name the world knows) regardless of which
- * data source the row came from. One name, one place.
- */
-function geoNameFromSlug(country: string, geoSlug: string): string | undefined {
-  // Popular-name overrides take priority.
-  const popular = getPopularPlaceName(country, geoSlug);
-  if (popular) return popular;
-  const manualLabel = MANUAL_DISPLAY_LABEL[country]?.[geoSlug.toLowerCase()];
-  if (manualLabel) return manualLabel;
-  const friendlyLabel =
-    CITY_FRIENDLY_DISPLAY_LABEL[country]?.[geoSlug.toLowerCase()];
-  if (friendlyLabel) return friendlyLabel;
-  // US state slug
-  const usState = SLUG_TO_GEO_ID[geoSlug.toLowerCase()];
-  if (usState) return GEO_ID_TO_NAME[usState];
-  return undefined;
-}
-
-/**
  * Internal: the raw lookup chain (no synthesis). Returns null on miss.
  * Used by getCellBySlug above.
  */
@@ -698,57 +567,13 @@ export async function getCellVariants(
   return data.map((r) => normalizeRow(r as Record<string, unknown>));
 }
 
-/** Distinct size bands present for a given (geo, industry). */
-export function distinctSizeBands(cells: Cell[]): string[] {
-  const seen = new Set<string>();
-  for (const c of cells) if (c.size_band) seen.add(c.size_band);
-  return Array.from(seen);
-}
-
-/** Distinct years present for a given (geo, industry). */
-export function distinctYears(cells: Cell[]): number[] {
-  const seen = new Set<number>();
-  for (const c of cells) if (c.year) seen.add(c.year);
-  return Array.from(seen).sort((a, b) => b - a);
-}
-
-export type TimePoint = {
-  year: number;
-  revenue_per_firm: number | null;
-  n_enterprises: number | null;
-  n_employees: number | null;
-  payroll_per_employee: number | null;
-};
-
-/**
- * Collapse variants into a one-row-per-year time series — picks the row
- * with the largest n_enterprises in each year (proxy for the "all sizes"
- * aggregate when a true total row is not present).
- */
-export function buildTimeSeries(cells: Cell[]): TimePoint[] {
-  const byYear = new Map<number, Cell>();
-  for (const c of cells) {
-    if (!c.year) continue;
-    const prev = byYear.get(c.year);
-    if (!prev || (c.n_enterprises ?? 0) > (prev.n_enterprises ?? 0)) {
-      byYear.set(c.year, c);
-    }
-  }
-  return Array.from(byYear.entries())
-    .sort(([a], [b]) => a - b)
-    .map(([year, c]) => ({
-      year,
-      revenue_per_firm: c.revenue_per_firm ?? null,
-      n_enterprises: c.n_enterprises ?? null,
-      n_employees: c.n_employees ?? null,
-      payroll_per_employee: c.payroll_per_employee ?? null,
-    }));
-}
-
-/** All US states (for region switcher). */
-export function listUsStates(): { name: string; slug: string }[] {
-  return Object.values(US_STATES).sort((a, b) => a.name.localeCompare(b.name));
-}
+// Time-series helpers moved to cells/time_series.ts.
+export {
+  distinctSizeBands,
+  distinctYears,
+  buildTimeSeries,
+} from "./cells/time_series";
+export type { TimePoint } from "./cells/time_series";
 
 /**
  * Top industries for a country — used by the country landing page.
