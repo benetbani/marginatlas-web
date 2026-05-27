@@ -70,12 +70,28 @@ function looksLikeBareScraper(req: NextRequest): boolean {
 }
 
 // In-memory IP → bucket. Edge runtime keeps state per instance.
+//
+// Memory bound: each entry is ~80 bytes. Without a sweep, a long-lived
+// Edge instance accumulates one entry per unique IP forever. At 100k
+// uniques that is ~8MB; at 10M (a year of traffic) it is GB scale.
+// We do a lazy sweep when the map grows past BUCKET_HIGH_WATER:
+// drop every entry whose window has expired. Worst case the sweep
+// touches BUCKET_HIGH_WATER entries on one request — bounded and
+// cheap compared to a SIGTERM from OOM.
 const BUCKET = new Map<string, { count: number; windowStart: number }>();
 const WINDOW_MS = 60_000;
 const PAGE_LIMIT = 60; // requests per minute per IP
+const BUCKET_HIGH_WATER = 10_000;
+
+function sweepExpired(now: number): void {
+  for (const [ip, b] of BUCKET) {
+    if (now - b.windowStart > WINDOW_MS) BUCKET.delete(ip);
+  }
+}
 
 function rateLimit(ip: string): { allowed: boolean; remaining: number } {
   const now = Date.now();
+  if (BUCKET.size >= BUCKET_HIGH_WATER) sweepExpired(now);
   const b = BUCKET.get(ip);
   if (!b || now - b.windowStart > WINDOW_MS) {
     BUCKET.set(ip, { count: 1, windowStart: now });
@@ -213,26 +229,37 @@ export function middleware(req: NextRequest) {
   return NextResponse.next({ request: { headers: withPathname(req, path) } });
 }
 
-// Plan v17 Phase 4.3 — paths the edge should cache for 6h with 24h stale.
-// Excludes /api/, /random (intentionally rotating), /saved (per-user),
+// Paths the edge should cache for 6h with 24h stale. Excludes
+// /api/, /random (intentionally rotating), /saved (per-user),
 // /you and /compare (client-state-heavy).
+//
+// At traffic scale the single largest perf win is edge-cache hit
+// rate. Every URL pattern here that we miss costs a function
+// invocation per request; every one we add saves that cost on every
+// hit after the first.
 const CACHEABLE_PATTERNS: RegExp[] = [
   /^\/$/,
   /^\/about-data$/,
   /^\/browse$/,
   /^\/blog($|\/)/,
+  /^\/cities($|\/[a-z0-9-]+($|\/(?:neighborhoods|curiosities))$)/,
   /^\/coverage($|\/)/,
   /^\/industries($|\/[a-z0-9-]+$)/,
+  /^\/learn($|\/[a-z0-9-]+$)/,
   /^\/sectors($|\/[a-z0-9_-]+$)/,
   /^\/world$/,
   /^\/pricing$/,
   /^\/calculator$/,
   /^\/status$/,
-  /^\/methodology$/,
+  /^\/methodology($|\/[a-z0-9-]+$)/,
   // /{country}
   /^\/[a-z]{2}$/,
+  // /{country}/{geo}
+  /^\/[a-z]{2}\/[a-z0-9-]+$/,
   // /{country}/{geo}/{industry}
   /^\/[a-z]{2}\/[a-z0-9-]+\/[a-z0-9-]+$/,
+  // /{country}/{geo}/{industry}/{sub} — neighborhood cell page
+  /^\/[a-z]{2}\/[a-z0-9-]+\/[a-z0-9-]+\/[a-z0-9-]+$/,
   // /{country}/{geo}/industries
   /^\/[a-z]{2}\/[a-z0-9-]+\/industries$/,
   // /{country}/industries

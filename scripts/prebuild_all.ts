@@ -86,6 +86,11 @@ function runGate(gate: Gate): Promise<GateResult> {
   return new Promise((resolve) => {
     const started = Date.now();
     const args = ["tsx", gate.script, ...(gate.args ?? [])];
+    // shell: true is required on Windows to spawn `npx` (which
+    // resolves to `npx.cmd`); Node 22+ refuses to spawn .cmd files
+    // directly with EINVAL. The DEP0190 deprecation warning this
+    // triggers is acceptable here because every arg is a hardcoded
+    // literal from the GATES array — no caller-controlled input.
     const child = spawn("npx", args, {
       shell: process.platform === "win32",
       env: process.env,

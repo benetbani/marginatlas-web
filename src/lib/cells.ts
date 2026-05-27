@@ -996,16 +996,23 @@ export async function getSameIndustryAcrossStates(
   const naics3Prefixes = (ind.naics_3 || []).map((n) => `${n}%`);
   const orClauses = naics3Prefixes.map((p) => `naics_6.like.${p}`).join(",");
 
-  // Pull a bunch (Supabase can't dedupe by state in one call), then collapse client-side.
+  // Trimmed limit (800 → 200). There are 50 US states; we cap returned
+  // rows at `limit` after a client-side per-state collapse, so 200
+  // rows give 4× headroom for tie-breaking. The previous 800-row
+  // fetch was timing out the 4s budget on 1-2% of US cell pages
+  // (build-log evidence, 2026-05-27 perf pass). We order by n first
+  // so the highest-firm-count rows land in the slate even when a
+  // recent year has scattered low-count entries that would otherwise
+  // dominate a year-first sort.
   const { data, error } = await supabaseAdmin
     .from("cells_master")
     .select("*")
     .eq("country", "US")
     .neq("geo_id", excludeGeoId)
     .or(orClauses)
-    .order("year", { ascending: false, nullsFirst: false })
     .order("n", { ascending: false, nullsFirst: false })
-    .limit(800);
+    .order("year", { ascending: false, nullsFirst: false })
+    .limit(200);
   if (error || !data) return [];
 
   const rows = data.map((r) => normalizeRow(r as Record<string, unknown>));
