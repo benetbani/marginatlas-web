@@ -14,7 +14,7 @@ import { industryToSlug, INDUSTRY_BY_ID } from "@/lib/taxonomy";
 export const revalidate = 86400;
 
 const CACHE_HEADERS = {
-  // Plan v17 Phase 4.3 — per-query edge caching for the /compare page.
+  // Per-query edge caching for the /compare page.
   "Cache-Control": "public, s-maxage=21600, stale-while-revalidate=86400",
 };
 
@@ -33,7 +33,7 @@ type CompactCell = {
   n_employees: number | null;
   payroll_per_employee: number | null;
   quality_score: number | null;
-  // Plan v13 Wave 4a — employees_per_firm derived field removed
+  // Employees_per_firm derived field removed
   // (n_enterprises denominator is unreliable).
   cellUrl: string | null;
 };

@@ -92,7 +92,7 @@ async function runChecks(): Promise<Check[]> {
     );
   }
 
-  // Plan v32 Sprint B — Ask Atlas + Anthropic API checks removed from
+  // Ask Atlas + Anthropic API checks removed from
   // status page along with the /ask route and AskWidget. No AI-flavored
   // services are currently part of the user-visible product.
 

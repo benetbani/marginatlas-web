@@ -26,7 +26,7 @@ const LINES: Array<{ field: keyof CostStack; label: string; hint?: string }> = [
   { field: "marketing_acquisition", label: "Marketing & acquisition" },
   { field: "insurance_professional", label: "Insurance & professional services" },
   { field: "equipment_maintenance", label: "Equipment & maintenance" },
-  // ATO Phase 3 — vehicle, fuel, maintenance, depreciation. Suppressed
+  // Vehicle, fuel, maintenance, depreciation. Suppressed
   // automatically when the cost-stack value is absent or zero.
   { field: "motor_vehicle", label: "Motor vehicle", hint: "Vehicle, fuel, maintenance, depreciation" },
   { field: "regulatory_licensing", label: "Regulatory & licensing" },
@@ -35,7 +35,7 @@ const LINES: Array<{ field: keyof CostStack; label: string; hint?: string }> = [
 export function AnnualCostStack({ cell }: Props) {
   const stack = cell.cost_stack;
   if (!stack) return null;
-  // ATO Phase 3 — exclude rows where the value is zero (motor_vehicle
+  // Exclude rows where the value is zero (motor_vehicle
   // is zero for office-based industries; rendering "$0" is noise).
   const populated = LINES.filter((line) => {
     const v = stack[line.field];
@@ -74,7 +74,7 @@ export function AnnualCostStack({ cell }: Props) {
           <tbody>
             {LINES.map((line) => {
               const v = stack[line.field];
-              // ATO Phase 3 — fully suppress rows with no data OR zero
+              // Fully suppress rows with no data OR zero
               // value. Motor vehicle is zero for office-based industries
               // and rendering "$0" was noise; the line vanishes entirely
               // when the industry doesn't have a real motor-vehicle cost.

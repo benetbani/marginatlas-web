@@ -1,5 +1,5 @@
 /**
- * Plan v30 Lane 2 — neighborhood flavor loader.
+ * Neighborhood flavor loader.
  *
  * Provides the deep editorial data per neighborhood: character paragraph,
  * signature businesses, food scene, demographic skew, walkability,

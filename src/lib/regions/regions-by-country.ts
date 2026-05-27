@@ -1,5 +1,5 @@
 /**
- * Plan v21 Blocks 2 + 3 — public wrapper around the auto-generated
+ * Public wrapper around the auto-generated
  * regions + subdivisions table.
  *
  * Source of truth: REGIONS_BY_COUNTRY_AUTO in regions_generated.ts,
@@ -117,7 +117,7 @@ export function getRegionsForCountry(iso2: string, countryName: string): RegionO
 }
 
 /**
- * Plan v21 Block 3 — subdivisions for a given (country, region).
+ * Subdivisions for a given (country, region).
  *
  * For non-US: returns entries whose `parent` field matches the region.
  * For US: there's no parent geo_id in regional_cells (the state lives in

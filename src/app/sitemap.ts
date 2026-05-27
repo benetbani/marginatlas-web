@@ -36,7 +36,7 @@ export default async function sitemap({
 }: {
   id: number;
 }): Promise<MetadataRoute.Sitemap> {
-  // Plan v24 Block 11 — Next 15's metadata-route system passes `id` as
+  // Next 15's metadata-route system passes `id` as
   // a STRING ("0", "1", ...) even when generateSitemaps returned numeric
   // ids. Strict-equality checks against numbers silently fell through
   // to the empty array, which is why every shard was 110 bytes before
@@ -83,7 +83,7 @@ async function staticAndContainersSitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  // Plan v14 Phase C.7 — /[country]/industries hub per country (~195 URLs).
+  // /[Country]/industries hub per country (~195 URLs).
   // High-value internal-link nexus for the country topical-authority play.
   const countryHubUrls: MetadataRoute.Sitemap = COUNTRIES.map((c) => ({
     url: `${BASE_URL}/${c.code.toLowerCase()}/industries`,
@@ -96,7 +96,7 @@ async function staticAndContainersSitemap(): Promise<MetadataRoute.Sitemap> {
 }
 
 async function usCellsSitemap(): Promise<MetadataRoute.Sitemap> {
-  // Plan v30 hotfix — was 5000, dropped to 500 to reduce build memory.
+  // Was 5000, dropped to 500 to reduce build memory.
   // Was contributing to OOM at the very end of static gen.
   const cells = await getTopCells(500);
   return cells
@@ -105,7 +105,7 @@ async function usCellsSitemap(): Promise<MetadataRoute.Sitemap> {
       const path = `/${c.country.toLowerCase()}/${slugify(c.geo_name)}/${slugify(c.industry_description || c.naics_6)}`;
       return { path };
     })
-    // Plan v24 Block 5 — drop pages flagged as thin / missing-core / broken.
+    // Drop pages flagged as thin / missing-core / broken.
     .filter(({ path }) => !isPathSuppressed(path))
     .map(({ path }) => ({
       url: `${BASE_URL}${path}`,
@@ -116,19 +116,19 @@ async function usCellsSitemap(): Promise<MetadataRoute.Sitemap> {
 }
 
 async function regionalCellsSitemap(): Promise<MetadataRoute.Sitemap> {
-  // Plan v26 follow-up: 20000 limit hit Supabase statement timeout
+  // 20000 Limit hit Supabase statement timeout
   // and emptied the shard. PostgREST caps per-request rows at 1000,
   // so we use that cap and keep the quality_score ordering so the
   // downstream filter (score100to10 >= 4) keeps the right rows.
-  // Plan v30 hotfix — dropped from 1000 to 300 to reduce build memory.
+  // Dropped from 1000 to 300 to reduce build memory.
   const cells = await getTopRegionalCells(300);
   return cells
-    // Plan v26 P8 — standardized on the native 0-100 scale. quality_score
+    // Standardized on the native 0-100 scale. quality_score
     // >= 40 corresponds to the old `score100to10(...) >= 4` filter.
     .filter((c) => (c.quality_score ?? 0) >= 40)
     .map((c) => regionalCellUrl(c))
     .filter((u) => u.length > 0)
-    // Plan v24 Block 5 — same suppression for the international cells.
+    // Same suppression for the international cells.
     .filter((path) => !isPathSuppressed(path))
     .map((path) => ({
       url: `${BASE_URL}${path}`,
@@ -148,7 +148,7 @@ async function coverageScorecardSitemap(): Promise<MetadataRoute.Sitemap> {
 }
 
 /**
- * Plan v14 Phase C.7 — region industry hubs.
+ * Region industry hubs.
  *
  * For every country with regional coverage (per regional_coverage_v1.json,
  * currently ~36 countries) emit /[iso2]/[region-slug]/industries.
@@ -173,7 +173,7 @@ async function regionIndustryHubsSitemap(): Promise<MetadataRoute.Sitemap> {
 }
 
 /**
- * Plan v26 Phase B.5 — neighborhood × industry URLs.
+ * Neighborhood × industry URLs.
  *
  * Emits /[country]/[city]/[neighborhood]/[industry] for every entry
  * in data/cities/neighborhoods_v1.json crossed with the top-20
@@ -235,7 +235,7 @@ async function neighborhoodSitemap(): Promise<MetadataRoute.Sitemap> {
 }
 
 
-/** Plan v27 Lane C — cities deep build: metropolis + neighborhood hub +
+/** Cities deep build: metropolis + neighborhood hub +
  *  curiosities + city-vs-city comparison pages. */
 async function citiesSitemap(): Promise<MetadataRoute.Sitemap> {
   type CityListEntry = { slug: string; tier: number };
@@ -261,7 +261,7 @@ async function citiesSitemap(): Promise<MetadataRoute.Sitemap> {
   return out;
 }
 
-/** Plan v27 Lane D — knowledge base for SEO. 60-page evergreen corpus
+/** Knowledge base for SEO. 60-page evergreen corpus
  *  routed under /learn/. */
 async function knowledgeBaseSitemap(): Promise<MetadataRoute.Sitemap> {
   const { LEARN_ARTICLES } = await import("@/lib/learn/articles");

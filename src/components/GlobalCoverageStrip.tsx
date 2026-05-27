@@ -1,7 +1,7 @@
 /**
  * GlobalCoverageStrip — quiet editorial scope strip.
  *
- * Plan v15 Block 2: numeric country/cell counts removed per founder
+ * Numeric country/cell counts removed per founder
  * R-002 catastrophic-flag. Now shows a featured flag rail with a
  * "Browse" CTA, no false-precision counts.
  */

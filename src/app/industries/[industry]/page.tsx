@@ -57,7 +57,7 @@ function lookupIndustryMargin(industryId: string | null | undefined): IndustryMa
   return INDUSTRY_MARGINS.industries[industryId] || INDUSTRY_MARGINS.default_fallback;
 }
 
-// Plan v16: cap build-time static generation. The rest render on
+// Cap build-time static generation. The rest render on
 // demand via dynamicParams=true.
 const STATIC_INDUSTRY_CAP = 30;
 

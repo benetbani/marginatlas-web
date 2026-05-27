@@ -1,5 +1,5 @@
 /**
- * Plan v24 Block 5 — render-layer suppression for thin pages.
+ * Render-layer suppression for thin pages.
  *
  * Loads `data/quality/thin_pages_v1.json` (produced by
  * `scripts/audit/page_fill_audit.ts`) at module init and exposes a
@@ -10,7 +10,7 @@
  * Source data is never mutated; the suppression is a pure render-layer
  * decision and can be re-derived from a fresh audit run.
  */
-// Plan v24 Block 11 — JSON-import the suppression list. The previous
+// JSON-import the suppression list. The previous
 // fs-based load chained through cells.ts into the Edge runtime, which
 // webpack rejected. The JSON import is inlined at build time and works
 // in both Node and Edge runtimes.

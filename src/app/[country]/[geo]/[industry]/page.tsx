@@ -22,7 +22,7 @@ import { iso2ToName } from "@/lib/countries";
 import { CountryFlag } from "@/components/CountryFlag";
 import { RevenueTiles } from "@/components/RevenueTiles";
 import { RevenueDistribution } from "@/components/RevenueDistribution";
-// Plan v30 Phase 1 — MarginWaterfall import removed; redundant with SmartWaterfall
+// MarginWaterfall import removed; redundant with SmartWaterfall
 import { Tooltip } from "@/components/Tooltip";
 import { DimensionSwitcher } from "@/components/DimensionSwitcher";
 import { TypicalFirmCard } from "@/components/TypicalFirmCard";
@@ -30,7 +30,7 @@ import { PostTaxToggle } from "@/components/PostTaxToggle";
 import { NetProfitWaterfall } from "@/components/NetProfitWaterfall";
 import { AcrossStatesStrip } from "@/components/AcrossStatesStrip";
 import { CellPageNav } from "@/components/CellPageNav";
-// Plan v30 Phase 1 — CellActions import removed (save/copy/CSV/embed buttons stripped)
+// CellActions import removed (save/copy/CSV/embed buttons stripped)
 import { AtlasScore } from "@/components/AtlasScore";
 import { SmartImage } from "@/components/SmartImage";
 import { AudienceCaveat } from "@/components/AudienceCaveat";
@@ -40,9 +40,9 @@ import { RelatedIndustriesStrip } from "@/components/RelatedIndustriesStrip";
 import { getToneClass } from "@/lib/page-layout/section-order";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { CellWarningChips } from "@/components/CellWarningChips";
-// Plan v13 Wave 4a (D2) — EmptyStateCard import removed; we degrade silently now.
+// EmptyStateCard import removed; we degrade silently now.
 // import { EmptyStateCard } from "@/components/EmptyStateCard";
-// Plan v32 perf — CorrectionForm is a heavy client form at the very
+// CorrectionForm is a heavy client form at the very
 // bottom of every cell page. Maybe 0.1% of visitors ever click "Send a
 // correction"; meanwhile its JS shipped with every cell page load.
 // Dynamic import code-splits it into its own chunk that only loads if
@@ -71,11 +71,11 @@ import MobileCellHero from "@/components/mobile/MobileCellHero";
 import { CityHero } from "@/components/CityHero";
 import { ComparableCitiesRibbon } from "@/components/ComparableCitiesRibbon";
 import { LocalContextCard } from "@/components/LocalContextCard";
-// Plan v30 Phase 1 — TrendSparkline import removed; synthesized 5-year trend was too speculative
+// TrendSparkline import removed; synthesized 5-year trend was too speculative
 import { DistributionVisual } from "@/components/DistributionVisual";
-// v34 Phase C reverted 2026-05-25: QuartileMarkers + gateValue temporarily
-// removed pending diagnosis of cell-page load failure. Re-add once the
-// root cause is found and isolated.
+// Reverted 2026-05-25: QuartileMarkers + gateValue temporarily removed
+// pending diagnosis of cell-page load failure. Re-add once the root
+// cause is found and isolated.
 // import { QuartileMarkers } from "@/components/monetization";
 // import { gateValue } from "@/lib/monetization/viewer_tier";
 import { NetProfitSummary } from "@/components/NetProfitSummary";
@@ -85,7 +85,7 @@ import { CellFallbackBanner } from "@/components/CellFallbackBanner";
 // compact (HowWeKnowThis) variant only.
 import { CoverageIndicator, deriveCoverageTier } from "@/components/CoverageIndicator";
 import { EditorialNote } from "@/components/EditorialNote";
-// Plan v32 Sprint G — industry deepening sections. All three self-suppress
+// Industry deepening sections. All three self-suppress
 // when their data isn't on the cell, so they're safe to mount before any
 // cell has been deepened (Phase 1 will populate the data).
 import { SubIndustryPicker } from "@/components/sections/SubIndustryPicker";
@@ -98,7 +98,7 @@ import { TangibleUnits } from "@/components/sections/TangibleUnits";
 import { KeyBenchmarkBanner } from "@/components/sections/KeyBenchmarkBanner";
 import { AuPrimaryDataBadge } from "@/components/AuPrimaryDataBadge";
 import { FailureModes } from "@/components/sections/FailureModes";
-// v34 Phase G reverted: InlineMidArticle temporarily removed.
+// Reverted: InlineMidArticle temporarily removed.
 // import { InlineMidArticle } from "@/components/newsletter/NewsletterSignupVariants";
 import { IfYouOpenedToday } from "@/components/sections/IfYouOpenedToday";
 
@@ -113,13 +113,13 @@ function lookupIndustryMargin(industryId: string | null | undefined): IndustryMa
   return INDUSTRY_MARGINS.industries[industryId] || INDUSTRY_MARGINS.default_fallback;
 }
 
-// Plan v19 Block A — S-100 implemented. The server page no longer reads
+// S-100 implemented. The server page no longer reads
 // searchParams; size/year selection is handled by the DimensionSwitcher
 // client component via useSearchParams. This drops the
 // DYNAMIC_SERVER_USAGE classification that R-003 caused and restores
 // edge caching: Vercel was overriding our middleware Cache-Control
 // header with `private, no-cache, no-store` because of force-dynamic.
-// Plan v32 perf — revalidate bumped from 6h to 24h. Cell data does
+// Revalidate bumped from 6h to 24h. Cell data does
 // not change hourly; bumping reduces ISR cold-start frequency by 4x
 // and saves Supabase round-trips. After bulk cost-stack imports the
 // data is even more stable so this is safe.
@@ -127,7 +127,7 @@ function lookupIndustryMargin(industryId: string | null | undefined): IndustryMa
 // fills the edge cache and subsequent hits serve from CDN.
 export const revalidate = 86400;
 export const dynamicParams = true;
-// Plan v26 follow-up — raise function timeout from 10s default to 60s
+// Raise function timeout from 10s default to 60s
 // so cold-start cells_master queries don't drop the request. After the
 // index migration on regional_cells / cells_master this returns to <2s
 // per request and the override becomes irrelevant.
@@ -136,7 +136,7 @@ export const maxDuration = 60;
 type Params = { country: string; geo: string; industry: string };
 
 /**
- * Plan v32 perf — pre-render a curated ~20 highest-traffic cells at
+ * Pre-render a curated ~20 highest-traffic cells at
  * build time. The v30 hotfix removed pre-rendering entirely to fix
  * an OOM during build. Vercel Pro + Supabase Pro now have enough
  * headroom to safely pre-render a small focused set without
@@ -318,7 +318,7 @@ export default async function CellPage({
   // sub-regional tax + fixed-cost adjustments. clampMargin is applied
   // inside the MarginWaterfall component as a defensive floor.
   //
-  // Plan v30 Phase 2 — unit-detection fix. cell.n_employees can be either
+  // Unit-detection fix. cell.n_employees can be either
   // total employees across all firms in the region (so divide by
   // n_enterprises for per-firm) OR already per-firm (some data sources).
   // Detect by the ratio: if n_employees < n_enterprises, it's already
@@ -353,7 +353,7 @@ export default async function CellPage({
   // Defensive floor — never let a sub-3% net margin reach the page.
   const computedNetMargin = rawNetMargin != null ? clampMargin(rawNetMargin, "net", cell.industry_id || null) : null;
 
-  // Plan v14 Phase C.4 — FAQPage JSON-LD payload. The question text matches
+  // FAQPage JSON-LD payload. The question text matches
   // the phrase universe (scripts/seo/build_phrase_universe.py), so any organic
   // search for "how much does a pharmacy make in California" surfaces this
   // page. Answers are derived live from the cell's revenue + margin numbers;
@@ -364,7 +364,7 @@ export default async function CellPage({
     net_margin: computedNetMargin,
   });
 
-  // Plan v14 Phase B — per-cell editorial narrative (Haiku-generated bulk
+  // Per-cell editorial narrative (Haiku-generated bulk
   // with Sonnet quality pass on top-200). The cache keys use the FRIENDLY
   // industry id (e.g. "restaurants"), but US cells_master rows may have a
   // null industry_id with the friendly slug only derivable via NAICS. We
@@ -384,7 +384,7 @@ export default async function CellPage({
 
   const url = `https://www.marginatlas.com/${country}/${geo}/${industry}`;
   return (
-    // Plan v25 Block 9 — wider gap between content and right TOC.
+    // Wider gap between content and right TOC.
     // Was xl:gap-6 (24px). Founder: "shift more to the right".
     <div className="xl:flex xl:gap-16">
       <div className="xl:flex-1 xl:min-w-0">

@@ -1,5 +1,5 @@
 /**
- * Plan v26 P10 — internal data-quality dashboard.
+ * Internal data-quality dashboard.
  *
  * Surfaces:
  *   - Backend inventory snapshot (per-table row counts, country/industry

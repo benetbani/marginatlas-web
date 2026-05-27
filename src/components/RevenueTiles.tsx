@@ -1,10 +1,10 @@
 /**
- * Plan v13 Wave 2 — Bottom 10% / Typical / Top 10% revenue tiles.
+ * Bottom 10% / Typical / Top 10% revenue tiles.
  *
  * Three prominent tiles anyone can read at a glance. Big numbers,
  * calm typography, no dollar-axis ticks needed.
  *
- * Plan v15 Block 6 — labels normalized to "Bottom 10% / Typical / Top 10%"
+ * Labels normalized to "Bottom 10% / Typical / Top 10%"
  * (was "Bottom 20% / Typical (median) / Top 10%"). Anchors use p10 / p50 / p90.
  * "Typical" carries an inline ⓘ tooltip disclosing the median definition.
  */
@@ -13,7 +13,7 @@ import { paretoTail } from "@/lib/stats/pareto";
 
 type Props = {
   p10?: number | null;
-  // Plan v15 Block 6: p20 kept in the type for back-compat with older callers,
+  // P20 kept in the type for back-compat with older callers,
   // but no longer rendered. p10 is the canonical low anchor.
   p20?: number | null;
   p50: number | null;
@@ -27,13 +27,13 @@ export function RevenueTiles({
   p90,
   currencySymbol = "$",
 }: Props) {
-  // Plan v13 Wave 4a (D2) — silent omission: no usable percentiles → render
+  // Silent omission: no usable percentiles → render
   // nothing, not an "Earnings distribution not available" banner.
   if (p50 == null && p10 == null && p90 == null) {
     return null;
   }
 
-  // Plan v15 Block 8a — Pareto-tail extrapolation for top 1% / top 0.1%.
+  // Pareto-tail extrapolation for top 1% / top 0.1%.
   // Only shown when both p50 and p90 are present and the fit yields α > 1
   // (finite-mean regime). Helper returns null otherwise — keeps casual
   // visitors away from numbers we can't stand behind.

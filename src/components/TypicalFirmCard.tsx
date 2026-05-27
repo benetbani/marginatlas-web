@@ -20,7 +20,7 @@ type CellLike = {
 };
 
 export function TypicalFirmCard({ cell, currencySymbol = "$" }: { cell: CellLike; currencySymbol?: string }) {
-  // Plan v30 Phase 2 — unit-detection fix. Different data sources use
+  // Unit-detection fix. Different data sources use
   // different conventions for cell.n_employees: some give the TOTAL
   // employees across the region (so divide by n_enterprises to get
   // per-firm), others give a per-firm average already. We detect which
@@ -45,7 +45,7 @@ export function TypicalFirmCard({ cell, currencySymbol = "$" }: { cell: CellLike
   }
   const rawRevPerEmp =
     cell.revenue_per_firm && empPerFirm && empPerFirm > 0 ? cell.revenue_per_firm / empPerFirm : null;
-  // Plan v30 Phase 2 — hard sanity ceiling. Revenue per employee above
+  // Hard sanity ceiling. Revenue per employee above
   // $500K is essentially never an SMB benchmark. Anything above this
   // band signals a unit error upstream; suppress the cell rather than
   // render an absurd number.

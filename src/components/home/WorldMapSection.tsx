@@ -1,5 +1,5 @@
 /**
- * Plan v30 follow-up — homepage section that wraps WorldMapPicker.
+ * Homepage section that wraps WorldMapPicker.
  *
  * Server-rendered shell with a client child for the interactive map.
  * Selecting a country navigates to /[iso2]. Framing is "covers the

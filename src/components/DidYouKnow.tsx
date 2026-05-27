@@ -1,5 +1,5 @@
 /**
- * Plan v19 Block H — "Did you know that..." surprise facts.
+ * "Did you know that..." surprise facts.
  *
  * Two facts per visit, picked deterministically from a curated list
  * at data/content/did_you_know_v1.json. The deterministic pick uses

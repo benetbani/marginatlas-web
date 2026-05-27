@@ -1,5 +1,5 @@
 /**
- * Plan v27 Lane C.3 — neighborhood hub page for a city.
+ * Neighborhood hub page for a city.
  *
  * Route: /cities/[slug]/neighborhoods
  *
@@ -111,7 +111,7 @@ export default async function NeighborhoodHub({
       <div className="space-y-4">
         {scheme.neighborhoods.map((n) => {
           const headline = CHARACTER_HEADLINE[n.character] || { industry: "restaurants", name: "Restaurants" };
-          // Plan v30 Lane 2 — surface deep flavor data when populated.
+          // Surface deep flavor data when populated.
           const flavor = getNeighborhoodFlavor(slug, n.slug);
           // Phase 1 commuter+tourism+tag framework (2026-05-25): the
           // multiplier breakdown for a default activity (restaurants

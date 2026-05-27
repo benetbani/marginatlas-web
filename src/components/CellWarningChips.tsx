@@ -16,7 +16,7 @@ type Props = {
   requestedIndustrySlug?: string;
   resolvedIndustryName?: string;
   resolvedIndustryUrl?: string;
-  // Plan v10 WW — cross-country plausibility lookup
+  // Cross-country plausibility lookup
   country?: string;
   geoId?: string | null;
   industryId?: string | null;
@@ -71,7 +71,7 @@ export function CellWarningChips({
 }: Props) {
   const chips: React.ReactNode[] = [];
 
-  // Plan v13 Wave 4a (D2) — cross-country plausibility chip suppressed.
+  // Cross-country plausibility chip suppressed.
   // The chip self-flagged suspect data ("revenue 2.1σ from expected") which
   // broadcasts brokenness rather than degrading silently. Internal QC still
   // tracks plausibility via the admin/review surface and the scan JSON.

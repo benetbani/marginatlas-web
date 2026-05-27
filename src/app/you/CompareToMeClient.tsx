@@ -36,7 +36,7 @@ export function CompareToMeClient() {
   const [region, setRegion] = useState("california");
   const [industry, setIndustry] = useState("restaurants");
   const [myRevenue, setMyRevenue] = useState<string>("");
-  // Plan v13 Wave 4a — headcount input removed (avg-staff comparison gone).
+  // Headcount input removed (avg-staff comparison gone).
 
   const [cell, setCell] = useState<CompactCell | null>(null);
   const [loading, setLoading] = useState(false);
@@ -96,7 +96,7 @@ export function CompareToMeClient() {
     ? (myRevenueNum - cell.revenue_per_firm) / cell.revenue_per_firm
     : null;
 
-  // Plan v13 Wave 4a — headcount-vs-typical comparison removed because the
+  // Headcount-vs-typical comparison removed because the
   // avg-employees-per-firm denominator (n_enterprises) is unreliable.
 
   return (

@@ -15,7 +15,7 @@ import { getPopularRotationSnapshot, findSnapshotCell } from "@/lib/snapshots";
 export const revalidate = 3600;
 
 const CACHE_HEADERS = {
-  // Plan v17 Phase 4.3 — edge cache 1h, stale-while-revalidate 24h.
+  // Edge cache 1h, stale-while-revalidate 24h.
   "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
 };
 
@@ -36,7 +36,7 @@ const ROTATION: { country: string; geo: string; industry: string }[] = [
 export async function GET() {
   const hourBucket = Math.floor(Date.now() / (1000 * 60 * 60));
   const snap = getPopularRotationSnapshot();
-  // Plan v18 Phase 0 — read from baked snapshot first; only walk to
+  // Read from baked snapshot first; only walk to
   // Supabase if the snapshot is empty or this pick is missing.
   for (let i = 0; i < ROTATION.length; i++) {
     const pick = ROTATION[(hourBucket + i) % ROTATION.length];

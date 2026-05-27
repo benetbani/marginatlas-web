@@ -1,5 +1,5 @@
 /**
- * Plan v13 Wave 1 — recency label helper.
+ * Recency label helper.
  *
  * Public-facing pages must NEVER display raw year strings or year
  * ranges. We collapse all vintage information into a single calm

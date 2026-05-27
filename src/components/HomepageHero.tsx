@@ -16,7 +16,7 @@
 import Link from "next/link";
 import RotatingWords from "./RotatingWords";
 
-// Plan v30 — WorldMapPicker lives in its own homepage section
+// WorldMapPicker lives in its own homepage section
 // (WorldMapSection) rather than nested inside the hero. Removed the
 // lazy import to drop dead code.
 
@@ -26,7 +26,7 @@ import RotatingWords from "./RotatingWords";
 const INDUSTRY_WORDS = ["restaurant", "coffee shop", "law firm", "bakery"];
 const CITY_WORDS     = ["Tokyo", "Lagos", "Berlin", "Madrid"];
 
-// Plan v30 — qualitative editorial strip. Replaces the original
+// Qualitative editorial strip. Replaces the original
 // numeric totals strip ("196 countries, 223 industries...") per
 // founder direction: never expose a country count, narrative is
 // "the whole world".

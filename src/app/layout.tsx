@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 
-// Plan v32 perf — pin all server-rendered routes to Frankfurt. Supabase
+// Pin all server-rendered routes to Frankfurt. Supabase
 // project lives in eu-west-1 (per the dashboard banner); Vercel default
 // is iad1 (US East). Every Supabase query was eating ~80-150ms of
 // transatlantic round-trip latency. Pinning Vercel to fra1 (Frankfurt)
@@ -20,7 +20,7 @@ import { FooterNewsletterBar } from "@/components/newsletter/NewsletterSignupVar
 import { LogoWordmark } from "@/components/brand/LogoWordmark";
 import { PaywallModalRoot } from "@/components/monetization";
 
-// Plan v30 Phase 3 — typography reset.
+// Typography reset.
 // Newsreader: warm, bookish editorial serif designed for screen reading.
 // Used for H1/H2/H3 and the single hero number per page.
 // Inter: clean, neutral sans for body text + ALL numbers in tables, stats,

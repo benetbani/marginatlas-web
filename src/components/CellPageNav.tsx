@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 type Section = { id: string; label: string };
 
 /**
- * Plan v14 A.1 (T-A1.4) — section IDs match canonical CELL_PAGE_SECTIONS
+ * Section IDs match canonical CELL_PAGE_SECTIONS
  * after the legacy rename. The hero `<header>` still carries id="headline"
  * so we keep that as the first anchor; everything else uses the canonical
  * id that the page now renders.
@@ -70,7 +70,7 @@ export function CellPageNav() {
   return (
     <nav
       aria-label="Page sections"
-      // Plan v25 Block 9 — wider left margin (was ml-6) so the TOC sits
+      // Wider left margin (was ml-6) so the TOC sits
       // further from the main content per founder direction.
       className="hidden xl:block sticky top-[120px] self-start ml-4 w-[180px] shrink-0 text-xs"
     >

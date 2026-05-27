@@ -6,7 +6,7 @@
  *
  * Renders a 1200x630 image with the cell's revenue + industry + region.
  *
- * Plan v26 Phase A.3 — switched from Edge to Node.js runtime. Plan v24
+ * Switched from Edge to Node.js runtime. Plan v24
  * Block 11's JSON-import of cell_triage_v1.json (2.8 MB) chained into
  * this Edge bundle via cells.ts, pushing it over Vercel Hobby's 1 MB
  * Edge function cap. Vercel rejected every deploy from Plan v24 Block 1

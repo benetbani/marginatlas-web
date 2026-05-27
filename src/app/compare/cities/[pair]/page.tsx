@@ -1,5 +1,5 @@
 /**
- * Plan v27 Lane C.5 — city-vs-city comparison page.
+ * City-vs-city comparison page.
  *
  * Route: /compare/cities/[pair]
  *

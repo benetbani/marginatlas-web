@@ -1,5 +1,5 @@
 /**
- * Plan v15 Block 8c — stylized world dots for the "Top 100 cities" placeholder.
+ * Stylized world dots for the "Top 100 cities" placeholder.
  *
  * Decorative inline SVG: ~24 city dots on an equirectangular layout with
  * three "active" cities ringed in atlas-600 to suggest the neighborhood

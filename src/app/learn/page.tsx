@@ -1,5 +1,5 @@
 /**
- * Plan v27 Lane D — knowledge base hub.
+ * Knowledge base hub.
  *
  * Route: /learn
  *

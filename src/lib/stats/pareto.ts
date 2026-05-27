@@ -1,5 +1,5 @@
 /**
- * Plan v15 Block 8a — Pareto-tail extrapolation.
+ * Pareto-tail extrapolation.
  *
  * Given the p50 (median) and p90 (top-decile) revenue anchors that ship
  * with every benchmark, fit a single-parameter power-law to the upper

@@ -1,5 +1,5 @@
 /**
- * Plan v14 Phase C.3 — generates up to 5 FAQ entries per cell page from
+ * Generates up to 5 FAQ entries per cell page from
  * cell data. Each FAQ question matches one of the canonical search-phrase
  * variants in the phrase universe (scripts/seo/build_phrase_universe.py),
  * with a data-backed answer drawn from the cell's revenue + margin numbers.

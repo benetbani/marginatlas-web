@@ -1,5 +1,5 @@
 /**
- * Plan v30 hotfix — minimal not-found that avoids the Next.js 15.5
+ * Minimal not-found that avoids the Next.js 15.5
  * post-export rename bug. The previous version (Phosphor barrel imports)
  * triggered an ENOENT on .next/export/500.html during static export,
  * killing every Vercel deploy of commits 4348a23 + 4680afc + 34b9e61.

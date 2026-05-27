@@ -1,5 +1,5 @@
 /**
- * Plan v28 Lane C — popular-name overrides for geo headlines.
+ * Popular-name overrides for geo headlines.
  *
  * Single source of truth for "what does the world call this place?"
  * Used by getCellBySlug() and every page-header label resolver to

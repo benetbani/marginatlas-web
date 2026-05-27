@@ -1,5 +1,5 @@
 /**
- * Plan v22 Block E — state/region landing page.
+ * State/region landing page.
  *
  * Handles URLs like `/us/california`, `/de/de2`, etc. Renders:
  *   - Hero with region name + flag
@@ -19,7 +19,7 @@ import { iso2ToName } from "@/lib/countries";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
 import { fmtMoney } from "@/lib/format/money";
 import { getNeighborhoodsForCity } from "@/lib/cities/neighborhoods";
-// Plan v32 Sprint G — city character. Renders only when this geo has
+// City character. Renders only when this geo has
 // a hand-curated entry in src/lib/places/city_character.ts. Self-suppresses
 // for cities without entries (most cities in v1).
 import { CityCharacter } from "@/components/sections/CityCharacter";

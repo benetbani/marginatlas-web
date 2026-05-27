@@ -23,7 +23,7 @@ function fmtPct(v: number): string {
 }
 
 /**
- * Plan v16 Block A6 — show the waterfall only when the actual computed
+ * Show the waterfall only when the actual computed
  * net profit is positive and finite. Suppress the negative-profit /
  * clamped-margin display that misled users on prior versions.
  */
@@ -61,7 +61,7 @@ export function NetProfitWaterfall({
     payroll,
   });
 
-  // Plan v16 Block A6 — refuse to render an inconsistent waterfall.
+  // Refuse to render an inconsistent waterfall.
   // Founders saw cases like "−$34k net profit, 3% net margin" on Italian
   // coffee shops — internally the margin had been clamped but the profit
   // hadn't. The right answer is to suppress the section entirely with a

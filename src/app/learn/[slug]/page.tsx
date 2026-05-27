@@ -1,5 +1,5 @@
 /**
- * Plan v27 Lane D — individual knowledge-base article.
+ * Individual knowledge-base article.
  *
  * Route: /learn/[slug]
  *

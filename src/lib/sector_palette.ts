@@ -8,7 +8,7 @@
  *             (border + bg + text — single string composed)
  *   - accent  Tailwind text color used for icon and accent rules
  *
- * Plan v30 Phase 3 — visual language pack. All colors stay within the
+ * Visual language pack. All colors stay within the
  * cream/parchment/atlas/cocoa family. NO blues, NO mint, NO purple.
  */
 

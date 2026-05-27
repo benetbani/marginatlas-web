@@ -1,5 +1,5 @@
 /**
- * Plan v10 Track TT — fixed cost estimator.
+ * Fixed cost estimator.
  *
  * Given a Cell, returns a breakdown of typical annual fixed costs.
  * Pulls from the curated tables landed earlier in Plan v10:

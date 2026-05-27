@@ -1,5 +1,5 @@
 /**
- * Plan v26 Phase B — neighborhood data layer.
+ * Neighborhood data layer.
  *
  * Loads the neighborhood scheme (data/cities/neighborhoods_v1.json) and
  * character multiplier table (data/cities/character_multipliers_v1.json),

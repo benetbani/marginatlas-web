@@ -1,5 +1,5 @@
 /**
- * Plan v20 — country-industry image query templates.
+ * Country-industry image query templates.
  *
  * For each (country, industry) we have a search query that pulls back
  * AUTHENTIC photos. Generic "restaurant" queries return Italian pasta

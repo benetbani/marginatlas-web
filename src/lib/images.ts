@@ -1,5 +1,5 @@
 /**
- * Plan v12 IM7 — image manifest lookup helper.
+ * Image manifest lookup helper.
  *
  * Reads the JSON manifests produced by scripts/images/build_manifests.py
  * and exposes typed accessors used by cell / country / city / sector
@@ -45,7 +45,7 @@ const INDUSTRIES = loadManifest("industries_manifest.json");
 const COUNTRIES = loadManifest("countries_manifest.json");
 const SECTORS = loadManifest("sectors_manifest.json");
 
-// Plan v13 Wave 4c — manual override layer. Founder-curated entries in
+// Manual override layer. Founder-curated entries in
 // manual_overrides_v1.json win against the auto-generated manifest. The
 // file's shape is { overrides: { "<category>/<slug>": AtlasImage } }.
 function loadOverrides(): Record<string, AtlasImage> {
@@ -107,7 +107,7 @@ export function pickCellHeroImage(
   sectorId?: string | null,
   iso2?: string | null,
 ): AtlasImage | null {
-  // Plan v20 — country-industry match first.
+  // Country-industry match first.
   if (iso2 && industryId) {
     try {
       const ci = findCountryIndustryImage(iso2, industryId);

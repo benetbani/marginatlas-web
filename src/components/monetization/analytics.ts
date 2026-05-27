@@ -1,5 +1,5 @@
 /**
- * v34 Phase H — analytics for monetization events.
+ * Analytics for monetization events.
  *
  * Uses Microsoft Clarity (already loaded site-wide via layout.tsx)
  * as the event sink. Zero new dependencies. Privacy-respecting

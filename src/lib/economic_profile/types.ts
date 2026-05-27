@@ -1,5 +1,5 @@
 /**
- * Plan v29 Phase 1.1 — Country Economic Profile (CEP) schema.
+ * Country Economic Profile (CEP) schema.
  *
  * Single source of truth for what a country's cost structure looks
  * like. Supersedes the old country_smb_baseline.json + country_factors_v1.json

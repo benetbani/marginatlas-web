@@ -31,7 +31,7 @@ export type IndustryBaseline = {
   equipment_maintenance: number;
   regulatory_licensing: number;
   /**
-   * ATO Phase 3 — motor vehicle (vehicle + fuel + maintenance +
+   * Motor vehicle (vehicle + fuel + maintenance +
    * depreciation) as a fraction of revenue. Optional: present only
    * for trades / transport / mobile services where the vehicle is a
    * real operating line item. Office-based industries leave this
@@ -139,7 +139,7 @@ export const INDUSTRY_BASELINES: Record<string, IndustryBaseline> = {
     source_note: "AHLA / STR 2024 industry benchmarks + hospitality cost studies (CBRE 2024).",
   },
 
-  // Plan v32 Sprint G extension — 10 additional high-traffic SMB industries.
+  // 10 Additional high-traffic SMB industries.
 
   dental_practices: {
     rent_occupancy: 0.08,

@@ -37,7 +37,7 @@ import {
 } from "react-simple-maps";
 import { ISO_NUMERIC_TO_ALPHA2 } from "@/lib/iso-codes";
 
-// Plan v32 hotfix — Kosovo has no `id` in world-atlas@2's countries-110m
+// Kosovo has no `id` in world-atlas@2's countries-110m
 // TopoJSON (Natural Earth tags it as a disputed territory and omits the
 // numeric ISO code entirely). "N. Cyprus" and "Somaliland" are in the
 // same boat, so a blanket "missing id => Kosovo" rule would mis-tag
@@ -49,7 +49,7 @@ const NAME_FALLBACK_ISO2: Record<string, string> = {
 
 const GEO_URL = "https://unpkg.com/world-atlas@2/countries-110m.json";
 
-// Plan v31 starter v3 — map borders pronounced per founder feedback
+// Map borders pronounced per founder feedback
 // ("the borders between countries should be pronounced. Right now,
 // they don't exist"). Stroke darkened from #DDDDDD (near-invisible
 // on a white bg) to #3A3A3A (graphite — clearly readable). Stroke
@@ -72,7 +72,7 @@ const COLORS = {
 const ANTARCTICA_ID = "010";
 const DISPUTED_ISO_NUMERIC = new Set<string>(["732"]); // Western Sahara
 
-// Plan v30 hotfix — OverlayDot type + OVERLAY_DOTS removed.
+// OverlayDot type + OVERLAY_DOTS removed.
 // The dots were rendering as "strange cities" on a political map per
 // founder feedback. Micro-states remain reachable via /world list.
 
@@ -89,7 +89,7 @@ type GeoFeature = {
 
 type Tooltip = { iso2: string; name: string; x: number; y: number } | null;
 
-// Plan v32 — visible zoom controls. Scroll/pinch still work; these buttons
+// Visible zoom controls. Scroll/pinch still work; these buttons
 // are the explicit UI for users who don't know the gesture is supported.
 // minZoom locked at 1 (globe view) so users can't zoom past the starting
 // state into the unattractive over-cropped layout.
@@ -126,7 +126,7 @@ export default function WorldMapPicker({ onSelect, className }: WorldMapPickerPr
   }, []);
   const handleMoveEnd = useCallback(
     (pos: { coordinates: [number, number]; zoom: number }) => {
-      // Plan v32 hotfix — clamp the pan extent so the map can't be
+      // Clamp the pan extent so the map can't be
       // dragged off-screen. Earth coordinates wrap, but for the user
       // experience we want the map to stay inside a bounding box
       // around the initial centered view. Effective pan budget
@@ -170,7 +170,7 @@ export default function WorldMapPicker({ onSelect, className }: WorldMapPickerPr
     }, 300);
   }, [onSelect]);
 
-  // Plan v30 hotfix v2 — hover detection via elementFromPoint on the
+  // Hover detection via elementFromPoint on the
   // wrapper, bypassing react-simple-maps's internal event handling
   // entirely. The previous per-Geography onMouseEnter approach was
   // failing because the Geography component's hover/pressed style

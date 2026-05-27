@@ -1,7 +1,7 @@
 /**
  * FeaturedCellTile — home-page tile for the curated 3×3 featured grid.
  *
- * Plan v16 Block H change: tile ALWAYS renders the same shape. When the
+ * Tile ALWAYS renders the same shape. When the
  * underlying benchmark is unavailable, we render the tile chrome without
  * a number rather than dropping it. This preserves the grid's symmetric
  * 3×3 layout regardless of data state. The click still navigates to the
@@ -20,7 +20,7 @@ import { IndustryIcon } from "@/components/icons/IndustryIcon";
 import { fmtMoney } from "@/lib/format/money";
 
 /**
- * Plan v18 Phase 0 — read the cell from the pre-baked snapshot JSON
+ * Read the cell from the pre-baked snapshot JSON
  * first. Snapshot lookups are synchronous (no Supabase round-trip),
  * so the 9-tile grid renders in essentially zero time. If the snapshot
  * doesn't have the entry (dev environment without baked data), fall back
@@ -55,7 +55,7 @@ export type FeaturedTileSpec = {
 };
 
 export async function FeaturedCellTile({ spec }: { spec: FeaturedTileSpec }) {
-  // Plan v18 Phase 0 — try snapshot first (sync, no Supabase). On miss,
+  // Try snapshot first (sync, no Supabase). On miss,
   // fall back to the timeout-protected Supabase fetch.
   const snap = getFeaturedSnapshot();
   const baked = findSnapshotCell(snap, spec.iso2, spec.geo, spec.industry);
@@ -66,7 +66,7 @@ export async function FeaturedCellTile({ spec }: { spec: FeaturedTileSpec }) {
     const cell = await fetchCellWithTimeout(spec.iso2.toLowerCase(), spec.geo, spec.industry);
     revenue = cell?.revenue_per_firm ?? null;
   }
-  // Plan v25 Block 6 — never render "Click for details". If the snapshot
+  // Never render "Click for details". If the snapshot
   // and timeout-bounded lookup both miss, synthesize a country+industry
   // baseline so every featured tile shows a number.
   if (revenue == null) {

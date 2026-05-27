@@ -1,5 +1,5 @@
 /**
- * Plan v31 hotfix — neighborhood OVERVIEW page.
+ * Neighborhood OVERVIEW page.
  *
  * Route: /[country]/[city]/[neighborhood]
  *

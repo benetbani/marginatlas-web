@@ -72,7 +72,7 @@ export function ComboField({
     return () => document.removeEventListener("mousedown", onDoc);
   }, []);
 
-  // Plan v25 Block 8 — commit on Enter (or blur) even when nothing is
+  // Commit on Enter (or blur) even when nothing is
   // focused. Founder reported "Show me the numbers" button unclickable
   // on Berlin nightclubs — root cause was ComboField never committing
   // a typed value to state unless the user explicitly clicked an

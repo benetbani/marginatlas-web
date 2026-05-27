@@ -1,5 +1,5 @@
 /**
- * Plan v19 Block F — Phosphor icon mapping for the 25 sectors.
+ * Phosphor icon mapping for the 25 sectors.
  *
  * Replaces the emoji-per-sector treatment in src/lib/taxonomy/sectors.json
  * with consistent Phosphor Duotone icons in the warm-earth palette. The
@@ -30,7 +30,7 @@ import {
   Sparkle,
   Mountains,
   CellTower,
-  // Plan v32 hotfix — additional icons so every sector gets a
+  // Additional icons so every sector gets a
   // distinct mark. Previously heavy_industry shared Factory with
   // manufacturing_artisan, finance_corp shared Bank with cultural,
   // higher_ed_hospitals shared Stethoscope with health_clinics.

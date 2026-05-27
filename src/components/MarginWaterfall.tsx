@@ -1,5 +1,5 @@
 /**
- * Plan v25 Block 4 — profit waterfall always renders all three bars.
+ * Profit waterfall always renders all three bars.
  *
  * Earlier behavior: if Operating or Net margin was null the row
  * rendered as an empty bordered box ("partial fill" bug). The fix is

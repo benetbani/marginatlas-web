@@ -10,7 +10,7 @@ import { getToneClass } from "@/lib/page-layout/section-order";
 import { getAllPosts, type BlogPost } from "@/lib/blog";
 
 /**
- * Plan v14 6b: full-bleed tone wrapper for homepage sections. The inner
+ * Full-bleed tone wrapper for homepage sections. The inner
  * content lives inside the layout's `max-w-7xl mx-auto px-6` constraint,
  * but the background color spans the full viewport via the same trick
  * the hero already uses (`left-1/2 right-1/2 -mx-[50vw] w-screen`).
@@ -26,7 +26,7 @@ function ToneBand({ tone, children }: { tone: string; children: React.ReactNode 
 export const revalidate = 86400; // 1 day
 
 /**
- * Plan v16 Block E - founder-specified set, 3×3 symmetric grid. Every tuple
+ * Founder-specified set, 3×3 symmetric grid. Every tuple
  * must resolve in the data layer; FeaturedCellTile returns null on miss,
  * which would break the grid, so any tuple here must be pre-validated.
  * Tiles use measured parent industries (no sub-niches) per Plan v4 Step 16.
@@ -46,7 +46,7 @@ const FEATURED: FeaturedTileSpec[] = [
 ];
 
 /**
- * Plan v15 Block 3 - blog rail. Pulls live posts when available, falls
+ * Blog rail. Pulls live posts when available, falls
  * back to curated placeholders so the rail always shows six cards.
  */
 // Fallback gradient cover for placeholder blog posts (per the
@@ -290,7 +290,6 @@ export default function HomePage() {
       </ToneBand>
 
       {/*
-        * Plan v32 Sprint B kill round, five sections removed in one pass:
         *  - DidYouKnow: rotating factoid card. The blog rail covers
         *    the same editorial-curiosity slot more usefully.
         *  - CellOfTheWeek: was rendering a malformed headline

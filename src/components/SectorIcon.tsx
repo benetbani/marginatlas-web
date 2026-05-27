@@ -6,7 +6,7 @@
  * Falls back to Briefcase for any unknown sector. Use with CategoryChip
  * or directly anywhere a sector visual is needed.
  *
- * Plan v30 Phase 3 — visual language pack.
+ * Visual language pack.
  */
 
 import {

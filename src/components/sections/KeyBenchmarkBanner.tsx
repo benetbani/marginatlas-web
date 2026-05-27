@@ -61,7 +61,7 @@ export function KeyBenchmarkBanner({ cell }: Props) {
   const { kb, range, rationale } = getKeyBenchmarkForIndustry(cell.industry_id);
   const label = labelKeyBenchmark(kb);
   const formula = ratioFormula(kb);
-  // ATO Phase 4 — comparative-voice lead. Replaces the descriptive
+  // Comparative-voice lead. Replaces the descriptive
   // rationale with a "Watch your X" imperative sentence that frames
   // the benchmark as a deviation gauge, not a typical-firm portrait.
   const lead = getComparativeLead(cell.industry_id);

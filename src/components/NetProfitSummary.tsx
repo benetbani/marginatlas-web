@@ -1,5 +1,5 @@
 /**
- * Plan v25 Block 4 — net-profit waterfall, expanded by default.
+ * Net-profit waterfall, expanded by default.
  *
  * Previous behavior (Plan v23 Part 2): collapsed by default, expand on
  * click. The founder explicitly reversed this: "the profit estimation
@@ -36,7 +36,7 @@ export function NetProfitSummary({
   payroll,
   takeHome,
 }: Props) {
-  // Plan v25 Block 4 — open by default per founder direction.
+  // Open by default per founder direction.
   const [open, setOpen] = useState(true);
 
   if (!takeHome || takeHome <= 0 || !grossRevenue || grossRevenue <= 0) {

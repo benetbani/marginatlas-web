@@ -1,7 +1,7 @@
 /**
  * src/lib/finance/turnover_band.ts
  *
- * ATO Phase 6 — turnover band classifier. Maps a cell's
+ * Turnover band classifier. Maps a cell's
  * revenue_per_firm in USD onto one of three turnover bands defined
  * per sector in data/finance/turnover_bands_v1.json.
  *

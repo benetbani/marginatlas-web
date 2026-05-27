@@ -1,5 +1,5 @@
 /**
- * Plan v24 Block 4 — manual supplement for friendly city aliases.
+ * Manual supplement for friendly city aliases.
  *
  * Founder reported `/de/frankfurt/...` rendering "How much does a
  * restaurant make in Hessen?" — Frankfurt was missing from the auto-

@@ -82,7 +82,7 @@ export type Cell = {
   rev_p75?: number | null;
   rev_p90?: number | null;
   payroll_per_employee?: number | null;
-  // Plan v25 Block 1 — derived profit fields. Populated by synthesizeCell
+  // Derived profit fields. Populated by synthesizeCell
   // and fillMissingFields so the render layer never has to recompute.
   gross_margin?: number | null;
   operating_margin?: number | null;
@@ -95,18 +95,18 @@ export type Cell = {
   coverage_tier?: string | null;
   coverage_source?: string | null;
   currency?: string | null;
-  // Plan v25 Block 1 — synthesis marker. True when the cell was produced
+  // Synthesis marker. True when the cell was produced
   // by synthesizeCell() rather than a real DB lookup. Render layer reads
   // this to badge the page as "Estimated".
   is_synthetic?: boolean;
-  // Plan v32 Sprint G — deepening fields. All optional; populated by
+  // Deepening fields. All optional; populated by
   // the Phase 1 data acquisition. When absent, the corresponding
   // sections suppress themselves. See src/lib/types/deepening.ts.
   sub_industry?: SubIndustryRef;
   cost_stack?: CostStack;
   setup_costs?: SetupCosts;
   local_alias?: LocalAlias;
-  // ATO Phase 6 — turnover band classification derived from
+  // Turnover band classification derived from
   // revenue_per_firm + industry's sector thresholds. Three values
   // (small / medium / large) or "unknown". Computed at read time;
   // not persisted. See src/lib/finance/turnover_band.ts.
@@ -194,7 +194,7 @@ export function slugify(s: string | null | undefined): string {
 export function regionalSlugToGeoId(country: string, geoSlug: string): string {
   const c = country.toUpperCase();
   const slug = geoSlug.toLowerCase();
-  // Plan v24 Block 4 — manual city alias supplement. Checked BEFORE the
+  // Manual city alias supplement. Checked BEFORE the
   // auto-generated map so hand-curated entries (Frankfurt → DE712, not the
   // NUTS-1 Hessen region) take precedence. Fixes the founder-reported
   // "/de/frankfurt → Hessen" bug.
@@ -207,7 +207,7 @@ export function regionalSlugToGeoId(country: string, geoSlug: string): string {
     }
     return manual.toUpperCase();
   }
-  // Plan v22 Block E — friendly city aliases. Resolves URLs like
+  // Friendly city aliases. Resolves URLs like
   // /us/los-angeles/restaurants → cells lookup against US-06-037.
   const friendly = CITY_FRIENDLY_TO_GEO_ID[c]?.[slug];
   if (friendly) {
@@ -230,7 +230,7 @@ export function regionalSlugToGeoId(country: string, geoSlug: string): string {
 }
 
 /**
- * Plan v15 Block 8b — roll the percentile anchors + per-firm headline
+ * Roll the percentile anchors + per-firm headline
  * + payroll/employee forward to the current target year using a
  * country-specific cumulative CPI factor. The cell's `year` field is
  * advanced to the target year so callers see a consistent "current"
@@ -288,7 +288,7 @@ function normalizeRegionalRow(r: Record<string, unknown>): Cell {
     coverage_tier: (r.coverage_tier as string) || "P",
     coverage_source: (r.coverage_source as string) || "National business statistics",
     currency: (r.currency as string) || "USD",
-    // Plan v32 Sprint G — deepening fields. Pulled directly from the
+    // Deepening fields. Pulled directly from the
     // new nullable columns. Empty for cells that haven't been deepened.
     sub_industry: r.sub_industry_id
       ? {
@@ -299,7 +299,7 @@ function normalizeRegionalRow(r: Record<string, unknown>): Cell {
     cost_stack: (r.cost_stack as CostStack | null) ?? undefined,
     setup_costs: (r.setup_costs as SetupCosts | null) ?? undefined,
   };
-  // Plan v32 Phase 0 — apply render-time currency correction for the
+  // Apply render-time currency correction for the
   // 2,298 local-currency-as-USD cells flagged by the May 2026 audit.
   // No-op for countries not on the correction list.
   return applyPlausibilitySuppression(applyCurrencyCorrection(applyRollforward(applyTaxonomy(cell))));
@@ -337,7 +337,7 @@ export async function getRegionalCell(
   const { data, error } = await q;
   if (error || !data || data.length === 0) return null;
   const row = data[0] as Record<string, unknown>;
-  // Plan v24 Block 1.4 — render-layer suppression. If this cell is in
+  // Render-layer suppression. If this cell is in
   // the triage suppression list, return null. Caller falls through to
   // extrapolated_cells; if that also has no data, page 404s.
   const rowCountry = ((row.country as string) || "").toUpperCase();
@@ -347,11 +347,11 @@ export async function getRegionalCell(
   let cell = normalizeRegionalRow(row);
   // Apply field-level overrides if any
   cell = applyCellOverrides(rowCountry, rowGeo, rowInd, cell);
-  // Plan v23 Part 1 grammar fix — if the URL used a friendly city slug,
+  // If the URL used a friendly city slug,
   // override geo_name to the canonical display label. /es/barcelona renders
   // 'Barcelona' regardless of whatever the DB row has for that field.
-  // Plan v24 Block 4 — manual map wins. /de/frankfurt → "Frankfurt am Main".
-  // Plan v30 Phase 2 — popular-name override fires FIRST so /it/lazio
+  // Manual map wins. /de/frankfurt → "Frankfurt am Main".
+  // Popular-name override fires FIRST so /it/lazio
   // renders "Rome", /it/lombardia renders "Milan", etc. across every code
   // path including the regional-cell hit (was previously only applied
   // at the end of getCellBySlug + in geoNameFromSlug, so admin1 slugs
@@ -449,7 +449,7 @@ function normalizeRow(r: Record<string, unknown>): Cell {
     coverage_tier: r.coverage_tier as string | null,
     coverage_source: r.coverage_source as string | null,
     currency: (r.currency as string) || "USD",
-    // Plan v32 Sprint G — deepening fields.
+    // Deepening fields.
     sub_industry: r.sub_industry_id
       ? {
           sub_industry_id: r.sub_industry_id as string,
@@ -459,7 +459,7 @@ function normalizeRow(r: Record<string, unknown>): Cell {
     cost_stack: (r.cost_stack as CostStack | null) ?? undefined,
     setup_costs: (r.setup_costs as SetupCosts | null) ?? undefined,
   };
-  // Plan v32 Phase 0 — render-time currency correction (see note above).
+  // Render-time currency correction (see note above).
   return applyPlausibilitySuppression(applyCurrencyCorrection(applyRollforward(applyTaxonomy(cell))));
 }
 
@@ -477,7 +477,7 @@ export type CellSelector = {
  * 1-dot quality tier so the UI can badge them clearly.
  */
 /**
- * Plan v26 follow-up — race the Supabase lookup against a budget. When
+ * Race the Supabase lookup against a budget. When
  * the DB is slow (cold connection, missing indexes, statement timeout),
  * the timeout wins and we fall through to synthesis. The user gets an
  * Estimated-badged page instead of a 504 from Vercel killing the
@@ -546,7 +546,7 @@ export async function getCellBySlug(
       }),
     );
   }
-  // Plan v26 A.5 drift fix — apply the manual / friendly city-alias
+  // Apply the manual / friendly city-alias
   // display label UNIVERSALLY at the end of the lookup chain. Previously
   // this override lived only in getRegionalCell, so when the chain fell
   // through to getExtrapolatedCell (typical on production with limited
@@ -554,7 +554,7 @@ export async function getCellBySlug(
   // of "Frankfurt am Main". Applying it here covers every code path.
   const friendlyLabel = geoNameFromSlug(country, geoSlug);
   if (friendlyLabel) cell.geo_name = friendlyLabel;
-  // ATO Phase 6 — stamp the turnover band on the way out. Computed
+  // Stamp the turnover band on the way out. Computed
   // from revenue_per_firm + industry's parent-sector thresholds.
   // Imported lazily to avoid pulling the band data file into every
   // module that depends on cells.ts.
@@ -570,12 +570,12 @@ export async function getCellBySlug(
  * cell row to read geo_name from. Used by synthesizeCell to render a
  * sensible hero (e.g. "Frankfurt am Main" instead of "DE71").
  *
- * Plan v28 Lane C — popular-name override fires FIRST, so Quintana Roo
+ * Popular-name override fires FIRST, so Quintana Roo
  * displays as Cancún (the name the world knows) regardless of which
  * data source the row came from. One name, one place.
  */
 function geoNameFromSlug(country: string, geoSlug: string): string | undefined {
-  // Plan v28 Lane C — popular-name overrides take priority.
+  // Popular-name overrides take priority.
   const popular = getPopularPlaceName(country, geoSlug);
   if (popular) return popular;
   const manualLabel = MANUAL_DISPLAY_LABEL[country]?.[geoSlug.toLowerCase()];
@@ -896,7 +896,7 @@ export async function getSameIndustryAcrossCountries(
   const ind = resolveToMeasuredIndustry(rawInd);
   if (!ind) return [];
   const excludeIso3 = iso2ToIso3(excludeIso2) || "";
-  // Plan v24 Block 6 — pull a wider slate so SMB-bound filtering still
+  // Pull a wider slate so SMB-bound filtering still
   // leaves enough comparators after dropping clearly-broken predictions
   // (Chile $millions / Liechtenstein billions). Order by quality first,
   // not revenue, so trustworthy countries surface before noise.
@@ -1067,7 +1067,7 @@ export async function getExtrapolatedCell(
     coverage_source: (r.coverage_source as string) || "Estimated from regional patterns",
     currency: "USD",
   };
-  // Plan v32 Phase 0 — render-time currency correction. extrapolated_cells
+  // Render-time currency correction. extrapolated_cells
   // also receives values from the same ingestion pipeline that produced
   // the local-currency-as-USD cells, so the correction applies here too.
   return applyPlausibilitySuppression(applyCurrencyCorrection(applyRollforward(applyTaxonomy(cell))));
@@ -1232,7 +1232,7 @@ export async function getIndustryRankInState(
 }
 
 /** Top N cells globally (for sitemap + homepage features).
- *  Plan v24 Block 11 — every ordering variant on the 722k-row cells_master
+ *  Every ordering variant on the 722k-row cells_master
  *  hit Supabase's statement timeout. Use `.gte('year', 2020)` to push
  *  filtering into an indexed range scan, then take whatever order Postgres
  *  returns. For sitemap purposes a deterministic sample is enough; we

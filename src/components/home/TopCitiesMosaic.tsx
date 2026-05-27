@@ -1,5 +1,5 @@
 /**
- * Plan v27 Lane C.1 - top-200 cities homepage mosaic.
+ * Top-200 cities homepage mosaic.
  *
  * Replaces the flat alphabetical CityPicker with a continent-grouped
  * card grid. Each card shows the city hero (Unsplash, where cached),

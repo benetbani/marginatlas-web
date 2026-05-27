@@ -15,7 +15,7 @@ import { getCellBySlug } from "@/lib/cells";
 export const revalidate = 86400;
 
 const CACHE_HEADERS = {
-  // Plan v17 Phase 4.3 — edge-cache snapshot JSON for 6h with 24h stale.
+  // Edge-cache snapshot JSON for 6h with 24h stale.
   "Cache-Control": "public, s-maxage=21600, stale-while-revalidate=86400",
 };
 

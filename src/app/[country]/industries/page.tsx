@@ -1,5 +1,5 @@
 /**
- * Plan v14 Phase C.5 — country industry hub page (`/us/industries`,
+ * Country industry hub page (`/us/industries`,
  * `/de/industries`, ...).
  *
  * Directory page listing every SMB-relevant industry we cover for the

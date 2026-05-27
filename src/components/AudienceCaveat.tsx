@@ -22,7 +22,7 @@ export function AudienceCaveat({ industry, usingParentData }: Props) {
   const audience = industry.audience || "smb_friendly";
   const parent = industry.parent_id ? INDUSTRY_BY_ID[industry.parent_id] : null;
 
-  // Plan v13 Wave 4a (D2) — sub-niche-borrowing banner removed. The page
+  // Sub-niche-borrowing banner removed. The page
   // silently shows parent-category numbers without broadcasting "we don't
   // have direct measurements." The URL remains stable; sister sub-niche
   // pages still render so future granular data can drop in transparently.

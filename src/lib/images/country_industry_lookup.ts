@@ -1,5 +1,5 @@
 /**
- * Plan v20 — read the country-industry image manifest produced by
+ * Read the country-industry image manifest produced by
  * scripts/images/build_country_industry_images.ts.
  *
  * Components ask for an image by (iso2, industry_id). The manifest is
@@ -19,7 +19,7 @@ export type CountryIndustryImage = {
   generated_at?: string;
 };
 
-// Plan v21 — try multiple candidate paths because Vercel's
+// Try multiple candidate paths because Vercel's
 // outputFileTracing sometimes lifts the file to .next/server/...
 // and process.cwd() in serverless functions may differ from the
 // repo root.

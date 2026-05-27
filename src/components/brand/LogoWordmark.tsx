@@ -16,7 +16,7 @@ export type LogoWordmarkProps = {
   /** If true, the whole thing is wrapped in an aria-label "Margin Atlas". */
   labeled?: boolean;
   /**
-   * Plan v32 — tone variant. "light" (default) is the header treatment:
+   * Tone variant. "light" (default) is the header treatment:
    * black "Margin" + vermillion "Atlas" on a light surface. "dark" is
    * the footer treatment: white "Margin" + vermillion "Atlas" on the
    * graphite atlas-paper-dark surface.

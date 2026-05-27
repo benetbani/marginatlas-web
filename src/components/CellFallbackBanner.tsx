@@ -1,5 +1,5 @@
 /**
- * Plan v24 Block 3.2 — substitution disclosure banner.
+ * Substitution disclosure banner.
  *
  * Renders ONLY when the cell page's resolved cell carries data from a
  * different industry than the URL requested (the PARENT_FALLBACK_MAP

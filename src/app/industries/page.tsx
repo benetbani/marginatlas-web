@@ -1,7 +1,7 @@
 /**
  * /industries — top-level industry directory.
  *
- * Plan v32 hotfix. Founder feedback: the previous page was ugly except
+ * The previous page was ugly except
  * for the A-Z section. Restructured into three clear blocks:
  *
  *   1. Hero (center-aligned, consistent with home)

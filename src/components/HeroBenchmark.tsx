@@ -1,5 +1,5 @@
 /**
- * Plan v23 Part 2 — story-first benchmark hero.
+ * Story-first benchmark hero.
  *
  * Replaces the previous tile-dashboard hero. Single ENORMOUS revenue
  * figure under a question-form headline. Cream-paper background.

@@ -1,5 +1,5 @@
 /**
- * Plan v25 Block 10 — sector icon map for visual differentiation.
+ * Sector icon map for visual differentiation.
  *
  * Used on /industries (sector group headings), /sectors index, country
  * pages, and anywhere else sectors are listed without an icon.

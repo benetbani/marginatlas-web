@@ -1,7 +1,7 @@
 /**
  * Country landing page — /us, /de, /fr, /jp, etc.
  *
- * Plan v3.0 §O.3. Shows: flag + name + coverage tier, signature line,
+ * Flag + name + coverage tier, signature line,
  * top SMB-relevant industries, "Compare {country}" CTA.
  */
 
@@ -33,11 +33,11 @@ export const dynamicParams = true;
 
 type Params = { country: string };
 
-// Plan v32 — COUNTRY_SIGNATURE removed alongside the hero photo. The
+// COUNTRY_SIGNATURE removed alongside the hero photo. The
 // per-country tagline is now sourced from getCountryAnchor(), and the
 // signature glyph is no longer used anywhere on the country page.
 
-// Plan v16: cap build-time static generation to the top 25 countries
+// Cap build-time static generation to the top 25 countries
 // by traffic potential (G7 + major emerging markets + key SMB hubs).
 // The remaining ~170 countries render on demand via dynamicParams=true.
 // Previous behavior pre-built all 195, which timed out Vercel's per-page
@@ -73,7 +73,7 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
   if (!meta) notFound();
 
   const topIndustries = await getTopIndustriesForCountry(iso2, 18);
-  // Plan v13 Wave 1 — countries with only city-level data (e.g. Argentina)
+  // Countries with only city-level data (e.g. Argentina)
   // must not advertise a sub-regional view. The flag is plumbed here so
   // any future Regions tab/section can be wrapped with `{showRegions ? ... : null}`.
   // Today the country page surfaces only cities + cell-page entrypoints,
@@ -81,7 +81,7 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
   const showRegions = hasRegionalCoverage(iso2);
   void showRegions;
 
-  // Plan v13 Wave 4d — admin-1 sub-region navigation list. All 194 countries
+  // Admin-1 sub-region navigation list. All 194 countries
   // (except SG) have admin1 data. Empty array → silent omission per Wave 4a
   // (D2): no "Regions not available" banner.
   const regions = getAdmin1Regions(iso2);

@@ -1,5 +1,5 @@
 /**
- * Plan v28 Lane D — editorial voice card.
+ * Editorial voice card.
  *
  * Renders a single calm paragraph between the data sections of a cell
  * or country page. Reads from src/lib/editorial/blurbs.ts.

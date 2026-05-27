@@ -12,7 +12,7 @@ import { getCellOfTheWeekSnapshot, findSnapshotCell } from "@/lib/snapshots";
 import { fmtMoney } from "@/lib/format/money";
 
 /**
- * Plan v17 fix — same timeout pattern as FeaturedCellTile. Bound the
+ * Same timeout pattern as FeaturedCellTile. Bound the
  * homepage stream time so a cold-cache Supabase call doesn't park the
  * "Snapshot of the week" section as an empty `<template>` placeholder.
  */
@@ -112,7 +112,7 @@ function weekNumber(d: Date): number {
 export async function CellOfTheWeek() {
   const week = weekNumber(new Date());
   const snap = getCellOfTheWeekSnapshot();
-  // Plan v18 Phase 0 — read from baked snapshot first (sync); fall back
+  // Read from baked snapshot first (sync); fall back
   // to the Plan v17 2-try timeout race only if the snapshot is missing
   // or this week's pick isn't in it.
   const MAX_TRIES = 2;

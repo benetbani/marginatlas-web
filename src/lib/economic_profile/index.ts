@@ -1,5 +1,5 @@
 /**
- * Plan v29 Phase 1 — Country Economic Profile loader.
+ * Country Economic Profile loader.
  *
  * Build-time JSON import. Honors 600MB RAM cap (~120KB file).
  * Falls back to default_fallback for any country not in the table.

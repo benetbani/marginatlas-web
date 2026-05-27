@@ -1,5 +1,5 @@
 /**
- * Plan v27 Lane D - knowledge base article registry.
+ * Knowledge base article registry.
  *
  * 60 evergreen pages in three families:
  *   Family A: "How much does X make?" (20)

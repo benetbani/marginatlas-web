@@ -53,7 +53,7 @@ export function CellDataset({
           : undefined,
     });
   }
-  // Plan v13 Wave 4a — avg-employees-per-firm display removed (n_enterprises
+  // Avg-employees-per-firm display removed (n_enterprises
   // denominator is unreliable, so the derived ratio looks dubious).
   if (wagePerEmployee != null) {
     variableMeasured.push({
@@ -64,7 +64,7 @@ export function CellDataset({
     });
   }
 
-  // Plan v15 Block 2 — raw `year` is suppressed from all public-facing surfaces
+  // Raw `year` is suppressed from all public-facing surfaces
   // (founder R-002 catastrophic-flag). The `year` prop is still accepted for
   // type compatibility with callers, but never rendered into the JSON-LD.
   void year;

@@ -43,7 +43,7 @@ export default function robots(): MetadataRoute.Robots {
         crawlDelay: 2,
       },
     ],
-    // Plan v24 Block 11 — Next 15's generateSitemaps emits per-id
+    // Next 15's generateSitemaps emits per-id
     // sub-sitemaps at /sitemap/[id].xml, not the conventional
     // /sitemap.xml. List every shard explicitly so crawlers can
     // discover the full URL inventory.

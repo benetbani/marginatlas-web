@@ -30,7 +30,7 @@ export function PostTaxToggle({ country, regionId, grossRevenue, payroll }: Prop
   const result = estimatePostTax(country, grossRevenue, payroll);
   if (!result) return null;
 
-  // Plan v10 SS — combined CIT for sub-regional cells (Munich Hebesatz,
+  // Combined CIT for sub-regional cells (Munich Hebesatz,
   // California state CIT, Zug canton, etc.). Falls back to country rate.
   const effective = getEffectiveCorporateTaxRate(country, regionId);
   // Apply the sub-regional rate when it differs from country base

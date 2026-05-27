@@ -1,7 +1,7 @@
 /**
  * CountryFlag — flat SVG flag rendered via flagcdn.com.
  *
- * Plan v13 Wave 1: replaces emoji-rendered flags whose system-emoji
+ * Replaces emoji-rendered flags whose system-emoji
  * shading looks 3D / glossy on most platforms. flagcdn ships flat
  * SVGs at a canonical 3:2 aspect.
  */

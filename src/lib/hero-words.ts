@@ -1,5 +1,5 @@
 /**
- * Plan v13 Wave 4e — rotating hero headline words.
+ * Rotating hero headline words.
  * Curated by founder. Cities ordered to alternate continents/feel.
  * Businesses are popular, recognizable SMB types.
  *

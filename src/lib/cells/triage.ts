@@ -1,5 +1,5 @@
 /**
- * Plan v24 Block 1.4 — render-layer triage application.
+ * Render-layer triage application.
  *
  * Reads data/quality/cell_triage_v1.json and exposes two helpers:
  *
@@ -12,10 +12,10 @@
  * Loaded once at module init. Honest about the file being missing —
  * dev environments without the triage JSON get zero suppressions.
  */
-// Plan v24 Block 11 — JSON-import the triage decisions (was previously
+// JSON-import the triage decisions (was previously
 // fs-read which broke the Edge runtime build).
 //
-// Plan v26 P4 — use the SLIMMED file (cell_triage_slim_v1.json) that
+// Use the SLIMMED file (cell_triage_slim_v1.json) that
 // contains only suppress + override entries. The full file had 6156
 // entries × ~450 bytes each = 2.8 MB; the slim version has 119
 // actionable entries × ~130 bytes = 15.7 KB. The original 2.8 MB
@@ -24,7 +24,7 @@
 // it into every server function is irrelevant.
 import triageJson from "../../../data/quality/cell_triage_slim_v1.json";
 
-// Plan v26 P4 — slim file shape. Only fields the runtime needs.
+// Slim file shape. Only fields the runtime needs.
 type TriageEntry = {
   country: string;
   geo_id: string;

@@ -1,10 +1,10 @@
 /**
  * Compact money formatters.
  *
- * Plan v13 Wave 2 — `formatMoney` is the bare number formatter; callers
+ * `FormatMoney` is the bare number formatter; callers
  * prepend their own currency symbol.
  *
- * Plan v24 Block 7 — `fmtMoney` is the canonical with-currency version,
+ * `FmtMoney` is the canonical with-currency version,
  * replacing 17+ duplicated local `fmtMoney` definitions across the app.
  * Before this consolidation, billions used .toFixed(1) in most files but
  * .toFixed(2) in CalculatorForm; some impls didn't handle NaN; some

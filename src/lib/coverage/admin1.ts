@@ -1,5 +1,5 @@
 /**
- * Plan v13 Wave 4d — admin-1 region lookup.
+ * Admin-1 region lookup.
  *
  * Returns the list of administrative-1 divisions for a given country
  * (states for US, regions for FR, counties for AL, etc.) sourced from

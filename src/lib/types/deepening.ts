@@ -86,7 +86,7 @@ export type CostStack = {
   equipment_maintenance?: number;
   regulatory_licensing?: number;
   /**
-   * ATO Phase 3 — vehicle, fuel, maintenance, depreciation. Material
+   * Vehicle, fuel, maintenance, depreciation. Material
    * for trades (4-8% of revenue), transport (15-25%), and field
    * services. Negligible for office-based work. Optional like every
    * other line: absent means "no primary-source data yet"; renderer

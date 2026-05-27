@@ -1,5 +1,5 @@
 /**
- * Plan v10 Track UU — net profit waterfall.
+ * Net profit waterfall.
  *
  * Builds the full 13-row breakdown from gross revenue → owner take.
  * Composes Track VV margins + Track TT fixed costs + sub-regional tax
@@ -75,7 +75,7 @@ export type NetProfitWaterfall = {
   // Bottom
   net_profit: number;
   net_margin: number; // net_profit / gross_revenue
-  // Plan v28 Lane A — sanity flags
+  // Sanity flags
   margin_clamped: boolean; // true when the raw computed margin exceeded the hard cap and was reduced
   margin_flagged: boolean; // true when the raw margin exceeded the investigate threshold
   raw_net_margin: number;  // the uncapped value for internal audit
@@ -120,7 +120,7 @@ export function estimateNetProfit(input: NetProfitInput): NetProfitWaterfall {
   const rawNetProfit = pre_tax_profit - corporate_income_tax;
   const rawNetMargin = input.grossRevenue > 0 ? rawNetProfit / input.grossRevenue : 0;
 
-  // Plan v28 Lane A — sanity clamp. The pipeline can produce absurdly
+  // Sanity clamp. The pipeline can produce absurdly
   // high margins when US-anchored gross margins are applied to non-US
   // revenue minus low local payroll. Clamp to industry-realistic ranges.
   const cap = marginCapFor(input.industryId);

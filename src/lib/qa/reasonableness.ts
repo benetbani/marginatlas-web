@@ -1,5 +1,5 @@
 /**
- * Plan v28 Lane B - server-side reasonableness check.
+ * Server-side reasonableness check.
  *
  * Catches "obvious unit error" anomalies that slip past the simple
  * SMB bounds: aggregate-vs-per-firm confusion, currency confusion

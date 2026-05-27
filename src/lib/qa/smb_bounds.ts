@@ -1,5 +1,5 @@
 /**
- * Plan v24 Block 1.1.b — SMB-physical bounds per field.
+ * SMB-physical bounds per field.
  *
  * Reference table for the scale-sanity scanner. Any cell value outside
  * these ranges is FLAGGED as logically inconsistent (not silently

@@ -1,5 +1,5 @@
 /**
- * Plan v14 Phase C.6 — region industry hub page
+ * Region industry hub page
  * (`/us/california/industries`, `/de/bayern/industries`, ...).
  *
  * Sister to /[country]/industries (T-C.5) but scoped to a sub-region.

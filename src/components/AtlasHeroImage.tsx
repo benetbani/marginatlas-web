@@ -1,7 +1,7 @@
 /**
  * Cell-page hero image.
  *
- * Plan v16 Block A7 — attribution figcaption removed. Founder reported
+ * Attribution figcaption removed. Founder reported
  * a Vancouver photo rendered for Italian coffee shops, then leaked
  * "Bank of Vancouver, British Columbia" via the caption. Per R-002
  * (no source leaks) and the v16 reformation pass, no attribution string

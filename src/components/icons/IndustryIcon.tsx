@@ -1,5 +1,5 @@
 /**
- * Plan v19 Block F — Phosphor icon mapping for the highest-traffic
+ * Phosphor icon mapping for the highest-traffic
  * industries. Falls back to the sector icon when the specific industry
  * isn't mapped, so every benchmark page gets a real icon without us
  * having to map all 192 industries by hand.

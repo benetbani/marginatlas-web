@@ -1,5 +1,5 @@
 /**
- * Plan v29 Phase 7 — Smart Waterfall display.
+ * Smart Waterfall display.
  *
  * Renders the 13-line cost structure from estimateCostStructure() with
  * per-line tooltips showing provenance and confidence. Includes a
@@ -22,7 +22,7 @@ type Props = {
   sizeBand?: "small" | "medium" | "large";
   grossRevenue: number;
   cityTier?: 1 | 2 | 3;
-  // Plan v32 Sprint G — when a cell has a populated cost_stack (from
+  // When a cell has a populated cost_stack (from
   // Phase 1 deepening), the waterfall overrides the heuristic engine's
   // line values with the sourced numbers. The engine still computes the
   // tax + net-profit math from those overrides.
@@ -177,7 +177,7 @@ export function SmartWaterfall({ iso2, industryId, sizeBand = "medium", grossRev
     cityTier,
   });
 
-  // Plan v32 Sprint G — if the cell ships with a real cost_stack,
+  // If the cell ships with a real cost_stack,
   // swap the sourced lines into the engine's structure. The engine
   // still owns the tax math; we just override the cost lines.
   // City rent multiplier additionally boosts the rent line for

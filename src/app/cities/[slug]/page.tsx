@@ -1,5 +1,5 @@
 /**
- * Plan v27 Lane C.2 — metropolis page for any of the top-200 cities.
+ * Metropolis page for any of the top-200 cities.
  *
  * Route: /cities/[slug]
  *
@@ -87,7 +87,7 @@ const HEADLINE_INDUSTRIES = [
 ];
 
 export async function generateStaticParams() {
-  // Plan v30 hotfix — pre-render Tier 1 only at build (~20 cities).
+  // Pre-render Tier 1 only at build (~20 cities).
   // Tier 2+3 land on-demand via ISR. Was Tier 1+2 (90+ pages) which
   // contributed to the build-worker OOM that killed every Vercel
   // deploy since the new bundles landed.

@@ -1,5 +1,5 @@
 /**
- * Plan v19 Block B — fill blank tiles with extrapolations when the source
+ * Fill blank tiles with extrapolations when the source
  * data is null.
  *
  * Founder rule: every benchmark page must show real numbers in >=70% of

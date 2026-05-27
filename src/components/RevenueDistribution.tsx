@@ -1,5 +1,5 @@
 /**
- * Plan v13 Wave 2 — log-normal distribution curve.
+ * Log-normal distribution curve.
  *
  * Replaces the cluster-bar chart with a single smooth SVG curve.
  * Asymmetric (right-tailed) since real revenue distributions are
@@ -37,7 +37,7 @@ export function RevenueDistribution({
   if (p75 != null && p75 > 0) points.push({ q: 0.75, v: p75 });
   if (p90 != null && p90 > 0) points.push({ q: 0.9, v: p90 });
 
-  // Plan v13 Wave 4a (D2) — silent omission: insufficient percentile points
+  // Silent omission: insufficient percentile points
   // for a log-normal fit → render nothing, not a "Distribution shape not
   // estimable" banner.
   if (points.length < 2 || p50 == null) {
@@ -83,7 +83,7 @@ export function RevenueDistribution({
     .map((p) => `L${sx(p.x).toFixed(1)},${sy(p.y).toFixed(1)}`)
     .join(" ")} L${sx(samples[samples.length - 1].x).toFixed(1)},${(H - padY).toFixed(1)} Z`;
 
-  // Plan v15 Block 6 — anchors normalized to Bottom 10% / Typical / Top 10%.
+  // Anchors normalized to Bottom 10% / Typical / Top 10%.
   // p10 is the canonical low anchor (was an interpolated p20 previously).
   const markers: Array<{ x: number; label: string; sub: string }> = [];
   if (p10 != null) markers.push({ x: p10, label: "Bottom 10%", sub: `${currencySymbol}${formatMoney(p10)}` });

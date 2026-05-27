@@ -1,7 +1,7 @@
 /**
  * /world — global coverage page.
  *
- * Plan v16 Block A9 — uniform tile sizes, no benchmark-count or quality
+ * Uniform tile sizes, no benchmark-count or quality
  * score leaked into the UI (D-107 + R-002 lockdown). Server-rendered;
  * regional grouping kept.
  */
@@ -55,7 +55,7 @@ function countryName(iso2: string): string {
 
 export default async function WorldPage() {
   const report = getCoverageReport();
-  // Plan v32 hotfix — only allow REAL ISO2 country codes (from the
+  // Only allow REAL ISO2 country codes (from the
   // COUNTRIES taxonomy). The coverage report leaked ISO3 codes (BDI,
   // AFG, ZWE) and World Bank regional aggregates (AFE, EUU, WLD,
   // IBD, etc.) which were rendering as "countries" on /world. Build

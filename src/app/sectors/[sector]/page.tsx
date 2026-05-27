@@ -10,7 +10,7 @@ import { SectorIcon } from "@/components/icons/SectorIcon";
 import { MoreDepthBanner } from "@/components/monetization";
 
 export const revalidate = 86400;
-// Plan v16: defer cold sectors to on-demand rendering so the build
+// Defer cold sectors to on-demand rendering so the build
 // doesn't time out. Top sectors pre-render; rest via dynamicParams.
 export const dynamicParams = true;
 

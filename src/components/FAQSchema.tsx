@@ -1,5 +1,5 @@
 /**
- * Plan v14 Phase C.2 — FAQPage JSON-LD for cell pages.
+ * FAQPage JSON-LD for cell pages.
  *
  * Injects schema.org FAQPage markup with 5 common questions per cell.
  * Wins Google's People-Also-Ask and AI Overviews. The actual question

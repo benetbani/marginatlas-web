@@ -28,7 +28,7 @@ import { CITIES_BY_STATE } from "@/lib/cities/city_aliases_generated";
 //  - the form has a brand top rule (vermillion accent bar) and an
 //    editorial caption row at the bottom of the card with the
 //    sample-prompt copy and the two CTAs aligned end-of-line
-// Plan v13 Wave 4a — emoji flagFromIso2 removed from dropdown labels
+// Emoji flagFromIso2 removed from dropdown labels
 // (ComboField input is a plain text field and can't host the SVG CountryFlag
 // image without an invasive rewrite). Flags still render on the destination
 // pages via <CountryFlag>.
@@ -50,7 +50,7 @@ function readClientGate(): Gate {
 
 export function NavigatorForm() {
   const router = useRouter();
-  // Plan v32 hotfix — startTransition was suppressing Next.js's
+  // StartTransition was suppressing Next.js's
   // built-in loading.tsx skeleton, leaving the user staring at the
   // homepage with a spinner for many seconds (looks like the button
   // is broken). Drop startTransition entirely; use a plain isLoading
@@ -91,7 +91,7 @@ export function NavigatorForm() {
     return getRegionsForCountry(country, name);
   }, [country]);
 
-  // Plan v22 Block E — city dropdown (replaces the previous
+  // City dropdown (replaces the previous
   // subdivision dropdown). For US, region is a state slug and the cities
   // come from CITIES_BY_STATE[country][stateSlug] (curated top cities
   // with friendly slugs like "los-angeles"). For non-US, falls back to
@@ -185,7 +185,7 @@ export function NavigatorForm() {
         }
       }
       const indSlug = industryToSlug(industry);
-      // Plan v21 Block 3 — if a subdivision is selected, navigate to
+      // If a subdivision is selected, navigate to
       // that finer-grained URL (e.g. `/us/us-06-037/restaurants` for
       // Los Angeles County). Otherwise stay at the region level.
       const targetGeo = subdivision || r;

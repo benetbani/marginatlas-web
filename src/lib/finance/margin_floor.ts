@@ -1,6 +1,6 @@
 /**
- * Plan v13 Wave 2 — defensive margin floor.
- * Plan v28 Lane A — defensive margin ceiling.
+ * Defensive margin floor.
+ * Defensive margin ceiling.
  *
  * SMB margins below these thresholds are not credible — a business
  * with sub-3% net margin has already failed. Above the ceiling band,

@@ -26,7 +26,7 @@ export const ISO_NUMERIC_TO_ALPHA2: Record<string, string> = {
   "344":"HK","348":"HU","352":"IS","356":"IN","360":"ID","364":"IR","368":"IQ",
   "372":"IE","376":"IL","380":"IT","384":"CI","388":"JM","392":"JP","398":"KZ",
   "400":"JO","404":"KE","408":"KP","410":"KR","412":"XK","414":"KW","417":"KG","418":"LA",
-  // Plan v31 hotfix — Kosovo. ISO numeric is contested; world-atlas
+  // Kosovo. ISO numeric is contested; world-atlas
   // TopoJSON tags it with several possible IDs across versions. Map
   // them all to XK so the country renders as clickable on the map.
   "983":"XK","999":"XK","-1":"XK",

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 /**
- * Plan v13 Wave 4e — slot-machine-style rotating word.
+ * Slot-machine-style rotating word.
  * Drops the current word down + fades it out, then rises the next word
  * from below + fades it in. Tailwind transitions only — no animation lib.
  */
@@ -26,7 +26,7 @@ export function RotatingWord({
   const [phase, setPhase] = useState<"in" | "out">("in");
 
   useEffect(() => {
-    // Plan v14 6c: respect prefers-reduced-motion. Users with motion
+    // Respect prefers-reduced-motion. Users with motion
     // reduction enabled get a single static pick and no rotation interval.
     const reduce =
       typeof window !== "undefined" &&

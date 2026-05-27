@@ -1,5 +1,5 @@
 /**
- * Plan v29 Phase 3-4 - Cost Structure Engine v2.
+ * Cost Structure Engine v2.
  *
  * For any (country, industry, size_band, gross_revenue) tuple, computes
  * a fully decomposed 13-line waterfall where each line carries:
@@ -102,7 +102,7 @@ type SectorICP = {
   net_margin_typical_low: number;
   net_margin_typical_high: number;
   net_margin_hard_cap: number;
-  // ATO Phase 1 — added 2026-05-26. motor_vehicle_share is carved out
+  // Added 2026-05-26. motor_vehicle_share is carved out
   // of other_overhead_share for sectors where vehicles are a real line
   // item (trades, transport, construction). key_benchmark designates
   // the ONE ratio that should be surfaced as the headline answer to

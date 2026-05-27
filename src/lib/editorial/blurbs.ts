@@ -1,5 +1,5 @@
 /**
- * Plan v28 Lane D - editorial voice layer.
+ * Editorial voice layer.
  *
  * The "site feels like a dump" critique fix. Templated voice that
  * surfaces on cell pages, country pages, and the homepage. Each blurb
@@ -14,7 +14,7 @@ type Blurb = string;
 
 // Industry-level character notes. One per industry - these are the
 // editorial "voice" of the site.
-// Plan v30 - rewritten for the 18-year-old test. No "operating margins",
+// Rewritten for the 18-year-old test. No "operating margins",
 // no "capital intensity", no "EBITDA". One sentence each in plain English.
 // What does this business actually look like for a normal owner?
 const INDUSTRY_VOICE: Record<string, Blurb> = {

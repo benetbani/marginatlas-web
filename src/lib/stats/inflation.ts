@@ -1,5 +1,5 @@
 /**
- * Plan v15 Block 8b — inflation roll-forward.
+ * Inflation roll-forward.
  *
  * Source benchmarks are typically tagged with the calendar year of the
  * underlying release (often 1-3 years stale from "right now"). To keep

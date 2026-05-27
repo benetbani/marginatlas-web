@@ -1,5 +1,5 @@
 /**
- * Plan v13 Wave 1 — regional coverage gating.
+ * Regional coverage gating.
  */
 import fs from "node:fs";
 import path from "node:path";

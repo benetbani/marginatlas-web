@@ -44,7 +44,7 @@ function loadReport(): CoverageReport | null {
 }
 
 export async function generateStaticParams() {
-  // Plan v30 hotfix — pre-render top 30 GDP countries only; rest
+  // Pre-render top 30 GDP countries only; rest
   // on-demand. Was 195 pages, contributing to build-worker OOM.
   const TOP_30 = ["US","CN","JP","DE","IN","GB","FR","IT","CA","BR","RU","KR","AU","ES","MX","ID","NL","SA","TR","CH","PL","AR","BE","SE","TH","IE","NO","AT","IL","SG"];
   return TOP_30.map((iso2) => ({ iso2: iso2.toLowerCase() }));

@@ -519,7 +519,7 @@ export const INDUSTRIES_BY_SECTOR: Record<string, Industry[]> = (() => {
   return out;
 })();
 
-/** Plan v4.0 §2 — sector-level visibility gate. */
+/** Sector-level visibility gate. */
 export type Gate = { revealMixed?: boolean; revealCorp?: boolean };
 
 /**

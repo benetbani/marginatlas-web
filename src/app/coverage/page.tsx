@@ -1,7 +1,7 @@
 /**
  * /coverage — permanent redirect to /world.
  *
- * Plan v32 hotfix. Founder feedback: /coverage and /world were two
+ * /Coverage and /world were two
  * pages doing the same job (country grid + depth indicators). The
  * separation served no purpose and made the site feel chaotic.
  * /world is now the canonical destination; /coverage 308-redirects

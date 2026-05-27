@@ -1,5 +1,5 @@
 /**
- * Plan v25 Block 1 — synthesis engine for "always render a cell".
+ * Synthesis engine for "always render a cell".
  *
  * `synthesizeCell(iso2, industrySlug, opts)` returns a complete Cell
  * populated with plausible per-firm revenue, percentiles, payroll,
@@ -213,7 +213,7 @@ export function synthesizeCell(
 }
 
 /**
- * Plan v25 Block 2 — common-sense math.
+ * Common-sense math.
  *
  * Ensures the cell's numbers add up:
  *   - revenue ≥ payroll × employees × 1.4 (40% non-payroll headroom)
@@ -228,7 +228,7 @@ export function synthesizeCell(
  */
 export function enforceSanity(cell: Cell): Cell {
   const out: Cell = { ...cell };
-  // Plan v28 Lane B — hard revenue ceiling at read time. Per-industry
+  // Hard revenue ceiling at read time. Per-industry
   // SMB bounds clamp revenue_per_firm BEFORE downstream consumers
   // (margin estimator, comparator, narrative) see it. This catches
   // extrapolated rows where industry × country produced absurd values
@@ -246,7 +246,7 @@ export function enforceSanity(cell: Cell): Cell {
     }
   }
 
-  // Plan v28 Lane B — wage sanity. Catches local-currency-as-USD bugs
+  // Wage sanity. Catches local-currency-as-USD bugs
   // (e.g., 6,000,000 yen leaked as $6M wage). Absolute SMB wage ceiling
   // is $250K/yr/employee; floor is $1.2K (anything below is likely
   // monthly mistaken for annual).

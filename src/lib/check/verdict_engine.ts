@@ -1,7 +1,7 @@
 /**
  * src/lib/check/verdict_engine.ts
  *
- * ATO Phase 7 — pure-function verdict engine for /check.
+ * Pure-function verdict engine for /check.
  *
  * Inputs: an operator's self-reported numbers (industry, annual
  * revenue, annual rent, annual labour cost, optional motor vehicle

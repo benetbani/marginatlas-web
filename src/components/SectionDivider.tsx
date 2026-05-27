@@ -5,7 +5,7 @@
  * Visual breath between major sections on Atlas pages. Three variants
  * so adjacent sections can use different separators without monotony.
  *
- * Plan v30 Phase 3 — visual language pack.
+ * Visual language pack.
  */
 
 export type SectionDividerVariant = "subtle" | "labeled" | "ornament";

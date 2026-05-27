@@ -27,7 +27,7 @@ export function TimeSeriesChart({
   currencySymbol = "$",
   label,
 }: TimeSeriesChartProps) {
-  // Plan v13 Wave 1 — n_enterprises is not a renderable public series
+  // N_enterprises is not a renderable public series
   // because the underlying firm-count field is unreliable.
   if (metric === "n_enterprises") return null;
   const pts = data

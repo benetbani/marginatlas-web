@@ -1,5 +1,5 @@
 /**
- * Plan v21 Block 5 — replace the pair of compact "Browse by country /
+ * Replace the pair of compact "Browse by country /
  * Browse by industry" anchors with two big symmetric image cards. The
  * entire card is clickable. Background is a Pexels stock image, with a
  * 45% dark overlay so the cream serif heading reads cleanly. Both cards

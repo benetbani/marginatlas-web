@@ -1,10 +1,10 @@
 /**
- * Plan v13 Wave 2b — canonical section order per page type.
+ * Canonical section order per page type.
  *
  * Sister pages (same template, different cell/country/industry) render
  * sections in this exact order WHEN the underlying data is present.
  *
- * Plan v13 Wave 4a (D2) override: sections with no usable data render
+ * Sections with no usable data render
  * NOTHING — no "Not available" banner, no "Coming soon" stub. Pages
  * are shorter when data is thin but never broadcast brokenness.
  */
@@ -44,7 +44,7 @@ export type CountrySection = (typeof COUNTRY_PAGE_SECTIONS)[number];
 export type IndustrySection = (typeof INDUSTRY_PAGE_SECTIONS)[number];
 
 /**
- * Plan v13 Wave 4d — section background tone map.
+ * Section background tone map.
  * Replaces the "every section a cream card" monotony with alternating
  * backgrounds + light section-type accents.
  */
@@ -54,7 +54,7 @@ export type SectionTone =
   | "white"
   | "cream-100"
   | "moss-tinted"
-  // Plan v32 — "paper" is intentionally transparent. The section adds NO
+  // "Paper" is intentionally transparent. The section adds NO
   // background of its own so the body's atlas-paper pattern shows
   // through. Use for sections that should feel like part of the page
   // surface (the world map, the featured grid where the cards are
@@ -66,7 +66,7 @@ export const SECTION_TONES: Record<string, SectionTone> = {
   // cream-100 broadsheet, matching the homepage hero treatment. Founder
   // explicit: dark hero on a cream site reads as "totally unrelated".
   "hero": "cream-100",
-  // Plan v14 Phase B — editorial narrative sits between the ink-dark hero
+  // Editorial narrative sits between the ink-dark hero
   // and the cream revenue tiles. Plan v14 6c (audit v2 N-2): switched to
   // white so it doesn't collide tonally with the cream-50 revenue-tiles
   // section directly below, restoring the alternation rhythm.
@@ -94,7 +94,7 @@ export const SECTION_TONES: Record<string, SectionTone> = {
   // cream-100 paper (was ink-dark cinematic video frame). The slight
   // warmth distinguishes it from the cream-50 body and the cream-50
   // navigator section directly below, preserving the alternation.
-  // Plan v32 — homepage tone map rewritten after the Sprint B kill round.
+  // Homepage tone map rewritten after the Sprint B kill round.
   // Old half of the entries (cell-of-the-week, tax-overlay, ask, quality,
   // stats, recently-added, spotlight, primary-ctas, what-youll-see,
   // whats-hot, methodology, global-coverage) are dead sections kept here
@@ -126,7 +126,7 @@ export const SECTION_TONES: Record<string, SectionTone> = {
 };
 
 export const TONE_CLASSES: Record<SectionTone, string> = {
-  // Plan v32 — ink-dark now renders the Atlas paper pattern at 10% white
+  // Ink-dark now renders the Atlas paper pattern at 10% white
   // on a graphite #3A3A3A surface. Mirrors the light atlas-paper used on
   // the page body. Set on any section meant to be visually heavy: the
   // colour swap + the pattern do all the work, no extra utilities needed.
@@ -135,7 +135,7 @@ export const TONE_CLASSES: Record<SectionTone, string> = {
   "white": "bg-white",
   "cream-100": "bg-cream-100",
   "moss-tinted": "bg-moss-50",
-  // Plan v32 — "paper" applies no background, so the body's atlas-paper
+  // "Paper" applies no background, so the body's atlas-paper
   // pattern is visible through the section. Cards on top of a paper
   // section pop off the patterned surface; cards on top of a white
   // or cream section sit on a clean band.
