@@ -116,18 +116,73 @@ Full list in `package.json` → `prebuild`.
 
 ## Known debt (and where it's documented)
 
-- **`cells.ts` is 1,321 lines**, scheduled for decomposition into
-  `cells/lookup.ts`, `cells/synthesis.ts`, `cells/variants.ts`,
-  `cells/time_series.ts`, `cells/geo.ts`. The file currently stays as
-  a thin re-export so 32+ external imports don't break.
-- **13 grandfathered layering violations** in the layering gate's
-  allowlist. Each is a page or component that imports `data/*.json`
-  directly. Migration is a separate cleanup wave.
-- **145 "Plan v / Phase / Sprint" comments** are project-management
-  noise polluting engineering documentation. Mechanical sweep
-  pending.
-- **Prebuild chain runs serially** (~60s). Parallelisation drops
-  this to ~15s.
+- **`cells.ts` is 1,146 lines** (down from 1,321 after the 2026-05-27
+  audit). `cells/geo.ts` and `cells/time_series.ts` are extracted;
+  the deeper split of `lookup.ts` / `synthesis.ts` / `variants.ts`
+  is deferred because those functions share private helpers that
+  need an `_internal.ts` module first. `cells.ts` stays as a thin
+  re-export so 32+ external imports don't break.
+- **14 grandfathered layering violations** in the layering gate's
+  allowlist (`scripts/verify_layering.ts`). Each is a page or
+  component that imports `data/*.json` directly. Migration is a
+  separate cleanup wave.
+- **Prebuild chain is parallel now** (`scripts/prebuild_all.ts`,
+  shipped 2026-05-27): ~28s for 25 gates, down from ~60s serial.
+  The old chain is still available as `npm run prebuild:serial` for
+  debugging.
 
 See `docs/strategy/2026-05-27-architecture-audit.md` for the full
 audit + refactoring roadmap.
+
+## Scale checklist (where we are vs. millions of users)
+
+What's already in place — no action needed:
+
+- **Edge caching** via middleware `Cache-Control: public, s-maxage=21600,
+  stale-while-revalidate=86400` on every deterministic public route
+  (homepage, cells, cities, sectors, industries, learn, methodology,
+  country + state landings, neighborhood pages). Every cache HIT after
+  the first bypasses the function entirely.
+- **ISR** via `export const revalidate = N` on each page — 6h on the
+  cell page, 12h on neighborhood, 24h on the homepage. Backstop for
+  edge-cache eviction.
+- **Region pinning**. Vercel functions pin to `fra1`; Supabase Pro is
+  in `eu-west-1`. Round-trip stays <20ms.
+- **Static prerender** of the top 500 cells via `generateStaticParams`.
+  These never hit the function on a cold request.
+- **Layering enforcement** via `verify_layering.ts` keeps presentation
+  out of `data/*.json` so the runtime path is predictable.
+- **Rate limit map is bounded** (`src/middleware.ts` BUCKET_HIGH_WATER)
+  so a long-lived Edge runtime instance won't OOM under sustained
+  unique-IP traffic.
+
+What's pending — apply before serious traffic:
+
+- **Supabase indexes** — `db/migrations/2026-05-27-perf-indexes.sql`
+  is staged but not yet applied. Without them, `getNudgeNeighbor`
+  and `getSameIndustryAcrossStates` time out at the 4s budget on
+  ~3% of cell-page renders. After applying, those queries drop to
+  ~30-80ms and the timeouts disappear. Run in the Supabase SQL
+  Editor one statement at a time (CONCURRENTLY can't be wrapped
+  in a transaction). See the file header for expected per-query
+  speedups.
+- **Runtime slow-query observability**. `withBudget` logs to
+  `console.warn` on timeout; that ends up in Vercel function logs
+  but isn't aggregated. Sentry is already installed
+  (`@sentry/nextjs`); wiring `withBudget` to also emit a
+  `Sentry.captureMessage` on timeout would give an alertable
+  dashboard. Two-line change in `src/lib/cells.ts`.
+- **Distributed rate-limit**. The in-memory `BUCKET` is per-Edge-
+  runtime-instance. Vercel may run multiple instances under load;
+  each has its own counter so the true rate limit is
+  `PAGE_LIMIT × instance_count`. For consistent enforcement,
+  swap for Upstash Redis (free tier handles thousands of req/s)
+  and use `Pipeline.incr` with a TTL. Only worth it once we
+  measurably hit the 60/min limit on a real user.
+
+What's overkill — don't build yet:
+
+- Read replicas, sharding, GraphQL layer, k8s, message queue.
+  Supabase Pro on a properly-indexed cells_master handles
+  100M+ queries/day without breaking a sweat. We're nowhere near
+  the wall.
