@@ -55,9 +55,22 @@ const MA_TO_AU_SLUG: Record<string, string> = (() => {
   return out;
 })();
 
-/** Feature flag check. Lets us flip off the override instantly. */
+/**
+ * Feature flag check. Lets us flip off the override instantly.
+ *
+ * Polarity is "default on" since Phase 1d activation (2026-05-27):
+ *   - Unset / "1" / "true" / "on" → enabled (default behaviour).
+ *   - "0" / "false" / "off" → disabled (kill switch).
+ *
+ * The data is verified and the override is the whole point of the
+ * Australia flagship, so the default-on polarity makes the override
+ * the production-default behaviour. Founder retains instant kill via
+ * env var.
+ */
 export function isAuPrimaryDataEnabled(): boolean {
-  return process.env.NEXT_PUBLIC_AU_PRIMARY_DATA === "1";
+  const v = (process.env.NEXT_PUBLIC_AU_PRIMARY_DATA ?? "").toLowerCase();
+  if (v === "0" || v === "false" || v === "off") return false;
+  return true;
 }
 
 /**

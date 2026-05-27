@@ -22,6 +22,7 @@ import { getCountryProfile } from "@/lib/economic_profile";
 import type { CountryEconomicProfile } from "@/lib/economic_profile/types";
 import industriesJson from "@/lib/taxonomy/industries.json";
 import icpJson from "../../../data/finance/industry_cost_profile_v1.json";
+import { getAuPrimaryAnchor } from "@/lib/economic_profile/au_primary_loader";
 
 // ============ Types ============
 
@@ -301,8 +302,25 @@ export function estimateCostStructure(input: {
   const softwareMod = softwareModifier(cep);
   const insuranceMod = insuranceModifier(cep);
 
+  // AU Phase 1d — primary-data override. For AU cells whose industry
+  // maps to an ATO benchmark and whose revenue classifies into one of
+  // the three ATO turnover bands, we replace the modelled base share
+  // with the ATO ratio midpoint. ATO ratios are already country-
+  // specific (Australia), so we BYPASS the country modifier when an
+  // override is in play. The clamp survives as defence against any
+  // data anomaly.
+  //
+  // Gated by NEXT_PUBLIC_AU_PRIMARY_DATA inside getAuPrimaryAnchor;
+  // returns null on miss so non-AU cells and unmapped AU industries
+  // continue to use the existing modelled pathway.
+  const auAnchor = input.iso2.toUpperCase() === "AU"
+    ? getAuPrimaryAnchor(input.industryId, rev)
+    : null;
+
   // COGS
-  const cogsShare = Math.max(0.04, Math.min(0.78, icp.cogs_share * cogsMod));
+  const cogsShare = auAnchor?.ratios.cost_of_sales
+    ? Math.max(0.04, Math.min(0.78, auAnchor.ratios.cost_of_sales.mid))
+    : Math.max(0.04, Math.min(0.78, icp.cogs_share * cogsMod));
   const cogsUsd = rev * cogsShare;
   const grossProfit = rev - cogsUsd;
 
@@ -317,8 +335,13 @@ export function estimateCostStructure(input: {
 
   // Country labor share modifier: high-employer-social countries push
   // the social line up; low-skill labor markets compress the wage line.
+  // AU Phase 1d — when an AU primary-data anchor provides a labour
+  // ratio, use it directly (ATO ratios are already country-specific
+  // and include employer-side loading).
   const laborShareCountry = icp.labor_share;
-  const totalLaborShare = Math.max(0.08, Math.min(0.65, laborShareCountry * employerLoading(cep)));
+  const totalLaborShare = auAnchor?.ratios.labour
+    ? Math.max(0.08, Math.min(0.65, auAnchor.ratios.labour.mid))
+    : Math.max(0.08, Math.min(0.65, laborShareCountry * employerLoading(cep)));
   const totalLaborUsd = rev * totalLaborShare;
   // Split into direct labor vs employer-side
   const employerShareOfTotal = (employerLoading(cep) - 1.0) / employerLoading(cep);
@@ -331,7 +354,10 @@ export function estimateCostStructure(input: {
   const opPreOverhead = grossProfit - directLaborUsd - socialUsd;
 
   // Overhead lines (each a share of revenue, modified)
-  const rentShare = Math.max(0.005, Math.min(0.30, icp.rent_share * rentMod));
+  // AU Phase 1d — primary-data override for rent.
+  const rentShare = auAnchor?.ratios.rent
+    ? Math.max(0.005, Math.min(0.30, auAnchor.ratios.rent.mid))
+    : Math.max(0.005, Math.min(0.30, icp.rent_share * rentMod));
   const rentUsd = rev * rentShare;
   const energyShare = Math.max(0.001, Math.min(0.18, icp.energy_share * energyMod));
   const energyUsd = rev * energyShare;
@@ -380,15 +406,24 @@ export function estimateCostStructure(input: {
   }
 
   // Provenance strings (universal terms - no country-specific tax names)
-  const cogsProv = icp.cogs_import_dependency > 0.4
+  // AU Phase 1d — when an AU primary-data anchor is in play for this
+  // line, the provenance string explicitly attributes to the official
+  // tax-authority benchmark, signalling the elevated trust tier.
+  const cogsProv = auAnchor?.ratios.cost_of_sales
+    ? `${(cogsShare * 100).toFixed(0)}% of revenue. Primary-source benchmark for the ${auAnchor.band_index === 0 ? "small" : auAnchor.band_index === 1 ? "medium" : "large"} band in this activity, FY ${auAnchor.source_year}.`
+    : icp.cogs_import_dependency > 0.4
     ? `${(cogsShare * 100).toFixed(0)}% of revenue. ${cep.name}'s import dependency (${(cep.imports_pct_of_gdp * 100).toFixed(0)}% of GDP) raises input costs for this category.`
     : `${(cogsShare * 100).toFixed(0)}% of revenue. Typical for this industry; ${cep.name} sources most inputs locally.`;
 
-  const laborProv = `Roughly ${impliedEmpCount} full-time-equivalent employees at $${Math.round(wagePerFte).toLocaleString()} median wage. Implied from the typical labor share for this category, scaled by ${cep.name}'s wage level.`;
+  const laborProv = auAnchor?.ratios.labour
+    ? `${(totalLaborShare * 100).toFixed(0)}% of revenue. Primary-source labour benchmark for the ${auAnchor.band_index === 0 ? "small" : auAnchor.band_index === 1 ? "medium" : "large"} band in this activity, FY ${auAnchor.source_year}.`
+    : `Roughly ${impliedEmpCount} full-time-equivalent employees at $${Math.round(wagePerFte).toLocaleString()} median wage. Implied from the typical labor share for this category, scaled by ${cep.name}'s wage level.`;
 
   const socialProv = `Employer-side social contributions add ${((cep.fully_loaded_labor_multiplier - 1) * 100).toFixed(1)}% on top of gross wage in ${cep.name}.`;
 
-  const rentProv = cityTier === 1
+  const rentProv = auAnchor?.ratios.rent
+    ? `${(rentShare * 100).toFixed(0)}% of revenue. Primary-source rent benchmark for the ${auAnchor.band_index === 0 ? "small" : auAnchor.band_index === 1 ? "medium" : "large"} band in this activity, FY ${auAnchor.source_year}.`
+    : cityTier === 1
     ? `Tier-1 commercial rent in ${cep.name} averages $${Math.round(cep.commercial_rent_t1_usd_per_sqm_year)}/sqm/year. This industry's ${icp.rent_location_dependency > 0.6 ? "high" : icp.rent_location_dependency > 0.3 ? "moderate" : "low"} location-dependency drives the share.`
     : cityTier === 2
     ? `Tier-2 city commercial rent in ${cep.name} averages $${Math.round(cep.commercial_rent_t2_usd_per_sqm_year)}/sqm/year.`
