@@ -20,11 +20,14 @@
 
 import auBenchmarksJson from "../../../data/finance/au_primary_benchmarks_v1.json";
 import { AU_TO_MA_INDUSTRY_MAP } from "./au_industry_map";
+import { getRatePerUsd } from "@/lib/finance/fx";
 
-// AUD → USD conversion rate. Locked at parse time so the override is
-// deterministic. Update via a single edit here when the rate moves
-// materially. Sourced from RBA mid-rate Q4 2024.
-const AUD_PER_USD = 1.5384;
+// AUD per USD: read from the central FX registry
+// (src/lib/finance/fx.ts) so the rate has one home, source metadata,
+// and a quarterly review cadence. Falls back to 1.5384 if the FX
+// module ever fails to register AUD (defensive; should never trigger
+// in production).
+const AUD_PER_USD = getRatePerUsd("AUD") ?? 1.5384;
 
 type RatioRange = { low: number; high: number };
 type BandRatio = { ranges: [RatioRange, RatioRange, RatioRange]; averages?: [number, number, number] };
@@ -55,23 +58,12 @@ const MA_TO_AU_SLUG: Record<string, string> = (() => {
   return out;
 })();
 
-/**
- * Feature flag check. Lets us flip off the override instantly.
- *
- * Polarity is "default on" since Phase 1d activation (2026-05-27):
- *   - Unset / "1" / "true" / "on" → enabled (default behaviour).
- *   - "0" / "false" / "off" → disabled (kill switch).
- *
- * The data is verified and the override is the whole point of the
- * Australia flagship, so the default-on polarity makes the override
- * the production-default behaviour. Founder retains instant kill via
- * env var.
- */
-export function isAuPrimaryDataEnabled(): boolean {
-  const v = (process.env.NEXT_PUBLIC_AU_PRIMARY_DATA ?? "").toLowerCase();
-  if (v === "0" || v === "false" || v === "off") return false;
-  return true;
-}
+// Feature-flag accessor lives in the central registry as of
+// 2026-05-27 architecture refactor. Re-exported here so existing
+// `import { isAuPrimaryDataEnabled } from '@/lib/economic_profile/au_primary_loader'`
+// callers keep working.
+export { isAuPrimaryDataEnabled } from "@/lib/feature_flags";
+import { isAuPrimaryDataEnabled as isAuPrimaryDataEnabledImpl } from "@/lib/feature_flags";
 
 /**
  * Classify a USD revenue into an AU turnover band index for a given
@@ -131,7 +123,7 @@ export function getAuPrimaryAnchor(
   maIndustryId: string,
   revenueUsd: number,
 ): AuPrimaryAnchor | null {
-  if (!isAuPrimaryDataEnabled()) return null;
+  if (!isAuPrimaryDataEnabledImpl()) return null;
   const auSlug = MA_TO_AU_SLUG[maIndustryId];
   if (!auSlug) return null;
   const entry = PARSED.industries[auSlug];

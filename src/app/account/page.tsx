@@ -66,9 +66,12 @@ type TabId = "saved" | "watch" | "recent" | "alerts" | "billing" | "settings";
  * kept behind the NEXT_PUBLIC_ACCOUNT_PREVIEW flag so production
  * doesn't leak placeholder personas. Default behaviour: render a
  * "coming soon" placeholder.
+ *
+ * 2026-05-27 — feature-flag check centralised in
+ * src/lib/feature_flags.ts (architecture audit refactor).
  */
-const SHOW_DESIGN_PREVIEW =
-  process.env.NEXT_PUBLIC_ACCOUNT_PREVIEW === "1";
+import { isAccountPreviewEnabled } from "@/lib/feature_flags";
+const SHOW_DESIGN_PREVIEW = isAccountPreviewEnabled();
 
 export default function AccountPage() {
   const [tab, setTab] = useState<TabId>("saved");
