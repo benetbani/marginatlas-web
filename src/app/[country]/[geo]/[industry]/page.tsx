@@ -96,6 +96,7 @@ import { AnnualCostStack } from "@/components/sections/AnnualCostStack";
 // without failure-modes coverage, without setup_costs).
 import { TangibleUnits } from "@/components/sections/TangibleUnits";
 import { KeyBenchmarkBanner } from "@/components/sections/KeyBenchmarkBanner";
+import { AuPrimaryDataBadge } from "@/components/AuPrimaryDataBadge";
 import { FailureModes } from "@/components/sections/FailureModes";
 // v34 Phase G reverted: InlineMidArticle temporarily removed.
 // import { InlineMidArticle } from "@/components/newsletter/NewsletterSignupVariants";
@@ -740,6 +741,16 @@ export default async function CellPage({
          the top of the body so the reader sees the headline ratio
          before the distribution chart. */}
       <KeyBenchmarkBanner cell={cell} />
+
+      {/* AU Phase 1c — primary data badge. Shown only when:
+         - country is AU
+         - industry maps to a parsed ATO entry
+         - revenue classifies into a turnover band
+         - NEXT_PUBLIC_AU_PRIMARY_DATA=1
+         Silently absent otherwise. */}
+      <div className="my-2">
+        <AuPrimaryDataBadge cell={cell} />
+      </div>
 
       {/* Plan v32 Sprint G Tier-1 — tangible units. Translates revenue
          into daily transactions + average ticket + texture note. */}
