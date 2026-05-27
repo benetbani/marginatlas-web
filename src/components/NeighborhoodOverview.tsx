@@ -1,36 +1,26 @@
 /**
- * Neighborhood OVERVIEW page.
+ * NeighborhoodOverview component.
  *
- * Route: /[country]/[city]/[neighborhood]
+ * Renders the neighborhood landing UI (character chip, editorial
+ * paragraph, 10-industry mosaic, sister neighborhoods). Used by the
+ * combined cell-or-overview dispatcher at
+ * src/app/[country]/[geo]/[industry]/page.tsx — when the URL
+ * `/[country]/[geo]/[industry]` happens to resolve as a known
+ * (city, neighborhood) pair instead of a (geo, industry) cell, this
+ * component renders instead of the cell page.
  *
- * Previously this URL 404'd, which meant the neighborhood hub at
- * /cities/{slug}/neighborhoods auto-deep-linked every neighborhood
- * straight into a single industry page (restaurants by default).
- * Founder critique: "I'm clicking at the actual neighborhood. That's
- * a massive error. Neighborhoods should not be treated like
- * micro-cities... another type of framework for them."
- *
- * This page is the correct landing for a neighborhood click. It shows:
- *   - Character chip (CBD / affluent / mid / etc.)
- *   - One-paragraph editorial blurb (when flavor data exists)
- *   - A 10-industry mosaic specific to this neighborhood
- *   - Sister neighborhoods within the same city
- *
- * Server-rendered, ISR 12h.
+ * Server component. Reads neighborhoods_v1.json + city_list_v1.json
+ * via the existing cities helpers.
  */
-import { notFound } from "next/navigation";
 import Link from "next/link";
-import type { Metadata } from "next";
-import cityListJson from "../../../../../data/cities/city_list_v1.json";
-import neighborhoodsJson from "../../../../../data/cities/neighborhoods_v1.json";
+import cityListJson from "../../data/cities/city_list_v1.json";
+import neighborhoodsJson from "../../data/cities/neighborhoods_v1.json";
 import { getNeighborhoodFlavor } from "@/lib/cities/neighborhood_flavor";
 import { COUNTRIES } from "@/lib/taxonomy";
 import { CountryFlag } from "@/components/CountryFlag";
 
-export const revalidate = 43200;
-
 type City = { slug: string; name: string; iso2: string; pop_m: number };
-type Neighborhood = {
+export type Neighborhood = {
   slug: string;
   name: string;
   character: string;
@@ -41,64 +31,66 @@ type Scheme = { scheme: string; neighborhoods: Neighborhood[] };
 const CITIES = (cityListJson as { cities: City[] }).cities;
 const NEIGHBORHOODS = (neighborhoodsJson as { cities: Record<string, Scheme> }).cities;
 
-// Same headline-industries set the city metropolis page uses.
 const HEADLINE_INDUSTRIES = [
-  { slug: "restaurants",              name: "Restaurants" },
-  { slug: "coffee-shops",             name: "Coffee shops" },
-  { slug: "law-offices",              name: "Law offices" },
-  { slug: "hair-salons",              name: "Hair salons" },
+  { slug: "restaurants", name: "Restaurants" },
+  { slug: "coffee-shops", name: "Coffee shops" },
+  { slug: "law-offices", name: "Law offices" },
+  { slug: "hair-salons", name: "Hair salons" },
   { slug: "construction-residential", name: "Construction" },
-  { slug: "software-dev-services",    name: "Software services" },
-  { slug: "fitness-centers",          name: "Fitness centers" },
-  { slug: "specialty-retail",         name: "Specialty retail" },
-  { slug: "auto-repair",              name: "Auto repair" },
-  { slug: "real-estate-brokerage",    name: "Real estate" },
+  { slug: "software-dev-services", name: "Software services" },
+  { slug: "fitness-centers", name: "Fitness centers" },
+  { slug: "specialty-retail", name: "Specialty retail" },
+  { slug: "auto-repair", name: "Auto repair" },
+  { slug: "real-estate-brokerage", name: "Real estate" },
 ];
 
-type Params = { country: string; city: string; neighborhood: string };
-
-function findContext(p: Params): { city: City; nb: Neighborhood } | null {
+/**
+ * Returns the (city, neighborhood) entry if `(country, citySlug,
+ * neighborhoodSlug)` matches a known scheme. Returns null otherwise.
+ * Used by the cell-page dispatcher to decide whether to render the
+ * neighborhood overview or fall through to the cell page.
+ */
+export function findNeighborhoodContext(
+  country: string,
+  citySlug: string,
+  neighborhoodSlug: string,
+): { city: City; nb: Neighborhood } | null {
   const cityEntry = CITIES.find(
-    (c) => c.slug === p.city && c.iso2.toLowerCase() === p.country.toLowerCase()
+    (c) => c.slug === citySlug && c.iso2.toLowerCase() === country.toLowerCase(),
   );
   if (!cityEntry) return null;
-  const scheme = NEIGHBORHOODS[p.city];
+  const scheme = NEIGHBORHOODS[citySlug];
   if (!scheme) return null;
-  const nb = scheme.neighborhoods.find((n) => n.slug === p.neighborhood);
+  const nb = scheme.neighborhoods.find((n) => n.slug === neighborhoodSlug);
   if (!nb) return null;
   return { city: cityEntry, nb };
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<Params>;
-}): Promise<Metadata> {
-  const p = await params;
-  const ctx = findContext(p);
-  if (!ctx) return { title: "Neighborhood not found | Margin Atlas" };
-  return {
-    title: `${ctx.nb.name}, ${ctx.city.name} | Margin Atlas`,
-    description: `Small-business benchmarks for ${ctx.nb.name}, ${ctx.city.name}. Revenue and category mix at neighborhood resolution.`,
-  };
+export function listSiblingNeighborhoods(
+  citySlug: string,
+  excludeSlug: string,
+): Neighborhood[] {
+  return (NEIGHBORHOODS[citySlug]?.neighborhoods || []).filter(
+    (n) => n.slug !== excludeSlug,
+  );
 }
 
-export default async function NeighborhoodOverviewPage({
-  params,
+export function NeighborhoodOverview({
+  country,
+  city,
+  nb,
 }: {
-  params: Promise<Params>;
+  country: string;
+  city: City;
+  nb: Neighborhood;
 }) {
-  const p = await params;
-  const ctx = findContext(p);
-  if (!ctx) notFound();
-  const { city, nb } = ctx;
-  const country = p.country.toLowerCase();
   const countryName = COUNTRIES.find((c) => c.code === city.iso2)?.name || city.iso2;
-  const flavor = getNeighborhoodFlavor(p.city, p.neighborhood);
+  const flavor = getNeighborhoodFlavor(city.slug, nb.slug);
+  const siblings = listSiblingNeighborhoods(city.slug, nb.slug);
+  const cc = country.toLowerCase();
 
   return (
     <article className="pb-16 max-w-5xl mx-auto px-4 md:px-6 pt-2 md:pt-4">
-      {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-xs uppercase tracking-wide text-cocoa-700 font-semibold mb-3 flex-wrap">
         <Link href={`/cities/${city.slug}`} className="hover:text-atlas-700 transition-colors">
           {city.name}
@@ -112,7 +104,6 @@ export default async function NeighborhoodOverviewPage({
         </Link>
       </div>
 
-      {/* Headline */}
       <div className="flex items-baseline gap-3 mb-2 flex-wrap">
         <h1 className="font-display text-3xl md:text-4xl font-medium tracking-tight text-ink-900">
           {nb.name}
@@ -127,12 +118,12 @@ export default async function NeighborhoodOverviewPage({
         )}
       </div>
 
-      {/* One-paragraph character */}
       <p className="text-base md:text-lg text-cocoa-700 max-w-2xl leading-relaxed mb-8">
-        {flavor?.character_paragraph || nb.description || `${nb.name} is one of ${city.name}'s ${nb.character.replace(/-/g, " ")} sub-areas.`}
+        {flavor?.character_paragraph ||
+          nb.description ||
+          `${nb.name} is one of ${city.name}'s ${nb.character.replace(/-/g, " ")} sub-areas.`}
       </p>
 
-      {/* Industry mosaic */}
       <section className="mb-12">
         <div className="text-xs uppercase tracking-wide text-atlas-700 font-semibold mb-2">
           Ten industries in {nb.name}
@@ -144,7 +135,7 @@ export default async function NeighborhoodOverviewPage({
           {HEADLINE_INDUSTRIES.map((ind) => (
             <Link
               key={ind.slug}
-              href={`/${country}/${city.slug}/${p.neighborhood}/${ind.slug}`}
+              href={`/${cc}/${city.slug}/${nb.slug}/${ind.slug}`}
               className="group block rounded-xl border border-cream-300 hover:border-atlas-500 bg-white p-3 transition-colors"
             >
               <div className="font-medium text-sm text-ink-900 group-hover:text-atlas-700 transition-colors leading-tight">
@@ -158,21 +149,19 @@ export default async function NeighborhoodOverviewPage({
         </div>
       </section>
 
-      {/* Sister neighborhoods */}
-      <section>
-        <div className="text-xs uppercase tracking-wide text-atlas-700 font-semibold mb-2">
-          Elsewhere in {city.name}
-        </div>
-        <h2 className="font-display text-xl md:text-2xl font-medium tracking-tight text-ink-900 mb-4">
-          Other neighborhoods
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 md:gap-3">
-          {(NEIGHBORHOODS[p.city]?.neighborhoods || [])
-            .filter((n) => n.slug !== p.neighborhood)
-            .map((n) => (
+      {siblings.length > 0 && (
+        <section>
+          <div className="text-xs uppercase tracking-wide text-atlas-700 font-semibold mb-2">
+            Elsewhere in {city.name}
+          </div>
+          <h2 className="font-display text-xl md:text-2xl font-medium tracking-tight text-ink-900 mb-4">
+            Other neighborhoods
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 md:gap-3">
+            {siblings.map((n) => (
               <Link
                 key={n.slug}
-                href={`/${country}/${city.slug}/${n.slug}`}
+                href={`/${cc}/${city.slug}/${n.slug}`}
                 className="group block rounded-xl border border-cream-300 hover:border-atlas-500 bg-cream-50 p-3 transition-colors"
               >
                 <div className="font-medium text-sm text-ink-900 group-hover:text-atlas-700 transition-colors leading-tight">
@@ -183,8 +172,9 @@ export default async function NeighborhoodOverviewPage({
                 </div>
               </Link>
             ))}
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
     </article>
   );
 }

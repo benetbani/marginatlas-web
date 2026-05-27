@@ -1,22 +1,26 @@
 /**
  * Neighborhood cell page.
  *
- * URL: /[country]/[city]/[neighborhood]/[industry]
+ * URL: /[country]/[geo]/[industry]/[sub]
  *
- * Resolves the city-level cell via the existing getCellBySlug chain,
- * then applies the (industry, neighborhood-character) multiplier to
- * synthesize neighborhood-level numbers. Renders the same canonical
- * sections as the 3-segment cell page: hero, revenue tiles, profit
- * waterfall, distribution, across-cities strip.
+ * Where `geo` is the city slug, `industry` is the neighborhood slug,
+ * and `sub` is the actual industry slug. The unusual param naming is
+ * a forced consequence of Next.js App Router refusing to have two
+ * different param names at the same depth across sibling routes
+ * (the depth-2 conflict was [city] vs [geo]; the depth-3 conflict
+ * was [neighborhood] vs [industry]; this file consolidates the
+ * neighborhood-cell route under the same param-name lineage as the
+ * 3-segment cell page).
  *
- * Tier 1+2 cities only — neighborhoods_v1.json lists which cities
- * have a scheme. Unknown city/neighborhood pairs 404.
+ * Resolves the city-level cell via getCellBySlug, then applies the
+ * (industry, neighborhood-character) multiplier to synthesize
+ * neighborhood-level numbers. Tier 1+2 cities only — unknown city /
+ * neighborhood pairs 404.
  */
 import { notFound } from "next/navigation";
-import { getCellBySlug, slugify } from "@/lib/cells";
+import { getCellBySlug } from "@/lib/cells";
 import { iso2ToName } from "@/lib/countries";
 import {
-  INDUSTRIES,
   industryToSlug,
   slugToIndustry,
   resolveToMeasuredIndustry,
@@ -32,34 +36,34 @@ import {
   tagLabel,
 } from "@/lib/economics/neighborhood_multipliers";
 import { HeroBenchmark } from "@/components/HeroBenchmark";
-// MarginWaterfall import removed
 import { DistributionVisual } from "@/components/DistributionVisual";
 import { NetProfitSummary } from "@/components/NetProfitSummary";
 import { SmartWaterfall } from "@/components/SmartWaterfall";
 import { CoverageIndicator } from "@/components/CoverageIndicator";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { CountryFlag } from "@/components/CountryFlag";
-import { fmtMoney } from "@/lib/format/money";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { sectorIcon } from "@/lib/taxonomy/sector_icons";
 
 export const revalidate = 21600;
 export const dynamicParams = true;
-// Vercel Hobby defaults serverless function timeout
-// to 10s, but cold-start cells_master queries on US can take 13-15s
-// before warm-up. Raise to 60s (Hobby ceiling) so cold starts don't
-// drop the request. After the index migration this returns to <2s.
+// Vercel Hobby defaults serverless function timeout to 10s, but cold
+// cells_master queries can take 13-15s before warm-up. Raise to 60s.
 export const maxDuration = 60;
 
+/**
+ * URL params: `geo` is the city slug, `industry` is the neighborhood
+ * slug, `sub` is the actual industry slug. See file header for why.
+ */
 type Params = {
   country: string;
-  city: string;
-  neighborhood: string;
+  geo: string;
   industry: string;
+  sub: string;
 };
 
 export async function generateMetadata({ params }: { params: Promise<Params> }) {
-  const { country, city, neighborhood, industry } = await params;
+  const { country, geo: city, industry: neighborhood, sub: industry } = await params;
   const ind = slugToIndustry(industry);
   if (!ind) return { title: "Page not found" };
   const cityName = city
@@ -86,7 +90,7 @@ export default async function NeighborhoodCellPage({
 }: {
   params: Promise<Params>;
 }) {
-  const { country, city, neighborhood, industry } = await params;
+  const { country, geo: city, industry: neighborhood, sub: industry } = await params;
 
   // Resolve the neighborhood. Unknown city/neighborhood → 404.
   const nb = getNeighborhood(city, neighborhood);
@@ -97,15 +101,15 @@ export default async function NeighborhoodCellPage({
   if (!rawInd) notFound();
   const ind = resolveToMeasuredIndustry(rawInd) || rawInd;
 
-  // Get the city-level cell (always returns something thanks to Plan v25 B.3).
+  // Get the city-level cell (always returns something via the
+  // synthesis fallback in getCellBySlug).
   const cityCell = await getCellBySlug(country, city, industry);
 
   // Apply the neighborhood character multiplier.
   const cell = applyNeighborhoodMultiplier(cityCell, ind.id, nb.character);
 
   // Always-synthetic: even if the city cell was real, the neighborhood
-  // multiplier introduces estimation, so this page is always flagged
-  // as derived.
+  // multiplier introduces estimation, so this page is always flagged.
   cell.is_synthetic = true;
   cell.coverage_tier = "X";
   cell.coverage_source = `Estimated from ${cityCell.geo_name || city} city averages, adjusted for neighborhood character`;
@@ -148,14 +152,9 @@ export default async function NeighborhoodCellPage({
       })
     : null;
 
-  // Sister neighborhoods in the same city — for the strip below the
-  // main content.
   const allNeighborhoods = getNeighborhoodsForCity(city) || [];
   const siblings = allNeighborhoods.filter((n) => n.slug !== nb.slug).slice(0, 4);
 
-  // Phase 4 (2026-05-25): commuter + tourism + anomaly-tag multiplier
-  // breakdown for this neighborhood-activity pair. Only renders when
-  // the neighborhood has curated intensity data; silent otherwise.
   const fwHasData = hasNeighborhoodIntensity(city, neighborhood);
   const fwMult = fwHasData
     ? getNeighborhoodMultiplier(city, neighborhood, ind.id)
@@ -166,10 +165,6 @@ export default async function NeighborhoodCellPage({
       <div className="xl:flex-1 xl:min-w-0">
         <Breadcrumb items={breadcrumbs} />
 
-        {/* Phase 4 neighborhood framework panel. Surfaces when curated
-           intensity data exists for this neighborhood (NYC, London,
-           Paris, Tokyo, Berlin, HK, Singapore, Mumbai, São Paulo,
-           Dubai for now). Silent otherwise. */}
         {fwMult && (
           <section className="atlas-card p-4 md:p-5 mb-6 flex flex-col md:flex-row md:items-center justify-between gap-3">
             <div className="flex-1 min-w-0">
@@ -216,7 +211,6 @@ export default async function NeighborhoodCellPage({
           </section>
         )}
 
-        {/* Hero */}
         <HeroBenchmark
           iso2={country.toUpperCase()}
           countryName={iso2ToName(country) || country.toUpperCase()}
@@ -232,7 +226,6 @@ export default async function NeighborhoodCellPage({
           currencySymbol="$"
         />
 
-        {/* Neighborhood character chip */}
         <section className="bg-cream-100 border-l-4 border-l-atlas-700 py-5 md:py-6">
           <div className="text-xs md:text-sm font-bold uppercase tracking-[0.14em] text-atlas-700 mb-2">
             Neighborhood character
@@ -257,7 +250,6 @@ export default async function NeighborhoodCellPage({
           geoName={`${nb.name}, ${cityName}`}
         />
 
-        {/* Profit estimate */}
         <NetProfitSummary
           iso2={country.toUpperCase()}
           geoId={cell.geo_id}
@@ -272,9 +264,6 @@ export default async function NeighborhoodCellPage({
           takeHome={profit?.net_profit ?? null}
         />
 
-        {/* Plan v30 quick-win — SmartWaterfall now on neighborhood pages
-            too. Same 13-line decomposition + provenance tooltips +
-            "what changes here" sidebar as the city-level cell page. */}
         {cell.revenue_per_firm && cell.revenue_per_firm > 0 ? (
           <SmartWaterfall
             iso2={country.toUpperCase()}
@@ -285,14 +274,12 @@ export default async function NeighborhoodCellPage({
           />
         ) : null}
 
-        {/* Distribution */}
         <DistributionVisual
           p10={cell.rev_p10 ?? null}
           p50={cell.rev_p50 ?? null}
           p90={cell.rev_p90 ?? null}
         />
 
-        {/* Sister neighborhoods strip */}
         {siblings.length > 0 && (
           <section className="py-8">
             <h2 className="text-xl md:text-2xl font-semibold text-ink-900 mb-4">
@@ -317,7 +304,6 @@ export default async function NeighborhoodCellPage({
           </section>
         )}
 
-        {/* Back to city + country */}
         <section className="py-6 border-t border-parchment text-sm text-ink-700/70">
           <div className="flex items-center gap-3 flex-wrap">
             <CountryFlag iso2={country.toUpperCase()} className="w-4" />

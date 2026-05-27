@@ -101,6 +101,10 @@ import { FailureModes } from "@/components/sections/FailureModes";
 // Reverted: InlineMidArticle temporarily removed.
 // import { InlineMidArticle } from "@/components/newsletter/NewsletterSignupVariants";
 import { IfYouOpenedToday } from "@/components/sections/IfYouOpenedToday";
+import {
+  NeighborhoodOverview,
+  findNeighborhoodContext,
+} from "@/components/NeighborhoodOverview";
 
 type IndustryMarginRow = { gross_margin: number; operating_margin: number; asset_intensity?: number };
 const INDUSTRY_MARGINS = industryMarginsJson as unknown as {
@@ -232,7 +236,24 @@ export default async function CellPage({
   params: Promise<Params>;
 }) {
   const { country, geo, industry } = await params;
-  // Plan v19 Block A / S-100 — server renders the default cell (no
+
+  // Neighborhood-overview dispatch.
+  //
+  // The URL /[country]/[geo]/[industry] is also the home of the
+  // neighborhood-landing page (e.g. /us/los-angeles/santa-monica).
+  // Next.js App Router refuses to have two different param names at
+  // the same depth, so a single route file handles both shapes and
+  // dispatches based on a fast in-memory lookup.
+  //
+  // If (country, geo, industry) matches a known (country, city,
+  // neighborhood) triple in neighborhoods_v1.json, render the
+  // overview UI and skip the cell-page DB chain entirely. Otherwise
+  // fall through to the normal cell lookup below.
+  const nbCtx = findNeighborhoodContext(country, geo, industry);
+  if (nbCtx) {
+    return <NeighborhoodOverview country={country} city={nbCtx.city} nb={nbCtx.nb} />;
+  }
+  // Server renders the default cell (no
   // size/year filter). The DimensionSwitcher (client component) reads
   // searchParams via useSearchParams and triggers a client-side data
   // refresh through /api/cell-lookup when the user picks a different
