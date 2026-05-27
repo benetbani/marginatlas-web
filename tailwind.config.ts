@@ -57,15 +57,14 @@ const config: Config = {
         ...tailwindColors,
       },
       keyframes: {
-        // Plan v30 Phase 3 — calm pulse for LoadingSkeleton. Slower
-        // than tailwind's default animate-pulse; smaller opacity range
-        // so the page doesn't feel jittery during loads.
+        // Calm pulse for LoadingSkeleton. Slower than Tailwind's default
+        // animate-pulse; smaller opacity range so the page does not feel
+        // jittery during loads.
         atlasPulse: {
           "0%,100%": { opacity: "0.55" },
           "50%": { opacity: "0.85" },
         },
-        // Section 1 visual upgrade: shadcn Accordion expand/collapse.
-        // Standard shadcn keyframes; consumed by the Accordion primitive.
+        // shadcn Accordion expand/collapse keyframes.
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -74,11 +73,25 @@ const config: Config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        // Design-system Phase 4 motion vocabulary. Subtle entrance
+        // animations consumed by ui/motion/* primitives. Easing
+        // matches design-tokens.easing.out so duration/easing read
+        // consistently across the site.
+        "ds-fade-in": {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
+        "ds-slide-up": {
+          from: { opacity: "0", transform: "translateY(8px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
       },
       animation: {
         atlasPulse: "atlasPulse 1800ms ease-in-out infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "ds-fade-in": "ds-fade-in 300ms cubic-bezier(0.16, 1, 0.3, 1) both",
+        "ds-slide-up": "ds-slide-up 300ms cubic-bezier(0.16, 1, 0.3, 1) both",
       },
       fontFamily: {
         // Imported from src/lib/design-tokens.ts. sans = Inter via
