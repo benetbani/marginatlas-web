@@ -70,7 +70,11 @@ const GATES: Gate[] = [
 /** CLI arg parsing. */
 const argv = process.argv.slice(2);
 const concurrencyArg = argv.find((a) => a.startsWith("--concurrency="));
-const CONCURRENCY = concurrencyArg ? Math.max(1, parseInt(concurrencyArg.split("=")[1], 10)) : 6;
+// Default concurrency 4 (was 6). 6 hit Windows resource limits with
+// some gates intermittently segfaulting (exit 134 / Windows 0xC0000005)
+// when the system was already loaded. 4 keeps wall-clock close to
+// optimal (~30s for 25 gates) without that failure mode.
+const CONCURRENCY = concurrencyArg ? Math.max(1, parseInt(concurrencyArg.split("=")[1], 10)) : 4;
 const BAIL = !argv.includes("--no-bail");
 const QUIET = argv.includes("--quiet");
 
