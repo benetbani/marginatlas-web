@@ -103,6 +103,39 @@ Build status: presumed passing (last verified 2026-05-27 in handoff); not re-run
   - Phase 0 scripts committed to parent repo E:/atlas (commit 8d31f44): scripts/verify_supabase_counts.py, scripts/inspect_parquet.py
 - Key finding: site has rich data-access code but 2 of 3 data tables are empty; "reaching the data" = loading extrapolated_cells (immediate unlock, ~3 min) + building regional_cells ETL (larger)
 
+## ✅ FOUNDATION SHIPPED (sub-project ① keystone) — 2026-05-29
+Reachability fix committed + proven. Recovered 258,388 rows of real data that the
+site was silently dropping.
+- New module: src/lib/cells/industry_resolution.ts (industryQueryCandidates, resolveDisplayIndustry, LEGACY_DB_TO_TAXONOMY)
+- Patched in cells.ts: getRegionalCell, getExtrapolatedCell (exact-first .in(candidates) + priority rank)
+- Unit test: tests/cells/industry_resolution.test.ts (PASS)
+- Audits: regional 39.2%→0.0%, extrapolated 46.4%→0.0% unreachable; probe 5 bugs→0; tsc 0 errors
+- Spec: docs/superpowers/specs/2026-05-29-atlas-reformation-design.md (North-Star + 6 sub-projects)
+- Commit: "fix(data): exact-first industry resolution recovers 258k unreachable rows"
+
+## ▶ EXACT NEXT STEPS (resume here — same proven pattern)
+1. Extend exact-first to the VARIANT/sibling query fns in cells.ts so charts/rails/rankings
+   reach data too (cell page coherence). Apply the SAME pattern as getRegionalCell:
+   replace `slugToIndustry`+`resolveToMeasuredIndustry`+`.eq("industry_id", ind.id)` with
+   `industryQueryCandidates(industrySlug)` + `.in("industry_id", candidates)` + candRank sort.
+   Functions to patch (verify each by reading first — reads were glitching at checkpoint):
+     - getRegionalCellVariants (~line 266)
+     - getExtrapolatedVariants (~line 790)
+     - getSectorFallbackCell (~line 913)
+     - getSameIndustryAcrossCountries (~line 715)
+     - getTopIndustriesForCountry (~line 609, non-US path)
+     - getNudgeNeighbor (~line 672)
+   After each: re-run `npx tsx scripts/audit/probe_live_data.ts` (expect synthetic=0, more regional).
+2. ①.2 Honesty: formalize 3 section states (real / labeled-estimate / honest-not-yet+links). Never a blank void.
+3. ①.3 Canonical skeleton: extend src/lib/page-layout/section-order.ts to country/region/city/neighborhood/cell;
+   add prebuild gate scripts/verify_section_order.ts (26th gate) enforcing per-level order + membership.
+4. Then sub-projects ②editorial ③signature-viz ④color+imagery ⑤gamification ⑥enrichment-hardening (each own spec).
+
+## CHECKPOINT NOTE (2026-05-29)
+Environment degraded mid-session: tool output noise (duplicated/injected lines), one garbled file read,
+then empty reads of cells.ts variant fns. Stopped spine edits per the no-marathon discipline rule.
+Verify reads are clean before resuming spine edits. Build NOT run this session (only tsc + read-only audits, all green).
+
 ## !! PREMISE CORRECTED — data is ALREADY loaded and reachable !!
 Live Supabase Pro query (2026-05-29) contradicts the stale handoff:
   - cells_master      = 722,432 (US)
