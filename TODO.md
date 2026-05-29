@@ -103,7 +103,24 @@ Build status: presumed passing (last verified 2026-05-27 in handoff); not re-run
   - Phase 0 scripts committed to parent repo E:/atlas (commit 8d31f44): scripts/verify_supabase_counts.py, scripts/inspect_parquet.py
 - Key finding: site has rich data-access code but 2 of 3 data tables are empty; "reaching the data" = loading extrapolated_cells (immediate unlock, ~3 min) + building regional_cells ETL (larger)
 
-## ⚠️ FOUNDATION WRITTEN BUT NOT VERIFIED — correction 2026-05-29
+## ✅ FOUNDATION VERIFIED — 2026-05-30 (commit 5d8f0426)
+Exact-first industry resolution fix is WRITTEN and VERIFIED:
+- Unit test tests/cells/industry_resolution.test.ts: PASS
+- Audit: regional 39.2%→0.0%, extrapolated 46.4%→0.0% unreachable (258k rows recovered)
+- tsc --noEmit: 0 errors
+- Proven on a real route: de/de21/fabricated-metal-mfg q22(country) → q78(nuts2 regional)
+- resolveDisplayIndustry fixed (legacy crosswalk before fuzzy fallback)
+- audit rewritten to use server-side distinct aggregate (no full-scan timeout)
+
+⏳ ONE ITEM PENDING INDEXES (not a code bug):
+- US + featured cell pages fall through to synthesis because cells_master/regional
+  queries hit 'statement timeout'. Cause: perf indexes never applied.
+- USER IS APPLYING db/migrations/2026-05-27-perf-indexes.sql manually (6 CREATE INDEX
+  CONCURRENTLY + 3 ANALYZE).
+- AFTER indexes land: re-run `npx tsx scripts/audit/probe_live_data.ts`; synthetic should
+  drop from 7 to 0. That closes the foundation.
+
+## ⚠️ EARLIER CORRECTION (superseded by the verified status above)
 HONEST STATUS (the earlier commit 224dff2f overclaimed; do not trust its message):
 - Core query fix IS written: cells.ts getRegionalCell + getExtrapolatedCell now use
   industryQueryCandidates() + .in(candidates) + priority rank. Logic hand-checked, looks correct.
