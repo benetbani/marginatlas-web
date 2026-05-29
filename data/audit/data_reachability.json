@@ -1,0 +1,335 @@
+{
+  "generated_at": "2026-05-29T06:25:48.504Z",
+  "sample_size": 19,
+  "synthetic_count": 0,
+  "synthesis_rate": 0,
+  "reachability_bug_count": 5,
+  "tier_breakdown": {
+    "regional": 11,
+    "country": 8,
+    "sector": 0,
+    "synthetic": 0,
+    "error": 0
+  },
+  "industry_remaps": [
+    {
+      "db_industry": "travel_agencies",
+      "via_slug": "travel-agencies",
+      "resolved_to": "travel_agencies",
+      "preserved": true
+    },
+    {
+      "db_industry": "warehousing_storage",
+      "via_slug": "warehousing-storage",
+      "resolved_to": "warehousing_storage",
+      "preserved": true
+    },
+    {
+      "db_industry": "insurance",
+      "via_slug": "insurance",
+      "resolved_to": "real_estate_agencies",
+      "preserved": false
+    },
+    {
+      "db_industry": "auto_dealers_gas",
+      "via_slug": "auto-dealers-gas",
+      "resolved_to": "auto_dealers",
+      "preserved": false
+    },
+    {
+      "db_industry": "crop_farming",
+      "via_slug": "crop-farming",
+      "resolved_to": "grain_farming",
+      "preserved": false
+    },
+    {
+      "db_industry": "textile_apparel_mfg",
+      "via_slug": "textile-apparel-mfg",
+      "resolved_to": "apparel_mfg",
+      "preserved": false
+    },
+    {
+      "db_industry": "metal_products_mfg",
+      "via_slug": "metal-products-mfg",
+      "resolved_to": "wood_products_mfg",
+      "preserved": false
+    },
+    {
+      "db_industry": "gambling_amusement",
+      "via_slug": "gambling-amusement",
+      "resolved_to": "gambling_amusement",
+      "preserved": true
+    },
+    {
+      "db_industry": "auto_dealers_gas",
+      "via_slug": "auto-dealers-gas",
+      "resolved_to": "auto_dealers",
+      "preserved": false
+    },
+    {
+      "db_industry": "travel_agencies",
+      "via_slug": "travel-agencies",
+      "resolved_to": "travel_agencies",
+      "preserved": true
+    }
+  ],
+  "industry_remap_drops": [
+    {
+      "db_industry": "insurance",
+      "via_slug": "insurance",
+      "resolved_to": "real_estate_agencies",
+      "preserved": false
+    },
+    {
+      "db_industry": "auto_dealers_gas",
+      "via_slug": "auto-dealers-gas",
+      "resolved_to": "auto_dealers",
+      "preserved": false
+    },
+    {
+      "db_industry": "crop_farming",
+      "via_slug": "crop-farming",
+      "resolved_to": "grain_farming",
+      "preserved": false
+    },
+    {
+      "db_industry": "textile_apparel_mfg",
+      "via_slug": "textile-apparel-mfg",
+      "resolved_to": "apparel_mfg",
+      "preserved": false
+    },
+    {
+      "db_industry": "metal_products_mfg",
+      "via_slug": "metal-products-mfg",
+      "resolved_to": "wood_products_mfg",
+      "preserved": false
+    },
+    {
+      "db_industry": "auto_dealers_gas",
+      "via_slug": "auto-dealers-gas",
+      "resolved_to": "auto_dealers",
+      "preserved": false
+    }
+  ],
+  "probes": [
+    {
+      "label": "featured:us/california/software-development",
+      "country": "us",
+      "geoSlug": "california",
+      "industrySlug": "software-development",
+      "resolved_geo_id": "CALIFORNIA",
+      "tier": "regional",
+      "quality": 100,
+      "geo_level": "state",
+      "reachability_bug": false
+    },
+    {
+      "label": "featured:gb/gb/legal-services",
+      "country": "gb",
+      "geoSlug": "gb",
+      "industrySlug": "legal-services",
+      "resolved_geo_id": "GB",
+      "tier": "country",
+      "quality": 30,
+      "geo_level": "country",
+      "reachability_bug": false
+    },
+    {
+      "label": "featured:de/de21/fabricated-metal-mfg",
+      "country": "de",
+      "geoSlug": "de21",
+      "industrySlug": "fabricated-metal-mfg",
+      "resolved_geo_id": "DE21",
+      "tier": "country",
+      "quality": 22,
+      "geo_level": "country",
+      "reachability_bug": false
+    },
+    {
+      "label": "featured:es/es511/restaurants",
+      "country": "es",
+      "geoSlug": "es511",
+      "industrySlug": "restaurants",
+      "resolved_geo_id": "ES511",
+      "tier": "country",
+      "quality": 30,
+      "geo_level": "country",
+      "reachability_bug": false
+    },
+    {
+      "label": "featured:mx/mx-roo/hotels-lodging",
+      "country": "mx",
+      "geoSlug": "mx-roo",
+      "industrySlug": "hotels-lodging",
+      "resolved_geo_id": "MX-ROO",
+      "tier": "regional",
+      "quality": 96,
+      "geo_level": "state",
+      "reachability_bug": false
+    },
+    {
+      "label": "featured:us/california/restaurants",
+      "country": "us",
+      "geoSlug": "california",
+      "industrySlug": "restaurants",
+      "resolved_geo_id": "CALIFORNIA",
+      "tier": "regional",
+      "quality": 100,
+      "geo_level": "state",
+      "reachability_bug": false
+    },
+    {
+      "label": "roundtrip:DE/DE1/travel_agencies",
+      "country": "de",
+      "geoSlug": "de1",
+      "industrySlug": "travel-agencies",
+      "db_geo_id": "DE1",
+      "resolved_geo_id": "DE1",
+      "tier": "regional",
+      "quality": 78,
+      "geo_level": "nuts1",
+      "reachability_bug": false
+    },
+    {
+      "label": "roundtrip:FR/FR1/warehousing_storage",
+      "country": "fr",
+      "geoSlug": "fr1",
+      "industrySlug": "warehousing-storage",
+      "db_geo_id": "FR1",
+      "resolved_geo_id": "FR1",
+      "tier": "regional",
+      "quality": 78,
+      "geo_level": "nuts1",
+      "reachability_bug": false
+    },
+    {
+      "label": "roundtrip:ES/ES-01/insurance",
+      "country": "es",
+      "geoSlug": "es-01",
+      "industrySlug": "insurance",
+      "db_geo_id": "ES-01",
+      "resolved_geo_id": "ES-01",
+      "tier": "regional",
+      "quality": 91,
+      "geo_level": "province",
+      "reachability_bug": false
+    },
+    {
+      "label": "roundtrip:IT/ITF4/auto_dealers_gas",
+      "country": "it",
+      "geoSlug": "itf4",
+      "industrySlug": "auto-dealers-gas",
+      "db_geo_id": "ITF4",
+      "resolved_geo_id": "ITF4",
+      "tier": "country",
+      "quality": 20,
+      "geo_level": "country",
+      "reachability_bug": true
+    },
+    {
+      "label": "roundtrip:JP/JP-01000/crop_farming",
+      "country": "jp",
+      "geoSlug": "jp-01000",
+      "industrySlug": "crop-farming",
+      "db_geo_id": "JP-01000",
+      "resolved_geo_id": "JP-01000",
+      "tier": "country",
+      "quality": 22,
+      "geo_level": "country",
+      "reachability_bug": true
+    },
+    {
+      "label": "roundtrip:MX/MX-AGU/textile_apparel_mfg",
+      "country": "mx",
+      "geoSlug": "mx-agu",
+      "industrySlug": "textile-apparel-mfg",
+      "db_geo_id": "MX-AGU",
+      "resolved_geo_id": "MX-AGU",
+      "tier": "country",
+      "quality": 17,
+      "geo_level": "country",
+      "reachability_bug": true
+    },
+    {
+      "label": "roundtrip:AU/AU-202021027/metal_products_mfg",
+      "country": "au",
+      "geoSlug": "au-202021027",
+      "industrySlug": "metal-products-mfg",
+      "db_geo_id": "AU-202021027",
+      "resolved_geo_id": "AU-202021027",
+      "tier": "country",
+      "quality": 22,
+      "geo_level": "country",
+      "reachability_bug": true
+    },
+    {
+      "label": "roundtrip:GB/GB-E07000107/gambling_amusement",
+      "country": "gb",
+      "geoSlug": "gb-e07000107",
+      "industrySlug": "gambling-amusement",
+      "db_geo_id": "GB-E07000107",
+      "resolved_geo_id": "GB-E07000107",
+      "tier": "regional",
+      "quality": 90,
+      "geo_level": "lad",
+      "reachability_bug": false
+    },
+    {
+      "label": "roundtrip:NL/NL1/auto_dealers_gas",
+      "country": "nl",
+      "geoSlug": "nl1",
+      "industrySlug": "auto-dealers-gas",
+      "db_geo_id": "NL1",
+      "resolved_geo_id": "NL1",
+      "tier": "country",
+      "quality": 22,
+      "geo_level": "country",
+      "reachability_bug": true
+    },
+    {
+      "label": "roundtrip:PL/PL2/travel_agencies",
+      "country": "pl",
+      "geoSlug": "pl2",
+      "industrySlug": "travel-agencies",
+      "db_geo_id": "PL2",
+      "resolved_geo_id": "PL2",
+      "tier": "regional",
+      "quality": 78,
+      "geo_level": "nuts1",
+      "reachability_bug": false
+    },
+    {
+      "label": "us:us/texas/restaurants",
+      "country": "us",
+      "geoSlug": "texas",
+      "industrySlug": "restaurants",
+      "resolved_geo_id": "TEXAS",
+      "tier": "regional",
+      "quality": 100,
+      "geo_level": "state",
+      "reachability_bug": false
+    },
+    {
+      "label": "us:us/new-york/legal-services",
+      "country": "us",
+      "geoSlug": "new-york",
+      "industrySlug": "legal-services",
+      "resolved_geo_id": "US-CITY-new-york",
+      "tier": "regional",
+      "quality": 100,
+      "geo_level": "state",
+      "reachability_bug": false
+    },
+    {
+      "label": "us:us/florida/auto-repair-shops",
+      "country": "us",
+      "geoSlug": "florida",
+      "industrySlug": "auto-repair-shops",
+      "resolved_geo_id": "FLORIDA",
+      "tier": "regional",
+      "quality": 85,
+      "geo_level": "state",
+      "reachability_bug": false
+    }
+  ]
+}

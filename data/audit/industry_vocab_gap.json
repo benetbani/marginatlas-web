@@ -1,0 +1,1274 @@
+{
+  "generated_at": "2026-05-29T06:29:19.495Z",
+  "regional_cells": {
+    "distinct_ids": 78,
+    "broken_ids": 30,
+    "total_rows": 376033,
+    "unreachable_rows": 147336,
+    "unreachable_pct": 39.2,
+    "drops": [
+      {
+        "db_industry_id": "metal_products_mfg",
+        "rows": 13694,
+        "via_slug": "metal-products-mfg",
+        "resolves_to": "wood_products_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "doctors_clinics",
+        "rows": 13123,
+        "via_slug": "doctors-clinics",
+        "resolves_to": "veterinary_pet_care",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "hairdressers_beauty",
+        "rows": 12192,
+        "via_slug": "hairdressers-beauty",
+        "resolves_to": "cleaning_services",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "food_beverage_mfg",
+        "rows": 9193,
+        "via_slug": "food-beverage-mfg",
+        "resolves_to": "food_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "wood_paper_mfg",
+        "rows": 6895,
+        "via_slug": "wood-paper-mfg",
+        "resolves_to": "wood_products_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "auto_repair_shops",
+        "rows": 6577,
+        "via_slug": "auto-repair-shops",
+        "resolves_to": "motor_vehicles_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "property_leasing",
+        "rows": 6414,
+        "via_slug": "property-leasing",
+        "resolves_to": "real_estate_leasing",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "wholesale_durables",
+        "rows": 6403,
+        "via_slug": "wholesale-durable-goods",
+        "resolves_to": "wholesale_food",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "furniture_other_mfg",
+        "rows": 6297,
+        "via_slug": "furniture-other-mfg",
+        "resolves_to": "other_transport_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "auto_dealers_gas",
+        "rows": 6132,
+        "via_slug": "auto-dealers-gas",
+        "resolves_to": "auto_dealers",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "textile_apparel_mfg",
+        "rows": 6103,
+        "via_slug": "textile-apparel-mfg",
+        "resolves_to": "apparel_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "broadcasting_telecom",
+        "rows": 5338,
+        "via_slug": "broadcasting-telecom",
+        "resolves_to": "broadcasting",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "crop_farming",
+        "rows": 4887,
+        "via_slug": "crop-farming",
+        "resolves_to": "grain_farming",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "childcare_social",
+        "rows": 4615,
+        "via_slug": "childcare-social-services",
+        "resolves_to": "veterinary_pet_care",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "sports_fitness",
+        "rows": 4615,
+        "via_slug": "sports-fitness",
+        "resolves_to": "restaurants",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "media_publishing",
+        "rows": 4205,
+        "via_slug": "media-publishing",
+        "resolves_to": "news_periodical_publishing",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "postal_courier",
+        "rows": 4175,
+        "via_slug": "postal-courier",
+        "resolves_to": "postal_service",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "insurance",
+        "rows": 3410,
+        "via_slug": "insurance",
+        "resolves_to": "real_estate_agencies",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "tutoring_centers",
+        "rows": 3227,
+        "via_slug": "tutoring-centers",
+        "resolves_to": "vocational_training",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "events_entertainment",
+        "rows": 2877,
+        "via_slug": "events-entertainment",
+        "resolves_to": null,
+        "reason": "unresolved"
+      },
+      {
+        "db_industry_id": "investment_securities",
+        "rows": 2383,
+        "via_slug": "investment-securities",
+        "resolves_to": "securities_brokerage",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "furniture_home_stores",
+        "rows": 2263,
+        "via_slug": "furniture-home-stores",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "general_merchandise",
+        "rows": 2154,
+        "via_slug": "general-merchandise-stores",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "passenger_transport",
+        "rows": 2036,
+        "via_slug": "passenger-transport",
+        "resolves_to": "trucking_freight",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "home_decor_gift",
+        "rows": 1995,
+        "via_slug": "home-decor-gift-shops",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "health_beauty_stores",
+        "rows": 1719,
+        "via_slug": "pharmacies-health-stores",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "ecommerce_mail_order",
+        "rows": 1681,
+        "via_slug": "e-commerce-mail-order",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "bookstores_indie",
+        "rows": 1175,
+        "via_slug": "indie-bookstores",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "electronics_appliance_stores",
+        "rows": 804,
+        "via_slug": "electronics-appliance-stores",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "wholesale_general",
+        "rows": 754,
+        "via_slug": "general-wholesale",
+        "resolves_to": "wholesale_food",
+        "reason": "remapped"
+      }
+    ]
+  },
+  "extrapolated_cells": {
+    "distinct_ids": 236,
+    "broken_ids": 149,
+    "total_rows": 239527,
+    "unreachable_rows": 111052,
+    "unreachable_pct": 46.4,
+    "drops": [
+      {
+        "db_industry_id": "furniture_other_mfg",
+        "rows": 2324,
+        "via_slug": "furniture-other-mfg",
+        "resolves_to": "other_transport_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "textile_apparel_mfg",
+        "rows": 2324,
+        "via_slug": "textile-apparel-mfg",
+        "resolves_to": "apparel_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "property_leasing",
+        "rows": 2323,
+        "via_slug": "property-leasing",
+        "resolves_to": "real_estate_leasing",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "broadcasting_telecom",
+        "rows": 2322,
+        "via_slug": "broadcasting-telecom",
+        "resolves_to": "broadcasting",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "food_beverage_mfg",
+        "rows": 2322,
+        "via_slug": "food-beverage-mfg",
+        "resolves_to": "food_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "media_publishing",
+        "rows": 2322,
+        "via_slug": "media-publishing",
+        "resolves_to": "news_periodical_publishing",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "postal_courier",
+        "rows": 2322,
+        "via_slug": "postal-courier",
+        "resolves_to": "postal_service",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "wood_paper_mfg",
+        "rows": 2322,
+        "via_slug": "wood-paper-mfg",
+        "resolves_to": "wood_products_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "metal_products_mfg",
+        "rows": 2319,
+        "via_slug": "metal-products-mfg",
+        "resolves_to": "wood_products_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "auto_dealers_gas",
+        "rows": 1589,
+        "via_slug": "auto-dealers-gas",
+        "resolves_to": "auto_dealers",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "auto_repair_shops",
+        "rows": 1551,
+        "via_slug": "auto-repair-shops",
+        "resolves_to": "motor_vehicles_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "insurance",
+        "rows": 1542,
+        "via_slug": "insurance",
+        "resolves_to": "real_estate_agencies",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "sports_fitness",
+        "rows": 1542,
+        "via_slug": "sports-fitness",
+        "resolves_to": "restaurants",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "doctors_clinics",
+        "rows": 1537,
+        "via_slug": "doctors-clinics",
+        "resolves_to": "veterinary_pet_care",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "childcare_social",
+        "rows": 1351,
+        "via_slug": "childcare-social-services",
+        "resolves_to": "veterinary_pet_care",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "hairdressers_beauty",
+        "rows": 1348,
+        "via_slug": "hairdressers-beauty",
+        "resolves_to": "cleaning_services",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "passenger_transport",
+        "rows": 959,
+        "via_slug": "passenger-transport",
+        "resolves_to": "trucking_freight",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "crop_farming",
+        "rows": 952,
+        "via_slug": "crop-farming",
+        "resolves_to": "grain_farming",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "investment_securities",
+        "rows": 951,
+        "via_slug": "investment-securities",
+        "resolves_to": "securities_brokerage",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "accounting_tax",
+        "rows": 591,
+        "via_slug": "accounting-tax",
+        "resolves_to": "legal_services",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "appliance_repair",
+        "rows": 591,
+        "via_slug": "appliance-repair",
+        "resolves_to": "motor_vehicles_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "art_classes",
+        "rows": 591,
+        "via_slug": "art-classes-studios",
+        "resolves_to": "vocational_training",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "art_craft_supplies",
+        "rows": 591,
+        "via_slug": "art-craft-supply-shops",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "artisan_bakery_wholesale",
+        "rows": 591,
+        "via_slug": "artisan-bakery-wholesale",
+        "resolves_to": "food_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "auto_body_shops",
+        "rows": 591,
+        "via_slug": "auto-body-shops",
+        "resolves_to": "motor_vehicles_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "bags_leather_retail",
+        "rows": 591,
+        "via_slug": "bags-leather-goods",
+        "resolves_to": "clothing_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "bakeries_retail",
+        "rows": 591,
+        "via_slug": "bakeries-retail",
+        "resolves_to": "restaurants",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "barbershops",
+        "rows": 591,
+        "via_slug": "barbershops",
+        "resolves_to": "cleaning_services",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "bars_nightclubs",
+        "rows": 591,
+        "via_slug": "bars-nightclubs",
+        "resolves_to": "restaurants",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "bike_repair",
+        "rows": 591,
+        "via_slug": "bike-repair-shops",
+        "resolves_to": "motor_vehicles_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "bnbs",
+        "rows": 591,
+        "via_slug": "bed-breakfasts",
+        "resolves_to": "hotels_lodging",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "bookstores_indie",
+        "rows": 591,
+        "via_slug": "indie-bookstores",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "boutique_clothing",
+        "rows": 591,
+        "via_slug": "clothing-boutiques",
+        "resolves_to": "clothing_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "breweries_taprooms",
+        "rows": 591,
+        "via_slug": "breweries-taprooms-retail",
+        "resolves_to": "restaurants",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "brow_lash_studios",
+        "rows": 591,
+        "via_slug": "brow-lash-studios",
+        "resolves_to": "cleaning_services",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "building_garden_stores",
+        "rows": 591,
+        "via_slug": "building-garden-supply-stores",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "cafes_coffee",
+        "rows": 591,
+        "via_slug": "cafes-coffee-shops",
+        "resolves_to": "restaurants",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "carpenters_finish",
+        "rows": 591,
+        "via_slug": "carpenters-finish-work",
+        "resolves_to": "specialty_trades",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "catering",
+        "rows": 591,
+        "via_slug": "catering-food-service-contractors",
+        "resolves_to": "food_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "childrens_clothing",
+        "rows": 591,
+        "via_slug": "children-s-maternity-clothing",
+        "resolves_to": "clothing_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "chiropractic",
+        "rows": 591,
+        "via_slug": "chiropractic-clinics",
+        "resolves_to": "veterinary_pet_care",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "coding_schools",
+        "rows": 591,
+        "via_slug": "coding-bootcamps-schools",
+        "resolves_to": "vocational_training",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "coffee_roasters",
+        "rows": 591,
+        "via_slug": "coffee-roasters",
+        "resolves_to": "food_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "commercial_construction",
+        "rows": 591,
+        "via_slug": "commercial-construction",
+        "resolves_to": "residential_construction",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "cosmetics_shops",
+        "rows": 591,
+        "via_slug": "cosmetics-beauty-shops",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "craft_beer_mfg",
+        "rows": 591,
+        "via_slug": "craft-breweries-taprooms",
+        "resolves_to": "beverage_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "custom_apparel_mfg",
+        "rows": 591,
+        "via_slug": "custom-apparel-uniforms",
+        "resolves_to": "apparel_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "custom_furniture_makers",
+        "rows": 591,
+        "via_slug": "custom-furniture-makers",
+        "resolves_to": "wood_products_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "custom_jewelers",
+        "rows": 591,
+        "via_slug": "custom-jewelers-mfg",
+        "resolves_to": "fabricated_metal_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "custom_software_contract",
+        "rows": 591,
+        "via_slug": "custom-software-contract-dev",
+        "resolves_to": "software_development",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "dance_studios",
+        "rows": 591,
+        "via_slug": "dance-studios",
+        "resolves_to": "vocational_training",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "day_spas",
+        "rows": 591,
+        "via_slug": "day-spas",
+        "resolves_to": "cleaning_services",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "daycare_preschool",
+        "rows": 591,
+        "via_slug": "daycare-preschool",
+        "resolves_to": "veterinary_pet_care",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "dental_practices",
+        "rows": 591,
+        "via_slug": "dental-practices",
+        "resolves_to": "veterinary_pet_care",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "designer_fashion",
+        "rows": 591,
+        "via_slug": "designer-fashion",
+        "resolves_to": "clothing_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "driving_schools",
+        "rows": 591,
+        "via_slug": "driving-schools",
+        "resolves_to": "vocational_training",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "dry_cleaning_laundry",
+        "rows": 591,
+        "via_slug": "dry-cleaning-laundry",
+        "resolves_to": "cleaning_services",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "ecommerce_mail_order",
+        "rows": 591,
+        "via_slug": "e-commerce-mail-order",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "electricians",
+        "rows": 591,
+        "via_slug": "electricians",
+        "resolves_to": "specialty_trades",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "electronics_appliance_stores",
+        "rows": 591,
+        "via_slug": "electronics-appliance-stores",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "electronics_repair",
+        "rows": 591,
+        "via_slug": "electronics-phone-repair",
+        "resolves_to": "motor_vehicles_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "event_production",
+        "rows": 591,
+        "via_slug": "event-production-small",
+        "resolves_to": "marketing_design",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "eyewear_optical",
+        "rows": 591,
+        "via_slug": "eyewear-optical-retail",
+        "resolves_to": "clothing_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "fast_casual",
+        "rows": 591,
+        "via_slug": "fast-casual-restaurants",
+        "resolves_to": "restaurants",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "flooring_installers",
+        "rows": 591,
+        "via_slug": "flooring-installers",
+        "resolves_to": "specialty_trades",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "florist_shops",
+        "rows": 591,
+        "via_slug": "florist-shops",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "food_trucks",
+        "rows": 591,
+        "via_slug": "food-trucks",
+        "resolves_to": "restaurants",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "furniture_stores",
+        "rows": 591,
+        "via_slug": "furniture-stores",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "game_dev_studios",
+        "rows": 591,
+        "via_slug": "game-development-studios",
+        "resolves_to": "software_development",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "garden_centers",
+        "rows": 591,
+        "via_slug": "garden-centers-nurseries",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "general_merchandise",
+        "rows": 591,
+        "via_slug": "general-merchandise-stores",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "hair_salons_full",
+        "rows": 591,
+        "via_slug": "hair-salons-full-service",
+        "resolves_to": "cleaning_services",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "hardware_stores",
+        "rows": 591,
+        "via_slug": "hardware-stores-local",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "health_beauty_stores",
+        "rows": 591,
+        "via_slug": "pharmacies-health-stores",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "home_decor_gift",
+        "rows": 591,
+        "via_slug": "home-decor-gift-shops",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "hostels",
+        "rows": 591,
+        "via_slug": "hostels",
+        "resolves_to": "hotels_lodging",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "hvac_services",
+        "rows": 591,
+        "via_slug": "hvac-services",
+        "resolves_to": "specialty_trades",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "ice_cream_shops",
+        "rows": 591,
+        "via_slug": "ice-cream-frozen-dessert-shops",
+        "resolves_to": "restaurants",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "independent_hotels",
+        "rows": 591,
+        "via_slug": "independent-hotels-inns",
+        "resolves_to": "hotels_lodging",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "independent_pharmacy",
+        "rows": 591,
+        "via_slug": "independent-pharmacies",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "insurance_brokers",
+        "rows": 591,
+        "via_slug": "independent-insurance-brokers",
+        "resolves_to": "real_estate_agencies",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "it_services_msp",
+        "rows": 591,
+        "via_slug": "it-services-msps-small",
+        "resolves_to": "it_services_hosting",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "jewelry_stores",
+        "rows": 591,
+        "via_slug": "jewelry-stores",
+        "resolves_to": "clothing_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "junk_removal_moving",
+        "rows": 591,
+        "via_slug": "junk-removal-small-moving",
+        "resolves_to": "trucking_freight",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "landscaping_lawn",
+        "rows": 591,
+        "via_slug": "landscaping-lawn-care",
+        "resolves_to": "cleaning_services",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "language_schools",
+        "rows": 591,
+        "via_slug": "language-schools",
+        "resolves_to": "vocational_training",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "lingerie_intimates",
+        "rows": 591,
+        "via_slug": "lingerie-intimates",
+        "resolves_to": "clothing_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "locksmiths",
+        "rows": 591,
+        "via_slug": "locksmiths",
+        "resolves_to": "motor_vehicles_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "martial_arts",
+        "rows": 591,
+        "via_slug": "martial-arts-dojos",
+        "resolves_to": "vocational_training",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "massage_therapy",
+        "rows": 591,
+        "via_slug": "massage-therapy-clinics",
+        "resolves_to": "cleaning_services",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "med_spas",
+        "rows": 591,
+        "via_slug": "med-spas-small",
+        "resolves_to": "cleaning_services",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "mental_health_practice",
+        "rows": 591,
+        "via_slug": "mental-health-practices-small",
+        "resolves_to": "veterinary_pet_care",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "metal_fab_machine_shops",
+        "rows": 591,
+        "via_slug": "metal-fabrication-machine-shops",
+        "resolves_to": "fabricated_metal_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "music_instrument_shops",
+        "rows": 591,
+        "via_slug": "music-instrument-shops",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "music_schools",
+        "rows": 591,
+        "via_slug": "music-schools-private-lessons",
+        "resolves_to": "vocational_training",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "nail_salons",
+        "rows": 591,
+        "via_slug": "nail-salons",
+        "resolves_to": "cleaning_services",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "nutritionist",
+        "rows": 591,
+        "via_slug": "nutritionist-dietician-practices",
+        "resolves_to": "veterinary_pet_care",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "optometry",
+        "rows": 591,
+        "via_slug": "optometry-vision-centers",
+        "resolves_to": "veterinary_pet_care",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "painters_residential",
+        "rows": 591,
+        "via_slug": "painters-residential",
+        "resolves_to": "specialty_trades",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "pastry_dessert",
+        "rows": 591,
+        "via_slug": "pastry-dessert-shops",
+        "resolves_to": "restaurants",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "personal_training",
+        "rows": 591,
+        "via_slug": "personal-training",
+        "resolves_to": "restaurants",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "pest_control_local",
+        "rows": 591,
+        "via_slug": "pest-control-local",
+        "resolves_to": "cleaning_services",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "pet_stores",
+        "rows": 591,
+        "via_slug": "pet-stores",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "photography_studios",
+        "rows": 591,
+        "via_slug": "photography-studios",
+        "resolves_to": "marketing_design",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "physical_therapy",
+        "rows": 591,
+        "via_slug": "physical-therapy-clinics",
+        "resolves_to": "veterinary_pet_care",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "pizzerias",
+        "rows": 591,
+        "via_slug": "pizzerias",
+        "resolves_to": "restaurants",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "plumbers",
+        "rows": 591,
+        "via_slug": "plumbers",
+        "resolves_to": "specialty_trades",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "pool_service",
+        "rows": 591,
+        "via_slug": "pool-service-maintenance",
+        "resolves_to": "cleaning_services",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "print_shops",
+        "rows": 591,
+        "via_slug": "print-shops-offset-digital",
+        "resolves_to": "paper_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "private_k12",
+        "rows": 591,
+        "via_slug": "private-k-12-schools-small",
+        "resolves_to": "primary_secondary_schools",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "pubs_taverns",
+        "rows": 591,
+        "via_slug": "pubs-taverns",
+        "resolves_to": "restaurants",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "residential_cleaning",
+        "rows": 591,
+        "via_slug": "residential-cleaning-services",
+        "resolves_to": "cleaning_services",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "roofers",
+        "rows": 591,
+        "via_slug": "roofers",
+        "resolves_to": "specialty_trades",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "scenic_sightseeing_transport",
+        "rows": 591,
+        "via_slug": "scenic-sightseeing-transport",
+        "resolves_to": "trucking_freight",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "shoe_repair",
+        "rows": 591,
+        "via_slug": "shoe-repair",
+        "resolves_to": "cleaning_services",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "shoe_stores",
+        "rows": 591,
+        "via_slug": "shoe-stores",
+        "resolves_to": "clothing_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "sign_shops",
+        "rows": 591,
+        "via_slug": "sign-shops-graphics-fab",
+        "resolves_to": "paper_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "sit_down_restaurants",
+        "rows": 591,
+        "via_slug": "sit-down-restaurants",
+        "resolves_to": "restaurants",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "small_leather_goods",
+        "rows": 591,
+        "via_slug": "small-leather-goods",
+        "resolves_to": "apparel_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "soap_candle_makers",
+        "rows": 591,
+        "via_slug": "soap-candle-makers",
+        "resolves_to": "chemical_pharma_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "sole_accounting",
+        "rows": 591,
+        "via_slug": "sole-practitioner-accountants",
+        "resolves_to": "legal_services",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "sole_law_firms",
+        "rows": 591,
+        "via_slug": "sole-practitioner-law-firms",
+        "resolves_to": "legal_services",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "specialty_food_production",
+        "rows": 591,
+        "via_slug": "specialty-food-production",
+        "resolves_to": "food_mfg",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "specialty_grocery",
+        "rows": 591,
+        "via_slug": "specialty-grocers-delis",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "sporting_goods_specialty",
+        "rows": 591,
+        "via_slug": "sporting-goods-specialty",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "stationery_paper",
+        "rows": 591,
+        "via_slug": "stationery-paper-goods",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "str_management",
+        "rows": 591,
+        "via_slug": "short-term-rental-management",
+        "resolves_to": "hotels_lodging",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "streetwear_casual",
+        "rows": 591,
+        "via_slug": "streetwear-casual-apparel",
+        "resolves_to": "clothing_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "tailoring_alterations",
+        "rows": 591,
+        "via_slug": "tailoring-alterations",
+        "resolves_to": "cleaning_services",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "tanning_salons",
+        "rows": 591,
+        "via_slug": "tanning-salons",
+        "resolves_to": "cleaning_services",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "tattoo_piercing",
+        "rows": 591,
+        "via_slug": "tattoo-piercing-studios",
+        "resolves_to": "cleaning_services",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "tea_houses",
+        "rows": 591,
+        "via_slug": "tea-houses-matcha-bars",
+        "resolves_to": "restaurants",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "test_prep",
+        "rows": 591,
+        "via_slug": "test-prep-services",
+        "resolves_to": "vocational_training",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "toy_game_stores",
+        "rows": 591,
+        "via_slug": "toy-game-stores",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "transit_ground_passenger",
+        "rows": 591,
+        "via_slug": "transit-ground-passenger-transport",
+        "resolves_to": "trucking_freight",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "transport_support",
+        "rows": 591,
+        "via_slug": "transport-support-services",
+        "resolves_to": "trucking_freight",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "tutoring_centers",
+        "rows": 591,
+        "via_slug": "tutoring-centers",
+        "resolves_to": "vocational_training",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "videography_services",
+        "rows": 591,
+        "via_slug": "videography-services",
+        "resolves_to": "marketing_design",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "vintage_consignment",
+        "rows": 591,
+        "via_slug": "vintage-consignment",
+        "resolves_to": "clothing_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "watch_jewelry_repair",
+        "rows": 591,
+        "via_slug": "watch-jewelry-repair",
+        "resolves_to": "cleaning_services",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "watch_shops",
+        "rows": 591,
+        "via_slug": "watch-shops",
+        "resolves_to": "clothing_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "web_mobile_dev_shops",
+        "rows": 591,
+        "via_slug": "web-mobile-dev-shops",
+        "resolves_to": "software_development",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "wedding_planning",
+        "rows": 591,
+        "via_slug": "wedding-planning-coordination",
+        "resolves_to": "marketing_design",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "wholesale_durables",
+        "rows": 591,
+        "via_slug": "wholesale-durable-goods",
+        "resolves_to": "wholesale_food",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "wholesale_general",
+        "rows": 591,
+        "via_slug": "general-wholesale",
+        "resolves_to": "wholesale_food",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "window_washing",
+        "rows": 591,
+        "via_slug": "window-washing",
+        "resolves_to": "cleaning_services",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "wine_bars",
+        "rows": 591,
+        "via_slug": "wine-bars",
+        "resolves_to": "restaurants",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "wine_liquor_stores",
+        "rows": 591,
+        "via_slug": "wine-liquor-stores",
+        "resolves_to": "grocery_stores",
+        "reason": "remapped"
+      },
+      {
+        "db_industry_id": "yoga_pilates",
+        "rows": 591,
+        "via_slug": "yoga-pilates-studios",
+        "resolves_to": "restaurants",
+        "reason": "remapped"
+      }
+    ]
+  }
+}
