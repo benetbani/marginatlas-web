@@ -58,8 +58,14 @@ async function distinctIndustryCounts(
 }
 
 async function run(): Promise<void> {
-  const { slugToIndustry, resolveToMeasuredIndustry, industryToSlug } =
-    await import("../../src/lib/taxonomy");
+  // Reachability is now measured against the EXACT-FIRST candidate resolver
+  // (industryQueryCandidates), not the old single-resolve round-trip. A DB
+  // industry_id is reachable when the candidate list for its own slug
+  // contains it - i.e. a query for that slug would hit its rows.
+  const { industryToSlug } = await import("../../src/lib/taxonomy");
+  const { industryQueryCandidates } = await import(
+    "../../src/lib/cells/industry_resolution"
+  );
 
   const tables: Array<{ table: string; col: string }> = [
     { table: "regional_cells", col: "industry_id" },
@@ -76,15 +82,15 @@ async function run(): Promise<void> {
     const drops: Drop[] = [];
     for (const [id, rows] of counts) {
       const slug = industryToSlug(id) ?? id;
-      const raw = slugToIndustry(slug);
-      const res = raw ? resolveToMeasuredIndustry(raw) : null;
-      if (!res || res.id !== id) {
+      const candidates = industryQueryCandidates(slug);
+      const reachable = candidates.includes(id);
+      if (!reachable) {
         drops.push({
           db_industry_id: id,
           rows,
           via_slug: slug,
-          resolves_to: res?.id ?? null,
-          reason: res ? "remapped" : "unresolved",
+          resolves_to: candidates[0] ?? null,
+          reason: candidates.length ? "remapped" : "unresolved",
         });
       }
     }

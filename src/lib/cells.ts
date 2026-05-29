@@ -60,6 +60,13 @@ import {
 } from "./cells/geo";
 // Re-export so existing imports `from "@/lib/cells"` keep working.
 export { slugify, regionalSlugToGeoId, listUsStates };
+// Exact-first industry resolution (data activation 2026-05-29). Fixes the
+// reachability bug where sub-niche industry ids present in the data tables
+// were collapsed to a measured parent before the query and missed.
+import {
+  industryQueryCandidates,
+  resolveDisplayIndustry,
+} from "./cells/industry_resolution";
 
 export type Cell = {
   // identity
@@ -211,25 +218,35 @@ export async function getRegionalCell(
 ): Promise<Cell | null> {
   const c = country.toUpperCase();
   const geoId = regionalSlugToGeoId(c, geoSlug);
-  const rawInd = slugToIndustry(industrySlug);
-  const ind = resolveToMeasuredIndustry(rawInd);
-  if (!ind) return null;
+  // Exact-first: query the precise industry_id plus legacy aliases before the
+  // measured parent, so sub-niche rows present in the DB are not missed.
+  const candidates = industryQueryCandidates(industrySlug);
+  if (candidates.length === 0) return null;
 
   let q = supabaseAdmin
     .from("regional_cells")
     .select("*")
     .eq("country", c)
     .eq("geo_id", geoId)
-    .eq("industry_id", ind.id)
+    .in("industry_id", candidates)
     .order("year", { ascending: false, nullsFirst: false })
     .order("n_enterprises", { ascending: false, nullsFirst: false })
-    .limit(1);
+    .limit(60);
   if (selector.sizeBand) q = q.eq("size_band", selector.sizeBand);
   if (selector.year) q = q.eq("year", selector.year);
 
   const { data, error } = await q;
   if (error || !data || data.length === 0) return null;
-  const row = data[0] as Record<string, unknown>;
+  // Prefer the highest-priority candidate that returned data (exact id before
+  // parent fallback). Array.sort is stable, so the SQL year/n ordering holds
+  // within each candidate group.
+  const candRank = (id: string) => {
+    const i = candidates.indexOf(id);
+    return i === -1 ? candidates.length : i;
+  };
+  const row = (data as Record<string, unknown>[])
+    .slice()
+    .sort((a, b) => candRank(a.industry_id as string) - candRank(b.industry_id as string))[0];
   // Render-layer suppression. If this cell is in
   // the triage suppression list, return null. Caller falls through to
   // extrapolated_cells; if that also has no data, page 404s.
@@ -237,6 +254,10 @@ export async function getRegionalCell(
   const rowGeo = row.geo_id as string;
   const rowInd = (row.industry_id as string) || "";
   if (isCellSuppressed(rowCountry, rowGeo, rowInd)) return null;
+  // Display naming: if the matched row uses a legacy id, present the taxonomy
+  // equivalent (we already matched on the real id above for the query).
+  const dispInd = resolveDisplayIndustry(industrySlug);
+  if (dispInd) (row as Record<string, unknown>).industry_id = dispInd.id;
   let cell = normalizeRegionalRow(row);
   // Apply field-level overrides if any
   cell = applyCellOverrides(rowCountry, rowGeo, rowInd, cell);
@@ -837,24 +858,31 @@ export async function getExtrapolatedCell(
 ): Promise<Cell | null> {
   const iso3 = iso2ToIso3(iso2);
   if (!iso3) return null;
-  // Same parent-fallback policy as US: sub-niches resolve up to their parent.
-  const rawInd = slugToIndustry(industrySlug);
-  const ind = resolveToMeasuredIndustry(rawInd);
-  if (!ind) return null;
+  // Exact-first: query the precise + legacy industry ids before the measured
+  // parent. `ind` is the taxonomy industry to use for display naming.
+  const candidates = industryQueryCandidates(industrySlug);
+  if (candidates.length === 0) return null;
+  const ind = resolveDisplayIndustry(industrySlug);
 
   let q = supabaseAdmin
     .from("extrapolated_cells")
     .select("*")
     .eq("country_iso3", iso3)
-    .eq("industry_id", ind.id)
+    .in("industry_id", candidates)
     .order("year", { ascending: false, nullsFirst: false })
-    .limit(1);
+    .limit(60);
   if (selector.sizeBand) q = q.eq("size_band", selector.sizeBand);
   if (selector.year) q = q.eq("year", selector.year);
 
   const { data, error } = await q;
   if (error || !data || data.length === 0) return null;
-  const r = data[0] as Record<string, unknown>;
+  const candRank = (id: string) => {
+    const i = candidates.indexOf(id);
+    return i === -1 ? candidates.length : i;
+  };
+  const r = (data as Record<string, unknown>[])
+    .slice()
+    .sort((a, b) => candRank(a.industry_id as string) - candRank(b.industry_id as string))[0];
 
   const predRev = (r.predicted_rev_per_firm as number) ?? null;
   // Coarse spread synthesis: ±50% wedge so RevenueTiles/RevenueDistribution
@@ -872,8 +900,8 @@ export async function getExtrapolatedCell(
     geo_name: (r.country_name as string) || iso2ToName(iso2),
     naics_6: null,
     naics_4: null,
-    industry_id: ind.id,
-    industry_description: ind.name,
+    industry_id: ind?.id ?? (r.industry_id as string),
+    industry_description: ind?.name ?? (r.industry_id as string),
     size_band: (r.size_band as string) || null,
     year: (r.year as number) || 2024,
     n_enterprises: null,
