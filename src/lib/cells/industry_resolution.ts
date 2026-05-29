@@ -122,13 +122,14 @@ export function industryQueryCandidates(industrySlug: string): string[] {
  * taxonomy industry; otherwise falls back to the measured parent.
  */
 export function resolveDisplayIndustry(industrySlug: string): Industry | null {
-  const raw = slugToIndustry(industrySlug);
-  if (raw) return raw;
+  // Legacy slug FIRST: a legacy slug like "metal-products-mfg" would fuzzy-
+  // match to an unrelated industry via slugToIndustry (wood_products_mfg), so
+  // the curated crosswalk target must win before the fuzzy fallback runs.
   const norm = normalizeSlug(industrySlug);
   const legacyDirect = LEGACY_SLUG_TO_DB_ID[norm];
   if (legacyDirect) {
     const taxId = LEGACY_DB_TO_TAXONOMY[legacyDirect];
     if (taxId && INDUSTRY_BY_ID[taxId]) return INDUSTRY_BY_ID[taxId];
   }
-  return null;
+  return slugToIndustry(industrySlug);
 }

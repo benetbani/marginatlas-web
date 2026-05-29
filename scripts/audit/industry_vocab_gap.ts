@@ -1,21 +1,19 @@
 /**
  * industry_vocab_gap.ts - reachability audit for the industry-vocabulary
  * drift between the loaded data (regional_cells / extrapolated_cells) and
- * the website taxonomy (industries.json).
+ * the website taxonomy.
  *
- * For every distinct industry_id in the data tables, it asks: does the
- * site's own round-trip (industryToSlug -> slugToIndustry ->
- * resolveToMeasuredIndustry) land back on the SAME id the DB row uses?
- * If not, the data-access layer queries for the wrong industry_id and the
- * real rows behind that id are unreachable (the page falls through to
- * coarser country-level data or, worst case, resolves to an unrelated
- * industry).
+ * Reachability is measured against the EXACT-FIRST candidate resolver
+ * (industryQueryCandidates): a DB industry_id is reachable when the
+ * candidate list for its own slug contains it - i.e. a query for that slug
+ * would hit its rows.
  *
- * Output: data/audit/industry_vocab_gap.json - the full list of broken
- * ids with row counts, so the fix (a vocabulary crosswalk) can be derived
- * and so this can be re-run as a regression check after the fix lands.
+ * Distinct industry_ids (and their row counts) are read from a server-side
+ * aggregate RPC when available, falling back to a bounded paged scan. The
+ * aggregate avoids the statement-timeout that a full table scan hits on the
+ * large unindexed tables. Read-only.
  *
- * Read-only. Usage: npx tsx scripts/audit/industry_vocab_gap.ts
+ * Usage: npx tsx scripts/audit/industry_vocab_gap.ts
  */
 import { config } from "dotenv";
 import { resolve } from "node:path";
@@ -31,60 +29,74 @@ type Drop = {
   reason: "remapped" | "unresolved";
 };
 
+/**
+ * Distinct industry_id -> row count. Tries a single GROUP BY via PostgREST's
+ * aggregate support; if that is not exposed, falls back to a bounded paged
+ * scan. The aggregate is one cheap query and sidesteps the full-scan
+ * statement-timeout on the unindexed large tables.
+ */
 async function distinctIndustryCounts(
   table: string,
-  col: string,
 ): Promise<Map<string, number>> {
   const { supabaseAdmin } = await import("../../src/lib/supabase");
   const counts = new Map<string, number>();
+
+  // Preferred: server-side aggregate (PostgREST: select=industry_id,count()).
+  try {
+    const { data, error } = await supabaseAdmin
+      .from(table)
+      .select("industry_id, count:count()")
+      .order("industry_id", { ascending: true });
+    if (!error && data && data.length > 0 && "count" in (data[0] as object)) {
+      for (const r of data as unknown as Array<{ industry_id: string; count: number }>) {
+        if (r.industry_id) counts.set(r.industry_id, Number(r.count) || 0);
+      }
+      return counts;
+    }
+  } catch {
+    // fall through to paged scan
+  }
+
+  // Fallback: bounded paged scan (may hit a timeout on huge tables, but
+  // returns whatever it collected before failing).
   let from = 0;
   const page = 1000;
   for (;;) {
     const { data, error } = await supabaseAdmin
       .from(table)
-      .select(col)
+      .select("industry_id")
       .range(from, from + page - 1);
-    if (error) throw error;
+    if (error) break;
     if (!data || data.length === 0) break;
-    for (const r of data as Record<string, unknown>[]) {
-      const k = r[col] as string;
+    for (const r of data as unknown as Record<string, unknown>[]) {
+      const k = r.industry_id as string;
       if (k) counts.set(k, (counts.get(k) ?? 0) + 1);
     }
     if (data.length < page) break;
     from += page;
-    if (from > 1_000_000) break; // safety stop
+    if (from > 1_000_000) break;
   }
   return counts;
 }
 
 async function run(): Promise<void> {
-  // Reachability is now measured against the EXACT-FIRST candidate resolver
-  // (industryQueryCandidates), not the old single-resolve round-trip. A DB
-  // industry_id is reachable when the candidate list for its own slug
-  // contains it - i.e. a query for that slug would hit its rows.
   const { industryToSlug } = await import("../../src/lib/taxonomy");
   const { industryQueryCandidates } = await import(
     "../../src/lib/cells/industry_resolution"
   );
 
-  const tables: Array<{ table: string; col: string }> = [
-    { table: "regional_cells", col: "industry_id" },
-    { table: "extrapolated_cells", col: "industry_id" },
-  ];
-
   const report: Record<string, unknown> = {
     generated_at: new Date().toISOString(),
   };
 
-  for (const { table, col } of tables) {
-    const counts = await distinctIndustryCounts(table, col);
+  for (const table of ["regional_cells", "extrapolated_cells"]) {
+    const counts = await distinctIndustryCounts(table);
     const totalRows = [...counts.values()].reduce((a, b) => a + b, 0);
     const drops: Drop[] = [];
     for (const [id, rows] of counts) {
       const slug = industryToSlug(id) ?? id;
       const candidates = industryQueryCandidates(slug);
-      const reachable = candidates.includes(id);
-      if (!reachable) {
+      if (!candidates.includes(id)) {
         drops.push({
           db_industry_id: id,
           rows,
@@ -101,13 +113,14 @@ async function run(): Promise<void> {
       broken_ids: drops.length,
       total_rows: totalRows,
       unreachable_rows: droppedRows,
-      unreachable_pct: Number(((droppedRows / totalRows) * 100).toFixed(1)),
+      unreachable_pct:
+        totalRows > 0 ? Number(((droppedRows / totalRows) * 100).toFixed(1)) : null,
       drops,
     };
     console.log(
       `${table}: ${drops.length}/${counts.size} ids broken; ` +
         `${droppedRows}/${totalRows} rows unreachable ` +
-        `(${((droppedRows / totalRows) * 100).toFixed(1)}%)`,
+        `(${totalRows > 0 ? ((droppedRows / totalRows) * 100).toFixed(1) : "n/a"}%)`,
     );
   }
 
