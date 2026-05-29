@@ -23,4 +23,4 @@ Five-star rating + source line. Five stars = direct primary survey. Two stars = 
 Other industries in the same place. Useful for sanity-checking and exploring nearby businesses.
 
 ### 6. Methodology link
-For the curious — every number's provenance.
+For the curious: every number's provenance.

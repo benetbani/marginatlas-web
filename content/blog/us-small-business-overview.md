@@ -1,5 +1,5 @@
 ---
-title: "Small business in the United States — overview"
+title: "Small business in the United States: overview"
 date: "2026-05-14"
 excerpt: "33 million small businesses, every industry covered, the richest SMB data anywhere. Here's the lay of the land."
 author: "Margin Atlas team"

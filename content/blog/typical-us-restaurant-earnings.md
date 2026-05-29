@@ -1,13 +1,13 @@
 ---
 title: "What does the typical American restaurant actually earn?"
 date: "2026-05-14"
-excerpt: "We compared 50 US states and found a tighter band than expected — the typical full-service restaurant pulls in between $480k and $720k a year, but the spread between the bottom 10% and top 10% is enormous."
+excerpt: "We compared 50 US states and found a tighter band than expected: the typical full-service restaurant pulls in between $480k and $720k a year, but the spread between the bottom 10% and top 10% is enormous."
 author: "Margin Atlas team"
 ---
 
 When people think 'restaurant business' they imagine fine-dining margins. The data tells a more crowded story.
 
-Across the United States, the typical full-service restaurant earns roughly **$600,000 in yearly revenue**. The middle of the pack is remarkably consistent state to state — California, New York, Texas, Florida, all cluster between $480k and $720k.
+Across the United States, the typical full-service restaurant earns roughly **$600,000 in yearly revenue**. The middle of the pack is remarkably consistent state to state: California, New York, Texas, Florida, all cluster between $480k and $720k.
 
 What changes wildly is the **spread**. In high-income metros the top 10% of restaurants pull in north of $3 million. In rural areas, the top 10% often barely cross $1 million.
 

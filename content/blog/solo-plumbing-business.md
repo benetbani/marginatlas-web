@@ -1,7 +1,7 @@
 ---
 title: "What it takes to run a single-employee plumbing business"
 date: "2026-05-10"
-excerpt: "The single-person plumbing firm is one of the most common business shapes in the developed world. The numbers say it works — but barely."
+excerpt: "The single-person plumbing firm is one of the most common business shapes in the developed world. The numbers say it works, but barely."
 author: "Margin Atlas team"
 ---
 

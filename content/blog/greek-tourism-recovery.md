@@ -13,4 +13,4 @@ Median accommodation firm:
 - 2008: 8 employees, €420k revenue
 - 2022: 5 employees, €280k revenue
 
-The sector recovered through fragmentation — more, smaller operators. Some economists see this as resilience; others as a sign that the recovery is incomplete.
+The sector recovered through fragmentation: more, smaller operators. Some economists see this as resilience; others as a sign that the recovery is incomplete.

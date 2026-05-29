@@ -1,5 +1,5 @@
 ---
-title: "A firm vs an establishment — why the difference matters"
+title: "A firm vs an establishment: why the difference matters"
 date: "2026-05-09"
 excerpt: "Both terms appear in our data. They mean different things."
 author: "Margin Atlas team"

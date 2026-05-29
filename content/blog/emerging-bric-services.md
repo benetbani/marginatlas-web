@@ -1,7 +1,7 @@
 ---
 title: "Service-sector economics in BRIC countries"
 date: "2026-05-09"
-excerpt: "Brazil, Russia, India, China — four very different service economies, each with characteristic patterns."
+excerpt: "Brazil, Russia, India, China: four very different service economies, each with characteristic patterns."
 author: "Margin Atlas team"
 ---
 
@@ -11,8 +11,8 @@ The BRIC services sectors couldn't be more different.
 
 **India**: Still capturing data, but informal sector estimated at 60+ million tiny businesses. Statistically tricky.
 
-**China**: Massive scale (5M+ formal service firms), urban concentration extreme — Shanghai/Beijing/Shenzhen dominate.
+**China**: Massive scale (5M+ formal service firms), urban concentration extreme, Shanghai/Beijing/Shenzhen dominate.
 
 **Russia**: Heavily state-influenced. Private services concentrated in Moscow + St. Petersburg.
 
-We show high-quality data for Brazil (via IBGE SIDRA). The other three require deeper investment to do justice — they're priority for Atlas v2.
+We show high-quality data for Brazil (via IBGE SIDRA). The other three require deeper investment to do justice. They're priority for Atlas v2.

@@ -7,7 +7,7 @@ author: "Margin Atlas team"
 
 Major industry classification standards:
 
-- **ISIC Rev.4** (UN) — universal reference
+- **ISIC Rev.4** (UN): universal reference
 - **NAICS 2017** (US/CA/MX)
 - **NACE Rev.2** (EU)
 - **SSIC 2020** (Singapore)

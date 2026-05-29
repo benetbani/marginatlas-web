@@ -1,7 +1,7 @@
 ---
 title: "Real estate agencies and brokers around the world"
 date: "2026-04-25"
-excerpt: "Real estate agencies (NACE 68.31, NAICS 531) are one of the most uneven small-business types — what's a 'real estate firm' varies completely by country."
+excerpt: "Real estate agencies (NACE 68.31, NAICS 531) are one of the most uneven small-business types: what's a 'real estate firm' varies completely by country."
 author: "Margin Atlas team"
 ---
 

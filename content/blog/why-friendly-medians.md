@@ -17,4 +17,4 @@ The tradeoff: some statisticians find our terms imprecise. We chose accessibilit
 
 1. Statisticians can still find precision in the methodology page
 2. The 95% of non-statistician users get value from accessible labels
-3. Friendly UI doesn't lose anything statistically — the underlying numbers are unchanged
+3. Friendly UI doesn't lose anything statistically: the underlying numbers are unchanged

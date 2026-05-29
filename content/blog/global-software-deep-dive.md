@@ -1,7 +1,7 @@
 ---
 title: "The global software industry, by the numbers"
 date: "2026-04-30"
-excerpt: "Software development (NACE 62, NAICS 5415) is the youngest major industry — and the most geographically uneven."
+excerpt: "Software development (NACE 62, NAICS 5415) is the youngest major industry, and the most geographically uneven."
 author: "Margin Atlas team"
 ---
 

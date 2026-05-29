@@ -1,7 +1,7 @@
 ---
 title: "Healthcare economics: small-business slice"
 date: "2026-04-27"
-excerpt: "Doctors' offices, dental practices, physiotherapy clinics — the SMB tier of healthcare is enormous and varies country to country."
+excerpt: "Doctors' offices, dental practices, physiotherapy clinics: the SMB tier of healthcare is enormous and varies country to country."
 author: "Margin Atlas team"
 ---
 

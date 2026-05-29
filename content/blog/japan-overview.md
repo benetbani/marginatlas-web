@@ -11,5 +11,5 @@ Japan's SMB profile:
 - Median firm: 5 employees (smaller than US/EU averages)
 - Tokyo dominates: ~17% of all businesses
 - Highest restaurant density in the world
-- Manufacturing SMBs supply giant exporters (Toyota, Honda, Sony) — Keiretsu networks
+- Manufacturing SMBs supply giant exporters (Toyota, Honda, Sony): Keiretsu networks
 - Owner-operator model widespread; many businesses pass generation-to-generation

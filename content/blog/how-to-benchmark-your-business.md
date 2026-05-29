@@ -14,4 +14,4 @@ The page that loads shows:
 - Wage levels
 - Source + quality rating
 
-Compare your actual numbers. If you're in the bottom decile, understand why. If you're above the top decile, you're a top performer — congrats.
+Compare your actual numbers. If you're in the bottom decile, understand why. If you're above the top decile, you're a top performer. Congrats.

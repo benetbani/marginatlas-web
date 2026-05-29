@@ -1,7 +1,7 @@
 ---
 title: "A future version of this dataset: what's coming in v2"
 date: "2026-04-25"
-excerpt: "Looking ahead at what v2 of Margin Atlas will include — and what we deliberately won't."
+excerpt: "Looking ahead at what v2 of Margin Atlas will include, and what we deliberately won't."
 author: "Margin Atlas team"
 ---
 
@@ -17,8 +17,8 @@ Margin Atlas v1.15 is the foundation. v2 plans include:
 
 **Will NOT be added (intentionally):**
 
-- Individual company data — privacy first, always
+- Individual company data: privacy first, always
 - Highly speculative imputed cells for countries without primary data
-- A live trading-style ticker view — wrong tool for benchmarking
+- A live trading-style ticker view: wrong tool for benchmarking
 
 The goal is to be the most-cited, most-trusted, free public SMB benchmark database in the world. We're getting closer with every release.

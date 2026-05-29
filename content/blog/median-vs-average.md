@@ -11,4 +11,4 @@ The **average** of those 11 firms is **$5 million**. Useless.
 
 The **median** is **$500k**. That's what the middle firm actually does.
 
-Margin Atlas defaults to median (and the surrounding distribution) for every cell, because that's what describes the *typical* business — the one a reader is probably trying to benchmark against. We never lead with averages.
+Margin Atlas defaults to median (and the surrounding distribution) for every cell, because that's what describes the *typical* business, the one a reader is probably trying to benchmark against. We never lead with averages.

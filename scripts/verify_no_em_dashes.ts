@@ -11,18 +11,29 @@
  *
  * To allow a specific use case, add an `// allow-em-dash` line-tail comment.
  */
-import { readFileSync, readdirSync, statSync } from "node:fs";
+import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { resolve, join } from "node:path";
 
-const ROOT = resolve(process.cwd(), "src");
+const SRC_ROOT = resolve(process.cwd(), "src");
+// content/blog is the only user-rendered markdown: titles + excerpts
+// surface on the homepage rail via getAllPosts(), and bodies render on
+// /blog/[slug]. The original gate only scanned src/, so em-dashes in
+// blog frontmatter leaked to the live homepage (QA failure C7).
+// NOTE: content/learn and content/glossary are NOT scanned because the
+// site renders /learn from src/lib/learn/articles.ts (a TS module) and
+// has no glossary route; their markdown is draft/non-rendered. content/
+// superpowers holds internal planning docs that legitimately discuss the
+// em-dash rule. Widen this only if those dirs become user-rendered.
+const CONTENT_ROOT = resolve(process.cwd(), "content", "blog");
 const TARGET = "—"; // em dash
 
-function walk(dir: string, acc: string[] = []): string[] {
+function walk(dir: string, exts: string[], acc: string[] = []): string[] {
+  if (!existsSync(dir)) return acc;
   for (const name of readdirSync(dir)) {
     const p = join(dir, name);
     const s = statSync(p);
-    if (s.isDirectory()) walk(p, acc);
-    else if (p.endsWith(".tsx") || p.endsWith(".ts")) acc.push(p);
+    if (s.isDirectory()) walk(p, exts, acc);
+    else if (exts.some((e) => p.endsWith(e))) acc.push(p);
   }
   return acc;
 }
@@ -42,7 +53,9 @@ function isAllowed(line: string): boolean {
 }
 
 let violations = 0;
-for (const file of walk(ROOT)) {
+
+// Pass 1: TS/TSX under src/. Comment lines are exempt (not rendered).
+for (const file of walk(SRC_ROOT, [".tsx", ".ts"])) {
   const src = readFileSync(file, "utf-8");
   const lines = src.split("\n");
   for (let i = 0; i < lines.length; i++) {
@@ -52,6 +65,24 @@ for (const file of walk(ROOT)) {
     if (isAllowed(line)) continue;
     console.error(
       `${file.replace(process.cwd(), ".")}:${i + 1}: em-dash in non-comment line\n  ${line.trim()}`,
+    );
+    violations++;
+  }
+}
+
+// Pass 2: markdown under content/. Every line is user-visible (no code
+// comments in markdown), so there is no comment exemption. The
+// allow-em-dash escape hatch (write it inside an HTML comment, e.g.
+// <!-- allow-em-dash -->) still applies for the rare legitimate case.
+for (const file of walk(CONTENT_ROOT, [".md", ".mdx"])) {
+  const src = readFileSync(file, "utf-8");
+  const lines = src.split("\n");
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (!line.includes(TARGET)) continue;
+    if (isAllowed(line)) continue;
+    console.error(
+      `${file.replace(process.cwd(), ".")}:${i + 1}: em-dash in markdown content\n  ${line.trim()}`,
     );
     violations++;
   }

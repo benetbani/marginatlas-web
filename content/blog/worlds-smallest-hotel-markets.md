@@ -15,6 +15,6 @@ The smallest hotel markets we cover (under 5,000 establishments):
 - Slovenia: 3,600 hotels, ~€220k typical revenue
 - Luxembourg: 1,200 hotels, ~€680k typical revenue
 
-Luxembourg is the standout — small market, but extraordinarily high per-firm revenue because the typical Luxembourg hotel serves business travelers at premium rates.
+Luxembourg is the standout: small market, but extraordinarily high per-firm revenue because the typical Luxembourg hotel serves business travelers at premium rates.
 
 Iceland's hotels punch above their weight because tourism volume is huge relative to the number of operators.

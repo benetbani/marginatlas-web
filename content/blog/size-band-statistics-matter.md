@@ -7,7 +7,7 @@ author: "Margin Atlas team"
 
 The single most common mistake in business benchmarking is **using country-level averages** for industry comparisons.
 
-Take US restaurants: the country-level mean revenue per firm is around $1.1 million — a number that includes Chipotle franchises grossing $3M and family diners grossing $500k.
+Take US restaurants: the country-level mean revenue per firm is around $1.1 million, a number that includes Chipotle franchises grossing $3M and family diners grossing $500k.
 
 Now look by size band:
 

@@ -7,7 +7,7 @@ author: "Margin Atlas team"
 
 Italy and Spain are the world's #2 and #3 tourist destinations by international arrivals. The economics of their accommodation industries differ in revealing ways.
 
-**Italy** (NACE 55): 95,000+ accommodation establishments. Heavily fragmented — the typical hotel/B&B operates with 4 employees and earns €240k revenue. Family-owned dominance.
+**Italy** (NACE 55): 95,000+ accommodation establishments. Heavily fragmented: the typical hotel/B&B operates with 4 employees and earns €240k revenue. Family-owned dominance.
 
 **Spain** (NACE 55): 33,000 accommodation establishments. More consolidated. The typical operator employs 12 people and earns €890k revenue. Chain-heavy on the coasts.
 

@@ -1,7 +1,7 @@
 ---
 title: "Restaurants worldwide: a sector deep-dive"
 date: "2026-05-02"
-excerpt: "Restaurants and food service are visible everywhere — but their economics vary more than you'd think across countries."
+excerpt: "Restaurants and food service are visible everywhere, but their economics vary more than you'd think across countries."
 author: "Margin Atlas team"
 ---
 

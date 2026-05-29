@@ -10,7 +10,7 @@ Construction is universally important. Across our 40+ countries, construction fi
 The pattern is remarkably consistent:
 
 - **Many tiny firms**: typically 60-70% are 1-9 person operations
-- **Specialty trades dominate**: plumbing, electrical, roofing — these alone are 40-50% of construction firms
+- **Specialty trades dominate**: plumbing, electrical, roofing, these alone are 40-50% of construction firms
 - **Low capital, high labor**: median revenue per employee is consistently $80-130k
 - **Local market lock-in**: construction businesses rarely scale beyond a metropolitan area
 

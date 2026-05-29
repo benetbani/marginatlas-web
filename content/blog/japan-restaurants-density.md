@@ -1,13 +1,13 @@
 ---
 title: "Why Tokyo has more restaurants per capita than New York"
 date: "2026-05-07"
-excerpt: "Japan's restaurant density is the highest in the developed world. The data tells you why — and how the economics work."
+excerpt: "Japan's restaurant density is the highest in the developed world. The data tells you why, and how the economics work."
 author: "Margin Atlas team"
 ---
 
-Tokyo has ~140,000 restaurants for ~14 million residents — that's 1 restaurant per 100 people.
+Tokyo has ~140,000 restaurants for ~14 million residents, that's 1 restaurant per 100 people.
 
-New York has ~25,000 for ~8 million — 1 per 320 people.
+New York has ~25,000 for ~8 million, 1 per 320 people.
 
 London: 1 per 250.
 Paris: 1 per 180.

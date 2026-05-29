@@ -1,5 +1,5 @@
 ---
-title: "The German Mittelstand — what the data shows"
+title: "The German Mittelstand: what the data shows"
 date: "2026-05-14"
 excerpt: "Germany's mid-sized businesses are the engine of the world's 4th-largest economy. The data tells you why."
 author: "Margin Atlas team"

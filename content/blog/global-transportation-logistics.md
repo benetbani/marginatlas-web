@@ -1,7 +1,7 @@
 ---
 title: "Trucking, taxis, and warehousing: the logistics SMB economy"
 date: "2026-04-24"
-excerpt: "Transport & logistics is one of the most globally consistent industries — partly because the trucks and taxis themselves are commoditized."
+excerpt: "Transport & logistics is one of the most globally consistent industries, partly because the trucks and taxis themselves are commoditized."
 author: "Margin Atlas team"
 ---
 
@@ -16,4 +16,4 @@ The rise of ride-share has eaten dramatically into single-cab taxi numbers since
 - UK: -42%
 - France: -35%
 
-But total passenger-transport activity is UP — rides are just spread across more (smaller) operators.
+But total passenger-transport activity is UP: rides are just spread across more (smaller) operators.
