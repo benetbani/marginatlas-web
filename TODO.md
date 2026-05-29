@@ -103,14 +103,31 @@ Build status: presumed passing (last verified 2026-05-27 in handoff); not re-run
   - Phase 0 scripts committed to parent repo E:/atlas (commit 8d31f44): scripts/verify_supabase_counts.py, scripts/inspect_parquet.py
 - Key finding: site has rich data-access code but 2 of 3 data tables are empty; "reaching the data" = loading extrapolated_cells (immediate unlock, ~3 min) + building regional_cells ETL (larger)
 
-## ✅ FOUNDATION VERIFIED — 2026-05-30 (commit 5d8f0426)
-Exact-first industry resolution fix is WRITTEN and VERIFIED:
+## ✅ FOUNDATION VERIFIED — 2026-05-30 (commit 6f3e1da2)
+ALL output read directly, full counts, deterministic:
 - Unit test tests/cells/industry_resolution.test.ts: PASS
-- Audit: regional 39.2%→0.0%, extrapolated 46.4%→0.0% unreachable (258k rows recovered)
 - tsc --noEmit: 0 errors
-- Proven on a real route: de/de21/fabricated-metal-mfg q22(country) → q78(nuts2 regional)
-- resolveDisplayIndustry fixed (legacy crosswalk before fuzzy fallback)
-- audit rewritten to use server-side distinct aggregate (no full-scan timeout)
+- Reachability audit (pg GROUP BY, SET statement_timeout=0 to beat the unindexed-scan limit):
+    regional_cells:     0/78  ids broken, 0/376,033 rows unreachable (0.0%)  [was 39.2%]
+    extrapolated_cells: 0/236 ids broken, 0/239,527 rows unreachable (0.0%)  [was 46.4%]
+    => 615,560 rows now fully reachable
+- Real route proven: de/de21/fabricated-metal-mfg = q78 nuts2 REGIONAL (was q22 country)
+- New durable audit tool: scripts/audit/industry_reach_check.ts (needs SUPABASE_DB_URL
+  from parent E:/atlas/secrets.env; website/.env.local lacks it. Run:
+  `SUPABASE_DB_URL=... npx tsx scripts/audit/industry_reach_check.ts`)
+
+PROCESS NOTE: two commits during this work (224dff2f, 9485219b) overclaimed results
+before I had read the actual output (env was cross-contaminating tool stdout). Commit
+6f3e1da2 is the one with directly-read, trustworthy numbers. The fix itself was always
+sound; only the verification reporting was premature.
+
+## ⏳ ONE OPEN ITEM — perf indexes (USER APPLYING)
+Probe showed synthetic=7 on US + featured routes. Cause is NOT the resolver: the
+cells_master/regional queries hit 'canceling statement due to statement timeout'
+because db/migrations/2026-05-27-perf-indexes.sql was never applied.
+- USER is applying the 6 CREATE INDEX CONCURRENTLY + 3 ANALYZE manually in Supabase SQL Editor.
+- AFTER they land: `npx tsx scripts/audit/probe_live_data.ts` — synthetic should drop 7→0.
+  That closes sub-project ① fully.
 
 ⏳ ONE ITEM PENDING INDEXES (not a code bug):
 - US + featured cell pages fall through to synthesis because cells_master/regional
