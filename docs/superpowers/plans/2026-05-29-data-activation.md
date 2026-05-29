@@ -1,5 +1,41 @@
 # Data Activation: From Disk to Live Site - Implementation Plan
 
+> **!! PREMISE CORRECTED 2026-05-29 BY LIVE RECON. READ THIS FIRST. !!**
+>
+> This plan was written from the stale `HANDOFF-v1.16.md` and old loader
+> scripts, which claimed `regional_cells` and `extrapolated_cells` were
+> EMPTY. They are NOT. A direct query against the live Supabase Pro DB
+> shows:
+>
+> | Table | Plan assumed | LIVE REALITY (measured) |
+> |---|---|---|
+> | `cells_master` | 722k US | 722,432 (US) |
+> | `regional_cells` | EMPTY | **376,033 rows / 127 countries / 78 industries / 80% at quality>=70 / yrs 2018-2025** |
+> | `extrapolated_cells` | EMPTY | **239,527 rows / 259 countries / 236 industries / yrs 2018-2024** |
+>
+> The live `extrapolated_cells` is RICHER than the v1.19.0 parquet on disk
+> (236 industries vs 44), so a later, better pipeline already loaded it.
+> Identifier formats MATCH the website: taxonomy `.id` is underscored
+> (`software_development`) and so is `regional_cells.industry_id`; `geo_id`
+> formats (`de21`, `jp-13`, `mx-cmx`, `US-06`) round-trip through
+> `regionalSlugToGeoId`. Featured tuples resolve at quality 80-85.
+>
+> **CONSEQUENCES:**
+> - **Phase 2 (load extrapolated) is OBSOLETE and DESTRUCTIVE.** Its
+>   `TRUNCATE` + load of the 57,816-row parquet would DELETE ~180k live
+>   rows and ~40 countries. DO NOT RUN IT.
+> - **Phase 5 (build regional_cells ETL) is ALREADY DONE in production.**
+>   Do not rebuild/reload; you would risk overwriting richer live data.
+> - **Phase 0 is DONE** (verifiers written + run; see baseline report).
+> - **Phases 1, 3, 4, 6 REMAIN VALID** but reframed: the goal is no longer
+>   "load the data," it is "PROVE the loaded data reaches every page, find
+>   the routes that still synthesize despite real data existing, surface
+>   the depth, and lock the gain against regression."
+>
+> See `docs/handoff/2026-05-29-session-handoff.md` for the corrected next
+> steps. The phases below are kept for the still-valid tasks (1/3/4/6);
+> ignore Phases 2 and 5.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Make the ~420k real cells that already exist on disk reachable through marginatlas.com, so the site stops synthesizing the entire non-US world and serves real data with honest, measurable coverage.
