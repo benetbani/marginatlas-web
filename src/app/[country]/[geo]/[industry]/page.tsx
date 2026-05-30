@@ -697,6 +697,12 @@ export default async function CellPage({
          single-shape independents naturally suppress themselves. */}
       <SetupCostBlock cell={cell} />
 
+      {/* Confidence worn openly (2026-05-30). Compact, confident coverage
+          badge: neutral 5-dot meter + a positive word for well-covered cells
+          + a quiet methodology link. Not apologetic; low-coverage cells show
+          only the meter (no disclaimer word). */}
+      <CoverageBadge cell={cell} className="mt-2 mb-4" />
+
       {/* Plan v23 Part 3 — narrative now reads as editorial prose. Drop
          cap on the first paragraph, looser line-height, max-w-prose.
          Backend Phase 5 (2026-05-26): a comparative-voice lead is
