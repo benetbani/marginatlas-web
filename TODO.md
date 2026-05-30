@@ -129,13 +129,87 @@ Re-ran probe_live_data.ts (read directly):
 US + featured routes now serve REAL data instead of timing out into synthesis.
 => Sub-project ① REACHABILITY FLOOR IS COMPLETE AND VERIFIED.
 
-## ⛔ STEP 6 BLOCKED BY ENVIRONMENT — resume in a FRESH session
-Attempted to extend exact-first resolution to the remaining query fns. STOPPED:
-the environment degraded to where Bash stdout AND the Read tool both return empty/
-garbled content for src/lib/cells.ts. Cannot safely edit a 1,150-line data spine I
-cannot read back. (Twice earlier this session, corrupted output led to premature
-"verified" commits; not repeating that on the spine.) Writes still work, reads don't.
-A fresh session will have clean I/O.
+## ✅ STEP 6 COMPLETE + VERIFIED — 2026-05-30 (commit 24c543fa)
+Extended exact-first resolution to ALL 6 remaining query fns in src/lib/cells.ts:
+  - getRegionalCellVariants     : .eq -> .in(candidates) + legacy->taxonomy display
+  - getExtrapolatedVariants     : .eq -> .in(candidates) + display naming
+  - getSameIndustryAcrossCountries : .eq -> .in(candidates) (comparison rail)
+  - getSectorFallbackCell       : slugToIndustry -> resolveDisplayIndustry
+  - getTopIndustriesForCountry  : fold legacy->taxonomy ids before aggregation
+  - getNudgeNeighbor            : non-US branch queries taxonomy id + legacy aliases
+Verified (read directly): tsc --noEmit 0 errors; unit test PASS; probe 19 routes
+regional=17 country=2 synthetic=0 error=0 reachability-bugs=0.
+New imports added to cells.ts: LEGACY_DB_TO_TAXONOMY, TAXONOMY_TO_LEGACY_DB.
+
+=> REACHABILITY FOUNDATION (the data floor of sub-project ①) IS FULLY DONE:
+   the bug is fixed in every single-cell lookup AND every variant/rail/ranking path,
+   perf indexes applied, all 615,560 rows reachable, 0% synthetic on the probe.
+
+## ⛔ ①.2 + ①.3 NOT STARTED — environment I/O failed, resume in a FRESH session
+The Claude Code tool I/O degraded to unusable during ①.3 recon: Bash returns empty
+for even `echo`, and the Read tool returns empty for files that exist. Edits/Writes
+still landed. Stopping here is correct: building + registering a prebuild gate I
+cannot run or read back would risk another unverified change. RESTART the Claude Code
+process for clean I/O before continuing.
+
+ALL COMMITTED WORK IS SOUND AND VERIFIED (the reachability foundation is done). Only
+①.2 (honesty states) and ①.3 (skeleton gate) remain in sub-project ①.
+
+### RECON CAPTURED FOR ①.3 (verified by grep before I/O failed — re-confirm, then act)
+- Cell page `src/app/[country]/[geo]/[industry]/page.tsx` renders these <section id=>
+  in SOURCE ORDER: narrative(699), revenue-tiles(734), tax-and-cost-panel(792),
+  revenue-distribution(958), related-cells(1028). The hero is rendered by a COMPONENT
+  (DenseCellHero / MobileCellHero), NOT a <section id="hero">, and margin-waterfall is
+  not a literal section here. So the gate must recognize component-rendered sections,
+  not just literal <section id=>.
+  TWO REAL BUGS TO FIX (found this session):
+    (a) ORDER: canonical CELL_PAGE_SECTIONS is
+        hero, narrative, revenue-tiles, revenue-distribution, margin-waterfall,
+        tax-and-cost-panel, related-cells
+        but the page renders tax-and-cost-panel BEFORE revenue-distribution. Reconcile
+        (either fix the page order or update the canonical list to match intent).
+    (b) TONE BUG: the revenue-distribution <section> uses
+        getToneClass("margin-waterfall") instead of getToneClass("revenue-distribution")
+        — a copy-paste error at line ~958. Fix to the correct tone key.
+- Country page `src/app/[country]/page.tsx` sections (SOURCE ORDER, line):
+  hero(116), country-stats(135), industry-mix-grid(152), top-cities(200), regions(211),
+  related-countries(241). MATCHES canonical COUNTRY_PAGE_SECTIONS exactly. ✓ (good
+  reference for what a compliant page looks like.)
+- `src/app/[country]/[geo]/page.tsx` (1226 lines) and
+  `src/app/[country]/[geo]/[industry]/[sub]/page.tsx` (1148 lines) BOTH have NO literal
+  <section id=> and `return <` at line 46 — they are DISPATCHERS that delegate to
+  components (e.g. NeighborhoodOverview, comparison page components, or the cell
+  template) depending on whether the path segment is a region/city/neighborhood. The
+  gate + the per-level section lists must handle this: the [geo] level can render EITHER
+  a geo-overview OR fall through to the cell template; section order for those rendered
+  components is what to register. READ both files fully first (offset 1, then 40-120) to
+  map their dispatch branches before writing REGION/CITY/NEIGHBORHOOD section lists.
+
+### ①.3 STEPS (the "skeleton respected by all entries" ask)
+1. Read the [geo] and [sub] dispatcher pages fully; map which component renders for
+   region vs city vs neighborhood; note each component's section order.
+2. Extend `src/lib/page-layout/section-order.ts`: add REGION_PAGE_SECTIONS,
+   CITY_PAGE_SECTIONS, NEIGHBORHOOD_PAGE_SECTIONS (today only cell/country/industry
+   exist). Add their tone entries to SECTION_TONES.
+3. Fix the two cell-page bugs above so the page matches its registry.
+4. Write `scripts/verify_section_order.ts` (26th gate): for each level, extract rendered
+   section ids in source order (handle both <section id=> and the known section-rendering
+   components) and assert they are a SUBSEQUENCE of that level's canonical list
+   (subsequence, not equality — data-thin sections legitimately collapse). Fail on any
+   unregistered section id or any out-of-order section.
+5. Register it in `scripts/prebuild_all.ts` GATES array (concurrency stays <=4 on Windows).
+6. `npm run prebuild` (ASK THE USER FIRST per the no-autonomous-build rule) — confirm all
+   26 gates pass.
+
+### ①.2 STEPS (honesty states) — independent of ①.3, either order
+Formalize 3 section states so no section is ever a blank void:
+  real data -> render | confident estimate -> render WITH a visible "estimated" badge
+  (is_synthetic / low quality_score already flags this) | genuinely empty -> a compact
+  "not yet, see nearby" state that links to covered cells in the same geo/industry.
+Touch points: `src/lib/page-layout/section-registry.ts` (resolver already supports
+collapse via requiresData), the section components in `src/components/sections/`, and
+the cell-page composer. The EmptyState / empty/* primitives already exist — wire the
+"not yet" state to link onward instead of rendering nothing.
 
 ### EXACT STEP 6 WORK (do first in fresh session) — extend exact-first to these fns in src/lib/cells.ts
 The pattern is PROVEN in getRegionalCell + getExtrapolatedCell (commit 224dff2f). Apply identically:
