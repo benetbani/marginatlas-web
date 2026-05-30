@@ -39,7 +39,19 @@ PLAN (small, ~1-2 files):
   4. Add a story to src/app/_design/page.tsx (catalog) per the design-system rule.
   5. Verify: npx tsc --noEmit (exit 0) + npx tsx scripts/verify_section_order.ts +
      npx tsx scripts/prebuild_all.ts (26/26) — ASK USER before the full prebuild.
-STATUS 2026-05-30 (end of session): CoverageBadge.tsx is BUILT + committed (45cc6944) and
+## ✅ CONFIDENCE/COVERAGE BADGE — DONE + LIVE + VERIFIED (2026-05-30, commit 9f3a1c20)
+CoverageBadge.tsx built, wired under the cell hero, and full-system verified:
+- import 1 / render 1 (confirmed via python + PowerShell + grep after a wiring tangle)
+- npx tsc --noEmit exit 0
+- section-order gate exit 0
+- full prebuild 26/26 PASS, exit 0
+Confident framing per founder: neutral 5-dot meter + positive word (Measured/Regional) for
+covered cells; low-coverage cells show ONLY the meter, no disclaimer word; no sample size;
+no raw year. Reuses deriveCoverageTier + HowWeKnowThis; does NOT reintroduce apologetic pills.
+Optional follow-on: add a CoverageBadge story to src/app/_design/page.tsx (catalog).
+
+--- historical note (the wiring tangle, now resolved) ---
+STATUS 2026-05-30 (earlier): CoverageBadge.tsx was BUILT + committed (45cc6944) and
 correct (tier logic sound; colors verified vs design-tokens.ts: moss-500/atlas-500/cocoa-300/
 cream-300). BUT it is NOT WIRED INTO THE CELL PAGE — my placement edits kept failing on text
 mismatch and a dedup step removed the import. Last reliable checks: `grep -c "import { CoverageBadge }"`
