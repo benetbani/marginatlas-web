@@ -85,6 +85,7 @@ import { CellFallbackBanner } from "@/components/CellFallbackBanner";
 // Sanity-§8: EstimatedBadge purged; CoverageIndicator stays for its
 // compact (HowWeKnowThis) variant only.
 import { CoverageIndicator, deriveCoverageTier } from "@/components/CoverageIndicator";
+import { CoverageBadge } from "@/components/CoverageBadge";
 import { EditorialNote } from "@/components/EditorialNote";
 // Industry deepening sections. All three self-suppress
 // when their data isn't on the cell, so they're safe to mount before any
