@@ -1,11 +1,33 @@
 # TODO — session 2026-05-28
 
-## ✅ FULL 26-GATE PREBUILD GREEN — 2026-05-30
-scripts/prebuild_all.ts: 26/26 PASS, 0 fail, 40.2s, exit 0 (read from file). New
-section-order gate passes (4.4s). Nothing in the reachability or skeleton work broke
-any existing gate. Sub-project ① data floor + skeleton are DONE and full-system verified.
-NEXT: ①.2 honesty states (3 section states, never a dead void), then sub-projects ②-⑥.
-Section ideas to draw from: docs/superpowers/specs/2026-05-30-section-ideas-research.md
+## ✅ SUB-PROJECT ① FOUNDATION COMPLETE — 2026-05-30
+All three pieces of ① done and full-system verified (26/26 prebuild gates pass twice):
+- ①.1 reachability: 615,560 rows recovered, 0% unreachable (was 39%/46%), perf indexes
+  applied, probe synthetic=0.
+- ①.3 canonical skeleton: 5-level section registry + section-order prebuild gate (26th)
+  + cell page reordered distribution-first.
+- ①.2 honesty / no dead sections: NEW src/components/sections/SectionEmpty.tsx (wrapper
+  over the design-system EmptyState primitive). The hero distribution beat now branches
+  hasDistribution ? <DistributionVisual> : <SectionEmpty with onward links> instead of an
+  empty toned band. Other registered cell sections checked: revenue-tiles always has the
+  typical-revenue stat; tax-and-cost-panel always has AtlasScore; related-cells already
+  guarded. The distribution band was the one true dead-band risk (it's the hero + hard-
+  returns null) and is fixed. Commit c981d1d2.
+
+### NEXT — sub-projects ②-⑥ (each its own spec), per North-Star design
+   docs/superpowers/specs/2026-05-29-atlas-reformation-design.md
+   ② editorial house voice + auto-prose (the verdict line under the hero — high-impact,
+      low-effort per the research) | ③ signature viz family | ④ sector color + imagery
+   | ⑤ quiet gamification (Atlas Score, rankings, rarity, guess-reveal, my-atlas)
+   | ⑥ enrichment pipeline hardening.
+   Section ideas + priorities: docs/superpowers/specs/2026-05-30-section-ideas-research.md
+   Top low-effort/high-impact wins from the research: (1) editorial verdict line under
+   hero [②], (2) confidence/quality badge worn openly, (3) the distribution hero [done].
+
+### Optional ①.2 follow-on (lower priority)
+   Extend SectionEmpty to the few other places that self-suppress to null where a
+   registered section could go blank (e.g. related-cells when comparables=0, now rare
+   post-reachability-fix). Not urgent; the hero beat was the real problem.
 
 Source of truth for this session's work. Marker key: `[ ]` open, `[~]` in progress, `[x]` done (must include verification note).
 
