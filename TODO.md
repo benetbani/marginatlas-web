@@ -145,7 +145,52 @@ New imports added to cells.ts: LEGACY_DB_TO_TAXONOMY, TAXONOMY_TO_LEGACY_DB.
    the bug is fixed in every single-cell lookup AND every variant/rail/ranking path,
    perf indexes applied, all 615,560 rows reachable, 0% synthetic on the probe.
 
-## ⚠️ ①.3 SKELETON — PARTIALLY BUILT, GATE UNVERIFIED (env corrupting stdout). RESUME FRESH.
+## ✅ ①.3 SKELETON GATE — BUILT + VERIFIED WORKING. One reorder left (env-blocked). RESUME FRESH.
+The gate is REAL and CORRECT (verified by reading its output file, not stdout):
+- scripts/verify_section_order.ts works: subsequence check per level, dedupes ternary
+  branches. Last clean run:
+    ✓ country  passes
+    ✓ region   passes (new ids added to [geo]/page.tsx)
+    ✓ industry passes (after ternary-dedupe fix)
+    ✗ cell     FAILS — renders [narrative, revenue-tiles, tax-and-cost-panel,
+               revenue-distribution, related-cells]; canonical wants revenue-distribution
+               BEFORE tax-and-cost-panel. This is a REAL, correct catch.
+- Committed: section-order.ts (REGION/CITY/NEIGHBORHOOD lists + PAGE_SECTION_ORDER + tones),
+  [geo]/page.tsx section ids, the gate, the ternary-dedupe fix.
+- Gate is NOT yet wired into prebuild_all.ts — wire it ONLY after the cell page passes.
+
+### DECISION MADE BY USER: distribution-first.
+Reorder the CELL PAGE to match canonical (do NOT change the registry):
+  target order: hero, narrative, revenue-tiles, revenue-distribution(+margin-waterfall),
+                tax-and-cost-panel, related-cells
+  ACTION: in src/app/[country]/[geo]/[industry]/page.tsx, move the
+  `<section id="tax-and-cost-panel">...</section>` block (AtlasScore + AnnualCostStack +
+  PostTaxToggle) to AFTER the `<section id="revenue-distribution">...</section>` block
+  (which contains DistributionVisual + NetProfitWaterfall) and BEFORE
+  `<section id="related-cells">`.
+
+### ⛔ WHY NOT DONE NOW — corrupted reads of the cell page
+Reading src/app/[country]/[geo]/[industry]/page.tsx returned GARBAGE this session:
+interleaved bogus line numbers (30, 71, 743 mixed into the 786-979 range) and ~40
+fabricated single-char filler comments ({/* . */}, {/* okay */}, {/* —— */}). Moving a
+large JSX block on a corrupted read would destroy the file. DID NOT ATTEMPT. Restart the
+Claude Code process for clean I/O, re-read the file, confirm it's clean (real code, sane
+line numbers), THEN do the move.
+
+### RESUME STEPS (fresh session, clean I/O)
+1. Read src/app/[country]/[geo]/[industry]/page.tsx around the section blocks; confirm
+   the read is CLEAN (no bogus line numbers, no junk comments) before editing.
+2. Move the tax-and-cost-panel <section> to between revenue-distribution and related-cells.
+3. `npx tsx scripts/verify_section_order.ts` -> all 4 pages must show ✓ (read the output
+   FILE, e.g. redirect to a temp file and Read it; do not trust raw stdout this session).
+4. `npx tsc --noEmit` -> 0 errors.
+5. Wire the gate into scripts/prebuild_all.ts GATES array (26th gate; concurrency <=4).
+6. `npm run prebuild` (ASK USER FIRST per no-autonomous-build rule) -> all 26 gates green.
+7. Commit "feat(skeleton): enforce per-level section order (26th prebuild gate)".
+
+### THEN ①.2 honesty states (see plan below) and sub-project ① is complete.
+
+## OLD: ⚠️ ①.3 SKELETON — PARTIALLY BUILT, GATE UNVERIFIED (env corrupting stdout). RESUME FRESH.
 Done + safe (tsc 0 errors verified via file read; additive only):
 - src/lib/page-layout/section-order.ts: added REGION_PAGE_SECTIONS, CITY_PAGE_SECTIONS,
   NEIGHBORHOOD_PAGE_SECTIONS, the PAGE_SECTION_ORDER map, and their SECTION_TONES entries.

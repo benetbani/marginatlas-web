@@ -65,6 +65,7 @@ const GATES: Gate[] = [
   { name: "au-industry-map", script: "scripts/verify_au_industry_map.ts" },
   { name: "au-anchor-render", script: "scripts/verify_au_primary_anchor_render.ts" },
   { name: "layering", script: "scripts/verify_layering.ts" },
+  { name: "section-order", script: "scripts/verify_section_order.ts" },
 ];
 
 /** CLI arg parsing. */
