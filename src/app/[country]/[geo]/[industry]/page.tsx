@@ -782,6 +782,17 @@ export default async function CellPage({
          COGS, etc.). Suppressed when cost_stack is absent. */}
       <AnnualCostStack cell={cell} />
 
+      {/* Distribution band. Moved above the tax/cost story (2026-05-30) so the
+         page is distribution-first, matching the canonical cell skeleton
+         (CELL_PAGE_SECTIONS in section-order.ts). */}
+      <section id="revenue-distribution" className={`py-6 ${getToneClass("revenue-distribution")}`}>
+        <DistributionVisual
+          p10={cell.rev_p10 ?? null}
+          p50={cell.rev_p50 ?? null}
+          p90={cell.rev_p90 ?? null}
+        />
+      </section>
+
       {/* Atlas Score + Typical-firm biography card.
          Plan v14 A.1 (T-A1.4): legacy id="typical-firm" renamed to canonical
          "tax-and-cost-panel": section hosts PostTaxToggle +
@@ -951,19 +962,6 @@ export default async function CellPage({
           geoId={cell.geo_id ?? null}
         />
       ) : null}
-
-      {/* Plan v23 Part 2 — single visual distribution band replaces the
-         previous tile-grid + log-normal-curve combo. One image to look
-         at instead of a number-slap. */}
-      <section id="revenue-distribution" className={`py-6 ${getToneClass("margin-waterfall")}`}>
-        <DistributionVisual
-          p10={cell.rev_p10 ?? null}
-          p50={cell.rev_p50 ?? null}
-          p90={cell.rev_p90 ?? null}
-        />
-        {/* v34 Phase C QuartileMarkers reverted 2026-05-25 pending
-           diagnosis of cell-page load failure. */}
-      </section>
 
       {/* Reformation idea #5 — local cost-of-living context anchor.
          Gives a frame for reading the revenue numbers against the
