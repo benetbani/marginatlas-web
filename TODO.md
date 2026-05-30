@@ -14,6 +14,33 @@ All three pieces of ① done and full-system verified (26/26 prebuild gates pass
   guarded. The distribution band was the one true dead-band risk (it's the hero + hard-
   returns null) and is fixed. Commit c981d1d2.
 
+### ▶ IN PROGRESS — confidence/quality badge worn openly (Zillow trust trick)
+Goal: every cell page openly shows its data confidence + coverage as a visible trust
+element near the hero (not hidden). Per the section-ideas research (high-impact/low-effort).
+RECON DONE (components that already exist — REUSE, don't duplicate):
+  - src/components/QualityDots.tsx — 1-5 dot confidence meter from 0-100 quality_score.
+    role="img", aria-label "Data confidence: N of 5". Founder rule: NEVER show the raw
+    numeric score; dots only.
+  - src/components/CoverageIndicator.tsx — (read it; coverage tier display)
+  - src/components/CellWarningChips.tsx — (read it; renders caveat chips; ALREADY mounted
+    on the cell page — grep showed it imported at line 42)
+  - The Cell type carries: quality_score (0-100), coverage_tier ("S".."X"),
+    coverage_source (string), is_synthetic (bool).
+PLAN (small, ~1-2 files):
+  1. Decide placement: a compact badge row directly under the hero number (cell page),
+     showing QualityDots + a short coverage word (e.g. "Measured" / "Estimated" /
+     "Modeled") + sample size "based on N firms" when n_enterprises present + vintage year.
+     For is_synthetic / coverage_tier "X" cells, label clearly as "Estimated".
+  2. Build src/components/CoverageBadge.tsx (or extend CellWarningChips) composing
+     QualityDots + the coverage word + sample-size + year. forwardRef/displayName/cva per
+     GUIDELINES. NO raw score number. No source-agency names (gate enforces). No em-dash.
+  3. Mount it on the cell page near the hero (the KeyBenchmarkBanner area ~line 777, or
+     just above revenue-tiles ~line 747). Check it is not duplicating CellWarningChips.
+  4. Add a story to src/app/_design/page.tsx (catalog) per the design-system rule.
+  5. Verify: npx tsc --noEmit (exit 0) + npx tsx scripts/verify_section_order.ts +
+     npx tsx scripts/prebuild_all.ts (26/26) — ASK USER before the full prebuild.
+NOT STARTED: no code written yet for the badge. Clean slate. Stopped here on budget limit.
+
 ### NEXT — sub-projects ②-⑥ (each its own spec), per North-Star design
    docs/superpowers/specs/2026-05-29-atlas-reformation-design.md
    ② editorial house voice + auto-prose (the verdict line under the hero — high-impact,
