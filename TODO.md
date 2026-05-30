@@ -121,13 +121,78 @@ before I had read the actual output (env was cross-contaminating tool stdout). C
 6f3e1da2 is the one with directly-read, trustworthy numbers. The fix itself was always
 sound; only the verification reporting was premature.
 
-## ⏳ ONE OPEN ITEM — perf indexes (USER APPLYING)
-Probe showed synthetic=7 on US + featured routes. Cause is NOT the resolver: the
-cells_master/regional queries hit 'canceling statement due to statement timeout'
-because db/migrations/2026-05-27-perf-indexes.sql was never applied.
-- USER is applying the 6 CREATE INDEX CONCURRENTLY + 3 ANALYZE manually in Supabase SQL Editor.
-- AFTER they land: `npx tsx scripts/audit/probe_live_data.ts` — synthetic should drop 7→0.
-  That closes sub-project ① fully.
+## ✅ PERF INDEXES APPLIED + VERIFIED — 2026-05-30 (commit 43e8a9c2)
+User applied all 6 perf indexes. Verified present via pg query (all 6, 0 missing).
+Re-ran probe_live_data.ts (read directly):
+  19 probes: regional=12 country=6 sector=0 synthetic=0 error=0
+  reachability bugs: 0 | industry-resolution drops: 0/10
+US + featured routes now serve REAL data instead of timing out into synthesis.
+=> Sub-project ① REACHABILITY FLOOR IS COMPLETE AND VERIFIED.
+
+## ⛔ STEP 6 BLOCKED BY ENVIRONMENT — resume in a FRESH session
+Attempted to extend exact-first resolution to the remaining query fns. STOPPED:
+the environment degraded to where Bash stdout AND the Read tool both return empty/
+garbled content for src/lib/cells.ts. Cannot safely edit a 1,150-line data spine I
+cannot read back. (Twice earlier this session, corrupted output led to premature
+"verified" commits; not repeating that on the spine.) Writes still work, reads don't.
+A fresh session will have clean I/O.
+
+### EXACT STEP 6 WORK (do first in fresh session) — extend exact-first to these fns in src/lib/cells.ts
+The pattern is PROVEN in getRegionalCell + getExtrapolatedCell (commit 224dff2f). Apply identically:
+  REPLACE:  const rawInd = slugToIndustry(industrySlug);
+            const ind = resolveToMeasuredIndustry(rawInd);
+            ... .eq("industry_id", ind.id) ...
+  WITH:     const candidates = industryQueryCandidates(industrySlug);
+            if (!candidates.length) return [] (or null per fn);
+            ... .in("industry_id", candidates) ...
+            then rank results by candidate priority (candRank helper) and pick best;
+            use resolveDisplayIndustry(industrySlug) for display naming.
+  import is already present: industryQueryCandidates, resolveDisplayIndustry from "./cells/industry_resolution"
+
+Functions to patch (grep `\.eq("industry_id"` and `resolveToMeasuredIndustry` to find exact lines — line numbers drift):
+  1. getRegionalCellVariants     — variants for size-band/year selector on non-US cell pages
+  2. getExtrapolatedVariants     — country-level variant selector
+  3. getSectorFallbackCell       — sector fallback when industry has no direct data
+  4. getSameIndustryAcrossCountries — the "same industry elsewhere" comparison rail
+  5. getNudgeNeighbor            — "better coverage nearby" nudge
+  6. getTopIndustriesForCountry  — non-US path (country page rankings); NOTE this one
+     GROUPS by industry_id from extrapolated_cells — verify the legacy ids are folded
+     to taxonomy ids for display (use resolveDisplayIndustry on each grouped id) so
+     rankings don't show duplicate/legacy labels.
+  ALSO: getCellVariants US path + getCellBySlugRaw US path use NAICS-3 prefix matching
+     (not industry_id) — they are NOT affected by the vocab bug, leave them.
+AFTER each fn: `SUPABASE_DB_URL=<from E:/atlas/secrets.env> npx tsx scripts/audit/probe_live_data.ts`
+  — extend the probe's roundtrip sample to exercise variants/rails if needed; expect synthetic stays 0.
+Then: `npx tsx tests/cells/industry_resolution.test.ts` (PASS) + `npx tsc --noEmit` (0 errors).
+
+### THEN ①.2 HONESTY STATES
+Formalize 3 section states so no section is ever a blank void:
+  - real data -> render
+  - confident estimate -> render WITH visible "estimated" badge (is_synthetic / low quality already flags this)
+  - genuinely empty -> compact "not yet" state linking to what IS covered nearby
+Touch points: src/lib/page-layout/section-registry.ts (resolver already supports collapse),
+the section components under src/components/sections/, and the cell page composer.
+
+### THEN ①.3 CANONICAL SKELETON (the "skeleton respected by all entries" ask)
+Extend src/lib/page-layout/section-order.ts from {cell,country,industry} to all 5 levels:
+  country, region, city, neighborhood, cell — each a fixed ordered section list.
+Add prebuild gate scripts/verify_section_order.ts (26th gate) asserting each level's page
+composes sections in registered order, no unregistered section, no missing required section.
+Register it in scripts/prebuild_all.ts GATES array (concurrency stays <=4 on Windows).
+Cell-page reference order: hero(number+verdict+distribution), narrative(minimal verdict
+one-liner in ①; full editorial is ②), revenue-tiles, revenue-distribution, margin-waterfall,
+tax-and-cost-panel, comparisons(labeled rails), related-cells, methodology/coverage.
+
+### THEN CHECKPOINT
+`npm run prebuild` (ASK USER FIRST per the no-autonomous-build rule) — all gates incl. the new one.
+Commit. Sub-project ① complete. Then ② editorial / ③ viz / ④ color+imagery / ⑤ gamification / ⑥ enrichment.
+
+### ENV NOTE FOR NEXT SESSION
+This session's tool I/O degraded badly toward the end (empty/garbled Bash output and Read
+results, commands auto-backgrounding, cross-contaminated stdout). Everything committed is
+sound and verified. If reads come back empty in the new session too, restart the Claude Code
+process. All scripts that need the DB take SUPABASE_DB_URL from E:/atlas/secrets.env (the
+website .env.local has only PostgREST keys, no direct pg URL).
 
 ⏳ ONE ITEM PENDING INDEXES (not a code bug):
 - US + featured cell pages fall through to synthesis because cells_master/regional
