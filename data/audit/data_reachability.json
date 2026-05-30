@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-30T05:53:21.372Z",
+  "generated_at": "2026-05-30T05:57:44.345Z",
   "sample_size": 19,
   "synthetic_count": 0,
   "synthesis_rate": 0,
@@ -43,10 +43,10 @@
       "preserved": false
     },
     {
-      "db_industry": "textile_apparel_mfg",
-      "via_slug": "textile-apparel-mfg",
-      "resolved_to": "apparel_mfg",
-      "preserved": false
+      "db_industry": "livestock_farming",
+      "via_slug": "livestock-farming",
+      "resolved_to": "livestock_farming",
+      "preserved": true
     },
     {
       "db_industry": "metal_products_mfg",
@@ -96,12 +96,6 @@
       "db_industry": "auto_dealers_gas",
       "via_slug": "auto-dealers-gas",
       "resolved_to": "auto_dealers",
-      "preserved": false
-    },
-    {
-      "db_industry": "textile_apparel_mfg",
-      "via_slug": "textile-apparel-mfg",
-      "resolved_to": "apparel_mfg",
       "preserved": false
     },
     {
@@ -251,10 +245,10 @@
       "reachability_bug": false
     },
     {
-      "label": "roundtrip:MX/MX-AGU/textile_apparel_mfg",
+      "label": "roundtrip:MX/MX-AGU/livestock_farming",
       "country": "mx",
       "geoSlug": "mx-agu",
-      "industrySlug": "textile-apparel-mfg",
+      "industrySlug": "livestock-farming",
       "db_geo_id": "MX-AGU",
       "resolved_geo_id": "MX-AGU",
       "tier": "regional",

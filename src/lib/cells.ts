@@ -66,6 +66,8 @@ export { slugify, regionalSlugToGeoId, listUsStates };
 import {
   industryQueryCandidates,
   resolveDisplayIndustry,
+  LEGACY_DB_TO_TAXONOMY,
+  TAXONOMY_TO_LEGACY_DB,
 } from "./cells/industry_resolution";
 
 export type Cell = {
@@ -286,16 +288,17 @@ export async function getRegionalCellVariants(
 ): Promise<Cell[]> {
   const c = country.toUpperCase();
   const geoId = regionalSlugToGeoId(c, geoSlug);
-  const rawInd = slugToIndustry(industrySlug);
-  const ind = resolveToMeasuredIndustry(rawInd);
-  if (!ind) return [];
+  // Exact-first: include precise + legacy ids so variant rows are not missed.
+  const candidates = industryQueryCandidates(industrySlug);
+  if (candidates.length === 0) return [];
+  const dispInd = resolveDisplayIndustry(industrySlug);
 
   const { data, error } = await supabaseAdmin
     .from("regional_cells")
     .select("*")
     .eq("country", c)
     .eq("geo_id", geoId)
-    .eq("industry_id", ind.id)
+    .in("industry_id", candidates)
     .order("year", { ascending: false, nullsFirst: false })
     .order("n_enterprises", { ascending: false, nullsFirst: false })
     .limit(50);
@@ -312,6 +315,8 @@ export async function getRegionalCellVariants(
       const rowInd = (row.industry_id as string) || "";
       // Skip suppressed rows
       if (isCellSuppressed(rowCountry, rowGeo, rowInd)) return null;
+      // Present the taxonomy industry even when the row uses a legacy id.
+      if (dispInd) row.industry_id = dispInd.id;
       let cell = normalizeRegionalRow(row);
       cell = applyCellOverrides(rowCountry, rowGeo, rowInd, cell);
       if (friendlyLabel) cell.geo_name = friendlyLabel;
@@ -682,7 +687,14 @@ export async function getTopIndustriesForCountry(
     .order("quality_score", { ascending: false, nullsFirst: false })
     .limit(500);
   if (error || !data) return [];
-  return aggregateExtrapolatedByIndustry(data as ExtrapolatedRow[], country, limit);
+  // Fold legacy DB ids to their taxonomy equivalents BEFORE aggregation, so
+  // legacy-tagged rows (metal_products_mfg, etc.) are not silently dropped by
+  // the aggregator's INDUSTRY_BY_ID lookup and don't show as duplicate labels.
+  const folded = (data as ExtrapolatedRow[]).map((r) => ({
+    ...r,
+    industry_id: LEGACY_DB_TO_TAXONOMY[r.industry_id] ?? r.industry_id,
+  }));
+  return aggregateExtrapolatedByIndustry(folded, country, limit);
 }
 
 /**
@@ -738,9 +750,11 @@ export async function getSameIndustryAcrossCountries(
   excludeIso2: string,
   limit = 10
 ): Promise<Cell[]> {
-  const rawInd = slugToIndustry(industrySlug);
-  const ind = resolveToMeasuredIndustry(rawInd);
-  if (!ind) return [];
+  // Exact-first: include precise + legacy ids so the comparison rail reaches
+  // every country's row for this industry. `ind` drives display + bounds.
+  const candidates = industryQueryCandidates(industrySlug);
+  const ind = resolveDisplayIndustry(industrySlug);
+  if (!ind || candidates.length === 0) return [];
   const excludeIso3 = iso2ToIso3(excludeIso2) || "";
   // Pull a wider slate so SMB-bound filtering still
   // leaves enough comparators after dropping clearly-broken predictions
@@ -749,7 +763,7 @@ export async function getSameIndustryAcrossCountries(
   let q = supabaseAdmin
     .from("extrapolated_cells")
     .select("*")
-    .eq("industry_id", ind.id)
+    .in("industry_id", candidates)
     .order("quality_score", { ascending: false, nullsFirst: false })
     .order("predicted_rev_per_firm", { ascending: false, nullsFirst: false })
     .limit(limit * 5);
@@ -803,13 +817,15 @@ export async function getExtrapolatedVariants(
 ): Promise<Cell[]> {
   const iso3 = iso2ToIso3(iso2);
   if (!iso3) return [];
-  const ind = slugToIndustry(industrySlug);
-  if (!ind) return [];
+  // Exact-first: include precise + legacy ids so variant rows are not missed.
+  const candidates = industryQueryCandidates(industrySlug);
+  if (candidates.length === 0) return [];
+  const ind = resolveDisplayIndustry(industrySlug);
   const { data, error } = await supabaseAdmin
     .from("extrapolated_cells")
     .select("*")
     .eq("country_iso3", iso3)
-    .eq("industry_id", ind.id)
+    .in("industry_id", candidates)
     .order("year", { ascending: false, nullsFirst: false })
     .limit(50);
   if (error || !data) return [];
@@ -822,8 +838,8 @@ export async function getExtrapolatedVariants(
       geo_name: (r.country_name as string) || iso2ToName(iso2),
       naics_6: null,
       naics_4: null,
-      industry_id: ind.id,
-      industry_description: ind.name,
+      industry_id: ind?.id ?? (r.industry_id as string),
+      industry_description: ind?.name ?? (r.industry_id as string),
       size_band: (r.size_band as string) || null,
       year: (r.year as number) || 2024,
       n_enterprises: null,
@@ -945,7 +961,9 @@ export async function getSectorFallbackCell(
 ): Promise<Cell | null> {
   const iso3 = iso2ToIso3(iso2);
   if (!iso3) return null;
-  const rawInd = slugToIndustry(industrySlug);
+  // resolveDisplayIndustry so legacy slugs (e.g. metal-products-mfg) still
+  // resolve to a taxonomy industry and the sector fallback can fire.
+  const rawInd = resolveDisplayIndustry(industrySlug);
   if (!rawInd) return null;
   const sectorId = rawInd.sector_id;
   if (!sectorId) return null;
