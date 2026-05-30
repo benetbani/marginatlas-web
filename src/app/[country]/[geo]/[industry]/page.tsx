@@ -38,6 +38,7 @@ import { SECTOR_BY_ID, INDUSTRY_BY_ID, slugToIndustry, resolveToMeasuredIndustry
 import { CellDataset, Breadcrumbs } from "@/components/StructuredData";
 import { RelatedIndustriesStrip } from "@/components/RelatedIndustriesStrip";
 import { getToneClass } from "@/lib/page-layout/section-order";
+import { SectionEmpty } from "@/components/sections/SectionEmpty";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { CellWarningChips } from "@/components/CellWarningChips";
 // EmptyStateCard import removed; we degrade silently now.
@@ -321,6 +322,18 @@ export default async function CellPage({
       slug: industryToSlug(i.id),
     }))
     .sort((a, b) => a.name.localeCompare(b.name));
+
+  // Sub-project 1.2 (no dead sections): the revenue-distribution section is a
+  // registered skeleton beat, so it must never render as an empty toned band.
+  // DistributionVisual needs all three of p10/p50/p90 to draw a spread; when
+  // any is missing we render SectionEmpty with onward links to cells that DO
+  // have the full distribution (drawn from the already-fetched comparables).
+  const hasDistribution =
+    cell.rev_p10 != null && cell.rev_p50 != null && cell.rev_p90 != null;
+  const distributionSuggestions = comparables.slice(0, 3).map((c) => ({
+    label: `${c.industry_name ?? "Similar"} in ${c.geo_name ?? "nearby"}`,
+    href: cellUrl(c),
+  }));
 
   // Caveat resolution: which industry record did the URL hit, and are we
   // displaying parent-fallback numbers?
@@ -784,13 +797,24 @@ export default async function CellPage({
 
       {/* Distribution band. Moved above the tax/cost story (2026-05-30) so the
          page is distribution-first, matching the canonical cell skeleton
-         (CELL_PAGE_SECTIONS in section-order.ts). */}
+         (CELL_PAGE_SECTIONS in section-order.ts).
+         Sub-project 1.2 (no dead sections): when the spread is missing,
+         render an honest "not yet, see nearby" state instead of an empty
+         toned band. DistributionVisual needs p10+p50+p90 to render. */}
       <section id="revenue-distribution" className={`py-6 ${getToneClass("revenue-distribution")}`}>
-        <DistributionVisual
-          p10={cell.rev_p10 ?? null}
-          p50={cell.rev_p50 ?? null}
-          p90={cell.rev_p90 ?? null}
-        />
+        {hasDistribution ? (
+          <DistributionVisual
+            p10={cell.rev_p10 ?? null}
+            p50={cell.rev_p50 ?? null}
+            p90={cell.rev_p90 ?? null}
+          />
+        ) : (
+          <SectionEmpty
+            title="Full distribution coming for this cell"
+            body={`We have a typical figure but not yet the full bottom-to-top spread for ${cell.industry_name ?? "this business"}${cell.geo_name ? ` in ${cell.geo_name}` : ""}. These nearby cells already show it.`}
+            suggestions={distributionSuggestions}
+          />
+        )}
       </section>
 
       {/* Atlas Score + Typical-firm biography card.
