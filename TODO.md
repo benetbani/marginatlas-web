@@ -39,6 +39,29 @@ PLAN (small, ~1-2 files):
   4. Add a story to src/app/_design/page.tsx (catalog) per the design-system rule.
   5. Verify: npx tsc --noEmit (exit 0) + npx tsx scripts/verify_section_order.ts +
      npx tsx scripts/prebuild_all.ts (26/26) — ASK USER before the full prebuild.
+STATUS 2026-05-30 (end of session): CoverageBadge.tsx is BUILT + committed (45cc6944) and
+correct (tier logic sound; colors verified vs design-tokens.ts: moss-500/atlas-500/cocoa-300/
+cream-300). BUT it is NOT WIRED INTO THE CELL PAGE — my placement edits kept failing on text
+mismatch and a dedup step removed the import. Last reliable checks: `grep -c "import { CoverageBadge }"`
+= 0, `<CoverageBadge` refs = 0, tsc exit 0 (passes precisely because the component is unused),
+section gate exit 0. So commit 45cc6944 shipped a correct-but-UNUSED component (dead code, harmless,
+but the "feat" message overstates it — it's not live on the page).
+
+⛔ ENVIRONMENT FAILED at this point: Bash, PowerShell, Read, and Grep all began returning empty
+output. Could not safely wire a 1090-line file I cannot read back. RESTART the Claude Code process.
+
+FIX IN FRESH SESSION (2 lines, ~2 min):
+  1. Read src/app/[country]/[geo]/[industry]/page.tsx; find where the hero renders (DenseCellHero /
+     MobileCellHero, near line ~410-430) and the first body section after it.
+  2. Add import near the other component imports (~line 88):
+        import { CoverageBadge } from "@/components/CoverageBadge";
+  3. Add the render immediately AFTER the hero / before the first body section:
+        <CoverageBadge cell={cell} className="mt-4" />
+  4. Verify: grep shows exactly 1 import + 1 render; npx tsc --noEmit exit 0; npx tsx
+     scripts/verify_section_order.ts exit 0; then npx tsx scripts/prebuild_all.ts (ASK USER) 26/26.
+  5. Commit "fix(trust): actually mount CoverageBadge on the cell page".
+  6. Optional: add a CoverageBadge story to src/app/_design/page.tsx (catalog) per design-system rule.
+
 NOT STARTED: no code written yet for the badge. Clean slate. Stopped here on budget limit.
 
 ### NEXT — sub-projects ②-⑥ (each its own spec), per North-Star design
