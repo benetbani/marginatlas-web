@@ -38,12 +38,21 @@ const PAGES: PageCheck[] = [
   { level: "industry", file: "src/app/industries/[industry]/page.tsx" },
 ];
 
-/** Extract <section id="..."> ids in source order. */
+/**
+ * Extract <section id="..."> ids in source order, collapsing CONSECUTIVE
+ * duplicates. A page commonly renders the same section id in both branches of
+ * a ternary (`hasData ? <section id="hero">A : <section id="hero">B`); only one
+ * renders at runtime, so two adjacent identical ids are one logical section,
+ * not an out-of-order repeat. Non-adjacent duplicates are still surfaced (they
+ * indicate a genuinely repeated section).
+ */
 function renderedSectionIds(source: string): string[] {
   const ids: string[] = [];
   const re = /<section[^>]*\sid="([a-z0-9-]+)"/g;
   let m: RegExpExecArray | null;
-  while ((m = re.exec(source)) !== null) ids.push(m[1]);
+  while ((m = re.exec(source)) !== null) {
+    if (ids[ids.length - 1] !== m[1]) ids.push(m[1]);
+  }
   return ids;
 }
 
