@@ -86,7 +86,7 @@ export default async function RegionLandingPage({
   return (
     <div>
       {/* Hero */}
-      <section className="py-10 md:py-14 bg-cream-100">
+      <section id="hero" className="py-10 md:py-14 bg-cream-100">
         <nav className="text-sm text-cocoa-700/70 mb-4">
           <Link href="/" className="hover:text-atlas-700">Home</Link>
           <span className="mx-2">/</span>
@@ -119,7 +119,7 @@ export default async function RegionLandingPage({
         const nbList = getNeighborhoodsForCity(geo);
         if (!nbList || nbList.length === 0) return null;
         return (
-          <section className="py-10 md:py-14 bg-cream-50">
+          <section id="neighborhoods" className="py-10 md:py-14 bg-cream-50">
             <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900">
               Neighborhoods of {regionLabel}
             </h2>
@@ -155,7 +155,7 @@ export default async function RegionLandingPage({
 
       {/* Top cities */}
       {curatedCities.length > 0 && (
-        <section className="py-10 md:py-14">
+        <section id="top-cities" className="py-10 md:py-14">
           <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900">
             Top cities in {regionLabel}
           </h2>
@@ -189,7 +189,7 @@ export default async function RegionLandingPage({
 
       {/* Top industries */}
       {topIndustries.length > 0 && (
-        <section className="py-10 md:py-14 bg-cream-50">
+        <section id="top-industries" className="py-10 md:py-14 bg-cream-50">
           <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900">
             Top small-business industries in {regionLabel}
           </h2>

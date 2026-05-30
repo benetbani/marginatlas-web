@@ -29,6 +29,32 @@ export const COUNTRY_PAGE_SECTIONS = [
   "related-countries",
 ] as const;
 
+// Region / city landing page (`/[country]/[geo]`). Renders a hero, an
+// optional neighborhoods grid (cities with a neighborhood scheme only),
+// top cities in the region, and the region's top SMB industries. Sections
+// after the hero self-suppress when their data is absent.
+export const REGION_PAGE_SECTIONS = [
+  "hero",
+  "city-character",
+  "neighborhoods",
+  "top-cities",
+  "top-industries",
+] as const;
+
+// City landing page shares the region template today (same `/[country]/[geo]`
+// route resolves both region and city slugs). Kept as a distinct named
+// export so the two can diverge later without touching the gate.
+export const CITY_PAGE_SECTIONS = REGION_PAGE_SECTIONS;
+
+// Neighborhood overview (`/[country]/[geo]/[sub]` when [sub] is a
+// neighborhood rather than an industry). Renders a hero and the
+// neighborhood's industry grid; falls through to the cell template when the
+// final segment resolves to an industry.
+export const NEIGHBORHOOD_PAGE_SECTIONS = [
+  "hero",
+  "neighborhood-industries",
+] as const;
+
 // Country-page rebuild §8 (2026-05-25): industry-tiles, revenue-
 // distribution, top-countries, and top-cities-for-industry sections
 // were removed because they depend on a global cross-country revenue
@@ -42,6 +68,24 @@ export const INDUSTRY_PAGE_SECTIONS = [
 export type CellSection = (typeof CELL_PAGE_SECTIONS)[number];
 export type CountrySection = (typeof COUNTRY_PAGE_SECTIONS)[number];
 export type IndustrySection = (typeof INDUSTRY_PAGE_SECTIONS)[number];
+export type RegionSection = (typeof REGION_PAGE_SECTIONS)[number];
+export type NeighborhoodSection = (typeof NEIGHBORHOOD_PAGE_SECTIONS)[number];
+
+/**
+ * Per-level canonical section order, keyed for the verify_section_order
+ * prebuild gate. The gate asserts each page renders a SUBSEQUENCE of its
+ * level's list (subsequence, not equality, because data-thin sections
+ * collapse to nothing). Adding a section to a page means adding it here
+ * first, in the right position.
+ */
+export const PAGE_SECTION_ORDER: Record<string, readonly string[]> = {
+  cell: CELL_PAGE_SECTIONS,
+  country: COUNTRY_PAGE_SECTIONS,
+  region: REGION_PAGE_SECTIONS,
+  city: CITY_PAGE_SECTIONS,
+  neighborhood: NEIGHBORHOOD_PAGE_SECTIONS,
+  industry: INDUSTRY_PAGE_SECTIONS,
+};
 
 /**
  * Section background tone map.
@@ -89,6 +133,16 @@ export const SECTION_TONES: Record<string, SectionTone> = {
   "industry-tiles": "cream-50",
   "top-countries": "white",
   "top-cities-for-industry": "cream-100",
+
+  // Region / city landing page. Alternating cream/white after the
+  // cream-100 hero to preserve the broadsheet rhythm. ("top-cities" already
+  // has a tone entry under the country page block above and is shared.)
+  "city-character": "white",
+  "neighborhoods": "cream-50",
+  "top-industries": "cream-50",
+
+  // Neighborhood overview
+  "neighborhood-industries": "cream-50",
 
   // Homepage. Plan v14 6d: hero is a quiet editorial masthead on
   // cream-100 paper (was ink-dark cinematic video frame). The slight

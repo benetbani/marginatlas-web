@@ -145,7 +145,50 @@ New imports added to cells.ts: LEGACY_DB_TO_TAXONOMY, TAXONOMY_TO_LEGACY_DB.
    the bug is fixed in every single-cell lookup AND every variant/rail/ranking path,
    perf indexes applied, all 615,560 rows reachable, 0% synthetic on the probe.
 
-## ⛔ ①.2 + ①.3 NOT STARTED — environment I/O failed, resume in a FRESH session
+## ⚠️ ①.3 SKELETON — PARTIALLY BUILT, GATE UNVERIFIED (env corrupting stdout). RESUME FRESH.
+Done + safe (tsc 0 errors verified via file read; additive only):
+- src/lib/page-layout/section-order.ts: added REGION_PAGE_SECTIONS, CITY_PAGE_SECTIONS,
+  NEIGHBORHOOD_PAGE_SECTIONS, the PAGE_SECTION_ORDER map, and their SECTION_TONES entries.
+- src/app/[country]/[geo]/page.tsx: added id="hero|neighborhoods|top-cities|top-industries"
+  to the four previously-unmarked <section>s so the region page has an enforceable skeleton.
+- scripts/verify_section_order.ts: NEW prebuild-gate candidate. Subsequence check of each
+  page's <section id=> order against its canonical list.
+
+⛔ DO NOT TRUST THE GATE YET / DO NOT WIRE IT INTO prebuild_all.ts until this is resolved:
+  When run, the gate REPORTED all pages pass — but that is almost certainly WRONG. The cell
+  page renders sections in order [narrative, revenue-tiles, tax-and-cost-panel,
+  revenue-distribution, related-cells], while canonical CELL_PAGE_SECTIONS has
+  revenue-distribution BEFORE tax-and-cost-panel. A correct subsequence check MUST FAIL that
+  (revenue-distribution appears after tax-and-cost-panel in the render = out of order). The
+  reported "pass" is unexplained and coincided with proven stdout corruption (injected prose,
+  phantom "=== DONE ===", a violation reported for two identical arrays in the same run).
+  TWO possibilities to check FIRST in a clean session:
+    (a) Gate bug: re-run `npx tsx scripts/verify_section_order.ts` with clean I/O; if the cell
+        page does NOT fail, debug firstViolation() (the subsequence/indexOf-from-cursor logic).
+    (b) Real order discrepancy needing a DECISION: is tax-and-cost-panel-before-
+        revenue-distribution the intended cell order? If yes, update CELL_PAGE_SECTIONS to
+        match the page. If no, reorder the page. (This was already flagged as a decision item.)
+  Only once the gate provably FAILS on a real violation and PASSES on a compliant page:
+    - register it in scripts/prebuild_all.ts GATES array (26th gate; concurrency stays <=4)
+    - `npm run prebuild` (ASK USER FIRST) -> all gates green
+    - commit "feat: section-order prebuild gate (per-level canonical skeleton enforced)"
+
+### WHY I STOPPED HERE
+Tool stdout began corrupting mid-step (injected text, contradictory results). Edits/commits
+still land correctly (files verify clean on re-read), but I cannot TRUST verification output,
+and verifying a build gate is the entire point of a build gate. Per the no-premature-"done"
+discipline (violated twice earlier this session under the same corruption), stopping is correct.
+RESTART the Claude Code process for clean I/O before continuing ①.3.
+
+### REMAINING IN ①.3 AFTER THE GATE IS TRUSTED
+- Decide + fix the cell-page section-order discrepancy (above).
+- Confirm the [sub] neighborhood page (src/app/[country]/[geo]/[industry]/[sub]/page.tsx, 335
+  lines, dispatcher) section order; add NEIGHBORHOOD ids if it renders its own sections, or
+  leave as component-dispatch (gate already skips literal-section-free pages).
+- Optionally add the cell + industry pages to the gate's PAGES list with hero recognized as
+  a component-rendered section (DenseCellHero/MobileCellHero), not a literal <section id=hero>.
+
+## OLD NOTE (superseded) — ①.2 + ①.3 NOT STARTED — environment I/O failed, resume in a FRESH session
 The Claude Code tool I/O degraded to unusable during ①.3 recon: Bash returns empty
 for even `echo`, and the Read tool returns empty for files that exist. Edits/Writes
 still landed. Stopping here is correct: building + registering a prebuild gate I
@@ -162,15 +205,15 @@ ALL COMMITTED WORK IS SOUND AND VERIFIED (the reachability foundation is done). 
   (DenseCellHero / MobileCellHero), NOT a <section id="hero">, and margin-waterfall is
   not a literal section here. So the gate must recognize component-rendered sections,
   not just literal <section id=>.
-  TWO REAL BUGS TO FIX (found this session):
-    (a) ORDER: canonical CELL_PAGE_SECTIONS is
-        hero, narrative, revenue-tiles, revenue-distribution, margin-waterfall,
-        tax-and-cost-panel, related-cells
-        but the page renders tax-and-cost-panel BEFORE revenue-distribution. Reconcile
-        (either fix the page order or update the canonical list to match intent).
-    (b) TONE BUG: the revenue-distribution <section> uses
-        getToneClass("margin-waterfall") instead of getToneClass("revenue-distribution")
-        — a copy-paste error at line ~958. Fix to the correct tone key.
+  ONE ORDER DISCREPANCY (needs a DECISION, not a blind fix):
+    Canonical CELL_PAGE_SECTIONS is hero, narrative, revenue-tiles,
+    revenue-distribution, margin-waterfall, tax-and-cost-panel, related-cells
+    but the page renders tax-and-cost-panel BEFORE revenue-distribution.
+    This may be intentional. Decide canonical-vs-page with the user before enforcing.
+  NOT A BUG (corrected): the revenue-distribution <section> using
+    getToneClass("margin-waterfall") at line 958 is INTENTIONAL — the comment at
+    954-957 says the margin-waterfall renders inside the revenue-distribution band so
+    they read as one "what you earn / what you keep" unit. Do NOT "fix" this.
 - Country page `src/app/[country]/page.tsx` sections (SOURCE ORDER, line):
   hero(116), country-stats(135), industry-mix-grid(152), top-cities(200), regions(211),
   related-countries(241). MATCHES canonical COUNTRY_PAGE_SECTIONS exactly. ✓ (good
