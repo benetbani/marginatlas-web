@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-05-29T19:30:11.358Z",
-  "sample_size": 17,
-  "synthetic_count": 7,
-  "synthesis_rate": 0.4118,
+  "generated_at": "2026-05-30T05:53:21.372Z",
+  "sample_size": 19,
+  "synthetic_count": 0,
+  "synthesis_rate": 0,
   "reachability_bug_count": 0,
   "tier_breakdown": {
-    "regional": 9,
-    "country": 1,
+    "regional": 17,
+    "country": 2,
     "sector": 0,
-    "synthetic": 7,
+    "synthetic": 0,
     "error": 0
   },
   "industry_remaps": [
@@ -19,10 +19,10 @@
       "preserved": true
     },
     {
-      "db_industry": "warehousing_storage",
-      "via_slug": "warehousing-storage",
-      "resolved_to": "warehousing_storage",
-      "preserved": true
+      "db_industry": "auto_dealers_gas",
+      "via_slug": "auto-dealers-gas",
+      "resolved_to": "auto_dealers",
+      "preserved": false
     },
     {
       "db_industry": "insurance",
@@ -37,15 +37,27 @@
       "preserved": false
     },
     {
-      "db_industry": "crop_farming",
-      "via_slug": "crop-farming",
-      "resolved_to": "grain_farming",
+      "db_industry": "auto_dealers_gas",
+      "via_slug": "auto-dealers-gas",
+      "resolved_to": "auto_dealers",
       "preserved": false
     },
     {
-      "db_industry": "livestock_farming",
-      "via_slug": "livestock-farming",
-      "resolved_to": "livestock_farming",
+      "db_industry": "textile_apparel_mfg",
+      "via_slug": "textile-apparel-mfg",
+      "resolved_to": "apparel_mfg",
+      "preserved": false
+    },
+    {
+      "db_industry": "metal_products_mfg",
+      "via_slug": "metal-products-mfg",
+      "resolved_to": "wood_products_mfg",
+      "preserved": false
+    },
+    {
+      "db_industry": "gambling_amusement",
+      "via_slug": "gambling-amusement",
+      "resolved_to": "gambling_amusement",
       "preserved": true
     },
     {
@@ -55,14 +67,20 @@
       "preserved": false
     },
     {
-      "db_industry": "travel_agencies",
-      "via_slug": "travel-agencies",
-      "resolved_to": "travel_agencies",
-      "preserved": true
+      "db_industry": "auto_dealers_gas",
+      "via_slug": "auto-dealers-gas",
+      "resolved_to": "auto_dealers",
+      "preserved": false
     }
   ],
   "industry_remap_drops": [
     {
+      "db_industry": "auto_dealers_gas",
+      "via_slug": "auto-dealers-gas",
+      "resolved_to": "auto_dealers",
+      "preserved": false
+    },
+    {
       "db_industry": "insurance",
       "via_slug": "insurance",
       "resolved_to": "real_estate_agencies",
@@ -75,9 +93,27 @@
       "preserved": false
     },
     {
-      "db_industry": "crop_farming",
-      "via_slug": "crop-farming",
-      "resolved_to": "grain_farming",
+      "db_industry": "auto_dealers_gas",
+      "via_slug": "auto-dealers-gas",
+      "resolved_to": "auto_dealers",
+      "preserved": false
+    },
+    {
+      "db_industry": "textile_apparel_mfg",
+      "via_slug": "textile-apparel-mfg",
+      "resolved_to": "apparel_mfg",
+      "preserved": false
+    },
+    {
+      "db_industry": "metal_products_mfg",
+      "via_slug": "metal-products-mfg",
+      "resolved_to": "wood_products_mfg",
+      "preserved": false
+    },
+    {
+      "db_industry": "auto_dealers_gas",
+      "via_slug": "auto-dealers-gas",
+      "resolved_to": "auto_dealers",
       "preserved": false
     },
     {
@@ -94,9 +130,9 @@
       "geoSlug": "california",
       "industrySlug": "software-development",
       "resolved_geo_id": "CALIFORNIA",
-      "tier": "synthetic",
-      "quality": 20,
-      "geo_level": "region",
+      "tier": "regional",
+      "quality": 100,
+      "geo_level": "state",
       "reachability_bug": false
     },
     {
@@ -116,9 +152,9 @@
       "geoSlug": "de21",
       "industrySlug": "fabricated-metal-mfg",
       "resolved_geo_id": "DE21",
-      "tier": "synthetic",
-      "quality": 20,
-      "geo_level": "region",
+      "tier": "regional",
+      "quality": 78,
+      "geo_level": "nuts2",
       "reachability_bug": false
     },
     {
@@ -127,9 +163,9 @@
       "geoSlug": "es511",
       "industrySlug": "restaurants",
       "resolved_geo_id": "ES511",
-      "tier": "synthetic",
-      "quality": 20,
-      "geo_level": "region",
+      "tier": "country",
+      "quality": 30,
+      "geo_level": "country",
       "reachability_bug": false
     },
     {
@@ -149,9 +185,9 @@
       "geoSlug": "california",
       "industrySlug": "restaurants",
       "resolved_geo_id": "CALIFORNIA",
-      "tier": "synthetic",
-      "quality": 20,
-      "geo_level": "region",
+      "tier": "regional",
+      "quality": 100,
+      "geo_level": "state",
       "reachability_bug": false
     },
     {
@@ -167,10 +203,10 @@
       "reachability_bug": false
     },
     {
-      "label": "roundtrip:FR/FR1/warehousing_storage",
+      "label": "roundtrip:FR/FR1/auto_dealers_gas",
       "country": "fr",
       "geoSlug": "fr1",
-      "industrySlug": "warehousing-storage",
+      "industrySlug": "auto-dealers-gas",
       "db_geo_id": "FR1",
       "resolved_geo_id": "FR1",
       "tier": "regional",
@@ -203,10 +239,10 @@
       "reachability_bug": false
     },
     {
-      "label": "roundtrip:JP/JP-01000/crop_farming",
+      "label": "roundtrip:JP/JP-01000/auto_dealers_gas",
       "country": "jp",
       "geoSlug": "jp-01000",
-      "industrySlug": "crop-farming",
+      "industrySlug": "auto-dealers-gas",
       "db_geo_id": "JP-01000",
       "resolved_geo_id": "JP-01000",
       "tier": "regional",
@@ -215,15 +251,39 @@
       "reachability_bug": false
     },
     {
-      "label": "roundtrip:MX/MX-AGU/livestock_farming",
+      "label": "roundtrip:MX/MX-AGU/textile_apparel_mfg",
       "country": "mx",
       "geoSlug": "mx-agu",
-      "industrySlug": "livestock-farming",
+      "industrySlug": "textile-apparel-mfg",
       "db_geo_id": "MX-AGU",
       "resolved_geo_id": "MX-AGU",
       "tier": "regional",
       "quality": 96,
       "geo_level": "state",
+      "reachability_bug": false
+    },
+    {
+      "label": "roundtrip:AU/AU-202021027/metal_products_mfg",
+      "country": "au",
+      "geoSlug": "au-202021027",
+      "industrySlug": "metal-products-mfg",
+      "db_geo_id": "AU-202021027",
+      "resolved_geo_id": "AU-202021027",
+      "tier": "regional",
+      "quality": 90,
+      "geo_level": "sa2",
+      "reachability_bug": false
+    },
+    {
+      "label": "roundtrip:GB/GB-E07000107/gambling_amusement",
+      "country": "gb",
+      "geoSlug": "gb-e07000107",
+      "industrySlug": "gambling-amusement",
+      "db_geo_id": "GB-E07000107",
+      "resolved_geo_id": "GB-E07000107",
+      "tier": "regional",
+      "quality": 90,
+      "geo_level": "lad",
       "reachability_bug": false
     },
     {
@@ -239,15 +299,15 @@
       "reachability_bug": false
     },
     {
-      "label": "roundtrip:PL/PL2/travel_agencies",
+      "label": "roundtrip:PL/PL61/auto_dealers_gas",
       "country": "pl",
-      "geoSlug": "pl2",
-      "industrySlug": "travel-agencies",
-      "db_geo_id": "PL2",
-      "resolved_geo_id": "PL2",
+      "geoSlug": "pl61",
+      "industrySlug": "auto-dealers-gas",
+      "db_geo_id": "PL61",
+      "resolved_geo_id": "PL61",
       "tier": "regional",
       "quality": 78,
-      "geo_level": "nuts1",
+      "geo_level": "nuts2",
       "reachability_bug": false
     },
     {
@@ -256,9 +316,9 @@
       "geoSlug": "texas",
       "industrySlug": "restaurants",
       "resolved_geo_id": "TEXAS",
-      "tier": "synthetic",
-      "quality": 20,
-      "geo_level": "region",
+      "tier": "regional",
+      "quality": 100,
+      "geo_level": "state",
       "reachability_bug": false
     },
     {
@@ -267,9 +327,9 @@
       "geoSlug": "new-york",
       "industrySlug": "legal-services",
       "resolved_geo_id": "US-CITY-new-york",
-      "tier": "synthetic",
-      "quality": 20,
-      "geo_level": "region",
+      "tier": "regional",
+      "quality": 100,
+      "geo_level": "state",
       "reachability_bug": false
     },
     {
@@ -278,9 +338,9 @@
       "geoSlug": "florida",
       "industrySlug": "auto-repair-shops",
       "resolved_geo_id": "FLORIDA",
-      "tier": "synthetic",
-      "quality": 20,
-      "geo_level": "region",
+      "tier": "regional",
+      "quality": 85,
+      "geo_level": "state",
       "reachability_bug": false
     }
   ]
