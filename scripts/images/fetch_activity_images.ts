@@ -23,17 +23,20 @@ const KEY = process.env.PEXELS_API_KEY;
 const FALLBACK = process.env.PEXELS_FALLBACK_KEY;
 const MANIFEST = resolve(process.cwd(), "data/images/industries_manifest.json");
 
-type Record_ = {
-  industryId: string;
-  industry_id: string;
+// The manifest is a DICT keyed by industry_id, each value an array of image
+// records (industry_heroes.ts reads value[0]). We append a Pexels record for
+// any activity whose key is absent.
+type ImageRecord = {
   url: string;
+  source: string;
+  attribution: string;
+  license: string;
+  alt: string;
   width: number | null;
   height: number | null;
-  alt: string;
-  attributionHtml: string;
-  license: string;
   query: string;
 };
+type Manifest = Record<string, ImageRecord[]>;
 
 type PexelsPhoto = {
   src: { large: string; landscape: string };
@@ -72,9 +75,8 @@ async function main() {
     console.error("PEXELS_API_KEY not set");
     process.exit(2);
   }
-  const manifest = JSON.parse(readFileSync(MANIFEST, "utf-8")) as Record_[];
-  const have = new Set(manifest.map((r) => r.industry_id));
-  const missing = INDUSTRIES.filter((i) => !have.has(i.id));
+  const manifest = JSON.parse(readFileSync(MANIFEST, "utf-8")) as Manifest;
+  const missing = INDUSTRIES.filter((i) => !manifest[i.id] || manifest[i.id].length === 0);
 
   let added = 0;
   let useFallback = false;
@@ -94,23 +96,23 @@ async function main() {
       log.push(`${ind.id}: no match for "${q}"`);
       continue;
     }
-    manifest.push({
-      industryId: ind.id,
-      industry_id: ind.id,
-      url: photo.src.landscape || photo.src.large,
-      width: photo.width ?? null,
-      height: photo.height ?? null,
-      alt: photo.alt || ind.name,
-      attributionHtml: `Photo by <a href="${photo.photographer_url}">${photo.photographer}</a>`,
-      license: "Pexels",
-      query: q,
-    });
+    manifest[ind.id] = [
+      {
+        url: photo.src.landscape || photo.src.large,
+        source: "pexels",
+        attribution: `Photo by <a href="${photo.photographer_url}">${photo.photographer}</a>`,
+        license: "Pexels",
+        alt: photo.alt || ind.name,
+        width: photo.width ?? null,
+        height: photo.height ?? null,
+        query: q,
+      },
+    ];
     added++;
-    // Persist incrementally so a mid-run failure keeps progress.
     if (added % 10 === 0) writeFileSync(MANIFEST, JSON.stringify(manifest, null, 2));
   }
   writeFileSync(MANIFEST, JSON.stringify(manifest, null, 2));
-  const report = `added=${added} missing_before=${missing.length} total=${manifest.length}\n${log.slice(0, 40).join("\n")}\n`;
+  const report = `added=${added} missing_before=${missing.length} total_keys=${Object.keys(manifest).length}\n${log.slice(0, 40).join("\n")}\n`;
   writeFileSync(resolve(process.cwd(), "data/images/_activity_fetch_report.txt"), report);
   console.log(report);
 }

@@ -969,7 +969,7 @@
   "it_services_msp": {
     "id": "it_services_msp",
     "hook": "An MSP rents out always-on reliability, and the whole model is built on getting paid every month whether or not anything breaks.",
-    "economics": "Revenue is mostly flat-fee contracts billed in advance, so the gross take is high and the asset base is almost nothing but laptops and a few servers. The real cost is the engineering payroll that sits behind every service-level promise, plus the tooling stack that quietly grows with each client. Profit comes from loading more accounts onto the same monitoring and the same technicians, because a contract priced for one crisis a month earns far more when it stays quiet.",
+    "economics": "Recurring monthly contracts billed in advance carry the revenue, so the gross take is high and the asset base is almost nothing but laptops and a few servers. The real cost is the engineering payroll that sits behind every service-level promise, plus the tooling stack that quietly grows with each client. Profit comes from loading more accounts onto the same monitoring and the same technicians, because a contract priced for one crisis a month earns far more when it stays quiet.",
     "watchOut": "Scope creep eats the contract from the inside, since clients treat a fixed fee as permission to call about everything and unbilled hours pile up until a profitable account is underwater.",
     "edge": "Top operators standardize their stack and automate the routine tickets, so they support more endpoints per engineer; the median shop reinvents a fix at every client and stays trapped trading hours for dollars.",
     "categoryNote": "Versus project-based dev shops, an MSP trades the lumpy thrill of a big build for the calmer math of recurring revenue that compounds as long as churn stays low."
@@ -1019,7 +1019,7 @@
   "funds_trusts": {
     "id": "funds_trusts",
     "hook": "A fund manager is paid a small percentage of the money it watches, so the entire business is the size of the pile.",
-    "economics": "Revenue is a management fee taken on assets under management, which means income is a thin slice of a very large number and grows mainly as the pile grows. The cost to run another dollar of assets is tiny once the operation exists, so the model is extraordinarily scalable and the marginal economics improve with every inflow. The flip side is that markets move the asset base for you, lifting fees in good years and cutting them in bad ones without a single client leaving.",
+    "economics": "A thin management fee taken on assets under management is the whole top line, which means income is a slice of a very large number and grows mainly as the pile grows. The cost to run another dollar of assets is tiny once the operation exists, so the model is extraordinarily scalable and the marginal economics improve with every inflow. The flip side is that markets move the asset base for you, lifting fees in good years and cutting them in bad ones without a single client leaving.",
     "watchOut": "Fee compression and passive competition push the percentage down year after year, so even a growing asset base can deliver flat revenue.",
     "edge": "Managers with scale or a hard-to-replicate strategy defend their fee; commodity managers compete on price alone and watch the slice keep shrinking."
   },
@@ -1160,7 +1160,7 @@
   "travel_agencies": {
     "id": "travel_agencies",
     "hook": "A travel agency earns a commission for arranging trips it never has to own, living on the spread between booking and supplier.",
-    "economics": "Revenue is commission and service fees on bookings, so the gross take is high and the infrastructure is light, just systems and people. The model is a thin slice of each trip's value, multiplied across booking volume, with the supplier carrying the actual cost of the flights and rooms. Profit depends on volume and on add-on services, because base commissions on commodity travel have been squeezed for years.",
+    "economics": "Commission and service fees on other people bookings make up the revenue, so the gross take is high and the infrastructure is light, just systems and people. The model is a thin slice of each trip's value, multiplied across booking volume, with the supplier carrying the actual cost of the flights and rooms. Profit depends on volume and on add-on services, because base commissions on commodity travel have been squeezed for years.",
     "watchOut": "Direct booking by suppliers has been steadily disintermediating the agent, so a commodity travel agency keeps doing the work while customers route around it.",
     "edge": "Top agencies specialize in complex or high-touch trips where their expertise is worth a real fee; the median one books simple travel that customers increasingly do themselves."
   },
@@ -1197,7 +1197,7 @@
   "pool_service": {
     "id": "pool_service",
     "hook": "Pool service is a subscription business disguised as a chemistry job, paid by the visit and won by the route.",
-    "economics": "Revenue is a stack of small recurring tickets, so the math lives in how many pools one tech cleans per day and how tightly they sit on a map. Chemicals and a truck are the only real costs, which is why the gross margin stays comfortable and the net holds up once a route is full. Profit is mostly density. Two extra stops a day on the same drive is almost pure margin.",
+    "economics": "A stack of small recurring tickets adds up to the revenue, so the math lives in how many pools one tech cleans per day and how tightly they sit on a map. Chemicals and a truck are the only real costs, which is why the gross margin stays comfortable and the net holds up once a route is full. Profit is mostly density. Two extra stops a day on the same drive is almost pure margin.",
     "watchOut": "Sprawl quietly eats the business when techs spend more time driving than cleaning, and churn from a single bad green-pool season can hollow out a route faster than new signups refill it.",
     "edge": "Top operators cluster customers into tight loops and lock in annual contracts, so their trucks bill more hours of work and fewer hours of windshield than the median single-route owner.",
     "categoryNote": "Like pest control, this lives on recurring visits, but pools demand a fixed weekly cadence in season, so route density matters even more than it does for a quarterly pest call."
@@ -1326,7 +1326,7 @@
   "physical_therapy": {
     "id": "physical_therapy",
     "hook": "A physical therapy clinic bills for hands-on time, and its margin is set by how many patients each therapist can carry at once.",
-    "economics": "Revenue is therapist hours sold through insurance, with equipment and clinic space as the supporting cost, so productivity per therapist is the core lever. Unlike a solo owner-operator practice, this leans on a team plus billing infrastructure, which trims the margin below the owner-only health practices. Profit comes from high therapist utilization and clean reimbursement, since each open slot is unrecoverable revenue.",
+    "economics": "Therapist hours sold through insurance are the whole top line, with equipment and clinic space as the supporting cost, so productivity per therapist is the core lever. Unlike a solo owner-operator practice, this leans on a team plus billing infrastructure, which trims the margin below the owner-only health practices. Profit comes from high therapist utilization and clean reimbursement, since each open slot is unrecoverable revenue.",
     "watchOut": "Patient drop-off before a plan of care is complete leaves therapists with gaps, and reimbursement cuts hit a business whose costs are fixed in floor space and salaried clinicians.",
     "edge": "The best clinics keep therapist schedules full and patients adherent to their full plan, while the median loses revenue to no-shows, early dropouts, and slots that never get rebooked."
   },
@@ -1420,7 +1420,7 @@
   "personal_training": {
     "id": "personal_training",
     "hook": "A personal trainer sells the same body, one hour at a time, and the only real inventory is the calendar.",
-    "economics": "Revenue is the trainer's hours times a per-session rate, with almost nothing between top-line and take-home. There is no product to buy and no premises to fill, so gross stays high and the owner keeps an unusually large slice as personal income. Growth past one person means hiring trainers and paying them a session split, which is exactly where the rich solo margin starts to thin.",
+    "economics": "The trainer hours times a per-session rate are the entire top line, with almost nothing between revenue and take-home. There is no product to buy and no premises to fill, so gross stays high and the owner keeps an unusually large slice as personal income. Growth past one person means hiring trainers and paying them a session split, which is exactly where the rich solo margin starts to thin.",
     "watchOut": "Income is capped by hours in the week and collapses the moment the trainer is sick, on holiday, or simply burned out, because nobody else delivers the service.",
     "edge": "Top earners convert clients onto recurring packages and small-group sessions, selling several bodies in one hour instead of one, while the median trades single sessions and stalls at a personal ceiling.",
     "categoryNote": "Unlike a gym, which sells access to capital and lives on membership churn, a trainer sells attention and lives on retention, so the asset base is trivial but the income ceiling is the calendar."
@@ -1484,7 +1484,7 @@
   "massage_therapy": {
     "id": "massage_therapy",
     "hook": "A massage clinic sells a therapist's hands by the hour, and that hour is the whole product.",
-    "economics": "Revenue is billed hours times rate, with very low materials and a light premises, so the margin on each session is high. The dominant cost is the therapist, who typically works on a split of what they bill, so the owner keeps the spread plus their own session income. Capital needs are minimal, which is why a well-booked clinic keeps an unusually large share of revenue.",
+    "economics": "Billed hours times rate make up the top line, with very low materials and a light premises, so the margin on each session is high. The dominant cost is the therapist, who typically works on a split of what they bill, so the owner keeps the spread plus their own session income. Capital needs are minimal, which is why a well-booked clinic keeps an unusually large share of revenue.",
     "watchOut": "Output is capped by therapist hours and physically limited, since hands wear out, so a fully booked clinic cannot simply work harder to grow.",
     "edge": "Top clinics keep therapists booked on recurring treatment plans and rebooked clients, while the median runs gaps between one-off appointments that no one fills.",
     "categoryNote": "Lighter on equipment and rooms than a day spa, a massage clinic keeps more of each session but is even more tightly bound to billable hands."
@@ -1612,7 +1612,7 @@
   "pet_daycare": {
     "id": "pet_daycare",
     "hook": "A pet boarding business sells supervised space by the night, and an empty kennel earns nothing.",
-    "economics": "Revenue is occupied kennels or daycare slots times rate, but the facility, the fencing, and the insurance are a serious fixed cost that runs full or empty. The model is capacity utilization over a fixed property, so each extra animal is cheap once the space and staff are in place. Profit depends on keeping occupancy high, especially across the holiday peaks that make the year.",
+    "economics": "Occupied kennels or daycare slots times rate set the top line, but the facility, the fencing, and the insurance are a serious fixed cost that runs full or empty. The model is capacity utilization over a fixed property, so each extra animal is cheap once the space and staff are in place. Profit depends on keeping occupancy high, especially across the holiday peaks that make the year.",
     "watchOut": "Demand bunches into holidays and weekends, so the expensive facility sits underused midweek and off-season while the mortgage and insurance roll on.",
     "edge": "The best operators build standing daycare memberships to fill the weekday troughs, while the median lives off boarding spikes and idle space in between.",
     "categoryNote": "Far more facility- and insurance-heavy than pet sitting, boarding is a property-utilization business, not a service the owner can run from a phone."
@@ -1668,7 +1668,7 @@
   "campgrounds_rv_parks": {
     "id": "campgrounds_rv_parks",
     "hook": "A campground sells the same patch of dirt every night, and the land it sits on is the whole business.",
-    "economics": "Revenue is sites times nights times season length, and once the land and hookups are paid for, an extra camper costs almost nothing. The money sinks into the property itself, utilities, water, sewer, and grading, so the balance sheet is heavy long before the first guest arrives. A short busy season has to cover twelve months of fixed cost, which is why occupancy in the peak weeks decides the year.",
+    "economics": "Sites times nights times season length set the top line, and once the land and hookups are paid for, an extra camper costs almost nothing. The money sinks into the property itself, utilities, water, sewer, and grading, so the balance sheet is heavy long before the first guest arrives. A short busy season has to cover twelve months of fixed cost, which is why occupancy in the peak weeks decides the year.",
     "watchOut": "Owners over-improve with pools, cabins, and amenities that draw guests for three months but bleed cash for nine.",
     "edge": "Top operators stretch the season with off-peak events and add high-margin extras like firewood, rentals, and premium full-hookup sites; the median just opens the gate in summer and hopes for sun."
   },
@@ -1682,7 +1682,7 @@
   "air_transport_carriers": {
     "id": "air_transport_carriers",
     "hook": "An airline rents seats on a depreciating asset that has to fly whether it is full or empty.",
-    "economics": "Revenue is seats times load factor times yield, but the cost of putting the plane in the air is nearly fixed the moment the doors close. Aircraft, fuel, and crew dominate every flight, so the marginal passenger is almost pure profit and the empty seat is almost pure loss. The whole model swings on filling the cabin and on a fuel price the operator cannot control.",
+    "economics": "Seats times load factor times yield set the top line, but the cost of putting the plane in the air is nearly fixed the moment the doors close. Aircraft, fuel, and crew dominate every flight, so the marginal passenger is almost pure profit and the empty seat is almost pure loss. The whole model swings on filling the cabin and on a fuel price the operator cannot control.",
     "watchOut": "Fuel spikes and demand shocks hit a cost base loaded with debt and lease payments that do not pause when planes are grounded.",
     "edge": "The strongest carriers squeeze utilization out of every airframe and hedge fuel; the weak fly half-empty schedules into a downturn and run out of cash."
   },
