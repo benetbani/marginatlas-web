@@ -1,0 +1,46 @@
+{
+  "schema": "research-drop/v1",
+  "country_iso2": "IN",
+  "sector_cluster": "food_hospitality",
+  "source_model": "paste-the-model-name",
+  "captured_at": "2026-05-31",
+  "confidence_default": "modeled",
+  "activities": [
+    {
+      "industry_id": "restaurants",
+      "currency": "INR",
+      "fx_to_usd": 0.012,
+      "fx_date": "2026-05-31",
+      "size_bands": [
+        {
+          "band": "1-4",
+          "revenue_per_firm_local": 2500000,
+          "net_margin_pct_low": 3,
+          "net_margin_pct_high": 8,
+          "margin_basis": "owner take-home",
+          "cost_structure_pct": { "cogs": 35, "labor": 25, "rent": 12, "utilities": 6, "tax": 5, "other": 17 },
+          "share_of_firms_pct": 70,
+          "share_of_revenue_pct": 30,
+          "confidence": "modeled",
+          "source": "NSS unincorporated enterprise survey 2023"
+        },
+        {
+          "band": "5-9",
+          "revenue_per_firm_local": 7000000,
+          "net_margin_pct_low": 4,
+          "net_margin_pct_high": 9,
+          "margin_basis": "owner take-home",
+          "cost_structure_pct": { "cogs": 34, "labor": 27, "rent": 11, "utilities": 6, "tax": 5, "other": 17 },
+          "share_of_firms_pct": 22,
+          "share_of_revenue_pct": 40,
+          "confidence": "modeled",
+          "source": "NSS unincorporated enterprise survey 2023"
+        }
+      ],
+      "regional_variation": [
+        { "region": "Mumbai", "revenue_multiplier_vs_national": 1.6, "confidence": "modeled", "source": "NRAI 2024" },
+        { "region": "tier-3 cities", "revenue_multiplier_vs_national": 0.7, "confidence": "modeled", "source": "NRAI 2024" }
+      ]
+    }
+  ]
+}
