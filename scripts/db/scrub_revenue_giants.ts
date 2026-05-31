@@ -52,8 +52,78 @@ async function main(): Promise<void> {
   await client.connect();
   await client.query("SET statement_timeout = 0");
 
+  // Build a VALUES list of (industry_id, hi) from the bounds table so we can do
+  // ONE set-based UPDATE per table instead of 21k single-row UPDATEs (the loop
+  // version died mid-run). Default ceiling applies to any industry not listed.
+  const DEFAULT_HI = DEFAULT_REVENUE_BOUNDS.hi;
+  const boundPairs = Object.entries(REVENUE_PER_FIRM_BOUNDS).map(
+    ([id, b]) => `('${id.replace(/'/g, "''")}', ${b.hi})`,
+  );
+  const boundsValues = boundPairs.join(",\n  ");
+  const TAG = "scrub:revenue-cap-2026-05-31";
+
   let totalCapped = 0;
   const perTable: Record<string, number> = {};
+
+  if (commit) {
+    // regional_cells: cap revenue_per_firm + scale percentiles proportionally,
+    // clamp each percentile to hi, tag coverage_source once.
+    const regSql = `
+      WITH b(industry_id, hi) AS (VALUES
+        ${boundsValues}
+      ),
+      tgt AS (
+        SELECT r.ctid,
+               COALESCE(b.hi, ${DEFAULT_HI}) AS hi,
+               COALESCE(b.hi, ${DEFAULT_HI})::float / r.revenue_per_firm AS scale
+        FROM regional_cells r
+        LEFT JOIN b ON b.industry_id = r.industry_id
+        WHERE r.revenue_per_firm IS NOT NULL
+          AND r.revenue_per_firm > COALESCE(b.hi, ${DEFAULT_HI})
+      )
+      UPDATE regional_cells r SET
+        revenue_per_firm = tgt.hi,
+        rev_p10 = LEAST(tgt.hi, r.rev_p10 * tgt.scale),
+        rev_p25 = LEAST(tgt.hi, r.rev_p25 * tgt.scale),
+        rev_p50 = LEAST(tgt.hi, r.rev_p50 * tgt.scale),
+        rev_p75 = LEAST(tgt.hi, r.rev_p75 * tgt.scale),
+        rev_p90 = LEAST(tgt.hi, r.rev_p90 * tgt.scale),
+        coverage_source = CASE WHEN r.coverage_source LIKE '%scrub:%'
+                               THEN r.coverage_source
+                               ELSE COALESCE(r.coverage_source,'unknown') || ' | ${TAG}' END
+      FROM tgt WHERE r.ctid = tgt.ctid`;
+    const regRes = await client.query(regSql);
+    perTable.regional_cells = regRes.rowCount ?? 0;
+
+    const extSql = `
+      WITH b(industry_id, hi) AS (VALUES
+        ${boundsValues}
+      ),
+      tgt AS (
+        SELECT e.ctid, COALESCE(b.hi, ${DEFAULT_HI}) AS hi
+        FROM extrapolated_cells e
+        LEFT JOIN b ON b.industry_id = e.industry_id
+        WHERE e.predicted_rev_per_firm IS NOT NULL
+          AND e.predicted_rev_per_firm > COALESCE(b.hi, ${DEFAULT_HI})
+      )
+      UPDATE extrapolated_cells e SET
+        predicted_rev_per_firm = tgt.hi,
+        coverage_source = CASE WHEN e.coverage_source LIKE '%scrub:%'
+                               THEN e.coverage_source
+                               ELSE COALESCE(e.coverage_source,'unknown') || ' | ${TAG}' END
+      FROM tgt WHERE e.ctid = tgt.ctid`;
+    const extRes = await client.query(extSql);
+    perTable.extrapolated_cells = extRes.rowCount ?? 0;
+
+    totalCapped = perTable.regional_cells + perTable.extrapolated_cells;
+    await client.end();
+    console.log(
+      `COMMITTED (bulk): ${totalCapped} rows capped ` +
+        `(regional ${perTable.regional_cells}, extrapolated ${perTable.extrapolated_cells}). ` +
+        `Tagged '${TAG}'.`,
+    );
+    return;
+  }
 
   try {
     // --- regional_cells: revenue_per_firm + rev_p* percentiles ---
