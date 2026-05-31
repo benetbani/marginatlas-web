@@ -88,7 +88,7 @@ async function main(): Promise<void> {
           await client.query(
             `UPDATE regional_cells
              SET revenue_per_firm=$1, rev_p10=$2, rev_p25=$3, rev_p50=$4,
-                 rev_p75=$5, rev_p90=$6, coverage_source=$7, updated_at=now()
+                 rev_p75=$5, rev_p90=$6, coverage_source=$7
              WHERE country=$8 AND geo_id=$9 AND industry_id=$10
                AND year=$11 AND size_band IS NOT DISTINCT FROM $12`,
             [
