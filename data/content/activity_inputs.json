@@ -1,0 +1,3899 @@
+[
+  {
+    "id": "grain_farming",
+    "name": "Grain farming",
+    "sector": "Farming & food production",
+    "audience": "smb_friendly",
+    "examples": [
+      "wheat",
+      "corn",
+      "soybeans",
+      "rice"
+    ],
+    "gross_margin": 0.3,
+    "operating_margin": 0.1,
+    "net_margin": 0.055,
+    "asset_intensity": 1.2,
+    "notes": ""
+  },
+  {
+    "id": "vegetable_fruit_farming",
+    "name": "Vegetable & fruit farming",
+    "sector": "Farming & food production",
+    "audience": "smb_friendly",
+    "examples": [
+      "vegetables",
+      "fruits",
+      "tree nuts",
+      "berries",
+      "orchards"
+    ],
+    "gross_margin": 0.3,
+    "operating_margin": 0.1,
+    "net_margin": 0.055,
+    "asset_intensity": 1.2,
+    "notes": ""
+  },
+  {
+    "id": "livestock_farming",
+    "name": "Livestock farming",
+    "sector": "Farming & food production",
+    "audience": "smb_friendly",
+    "examples": [
+      "dairy",
+      "beef",
+      "poultry",
+      "eggs"
+    ],
+    "gross_margin": 0.25,
+    "operating_margin": 0.08,
+    "net_margin": 0.044,
+    "asset_intensity": 1.4,
+    "notes": "Feed + breeding stock heavy. Margins erode quickly with feed price."
+  },
+  {
+    "id": "fishing_aquaculture",
+    "name": "Fishing & aquaculture",
+    "sector": "Farming & food production",
+    "audience": "smb_friendly",
+    "examples": [
+      "commercial fishing",
+      "fish farming",
+      "shellfish"
+    ],
+    "gross_margin": 0.35,
+    "operating_margin": 0.1,
+    "net_margin": 0.055,
+    "asset_intensity": 0.9,
+    "notes": "Vessel / pond infrastructure. Quota costs in regulated waters."
+  },
+  {
+    "id": "forestry_logging",
+    "name": "Forestry & logging",
+    "sector": "Farming & food production",
+    "audience": "smb_friendly",
+    "examples": [
+      "timber",
+      "pulpwood",
+      "tree nurseries"
+    ],
+    "gross_margin": 0.4,
+    "operating_margin": 0.12,
+    "net_margin": 0.066,
+    "asset_intensity": 1,
+    "notes": "Equipment + harvesting rights heavy."
+  },
+  {
+    "id": "oil_gas_extraction",
+    "name": "Oil & gas extraction",
+    "sector": "Mining & energy",
+    "audience": "corp_only",
+    "examples": [
+      "crude petroleum",
+      "natural gas",
+      "drilling"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "mining_quarrying",
+    "name": "Mining & quarrying (metals, stone)",
+    "sector": "Mining & energy",
+    "audience": "corp_only",
+    "examples": [
+      "metal ores",
+      "stone",
+      "sand",
+      "gravel"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "mining_support",
+    "name": "Mining support services",
+    "sector": "Mining & energy",
+    "audience": "corp_only",
+    "examples": [
+      "drilling support",
+      "exploration services"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "electricity_gas_utilities",
+    "name": "Electricity & gas utilities",
+    "sector": "Mining & energy",
+    "audience": "corp_only",
+    "examples": [
+      "power generation",
+      "transmission",
+      "natural gas supply"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "water_waste",
+    "name": "Water & waste management",
+    "sector": "Trades & home services",
+    "audience": "mixed_caution",
+    "examples": [
+      "water supply",
+      "sewerage",
+      "recycling",
+      "waste collection"
+    ],
+    "gross_margin": 0.45,
+    "operating_margin": 0.12,
+    "net_margin": 0.07,
+    "asset_intensity": 1.5,
+    "notes": "Water/wastewater + waste collection. AWWA benchmarking tracks utility ops. Private hauler segment runs higher margin than regulated water utility. Blended SMB-typical estimate. Extremely asset-heavy."
+  },
+  {
+    "id": "food_mfg",
+    "name": "Food manufacturing",
+    "sector": "Farming & food production",
+    "audience": "smb_friendly",
+    "examples": [
+      "bakery products",
+      "dairy products",
+      "packaged food"
+    ],
+    "gross_margin": 0.32,
+    "operating_margin": 0.11,
+    "net_margin": 0.0715,
+    "asset_intensity": 0.55,
+    "notes": ""
+  },
+  {
+    "id": "beverage_mfg",
+    "name": "Beverage manufacturing",
+    "sector": "Farming & food production",
+    "audience": "smb_friendly",
+    "examples": [
+      "soft drinks",
+      "bottled water",
+      "juices"
+    ],
+    "gross_margin": 0.32,
+    "operating_margin": 0.11,
+    "net_margin": 0.0715,
+    "asset_intensity": 0.55,
+    "notes": ""
+  },
+  {
+    "id": "craft_beer_mfg",
+    "name": "Craft breweries & taprooms",
+    "sector": "Farming & food production",
+    "audience": "smb_core",
+    "examples": [
+      "microbreweries",
+      "brewpubs",
+      "small-batch beer"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.12,
+    "net_margin": 0.078,
+    "asset_intensity": 0.7,
+    "notes": "High gross via taproom retail; brewhouse capex heavy."
+  },
+  {
+    "id": "coffee_roasters",
+    "name": "Coffee roasters",
+    "sector": "Farming & food production",
+    "audience": "smb_core",
+    "examples": [
+      "specialty coffee",
+      "wholesale roasters"
+    ],
+    "gross_margin": 0.5,
+    "operating_margin": 0.13,
+    "net_margin": 0.0845,
+    "asset_intensity": 0.3,
+    "notes": "Roaster capex modest; wholesale price-takers."
+  },
+  {
+    "id": "specialty_food_production",
+    "name": "Specialty food production",
+    "sector": "Farming & food production",
+    "audience": "smb_core",
+    "examples": [
+      "sauces",
+      "preserves",
+      "snacks",
+      "spices"
+    ],
+    "gross_margin": 0.45,
+    "operating_margin": 0.1,
+    "net_margin": 0.065,
+    "asset_intensity": 0.35,
+    "notes": "Small-batch; distribution overhead."
+  },
+  {
+    "id": "artisan_bakery_wholesale",
+    "name": "Artisan bakery (wholesale)",
+    "sector": "Farming & food production",
+    "audience": "smb_core",
+    "examples": [
+      "bread",
+      "pastries",
+      "wholesale baking"
+    ],
+    "gross_margin": 0.42,
+    "operating_margin": 0.09,
+    "net_margin": 0.0585,
+    "asset_intensity": 0.3,
+    "notes": "Oven + facility. Spoilage risk."
+  },
+  {
+    "id": "textiles_fabric_mfg",
+    "name": "Textiles & fabric manufacturing",
+    "sector": "Manufacturing & artisan",
+    "audience": "smb_friendly",
+    "examples": [
+      "yarn",
+      "fabric",
+      "carpets",
+      "textile mills"
+    ],
+    "gross_margin": 0.35,
+    "operating_margin": 0.07,
+    "net_margin": 0.0455,
+    "asset_intensity": 0.4,
+    "notes": ""
+  },
+  {
+    "id": "apparel_mfg",
+    "name": "Apparel manufacturing",
+    "sector": "Manufacturing & artisan",
+    "audience": "smb_friendly",
+    "examples": [
+      "clothing",
+      "hosiery",
+      "leather goods",
+      "shoes"
+    ],
+    "gross_margin": 0.35,
+    "operating_margin": 0.07,
+    "net_margin": 0.0455,
+    "asset_intensity": 0.4,
+    "notes": ""
+  },
+  {
+    "id": "custom_apparel_mfg",
+    "name": "Custom apparel & uniforms",
+    "sector": "Manufacturing & artisan",
+    "audience": "smb_core",
+    "examples": [
+      "uniforms",
+      "custom t-shirts",
+      "embroidery"
+    ],
+    "gross_margin": 0.45,
+    "operating_margin": 0.1,
+    "net_margin": 0.072,
+    "asset_intensity": 0.25,
+    "notes": "Bespoke premium; smaller equipment."
+  },
+  {
+    "id": "small_leather_goods",
+    "name": "Small leather goods",
+    "sector": "Manufacturing & artisan",
+    "audience": "smb_core",
+    "examples": [
+      "wallets",
+      "bags",
+      "belts",
+      "small workshops"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.14,
+    "net_margin": 0.1008,
+    "asset_intensity": 0.2,
+    "notes": "Premium pricing; hand-tool intensive."
+  },
+  {
+    "id": "wood_products_mfg",
+    "name": "Wood products manufacturing",
+    "sector": "Manufacturing & artisan",
+    "audience": "smb_friendly",
+    "examples": [
+      "sawmills",
+      "plywood",
+      "lumber",
+      "wood components"
+    ],
+    "gross_margin": 0.3,
+    "operating_margin": 0.08,
+    "net_margin": 0.052,
+    "asset_intensity": 0.65,
+    "notes": ""
+  },
+  {
+    "id": "paper_mfg",
+    "name": "Paper & printing manufacturing",
+    "sector": "Manufacturing & artisan",
+    "audience": "smb_friendly",
+    "examples": [
+      "pulp",
+      "paper",
+      "cardboard",
+      "packaging",
+      "printing"
+    ],
+    "gross_margin": 0.3,
+    "operating_margin": 0.08,
+    "net_margin": 0.052,
+    "asset_intensity": 0.65,
+    "notes": ""
+  },
+  {
+    "id": "custom_furniture_makers",
+    "name": "Custom furniture makers",
+    "sector": "Manufacturing & artisan",
+    "audience": "smb_core",
+    "examples": [
+      "bespoke furniture",
+      "cabinetry",
+      "joinery"
+    ],
+    "gross_margin": 0.5,
+    "operating_margin": 0.13,
+    "net_margin": 0.0845,
+    "asset_intensity": 0.3,
+    "notes": "Workshop tooling; lumber cost variability."
+  },
+  {
+    "id": "print_shops",
+    "name": "Print shops (offset & digital)",
+    "sector": "Manufacturing & artisan",
+    "audience": "smb_core",
+    "examples": [
+      "business cards",
+      "flyers",
+      "short-run printing"
+    ],
+    "gross_margin": 0.38,
+    "operating_margin": 0.09,
+    "net_margin": 0.0585,
+    "asset_intensity": 0.45,
+    "notes": "Press capex; commoditization pressure."
+  },
+  {
+    "id": "sign_shops",
+    "name": "Sign shops & graphics fab",
+    "sector": "Manufacturing & artisan",
+    "audience": "smb_core",
+    "examples": [
+      "business signs",
+      "vehicle wraps",
+      "signage"
+    ],
+    "gross_margin": 0.42,
+    "operating_margin": 0.12,
+    "net_margin": 0.078,
+    "asset_intensity": 0.3,
+    "notes": "Vinyl/digital print + installation."
+  },
+  {
+    "id": "chemical_pharma_mfg",
+    "name": "Chemical & pharma manufacturing",
+    "sector": "Heavy industry",
+    "audience": "corp_only",
+    "examples": [
+      "industrial chemicals",
+      "pharmaceuticals",
+      "cleaning compounds"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "petroleum_coal_mfg",
+    "name": "Petroleum & coal products",
+    "sector": "Heavy industry",
+    "audience": "corp_only",
+    "examples": [
+      "refined petroleum",
+      "asphalt",
+      "lubricants"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "soap_candle_makers",
+    "name": "Soap & candle makers",
+    "sector": "Manufacturing & artisan",
+    "audience": "smb_core",
+    "examples": [
+      "artisan soap",
+      "candles",
+      "small-batch cosmetics"
+    ],
+    "gross_margin": 0.58,
+    "operating_margin": 0.15,
+    "net_margin": 0.108,
+    "asset_intensity": 0.15,
+    "notes": "Low capex; brand-driven margins."
+  },
+  {
+    "id": "plastics_rubber_mfg",
+    "name": "Plastics & rubber products",
+    "sector": "Manufacturing & artisan",
+    "audience": "mixed_caution",
+    "examples": [
+      "plastic packaging",
+      "tires",
+      "rubber goods"
+    ],
+    "gross_margin": 0.25,
+    "operating_margin": 0.08,
+    "net_margin": 0.05,
+    "asset_intensity": 0.65,
+    "notes": "NAICS 326 plastics + rubber products. Capital-heavy molding/extrusion equipment. Resin commodity exposure compresses gross. Sector-typical nondurable-mfg band."
+  },
+  {
+    "id": "fabricated_metal_mfg",
+    "name": "Fabricated metal manufacturing",
+    "sector": "Manufacturing & artisan",
+    "audience": "smb_friendly",
+    "examples": [
+      "forgings",
+      "hardware",
+      "springs",
+      "structural metals",
+      "tools"
+    ],
+    "gross_margin": 0.28,
+    "operating_margin": 0.08,
+    "net_margin": 0.052,
+    "asset_intensity": 0.7,
+    "notes": ""
+  },
+  {
+    "id": "primary_metal_mfg",
+    "name": "Primary metal manufacturing",
+    "sector": "Manufacturing & artisan",
+    "audience": "smb_friendly",
+    "examples": [
+      "steel mills",
+      "foundries",
+      "smelting",
+      "aluminum",
+      "nonmetallic minerals"
+    ],
+    "gross_margin": 0.28,
+    "operating_margin": 0.08,
+    "net_margin": 0.052,
+    "asset_intensity": 0.7,
+    "notes": ""
+  },
+  {
+    "id": "metal_fab_machine_shops",
+    "name": "Metal fabrication & machine shops",
+    "sector": "Manufacturing & artisan",
+    "audience": "smb_core",
+    "examples": [
+      "custom fabrication",
+      "welding shops",
+      "machining"
+    ],
+    "gross_margin": 0.32,
+    "operating_margin": 0.1,
+    "net_margin": 0.065,
+    "asset_intensity": 0.65,
+    "notes": "CNC capex. Skilled labor scarcity."
+  },
+  {
+    "id": "custom_jewelers",
+    "name": "Custom jewelers (mfg)",
+    "sector": "Manufacturing & artisan",
+    "audience": "smb_core",
+    "examples": [
+      "bespoke jewelry",
+      "goldsmiths",
+      "engravers"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.14,
+    "net_margin": 0.1008,
+    "asset_intensity": 0.2,
+    "notes": "Metal/stone inventory turn. Workmanship premium."
+  },
+  {
+    "id": "machinery_mfg",
+    "name": "Machinery manufacturing",
+    "sector": "Heavy industry",
+    "audience": "mixed_caution",
+    "examples": [
+      "industrial equipment",
+      "agricultural machinery",
+      "engines"
+    ],
+    "gross_margin": 0.3,
+    "operating_margin": 0.09,
+    "net_margin": 0.05,
+    "asset_intensity": 0.7,
+    "notes": "NAICS 333 machinery mfg: SMB ag / construction / industrial equipment fab. Heavy fixed assets, skilled labor. Sector-typical durable-goods margin band."
+  },
+  {
+    "id": "electronics_mfg",
+    "name": "Electronics & semiconductors",
+    "sector": "Heavy industry",
+    "audience": "corp_only",
+    "examples": [
+      "computers",
+      "components",
+      "chips",
+      "phones"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "electrical_equipment_mfg",
+    "name": "Electrical equipment",
+    "sector": "Manufacturing & artisan",
+    "audience": "mixed_caution",
+    "examples": [
+      "motors",
+      "batteries",
+      "wiring",
+      "lighting"
+    ],
+    "gross_margin": 0.28,
+    "operating_margin": 0.08,
+    "net_margin": 0.05,
+    "asset_intensity": 0.6,
+    "notes": "NAICS 335 manufacturers; SMB motors / batteries / lighting fab. Asset-heavy. Sector-typical durable-goods mfg margin band."
+  },
+  {
+    "id": "motor_vehicles_mfg",
+    "name": "Motor vehicles & parts",
+    "sector": "Heavy industry",
+    "audience": "corp_only",
+    "examples": [
+      "cars",
+      "trucks",
+      "auto parts",
+      "trailers"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "other_transport_mfg",
+    "name": "Aerospace & other transport mfg",
+    "sector": "Heavy industry",
+    "audience": "corp_only",
+    "examples": [
+      "aircraft",
+      "ships",
+      "trains",
+      "motorcycles"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "furniture_mfg",
+    "name": "Furniture manufacturing",
+    "sector": "Manufacturing & artisan",
+    "audience": "smb_core",
+    "examples": [
+      "household furniture",
+      "office furniture",
+      "cabinets"
+    ],
+    "gross_margin": 0.3,
+    "operating_margin": 0.07,
+    "net_margin": 0.0455,
+    "asset_intensity": 0.5,
+    "notes": ""
+  },
+  {
+    "id": "misc_mfg",
+    "name": "Miscellaneous manufacturing",
+    "sector": "Manufacturing & artisan",
+    "audience": "smb_core",
+    "examples": [
+      "medical equipment",
+      "jewelry",
+      "sporting goods",
+      "musical instruments",
+      "toys"
+    ],
+    "gross_margin": 0.3,
+    "operating_margin": 0.07,
+    "net_margin": 0.0455,
+    "asset_intensity": 0.5,
+    "notes": ""
+  },
+  {
+    "id": "residential_construction",
+    "name": "Residential construction",
+    "sector": "Construction",
+    "audience": "smb_core",
+    "examples": [
+      "homes",
+      "apartments",
+      "renovations"
+    ],
+    "gross_margin": 0.22,
+    "operating_margin": 0.07,
+    "net_margin": 0.0504,
+    "asset_intensity": 0.25,
+    "notes": "Trucks + small equipment; labor + subcontractor heavy."
+  },
+  {
+    "id": "commercial_construction",
+    "name": "Commercial construction",
+    "sector": "Construction",
+    "audience": "smb_friendly",
+    "examples": [
+      "offices",
+      "retail buildings",
+      "industrial buildings"
+    ],
+    "gross_margin": 0.18,
+    "operating_margin": 0.06,
+    "net_margin": 0.039,
+    "asset_intensity": 0.3,
+    "notes": "Lower margin / higher volume than residential."
+  },
+  {
+    "id": "civil_engineering",
+    "name": "Civil engineering",
+    "sector": "Construction",
+    "audience": "mixed_caution",
+    "examples": [
+      "roads",
+      "bridges",
+      "utilities infrastructure"
+    ],
+    "gross_margin": 0.16,
+    "operating_margin": 0.07,
+    "net_margin": 0.05,
+    "asset_intensity": 0.4,
+    "notes": "CFMA 2024 Construction Financial Benchmarker: ~14.8% gross for general contractors; well-run firms net 5-8%. SMB civil-infra firms (roads, bridges, utility install) closer to specialty contractor band."
+  },
+  {
+    "id": "specialty_trades",
+    "name": "Specialty trades (mixed)",
+    "sector": "Trades & home services",
+    "audience": "smb_core",
+    "examples": [
+      "plumbing",
+      "electrical",
+      "painting",
+      "roofing",
+      "HVAC"
+    ],
+    "gross_margin": 0.35,
+    "operating_margin": 0.11,
+    "net_margin": 0.0792,
+    "asset_intensity": 0.2,
+    "notes": "Small crews; equipment + truck."
+  },
+  {
+    "id": "plumbers",
+    "name": "Plumbers",
+    "sector": "Trades & home services",
+    "audience": "smb_core",
+    "examples": [
+      "residential plumbing",
+      "drain cleaning",
+      "water heaters"
+    ],
+    "gross_margin": 0.4,
+    "operating_margin": 0.12,
+    "net_margin": 0.0864,
+    "asset_intensity": 0.18,
+    "notes": "Truck-based; on-call premium."
+  },
+  {
+    "id": "electricians",
+    "name": "Electricians",
+    "sector": "Trades & home services",
+    "audience": "smb_core",
+    "examples": [
+      "residential wiring",
+      "commercial wiring",
+      "panel upgrades"
+    ],
+    "gross_margin": 0.42,
+    "operating_margin": 0.13,
+    "net_margin": 0.0936,
+    "asset_intensity": 0.18,
+    "notes": "Licensed trade; service + new-construction split."
+  },
+  {
+    "id": "hvac_services",
+    "name": "HVAC services",
+    "sector": "Trades & home services",
+    "audience": "smb_core",
+    "examples": [
+      "heating",
+      "cooling",
+      "AC installation",
+      "furnace repair"
+    ],
+    "gross_margin": 0.4,
+    "operating_margin": 0.12,
+    "net_margin": 0.0864,
+    "asset_intensity": 0.22,
+    "notes": "Equipment install + service contract recurring."
+  },
+  {
+    "id": "painters_residential",
+    "name": "Painters (residential)",
+    "sector": "Trades & home services",
+    "audience": "smb_core",
+    "examples": [
+      "interior painting",
+      "exterior painting",
+      "house painters"
+    ],
+    "gross_margin": 0.45,
+    "operating_margin": 0.11,
+    "net_margin": 0.0792,
+    "asset_intensity": 0.12,
+    "notes": "Labor + materials heavy; low capex."
+  },
+  {
+    "id": "roofers",
+    "name": "Roofers",
+    "sector": "Trades & home services",
+    "audience": "smb_core",
+    "examples": [
+      "roof installation",
+      "roof repair",
+      "gutters"
+    ],
+    "gross_margin": 0.32,
+    "operating_margin": 0.1,
+    "net_margin": 0.072,
+    "asset_intensity": 0.2,
+    "notes": "Seasonal; insurance heavy."
+  },
+  {
+    "id": "carpenters_finish",
+    "name": "Carpenters & finish work",
+    "sector": "Trades & home services",
+    "audience": "smb_core",
+    "examples": [
+      "framing",
+      "trim",
+      "cabinetry installation"
+    ],
+    "gross_margin": 0.45,
+    "operating_margin": 0.13,
+    "net_margin": 0.0936,
+    "asset_intensity": 0.15,
+    "notes": "Tools + truck. Skilled-labor premium."
+  },
+  {
+    "id": "flooring_installers",
+    "name": "Flooring installers",
+    "sector": "Trades & home services",
+    "audience": "smb_core",
+    "examples": [
+      "hardwood",
+      "tile",
+      "carpet"
+    ],
+    "gross_margin": 0.38,
+    "operating_margin": 0.1,
+    "net_margin": 0.072,
+    "asset_intensity": 0.15,
+    "notes": "Materials passthrough; install margin thin."
+  },
+  {
+    "id": "wholesale_food",
+    "name": "Wholesale food & beverages",
+    "sector": "Other local services",
+    "audience": "smb_friendly",
+    "examples": [
+      "groceries wholesale",
+      "restaurant supply",
+      "drinks distribution"
+    ],
+    "gross_margin": 0.22,
+    "operating_margin": 0.05,
+    "net_margin": 0.0325,
+    "asset_intensity": 0.35,
+    "notes": "Warehouse + truck; thin volume margin."
+  },
+  {
+    "id": "wholesale_durables",
+    "name": "Wholesale durable goods",
+    "sector": "Other local services",
+    "audience": "smb_friendly",
+    "examples": [
+      "machinery",
+      "vehicles",
+      "electronics wholesale"
+    ],
+    "gross_margin": 0.28,
+    "operating_margin": 0.07,
+    "net_margin": 0.0455,
+    "asset_intensity": 0.4,
+    "notes": "Inventory carry; warehouse."
+  },
+  {
+    "id": "wholesale_chemicals_pharma",
+    "name": "Wholesale chemicals & pharma",
+    "sector": "Heavy industry",
+    "audience": "mixed_caution",
+    "examples": [
+      "industrial chemicals",
+      "drug distributors"
+    ],
+    "gross_margin": 0.2,
+    "operating_margin": 0.06,
+    "net_margin": 0.04,
+    "asset_intensity": 0.3,
+    "notes": "Pharma wholesaler gross margin ~6.3% per HHS ASPE 2022; broader chemical/pharma distributors run 15-25% gross at SMB scale (specialty product mix). High volume, low takerate model."
+  },
+  {
+    "id": "wholesale_general",
+    "name": "General wholesale",
+    "sector": "Other local services",
+    "audience": "smb_friendly",
+    "examples": [
+      "mixed merchandise",
+      "import-export",
+      "brokers"
+    ],
+    "gross_margin": 0.25,
+    "operating_margin": 0.06,
+    "net_margin": 0.039,
+    "asset_intensity": 0.35,
+    "notes": "Pass-through to retail."
+  },
+  {
+    "id": "grocery_stores",
+    "name": "Grocery stores",
+    "sector": "Food & drink",
+    "audience": "smb_friendly",
+    "examples": [
+      "supermarkets",
+      "convenience stores",
+      "farmers markets"
+    ],
+    "gross_margin": 0.28,
+    "operating_margin": 0.05,
+    "net_margin": 0.03,
+    "asset_intensity": 0.25,
+    "notes": "Volume + thin margin."
+  },
+  {
+    "id": "specialty_grocery",
+    "name": "Specialty grocers & delis",
+    "sector": "Food & drink",
+    "audience": "smb_core",
+    "examples": [
+      "delis",
+      "ethnic grocers",
+      "butchers",
+      "fishmongers"
+    ],
+    "gross_margin": 0.38,
+    "operating_margin": 0.07,
+    "net_margin": 0.0504,
+    "asset_intensity": 0.25,
+    "notes": "Curated SKUs; higher margin."
+  },
+  {
+    "id": "wine_liquor_stores",
+    "name": "Wine & liquor stores",
+    "sector": "Food & drink",
+    "audience": "smb_core",
+    "examples": [
+      "wine shops",
+      "liquor stores",
+      "bottle shops"
+    ],
+    "gross_margin": 0.3,
+    "operating_margin": 0.08,
+    "net_margin": 0.0576,
+    "asset_intensity": 0.25,
+    "notes": "Licensed; inventory + shrinkage."
+  },
+  {
+    "id": "clothing_stores",
+    "name": "Clothing & shoe stores",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "apparel shops",
+      "shoe stores",
+      "accessories"
+    ],
+    "gross_margin": 0.5,
+    "operating_margin": 0.06,
+    "net_margin": 0.0432,
+    "asset_intensity": 0.25,
+    "notes": "Inventory carry; markdown risk."
+  },
+  {
+    "id": "boutique_clothing",
+    "name": "Clothing boutiques",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "independent boutiques",
+      "designer-curated shops"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.08,
+    "net_margin": 0.0576,
+    "asset_intensity": 0.25,
+    "notes": "Curated; lower volume than chains."
+  },
+  {
+    "id": "streetwear_casual",
+    "name": "Streetwear & casual apparel",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "streetwear shops",
+      "sneaker boutiques"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.1,
+    "net_margin": 0.072,
+    "asset_intensity": 0.2,
+    "notes": "Drop model; brand-driven."
+  },
+  {
+    "id": "designer_fashion",
+    "name": "Designer fashion",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "designer-label shops",
+      "high-end fashion"
+    ],
+    "gross_margin": 0.6,
+    "operating_margin": 0.1,
+    "net_margin": 0.065,
+    "asset_intensity": 0.3,
+    "notes": "Premium pricing; runway costs."
+  },
+  {
+    "id": "childrens_clothing",
+    "name": "Children's & maternity clothing",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "kids' boutiques",
+      "maternity stores"
+    ],
+    "gross_margin": 0.5,
+    "operating_margin": 0.07,
+    "net_margin": 0.0504,
+    "asset_intensity": 0.22,
+    "notes": "Repeat purchase; growth-driven."
+  },
+  {
+    "id": "jewelry_stores",
+    "name": "Jewelry stores",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "jewelers",
+      "fine jewelry",
+      "fashion jewelry"
+    ],
+    "gross_margin": 0.5,
+    "operating_margin": 0.1,
+    "net_margin": 0.065,
+    "asset_intensity": 0.4,
+    "notes": "Inventory carry on metal/stone."
+  },
+  {
+    "id": "watch_shops",
+    "name": "Watch shops",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "watch retailers",
+      "horology"
+    ],
+    "gross_margin": 0.48,
+    "operating_margin": 0.1,
+    "net_margin": 0.065,
+    "asset_intensity": 0.4,
+    "notes": "Inventory carry; authorized dealer fees."
+  },
+  {
+    "id": "eyewear_optical",
+    "name": "Eyewear & optical retail",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "opticians",
+      "sunglasses shops"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.15,
+    "net_margin": 0.108,
+    "asset_intensity": 0.25,
+    "notes": "Lab + dispensary; insurance billing."
+  },
+  {
+    "id": "shoe_stores",
+    "name": "Shoe stores",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "family shoe stores",
+      "athletic shoe shops"
+    ],
+    "gross_margin": 0.45,
+    "operating_margin": 0.07,
+    "net_margin": 0.0504,
+    "asset_intensity": 0.25,
+    "notes": "Seasonal turn."
+  },
+  {
+    "id": "bags_leather_retail",
+    "name": "Bags & leather goods",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "handbag boutiques",
+      "leather goods"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.1,
+    "net_margin": 0.072,
+    "asset_intensity": 0.25,
+    "notes": "Premium accessory."
+  },
+  {
+    "id": "lingerie_intimates",
+    "name": "Lingerie & intimates",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "lingerie boutiques",
+      "intimates shops"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.1,
+    "net_margin": 0.072,
+    "asset_intensity": 0.22,
+    "notes": "Curated specialty."
+  },
+  {
+    "id": "vintage_consignment",
+    "name": "Vintage & consignment",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "thrift shops",
+      "consignment stores",
+      "vintage"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.13,
+    "net_margin": 0.0936,
+    "asset_intensity": 0.1,
+    "notes": "Consignment model; low inventory risk."
+  },
+  {
+    "id": "electronics_appliance_stores",
+    "name": "Electronics & appliance stores",
+    "sector": "Retail & shops",
+    "audience": "smb_friendly",
+    "examples": [
+      "phone shops",
+      "computer stores",
+      "appliances"
+    ],
+    "gross_margin": 0.28,
+    "operating_margin": 0.05,
+    "net_margin": 0.0325,
+    "asset_intensity": 0.3,
+    "notes": "Compete with chains; thin margins."
+  },
+  {
+    "id": "furniture_stores",
+    "name": "Furniture stores",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "furniture retail",
+      "home furnishings"
+    ],
+    "gross_margin": 0.42,
+    "operating_margin": 0.08,
+    "net_margin": 0.052,
+    "asset_intensity": 0.3,
+    "notes": ""
+  },
+  {
+    "id": "building_garden_stores",
+    "name": "Building & garden supply stores",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "hardware",
+      "lumber",
+      "garden supplies"
+    ],
+    "gross_margin": 0.42,
+    "operating_margin": 0.08,
+    "net_margin": 0.052,
+    "asset_intensity": 0.3,
+    "notes": ""
+  },
+  {
+    "id": "hardware_stores",
+    "name": "Hardware stores (local)",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "neighborhood hardware",
+      "small DIY"
+    ],
+    "gross_margin": 0.38,
+    "operating_margin": 0.07,
+    "net_margin": 0.0504,
+    "asset_intensity": 0.25,
+    "notes": "Wide SKU; community fixture."
+  },
+  {
+    "id": "garden_centers",
+    "name": "Garden centers & nurseries",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "plant nurseries",
+      "garden supply"
+    ],
+    "gross_margin": 0.4,
+    "operating_margin": 0.08,
+    "net_margin": 0.052,
+    "asset_intensity": 0.35,
+    "notes": "Seasonal + perishable inventory."
+  },
+  {
+    "id": "home_decor_gift",
+    "name": "Home decor & gift shops",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "decor boutiques",
+      "gift shops"
+    ],
+    "gross_margin": 0.5,
+    "operating_margin": 0.09,
+    "net_margin": 0.0648,
+    "asset_intensity": 0.2,
+    "notes": "Curated SKUs; foot traffic dependent."
+  },
+  {
+    "id": "health_beauty_stores",
+    "name": "Pharmacies & health stores",
+    "sector": "Retail & shops",
+    "audience": "smb_friendly",
+    "examples": [
+      "pharmacies",
+      "drugstores",
+      "cosmetics stores",
+      "optical shops"
+    ],
+    "gross_margin": 0.45,
+    "operating_margin": 0.08,
+    "net_margin": 0.0576,
+    "asset_intensity": 0.2,
+    "notes": "Compete with chains + drugstores."
+  },
+  {
+    "id": "cosmetics_shops",
+    "name": "Cosmetics & beauty shops",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "beauty stores",
+      "perfumeries",
+      "skincare shops"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.11,
+    "net_margin": 0.0792,
+    "asset_intensity": 0.22,
+    "notes": "Premium beauty; sampling cost."
+  },
+  {
+    "id": "independent_pharmacy",
+    "name": "Independent pharmacies",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "neighborhood pharmacy",
+      "compounding pharmacy"
+    ],
+    "gross_margin": 0.22,
+    "operating_margin": 0.05,
+    "net_margin": 0.03,
+    "asset_intensity": 0.18,
+    "notes": "Insurance reimbursement compression."
+  },
+  {
+    "id": "auto_dealers",
+    "name": "Auto dealers",
+    "sector": "Retail & shops",
+    "audience": "smb_friendly",
+    "examples": [
+      "car dealers",
+      "used car lots",
+      "motorcycle dealers"
+    ],
+    "gross_margin": 0.15,
+    "operating_margin": 0.05,
+    "net_margin": 0.03,
+    "asset_intensity": 0.45,
+    "notes": ""
+  },
+  {
+    "id": "gas_stations",
+    "name": "Gas stations",
+    "sector": "Retail & shops",
+    "audience": "smb_friendly",
+    "examples": [
+      "gas stations",
+      "service stations",
+      "fuel retail"
+    ],
+    "gross_margin": 0.15,
+    "operating_margin": 0.05,
+    "net_margin": 0.03,
+    "asset_intensity": 0.45,
+    "notes": ""
+  },
+  {
+    "id": "ecommerce_mail_order",
+    "name": "E-commerce & mail-order",
+    "sector": "Retail & shops",
+    "audience": "smb_friendly",
+    "examples": [
+      "online retail",
+      "catalog sales",
+      "marketplace sellers"
+    ],
+    "gross_margin": 0.4,
+    "operating_margin": 0.08,
+    "net_margin": 0.0576,
+    "asset_intensity": 0.2,
+    "notes": "Shipping + customer-acq drag."
+  },
+  {
+    "id": "general_merchandise",
+    "name": "General merchandise stores",
+    "sector": "Retail & shops",
+    "audience": "mixed_caution",
+    "examples": [
+      "department stores",
+      "dollar stores",
+      "warehouse clubs"
+    ],
+    "gross_margin": 0.3,
+    "operating_margin": 0.06,
+    "net_margin": 0.04,
+    "asset_intensity": 0.4,
+    "notes": "Dollar stores / discount general merch: 25-35% gross, 3-6% net. Dollar General ~3% net 2025; ~6% peak. SMB independent variety stores in same band."
+  },
+  {
+    "id": "bookstores_indie",
+    "name": "Indie bookstores",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "independent bookshops",
+      "used books"
+    ],
+    "gross_margin": 0.42,
+    "operating_margin": 0.05,
+    "net_margin": 0.036,
+    "asset_intensity": 0.18,
+    "notes": "Margin pressure from chains/online."
+  },
+  {
+    "id": "toy_game_stores",
+    "name": "Toy & game stores",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "toy shops",
+      "hobby shops",
+      "game stores"
+    ],
+    "gross_margin": 0.45,
+    "operating_margin": 0.07,
+    "net_margin": 0.0504,
+    "asset_intensity": 0.2,
+    "notes": "Holiday-concentrated revenue."
+  },
+  {
+    "id": "pet_stores",
+    "name": "Pet stores",
+    "sector": "Pet services",
+    "audience": "smb_core",
+    "examples": [
+      "pet supply shops",
+      "aquarium stores"
+    ],
+    "gross_margin": 0.4,
+    "operating_margin": 0.08,
+    "net_margin": 0.0576,
+    "asset_intensity": 0.22,
+    "notes": "Live-animal handling adds overhead."
+  },
+  {
+    "id": "sporting_goods_specialty",
+    "name": "Sporting goods (specialty)",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "bike shops",
+      "ski shops",
+      "running stores"
+    ],
+    "gross_margin": 0.4,
+    "operating_margin": 0.08,
+    "net_margin": 0.0576,
+    "asset_intensity": 0.22,
+    "notes": "Specialty knowledge; service component."
+  },
+  {
+    "id": "art_craft_supplies",
+    "name": "Art & craft supply shops",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "art supplies",
+      "craft stores",
+      "yarn shops"
+    ],
+    "gross_margin": 0.5,
+    "operating_margin": 0.08,
+    "net_margin": 0.0576,
+    "asset_intensity": 0.2,
+    "notes": "Diverse SKUs; hobby-driven."
+  },
+  {
+    "id": "music_instrument_shops",
+    "name": "Music instrument shops",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "guitar shops",
+      "piano shops",
+      "drum shops"
+    ],
+    "gross_margin": 0.32,
+    "operating_margin": 0.06,
+    "net_margin": 0.039,
+    "asset_intensity": 0.3,
+    "notes": "Inventory carry + repair sideline."
+  },
+  {
+    "id": "stationery_paper",
+    "name": "Stationery & paper goods",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "stationers",
+      "card shops"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.09,
+    "net_margin": 0.0648,
+    "asset_intensity": 0.18,
+    "notes": "Premium niche; gift purchases."
+  },
+  {
+    "id": "florist_shops",
+    "name": "Florist shops",
+    "sector": "Retail & shops",
+    "audience": "smb_core",
+    "examples": [
+      "flower shops",
+      "wedding florists"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.1,
+    "net_margin": 0.072,
+    "asset_intensity": 0.18,
+    "notes": "Spoilage + event-driven peaks."
+  },
+  {
+    "id": "trucking_freight",
+    "name": "Trucking & freight",
+    "sector": "Transport (small)",
+    "audience": "smb_core",
+    "examples": [
+      "long-haul trucking",
+      "local delivery",
+      "freight forwarding"
+    ],
+    "gross_margin": 0.32,
+    "operating_margin": 0.075,
+    "net_margin": 0.045,
+    "asset_intensity": 0.6,
+    "notes": "Plan v30 audit — gross margin 0.20 was actually net-of-line-haul; true revenue-minus-fuel-and-variable gross is 30-45%. Net margin band 3-7% is correct for owner-operator and small fleet."
+  },
+  {
+    "id": "junk_removal_moving",
+    "name": "Junk removal & small moving",
+    "sector": "Trades & home services",
+    "audience": "smb_core",
+    "examples": [
+      "residential movers",
+      "junk haulers"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.15,
+    "net_margin": 0.108,
+    "asset_intensity": 0.25,
+    "notes": "Truck-heavy; disposal fees."
+  },
+  {
+    "id": "transit_ground_passenger",
+    "name": "Transit & ground passenger transport",
+    "sector": "Transport (small)",
+    "audience": "smb_core",
+    "examples": [
+      "urban transit",
+      "buses",
+      "taxis",
+      "limousines"
+    ],
+    "gross_margin": 0.25,
+    "operating_margin": 0.07,
+    "net_margin": 0.0455,
+    "asset_intensity": 0.55,
+    "notes": ""
+  },
+  {
+    "id": "scenic_sightseeing_transport",
+    "name": "Scenic & sightseeing transport",
+    "sector": "Transport (small)",
+    "audience": "smb_core",
+    "examples": [
+      "sightseeing tours",
+      "scenic transport"
+    ],
+    "gross_margin": 0.25,
+    "operating_margin": 0.07,
+    "net_margin": 0.0455,
+    "asset_intensity": 0.55,
+    "notes": ""
+  },
+  {
+    "id": "transport_support",
+    "name": "Transport support services",
+    "sector": "Transport (small)",
+    "audience": "smb_core",
+    "examples": [
+      "freight forwarding",
+      "port services",
+      "terminal services"
+    ],
+    "gross_margin": 0.25,
+    "operating_margin": 0.07,
+    "net_margin": 0.0455,
+    "asset_intensity": 0.55,
+    "notes": ""
+  },
+  {
+    "id": "warehousing_storage",
+    "name": "Warehousing & storage",
+    "sector": "Transport (small)",
+    "audience": "smb_friendly",
+    "examples": [
+      "storage facilities",
+      "cold storage",
+      "self-storage"
+    ],
+    "gross_margin": 0.4,
+    "operating_margin": 0.18,
+    "net_margin": 0.099,
+    "asset_intensity": 0.85,
+    "notes": "Property-heavy business."
+  },
+  {
+    "id": "postal_service",
+    "name": "Postal service",
+    "sector": "Transport (small)",
+    "audience": "mixed_caution",
+    "examples": [
+      "postal service"
+    ],
+    "gross_margin": 0.22,
+    "operating_margin": 0.07,
+    "net_margin": 0.04,
+    "asset_intensity": 0.4,
+    "notes": ""
+  },
+  {
+    "id": "courier_messenger",
+    "name": "Couriers & messengers",
+    "sector": "Transport (small)",
+    "audience": "mixed_caution",
+    "examples": [
+      "courier",
+      "messenger",
+      "local delivery"
+    ],
+    "gross_margin": 0.3,
+    "operating_margin": 0.06,
+    "net_margin": 0.035,
+    "asset_intensity": 0.4,
+    "notes": ""
+  },
+  {
+    "id": "restaurants",
+    "name": "Restaurants",
+    "sector": "Food & drink",
+    "audience": "smb_core",
+    "examples": [
+      "cafés",
+      "bistros",
+      "fast food",
+      "fine dining",
+      "takeaway"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.1,
+    "net_margin": 0.065,
+    "asset_intensity": 0.3,
+    "notes": "Food cost ~30-35%; labor + rent heavy."
+  },
+  {
+    "id": "sit_down_restaurants",
+    "name": "Sit-down restaurants",
+    "sector": "Food & drink",
+    "audience": "smb_core",
+    "examples": [
+      "full-service restaurants",
+      "casual dining"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.08,
+    "net_margin": 0.052,
+    "asset_intensity": 0.35,
+    "notes": "FOH labor higher than fast casual."
+  },
+  {
+    "id": "fast_casual",
+    "name": "Fast-casual restaurants",
+    "sector": "Food & drink",
+    "audience": "smb_core",
+    "examples": [
+      "fast-casual chains",
+      "fast-casual independents"
+    ],
+    "gross_margin": 0.68,
+    "operating_margin": 0.12,
+    "net_margin": 0.0864,
+    "asset_intensity": 0.28,
+    "notes": "Limited service; higher throughput."
+  },
+  {
+    "id": "cafes_coffee",
+    "name": "Cafés & coffee shops",
+    "sector": "Food & drink",
+    "audience": "smb_core",
+    "examples": [
+      "espresso bars",
+      "neighborhood cafés"
+    ],
+    "gross_margin": 0.72,
+    "operating_margin": 0.12,
+    "net_margin": 0.0864,
+    "asset_intensity": 0.22,
+    "notes": "Coffee COGS low; labor + lease."
+  },
+  {
+    "id": "bakeries_retail",
+    "name": "Bakeries (retail)",
+    "sector": "Food & drink",
+    "audience": "smb_core",
+    "examples": [
+      "bread bakeries",
+      "pastry shops",
+      "patisseries"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.1,
+    "net_margin": 0.072,
+    "asset_intensity": 0.25,
+    "notes": "Early-morning labor; spoilage."
+  },
+  {
+    "id": "pastry_dessert",
+    "name": "Pastry & dessert shops",
+    "sector": "Food & drink",
+    "audience": "smb_core",
+    "examples": [
+      "cake shops",
+      "macaron shops",
+      "dessert bars"
+    ],
+    "gross_margin": 0.68,
+    "operating_margin": 0.13,
+    "net_margin": 0.0936,
+    "asset_intensity": 0.22,
+    "notes": "Premium pricing; small footprint."
+  },
+  {
+    "id": "ice_cream_shops",
+    "name": "Ice cream & frozen dessert shops",
+    "sector": "Food & drink",
+    "audience": "smb_core",
+    "examples": [
+      "gelato",
+      "frozen yogurt",
+      "ice cream parlors"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.13,
+    "net_margin": 0.0936,
+    "asset_intensity": 0.25,
+    "notes": "Highly seasonal."
+  },
+  {
+    "id": "pizzerias",
+    "name": "Pizzerias",
+    "sector": "Food & drink",
+    "audience": "smb_core",
+    "examples": [
+      "wood-fired pizza",
+      "neighborhood pizza"
+    ],
+    "gross_margin": 0.68,
+    "operating_margin": 0.12,
+    "net_margin": 0.0864,
+    "asset_intensity": 0.25,
+    "notes": "Low food cost; delivery commission drag."
+  },
+  {
+    "id": "food_trucks",
+    "name": "Food trucks",
+    "sector": "Food & drink",
+    "audience": "smb_core",
+    "examples": [
+      "mobile food",
+      "street food trucks"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.16,
+    "net_margin": 0.1152,
+    "asset_intensity": 0.2,
+    "notes": "No rent; vehicle + permit."
+  },
+  {
+    "id": "tea_houses",
+    "name": "Tea houses & matcha bars",
+    "sector": "Food & drink",
+    "audience": "smb_core",
+    "examples": [
+      "tea shops",
+      "bubble tea",
+      "matcha bars"
+    ],
+    "gross_margin": 0.72,
+    "operating_margin": 0.12,
+    "net_margin": 0.0864,
+    "asset_intensity": 0.22,
+    "notes": "Similar economics to cafés."
+  },
+  {
+    "id": "bars_nightclubs",
+    "name": "Bars & nightclubs",
+    "sector": "Food & drink",
+    "audience": "smb_core",
+    "examples": [
+      "pubs",
+      "taverns",
+      "lounges",
+      "wine bars"
+    ],
+    "gross_margin": 0.72,
+    "operating_margin": 0.1,
+    "net_margin": 0.065,
+    "asset_intensity": 0.3,
+    "notes": "Liquor cost low; license + insurance heavy."
+  },
+  {
+    "id": "wine_bars",
+    "name": "Wine bars",
+    "sector": "Food & drink",
+    "audience": "smb_core",
+    "examples": [
+      "natural wine bars",
+      "wine lounges"
+    ],
+    "gross_margin": 0.68,
+    "operating_margin": 0.1,
+    "net_margin": 0.072,
+    "asset_intensity": 0.25,
+    "notes": "Inventory carry on premium bottles."
+  },
+  {
+    "id": "pubs_taverns",
+    "name": "Pubs & taverns",
+    "sector": "Food & drink",
+    "audience": "smb_core",
+    "examples": [
+      "neighborhood pubs",
+      "sports bars"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.09,
+    "net_margin": 0.0585,
+    "asset_intensity": 0.3,
+    "notes": "Food + drink mix; rent heavy."
+  },
+  {
+    "id": "breweries_taprooms",
+    "name": "Breweries & taprooms (retail)",
+    "sector": "Food & drink",
+    "audience": "smb_core",
+    "examples": [
+      "taprooms",
+      "brewpubs"
+    ],
+    "gross_margin": 0.62,
+    "operating_margin": 0.13,
+    "net_margin": 0.0845,
+    "asset_intensity": 0.65,
+    "notes": "Brewhouse capex; taproom margin."
+  },
+  {
+    "id": "catering",
+    "name": "Catering & food service contractors",
+    "sector": "Food & drink",
+    "audience": "smb_core",
+    "examples": [
+      "corporate dining",
+      "event catering",
+      "institutional food"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.14,
+    "net_margin": 0.1008,
+    "asset_intensity": 0.25,
+    "notes": "Event-driven; equipment + vehicles."
+  },
+  {
+    "id": "hotels_lodging",
+    "name": "Hotels & lodging",
+    "sector": "Hospitality",
+    "audience": "smb_core",
+    "examples": [
+      "hotels",
+      "motels",
+      "resorts",
+      "bed & breakfast"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.12,
+    "net_margin": 0.075,
+    "asset_intensity": 1.2,
+    "notes": "Plan v30 audit — SMB independent hotels run 8-15% operating margin, not 18%. Net 5-10% is the realistic band; 18% was branded-chain data mis-applied to independents."
+  },
+  {
+    "id": "independent_hotels",
+    "name": "Independent hotels & inns",
+    "sector": "Food & drink",
+    "audience": "smb_core",
+    "examples": [
+      "boutique hotels",
+      "country inns"
+    ],
+    "gross_margin": 0.7,
+    "operating_margin": 0.2,
+    "net_margin": 0.11,
+    "asset_intensity": 1.1,
+    "notes": "Property-heavy; high fixed costs."
+  },
+  {
+    "id": "bnbs",
+    "name": "Bed & breakfasts",
+    "sector": "Food & drink",
+    "audience": "smb_core",
+    "examples": [
+      "B&Bs",
+      "guest houses"
+    ],
+    "gross_margin": 0.75,
+    "operating_margin": 0.25,
+    "net_margin": 0.1625,
+    "asset_intensity": 0.8,
+    "notes": "Owner-occupied common; lower staffing."
+  },
+  {
+    "id": "hostels",
+    "name": "Hostels",
+    "sector": "Hospitality",
+    "audience": "smb_core",
+    "examples": [
+      "youth hostels",
+      "backpacker hostels"
+    ],
+    "gross_margin": 0.68,
+    "operating_margin": 0.14,
+    "net_margin": 0.085,
+    "asset_intensity": 0.85,
+    "notes": "Plan v30 audit — hostels run slightly better than hotels (lower service intensity, dorm rate efficiency) but 20% operating was unrealistic. 12-16% op is the achievable band; 8-12% net for well-run urban hostels."
+  },
+  {
+    "id": "str_management",
+    "name": "Short-term rental management",
+    "sector": "Food & drink",
+    "audience": "smb_core",
+    "examples": [
+      "Airbnb management",
+      "vacation rental managers"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.2,
+    "net_margin": 0.144,
+    "asset_intensity": 0.1,
+    "notes": "Service business managing others' properties."
+  },
+  {
+    "id": "software_development",
+    "name": "Software development",
+    "sector": "Creative & media",
+    "audience": "smb_core",
+    "examples": [
+      "web apps",
+      "mobile apps",
+      "custom software",
+      "SaaS"
+    ],
+    "gross_margin": 0.78,
+    "operating_margin": 0.15,
+    "net_margin": 0.105,
+    "asset_intensity": 0.05,
+    "notes": "Plan v30 audit — SMB software service firms (not product SaaS) run 12-18% operating margin. 20% was top-decile; 15% is the realistic median across body-shop, custom dev, and small product firms."
+  },
+  {
+    "id": "web_mobile_dev_shops",
+    "name": "Web & mobile dev shops",
+    "sector": "Software & tech",
+    "audience": "smb_core",
+    "examples": [
+      "web agencies",
+      "mobile app studios"
+    ],
+    "gross_margin": 0.75,
+    "operating_margin": 0.18,
+    "net_margin": 0.1296,
+    "asset_intensity": 0.05,
+    "notes": "Labor-only; project-based."
+  },
+  {
+    "id": "custom_software_contract",
+    "name": "Custom software / contract dev",
+    "sector": "Software & tech",
+    "audience": "smb_core",
+    "examples": [
+      "bespoke software",
+      "contract programming"
+    ],
+    "gross_margin": 0.78,
+    "operating_margin": 0.18,
+    "net_margin": 0.1296,
+    "asset_intensity": 0.05,
+    "notes": "Labor + cloud."
+  },
+  {
+    "id": "game_dev_studios",
+    "name": "Game development studios",
+    "sector": "Software & tech",
+    "audience": "smb_friendly",
+    "examples": [
+      "indie game studios",
+      "mobile games"
+    ],
+    "gross_margin": 0.8,
+    "operating_margin": 0.15,
+    "net_margin": 0.108,
+    "asset_intensity": 0.08,
+    "notes": "Royalty-bearing; high failure rate."
+  },
+  {
+    "id": "it_services_hosting",
+    "name": "IT services & hosting",
+    "sector": "Creative & media",
+    "audience": "smb_friendly",
+    "examples": [
+      "cloud hosting",
+      "web hosting",
+      "IT consulting",
+      "managed services"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.15,
+    "net_margin": 0.108,
+    "asset_intensity": 0.25,
+    "notes": "Server + colo infrastructure."
+  },
+  {
+    "id": "it_services_msp",
+    "name": "IT services & MSPs (small)",
+    "sector": "Creative & media",
+    "audience": "smb_core",
+    "examples": [
+      "managed service providers",
+      "IT support shops"
+    ],
+    "gross_margin": 0.6,
+    "operating_margin": 0.18,
+    "net_margin": 0.1296,
+    "asset_intensity": 0.1,
+    "notes": "Recurring MSP contracts."
+  },
+  {
+    "id": "news_periodical_publishing",
+    "name": "News & periodical publishing",
+    "sector": "Creative & media",
+    "audience": "smb_friendly",
+    "examples": [
+      "newspapers",
+      "magazines",
+      "books",
+      "online news"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.1,
+    "net_margin": 0.072,
+    "asset_intensity": 0.1,
+    "notes": ""
+  },
+  {
+    "id": "motion_picture_recording",
+    "name": "Motion picture & sound recording",
+    "sector": "Creative & media",
+    "audience": "smb_friendly",
+    "examples": [
+      "film production",
+      "music recording",
+      "video studios",
+      "post-production"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.1,
+    "net_margin": 0.072,
+    "asset_intensity": 0.1,
+    "notes": ""
+  },
+  {
+    "id": "broadcasting",
+    "name": "Broadcasting",
+    "sector": "Telecom & broadcasting",
+    "audience": "corp_only",
+    "examples": [
+      "radio stations",
+      "television broadcasting"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "telecom",
+    "name": "Telecommunications",
+    "sector": "Telecom & broadcasting",
+    "audience": "corp_only",
+    "examples": [
+      "wireless carriers",
+      "wired telecom",
+      "ISPs"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "banking",
+    "name": "Banking",
+    "sector": "Finance (corp)",
+    "audience": "corp_only",
+    "examples": [
+      "commercial banks",
+      "credit unions",
+      "savings banks"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "securities_brokerage",
+    "name": "Securities & brokerage",
+    "sector": "Finance (corp)",
+    "audience": "corp_only",
+    "examples": [
+      "securities dealers",
+      "commodity contracts"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "funds_trusts",
+    "name": "Funds & trusts",
+    "sector": "Finance (corp)",
+    "audience": "corp_only",
+    "examples": [
+      "mutual funds",
+      "trusts",
+      "pension funds"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "insurance",
+    "name": "Insurance",
+    "sector": "Finance (corp)",
+    "audience": "mixed_caution",
+    "examples": [
+      "life insurance",
+      "property insurance",
+      "health insurance",
+      "brokers"
+    ],
+    "gross_margin": 0.4,
+    "operating_margin": 0.18,
+    "net_margin": 0.12,
+    "asset_intensity": 0.1,
+    "notes": "Independent insurance brokers/agencies: 15-30% net typical for well-run independents; 5-10% net franchise-band. SMB-focused at 12% mid. Commission-based, light fixed assets."
+  },
+  {
+    "id": "insurance_brokers",
+    "name": "Independent insurance brokers",
+    "sector": "Real estate",
+    "audience": "smb_core",
+    "examples": [
+      "local insurance agencies",
+      "independent brokers"
+    ],
+    "gross_margin": 0.85,
+    "operating_margin": 0.25,
+    "net_margin": 0.18,
+    "asset_intensity": 0.05,
+    "notes": "Commission-based; low capex."
+  },
+  {
+    "id": "real_estate_agencies",
+    "name": "Real estate agencies",
+    "sector": "Real estate",
+    "audience": "smb_core",
+    "examples": [
+      "realtors",
+      "property managers",
+      "agents"
+    ],
+    "gross_margin": 0.85,
+    "operating_margin": 0.2,
+    "net_margin": 0.144,
+    "asset_intensity": 0.05,
+    "notes": "Commission; office overhead."
+  },
+  {
+    "id": "real_estate_leasing",
+    "name": "Real estate leasing",
+    "sector": "Real estate",
+    "audience": "smb_core",
+    "examples": [
+      "property management",
+      "rental property"
+    ],
+    "gross_margin": 0.75,
+    "operating_margin": 0.3,
+    "net_margin": 0.165,
+    "asset_intensity": 2.5,
+    "notes": ""
+  },
+  {
+    "id": "equipment_rental",
+    "name": "Equipment rental & leasing",
+    "sector": "Professional services",
+    "audience": "smb_core",
+    "examples": [
+      "equipment rental",
+      "vehicle leasing"
+    ],
+    "gross_margin": 0.75,
+    "operating_margin": 0.3,
+    "net_margin": 0.165,
+    "asset_intensity": 2.5,
+    "notes": ""
+  },
+  {
+    "id": "legal_services",
+    "name": "Legal services",
+    "sector": "Professional services",
+    "audience": "smb_core",
+    "examples": [
+      "law firms",
+      "attorneys",
+      "paralegals",
+      "notaries"
+    ],
+    "gross_margin": 0.92,
+    "operating_margin": 0.25,
+    "net_margin": 0.18,
+    "asset_intensity": 0.08,
+    "notes": "Labor + office; minimal physical capex."
+  },
+  {
+    "id": "sole_law_firms",
+    "name": "Sole-practitioner law firms",
+    "sector": "Professional services",
+    "audience": "smb_core",
+    "examples": [
+      "solo attorneys",
+      "small boutique law"
+    ],
+    "gross_margin": 0.92,
+    "operating_margin": 0.35,
+    "net_margin": 0.252,
+    "asset_intensity": 0.05,
+    "notes": "Owner-operator high take."
+  },
+  {
+    "id": "accounting_tax",
+    "name": "Accounting & tax",
+    "sector": "Professional services",
+    "audience": "smb_core",
+    "examples": [
+      "CPAs",
+      "bookkeeping",
+      "tax preparation",
+      "audit"
+    ],
+    "gross_margin": 0.85,
+    "operating_margin": 0.22,
+    "net_margin": 0.1584,
+    "asset_intensity": 0.08,
+    "notes": "Seasonal peaks; software + labor."
+  },
+  {
+    "id": "sole_accounting",
+    "name": "Sole-practitioner accountants",
+    "sector": "Professional services",
+    "audience": "smb_core",
+    "examples": [
+      "solo CPAs",
+      "neighborhood tax prep"
+    ],
+    "gross_margin": 0.88,
+    "operating_margin": 0.35,
+    "net_margin": 0.252,
+    "asset_intensity": 0.05,
+    "notes": "Owner-operator."
+  },
+  {
+    "id": "management_consulting",
+    "name": "Management consulting",
+    "sector": "Professional services",
+    "audience": "smb_core",
+    "examples": [
+      "strategy",
+      "operations",
+      "HR consulting"
+    ],
+    "gross_margin": 0.78,
+    "operating_margin": 0.22,
+    "net_margin": 0.1584,
+    "asset_intensity": 0.05,
+    "notes": "Labor + travel."
+  },
+  {
+    "id": "engineering_architecture",
+    "name": "Engineering & architecture",
+    "sector": "Professional services",
+    "audience": "smb_core",
+    "examples": [
+      "architects",
+      "civil engineers",
+      "surveyors"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.15,
+    "net_margin": 0.108,
+    "asset_intensity": 0.1,
+    "notes": "Software + labor."
+  },
+  {
+    "id": "marketing_design",
+    "name": "Marketing & design agencies",
+    "sector": "Professional services",
+    "audience": "smb_core",
+    "examples": [
+      "advertising",
+      "PR",
+      "graphic design",
+      "branding"
+    ],
+    "gross_margin": 0.72,
+    "operating_margin": 0.18,
+    "net_margin": 0.1296,
+    "asset_intensity": 0.08,
+    "notes": "Agency model; project-based."
+  },
+  {
+    "id": "photography_studios",
+    "name": "Photography studios",
+    "sector": "Creative & media",
+    "audience": "smb_core",
+    "examples": [
+      "portrait studios",
+      "wedding photographers",
+      "commercial photography"
+    ],
+    "gross_margin": 0.75,
+    "operating_margin": 0.18,
+    "net_margin": 0.1296,
+    "asset_intensity": 0.2,
+    "notes": "Equipment + studio rent."
+  },
+  {
+    "id": "videography_services",
+    "name": "Videography services",
+    "sector": "Creative & media",
+    "audience": "smb_core",
+    "examples": [
+      "wedding video",
+      "commercial video",
+      "music video"
+    ],
+    "gross_margin": 0.7,
+    "operating_margin": 0.18,
+    "net_margin": 0.1296,
+    "asset_intensity": 0.25,
+    "notes": "Camera + post-production gear."
+  },
+  {
+    "id": "wedding_planning",
+    "name": "Wedding planning & coordination",
+    "sector": "Events & entertainment",
+    "audience": "smb_core",
+    "examples": [
+      "wedding planners",
+      "destination wedding"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.2,
+    "net_margin": 0.144,
+    "asset_intensity": 0.08,
+    "notes": "Coordination service; minimal capex."
+  },
+  {
+    "id": "event_production",
+    "name": "Event production (small)",
+    "sector": "Professional services",
+    "audience": "smb_core",
+    "examples": [
+      "event producers",
+      "AV companies",
+      "small event shops"
+    ],
+    "gross_margin": 0.45,
+    "operating_margin": 0.12,
+    "net_margin": 0.0864,
+    "asset_intensity": 0.2,
+    "notes": "AV gear + temporary infrastructure."
+  },
+  {
+    "id": "employment_services",
+    "name": "Employment services",
+    "sector": "Trades & home services",
+    "audience": "smb_friendly",
+    "examples": [
+      "staffing",
+      "temp agencies",
+      "executive search",
+      "recruiting"
+    ],
+    "gross_margin": 0.3,
+    "operating_margin": 0.1,
+    "net_margin": 0.072,
+    "asset_intensity": 0.08,
+    "notes": "Pass-through model; light fixed costs."
+  },
+  {
+    "id": "office_support",
+    "name": "Office & business support",
+    "sector": "Trades & home services",
+    "audience": "smb_friendly",
+    "examples": [
+      "call centers",
+      "secretarial",
+      "BPO",
+      "answering services"
+    ],
+    "gross_margin": 0.45,
+    "operating_margin": 0.13,
+    "net_margin": 0.0936,
+    "asset_intensity": 0.1,
+    "notes": "Service / administrative."
+  },
+  {
+    "id": "travel_agencies",
+    "name": "Travel agencies",
+    "sector": "Trades & home services",
+    "audience": "smb_core",
+    "examples": [
+      "tour operators",
+      "travel booking",
+      "destination management"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.12,
+    "net_margin": 0.0864,
+    "asset_intensity": 0.08,
+    "notes": "Commission-based; light infrastructure."
+  },
+  {
+    "id": "security_services",
+    "name": "Security services",
+    "sector": "Trades & home services",
+    "audience": "smb_friendly",
+    "examples": [
+      "guards",
+      "alarm monitoring",
+      "private investigation"
+    ],
+    "gross_margin": 0.35,
+    "operating_margin": 0.1,
+    "net_margin": 0.072,
+    "asset_intensity": 0.15,
+    "notes": "Labor-heavy; uniform + equipment."
+  },
+  {
+    "id": "cleaning_services",
+    "name": "Cleaning services",
+    "sector": "Trades & home services",
+    "audience": "smb_core",
+    "examples": [
+      "janitorial",
+      "commercial cleaning",
+      "carpet cleaning"
+    ],
+    "gross_margin": 0.5,
+    "operating_margin": 0.13,
+    "net_margin": 0.0936,
+    "asset_intensity": 0.08,
+    "notes": "Supplies + labor; light equipment."
+  },
+  {
+    "id": "residential_cleaning",
+    "name": "Residential cleaning services",
+    "sector": "Trades & home services",
+    "audience": "smb_core",
+    "examples": [
+      "house cleaning",
+      "maid services"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.15,
+    "net_margin": 0.108,
+    "asset_intensity": 0.05,
+    "notes": "Owner-operator typical; minimal capex."
+  },
+  {
+    "id": "landscaping_lawn",
+    "name": "Landscaping & lawn care",
+    "sector": "Trades & home services",
+    "audience": "smb_core",
+    "examples": [
+      "lawn mowing",
+      "tree services",
+      "landscape design"
+    ],
+    "gross_margin": 0.45,
+    "operating_margin": 0.13,
+    "net_margin": 0.0845,
+    "asset_intensity": 0.3,
+    "notes": "Mower + truck fleet; seasonal."
+  },
+  {
+    "id": "pool_service",
+    "name": "Pool service & maintenance",
+    "sector": "Trades & home services",
+    "audience": "smb_core",
+    "examples": [
+      "pool cleaners",
+      "pool maintenance"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.17,
+    "net_margin": 0.1224,
+    "asset_intensity": 0.15,
+    "notes": "Recurring service contracts."
+  },
+  {
+    "id": "pest_control_local",
+    "name": "Pest control (local)",
+    "sector": "Trades & home services",
+    "audience": "smb_core",
+    "examples": [
+      "exterminators",
+      "termite control"
+    ],
+    "gross_margin": 0.6,
+    "operating_margin": 0.18,
+    "net_margin": 0.1296,
+    "asset_intensity": 0.15,
+    "notes": "Recurring contracts; chemical inventory."
+  },
+  {
+    "id": "window_washing",
+    "name": "Window washing",
+    "sector": "Trades & home services",
+    "audience": "smb_core",
+    "examples": [
+      "window cleaners",
+      "high-rise window service"
+    ],
+    "gross_margin": 0.6,
+    "operating_margin": 0.17,
+    "net_margin": 0.1224,
+    "asset_intensity": 0.1,
+    "notes": "Labor + light equipment."
+  },
+  {
+    "id": "primary_secondary_schools",
+    "name": "Primary & secondary schools",
+    "sector": "Education & instruction",
+    "audience": "smb_friendly",
+    "examples": [
+      "K-12",
+      "kindergartens",
+      "high schools"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.08,
+    "net_margin": 0.052,
+    "asset_intensity": 0.8,
+    "notes": "Facility + teacher payroll heavy."
+  },
+  {
+    "id": "private_k12",
+    "name": "Private K-12 schools (small)",
+    "sector": "Education & instruction",
+    "audience": "smb_friendly",
+    "examples": [
+      "small private schools",
+      "religious schools"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.1,
+    "net_margin": 0.055,
+    "asset_intensity": 0.85,
+    "notes": "Tuition-funded; facility heavy."
+  },
+  {
+    "id": "higher_education",
+    "name": "Higher education",
+    "sector": "Higher ed & hospitals",
+    "audience": "mixed_caution",
+    "examples": [
+      "colleges",
+      "universities",
+      "professional schools"
+    ],
+    "gross_margin": 0.45,
+    "operating_margin": 0.05,
+    "net_margin": 0.03,
+    "asset_intensity": 1.2,
+    "notes": "Small private colleges (CIC Financial Indicators): 4% operating margin is baseline financial strength. Many small institutions run at or below the line. Tuition-driven revenue; facility/faculty fixed cost heavy."
+  },
+  {
+    "id": "vocational_training",
+    "name": "Vocational & other training",
+    "sector": "Education & instruction",
+    "audience": "smb_core",
+    "examples": [
+      "driving schools",
+      "language schools",
+      "tutoring",
+      "test prep"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.15,
+    "net_margin": 0.108,
+    "asset_intensity": 0.25,
+    "notes": "Equipment + instructor labor."
+  },
+  {
+    "id": "tutoring_centers",
+    "name": "Tutoring centers",
+    "sector": "Education & instruction",
+    "audience": "smb_core",
+    "examples": [
+      "academic tutoring",
+      "after-school programs"
+    ],
+    "gross_margin": 0.72,
+    "operating_margin": 0.18,
+    "net_margin": 0.1296,
+    "asset_intensity": 0.15,
+    "notes": "Lease + instructor pay."
+  },
+  {
+    "id": "test_prep",
+    "name": "Test-prep services",
+    "sector": "Education & instruction",
+    "audience": "smb_core",
+    "examples": [
+      "SAT prep",
+      "GMAT prep",
+      "test preparation"
+    ],
+    "gross_margin": 0.72,
+    "operating_margin": 0.2,
+    "net_margin": 0.144,
+    "asset_intensity": 0.1,
+    "notes": "Seasonal exam-driven."
+  },
+  {
+    "id": "language_schools",
+    "name": "Language schools",
+    "sector": "Education & instruction",
+    "audience": "smb_core",
+    "examples": [
+      "ESL schools",
+      "foreign language instruction"
+    ],
+    "gross_margin": 0.7,
+    "operating_margin": 0.15,
+    "net_margin": 0.108,
+    "asset_intensity": 0.15,
+    "notes": "Instructor + lease."
+  },
+  {
+    "id": "music_schools",
+    "name": "Music schools & private lessons",
+    "sector": "Education & instruction",
+    "audience": "smb_core",
+    "examples": [
+      "music academies",
+      "private music instruction"
+    ],
+    "gross_margin": 0.7,
+    "operating_margin": 0.16,
+    "net_margin": 0.1152,
+    "asset_intensity": 0.15,
+    "notes": "Instructor split typical."
+  },
+  {
+    "id": "dance_studios",
+    "name": "Dance studios",
+    "sector": "Beauty & wellness",
+    "audience": "smb_core",
+    "examples": [
+      "ballet schools",
+      "dance academies"
+    ],
+    "gross_margin": 0.75,
+    "operating_margin": 0.2,
+    "net_margin": 0.144,
+    "asset_intensity": 0.25,
+    "notes": "Studio lease + instructor split."
+  },
+  {
+    "id": "driving_schools",
+    "name": "Driving schools",
+    "sector": "Education & instruction",
+    "audience": "smb_core",
+    "examples": [
+      "driver education",
+      "driving instructors"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.18,
+    "net_margin": 0.117,
+    "asset_intensity": 0.35,
+    "notes": "Vehicle fleet + insurance."
+  },
+  {
+    "id": "martial_arts",
+    "name": "Martial arts dojos",
+    "sector": "Education & instruction",
+    "audience": "smb_core",
+    "examples": [
+      "karate",
+      "BJJ",
+      "taekwondo",
+      "MMA gyms"
+    ],
+    "gross_margin": 0.78,
+    "operating_margin": 0.2,
+    "net_margin": 0.144,
+    "asset_intensity": 0.25,
+    "notes": "Dojo lease + member retention."
+  },
+  {
+    "id": "coding_schools",
+    "name": "Coding bootcamps & schools",
+    "sector": "Education & instruction",
+    "audience": "smb_core",
+    "examples": [
+      "coding bootcamps",
+      "kids coding"
+    ],
+    "gross_margin": 0.75,
+    "operating_margin": 0.18,
+    "net_margin": 0.1296,
+    "asset_intensity": 0.1,
+    "notes": "Instructor + courseware."
+  },
+  {
+    "id": "art_classes",
+    "name": "Art classes & studios",
+    "sector": "Education & instruction",
+    "audience": "smb_core",
+    "examples": [
+      "painting classes",
+      "pottery studios",
+      "art instruction"
+    ],
+    "gross_margin": 0.7,
+    "operating_margin": 0.18,
+    "net_margin": 0.1296,
+    "asset_intensity": 0.15,
+    "notes": "Studio + supplies."
+  },
+  {
+    "id": "doctors_clinics",
+    "name": "Doctors & clinics",
+    "sector": "Health & clinics",
+    "audience": "smb_core",
+    "examples": [
+      "general practice",
+      "specialty clinics",
+      "outpatient care"
+    ],
+    "gross_margin": 0.6,
+    "operating_margin": 0.2,
+    "net_margin": 0.13,
+    "asset_intensity": 0.3,
+    "notes": "Insurance reimbursement; admin staff."
+  },
+  {
+    "id": "chiropractic",
+    "name": "Chiropractic clinics",
+    "sector": "Health & clinics",
+    "audience": "smb_core",
+    "examples": [
+      "chiropractors",
+      "spinal care"
+    ],
+    "gross_margin": 0.78,
+    "operating_margin": 0.3,
+    "net_margin": 0.216,
+    "asset_intensity": 0.2,
+    "notes": "Owner-doctor high take."
+  },
+  {
+    "id": "physical_therapy",
+    "name": "Physical therapy clinics",
+    "sector": "Health & clinics",
+    "audience": "smb_core",
+    "examples": [
+      "PT clinics",
+      "rehab"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.18,
+    "net_margin": 0.1296,
+    "asset_intensity": 0.25,
+    "notes": "Equipment + therapist labor."
+  },
+  {
+    "id": "optometry",
+    "name": "Optometry / vision centers",
+    "sector": "Health & clinics",
+    "audience": "smb_core",
+    "examples": [
+      "optometrists",
+      "vision care"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.2,
+    "net_margin": 0.144,
+    "asset_intensity": 0.25,
+    "notes": "Exam + dispensary mix."
+  },
+  {
+    "id": "mental_health_practice",
+    "name": "Mental health practices (small)",
+    "sector": "Health & clinics",
+    "audience": "smb_core",
+    "examples": [
+      "therapists",
+      "psychologists",
+      "counseling"
+    ],
+    "gross_margin": 0.85,
+    "operating_margin": 0.35,
+    "net_margin": 0.252,
+    "asset_intensity": 0.05,
+    "notes": "Owner-operator therapy practice."
+  },
+  {
+    "id": "nutritionist",
+    "name": "Nutritionist / dietician practices",
+    "sector": "Health & clinics",
+    "audience": "smb_core",
+    "examples": [
+      "nutritionists",
+      "dieticians",
+      "nutrition coaching"
+    ],
+    "gross_margin": 0.85,
+    "operating_margin": 0.35,
+    "net_margin": 0.252,
+    "asset_intensity": 0.05,
+    "notes": "Owner-operator consulting."
+  },
+  {
+    "id": "dental_practices",
+    "name": "Dental practices",
+    "sector": "Health & clinics",
+    "audience": "smb_core",
+    "examples": [
+      "general dentistry",
+      "orthodontics",
+      "oral surgery"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.22,
+    "net_margin": 0.143,
+    "asset_intensity": 0.4,
+    "notes": "Equipment + lab fees."
+  },
+  {
+    "id": "hospitals",
+    "name": "Hospitals",
+    "sector": "Higher ed & hospitals",
+    "audience": "corp_only",
+    "examples": [
+      "general hospitals",
+      "specialty hospitals",
+      "psychiatric"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "nursing_elderly",
+    "name": "Nursing & elderly care",
+    "sector": "Health & clinics",
+    "audience": "smb_friendly",
+    "examples": [
+      "nursing homes",
+      "home care",
+      "assisted living"
+    ],
+    "gross_margin": 0.4,
+    "operating_margin": 0.08,
+    "net_margin": 0.052,
+    "asset_intensity": 0.8,
+    "notes": "Facility + 24h staffing."
+  },
+  {
+    "id": "childcare_social",
+    "name": "Childcare & social services",
+    "sector": "Health & clinics",
+    "audience": "smb_core",
+    "examples": [
+      "daycares",
+      "family services",
+      "youth services"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.1,
+    "net_margin": 0.065,
+    "asset_intensity": 0.45,
+    "notes": "Facility + ratio-mandated staff."
+  },
+  {
+    "id": "daycare_preschool",
+    "name": "Daycare & preschool",
+    "sector": "Education & instruction",
+    "audience": "smb_core",
+    "examples": [
+      "preschools",
+      "daycares",
+      "early learning"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.12,
+    "net_margin": 0.078,
+    "asset_intensity": 0.45,
+    "notes": "Facility + ratio-mandated staff."
+  },
+  {
+    "id": "veterinary_pet_care",
+    "name": "Veterinary & pet care",
+    "sector": "Health & clinics",
+    "audience": "smb_core",
+    "examples": [
+      "vets",
+      "pet grooming",
+      "kennels",
+      "pet hospitals"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.16,
+    "net_margin": 0.104,
+    "asset_intensity": 0.35,
+    "notes": "Equipment + drug inventory."
+  },
+  {
+    "id": "performing_arts",
+    "name": "Performing arts",
+    "sector": "Events & entertainment",
+    "audience": "smb_core",
+    "examples": [
+      "theatre",
+      "music",
+      "dance",
+      "live performance"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.05,
+    "net_margin": 0.0325,
+    "asset_intensity": 0.3,
+    "notes": "Venue + production cost heavy."
+  },
+  {
+    "id": "sports_fitness",
+    "name": "Sports & fitness",
+    "sector": "Events & entertainment",
+    "audience": "smb_core",
+    "examples": [
+      "gyms",
+      "sports clubs",
+      "yoga studios",
+      "personal trainers"
+    ],
+    "gross_margin": 0.78,
+    "operating_margin": 0.18,
+    "net_margin": 0.117,
+    "asset_intensity": 0.4,
+    "notes": "Equipment + lease; member-driven recurring."
+  },
+  {
+    "id": "yoga_pilates",
+    "name": "Yoga & pilates studios",
+    "sector": "Events & entertainment",
+    "audience": "smb_core",
+    "examples": [
+      "yoga studios",
+      "pilates studios",
+      "barre"
+    ],
+    "gross_margin": 0.8,
+    "operating_margin": 0.22,
+    "net_margin": 0.1584,
+    "asset_intensity": 0.2,
+    "notes": "Lower equipment than gyms; instructor split."
+  },
+  {
+    "id": "personal_training",
+    "name": "Personal training",
+    "sector": "Beauty & wellness",
+    "audience": "smb_core",
+    "examples": [
+      "personal trainers",
+      "small group training"
+    ],
+    "gross_margin": 0.78,
+    "operating_margin": 0.3,
+    "net_margin": 0.216,
+    "asset_intensity": 0.1,
+    "notes": "Owner-operator typical."
+  },
+  {
+    "id": "museums_cultural",
+    "name": "Museums & cultural",
+    "sector": "Cultural",
+    "audience": "smb_friendly",
+    "examples": [
+      "museums",
+      "libraries",
+      "galleries",
+      "historical sites"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.05,
+    "net_margin": 0.0325,
+    "asset_intensity": 0.65,
+    "notes": "Often non-profit; mission > margin."
+  },
+  {
+    "id": "gambling_amusement",
+    "name": "Gambling & amusement",
+    "sector": "Events & entertainment",
+    "audience": "mixed_caution",
+    "examples": [
+      "casinos",
+      "arcades",
+      "amusement parks",
+      "bowling"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.12,
+    "net_margin": 0.07,
+    "asset_intensity": 0.8,
+    "notes": "Casinos/gaming gross ~55-68% (high hold). SMB regional casinos and amusement venues run thinner net after gaming tax + facility capex. Excludes large strip operators."
+  },
+  {
+    "id": "hairdressers_beauty",
+    "name": "Hairdressers & beauty",
+    "sector": "Beauty & wellness",
+    "audience": "smb_core",
+    "examples": [
+      "barbers",
+      "salons",
+      "beauty parlors",
+      "spas",
+      "nail salons"
+    ],
+    "gross_margin": 0.6,
+    "operating_margin": 0.15,
+    "net_margin": 0.108,
+    "asset_intensity": 0.2,
+    "notes": "Stylist commissions + product retail."
+  },
+  {
+    "id": "hair_salons_full",
+    "name": "Hair salons (full service)",
+    "sector": "Other local services",
+    "audience": "smb_core",
+    "examples": [
+      "women's salons",
+      "color salons",
+      "cut and color"
+    ],
+    "gross_margin": 0.6,
+    "operating_margin": 0.15,
+    "net_margin": 0.108,
+    "asset_intensity": 0.2,
+    "notes": "Stylist commissions + salon overhead."
+  },
+  {
+    "id": "barbershops",
+    "name": "Barbershops",
+    "sector": "Beauty & wellness",
+    "audience": "smb_core",
+    "examples": [
+      "men's barbershops",
+      "traditional barbers"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.2,
+    "net_margin": 0.144,
+    "asset_intensity": 0.15,
+    "notes": "Lower product retail; cash-heavy."
+  },
+  {
+    "id": "nail_salons",
+    "name": "Nail salons",
+    "sector": "Beauty & wellness",
+    "audience": "smb_core",
+    "examples": [
+      "manicure",
+      "pedicure",
+      "nail art"
+    ],
+    "gross_margin": 0.62,
+    "operating_margin": 0.18,
+    "net_margin": 0.1296,
+    "asset_intensity": 0.18,
+    "notes": "Tech-heavy seating + ventilation."
+  },
+  {
+    "id": "day_spas",
+    "name": "Day spas",
+    "sector": "Beauty & wellness",
+    "audience": "smb_core",
+    "examples": [
+      "spa services",
+      "facials",
+      "skin treatments"
+    ],
+    "gross_margin": 0.6,
+    "operating_margin": 0.15,
+    "net_margin": 0.0975,
+    "asset_intensity": 0.3,
+    "notes": "Equipment + facility."
+  },
+  {
+    "id": "massage_therapy",
+    "name": "Massage therapy clinics",
+    "sector": "Beauty & wellness",
+    "audience": "smb_core",
+    "examples": [
+      "massage therapists",
+      "deep tissue",
+      "sports massage"
+    ],
+    "gross_margin": 0.72,
+    "operating_margin": 0.22,
+    "net_margin": 0.1584,
+    "asset_intensity": 0.15,
+    "notes": "Therapist split common."
+  },
+  {
+    "id": "tanning_salons",
+    "name": "Tanning salons",
+    "sector": "Beauty & wellness",
+    "audience": "smb_core",
+    "examples": [
+      "tanning beds",
+      "spray tan"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.18,
+    "net_margin": 0.117,
+    "asset_intensity": 0.4,
+    "notes": "Bed capex + utilities."
+  },
+  {
+    "id": "brow_lash_studios",
+    "name": "Brow & lash studios",
+    "sector": "Beauty & wellness",
+    "audience": "smb_core",
+    "examples": [
+      "microblading",
+      "lash extensions",
+      "brow shaping"
+    ],
+    "gross_margin": 0.75,
+    "operating_margin": 0.22,
+    "net_margin": 0.1584,
+    "asset_intensity": 0.15,
+    "notes": "Specialty service; growth segment."
+  },
+  {
+    "id": "med_spas",
+    "name": "Med spas (small)",
+    "sector": "Other local services",
+    "audience": "smb_core",
+    "examples": [
+      "botox",
+      "fillers",
+      "laser hair removal"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.2,
+    "net_margin": 0.13,
+    "asset_intensity": 0.3,
+    "notes": "Equipment capex; premium pricing."
+  },
+  {
+    "id": "tattoo_piercing",
+    "name": "Tattoo & piercing studios",
+    "sector": "Beauty & wellness",
+    "audience": "smb_core",
+    "examples": [
+      "tattoo parlors",
+      "piercing studios"
+    ],
+    "gross_margin": 0.72,
+    "operating_margin": 0.2,
+    "net_margin": 0.144,
+    "asset_intensity": 0.15,
+    "notes": "Artist booth split; sterilization overhead."
+  },
+  {
+    "id": "auto_repair_shops",
+    "name": "Auto repair shops",
+    "sector": "Repair services",
+    "audience": "smb_core",
+    "examples": [
+      "mechanics",
+      "body shops",
+      "tire shops",
+      "car wash"
+    ],
+    "gross_margin": 0.45,
+    "operating_margin": 0.12,
+    "net_margin": 0.078,
+    "asset_intensity": 0.35,
+    "notes": "Bay + lift capex + parts inventory."
+  },
+  {
+    "id": "auto_body_shops",
+    "name": "Auto body shops",
+    "sector": "Repair services",
+    "audience": "smb_core",
+    "examples": [
+      "collision repair",
+      "paint and body"
+    ],
+    "gross_margin": 0.42,
+    "operating_margin": 0.1,
+    "net_margin": 0.065,
+    "asset_intensity": 0.4,
+    "notes": "Paint booth + frame equipment."
+  },
+  {
+    "id": "bike_repair",
+    "name": "Bike repair shops",
+    "sector": "Repair services",
+    "audience": "smb_core",
+    "examples": [
+      "bicycle repair",
+      "bike tune-up"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.15,
+    "net_margin": 0.108,
+    "asset_intensity": 0.15,
+    "notes": "Tools + parts inventory."
+  },
+  {
+    "id": "electronics_repair",
+    "name": "Electronics & phone repair",
+    "sector": "Repair services",
+    "audience": "smb_core",
+    "examples": [
+      "phone repair",
+      "computer repair",
+      "electronics fix"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.18,
+    "net_margin": 0.1296,
+    "asset_intensity": 0.1,
+    "notes": "Tools + replacement parts."
+  },
+  {
+    "id": "locksmiths",
+    "name": "Locksmiths",
+    "sector": "Repair services",
+    "audience": "smb_core",
+    "examples": [
+      "residential locksmith",
+      "auto locksmith"
+    ],
+    "gross_margin": 0.6,
+    "operating_margin": 0.2,
+    "net_margin": 0.144,
+    "asset_intensity": 0.12,
+    "notes": "Mobile service; 24h premium."
+  },
+  {
+    "id": "appliance_repair",
+    "name": "Appliance repair",
+    "sector": "Repair services",
+    "audience": "smb_core",
+    "examples": [
+      "refrigerator repair",
+      "washer/dryer repair"
+    ],
+    "gross_margin": 0.5,
+    "operating_margin": 0.15,
+    "net_margin": 0.108,
+    "asset_intensity": 0.15,
+    "notes": "Truck + parts inventory."
+  },
+  {
+    "id": "dry_cleaning_laundry",
+    "name": "Dry cleaning & laundry",
+    "sector": "Other local services",
+    "audience": "smb_core",
+    "examples": [
+      "laundromats",
+      "dry cleaners",
+      "linen services"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.13,
+    "net_margin": 0.0845,
+    "asset_intensity": 0.35,
+    "notes": "Equipment + chemicals."
+  },
+  {
+    "id": "tailoring_alterations",
+    "name": "Tailoring & alterations",
+    "sector": "Repair services",
+    "audience": "smb_core",
+    "examples": [
+      "tailors",
+      "alterations shops"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.2,
+    "net_margin": 0.144,
+    "asset_intensity": 0.1,
+    "notes": "Machine + small shop."
+  },
+  {
+    "id": "shoe_repair",
+    "name": "Shoe repair",
+    "sector": "Repair services",
+    "audience": "smb_core",
+    "examples": [
+      "cobblers",
+      "shoe repair shops"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.17,
+    "net_margin": 0.1224,
+    "asset_intensity": 0.12,
+    "notes": "Machine + small shop."
+  },
+  {
+    "id": "watch_jewelry_repair",
+    "name": "Watch & jewelry repair",
+    "sector": "Repair services",
+    "audience": "smb_core",
+    "examples": [
+      "watch repair",
+      "jewelry repair"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.22,
+    "net_margin": 0.1584,
+    "asset_intensity": 0.15,
+    "notes": "Specialty tools + parts."
+  },
+  {
+    "id": "funeral_services",
+    "name": "Funeral services",
+    "sector": "Other local services",
+    "audience": "smb_core",
+    "examples": [
+      "funeral homes",
+      "cemeteries",
+      "crematoria"
+    ],
+    "gross_margin": 0.5,
+    "operating_margin": 0.18,
+    "net_margin": 0.117,
+    "asset_intensity": 0.55,
+    "notes": "Facility + equipment; recession-resilient."
+  },
+  {
+    "id": "pet_daycare",
+    "name": "Pet daycare & boarding",
+    "sector": "Pet services",
+    "audience": "smb_core",
+    "examples": [
+      "dog daycare",
+      "cat boarding",
+      "pet hotels"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.18,
+    "net_margin": 0.117,
+    "asset_intensity": 0.35,
+    "notes": "Facility + insurance heavy."
+  },
+  {
+    "id": "pet_walking_sitting",
+    "name": "Pet walking & sitting",
+    "sector": "Pet services",
+    "audience": "smb_core",
+    "examples": [
+      "dog walkers",
+      "pet sitters",
+      "home visits"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.22,
+    "net_margin": 0.1584,
+    "asset_intensity": 0.05,
+    "notes": "Owner-operator; minimal capex."
+  },
+  {
+    "id": "pet_training",
+    "name": "Pet training",
+    "sector": "Pet services",
+    "audience": "smb_core",
+    "examples": [
+      "dog training",
+      "puppy classes",
+      "obedience"
+    ],
+    "gross_margin": 0.6,
+    "operating_margin": 0.2,
+    "net_margin": 0.144,
+    "asset_intensity": 0.1,
+    "notes": "Service-only; minimal overhead."
+  },
+  {
+    "id": "art_galleries_small",
+    "name": "Independent art galleries",
+    "sector": "Cultural",
+    "audience": "smb_core",
+    "examples": [
+      "contemporary art",
+      "local artists",
+      "exhibition spaces"
+    ],
+    "gross_margin": 0.5,
+    "operating_margin": 0.1,
+    "net_margin": 0.072,
+    "asset_intensity": 0.2,
+    "notes": "Consignment + commissions."
+  },
+  {
+    "id": "small_museums",
+    "name": "Small museums",
+    "sector": "Cultural",
+    "audience": "smb_core",
+    "examples": [
+      "local history museums",
+      "themed museums",
+      "private collections"
+    ],
+    "gross_margin": 0.5,
+    "operating_margin": 0.05,
+    "net_margin": 0.0325,
+    "asset_intensity": 0.55,
+    "notes": "Facility + curation overhead."
+  },
+  {
+    "id": "private_libraries_archives",
+    "name": "Private libraries & archives",
+    "sector": "Cultural",
+    "audience": "smb_core",
+    "examples": [
+      "specialty libraries",
+      "research archives",
+      "rare books"
+    ],
+    "gross_margin": 0.55,
+    "operating_margin": 0.1,
+    "net_margin": 0.065,
+    "asset_intensity": 0.45,
+    "notes": "Specialty; donor + member funded."
+  },
+  {
+    "id": "guest_houses",
+    "name": "Guest houses & pensions",
+    "sector": "Hospitality",
+    "audience": "smb_core",
+    "examples": [
+      "guest houses",
+      "pensions",
+      "small lodges"
+    ],
+    "gross_margin": 0.72,
+    "operating_margin": 0.22,
+    "net_margin": 0.143,
+    "asset_intensity": 0.8,
+    "notes": "Owner-occupied common."
+  },
+  {
+    "id": "campgrounds_rv_parks",
+    "name": "Campgrounds & RV parks",
+    "sector": "Hospitality",
+    "audience": "smb_core",
+    "examples": [
+      "RV parks",
+      "campgrounds",
+      "glamping sites"
+    ],
+    "gross_margin": 0.65,
+    "operating_margin": 0.22,
+    "net_margin": 0.121,
+    "asset_intensity": 0.95,
+    "notes": "Land + utilities heavy; seasonal."
+  },
+  {
+    "id": "specialty_construction",
+    "name": "Specialty construction services",
+    "sector": "Construction",
+    "audience": "smb_core",
+    "examples": [
+      "foundation",
+      "demolition",
+      "scaffolding",
+      "site preparation"
+    ],
+    "gross_margin": 0.28,
+    "operating_margin": 0.09,
+    "net_margin": 0.0585,
+    "asset_intensity": 0.3,
+    "notes": "Foundations, demolition, excavation specialists."
+  },
+  {
+    "id": "air_transport_carriers",
+    "name": "Air transportation carriers",
+    "sector": "Transport (small)",
+    "audience": "corp_only",
+    "examples": [
+      "passenger airlines",
+      "cargo airlines",
+      "charter operators"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "rail_transport_carriers",
+    "name": "Rail transportation",
+    "sector": "Transport (small)",
+    "audience": "corp_only",
+    "examples": [
+      "freight rail",
+      "passenger rail",
+      "commuter rail"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "water_transport_carriers",
+    "name": "Water transportation",
+    "sector": "Transport (small)",
+    "audience": "corp_only",
+    "examples": [
+      "ocean freight",
+      "inland shipping",
+      "ferry operators"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "pipeline_transport",
+    "name": "Pipeline transportation",
+    "sector": "Transport (small)",
+    "audience": "corp_only",
+    "examples": [
+      "oil pipelines",
+      "gas pipelines",
+      "refined products pipelines"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "bricklaying_services",
+    "name": "Bricklaying services",
+    "sector": "Construction",
+    "audience": "smb_core",
+    "examples": [
+      "new-build brickwork",
+      "boundary walls",
+      "decorative brick",
+      "chimneys",
+      "tuck pointing"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "blocklaying_services",
+    "name": "Blocklaying services",
+    "sector": "Construction",
+    "audience": "smb_core",
+    "examples": [
+      "concrete block walls",
+      "load-bearing blockwork",
+      "garden walls",
+      "retaining structures"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "cement_rendering_services",
+    "name": "Cement rendering services",
+    "sector": "Construction",
+    "audience": "smb_core",
+    "examples": [
+      "external render",
+      "stucco finish",
+      "acrylic render",
+      "polished concrete"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "carpet_laying_services",
+    "name": "Carpet laying services",
+    "sector": "Construction",
+    "audience": "smb_core",
+    "examples": [
+      "wall-to-wall installation",
+      "carpet tiles",
+      "underlay fitting",
+      "stair carpeting"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "cabinet_making",
+    "name": "Cabinet making",
+    "sector": "Manufacturing & artisan",
+    "audience": "smb_core",
+    "examples": [
+      "kitchen cabinets",
+      "bespoke joinery",
+      "built-in wardrobes",
+      "office millwork"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "chicken_shops",
+    "name": "Chicken shops",
+    "sector": "Food & drink",
+    "audience": "smb_core",
+    "examples": [
+      "fried chicken takeaways",
+      "rotisserie chicken",
+      "wings shops",
+      "halal chicken counters"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "cake_shops_patisseries",
+    "name": "Cake shops & patisseries",
+    "sector": "Food & drink",
+    "audience": "smb_core",
+    "examples": [
+      "wedding cakes",
+      "macarons",
+      "tarts and entremets",
+      "celebration cakes"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "alarm_systems_install",
+    "name": "Alarm systems install",
+    "sector": "Trades & home services",
+    "audience": "smb_core",
+    "examples": [
+      "intruder alarms",
+      "fire alarms",
+      "CCTV",
+      "monitored security"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "cleaning_building_industrial",
+    "name": "Cleaning: building & industrial",
+    "sector": "Repair services",
+    "audience": "smb_core",
+    "examples": [
+      "office contract cleaning",
+      "warehouse cleaning",
+      "post-construction clean",
+      "industrial facility"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "cleaning_carpet_upholstery",
+    "name": "Cleaning: carpet & upholstery",
+    "sector": "Repair services",
+    "audience": "smb_core",
+    "examples": [
+      "carpet deep clean",
+      "sofa cleaning",
+      "rug shampoo",
+      "stain removal"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "automotive_electrical_services",
+    "name": "Automotive electrical services",
+    "sector": "Repair services",
+    "audience": "smb_core",
+    "examples": [
+      "auto electrician",
+      "vehicle wiring",
+      "starter motors",
+      "alternators",
+      "diagnostic"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "air_conditioning_refrigeration",
+    "name": "Air conditioning & refrigeration",
+    "sector": "Trades & home services",
+    "audience": "smb_core",
+    "examples": [
+      "HVAC install",
+      "split-system air-con",
+      "commercial refrigeration",
+      "heat pumps"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "carpentry_services",
+    "name": "Carpentry services",
+    "sector": "Construction",
+    "audience": "smb_core",
+    "examples": [
+      "framing carpenter",
+      "finish carpentry",
+      "trim work",
+      "deck building",
+      "interior fitouts"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "book_retailing",
+    "name": "Book retailing",
+    "sector": "Retail & shops",
+    "audience": "smb_friendly",
+    "examples": [
+      "independent bookshops",
+      "academic booksellers",
+      "rare book dealers",
+      "new release retail"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "plumbing_services",
+    "name": "Plumbing services",
+    "sector": "Trades & home services",
+    "audience": "smb_core",
+    "examples": [
+      "domestic plumbing",
+      "drain clearance",
+      "gas fitting",
+      "boiler install",
+      "bathroom fitting"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "roofing_services",
+    "name": "Roofing services",
+    "sector": "Construction",
+    "audience": "smb_core",
+    "examples": [
+      "roof replacement",
+      "leak repair",
+      "slate and tile",
+      "flat roof",
+      "gutters"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "tiling_services",
+    "name": "Tiling services",
+    "sector": "Construction",
+    "audience": "smb_core",
+    "examples": [
+      "bathroom tiling",
+      "kitchen splashbacks",
+      "floor tile",
+      "porcelain",
+      "natural stone"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "plastering_services",
+    "name": "Plastering services",
+    "sector": "Construction",
+    "audience": "smb_core",
+    "examples": [
+      "wall plastering",
+      "ceiling plastering",
+      "skim coat",
+      "patch repair",
+      "decorative cornice"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "landscaping_services",
+    "name": "Landscaping services",
+    "sector": "Trades & home services",
+    "audience": "smb_core",
+    "examples": [
+      "garden design",
+      "lawn care",
+      "tree work",
+      "paving",
+      "irrigation"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  },
+  {
+    "id": "painting_services",
+    "name": "Painting services",
+    "sector": "Construction",
+    "audience": "smb_core",
+    "examples": [
+      "interior painting",
+      "exterior painting",
+      "wallpaper",
+      "spray finishing",
+      "decorative work"
+    ],
+    "gross_margin": null,
+    "operating_margin": null,
+    "net_margin": null,
+    "asset_intensity": null,
+    "notes": null
+  }
+]
