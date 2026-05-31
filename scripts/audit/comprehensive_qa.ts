@@ -30,6 +30,7 @@ import { resolve, join } from "node:path";
 export {}; // module marker
 
 const BASE = process.env.BASE || "https://www.marginatlas.com";
+const PACE_MS = process.env.PACE_MS ? parseInt(process.env.PACE_MS, 10) : 1200;
 const AUDIT_DIR = resolve(process.cwd(), "data", "audit");
 
 const HEADERS = {
@@ -1055,7 +1056,10 @@ async function main() {
     const r = await probe(c);
     results.push({ check: c, pass: r.pass, status: r.status, duration_ms: r.duration_ms, note: r.note });
     console.log(r.pass ? "PASS" : `FAIL (${r.note})`);
-    await new Promise((res) => setTimeout(res, 250));
+    // Pacing is env-tunable. Default 1200ms (slow) to dodge the bot/rate-limit
+    // block that silently empties response bodies and false-fails every check
+    // after ~check 18. PACE_MS=250 for a fast (riskier) run.
+    await new Promise((res) => setTimeout(res, PACE_MS));
   }
 
   // Group by category
