@@ -379,7 +379,15 @@ function normalizeRow(r: Record<string, unknown>): Cell {
     setup_costs: (r.setup_costs as SetupCosts | null) ?? undefined,
   };
   // Render-time currency correction (see note above).
-  return applyPlausibilitySuppression(applyCurrencyCorrection(applyRollforward(applyTaxonomy(cell))));
+  // enforceSanity runs here so the regional read path gets the same revenue/
+  // percentile/wage clamps as getCellBySlug. Without it, comparison rails,
+  // variant lists, and direct getRegionalCell consumers served RAW unclamped
+  // rows, which is why travel_agencies / Swiss grocery showed $500M-$2B per firm
+  // (QA scale-anomaly bug, 2026-05-31). normalizeRegionalRow is the shared exit
+  // for getRegionalCell + the variants path, so one call covers them all.
+  return enforceSanity(
+    applyPlausibilitySuppression(applyCurrencyCorrection(applyRollforward(applyTaxonomy(cell)))),
+  );
 }
 
 export type CellSelector = {
