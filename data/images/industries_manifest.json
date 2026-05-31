@@ -139,7 +139,18 @@
       "description": "File:Display case of Pâtisserie Saveurs (2) 2025-03-27.jpg"
     }
   ],
-  "ice_cream_shops": [],
+  "ice_cream_shops": [
+    {
+      "url": "https://images.pexels.com/photos/684968/pexels-photo-684968.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@valeriya\">Valeria Boltneva</a>",
+      "license": "Pexels",
+      "alt": "Indulge in creamy vanilla and fruity gelato scoops in a cozy ice cream shop.",
+      "width": 6000,
+      "height": 4000,
+      "query": "Ice cream frozen dessert shops"
+    }
+  ],
   "pizzerias": [
     {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Commercial_Wood_Fired_Pizza_Ovens.jpg/1280px-Commercial_Wood_Fired_Pizza_Ovens.jpg",
@@ -380,7 +391,18 @@
       "description": "File:King's Hostel, Trinity college, Cambridge, with plans and illustrations; an examination of the history of King's Hall, with special reference to the ancient buildings recently disclosed (IA kingshosteltrini00caro).pdf"
     }
   ],
-  "guest_houses": [],
+  "guest_houses": [
+    {
+      "url": "https://images.pexels.com/photos/27582015/pexels-photo-27582015.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@hson\">HONG SON</a>",
+      "license": "Pexels",
+      "alt": "Vibrant green guest house surrounded by lush greenery and a serene road setting.",
+      "width": 6688,
+      "height": 4459,
+      "query": "Guest houses pensions"
+    }
+  ],
   "campgrounds_rv_parks": [
     {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Recycling_containers_in_the_Sunset_Bay_State_Park_campground.jpg/1280px-Recycling_containers_in_the_Sunset_Bay_State_Park_campground.jpg",
@@ -501,7 +523,18 @@
       "description": "File:Stockmannin Boutique muotinäytös vuonna 1959.jpg"
     }
   ],
-  "streetwear_casual": [],
+  "streetwear_casual": [
+    {
+      "url": "https://images.pexels.com/photos/2226963/pexels-photo-2226963.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@kyleroxas\">Kyle Roxas</a>",
+      "license": "Pexels",
+      "alt": "A woman in a yellow Adidas shirt squats near a hedge, showcasing streetwear style.",
+      "width": 6720,
+      "height": 4480,
+      "query": "Streetwear casual apparel"
+    }
+  ],
   "designer_fashion": [
     {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Hayden_Ng_-_Singapore_Fashion_Designer.jpg/1280px-Hayden_Ng_-_Singapore_Fashion_Designer.jpg",
@@ -582,7 +615,18 @@
       "description": "File:Coast watch (IA coastwatch00uncs 11).pdf"
     }
   ],
-  "eyewear_optical": [],
+  "eyewear_optical": [
+    {
+      "url": "https://images.pexels.com/photos/5202048/pexels-photo-5202048.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@karola-g\">www.kaboompics.com</a>",
+      "license": "Pexels",
+      "alt": "Close-up view of stylish sunglasses displayed on a rack in a retail store.",
+      "width": 6720,
+      "height": 4480,
+      "query": "Eyewear optical retail"
+    }
+  ],
   "shoe_stores": [
     {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Books_from_the_Library_of_Congress_%28IA_tourthroughsever00hug%29.pdf/page1-500px-Books_from_the_Library_of_Congress_%28IA_tourthroughsever00hug%29.pdf.jpg",
@@ -843,7 +887,18 @@
       "description": "File:Used car dealership, Inverness - geograph.org.uk - 2707016.jpg"
     }
   ],
-  "ecommerce_mail_order": [],
+  "ecommerce_mail_order": [
+    {
+      "url": "https://images.pexels.com/photos/7843978/pexels-photo-7843978.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@kampus\">Kampus Production</a>",
+      "license": "Pexels",
+      "alt": "Close-up of a cardboard package with QR codes and a barcode, ideal for delivery and shipping concepts.",
+      "width": 5357,
+      "height": 3576,
+      "query": "E-commerce mail-order"
+    }
+  ],
   "bookstores_indie": [
     {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Halliday%27s_collection_of_photographs_of_New_England_historic_buildings_and_colonial_and_provincial_houses._%28IA_hallidayscollect00hall%29.pdf/page1-960px-Halliday%27s_collection_of_photographs_of_New_England_historic_buildings_and_colonial_and_provincial_houses._%28IA_hallidayscollect00hall%29.pdf.jpg",
@@ -2284,7 +2339,18 @@
       "description": "File:Stand-up meeting before road works.jpg"
     }
   ],
-  "game_dev_studios": [],
+  "game_dev_studios": [
+    {
+      "url": "https://images.pexels.com/photos/14629387/pexels-photo-14629387.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@egorkomarov\">Egor Komarov</a>",
+      "license": "Pexels",
+      "alt": "Stylish setup of gaming controllers and console on wooden surface.",
+      "width": 8256,
+      "height": 6200,
+      "query": "Game development studios"
+    }
+  ],
   "media_publishing": [
     {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/1905._Editorial_Wild_Oats.djvu/page1-1280px-1905._Editorial_Wild_Oats.djvu.jpg",
@@ -3474,6 +3540,894 @@
       "width": 1200,
       "height": 718,
       "description": "File:Layout and Routing of a Typical Manufacturing Plant, 1909.jpg"
+    }
+  ],
+  "grain_farming": [
+    {
+      "url": "https://images.pexels.com/photos/37449585/pexels-photo-37449585.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@eleonora-vokueva-2161345723\">Eleonora Vokueva</a>",
+      "license": "Pexels",
+      "alt": "Close-up of a golden wheat field basking in the summer sun.",
+      "width": 5776,
+      "height": 3248,
+      "query": "Grain farming"
+    }
+  ],
+  "vegetable_fruit_farming": [
+    {
+      "url": "https://images.pexels.com/photos/3173586/pexels-photo-3173586.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@silvia-trigo-545701\">Silvia Trigo</a>",
+      "license": "Pexels",
+      "alt": "Cluster of green tomatoes growing in a lush garden ready for harvest.",
+      "width": 5472,
+      "height": 3648,
+      "query": "Vegetable fruit farming"
+    }
+  ],
+  "oil_gas_extraction": [
+    {
+      "url": "https://images.pexels.com/photos/16862261/pexels-photo-16862261.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@janzakelj\">Jan  Zakelj</a>",
+      "license": "Pexels",
+      "alt": "Dramatic silhouette of an oil pump jack against a vibrant sunset sky, emphasizing energy extraction.",
+      "width": 4344,
+      "height": 2840,
+      "query": "Oil gas extraction"
+    }
+  ],
+  "mining_quarrying": [
+    {
+      "url": "https://images.pexels.com/photos/15138925/pexels-photo-15138925.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@enrique72\">Enrique</a>",
+      "license": "Pexels",
+      "alt": "An excavator operates in a large stone quarry with rugged rocky terrain under daylight.",
+      "width": 5568,
+      "height": 3712,
+      "query": "Mining quarrying (metals, stone)"
+    }
+  ],
+  "mining_support": [
+    {
+      "url": "https://images.pexels.com/photos/16862261/pexels-photo-16862261.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@janzakelj\">Jan  Zakelj</a>",
+      "license": "Pexels",
+      "alt": "Dramatic silhouette of an oil pump jack against a vibrant sunset sky, emphasizing energy extraction.",
+      "width": 4344,
+      "height": 2840,
+      "query": "drilling support Mining support services"
+    }
+  ],
+  "electricity_gas_utilities": [
+    {
+      "url": "https://images.pexels.com/photos/35107502/pexels-photo-35107502.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@robertkso\">Robert So</a>",
+      "license": "Pexels",
+      "alt": "Multiple smart utility meters lined up on a blue industrial wall.",
+      "width": 8755,
+      "height": 6336,
+      "query": "Electricity gas utilities"
+    }
+  ],
+  "water_waste": [
+    {
+      "url": "https://images.pexels.com/photos/18274115/pexels-photo-18274115.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@aamir\">aamir dukanwala</a>",
+      "license": "Pexels",
+      "alt": "A detailed view of a leaking water pipe in a lush green garden setting.",
+      "width": 6000,
+      "height": 4000,
+      "query": "water supply Water"
+    }
+  ],
+  "food_mfg": [
+    {
+      "url": "https://images.pexels.com/photos/36823725/pexels-photo-36823725.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@adrien-olichon-1257089\">Adrien Olichon</a>",
+      "license": "Pexels",
+      "alt": "Spacious and modern food production plant interior with industrial machinery and processing line.",
+      "width": 9061,
+      "height": 6031,
+      "query": "Food manufacturing"
+    }
+  ],
+  "beverage_mfg": [
+    {
+      "url": "https://images.pexels.com/photos/36423812/pexels-photo-36423812.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@keeganjchecks\">Keegan Checks</a>",
+      "license": "Pexels",
+      "alt": "Rows of green glass bottles on an automated production line in a factory setting.",
+      "width": 6000,
+      "height": 4000,
+      "query": "Beverage manufacturing"
+    }
+  ],
+  "textiles_fabric_mfg": [
+    {
+      "url": "https://images.pexels.com/photos/31199588/pexels-photo-31199588.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@equalstock\">EqualStock IN</a>",
+      "license": "Pexels",
+      "alt": "Female workers sew textiles in an Indian factory, showcasing industrial textile production.",
+      "width": 3744,
+      "height": 2496,
+      "query": "Textiles fabric manufacturing"
+    }
+  ],
+  "apparel_mfg": [
+    {
+      "url": "https://images.pexels.com/photos/31199564/pexels-photo-31199564.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@equalstock\">EqualStock IN</a>",
+      "license": "Pexels",
+      "alt": "Indian woman working efficiently in a textile factory, sewing fabrics.",
+      "width": 6000,
+      "height": 4000,
+      "query": "Apparel manufacturing"
+    }
+  ],
+  "wood_products_mfg": [
+    {
+      "url": "https://images.pexels.com/photos/12278574/pexels-photo-12278574.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@nc-farm-bureau-mark\">Mark Stebnicki</a>",
+      "license": "Pexels",
+      "alt": "Image of stacked wooden planks in an outdoor lumber yard, showcasing industrial wood processing.",
+      "width": 7952,
+      "height": 5301,
+      "query": "Wood products manufacturing"
+    }
+  ],
+  "paper_mfg": [
+    {
+      "url": "https://images.pexels.com/photos/19316517/pexels-photo-19316517.png?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@joaojesusdesign\">João  Jesus</a>",
+      "license": "Pexels",
+      "alt": "Close-up of an industrial printing press producing designs.",
+      "width": 5049,
+      "height": 3366,
+      "query": "Paper printing manufacturing"
+    }
+  ],
+  "chemical_pharma_mfg": [
+    {
+      "url": "https://images.pexels.com/photos/10514729/pexels-photo-10514729.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@yurashkoda\">Yuri Shkoda</a>",
+      "license": "Pexels",
+      "alt": "Close-up of stainless steel pipes and valves in a chemical industry setting.",
+      "width": 4500,
+      "height": 3011,
+      "query": "Chemical pharma manufacturing"
+    }
+  ],
+  "petroleum_coal_mfg": [
+    {
+      "url": "https://images.pexels.com/photos/32932494/pexels-photo-32932494.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@dapur-melodi-192125\">Dapur Melodi</a>",
+      "license": "Pexels",
+      "alt": "Heavy machinery loading coal at a port with a clear sky reflecting on the water.",
+      "width": 6016,
+      "height": 4010,
+      "query": "Petroleum coal products"
+    }
+  ],
+  "plastics_rubber_mfg": [
+    {
+      "url": "https://images.pexels.com/photos/5218032/pexels-photo-5218032.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@shvetsa\">Anna Shvets</a>",
+      "license": "Pexels",
+      "alt": "Overhead layout of assorted cleansing tools including brush sponge and plastic bottle arranged on light pink surface",
+      "width": 6240,
+      "height": 4160,
+      "query": "Plastics rubber products"
+    }
+  ],
+  "fabricated_metal_mfg": [
+    {
+      "url": "https://images.pexels.com/photos/8973680/pexels-photo-8973680.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@rolledalloys-metal-supply\">Rolled Alloys Specialty Metal Supplier</a>",
+      "license": "Pexels",
+      "alt": "Detailed view of industrial machinery cutting metal, showcasing sparks and heat.",
+      "width": 5472,
+      "height": 3648,
+      "query": "Fabricated metal manufacturing"
+    }
+  ],
+  "primary_metal_mfg": [
+    {
+      "url": "https://images.pexels.com/photos/8973680/pexels-photo-8973680.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@rolledalloys-metal-supply\">Rolled Alloys Specialty Metal Supplier</a>",
+      "license": "Pexels",
+      "alt": "Detailed view of industrial machinery cutting metal, showcasing sparks and heat.",
+      "width": 5472,
+      "height": 3648,
+      "query": "Primary metal manufacturing"
+    }
+  ],
+  "machinery_mfg": [
+    {
+      "url": "https://images.pexels.com/photos/14804687/pexels-photo-14804687.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@mandiri-abadi-396768996\">Mandiri Abadi</a>",
+      "license": "Pexels",
+      "alt": "Workers wearing protective gear operating machinery in a factory environment, focusing on safety and production.",
+      "width": 6000,
+      "height": 4000,
+      "query": "Machinery manufacturing"
+    }
+  ],
+  "electronics_mfg": [
+    {
+      "url": "https://images.pexels.com/photos/6755078/pexels-photo-6755078.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@tima-miroshnichenko\">Tima Miroshnichenko</a>",
+      "license": "Pexels",
+      "alt": "Detailed view of a motherboard with visible microchips and circuits.",
+      "width": 3901,
+      "height": 2601,
+      "query": "Electronics semiconductors"
+    }
+  ],
+  "electrical_equipment_mfg": [
+    {
+      "url": "https://images.pexels.com/photos/7867329/pexels-photo-7867329.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@didsss\">Diana ✨</a>",
+      "license": "Pexels",
+      "alt": "Colorful high voltage insulators in an electric substation highlighting power infrastructure.",
+      "width": 4608,
+      "height": 3072,
+      "query": "Electrical equipment"
+    }
+  ],
+  "motor_vehicles_mfg": [
+    {
+      "url": "https://images.pexels.com/photos/35531283/pexels-photo-35531283.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@adempercem\">Adem Percem</a>",
+      "license": "Pexels",
+      "alt": "Detailed view of a modern car engine showcasing gears and mechanical components.",
+      "width": 5000,
+      "height": 3324,
+      "query": "Motor vehicles parts"
+    }
+  ],
+  "other_transport_mfg": [
+    {
+      "url": "https://images.pexels.com/photos/35930725/pexels-photo-35930725.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@tejasswat-rajindu-576892407\">Tejasswat Rajindu</a>",
+      "license": "Pexels",
+      "alt": "Two men inspecting military aircraft cockpit on a clear day.",
+      "width": 4608,
+      "height": 3456,
+      "query": "aircraft Aerospace"
+    }
+  ],
+  "furniture_mfg": [
+    {
+      "url": "https://images.pexels.com/photos/14804687/pexels-photo-14804687.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@mandiri-abadi-396768996\">Mandiri Abadi</a>",
+      "license": "Pexels",
+      "alt": "Workers wearing protective gear operating machinery in a factory environment, focusing on safety and production.",
+      "width": 6000,
+      "height": 4000,
+      "query": "Furniture manufacturing"
+    }
+  ],
+  "misc_mfg": [
+    {
+      "url": "https://images.pexels.com/photos/37650270/pexels-photo-37650270.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@elementsinteractive\">Elements Interactive</a>",
+      "license": "Pexels",
+      "alt": "Close-up of ampoule filling and sealing in a pharmaceutical manufacturing line.",
+      "width": 4176,
+      "height": 2784,
+      "query": "medical equipment Miscellaneous manufacturing"
+    }
+  ],
+  "civil_engineering": [
+    {
+      "url": "https://images.pexels.com/photos/8961260/pexels-photo-8961260.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@mikael-blomkvist\">Mikael Blomkvist</a>",
+      "license": "Pexels",
+      "alt": "Two workers discussing plans on a sandy construction site, wearing safety gear.",
+      "width": 7715,
+      "height": 5144,
+      "query": "Civil engineering"
+    }
+  ],
+  "wholesale_chemicals_pharma": [
+    {
+      "url": "https://images.pexels.com/photos/8851255/pexels-photo-8851255.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@mikhail-nilov\">Mikhail Nilov</a>",
+      "license": "Pexels",
+      "alt": "Close-up of a gloved hand holding a white capsule in a lab environment.",
+      "width": 4997,
+      "height": 3334,
+      "query": "Wholesale chemicals pharma"
+    }
+  ],
+  "furniture_stores": [
+    {
+      "url": "https://images.pexels.com/photos/6830012/pexels-photo-6830012.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@tima-miroshnichenko\">Tima Miroshnichenko</a>",
+      "license": "Pexels",
+      "alt": "A spacious showroom filled with various antique wooden furniture pieces on display.",
+      "width": 5751,
+      "height": 3834,
+      "query": "Furniture stores"
+    }
+  ],
+  "building_garden_stores": [
+    {
+      "url": "https://images.pexels.com/photos/12297509/pexels-photo-12297509.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@serenakoi\">Serena Koi</a>",
+      "license": "Pexels",
+      "alt": "Explore a vibrant greenhouse filled with diverse plants and pots in Rizza, Veneto, Italy.",
+      "width": 8256,
+      "height": 5504,
+      "query": "Building garden supply stores"
+    }
+  ],
+  "auto_dealers": [
+    {
+      "url": "https://images.pexels.com/photos/4173190/pexels-photo-4173190.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@gustavo-fring\">Gustavo Fring</a>",
+      "license": "Pexels",
+      "alt": "Positive smiling diverse stylish man and female dealer checking under car motor hood and smiling while choosing new car in car showroom",
+      "width": 5760,
+      "height": 3840,
+      "query": "Auto dealers"
+    }
+  ],
+  "gas_stations": [
+    {
+      "url": "https://images.pexels.com/photos/34636185/pexels-photo-34636185.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@ddlogg-2150483267\">ddlogg</a>",
+      "license": "Pexels",
+      "alt": "Brightly lit modern gas station featuring multiple fuel pumps and a distinct red and white design.",
+      "width": 2878,
+      "height": 2056,
+      "query": "Gas stations"
+    }
+  ],
+  "general_merchandise": [
+    {
+      "url": "https://images.pexels.com/photos/33624549/pexels-photo-33624549.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@gene-samit-546626702\">Gene Samit</a>",
+      "license": "Pexels",
+      "alt": "Bags and apparel displayed outside a general store in Frenchtown, NJ.",
+      "width": 4692,
+      "height": 3529,
+      "query": "General merchandise stores"
+    }
+  ],
+  "transit_ground_passenger": [
+    {
+      "url": "https://images.pexels.com/photos/34048282/pexels-photo-34048282.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@shox\">SHOX ART</a>",
+      "license": "Pexels",
+      "alt": "A monochrome photo of FlixBus parked at station with people nearby.",
+      "width": 5184,
+      "height": 2920,
+      "query": "Transit ground passenger transport"
+    }
+  ],
+  "scenic_sightseeing_transport": [
+    {
+      "url": "https://images.pexels.com/photos/26970226/pexels-photo-26970226.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@jbmalong\">John Benedict Malong</a>",
+      "license": "Pexels",
+      "alt": "A scenic aerial view of the Hong Kong Peak Tram surrounded by lush greenery, showcasing urban transportation amidst nature.",
+      "width": 6000,
+      "height": 4000,
+      "query": "Scenic sightseeing transport"
+    }
+  ],
+  "transport_support": [
+    {
+      "url": "https://images.pexels.com/photos/9564181/pexels-photo-9564181.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@robin-montero-107927805\">Robin Montero</a>",
+      "license": "Pexels",
+      "alt": "A freight train with cargo and tank containers in a sunset setting. Ideal for industrial themes.",
+      "width": 3072,
+      "height": 2048,
+      "query": "freight forwarding Transport support services"
+    }
+  ],
+  "postal_service": [
+    {
+      "url": "https://images.pexels.com/photos/4744769/pexels-photo-4744769.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@ekaterinabelinskaya\">Ekaterina Belinskaya</a>",
+      "license": "Pexels",
+      "alt": "United States Postal Service van parked on a sunny street in Los Angeles, CA.",
+      "width": 3000,
+      "height": 2000,
+      "query": "Postal service"
+    }
+  ],
+  "courier_messenger": [
+    {
+      "url": "https://images.pexels.com/photos/8931690/pexels-photo-8931690.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@kampus\">Kampus Production</a>",
+      "license": "Pexels",
+      "alt": "Asian delivery man wearing a red cap with an insulated bag, ready for delivery outdoors.",
+      "width": 5760,
+      "height": 3840,
+      "query": "Couriers messengers"
+    }
+  ],
+  "news_periodical_publishing": [
+    {
+      "url": "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@pixabay\">Pixabay</a>",
+      "license": "Pexels",
+      "alt": "A close-up image of folded newspapers, perfect for news or journalism themes.",
+      "width": 5184,
+      "height": 3456,
+      "query": "News periodical publishing"
+    }
+  ],
+  "motion_picture_recording": [
+    {
+      "url": "https://images.pexels.com/photos/9227679/pexels-photo-9227679.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@ds-stories\">DS stories</a>",
+      "license": "Pexels",
+      "alt": "Vintage media setup featuring VHS tapes and a film clapperboard for a nostalgic cinematic feel.",
+      "width": 7627,
+      "height": 5085,
+      "query": "Motion picture sound recording"
+    }
+  ],
+  "broadcasting": [
+    {
+      "url": "https://images.pexels.com/photos/4319926/pexels-photo-4319926.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@michal-dziekonski-2726786\">Michal Dziekonski</a>",
+      "license": "Pexels",
+      "alt": "Close-up of a condenser microphone in a studio setting, ideal for podcasts and audio recording.",
+      "width": 5568,
+      "height": 3712,
+      "query": "Broadcasting"
+    }
+  ],
+  "telecom": [
+    {
+      "url": "https://images.pexels.com/photos/14938295/pexels-photo-14938295.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@shreyaan\">Shreyaan Vashishtha</a>",
+      "license": "Pexels",
+      "alt": "Imposing satellite tower with numerous dishes against a vibrant blue sky.",
+      "width": 5184,
+      "height": 3456,
+      "query": "Telecommunications"
+    }
+  ],
+  "banking": [
+    {
+      "url": "https://images.pexels.com/photos/12008048/pexels-photo-12008048.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@matreding\">Mathias Reding</a>",
+      "license": "Pexels",
+      "alt": "Man at a currency exchange office window, showing currency rates inside a bustling city.",
+      "width": 6240,
+      "height": 4160,
+      "query": "Banking"
+    }
+  ],
+  "securities_brokerage": [
+    {
+      "url": "https://images.pexels.com/photos/31738798/pexels-photo-31738798.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@jakubzerdzicki\">Jakub Zerdzicki</a>",
+      "license": "Pexels",
+      "alt": "High-tech trading setup with charts on tablet and computer screens, representing data analysis and financial trends.",
+      "width": 3000,
+      "height": 2001,
+      "query": "securities dealers Securities"
+    }
+  ],
+  "funds_trusts": [
+    {
+      "url": "https://images.pexels.com/photos/5849561/pexels-photo-5849561.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@gabby-k\">Monstera Production</a>",
+      "license": "Pexels",
+      "alt": "Creative illustration of full trolley with gold representing concept investing in funds and make capital",
+      "width": 10800,
+      "height": 6334,
+      "query": "mutual funds Funds"
+    }
+  ],
+  "insurance": [
+    {
+      "url": "https://images.pexels.com/photos/7688374/pexels-photo-7688374.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@kindelmedia\">Kindel Media</a>",
+      "license": "Pexels",
+      "alt": "Close-up of hands typing on laptop with an insurance document visible on the desk.",
+      "width": 5184,
+      "height": 3888,
+      "query": "Insurance"
+    }
+  ],
+  "real_estate_leasing": [
+    {
+      "url": "https://images.pexels.com/photos/31663643/pexels-photo-31663643.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@artful-homes-921250275\">Artful Homes</a>",
+      "license": "Pexels",
+      "alt": "Lease agreement document with pen and American flag keychain on a black table.",
+      "width": 4945,
+      "height": 3296,
+      "query": "Real estate leasing"
+    }
+  ],
+  "equipment_rental": [
+    {
+      "url": "https://images.pexels.com/photos/32239061/pexels-photo-32239061.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@jan-van-der-wolf-11680885\">Jan van der Wolf</a>",
+      "license": "Pexels",
+      "alt": "A collection of colorful boom lifts reaching toward a clear blue sky, showcasing industrial machinery.",
+      "width": 3546,
+      "height": 2364,
+      "query": "Equipment rental leasing"
+    }
+  ],
+  "higher_education": [
+    {
+      "url": "https://images.pexels.com/photos/8197551/pexels-photo-8197551.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@yankrukov\">Yan Krukau</a>",
+      "license": "Pexels",
+      "alt": "University students engaging in a diverse classroom setting with a lecturer.",
+      "width": 6000,
+      "height": 4000,
+      "query": "Higher education"
+    }
+  ],
+  "hospitals": [
+    {
+      "url": "https://images.pexels.com/photos/9765437/pexels-photo-9765437.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@stephentcandrews\">Stephen Andrews</a>",
+      "license": "Pexels",
+      "alt": "Focused shot of a patient's hand with IV in a hospital setting.",
+      "width": 4928,
+      "height": 3280,
+      "query": "Hospitals"
+    }
+  ],
+  "gambling_amusement": [
+    {
+      "url": "https://images.pexels.com/photos/24643920/pexels-photo-24643920.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@elizabeth-ferreira-1040803688\">Elizabeth Ferreira</a>",
+      "license": "Pexels",
+      "alt": "Vibrant casino floor with colorful slot machines and bright lights capturing a lively gaming atmosphere.",
+      "width": 6720,
+      "height": 4480,
+      "query": "Gambling amusement"
+    }
+  ],
+  "air_transport_carriers": [
+    {
+      "url": "https://images.pexels.com/photos/32563016/pexels-photo-32563016.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@crystal-vega-2101621860\">Crystal  vega</a>",
+      "license": "Pexels",
+      "alt": "Atlas Air cargo plane taxiing on runway under a vibrant blue sky, captured outdoors.",
+      "width": 4000,
+      "height": 3000,
+      "query": "Air transportation carriers"
+    }
+  ],
+  "rail_transport_carriers": [
+    {
+      "url": "https://images.pexels.com/photos/5742831/pexels-photo-5742831.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@andrey-karpov-3835451\">Andrey Karpov</a>",
+      "license": "Pexels",
+      "alt": "Aerial perspective capturing a freight train on intersecting railway tracks during the day.",
+      "width": 5529,
+      "height": 3843,
+      "query": "Rail transportation"
+    }
+  ],
+  "water_transport_carriers": [
+    {
+      "url": "https://images.pexels.com/photos/11331658/pexels-photo-11331658.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@markus-winkler-1430818\">Markus Winkler</a>",
+      "license": "Pexels",
+      "alt": "A fleet of solar-powered boats docked at an urban marina, showcasing green transportation.",
+      "width": 3999,
+      "height": 2666,
+      "query": "Water transportation"
+    }
+  ],
+  "pipeline_transport": [
+    {
+      "url": "https://images.pexels.com/photos/18784617/pexels-photo-18784617.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@wolfgang-weiser-467045605\">Wolfgang Weiser</a>",
+      "license": "Pexels",
+      "alt": "View of large industrial pipelines running through a lush forest landscape.",
+      "width": 8256,
+      "height": 5504,
+      "query": "Pipeline transportation"
+    }
+  ],
+  "bricklaying_services": [
+    {
+      "url": "https://images.pexels.com/photos/7394220/pexels-photo-7394220.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@ilabappa\">Ila Bappa Ibrahim</a>",
+      "license": "Pexels",
+      "alt": "High-resolution textured brick wall, perfect for design and architectural projects.",
+      "width": 6240,
+      "height": 4160,
+      "query": "new-build brickwork Bricklaying services"
+    }
+  ],
+  "blocklaying_services": [
+    {
+      "url": "https://images.pexels.com/photos/14408706/pexels-photo-14408706.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@huys-photography-202304\">Huys Photography</a>",
+      "license": "Pexels",
+      "alt": "Close-up of a gray cinder block wall with a rough texture, perfect for backgrounds.",
+      "width": 5184,
+      "height": 3888,
+      "query": "concrete block walls Blocklaying services"
+    }
+  ],
+  "cement_rendering_services": [
+    {
+      "url": "https://images.pexels.com/photos/18435146/pexels-photo-18435146.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@jan-van-der-wolf-11680885\">Jan van der Wolf</a>",
+      "license": "Pexels",
+      "alt": "Detailed textured surface of a yellow painted cement wall with shadow effects.",
+      "width": 6000,
+      "height": 4000,
+      "query": "external render Cement rendering services"
+    }
+  ],
+  "carpet_laying_services": [
+    {
+      "url": "https://images.pexels.com/photos/23916838/pexels-photo-23916838.png?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@ansar-muhammad-380085065\">Ansar Muhammad</a>",
+      "license": "Pexels",
+      "alt": "Chic hotel room featuring twin beds with teal accents and elegant decor.",
+      "width": 4232,
+      "height": 3072,
+      "query": "wall-to-wall installation Carpet laying services"
+    }
+  ],
+  "cabinet_making": [
+    {
+      "url": "https://images.pexels.com/photos/702146/pexels-photo-702146.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@john-tekeridis-21837\">John Tekeridis</a>",
+      "license": "Pexels",
+      "alt": "Macro shot of wooden board with dowel pin for furniture assembly.",
+      "width": 6000,
+      "height": 4000,
+      "query": "Cabinet making"
+    }
+  ],
+  "chicken_shops": [
+    {
+      "url": "https://images.pexels.com/photos/13524831/pexels-photo-13524831.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@alejandro-maroto-245702196\">Alejandro Maroto</a>",
+      "license": "Pexels",
+      "alt": "Close-up of raw chickens hanging on hooks in a market, ready for sale.",
+      "width": 3936,
+      "height": 2216,
+      "query": "Chicken shops"
+    }
+  ],
+  "cake_shops_patisseries": [
+    {
+      "url": "https://images.pexels.com/photos/13914952/pexels-photo-13914952.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@sorrasfilms\">Sarah Films</a>",
+      "license": "Pexels",
+      "alt": "A tempting assortment of pastries and cakes displayed in a bakery shop window.",
+      "width": 5616,
+      "height": 3744,
+      "query": "Cake shops patisseries"
+    }
+  ],
+  "alarm_systems_install": [
+    {
+      "url": "https://images.pexels.com/photos/27076960/pexels-photo-27076960.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@hakan-kayahan-1453673684\">Hakan Kayahan</a>",
+      "license": "Pexels",
+      "alt": "A warning system with loudspeakers on a pole against a cloudy sky, signaling emergency alerts.",
+      "width": 5184,
+      "height": 3888,
+      "query": "Alarm systems install"
+    }
+  ],
+  "cleaning_building_industrial": [
+    {
+      "url": "https://images.pexels.com/photos/34517611/pexels-photo-34517611.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@manh-cuong-le-2155495806\">Manh Cuong Le</a>",
+      "license": "Pexels",
+      "alt": "Window cleaners suspended on ropes clean a high-rise building's glass exterior.",
+      "width": 4592,
+      "height": 3056,
+      "query": "Cleaning: building industrial"
+    }
+  ],
+  "cleaning_carpet_upholstery": [
+    {
+      "url": "https://images.pexels.com/photos/5233264/pexels-photo-5233264.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@khunkorn-laowisit-1359149\">Khunkorn Laowisit</a>",
+      "license": "Pexels",
+      "alt": "A hand in a glove using a vacuum to clean a car interior carpet, removing dirt effectively.",
+      "width": 4928,
+      "height": 3264,
+      "query": "Cleaning: carpet upholstery"
+    }
+  ],
+  "automotive_electrical_services": [
+    {
+      "url": "https://images.pexels.com/photos/37177070/pexels-photo-37177070.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@ayyeee-ayyeee-434363205\">Ayyeee Ayyeee</a>",
+      "license": "Pexels",
+      "alt": "Detailed view of an orange car battery inside a vehicle's engine bay, highlighting its features.",
+      "width": 6240,
+      "height": 4160,
+      "query": "auto electrician Automotive electrical services"
+    }
+  ],
+  "air_conditioning_refrigeration": [
+    {
+      "url": "https://images.pexels.com/photos/33671149/pexels-photo-33671149.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@multitech-institute-2155038539\">Multitech Institute</a>",
+      "license": "Pexels",
+      "alt": "Technician repairing an air conditioner unit in New Delhi workshop.",
+      "width": 6000,
+      "height": 4000,
+      "query": "Air conditioning refrigeration"
+    }
+  ],
+  "carpentry_services": [
+    {
+      "url": "https://images.pexels.com/photos/8817847/pexels-photo-8817847.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@ron-lach\">Ron Lach</a>",
+      "license": "Pexels",
+      "alt": "A focused carpenter working with tools at a wooden construction site outdoors.",
+      "width": 5318,
+      "height": 3545,
+      "query": "framing carpenter Carpentry services"
+    }
+  ],
+  "book_retailing": [
+    {
+      "url": "https://images.pexels.com/photos/18797448/pexels-photo-18797448.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@xuanthanh\">Xuan Thanh Le</a>",
+      "license": "Pexels",
+      "alt": "Black and white photo of neatly arranged books on shelves in a bookstore.",
+      "width": 5616,
+      "height": 3744,
+      "query": "Book retailing"
+    }
+  ],
+  "plumbing_services": [
+    {
+      "url": "https://images.pexels.com/photos/8581897/pexels-photo-8581897.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@jeremiah-buchanan-1948370\">Jeremiah Buchanan</a>",
+      "license": "Pexels",
+      "alt": "Detailed view of industrial steel pipes and a gas meter on a brick wall.",
+      "width": 6000,
+      "height": 4000,
+      "query": "domestic plumbing Plumbing services"
+    }
+  ],
+  "roofing_services": [
+    {
+      "url": "https://images.pexels.com/photos/33404248/pexels-photo-33404248.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@rstephens\">Ryan  Stephens</a>",
+      "license": "Pexels",
+      "alt": "Roofer using nail gun for shingle installation on residential roof.",
+      "width": 6359,
+      "height": 4239,
+      "query": "roof replacement Roofing services"
+    }
+  ],
+  "tiling_services": [
+    {
+      "url": "https://images.pexels.com/photos/6903205/pexels-photo-6903205.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@artbovich\">Max Vakhtbovych</a>",
+      "license": "Pexels",
+      "alt": "Interior of contemporary bathroom with white hot tub and metal faucet and shower",
+      "width": 7181,
+      "height": 4793,
+      "query": "bathroom tiling Tiling services"
+    }
+  ],
+  "plastering_services": [
+    {
+      "url": "https://images.pexels.com/photos/5493658/pexels-photo-5493658.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@ai25studioai\">AI25.Studio  Studio</a>",
+      "license": "Pexels",
+      "alt": "Back view of a construction worker in safety gear plastering a white wall.",
+      "width": 4000,
+      "height": 2667,
+      "query": "wall plastering Plastering services"
+    }
+  ],
+  "landscaping_services": [
+    {
+      "url": "https://images.pexels.com/photos/4920285/pexels-photo-4920285.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@gustavo-fring\">Gustavo Fring</a>",
+      "license": "Pexels",
+      "alt": "Two gardeners, a man and a woman, work together in a nursery garden, promoting teamwork and diversity.",
+      "width": 6000,
+      "height": 4000,
+      "query": "garden design Landscaping services"
+    }
+  ],
+  "painting_services": [
+    {
+      "url": "https://images.pexels.com/photos/4981782/pexels-photo-4981782.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+      "source": "pexels",
+      "attribution": "Photo by <a href=\"https://www.pexels.com/@ai25studioai\">AI25.Studio  Studio</a>",
+      "license": "Pexels",
+      "alt": "A professional painter wearing safety gear holding a paint roller, ready for work.",
+      "width": 4000,
+      "height": 2667,
+      "query": "interior painting Painting services"
     }
   ]
 }
