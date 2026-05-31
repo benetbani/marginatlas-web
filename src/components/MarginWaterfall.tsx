@@ -23,9 +23,22 @@ const FALLBACK_OPERATING = 0.1;
 const FALLBACK_NET = 0.05;
 
 export function MarginWaterfall({ grossMargin, operatingMargin, netMargin }: Props) {
-  const g = clampMargin(grossMargin ?? FALLBACK_GROSS, "gross");
-  const o = clampMargin(operatingMargin ?? FALLBACK_OPERATING, "operating");
-  const n = clampMargin(netMargin ?? FALLBACK_NET, "net");
+  const gRaw = clampMargin(grossMargin ?? FALLBACK_GROSS, "gross");
+  const oRaw = clampMargin(operatingMargin ?? FALLBACK_OPERATING, "operating");
+  const nRaw = clampMargin(netMargin ?? FALLBACK_NET, "net");
+
+  // QA D8: a waterfall must descend (gross >= operating >= net) and every
+  // share must sit in 0-100%. Bad source rows can arrive with operating > gross
+  // (which made the inner bar render wider than its container) or a margin
+  // stored as a whole number (45 meaning 45%, not 4500%). clampMargin already
+  // bounds each to [0,1]; here we also enforce the ordering so the bars never
+  // invert and the displayed percentages are always sane.
+  const g = gRaw;
+  const o = Math.min(oRaw, g);
+  const n = Math.min(nRaw, o);
+  // Width of an inner bar relative to gross, clamped to 0-100 so it can never
+  // overflow its container even if g is tiny.
+  const widthOf = (part: number) => (g > 0 ? Math.min(100, Math.max(0, (part / g) * 100)) : 0);
 
   return (
     <section className="py-6" aria-label="Profit waterfall">
@@ -36,10 +49,10 @@ export function MarginWaterfall({ grossMargin, operatingMargin, netMargin }: Pro
         <Segment label="Gross" pct={g} tone="bg-moss-200 text-ink-900" widthPct={100} />
       </div>
       <div className="mt-2 flex w-full overflow-hidden rounded-lg border border-ink-200" style={{ height: "44px" }}>
-        <Segment label="Operating" pct={o} tone="bg-moss-400 text-cream-50" widthPct={(o / g) * 100} />
+        <Segment label="Operating" pct={o} tone="bg-moss-400 text-cream-50" widthPct={widthOf(o)} />
       </div>
       <div className="mt-2 flex w-full overflow-hidden rounded-lg border border-ink-200" style={{ height: "44px" }}>
-        <Segment label="Net" pct={n} tone="bg-moss-600 text-cream-50" widthPct={(n / g) * 100} />
+        <Segment label="Net" pct={n} tone="bg-moss-600 text-cream-50" widthPct={widthOf(n)} />
       </div>
     </section>
   );

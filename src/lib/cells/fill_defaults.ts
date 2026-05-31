@@ -246,6 +246,26 @@ export function enforceSanity(cell: Cell): Cell {
     }
   }
 
+  // Percentile monotonicity (QA D4). Some real source rows arrive with
+  // p10 >= p50 or otherwise out of order, which renders a distribution where
+  // "bottom 10%" sits above "typical". Sort the present percentile values
+  // ascending and reassign in order so p10 <= p25 <= p50 <= p75 <= p90 always
+  // holds. Only reorders values that exist; nulls are left for fillMissingFields.
+  {
+    const pKeys = ["rev_p10", "rev_p25", "rev_p50", "rev_p75", "rev_p90"] as const;
+    const present = pKeys.filter(
+      (k) => typeof out[k as keyof Cell] === "number" && (out[k as keyof Cell] as number) > 0,
+    );
+    if (present.length >= 2) {
+      const sorted = present
+        .map((k) => out[k as keyof Cell] as number)
+        .sort((a, b) => a - b);
+      present.forEach((k, i) => {
+        (out as Record<string, unknown>)[k] = sorted[i];
+      });
+    }
+  }
+
   // Wage sanity. Catches local-currency-as-USD bugs
   // (e.g., 6,000,000 yen leaked as $6M wage). Absolute SMB wage ceiling
   // is $250K/yr/employee; floor is $1.2K (anything below is likely
