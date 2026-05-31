@@ -62,6 +62,7 @@ export const NEIGHBORHOOD_PAGE_SECTIONS = [
 // now hands users off to the country page for real revenue data.
 export const INDUSTRY_PAGE_SECTIONS = [
   "hero",
+  "how-it-works",
   "margin-waterfall",
 ] as const;
 
