@@ -62,6 +62,7 @@ import { generateFAQs } from "@/lib/seo/faq_generator";
 import { FAQSchema } from "@/components/FAQSchema";
 import { getCellNarrative } from "@/lib/content/narratives";
 import { getComparativeLead } from "@/lib/content/comparative_narratives";
+import { getActivityCharacter } from "@/lib/content/activity_character";
 import {
   estimateWagePerEmployee,
   estimateEmployeesFromFirms,
@@ -329,6 +330,7 @@ export default async function CellPage({
   // DistributionVisual needs all three of p10/p50/p90 to draw a spread; when
   // any is missing we render SectionEmpty with onward links to cells that DO
   // have the full distribution (drawn from the already-fetched comparables).
+  const activityCharacter = getActivityCharacter(cell.industry_id);
   const hasDistribution =
     cell.rev_p10 != null && cell.rev_p50 != null && cell.rev_p90 != null;
   const distributionSuggestions = comparables.slice(0, 3).map((c) => ({
@@ -732,6 +734,31 @@ export default async function CellPage({
           </section>
         );
       })()}
+
+      {/* Activity character side-note (2026-05-30). The write-once "how this
+         business actually works" economics, reused from the activity page so
+         every geo cell gets opinionated context without a bland per-cell line.
+         Secondary slot, quiet styling, not a headline. Self-suppresses when
+         the activity is unwritten. */}
+      {activityCharacter && (
+        <aside className="my-8 rounded-xl border border-parchment bg-cream-50 p-5 md:p-6 max-w-prose">
+          <div className="text-[10px] uppercase tracking-[0.16em] text-atlas-700 font-semibold mb-2">
+            How {cell.industry_name ?? "this business"} makes money
+          </div>
+          <p className="text-sm md:text-base text-ink-900 leading-relaxed font-medium">
+            {activityCharacter.hook}
+          </p>
+          <p className="mt-2 text-sm text-cocoa-700 leading-relaxed">
+            {activityCharacter.economics}
+          </p>
+          <a
+            href={`/industries/${industry}`}
+            className="mt-3 inline-block text-xs text-atlas-700 hover:text-atlas-900 font-semibold border-b border-dotted border-atlas-300 hover:border-atlas-700 transition-colors"
+          >
+            More on the economics of this activity
+          </a>
+        </aside>
+      )}
 
       {/* Plan v19 Block B — fill rule. Headline tiles fall back to
          extrapolations when source data is null. People-working uses
