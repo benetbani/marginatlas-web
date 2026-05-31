@@ -32,6 +32,7 @@ import { MarginWaterfall } from "@/components/MarginWaterfall";
 import industryMarginsJson from "@/lib/finance/industry_margins.json";
 import { INDUSTRY_PAGE_SECTIONS, getToneClass } from "@/lib/page-layout/section-order";
 import { getIndustryHero } from "@/lib/images/industry_heroes";
+import { getActivityCharacter } from "@/lib/content/activity_character";
 
 void INDUSTRY_PAGE_SECTIONS;
 
@@ -89,6 +90,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
   const sector = ind ? SECTOR_BY_ID[ind.sector_id] : null;
   const margin = lookupIndustryMargin(ind.id);
   const hero = getIndustryHero(ind.id);
+  const character = getActivityCharacter(ind.id);
 
   void INDUSTRY_BY_ID;
 
@@ -157,6 +159,44 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
               </p>
             )}
           </header>
+        </section>
+      )}
+
+      {/* 1b. character: write-once, opinionated economics for this activity.
+         The "found nowhere else" layer. Self-suppresses when unwritten so
+         the page never shows an empty block. */}
+      {character && (
+        <section id="how-it-works" className="py-8 md:py-10">
+          <div className="max-w-3xl">
+            <div className="text-xs font-semibold uppercase tracking-[0.16em] text-atlas-700 mb-3">
+              How this business actually works
+            </div>
+            <p className="font-display text-xl md:text-2xl text-ink-900 leading-snug">
+              {character.hook}
+            </p>
+            <p className="mt-4 text-base text-cocoa-700 leading-relaxed">
+              {character.economics}
+            </p>
+            <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="rounded-xl border border-parchment bg-cream-50 p-4">
+                <div className="text-[10px] uppercase tracking-[0.16em] text-clay-700 font-semibold mb-1.5">
+                  What quietly kills operators
+                </div>
+                <p className="text-sm text-ink-900 leading-relaxed">{character.watchOut}</p>
+              </div>
+              <div className="rounded-xl border border-parchment bg-cream-50 p-4">
+                <div className="text-[10px] uppercase tracking-[0.16em] text-moss-700 font-semibold mb-1.5">
+                  What the best operators do
+                </div>
+                <p className="text-sm text-ink-900 leading-relaxed">{character.edge}</p>
+              </div>
+            </div>
+            {character.categoryNote && (
+              <p className="mt-4 text-sm text-cocoa-700/85 italic leading-relaxed border-l-2 border-atlas-300 pl-3">
+                {character.categoryNote}
+              </p>
+            )}
+          </div>
         </section>
       )}
 
