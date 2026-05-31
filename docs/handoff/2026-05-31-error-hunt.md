@@ -18,17 +18,34 @@ Scale-anomaly report (`data/quality/scale_anomalies_REPORT.md`): **13,455 anomal
   Almost certainly a wrong-aggregation (whole-sector revenue as per-firm, or n=1).
 - **Swiss/Monaco giants**: grocery_stores $1-2B, veterinary_pet_care $1B, utilities
   $5B at city level.
-Root-cause hypothesis: these are REAL `regional_cells` rows whose revenue_per_firm is
-mis-aggregated at load time, and `enforceSanity`'s bound-clamp either is not on the
-regional read path or runs after the value is already shown elsewhere. NEXT SESSION:
-1. Confirm whether `enforceSanity` runs inside `getRegionalCell` / `normalizeRegionalRow`
-   (grep was glitching; Read the functions directly). If not, the city giants are served
-   raw. If yes, the clamp's `bounds.hi` may be too loose for these industries.
-2. Decide fix location: (a) clamp harder at read (fast, masks bad data), or (b) fix the
-   rows in the DB / at ingest (correct, needs DB). Prefer (b) for the worst rows, (a) as
-   the guard. A DB UPDATE tagging+nulling revenue_per_firm > bounds.hi*3 for these
-   industries would kill the 149 high-severity ones immediately.
-3. Re-run the scale scanner; target high-severity count -> 0.
+ROOT CAUSE CONFIRMED (grep of cells.ts call sites, 2026-05-31):
+`enforceSanity` (which holds the revenue bound-clamp + the new D4 percentile sort) is
+ONLY called inside `getCellBySlug` (line ~458). The regional read path does NOT call it:
+- `getRegionalCell` (~line 263) maps via `normalizeRegionalRow` and returns at line ~382
+  through `applyPlausibilitySuppression(applyCurrencyCorrection(applyRollforward(
+  applyTaxonomy(cell))))` — NO enforceSanity.
+- `normalizeRegionalRow` itself (def ~line 163, shared return ~line 382) is also used by
+  the variants path (~line 1149).
+So the single cell PAGE is protected (getCellBySlug clamps), but comparison rails,
+variant lists, and any direct getRegionalCell/variants consumer serve RAW unclamped
+revenue. That is why travel_agencies shows $900M on those surfaces.
+
+THE FIX (do in a fresh session with clean I/O + tsc working):
+1. Add `enforceSanity` into the regional pipeline. Cleanest single point:
+   `normalizeRegionalRow`'s return (line ~382), wrap the existing chain:
+   `return enforceSanity(applyPlausibilitySuppression(applyCurrencyCorrection(
+     applyRollforward(applyTaxonomy(cell)))));`
+   CAUTION: that exact return line appears 3x (lines ~207, ~382, ~942 = three different
+   functions). Do NOT use a plain Edit (not unique). Either Read each and use a unique
+   surrounding-context anchor, or add a tiny named helper `finalizeRegional(cell)` and
+   call it only at line 382. tsc was OOMing this session; verify when it recovers.
+2. enforceSanity already clamps revenue_per_firm and percentiles to bounds.hi; once it
+   runs on the regional path, the city giants (travel_agencies, Swiss grocery/vet) drop
+   to their SMB bound automatically. No DB write needed for the render fix.
+3. SEPARATELY, fix the source rows so the DB itself is clean (needs DB back): a tagged
+   UPDATE nulling revenue_per_firm where it exceeds bounds.hi*3 for the worst industries,
+   so exports/API and the scanner agree with the rendered pages.
+4. Re-run `data/quality` scale scanner; target high-severity 149 -> 0.
 
 ## ENVIRONMENT BLOCKERS (why the big fix waited)
 - **Supabase DB unreachable** mid-session: `connection to database not available`
