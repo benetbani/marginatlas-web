@@ -1,5 +1,15 @@
 # Error hunt + ingestion — 2026-05-31
 
+## RESUME-SESSION VERIFY (2026-05-31, second pass)
+- Ingestion re-verified: unit test PASS, sample drop OK, `tsc --noEmit` 0 (raised heap).
+- **Full serial prebuild: GATE PASS, 0 hard fails** — D4/D8/regional-enforceSanity fixes
+  broke nothing. The 76 "taxonomy warnings" are the legacy DB ids (food_beverage_mfg etc);
+  confirmed NON-issue: verify_industry_medians validates their medians (R1-R4) BEFORE the
+  cosmetic R5 mapping-warning, so no plausibility gap. 24 grandfathered layering warnings
+  = known tech debt, non-urgent.
+- DB still DOWN (Supabase pooler, not the password). Live scanners + source-row cleanup
+  remain blocked. All render-layer fixes are already in and need no DB.
+
 ## DONE + VERIFIED this session
 - **Research ingestion pipeline** (commit 15629f60): schema + validator + dry-run
   loader + rollback + offline test. Verified: unit test PASS, sample drop validates
