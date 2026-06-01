@@ -27,19 +27,17 @@ Sentry.init({
 
   // Capture all errors (low volume for a content site).
   sampleRate: 1.0,
-  // Performance traces sampled lightly to stay inside the free tier.
-  tracesSampleRate: 0.1,
+  // Performance traces sampled lightly to stay inside the free tier (10k
+  // spans/mo). Low for a static content site.
+  tracesSampleRate: 0.05,
 
-  // Session Replay: only on error sessions (a paid feature; sample minimally
-  // so the trial gives a few real replays to evaluate without blowing quota).
-  replaysOnErrorSampleRate: 1.0,
-  replaysSessionSampleRate: 0.0,
+  // Session Replay removed: it is a paid feature. After the trial ends this
+  // site is on the free tier, where Replay does not ingest, so shipping the
+  // replay integration would only add bundle weight and dead recording work.
+  // Re-add Sentry.replayIntegration({...}) + replaysOnErrorSampleRate if a
+  // paid plan is taken later.
 
   sendDefaultPii: false,
-
-  integrations: [
-    Sentry.replayIntegration({ maskAllText: true, blockAllMedia: true }),
-  ],
 
   ignoreErrors: [
     "AbortError",

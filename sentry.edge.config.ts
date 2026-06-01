@@ -13,7 +13,8 @@ Sentry.init({
   enabled: Boolean(DSN) && process.env.NODE_ENV === "production",
 
   sampleRate: 1.0,
-  tracesSampleRate: 0.1,
+  // Free tier = 10k spans/mo. Static content site, low SSR volume.
+  tracesSampleRate: 0.05,
 
   sendDefaultPii: false,
 
