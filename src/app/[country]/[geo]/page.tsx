@@ -29,17 +29,15 @@ export const dynamicParams = true;
 
 type Params = { country: string; geo: string };
 
-// Pre-render top US states + major non-US regions for fast first paint.
-const STATIC_REGIONS: Array<{ country: string; geo: string }> = [
-  ...["california", "texas", "new-york", "florida", "illinois"].map((g) => ({ country: "us", geo: g })),
-  { country: "de", geo: "de2" },
-  { country: "it", geo: "itc4" },
-  { country: "fr", geo: "fr10" },
-  { country: "es", geo: "es51" },
-];
-
+// Build-time prerender DISABLED (2026-05-31). The region page runs
+// getTopIndustriesForCountry, a heavy Supabase query; on the current DB
+// compute it exceeds Vercel's 300s per-page static-gen limit for big states
+// (/us/illinois, /us/texas) and KILLS the whole build. dynamicParams=true
+// (above) means every region still renders fine on first request and is then
+// cached for `revalidate` seconds, so users see no difference. Re-enable a
+// small prerender list once DB compute is bumped off NANO.
 export async function generateStaticParams(): Promise<Params[]> {
-  return STATIC_REGIONS;
+  return [];
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }) {
