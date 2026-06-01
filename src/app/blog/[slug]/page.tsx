@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { getAllPosts, getPost } from "@/lib/blog";
+import LongformArticle from "@/components/editorial/LongformArticle";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -25,49 +26,52 @@ export default async function BlogPost({ params }: { params: Promise<Params> }) 
   const post = await getPost(slug);
   if (!post) notFound();
 
-  return (
-    <article className="max-w-2xl mx-auto">
-      <nav className="text-sm text-ink-700/70 mb-4">
-        <a href="/blog" className="hover:text-atlas-600">← Back to all posts</a>
-      </nav>
-      {/* Cover image — required by site convention (founder 2026-05-26).
-          When frontmatter has `image: /path/or/url.jpg`, render that;
-          otherwise show the deterministic gradient placeholder with
-          the post initial. Never renders empty. */}
-      {post.image.kind === "url" ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={post.image.src}
-          alt={post.image.alt}
-          className="w-full aspect-[16/9] object-cover rounded-md mb-6"
-        />
-      ) : (
-        <div
-          className="w-full aspect-[16/9] rounded-md mb-6 flex items-center justify-center"
-          style={{ background: post.image.gradient }}
-          aria-hidden="true"
-        >
-          <span className="font-display text-6xl md:text-7xl font-semibold text-white/85">
-            {post.image.initial}
-          </span>
-        </div>
-      )}
+  // Reading time from the rendered body (about 200 words per minute).
+  const words = (post.bodyHtml || "").replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
+  const readMinutes = Math.max(1, Math.round(words / 200));
+  const publishDate = new Date(post.date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+  const related = getAllPosts()
+    .filter((p) => p.slug !== slug)
+    .slice(0, 4)
+    .map((p) => ({ slug: p.slug, title: p.title, subtitle: p.excerpt }));
 
-      <header className="py-6">
-        <div className="text-xs text-ink-700/60">
-          {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })} · {post.author}
-        </div>
-        <h1 className="mt-2 text-3xl md:text-4xl font-semibold tracking-tight text-ink-900">
-          {post.title}
-        </h1>
-        {post.excerpt && (
-          <p className="mt-3 text-lg text-ink-800/80">{post.excerpt}</p>
-        )}
-      </header>
+  // Cover: keep the site convention (real image when present, deterministic
+  // gradient placeholder otherwise). Rendered inside the longform frame.
+  const cover =
+    post.image.kind === "url" ? (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img src={post.image.src} alt={post.image.alt} className="w-full object-cover" />
+    ) : (
       <div
-        className="prose prose-slate max-w-none py-6"
-        dangerouslySetInnerHTML={{ __html: post.bodyHtml || "" }}
+        className="w-full aspect-[16/9] flex items-center justify-center"
+        style={{ background: post.image.gradient }}
+        aria-hidden="true"
+      >
+        <span className="font-display text-6xl md:text-7xl font-semibold text-white/85">
+          {post.image.initial}
+        </span>
+      </div>
+    );
+
+  return (
+    <div className="max-w-2xl mx-auto">
+      <nav className="text-sm text-ink-700/70 mb-2">
+        <a href="/blog" className="hover:text-atlas-600">Back to all posts</a>
+      </nav>
+      <LongformArticle
+        title={post.title}
+        deck={post.excerpt}
+        publishDate={publishDate}
+        author={post.author || "Margin Atlas"}
+        readMinutes={readMinutes}
+        cover={cover}
+        bodyHtml={post.bodyHtml || ""}
+        related={related}
       />
-    </article>
+    </div>
   );
 }
