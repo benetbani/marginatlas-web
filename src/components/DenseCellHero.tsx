@@ -78,9 +78,9 @@ const COVERAGE_ANCHOR: Record<CoverageTier, string> = {
 // hero stat row. Only the two strong tiers get a word, and it is phrased as
 // a quiet point of confidence. The two weak tiers return undefined so the
 // hero stays silent rather than labelling its own thin data.
-const COVERAGE_WORD: Partial<Record<CoverageTier, { label: string; cls: string }>> = {
-  measured: { label: "Measured data", cls: "text-moss-700" },
-  regional: { label: "Regional benchmark", cls: "text-atlas-700" },
+const COVERAGE_WORD: Partial<Record<CoverageTier, { text: string; cls: string }>> = {
+  measured: { text: "Measured data", cls: "text-moss-700" },
+  regional: { text: "Regional benchmark", cls: "text-atlas-700" },
 };
 
 // ---------------------------------------------------------------------------
@@ -289,7 +289,7 @@ export default function DenseCellHero(props: DenseCellHeroProps) {
           {coverageWord && (
             <>
               <span aria-hidden="true" className="text-parchment">·</span>
-              <span className={`font-semibold ${coverageWord.cls}`}>{coverageWord.label}</span>
+              <span className={`font-semibold ${coverageWord.cls}`}>{coverageWord.text}</span>
             </>
           )}
         </div>

@@ -157,7 +157,8 @@ export default function LongformArticle({
       <div className="lf-shell">
         <header>
           <div className="lf-eyebrow">{seriesLabel.toUpperCase()}</div>
-          <h1 className="lf-title">{title}</h1>
+          {/* typography-ok: longform uses scoped lf-* type via the style island, not the global token scale */}
+          <h1 className="lf-title" data-typography="custom">{title}</h1>
           {deck && <p className="lf-deck">{deck}</p>}
           <hr className="lf-rule" />
           <div className="lf-byline">
