@@ -133,6 +133,32 @@ Each phase: branch, port, constraint-pass, preview, founder review, commit.
    (recommend additive)
 5. **Monetization** (Tier 3) — hold for later (recommend), or include now?
 
+## Execution log (2026-06-02, branch `visual-reform`)
+Founder answered the 5 decisions and said execute. Done on branch, not merged/live:
+1. **Atlas Score killed** (`194555f`). Removed the strip + the `atlasScore` prop +
+   deleted `AtlasScore.tsx`. Hero now shows a coverage word: loud on strong tiers
+   (Measured data / Regional benchmark), silent on weak tiers.
+2. **Longform blog adopted** (`471079b`). New `editorial/LongformArticle.tsx`,
+   re-skinned to Atlas tokens, wired on every blog post. `BlogCoverCard` skipped
+   (demo-hardcoded, not data-driven).
+3. **RolePay skipped.** No code. Confirmed no salary speculation added.
+4. **atlas-reform.css NOT adopted.** It is mockup-showcase CSS with a CONFLICTING
+   palette under the same var names (terracotta `--atlas-700` vs live amber) and
+   generic class names that risk collisions. The real texture pack (8 atlas SVGs +
+   atlas-pattern.css) is already in the repo. Adopting it would be a regression, not
+   an enrichment, so it was correctly declined.
+5. **Gated free/paid design** (`28f566f`, dashes fixed `5fd3fa6`). New
+   `lib/monetization/free_paid_map.ts` (the Free/Basic/Premium visibility plan, pure
+   data) + admin-gated `/_design/monetized` preview showing fog, ghost bars,
+   redaction, a key cue, and the full table on mock data. Live cell-page wiring
+   deliberately deferred: an earlier gating wire broke the page (reverted
+   2026-05-25), so it is a separate tested step. Key cue added per founder, distinct
+   from the v34 no-padlock rule.
+
+Pending: verify (tsc + prebuild), founder review of branch + `/_design/monetized`,
+then merge + deploy. Tier-1/2 component PORTS from the spec (empty states,
+WorldMapPicker, homepage polish) are NOT in this branch yet; they are the next pass.
+
 ## Verification (when implementation runs, with permission)
 - `npm run prebuild` (26 gates) green, incl. em-dash, source-agency, section-order, layering.
 - `npx tsc --noEmit` clean.
