@@ -1,0 +1,140 @@
+# Visual reform — design spec (2026-06-01)
+
+Status: DRAFT for founder async review. No code written yet. No builds run.
+
+## TL;DR (the surprise)
+The four dropped zips (`Margin Atlas (17)..(20)`) are **iterative re-exports of the
+same design system that past sessions already integrated**. ~90% of the components
+already live in `src/`. So this is **not** a greenfield reskin. It is three smaller,
+safer jobs:
+
+1. **Port** selective visual improvements from the newest iteration (set_20) into the
+   ~8 live components whose export version changed meaningfully.
+2. **Fix** the constraint violations the export would reintroduce on port (em-dashes,
+   hardcoded hex, the Atlas Score).
+3. **Decide + add** the handful of genuinely net-new pieces (editorial blog layouts,
+   a texture pack, a few cell sections) — most are redundant or against a founder
+   steer and should be skipped.
+
+Saved, extracted, inventoried under `design-assets/incoming/set_17..20`. set_20 is the
+superset/newest.
+
+## Evidence (the diff)
+Against the repo, set_20/src contains:
+
+**Net-new (not in repo):** `billing/UpgradeModal`, `CostStructure`, `MethodologyBlock`,
+`PeerCells`, `RolePay`. Earlier sets also carry net-new `BlogCoverCard`,
+`DecadeArticleLayout`, `styles/atlas-reform.css`, and a "Niche Markers / Districts"
+HTML mockup.
+
+**Changed, large diff (real visual iteration, worth porting):** `WorldMapPicker`
+(+98/-186), `HomepageHero` (+57/-65), `SectorIcon` (+56/-69), `EmptyState` (+50/-23),
+`empty/CellDataMissingEmpty` (+62/-42), `empty/SectorUnderConstructionEmpty` (+42/-25),
+`SectionDivider` (+40/-17), `LoadingSkeleton` (+40/-54), `DenseCellHero` (+40/-26),
+`empty/ComingSoonPlaceholderCard` (+24/-16), `mobile/MobileCellHero` (+17/-13),
+`billing/PricingFAQ` (+16/-31), `RotatingWords` (+11/-50), `HomepageEditorialBlocks`
+(+4/-8).
+
+**Changed, trivial diff (already effectively integrated — skip):** all four
+`comparison/*` (1-4 lines), `mobile/MobileNavDrawer` / `MobileShareSheet` (1-3 lines),
+`newsletter/NewsletterSignupVariants` (1 line).
+
+## Constraints the export VIOLATES (must fix on every port)
+- **Em-dashes in 15 export files.** Repo versions already had these stripped; that is
+  part of why they read as "changed." A blind copy reintroduces them and fails the
+  `verify_no_em_dashes` gate. Every ported line gets em-dashes converted.
+- **Hardcoded hex in 8 export files.** Violates the tokens-only rule. Map to
+  `design-tokens.ts` / Tailwind tokens on port.
+- **Atlas Score in `DenseCellHero`.** Founder ruling: the Atlas Score is too risky.
+  It is still live (hero prop + a separate `<AtlasScore>` row on the cell page).
+  Resolve as part of this work (see Decision 1).
+- **No source-agency names** in any copy added/ported (gate `verify_no_source_agencies`).
+- **Section-order gate** + **layering gate** still apply to any wired component.
+
+## Scope decision (what is IN / OUT and why)
+
+### IN — Tier 1 (port + constraint-fix; low risk, high polish)
+- **Empty / coverage states.** Port the visual upgrades to `EmptyState` + the three
+  `empty/*` components (high diff, clearly on-brand, matches the "honest not-yet"
+  philosophy). Wire the redesigned `not-found.tsx` (404). This is the cleanest win.
+- **Cell hero.** Port `DenseCellHero` visual deltas, **minus** the Atlas Score, pending
+  Decision 1. Keep mobile/desktop split as-is.
+- **Mobile.** Port the small `MobileCellHero` delta; NavDrawer/ShareSheet diffs are
+  trivial, skip.
+
+### IN — Tier 2 (port; medium risk)
+- **Homepage.** Port `HomepageHero`, `HomepageEditorialBlocks`, `RotatingWords`
+  improvements. Confirm totals come from real data, not hardcoded counts.
+- **Geo / decorative.** Port `WorldMapPicker` (largest diff — verify it does not
+  regress current behavior), `SectorIcon`, `SectionDivider`, `LoadingSkeleton`.
+- **Comparison + v2 geo (LondonRoadmap, CoverageHubV2, scorecards).** Already in repo;
+  diffs trivial. Action is **wiring/verification**, not porting: confirm each is
+  actually rendered on its route; if a strong component sits unused, wire it.
+
+### DECIDE then maybe add — net-new
+- **Editorial blog (`DecadeArticleLayout` + `BlogCoverCard`).** Genuinely net-new,
+  genuinely useful for `/blog`. Recommend ADOPT (Decision 2).
+- **`atlas-reform.css` texture pack.** Adopt **additively** (new optional utility
+  classes), never ripping the current `atlas-pattern.css` / `homepage-visual-tokens.css`
+  (Decision 4).
+- **Niche district markers** (HTML mockup): could enrich `NeighborhoodOverview` /
+  `CitiesDotsMap`. Low priority; evaluate after Tier 1+2.
+
+### OUT — skip (redundant or against a founder steer)
+- **`RolePay`** (annual pay by role). Founder steer: the site is **not** salary-focused.
+  Skip unless Decision 3 overrides.
+- **`CostStructure`** (P&L stacked bar). Redundant with the live `SmartWaterfall` +
+  `AnnualCostStack`. Skip.
+- **`PeerCells`, `MethodologyBlock`.** Redundant with the live comparables section +
+  `CoverageBadge`/`CoverageIndicator`/`about-data`. Skip unless a clear visual win is
+  found during the port pass.
+
+### HOLD — Tier 3 (monetization)
+- **`UpgradeModal`, `PricingFAQ`, pricing/account/billing refresh.** Founder is cautious
+  on monetization. Hold for a dedicated later pass (Decision 5).
+
+## Method (how each port is done safely)
+For every CHANGED file:
+1. `diff repo vs set_20`. Classify each hunk as **visual improvement** vs **local fix**
+   (token swap, em-dash strip, Atlas-Score removal, prop wiring).
+2. Apply only the visual-improvement hunks; preserve every local fix.
+3. Re-run the constraint pass on the result: em-dash, hex-to-token, source-agency.
+4. Component renders are **shown before commit** (per the always-dry-run-and-show rule).
+   Because the user is away, ports are staged on a branch and previewed via the
+   `/_design` catalog route or screenshots, never pushed live unreviewed.
+
+For every NEW file: assess fit + redundancy, wire only if it earns its place, same
+constraint pass, same preview-before-commit.
+
+## Guardrails (hard)
+- No `npm run build` / `prebuild` / `tsc` without explicit permission.
+- No live render change without showing first.
+- Tokens only (no raw hex/px/ms in components).
+- No em-dashes; no source-agency names in copy.
+- Respect layering + section-order gates.
+- Small commits, reviewable; founder approves before anything ships to `main`/live.
+
+## Sequencing (phases)
+- **P0** Decisions (founder): Atlas Score, blog editorial, RolePay, texture pack,
+  monetization timing.
+- **P1** Tier 1 ports (empty states + 404, DenseCellHero minus Atlas Score, MobileCellHero).
+- **P2** Tier 2 ports (homepage, WorldMapPicker, SectorIcon, dividers, skeleton) + wire-audit of comparison/v2.
+- **P3** Net-new adopted in P0 (blog editorial, texture pack additive).
+- **P4** (optional/held) monetization refresh.
+Each phase: branch, port, constraint-pass, preview, founder review, commit.
+
+## Decisions needed (async)
+1. **Atlas Score** — remove entirely (recommend) and replace with coverage-confidence
+   wording, or keep demoted?
+2. **Blog editorial** (`DecadeArticleLayout` + `BlogCoverCard`) — adopt for `/blog`?
+   (recommend yes)
+3. **RolePay** (pay-by-role) — confirm skip given the not-salaries steer? (recommend skip)
+4. **`atlas-reform.css`** — adopt additively, or leave current texture untouched?
+   (recommend additive)
+5. **Monetization** (Tier 3) — hold for later (recommend), or include now?
+
+## Verification (when implementation runs, with permission)
+- `npm run prebuild` (26 gates) green, incl. em-dash, source-agency, section-order, layering.
+- `npx tsc --noEmit` clean.
+- `/_design` catalog updated for any changed/new UI primitive.
+- Visual diff (screenshots) of every touched surface, desktop + mobile, shown before commit.
