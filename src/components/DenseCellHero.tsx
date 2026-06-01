@@ -9,7 +9,7 @@
  *
  * Density principles:
  *   - One screenful of real information on first paint (typical revenue,
- *     percentile band, headcount, wage, margin, score, coverage tier).
+ *     percentile band, headcount, wage, margin, coverage tier).
  *   - Display serif lives only on H1 and the hero number. Every other number
  *     is sans + tabular-nums for skimmability.
  *   - Stays under 55vh on 1440x900 desktop and under 100vh on 390x844 mobile.
@@ -44,7 +44,6 @@ export type DenseCellHeroProps = {
   employees: number;             // 4
   medianWage: number;            // 32000
   netMargin: number;             // 0.12
-  atlasScore: number;            // 77
   coverageTier: CoverageTier;
 };
 
@@ -73,6 +72,15 @@ const COVERAGE_ANCHOR: Record<CoverageTier, string> = {
   regional: "regional",
   estimated: "estimated",
   modeled: "modeled",
+};
+
+// Coverage-confidence word that replaces the retired Atlas Score in the
+// hero stat row. Only the two strong tiers get a word, and it is phrased as
+// a quiet point of confidence. The two weak tiers return undefined so the
+// hero stays silent rather than labelling its own thin data.
+const COVERAGE_WORD: Partial<Record<CoverageTier, { label: string; cls: string }>> = {
+  measured: { label: "Measured data", cls: "text-moss-700" },
+  regional: { label: "Regional benchmark", cls: "text-atlas-700" },
 };
 
 // ---------------------------------------------------------------------------
@@ -118,12 +126,17 @@ export default function DenseCellHero(props: DenseCellHeroProps) {
     industrySubniches, sectorId, sectorLabel,
     iso2, countryName, geoName, question,
     typicalRevenue, p10Revenue, p90Revenue,
-    employees, medianWage, netMargin, atlasScore,
+    employees, medianWage, netMargin,
     coverageTier,
   } = props;
 
   const SectorIcon = SECTOR_ICONS[sectorId] ?? Briefcase;
   const covAnchor = COVERAGE_ANCHOR[coverageTier];
+  // Atlas Score retired (too risky to put a single composite number in the
+  // open). Replaced by a coverage-confidence word that leans loud on strong
+  // coverage and stays silent on weak coverage, so the page never advertises
+  // its own thin cells.
+  const coverageWord = COVERAGE_WORD[coverageTier];
 
   // Log-positioned typical marker on the percentile band.
   const typicalPos = (() => {
@@ -273,11 +286,12 @@ export default function DenseCellHero(props: DenseCellHeroProps) {
             <span className="tabular-nums font-semibold text-ink-900">{fmtPct(netMargin)}</span>
             <span className="ml-1">profit kept</span>
           </span>
-          <span aria-hidden="true" className="text-parchment">·</span>
-          <span aria-label={`Atlas Score ${atlasScore} out of 100`}>
-            <span className="tabular-nums font-semibold text-ink-900">{atlasScore}/100</span>
-            <span className="ml-1">Atlas Score</span>
-          </span>
+          {coverageWord && (
+            <>
+              <span aria-hidden="true" className="text-parchment">·</span>
+              <span className={`font-semibold ${coverageWord.cls}`}>{coverageWord.label}</span>
+            </>
+          )}
         </div>
       </div>
     </section>

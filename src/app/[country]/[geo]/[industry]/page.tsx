@@ -31,7 +31,9 @@ import { NetProfitWaterfall } from "@/components/NetProfitWaterfall";
 import { AcrossStatesStrip } from "@/components/AcrossStatesStrip";
 import { CellPageNav } from "@/components/CellPageNav";
 // CellActions import removed (save/copy/CSV/embed buttons stripped)
-import { AtlasScore } from "@/components/AtlasScore";
+// AtlasScore retired (2026-06-02): founder ruling that a single composite
+// score in the open is too risky. The hero now shows a coverage-confidence
+// word instead, and the cell page no longer renders an AtlasScore strip.
 import { SmartImage } from "@/components/SmartImage";
 import { AudienceCaveat } from "@/components/AudienceCaveat";
 import { SECTOR_BY_ID, INDUSTRY_BY_ID, slugToIndustry, resolveToMeasuredIndustry } from "@/lib/taxonomy";
@@ -585,7 +587,6 @@ export default async function CellPage({
           }
         }
         const heroCoverageTier = deriveCoverageTier(cell);
-        const atlasScore = Math.max(0, Math.min(100, Math.round(cell.quality_score ?? 60)));
         return typical > 0 ? (
           <>
             {/* Plan v30 Bundle 1 — mobile-specific hero rendered below md;
@@ -623,7 +624,6 @@ export default async function CellPage({
                 employees={empPerFirm}
                 medianWage={cell.payroll_per_employee ?? 30000}
                 netMargin={computedNetMargin ?? 0.08}
-                atlasScore={atlasScore}
                 coverageTier={heroCoverageTier}
               />
             </div>
@@ -851,17 +851,13 @@ export default async function CellPage({
         )}
       </section>
 
-      {/* Atlas Score + Typical-firm biography card.
+      {/* Typical-firm biography card + tax/cost panel.
          Plan v14 A.1 (T-A1.4): legacy id="typical-firm" renamed to canonical
          "tax-and-cost-panel": section hosts PostTaxToggle +
-         NetProfitWaterfall + MarginWaterfall. */}
-      {/* Plan v30 quick-win — AtlasScore demoted from full card to
-          single-row chip-style strip. Frees the left rail; ATLAS
-          composite score still visible but no longer dominating. */}
+         NetProfitWaterfall. AtlasScore strip retired 2026-06-02 (composite
+         score in the open is too risky); coverage confidence now lives as a
+         word in the hero. */}
       <section id="tax-and-cost-panel" className={`py-6 ${getToneClass("tax-and-cost-panel")}`}>
-        <div className="mb-4">
-          <AtlasScore cell={cell} />
-        </div>
         <div>
           <TypicalFirmCard cell={cell} currencySymbol="$" />
           <PostTaxToggle
