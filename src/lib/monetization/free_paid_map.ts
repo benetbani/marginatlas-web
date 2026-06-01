@@ -1,5 +1,5 @@
 /**
- * free_paid_map — the single declaration of what a Free, Basic, or Premium
+ * free_paid_map: the single declaration of what a Free, Basic, or Premium
  * viewer sees on a cell page.
  *
  * This is DATA, not wiring. It carries no render logic and touches no page, so

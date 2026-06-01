@@ -1,5 +1,5 @@
 /**
- * /_design/monetized — preview of the Free vs Paid gated states.
+ * /_design/monetized: preview of the Free vs Paid gated states.
  *
  * Admin-gated by ?key=<ADMIN_KEY>, same pattern as /_design. This is a SAFE
  * preview surface: it renders the v34 lock primitives over MOCK data so the
