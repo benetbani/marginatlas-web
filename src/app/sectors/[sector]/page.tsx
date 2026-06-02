@@ -8,6 +8,8 @@ import {
 } from "@/lib/taxonomy";
 import { SectorIcon } from "@/components/icons/SectorIcon";
 import { MoreDepthBanner } from "@/components/monetization";
+import { SectionEyebrow } from "@/components/ui/section-eyebrow";
+import { colors } from "@/lib/design-tokens";
 
 export const revalidate = 86400;
 // Defer cold sectors to on-demand rendering so the build
@@ -78,15 +80,13 @@ export default async function SectorPage({ params }: { params: Promise<Params> }
         <div className="flex items-start gap-5">
           <div
             className="shrink-0 hidden md:flex items-center justify-center w-24 h-24 rounded-3xl border border-parchment text-atlas-700"
-            style={{ backgroundColor: s.header_color || "#F5F5F5" }}
+            style={{ backgroundColor: s.header_color || colors.cream[100] }}
             aria-hidden
           >
             <SectorIcon sectorId={s.id} size={48} weight="duotone" />
           </div>
           <div className="flex-1">
-            <div className="text-xs uppercase tracking-wider text-atlas-700 font-semibold">
-              Category
-            </div>
+            <SectionEyebrow size="md">Category</SectionEyebrow>
             <h1 className="mt-2 text-4xl md:text-5xl font-semibold tracking-tight text-ink-900 flex items-center gap-3">
               <span className="md:hidden text-atlas-700" aria-hidden>
                 <SectorIcon sectorId={s.id} size={32} weight="duotone" />
