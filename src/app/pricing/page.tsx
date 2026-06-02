@@ -26,6 +26,7 @@
 
 import { Check, Minus } from "@phosphor-icons/react/dist/ssr";
 import PricingFAQ from "@/components/billing/PricingFAQ";
+import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import {
   TIERS,
   CANCEL_ANYTIME_BLOCK,
@@ -100,7 +101,7 @@ export default function PricingPage() {
     <article>
       <section className="bg-cream-50 border-b border-parchment">
         <div className="mx-auto max-w-6xl px-6 pt-16 pb-12 sm:pt-20 sm:pb-16">
-          <p className="text-[11px] tracking-[0.22em] uppercase font-semibold text-atlas-700">Pricing</p>
+          <SectionEyebrow size="md">Pricing</SectionEyebrow>
           <h1 className="font-display mt-3 text-balance text-4xl sm:text-5xl leading-[1.08] tracking-[-0.022em] font-semibold text-ink-900 max-w-3xl">
             Three ways to use Atlas.
           </h1>
@@ -126,7 +127,7 @@ export default function PricingPage() {
       {/* Full feature matrix. */}
       <section className="bg-cream-100 border-t border-b border-parchment">
         <div className="mx-auto max-w-6xl px-6 py-14 sm:py-20">
-          <p className="text-[11px] tracking-[0.22em] uppercase font-semibold text-atlas-700">Side by side</p>
+          <SectionEyebrow size="md">Side by side</SectionEyebrow>
           <h2 className="font-display mt-3 text-2xl sm:text-3xl leading-[1.1] tracking-[-0.02em] font-semibold text-ink-900 max-w-3xl">
             What sits inside each tier.
           </h2>
@@ -178,9 +179,7 @@ export default function PricingPage() {
           Part 3.6 cancel-anytime block. Both verbatim. */}
       <section className="bg-cream-50 border-t border-parchment">
         <div className="mx-auto max-w-3xl px-6 py-12 sm:py-16">
-          <p className="text-[11px] tracking-[0.22em] uppercase font-semibold text-atlas-700">
-            How we think about your card
-          </p>
+          <SectionEyebrow size="md">How we think about your card</SectionEyebrow>
           <p className="font-display mt-3 text-balance text-base sm:text-lg text-ink-900 leading-relaxed">
             {ANTI_TE_CALLOUT}
           </p>
@@ -233,7 +232,7 @@ function PaidCard({
 }) {
   const spec = TIERS[tier];
   const wrapperClasses = highlighted
-    ? "bg-white border border-atlas-300 shadow-[0_1px_2px_rgba(0,0,0,0.04),_0_10px_28px_rgba(22,174,181,0.08)]"
+    ? "bg-white border border-atlas-300 shadow-[0_1px_3px_rgb(0_0_0/0.05),_0_8px_28px_rgb(0_0_0/0.06)]"
     : "bg-cream-50 border border-parchment";
   const buttonClasses =
     tier === "basic"
@@ -275,7 +274,7 @@ function PaidCard({
           {tier === "basic" ? "Notify me when Basic opens" : "Notify me when Premium opens"}
         </a>
         <p className="mt-2 text-[11px] text-cocoa-700/80 text-center">
-          Coming soon. Drop your email below and we&apos;ll let you know.
+          We will email you when paid plans open.
         </p>
       </div>
     </div>
