@@ -164,3 +164,34 @@ WorldMapPicker, homepage polish) are NOT in this branch yet; they are the next p
 - `npx tsc --noEmit` clean.
 - `/_design` catalog updated for any changed/new UI primitive.
 - Visual diff (screenshots) of every touched surface, desktop + mobile, shown before commit.
+
+## Tier-1/2 PORT AUDIT (2026-06-02): SKIP ALL. The export is stale, not newer.
+
+A direction-classification pass diffed every Tier-1/2 target (repo vs `set_20`) and
+overturned the spec's core premise. The spec assumed a larger diff meant a newer export
+worth porting FROM. The opposite is true: `set_20` is a snapshot taken BEFORE the
+2026-05-27 design-system refactor, so the large diffs are the repo moving AHEAD
+(adopting shared primitives, stripping hex, removing the Atlas Score), not the export
+adding anything. Porting any target backward is a regression. Evidence per file:
+
+| Target | Verdict | Regression the export would reintroduce |
+|---|---|---|
+| `EmptyState`, `empty/CellDataMissingEmpty`, `empty/SectorUnderConstructionEmpty` | SKIP | Repo composes the `ui/empty-state` primitive (Phase 2). Export re-inlines markup, hardcodes hex (`#F8F2E4`), and DROPS the suggestion-chip focus-visible ring (WCAG AA). Primitive already has the amber left-rule + hatched variant the export "adds". |
+| `app/not-found.tsx` (404) | SKIP (dangerous) | Export reintroduces Phosphor `/dist/ssr` barrel imports, the exact shape that ENOENT-killed every Vercel deploy on `4348a23`+`4680afc`+`34b9e61`. Repo is deliberately minimal HTML+Tailwind. Also adds inline `clamp()` px. |
+| `DenseCellHero` | SKIP | Reintroduces the killed Atlas Score (`atlasScore` prop) plus hardcoded hex. |
+| `mobile/MobileCellHero` | SKIP | Strips the shared `HowWeKnowThis` primitive, re-inlines the old coverage chip. |
+| `HomepageHero` | SKIP | Restores hardcoded stat counts the repo removed by design. |
+| `WorldMapPicker` | SKIP | Loses zoom/pan (ZoomableGroup -> Marker) + 10 hardcoded hex colors. |
+| `RotatingWords` | SKIP | Drops the `prefers-reduced-motion` a11y guard. |
+| `LoadingSkeleton` | SKIP | Abandons the `ui/skeleton` primitive for inline `#F4EAD5` hex. |
+| `SectorIcon`, `SectionDivider`, `HomepageEditorialBlocks` | SKIP | Inline styles, em-dashes, spacing downgrades; no visual gain. |
+
+Conclusion: there is no porting work. The reform's genuinely-new value (Atlas Score
+removal `194555f`, longform blog `471079b`, `free_paid_map` `28f566f`) was already
+merged. PART 10 item #3 ("Tier-1/2 visual component PORTS") is hereby CLOSED as
+"audited, do not port." `design-assets/incoming/set_17..20` are a historical artifact
+only; do not port from them. The forward path for visual improvement is net-new design
+inside the current (superior) primitive system, not backward ports. The one survivor
+from the spec's Tier-2 is the non-port "wire-audit": confirm the strong v2 geo
+components (`LondonRoadmap`, `CoverageHubV2`, City/Country scorecards) and `comparison/*`
+are actually rendered on their routes, and wire any strong orphan that sits unused.
