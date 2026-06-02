@@ -231,7 +231,7 @@ export default function HomePage() {
           <div className="rounded-2xl bg-white border border-ink-200 overflow-hidden">
             <div className="grid md:grid-cols-[1fr_minmax(0,640px)] gap-0 items-stretch">
               <div className="px-6 py-8 md:px-10 md:py-12">
-                <SectionEyebrow className="mb-3">Top 200 cities</SectionEyebrow>
+                <SectionEyebrow size="md" className="mb-3">Top 200 cities</SectionEyebrow>
                 <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight text-ink-900">
                   Drilled to the neighborhood
                 </h2>
@@ -265,7 +265,7 @@ export default function HomePage() {
       {/* Featured benchmarks. Plan v16 Block E: 9 tiles in 3×3 symmetric grid. */}
       <ToneBand tone="home-featured">
         <section className="py-10">
-          <SectionEyebrow className="mb-2">Featured benchmarks</SectionEyebrow>
+          <SectionEyebrow size="md" className="mb-2">Featured benchmarks</SectionEyebrow>
           <div className="flex items-baseline justify-between gap-4 flex-wrap mb-4">
             <h2 className="font-display text-2xl md:text-3xl font-semibold tracking-tight text-ink-900">
               Start with something familiar
@@ -336,7 +336,7 @@ export default function HomePage() {
       {/* Plan v15 Block 3 - blog rail. */}
       <ToneBand tone="home-blog-rail">
         <section className="py-12 md:py-16">
-          <SectionEyebrow className="mb-2">Writing</SectionEyebrow>
+          <SectionEyebrow size="md" className="mb-2">Writing</SectionEyebrow>
           <div className="flex items-baseline justify-between gap-4 flex-wrap mb-6 md:mb-8">
             <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900">
               From the Atlas notebook

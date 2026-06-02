@@ -21,6 +21,7 @@ import {
   Briefcase, Rocket, ChartLine, BookOpen,
 } from "@phosphor-icons/react/dist/ssr";
 import type { Icon as PhIcon } from "@phosphor-icons/react";
+import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 
 // ============================================================================
 // Block A — What you can ask Atlas
@@ -40,9 +41,7 @@ function BlockA({ questions = DEFAULT_QUESTIONS }: { questions?: AtlasQuestion[]
   return (
     <section aria-labelledby="block-a-h2" className="w-full bg-white">
       <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
-        <p className="text-xs uppercase tracking-[0.22em] font-semibold text-atlas-700">
-          What you can ask Atlas
-        </p>
+        <SectionEyebrow size="md">What you can ask Atlas</SectionEyebrow>
         <div className="mt-3 grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-14 items-start">
           <div className="md:col-span-5">
             <h2
@@ -114,9 +113,7 @@ function BlockB() {
   return (
     <section aria-labelledby="block-b-h2" className="w-full bg-cream-50">
       <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
-        <p className="text-xs uppercase tracking-[0.22em] font-semibold text-atlas-700">
-          How the numbers are built
-        </p>
+        <SectionEyebrow size="md">How the numbers are built</SectionEyebrow>
         <h2
           id="block-b-h2"
           className="font-display mt-3 text-3xl sm:text-4xl font-semibold tracking-tight text-balance text-ink-900 leading-[1.1] max-w-3xl"
@@ -200,9 +197,7 @@ function BlockC() {
   return (
     <section aria-labelledby="block-c-h2" className="w-full bg-parchment">
       <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
-        <p className="text-xs uppercase tracking-[0.22em] font-semibold text-atlas-700">
-          Who uses Atlas
-        </p>
+        <SectionEyebrow size="md">Who uses Atlas</SectionEyebrow>
         <h2
           id="block-c-h2"
           className="font-display mt-3 text-3xl sm:text-4xl font-semibold tracking-tight text-balance text-ink-900 leading-[1.1] max-w-3xl"

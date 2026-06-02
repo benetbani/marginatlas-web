@@ -13,14 +13,15 @@
  * the countries remain readable.
  */
 import { WorldMapClient } from "./WorldMapClient";
+import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 
 export function WorldMapSection() {
   return (
     <section className="pt-12 pb-12 md:pt-20 md:pb-16">
       <div className="text-center max-w-3xl mx-auto mb-6 md:mb-10">
-        <div className="text-xs md:text-sm font-semibold uppercase tracking-[0.18em] text-atlas-300 mb-3">
+        <SectionEyebrow tone="inverse" size="md" className="mb-3">
           Start with a place
-        </div>
+        </SectionEyebrow>
         <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight text-white leading-[1.08]">
           Pick a country
         </h2>

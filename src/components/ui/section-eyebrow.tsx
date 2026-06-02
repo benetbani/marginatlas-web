@@ -20,6 +20,7 @@ const eyebrowVariants = cva("uppercase font-semibold leading-none", {
     tone: {
       default: "text-atlas-700",
       muted: "text-cocoa-700/70",
+      inverse: "text-atlas-300", // on dark bands (atlas-paper-dark)
     },
     size: {
       sm: "text-[10px] tracking-[0.16em]",
