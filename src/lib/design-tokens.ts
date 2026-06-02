@@ -120,6 +120,17 @@ export const colors = {
     starter: "#f87850", // = atlas-300, thin
     modeled: "#737373", // = cocoa-500, estimated
   },
+  /**
+   * Delta / multiplier indicators (above, at par, caution, below). Semantic,
+   * reusing the warm palette so we stop hardcoding green/yellow/red hex like
+   * #16a34a / #ca8a04 / #7f1d1d in neighborhood and decide pages.
+   */
+  delta: {
+    positive: "#3f6212", // = moss-700, above par
+    atpar: "#952509", //    = atlas-700, at par
+    caution: "#f87850", //  = atlas-300, watch
+    negative: "#991b1b", // = clay-700, below par
+  },
   parchment: "#dddddd",
   graphite: "#3a3a3a",
 } as const;
@@ -319,4 +330,5 @@ export const tailwindColors = {
   cocoa: colors.cocoa,
   teal: colors.teal,
   tier: colors.tier,
+  delta: colors.delta,
 } as const;
