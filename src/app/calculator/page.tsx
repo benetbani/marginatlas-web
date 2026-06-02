@@ -9,6 +9,7 @@ import Link from "next/link";
 import { COUNTRIES, INDUSTRIES, industryToSlug, isDefaultVisible } from "@/lib/taxonomy";
 import { CalculatorForm } from "@/components/CalculatorForm";
 import { MoreDepthBanner } from "@/components/monetization";
+import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 
 export const revalidate = 86400;
 
@@ -28,9 +29,7 @@ export default function CalculatorPage() {
 
   return (
     <div className="py-10 max-w-3xl">
-      <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
-        Calculator
-      </div>
+      <SectionEyebrow size="md">Calculator</SectionEyebrow>
       <h1 className="mt-2 text-4xl md:text-5xl font-semibold tracking-tight text-ink-900">
         Where do you actually sit?
       </h1>
