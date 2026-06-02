@@ -25,6 +25,7 @@ import {
   MANUAL_DISPLAY_LABEL,
 } from "@/lib/cities/manual_city_aliases";
 import { getPopularPlaceName } from "@/lib/geo/popular_place_overrides";
+import { REGIONS_BY_COUNTRY_AUTO } from "@/lib/regions/regions_generated";
 
 // US state FIPS code → human name → URL slug
 export const US_STATES: Record<string, { name: string; slug: string }> = {
@@ -170,5 +171,22 @@ export function geoNameFromSlug(country: string, geoSlug: string): string | unde
   // US state slug
   const usState = SLUG_TO_GEO_ID[geoSlug.toLowerCase()];
   if (usState) return GEO_ID_TO_NAME[usState];
+  // Sub-national region code (NUTS / province) via the generated table.
+  // Exact match first; for a NUTS3 code not listed (e.g. es511) fall back to
+  // the nearest listed parent (es51 -> Cataluna) by trimming trailing digits.
+  const regions = REGIONS_BY_COUNTRY_AUTO[country.toUpperCase()];
+  if (regions) {
+    const lc = geoSlug.toLowerCase();
+    const exact = regions.find((r) => r.value === lc);
+    if (exact) return exact.label;
+    if (/^[a-z]{2}\d+$/.test(lc)) {
+      let code = lc;
+      while (code.length > 3) {
+        code = code.slice(0, -1);
+        const parent = regions.find((r) => r.value === code);
+        if (parent) return parent.label;
+      }
+    }
+  }
   return undefined;
 }
