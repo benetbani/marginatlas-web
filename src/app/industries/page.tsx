@@ -20,6 +20,7 @@ import {
   isDefaultVisible,
 } from "@/lib/taxonomy";
 import { SectorMasterMenu } from "@/components/SectorMasterMenu";
+import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 
 export const revalidate = 86400;
 
@@ -39,9 +40,7 @@ export default function IndustriesIndex() {
     <div>
       {/* Hero */}
       <section className="py-10 md:py-14 text-center">
-        <div className="text-xs font-semibold uppercase tracking-[0.16em] text-atlas-700 mb-3">
-          Activities
-        </div>
+        <SectionEyebrow size="md" className="mb-3">Activities</SectionEyebrow>
         <h1 className="font-display text-3xl md:text-5xl font-medium tracking-tight text-ink-900 leading-tight max-w-3xl mx-auto">
           Every kind of small business we cover
         </h1>
@@ -59,9 +58,7 @@ export default function IndustriesIndex() {
       {/* A-Z list — founder-approved as-is. */}
       <section className="py-10 md:py-14 border-t border-ink-100">
         <div className="text-center mb-6 md:mb-8">
-          <div className="text-xs font-semibold uppercase tracking-[0.16em] text-atlas-700">
-            All activities
-          </div>
+          <SectionEyebrow size="md">All activities</SectionEyebrow>
           <h2 className="mt-2 font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900">
             {visibleIndustries.length} activities, A to Z
           </h2>
