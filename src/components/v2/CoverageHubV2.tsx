@@ -4,6 +4,8 @@
 
 import * as React from "react";
 
+import { colors } from "@/lib/design-tokens";
+
 type Tier = "deep" | "good" | "starter" | "modeled";
 
 interface Country {
@@ -23,25 +25,25 @@ const TIER_META: Record<Tier, { title: string; explainer: string; dot: string }>
     title: "Deep coverage",
     explainer:
       "Primary measurement with neighborhood-level depth. Cross-sectional comparison inside a city is supported.",
-    dot: "#1F8A4C",
+    dot: colors.tier.deep,
   },
   good: {
     title: "Good coverage",
     explainer:
       "Full regional benchmarks across the main metros. Sub-city resolution outside the largest cities is still light.",
-    dot: "#2563EB",
+    dot: colors.tier.good,
   },
   starter: {
     title: "Starter coverage",
     explainer:
       "Country-level numbers only, no city-level depth yet. Treat as orientation while we build out.",
-    dot: "#D73A14",
+    dot: colors.tier.starter,
   },
   modeled: {
     title: "Modeled",
     explainer:
       "Extrapolated from peer-country measurement. Useful for ballparking, not for committee.",
-    dot: "#3A3A3A",
+    dot: colors.tier.modeled,
   },
 };
 
@@ -63,8 +65,8 @@ function CountryChip({ country }: { country: Country }) {
       href={`/coverage/${country.iso2.toLowerCase()}`}
       className="
         group inline-flex items-center gap-2
-        bg-white hover:bg-[#F5F5F5]
-        border border-[#E5E5E5] hover:border-[#3A3A3A]
+        bg-white hover:bg-cream-100
+        border border-ink-200 hover:border-ink-700
         px-3 py-1.5
         rounded-full
         transition-colors duration-150
@@ -74,8 +76,8 @@ function CountryChip({ country }: { country: Country }) {
       <span aria-hidden="true" className="text-sm leading-none">
         {iso2ToFlag(country.iso2)}
       </span>
-      <span className="font-sans text-sm text-black">{country.name}</span>
-      <span className="font-sans text-xs text-[#3A3A3A] tabular-nums">
+      <span className="font-sans text-sm text-ink-900">{country.name}</span>
+      <span className="font-sans text-xs text-cocoa-700 tabular-nums">
         {country.cellCount.toLocaleString()}
       </span>
     </a>
@@ -102,16 +104,16 @@ export default function CoverageHubV2({ countries }: CoverageHubV2Props) {
     <section className="bg-white">
       <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-10 md:py-14">
         <div className="mb-10">
-          <div className="font-sans text-xs uppercase tracking-wide text-[#3A3A3A]">
+          <div className="font-sans text-xs uppercase tracking-wide text-cocoa-700">
             Global coverage
           </div>
           <h1
-            className="mt-2 font-display text-4xl font-medium text-black leading-tight"
+            className="mt-2 font-display text-4xl font-medium text-ink-900 leading-tight"
             style={{ fontFamily: "Newsreader, serif" }}
           >
             Where Atlas reaches today
           </h1>
-          <p className="mt-3 font-sans text-base text-[#3A3A3A] max-w-[60ch] leading-relaxed">
+          <p className="mt-3 font-sans text-base text-cocoa-700 max-w-[60ch] leading-relaxed">
             {totalCountries} countries, {totalCells.toLocaleString()} industry-city cells.
             Below: every country grouped by how deep the numbers go. Countries we cannot
             speak to yet are absent on purpose.
@@ -132,16 +134,16 @@ export default function CoverageHubV2({ countries }: CoverageHubV2Props) {
                     style={{ backgroundColor: meta.dot }}
                   />
                   <h2
-                    className="font-display text-xl font-medium text-black"
+                    className="font-display text-xl font-medium text-ink-900"
                     style={{ fontFamily: "Newsreader, serif" }}
                   >
                     {meta.title}
                   </h2>
-                  <span className="ml-1 font-sans text-xs tabular-nums text-[#3A3A3A]">
+                  <span className="ml-1 font-sans text-xs tabular-nums text-cocoa-700">
                     {items.length}
                   </span>
                 </div>
-                <p className="mt-1 font-sans text-sm text-[#3A3A3A] max-w-[64ch]">
+                <p className="mt-1 font-sans text-sm text-cocoa-700 max-w-[64ch]">
                   {meta.explainer}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">

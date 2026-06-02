@@ -4,6 +4,8 @@
 
 import * as React from "react";
 
+import { colors } from "@/lib/design-tokens";
+
 type Tier = "deep" | "good" | "starter" | "modeled";
 
 interface CountryScorecardV2Props {
@@ -19,10 +21,10 @@ interface CountryScorecardV2Props {
 }
 
 const TIER_META: Record<Tier, { label: string; dot: string }> = {
-  deep:    { label: "Deep coverage",    dot: "#1F8A4C" },
-  good:    { label: "Good coverage",    dot: "#2563EB" },
-  starter: { label: "Starter coverage", dot: "#D73A14" },
-  modeled: { label: "Modeled",          dot: "#3A3A3A" },
+  deep:    { label: "Deep coverage",    dot: colors.tier.deep },
+  good:    { label: "Good coverage",    dot: colors.tier.good },
+  starter: { label: "Starter coverage", dot: colors.tier.starter },
+  modeled: { label: "Modeled",          dot: colors.tier.modeled },
 };
 
 function iso2ToFlag(iso: string): string {
@@ -58,10 +60,10 @@ function makeBlurb(
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <div className="font-sans text-[10px] uppercase tracking-wide text-[#3A3A3A]">
+      <div className="font-sans text-[10px] uppercase tracking-wide text-cocoa-700">
         {label}
       </div>
-      <div className="mt-1 font-sans tabular-nums font-semibold text-2xl leading-tight text-black">
+      <div className="mt-1 font-sans tabular-nums font-semibold text-2xl leading-tight text-ink-900">
         {value}
       </div>
     </div>
@@ -92,31 +94,31 @@ export default function CountryScorecardV2({
               {flag}
             </span>
             <h1
-              className="font-display text-4xl font-medium text-black leading-tight"
+              className="font-display text-4xl font-medium text-ink-900 leading-tight"
               style={{ fontFamily: "Newsreader, serif" }}
             >
               {name}
             </h1>
           </div>
-          <div className="inline-flex items-center gap-1.5 border border-[#E5E5E5] rounded-full px-3 py-1.5 bg-white">
+          <div className="inline-flex items-center gap-1.5 border border-ink-200 rounded-full px-3 py-1.5 bg-white">
             <span
               aria-hidden="true"
               className="inline-block w-1.5 h-1.5 rounded-full"
               style={{ backgroundColor: tm.dot }}
             />
-            <span className="font-sans text-[11px] uppercase tracking-wide text-[#3A3A3A] font-medium">
+            <span className="font-sans text-[11px] uppercase tracking-wide text-cocoa-700 font-medium">
               {tm.label}
             </span>
           </div>
         </div>
 
         {/* Editorial blurb */}
-        <p className="mt-4 font-sans text-base text-[#3A3A3A] max-w-[62ch] leading-relaxed">
+        <p className="mt-4 font-sans text-base text-cocoa-700 max-w-[62ch] leading-relaxed">
           {blurb}
         </p>
 
         {/* 3-stat row */}
-        <div className="mt-8 grid grid-cols-3 gap-x-6 border-t border-[#E5E5E5] pt-5">
+        <div className="mt-8 grid grid-cols-3 gap-x-6 border-t border-ink-200 pt-5">
           {/* useless-tile-ok: dead v2 component, not mounted anywhere; pending deletion */}
           <Stat label="Industries covered" value={industriesCovered.toLocaleString()} />
           {/* useless-tile-ok: dead v2 component, not mounted anywhere; pending deletion */}
@@ -130,20 +132,20 @@ export default function CountryScorecardV2({
         {/* Two-column deep links */}
         <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
           <div>
-            <div className="font-sans text-xs uppercase tracking-wide text-[#3A3A3A]">
+            <div className="font-sans text-xs uppercase tracking-wide text-cocoa-700">
               Top industries
             </div>
-            <ul className="mt-3 divide-y divide-[#E5E5E5] border-y border-[#E5E5E5]">
+            <ul className="mt-3 divide-y divide-ink-200 border-y border-ink-200">
               {sampleIndustries.slice(0, 6).map((ind) => (
                 <li key={ind.name}>
                   <a
                     href={ind.href}
-                    className="flex items-center justify-between py-2.5 hover:bg-[#F5F5F5] -mx-2 px-2 transition-colors duration-150 no-underline"
+                    className="flex items-center justify-between py-2.5 hover:bg-cream-100 -mx-2 px-2 transition-colors duration-150 no-underline"
                   >
-                    <span className="font-sans text-sm text-black truncate pr-2">
+                    <span className="font-sans text-sm text-ink-900 truncate pr-2">
                       {ind.name}
                     </span>
-                    <span className="font-sans text-xs text-[#3A3A3A] tabular-nums shrink-0">
+                    <span className="font-sans text-xs text-cocoa-700 tabular-nums shrink-0">
                       {ind.cellCount.toLocaleString()}
                     </span>
                   </a>
@@ -152,22 +154,22 @@ export default function CountryScorecardV2({
             </ul>
           </div>
           <div>
-            <div className="font-sans text-xs uppercase tracking-wide text-[#3A3A3A]">
+            <div className="font-sans text-xs uppercase tracking-wide text-cocoa-700">
               Top cities
             </div>
-            <ul className="mt-3 divide-y divide-[#E5E5E5] border-y border-[#E5E5E5]">
+            <ul className="mt-3 divide-y divide-ink-200 border-y border-ink-200">
               {sampleCities.slice(0, 6).map((city) => (
                 <li key={city.name}>
                   <a
                     href={city.href}
-                    className="flex items-center justify-between py-2.5 hover:bg-[#F5F5F5] -mx-2 px-2 transition-colors duration-150 no-underline"
+                    className="flex items-center justify-between py-2.5 hover:bg-cream-100 -mx-2 px-2 transition-colors duration-150 no-underline"
                   >
-                    <span className="font-sans text-sm text-black truncate pr-2">
+                    <span className="font-sans text-sm text-ink-900 truncate pr-2">
                       {city.name}
                     </span>
                     <span
                       aria-hidden="true"
-                      className="font-sans text-xs text-[#3A3A3A] shrink-0"
+                      className="font-sans text-xs text-cocoa-700 shrink-0"
                     >
                       &rarr;
                     </span>
@@ -179,10 +181,10 @@ export default function CountryScorecardV2({
         </div>
 
         {/* Footer */}
-        <div className="mt-10 pt-5 border-t border-[#E5E5E5]">
+        <div className="mt-10 pt-5 border-t border-ink-200">
           <a
             href="/methodology"
-            className="font-sans text-sm text-[#952509] hover:text-[#D73A14] underline underline-offset-4 decoration-[#E5E5E5] hover:decoration-[#D73A14] transition-colors"
+            className="font-sans text-sm text-atlas-700 hover:text-atlas-500 underline underline-offset-4 decoration-ink-200 hover:decoration-atlas-500 transition-colors"
           >
             How Atlas measures and tiers coverage
           </a>
