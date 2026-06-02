@@ -43,6 +43,7 @@ const GATES: Gate[] = [
   { name: "taxonomy", script: "scripts/verify_taxonomy.ts" },
   { name: "no-em-dashes", script: "scripts/verify_no_em_dashes.ts" },
   { name: "no-source-agencies", script: "scripts/verify_no_source_agencies.ts" },
+  { name: "no-hardcoded-hex", script: "scripts/verify_hardcoded_hex.ts" },
   { name: "dead-links", script: "scripts/audit/find_dead_links.ts", args: ["--strict"] },
   { name: "featured-tiles", script: "scripts/verify_featured_tiles.ts" },
   { name: "render-guards", script: "scripts/verify_render_guards.ts" },
