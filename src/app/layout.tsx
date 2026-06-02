@@ -59,6 +59,20 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  openGraph: {
+    title: "Margin Atlas: Small-business benchmarks worldwide",
+    description:
+      "Revenue, payroll, and after-tax owner take-home for small businesses worldwide, by industry, city, and size.",
+    url: "https://www.marginatlas.com",
+    siteName: "Margin Atlas",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Margin Atlas: Small-business benchmarks worldwide",
+    description:
+      "Small-business revenue, payroll, and owner take-home, by industry, city, and size.",
+  },
 };
 
 export default function RootLayout({
