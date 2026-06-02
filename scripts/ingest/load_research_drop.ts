@@ -21,7 +21,7 @@ import { resolve, basename } from "node:path";
 config({ path: resolve(process.cwd(), ".env.local") });
 
 import { INDUSTRY_BY_ID } from "../../src/lib/taxonomy";
-import { iso2ToIso3 } from "../../src/lib/countries";
+import { iso2ToIso3, iso2ToName } from "../../src/lib/countries";
 import {
   type ResearchDrop,
   type ActivityDrop,
@@ -37,6 +37,7 @@ const SPREAD = { p10: 0.4, p25: 0.65, p50: 1.0, p75: 1.55, p90: 2.3 };
 
 type ExtrapRow = {
   country_iso3: string;
+  country_name: string;
   industry_id: string;
   year: number;
   size_band: string;
@@ -69,6 +70,7 @@ function bandRows(
   const { quality_score, coverage_tier } = confidenceToQuality(conf);
   return {
     country_iso3: iso3,
+    country_name: iso2ToName(drop.country_iso2) || drop.country_iso2,
     industry_id: a.industry_id,
     year: 2025,
     size_band: band,
