@@ -1,3 +1,5 @@
+import { SectionEyebrow } from "@/components/ui/section-eyebrow";
+
 export const revalidate = 86400;
 
 export const metadata = {
@@ -12,6 +14,7 @@ export default function AboutDataPage() {
          top removed (founder rule: no decorative images on overview
          pages). Stale "40+ countries" copy updated to reflect the real
          coverage. */}
+      <SectionEyebrow size="md" className="mb-3">Reference</SectionEyebrow>
       <h1 className="text-4xl font-semibold tracking-tight text-ink-900">
         About the data
       </h1>
@@ -66,9 +69,9 @@ export default function AboutDataPage() {
           Four tiers, one vocabulary:
         </p>
 
-        <div id="measured" className="mt-6 border-l-4 border-l-emerald-500 bg-emerald-50 px-5 py-4 rounded-r-lg scroll-mt-24">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-emerald-900 mb-1">
-            <span className="w-2 h-2 rounded-full bg-emerald-500" />
+        <div id="measured" className="mt-6 border-l-4 border-l-tier-deep bg-cream-50 px-5 py-4 rounded-r-lg scroll-mt-24">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-atlas-700 mb-1">
+            <span className="w-2 h-2 rounded-full bg-tier-deep" />
             Measured
           </div>
           <p className="text-ink-800 text-sm leading-relaxed">
@@ -77,9 +80,9 @@ export default function AboutDataPage() {
           </p>
         </div>
 
-        <div id="regional" className="mt-3 border-l-4 border-l-sky-500 bg-sky-50 px-5 py-4 rounded-r-lg scroll-mt-24">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-sky-900 mb-1">
-            <span className="w-2 h-2 rounded-full bg-sky-500" />
+        <div id="regional" className="mt-3 border-l-4 border-l-tier-good bg-cream-50 px-5 py-4 rounded-r-lg scroll-mt-24">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-atlas-700 mb-1">
+            <span className="w-2 h-2 rounded-full bg-tier-good" />
             Regional
           </div>
           <p className="text-ink-800 text-sm leading-relaxed">
@@ -88,9 +91,9 @@ export default function AboutDataPage() {
           </p>
         </div>
 
-        <div id="estimated" className="mt-3 border-l-4 border-l-amber-500 bg-amber-50 px-5 py-4 rounded-r-lg scroll-mt-24">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-amber-900 mb-1">
-            <span className="w-2 h-2 rounded-full bg-amber-500" />
+        <div id="estimated" className="mt-3 border-l-4 border-l-tier-starter bg-cream-50 px-5 py-4 rounded-r-lg scroll-mt-24">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-atlas-700 mb-1">
+            <span className="w-2 h-2 rounded-full bg-tier-starter" />
             Estimated
           </div>
           <p className="text-ink-800 text-sm leading-relaxed">
@@ -100,9 +103,9 @@ export default function AboutDataPage() {
           </p>
         </div>
 
-        <div id="modeled" className="mt-3 border-l-4 border-l-stone-500 bg-stone-50 px-5 py-4 rounded-r-lg scroll-mt-24">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-stone-900 mb-1">
-            <span className="w-2 h-2 rounded-full bg-stone-500" />
+        <div id="modeled" className="mt-3 border-l-4 border-l-tier-modeled bg-cream-50 px-5 py-4 rounded-r-lg scroll-mt-24">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-cocoa-700 mb-1">
+            <span className="w-2 h-2 rounded-full bg-tier-modeled" />
             Modeled
           </div>
           <p className="text-ink-800 text-sm leading-relaxed">
