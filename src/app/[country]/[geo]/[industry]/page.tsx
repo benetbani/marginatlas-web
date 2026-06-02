@@ -86,7 +86,6 @@ import { DistributionVisual } from "@/components/DistributionVisual";
 import { NetProfitSummary } from "@/components/NetProfitSummary";
 import { SmartWaterfall } from "@/components/SmartWaterfall";
 import { CellFallbackBanner } from "@/components/CellFallbackBanner";
-import { LowConfidenceBanner } from "@/components/LowConfidenceBanner";
 // Sanity-§8: EstimatedBadge purged; CoverageIndicator stays for its
 // compact (HowWeKnowThis) variant only.
 import { CoverageIndicator, deriveCoverageTier } from "@/components/CoverageIndicator";
@@ -664,16 +663,6 @@ export default async function CellPage({
           requestedIndustryName={requestedIndustry.name}
           actualIndustryName={cell.industry_name}
           actualIndustryHref={cell.industry_id ? `/industries/${cell.industry_id.replace(/_/g, "-")}` : null}
-        />
-      ) : null}
-
-      {/* Low-confidence caveat for tier-X cells (extrapolated / synthesized).
-          The hero coverage word is silent on weak tiers, so without this a
-          modeled country-level estimate shows clean numbers with no signal. */}
-      {cell.coverage_tier === "X" ? (
-        <LowConfidenceBanner
-          place={cell.geo_name || undefined}
-          industryName={cell.industry_name}
         />
       ) : null}
 
