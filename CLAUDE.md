@@ -75,6 +75,11 @@ website/
 - `npx tsc --noEmit` — typecheck only, ~30-60s
 - `npm run build` — full Next.js build (after prebuild); minutes
 
+## Latest handoff
+
+- `docs/handoff/2026-06-02-session-handoff.md` is the current full handoff (both-repo map + intensive bootstrap prompt). Read it first.
+
 ## Manual actions outstanding
 
-- Supabase perf indexes: `db/migrations/2026-05-27-perf-indexes.sql` — paste each statement into Supabase SQL Editor one at a time (CONCURRENTLY breaks in transactions). Expected impact: ~6 slow-query timeouts disappear from build log.
+- Supabase perf indexes (`db/migrations/2026-05-27-perf-indexes.sql`): APPLIED 2026-06-02. DB healthy. If high-CPU/Unhealthy recurs, verify the indexes still exist before anything else, then consider bumping compute off NANO.
+- Sentry: cancel the trial (free tier already configured in code; no card on file = auto-drops to free).
