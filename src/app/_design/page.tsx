@@ -49,6 +49,9 @@ import { Number as NumberDisplay } from "@/components/ui/number";
 import { Pill } from "@/components/ui/pill";
 import { InlineLink } from "@/components/ui/inline-link";
 import { DisclosureIcon } from "@/components/ui/disclosure";
+import { TierDot, type Tier } from "@/components/ui/tier-dot";
+import { SectionEyebrow } from "@/components/ui/section-eyebrow";
+import { StatRow } from "@/components/ui/stat-row";
 import { FadeIn } from "@/components/ui/motion/FadeIn";
 import { SlideUp } from "@/components/ui/motion/SlideUp";
 import { Stagger } from "@/components/ui/motion/Stagger";
@@ -83,6 +86,7 @@ export default async function DesignCatalogPage({
         <TypographySection />
         <ButtonsSection />
         <PillsSection />
+        <S1PrimitivesSection />
         <FormFeedbackSection />
         <NumericSection />
         <LinksSection />
@@ -367,6 +371,67 @@ function PillsSection() {
           <Pill size="sm">Small</Pill>
           <Pill size="md">Medium</Pill>
           <Pill size="lg">Large</Pill>
+        </div>
+      </SubSection>
+    </Section>
+  );
+}
+
+function S1PrimitivesSection() {
+  const tiers: Tier[] = ["deep", "good", "starter", "modeled"];
+  return (
+    <Section
+      title="Tier, eyebrow, stat row"
+      description="2026-06-02 additions. One warm tier-color token plus three primitives that raise every surface at once. Source: design-tokens.ts tier scale, ui/tier-dot.tsx, ui/section-eyebrow.tsx, ui/stat-row.tsx."
+    >
+      <SubSection title="Tier color token" caption="colors.tier (saturation reads as confidence)">
+        <div className="flex flex-wrap gap-3">
+          {Object.entries(colors.tier).map(([name, hex]) => (
+            <div key={name} className="text-center">
+              <div className="w-16 h-16 rounded-lg border border-parchment" style={{ background: hex }} />
+              <div className="text-xs font-semibold text-ink-900 mt-1.5">{name}</div>
+              <div className="text-[10px] text-cocoa-700/70 tabular-nums">{hex}</div>
+            </div>
+          ))}
+        </div>
+      </SubSection>
+      <SubSection title="TierDot" caption="ui/tier-dot.tsx">
+        <div className="space-y-4">
+          <div className="flex flex-wrap items-center gap-4">
+            {tiers.map((t) => (
+              <TierDot key={t} tier={t} showLabel />
+            ))}
+          </div>
+          <div className="flex flex-wrap items-center gap-4">
+            {tiers.map((t) => (
+              <TierDot key={t} tier={t} size="lg" />
+            ))}
+          </div>
+        </div>
+      </SubSection>
+      <SubSection title="SectionEyebrow" caption="ui/section-eyebrow.tsx">
+        <div className="space-y-4">
+          <div>
+            <SectionEyebrow>Where the money goes</SectionEyebrow>
+            <h3 className="font-display text-2xl font-semibold text-ink-900 mt-1">
+              A typical restaurant in Munich
+            </h3>
+          </div>
+          <div>
+            <SectionEyebrow tone="muted" size="md">Coverage</SectionEyebrow>
+            <h3 className="font-display text-2xl font-semibold text-ink-900 mt-1">
+              Regional benchmark
+            </h3>
+          </div>
+        </div>
+      </SubSection>
+      <SubSection title="StatRow" caption="ui/stat-row.tsx">
+        <div className="max-w-sm">
+          <StatRow label="Typical revenue" value="$420,000" />
+          <StatRow label="People working" value="4" />
+          <StatRow label="Wage per person" value="$52,000" />
+          <StatRow label="Profit kept" value="12%" />
+          <StatRow label="Multi-year trend" value={null} divider={false} />
         </div>
       </SubSection>
     </Section>

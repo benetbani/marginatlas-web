@@ -106,6 +106,20 @@ export const colors = {
     600: "#0d5f58",
     700: "#0f766e",
   },
+  /**
+   * Data-confidence tier scale. Semantic, not a new hue: it reuses the
+   * amber ramp so saturation reads as confidence (deeper amber = more
+   * measured), draining to neutral gray for the weakest tier. This is the
+   * one canonical place tier color lives; tier dots, scorecard badges, and
+   * coverage chips all read from here instead of inventing their own green
+   * or blue (the v2 components hardcoded a blue dot, which this retires).
+   */
+  tier: {
+    deep: "#952509", //    = atlas-700, measured / primary
+    good: "#d73a14", //    = atlas-500, regional
+    starter: "#f87850", // = atlas-300, thin
+    modeled: "#737373", // = cocoa-500, estimated
+  },
   parchment: "#dddddd",
   graphite: "#3a3a3a",
 } as const;
@@ -304,4 +318,5 @@ export const tailwindColors = {
   clay: colors.clay,
   cocoa: colors.cocoa,
   teal: colors.teal,
+  tier: colors.tier,
 } as const;
