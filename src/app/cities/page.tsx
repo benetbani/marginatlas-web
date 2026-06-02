@@ -17,6 +17,7 @@ import CitiesWorldMap, {
   type CitiesWorldMapCity,
 } from "@/components/cities/CitiesWorldMap";
 import { COUNTRIES } from "@/lib/taxonomy";
+import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 
 export const revalidate = 86400;
 
@@ -111,9 +112,7 @@ export default function CitiesHub() {
 
   return (
     <article className="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16">
-      <div className="text-xs uppercase tracking-wide text-atlas-600 font-semibold mb-2">
-        Cities
-      </div>
+      <SectionEyebrow size="md" className="mb-2">Cities</SectionEyebrow>
       <h1 className="font-display text-4xl md:text-5xl font-medium tracking-tight text-ink-900 mb-3">
         Cities of the world
       </h1>
@@ -126,7 +125,7 @@ export default function CitiesHub() {
          every continent block) sits on ONE big white card so the
          body paper pattern stops fighting the dense text. Warm
          cocoa shadow seats the card on the page. */}
-      <div className="rounded-2xl bg-white border border-[rgba(76,39,18,0.10)] shadow-[0_2px_4px_rgba(76,39,18,0.05),_0_12px_28px_rgba(76,39,18,0.06)] px-4 md:px-8 py-6 md:py-10">
+      <div className="rounded-2xl bg-white border border-parchment shadow-[0_1px_3px_rgb(0_0_0/0.05),_0_8px_28px_rgb(0_0_0/0.06)] px-4 md:px-8 py-6 md:py-10">
 
       {/* Cities §1: geographic map anchors the page, one marker per
           covered city, each linking to its city page. */}

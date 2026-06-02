@@ -17,6 +17,7 @@ import cityListJson from "../../../../../data/cities/city_list_v1.json";
 import neighborhoodsJson from "../../../../../data/cities/neighborhoods_v1.json";
 import { CountryFlag } from "@/components/CountryFlag";
 import { COUNTRIES } from "@/lib/taxonomy";
+import { colors } from "@/lib/design-tokens";
 import { getNeighborhoodFlavor } from "@/lib/cities/neighborhood_flavor";
 import {
   getNeighborhoodMultiplier,
@@ -122,12 +123,12 @@ export default async function NeighborhoodHub({
           const multPct = Math.round((mult.final - 1) * 100);
           const multColor =
             mult.final > 1.15
-              ? "#14532D"
+              ? colors.moss[700]
               : mult.final > 1.0
-                ? "#16A34A"
+                ? colors.moss[500]
                 : mult.final > 0.85
-                  ? "#CA8A04"
-                  : "#7F1D1D";
+                  ? colors.delta.caution
+                  : colors.delta.negative;
           return (
             <Link
               key={n.slug}
