@@ -73,6 +73,7 @@ import { HeroBenchmark } from "@/components/HeroBenchmark";
 import DenseCellHero from "@/components/DenseCellHero";
 import MobileCellHero from "@/components/mobile/MobileCellHero";
 import { CityHero } from "@/components/CityHero";
+import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { ComparableCitiesRibbon } from "@/components/ComparableCitiesRibbon";
 import { LocalContextCard } from "@/components/LocalContextCard";
 // TrendSparkline import removed; synthesized 5-year trend was too speculative
@@ -742,9 +743,9 @@ export default async function CellPage({
          the activity is unwritten. */}
       {activityCharacter && (
         <aside className="my-8 rounded-xl border border-parchment bg-cream-50 p-5 md:p-6 max-w-prose">
-          <div className="text-[10px] uppercase tracking-[0.16em] text-atlas-700 font-semibold mb-2">
+          <SectionEyebrow className="mb-2">
             How {cell.industry_name ?? "this business"} makes money
-          </div>
+          </SectionEyebrow>
           <p className="text-sm md:text-base text-ink-900 leading-relaxed font-medium">
             {activityCharacter.hook}
           </p>
@@ -1078,6 +1079,7 @@ export default async function CellPage({
          "related-cells". */}
       {comparables.length > 0 && (
         <section id="related-cells" className={`py-8 ${getToneClass("related-cells")}`}>
+          <SectionEyebrow size="md" className="mb-2">Compare</SectionEyebrow>
           <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
             Other industries in {cell.geo_name}
           </h2>
@@ -1121,9 +1123,7 @@ export default async function CellPage({
           deeper into the category context. */}
       {cell.industry_id ? (
         <section className="py-8 border-t border-parchment mt-4">
-          <div className="text-xs uppercase tracking-wide text-atlas-700 font-semibold mb-2">
-            Read more
-          </div>
+          <SectionEyebrow size="md" className="mb-2">Read more</SectionEyebrow>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <a
               href={`/learn/how-much-does-a-${(cell.industry_name || cell.industry_id).toLowerCase().replace(/s$/, "").replace(/\s+/g, "-").replace(/-+/g, "-")}-make`}
