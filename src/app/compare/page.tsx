@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { CompareClient } from "./CompareClient";
 import { MoreDepthBanner } from "@/components/monetization";
+import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 
 export const metadata = {
   title: "Compare snapshots | Margin Atlas",
@@ -11,6 +12,7 @@ export default function ComparePage() {
   return (
     <div>
       <header className="py-8">
+        <SectionEyebrow size="md" className="mb-2">Compare</SectionEyebrow>
         <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-ink-900">
           Compare snapshots side by side
         </h1>

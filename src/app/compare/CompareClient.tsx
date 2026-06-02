@@ -9,6 +9,7 @@ import {
 } from "@/lib/taxonomy";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
 import { fmtMoney } from "@/lib/format/money";
+import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 
 type Slot = { country: string; industry: string; region: string };
 
@@ -153,9 +154,7 @@ export function CompareClient() {
       <section className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {slots.map((slot, idx) => (
           <div key={idx} className="card space-y-3">
-            <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
-              Cell {idx + 1}
-            </div>
+            <SectionEyebrow size="md">Cell {idx + 1}</SectionEyebrow>
             <ComboField
               id={`country-${idx}`}
               label="Country"
