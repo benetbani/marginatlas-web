@@ -48,3 +48,6 @@ Masterplan: docs/superpowers/specs/2026-06-03-visual-reform-masterplan.md.
 
 ## Log
 - 2026-06-03: loop started. Preview loop (Playwright+Edge), visx, PageShell, PercentileStrip, cell mockup v1 done. globals.css @import order fixed (turbopack).
+- 2026-06-03: cell mockup v2 (P&L readout, firm-mix bar, trust row, two-column rhythm). Committed 98a23481 (local). Mobile (390) stacks cleanly; percentile labels a touch tight at 390, widen later.
+- 2026-06-03 FOUND DATA BUG (spawned as a separate task, not for the design loop): the "all sizes" cell revenue is non-deterministic ($10K vs $270K for the same cell) = the aggregation in cells.ts picks bands inconsistently. This is the founder's "all-sizes unrealistic" complaint. Design loop: tolerate it (judge LAYOUT, not the flickering number) until the data task lands.
+- NEXT cron fire: (a) hero visual anchor (kill the dead right-space) + re-shoot; (b) widen percentile at mobile; (c) add across-regions + related sections; (d) start /dev/country.
