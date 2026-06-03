@@ -451,6 +451,934 @@
     "source_model": "overnight-loop-2026-06-03",
     "confidence": "low"
   },
+  "AL:accounting_tax": {
+    "net_margin": 0.36,
+    "gross_margin": 0.949,
+    "operating_margin": 0.577,
+    "cost_structure": {
+      "cogs": 8,
+      "labor": 46,
+      "rent": 12,
+      "other": 34
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 15,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AL:apparel_mfg": {
+    "net_margin": 0.087,
+    "gross_margin": 0.568,
+    "operating_margin": 0.199,
+    "cost_structure": {
+      "cogs": 47,
+      "labor": 36,
+      "rent": 4,
+      "other": 12
+    },
+    "firm_distribution": {
+      "1-4": 55,
+      "5-9": 25,
+      "10-19": 13,
+      "20-49": 7
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AL:auto_repair_shops": {
+    "net_margin": 0.182,
+    "gross_margin": 0.629,
+    "operating_margin": 0.358,
+    "cost_structure": {
+      "cogs": 45,
+      "labor": 25,
+      "rent": 8,
+      "other": 21
+    },
+    "firm_distribution": {
+      "1-4": 84,
+      "5-9": 13,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AL:bakeries_retail": {
+    "net_margin": 0.092,
+    "gross_margin": 0.591,
+    "operating_margin": 0.298,
+    "cost_structure": {
+      "cogs": 45,
+      "labor": 25,
+      "rent": 8,
+      "other": 23
+    },
+    "firm_distribution": {
+      "1-4": 74,
+      "5-9": 21,
+      "10-19": 5
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AL:barbershops": {
+    "net_margin": 0.366,
+    "gross_margin": 0.924,
+    "operating_margin": 0.647,
+    "cost_structure": {
+      "cogs": 12,
+      "labor": 29,
+      "rent": 15,
+      "other": 44
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AL:cafes_coffee": {
+    "net_margin": 0.137,
+    "gross_margin": 0.741,
+    "operating_margin": 0.409,
+    "cost_structure": {
+      "cogs": 30,
+      "labor": 26,
+      "rent": 12,
+      "other": 32
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 16,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AL:clothing_stores": {
+    "net_margin": 0.088,
+    "gross_margin": 0.469,
+    "operating_margin": 0.234,
+    "cost_structure": {
+      "cogs": 58,
+      "labor": 14,
+      "rent": 12,
+      "other": 16
+    },
+    "firm_distribution": {
+      "1-4": 83,
+      "5-9": 14,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AL:daycare_preschool": {
+    "net_margin": 0.177,
+    "gross_margin": 0.901,
+    "operating_margin": 0.349,
+    "cost_structure": {
+      "cogs": 12,
+      "labor": 51,
+      "rent": 16,
+      "other": 21
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 24,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AL:dental_practices": {
+    "net_margin": 0.314,
+    "gross_margin": 0.848,
+    "operating_margin": 0.556,
+    "cost_structure": {
+      "cogs": 22,
+      "labor": 31,
+      "rent": 12,
+      "other": 35
+    },
+    "firm_distribution": {
+      "1-4": 85,
+      "5-9": 13,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AL:dry_cleaning_laundry": {
+    "net_margin": 0.213,
+    "gross_margin": 0.826,
+    "operating_margin": 0.462,
+    "cost_structure": {
+      "cogs": 22,
+      "labor": 30,
+      "rent": 16,
+      "other": 32
+    },
+    "firm_distribution": {
+      "1-4": 86.9,
+      "5-9": 13.1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AL:food_mfg": {
+    "net_margin": 0.076,
+    "gross_margin": 0.417,
+    "operating_margin": 0.204,
+    "cost_structure": {
+      "cogs": 63,
+      "labor": 19,
+      "rent": 4,
+      "other": 14
+    },
+    "firm_distribution": {
+      "1-4": 60,
+      "5-9": 27,
+      "10-19": 9,
+      "20-49": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AL:gas_stations": {
+    "net_margin": 0.035,
+    "gross_margin": 0.15,
+    "operating_margin": 0.073,
+    "cost_structure": {
+      "cogs": 88,
+      "labor": 5,
+      "rent": 3,
+      "other": 4
+    },
+    "firm_distribution": {
+      "1-4": 65,
+      "5-9": 27,
+      "10-19": 8
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AL:grocery_stores": {
+    "net_margin": 0.039,
+    "gross_margin": 0.229,
+    "operating_margin": 0.097,
+    "cost_structure": {
+      "cogs": 80,
+      "labor": 9,
+      "rent": 5,
+      "other": 6
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 13,
+      "10-19": 4,
+      "20-49": 1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AL:hairdressers_beauty": {
+    "net_margin": 0.317,
+    "gross_margin": 0.877,
+    "operating_margin": 0.572,
+    "cost_structure": {
+      "cogs": 18,
+      "labor": 31,
+      "rent": 14,
+      "other": 37
+    },
+    "firm_distribution": {
+      "1-4": 88,
+      "5-9": 11,
+      "10-19": 1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AL:hardware_stores": {
+    "net_margin": 0.077,
+    "gross_margin": 0.333,
+    "operating_margin": 0.169,
+    "cost_structure": {
+      "cogs": 72,
+      "labor": 11,
+      "rent": 7,
+      "other": 10
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 16,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AL:hotels_lodging": {
+    "net_margin": 0.157,
+    "gross_margin": 0.848,
+    "operating_margin": 0.477,
+    "cost_structure": {
+      "cogs": 18,
+      "labor": 29,
+      "rent": 15,
+      "other": 38
+    },
+    "firm_distribution": {
+      "1-4": 68,
+      "5-9": 22,
+      "10-19": 8,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AL:independent_pharmacy": {
+    "net_margin": 0.068,
+    "gross_margin": 0.346,
+    "operating_margin": 0.17,
+    "cost_structure": {
+      "cogs": 70,
+      "labor": 13,
+      "rent": 6,
+      "other": 11
+    },
+    "firm_distribution": {
+      "1-4": 84,
+      "5-9": 14,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AL:livestock_farming": {
+    "net_margin": 0.162,
+    "gross_margin": 0.536,
+    "operating_margin": 0.344,
+    "cost_structure": {
+      "cogs": 55,
+      "labor": 18,
+      "rent": 5,
+      "other": 22
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 9,
+      "10-19": 1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AL:pubs_taverns": {
+    "net_margin": 0.134,
+    "gross_margin": 0.671,
+    "operating_margin": 0.355,
+    "cost_structure": {
+      "cogs": 38,
+      "labor": 25,
+      "rent": 12,
+      "other": 26
+    },
+    "firm_distribution": {
+      "1-4": 78,
+      "5-9": 18,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AL:residential_construction": {
+    "net_margin": 0.113,
+    "gross_margin": 0.532,
+    "operating_margin": 0.243,
+    "cost_structure": {
+      "cogs": 53,
+      "labor": 30,
+      "rent": 3,
+      "other": 15
+    },
+    "firm_distribution": {
+      "1-4": 72,
+      "5-9": 20,
+      "10-19": 6,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AL:restaurants": {
+    "net_margin": 0.091,
+    "gross_margin": 0.682,
+    "operating_margin": 0.331,
+    "cost_structure": {
+      "cogs": 35,
+      "labor": 29,
+      "rent": 10,
+      "other": 26
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 22,
+      "10-19": 6,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AL:specialty_trades": {
+    "net_margin": 0.182,
+    "gross_margin": 0.653,
+    "operating_margin": 0.358,
+    "cost_structure": {
+      "cogs": 42,
+      "labor": 32,
+      "rent": 4,
+      "other": 22
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 15,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AL:transit_ground_passenger": {
+    "net_margin": 0.135,
+    "gross_margin": 0.609,
+    "operating_margin": 0.365,
+    "cost_structure": {
+      "cogs": 45,
+      "labor": 25,
+      "rent": 3,
+      "other": 27
+    },
+    "firm_distribution": {
+      "1-4": 85,
+      "5-9": 12,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AL:trucking_freight": {
+    "net_margin": 0.105,
+    "gross_margin": 0.551,
+    "operating_margin": 0.307,
+    "cost_structure": {
+      "cogs": 50,
+      "labor": 24,
+      "rent": 3,
+      "other": 23
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 16,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AL:wholesale_food": {
+    "net_margin": 0.038,
+    "gross_margin": 0.169,
+    "operating_margin": 0.086,
+    "cost_structure": {
+      "cogs": 86,
+      "labor": 6,
+      "rent": 3,
+      "other": 5
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 22,
+      "10-19": 6,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:accounting_tax": {
+    "net_margin": 0.329,
+    "gross_margin": 0.961,
+    "operating_margin": 0.513,
+    "cost_structure": {
+      "cogs": 6,
+      "labor": 53,
+      "rent": 14,
+      "other": 27
+    },
+    "firm_distribution": {
+      "1-4": 84,
+      "5-9": 13,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:apparel_mfg": {
+    "net_margin": 0.13,
+    "gross_margin": 0.573,
+    "operating_margin": 0.23,
+    "cost_structure": {
+      "cogs": 49,
+      "labor": 34,
+      "rent": 5,
+      "other": 11
+    },
+    "firm_distribution": {
+      "1-4": 60,
+      "5-9": 27,
+      "10-19": 10,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:auto_repair_shops": {
+    "net_margin": 0.197,
+    "gross_margin": 0.675,
+    "operating_margin": 0.314,
+    "cost_structure": {
+      "cogs": 40,
+      "labor": 33,
+      "rent": 12,
+      "other": 15
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 16,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:bars_nightclubs": {
+    "net_margin": 0.125,
+    "gross_margin": 0.706,
+    "operating_margin": 0.315,
+    "cost_structure": {
+      "cogs": 34,
+      "labor": 27,
+      "rent": 18,
+      "other": 22
+    },
+    "firm_distribution": {
+      "1-4": 64,
+      "5-9": 28,
+      "10-19": 8
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:cafes_coffee": {
+    "net_margin": 0.129,
+    "gross_margin": 0.739,
+    "operating_margin": 0.315,
+    "cost_structure": {
+      "cogs": 30,
+      "labor": 31,
+      "rent": 18,
+      "other": 21
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 25,
+      "10-19": 5
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:clothing_stores": {
+    "net_margin": 0.134,
+    "gross_margin": 0.495,
+    "operating_margin": 0.269,
+    "cost_structure": {
+      "cogs": 58,
+      "labor": 12,
+      "rent": 14,
+      "other": 16
+    },
+    "firm_distribution": {
+      "1-4": 86,
+      "5-9": 11,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:dental_practices": {
+    "net_margin": 0.275,
+    "gross_margin": 0.779,
+    "operating_margin": 0.394,
+    "cost_structure": {
+      "cogs": 30,
+      "labor": 40,
+      "rent": 13,
+      "other": 17
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 17,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:doctors_clinics": {
+    "net_margin": 0.28,
+    "gross_margin": 0.838,
+    "operating_margin": 0.405,
+    "cost_structure": {
+      "cogs": 23,
+      "labor": 49,
+      "rent": 11,
+      "other": 17
+    },
+    "firm_distribution": {
+      "1-4": 76,
+      "5-9": 19,
+      "10-19": 5
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:electronics_appliance_stores": {
+    "net_margin": 0.07,
+    "gross_margin": 0.289,
+    "operating_margin": 0.133,
+    "cost_structure": {
+      "cogs": 77,
+      "labor": 9,
+      "rent": 8,
+      "other": 7
+    },
+    "firm_distribution": {
+      "1-4": 78,
+      "5-9": 18,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:electronics_repair": {
+    "net_margin": 0.282,
+    "gross_margin": 0.725,
+    "operating_margin": 0.388,
+    "cost_structure": {
+      "cogs": 38,
+      "labor": 34,
+      "rent": 13,
+      "other": 15
+    },
+    "firm_distribution": {
+      "1-4": 88,
+      "5-9": 12
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:food_mfg": {
+    "net_margin": 0.1,
+    "gross_margin": 0.433,
+    "operating_margin": 0.186,
+    "cost_structure": {
+      "cogs": 63,
+      "labor": 22,
+      "rent": 6,
+      "other": 10
+    },
+    "firm_distribution": {
+      "1-4": 64,
+      "5-9": 25,
+      "10-19": 8,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:gas_stations": {
+    "net_margin": 0.038,
+    "gross_margin": 0.15,
+    "operating_margin": 0.076,
+    "cost_structure": {
+      "cogs": 88,
+      "labor": 5,
+      "rent": 3,
+      "other": 4
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 25,
+      "10-19": 5
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:grocery_stores": {
+    "net_margin": 0.053,
+    "gross_margin": 0.241,
+    "operating_margin": 0.118,
+    "cost_structure": {
+      "cogs": 80,
+      "labor": 8,
+      "rent": 5,
+      "other": 7
+    },
+    "firm_distribution": {
+      "1-4": 86,
+      "5-9": 11,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:hairdressers_beauty": {
+    "net_margin": 0.286,
+    "gross_margin": 0.871,
+    "operating_margin": 0.453,
+    "cost_structure": {
+      "cogs": 18,
+      "labor": 41,
+      "rent": 18,
+      "other": 23
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 15,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:health_beauty_stores": {
+    "net_margin": 0.085,
+    "gross_margin": 0.355,
+    "operating_margin": 0.173,
+    "cost_structure": {
+      "cogs": 70,
+      "labor": 12,
+      "rent": 8,
+      "other": 10
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 16,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:hotels_lodging": {
+    "net_margin": 0.16,
+    "gross_margin": 0.867,
+    "operating_margin": 0.424,
+    "cost_structure": {
+      "cogs": 16,
+      "labor": 32,
+      "rent": 21,
+      "other": 31
+    },
+    "firm_distribution": {
+      "1-4": 60,
+      "5-9": 28,
+      "10-19": 9,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:legal_services": {
+    "net_margin": 0.361,
+    "gross_margin": 0.963,
+    "operating_margin": 0.537,
+    "cost_structure": {
+      "cogs": 6,
+      "labor": 51,
+      "rent": 16,
+      "other": 27
+    },
+    "firm_distribution": {
+      "1-4": 84,
+      "5-9": 13,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:residential_construction": {
+    "net_margin": 0.166,
+    "gross_margin": 0.561,
+    "operating_margin": 0.28,
+    "cost_structure": {
+      "cogs": 53,
+      "labor": 30,
+      "rent": 4,
+      "other": 14
+    },
+    "firm_distribution": {
+      "1-4": 74,
+      "5-9": 19,
+      "10-19": 5,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:restaurants": {
+    "net_margin": 0.099,
+    "gross_margin": 0.667,
+    "operating_margin": 0.279,
+    "cost_structure": {
+      "cogs": 37,
+      "labor": 30,
+      "rent": 13,
+      "other": 20
+    },
+    "firm_distribution": {
+      "1-4": 58,
+      "5-9": 29,
+      "10-19": 10,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:software_development": {
+    "net_margin": 0.242,
+    "gross_margin": 0.931,
+    "operating_margin": 0.359,
+    "cost_structure": {
+      "cogs": 9,
+      "labor": 68,
+      "rent": 7,
+      "other": 15
+    },
+    "firm_distribution": {
+      "1-4": 55,
+      "5-9": 28,
+      "10-19": 12,
+      "20-49": 5
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:specialty_grocery": {
+    "net_margin": 0.088,
+    "gross_margin": 0.341,
+    "operating_margin": 0.177,
+    "cost_structure": {
+      "cogs": 72,
+      "labor": 11,
+      "rent": 7,
+      "other": 10
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:specialty_trades": {
+    "net_margin": 0.228,
+    "gross_margin": 0.657,
+    "operating_margin": 0.35,
+    "cost_structure": {
+      "cogs": 44,
+      "labor": 36,
+      "rent": 4,
+      "other": 16
+    },
+    "firm_distribution": {
+      "1-4": 85,
+      "5-9": 12,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:transit_ground_passenger": {
+    "net_margin": 0.231,
+    "gross_margin": 0.705,
+    "operating_margin": 0.436,
+    "cost_structure": {
+      "cogs": 38,
+      "labor": 30,
+      "rent": 5,
+      "other": 27
+    },
+    "firm_distribution": {
+      "1-4": 88,
+      "5-9": 10,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:trucking_freight": {
+    "net_margin": 0.14,
+    "gross_margin": 0.6,
+    "operating_margin": 0.31,
+    "cost_structure": {
+      "cogs": 47,
+      "labor": 28,
+      "rent": 6,
+      "other": 20
+    },
+    "firm_distribution": {
+      "1-4": 78,
+      "5-9": 17,
+      "10-19": 5
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:wholesale_food": {
+    "net_margin": 0.037,
+    "gross_margin": 0.158,
+    "operating_margin": 0.075,
+    "cost_structure": {
+      "cogs": 87,
+      "labor": 6,
+      "rent": 3,
+      "other": 4
+    },
+    "firm_distribution": {
+      "1-4": 64,
+      "5-9": 27,
+      "10-19": 7,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AM:wine_liquor_stores": {
+    "net_margin": 0.106,
+    "gross_margin": 0.389,
+    "operating_margin": 0.21,
+    "cost_structure": {
+      "cogs": 68,
+      "labor": 10,
+      "rent": 10,
+      "other": 12
+    },
+    "firm_distribution": {
+      "1-4": 85,
+      "5-9": 12,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
   "AR:accounting_tax": {
     "net_margin": 0.415,
     "gross_margin": 0.965,
@@ -890,6 +1818,489 @@
     "source_model": "overnight-loop-2026-06-03",
     "confidence": "low"
   },
+  "AZ:accounting_tax": {
+    "net_margin": 0.397,
+    "gross_margin": 0.952,
+    "operating_margin": 0.551,
+    "cost_structure": {
+      "cogs": 8,
+      "labor": 53,
+      "rent": 14,
+      "other": 26
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 16,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:auto_repair_shops": {
+    "net_margin": 0.202,
+    "gross_margin": 0.677,
+    "operating_margin": 0.356,
+    "cost_structure": {
+      "cogs": 40,
+      "labor": 30,
+      "rent": 10,
+      "other": 19
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 15,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:bakeries_retail": {
+    "net_margin": 0.117,
+    "gross_margin": 0.624,
+    "operating_margin": 0.289,
+    "cost_structure": {
+      "cogs": 43,
+      "labor": 26,
+      "rent": 12,
+      "other": 19
+    },
+    "firm_distribution": {
+      "1-4": 78,
+      "5-9": 18,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:cafes_coffee": {
+    "net_margin": 0.137,
+    "gross_margin": 0.727,
+    "operating_margin": 0.341,
+    "cost_structure": {
+      "cogs": 32,
+      "labor": 27,
+      "rent": 18,
+      "other": 24
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 25,
+      "10-19": 5
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:clothing_stores": {
+    "net_margin": 0.134,
+    "gross_margin": 0.495,
+    "operating_margin": 0.269,
+    "cost_structure": {
+      "cogs": 58,
+      "labor": 12,
+      "rent": 14,
+      "other": 16
+    },
+    "firm_distribution": {
+      "1-4": 86,
+      "5-9": 11,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:dental_practices": {
+    "net_margin": 0.284,
+    "gross_margin": 0.796,
+    "operating_margin": 0.423,
+    "cost_structure": {
+      "cogs": 28,
+      "labor": 38,
+      "rent": 14,
+      "other": 19
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 17,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:doctors_clinics": {
+    "net_margin": 0.277,
+    "gross_margin": 0.85,
+    "operating_margin": 0.429,
+    "cost_structure": {
+      "cogs": 21,
+      "labor": 45,
+      "rent": 14,
+      "other": 21
+    },
+    "firm_distribution": {
+      "1-4": 72,
+      "5-9": 22,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:dry_cleaning_laundry": {
+    "net_margin": 0.24,
+    "gross_margin": 0.8,
+    "operating_margin": 0.403,
+    "cost_structure": {
+      "cogs": 26,
+      "labor": 35,
+      "rent": 18,
+      "other": 21
+    },
+    "firm_distribution": {
+      "1-4": 86,
+      "5-9": 14
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:electronics_appliance_stores": {
+    "net_margin": 0.09,
+    "gross_margin": 0.304,
+    "operating_margin": 0.16,
+    "cost_structure": {
+      "cogs": 77,
+      "labor": 9,
+      "rent": 7,
+      "other": 8
+    },
+    "firm_distribution": {
+      "1-4": 78,
+      "5-9": 18,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:electronics_repair": {
+    "net_margin": 0.281,
+    "gross_margin": 0.725,
+    "operating_margin": 0.423,
+    "cost_structure": {
+      "cogs": 38,
+      "labor": 30,
+      "rent": 12,
+      "other": 20
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:furniture_mfg": {
+    "net_margin": 0.165,
+    "gross_margin": 0.577,
+    "operating_margin": 0.26,
+    "cost_structure": {
+      "cogs": 51,
+      "labor": 30,
+      "rent": 8,
+      "other": 11
+    },
+    "firm_distribution": {
+      "1-4": 74,
+      "5-9": 20,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:gas_stations": {
+    "net_margin": 0.037,
+    "gross_margin": 0.148,
+    "operating_margin": 0.075,
+    "cost_structure": {
+      "cogs": 88,
+      "labor": 5,
+      "rent": 3,
+      "other": 4
+    },
+    "firm_distribution": {
+      "1-4": 60,
+      "5-9": 32,
+      "10-19": 8
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:grocery_stores": {
+    "net_margin": 0.054,
+    "gross_margin": 0.241,
+    "operating_margin": 0.118,
+    "cost_structure": {
+      "cogs": 80,
+      "labor": 8,
+      "rent": 5,
+      "other": 7
+    },
+    "firm_distribution": {
+      "1-4": 88,
+      "5-9": 9,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:hairdressers_beauty": {
+    "net_margin": 0.312,
+    "gross_margin": 0.902,
+    "operating_margin": 0.512,
+    "cost_structure": {
+      "cogs": 14,
+      "labor": 41,
+      "rent": 16,
+      "other": 29
+    },
+    "firm_distribution": {
+      "1-4": 84,
+      "5-9": 14,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:health_beauty_stores": {
+    "net_margin": 0.085,
+    "gross_margin": 0.355,
+    "operating_margin": 0.173,
+    "cost_structure": {
+      "cogs": 70,
+      "labor": 12,
+      "rent": 8,
+      "other": 10
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 16,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:hotels_lodging": {
+    "net_margin": 0.172,
+    "gross_margin": 0.847,
+    "operating_margin": 0.414,
+    "cost_structure": {
+      "cogs": 18,
+      "labor": 31,
+      "rent": 21,
+      "other": 29
+    },
+    "firm_distribution": {
+      "1-4": 64,
+      "5-9": 28,
+      "10-19": 6,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:marketing_design": {
+    "net_margin": 0.354,
+    "gross_margin": 0.909,
+    "operating_margin": 0.505,
+    "cost_structure": {
+      "cogs": 14,
+      "labor": 51,
+      "rent": 12,
+      "other": 23
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 17,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:residential_construction": {
+    "net_margin": 0.155,
+    "gross_margin": 0.554,
+    "operating_margin": 0.274,
+    "cost_structure": {
+      "cogs": 53,
+      "labor": 30,
+      "rent": 3,
+      "other": 14
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 22,
+      "10-19": 6,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:restaurants": {
+    "net_margin": 0.1,
+    "gross_margin": 0.666,
+    "operating_margin": 0.28,
+    "cost_structure": {
+      "cogs": 37,
+      "labor": 29,
+      "rent": 14,
+      "other": 20
+    },
+    "firm_distribution": {
+      "1-4": 62,
+      "5-9": 27,
+      "10-19": 8,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:software_development": {
+    "net_margin": 0.349,
+    "gross_margin": 0.947,
+    "operating_margin": 0.498,
+    "cost_structure": {
+      "cogs": 8,
+      "labor": 61,
+      "rent": 8,
+      "other": 23
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 24,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:specialty_grocery": {
+    "net_margin": 0.083,
+    "gross_margin": 0.338,
+    "operating_margin": 0.173,
+    "cost_structure": {
+      "cogs": 72,
+      "labor": 11,
+      "rent": 7,
+      "other": 10
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:specialty_trades": {
+    "net_margin": 0.234,
+    "gross_margin": 0.66,
+    "operating_margin": 0.368,
+    "cost_structure": {
+      "cogs": 44,
+      "labor": 34,
+      "rent": 4,
+      "other": 17
+    },
+    "firm_distribution": {
+      "1-4": 84,
+      "5-9": 14,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:tailoring_alterations": {
+    "net_margin": 0.318,
+    "gross_margin": 0.849,
+    "operating_margin": 0.493,
+    "cost_structure": {
+      "cogs": 22,
+      "labor": 38,
+      "rent": 14,
+      "other": 26
+    },
+    "firm_distribution": {
+      "1-4": 92,
+      "5-9": 8
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:transit_ground_passenger": {
+    "net_margin": 0.242,
+    "gross_margin": 0.741,
+    "operating_margin": 0.48,
+    "cost_structure": {
+      "cogs": 34,
+      "labor": 30,
+      "rent": 4,
+      "other": 31
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:trucking_freight": {
+    "net_margin": 0.166,
+    "gross_margin": 0.611,
+    "operating_margin": 0.373,
+    "cost_structure": {
+      "cogs": 47,
+      "labor": 25,
+      "rent": 4,
+      "other": 25
+    },
+    "firm_distribution": {
+      "1-4": 76,
+      "5-9": 18,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:vegetable_fruit_farming": {
+    "net_margin": 0.23,
+    "gross_margin": 0.69,
+    "operating_margin": 0.459,
+    "cost_structure": {
+      "cogs": 40,
+      "labor": 24,
+      "rent": 6,
+      "other": 30
+    },
+    "firm_distribution": {
+      "1-4": 94,
+      "5-9": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "AZ:wholesale_food": {
+    "net_margin": 0.038,
+    "gross_margin": 0.165,
+    "operating_margin": 0.082,
+    "cost_structure": {
+      "cogs": 87,
+      "labor": 6,
+      "rent": 3,
+      "other": 5
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 23,
+      "10-19": 7
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
   "BD:apparel_mfg": {
     "net_margin": 0.093,
     "gross_margin": 0.434,
@@ -1285,6 +2696,480 @@
     "source_model": "overnight-loop-2026-06-03",
     "confidence": "low"
   },
+  "BH:accounting_tax": {
+    "net_margin": 0.31,
+    "gross_margin": 0.959,
+    "operating_margin": 0.497,
+    "cost_structure": {
+      "cogs": 6,
+      "labor": 53,
+      "rent": 14,
+      "other": 27
+    },
+    "firm_distribution": {
+      "1-4": 64,
+      "5-9": 26,
+      "10-19": 8,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BH:auto_repair_shops": {
+    "net_margin": 0.15,
+    "gross_margin": 0.655,
+    "operating_margin": 0.298,
+    "cost_structure": {
+      "cogs": 41,
+      "labor": 29,
+      "rent": 13,
+      "other": 17
+    },
+    "firm_distribution": {
+      "1-4": 60,
+      "5-9": 27,
+      "10-19": 10,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BH:bakeries_retail": {
+    "net_margin": 0.108,
+    "gross_margin": 0.656,
+    "operating_margin": 0.282,
+    "cost_structure": {
+      "cogs": 39,
+      "labor": 27,
+      "rent": 15,
+      "other": 20
+    },
+    "firm_distribution": {
+      "1-4": 62,
+      "5-9": 26,
+      "10-19": 9,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BH:cafes_coffee": {
+    "net_margin": 0.121,
+    "gross_margin": 0.754,
+    "operating_margin": 0.32,
+    "cost_structure": {
+      "cogs": 28,
+      "labor": 28,
+      "rent": 21,
+      "other": 23
+    },
+    "firm_distribution": {
+      "1-4": 58,
+      "5-9": 28,
+      "10-19": 11,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BH:cleaning_services": {
+    "net_margin": 0.172,
+    "gross_margin": 0.901,
+    "operating_margin": 0.346,
+    "cost_structure": {
+      "cogs": 12,
+      "labor": 60,
+      "rent": 7,
+      "other": 21
+    },
+    "firm_distribution": {
+      "1-4": 40,
+      "5-9": 30,
+      "10-19": 18,
+      "20-49": 9,
+      "50-99": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BH:clothing_stores": {
+    "net_margin": 0.089,
+    "gross_margin": 0.495,
+    "operating_margin": 0.204,
+    "cost_structure": {
+      "cogs": 55,
+      "labor": 14,
+      "rent": 18,
+      "other": 13
+    },
+    "firm_distribution": {
+      "1-4": 66,
+      "5-9": 24,
+      "10-19": 8,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BH:dental_practices": {
+    "net_margin": 0.241,
+    "gross_margin": 0.829,
+    "operating_margin": 0.4,
+    "cost_structure": {
+      "cogs": 23,
+      "labor": 39,
+      "rent": 17,
+      "other": 21
+    },
+    "firm_distribution": {
+      "1-4": 60,
+      "5-9": 28,
+      "10-19": 9,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BH:doctors_clinics": {
+    "net_margin": 0.224,
+    "gross_margin": 0.855,
+    "operating_margin": 0.384,
+    "cost_structure": {
+      "cogs": 19,
+      "labor": 45,
+      "rent": 15,
+      "other": 21
+    },
+    "firm_distribution": {
+      "1-4": 52,
+      "5-9": 30,
+      "10-19": 13,
+      "20-49": 5
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BH:electronics_appliance_stores": {
+    "net_margin": 0.069,
+    "gross_margin": 0.322,
+    "operating_margin": 0.131,
+    "cost_structure": {
+      "cogs": 73,
+      "labor": 11,
+      "rent": 10,
+      "other": 7
+    },
+    "firm_distribution": {
+      "1-4": 64,
+      "5-9": 26,
+      "10-19": 8,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BH:gas_stations": {
+    "net_margin": 0.033,
+    "gross_margin": 0.135,
+    "operating_margin": 0.062,
+    "cost_structure": {
+      "cogs": 89,
+      "labor": 5,
+      "rent": 3,
+      "other": 3
+    },
+    "firm_distribution": {
+      "5-9": 55,
+      "10-19": 33,
+      "20-49": 12
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BH:grocery_stores": {
+    "net_margin": 0.038,
+    "gross_margin": 0.226,
+    "operating_margin": 0.086,
+    "cost_structure": {
+      "cogs": 81,
+      "labor": 8,
+      "rent": 7,
+      "other": 5
+    },
+    "firm_distribution": {
+      "1-4": 64,
+      "5-9": 22,
+      "10-19": 10,
+      "20-49": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BH:hairdressers_beauty": {
+    "net_margin": 0.267,
+    "gross_margin": 0.897,
+    "operating_margin": 0.411,
+    "cost_structure": {
+      "cogs": 14,
+      "labor": 43,
+      "rent": 24,
+      "other": 20
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 23,
+      "10-19": 7
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BH:health_beauty_stores": {
+    "net_margin": 0.087,
+    "gross_margin": 0.425,
+    "operating_margin": 0.174,
+    "cost_structure": {
+      "cogs": 63,
+      "labor": 14,
+      "rent": 13,
+      "other": 10
+    },
+    "firm_distribution": {
+      "1-4": 58,
+      "5-9": 28,
+      "10-19": 11,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BH:hotels_lodging": {
+    "net_margin": 0.127,
+    "gross_margin": 0.8,
+    "operating_margin": 0.293,
+    "cost_structure": {
+      "cogs": 23,
+      "labor": 35,
+      "rent": 23,
+      "other": 19
+    },
+    "firm_distribution": {
+      "5-9": 40,
+      "10-19": 35,
+      "20-49": 18,
+      "50-99": 7
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BH:legal_services": {
+    "net_margin": 0.338,
+    "gross_margin": 0.967,
+    "operating_margin": 0.524,
+    "cost_structure": {
+      "cogs": 5,
+      "labor": 51,
+      "rent": 16,
+      "other": 28
+    },
+    "firm_distribution": {
+      "1-4": 66,
+      "5-9": 24,
+      "10-19": 8,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BH:marketing_design": {
+    "net_margin": 0.267,
+    "gross_margin": 0.927,
+    "operating_margin": 0.451,
+    "cost_structure": {
+      "cogs": 10,
+      "labor": 51,
+      "rent": 13,
+      "other": 25
+    },
+    "firm_distribution": {
+      "1-4": 62,
+      "5-9": 26,
+      "10-19": 9,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BH:real_estate_agencies": {
+    "net_margin": 0.231,
+    "gross_margin": 0.939,
+    "operating_margin": 0.444,
+    "cost_structure": {
+      "cogs": 8,
+      "labor": 47,
+      "rent": 18,
+      "other": 28
+    },
+    "firm_distribution": {
+      "1-4": 68,
+      "5-9": 24,
+      "10-19": 8
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BH:residential_construction": {
+    "net_margin": 0.098,
+    "gross_margin": 0.523,
+    "operating_margin": 0.218,
+    "cost_structure": {
+      "cogs": 53,
+      "labor": 30,
+      "rent": 4,
+      "other": 13
+    },
+    "firm_distribution": {
+      "1-4": 44,
+      "5-9": 30,
+      "10-19": 18,
+      "20-49": 8
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BH:restaurants": {
+    "net_margin": 0.096,
+    "gross_margin": 0.697,
+    "operating_margin": 0.295,
+    "cost_structure": {
+      "cogs": 33,
+      "labor": 27,
+      "rent": 17,
+      "other": 22
+    },
+    "firm_distribution": {
+      "1-4": 48,
+      "5-9": 30,
+      "10-19": 14,
+      "20-49": 6,
+      "50-99": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BH:specialty_trades": {
+    "net_margin": 0.157,
+    "gross_margin": 0.674,
+    "operating_margin": 0.303,
+    "cost_structure": {
+      "cogs": 39,
+      "labor": 37,
+      "rent": 7,
+      "other": 17
+    },
+    "firm_distribution": {
+      "1-4": 56,
+      "5-9": 28,
+      "10-19": 11,
+      "20-49": 5
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BH:sports_fitness": {
+    "net_margin": 0.175,
+    "gross_margin": 0.934,
+    "operating_margin": 0.335,
+    "cost_structure": {
+      "cogs": 8,
+      "labor": 41,
+      "rent": 31,
+      "other": 19
+    },
+    "firm_distribution": {
+      "1-4": 56,
+      "5-9": 30,
+      "10-19": 11,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BH:trucking_freight": {
+    "net_margin": 0.127,
+    "gross_margin": 0.592,
+    "operating_margin": 0.329,
+    "cost_structure": {
+      "cogs": 47,
+      "labor": 25,
+      "rent": 5,
+      "other": 23
+    },
+    "firm_distribution": {
+      "1-4": 52,
+      "5-9": 28,
+      "10-19": 14,
+      "20-49": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BH:vocational_training": {
+    "net_margin": 0.213,
+    "gross_margin": 0.921,
+    "operating_margin": 0.378,
+    "cost_structure": {
+      "cogs": 10,
+      "labor": 52,
+      "rent": 17,
+      "other": 21
+    },
+    "firm_distribution": {
+      "1-4": 58,
+      "5-9": 28,
+      "10-19": 11,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BH:wholesale_food": {
+    "net_margin": 0.036,
+    "gross_margin": 0.153,
+    "operating_margin": 0.072,
+    "cost_structure": {
+      "cogs": 88,
+      "labor": 5,
+      "rent": 3,
+      "other": 4
+    },
+    "firm_distribution": {
+      "1-4": 46,
+      "5-9": 30,
+      "10-19": 17,
+      "20-49": 7
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BH:wholesale_general": {
+    "net_margin": 0.05,
+    "gross_margin": 0.185,
+    "operating_margin": 0.093,
+    "cost_structure": {
+      "cogs": 86,
+      "labor": 6,
+      "rent": 4,
+      "other": 5
+    },
+    "firm_distribution": {
+      "1-4": 50,
+      "5-9": 30,
+      "10-19": 14,
+      "20-49": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
   "BR:auto_body_shops": {
     "net_margin": 0.08,
     "gross_margin": 0.599,
@@ -1384,6 +3269,446 @@
     },
     "source_model": "deep-research-report-16",
     "confidence": "modeled"
+  },
+  "BY:accounting_tax": {
+    "net_margin": 0.33,
+    "gross_margin": 0.96,
+    "operating_margin": 0.488,
+    "cost_structure": {
+      "cogs": 6,
+      "labor": 59,
+      "rent": 12,
+      "other": 24
+    },
+    "firm_distribution": {
+      "1-4": 75,
+      "5-9": 19,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BY:auto_repair_shops": {
+    "net_margin": 0.195,
+    "gross_margin": 0.672,
+    "operating_margin": 0.313,
+    "cost_structure": {
+      "cogs": 41,
+      "labor": 33,
+      "rent": 12,
+      "other": 15
+    },
+    "firm_distribution": {
+      "1-4": 68,
+      "5-9": 24,
+      "10-19": 8
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BY:bakeries_retail": {
+    "net_margin": 0.103,
+    "gross_margin": 0.62,
+    "operating_margin": 0.234,
+    "cost_structure": {
+      "cogs": 42,
+      "labor": 30,
+      "rent": 13,
+      "other": 15
+    },
+    "firm_distribution": {
+      "1-4": 68,
+      "5-9": 24,
+      "10-19": 8
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BY:cafes_coffee": {
+    "net_margin": 0.1,
+    "gross_margin": 0.73,
+    "operating_margin": 0.28,
+    "cost_structure": {
+      "cogs": 30,
+      "labor": 35,
+      "rent": 15,
+      "other": 20
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 24,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BY:cleaning_services": {
+    "net_margin": 0.199,
+    "gross_margin": 0.852,
+    "operating_margin": 0.335,
+    "cost_structure": {
+      "cogs": 19,
+      "labor": 59,
+      "rent": 5,
+      "other": 17
+    },
+    "firm_distribution": {
+      "1-4": 64,
+      "5-9": 24,
+      "10-19": 9,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BY:clothing_stores": {
+    "net_margin": 0.077,
+    "gross_margin": 0.459,
+    "operating_margin": 0.167,
+    "cost_structure": {
+      "cogs": 59,
+      "labor": 18,
+      "rent": 14,
+      "other": 10
+    },
+    "firm_distribution": {
+      "1-4": 72,
+      "5-9": 22,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BY:dental_practices": {
+    "net_margin": 0.244,
+    "gross_margin": 0.785,
+    "operating_margin": 0.377,
+    "cost_structure": {
+      "cogs": 28,
+      "labor": 40,
+      "rent": 14,
+      "other": 18
+    },
+    "firm_distribution": {
+      "1-4": 64,
+      "5-9": 26,
+      "10-19": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BY:doctors_clinics": {
+    "net_margin": 0.238,
+    "gross_margin": 0.84,
+    "operating_margin": 0.367,
+    "cost_structure": {
+      "cogs": 21,
+      "labor": 49,
+      "rent": 13,
+      "other": 17
+    },
+    "firm_distribution": {
+      "1-4": 55,
+      "5-9": 30,
+      "10-19": 15
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BY:dry_cleaning_laundry": {
+    "net_margin": 0.178,
+    "gross_margin": 0.767,
+    "operating_margin": 0.298,
+    "cost_structure": {
+      "cogs": 28,
+      "labor": 40,
+      "rent": 17,
+      "other": 15
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 22,
+      "10-19": 8
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BY:food_mfg": {
+    "net_margin": 0.074,
+    "gross_margin": 0.394,
+    "operating_margin": 0.194,
+    "cost_structure": {
+      "cogs": 65,
+      "labor": 17,
+      "rent": 4,
+      "other": 13
+    },
+    "firm_distribution": {
+      "5-9": 48,
+      "10-19": 32,
+      "20-49": 20
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BY:furniture_mfg": {
+    "net_margin": 0.135,
+    "gross_margin": 0.556,
+    "operating_margin": 0.247,
+    "cost_structure": {
+      "cogs": 51,
+      "labor": 29,
+      "rent": 6,
+      "other": 13
+    },
+    "firm_distribution": {
+      "1-4": 55,
+      "5-9": 28,
+      "10-19": 12,
+      "20-49": 5
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BY:gas_stations": {
+    "net_margin": 0.039,
+    "gross_margin": 0.151,
+    "operating_margin": 0.077,
+    "cost_structure": {
+      "cogs": 88,
+      "labor": 6,
+      "rent": 2,
+      "other": 4
+    },
+    "firm_distribution": {
+      "5-9": 70,
+      "10-19": 30
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BY:grocery_stores": {
+    "net_margin": 0.033,
+    "gross_margin": 0.222,
+    "operating_margin": 0.081,
+    "cost_structure": {
+      "cogs": 81,
+      "labor": 10,
+      "rent": 5,
+      "other": 5
+    },
+    "firm_distribution": {
+      "1-4": 62,
+      "5-9": 26,
+      "10-19": 9,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BY:hairdressers_beauty": {
+    "net_margin": 0.276,
+    "gross_margin": 0.897,
+    "operating_margin": 0.439,
+    "cost_structure": {
+      "cogs": 14,
+      "labor": 46,
+      "rent": 18,
+      "other": 23
+    },
+    "firm_distribution": {
+      "1-4": 76,
+      "5-9": 19,
+      "10-19": 5
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BY:health_beauty_stores": {
+    "net_margin": 0.075,
+    "gross_margin": 0.325,
+    "operating_margin": 0.13,
+    "cost_structure": {
+      "cogs": 73,
+      "labor": 13,
+      "rent": 8,
+      "other": 6
+    },
+    "firm_distribution": {
+      "1-4": 60,
+      "5-9": 28,
+      "10-19": 12
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BY:hotels_lodging": {
+    "net_margin": 0.15,
+    "gross_margin": 0.847,
+    "operating_margin": 0.359,
+    "cost_structure": {
+      "cogs": 18,
+      "labor": 36,
+      "rent": 21,
+      "other": 25
+    },
+    "firm_distribution": {
+      "1-4": 58,
+      "5-9": 28,
+      "10-19": 10,
+      "20-49": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BY:marketing_design": {
+    "net_margin": 0.279,
+    "gross_margin": 0.914,
+    "operating_margin": 0.44,
+    "cost_structure": {
+      "cogs": 12,
+      "labor": 56,
+      "rent": 10,
+      "other": 22
+    },
+    "firm_distribution": {
+      "1-4": 68,
+      "5-9": 24,
+      "10-19": 8
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BY:residential_construction": {
+    "net_margin": 0.136,
+    "gross_margin": 0.541,
+    "operating_margin": 0.254,
+    "cost_structure": {
+      "cogs": 53,
+      "labor": 29,
+      "rent": 4,
+      "other": 14
+    },
+    "firm_distribution": {
+      "1-4": 58,
+      "5-9": 28,
+      "10-19": 10,
+      "20-49": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BY:restaurants": {
+    "net_margin": 0.08,
+    "gross_margin": 0.679,
+    "operating_margin": 0.264,
+    "cost_structure": {
+      "cogs": 35,
+      "labor": 34,
+      "rent": 12,
+      "other": 20
+    },
+    "firm_distribution": {
+      "1-4": 55,
+      "5-9": 30,
+      "10-19": 11,
+      "20-49": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BY:software_development": {
+    "net_margin": 0.292,
+    "gross_margin": 0.943,
+    "operating_margin": 0.439,
+    "cost_structure": {
+      "cogs": 8,
+      "labor": 64,
+      "rent": 8,
+      "other": 21
+    },
+    "firm_distribution": {
+      "1-4": 50,
+      "5-9": 28,
+      "10-19": 14,
+      "20-49": 8
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BY:specialty_trades": {
+    "net_margin": 0.178,
+    "gross_margin": 0.624,
+    "operating_margin": 0.307,
+    "cost_structure": {
+      "cogs": 46,
+      "labor": 34,
+      "rent": 5,
+      "other": 16
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 22,
+      "10-19": 8
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BY:trucking_freight": {
+    "net_margin": 0.109,
+    "gross_margin": 0.5,
+    "operating_margin": 0.248,
+    "cost_structure": {
+      "cogs": 56,
+      "labor": 24,
+      "rent": 4,
+      "other": 16
+    },
+    "firm_distribution": {
+      "1-4": 60,
+      "5-9": 27,
+      "10-19": 9,
+      "20-49": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BY:vocational_training": {
+    "net_margin": 0.294,
+    "gross_margin": 0.943,
+    "operating_margin": 0.432,
+    "cost_structure": {
+      "cogs": 8,
+      "labor": 56,
+      "rent": 17,
+      "other": 20
+    },
+    "firm_distribution": {
+      "1-4": 72,
+      "5-9": 21,
+      "10-19": 7
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "BY:wholesale_food": {
+    "net_margin": 0.036,
+    "gross_margin": 0.153,
+    "operating_margin": 0.065,
+    "cost_structure": {
+      "cogs": 88,
+      "labor": 6,
+      "rent": 3,
+      "other": 3
+    },
+    "firm_distribution": {
+      "1-4": 45,
+      "5-9": 33,
+      "10-19": 15,
+      "20-49": 7
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
   },
   "CA:accounting_tax": {
     "net_margin": 0.372,
@@ -3448,6 +5773,805 @@
     "source_model": "overnight-loop-2026-06-03",
     "confidence": "low"
   },
+  "CR:accounting_tax": {
+    "net_margin": 0.368,
+    "gross_margin": 0.962,
+    "operating_margin": 0.577,
+    "cost_structure": {
+      "cogs": 6,
+      "labor": 47,
+      "rent": 14,
+      "other": 33
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 15,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "CR:auto_repair_shops": {
+    "net_margin": 0.195,
+    "gross_margin": 0.658,
+    "operating_margin": 0.32,
+    "cost_structure": {
+      "cogs": 43,
+      "labor": 32,
+      "rent": 10,
+      "other": 15
+    },
+    "firm_distribution": {
+      "1-4": 76,
+      "5-9": 20,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "CR:bakeries_retail": {
+    "net_margin": 0.118,
+    "gross_margin": 0.627,
+    "operating_margin": 0.27,
+    "cost_structure": {
+      "cogs": 42,
+      "labor": 29,
+      "rent": 12,
+      "other": 17
+    },
+    "firm_distribution": {
+      "1-4": 76,
+      "5-9": 19,
+      "10-19": 5
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "CR:cafes_coffee": {
+    "net_margin": 0.123,
+    "gross_margin": 0.722,
+    "operating_margin": 0.312,
+    "cost_structure": {
+      "cogs": 32,
+      "labor": 31,
+      "rent": 16,
+      "other": 22
+    },
+    "firm_distribution": {
+      "1-4": 78,
+      "5-9": 18,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "CR:cleaning_services": {
+    "net_margin": 0.254,
+    "gross_margin": 0.91,
+    "operating_margin": 0.438,
+    "cost_structure": {
+      "cogs": 12,
+      "labor": 59,
+      "rent": 4,
+      "other": 25
+    },
+    "firm_distribution": {
+      "1-4": 74,
+      "5-9": 18,
+      "10-19": 6,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "CR:clothing_stores": {
+    "net_margin": 0.095,
+    "gross_margin": 0.489,
+    "operating_margin": 0.2,
+    "cost_structure": {
+      "cogs": 56,
+      "labor": 16,
+      "rent": 16,
+      "other": 12
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 16,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "CR:dental_practices": {
+    "net_margin": 0.299,
+    "gross_margin": 0.842,
+    "operating_margin": 0.489,
+    "cost_structure": {
+      "cogs": 22,
+      "labor": 35,
+      "rent": 16,
+      "other": 27
+    },
+    "firm_distribution": {
+      "1-4": 78,
+      "5-9": 18,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "CR:doctors_clinics": {
+    "net_margin": 0.321,
+    "gross_margin": 0.903,
+    "operating_margin": 0.518,
+    "cost_structure": {
+      "cogs": 14,
+      "labor": 39,
+      "rent": 17,
+      "other": 29
+    },
+    "firm_distribution": {
+      "1-4": 72,
+      "5-9": 22,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "CR:gas_stations": {
+    "net_margin": 0.037,
+    "gross_margin": 0.147,
+    "operating_margin": 0.076,
+    "cost_structure": {
+      "cogs": 89,
+      "labor": 6,
+      "rent": 2,
+      "other": 4
+    },
+    "firm_distribution": {
+      "5-9": 52,
+      "10-19": 38,
+      "20-49": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "CR:grocery_stores": {
+    "net_margin": 0.058,
+    "gross_margin": 0.253,
+    "operating_margin": 0.112,
+    "cost_structure": {
+      "cogs": 79,
+      "labor": 9,
+      "rent": 6,
+      "other": 6
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 13,
+      "10-19": 4,
+      "20-49": 1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "CR:hairdressers_beauty": {
+    "net_margin": 0.288,
+    "gross_margin": 0.885,
+    "operating_margin": 0.469,
+    "cost_structure": {
+      "cogs": 16,
+      "labor": 41,
+      "rent": 18,
+      "other": 25
+    },
+    "firm_distribution": {
+      "1-4": 85,
+      "5-9": 13,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "CR:health_beauty_stores": {
+    "net_margin": 0.088,
+    "gross_margin": 0.373,
+    "operating_margin": 0.154,
+    "cost_structure": {
+      "cogs": 69,
+      "labor": 14,
+      "rent": 10,
+      "other": 7
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 23,
+      "10-19": 7
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "CR:hotels_lodging": {
+    "net_margin": 0.197,
+    "gross_margin": 0.868,
+    "operating_margin": 0.431,
+    "cost_structure": {
+      "cogs": 16,
+      "labor": 35,
+      "rent": 19,
+      "other": 29
+    },
+    "firm_distribution": {
+      "1-4": 66,
+      "5-9": 24,
+      "10-19": 8,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "CR:legal_services": {
+    "net_margin": 0.391,
+    "gross_margin": 0.963,
+    "operating_margin": 0.591,
+    "cost_structure": {
+      "cogs": 6,
+      "labor": 45,
+      "rent": 16,
+      "other": 33
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 16,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "CR:residential_construction": {
+    "net_margin": 0.136,
+    "gross_margin": 0.544,
+    "operating_margin": 0.253,
+    "cost_structure": {
+      "cogs": 53,
+      "labor": 30,
+      "rent": 4,
+      "other": 14
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 22,
+      "10-19": 6,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "CR:restaurants": {
+    "net_margin": 0.101,
+    "gross_margin": 0.666,
+    "operating_margin": 0.296,
+    "cost_structure": {
+      "cogs": 37,
+      "labor": 29,
+      "rent": 12,
+      "other": 22
+    },
+    "firm_distribution": {
+      "1-4": 64,
+      "5-9": 26,
+      "10-19": 8,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "CR:security_services": {
+    "net_margin": 0.114,
+    "gross_margin": 0.927,
+    "operating_margin": 0.249,
+    "cost_structure": {
+      "cogs": 8,
+      "labor": 74,
+      "rent": 3,
+      "other": 15
+    },
+    "firm_distribution": {
+      "5-9": 40,
+      "10-19": 38,
+      "20-49": 18,
+      "50-99": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "CR:software_development": {
+    "net_margin": 0.267,
+    "gross_margin": 0.941,
+    "operating_margin": 0.448,
+    "cost_structure": {
+      "cogs": 8,
+      "labor": 60,
+      "rent": 7,
+      "other": 25
+    },
+    "firm_distribution": {
+      "1-4": 64,
+      "5-9": 24,
+      "10-19": 9,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "CR:specialty_trades": {
+    "net_margin": 0.224,
+    "gross_margin": 0.686,
+    "operating_margin": 0.358,
+    "cost_structure": {
+      "cogs": 41,
+      "labor": 36,
+      "rent": 6,
+      "other": 17
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 16,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "CR:transit_ground_passenger": {
+    "net_margin": 0.17,
+    "gross_margin": 0.665,
+    "operating_margin": 0.405,
+    "cost_structure": {
+      "cogs": 40,
+      "labor": 28,
+      "rent": 3,
+      "other": 28
+    },
+    "firm_distribution": {
+      "1-4": 84,
+      "5-9": 13,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "CR:trucking_freight": {
+    "net_margin": 0.132,
+    "gross_margin": 0.579,
+    "operating_margin": 0.318,
+    "cost_structure": {
+      "cogs": 49,
+      "labor": 26,
+      "rent": 4,
+      "other": 21
+    },
+    "firm_distribution": {
+      "1-4": 78,
+      "5-9": 18,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "CR:wholesale_food": {
+    "net_margin": 0.054,
+    "gross_margin": 0.195,
+    "operating_margin": 0.101,
+    "cost_structure": {
+      "cogs": 85,
+      "labor": 6,
+      "rent": 3,
+      "other": 5
+    },
+    "firm_distribution": {
+      "1-4": 58,
+      "5-9": 30,
+      "10-19": 9,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "DO:accounting_tax": {
+    "net_margin": 0.396,
+    "gross_margin": 0.97,
+    "operating_margin": 0.635,
+    "cost_structure": {
+      "cogs": 5,
+      "labor": 42,
+      "rent": 14,
+      "other": 40
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 17,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "DO:apparel_mfg": {
+    "net_margin": 0.196,
+    "gross_margin": 0.632,
+    "operating_margin": 0.329,
+    "cost_structure": {
+      "cogs": 46,
+      "labor": 30,
+      "rent": 8,
+      "other": 17
+    },
+    "firm_distribution": {
+      "1-4": 78,
+      "5-9": 18,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "DO:auto_repair_shops": {
+    "net_margin": 0.245,
+    "gross_margin": 0.708,
+    "operating_margin": 0.421,
+    "cost_structure": {
+      "cogs": 39,
+      "labor": 26,
+      "rent": 12,
+      "other": 23
+    },
+    "firm_distribution": {
+      "1-4": 84,
+      "5-9": 14,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "DO:bars_nightclubs": {
+    "net_margin": 0.144,
+    "gross_margin": 0.586,
+    "operating_margin": 0.332,
+    "cost_structure": {
+      "cogs": 48,
+      "labor": 17,
+      "rent": 13,
+      "other": 22
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 17,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "DO:building_garden_stores": {
+    "net_margin": 0.09,
+    "gross_margin": 0.322,
+    "operating_margin": 0.176,
+    "cost_structure": {
+      "cogs": 75,
+      "labor": 8,
+      "rent": 8,
+      "other": 9
+    },
+    "firm_distribution": {
+      "1-4": 78,
+      "5-9": 18,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "DO:cleaning_services": {
+    "net_margin": 0.282,
+    "gross_margin": 0.914,
+    "operating_margin": 0.476,
+    "cost_structure": {
+      "cogs": 12,
+      "labor": 56,
+      "rent": 5,
+      "other": 27
+    },
+    "firm_distribution": {
+      "1-4": 78,
+      "5-9": 18,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "DO:clothing_stores": {
+    "net_margin": 0.116,
+    "gross_margin": 0.484,
+    "operating_margin": 0.27,
+    "cost_structure": {
+      "cogs": 58,
+      "labor": 10,
+      "rent": 14,
+      "other": 17
+    },
+    "firm_distribution": {
+      "1-4": 84,
+      "5-9": 14,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "DO:custom_furniture_makers": {
+    "net_margin": 0.228,
+    "gross_margin": 0.642,
+    "operating_margin": 0.356,
+    "cost_structure": {
+      "cogs": 46,
+      "labor": 30,
+      "rent": 7,
+      "other": 17
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 16,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "DO:doctors_clinics": {
+    "net_margin": 0.35,
+    "gross_margin": 0.905,
+    "operating_margin": 0.599,
+    "cost_structure": {
+      "cogs": 15,
+      "labor": 32,
+      "rent": 15,
+      "other": 38
+    },
+    "firm_distribution": {
+      "1-4": 76,
+      "5-9": 20,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "DO:electronics_repair": {
+    "net_margin": 0.34,
+    "gross_margin": 0.773,
+    "operating_margin": 0.521,
+    "cost_structure": {
+      "cogs": 34,
+      "labor": 26,
+      "rent": 12,
+      "other": 27
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 9,
+      "10-19": 1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "DO:food_mfg": {
+    "net_margin": 0.139,
+    "gross_margin": 0.496,
+    "operating_margin": 0.264,
+    "cost_structure": {
+      "cogs": 59,
+      "labor": 20,
+      "rent": 7,
+      "other": 14
+    },
+    "firm_distribution": {
+      "1-4": 76,
+      "5-9": 20,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "DO:grocery_stores": {
+    "net_margin": 0.057,
+    "gross_margin": 0.244,
+    "operating_margin": 0.13,
+    "cost_structure": {
+      "cogs": 80,
+      "labor": 6,
+      "rent": 6,
+      "other": 8
+    },
+    "firm_distribution": {
+      "1-4": 86,
+      "5-9": 12,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "DO:hairdressers_beauty": {
+    "net_margin": 0.373,
+    "gross_margin": 0.898,
+    "operating_margin": 0.603,
+    "cost_structure": {
+      "cogs": 16,
+      "labor": 29,
+      "rent": 18,
+      "other": 37
+    },
+    "firm_distribution": {
+      "1-4": 88,
+      "5-9": 11,
+      "10-19": 1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "DO:health_beauty_stores": {
+    "net_margin": 0.072,
+    "gross_margin": 0.327,
+    "operating_margin": 0.16,
+    "cost_structure": {
+      "cogs": 72,
+      "labor": 9,
+      "rent": 9,
+      "other": 10
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 17,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "DO:hotels_lodging": {
+    "net_margin": 0.204,
+    "gross_margin": 0.881,
+    "operating_margin": 0.499,
+    "cost_structure": {
+      "cogs": 15,
+      "labor": 30,
+      "rent": 18,
+      "other": 37
+    },
+    "firm_distribution": {
+      "1-4": 64,
+      "5-9": 28,
+      "10-19": 8
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "DO:real_estate_agencies": {
+    "net_margin": 0.421,
+    "gross_margin": 0.977,
+    "operating_margin": 0.693,
+    "cost_structure": {
+      "cogs": 4,
+      "labor": 35,
+      "rent": 14,
+      "other": 47
+    },
+    "firm_distribution": {
+      "1-4": 84,
+      "5-9": 14,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "DO:residential_construction": {
+    "net_margin": 0.166,
+    "gross_margin": 0.557,
+    "operating_margin": 0.283,
+    "cost_structure": {
+      "cogs": 53,
+      "labor": 30,
+      "rent": 3,
+      "other": 14
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 24,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "DO:restaurants": {
+    "net_margin": 0.095,
+    "gross_margin": 0.681,
+    "operating_margin": 0.341,
+    "cost_structure": {
+      "cogs": 35,
+      "labor": 24,
+      "rent": 14,
+      "other": 27
+    },
+    "firm_distribution": {
+      "1-4": 74,
+      "5-9": 21,
+      "10-19": 5
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "DO:specialty_trades": {
+    "net_margin": 0.259,
+    "gross_margin": 0.699,
+    "operating_margin": 0.425,
+    "cost_structure": {
+      "cogs": 41,
+      "labor": 32,
+      "rent": 5,
+      "other": 22
+    },
+    "firm_distribution": {
+      "1-4": 86,
+      "5-9": 12,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "DO:tailoring_alterations": {
+    "net_margin": 0.365,
+    "gross_margin": 0.847,
+    "operating_margin": 0.578,
+    "cost_structure": {
+      "cogs": 24,
+      "labor": 30,
+      "rent": 12,
+      "other": 34
+    },
+    "firm_distribution": {
+      "1-4": 94,
+      "5-9": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "DO:transit_ground_passenger": {
+    "net_margin": 0.289,
+    "gross_margin": 0.979,
+    "operating_margin": 0.826,
+    "cost_structure": {
+      "cogs": 3,
+      "labor": 17,
+      "rent": 4,
+      "other": 76
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 9,
+      "10-19": 1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "DO:wholesale_food": {
+    "net_margin": 0.043,
+    "gross_margin": 0.173,
+    "operating_margin": 0.087,
+    "cost_structure": {
+      "cogs": 86,
+      "labor": 5,
+      "rent": 4,
+      "other": 5
+    },
+    "firm_distribution": {
+      "1-4": 66,
+      "5-9": 28,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
   "DZ:apparel_mfg": {
     "net_margin": 0.124,
     "gross_margin": 0.485,
@@ -5089,6 +8213,490 @@
     "source_model": "overnight-loop-2026-06-03",
     "confidence": "low"
   },
+  "GE:accounting_tax": {
+    "net_margin": 0.397,
+    "gross_margin": 0.952,
+    "operating_margin": 0.551,
+    "cost_structure": {
+      "cogs": 8,
+      "labor": 53,
+      "rent": 14,
+      "other": 26
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 16,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:auto_repair_shops": {
+    "net_margin": 0.202,
+    "gross_margin": 0.677,
+    "operating_margin": 0.356,
+    "cost_structure": {
+      "cogs": 40,
+      "labor": 30,
+      "rent": 10,
+      "other": 19
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 15,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:bakeries_retail": {
+    "net_margin": 0.117,
+    "gross_margin": 0.624,
+    "operating_margin": 0.289,
+    "cost_structure": {
+      "cogs": 43,
+      "labor": 26,
+      "rent": 12,
+      "other": 19
+    },
+    "firm_distribution": {
+      "1-4": 78,
+      "5-9": 18,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:cafes_coffee": {
+    "net_margin": 0.137,
+    "gross_margin": 0.727,
+    "operating_margin": 0.341,
+    "cost_structure": {
+      "cogs": 32,
+      "labor": 27,
+      "rent": 18,
+      "other": 24
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 25,
+      "10-19": 5
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:clothing_stores": {
+    "net_margin": 0.134,
+    "gross_margin": 0.495,
+    "operating_margin": 0.269,
+    "cost_structure": {
+      "cogs": 58,
+      "labor": 12,
+      "rent": 14,
+      "other": 16
+    },
+    "firm_distribution": {
+      "1-4": 86,
+      "5-9": 11,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:dental_practices": {
+    "net_margin": 0.284,
+    "gross_margin": 0.796,
+    "operating_margin": 0.423,
+    "cost_structure": {
+      "cogs": 28,
+      "labor": 38,
+      "rent": 14,
+      "other": 19
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 17,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:doctors_clinics": {
+    "net_margin": 0.277,
+    "gross_margin": 0.85,
+    "operating_margin": 0.429,
+    "cost_structure": {
+      "cogs": 21,
+      "labor": 45,
+      "rent": 14,
+      "other": 21
+    },
+    "firm_distribution": {
+      "1-4": 72,
+      "5-9": 22,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:dry_cleaning_laundry": {
+    "net_margin": 0.24,
+    "gross_margin": 0.8,
+    "operating_margin": 0.403,
+    "cost_structure": {
+      "cogs": 26,
+      "labor": 35,
+      "rent": 18,
+      "other": 21
+    },
+    "firm_distribution": {
+      "1-4": 86,
+      "5-9": 14
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:electronics_appliance_stores": {
+    "net_margin": 0.09,
+    "gross_margin": 0.304,
+    "operating_margin": 0.16,
+    "cost_structure": {
+      "cogs": 77,
+      "labor": 9,
+      "rent": 7,
+      "other": 8
+    },
+    "firm_distribution": {
+      "1-4": 78,
+      "5-9": 18,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:electronics_repair": {
+    "net_margin": 0.281,
+    "gross_margin": 0.725,
+    "operating_margin": 0.423,
+    "cost_structure": {
+      "cogs": 38,
+      "labor": 30,
+      "rent": 12,
+      "other": 20
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:furniture_mfg": {
+    "net_margin": 0.165,
+    "gross_margin": 0.577,
+    "operating_margin": 0.26,
+    "cost_structure": {
+      "cogs": 51,
+      "labor": 30,
+      "rent": 8,
+      "other": 11
+    },
+    "firm_distribution": {
+      "1-4": 74,
+      "5-9": 20,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:gas_stations": {
+    "net_margin": 0.037,
+    "gross_margin": 0.148,
+    "operating_margin": 0.075,
+    "cost_structure": {
+      "cogs": 88,
+      "labor": 5,
+      "rent": 3,
+      "other": 4
+    },
+    "firm_distribution": {
+      "1-4": 60,
+      "5-9": 32,
+      "10-19": 8
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:grocery_stores": {
+    "net_margin": 0.053,
+    "gross_margin": 0.241,
+    "operating_margin": 0.118,
+    "cost_structure": {
+      "cogs": 80,
+      "labor": 8,
+      "rent": 5,
+      "other": 7
+    },
+    "firm_distribution": {
+      "1-4": 87,
+      "5-9": 10,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:hairdressers_beauty": {
+    "net_margin": 0.312,
+    "gross_margin": 0.902,
+    "operating_margin": 0.512,
+    "cost_structure": {
+      "cogs": 14,
+      "labor": 41,
+      "rent": 16,
+      "other": 29
+    },
+    "firm_distribution": {
+      "1-4": 84,
+      "5-9": 14,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:health_beauty_stores": {
+    "net_margin": 0.085,
+    "gross_margin": 0.355,
+    "operating_margin": 0.173,
+    "cost_structure": {
+      "cogs": 70,
+      "labor": 12,
+      "rent": 8,
+      "other": 10
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 16,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:hotels_lodging": {
+    "net_margin": 0.172,
+    "gross_margin": 0.847,
+    "operating_margin": 0.414,
+    "cost_structure": {
+      "cogs": 18,
+      "labor": 31,
+      "rent": 21,
+      "other": 29
+    },
+    "firm_distribution": {
+      "1-4": 64,
+      "5-9": 28,
+      "10-19": 6,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:marketing_design": {
+    "net_margin": 0.354,
+    "gross_margin": 0.909,
+    "operating_margin": 0.505,
+    "cost_structure": {
+      "cogs": 14,
+      "labor": 51,
+      "rent": 12,
+      "other": 23
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 17,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:residential_construction": {
+    "net_margin": 0.155,
+    "gross_margin": 0.554,
+    "operating_margin": 0.274,
+    "cost_structure": {
+      "cogs": 53,
+      "labor": 30,
+      "rent": 3,
+      "other": 14
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 22,
+      "10-19": 6,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:restaurants": {
+    "net_margin": 0.099,
+    "gross_margin": 0.666,
+    "operating_margin": 0.28,
+    "cost_structure": {
+      "cogs": 37,
+      "labor": 29,
+      "rent": 13,
+      "other": 20
+    },
+    "firm_distribution": {
+      "1-4": 60,
+      "5-9": 28,
+      "10-19": 9,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:software_development": {
+    "net_margin": 0.349,
+    "gross_margin": 0.947,
+    "operating_margin": 0.498,
+    "cost_structure": {
+      "cogs": 8,
+      "labor": 61,
+      "rent": 8,
+      "other": 23
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 24,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:specialty_grocery": {
+    "net_margin": 0.083,
+    "gross_margin": 0.338,
+    "operating_margin": 0.173,
+    "cost_structure": {
+      "cogs": 72,
+      "labor": 11,
+      "rent": 7,
+      "other": 10
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:specialty_trades": {
+    "net_margin": 0.234,
+    "gross_margin": 0.66,
+    "operating_margin": 0.368,
+    "cost_structure": {
+      "cogs": 44,
+      "labor": 34,
+      "rent": 4,
+      "other": 17
+    },
+    "firm_distribution": {
+      "1-4": 84,
+      "5-9": 14,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:transit_ground_passenger": {
+    "net_margin": 0.242,
+    "gross_margin": 0.741,
+    "operating_margin": 0.48,
+    "cost_structure": {
+      "cogs": 34,
+      "labor": 30,
+      "rent": 4,
+      "other": 31
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:trucking_freight": {
+    "net_margin": 0.166,
+    "gross_margin": 0.611,
+    "operating_margin": 0.373,
+    "cost_structure": {
+      "cogs": 47,
+      "labor": 25,
+      "rent": 4,
+      "other": 25
+    },
+    "firm_distribution": {
+      "1-4": 76,
+      "5-9": 18,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:vegetable_fruit_farming": {
+    "net_margin": 0.23,
+    "gross_margin": 0.69,
+    "operating_margin": 0.459,
+    "cost_structure": {
+      "cogs": 40,
+      "labor": 24,
+      "rent": 6,
+      "other": 30
+    },
+    "firm_distribution": {
+      "1-4": 94,
+      "5-9": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:wholesale_food": {
+    "net_margin": 0.038,
+    "gross_margin": 0.165,
+    "operating_margin": 0.082,
+    "cost_structure": {
+      "cogs": 87,
+      "labor": 6,
+      "rent": 3,
+      "other": 5
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 23,
+      "10-19": 7
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GE:wine_liquor_stores": {
+    "net_margin": 0.105,
+    "gross_margin": 0.388,
+    "operating_margin": 0.21,
+    "cost_structure": {
+      "cogs": 68,
+      "labor": 10,
+      "rent": 10,
+      "other": 12
+    },
+    "firm_distribution": {
+      "1-4": 84,
+      "5-9": 13,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
   "GH:accounting_tax": {
     "net_margin": 0.399,
     "gross_margin": 0.971,
@@ -5520,6 +9128,861 @@
       "5-9": 28
     },
     "source_model": "overnight-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:accounting_tax": {
+    "net_margin": 0.352,
+    "gross_margin": 0.948,
+    "operating_margin": 0.541,
+    "cost_structure": {
+      "cogs": 8,
+      "labor": 47,
+      "rent": 16,
+      "other": 29
+    },
+    "firm_distribution": {
+      "1-4": 85,
+      "5-9": 12,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:apparel_mfg": {
+    "net_margin": 0.136,
+    "gross_margin": 0.613,
+    "operating_margin": 0.242,
+    "cost_structure": {
+      "cogs": 45,
+      "labor": 36,
+      "rent": 7,
+      "other": 12
+    },
+    "firm_distribution": {
+      "1-4": 72,
+      "5-9": 18,
+      "10-19": 7,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:auto_repair_shops": {
+    "net_margin": 0.192,
+    "gross_margin": 0.633,
+    "operating_margin": 0.326,
+    "cost_structure": {
+      "cogs": 45,
+      "labor": 28,
+      "rent": 10,
+      "other": 17
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 15,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:bakeries_retail": {
+    "net_margin": 0.134,
+    "gross_margin": 0.633,
+    "operating_margin": 0.285,
+    "cost_structure": {
+      "cogs": 42,
+      "labor": 28,
+      "rent": 12,
+      "other": 17
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 15,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:cafes_coffee": {
+    "net_margin": 0.133,
+    "gross_margin": 0.721,
+    "operating_margin": 0.301,
+    "cost_structure": {
+      "cogs": 32,
+      "labor": 31,
+      "rent": 18,
+      "other": 19
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 17,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:cleaning_services": {
+    "net_margin": 0.275,
+    "gross_margin": 0.913,
+    "operating_margin": 0.443,
+    "cost_structure": {
+      "cogs": 12,
+      "labor": 59,
+      "rent": 6,
+      "other": 23
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 15,
+      "10-19": 4,
+      "20-49": 1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:clothing_stores": {
+    "net_margin": 0.105,
+    "gross_margin": 0.477,
+    "operating_margin": 0.21,
+    "cost_structure": {
+      "cogs": 58,
+      "labor": 16,
+      "rent": 14,
+      "other": 12
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 16,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:coffee_roasters": {
+    "net_margin": 0.12,
+    "gross_margin": 0.45,
+    "operating_margin": 0.223,
+    "cost_structure": {
+      "cogs": 63,
+      "labor": 18,
+      "rent": 8,
+      "other": 12
+    },
+    "firm_distribution": {
+      "1-4": 78,
+      "5-9": 18,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:doctors_clinics": {
+    "net_margin": 0.322,
+    "gross_margin": 0.875,
+    "operating_margin": 0.493,
+    "cost_structure": {
+      "cogs": 18,
+      "labor": 39,
+      "rent": 18,
+      "other": 25
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 15,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:electronics_repair": {
+    "net_margin": 0.282,
+    "gross_margin": 0.711,
+    "operating_margin": 0.409,
+    "cost_structure": {
+      "cogs": 40,
+      "labor": 30,
+      "rent": 12,
+      "other": 18
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 9,
+      "10-19": 1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:food_mfg": {
+    "net_margin": 0.118,
+    "gross_margin": 0.5,
+    "operating_margin": 0.238,
+    "cost_structure": {
+      "cogs": 57,
+      "labor": 22,
+      "rent": 8,
+      "other": 14
+    },
+    "firm_distribution": {
+      "1-4": 74,
+      "5-9": 18,
+      "10-19": 6,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:gas_stations": {
+    "net_margin": 0.037,
+    "gross_margin": 0.148,
+    "operating_margin": 0.076,
+    "cost_structure": {
+      "cogs": 89,
+      "labor": 5,
+      "rent": 3,
+      "other": 4
+    },
+    "firm_distribution": {
+      "1-4": 58,
+      "5-9": 34,
+      "10-19": 8
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:general_merchandise": {
+    "net_margin": 0.086,
+    "gross_margin": 0.356,
+    "operating_margin": 0.157,
+    "cost_structure": {
+      "cogs": 70,
+      "labor": 12,
+      "rent": 10,
+      "other": 8
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 16,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:grocery_stores": {
+    "net_margin": 0.067,
+    "gross_margin": 0.251,
+    "operating_margin": 0.128,
+    "cost_structure": {
+      "cogs": 80,
+      "labor": 8,
+      "rent": 5,
+      "other": 7
+    },
+    "firm_distribution": {
+      "1-4": 84,
+      "5-9": 12,
+      "10-19": 3,
+      "20-49": 1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:hairdressers_beauty": {
+    "net_margin": 0.363,
+    "gross_margin": 0.884,
+    "operating_margin": 0.512,
+    "cost_structure": {
+      "cogs": 18,
+      "labor": 41,
+      "rent": 18,
+      "other": 23
+    },
+    "firm_distribution": {
+      "1-4": 88,
+      "5-9": 11,
+      "10-19": 1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:health_beauty_stores": {
+    "net_margin": 0.086,
+    "gross_margin": 0.374,
+    "operating_margin": 0.157,
+    "cost_structure": {
+      "cogs": 69,
+      "labor": 14,
+      "rent": 10,
+      "other": 8
+    },
+    "firm_distribution": {
+      "1-4": 78,
+      "5-9": 18,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:hotels_lodging": {
+    "net_margin": 0.178,
+    "gross_margin": 0.866,
+    "operating_margin": 0.379,
+    "cost_structure": {
+      "cogs": 16,
+      "labor": 35,
+      "rent": 24,
+      "other": 24
+    },
+    "firm_distribution": {
+      "1-4": 74,
+      "5-9": 20,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:legal_services": {
+    "net_margin": 0.361,
+    "gross_margin": 0.949,
+    "operating_margin": 0.548,
+    "cost_structure": {
+      "cogs": 8,
+      "labor": 46,
+      "rent": 17,
+      "other": 29
+    },
+    "firm_distribution": {
+      "1-4": 84,
+      "5-9": 13,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:residential_construction": {
+    "net_margin": 0.131,
+    "gross_margin": 0.515,
+    "operating_margin": 0.24,
+    "cost_structure": {
+      "cogs": 56,
+      "labor": 28,
+      "rent": 4,
+      "other": 13
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 22,
+      "10-19": 6,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:restaurants": {
+    "net_margin": 0.103,
+    "gross_margin": 0.663,
+    "operating_margin": 0.278,
+    "cost_structure": {
+      "cogs": 38,
+      "labor": 31,
+      "rent": 12,
+      "other": 19
+    },
+    "firm_distribution": {
+      "1-4": 72,
+      "5-9": 20,
+      "10-19": 6,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:specialty_trades": {
+    "net_margin": 0.202,
+    "gross_margin": 0.662,
+    "operating_margin": 0.333,
+    "cost_structure": {
+      "cogs": 42,
+      "labor": 35,
+      "rent": 6,
+      "other": 16
+    },
+    "firm_distribution": {
+      "1-4": 83,
+      "5-9": 14,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:transit_ground_passenger": {
+    "net_margin": 0.172,
+    "gross_margin": 0.665,
+    "operating_margin": 0.39,
+    "cost_structure": {
+      "cogs": 40,
+      "labor": 28,
+      "rent": 5,
+      "other": 26
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 15,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:travel_agencies": {
+    "net_margin": 0.228,
+    "gross_margin": 0.765,
+    "operating_margin": 0.36,
+    "cost_structure": {
+      "cogs": 30,
+      "labor": 41,
+      "rent": 12,
+      "other": 17
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 17,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:trucking_freight": {
+    "net_margin": 0.133,
+    "gross_margin": 0.561,
+    "operating_margin": 0.318,
+    "cost_structure": {
+      "cogs": 51,
+      "labor": 22,
+      "rent": 6,
+      "other": 21
+    },
+    "firm_distribution": {
+      "1-4": 76,
+      "5-9": 18,
+      "10-19": 5,
+      "20-49": 1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:vegetable_fruit_farming": {
+    "net_margin": 0.16,
+    "gross_margin": 0.745,
+    "operating_margin": 0.308,
+    "cost_structure": {
+      "cogs": 30,
+      "labor": 40,
+      "rent": 12,
+      "other": 18
+    },
+    "firm_distribution": {
+      "1-4": 86,
+      "5-9": 11,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "GT:wholesale_food": {
+    "net_margin": 0.049,
+    "gross_margin": 0.178,
+    "operating_margin": 0.084,
+    "cost_structure": {
+      "cogs": 86,
+      "labor": 6,
+      "rent": 4,
+      "other": 4
+    },
+    "firm_distribution": {
+      "1-4": 64,
+      "5-9": 26,
+      "10-19": 8,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "HK:accounting_tax": {
+    "net_margin": 0.329,
+    "gross_margin": 0.969,
+    "operating_margin": 0.506,
+    "cost_structure": {
+      "cogs": 5,
+      "labor": 48,
+      "rent": 21,
+      "other": 26
+    },
+    "firm_distribution": {
+      "1-4": 60,
+      "5-9": 30,
+      "10-19": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "HK:auto_repair_shops": {
+    "net_margin": 0.179,
+    "gross_margin": 0.664,
+    "operating_margin": 0.286,
+    "cost_structure": {
+      "cogs": 41,
+      "labor": 33,
+      "rent": 13,
+      "other": 13
+    },
+    "firm_distribution": {
+      "1-4": 58,
+      "5-9": 31,
+      "10-19": 11
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "HK:cafes_coffee": {
+    "net_margin": 0.107,
+    "gross_margin": 0.75,
+    "operating_margin": 0.25,
+    "cost_structure": {
+      "cogs": 28,
+      "labor": 29,
+      "rent": 27,
+      "other": 16
+    },
+    "firm_distribution": {
+      "1-4": 52,
+      "5-9": 34,
+      "10-19": 14
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "HK:cleaning_services": {
+    "net_margin": 0.129,
+    "gross_margin": 0.915,
+    "operating_margin": 0.28,
+    "cost_structure": {
+      "cogs": 10,
+      "labor": 67,
+      "rent": 5,
+      "other": 17
+    },
+    "firm_distribution": {
+      "5-9": 48,
+      "10-19": 33,
+      "20-49": 19
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "HK:clothing_stores": {
+    "net_margin": 0.088,
+    "gross_margin": 0.536,
+    "operating_margin": 0.161,
+    "cost_structure": {
+      "cogs": 51,
+      "labor": 17,
+      "rent": 25,
+      "other": 8
+    },
+    "firm_distribution": {
+      "1-4": 60,
+      "5-9": 28,
+      "10-19": 12
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "HK:electronics_appliance_stores": {
+    "net_margin": 0.052,
+    "gross_margin": 0.232,
+    "operating_margin": 0.09,
+    "cost_structure": {
+      "cogs": 81,
+      "labor": 8,
+      "rent": 7,
+      "other": 4
+    },
+    "firm_distribution": {
+      "1-4": 58,
+      "5-9": 31,
+      "10-19": 11
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "HK:grocery_stores": {
+    "net_margin": 0.038,
+    "gross_margin": 0.244,
+    "operating_margin": 0.076,
+    "cost_structure": {
+      "cogs": 79,
+      "labor": 8,
+      "rent": 9,
+      "other": 4
+    },
+    "firm_distribution": {
+      "1-4": 58,
+      "5-9": 30,
+      "10-19": 12
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "HK:hairdressers_beauty": {
+    "net_margin": 0.233,
+    "gross_margin": 0.908,
+    "operating_margin": 0.371,
+    "cost_structure": {
+      "cogs": 12,
+      "labor": 38,
+      "rent": 33,
+      "other": 18
+    },
+    "firm_distribution": {
+      "1-4": 60,
+      "5-9": 30,
+      "10-19": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "HK:health_beauty_stores": {
+    "net_margin": 0.071,
+    "gross_margin": 0.357,
+    "operating_margin": 0.117,
+    "cost_structure": {
+      "cogs": 69,
+      "labor": 13,
+      "rent": 13,
+      "other": 5
+    },
+    "firm_distribution": {
+      "1-4": 55,
+      "5-9": 32,
+      "10-19": 13
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "HK:hotels_lodging": {
+    "net_margin": 0.147,
+    "gross_margin": 0.886,
+    "operating_margin": 0.351,
+    "cost_structure": {
+      "cogs": 13,
+      "labor": 31,
+      "rent": 32,
+      "other": 24
+    },
+    "firm_distribution": {
+      "5-9": 50,
+      "10-19": 33,
+      "20-49": 17
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "HK:jewelry_stores": {
+    "net_margin": 0.052,
+    "gross_margin": 0.231,
+    "operating_margin": 0.08,
+    "cost_structure": {
+      "cogs": 81,
+      "labor": 7,
+      "rent": 8,
+      "other": 3
+    },
+    "firm_distribution": {
+      "1-4": 56,
+      "5-9": 32,
+      "10-19": 12
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "HK:legal_services": {
+    "net_margin": 0.343,
+    "gross_margin": 0.964,
+    "operating_margin": 0.518,
+    "cost_structure": {
+      "cogs": 5,
+      "labor": 45,
+      "rent": 23,
+      "other": 27
+    },
+    "firm_distribution": {
+      "1-4": 58,
+      "5-9": 30,
+      "10-19": 12
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "HK:marketing_design": {
+    "net_margin": 0.273,
+    "gross_margin": 0.916,
+    "operating_margin": 0.426,
+    "cost_structure": {
+      "cogs": 12,
+      "labor": 52,
+      "rent": 15,
+      "other": 21
+    },
+    "firm_distribution": {
+      "1-4": 60,
+      "5-9": 30,
+      "10-19": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "HK:real_estate_agencies": {
+    "net_margin": 0.276,
+    "gross_margin": 0.967,
+    "operating_margin": 0.476,
+    "cost_structure": {
+      "cogs": 5,
+      "labor": 47,
+      "rent": 21,
+      "other": 28
+    },
+    "firm_distribution": {
+      "1-4": 62,
+      "5-9": 28,
+      "10-19": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "HK:restaurants": {
+    "net_margin": 0.081,
+    "gross_margin": 0.699,
+    "operating_margin": 0.219,
+    "cost_structure": {
+      "cogs": 33,
+      "labor": 32,
+      "rent": 21,
+      "other": 15
+    },
+    "firm_distribution": {
+      "1-4": 40,
+      "5-9": 34,
+      "10-19": 18,
+      "20-49": 8
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "HK:software_development": {
+    "net_margin": 0.263,
+    "gross_margin": 0.931,
+    "operating_margin": 0.421,
+    "cost_structure": {
+      "cogs": 9,
+      "labor": 58,
+      "rent": 11,
+      "other": 21
+    },
+    "firm_distribution": {
+      "1-4": 55,
+      "5-9": 32,
+      "10-19": 13
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "HK:specialty_trades": {
+    "net_margin": 0.149,
+    "gross_margin": 0.617,
+    "operating_margin": 0.284,
+    "cost_structure": {
+      "cogs": 45,
+      "labor": 34,
+      "rent": 6,
+      "other": 16
+    },
+    "firm_distribution": {
+      "1-4": 56,
+      "5-9": 32,
+      "10-19": 12
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "HK:trucking_freight": {
+    "net_margin": 0.106,
+    "gross_margin": 0.673,
+    "operating_margin": 0.368,
+    "cost_structure": {
+      "cogs": 37,
+      "labor": 29,
+      "rent": 6,
+      "other": 29
+    },
+    "firm_distribution": {
+      "1-4": 56,
+      "5-9": 30,
+      "10-19": 14
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "HK:tutoring_centers": {
+    "net_margin": 0.244,
+    "gross_margin": 0.955,
+    "operating_margin": 0.403,
+    "cost_structure": {
+      "cogs": 6,
+      "labor": 48,
+      "rent": 25,
+      "other": 21
+    },
+    "firm_distribution": {
+      "1-4": 58,
+      "5-9": 31,
+      "10-19": 11
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "HK:wholesale_durables": {
+    "net_margin": 0.056,
+    "gross_margin": 0.192,
+    "operating_margin": 0.094,
+    "cost_structure": {
+      "cogs": 86,
+      "labor": 6,
+      "rent": 5,
+      "other": 4
+    },
+    "firm_distribution": {
+      "1-4": 54,
+      "5-9": 31,
+      "10-19": 15
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "HK:wholesale_general": {
+    "net_margin": 0.056,
+    "gross_margin": 0.183,
+    "operating_margin": 0.09,
+    "cost_structure": {
+      "cogs": 87,
+      "labor": 6,
+      "rent": 4,
+      "other": 4
+    },
+    "firm_distribution": {
+      "1-4": 56,
+      "5-9": 30,
+      "10-19": 14
+    },
+    "source_model": "longtail-loop-2026-06-03",
     "confidence": "low"
   },
   "ID:apparel_mfg": {
@@ -8399,6 +12862,396 @@
     "source_model": "overnight-loop-2026-06-03",
     "confidence": "low"
   },
+  "JO:auto_repair_shops": {
+    "net_margin": 0.201,
+    "gross_margin": 0.661,
+    "operating_margin": 0.357,
+    "cost_structure": {
+      "cogs": 42,
+      "labor": 28,
+      "rent": 10,
+      "other": 20
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 16,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "JO:barbershops": {
+    "net_margin": 0.366,
+    "gross_margin": 0.937,
+    "operating_margin": 0.598,
+    "cost_structure": {
+      "cogs": 10,
+      "labor": 36,
+      "rent": 18,
+      "other": 37
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "JO:cafes_coffee": {
+    "net_margin": 0.134,
+    "gross_margin": 0.743,
+    "operating_margin": 0.322,
+    "cost_structure": {
+      "cogs": 30,
+      "labor": 31,
+      "rent": 18,
+      "other": 22
+    },
+    "firm_distribution": {
+      "1-4": 74,
+      "5-9": 22,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "JO:clothing_stores": {
+    "net_margin": 0.093,
+    "gross_margin": 0.454,
+    "operating_margin": 0.2,
+    "cost_structure": {
+      "cogs": 60,
+      "labor": 14,
+      "rent": 14,
+      "other": 12
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 15,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "JO:dental_practices": {
+    "net_margin": 0.33,
+    "gross_margin": 0.831,
+    "operating_margin": 0.541,
+    "cost_structure": {
+      "cogs": 25,
+      "labor": 28,
+      "rent": 15,
+      "other": 32
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "JO:doctors_clinics": {
+    "net_margin": 0.366,
+    "gross_margin": 0.884,
+    "operating_margin": 0.59,
+    "cost_structure": {
+      "cogs": 18,
+      "labor": 30,
+      "rent": 16,
+      "other": 35
+    },
+    "firm_distribution": {
+      "1-4": 88,
+      "5-9": 12
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "JO:dry_cleaning_laundry": {
+    "net_margin": 0.223,
+    "gross_margin": 0.78,
+    "operating_margin": 0.407,
+    "cost_structure": {
+      "cogs": 28,
+      "labor": 30,
+      "rent": 18,
+      "other": 24
+    },
+    "firm_distribution": {
+      "1-4": 85,
+      "5-9": 15
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "JO:electronics_repair": {
+    "net_margin": 0.246,
+    "gross_margin": 0.696,
+    "operating_margin": 0.394,
+    "cost_structure": {
+      "cogs": 40,
+      "labor": 25,
+      "rent": 15,
+      "other": 20
+    },
+    "firm_distribution": {
+      "1-4": 92,
+      "5-9": 8
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "JO:gas_stations": {
+    "net_margin": 0.034,
+    "gross_margin": 0.147,
+    "operating_margin": 0.072,
+    "cost_structure": {
+      "cogs": 88,
+      "labor": 5,
+      "rent": 3,
+      "other": 4
+    },
+    "firm_distribution": {
+      "5-9": 70,
+      "10-19": 30
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "JO:grocery_stores": {
+    "net_margin": 0.044,
+    "gross_margin": 0.234,
+    "operating_margin": 0.102,
+    "cost_structure": {
+      "cogs": 80,
+      "labor": 9,
+      "rent": 5,
+      "other": 6
+    },
+    "firm_distribution": {
+      "1-4": 88,
+      "5-9": 9,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "JO:hair_salons_full": {
+    "net_margin": 0.322,
+    "gross_margin": 0.878,
+    "operating_margin": 0.526,
+    "cost_structure": {
+      "cogs": 18,
+      "labor": 34,
+      "rent": 18,
+      "other": 30
+    },
+    "firm_distribution": {
+      "1-4": 84,
+      "5-9": 14,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "JO:hotels_lodging": {
+    "net_margin": 0.153,
+    "gross_margin": 0.822,
+    "operating_margin": 0.365,
+    "cost_structure": {
+      "cogs": 21,
+      "labor": 33,
+      "rent": 21,
+      "other": 25
+    },
+    "firm_distribution": {
+      "1-4": 62,
+      "5-9": 28,
+      "10-19": 8,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "JO:independent_pharmacy": {
+    "net_margin": 0.107,
+    "gross_margin": 0.39,
+    "operating_margin": 0.186,
+    "cost_structure": {
+      "cogs": 68,
+      "labor": 14,
+      "rent": 9,
+      "other": 9
+    },
+    "firm_distribution": {
+      "1-4": 86,
+      "5-9": 14
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "JO:residential_construction": {
+    "net_margin": 0.133,
+    "gross_margin": 0.516,
+    "operating_margin": 0.251,
+    "cost_structure": {
+      "cogs": 56,
+      "labor": 28,
+      "rent": 3,
+      "other": 14
+    },
+    "firm_distribution": {
+      "1-4": 72,
+      "5-9": 20,
+      "10-19": 6,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "JO:restaurants": {
+    "net_margin": 0.105,
+    "gross_margin": 0.666,
+    "operating_margin": 0.284,
+    "cost_structure": {
+      "cogs": 37,
+      "labor": 31,
+      "rent": 12,
+      "other": 20
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 22,
+      "10-19": 6,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "JO:specialty_trades": {
+    "net_margin": 0.202,
+    "gross_margin": 0.638,
+    "operating_margin": 0.344,
+    "cost_structure": {
+      "cogs": 45,
+      "labor": 32,
+      "rent": 5,
+      "other": 18
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 15,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "JO:sports_fitness": {
+    "net_margin": 0.21,
+    "gross_margin": 0.921,
+    "operating_margin": 0.419,
+    "cost_structure": {
+      "cogs": 10,
+      "labor": 36,
+      "rent": 28,
+      "other": 27
+    },
+    "firm_distribution": {
+      "1-4": 78,
+      "5-9": 19,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "JO:tailoring_alterations": {
+    "net_margin": 0.368,
+    "gross_margin": 0.86,
+    "operating_margin": 0.555,
+    "cost_structure": {
+      "cogs": 22,
+      "labor": 30,
+      "rent": 18,
+      "other": 30
+    },
+    "firm_distribution": {
+      "1-4": 93,
+      "5-9": 7
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "JO:trucking_freight": {
+    "net_margin": 0.142,
+    "gross_margin": 0.583,
+    "operating_margin": 0.351,
+    "cost_structure": {
+      "cogs": 49,
+      "labor": 22,
+      "rent": 5,
+      "other": 24
+    },
+    "firm_distribution": {
+      "1-4": 74,
+      "5-9": 20,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "JO:tutoring_centers": {
+    "net_margin": 0.311,
+    "gross_margin": 0.945,
+    "operating_margin": 0.512,
+    "cost_structure": {
+      "cogs": 8,
+      "labor": 46,
+      "rent": 17,
+      "other": 29
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 18,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "JO:veterinary_pet_care": {
+    "net_margin": 0.245,
+    "gross_margin": 0.757,
+    "operating_margin": 0.424,
+    "cost_structure": {
+      "cogs": 32,
+      "labor": 30,
+      "rent": 14,
+      "other": 24
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "JO:wholesale_food": {
+    "net_margin": 0.038,
+    "gross_margin": 0.158,
+    "operating_margin": 0.076,
+    "cost_structure": {
+      "cogs": 88,
+      "labor": 6,
+      "rent": 3,
+      "other": 4
+    },
+    "firm_distribution": {
+      "1-4": 60,
+      "5-9": 30,
+      "10-19": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
   "KE:auto_repair_shops": {
     "net_margin": 0.238,
     "gross_margin": 0.704,
@@ -9132,6 +13985,443 @@
     "source_model": "overnight-loop-2026-06-03",
     "confidence": "low"
   },
+  "KW:accounting_tax": {
+    "net_margin": 0.373,
+    "gross_margin": 0.969,
+    "operating_margin": 0.46,
+    "cost_structure": {
+      "cogs": 5,
+      "labor": 56,
+      "rent": 25,
+      "other": 14
+    },
+    "firm_distribution": {
+      "1-4": 58,
+      "5-9": 30,
+      "10-19": 12
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "KW:auto_repair_shops": {
+    "net_margin": 0.193,
+    "gross_margin": 0.652,
+    "operating_margin": 0.269,
+    "cost_structure": {
+      "cogs": 43,
+      "labor": 31,
+      "rent": 17,
+      "other": 9
+    },
+    "firm_distribution": {
+      "1-4": 54,
+      "5-9": 33,
+      "10-19": 13
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "KW:cafes_coffee": {
+    "net_margin": 0.13,
+    "gross_margin": 0.751,
+    "operating_margin": 0.272,
+    "cost_structure": {
+      "cogs": 29,
+      "labor": 28,
+      "rent": 27,
+      "other": 16
+    },
+    "firm_distribution": {
+      "1-4": 52,
+      "5-9": 33,
+      "10-19": 15
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "KW:cleaning_services": {
+    "net_margin": 0.179,
+    "gross_margin": 0.885,
+    "operating_margin": 0.303,
+    "cost_structure": {
+      "cogs": 14,
+      "labor": 64,
+      "rent": 7,
+      "other": 15
+    },
+    "firm_distribution": {
+      "5-9": 42,
+      "10-19": 33,
+      "20-49": 18,
+      "50-99": 7
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "KW:clothing_stores": {
+    "net_margin": 0.091,
+    "gross_margin": 0.494,
+    "operating_margin": 0.163,
+    "cost_structure": {
+      "cogs": 56,
+      "labor": 16,
+      "rent": 20,
+      "other": 8
+    },
+    "firm_distribution": {
+      "1-4": 60,
+      "5-9": 28,
+      "10-19": 12
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "KW:dental_practices": {
+    "net_margin": 0.299,
+    "gross_margin": 0.838,
+    "operating_margin": 0.398,
+    "cost_structure": {
+      "cogs": 23,
+      "labor": 39,
+      "rent": 24,
+      "other": 14
+    },
+    "firm_distribution": {
+      "1-4": 58,
+      "5-9": 30,
+      "10-19": 12
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "KW:doctors_clinics": {
+    "net_margin": 0.273,
+    "gross_margin": 0.859,
+    "operating_margin": 0.373,
+    "cost_structure": {
+      "cogs": 19,
+      "labor": 46,
+      "rent": 21,
+      "other": 14
+    },
+    "firm_distribution": {
+      "1-4": 50,
+      "5-9": 32,
+      "10-19": 18
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "KW:dry_cleaning_laundry": {
+    "net_margin": 0.221,
+    "gross_margin": 0.821,
+    "operating_margin": 0.311,
+    "cost_structure": {
+      "cogs": 23,
+      "labor": 38,
+      "rent": 27,
+      "other": 12
+    },
+    "firm_distribution": {
+      "1-4": 62,
+      "5-9": 28,
+      "10-19": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "KW:electronics_appliance_stores": {
+    "net_margin": 0.071,
+    "gross_margin": 0.265,
+    "operating_margin": 0.099,
+    "cost_structure": {
+      "cogs": 79,
+      "labor": 10,
+      "rent": 7,
+      "other": 3
+    },
+    "firm_distribution": {
+      "1-4": 58,
+      "5-9": 30,
+      "10-19": 12
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "KW:engineering_architecture": {
+    "net_margin": 0.311,
+    "gross_margin": 0.922,
+    "operating_margin": 0.393,
+    "cost_structure": {
+      "cogs": 11,
+      "labor": 56,
+      "rent": 21,
+      "other": 12
+    },
+    "firm_distribution": {
+      "1-4": 52,
+      "5-9": 31,
+      "10-19": 17
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "KW:gas_stations": {
+    "net_margin": 0.033,
+    "gross_margin": 0.144,
+    "operating_margin": 0.062,
+    "cost_structure": {
+      "cogs": 89,
+      "labor": 6,
+      "rent": 3,
+      "other": 3
+    },
+    "firm_distribution": {
+      "5-9": 55,
+      "10-19": 35,
+      "20-49": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "KW:grocery_stores": {
+    "net_margin": 0.038,
+    "gross_margin": 0.225,
+    "operating_margin": 0.076,
+    "cost_structure": {
+      "cogs": 81,
+      "labor": 9,
+      "rent": 7,
+      "other": 4
+    },
+    "firm_distribution": {
+      "1-4": 62,
+      "5-9": 26,
+      "10-19": 9,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "KW:hairdressers_beauty": {
+    "net_margin": 0.274,
+    "gross_margin": 0.876,
+    "operating_margin": 0.386,
+    "cost_structure": {
+      "cogs": 17,
+      "labor": 36,
+      "rent": 31,
+      "other": 15
+    },
+    "firm_distribution": {
+      "1-4": 56,
+      "5-9": 31,
+      "10-19": 13
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "KW:health_beauty_stores": {
+    "net_margin": 0.076,
+    "gross_margin": 0.362,
+    "operating_margin": 0.122,
+    "cost_structure": {
+      "cogs": 69,
+      "labor": 13,
+      "rent": 12,
+      "other": 5
+    },
+    "firm_distribution": {
+      "1-4": 58,
+      "5-9": 30,
+      "10-19": 12
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "KW:it_services_msp": {
+    "net_margin": 0.263,
+    "gross_margin": 0.829,
+    "operating_margin": 0.331,
+    "cost_structure": {
+      "cogs": 23,
+      "labor": 53,
+      "rent": 15,
+      "other": 9
+    },
+    "firm_distribution": {
+      "1-4": 54,
+      "5-9": 32,
+      "10-19": 14
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "KW:jewelry_stores": {
+    "net_margin": 0.053,
+    "gross_margin": 0.191,
+    "operating_margin": 0.081,
+    "cost_structure": {
+      "cogs": 85,
+      "labor": 6,
+      "rent": 6,
+      "other": 3
+    },
+    "firm_distribution": {
+      "1-4": 66,
+      "5-9": 26,
+      "10-19": 8
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "KW:legal_services": {
+    "net_margin": 0.397,
+    "gross_margin": 0.97,
+    "operating_margin": 0.484,
+    "cost_structure": {
+      "cogs": 5,
+      "labor": 54,
+      "rent": 27,
+      "other": 14
+    },
+    "firm_distribution": {
+      "1-4": 60,
+      "5-9": 28,
+      "10-19": 12
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "KW:residential_construction": {
+    "net_margin": 0.11,
+    "gross_margin": 0.487,
+    "operating_margin": 0.201,
+    "cost_structure": {
+      "cogs": 58,
+      "labor": 28,
+      "rent": 4,
+      "other": 10
+    },
+    "firm_distribution": {
+      "5-9": 44,
+      "10-19": 34,
+      "20-49": 17,
+      "50-99": 5
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "KW:restaurants": {
+    "net_margin": 0.101,
+    "gross_margin": 0.714,
+    "operating_margin": 0.243,
+    "cost_structure": {
+      "cogs": 32,
+      "labor": 29,
+      "rent": 24,
+      "other": 16
+    },
+    "firm_distribution": {
+      "1-4": 44,
+      "5-9": 34,
+      "10-19": 16,
+      "20-49": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "KW:specialty_trades": {
+    "net_margin": 0.172,
+    "gross_margin": 0.673,
+    "operating_margin": 0.266,
+    "cost_structure": {
+      "cogs": 39,
+      "labor": 40,
+      "rent": 9,
+      "other": 11
+    },
+    "firm_distribution": {
+      "1-4": 50,
+      "5-9": 32,
+      "10-19": 13,
+      "20-49": 5
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "KW:tailoring_alterations": {
+    "net_margin": 0.281,
+    "gross_margin": 0.793,
+    "operating_margin": 0.35,
+    "cost_structure": {
+      "cogs": 29,
+      "labor": 37,
+      "rent": 25,
+      "other": 10
+    },
+    "firm_distribution": {
+      "1-4": 66,
+      "5-9": 26,
+      "10-19": 8
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "KW:trucking_freight": {
+    "net_margin": 0.164,
+    "gross_margin": 0.571,
+    "operating_margin": 0.276,
+    "cost_structure": {
+      "cogs": 51,
+      "labor": 30,
+      "rent": 6,
+      "other": 13
+    },
+    "firm_distribution": {
+      "1-4": 52,
+      "5-9": 32,
+      "10-19": 16
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "KW:wholesale_food": {
+    "net_margin": 0.051,
+    "gross_margin": 0.178,
+    "operating_margin": 0.079,
+    "cost_structure": {
+      "cogs": 87,
+      "labor": 7,
+      "rent": 4,
+      "other": 3
+    },
+    "firm_distribution": {
+      "5-9": 50,
+      "10-19": 34,
+      "20-49": 16
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "KW:wholesale_general": {
+    "net_margin": 0.066,
+    "gross_margin": 0.209,
+    "operating_margin": 0.094,
+    "cost_structure": {
+      "cogs": 85,
+      "labor": 8,
+      "rent": 4,
+      "other": 3
+    },
+    "firm_distribution": {
+      "1-4": 48,
+      "5-9": 34,
+      "10-19": 18
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
   "KZ:accounting_tax": {
     "net_margin": 0.354,
     "gross_margin": 0.962,
@@ -9528,6 +14818,401 @@
       "20-49": 13
     },
     "source_model": "overnight-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "LK:apparel_mfg": {
+    "net_margin": 0.093,
+    "gross_margin": 0.434,
+    "operating_margin": 0.184,
+    "cost_structure": {
+      "cogs": 62,
+      "labor": 22,
+      "rent": 6,
+      "other": 10
+    },
+    "firm_distribution": {
+      "5-9": 68,
+      "10-19": 22,
+      "20-49": 8,
+      "50-99": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "LK:auto_repair_shops": {
+    "net_margin": 0.197,
+    "gross_margin": 0.637,
+    "operating_margin": 0.338,
+    "cost_structure": {
+      "cogs": 45,
+      "labor": 28,
+      "rent": 9,
+      "other": 18
+    },
+    "firm_distribution": {
+      "1-4": 85,
+      "5-9": 13,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "LK:bakeries_retail": {
+    "net_margin": 0.099,
+    "gross_margin": 0.535,
+    "operating_margin": 0.278,
+    "cost_structure": {
+      "cogs": 52,
+      "labor": 18,
+      "rent": 10,
+      "other": 20
+    },
+    "firm_distribution": {
+      "1-4": 84,
+      "5-9": 13,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "LK:cafes_coffee": {
+    "net_margin": 0.138,
+    "gross_margin": 0.658,
+    "operating_margin": 0.392,
+    "cost_structure": {
+      "cogs": 40,
+      "labor": 17,
+      "rent": 14,
+      "other": 29
+    },
+    "firm_distribution": {
+      "1-4": 88,
+      "5-9": 10,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "LK:cleaning_services": {
+    "net_margin": 0.279,
+    "gross_margin": 0.914,
+    "operating_margin": 0.467,
+    "cost_structure": {
+      "cogs": 12,
+      "labor": 56,
+      "rent": 6,
+      "other": 26
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 16,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "LK:clothing_stores": {
+    "net_margin": 0.129,
+    "gross_margin": 0.409,
+    "operating_margin": 0.223,
+    "cost_structure": {
+      "cogs": 68,
+      "labor": 9,
+      "rent": 12,
+      "other": 11
+    },
+    "firm_distribution": {
+      "1-4": 86,
+      "5-9": 12,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "LK:doctors_clinics": {
+    "net_margin": 0.355,
+    "gross_margin": 0.908,
+    "operating_margin": 0.611,
+    "cost_structure": {
+      "cogs": 14,
+      "labor": 30,
+      "rent": 16,
+      "other": 40
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 15,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "LK:electronics_appliance_stores": {
+    "net_margin": 0.083,
+    "gross_margin": 0.246,
+    "operating_margin": 0.127,
+    "cost_structure": {
+      "cogs": 82,
+      "labor": 6,
+      "rent": 7,
+      "other": 5
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 15,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "LK:electronics_repair": {
+    "net_margin": 0.232,
+    "gross_margin": 0.691,
+    "operating_margin": 0.369,
+    "cost_structure": {
+      "cogs": 40,
+      "labor": 30,
+      "rent": 12,
+      "other": 18
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "LK:fabricated_metal_mfg": {
+    "net_margin": 0.113,
+    "gross_margin": 0.466,
+    "operating_margin": 0.226,
+    "cost_structure": {
+      "cogs": 60,
+      "labor": 20,
+      "rent": 7,
+      "other": 13
+    },
+    "firm_distribution": {
+      "1-4": 78,
+      "5-9": 18,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "LK:furniture_mfg": {
+    "net_margin": 0.127,
+    "gross_margin": 0.474,
+    "operating_margin": 0.23,
+    "cost_structure": {
+      "cogs": 60,
+      "labor": 20,
+      "rent": 8,
+      "other": 12
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 16,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "LK:grocery_stores": {
+    "net_margin": 0.054,
+    "gross_margin": 0.207,
+    "operating_margin": 0.11,
+    "cost_structure": {
+      "cogs": 84,
+      "labor": 5,
+      "rent": 5,
+      "other": 6
+    },
+    "firm_distribution": {
+      "1-4": 88,
+      "5-9": 10,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "LK:hairdressers_beauty": {
+    "net_margin": 0.331,
+    "gross_margin": 0.88,
+    "operating_margin": 0.556,
+    "cost_structure": {
+      "cogs": 18,
+      "labor": 30,
+      "rent": 18,
+      "other": 34
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 9,
+      "10-19": 1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "LK:health_beauty_stores": {
+    "net_margin": 0.128,
+    "gross_margin": 0.345,
+    "operating_margin": 0.204,
+    "cost_structure": {
+      "cogs": 75,
+      "labor": 8,
+      "rent": 8,
+      "other": 9
+    },
+    "firm_distribution": {
+      "1-4": 88,
+      "5-9": 10,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "LK:hotels_lodging": {
+    "net_margin": 0.217,
+    "gross_margin": 0.843,
+    "operating_margin": 0.497,
+    "cost_structure": {
+      "cogs": 20,
+      "labor": 26,
+      "rent": 18,
+      "other": 36
+    },
+    "firm_distribution": {
+      "5-9": 78,
+      "10-19": 18,
+      "20-49": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "LK:restaurants": {
+    "net_margin": 0.107,
+    "gross_margin": 0.612,
+    "operating_margin": 0.32,
+    "cost_structure": {
+      "cogs": 43,
+      "labor": 21,
+      "rent": 12,
+      "other": 24
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 15,
+      "10-19": 4,
+      "20-49": 1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "LK:specialty_grocery": {
+    "net_margin": 0.084,
+    "gross_margin": 0.305,
+    "operating_margin": 0.166,
+    "cost_structure": {
+      "cogs": 76,
+      "labor": 7,
+      "rent": 8,
+      "other": 9
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "LK:tailoring_alterations": {
+    "net_margin": 0.371,
+    "gross_margin": 0.81,
+    "operating_margin": 0.546,
+    "cost_structure": {
+      "cogs": 30,
+      "labor": 28,
+      "rent": 14,
+      "other": 28
+    },
+    "firm_distribution": {
+      "1-4": 92,
+      "5-9": 8
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "LK:textiles_fabric_mfg": {
+    "net_margin": 0.083,
+    "gross_margin": 0.392,
+    "operating_margin": 0.175,
+    "cost_structure": {
+      "cogs": 66,
+      "labor": 18,
+      "rent": 6,
+      "other": 10
+    },
+    "firm_distribution": {
+      "5-9": 72,
+      "10-19": 22,
+      "20-49": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "LK:transit_ground_passenger": {
+    "net_margin": 0.167,
+    "gross_margin": 0.876,
+    "operating_margin": 0.691,
+    "cost_structure": {
+      "cogs": 15,
+      "labor": 18,
+      "rent": 4,
+      "other": 63
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 9,
+      "10-19": 1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "LK:trucking_freight": {
+    "net_margin": 0.128,
+    "gross_margin": 0.846,
+    "operating_margin": 0.668,
+    "cost_structure": {
+      "cogs": 18,
+      "labor": 16,
+      "rent": 4,
+      "other": 62
+    },
+    "firm_distribution": {
+      "1-4": 84,
+      "5-9": 13,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "LK:vocational_training": {
+    "net_margin": 0.275,
+    "gross_margin": 0.943,
+    "operating_margin": 0.446,
+    "cost_structure": {
+      "cogs": 8,
+      "labor": 51,
+      "rent": 18,
+      "other": 24
+    },
+    "firm_distribution": {
+      "1-4": 84,
+      "5-9": 14,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
     "confidence": "low"
   },
   "MA:apparel_mfg": {
@@ -11271,6 +16956,846 @@
     "source_model": "overnight-loop-2026-06-03",
     "confidence": "low"
   },
+  "OM:auto_repair_shops": {
+    "net_margin": 0.169,
+    "gross_margin": 0.643,
+    "operating_margin": 0.266,
+    "cost_structure": {
+      "cogs": 43,
+      "labor": 32,
+      "rent": 13,
+      "other": 12
+    },
+    "firm_distribution": {
+      "1-4": 64,
+      "5-9": 27,
+      "10-19": 9
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "OM:bakeries_retail": {
+    "net_margin": 0.143,
+    "gross_margin": 0.651,
+    "operating_margin": 0.243,
+    "cost_structure": {
+      "cogs": 41,
+      "labor": 28,
+      "rent": 19,
+      "other": 12
+    },
+    "firm_distribution": {
+      "1-4": 72,
+      "5-9": 22,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "OM:cafes_coffee": {
+    "net_margin": 0.138,
+    "gross_margin": 0.738,
+    "operating_margin": 0.273,
+    "cost_structure": {
+      "cogs": 30,
+      "labor": 28,
+      "rent": 26,
+      "other": 16
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 24,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "OM:clothing_stores": {
+    "net_margin": 0.113,
+    "gross_margin": 0.482,
+    "operating_margin": 0.184,
+    "cost_structure": {
+      "cogs": 58,
+      "labor": 16,
+      "rent": 17,
+      "other": 8
+    },
+    "firm_distribution": {
+      "1-4": 64,
+      "5-9": 28,
+      "10-19": 8
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "OM:dental_practices": {
+    "net_margin": 0.224,
+    "gross_margin": 0.808,
+    "operating_margin": 0.327,
+    "cost_structure": {
+      "cogs": 25,
+      "labor": 41,
+      "rent": 21,
+      "other": 13
+    },
+    "firm_distribution": {
+      "1-4": 66,
+      "5-9": 28,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "OM:doctors_clinics": {
+    "net_margin": 0.215,
+    "gross_margin": 0.833,
+    "operating_margin": 0.316,
+    "cost_structure": {
+      "cogs": 21,
+      "labor": 45,
+      "rent": 21,
+      "other": 13
+    },
+    "firm_distribution": {
+      "1-4": 52,
+      "5-9": 34,
+      "10-19": 11,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "OM:dry_cleaning_laundry": {
+    "net_margin": 0.201,
+    "gross_margin": 0.821,
+    "operating_margin": 0.326,
+    "cost_structure": {
+      "cogs": 22,
+      "labor": 36,
+      "rent": 26,
+      "other": 16
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 25,
+      "10-19": 5
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "OM:electronics_appliance_stores": {
+    "net_margin": 0.058,
+    "gross_margin": 0.26,
+    "operating_margin": 0.095,
+    "cost_structure": {
+      "cogs": 79,
+      "labor": 11,
+      "rent": 7,
+      "other": 4
+    },
+    "firm_distribution": {
+      "1-4": 60,
+      "5-9": 30,
+      "10-19": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "OM:electronics_repair": {
+    "net_margin": 0.256,
+    "gross_margin": 0.715,
+    "operating_margin": 0.345,
+    "cost_structure": {
+      "cogs": 38,
+      "labor": 34,
+      "rent": 16,
+      "other": 12
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 18
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "OM:engineering_architecture": {
+    "net_margin": 0.247,
+    "gross_margin": 0.934,
+    "operating_margin": 0.348,
+    "cost_structure": {
+      "cogs": 9,
+      "labor": 59,
+      "rent": 19,
+      "other": 13
+    },
+    "firm_distribution": {
+      "1-4": 50,
+      "5-9": 33,
+      "10-19": 13,
+      "20-49": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "OM:gas_stations": {
+    "net_margin": 0.035,
+    "gross_margin": 0.145,
+    "operating_margin": 0.063,
+    "cost_structure": {
+      "cogs": 89,
+      "labor": 6,
+      "rent": 3,
+      "other": 3
+    },
+    "firm_distribution": {
+      "5-9": 55,
+      "10-19": 35,
+      "20-49": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "OM:grocery_stores": {
+    "net_margin": 0.038,
+    "gross_margin": 0.226,
+    "operating_margin": 0.077,
+    "cost_structure": {
+      "cogs": 80,
+      "labor": 9,
+      "rent": 7,
+      "other": 4
+    },
+    "firm_distribution": {
+      "1-4": 66,
+      "5-9": 25,
+      "10-19": 7,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "OM:hairdressers_beauty": {
+    "net_margin": 0.248,
+    "gross_margin": 0.862,
+    "operating_margin": 0.366,
+    "cost_structure": {
+      "cogs": 18,
+      "labor": 39,
+      "rent": 27,
+      "other": 16
+    },
+    "firm_distribution": {
+      "1-4": 74,
+      "5-9": 22,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "OM:jewelry_stores": {
+    "net_margin": 0.077,
+    "gross_margin": 0.256,
+    "operating_margin": 0.114,
+    "cost_structure": {
+      "cogs": 81,
+      "labor": 8,
+      "rent": 8,
+      "other": 4
+    },
+    "firm_distribution": {
+      "1-4": 72,
+      "5-9": 24,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "OM:residential_construction": {
+    "net_margin": 0.102,
+    "gross_margin": 0.484,
+    "operating_margin": 0.185,
+    "cost_structure": {
+      "cogs": 57,
+      "labor": 30,
+      "rent": 3,
+      "other": 9
+    },
+    "firm_distribution": {
+      "5-9": 48,
+      "10-19": 34,
+      "20-49": 14,
+      "50-99": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "OM:restaurants": {
+    "net_margin": 0.11,
+    "gross_margin": 0.693,
+    "operating_margin": 0.248,
+    "cost_structure": {
+      "cogs": 35,
+      "labor": 31,
+      "rent": 19,
+      "other": 16
+    },
+    "firm_distribution": {
+      "1-4": 62,
+      "5-9": 26,
+      "10-19": 9,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "OM:specialty_trades": {
+    "net_margin": 0.165,
+    "gross_margin": 0.656,
+    "operating_margin": 0.277,
+    "cost_structure": {
+      "cogs": 41,
+      "labor": 37,
+      "rent": 9,
+      "other": 13
+    },
+    "firm_distribution": {
+      "1-4": 58,
+      "5-9": 28,
+      "10-19": 10,
+      "20-49": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "OM:tailoring_alterations": {
+    "net_margin": 0.272,
+    "gross_margin": 0.851,
+    "operating_margin": 0.371,
+    "cost_structure": {
+      "cogs": 20,
+      "labor": 40,
+      "rent": 26,
+      "other": 14
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 20
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "OM:trucking_freight": {
+    "net_margin": 0.136,
+    "gross_margin": 0.735,
+    "operating_margin": 0.459,
+    "cost_structure": {
+      "cogs": 31,
+      "labor": 27,
+      "rent": 5,
+      "other": 37
+    },
+    "firm_distribution": {
+      "1-4": 56,
+      "5-9": 30,
+      "10-19": 11,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "OM:vocational_training": {
+    "net_margin": 0.229,
+    "gross_margin": 0.919,
+    "operating_margin": 0.333,
+    "cost_structure": {
+      "cogs": 11,
+      "labor": 51,
+      "rent": 25,
+      "other": 13
+    },
+    "firm_distribution": {
+      "1-4": 60,
+      "5-9": 28,
+      "10-19": 12
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "OM:wholesale_food": {
+    "net_margin": 0.037,
+    "gross_margin": 0.147,
+    "operating_margin": 0.066,
+    "cost_structure": {
+      "cogs": 89,
+      "labor": 6,
+      "rent": 3,
+      "other": 3
+    },
+    "firm_distribution": {
+      "5-9": 54,
+      "10-19": 34,
+      "20-49": 12
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "OM:wholesale_general": {
+    "net_margin": 0.052,
+    "gross_margin": 0.169,
+    "operating_margin": 0.08,
+    "cost_structure": {
+      "cogs": 88,
+      "labor": 6,
+      "rent": 4,
+      "other": 3
+    },
+    "firm_distribution": {
+      "5-9": 52,
+      "10-19": 33,
+      "20-49": 15
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PA:accounting_tax": {
+    "net_margin": 0.337,
+    "gross_margin": 0.967,
+    "operating_margin": 0.565,
+    "cost_structure": {
+      "cogs": 5,
+      "labor": 46,
+      "rent": 15,
+      "other": 34
+    },
+    "firm_distribution": {
+      "1-4": 72,
+      "5-9": 22,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PA:auto_repair_shops": {
+    "net_margin": 0.196,
+    "gross_margin": 0.672,
+    "operating_margin": 0.348,
+    "cost_structure": {
+      "cogs": 41,
+      "labor": 29,
+      "rent": 12,
+      "other": 19
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 24,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PA:bakeries_retail": {
+    "net_margin": 0.117,
+    "gross_margin": 0.626,
+    "operating_margin": 0.269,
+    "cost_structure": {
+      "cogs": 42,
+      "labor": 29,
+      "rent": 12,
+      "other": 17
+    },
+    "firm_distribution": {
+      "1-4": 68,
+      "5-9": 25,
+      "10-19": 7
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PA:cafes_coffee": {
+    "net_margin": 0.11,
+    "gross_margin": 0.721,
+    "operating_margin": 0.288,
+    "cost_structure": {
+      "cogs": 31,
+      "labor": 31,
+      "rent": 18,
+      "other": 20
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 24,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PA:cleaning_services": {
+    "net_margin": 0.21,
+    "gross_margin": 0.905,
+    "operating_margin": 0.394,
+    "cost_structure": {
+      "cogs": 12,
+      "labor": 60,
+      "rent": 5,
+      "other": 23
+    },
+    "firm_distribution": {
+      "1-4": 60,
+      "5-9": 28,
+      "10-19": 9,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PA:clothing_stores": {
+    "net_margin": 0.1,
+    "gross_margin": 0.472,
+    "operating_margin": 0.187,
+    "cost_structure": {
+      "cogs": 59,
+      "labor": 16,
+      "rent": 16,
+      "other": 10
+    },
+    "firm_distribution": {
+      "1-4": 72,
+      "5-9": 22,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PA:dental_practices": {
+    "net_margin": 0.281,
+    "gross_margin": 0.854,
+    "operating_margin": 0.472,
+    "cost_structure": {
+      "cogs": 20,
+      "labor": 37,
+      "rent": 16,
+      "other": 27
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 24,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PA:doctors_clinics": {
+    "net_margin": 0.276,
+    "gross_margin": 0.895,
+    "operating_margin": 0.48,
+    "cost_structure": {
+      "cogs": 14,
+      "labor": 42,
+      "rent": 16,
+      "other": 28
+    },
+    "firm_distribution": {
+      "1-4": 64,
+      "5-9": 26,
+      "10-19": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PA:electronics_repair": {
+    "net_margin": 0.232,
+    "gross_margin": 0.645,
+    "operating_margin": 0.367,
+    "cost_structure": {
+      "cogs": 46,
+      "labor": 24,
+      "rent": 12,
+      "other": 18
+    },
+    "firm_distribution": {
+      "1-4": 85.7,
+      "5-9": 14.3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PA:gas_stations": {
+    "net_margin": 0.033,
+    "gross_margin": 0.136,
+    "operating_margin": 0.062,
+    "cost_structure": {
+      "cogs": 89,
+      "labor": 5,
+      "rent": 3,
+      "other": 3
+    },
+    "firm_distribution": {
+      "5-9": 64,
+      "10-19": 30,
+      "20-49": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PA:grocery_stores": {
+    "net_margin": 0.038,
+    "gross_margin": 0.227,
+    "operating_margin": 0.084,
+    "cost_structure": {
+      "cogs": 80,
+      "labor": 8,
+      "rent": 7,
+      "other": 5
+    },
+    "firm_distribution": {
+      "1-4": 74,
+      "5-9": 18,
+      "10-19": 6,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PA:hairdressers_beauty": {
+    "net_margin": 0.31,
+    "gross_margin": 0.902,
+    "operating_margin": 0.541,
+    "cost_structure": {
+      "cogs": 14,
+      "labor": 35,
+      "rent": 17,
+      "other": 33
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 15,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PA:health_beauty_stores": {
+    "net_margin": 0.074,
+    "gross_margin": 0.342,
+    "operating_margin": 0.129,
+    "cost_structure": {
+      "cogs": 71,
+      "labor": 14,
+      "rent": 9,
+      "other": 6
+    },
+    "firm_distribution": {
+      "1-4": 56,
+      "5-9": 32,
+      "10-19": 12
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PA:hotels_lodging": {
+    "net_margin": 0.165,
+    "gross_margin": 0.85,
+    "operating_margin": 0.406,
+    "cost_structure": {
+      "cogs": 18,
+      "labor": 32,
+      "rent": 21,
+      "other": 29
+    },
+    "firm_distribution": {
+      "1-4": 52,
+      "5-9": 30,
+      "10-19": 13,
+      "20-49": 5
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PA:legal_services": {
+    "net_margin": 0.373,
+    "gross_margin": 0.962,
+    "operating_margin": 0.586,
+    "cost_structure": {
+      "cogs": 6,
+      "labor": 45,
+      "rent": 16,
+      "other": 34
+    },
+    "firm_distribution": {
+      "1-4": 66,
+      "5-9": 24,
+      "10-19": 8,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PA:real_estate_agencies": {
+    "net_margin": 0.32,
+    "gross_margin": 0.946,
+    "operating_margin": 0.568,
+    "cost_structure": {
+      "cogs": 8,
+      "labor": 40,
+      "rent": 16,
+      "other": 37
+    },
+    "firm_distribution": {
+      "1-4": 76,
+      "5-9": 18,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PA:residential_construction": {
+    "net_margin": 0.12,
+    "gross_margin": 0.53,
+    "operating_margin": 0.242,
+    "cost_structure": {
+      "cogs": 53,
+      "labor": 30,
+      "rent": 3,
+      "other": 14
+    },
+    "firm_distribution": {
+      "1-4": 55,
+      "5-9": 28,
+      "10-19": 12,
+      "20-49": 5
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PA:restaurants": {
+    "net_margin": 0.101,
+    "gross_margin": 0.671,
+    "operating_margin": 0.281,
+    "cost_structure": {
+      "cogs": 37,
+      "labor": 29,
+      "rent": 14,
+      "other": 20
+    },
+    "firm_distribution": {
+      "1-4": 62,
+      "5-9": 26,
+      "10-19": 9,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PA:security_services": {
+    "net_margin": 0.125,
+    "gross_margin": 0.935,
+    "operating_margin": 0.257,
+    "cost_structure": {
+      "cogs": 7,
+      "labor": 74,
+      "rent": 3,
+      "other": 15
+    },
+    "firm_distribution": {
+      "5-9": 46,
+      "10-19": 34,
+      "20-49": 20
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PA:specialty_trades": {
+    "net_margin": 0.194,
+    "gross_margin": 0.655,
+    "operating_margin": 0.338,
+    "cost_structure": {
+      "cogs": 43,
+      "labor": 34,
+      "rent": 6,
+      "other": 18
+    },
+    "firm_distribution": {
+      "1-4": 68,
+      "5-9": 24,
+      "10-19": 8
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PA:transit_ground_passenger": {
+    "net_margin": 0.18,
+    "gross_margin": 0.75,
+    "operating_margin": 0.53,
+    "cost_structure": {
+      "cogs": 30,
+      "labor": 23,
+      "rent": 4,
+      "other": 43
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 16,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PA:travel_agencies": {
+    "net_margin": 0.247,
+    "gross_margin": 0.83,
+    "operating_margin": 0.436,
+    "cost_structure": {
+      "cogs": 23,
+      "labor": 41,
+      "rent": 12,
+      "other": 25
+    },
+    "firm_distribution": {
+      "1-4": 74,
+      "5-9": 20,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PA:trucking_freight": {
+    "net_margin": 0.133,
+    "gross_margin": 0.697,
+    "operating_margin": 0.464,
+    "cost_structure": {
+      "cogs": 35,
+      "labor": 23,
+      "rent": 4,
+      "other": 38
+    },
+    "firm_distribution": {
+      "1-4": 64,
+      "5-9": 26,
+      "10-19": 8,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PA:wholesale_general": {
+    "net_margin": 0.054,
+    "gross_margin": 0.179,
+    "operating_margin": 0.09,
+    "cost_structure": {
+      "cogs": 87,
+      "labor": 6,
+      "rent": 3,
+      "other": 4
+    },
+    "firm_distribution": {
+      "1-4": 48,
+      "5-9": 32,
+      "10-19": 14,
+      "20-49": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
   "PE:apparel_mfg": {
     "net_margin": 0.137,
     "gross_margin": 0.546,
@@ -12669,6 +19194,404 @@
       "10-19": 6
     },
     "source_model": "overnight-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PY:accounting_tax": {
+    "net_margin": 0.358,
+    "gross_margin": 0.951,
+    "operating_margin": 0.556,
+    "cost_structure": {
+      "cogs": 8,
+      "labor": 50,
+      "rent": 12,
+      "other": 31
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 16,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PY:auto_repair_shops": {
+    "net_margin": 0.2,
+    "gross_margin": 0.676,
+    "operating_margin": 0.37,
+    "cost_structure": {
+      "cogs": 41,
+      "labor": 28,
+      "rent": 10,
+      "other": 21
+    },
+    "firm_distribution": {
+      "1-4": 78,
+      "5-9": 18,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PY:bakeries_retail": {
+    "net_margin": 0.122,
+    "gross_margin": 0.594,
+    "operating_margin": 0.258,
+    "cost_structure": {
+      "cogs": 46,
+      "labor": 29,
+      "rent": 10,
+      "other": 15
+    },
+    "firm_distribution": {
+      "1-4": 76,
+      "5-9": 20,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PY:bars_nightclubs": {
+    "net_margin": 0.131,
+    "gross_margin": 0.64,
+    "operating_margin": 0.303,
+    "cost_structure": {
+      "cogs": 41,
+      "labor": 25,
+      "rent": 14,
+      "other": 20
+    },
+    "firm_distribution": {
+      "1-4": 74,
+      "5-9": 20,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PY:cafes_coffee": {
+    "net_margin": 0.133,
+    "gross_margin": 0.725,
+    "operating_margin": 0.32,
+    "cost_structure": {
+      "cogs": 32,
+      "labor": 31,
+      "rent": 16,
+      "other": 22
+    },
+    "firm_distribution": {
+      "1-4": 78,
+      "5-9": 18,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PY:cleaning_services": {
+    "net_margin": 0.244,
+    "gross_margin": 0.899,
+    "operating_margin": 0.417,
+    "cost_structure": {
+      "cogs": 13,
+      "labor": 58,
+      "rent": 6,
+      "other": 23
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 22,
+      "10-19": 6,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PY:clothing_stores": {
+    "net_margin": 0.105,
+    "gross_margin": 0.441,
+    "operating_margin": 0.21,
+    "cost_structure": {
+      "cogs": 62,
+      "labor": 14,
+      "rent": 12,
+      "other": 12
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 16,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PY:dental_practices": {
+    "net_margin": 0.28,
+    "gross_margin": 0.839,
+    "operating_margin": 0.504,
+    "cost_structure": {
+      "cogs": 22,
+      "labor": 33,
+      "rent": 14,
+      "other": 31
+    },
+    "firm_distribution": {
+      "1-4": 84,
+      "5-9": 13,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PY:electronics_repair": {
+    "net_margin": 0.233,
+    "gross_margin": 0.675,
+    "operating_margin": 0.384,
+    "cost_structure": {
+      "cogs": 42,
+      "labor": 26,
+      "rent": 12,
+      "other": 20
+    },
+    "firm_distribution": {
+      "1-4": 88,
+      "5-9": 12
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PY:gas_stations": {
+    "net_margin": 0.031,
+    "gross_margin": 0.143,
+    "operating_margin": 0.07,
+    "cost_structure": {
+      "cogs": 88,
+      "labor": 5,
+      "rent": 3,
+      "other": 4
+    },
+    "firm_distribution": {
+      "5-9": 64,
+      "10-19": 28,
+      "20-49": 8
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PY:grocery_stores": {
+    "net_margin": 0.039,
+    "gross_margin": 0.229,
+    "operating_margin": 0.104,
+    "cost_structure": {
+      "cogs": 80,
+      "labor": 8,
+      "rent": 5,
+      "other": 7
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 13,
+      "10-19": 4,
+      "20-49": 1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PY:hairdressers_beauty": {
+    "net_margin": 0.338,
+    "gross_margin": 0.881,
+    "operating_margin": 0.569,
+    "cost_structure": {
+      "cogs": 18,
+      "labor": 31,
+      "rent": 16,
+      "other": 35
+    },
+    "firm_distribution": {
+      "1-4": 85,
+      "5-9": 13,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PY:hardware_stores": {
+    "net_margin": 0.099,
+    "gross_margin": 0.364,
+    "operating_margin": 0.186,
+    "cost_structure": {
+      "cogs": 71,
+      "labor": 12,
+      "rent": 8,
+      "other": 10
+    },
+    "firm_distribution": {
+      "1-4": 76,
+      "5-9": 18,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PY:health_beauty_stores": {
+    "net_margin": 0.08,
+    "gross_margin": 0.331,
+    "operating_margin": 0.15,
+    "cost_structure": {
+      "cogs": 73,
+      "labor": 12,
+      "rent": 8,
+      "other": 8
+    },
+    "firm_distribution": {
+      "1-4": 72,
+      "5-9": 22,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PY:legal_services": {
+    "net_margin": 0.397,
+    "gross_margin": 0.971,
+    "operating_margin": 0.601,
+    "cost_structure": {
+      "cogs": 5,
+      "labor": 48,
+      "rent": 14,
+      "other": 34
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 14,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PY:residential_construction": {
+    "net_margin": 0.136,
+    "gross_margin": 0.544,
+    "operating_margin": 0.251,
+    "cost_structure": {
+      "cogs": 53,
+      "labor": 30,
+      "rent": 4,
+      "other": 13
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 22,
+      "10-19": 6,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PY:restaurants": {
+    "net_margin": 0.103,
+    "gross_margin": 0.665,
+    "operating_margin": 0.28,
+    "cost_structure": {
+      "cogs": 37,
+      "labor": 31,
+      "rent": 12,
+      "other": 20
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 22,
+      "10-19": 6,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PY:specialty_trades": {
+    "net_margin": 0.207,
+    "gross_margin": 0.679,
+    "operating_margin": 0.376,
+    "cost_structure": {
+      "cogs": 40,
+      "labor": 32,
+      "rent": 6,
+      "other": 21
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 16,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PY:tailoring_alterations": {
+    "net_margin": 0.371,
+    "gross_margin": 0.848,
+    "operating_margin": 0.579,
+    "cost_structure": {
+      "cogs": 24,
+      "labor": 31,
+      "rent": 12,
+      "other": 33
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PY:trucking_freight": {
+    "net_margin": 0.13,
+    "gross_margin": 0.524,
+    "operating_margin": 0.296,
+    "cost_structure": {
+      "cogs": 55,
+      "labor": 23,
+      "rent": 4,
+      "other": 19
+    },
+    "firm_distribution": {
+      "1-4": 74,
+      "5-9": 20,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PY:veterinary_pet_care": {
+    "net_margin": 0.22,
+    "gross_margin": 0.7,
+    "operating_margin": 0.386,
+    "cost_structure": {
+      "cogs": 38,
+      "labor": 28,
+      "rent": 12,
+      "other": 21
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 14,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "PY:wholesale_food": {
+    "net_margin": 0.037,
+    "gross_margin": 0.168,
+    "operating_margin": 0.075,
+    "cost_structure": {
+      "cogs": 86,
+      "labor": 6,
+      "rent": 4,
+      "other": 4
+    },
+    "firm_distribution": {
+      "1-4": 64,
+      "5-9": 26,
+      "10-19": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
     "confidence": "low"
   },
   "QA:air_conditioning_refrigeration": {
@@ -14131,6 +21054,414 @@
     "source_model": "ru_smb_atlas_2026-06",
     "confidence": "modeled"
   },
+  "RW:auto_repair_shops": {
+    "net_margin": 0.23,
+    "gross_margin": 0.613,
+    "operating_margin": 0.41,
+    "cost_structure": {
+      "cogs": 50,
+      "labor": 20,
+      "rent": 6,
+      "other": 23
+    },
+    "firm_distribution": {
+      "1-4": 84,
+      "5-9": 16
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "RW:bakeries_retail": {
+    "net_margin": 0.096,
+    "gross_margin": 0.51,
+    "operating_margin": 0.29,
+    "cost_structure": {
+      "cogs": 54,
+      "labor": 17,
+      "rent": 8,
+      "other": 21
+    },
+    "firm_distribution": {
+      "1-4": 74,
+      "5-9": 26
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "RW:barbershops": {
+    "net_margin": 0.4,
+    "gross_margin": 0.904,
+    "operating_margin": 0.73,
+    "cost_structure": {
+      "cogs": 16,
+      "labor": 16,
+      "rent": 13,
+      "other": 55
+    },
+    "firm_distribution": {
+      "1-4": 100
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "RW:cafes_coffee": {
+    "net_margin": 0.137,
+    "gross_margin": 0.673,
+    "operating_margin": 0.416,
+    "cost_structure": {
+      "cogs": 38,
+      "labor": 17,
+      "rent": 13,
+      "other": 32
+    },
+    "firm_distribution": {
+      "1-4": 87,
+      "5-9": 13
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "RW:clothing_stores": {
+    "net_margin": 0.137,
+    "gross_margin": 0.45,
+    "operating_margin": 0.299,
+    "cost_structure": {
+      "cogs": 64,
+      "labor": 7,
+      "rent": 10,
+      "other": 19
+    },
+    "firm_distribution": {
+      "1-4": 86,
+      "5-9": 14
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "RW:daycare_preschool": {
+    "net_margin": 0.192,
+    "gross_margin": 0.921,
+    "operating_margin": 0.43,
+    "cost_structure": {
+      "cogs": 10,
+      "labor": 47,
+      "rent": 14,
+      "other": 29
+    },
+    "firm_distribution": {
+      "1-4": 74,
+      "5-9": 26
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "RW:electronics_appliance_stores": {
+    "net_margin": 0.068,
+    "gross_margin": 0.234,
+    "operating_margin": 0.13,
+    "cost_structure": {
+      "cogs": 82,
+      "labor": 5,
+      "rent": 6,
+      "other": 7
+    },
+    "firm_distribution": {
+      "1-4": 83,
+      "5-9": 17
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "RW:electronics_repair": {
+    "net_margin": 0.32,
+    "gross_margin": 0.701,
+    "operating_margin": 0.551,
+    "cost_structure": {
+      "cogs": 44,
+      "labor": 14,
+      "rent": 8,
+      "other": 34
+    },
+    "firm_distribution": {
+      "1-4": 100
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "RW:gas_stations": {
+    "net_margin": 0.038,
+    "gross_margin": 0.14,
+    "operating_margin": 0.077,
+    "cost_structure": {
+      "cogs": 89,
+      "labor": 4,
+      "rent": 3,
+      "other": 4
+    },
+    "firm_distribution": {
+      "5-9": 62,
+      "10-19": 38
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "RW:grain_farming": {
+    "net_margin": 0.19,
+    "gross_margin": 0.603,
+    "operating_margin": 0.368,
+    "cost_structure": {
+      "cogs": 49,
+      "labor": 22,
+      "rent": 7,
+      "other": 22
+    },
+    "firm_distribution": {
+      "1-4": 100
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "RW:grocery_stores": {
+    "net_margin": 0.073,
+    "gross_margin": 0.257,
+    "operating_margin": 0.145,
+    "cost_structure": {
+      "cogs": 80,
+      "labor": 5,
+      "rent": 7,
+      "other": 8
+    },
+    "firm_distribution": {
+      "1-4": 87,
+      "5-9": 11,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "RW:hairdressers_beauty": {
+    "net_margin": 0.357,
+    "gross_margin": 0.845,
+    "operating_margin": 0.647,
+    "cost_structure": {
+      "cogs": 24,
+      "labor": 19,
+      "rent": 12,
+      "other": 45
+    },
+    "firm_distribution": {
+      "1-4": 88,
+      "5-9": 12
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "RW:health_beauty_stores": {
+    "net_margin": 0.097,
+    "gross_margin": 0.33,
+    "operating_margin": 0.2,
+    "cost_structure": {
+      "cogs": 74,
+      "labor": 7,
+      "rent": 7,
+      "other": 11
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 20
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "RW:hotels_lodging": {
+    "net_margin": 0.162,
+    "gross_margin": 0.837,
+    "operating_margin": 0.524,
+    "cost_structure": {
+      "cogs": 19,
+      "labor": 28,
+      "rent": 10,
+      "other": 43
+    },
+    "firm_distribution": {
+      "1-4": 58,
+      "5-9": 30,
+      "10-19": 12
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "RW:livestock_farming": {
+    "net_margin": 0.141,
+    "gross_margin": 0.482,
+    "operating_margin": 0.343,
+    "cost_structure": {
+      "cogs": 60,
+      "labor": 12,
+      "rent": 4,
+      "other": 23
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 18
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "RW:residential_construction": {
+    "net_margin": 0.15,
+    "gross_margin": 0.5,
+    "operating_margin": 0.285,
+    "cost_structure": {
+      "cogs": 59,
+      "labor": 23,
+      "rent": 2,
+      "other": 16
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 22,
+      "10-19": 8
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "RW:restaurants": {
+    "net_margin": 0.116,
+    "gross_margin": 0.631,
+    "operating_margin": 0.382,
+    "cost_structure": {
+      "cogs": 42,
+      "labor": 17,
+      "rent": 11,
+      "other": 30
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 15,
+      "10-19": 5
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "RW:specialty_grocery": {
+    "net_margin": 0.089,
+    "gross_margin": 0.306,
+    "operating_margin": 0.195,
+    "cost_structure": {
+      "cogs": 76,
+      "labor": 6,
+      "rent": 6,
+      "other": 12
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "RW:specialty_trades": {
+    "net_margin": 0.231,
+    "gross_margin": 0.644,
+    "operating_margin": 0.42,
+    "cost_structure": {
+      "cogs": 46,
+      "labor": 25,
+      "rent": 4,
+      "other": 25
+    },
+    "firm_distribution": {
+      "1-4": 86,
+      "5-9": 14
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "RW:tailoring_alterations": {
+    "net_margin": 0.315,
+    "gross_margin": 0.725,
+    "operating_margin": 0.557,
+    "cost_structure": {
+      "cogs": 40,
+      "labor": 16,
+      "rent": 8,
+      "other": 35
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "RW:transit_ground_passenger": {
+    "net_margin": 0.168,
+    "gross_margin": 0.599,
+    "operating_margin": 0.471,
+    "cost_structure": {
+      "cogs": 48,
+      "labor": 12,
+      "rent": 3,
+      "other": 36
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "RW:trucking_freight": {
+    "net_margin": 0.134,
+    "gross_margin": 0.519,
+    "operating_margin": 0.369,
+    "cost_structure": {
+      "cogs": 56,
+      "labor": 14,
+      "rent": 3,
+      "other": 27
+    },
+    "firm_distribution": {
+      "1-4": 72,
+      "5-9": 28
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "RW:vegetable_fruit_farming": {
+    "net_margin": 0.2,
+    "gross_margin": 0.632,
+    "operating_margin": 0.392,
+    "cost_structure": {
+      "cogs": 46,
+      "labor": 24,
+      "rent": 6,
+      "other": 24
+    },
+    "firm_distribution": {
+      "1-4": 100
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "RW:wholesale_food": {
+    "net_margin": 0.052,
+    "gross_margin": 0.173,
+    "operating_margin": 0.107,
+    "cost_structure": {
+      "cogs": 87,
+      "labor": 4,
+      "rent": 3,
+      "other": 6
+    },
+    "firm_distribution": {
+      "1-4": 74,
+      "5-9": 26
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
   "SA:accounting_tax": {
     "net_margin": 0.329,
     "gross_margin": 0.956,
@@ -15100,6 +22431,449 @@
     "source_model": "overnight-loop-2026-06-03",
     "confidence": "low"
   },
+  "TN:accounting_tax": {
+    "net_margin": 0.404,
+    "gross_margin": 0.97,
+    "operating_margin": 0.662,
+    "cost_structure": {
+      "cogs": 5,
+      "labor": 39,
+      "rent": 13,
+      "other": 43
+    },
+    "firm_distribution": {
+      "1-4": 88,
+      "5-9": 10,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TN:apparel_mfg": {
+    "net_margin": 0.139,
+    "gross_margin": 0.579,
+    "operating_margin": 0.252,
+    "cost_structure": {
+      "cogs": 49,
+      "labor": 32,
+      "rent": 6,
+      "other": 13
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 18,
+      "10-19": 8,
+      "20-49": 3,
+      "50-99": 1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TN:auto_repair_shops": {
+    "net_margin": 0.203,
+    "gross_margin": 0.679,
+    "operating_margin": 0.398,
+    "cost_structure": {
+      "cogs": 40,
+      "labor": 26,
+      "rent": 9,
+      "other": 24
+    },
+    "firm_distribution": {
+      "1-4": 86,
+      "5-9": 11,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TN:bakeries_retail": {
+    "net_margin": 0.101,
+    "gross_margin": 0.593,
+    "operating_margin": 0.285,
+    "cost_structure": {
+      "cogs": 45,
+      "labor": 26,
+      "rent": 9,
+      "other": 20
+    },
+    "firm_distribution": {
+      "1-4": 76,
+      "5-9": 20,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TN:cafes_coffee": {
+    "net_margin": 0.167,
+    "gross_margin": 0.75,
+    "operating_margin": 0.413,
+    "cost_structure": {
+      "cogs": 30,
+      "labor": 28,
+      "rent": 13,
+      "other": 30
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 17,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TN:clothing_stores": {
+    "net_margin": 0.136,
+    "gross_margin": 0.496,
+    "operating_margin": 0.272,
+    "cost_structure": {
+      "cogs": 58,
+      "labor": 14,
+      "rent": 12,
+      "other": 16
+    },
+    "firm_distribution": {
+      "1-4": 85,
+      "5-9": 12,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TN:custom_furniture_makers": {
+    "net_margin": 0.202,
+    "gross_margin": 0.614,
+    "operating_margin": 0.326,
+    "cost_structure": {
+      "cogs": 48,
+      "labor": 30,
+      "rent": 6,
+      "other": 15
+    },
+    "firm_distribution": {
+      "1-4": 84,
+      "5-9": 13,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TN:doctors_clinics": {
+    "net_margin": 0.388,
+    "gross_margin": 0.912,
+    "operating_margin": 0.633,
+    "cost_structure": {
+      "cogs": 14,
+      "labor": 31,
+      "rent": 15,
+      "other": 40
+    },
+    "firm_distribution": {
+      "1-4": 86,
+      "5-9": 12,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TN:dry_cleaning_laundry": {
+    "net_margin": 0.24,
+    "gross_margin": 0.832,
+    "operating_margin": 0.48,
+    "cost_structure": {
+      "cogs": 22,
+      "labor": 32,
+      "rent": 14,
+      "other": 32
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 9,
+      "10-19": 1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TN:food_mfg": {
+    "net_margin": 0.098,
+    "gross_margin": 0.45,
+    "operating_margin": 0.237,
+    "cost_structure": {
+      "cogs": 61,
+      "labor": 18,
+      "rent": 6,
+      "other": 15
+    },
+    "firm_distribution": {
+      "1-4": 68,
+      "5-9": 20,
+      "10-19": 8,
+      "20-49": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TN:gas_stations": {
+    "net_margin": 0.038,
+    "gross_margin": 0.144,
+    "operating_margin": 0.077,
+    "cost_structure": {
+      "cogs": 89,
+      "labor": 5,
+      "rent": 2,
+      "other": 4
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 26,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TN:grocery_stores": {
+    "net_margin": 0.039,
+    "gross_margin": 0.229,
+    "operating_margin": 0.097,
+    "cost_structure": {
+      "cogs": 80,
+      "labor": 9,
+      "rent": 5,
+      "other": 6
+    },
+    "firm_distribution": {
+      "1-4": 88,
+      "5-9": 8,
+      "10-19": 3,
+      "20-49": 1,
+      "50-99": 0
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TN:hairdressers_beauty": {
+    "net_margin": 0.308,
+    "gross_margin": 0.902,
+    "operating_margin": 0.567,
+    "cost_structure": {
+      "cogs": 14,
+      "labor": 34,
+      "rent": 15,
+      "other": 37
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 9,
+      "10-19": 1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TN:health_beauty_stores": {
+    "net_margin": 0.106,
+    "gross_margin": 0.371,
+    "operating_margin": 0.203,
+    "cost_structure": {
+      "cogs": 70,
+      "labor": 12,
+      "rent": 7,
+      "other": 11
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 15,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TN:hotels_lodging": {
+    "net_margin": 0.144,
+    "gross_margin": 0.818,
+    "operating_margin": 0.391,
+    "cost_structure": {
+      "cogs": 21,
+      "labor": 35,
+      "rent": 15,
+      "other": 29
+    },
+    "firm_distribution": {
+      "1-4": 58,
+      "5-9": 26,
+      "10-19": 10,
+      "20-49": 4,
+      "50-99": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TN:legal_services": {
+    "net_margin": 0.442,
+    "gross_margin": 0.967,
+    "operating_margin": 0.69,
+    "cost_structure": {
+      "cogs": 6,
+      "labor": 36,
+      "rent": 14,
+      "other": 44
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 9,
+      "10-19": 1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TN:metal_fab_machine_shops": {
+    "net_margin": 0.192,
+    "gross_margin": 0.625,
+    "operating_margin": 0.334,
+    "cost_structure": {
+      "cogs": 46,
+      "labor": 30,
+      "rent": 6,
+      "other": 18
+    },
+    "firm_distribution": {
+      "1-4": 83,
+      "5-9": 14,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TN:residential_construction": {
+    "net_margin": 0.143,
+    "gross_margin": 0.55,
+    "operating_margin": 0.274,
+    "cost_structure": {
+      "cogs": 53,
+      "labor": 30,
+      "rent": 2,
+      "other": 15
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 14,
+      "10-19": 4,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TN:restaurants": {
+    "net_margin": 0.106,
+    "gross_margin": 0.664,
+    "operating_margin": 0.303,
+    "cost_structure": {
+      "cogs": 38,
+      "labor": 29,
+      "rent": 12,
+      "other": 22
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 14,
+      "10-19": 3,
+      "20-49": 1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TN:software_development": {
+    "net_margin": 0.291,
+    "gross_margin": 0.943,
+    "operating_margin": 0.467,
+    "cost_structure": {
+      "cogs": 8,
+      "labor": 58,
+      "rent": 9,
+      "other": 25
+    },
+    "firm_distribution": {
+      "1-4": 64,
+      "5-9": 24,
+      "10-19": 8,
+      "20-49": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TN:specialty_trades": {
+    "net_margin": 0.257,
+    "gross_margin": 0.686,
+    "operating_margin": 0.425,
+    "cost_structure": {
+      "cogs": 42,
+      "labor": 30,
+      "rent": 5,
+      "other": 23
+    },
+    "firm_distribution": {
+      "1-4": 88,
+      "5-9": 10,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TN:transit_ground_passenger": {
+    "net_margin": 0.216,
+    "gross_margin": 0.734,
+    "operating_margin": 0.564,
+    "cost_structure": {
+      "cogs": 34,
+      "labor": 19,
+      "rent": 3,
+      "other": 44
+    },
+    "firm_distribution": {
+      "1-4": 92,
+      "5-9": 7,
+      "10-19": 1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TN:trucking_freight": {
+    "net_margin": 0.144,
+    "gross_margin": 0.743,
+    "operating_margin": 0.535,
+    "cost_structure": {
+      "cogs": 30,
+      "labor": 21,
+      "rent": 3,
+      "other": 46
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 14,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TN:wholesale_food": {
+    "net_margin": 0.052,
+    "gross_margin": 0.171,
+    "operating_margin": 0.09,
+    "cost_structure": {
+      "cogs": 87,
+      "labor": 6,
+      "rent": 3,
+      "other": 4
+    },
+    "firm_distribution": {
+      "1-4": 64,
+      "5-9": 26,
+      "10-19": 8,
+      "20-49": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
   "TR:apparel_mfg": {
     "net_margin": 0.118,
     "gross_margin": 0.476,
@@ -15535,6 +23309,400 @@
       "20-49": 1
     },
     "source_model": "overnight-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TZ:auto_repair_shops": {
+    "net_margin": 0.269,
+    "gross_margin": 0.703,
+    "operating_margin": 0.478,
+    "cost_structure": {
+      "cogs": 41,
+      "labor": 19,
+      "rent": 12,
+      "other": 29
+    },
+    "firm_distribution": {
+      "1-4": 86,
+      "5-9": 11,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TZ:bars_nightclubs": {
+    "net_margin": 0.17,
+    "gross_margin": 0.54,
+    "operating_margin": 0.303,
+    "cost_structure": {
+      "cogs": 55,
+      "labor": 15,
+      "rent": 14,
+      "other": 16
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 15,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TZ:cleaning_services": {
+    "net_margin": 0.27,
+    "gross_margin": 0.898,
+    "operating_margin": 0.492,
+    "cost_structure": {
+      "cogs": 14,
+      "labor": 50,
+      "rent": 6,
+      "other": 30
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 16,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TZ:clothing_stores": {
+    "net_margin": 0.193,
+    "gross_margin": 0.497,
+    "operating_margin": 0.317,
+    "cost_structure": {
+      "cogs": 62,
+      "labor": 9,
+      "rent": 14,
+      "other": 15
+    },
+    "firm_distribution": {
+      "1-4": 88,
+      "5-9": 10,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TZ:doctors_clinics": {
+    "net_margin": 0.218,
+    "gross_margin": 0.761,
+    "operating_margin": 0.397,
+    "cost_structure": {
+      "cogs": 31,
+      "labor": 31,
+      "rent": 15,
+      "other": 23
+    },
+    "firm_distribution": {
+      "1-4": 75,
+      "5-9": 21,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TZ:electronics_repair": {
+    "net_margin": 0.329,
+    "gross_margin": 0.77,
+    "operating_margin": 0.566,
+    "cost_structure": {
+      "cogs": 34,
+      "labor": 17,
+      "rent": 14,
+      "other": 35
+    },
+    "firm_distribution": {
+      "1-4": 93,
+      "5-9": 7
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TZ:food_mfg": {
+    "net_margin": 0.142,
+    "gross_margin": 0.498,
+    "operating_margin": 0.304,
+    "cost_structure": {
+      "cogs": 59,
+      "labor": 15,
+      "rent": 8,
+      "other": 19
+    },
+    "firm_distribution": {
+      "1-4": 80,
+      "5-9": 15,
+      "10-19": 4,
+      "20-49": 1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TZ:furniture_mfg": {
+    "net_margin": 0.252,
+    "gross_margin": 0.623,
+    "operating_margin": 0.424,
+    "cost_structure": {
+      "cogs": 50,
+      "labor": 19,
+      "rent": 8,
+      "other": 23
+    },
+    "firm_distribution": {
+      "1-4": 88,
+      "5-9": 10,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TZ:gas_stations": {
+    "net_margin": 0.034,
+    "gross_margin": 0.128,
+    "operating_margin": 0.063,
+    "cost_structure": {
+      "cogs": 90,
+      "labor": 4,
+      "rent": 3,
+      "other": 3
+    },
+    "firm_distribution": {
+      "5-9": 75,
+      "10-19": 25
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TZ:general_merchandise": {
+    "net_margin": 0.135,
+    "gross_margin": 0.375,
+    "operating_margin": 0.218,
+    "cost_structure": {
+      "cogs": 72,
+      "labor": 6,
+      "rent": 12,
+      "other": 10
+    },
+    "firm_distribution": {
+      "1-4": 88,
+      "5-9": 10,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TZ:grocery_stores": {
+    "net_margin": 0.063,
+    "gross_margin": 0.25,
+    "operating_margin": 0.127,
+    "cost_structure": {
+      "cogs": 80,
+      "labor": 6,
+      "rent": 7,
+      "other": 7
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 8,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TZ:hairdressers_beauty": {
+    "net_margin": 0.365,
+    "gross_margin": 0.884,
+    "operating_margin": 0.601,
+    "cost_structure": {
+      "cogs": 18,
+      "labor": 23,
+      "rent": 22,
+      "other": 37
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 9,
+      "10-19": 1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TZ:health_beauty_stores": {
+    "net_margin": 0.163,
+    "gross_margin": 0.428,
+    "operating_margin": 0.26,
+    "cost_structure": {
+      "cogs": 68,
+      "labor": 8,
+      "rent": 12,
+      "other": 12
+    },
+    "firm_distribution": {
+      "1-4": 85,
+      "5-9": 13,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TZ:hotels_lodging": {
+    "net_margin": 0.196,
+    "gross_margin": 0.817,
+    "operating_margin": 0.431,
+    "cost_structure": {
+      "cogs": 23,
+      "labor": 29,
+      "rent": 19,
+      "other": 29
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 24,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TZ:primary_secondary_schools": {
+    "net_margin": 0.127,
+    "gross_margin": 0.904,
+    "operating_margin": 0.293,
+    "cost_structure": {
+      "cogs": 11,
+      "labor": 57,
+      "rent": 13,
+      "other": 19
+    },
+    "firm_distribution": {
+      "5-9": 55,
+      "10-19": 33,
+      "20-49": 12
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TZ:residential_construction": {
+    "net_margin": 0.12,
+    "gross_margin": 0.483,
+    "operating_margin": 0.225,
+    "cost_structure": {
+      "cogs": 59,
+      "labor": 26,
+      "rent": 3,
+      "other": 12
+    },
+    "firm_distribution": {
+      "5-9": 70,
+      "10-19": 24,
+      "20-49": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TZ:restaurants": {
+    "net_margin": 0.144,
+    "gross_margin": 0.619,
+    "operating_margin": 0.354,
+    "cost_structure": {
+      "cogs": 44,
+      "labor": 19,
+      "rent": 12,
+      "other": 24
+    },
+    "firm_distribution": {
+      "1-4": 85,
+      "5-9": 12,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TZ:specialty_trades": {
+    "net_margin": 0.24,
+    "gross_margin": 0.654,
+    "operating_margin": 0.441,
+    "cost_structure": {
+      "cogs": 46,
+      "labor": 23,
+      "rent": 5,
+      "other": 27
+    },
+    "firm_distribution": {
+      "1-4": 85,
+      "5-9": 12,
+      "10-19": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TZ:tailoring_alterations": {
+    "net_margin": 0.358,
+    "gross_margin": 0.807,
+    "operating_margin": 0.585,
+    "cost_structure": {
+      "cogs": 30,
+      "labor": 19,
+      "rent": 16,
+      "other": 35
+    },
+    "firm_distribution": {
+      "1-4": 92.9,
+      "5-9": 7.1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TZ:transit_ground_passenger": {
+    "net_margin": 0.203,
+    "gross_margin": 0.695,
+    "operating_margin": 0.499,
+    "cost_structure": {
+      "cogs": 38,
+      "labor": 21,
+      "rent": 4,
+      "other": 37
+    },
+    "firm_distribution": {
+      "1-4": 90,
+      "5-9": 8,
+      "10-19": 2
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TZ:trucking_freight": {
+    "net_margin": 0.14,
+    "gross_margin": 0.566,
+    "operating_margin": 0.382,
+    "cost_structure": {
+      "cogs": 51,
+      "labor": 17,
+      "rent": 4,
+      "other": 28
+    },
+    "firm_distribution": {
+      "1-4": 78,
+      "5-9": 18,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "TZ:wholesale_food": {
+    "net_margin": 0.065,
+    "gross_margin": 0.19,
+    "operating_margin": 0.107,
+    "cost_structure": {
+      "cogs": 87,
+      "labor": 4,
+      "rent": 5,
+      "other": 4
+    },
+    "firm_distribution": {
+      "1-4": 72,
+      "5-9": 22,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
     "confidence": "low"
   },
   "UA:accounting_tax": {
@@ -16345,6 +24513,445 @@
     },
     "source_model": "deep-research-report-10",
     "confidence": "modeled"
+  },
+  "UY:accounting_tax": {
+    "net_margin": 0.386,
+    "gross_margin": 0.951,
+    "operating_margin": 0.603,
+    "cost_structure": {
+      "cogs": 8,
+      "labor": 43,
+      "rent": 13,
+      "other": 35
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 24,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "UY:auto_repair_shops": {
+    "net_margin": 0.207,
+    "gross_margin": 0.661,
+    "operating_margin": 0.325,
+    "cost_structure": {
+      "cogs": 43,
+      "labor": 31,
+      "rent": 12,
+      "other": 15
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 24,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "UY:bakeries_retail": {
+    "net_margin": 0.111,
+    "gross_margin": 0.564,
+    "operating_margin": 0.244,
+    "cost_structure": {
+      "cogs": 49,
+      "labor": 27,
+      "rent": 9,
+      "other": 15
+    },
+    "firm_distribution": {
+      "1-4": 54,
+      "5-9": 32,
+      "10-19": 11,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "UY:barbershops": {
+    "net_margin": 0.37,
+    "gross_margin": 0.922,
+    "operating_margin": 0.61,
+    "cost_structure": {
+      "cogs": 12,
+      "labor": 32,
+      "rent": 18,
+      "other": 38
+    },
+    "firm_distribution": {
+      "1-4": 82,
+      "5-9": 18
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "UY:cafes_coffee": {
+    "net_margin": 0.114,
+    "gross_margin": 0.709,
+    "operating_margin": 0.302,
+    "cost_structure": {
+      "cogs": 33,
+      "labor": 31,
+      "rent": 15,
+      "other": 21
+    },
+    "firm_distribution": {
+      "1-4": 64,
+      "5-9": 27,
+      "10-19": 9
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "UY:cleaning_services": {
+    "net_margin": 0.234,
+    "gross_margin": 0.893,
+    "operating_margin": 0.4,
+    "cost_structure": {
+      "cogs": 14,
+      "labor": 59,
+      "rent": 5,
+      "other": 22
+    },
+    "firm_distribution": {
+      "1-4": 60,
+      "5-9": 28,
+      "10-19": 9,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "UY:clothing_stores": {
+    "net_margin": 0.112,
+    "gross_margin": 0.504,
+    "operating_margin": 0.211,
+    "cost_structure": {
+      "cogs": 56,
+      "labor": 18,
+      "rent": 15,
+      "other": 11
+    },
+    "firm_distribution": {
+      "1-4": 62,
+      "5-9": 28,
+      "10-19": 10
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "UY:dental_practices": {
+    "net_margin": 0.304,
+    "gross_margin": 0.842,
+    "operating_margin": 0.498,
+    "cost_structure": {
+      "cogs": 23,
+      "labor": 34,
+      "rent": 15,
+      "other": 28
+    },
+    "firm_distribution": {
+      "1-4": 68,
+      "5-9": 26,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "UY:doctors_clinics": {
+    "net_margin": 0.318,
+    "gross_margin": 0.898,
+    "operating_margin": 0.504,
+    "cost_structure": {
+      "cogs": 15,
+      "labor": 43,
+      "rent": 15,
+      "other": 27
+    },
+    "firm_distribution": {
+      "1-4": 61.9,
+      "5-9": 28.9,
+      "10-19": 9.3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "UY:dry_cleaning_laundry": {
+    "net_margin": 0.246,
+    "gross_margin": 0.829,
+    "operating_margin": 0.442,
+    "cost_structure": {
+      "cogs": 23,
+      "labor": 34,
+      "rent": 17,
+      "other": 26
+    },
+    "firm_distribution": {
+      "1-4": 70,
+      "5-9": 24,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "UY:gas_stations": {
+    "net_margin": 0.034,
+    "gross_margin": 0.142,
+    "operating_margin": 0.063,
+    "cost_structure": {
+      "cogs": 89,
+      "labor": 6,
+      "rent": 2,
+      "other": 3
+    },
+    "firm_distribution": {
+      "5-9": 40,
+      "10-19": 42,
+      "20-49": 18
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "UY:grocery_stores": {
+    "net_margin": 0.057,
+    "gross_margin": 0.24,
+    "operating_margin": 0.109,
+    "cost_structure": {
+      "cogs": 81,
+      "labor": 8,
+      "rent": 5,
+      "other": 6
+    },
+    "firm_distribution": {
+      "1-4": 60,
+      "5-9": 27,
+      "10-19": 9,
+      "20-49": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "UY:hairdressers_beauty": {
+    "net_margin": 0.34,
+    "gross_margin": 0.878,
+    "operating_margin": 0.563,
+    "cost_structure": {
+      "cogs": 19,
+      "labor": 32,
+      "rent": 16,
+      "other": 34
+    },
+    "firm_distribution": {
+      "1-4": 78,
+      "5-9": 18,
+      "10-19": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "UY:hardware_stores": {
+    "net_margin": 0.105,
+    "gross_margin": 0.383,
+    "operating_margin": 0.172,
+    "cost_structure": {
+      "cogs": 69,
+      "labor": 14,
+      "rent": 10,
+      "other": 8
+    },
+    "firm_distribution": {
+      "1-4": 60.4,
+      "5-9": 30.2,
+      "10-19": 9.4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "UY:health_beauty_stores": {
+    "net_margin": 0.071,
+    "gross_margin": 0.338,
+    "operating_margin": 0.141,
+    "cost_structure": {
+      "cogs": 71,
+      "labor": 14,
+      "rent": 7,
+      "other": 7
+    },
+    "firm_distribution": {
+      "1-4": 48,
+      "5-9": 34,
+      "10-19": 14,
+      "20-49": 4
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "UY:legal_services": {
+    "net_margin": 0.411,
+    "gross_margin": 0.965,
+    "operating_margin": 0.632,
+    "cost_structure": {
+      "cogs": 6,
+      "labor": 41,
+      "rent": 15,
+      "other": 38
+    },
+    "firm_distribution": {
+      "1-4": 72,
+      "5-9": 22,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "UY:residential_construction": {
+    "net_margin": 0.137,
+    "gross_margin": 0.542,
+    "operating_margin": 0.248,
+    "cost_structure": {
+      "cogs": 53,
+      "labor": 31,
+      "rent": 3,
+      "other": 13
+    },
+    "firm_distribution": {
+      "1-4": 60,
+      "5-9": 28,
+      "10-19": 9,
+      "20-49": 3
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "UY:restaurants": {
+    "net_margin": 0.098,
+    "gross_margin": 0.647,
+    "operating_margin": 0.269,
+    "cost_structure": {
+      "cogs": 39,
+      "labor": 31,
+      "rent": 11,
+      "other": 19
+    },
+    "firm_distribution": {
+      "1-4": 56,
+      "5-9": 28,
+      "10-19": 11,
+      "20-49": 5
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "UY:software_development": {
+    "net_margin": 0.262,
+    "gross_margin": 0.926,
+    "operating_margin": 0.416,
+    "cost_structure": {
+      "cogs": 10,
+      "labor": 62,
+      "rent": 7,
+      "other": 21
+    },
+    "firm_distribution": {
+      "1-4": 50,
+      "5-9": 30,
+      "10-19": 14,
+      "20-49": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "UY:specialty_trades": {
+    "net_margin": 0.226,
+    "gross_margin": 0.685,
+    "operating_margin": 0.373,
+    "cost_structure": {
+      "cogs": 41,
+      "labor": 35,
+      "rent": 6,
+      "other": 19
+    },
+    "firm_distribution": {
+      "1-4": 72,
+      "5-9": 22,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "UY:transit_ground_passenger": {
+    "net_margin": 0.224,
+    "gross_margin": 0.7,
+    "operating_margin": 0.476,
+    "cost_structure": {
+      "cogs": 39,
+      "labor": 25,
+      "rent": 4,
+      "other": 32
+    },
+    "firm_distribution": {
+      "1-4": 74,
+      "5-9": 20,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "UY:trucking_freight": {
+    "net_margin": 0.141,
+    "gross_margin": 0.564,
+    "operating_margin": 0.32,
+    "cost_structure": {
+      "cogs": 51,
+      "labor": 23,
+      "rent": 6,
+      "other": 21
+    },
+    "firm_distribution": {
+      "1-4": 67.3,
+      "5-9": 26.5,
+      "10-19": 6.1
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "UY:veterinary_pet_care": {
+    "net_margin": 0.224,
+    "gross_margin": 0.683,
+    "operating_margin": 0.337,
+    "cost_structure": {
+      "cogs": 41,
+      "labor": 31,
+      "rent": 13,
+      "other": 15
+    },
+    "firm_distribution": {
+      "1-4": 66,
+      "5-9": 28,
+      "10-19": 6
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
+  },
+  "UY:wholesale_food": {
+    "net_margin": 0.046,
+    "gross_margin": 0.173,
+    "operating_margin": 0.083,
+    "cost_structure": {
+      "cogs": 87,
+      "labor": 7,
+      "rent": 3,
+      "other": 4
+    },
+    "firm_distribution": {
+      "1-4": 50,
+      "5-9": 32,
+      "10-19": 13,
+      "20-49": 5
+    },
+    "source_model": "longtail-loop-2026-06-03",
+    "confidence": "low"
   },
   "UZ:apparel_mfg": {
     "net_margin": 0.098,

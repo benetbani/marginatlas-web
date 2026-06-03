@@ -37,6 +37,7 @@ export function CountryEconomicsBreakdown({ costStructure, firmDistribution, ind
 
   const bands = firmDistribution ? BAND_ORDER.filter((b) => (firmDistribution[b] ?? 0) > 0) : [];
   const hasFirms = bands.length > 0;
+  const firmTotal = bands.reduce((s, b) => s + (firmDistribution?.[b] ?? 0), 0) || 1;
 
   if (!hasCost && !hasFirms) return null;
 
@@ -90,7 +91,7 @@ export function CountryEconomicsBreakdown({ costStructure, firmDistribution, ind
               <div
                 key={b}
                 className={BAND_SHADES[i] ?? "bg-ink-300"}
-                style={{ width: `${firmDistribution[b]}%` }}
+                style={{ width: `${(firmDistribution[b] / firmTotal) * 100}%` }}
                 aria-label={`${b} employees, ${Math.round(firmDistribution[b])} percent of firms`}
               />
             ))}
