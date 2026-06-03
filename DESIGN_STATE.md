@@ -46,7 +46,7 @@ Masterplan: docs/superpowers/specs/2026-06-03-visual-reform-masterplan.md.
 3. **Home** — `/dev/home` v1 DONE (confident serif promise, free-to-read framing, 3 entry lanes, Kenya data taste). Desktop + mobile clean. Committed dc9ecc8a.
 4. **Sectors** — `/dev/sectors` v1 DONE (generous editorial directory, activities per sector; afa31781).
    **Cities** — `/dev/cities` v1 DONE (tier-grouped 3-column world directory; 387e2274).
-   **Compare** — `/dev/compare` v1 DONE (Kenya vs Germany, two-column gap; 1d6ee7d6). **Calculator** — todo.
+   **Compare** — `/dev/compare` v1 DONE (1d6ee7d6). **Calculator** — `/dev/calculator` v1 DONE (inline controls + you-marker on distribution; 99bd1840). **ALL 7 CORE PAGE TYPES BUILT.**
 5. Mobile passes on all — todo
 6. Then: extract the winning patterns into the live pages (after founder approves the batch).
 
@@ -58,4 +58,6 @@ Masterplan: docs/superpowers/specs/2026-06-03-visual-reform-masterplan.md.
 - 2026-06-03: BATCH of 3 done this round — country v1 (a2d015ee), home v1 (dc9ecc8a), cell v3 (prior). All desktop + mobile clean, the editorial system holds across all three. Data-bug task is editing fill_defaults in parallel (all-sizes share-weighted fold) which will fix the odd revenue values shown in the indexes.
 - 2026-06-03: sectors v1 (afa31781) + cities v1 (387e2274) done, desktop + mobile. FIVE pages now in the system (cell, country, home, sectors, cities), all editorial, no cards, consistent.
 - 2026-06-03: compare v1 done (1d6ee7d6). SIX pages now (cell, country, home, sectors, cities, compare), one consistent editorial system, desktop + mobile. NOTE: occasional transient blank shots while the parallel data task hot-reloads fill_defaults / the new extrapolated_aggregation.ts; just re-shoot to confirm.
-- NEXT cron fire: the **calculator** (`/dev/calculator`), then a POLISH pass across all six (subtle warm paper texture trial, refine the visx percentile strip, tighten spacing rhythm, recheck mobile), then prep extracting the winning patterns into the LIVE pages for founder approval. Review batch: screens/dev_{cell,country,home,sectors,cities,compare}.png (+ _m mobile).
+- 2026-06-03: calculator v1 done (99bd1840); PercentileStrip gained a "you" marker. **ALL 7 core page types built** (cell, country, home, sectors, cities, compare, calculator), one consistent editorial system, desktop + mobile. The parallel data fix is landing: all-sizes typical is now a sensible blend (KE restaurant ~$26K, not the $10K micro-floor).
+- NEXT cron fires: (a) POLISH pass across the 7 (warm-paper-texture trial, refine the percentile + cost charts, tighten spacing rhythm, recheck every mobile); (b) build the remaining page TYPES (more everything): about-data, pricing, methodology, coverage, blog index. HOLD the live-page extraction until the founder approves the screen batch.
+- REVIEW BATCH for founder: screens/dev_{cell,country,home,sectors,cities,compare,calculator}.png (+ _m mobile) — 14 desktop + mobile screens of the new system.
