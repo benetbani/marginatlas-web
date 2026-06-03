@@ -28,6 +28,7 @@ import { DimensionSwitcher } from "@/components/DimensionSwitcher";
 import { TypicalFirmCard } from "@/components/TypicalFirmCard";
 import { PostTaxToggle } from "@/components/PostTaxToggle";
 import { NetProfitWaterfall } from "@/components/NetProfitWaterfall";
+import { CountryEconomicsBreakdown } from "@/components/CountryEconomicsBreakdown";
 import { AcrossStatesStrip } from "@/components/AcrossStatesStrip";
 import { CellPageNav } from "@/components/CellPageNav";
 // CellActions import removed (save/copy/CSV/embed buttons stripped)
@@ -885,6 +886,14 @@ export default async function CellPage({
                 : null
             }
             takeHome={netTakeHome}
+          />
+
+          {/* Country-specific cost split + firm-size mix from the research drops
+             (Phase 2 enrichment). Self-suppresses when the cell has no drop data. */}
+          <CountryEconomicsBreakdown
+            costStructure={cell.cost_structure}
+            firmDistribution={cell.firm_distribution}
+            industryName={cell.industry_name}
           />
 
           {/* Founder-spec AOV + breakeven panel (2026-05-26). The
