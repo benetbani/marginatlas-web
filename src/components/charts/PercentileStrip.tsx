@@ -15,10 +15,12 @@ type Props = {
   p50: number;
   p75: number;
   p90: number;
+  /** Optional "you are here" value (the calculator marks the user's revenue). */
+  you?: number | null;
   format: (n: number) => string;
 };
 
-export function PercentileStrip({ p10, p25, p50, p75, p90, format }: Props) {
+export function PercentileStrip({ p10, p25, p50, p75, p90, you, format }: Props) {
   const W = 760;
   const H = 92;
   const padX = 64;
@@ -44,6 +46,14 @@ export function PercentileStrip({ p10, p25, p50, p75, p90, format }: Props) {
         <rect x={xp(p25)} y={trackY} width={xp(p75) - xp(p25)} height={trackH} rx={r} className="fill-atlas-200" />
         {/* typical marker */}
         <line x1={xp(p50)} x2={xp(p50)} y1={trackY - 12} y2={trackY + trackH + 12} className="stroke-atlas-500" strokeWidth={2.5} strokeLinecap="round" />
+        {/* you marker (calculator) */}
+        {you != null && (
+          <g>
+            <line x1={xp(you)} x2={xp(you)} y1={trackY - 12} y2={trackY + trackH + 12} className="stroke-ink-900" strokeWidth={2.5} strokeLinecap="round" />
+            <text x={xp(you)} y={trackY + trackH + 28} textAnchor="middle" className="fill-ink-900 tabular-nums" fontSize="14" fontWeight={700}>{format(you)}</text>
+            <text x={xp(you)} y={trackY - 18} textAnchor="middle" className="fill-ink-900" fontSize="11.5" fontWeight={700} letterSpacing="0.04em">YOU</text>
+          </g>
+        )}
 
         {/* endpoint labels */}
         <text x={xp(p10)} y={trackY - 16} textAnchor="middle" className="fill-ink-400" fontSize="11.5" letterSpacing="0.04em">BOTTOM 10%</text>
