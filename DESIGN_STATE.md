@@ -42,9 +42,9 @@ Masterplan: docs/superpowers/specs/2026-06-03-visual-reform-masterplan.md.
    distribution, no dead space), P&L readout, firm-mix bar, "more in Kenya" index, trust row. No cards,
    restrained editorial, atlas accent. Polish leftovers for later: subtle warm paper texture; the "more in
    Kenya" data has a couple odd values (Hotels $1.85K) = the all-sizes data bug (spawned task), not design.
-2. Country page (`/dev/country`) — todo
-3. Home — todo
-4. Sectors, Cities, Compare, Calculator — todo
+2. **Country page** — `/dev/country` v1 DONE (editorial industries index + sector tags, regions wrap, coverage line). Desktop + mobile clean. Committed a2d015ee.
+3. **Home** — `/dev/home` v1 DONE (confident serif promise, free-to-read framing, 3 entry lanes, Kenya data taste). Desktop + mobile clean. Committed dc9ecc8a.
+4. Sectors, Cities, Compare, Calculator — todo (NEXT)
 5. Mobile passes on all — todo
 6. Then: extract the winning patterns into the live pages (after founder approves the batch).
 
@@ -53,4 +53,5 @@ Masterplan: docs/superpowers/specs/2026-06-03-visual-reform-masterplan.md.
 - 2026-06-03: cell mockup v2 (P&L readout, firm-mix bar, trust row, two-column rhythm). Committed 98a23481 (local). Mobile (390) stacks cleanly; percentile labels a touch tight at 390, widen later.
 - 2026-06-03 FOUND DATA BUG (spawned as a separate task, not for the design loop): the "all sizes" cell revenue is non-deterministic ($10K vs $270K for the same cell) = the aggregation in cells.ts picks bands inconsistently. This is the founder's "all-sizes unrealistic" complaint. Design loop: tolerate it (judge LAYOUT, not the flickering number) until the data task lands.
 - 2026-06-03: cell v3 (paired hero + distribution kills dead space; "more in Kenya" index adds depth). Committed fea56553. Desktop + mobile (390) both clean. CELL PAGE DONE for now.
-- NEXT cron fire: start the **country page** at `/dev/country` (use Kenya: /ke). Apply the same system — PageShell, big serif hero ("What do Kenyans run?"), a strong "what people actually run" index (getTopIndustriesForCountry), a coverage/quality line, regions list, cities shortcuts. No card grid; editorial index rows like the cell page's "more in Kenya". Then home, sectors, cities, compare, calculator. Build at /dev/country, shot, judge, correct, commit local.
+- 2026-06-03: BATCH of 3 done this round — country v1 (a2d015ee), home v1 (dc9ecc8a), cell v3 (prior). All desktop + mobile clean, the editorial system holds across all three. Data-bug task is editing fill_defaults in parallel (all-sizes share-weighted fold) which will fix the odd revenue values shown in the indexes.
+- NEXT cron fire: `/dev/sectors`, `/dev/cities`, `/dev/compare`, calculator. Same system (PageShell, serif hero, editorial index rows, no cards). Then a polish pass + a subtle warm paper texture trial, and prepare to extract the winning patterns into the LIVE pages once the founder approves the screen batch. Screens to review: screens/dev_cell.png, dev_country.png, dev_home.png (+ _m mobile variants).
