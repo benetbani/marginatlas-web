@@ -38,8 +38,10 @@ Masterplan: docs/superpowers/specs/2026-06-03-visual-reform-masterplan.md.
 - AVOID porting `design-assets/incoming/set_17-20` (stale, regresses).
 
 ## Queue (status)
-1. **Cell page** — `/dev/cell` v2 done (hero, percentile, P&L readout, firm-mix bar, trust row; two-column rhythm). JUDGED: solid, no cards, no floating metrics.
-   NEXT ROUNDS: (a) hero is text-only with dead right-space, add a restrained visual anchor or key-figure callout; (b) verify + fix mobile at 390px (two-column sections must stack); (c) consider a subtle warm paper texture for premium feel; (d) add across-regions + related-activities sections; (e) then move to country page. IN PROGRESS.
+1. **Cell page** — `/dev/cell` **v3 DONE (strong, desktop + mobile clean).** Paired hero (headline + visx
+   distribution, no dead space), P&L readout, firm-mix bar, "more in Kenya" index, trust row. No cards,
+   restrained editorial, atlas accent. Polish leftovers for later: subtle warm paper texture; the "more in
+   Kenya" data has a couple odd values (Hotels $1.85K) = the all-sizes data bug (spawned task), not design.
 2. Country page (`/dev/country`) — todo
 3. Home — todo
 4. Sectors, Cities, Compare, Calculator — todo
@@ -50,4 +52,5 @@ Masterplan: docs/superpowers/specs/2026-06-03-visual-reform-masterplan.md.
 - 2026-06-03: loop started. Preview loop (Playwright+Edge), visx, PageShell, PercentileStrip, cell mockup v1 done. globals.css @import order fixed (turbopack).
 - 2026-06-03: cell mockup v2 (P&L readout, firm-mix bar, trust row, two-column rhythm). Committed 98a23481 (local). Mobile (390) stacks cleanly; percentile labels a touch tight at 390, widen later.
 - 2026-06-03 FOUND DATA BUG (spawned as a separate task, not for the design loop): the "all sizes" cell revenue is non-deterministic ($10K vs $270K for the same cell) = the aggregation in cells.ts picks bands inconsistently. This is the founder's "all-sizes unrealistic" complaint. Design loop: tolerate it (judge LAYOUT, not the flickering number) until the data task lands.
-- NEXT cron fire: (a) hero visual anchor (kill the dead right-space) + re-shoot; (b) widen percentile at mobile; (c) add across-regions + related sections; (d) start /dev/country.
+- 2026-06-03: cell v3 (paired hero + distribution kills dead space; "more in Kenya" index adds depth). Committed fea56553. Desktop + mobile (390) both clean. CELL PAGE DONE for now.
+- NEXT cron fire: start the **country page** at `/dev/country` (use Kenya: /ke). Apply the same system — PageShell, big serif hero ("What do Kenyans run?"), a strong "what people actually run" index (getTopIndustriesForCountry), a coverage/quality line, regions list, cities shortcuts. No card grid; editorial index rows like the cell page's "more in Kenya". Then home, sectors, cities, compare, calculator. Build at /dev/country, shot, judge, correct, commit local.
