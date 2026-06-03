@@ -141,6 +141,20 @@ function resolveEconomics(industryId: string, iso2: string): ResolvedEcon {
 }
 
 /**
+ * Firm-share distribution (share of firms per employee band) for a
+ * (country, industry) from the research-drop economics, or null when there is
+ * no entry. Exposed so the extrapolated all-sizes read can fold its per-band
+ * rows with the SAME weights fill_defaults uses for the cost / margin profile,
+ * keeping the headline number and the "who runs these" mix in agreement.
+ */
+export function getCountryIndustryFirmDistribution(
+  industryId: string,
+  iso2: string,
+): Record<string, number> | null {
+  return resolveEconomics(industryId, iso2).firm_distribution;
+}
+
+/**
  * Pick a typical revenue-per-firm for (country, industry) within the
  * SMB envelope. Uses the per-industry bounds midpoint scaled by the
  * country's revenue multiplier, clamped back into bounds.

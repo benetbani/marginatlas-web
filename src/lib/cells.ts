@@ -9,6 +9,7 @@ import { supabaseAdmin } from "./supabase";
 import { applyCurrencyCorrection, CURRENCY_FX_CORRECTIONS } from "./qa/currency_corrections";
 import {
   applyPlausibilitySuppression,
+  getCatastropheCeiling,
 } from "./qa/plausibility_suppression";
 import type {
   SubIndustryRef,
@@ -47,7 +48,12 @@ import {
   synthesizeCell,
   fillMissingFields,
   enforceSanity,
+  getCountryIndustryFirmDistribution,
 } from "./cells/fill_defaults";
+import {
+  blendBandsToAllSizesRevenue,
+  sizeBandRank,
+} from "./cells/extrapolated_aggregation";
 // Geo helpers moved to cells/geo.ts (architecture audit strategy F).
 import {
   US_STATES,
@@ -910,11 +916,52 @@ export async function getExtrapolatedCell(
     const i = candidates.indexOf(id);
     return i === -1 ? candidates.length : i;
   };
-  const r = (data as Record<string, unknown>[])
-    .slice()
-    .sort((a, b) => candRank(a.industry_id as string) - candRank(b.industry_id as string))[0];
+  const allRows = data as Record<string, unknown>[];
+  // Resolve the best candidate id (highest-priority industry that returned rows)
+  // and the target year (explicit selector, else the latest present) up front,
+  // so everything below operates on one deterministic (industry, year) group
+  // rather than on whatever physical order PostgREST returned the tied rows in.
+  const bestCand = allRows.reduce(
+    (best, row) => Math.min(best, candRank(row.industry_id as string)),
+    candidates.length,
+  );
+  const candRows = allRows.filter((row) => candRank(row.industry_id as string) === bestCand);
+  const targetYear =
+    selector.year ??
+    candRows.reduce((y, row) => Math.max(y, (row.year as number) || 0), 0);
+  const yearRows = candRows.filter((row) => ((row.year as number) || 0) === targetYear);
+  // Representative row for display metadata (country name, quality, coverage).
+  // Bands of one drop share these, but pick by canonical band order so the
+  // choice never depends on DB row order either.
+  const r =
+    yearRows
+      .slice()
+      .sort((a, b) => sizeBandRank(a.size_band as string) - sizeBandRank(b.size_band as string))[0] ??
+    yearRows[0];
 
-  const predRev = (r.predicted_rev_per_firm as number) ?? null;
+  const dispId = ind?.id ?? (r.industry_id as string);
+  let predRev: number | null;
+  if (selector.sizeBand) {
+    // Caller asked for one specific size band — return that band's value (the
+    // query already filtered to it; the latest year is selected above).
+    predRev = (r.predicted_rev_per_firm as number) ?? null;
+  } else {
+    // "All sizes": fold the per-band rows into ONE firm-share-weighted typical.
+    // The per-band predicted_rev_per_firm differ by ~50x (a micro kibanda vs a
+    // 20-49-staff restaurant); picking a single band by DB row order returned a
+    // value that flickered between identical requests. Weighting by share_of_firms
+    // keeps the micro-dominated reality near the floor while the larger bands lift
+    // it, and folding in a fixed band order makes the result identical every time.
+    const firmDistribution = getCountryIndustryFirmDistribution(dispId, iso2);
+    predRev =
+      blendBandsToAllSizesRevenue(
+        yearRows.map((row) => ({
+          size_band: (row.size_band as string) ?? null,
+          predicted_rev_per_firm: (row.predicted_rev_per_firm as number) ?? null,
+        })),
+        { firmDistribution, ceiling: getCatastropheCeiling(dispId) },
+      ) ?? ((r.predicted_rev_per_firm as number) ?? null);
+  }
   // Coarse spread synthesis: ±50% wedge so RevenueTiles/RevenueDistribution
   // render something rather than identical values. Clearly flagged via quality.
   const p10 = predRev != null ? predRev * 0.4 : null;
@@ -930,10 +977,12 @@ export async function getExtrapolatedCell(
     geo_name: (r.country_name as string) || iso2ToName(iso2),
     naics_6: null,
     naics_4: null,
-    industry_id: ind?.id ?? (r.industry_id as string),
+    industry_id: dispId,
     industry_description: ind?.name ?? (r.industry_id as string),
-    size_band: (r.size_band as string) || null,
-    year: (r.year as number) || 2024,
+    // A blended all-sizes cell is not a single band; only label the band when
+    // the caller actually asked for one.
+    size_band: selector.sizeBand ? ((r.size_band as string) || null) : null,
+    year: targetYear || (r.year as number) || 2024,
     n_enterprises: null,
     n_employees: null,
     total_revenue: null,
