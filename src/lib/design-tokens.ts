@@ -55,9 +55,9 @@ export const colors = {
     200: "#efb795",
     300: "#e08a5f",
     400: "#cf6336",
-    500: "#bd5424", // primary accent (surfaces) — terracotta
+    500: "#bd5424", // primary accent (surfaces), terracotta
     600: "#a0440f", // hover / pressed
-    700: "#883a14", // primary accent (text + headline) — burnt sienna
+    700: "#883a14", // primary accent (text + headline), burnt sienna
     800: "#65290c",
     900: "#431a06",
   },
@@ -65,10 +65,10 @@ export const colors = {
     // Warm paper ladder. 50 = warm white (cards/popovers, lightest),
     // climbing into warm sand (page paper, borders). Replaces the cold
     // white-to-gray surfaces that the pre-reformation system used.
-    50: "#fffdf8", // warm white — card / popover surface
-    100: "#f7efe1", // warm sand — page paper / muted surface
+    50: "#fffdf8", // warm white card / popover surface
+    100: "#f7efe1", // warm sand page paper / muted surface
     200: "#eee2cf",
-    300: "#e2d2b9", // warm taupe — hairline / border step
+    300: "#e2d2b9", // warm taupe hairline / border step
     400: "#c4b095",
     500: "#93826a",
   },

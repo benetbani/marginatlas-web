@@ -13,7 +13,7 @@ import { PercentileStrip } from "@/components/charts/PercentileStrip";
 export const dynamic = "force-dynamic";
 
 function usd(n: number | null | undefined): string {
-  if (n == null) return "—";
+  if (n == null) return "–";
   if (n >= 1e6) return "$" + (n / 1e6).toFixed(1) + "M";
   if (n >= 1e3) return "$" + Math.round(n / 1e3) + "K";
   return "$" + Math.round(n);
@@ -30,7 +30,7 @@ const BANDS = ["1-4", "5-9", "10-19", "20-49", "50-99", "100+"];
 const BAND_SHADE = ["bg-atlas-500", "bg-atlas-400", "bg-atlas-300", "bg-atlas-200", "bg-atlas-100", "bg-ink-200"];
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
-  return <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-6">{children}</h2>;
+  return <h2 data-typography="custom" className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-6">{children}</h2>;
 }
 
 export default async function CellMockup() {

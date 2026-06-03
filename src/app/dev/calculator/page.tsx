@@ -12,7 +12,7 @@ import { PercentileStrip } from "@/components/charts/PercentileStrip";
 export const dynamic = "force-dynamic";
 
 function usd(n: number | null | undefined): string {
-  if (n == null) return "—";
+  if (n == null) return "–";
   if (n >= 1e6) return "$" + (n / 1e6).toFixed(1) + "M";
   if (n >= 1e3) return "$" + Math.round(n / 1e3) + "K";
   return "$" + Math.round(n);

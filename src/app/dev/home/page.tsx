@@ -11,14 +11,14 @@ import { PageShell, ContentColumn } from "@/components/ui/page-shell";
 export const dynamic = "force-dynamic";
 
 function usd(n: number | null | undefined): string {
-  if (n == null) return "—";
+  if (n == null) return "–";
   if (n >= 1e6) return "$" + (n / 1e6).toFixed(1) + "M";
   if (n >= 1e3) return "$" + Math.round(n / 1e3) + "K";
   return "$" + Math.round(n);
 }
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
-  return <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-5">{children}</h2>;
+  return <h2 data-typography="custom" className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-5">{children}</h2>;
 }
 
 const COUNTRIES_PICK = [
