@@ -7,13 +7,14 @@
  */
 
 :root {
-  --cream-50:  #FFFFFF;
-  --cream-100: #F5F5F5;
-  --parchment: #DDDDDD;
-  --atlas-500: #D73A14;
-  --atlas-700: #952509;
-  --cocoa-700: #3A3A3A;
-  --ink-900:   #000000;
+  /* Warm Atlas reformation 2026-06-04 — mirror of design-tokens.ts. */
+  --cream-50:  #FFFDF8;
+  --cream-100: #F7EFE1;
+  --parchment: #E2D2B9;
+  --atlas-500: #BD5424;
+  --atlas-700: #883A14;
+  --cocoa-700: #534231;
+  --ink-900:   #211810;
 }
 
 /* Subtle dot-grid backdrop — used behind editorial sections.
