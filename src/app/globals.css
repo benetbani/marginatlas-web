@@ -1,15 +1,13 @@
+/* @import must precede @tailwind (which expands to many rules); turbopack
+   enforces the CSS spec, webpack tolerated lower imports. These are bespoke
+   class files (homepage visual tokens; .atlas-paper pattern) with no Tailwind
+   utility-name collisions, so moving them above @tailwind keeps the cascade. */
+@import "../styles/homepage-visual-tokens.css";
+@import "../styles/atlas-pattern.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Plan v30 — homepage visual tokens (dot grid, spotlight, editorial line, pipeline, rotator). */
-@import "../styles/homepage-visual-tokens.css";
-
-/* Plan v31 — Atlas paper pattern (tiny 4-point compass stars on a
-   neutral light gray repeat). Three utility classes: .atlas-paper
-   for sections, .atlas-paper-dim for subtler use, .atlas-paper-card
-   for card interiors with edge-fade mask. */
-@import "../styles/atlas-pattern.css";
 
 @layer base {
   /* Section 1 of master visual-upgrade: shadcn CSS variables retokenized
