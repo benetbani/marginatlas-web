@@ -11,6 +11,7 @@
     "verify:em-dashes": "npx tsx scripts/verify_no_em_dashes.ts",
     "verify:agencies": "npx tsx scripts/verify_no_source_agencies.ts",
     "verify:hardcoded-hex": "npx tsx scripts/verify_hardcoded_hex.ts",
+    "research:load-all": "npx tsx scripts/ingest/load_all_drops.ts",
     "verify:dead-links": "npx tsx scripts/audit/find_dead_links.ts --strict",
     "verify:featured-tiles": "npx tsx scripts/verify_featured_tiles.ts",
     "verify:edge-sizes": "npx tsx scripts/verify_edge_function_sizes.ts",
