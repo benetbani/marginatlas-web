@@ -1,11 +1,12 @@
 /**
- * Cell-page redesign MOCKUP v2 (preview route /dev/cell — not live).
- * Fuller editorial direction: hero, distribution, a real P&L readout, firm mix,
- * and an honest trust section. Real Kenya data. No cards, no floating metrics.
- * Screenshot: node scripts/shot.mjs /dev/cell
+ * Cell-page redesign MOCKUP v3 (preview route /dev/cell — not live).
+ * Editorial direction: a two-column hero (question + distribution), a P&L
+ * readout, firm mix, a quiet "more in Kenya" index, and an honest trust row.
+ * Real Kenya data. No cards, no floating metrics. Screenshot: scripts/shot.mjs.
  */
 import * as React from "react";
-import { getCellBySlug } from "@/lib/cells";
+import { getCellBySlug, getTopIndustriesForCountry } from "@/lib/cells";
+import { industryToSlug } from "@/lib/taxonomy";
 import { PageShell, ContentColumn } from "@/components/ui/page-shell";
 import { PercentileStrip } from "@/components/charts/PercentileStrip";
 
@@ -46,6 +47,10 @@ export default async function CellMockup() {
   const bands = firms ? BANDS.filter((b) => (firms[b] ?? 0) > 0) : [];
   const firmTotal = bands.reduce((s, b) => s + (firms?.[b] ?? 0), 0) || 1;
 
+  const others = (await getTopIndustriesForCountry("KE", 12))
+    .filter((o) => o.industry_id !== cell.industry_id)
+    .slice(0, 8);
+
   return (
     <PageShell tone="paper">
       <ContentColumn width="wide" className="py-10 md:py-16">
@@ -57,39 +62,43 @@ export default async function CellMockup() {
           <span className="text-ink-700">Restaurants</span>
         </nav>
 
-        <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-atlas-700 mb-4">
-          Food and Drink, Kenya
-        </div>
-        <h1 className="font-display text-4xl md:text-5xl lg:text-[3.5rem] leading-[1.03] tracking-tight text-ink-900 max-w-3xl">
-          How much does a restaurant make in Kenya?
-        </h1>
-        <p className="mt-7 text-lg md:text-xl leading-relaxed text-ink-700 max-w-2xl">
-          A typical restaurant in Kenya turns over about{" "}
-          <strong className="text-ink-900 font-semibold tabular-nums">{usd(p50)}</strong> a year. The busiest tenth
-          reach <strong className="text-ink-900 font-semibold tabular-nums">{usd(p90)}</strong>, while the smallest sit
-          near <strong className="text-ink-900 font-semibold tabular-nums">{usd(p10)}</strong>.
-        </p>
-        <div className="mt-7 inline-flex items-center gap-2 text-sm text-ink-500">
-          <span>Showing</span>
-          <span className="inline-flex items-center gap-2 rounded-lg border border-ink-200 bg-cream-50 px-3 py-1.5 font-medium text-ink-900">
-            All sizes
-            <svg width="11" height="11" viewBox="0 0 12 12" aria-hidden className="text-ink-400">
-              <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.6" fill="none" />
-            </svg>
-          </span>
+        {/* hero — question paired with the distribution */}
+        <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-16 items-end">
+          <div>
+            <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-atlas-700 mb-4">
+              Food and Drink, Kenya
+            </div>
+            <h1 className="font-display text-4xl md:text-5xl lg:text-[3.4rem] leading-[1.03] tracking-tight text-ink-900">
+              How much does a restaurant make in Kenya?
+            </h1>
+            <p className="mt-7 text-lg md:text-xl leading-relaxed text-ink-700 max-w-xl">
+              A typical restaurant turns over about{" "}
+              <strong className="text-ink-900 font-semibold tabular-nums">{usd(p50)}</strong> a year, with the busiest
+              tenth near <strong className="text-ink-900 font-semibold tabular-nums">{usd(p90)}</strong>.
+            </p>
+            <div className="mt-7 inline-flex items-center gap-2 text-sm text-ink-500">
+              <span>Showing</span>
+              <span className="inline-flex items-center gap-2 rounded-lg border border-ink-200 bg-cream-50 px-3 py-1.5 font-medium text-ink-900">
+                All sizes
+                <svg width="11" height="11" viewBox="0 0 12 12" aria-hidden className="text-ink-400">
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.6" fill="none" />
+                </svg>
+              </span>
+            </div>
+          </div>
+
+          <div className="lg:pb-1">
+            <Eyebrow>Where they land</Eyebrow>
+            <PercentileStrip p10={p10} p25={p25} p50={p50} p75={p75} p90={p90} format={usd} />
+            <p className="mt-5 text-sm leading-relaxed text-ink-500">
+              Half fall between <span className="tabular-nums text-ink-700">{usd(p25)}</span> and{" "}
+              <span className="tabular-nums text-ink-700">{usd(p75)}</span>. A kibanda and a full sit-down place are both
+              "a restaurant," and the gap shows.
+            </p>
+          </div>
         </div>
 
-        <section className="mt-16 md:mt-24">
-          <Eyebrow>Where they land</Eyebrow>
-          <PercentileStrip p10={p10} p25={p25} p50={p50} p75={p75} p90={p90} format={usd} />
-          <p className="mt-6 text-base leading-relaxed text-ink-600 max-w-xl">
-            Half of Kenyan restaurants fall between{" "}
-            <span className="tabular-nums text-ink-800">{usd(p25)}</span> and{" "}
-            <span className="tabular-nums text-ink-800">{usd(p75)}</span> a year. The spread is wide: a kibanda and a
-            full sit-down place are both "a restaurant," and the gap shows.
-          </p>
-        </section>
-
+        {/* economics */}
         <section className="mt-16 md:mt-24 border-t border-ink-100 pt-12">
           <Eyebrow>What it costs to run</Eyebrow>
           <div className="grid md:grid-cols-[1fr_1.1fr] gap-10 lg:gap-16 items-start">
@@ -136,6 +145,7 @@ export default async function CellMockup() {
           </div>
         </section>
 
+        {/* who runs these */}
         {firms && bands.length > 0 && (
           <section className="mt-16 md:mt-24 border-t border-ink-100 pt-12">
             <Eyebrow>Who runs these</Eyebrow>
@@ -165,6 +175,26 @@ export default async function CellMockup() {
           </section>
         )}
 
+        {/* more in Kenya — quiet editorial index */}
+        {others.length > 0 && (
+          <section className="mt-16 md:mt-24 border-t border-ink-100 pt-12">
+            <Eyebrow>More small businesses in Kenya</Eyebrow>
+            <div className="grid sm:grid-cols-2 gap-x-12 lg:gap-x-20">
+              {others.map((o) => (
+                <a
+                  key={o.industry_id}
+                  href={`/ke/kenya/${industryToSlug(o.industry_id)}`}
+                  className="group flex items-baseline justify-between gap-4 border-b border-ink-100 py-3.5"
+                >
+                  <span className="text-[15px] text-ink-800 group-hover:text-atlas-700 transition-colors">{o.industry_name}</span>
+                  <span className="tabular-nums text-sm text-ink-500 shrink-0">{usd(o.revenue_per_firm)}</span>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* trust */}
         <section className="mt-16 md:mt-24 border-t border-ink-100 pt-12">
           <Eyebrow>How we know this</Eyebrow>
           <div className="grid sm:grid-cols-3 gap-8 max-w-3xl">
