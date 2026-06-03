@@ -108,6 +108,12 @@ export type Cell = {
   gross_profit?: number | null;
   operating_profit?: number | null;
   net_profit?: number | null;
+  // Country-specific economics from research drops (fill_defaults prefers these
+  // over the generic per-industry margin profile when an entry exists). The cost
+  // split sums to ~100 across cogs/labor/rent/other; firm_distribution is the
+  // share of firms per employee band.
+  cost_structure?: { cogs: number; labor: number; rent: number; other: number } | null;
+  firm_distribution?: Record<string, number> | null;
   // quality
   quality_score?: number | null;
   coverage_tier?: string | null;

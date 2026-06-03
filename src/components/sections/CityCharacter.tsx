@@ -62,14 +62,22 @@ export function CityCharacter({ geoId, countryIso2 }: Props) {
               {char.defining_industries.map((id) => {
                 const ind = INDUSTRY_BY_ID[id];
                 if (!ind) return null;
+                // Guard against an empty geoId producing a "/ke//slug" double-slash
+                // 404. If we have no geo, render the chip as non-clickable text.
+                const href = geoId
+                  ? `/${country}/${geoId.toLowerCase()}/${industryToSlug(id)}`
+                  : null;
+                const chip =
+                  "inline-flex items-center px-3 py-1.5 rounded-full bg-cream-50 border border-parchment text-sm text-ink-900 transition-colors";
                 return (
                   <li key={id}>
-                    <a
-                      href={`/${country}/${(geoId ?? "").toLowerCase()}/${industryToSlug(id)}`}
-                      className="inline-flex items-center px-3 py-1.5 rounded-full bg-cream-50 border border-parchment hover:border-atlas-500 text-sm text-ink-900 transition-colors"
-                    >
-                      {ind.name}
-                    </a>
+                    {href ? (
+                      <a href={href} className={`${chip} hover:border-atlas-500`}>
+                        {ind.name}
+                      </a>
+                    ) : (
+                      <span className={chip}>{ind.name}</span>
+                    )}
                   </li>
                 );
               })}

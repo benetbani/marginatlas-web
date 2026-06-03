@@ -40,6 +40,7 @@ import {
 } from "../taxonomy";
 import { iso2ToIso3, iso2ToName } from "../countries";
 import industryMarginsJson from "../finance/industry_margins.json";
+import countryEconJson from "../finance/country_industry_economics.json";
 import countryBaselineJson from "./country_smb_baseline.json";
 import type { Cell } from "../cells";
 import { getIndustryAnchorRevenue } from "@/lib/economic_profile/industry_medians";
@@ -94,6 +95,51 @@ function lookupIndustryMargin(industryId: string): IndustryMarginRow {
   return MARGINS.industries[industryId] || MARGINS.default_fallback;
 }
 
+type CountryEconRow = {
+  net_margin: number;
+  gross_margin: number;
+  operating_margin: number;
+  cost_structure: { cogs: number; labor: number; rent: number; other: number };
+  firm_distribution: Record<string, number>;
+};
+
+const COUNTRY_ECON = countryEconJson as unknown as Record<string, CountryEconRow>;
+
+type ResolvedEcon = {
+  gross_margin: number;
+  operating_margin: number;
+  net_margin: number;
+  cost_structure: { cogs: number; labor: number; rent: number; other: number } | null;
+  firm_distribution: Record<string, number> | null;
+};
+
+/**
+ * Country-specific economics from the research drops, falling back to the
+ * generic per-industry margin profile when there is no (country, industry)
+ * entry. Keyed `${ISO2}:${industry_id}`. This is what makes a Kenyan salon
+ * show Kenyan margins + a Kenyan cost split instead of a global average.
+ */
+function resolveEconomics(industryId: string, iso2: string): ResolvedEcon {
+  const c = COUNTRY_ECON[`${iso2.toUpperCase()}:${industryId}`];
+  if (c) {
+    return {
+      gross_margin: c.gross_margin,
+      operating_margin: c.operating_margin,
+      net_margin: c.net_margin,
+      cost_structure: c.cost_structure ?? null,
+      firm_distribution: c.firm_distribution ?? null,
+    };
+  }
+  const m = lookupIndustryMargin(industryId);
+  return {
+    gross_margin: m.gross_margin,
+    operating_margin: m.operating_margin,
+    net_margin: m.net_margin,
+    cost_structure: null,
+    firm_distribution: null,
+  };
+}
+
 /**
  * Pick a typical revenue-per-firm for (country, industry) within the
  * SMB envelope. Uses the per-industry bounds midpoint scaled by the
@@ -140,12 +186,12 @@ export function synthesizeCell(
   const sectorName = sectorId ? SECTOR_BY_ID[sectorId]?.name || null : null;
 
   const country = lookupCountry(isoUpper);
-  const margin = lookupIndustryMargin(industryId);
+  const econ = resolveEconomics(industryId, isoUpper);
 
   const typicalRevenue = pickTypicalRevenue(industryId, isoUpper);
-  const grossMargin = margin.gross_margin;
-  const operatingMargin = margin.operating_margin;
-  const netMargin = margin.net_margin;
+  const grossMargin = econ.gross_margin;
+  const operatingMargin = econ.operating_margin;
+  const netMargin = econ.net_margin;
 
   const grossProfit = typicalRevenue * grossMargin;
   const operatingProfit = typicalRevenue * operatingMargin;
@@ -203,6 +249,8 @@ export function synthesizeCell(
     gross_profit: grossProfit,
     operating_profit: operatingProfit,
     net_profit: netProfit,
+    cost_structure: econ.cost_structure,
+    firm_distribution: econ.firm_distribution,
     quality_score: 20,
     coverage_tier: "X",
     coverage_source: "Estimated from country and industry averages",
@@ -303,13 +351,16 @@ export function enforceSanity(cell: Cell): Cell {
   //    non-positive (which happens with broken extrapolations), bump
   //    to the industry default's net_margin floor.
   const industryId = out.industry_id || "default";
-  const margin = lookupIndustryMargin(industryId);
+  const econ = resolveEconomics(industryId, out.country || "US");
   if (out.net_margin == null || out.net_margin <= 0) {
-    out.net_margin = margin.net_margin;
+    out.net_margin = econ.net_margin;
   }
   if (rev > 0 && (out.net_profit == null || out.net_profit <= 0)) {
-    out.net_profit = rev * (out.net_margin || margin.net_margin);
+    out.net_profit = rev * (out.net_margin || econ.net_margin);
   }
+  // Attach the country-specific cost split + firm mix if an earlier step did not.
+  if (out.cost_structure == null && econ.cost_structure) out.cost_structure = econ.cost_structure;
+  if (out.firm_distribution == null && econ.firm_distribution) out.firm_distribution = econ.firm_distribution;
 
   return out;
 }
@@ -323,7 +374,7 @@ export function fillMissingFields(cell: Cell): Cell {
   const iso2 = (cell.country || "US").toUpperCase();
   const industryId = cell.industry_id || "default";
   const country = lookupCountry(iso2);
-  const margin = lookupIndustryMargin(industryId);
+  const econ = resolveEconomics(industryId, iso2);
 
   const out: Cell = { ...cell };
   const typical = out.revenue_per_firm || pickTypicalRevenue(industryId, iso2);
@@ -339,15 +390,18 @@ export function fillMissingFields(cell: Cell): Cell {
   if (out.n_enterprises == null) out.n_enterprises = 100;
   if (out.currency == null) out.currency = country.currency;
 
-  // Derived margins — always set so render layer never sees null.
-  if (out.gross_margin == null) out.gross_margin = margin.gross_margin;
-  if (out.operating_margin == null) out.operating_margin = margin.operating_margin;
-  if (out.net_margin == null) out.net_margin = margin.net_margin;
+  // Derived margins — always set so render layer never sees null. Prefer the
+  // country-specific economics from the drops; fall back to the generic profile.
+  if (out.gross_margin == null) out.gross_margin = econ.gross_margin;
+  if (out.operating_margin == null) out.operating_margin = econ.operating_margin;
+  if (out.net_margin == null) out.net_margin = econ.net_margin;
   if (out.gross_profit == null && out.revenue_per_firm != null)
-    out.gross_profit = out.revenue_per_firm * (out.gross_margin || margin.gross_margin);
+    out.gross_profit = out.revenue_per_firm * (out.gross_margin || econ.gross_margin);
   if (out.operating_profit == null && out.revenue_per_firm != null)
-    out.operating_profit = out.revenue_per_firm * (out.operating_margin || margin.operating_margin);
+    out.operating_profit = out.revenue_per_firm * (out.operating_margin || econ.operating_margin);
   if (out.net_profit == null && out.revenue_per_firm != null)
-    out.net_profit = out.revenue_per_firm * (out.net_margin || margin.net_margin);
+    out.net_profit = out.revenue_per_firm * (out.net_margin || econ.net_margin);
+  if (out.cost_structure == null) out.cost_structure = econ.cost_structure;
+  if (out.firm_distribution == null) out.firm_distribution = econ.firm_distribution;
   return out;
 }
