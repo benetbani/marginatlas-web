@@ -23,6 +23,32 @@ import { getNeighborhoodsForCity } from "@/lib/cities/neighborhoods";
 // a hand-curated entry in src/lib/places/city_character.ts. Self-suppresses
 // for cities without entries (most cities in v1).
 import { CityCharacter } from "@/components/sections/CityCharacter";
+// Place-level decision lede (bible Section 5, the City page row). Pure
+// synthesis module + warm server component, the same established pattern as
+// the country, industry, and cell verdicts.
+import { generateGeoVerdict } from "@/lib/scores/geo_verdict";
+import { GeoViabilityLede } from "@/components/geo/GeoViabilityLede";
+import industryMarginsJson from "@/lib/finance/industry_margins.json";
+
+// Curated, cross-country-stable margin shape per activity (the same table the
+// industry page uses). Read at module scope so the lookup is a plain object
+// access, no query. Net/gross/asset are structural ratios that hold across
+// places; the geo page joins them to its locally-typical revenue to rank which
+// activities actually leave the most for an owner.
+type IndustryMarginRow = {
+  gross_margin?: number | null;
+  operating_margin?: number | null;
+  net_margin?: number | null;
+  asset_intensity?: number | null;
+};
+const INDUSTRY_MARGINS = industryMarginsJson as unknown as {
+  default_fallback: IndustryMarginRow;
+  industries: Record<string, IndustryMarginRow>;
+};
+
+function lookupMargin(industryId: string): IndustryMarginRow {
+  return INDUSTRY_MARGINS.industries[industryId] || INDUSTRY_MARGINS.default_fallback;
+}
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -81,6 +107,34 @@ export default async function RegionLandingPage({
   // wired, so we surface the country-level top 9 here).
   const topIndustries = (await getTopIndustriesForCountry(iso2, 9)) ?? [];
 
+  // Place-level decision lede (bible Section 5, the City page move: "best and
+  // hardest businesses", using the actual economic modules, not a listicle).
+  // Pure synthesis from data already loaded: the densest local activities and
+  // the typical revenue each turns over, joined to each activity's curated,
+  // cross-country-stable margin shape. The single derived signal is "what
+  // reaches the owner" (revenue x net margin); no new query, no invented
+  // number. Each clause and entry self-omits when its input is missing.
+  const geoVerdict = generateGeoVerdict({
+    placeLabel: regionLabel,
+    activities: topIndustries.map((ind) => {
+      const m = lookupMargin(ind.industry_id);
+      return {
+        industryId: ind.industry_id,
+        name: ind.industry_name || INDUSTRY_BY_ID[ind.industry_id]?.name || ind.industry_id,
+        typicalRevenue: ind.revenue_per_firm ?? null,
+        netMargin: m.net_margin ?? null,
+        grossMargin: m.gross_margin ?? null,
+        assetIntensity: m.asset_intensity ?? null,
+      };
+    }),
+  });
+  // Mount the lede only when the synthesis produced real signal: a named
+  // contrast (best and hardest), which needs enough distinct activities with
+  // both a typical revenue and a curated margin. Otherwise it would be the
+  // generic thin-coverage line, which we omit rather than show as an apology.
+  const showGeoVerdict =
+    geoVerdict.best.length > 0 || geoVerdict.hardest.length > 0;
+
   return (
     <div>
       {/* Hero */}
@@ -97,13 +151,30 @@ export default async function RegionLandingPage({
           <span>{countryName}</span>
         </div>
         <h1 className="mt-3 font-display text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-ink-900 leading-[1.05]">
-          {regionLabel}
+          Best and hardest businesses in {regionLabel}
         </h1>
         <p className="mt-4 text-base md:text-lg text-ink-800 max-w-2xl leading-relaxed">
-          Small-business benchmarks across {regionLabel}. Pick a city or an
-          industry below to drill in.
+          Which small businesses tend to leave the most for an owner in{" "}
+          {regionLabel}, and which ones quietly eat the margin. Pick a city or an
+          activity below to see the real numbers.
         </p>
       </section>
+
+      {/* Place-level decision lede (bible Section 5, "best and hardest
+         businesses in [city]"). The opinionated read of which activities in
+         the local mix leave the most for an owner and which are the harder way
+         to make a living, drawn from the densest local activities and their
+         margin structure. Mounts only when the synthesis produced a real
+         contrast (see showGeoVerdict). It links each named activity straight to
+         the cell page so the reader can check the numbers. */}
+      {showGeoVerdict ? (
+        <GeoViabilityLede
+          verdict={geoVerdict}
+          hrefFor={(industryId) =>
+            `/${country.toLowerCase()}/${geo.toLowerCase()}/${industryToSlug(industryId)}`
+          }
+        />
+      ) : null}
 
       {/* Plan v32 Sprint G — city character panel. Renders only for
          hand-curated cities (NYC, LA, London, Paris, Tokyo, etc.).
