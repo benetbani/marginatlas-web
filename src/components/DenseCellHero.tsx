@@ -256,7 +256,7 @@ export default function DenseCellHero(props: DenseCellHeroProps) {
                     top: -4,
                     bottom: -4,
                     width: 3,
-                    background: "#A55C00",
+                    background: "#c03d2b",
                     transform: "translateX(-50%)",
                     borderRadius: 2,
                     boxShadow: "0 0 0 2px #FFFFFF",

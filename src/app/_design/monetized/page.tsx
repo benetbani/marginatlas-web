@@ -126,7 +126,7 @@ export default async function MonetizedPreview({
           <svg viewBox="0 0 300 90" className="w-full" role="img" aria-label="Distribution with ghosted inner quartiles">
             <rect x="20" y="50" width="24" height="30" fill="#D47706" opacity="0.85" rx="2" />
             <GhostBar x={80} y={35} width={24} height={45} tier="basic" entry="cell_distribution_p25_p75" ariaLabel="p25, unlock with Basic" />
-            <rect x="140" y="20" width="24" height="60" fill="#A55C00" rx="2" />
+            <rect x="140" y="20" width="24" height="60" fill="#c03d2b" rx="2" />
             <GhostBar x={200} y={35} width={24} height={45} tier="basic" entry="cell_distribution_p25_p75" ariaLabel="p75, unlock with Basic" />
             <rect x="260" y="55" width="24" height="25" fill="#D47706" opacity="0.85" rx="2" />
             <text x="32" y="88" fontSize="8" textAnchor="middle" fill="#5A3A1A">p10</text>

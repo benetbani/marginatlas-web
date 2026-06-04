@@ -47,30 +47,30 @@
  */
 export const colors = {
   atlas: {
-    // Warm Atlas reformation 2026-06-04: the loud vermillion ramp earthed
-    // toward terracotta / burnt sienna. Browner, slightly less saturated,
-    // same lightness ladder so every contrast relationship still holds.
-    50: "#fdf3ed",
-    100: "#f8dcca",
-    200: "#efb795",
-    300: "#e08a5f",
-    400: "#cf6336",
-    500: "#bd5424", // primary accent (surfaces), terracotta
-    600: "#a0440f", // hover / pressed
-    700: "#883a14", // primary accent (text + headline), burnt sienna
-    800: "#65290c",
-    900: "#431a06",
+    // Reformation v2 2026-06-04: retoned from terracotta to a brighter brick
+    // red (clearly red, less orange/brown), keeping the same lightness ladder
+    // so every contrast relationship still holds.
+    50: "#fbf1ef",
+    100: "#f6d9d3",
+    200: "#ecb2a8",
+    300: "#de8678",
+    400: "#cd5947",
+    500: "#c03d2b", // primary accent (surfaces), terracotta
+    600: "#a52f20", // hover / pressed
+    700: "#8a2618", // primary accent (text + headline), burnt sienna
+    800: "#671a10",
+    900: "#45110a",
   },
   cream: {
     // Warm paper ladder. 50 = warm white (cards/popovers, lightest),
     // climbing into warm sand (page paper, borders). Replaces the cold
     // white-to-gray surfaces that the pre-reformation system used.
-    50: "#fffdf8", // warm white card / popover surface
-    100: "#f7efe1", // warm sand page paper / muted surface
-    200: "#eee2cf",
-    300: "#e2d2b9", // warm taupe hairline / border step
-    400: "#c4b095",
-    500: "#93826a",
+    50: "#ffffff", // warm white card / popover surface
+    100: "#f7f6f4", // warm sand page paper / muted surface
+    200: "#efeeeb",
+    300: "#e4e2dd", // warm taupe hairline / border step
+    400: "#c3bfb7",
+    500: "#8d887e",
   },
   ink: {
     // Warm brown-black text ladder. Reads as warm ink on warm paper,
@@ -130,9 +130,9 @@ export const colors = {
    * or blue (the v2 components hardcoded a blue dot, which this retires).
    */
   tier: {
-    deep: "#883a14", //    = atlas-700, measured / primary
-    good: "#bd5424", //    = atlas-500, regional
-    starter: "#e08a5f", // = atlas-300, thin
+    deep: "#8a2618", //    = atlas-700, measured / primary
+    good: "#c03d2b", //    = atlas-500, regional
+    starter: "#de8678", // = atlas-300, thin
     modeled: "#87745d", // = cocoa-500, estimated
   },
   /**
@@ -142,11 +142,11 @@ export const colors = {
    */
   delta: {
     positive: "#4a6018", // = moss-700, above par
-    atpar: "#883a14", //    = atlas-700, at par
-    caution: "#e08a5f", //  = atlas-300, watch
+    atpar: "#8a2618", //    = atlas-700, at par
+    caution: "#de8678", //  = atlas-300, watch
     negative: "#991b1b", // = clay-700, below par
   },
-  parchment: "#e2d2b9", // warm taupe = cream-300
+  parchment: "#e4e2dd", // warm taupe = cream-300
   graphite: "#463726", // warm brown-gray = ink-700
 } as const;
 

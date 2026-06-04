@@ -23,31 +23,31 @@
     /* Warm Atlas reformation 2026-06-04: shadcn tokens re-toned to warm
        sand paper, warm-white cards, warm brown-black ink, terracotta
        accent. Token names unchanged; only the values warmed. */
-    --background: 247 239 225;       /* cream-100 #F7EFE1, warm sand paper */
+    --background: 247 246 244;       /* cream-100 #F7EFE1, warm sand paper */
     --foreground: 33 24 16;          /* ink-900 #211810, warm near-black */
-    --card: 255 253 248;             /* cream-50 #FFFDF8, warm white card */
+    --card: 255 255 255;             /* cream-50 #FFFDF8, warm white card */
     --card-foreground: 33 24 16;     /* ink-900 */
-    --popover: 255 253 248;          /* cream-50 */
+    --popover: 255 255 255;          /* cream-50 */
     --popover-foreground: 33 24 16;  /* ink-900 */
-    --primary: 136 58 20;            /* atlas-700 #883A14, burnt sienna */
-    --primary-foreground: 255 253 248; /* cream-50 */
-    --secondary: 247 239 225;        /* cream-100 */
+    --primary: 138 38 24;            /* atlas-700 #883A14, burnt sienna */
+    --primary-foreground: 255 255 255; /* cream-50 */
+    --secondary: 247 246 244;        /* cream-100 */
     --secondary-foreground: 33 24 16; /* ink-900 */
-    --muted: 226 210 185;            /* cream-300 #E2D2B9, warm taupe */
+    --muted: 228 226 221;            /* cream-300 #E2D2B9, warm taupe */
     --muted-foreground: 83 66 49;    /* cocoa-700 #534231, warm brown */
-    --accent: 247 239 225;           /* cream-100 */
+    --accent: 247 246 244;           /* cream-100 */
     --accent-foreground: 33 24 16;   /* ink-900 */
     --destructive: 153 27 27;        /* clay-700 #991B1B, true red */
     --destructive-foreground: 255 253 248; /* cream-50 */
-    --border: 226 210 185;           /* cream-300 #E2D2B9, warm taupe */
-    --input: 226 210 185;            /* cream-300 */
-    --ring: 136 58 20;               /* atlas-700, used with /40 alpha in primitives */
+    --border: 228 226 221;           /* cream-300 #E2D2B9, warm taupe */
+    --input: 228 226 221;            /* cream-300 */
+    --ring: 138 38 24;               /* atlas-700, used with /40 alpha in primitives */
     --radius: 1rem;
 
     /* Legacy hex variables that are consumed directly by CSS rules below
        (html background, body gradient). Kept alongside the RGB triplets
        to preserve unchanged visual output. */
-    --hero-fade: #F7EFE1;            /* cream-100, soft warm wash under hero */
+    --hero-fade: #f7f6f4;            /* cream-100, soft warm wash under hero */
 
     /* ==========================================================================
        Atlas card + elevation system (2026-05-25, /frontend-design pass).
@@ -63,27 +63,27 @@
        ========================================================================== */
 
     /* Card surfaces — Warm Atlas: sand paper body, warm-white cards. */
-    --atlas-surface-paper: #F7EFE1;          /* body paper, warm sand */
-    --atlas-surface-card: #FFFDF8;           /* canonical card surface, warm white */
-    --atlas-surface-card-soft: #F2E8D6;      /* secondary card within a card section */
-    --atlas-surface-band: #FFFDF8;           /* warm-white section band, no pattern */
+    --atlas-surface-paper: #f7f6f4;          /* body paper, warm sand */
+    --atlas-surface-card: #ffffff;           /* canonical card surface, warm white */
+    --atlas-surface-card-soft: #efeeeb;      /* secondary card within a card section */
+    --atlas-surface-band: #ffffff;           /* warm-white section band, no pattern */
 
     /* Hairlines — barely visible warm-ink, not gray */
-    --atlas-hairline: rgba(76, 39, 18, 0.08);
-    --atlas-hairline-strong: rgba(76, 39, 18, 0.14);
-    --atlas-hairline-vermillion: rgba(136, 58, 20, 0.30);
+    --atlas-hairline: rgba(38, 33, 28, 0.07);
+    --atlas-hairline-strong: rgba(38, 33, 28, 0.12);
+    --atlas-hairline-vermillion: rgba(192, 61, 43, 0.30);
 
     /* Elevation scale — warm cocoa-tinted shadows, never gray.
        1 = card at rest. 2 = card hover. 3 = modal / popover / sticky. */
     --atlas-elev-1:
-      0 1px 2px rgba(76, 39, 18, 0.04),
-      0 2px 8px rgba(76, 39, 18, 0.03);
+      0 1px 2px rgba(38, 33, 28, 0.05),
+      0 2px 8px rgba(38, 33, 28, 0.04);
     --atlas-elev-2:
-      0 2px 4px rgba(76, 39, 18, 0.05),
-      0 12px 28px rgba(120, 53, 15, 0.08);
+      0 2px 4px rgba(38, 33, 28, 0.06),
+      0 12px 28px rgba(55, 45, 38, 0.08);
     --atlas-elev-3:
-      0 4px 8px rgba(76, 39, 18, 0.06),
-      0 24px 56px rgba(120, 53, 15, 0.12);
+      0 4px 8px rgba(38, 33, 28, 0.07),
+      0 24px 56px rgba(55, 45, 38, 0.12);
 
     /* Section alternation tones used by getToneClass + .section-band */
     --atlas-tone-paper: var(--atlas-surface-paper);
@@ -107,12 +107,12 @@
     background-image:
       linear-gradient(
         180deg,
-        rgba(244, 230, 211, 0.55) 0%,
+        rgba(232, 230, 226, 0.5) 0%,
         rgba(250, 250, 250, 0) 800px
       ),
       radial-gradient(
         circle at 1px 1px,
-        rgba(136, 58, 20, 0.05) 1px,
+        rgba(138, 38, 24, 0.04) 1px,
         transparent 0
       );
     background-size: auto, 22px 22px;
@@ -230,7 +230,7 @@
 @layer components {
   /* Brand name treatment — burnt amber gradient, used sparingly */
   .gradient-name {
-    background: linear-gradient(90deg, #CF6336 0%, #BD5424 50%, #A0440F 100%);
+    background: linear-gradient(90deg, #cd5947 0%, #c03d2b 50%, #a52f20 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -328,7 +328,7 @@
        white section background. The small delta from #FFFDF8 is
        enough to visually separate the surfaces without breaking
        the calm reading rhythm. */
-    background: #FDFAF3;
+    background: #ffffff;
     border-radius: 6px;
     border: 1px solid var(--atlas-hairline);
     box-shadow:
