@@ -32,13 +32,14 @@ Live log of the Wave 1 build. Pairs with `REFORMATION-BIBLE.md` (the spec) and
   data fetch, generateMetadata, JSON-LD (Dataset + FAQ + Breadcrumbs), URL,
   size/year switcher, and every edge case (US measured path, missing-data
   fallback to HeroBenchmark).
-- Gated: tsc clean, all 25 gates green. Preview building.
+- Gated: tsc clean, all 25 gates green. Preview built and **Ready** (warm-cache build, 14 min). The reformed cell page is viewable.
 
 ## Notes / constraints discovered
 - **Preview builds are slow when cold** (24 min: 606 pages prerendered, each
   hitting Supabase, queries hitting their budgets; Italy's country page even
-  hit the 300s per-page cap once). Watching whether warm-cache builds are
-  faster. If they stay slow, raise with founder: candidate fixes are on-demand
+  hit the 300s per-page cap once). Confirmed: warm-cache builds run about
+  14 min (cold was 24 min), so Vercel's cache helps but builds are still slow.
+  If this stays a velocity problem, raise with founder: candidate fixes are on-demand
   ISR for the data-heavy routes, or a Supabase compute bump for build bursts.
   Not changing prerender strategy or infra autonomously.
 - **Preview deployments are behind Vercel SSO** (HTTP 401 to anonymous). The
@@ -56,4 +57,4 @@ Live log of the Wave 1 build. Pairs with `REFORMATION-BIBLE.md` (the spec) and
 
 ## Preview URLs (Vercel, founder-viewable when logged in)
 - Warm design system (Ready): marginatlas-web-twtl-8brab97ma-benets-projects-3110e8e1.vercel.app
-- Flagship (building): marginatlas-web-twtl-d32qh7pdo-benets-projects-3110e8e1.vercel.app
+- Flagship cell page (Ready): marginatlas-web-twtl-d32qh7pdo-benets-projects-3110e8e1.vercel.app
