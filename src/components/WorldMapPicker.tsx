@@ -259,7 +259,7 @@ export default function WorldMapPicker({ onSelect, className }: WorldMapPickerPr
          this box regardless of user gestures. */}
       {/* Atlas pattern (faint 4-point compass repeat) sits behind the
           continents per founder direction 2026-05-26. */}
-      <div className="relative rounded-md border border-ink-200 atlas-paper overflow-hidden">
+      <div className="relative rounded-2xl atlas-paper overflow-hidden">
         {!loaded && (
           <div
             className="absolute inset-0 rounded-xl overflow-hidden"

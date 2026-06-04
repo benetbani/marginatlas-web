@@ -6,7 +6,7 @@ import { WhatAtlasWeighs } from "@/components/home/WhatAtlasWeighs";
 import HomepageEditorialBlocks, { type AtlasQuestion } from "@/components/HomepageEditorialBlocks";
 import Image from "next/image";
 import { RotatingWord } from "@/components/RotatingWord";
-import { HERO_BUSINESSES } from "@/lib/hero-words";
+import { HERO_BUSINESSES, HERO_CITIES } from "@/lib/hero-words";
 import { getToneClass } from "@/lib/page-layout/section-order";
 import { getAllPosts, type BlogPost } from "@/lib/blog";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
@@ -154,43 +154,41 @@ export default function HomePage() {
   return (
     <div>
       {/*
-        Hero: warm reformation (bible Section 25/26). The H1 is the fixed
-        positioning promise ("Know if a business works before you risk your
-        money"); the sub-line names the forces the product weighs; the
-        search-prompt line carries one rotating example word and points at
-        the navigator. Hero + navigator share one band so they read as a
-        single section. The navigator (with its working search/submit) is
-        the primary call-to-action and is preserved verbatim.
+        Hero (Reformation v2): the rotating question is the headline again
+        ("How much does a [business] make in [city]?"), with the fixed
+        positioning line demoted to a one-line subtitle and the old
+        "compare small-business..." subhead cut. The eyebrow carries the #1
+        leadership claim. Hero + navigator share one band so they read as a
+        single section; the navigator is the primary call-to-action and is
+        preserved verbatim. The H1 server-renders a concrete question for
+        crawlers; the words rotate client-side.
       */}
       <ToneBand tone="home-hero">
         <section className="pt-6 pb-4 md:pt-10 md:pb-6 lg:pt-12">
           <div className="max-w-4xl mx-auto text-center">
             <SectionEyebrow size="md" className="mb-4 md:mb-5 text-center">
-              Local profit intelligence
+              The #1 atlas of local profit intelligence
             </SectionEyebrow>
-            {/* Hero promise per bible Section 25/26: the blunt, fixed
-               positioning line, not a rotating marketing claim. text-balance
-               keeps the break clean across viewport widths. */}
             <h1 className="font-display text-[1.75rem] sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-ink-900 leading-[1.08] text-balance">
-              Know if a business works before you risk your money
-            </h1>
-            <p className="mt-4 md:mt-6 max-w-2xl mx-auto text-base md:text-lg text-graphite leading-relaxed">
-              Compare small-business profitability by city and industry, after
-              rent, wages, taxes, competition, and what the owner actually
-              takes home. No easy-money promises.
-            </p>
-            {/* Search-prompt line ties the navigator below to a concrete
-               example. The rotating business word keeps the interactive
-               flourish without diluting the fixed hero promise. */}
-            <p className="mt-4 text-sm md:text-base text-cocoa-700 leading-relaxed">
-              Pick any business and place:{" "}
-              <span className="font-medium text-atlas-700">
+              How much does a{" "}
+              <span className="text-atlas-700">
                 <RotatingWord
                   words={HERO_BUSINESSES as unknown as string[]}
                   interval={2000}
                 />
               </span>{" "}
-              in a city you know.
+              make in{" "}
+              <span className="text-atlas-700">
+                <RotatingWord
+                  words={HERO_CITIES as unknown as string[]}
+                  interval={2000}
+                  offset={1000}
+                />
+              </span>
+              ?
+            </h1>
+            <p className="mt-4 md:mt-6 max-w-2xl mx-auto text-base md:text-lg text-graphite leading-relaxed">
+              Know if a business works before you risk your money.
             </p>
           </div>
           {/* Navigator sits inside the same band immediately under the

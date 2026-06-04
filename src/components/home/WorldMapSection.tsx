@@ -26,9 +26,11 @@ export function WorldMapSection() {
           Pick a country
         </h2>
       </div>
-      {/* White card keeps the map background clean — only the
-          surrounding section is dark. */}
-      <div className="rounded-2xl bg-white shadow-[0_4px_24px_rgba(0,0,0,0.25)] p-2 md:p-4">
+      {/* White card keeps the map readable on the dark section. Constrained
+          to the map width and overflow-hidden with no padding, so the map
+          fills the rounded card edge to edge: the old full-width card plus
+          p-2/p-4 padding left a stray white margin all around the map. */}
+      <div className="rounded-2xl bg-white shadow-[0_4px_24px_rgba(0,0,0,0.25)] overflow-hidden max-w-5xl mx-auto">
         <WorldMapClient />
       </div>
     </section>
