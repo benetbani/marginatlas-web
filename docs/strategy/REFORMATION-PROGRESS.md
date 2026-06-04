@@ -69,9 +69,28 @@ branch `reform/warm-atlas-flagship`, each gated (tsc + 25 gates) and pushed. The
 newest Vercel preview build carries all of them cumulatively. Two paywalls were
 removed along the way (compare, calculator) to honor free-only. Nothing is merged
 to `main`: the branch is one PR from production and one `git revert` from undo.
-Next: founder reviews the cumulative preview, then we merge; Wave 2 is the long
-tail of pages (world, cities index, coverage, methodology, learn, blog) adopting
-the same warm system.
+## Wave 2 (in progress)
+Founder asked for ~10 more pages "to the maximum", both new long-tail pages and
+deepening the Wave 1 keystones. Same proven pattern (a pure synthesis module
+feeds a warm component), reviewed and re-gated before push, builds batched (one
+build per 3 pages). Builds have warmed to ~2 min.
+
+Long-tail, done (gated, pushed):
+- [x] Methodology `/methodology` (trust front door; confidence as a feature).
+- [x] World `/world` (guided atlas, breadth-first; depth handed to /coverage).
+- [x] Cities `/cities` (guided directory by market depth).
+- [x] Learn `/learn` (escalating argument, not a list).
+- [x] Blog `/blog` (featured plus chronological river).
+- [x] Decide `/decide` (lead with the decision; best vs hardest by net margin).
+
+Deepen track (queued): the cell, country, and industry keystones pushed further.
+Held until the Vercel Protection Bypass token is live, so these high-stakes
+keystone edits get visual review before they ship (curl/Playwright screenshot via
+the `x-vercel-protection-bypass` header). coverage and city-detail are also
+candidates.
+
+Merge: nothing on `main` yet; `reform/warm-atlas-flagship` is one PR from
+production and one `git revert` from undo.
 
 ## Preview URLs (Vercel, founder-viewable when logged in)
 - Warm design system (Ready): marginatlas-web-twtl-8brab97ma-benets-projects-3110e8e1.vercel.app
