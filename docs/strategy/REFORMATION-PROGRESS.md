@@ -48,12 +48,25 @@ Live log of the Wave 1 build. Pairs with `REFORMATION-BIBLE.md` (the spec) and
   code review. To enable visual self-checks, founder could add a Protection
   Bypass token or relax preview protection (their call; a security setting).
 
-## Next (in order)
-1. Verify the flagship preview build is Ready; eyeball the live cell page.
-2. Country page `/[country]` — warm + decision-first per bible Section 5
-   (business climate, tax/wage/friction, top industries, rolled-up scores).
-3. Industry page `/industries/[industry]` — "business model anatomy", Section 5.
-4. City, Home, Compare, Calculator, Sectors.
+## Fan-out status
+Each page uses the proven pattern: a pure `src/lib/scores/*_verdict.ts` synthesis
+module (no queries, invents nothing, self-omits on null) feeding a warm server
+component (SectionEyebrow + serif lead + semantic `dl`, tokens only). Every page
+is reviewed and re-gated (tsc + 25 gates) before push. One page in flight at a
+time so builds and the working tree stay clean.
+
+- [x] Flagship cell page `/[country]/[geo]/[industry]` (Ready). VerdictHero + ScorePanel + scores/{index,verdict}.ts.
+- [x] Country page `/[country]` (Ready). CountryViabilityLede + country_verdict.ts.
+- [x] Industry page `/industries/[industry]` (building). IndustryModelLede + industry_verdict.ts.
+- [ ] City/geo page `/[country]/[geo]` (drafting).
+- [ ] Home `/`, Compare `/compare`, Calculator `/calculator`, Sectors `/sectors`.
+
+How to continue the fan-out: dispatch a general-purpose agent per page with the
+same brief shape used for country/industry (read bible Section 5 + GUIDELINES +
+the live page + the reformed siblings; build the verdict-module + warm-component
+pattern; preserve SEO/ids/order; gate tsc + prebuild:serial; do not push). Then
+review the two new files, re-gate, commit, push. Build times warmed down from
+24 min (cold) to 9 min as Vercel's cache filled.
 
 ## Preview URLs (Vercel, founder-viewable when logged in)
 - Warm design system (Ready): marginatlas-web-twtl-8brab97ma-benets-projects-3110e8e1.vercel.app
