@@ -36,7 +36,8 @@
  *   - ink      — warm brown-black text ladder
  *   - cocoa    — text aliases, re-warmed to real browns
  *   - moss     — positive deltas (YoY up, "good" indicator)
- *   - clay     — negative deltas + destructive (held as a true red)
+ *   - clay     — destructive / strong-danger (deep maroon, kept distinct from brand red)
+ *   - amber    — warnings / caution (soft-danger), distinct from clay and moss
  *   - teal     — single muted-sage data accent (use <5% of surface)
  *
  * Plus two standalone tokens:
@@ -104,14 +105,34 @@ export const colors = {
     900: "#222e09",
   },
   clay: {
-    // Held as a true red. Danger and negative deltas must stay clearly
-    // distinct from the terracotta accent, so this family is NOT warmed.
-    50: "#fef2f2",
-    100: "#fee2e2",
-    300: "#fca5a5",
-    500: "#dc2626",
-    700: "#991b1b",
-    900: "#450a0a",
+    // Deep maroon / oxblood — the DESTRUCTIVE color. Retoned 2026-06-04 off
+    // the prior bright red so strong-danger reads clearly distinct from the
+    // vivid red brand accent (atlas, #e62200). Red stays reserved for brand.
+    50: "#fbeae8",
+    100: "#f3c9c4",
+    200: "#e29c93",
+    300: "#cf6c5f",
+    400: "#b3463a",
+    500: "#8c2b22",
+    600: "#73211a",
+    700: "#5c1813",
+    800: "#421009",
+    900: "#2b0a05",
+  },
+  amber: {
+    // Warnings (caution, watch, soft-danger). Added 2026-06-04 so warnings
+    // read as amber rather than borrowing the red brand accent. Distinct
+    // from moss (positive) and clay (destructive maroon).
+    50: "#fff8eb",
+    100: "#fdecc8",
+    200: "#fad79a",
+    300: "#f5bd5c",
+    400: "#eda12f",
+    500: "#d4860f",
+    600: "#b06a08",
+    700: "#8a510a",
+    800: "#653a0c",
+    900: "#3f2408",
   },
   teal: {
     // Muted sage / eucalyptus — the single cool counterweight to the
@@ -142,9 +163,9 @@ export const colors = {
    */
   delta: {
     positive: "#4a6018", // = moss-700, above par
-    atpar: "#991600", //    = atlas-700, at par
-    caution: "#fb8469", //  = atlas-300, watch
-    negative: "#991b1b", // = clay-700, below par
+    atpar: "#463726", //    = ink-700 graphite neutral, at par (not brand-red)
+    caution: "#b06a08", //  = amber-600, watch
+    negative: "#8a510a", // = amber-700, below par (warning, not brand-red)
   },
   parchment: "#e4e2dd", // warm taupe = cream-300
   graphite: "#463726", // warm brown-gray = ink-700
@@ -167,8 +188,10 @@ export const semanticColors = {
   ring: colors.atlas[700],
   success: colors.moss[700],
   successSurface: colors.moss[100],
-  danger: colors.clay[700],
+  danger: colors.clay[700], // maroon (destructive), distinct from brand red
   dangerSurface: colors.clay[100],
+  warning: colors.amber[700],
+  warningSurface: colors.amber[100],
   muted: colors.ink[500],
   mutedSurface: colors.cream[100],
 } as const;
@@ -342,6 +365,7 @@ export const tailwindColors = {
   graphite: colors.graphite,
   moss: colors.moss,
   clay: colors.clay,
+  amber: colors.amber,
   cocoa: colors.cocoa,
   teal: colors.teal,
   tier: colors.tier,

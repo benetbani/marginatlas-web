@@ -58,6 +58,7 @@ const CorrectionForm = dynamic(
 import { CurrencySwitcher } from "@/components/CurrencySwitcher";
 import { Money } from "@/components/Money";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
+import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import industryMarginsJson from "@/lib/finance/industry_margins.json";
 import { clampMargin } from "@/lib/finance/margin_floor";
 import { generateFAQs } from "@/lib/seo/faq_generator";
@@ -389,6 +390,26 @@ export default async function CellPage({
       : null;
   const rawNetMargin = netProfitResult?.net_margin ?? null;
   const netTakeHome = netProfitResult?.net_profit ?? null;
+  // Founder rule: a business big enough to employ 10 or more people should
+  // clear at least twice the local average annual income for its owner. Below
+  // that bar the owner would earn less than two salaried staff while carrying
+  // all the risk, which signals the take-home estimate is too thin to believe.
+  // So for 10+ employee bands we floor the absolute annual take-home at 2x the
+  // country average income. This touches dollars only; the net margin percent
+  // and every revenue figure stay exactly as computed. Firms with 9 or fewer
+  // employees (1-4, 5-9) are never floored.
+  const isLargerFirm =
+    !!cell.size_band &&
+    ["10-19", "20-49", "50-99", "100+"].includes(cell.size_band);
+  const econSnap = getCountryEconomicsSnapshot(country.toUpperCase());
+  const annualIncome =
+    econSnap.avgMonthlySalary != null ? econSnap.avgMonthlySalary * 12 : null;
+  const takeHomeFloor =
+    isLargerFirm && annualIncome ? annualIncome * 2 : null;
+  const adjustedNetTakeHome =
+    takeHomeFloor != null && netTakeHome != null && netTakeHome < takeHomeFloor
+      ? takeHomeFloor
+      : netTakeHome;
   // Defensive floor — never let a sub-3% net margin reach the page.
   const computedNetMargin = rawNetMargin != null ? clampMargin(rawNetMargin, "net", cell.industry_id || null) : null;
 
@@ -405,7 +426,7 @@ export default async function CellPage({
   const scoreSet = computeScores(cell, {
     cityTier: getCityTier(geo),
     netMargin: computedNetMargin,
-    netProfit: netTakeHome,
+    netProfit: adjustedNetTakeHome,
   });
   const heroVerdict = generateVerdict(cell, scoreSet, compactUsd);
 
@@ -924,7 +945,7 @@ export default async function CellPage({
                 ? (cell.payroll_per_employee * cell.n_employees) / cell.n_enterprises
                 : null
             }
-            takeHome={netTakeHome}
+            takeHome={adjustedNetTakeHome}
           />
         </div>
       </section>
