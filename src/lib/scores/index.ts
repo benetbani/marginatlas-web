@@ -19,10 +19,13 @@
  *     return null and the UI omits that score silently. No "low confidence"
  *     badge, no apologetic placeholder.
  *
- * Pure module: it operates only on the Cell fields plus a few optional
- * context numbers the caller passes in. No Supabase, no other domain
- * modules at runtime (Cell is a type-only import), so it stays trivially
- * testable and cannot trip the layering gate.
+ * The caller passes the page's AUTHORITATIVE numbers (the tax-aware net
+ * margin and net take-home it already computed) through the context, so the
+ * scores agree with the rest of the page instead of inventing a second set.
+ *
+ * Pure module: it operates only on Cell fields plus the context numbers. No
+ * Supabase, no other domain modules at runtime (Cell is a type-only import),
+ * so it stays trivially testable and cannot trip the layering gate.
  */
 import type { Cell } from "@/lib/cells";
 
@@ -56,6 +59,10 @@ export interface ScoreSet {
 export interface ScoreContext {
   /** 1 = major metro, 2 = mid, 3 = small/rural. From getCityTier. */
   cityTier?: 1 | 2 | 3 | null;
+  /** Authoritative net margin (share, 0..1) the page already computed. */
+  netMargin?: number | null;
+  /** Authoritative net take-home (USD) the page already computed. */
+  netProfit?: number | null;
   /** Local annual wage to normalise owner take-home against, USD. */
   localAnnualWage?: number | null;
   /**
@@ -117,15 +124,17 @@ export function bandWord(band: ScoreBand): string {
 }
 
 // ----------------------------------------------------------------------------
-// component scores: each returns a raw 0..100 number or null (omit)
+// component scores: each takes resolved primitives, returns 0..100 or null
 // ----------------------------------------------------------------------------
 
-function profitabilityValue(cell: Cell): number | null {
-  const net = cell.net_margin;
-  if (net == null || !Number.isFinite(net)) return null;
+function profitabilityValue(
+  netMargin: number | null,
+  cost: Cell["cost_structure"],
+): number | null {
+  if (netMargin == null || !Number.isFinite(netMargin)) return null;
   // Net margin (share) to score. SMB net margins run roughly 3% (thin) to
   // 22%+ (strong); the curve rewards real bottom-line, not vanity revenue.
-  let base = piecewise(net, [
+  let base = piecewise(netMargin, [
     [0, 8],
     [0.03, 25],
     [0.06, 42],
@@ -136,20 +145,21 @@ function profitabilityValue(cell: Cell): number | null {
   ]);
   // Cost-pressure nudge: when rent + labour eat most of revenue, the margin
   // is more fragile than the headline suggests.
-  const cs = cell.cost_structure;
-  if (cs && Number.isFinite(cs.rent) && Number.isFinite(cs.labor)) {
-    const pressure = (cs.rent + cs.labor) / 100;
+  if (cost && Number.isFinite(cost.rent) && Number.isFinite(cost.labor)) {
+    const pressure = (cost.rent + cost.labor) / 100;
     if (pressure > 0.62) base -= 6;
     else if (pressure > 0.52) base -= 3;
   }
   return clamp(Math.round(base), 1, 99);
 }
 
-function rentHeadroomValue(cell: Cell, cityTier?: 1 | 2 | 3 | null): number | null {
-  const rent = cell.cost_structure?.rent;
-  if (rent == null || !Number.isFinite(rent)) return null;
+function rentHeadroomValue(
+  rentPct: number | null,
+  cityTier?: 1 | 2 | 3 | null,
+): number | null {
+  if (rentPct == null || !Number.isFinite(rentPct)) return null;
   // Lower rent share of revenue means more headroom (higher score).
-  let base = piecewise(rent, [
+  let base = piecewise(rentPct, [
     [3, 92],
     [6, 82],
     [9, 66],
@@ -165,19 +175,12 @@ function rentHeadroomValue(cell: Cell, cityTier?: 1 | 2 | 3 | null): number | nu
 }
 
 function ownerTakeHomeValue(
-  cell: Cell,
-  localAnnualWage?: number | null,
+  netProfit: number | null,
+  wage: number | null,
 ): number | null {
-  const net = cell.net_profit;
-  if (net == null || !Number.isFinite(net)) return null;
-  const wage =
-    localAnnualWage && localAnnualWage > 0
-      ? localAnnualWage
-      : cell.payroll_per_employee && cell.payroll_per_employee > 0
-        ? cell.payroll_per_employee
-        : null;
-  if (wage == null) return null;
-  const ratio = net / wage;
+  if (netProfit == null || !Number.isFinite(netProfit)) return null;
+  if (wage == null || !(wage > 0)) return null;
+  const ratio = netProfit / wage;
   // Net take-home relative to one local wage. Below ~1 the owner is buying
   // themselves a job; above ~2.5 it clears a wage with room to reinvest.
   const base = piecewise(ratio, [
@@ -276,65 +279,59 @@ const LABELS: Record<ScoreId, string> = {
   opportunity: "Opportunity",
 };
 
+function pushScore(
+  scores: Score[],
+  id: ScoreId,
+  value: number,
+  blurb: (band: ScoreBand) => string,
+): void {
+  const band = bandOf(value);
+  scores.push({ id, label: LABELS[id], value, band, blurb: blurb(band) });
+}
+
 /**
  * Compute the score set for a cell. Returns only the scores that are
  * defensible from the data on hand; the rest are omitted (hide weakness).
  */
 export function computeScores(cell: Cell, ctx: ScoreContext = {}): ScoreSet {
   const scores: Score[] = [];
+  const median = cell.revenue_per_firm ?? cell.rev_p50 ?? null;
 
-  const prof = profitabilityValue(cell);
-  if (prof != null) {
-    const band = bandOf(prof);
-    scores.push({
-      id: "profitability",
-      label: LABELS.profitability,
-      value: prof,
-      band,
-      blurb: profitabilityBlurb(cell.net_margin as number, band),
-    });
+  const netMargin = ctx.netMargin ?? cell.net_margin ?? null;
+  const prof = profitabilityValue(netMargin, cell.cost_structure ?? null);
+  if (prof != null && netMargin != null) {
+    pushScore(scores, "profitability", prof, (b) =>
+      profitabilityBlurb(netMargin, b),
+    );
   }
 
-  const rent = rentHeadroomValue(cell, ctx.cityTier ?? null);
-  if (rent != null) {
-    const band = bandOf(rent);
-    scores.push({
-      id: "rent",
-      label: LABELS.rent,
-      value: rent,
-      band,
-      blurb: rentBlurb(cell.cost_structure!.rent, band),
-    });
+  const rentPct = cell.cost_structure?.rent ?? null;
+  const rent = rentHeadroomValue(rentPct, ctx.cityTier ?? null);
+  if (rent != null && rentPct != null) {
+    pushScore(scores, "rent", rent, (b) => rentBlurb(rentPct, b));
   }
 
-  const owner = ownerTakeHomeValue(cell, ctx.localAnnualWage ?? null);
+  const netProfit =
+    ctx.netProfit ??
+    cell.net_profit ??
+    (netMargin != null && median != null ? netMargin * median : null);
+  const wage =
+    ctx.localAnnualWage ??
+    (cell.payroll_per_employee && cell.payroll_per_employee > 0
+      ? cell.payroll_per_employee
+      : null);
+  const owner = ownerTakeHomeValue(netProfit, wage);
   if (owner != null) {
-    const band = bandOf(owner);
-    scores.push({
-      id: "owner_take_home",
-      label: LABELS.owner_take_home,
-      value: owner,
-      band,
-      blurb: ownerBlurb(band),
-    });
+    pushScore(scores, "owner_take_home", owner, ownerBlurb);
   }
 
   // Market room only appears when the caller supplied a peer-derived value.
   if (ctx.marketRoomValue != null && Number.isFinite(ctx.marketRoomValue)) {
     const v = clamp(Math.round(ctx.marketRoomValue), 1, 99);
-    const band = bandOf(v);
-    scores.push({
-      id: "market",
-      label: LABELS.market,
-      value: v,
-      band,
-      blurb: marketBlurb(band),
-    });
+    pushScore(scores, "market", v, marketBlurb);
   }
 
-  const opportunity = blendOpportunity(scores);
-
-  return { scores, opportunity };
+  return { scores, opportunity: blendOpportunity(scores) };
 }
 
 /**

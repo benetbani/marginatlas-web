@@ -71,8 +71,10 @@ import {
   estimateEmployeesFromFirms,
 } from "@/lib/extrapolations/fill_missing";
 import { HeroBenchmark } from "@/components/HeroBenchmark";
-import DenseCellHero from "@/components/DenseCellHero";
-import MobileCellHero from "@/components/mobile/MobileCellHero";
+import { VerdictHero } from "@/components/cell/VerdictHero";
+import { ScorePanel } from "@/components/cell/ScorePanel";
+import { computeScores } from "@/lib/scores";
+import { generateVerdict } from "@/lib/scores/verdict";
 import { CityHero } from "@/components/CityHero";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { ComparableCitiesRibbon } from "@/components/ComparableCitiesRibbon";
@@ -394,6 +396,23 @@ export default async function CellPage({
   // Defensive floor — never let a sub-3% net margin reach the page.
   const computedNetMargin = rawNetMargin != null ? clampMargin(rawNetMargin, "net", cell.industry_id || null) : null;
 
+  // Reformation decision layer (bible Sections 6, 10, 21, 25). Pure compute,
+  // no new queries: the proprietary scores and the opinionated verdict come
+  // from the cell's own economics, using the same tax-aware net numbers the
+  // rest of the page shows. Each score self-omits when it cannot be defended.
+  const compactUsd = (n: number): string => {
+    if (!Number.isFinite(n)) return "";
+    if (n >= 1_000_000) return `$${(n / 1_000_000).toFixed(1)}M`;
+    if (n >= 1_000) return `$${Math.round(n / 1_000)}K`;
+    return `$${Math.round(n)}`;
+  };
+  const scoreSet = computeScores(cell, {
+    cityTier: getCityTier(geo),
+    netMargin: computedNetMargin,
+    netProfit: netTakeHome,
+  });
+  const heroVerdict = generateVerdict(cell, scoreSet, compactUsd);
+
   // FAQPage JSON-LD payload. The question text matches
   // the phrase universe (scripts/seo/build_phrase_universe.py), so any organic
   // search for "how much does a pharmacy make in California" surfaces this
@@ -574,62 +593,21 @@ export default async function CellPage({
           all in ~55vh on desktop and ~100vh on mobile. */}
       {(() => {
         const industryName = cell.industry_name || industry.replace(/-/g, " ");
-        const subniches = (cell.industry_examples ?? []).slice(0, 4).join(" · ") || industryName;
         const question = `How much does a ${industryName.toLowerCase().replace(/s$/, "")} make in ${cell.geo_name || iso2ToName(country) || country.toUpperCase()}?`;
         const typical = cell.revenue_per_firm ?? cell.rev_p50 ?? 0;
         const p10 = cell.rev_p10 ?? typical * 0.32;
         const p90 = cell.rev_p90 ?? typical * 2.6;
-        // Employee count: handle unit-detection (Plan v30 Phase 2).
-        let empPerFirm = 1;
-        if (cell.n_employees && cell.n_employees > 0) {
-          if (cell.n_enterprises && cell.n_enterprises > 0 && cell.n_employees >= cell.n_enterprises) {
-            empPerFirm = Math.max(1, Math.round(cell.n_employees / cell.n_enterprises));
-          } else {
-            empPerFirm = Math.max(1, Math.round(cell.n_employees));
-          }
-        }
-        const heroCoverageTier = deriveCoverageTier(cell);
         return typical > 0 ? (
-          <>
-            {/* Plan v30 Bundle 1 — mobile-specific hero rendered below md;
-                desktop DenseCellHero rendered from md up. Both compiled,
-                Tailwind shows/hides per viewport. */}
-            <div className="md:hidden">
-              <MobileCellHero
-                sectorId={cell.sector_id || "other_local"}
-                sectorLabel={(cell.sector_name || "Industry").toUpperCase()}
-                geoName={cell.geo_name || iso2ToName(country) || country.toUpperCase()}
-                countryName={iso2ToName(country) || country.toUpperCase()}
-                question={question}
-                industrySubniches={subniches}
-                typicalRevenue={typical}
-                p10Revenue={p10}
-                p90Revenue={p90}
-                coverageTier={heroCoverageTier}
-                pickCountryHref="/world"
-                browseIndustriesHref="/sectors"
-              />
-            </div>
-            <div className="hidden md:block">
-              <DenseCellHero
-                industryName={industryName}
-                industrySubniches={subniches}
-                sectorId={cell.sector_id || "other_local"}
-                sectorLabel={(cell.sector_name || "Industry").toUpperCase()}
-                iso2={country.toUpperCase()}
-                countryName={iso2ToName(country) || country.toUpperCase()}
-                geoName={cell.geo_name || iso2ToName(country) || country.toUpperCase()}
-                question={question}
-                typicalRevenue={typical}
-                p10Revenue={p10}
-                p90Revenue={p90}
-                employees={empPerFirm}
-                medianWage={cell.payroll_per_employee ?? 30000}
-                netMargin={computedNetMargin ?? 0.08}
-                coverageTier={heroCoverageTier}
-              />
-            </div>
-          </>
+          <VerdictHero
+            sectorLabel={cell.sector_name || null}
+            question={question}
+            verdict={heroVerdict}
+            opportunity={scoreSet.opportunity}
+            typical={typical}
+            p10={p10}
+            p90={p90}
+            fmt={compactUsd}
+          />
         ) : (
           // Fallback to the legacy hero if revenue is missing entirely.
           <HeroBenchmark
@@ -644,6 +622,14 @@ export default async function CellPage({
           />
         );
       })()}
+
+      {/* Reformation decision layer: the proprietary scores, right under the
+         verdict (bible Section 10). Self-omits when nothing is computable. */}
+      {scoreSet.scores.length > 0 ? (
+        <section className="py-6">
+          <ScorePanel scores={scoreSet.scores} />
+        </section>
+      ) : null}
       {/* Plan v30 Phase 1 — currency switcher only. The 5-year trend
           sparkline was removed: applying a synthesized CAGR to revenue
           gives the wrong impression of measured forecasting. Revive
