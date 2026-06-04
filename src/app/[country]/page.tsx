@@ -36,6 +36,10 @@ void COUNTRY_PAGE_SECTIONS;
 
 export const revalidate = 86400;
 export const dynamicParams = true;
+// Country pages render on demand (generateStaticParams returns []), so give
+// the getTopIndustriesForCountry read headroom on a cold or throttled DB: a
+// first-hit render should not drop at the default function timeout.
+export const maxDuration = 60;
 
 type Params = { country: string };
 
@@ -43,21 +47,19 @@ type Params = { country: string };
 // per-country tagline is now sourced from getCountryAnchor(), and the
 // signature glyph is no longer used anywhere on the country page.
 
-// Cap build-time static generation to the top 25 countries
-// by traffic potential (G7 + major emerging markets + key SMB hubs).
-// The remaining ~170 countries render on demand via dynamicParams=true.
-// Previous behavior pre-built all 195, which timed out Vercel's per-page
-// 60s budget on low-coverage entries that did long Supabase fallback walks.
-const STATIC_COUNTRY_CODES = new Set([
-  "US", "GB", "DE", "FR", "IT", "ES", "JP", "BR", "MX", "CA",
-  "AU", "NL", "BE", "CH", "AT", "SE", "PL", "PT", "IE", "DK",
-  "IN", "CN", "ID", "TR", "AE",
-]);
-
+// Build-time prerender DISABLED (2026-06-04). Mirrors the region page
+// (src/app/[country]/[geo]/page.tsx): getTopIndustriesForCountry is a heavy
+// Supabase aggregate with no budget wrapper, and prerendering even the top 25
+// countries fired 25 such reads concurrently against a cold (and recently
+// spend-capped) DB. Each country page then exceeded Vercel's 300s per-route
+// static-gen cap, retried 3x, and the build blew the 45-minute limit and
+// failed the production deploy (build-log evidence, deploy ks27agr69).
+// dynamicParams=true (above) means every country still renders on first
+// request and is then cached for `revalidate` seconds, so visitors see no
+// difference. Re-enable a small prerender list once the country
+// top-industries read is materialized or the DB is bumped off NANO.
 export async function generateStaticParams(): Promise<Params[]> {
-  return COUNTRIES
-    .filter((c) => STATIC_COUNTRY_CODES.has(c.code))
-    .map((c) => ({ country: c.code.toLowerCase() }));
+  return [];
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }) {
