@@ -55,18 +55,23 @@ component (SectionEyebrow + serif lead + semantic `dl`, tokens only). Every page
 is reviewed and re-gated (tsc + 25 gates) before push. One page in flight at a
 time so builds and the working tree stay clean.
 
-- [x] Flagship cell page `/[country]/[geo]/[industry]` (Ready). VerdictHero + ScorePanel + scores/{index,verdict}.ts.
-- [x] Country page `/[country]` (Ready). CountryViabilityLede + country_verdict.ts.
-- [x] Industry page `/industries/[industry]` (building). IndustryModelLede + industry_verdict.ts.
-- [ ] City/geo page `/[country]/[geo]` (drafting).
-- [ ] Home `/`, Compare `/compare`, Calculator `/calculator`, Sectors `/sectors`.
+- [x] Flagship cell page `/[country]/[geo]/[industry]`. VerdictHero + ScorePanel + scores/{index,verdict}.ts.
+- [x] Country page `/[country]`. CountryViabilityLede + country_verdict.ts.
+- [x] Industry page `/industries/[industry]`. IndustryModelLede + industry_verdict.ts.
+- [x] City/geo page `/[country]/[geo]`. GeoViabilityLede + geo_verdict.ts.
+- [x] Home `/`. WhatAtlasWeighs + the promise hero.
+- [x] Compare `/compare`. compare_verdict.ts; honest p10-p90 spread instead of a faked waterfall; paywall removed.
+- [x] Calculator `/calculator`. Free break-even + owner take-home; paywall removed.
+- [x] Sectors `/sectors`. Guided directory grouped by where the owner keeps most; sector_economics.ts.
 
-How to continue the fan-out: dispatch a general-purpose agent per page with the
-same brief shape used for country/industry (read bible Section 5 + GUIDELINES +
-the live page + the reformed siblings; build the verdict-module + warm-component
-pattern; preserve SEO/ids/order; gate tsc + prebuild:serial; do not push). Then
-review the two new files, re-gate, commit, push. Build times warmed down from
-24 min (cold) to 9 min as Vercel's cache filled.
+**WAVE 1 COMPLETE.** The warm design system plus eight perfected pages, all on
+branch `reform/warm-atlas-flagship`, each gated (tsc + 25 gates) and pushed. The
+newest Vercel preview build carries all of them cumulatively. Two paywalls were
+removed along the way (compare, calculator) to honor free-only. Nothing is merged
+to `main`: the branch is one PR from production and one `git revert` from undo.
+Next: founder reviews the cumulative preview, then we merge; Wave 2 is the long
+tail of pages (world, cities index, coverage, methodology, learn, blog) adopting
+the same warm system.
 
 ## Preview URLs (Vercel, founder-viewable when logged in)
 - Warm design system (Ready): marginatlas-web-twtl-8brab97ma-benets-projects-3110e8e1.vercel.app
