@@ -71,7 +71,7 @@ import { HeroBenchmark } from "@/components/HeroBenchmark";
 import { VerdictHero } from "@/components/cell/VerdictHero";
 import { CellDashboard } from "@/components/cell/CellDashboard";
 import { computeScores } from "@/lib/scores";
-import { buildCellDashboard } from "@/lib/scores/cell_dashboard";
+import { buildCellDashboard, getLondonEntry } from "@/lib/scores/cell_dashboard";
 import { generateVerdict } from "@/lib/scores/verdict";
 import { CityHero } from "@/components/CityHero";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
@@ -462,6 +462,15 @@ export default async function CellPage({
     peopleWorking: employeesEstimate ?? null,
     wagePerEmployee: wageEstimate ?? null,
     cityPopulation,
+    // econSnap is the country-economics snapshot already computed above for
+    // the take-home floor; reused here so the climate section needs no second
+    // lookup. costStructure + setupCosts are the cell's own enrichment fields;
+    // londonEntry is the curated, clearly-modeled London market dataset (GB
+    // cells only, self-omits otherwise).
+    econ: econSnap,
+    costStructure: cell.cost_structure ?? null,
+    setupCosts: cell.setup_costs ?? null,
+    londonEntry: getLondonEntry(cell),
     fmtMoney: formatMoney,
   });
 
