@@ -2,10 +2,11 @@ import { NavigatorForm } from "@/components/NavigatorForm";
 import { FeaturedCellTile, type FeaturedTileSpec } from "@/components/FeaturedCellTile";
 import { SectorMasterMenu } from "@/components/SectorMasterMenu";
 import { WorldMapSection } from "@/components/home/WorldMapSection";
-import HomepageEditorialBlocks from "@/components/HomepageEditorialBlocks";
+import { WhatAtlasWeighs } from "@/components/home/WhatAtlasWeighs";
+import HomepageEditorialBlocks, { type AtlasQuestion } from "@/components/HomepageEditorialBlocks";
 import Image from "next/image";
 import { RotatingWord } from "@/components/RotatingWord";
-import { HERO_CITIES, HERO_BUSINESSES } from "@/lib/hero-words";
+import { HERO_BUSINESSES } from "@/lib/hero-words";
 import { getToneClass } from "@/lib/page-layout/section-order";
 import { getAllPosts, type BlogPost } from "@/lib/blog";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
@@ -44,6 +45,20 @@ const FEATURED: FeaturedTileSpec[] = [
   // underlying data isn't currently in cells_master / regional_cells
   // and the founder rule (Plan v24 Block 2) says no half-empty grids.
   { iso2: "US", geo: "california",   industry: "restaurants",          title: "Restaurants",          region: "California",     glyph: "🍽️" },
+];
+
+/**
+ * Decision-first prompts for the editorial "What you can ask Atlas" block
+ * (bible Section 25 voice: the questions a skeptical operator actually asks
+ * before risking money, not feature marketing). Each lands on a live cell.
+ */
+const HOME_QUESTIONS: AtlasQuestion[] = [
+  { text: "Can a restaurant in Barcelona actually pay its owner?", href: "/es/es511/restaurants" },
+  { text: "Is software in San Francisco worth the cost base?",     href: "/us/california/software-development" },
+  { text: "How crowded is the legal market in the UK?",            href: "/gb/gb/legal-services" },
+  { text: "Do Cancún hotels make money once rent is paid?",        href: "/mx/mx-roo/hotels-lodging" },
+  { text: "What does metal manufacturing in Bavaria really earn?", href: "/de/de21/fabricated-metal-mfg" },
+  { text: "Where do California restaurant margins go?",            href: "/us/california/restaurants" },
 ];
 
 /**
@@ -139,55 +154,43 @@ export default function HomePage() {
   return (
     <div>
       {/*
-        Hero: Plan v16 Block B rebuild.
-        Eyebrow rewritten to a marketing claim. Question-mark spacing locked
-        via whitespace-nowrap so short cities (Dubai, Lagos) and long cities
-        (São Paulo, Barcelona) keep the ? hugged to the word. The two large
-        text-link CTAs were removed (founder explicit). The navigator form
-        is the primary call-to-action and sits directly under the hero copy.
+        Hero: warm reformation (bible Section 25/26). The H1 is the fixed
+        positioning promise ("Know if a business works before you risk your
+        money"); the sub-line names the forces the product weighs; the
+        search-prompt line carries one rotating example word and points at
+        the navigator. Hero + navigator share one band so they read as a
+        single section. The navigator (with its working search/submit) is
+        the primary call-to-action and is preserved verbatim.
       */}
-      {/* Plan v32 hotfix — hero + navigator unified into a single
-         band so they read as one section (founder: the table was
-         visually divided from the title above it). Eyebrow + H1 +
-         subtitle all center-aligned. H1 mobile sizes capped to keep
-         it on 2 lines (was wrapping to 3 on narrow screens). */}
       <ToneBand tone="home-hero">
         <section className="pt-6 pb-4 md:pt-10 md:pb-6 lg:pt-12">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="text-sm md:text-base font-semibold uppercase tracking-[0.16em] text-atlas-700 mb-4 md:mb-5">
-              The #1 small-business atlas in the world
-            </div>
-            {/* CitiesFix2 sec 1: tighten H1 on mobile so it never wraps
-               to 3 rows. text-balance keeps the line break clean. The
-               rotating-word containers now reserve the widest-word
-               width internally (CitiesFix2 sec 2), so the static text
-               around them does not move horizontally. */}
-            <h1 className="font-display text-[1.5rem] sm:text-2xl md:text-5xl lg:text-6xl font-medium tracking-tight text-ink-900 leading-[1.1] text-balance flex flex-col items-center">
-              <span className="block w-full">
-                How much does a{" "}
-                <span className="text-atlas-600">
-                  <RotatingWord
-                    words={HERO_BUSINESSES as unknown as string[]}
-                    interval={2000}
-                  />
-                </span>
-              </span>
-              <span className="block w-full mt-1 md:mt-2">
-                make in{" "}
-                <span className="text-atlas-600">
-                  <RotatingWord
-                    words={HERO_CITIES as unknown as string[]}
-                    interval={2000}
-                    offset={1000}
-                  />
-                </span>
-                {/* Small left margin so longer cities like "Mumbai" /
-                    "Shanghai" don't visually collide with the ? mark. */}
-                <span className="text-ink-900 ml-1">?</span>
-              </span>
+            <SectionEyebrow size="md" className="mb-4 md:mb-5 text-center">
+              Local profit intelligence
+            </SectionEyebrow>
+            {/* Hero promise per bible Section 25/26: the blunt, fixed
+               positioning line, not a rotating marketing claim. text-balance
+               keeps the break clean across viewport widths. */}
+            <h1 className="font-display text-[1.75rem] sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-ink-900 leading-[1.08] text-balance">
+              Know if a business works before you risk your money
             </h1>
-            <p className="mt-4 md:mt-5 max-w-2xl mx-auto text-base md:text-lg text-ink-800 leading-relaxed">
-              Revenue, margins, and what they actually mean, for the businesses behind every street.
+            <p className="mt-4 md:mt-6 max-w-2xl mx-auto text-base md:text-lg text-graphite leading-relaxed">
+              Compare small-business profitability by city and industry, after
+              rent, wages, taxes, competition, and what the owner actually
+              takes home. No easy-money promises.
+            </p>
+            {/* Search-prompt line ties the navigator below to a concrete
+               example. The rotating business word keeps the interactive
+               flourish without diluting the fixed hero promise. */}
+            <p className="mt-4 text-sm md:text-base text-cocoa-700 leading-relaxed">
+              Pick any business and place:{" "}
+              <span className="font-medium text-atlas-700">
+                <RotatingWord
+                  words={HERO_BUSINESSES as unknown as string[]}
+                  interval={2000}
+                />
+              </span>{" "}
+              in a city you know.
             </p>
           </div>
           {/* Navigator sits inside the same band immediately under the
@@ -215,6 +218,15 @@ export default function HomePage() {
          tertiary content. */}
       <ToneBand tone="home-sectors">
         <SectorMasterMenu />
+      </ToneBand>
+
+      {/* Decision-factors strip (bible Section 25/26). States the thesis
+          plainly before the page shows any tile: the average margin is not
+          the point; what eats it first is. Reuses the home-featured white
+          tone so it reads as a clean editorial band between the navigation
+          cluster above and the curated cells below. */}
+      <ToneBand tone="home-featured">
+        <WhatAtlasWeighs />
       </ToneBand>
 
       {/* Plan v32 Sprint B — ExploreCards removed. Was using Pexels stock
@@ -265,10 +277,10 @@ export default function HomePage() {
       {/* Featured benchmarks. Plan v16 Block E: 9 tiles in 3×3 symmetric grid. */}
       <ToneBand tone="home-featured">
         <section className="py-10">
-          <SectionEyebrow size="md" className="mb-2">Featured benchmarks</SectionEyebrow>
+          <SectionEyebrow size="md" className="mb-2">Start somewhere real</SectionEyebrow>
           <div className="flex items-baseline justify-between gap-4 flex-wrap mb-4">
             <h2 className="font-display text-2xl md:text-3xl font-semibold tracking-tight text-ink-900">
-              Start with something familiar
+              See where the money actually is
             </h2>
             <a
               href="/browse"
@@ -277,9 +289,10 @@ export default function HomePage() {
               Browse everything →
             </a>
           </div>
-          <p className="text-sm text-cocoa-700/80 max-w-2xl mb-6">
-            Six benchmarks people recognize on sight. Click any tile for the full
-            numbers: where every business lands, time series, comparable industries.
+          <p className="text-sm text-cocoa-700 max-w-2xl mb-6">
+            Six businesses people recognize on sight. Open any one for the full
+            read: typical revenue, where the margin goes, how many operators are
+            already there, and whether it clears for the owner.
           </p>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3 auto-rows-fr">
             {FEATURED.map((spec) => (
@@ -305,12 +318,10 @@ export default function HomePage() {
         */}
 
 
-      {/* Plan v30 prompt 4 output - three editorial blocks (Atlas
-          questions, methodology pipeline, audience archetypes). Adds
-          editorial spine to the homepage without replacing the
-          existing hero - the hero swap is deferred for a visual
-          review. */}
-      <HomepageEditorialBlocks />
+      {/* Editorial spine: the skeptical questions a working operator asks
+          (passed in from HOME_QUESTIONS, bible Section 25 voice) followed by
+          the three-tier methodology pipeline that carries the trust message. */}
+      <HomepageEditorialBlocks questions={HOME_QUESTIONS} />
 
       {/* Plan v31 hotfix — bottom TopCitiesMosaic removed (founder: "just
          a dump"). The top mosaic up near the world map already shows the

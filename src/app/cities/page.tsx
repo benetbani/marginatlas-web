@@ -1,12 +1,24 @@
 /**
- * Plan v27 Lane C, cities hub at /cities.
+ * Cities directory - /cities.
  *
- * Full alphabetical listing of all 200 cities, grouped by continent.
- * Server-rendered, revalidate 24h.
+ * Reformation (bible Section 14, the City directory row: "local discovery"
+ * with key modules "industries, rent, demand, rankings", whose stated things
+ * to avoid are "tourism fluff" and, for any directory, an "alphabetical dump
+ * only"). The page now leads with a blunt read of what the directory is for,
+ * keeps the geographic map as the anchor, then groups the cities by the depth
+ * of the local market instead of listing them flat by alphabet. Each city
+ * carries the real signal the city page already loads: how deep the market is,
+ * what the locals can pay, and how much of the demand walks in as a visitor.
  *
- * v34 sanity sweep section 2: a full-bleed geographic map now anchors
- * the page above the alphabetical list. Map renders every covered city
- * as a marker at its real lat/lon, joined from city_coordinates_v1.json.
+ * The reading groups and the per-city words come from a pure synthesis module
+ * (src/lib/scores/city_directory) fed only the city list the page already
+ * imports. It invents no numbers; it restates the same figures through the
+ * same break tables the city hero uses, and any city missing a field degrades
+ * to a plain link (bible: hide weakness, no apologetic placeholder).
+ *
+ * Plan v27 Lane C anchored this hub at /cities; v34 added the full-bleed map.
+ * Both are preserved: URL, metadata, and revalidate are unchanged, and every
+ * /cities/{slug} link still resolves to the same city page.
  */
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -16,8 +28,13 @@ import { CountryFlag } from "@/components/CountryFlag";
 import CitiesWorldMap, {
   type CitiesWorldMapCity,
 } from "@/components/cities/CitiesWorldMap";
-import { COUNTRIES } from "@/lib/taxonomy";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
+import { elevation } from "@/lib/design-tokens";
+import {
+  buildCityDirectory,
+  type DirectoryCity,
+  type DirectoryCityInput,
+} from "@/lib/scores/city_directory";
 
 export const revalidate = 86400;
 
@@ -26,12 +43,8 @@ export const metadata: Metadata = {
   description: "Two hundred cities of the world with small business benchmarks, neighborhood breakdowns, and side-by-side comparisons.",
 };
 
-type City = {
-  slug: string;
-  name: string;
-  iso2: string;
-  continent: string;
-  tier: number;
+type City = DirectoryCityInput & {
+  gdp_b?: number;
   pop_m: number;
 };
 
@@ -43,9 +56,8 @@ const COORD_BY_SLUG = new Map(COORDS.map((c) => [c.slug, c]));
 
 // Join the city list to the coordinates table. v34 sanity sweep section
 // 2 hard target 2.4: render exactly the full set, do not silently drop.
-// If a city is missing coords we surface the gap by logging at build
-// time and rendering it at 0,0 would distort the map, so we filter here
-// and the prebuild check would have caught a mismatch earlier.
+// A city missing coords at 0,0 would distort the map, so we filter it out of
+// the map only; it still appears in the grouped list below.
 const MAP_CITIES: CitiesWorldMapCity[] = CITIES.map((c) => {
   const coord = COORD_BY_SLUG.get(c.slug);
   if (!coord) return null;
@@ -58,197 +70,164 @@ const MAP_CITIES: CitiesWorldMapCity[] = CITIES.map((c) => {
   };
 }).filter((c): c is CitiesWorldMapCity => c !== null);
 
-// Cities §3 founder revision: 6 standard continents in alphabetical
-// order. The data was normalized by scripts/data/cities/apply_section2_curation.py
-// so every entry now uses these labels exactly. Old labels (EU, NA, SA,
-// MENA) are kept as fallbacks in case any legacy entry slips through.
-const CONTINENT_LABEL: Record<string, string> = {
-  Africa: "Africa",
-  Asia: "Asia",
-  Europe: "Europe",
-  "North America": "North America",
-  Oceania: "Oceania",
-  "South America": "South America",
-  // Legacy fallbacks
-  EU: "Europe",
-  NA: "North America",
-  SA: "South America",
-  MENA: "Asia",
-};
-const CONTINENT_ORDER = [
-  "Africa",
-  "Asia",
-  "Europe",
-  "North America",
-  "Oceania",
-  "South America",
-];
+// The whole directory, computed once at build time. Pure; no queries.
+const DIRECTORY = buildCityDirectory(CITIES);
 
-// Map iso2 -> country name from the taxonomy so we can group cities by
-// country within each continent. Falls back to iso2 if not found.
-const COUNTRY_NAME_BY_ISO2 = new Map(
-  COUNTRIES.map((c) => [c.code.toUpperCase(), c.name]),
-);
+/**
+ * One city, rendered as an editorial directory row: the flag, the name as the
+ * link, and the real signals as quiet qualitative words. Each signal self-omits
+ * when its field is thin, so a sparse city is still a usable, honest link.
+ */
+function CityRow({ city }: { city: DirectoryCity }) {
+  return (
+    <article className="border-t border-parchment py-3.5">
+      <div className="flex items-center gap-2.5">
+        <CountryFlag iso2={city.iso2} className="w-5 shrink-0" />
+        <Link
+          href={`/cities/${city.slug}`}
+          className="font-display text-base md:text-lg font-semibold text-ink-900 hover:text-atlas-700 transition-colors"
+        >
+          {city.name}
+        </Link>
+      </div>
+      {city.signals.length > 0 ? (
+        <dl className="mt-1.5 flex flex-wrap gap-x-5 gap-y-1 pl-[1.875rem]">
+          {city.signals.map((s) => (
+            <div key={s.label} className="flex items-baseline gap-1.5">
+              <dt className="text-[10px] font-medium uppercase tracking-[0.12em] text-cocoa-500">
+                {s.label}
+              </dt>
+              <dd className="text-[13px] capitalize text-graphite">{s.word}</dd>
+            </div>
+          ))}
+        </dl>
+      ) : null}
+    </article>
+  );
+}
 
 export default function CitiesHub() {
-  // Cities §3 founder structure: continent (alphabetical) -> country
-  // (alphabetical) -> cities (alphabetical). Two-level grouping.
-  const grouped = new Map<string, Map<string, City[]>>();
-  for (const c of CITIES) {
-    const continent = CONTINENT_LABEL[c.continent] || "Other";
-    if (!grouped.has(continent)) grouped.set(continent, new Map());
-    const countryName =
-      COUNTRY_NAME_BY_ISO2.get(c.iso2.toUpperCase()) || c.iso2;
-    const byCountry = grouped.get(continent)!;
-    if (!byCountry.has(countryName)) byCountry.set(countryName, []);
-    byCountry.get(countryName)!.push(c);
-  }
-  // Sort cities within each country alphabetically.
-  for (const byCountry of grouped.values()) {
-    for (const arr of byCountry.values()) {
-      arr.sort((a, b) => a.name.localeCompare(b.name));
-    }
-  }
+  const { groups, total, visitorLed } = DIRECTORY;
 
   return (
-    <article className="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16">
-      <SectionEyebrow size="md" className="mb-2">Cities</SectionEyebrow>
-      <h1 className="font-display text-4xl md:text-5xl font-medium tracking-tight text-ink-900 mb-3">
-        Cities of the world
-      </h1>
-      <p className="text-base md:text-lg text-cocoa-700/80 mb-8 max-w-2xl">
-        Each city opens to a hero, an industry mosaic, neighborhoods
-        (where covered), curiosities, and sister-city comparisons.
-      </p>
+    <article className="max-w-6xl mx-auto px-4 md:px-6 py-12 md:py-16">
+      <nav aria-label="Breadcrumb" className="text-sm text-cocoa-700/70 mb-8">
+        <Link href="/" className="hover:text-atlas-700">
+          Home
+        </Link>
+        <span className="mx-2 text-cocoa-300">/</span>
+        <span className="text-ink-900">Cities</span>
+      </nav>
 
-      {/* Founder spec 2026-05-25: the entire cities content (map +
-         every continent block) sits on ONE big white card so the
-         body paper pattern stops fighting the dense text. Warm
-         cocoa shadow seats the card on the page. */}
-      <div className="rounded-2xl bg-white border border-parchment shadow-[0_1px_3px_rgb(0_0_0/0.05),_0_8px_28px_rgb(0_0_0/0.06)] px-4 md:px-8 py-6 md:py-10">
+      <header className="max-w-3xl">
+        <SectionEyebrow size="md" className="mb-3">
+          The directory
+        </SectionEyebrow>
+        <h1 className="font-display text-4xl md:text-5xl lg:text-[3.3rem] font-semibold tracking-tight text-ink-900 leading-[1.04]">
+          Where small business actually works, city by city
+        </h1>
+        <p className="mt-5 text-lg md:text-xl text-graphite leading-relaxed">
+          What a cafe makes in Tokyo, a salon in Lagos, a corner shop in Mumbai.
+          The numbers bend with the city: rent, wages, and what people will pay
+          all shift from one place to the next.{" "}
+          <span className="text-ink-900">
+            So the cities below are grouped by the depth of the local market,
+            not by alphabet. A deeper market forgives a narrow concept; a shallow
+            one punishes it.
+          </span>{" "}
+          Pick a city to see its industries, costs, and rankings.
+        </p>
+        <p className="mt-4 text-sm text-cocoa-700/85 tabular-nums">
+          <span className="text-ink-900 font-medium">{total}</span> cities
+          across{" "}
+          <span className="text-ink-900 font-medium">{groups.length}</span>{" "}
+          reading groups.
+        </p>
+      </header>
 
-      {/* Cities §1: geographic map anchors the page, one marker per
+      {/* Cities §1: the geographic map stays as the page anchor, one marker per
           covered city, each linking to its city page. */}
-      <section className="mb-12" aria-labelledby="cities-map-heading">
+      <section className="mt-10 md:mt-12" aria-labelledby="cities-map-heading">
         <h2 id="cities-map-heading" className="sr-only">
           Map of covered cities
         </h2>
-        <CitiesWorldMap cities={MAP_CITIES} />
+        <div
+          className="rounded-2xl bg-white border border-parchment p-2 md:p-3"
+          style={{ boxShadow: elevation.card }}
+        >
+          <CitiesWorldMap cities={MAP_CITIES} />
+        </div>
       </section>
 
-      {/* Cities list - founder revision 2026-05-25 (round 2).
-          Round 1 used a grid; round 2 keeps countries as paragraph
-          blocks where cities flow horizontally (separated by middots)
-          and the WHOLE LIST of country blocks packs into a CSS
-          multi-column layout. break-inside: avoid keeps each country
-          intact within a column. The result: US (45 cities) becomes
-          a wrapping paragraph that consumes vertical space ONLY
-          where needed, and smaller countries pack next to it without
-          forcing staircase whitespace. Encyclopedia index pattern. */}
-      {CONTINENT_ORDER.map((continent) => {
-        const byCountry = grouped.get(continent);
-        if (!byCountry) return null;
-        const sortedCountries = [...byCountry.keys()].sort((a, b) =>
-          a.localeCompare(b),
-        );
-        const totalCities = [...byCountry.values()].reduce(
-          (n, arr) => n + arr.length,
-          0,
-        );
-        return (
-          <section key={continent} className="mb-12">
-            <h2 className="font-display text-2xl md:text-3xl font-semibold tracking-tight text-ink-900 mb-5 pb-2 border-b-2 border-parchment">
-              {continent}{" "}
-              <span className="text-sm font-normal text-cocoa-700/60 tabular-nums">
-                &middot; {totalCities} cities
-              </span>
-            </h2>
-            <div
-              className="gap-x-8"
-              style={{
-                columnGap: "2rem",
-                columnCount: 1,
-                columnFill: "balance",
-              }}
-            >
-              {/* Responsive column count via inline media queries on a
-                  style element would need a JS path. Instead use a
-                  class that resolves to column-count via globals. The
-                  inline style above sets the mobile default (1 col),
-                  and the data-attribute below is what desktop CSS keys
-                  off to bump to 2 or 3 columns. */}
-              <style>
-                {`
-                  @media (min-width: 640px) { .atlas-cities-columns { column-count: 2; } }
-                  @media (min-width: 1024px) { .atlas-cities-columns { column-count: 3; } }
-                `}
-              </style>
-              <div className="atlas-cities-columns" style={{ columnGap: "2.5rem", columnFill: "balance" }}>
-                {sortedCountries.map((countryName) => {
-                  const cities = byCountry.get(countryName)!;
-                  const iso2 = cities[0]?.iso2 || "";
-                  return (
-                    <article
-                      key={countryName}
-                      className="mb-5"
-                      style={{ breakInside: "avoid", pageBreakInside: "avoid" }}
-                    >
-                      <h3
-                        className="flex items-baseline gap-2.5 mb-1.5"
-                        data-typography="custom"
-                      >
-                        <CountryFlag
-                          iso2={iso2}
-                          className="w-7 shrink-0 translate-y-[2px]"
-                        />
-                        <span className="font-display text-base md:text-lg font-semibold text-ink-900">
-                          {countryName}
-                        </span>
-                        {cities.length > 1 && (
-                          <span className="text-[11px] font-normal text-cocoa-700/55 tabular-nums">
-                            {cities.length}
-                          </span>
-                        )}
-                      </h3>
-                      {/* Cities flow horizontally as a paragraph of bold
-                          links separated by middots. Each link is its
-                          OWN whitespace-nowrap element; the middot is
-                          a plain text node with surrounding spaces, so
-                          the browser has a real break opportunity
-                          between links. This fixes the "Sapporo /
-                          Cebu" overlap from the previous build, where
-                          adjacent whitespace-nowrap spans with no
-                          space-character between them rendered as a
-                          single unbreakable line in some browsers. */}
-                      <p className="text-sm text-ink-800 leading-[1.7]">
-                        {cities.map((c, idx) => (
-                          <span key={c.slug}>
-                            <Link
-                              href={`/cities/${c.slug}`}
-                              className="font-semibold text-ink-900 hover:text-atlas-700 transition-colors"
-                              style={{ whiteSpace: "nowrap" }}
-                            >
-                              {c.name}
-                            </Link>
-                            {idx < cities.length - 1 ? (
-                              <span aria-hidden="true" className="text-cocoa-700/35">
-                                {" · "}
-                              </span>
-                            ) : null}
-                          </span>
-                        ))}
-                      </p>
-                    </article>
-                  );
-                })}
-              </div>
+      {/* The honest tourism read (bible: tourism signal, not tourism fluff).
+          The cities where visitors most outnumber residents, named plainly so
+          the reader can find the markets whose economics tilt to the visitor.
+          Self-omits if no city carries both numbers. */}
+      {visitorLed.length > 0 ? (
+        <section
+          className="mt-10 md:mt-12 rounded-2xl bg-cream-100 border border-parchment px-5 py-6 md:px-7 md:py-7"
+          aria-labelledby="visitor-led-heading"
+        >
+          <h2
+            id="visitor-led-heading"
+            className="font-display text-xl md:text-2xl font-semibold tracking-tight text-ink-900"
+          >
+            Where the customers are visitors, not locals
+          </h2>
+          <p className="mt-2 text-sm text-graphite leading-relaxed max-w-2xl">
+            In these cities, arrivals outnumber residents by a wide margin. That
+            lifts revenue and pricing power in the season and pulls both back out
+            of it, so plan for the swing before you sign a year-round lease.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
+            {visitorLed.map((c) => (
+              <Link
+                key={c.slug}
+                href={`/cities/${c.slug}`}
+                className="inline-flex items-center gap-2 text-[15px] text-cocoa-700 hover:text-atlas-700 transition-colors"
+              >
+                <CountryFlag iso2={c.iso2} className="w-4" />
+                <span className="font-medium text-ink-900">{c.name}</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {/* The reading groups. Each is a real section with a real heading; a group
+          with no cities self-omits. The grouping is the editorial spine that
+          replaces the alphabetical dump. */}
+      <div className="mt-14 md:mt-20 space-y-14 md:space-y-20">
+        {groups.map((group) => (
+          <section key={group.meta.id} aria-labelledby={`group-${group.meta.id}`}>
+            <div className="max-w-3xl">
+              <h2
+                id={`group-${group.meta.id}`}
+                className="font-display text-2xl md:text-3xl font-semibold tracking-tight text-ink-900 leading-tight"
+              >
+                {group.meta.title}{" "}
+                <span className="text-base font-normal text-cocoa-700/60 tabular-nums">
+                  {group.cities.length}
+                </span>
+              </h2>
+              <p className="mt-3 text-base text-graphite leading-relaxed">
+                {group.meta.blurb}
+              </p>
+            </div>
+            <div className="mt-6 md:mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-0">
+              {group.cities.map((city) => (
+                <CityRow key={city.slug} city={city} />
+              ))}
             </div>
           </section>
-        );
-      })}
-
-      {/* Close the big white card wrapper. */}
+        ))}
       </div>
+
+      <p className="mt-16 pt-8 border-t border-parchment text-xs text-cocoa-700/70 max-w-2xl leading-relaxed">
+        Reading groups follow the depth of the local market, the single signal
+        that most changes how a small business reads a place. The words on each
+        city are a starting point, not a verdict. Open a city for the figures.
+      </p>
     </article>
   );
 }

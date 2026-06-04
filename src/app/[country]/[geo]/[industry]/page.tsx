@@ -19,7 +19,6 @@ import { computeBreakeven, fmtAov, fmtOrders } from "@/lib/economics/breakeven";
 import { getCityTier } from "@/lib/cities/city_tier";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { iso2ToName } from "@/lib/countries";
-import { CountryFlag } from "@/components/CountryFlag";
 import { RevenueTiles } from "@/components/RevenueTiles";
 import { RevenueDistribution } from "@/components/RevenueDistribution";
 // MarginWaterfall import removed; redundant with SmartWaterfall
@@ -65,14 +64,15 @@ import { generateFAQs } from "@/lib/seo/faq_generator";
 import { FAQSchema } from "@/components/FAQSchema";
 import { getCellNarrative } from "@/lib/content/narratives";
 import { getComparativeLead } from "@/lib/content/comparative_narratives";
-import { getActivityCharacter } from "@/lib/content/activity_character";
 import {
   estimateWagePerEmployee,
   estimateEmployeesFromFirms,
 } from "@/lib/extrapolations/fill_missing";
 import { HeroBenchmark } from "@/components/HeroBenchmark";
-import DenseCellHero from "@/components/DenseCellHero";
-import MobileCellHero from "@/components/mobile/MobileCellHero";
+import { VerdictHero } from "@/components/cell/VerdictHero";
+import { ScorePanel } from "@/components/cell/ScorePanel";
+import { computeScores } from "@/lib/scores";
+import { generateVerdict } from "@/lib/scores/verdict";
 import { CityHero } from "@/components/CityHero";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { ComparableCitiesRibbon } from "@/components/ComparableCitiesRibbon";
@@ -87,11 +87,10 @@ import { DistributionVisual } from "@/components/DistributionVisual";
 import { NetProfitSummary } from "@/components/NetProfitSummary";
 import { SmartWaterfall } from "@/components/SmartWaterfall";
 import { CellFallbackBanner } from "@/components/CellFallbackBanner";
-// Sanity-§8: EstimatedBadge purged; CoverageIndicator stays for its
-// compact (HowWeKnowThis) variant only.
-import { CoverageIndicator, deriveCoverageTier } from "@/components/CoverageIndicator";
+// Sanity-§8: EstimatedBadge purged. The standalone CoverageIndicator was
+// retired in the density reform (2026-06-04): CoverageBadge now carries the
+// only coverage read on the page, with its own "How we know this" link.
 import { CoverageBadge } from "@/components/CoverageBadge";
-import { EditorialNote } from "@/components/EditorialNote";
 // Industry deepening sections. All three self-suppress
 // when their data isn't on the cell, so they're safe to mount before any
 // cell has been deepened (Phase 1 will populate the data).
@@ -334,7 +333,6 @@ export default async function CellPage({
   // DistributionVisual needs all three of p10/p50/p90 to draw a spread; when
   // any is missing we render SectionEmpty with onward links to cells that DO
   // have the full distribution (drawn from the already-fetched comparables).
-  const activityCharacter = getActivityCharacter(cell.industry_id);
   const hasDistribution =
     cell.rev_p10 != null && cell.rev_p50 != null && cell.rev_p90 != null;
   const distributionSuggestions = comparables.slice(0, 3).map((c) => ({
@@ -393,6 +391,23 @@ export default async function CellPage({
   const netTakeHome = netProfitResult?.net_profit ?? null;
   // Defensive floor — never let a sub-3% net margin reach the page.
   const computedNetMargin = rawNetMargin != null ? clampMargin(rawNetMargin, "net", cell.industry_id || null) : null;
+
+  // Reformation decision layer (bible Sections 6, 10, 21, 25). Pure compute,
+  // no new queries: the proprietary scores and the opinionated verdict come
+  // from the cell's own economics, using the same tax-aware net numbers the
+  // rest of the page shows. Each score self-omits when it cannot be defended.
+  const compactUsd = (n: number): string => {
+    if (!Number.isFinite(n)) return "";
+    if (n >= 1_000_000) return `$${(n / 1_000_000).toFixed(1)}M`;
+    if (n >= 1_000) return `$${Math.round(n / 1_000)}K`;
+    return `$${Math.round(n)}`;
+  };
+  const scoreSet = computeScores(cell, {
+    cityTier: getCityTier(geo),
+    netMargin: computedNetMargin,
+    netProfit: netTakeHome,
+  });
+  const heroVerdict = generateVerdict(cell, scoreSet, compactUsd);
 
   // FAQPage JSON-LD payload. The question text matches
   // the phrase universe (scripts/seo/build_phrase_universe.py), so any organic
@@ -523,26 +538,10 @@ export default async function CellPage({
         </div>
       )}
 
-      {/* Plan v30 Phase 1 — CellActions (save / copy link / CSV / embed)
-          removed. These features were shipped before the underlying data
-          was trustworthy; reintroduce only when there's a defensible
-          export and a working auth path for saved cells. */}
-
-      {/* Breadcrumb */}
-      <nav className="text-sm text-ink-700/70 mb-4">
-        <a href="/" className="hover:text-atlas-600">Home</a>
-        <span className="mx-2">/</span>
-        <a href={`/${country}`} className="hover:text-atlas-600 inline-flex items-center gap-1">
-          <CountryFlag iso2={country} className="w-4" />
-          <span>{iso2ToName(country)}</span>
-        </a>
-        <span className="mx-2">/</span>
-        <a href={`/${country}/${geo}`} className="hover:text-atlas-600 capitalize">{geo.replace(/-/g, " ")}</a>
-        <span className="mx-2">/</span>
-        <span className="capitalize">
-          {cell.industry_name || industry.replace(/-/g, " ")}
-        </span>
-      </nav>
+      {/* Decision-first reform (2026-06-04): the duplicate hand-rolled
+          breadcrumb nav was removed. The adaptive <Breadcrumb> above is the
+          single canonical trail; a second one directly under it was pure
+          repetition and added vertical noise before the hero. */}
 
       {/* In-page dimension switcher: region/industry/size/year */}
       <DimensionSwitcher
@@ -567,89 +566,53 @@ export default async function CellPage({
         altOverride={`${cell.geo_name || geo} - ${cell.industry_name || industry}`}
       />
 
-      {/* Plan v30 Phase 4 — DenseCellHero. Replaces the previous
-          HeroBenchmark with a tight first frame packing every key data
-          point above the fold. Coverage chip, sector tag, headline
-          question, hero number, percentile band, and one-liner stats
-          all in ~55vh on desktop and ~100vh on mobile. */}
-      {(() => {
-        const industryName = cell.industry_name || industry.replace(/-/g, " ");
-        const subniches = (cell.industry_examples ?? []).slice(0, 4).join(" · ") || industryName;
-        const question = `How much does a ${industryName.toLowerCase().replace(/s$/, "")} make in ${cell.geo_name || iso2ToName(country) || country.toUpperCase()}?`;
-        const typical = cell.revenue_per_firm ?? cell.rev_p50 ?? 0;
-        const p10 = cell.rev_p10 ?? typical * 0.32;
-        const p90 = cell.rev_p90 ?? typical * 2.6;
-        // Employee count: handle unit-detection (Plan v30 Phase 2).
-        let empPerFirm = 1;
-        if (cell.n_employees && cell.n_employees > 0) {
-          if (cell.n_enterprises && cell.n_enterprises > 0 && cell.n_employees >= cell.n_enterprises) {
-            empPerFirm = Math.max(1, Math.round(cell.n_employees / cell.n_enterprises));
-          } else {
-            empPerFirm = Math.max(1, Math.round(cell.n_employees));
-          }
-        }
-        const heroCoverageTier = deriveCoverageTier(cell);
-        return typical > 0 ? (
-          <>
-            {/* Plan v30 Bundle 1 — mobile-specific hero rendered below md;
-                desktop DenseCellHero rendered from md up. Both compiled,
-                Tailwind shows/hides per viewport. */}
-            <div className="md:hidden">
-              <MobileCellHero
-                sectorId={cell.sector_id || "other_local"}
-                sectorLabel={(cell.sector_name || "Industry").toUpperCase()}
-                geoName={cell.geo_name || iso2ToName(country) || country.toUpperCase()}
-                countryName={iso2ToName(country) || country.toUpperCase()}
-                question={question}
-                industrySubniches={subniches}
-                typicalRevenue={typical}
-                p10Revenue={p10}
-                p90Revenue={p90}
-                coverageTier={heroCoverageTier}
-                pickCountryHref="/world"
-                browseIndustriesHref="/sectors"
-              />
-            </div>
-            <div className="hidden md:block">
-              <DenseCellHero
-                industryName={industryName}
-                industrySubniches={subniches}
-                sectorId={cell.sector_id || "other_local"}
-                sectorLabel={(cell.sector_name || "Industry").toUpperCase()}
-                iso2={country.toUpperCase()}
-                countryName={iso2ToName(country) || country.toUpperCase()}
-                geoName={cell.geo_name || iso2ToName(country) || country.toUpperCase()}
-                question={question}
-                typicalRevenue={typical}
-                p10Revenue={p10}
-                p90Revenue={p90}
-                employees={empPerFirm}
-                medianWage={cell.payroll_per_employee ?? 30000}
-                netMargin={computedNetMargin ?? 0.08}
-                coverageTier={heroCoverageTier}
-              />
-            </div>
-          </>
-        ) : (
-          // Fallback to the legacy hero if revenue is missing entirely.
-          <HeroBenchmark
-            iso2={country.toUpperCase()}
-            countryName={iso2ToName(country) || country.toUpperCase()}
-            geoName={cell.geo_name || iso2ToName(country) || country.toUpperCase()}
-            industryName={industryName}
-            industryExamples={cell.industry_examples}
-            sectorName={cell.sector_name || null}
-            revenue={cell.revenue_per_firm ?? null}
-            currencySymbol="$"
-          />
-        );
-      })()}
-      {/* Plan v30 Phase 1 — currency switcher only. The 5-year trend
-          sparkline was removed: applying a synthesized CAGR to revenue
-          gives the wrong impression of measured forecasting. Revive
-          only when the trend model is calibrated against real data. */}
-      <div className="bg-cream-100 pb-6 md:pb-8 -mt-2 flex items-center gap-4 flex-wrap text-xs text-cocoa-700/70">
-        <div className="flex items-center gap-2">
+      {/* Hero. Decision-first: the verdict and the headline number lead.
+          Wrapped in a div (not a section) carrying id="headline" so the
+          right-rail TOC anchor resolves without registering an extra
+          section id with the canonical skeleton gate. */}
+      <div id="headline">
+        {(() => {
+          const industryName = cell.industry_name || industry.replace(/-/g, " ");
+          const question = `How much does a ${industryName.toLowerCase().replace(/s$/, "")} make in ${cell.geo_name || iso2ToName(country) || country.toUpperCase()}?`;
+          const typical = cell.revenue_per_firm ?? cell.rev_p50 ?? 0;
+          const p10 = cell.rev_p10 ?? typical * 0.32;
+          const p90 = cell.rev_p90 ?? typical * 2.6;
+          return typical > 0 ? (
+            <VerdictHero
+              sectorLabel={cell.sector_name || null}
+              question={question}
+              verdict={heroVerdict}
+              opportunity={scoreSet.opportunity}
+              typical={typical}
+              p10={p10}
+              p90={p90}
+              fmt={compactUsd}
+            />
+          ) : (
+            // Fallback to the legacy hero if revenue is missing entirely.
+            <HeroBenchmark
+              iso2={country.toUpperCase()}
+              countryName={iso2ToName(country) || country.toUpperCase()}
+              geoName={cell.geo_name || iso2ToName(country) || country.toUpperCase()}
+              industryName={industryName}
+              industryExamples={cell.industry_examples}
+              sectorName={cell.sector_name || null}
+              revenue={cell.revenue_per_firm ?? null}
+              currencySymbol="$"
+            />
+          );
+        })()}
+      </div>
+
+      {/* One quiet meta row under the hero, merged from three former
+          stripes (coverage badge + currency switcher + the compact
+          coverage-indicator). Density reform 2026-06-04: the separate
+          CoverageIndicator section was dropped because CoverageBadge
+          already carries the "How we know this" methodology link, so a
+          second coverage stripe read as duplicate apology. */}
+      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b border-parchment/60 pb-5 mb-2">
+        <CoverageBadge cell={cell} />
+        <div className="flex items-center gap-2 text-xs text-cocoa-500">
           <span>Show numbers in:</span>
           <CurrencySwitcher />
         </div>
@@ -667,60 +630,29 @@ export default async function CellPage({
         />
       ) : null}
 
-      {/* Sanity-§8 — apologetic expanded CoverageIndicator banner
-          removed. We now surface only a quiet inline methodology link
-          via the compact variant; the hero already shows a coverage
-          dot, so an additional banner reads as apology. */}
-      <section className="py-2">
-        <CoverageIndicator tier={deriveCoverageTier(cell)} variant="compact" />
-      </section>
+      {/* Decision layer: the proprietary scores, right under the verdict
+          (bible Section 10). Self-omits when nothing is computable. */}
+      {scoreSet.scores.length > 0 ? (
+        <section className="py-6 md:py-8">
+          <ScorePanel scores={scoreSet.scores} />
+        </section>
+      ) : null}
 
       {/* Plan v32 Sprint G — sub-industry picker. Renders only when the
          parent industry has at least one data_ready variant. Otherwise
          returns null and the page reads as before. */}
       <SubIndustryPicker cell={cell} />
 
-      {/* Plan v28 Lane D — editorial voice. One paragraph of context
-          between the headline and the data so the page reads like a
-          narrative, not just a dump. */}
-      <EditorialNote
-        industryId={cell.industry_id}
-        sectorId={cell.sector_id}
-        iso2={country.toUpperCase()}
-      />
-
-      {/* Plan v32 Sprint G Tier-1 — "If you opened today" composition.
-         Computes literal calendar dates for opening, first revenue,
-         break-even, payback. Self-suppresses when setup_costs is
-         absent (consultants etc.). */}
-      <IfYouOpenedToday cell={cell} />
-
-      {/* Plan v32 Sprint G — setup-cost block. Two boxes (registration
-         + capital fit-out) shown above the revenue tiles. Renders only
-         when the cell has setup_costs populated; consultants and
-         single-shape independents naturally suppress themselves. */}
-      <SetupCostBlock cell={cell} />
-
-      {/* Confidence worn openly (2026-05-30). Compact, confident coverage
-          badge: neutral 5-dot meter + a positive word for well-covered cells
-          + a quiet methodology link. Not apologetic; low-coverage cells show
-          only the meter (no disclaimer word). */}
-      <CoverageBadge cell={cell} className="mt-2 mb-4" />
-
-      {/* Plan v23 Part 3 — narrative now reads as editorial prose. Drop
-         cap on the first paragraph, looser line-height, max-w-prose.
-         Backend Phase 5 (2026-05-26): a comparative-voice lead is
-         prepended above the cached prose, sourced from the
-         comparative_narratives generator. The lead frames the section
-         in the new voice ("Watch your X. Typical range is Y to Z.");
-         the existing prose carries the wider context. The cached
-         JSON is not regenerated, existing editorial content is
-         preserved. */}
+      {/* Editorial voice, tightened to ONE block (density reform
+          2026-06-04). The standalone EditorialNote and the activity-
+          character aside were removed: three stacked prose blocks read as
+          filler. This single narrative carries the comparative-voice lead
+          and the cached editorial prose with the drop-cap treatment. */}
       {(() => {
         const lead = cell.industry_id ? getComparativeLead(cell.industry_id) : null;
         if (!narrative && !lead) return null;
         return (
-          <section id="narrative" className={`py-12 md:py-16 ${getToneClass("narrative")}`}>
+          <section id="narrative" className={`py-8 md:py-10 ${getToneClass("narrative")}`}>
             <div className="max-w-prose">
               {lead && (
                 <p className="text-base md:text-lg leading-[1.6] text-cocoa-700 mb-6 border-l-4 border-atlas-700 pl-4 italic">
@@ -736,31 +668,6 @@ export default async function CellPage({
           </section>
         );
       })()}
-
-      {/* Activity character side-note (2026-05-30). The write-once "how this
-         business actually works" economics, reused from the activity page so
-         every geo cell gets opinionated context without a bland per-cell line.
-         Secondary slot, quiet styling, not a headline. Self-suppresses when
-         the activity is unwritten. */}
-      {activityCharacter && (
-        <aside className="my-8 rounded-xl border border-parchment bg-cream-50 p-5 md:p-6 max-w-prose">
-          <SectionEyebrow className="mb-2">
-            How {cell.industry_name ?? "this business"} makes money
-          </SectionEyebrow>
-          <p className="text-sm md:text-base text-ink-900 leading-relaxed font-medium">
-            {activityCharacter.hook}
-          </p>
-          <p className="mt-2 text-sm text-cocoa-700 leading-relaxed">
-            {activityCharacter.economics}
-          </p>
-          <a
-            href={`/industries/${industry}`}
-            className="mt-3 inline-block text-xs text-atlas-700 hover:text-atlas-900 font-semibold border-b border-dotted border-atlas-300 hover:border-atlas-700 transition-colors"
-          >
-            More on the economics of this activity
-          </a>
-        </aside>
-      )}
 
       {/* Plan v19 Block B — fill rule. Headline tiles fall back to
          extrapolations when source data is null. People-working uses
@@ -807,9 +714,9 @@ export default async function CellPage({
       })()}
 
       {/* ATO Phase 2 — Key Benchmark banner. Surfaces ONE ratio per
-         industry as the headline answer to "am I normal?". Sits at
-         the top of the body so the reader sees the headline ratio
-         before the distribution chart. */}
+         industry as the headline answer to "am I normal?". Sits with the
+         profit snapshot so the reader sees the headline ratio before the
+         distribution chart. */}
       <KeyBenchmarkBanner cell={cell} />
 
       {/* AU Phase 1c — primary data badge. Shown only when:
@@ -823,20 +730,14 @@ export default async function CellPage({
       </div>
 
       {/* Plan v32 Sprint G Tier-1 — tangible units. Translates revenue
-         into daily transactions + average ticket + texture note. */}
+         into daily transactions + average ticket + texture note. Closes
+         the profit-snapshot group: what the number feels like in practice. */}
       <TangibleUnits cell={cell} />
 
-      {/* Plan v32 Sprint G — annual cost stack. Eight-line breakdown of
-         what the typical firm in this cell pays per year (rent, payroll,
-         COGS, etc.). Suppressed when cost_stack is absent. */}
-      <AnnualCostStack cell={cell} />
-
-      {/* Distribution band. Moved above the tax/cost story (2026-05-30) so the
-         page is distribution-first, matching the canonical cell skeleton
-         (CELL_PAGE_SECTIONS in section-order.ts).
-         Sub-project 1.2 (no dead sections): when the spread is missing,
-         render an honest "not yet, see nearby" state instead of an empty
-         toned band. DistributionVisual needs p10+p50+p90 to render. */}
+      {/* Distribution band (the spread of operators), distribution-first per
+         the canonical cell skeleton. Sub-project 1.2 (no dead sections):
+         when the spread is missing, render an honest "not yet, see nearby"
+         state instead of an empty toned band. */}
       <section id="revenue-distribution" className={`py-6 ${getToneClass("revenue-distribution")}`}>
         {hasDistribution ? (
           <DistributionVisual
@@ -853,12 +754,150 @@ export default async function CellPage({
         )}
       </section>
 
-      {/* Typical-firm biography card + tax/cost panel.
-         Plan v14 A.1 (T-A1.4): legacy id="typical-firm" renamed to canonical
-         "tax-and-cost-panel": section hosts PostTaxToggle +
-         NetProfitWaterfall. AtlasScore strip retired 2026-06-02 (composite
-         score in the open is too risky); coverage confidence now lives as a
-         word in the hero. */}
+      {/* COST STRUCTURE: where the margin goes. Grouped under the canonical
+          "margin-waterfall" skeleton id (2026-06-04). The SmartWaterfall
+          decomposes every cost line with provenance; the AnnualCostStack
+          gives the dollar version of the same split; the country breakdown
+          adds the local cost mix and firm-size context. Each self-omits
+          when its data is thin, so a thin cell collapses to nothing. */}
+      <section id="margin-waterfall" className={`py-6 ${getToneClass("margin-waterfall")}`}>
+        {cell.revenue_per_firm && cell.revenue_per_firm > 0 && cell.industry_id ? (
+          <SmartWaterfall
+            iso2={country.toUpperCase()}
+            industryId={cell.industry_id}
+            sizeBand="medium"
+            grossRevenue={cell.revenue_per_firm}
+            costStackOverride={cell.cost_stack ?? null}
+            geoId={cell.geo_id ?? null}
+          />
+        ) : null}
+
+        {/* Eight-line annual cost breakdown in dollars. Suppressed when
+            cost_stack is absent. */}
+        <AnnualCostStack cell={cell} />
+
+        {/* Country-specific cost split + firm-size mix from the research drops
+            (Phase 2 enrichment). Self-suppresses when the cell has no drop data. */}
+        <CountryEconomicsBreakdown
+          costStructure={cell.cost_structure}
+          firmDistribution={cell.firm_distribution}
+          industryName={cell.industry_name}
+        />
+      </section>
+
+      {/* BREAK-EVEN: the sales floor. Promoted out of the tax panel to stand
+          on its own (2026-06-04), because "how many sales a day just to
+          survive" is one of the sharpest decision reads on the page. Colors
+          tokenized off raw hex (2026-06-04): moss for healthy headroom,
+          atlas at the line, clay when under water. */}
+      {(() => {
+        // Wave 2 AOV city-tier (2026-05-26): when geo is a known city slug,
+        // scale AOV by the city's tier. When geo is a state/region (most
+        // US/EU cells), pass null and the AOV stays at the global baseline.
+        const cityTier = getCityTier(geo);
+        const be = cell.industry_id
+          ? computeBreakeven(
+              cell.industry_id,
+              cell.revenue_per_firm ?? cell.rev_p50 ?? null,
+              cityTier,
+            )
+          : null;
+        if (!be) return null;
+        const coveragePct = Math.round((be.coverageRatio - 1) * 100);
+        // Moss when there is healthy headroom above the line, atlas right at
+        // the line, clay once the typical operator is under water.
+        const safetyTone =
+          be.coverageRatio >= 1.3
+            ? "text-moss-700"
+            : be.coverageRatio >= 1.0
+              ? "text-atlas-700"
+              : "text-clay-700";
+        return (
+          <section className="atlas-card p-4 md:p-6 my-6">
+            <div className="text-[10px] uppercase tracking-[0.16em] text-atlas-700 font-semibold mb-3">
+              Break-even, in orders per day
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
+              <div>
+                <div className="text-[10px] uppercase tracking-wide text-cocoa-500 font-semibold">
+                  Avg order
+                </div>
+                <div className="font-display text-xl md:text-2xl font-semibold text-ink-900 tabular-nums leading-tight mt-1">
+                  {fmtAov(be.aov)}
+                </div>
+              </div>
+              <div>
+                <div className="text-[10px] uppercase tracking-wide text-cocoa-500 font-semibold">
+                  Orders / day to break even
+                </div>
+                <div className="font-display text-xl md:text-2xl font-semibold text-atlas-700 tabular-nums leading-tight mt-1">
+                  {fmtOrders(be.breakevenOrdersDaily)}
+                </div>
+              </div>
+              <div>
+                <div className="text-[10px] uppercase tracking-wide text-cocoa-500 font-semibold">
+                  Typical daily orders
+                </div>
+                <div className="font-display text-xl md:text-2xl font-semibold text-ink-900 tabular-nums leading-tight mt-1">
+                  {fmtOrders(be.currentOrdersDaily)}
+                </div>
+              </div>
+              <div>
+                <div className="text-[10px] uppercase tracking-wide text-cocoa-500 font-semibold">
+                  Margin of safety
+                </div>
+                <div
+                  className={`font-display text-xl md:text-2xl font-semibold tabular-nums leading-tight mt-1 ${safetyTone}`}
+                >
+                  {coveragePct >= 0 ? "+" : ""}
+                  {coveragePct}%
+                </div>
+                {/* Visual gauge: how far above breakeven (0% = at
+                    breakeven; bar fills to 100% at double breakeven).
+                    When under water, render an empty bar so the
+                    absence is loud. Tone tracks coveragePct. */}
+                <ProgressBar
+                  className="mt-2"
+                  value={Math.max(0, coveragePct)}
+                  max={100}
+                  size="sm"
+                  tone={
+                    coveragePct >= 30
+                      ? "success"
+                      : coveragePct >= 0
+                        ? "default"
+                        : coveragePct >= -30
+                          ? "warning"
+                          : "danger"
+                  }
+                />
+              </div>
+            </div>
+            <p className="mt-3 text-xs text-cocoa-500 leading-relaxed">
+              Break-even holds fixed costs (rent + payroll + utilities
+              + insurance + regulatory) constant at the typical
+              revenue level and asks: at $
+              {fmtAov(be.aov).replace("$", "")} per order and a{" "}
+              {Math.round(be.grossMargin * 100)}% gross margin, how
+              many orders a day cover those costs?
+              {be.cityTierMultiplier !== 1 ? (
+                <>
+                  {" "}Order value is tier-adjusted for this metro
+                  ({be.cityTierMultiplier > 1 ? "+" : ""}
+                  {Math.round((be.cityTierMultiplier - 1) * 100)}%
+                  vs the global average of{" "}
+                  {fmtAov(be.baselineAov)}).
+                </>
+              ) : null}
+            </p>
+          </section>
+        );
+      })()}
+
+      {/* OWNER TAKE-HOME: the bottom line. Canonical "tax-and-cost-panel"
+          skeleton id. The typical-firm ratios frame the per-employee
+          economics; PostTaxToggle and NetProfitSummary carry the after-tax
+          take-home the verdict and scores are built on. */}
       <section id="tax-and-cost-panel" className={`py-6 ${getToneClass("tax-and-cost-panel")}`}>
         <div>
           <TypicalFirmCard cell={cell} currencySymbol="$" />
@@ -872,8 +911,8 @@ export default async function CellPage({
                 : null
             }
           />
-          {/* Plan v23 Part 2 — collapsed by default. Single-line take-home
-              figure. Expand to reveal the full waterfall on demand. */}
+          {/* Open by default. Single-line take-home figure plus the full
+              waterfall on demand. */}
           <NetProfitSummary
             iso2={country.toUpperCase()}
             geoId={cell.geo_id || geo}
@@ -887,151 +926,16 @@ export default async function CellPage({
             }
             takeHome={netTakeHome}
           />
-
-          {/* Country-specific cost split + firm-size mix from the research drops
-             (Phase 2 enrichment). Self-suppresses when the cell has no drop data. */}
-          <CountryEconomicsBreakdown
-            costStructure={cell.cost_structure}
-            firmDistribution={cell.firm_distribution}
-            industryName={cell.industry_name}
-          />
-
-          {/* Founder-spec AOV + breakeven panel (2026-05-26). The
-             operator question "how many sales a day to break even"
-             is more concrete than the abstract margin %. Computes
-             from cell revenue + industry baselines + AOV table. */}
-          {(() => {
-            // Wave 2 AOV city-tier (2026-05-26): when geo is a known
-            // city slug, scale AOV by the city's tier. When geo is a
-            // state/region (most US/EU cells), pass null and the AOV
-            // stays at the global baseline.
-            const cityTier = getCityTier(geo);
-            const be = cell.industry_id
-              ? computeBreakeven(
-                  cell.industry_id,
-                  cell.revenue_per_firm ?? cell.rev_p50 ?? null,
-                  cityTier,
-                )
-              : null;
-            if (!be) return null;
-            const coveragePct = Math.round((be.coverageRatio - 1) * 100);
-            const coverageColor =
-              be.coverageRatio >= 1.3
-                ? "#14532D"
-                : be.coverageRatio >= 1.0
-                  ? "#16A34A"
-                  : be.coverageRatio >= 0.7
-                    ? "#CA8A04"
-                    : "#7F1D1D";
-            return (
-              <section className="atlas-card p-4 md:p-5 mt-6">
-                <div className="text-[10px] uppercase tracking-[0.16em] text-atlas-700 font-semibold mb-3">
-                  Breakeven, in orders per day
-                </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
-                  <div>
-                    <div className="text-[10px] uppercase tracking-wide text-cocoa-700/70 font-semibold">
-                      Avg order
-                    </div>
-                    <div className="font-display text-xl md:text-2xl font-semibold text-ink-900 tabular-nums leading-tight mt-1">
-                      {fmtAov(be.aov)}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-[10px] uppercase tracking-wide text-cocoa-700/70 font-semibold">
-                      Orders / day to break even
-                    </div>
-                    <div className="font-display text-xl md:text-2xl font-semibold text-atlas-700 tabular-nums leading-tight mt-1">
-                      {fmtOrders(be.breakevenOrdersDaily)}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-[10px] uppercase tracking-wide text-cocoa-700/70 font-semibold">
-                      Typical daily orders
-                    </div>
-                    <div className="font-display text-xl md:text-2xl font-semibold text-ink-900 tabular-nums leading-tight mt-1">
-                      {fmtOrders(be.currentOrdersDaily)}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-[10px] uppercase tracking-wide text-cocoa-700/70 font-semibold">
-                      Margin of safety
-                    </div>
-                    <div
-                      className="font-display text-xl md:text-2xl font-semibold tabular-nums leading-tight mt-1"
-                      style={{ color: coverageColor }}
-                    >
-                      {coveragePct >= 0 ? "+" : ""}
-                      {coveragePct}%
-                    </div>
-                    {/* Visual gauge: how far above breakeven (0% = at
-                        breakeven; bar fills to 100% at double breakeven).
-                        When under water, render an empty bar so the
-                        absence is loud. Tone tracks coveragePct. */}
-                    <ProgressBar
-                      className="mt-2"
-                      value={Math.max(0, coveragePct)}
-                      max={100}
-                      size="sm"
-                      tone={
-                        coveragePct >= 30
-                          ? "success"
-                          : coveragePct >= 0
-                            ? "default"
-                            : coveragePct >= -30
-                              ? "warning"
-                              : "danger"
-                      }
-                    />
-                  </div>
-                </div>
-                <p className="mt-3 text-xs text-cocoa-700/70 leading-relaxed">
-                  Breakeven holds fixed costs (rent + payroll + utilities
-                  + insurance + regulatory) constant at the typical
-                  revenue level and asks: at $
-                  {fmtAov(be.aov).replace("$", "")} per order and a{" "}
-                  {Math.round(be.grossMargin * 100)}% gross margin, how
-                  many orders a day cover those costs?
-                  {be.cityTierMultiplier !== 1 ? (
-                    <>
-                      {" "}Order value is tier-adjusted for this metro
-                      ({be.cityTierMultiplier > 1 ? "+" : ""}
-                      {Math.round((be.cityTierMultiplier - 1) * 100)}%
-                      vs the global average of{" "}
-                      {fmtAov(be.baselineAov)}).
-                    </>
-                  ) : null}
-                </p>
-              </section>
-            );
-          })()}
-          {/* Plan v30 Phase 1 — legacy MarginWaterfall removed. It only
-              surfaced a single gross-margin band, which was redundant
-              and confusing alongside the SmartWaterfall below that
-              decomposes every cost line with provenance. */}
         </div>
       </section>
 
-      {/* Plan v29 Phase 4+7 — Smart Waterfall with per-line provenance,
-          confidence ratings, and "what changes here" sidebar. Reads from
-          the 196-country Country Economic Profile + Industry Cost Profile
-          + Industry × Country modifier matrix. */}
-      {cell.revenue_per_firm && cell.revenue_per_firm > 0 && cell.industry_id ? (
-        <SmartWaterfall
-          iso2={country.toUpperCase()}
-          industryId={cell.industry_id}
-          sizeBand="medium"
-          grossRevenue={cell.revenue_per_firm}
-          costStackOverride={cell.cost_stack ?? null}
-          geoId={cell.geo_id ?? null}
-        />
-      ) : null}
-
-      {/* Reformation idea #5 — local cost-of-living context anchor.
-         Gives a frame for reading the revenue numbers against the
-         local economy: median wage, price tier, currency, market
-         type. Same data the synthesis engine uses (so estimated
-         cells stay coherent). */}
+      {/* COST TO OPEN: what it takes to start, demoted below the "does it
+          work" economics (2026-06-04). SetupCostBlock gives the one-time
+          number; IfYouOpenedToday turns it into calendar dates; the local
+          context card frames every figure against the local economy. Each
+          self-suppresses when its data is thin. */}
+      <SetupCostBlock cell={cell} />
+      <IfYouOpenedToday cell={cell} />
       <LocalContextCard
         iso2={country.toUpperCase()}
         countryName={iso2ToName(country) || country.toUpperCase()}

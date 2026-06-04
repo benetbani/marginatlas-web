@@ -14,14 +14,14 @@ export const dynamic = "force-dynamic";
 const ISO = "KE";
 
 function usd(n: number | null | undefined): string {
-  if (n == null) return "—";
+  if (n == null) return "–";
   if (n >= 1e6) return "$" + (n / 1e6).toFixed(1) + "M";
   if (n >= 1e3) return "$" + Math.round(n / 1e3) + "K";
   return "$" + Math.round(n);
 }
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
-  return <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-6">{children}</h2>;
+  return <h2 data-typography="custom" className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-6">{children}</h2>;
 }
 
 export default async function CountryMockup() {
@@ -33,7 +33,7 @@ export default async function CountryMockup() {
   let regions: { name: string; slug: string }[] = [];
   try {
     const mod = await import("@/lib/coverage/admin1");
-    const fn = (mod as { getAdmin1Regions?: (iso: string) => Promise<{ name: string; slug: string }[]> }).getAdmin1Regions;
+    const fn = (mod as unknown as { getAdmin1Regions?: (iso: string) => Promise<{ name: string; slug: string }[]> }).getAdmin1Regions;
     if (fn) regions = (await fn(ISO))?.slice(0, 16) ?? [];
   } catch {
     regions = [];

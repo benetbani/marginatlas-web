@@ -27,72 +27,85 @@
 // =============================================================
 
 /**
- * The full Atlas palette. Five families:
+ * The full Atlas palette, Warm Atlas reformation (2026-06-04). Founder
+ * direction: warm, cozy, lifestyle feeling with terracotta, while still
+ * delivering serious data value. This reverses the earlier warmth-drain.
  *
- *   - atlas    — vermillion brand accent (the only loud color)
- *   - cream    — pure-white-to-light-gray surfaces
- *   - ink      — pure-grayscale text ladder
- *   - cocoa    — text aliases (retokenized from warm browns to neutral gray)
+ *   - atlas    — terracotta / burnt-sienna brand accent (the only loud color)
+ *   - cream    — warm-white-to-warm-sand paper surfaces
+ *   - ink      — warm brown-black text ladder
+ *   - cocoa    — text aliases, re-warmed to real browns
  *   - moss     — positive deltas (YoY up, "good" indicator)
- *   - clay     — negative deltas + destructive
- *   - teal     — single signature data accent (use <5% of surface)
+ *   - clay     — negative deltas + destructive (held as a true red)
+ *   - teal     — single muted-sage data accent (use <5% of surface)
  *
  * Plus two standalone tokens:
- *   - parchment — dedicated border token (= cream-300)
- *   - graphite  — dedicated secondary text token (= ink-700)
+ *   - parchment — dedicated warm-taupe border token (= cream-300)
+ *   - graphite  — dedicated warm secondary text token (= ink-700)
  *
- * Banned: aquamarine / cyan (reserved for founder's other product),
- * warm sand / amber (retokenized away in Plan v31 v3).
+ * Banned: aquamarine / cyan (reserved for founder's other product).
  */
 export const colors = {
   atlas: {
-    50: "#fff1ed",
-    100: "#fed7c6",
-    200: "#fcaa8b",
-    300: "#f87850",
-    400: "#e94e20",
-    500: "#d73a14", // primary accent (surfaces)
-    600: "#b82f0f", // hover / pressed
-    700: "#952509", // primary accent (text + headline)
-    800: "#6f1a06",
-    900: "#491004",
+    // Warm Atlas reformation 2026-06-04: the loud vermillion ramp earthed
+    // toward terracotta / burnt sienna. Browner, slightly less saturated,
+    // same lightness ladder so every contrast relationship still holds.
+    50: "#fdf3ed",
+    100: "#f8dcca",
+    200: "#efb795",
+    300: "#e08a5f",
+    400: "#cf6336",
+    500: "#bd5424", // primary accent (surfaces), terracotta
+    600: "#a0440f", // hover / pressed
+    700: "#883a14", // primary accent (text + headline), burnt sienna
+    800: "#65290c",
+    900: "#431a06",
   },
   cream: {
-    50: "#ffffff", // page background, pure white
-    100: "#f5f5f5", // primary card surface
-    200: "#eaeaea",
-    300: "#dddddd",
-    400: "#bbbbbb",
-    500: "#888888",
+    // Warm paper ladder. 50 = warm white (cards/popovers, lightest),
+    // climbing into warm sand (page paper, borders). Replaces the cold
+    // white-to-gray surfaces that the pre-reformation system used.
+    50: "#fffdf8", // warm white card / popover surface
+    100: "#f7efe1", // warm sand page paper / muted surface
+    200: "#eee2cf",
+    300: "#e2d2b9", // warm taupe hairline / border step
+    400: "#c4b095",
+    500: "#93826a",
   },
   ink: {
-    50: "#fafafa",
-    100: "#f0f0f0",
-    200: "#e5e5e5",
-    300: "#d4d4d4",
-    500: "#737373",
-    600: "#525252",
-    700: "#3a3a3a",
-    800: "#1a1a1a",
-    900: "#000000", // headlines, pure black
+    // Warm brown-black text ladder. Reads as warm ink on warm paper,
+    // not clinical black on white. 900 is the headline near-black.
+    50: "#faf4ec",
+    100: "#f0e7d9",
+    200: "#e4d8c5", // warm border
+    300: "#cbb79c",
+    500: "#7d6c58",
+    600: "#5d4d3b",
+    700: "#463726",
+    800: "#2c2015",
+    900: "#211810", // headlines, warm near-black
   },
   cocoa: {
-    50: "#fafafa",
-    100: "#f0f0f0",
-    300: "#bbbbbb",
-    500: "#737373",
-    700: "#3a3a3a",
-    900: "#171717",
+    // Re-warmed to real browns (the pre-reformation system had drained
+    // these to neutral gray). The text-alias family for muted copy.
+    50: "#faf4ec",
+    100: "#f0e7d9",
+    300: "#c3b39c",
+    500: "#87745d",
+    700: "#534231",
+    900: "#221910",
   },
   moss: {
-    50: "#f7fce8",
-    100: "#ecfccb",
-    300: "#bef264",
-    500: "#65a30d",
-    700: "#3f6212",
-    900: "#1a2e05",
+    50: "#f6fbe8",
+    100: "#e9f6c8",
+    300: "#bcd96a",
+    500: "#6f8f25",
+    700: "#4a6018",
+    900: "#222e09",
   },
   clay: {
+    // Held as a true red. Danger and negative deltas must stay clearly
+    // distinct from the terracotta accent, so this family is NOT warmed.
     50: "#fef2f2",
     100: "#fee2e2",
     300: "#fca5a5",
@@ -101,10 +114,12 @@ export const colors = {
     900: "#450a0a",
   },
   teal: {
-    50: "#f0fdfa",
-    500: "#0f766e",
-    600: "#0d5f58",
-    700: "#0f766e",
+    // Muted sage / eucalyptus — the single cool counterweight to the
+    // terracotta field. Cozy, never a loud cyan. Use under 5% of surface.
+    50: "#eef5f0",
+    500: "#4d7c64",
+    600: "#3d6650",
+    700: "#345a47",
   },
   /**
    * Data-confidence tier scale. Semantic, not a new hue: it reuses the
@@ -115,10 +130,10 @@ export const colors = {
    * or blue (the v2 components hardcoded a blue dot, which this retires).
    */
   tier: {
-    deep: "#952509", //    = atlas-700, measured / primary
-    good: "#d73a14", //    = atlas-500, regional
-    starter: "#f87850", // = atlas-300, thin
-    modeled: "#737373", // = cocoa-500, estimated
+    deep: "#883a14", //    = atlas-700, measured / primary
+    good: "#bd5424", //    = atlas-500, regional
+    starter: "#e08a5f", // = atlas-300, thin
+    modeled: "#87745d", // = cocoa-500, estimated
   },
   /**
    * Delta / multiplier indicators (above, at par, caution, below). Semantic,
@@ -126,13 +141,13 @@ export const colors = {
    * #16a34a / #ca8a04 / #7f1d1d in neighborhood and decide pages.
    */
   delta: {
-    positive: "#3f6212", // = moss-700, above par
-    atpar: "#952509", //    = atlas-700, at par
-    caution: "#f87850", //  = atlas-300, watch
+    positive: "#4a6018", // = moss-700, above par
+    atpar: "#883a14", //    = atlas-700, at par
+    caution: "#e08a5f", //  = atlas-300, watch
     negative: "#991b1b", // = clay-700, below par
   },
-  parchment: "#dddddd",
-  graphite: "#3a3a3a",
+  parchment: "#e2d2b9", // warm taupe = cream-300
+  graphite: "#463726", // warm brown-gray = ink-700
 } as const;
 
 /**
@@ -142,13 +157,13 @@ export const colors = {
  * classes for anything that might need theming later.
  */
 export const semanticColors = {
-  background: colors.cream[50],
+  background: colors.cream[100], // warm sand page paper
   foreground: colors.ink[900],
-  card: colors.cream[100],
+  card: colors.cream[50], // warm white article card
   cardForeground: colors.ink[900],
   primary: colors.atlas[700],
   primaryForeground: colors.cream[50],
-  border: colors.ink[200],
+  border: colors.cream[300], // warm taupe hairline
   ring: colors.atlas[700],
   success: colors.moss[700],
   successSurface: colors.moss[100],

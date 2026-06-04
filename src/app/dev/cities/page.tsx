@@ -44,7 +44,7 @@ export default async function CitiesMockup() {
             if (group.length === 0) return null;
             return (
               <section key={t} className="border-t border-ink-100 py-8 md:py-10">
-                <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-6">{label}</h2>
+                <h2 data-typography="custom" className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-6">{label}</h2>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-0.5">
                   {group.map((c) => (
                     <a
