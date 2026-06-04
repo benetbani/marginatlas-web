@@ -15,6 +15,7 @@ import {
   industryToSlug,
 } from "@/lib/taxonomy";
 import { CountryFlag } from "@/components/CountryFlag";
+import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { CountryCityShortcuts } from "@/components/CountryCityShortcuts";
 import { CountryStatsStrip } from "@/components/CountryStatsStrip";
 import { CountryAtAGlance } from "@/components/CountryAtAGlance";
@@ -25,6 +26,7 @@ import { getCountryAnchor } from "@/lib/content/country-anchors";
 import { fmtMoney } from "@/lib/format/money";
 import { CountrySignaturePanel } from "@/components/countries/CountrySignaturePanel";
 import { CountryViabilityLede } from "@/components/countries/CountryViabilityLede";
+import { CountryTaxReality } from "@/components/countries/CountryTaxReality";
 import { generateCountryVerdict } from "@/lib/scores/country_verdict";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import { getSmbRegime, getVatRow } from "@/lib/tax/smb_effective_rates";
@@ -150,9 +152,7 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
          background colour: the section sits on the site-wide atlas-paper
          pattern from layout.tsx. */}
       <section id="hero" className="pt-2 pb-6">
-        <div className="text-xs uppercase tracking-wide text-atlas-700 font-semibold">
-          Local profit intelligence
-        </div>
+        <SectionEyebrow size="md">Local profit intelligence</SectionEyebrow>
         <h1 className="mt-2 text-3xl md:text-5xl font-semibold tracking-tight text-ink-900 flex items-center gap-3 flex-wrap">
           <span className="inline-flex pl-1">
             <CountryFlag iso2={iso2} className="w-10 md:w-14" />
@@ -174,17 +174,14 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
          when that synthesis produced real signal (see showVerdict). */}
       {showVerdict ? <CountryViabilityLede verdict={countryVerdict} /> : null}
 
-      {/* 2. country-stats: Track FF.2 tax overlay tiles. The standalone
-         quality-summary card was rolled up into the at-a-glance above. */}
-      <section id="country-stats" className={`py-6 ${getToneClass("country-stats")}`}>
+      {/* 2. country-stats: the business-climate signals (sales tax, the
+         small-business regime, time to launch, inflation). This is the second
+         beat in the decision flow: after the lede says whether a business can
+         make money here, the climate strip says what the operating ground
+         costs. The standalone quality-summary card was rolled up into the
+         at-a-glance above. */}
+      <section id="country-stats" className={`py-8 ${getToneClass("country-stats")}`}>
         <CountryStatsStrip iso2={iso2} />
-      </section>
-
-      {/* 2.5. Country signature panel (demographics, signature sectors,
-          culture spectrum, government scores). Renders null when the
-          country has no entry in country_signature_v1.json. */}
-      <section className="py-6">
-        <CountrySignaturePanel iso2={iso2} countryName={meta.name} />
       </section>
 
       {/* 3. industry-mix-grid: top activities in this country. Reformation
@@ -197,15 +194,16 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
       {topIndustries.length > 0 && (
         <section id="industry-mix-grid" className={getToneClass("industry-mix-grid")}>
           <div className="py-8">
+            <SectionEyebrow className="mb-2">Where the money is</SectionEyebrow>
             <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
               Where the typical money lands in {meta.name}
             </h2>
             {/* useless-tile-ok: subtitle describes the ranking criterion, not a count of things we cover */}
-            <p className="mt-1 text-sm text-ink-700/70 max-w-2xl">
-              The activities that show up most in the local small-business mix,
-              with what the typical firm turns over. Revenue is the top line,
-              not take-home. Open any one for the cost stack, tax, and what is
-              left for an owner.
+            <p className="mt-1 text-sm text-graphite max-w-2xl leading-relaxed">
+              The activities that fill the local small-business mix, ranked by how
+              commonly they show up, with what the typical firm turns over.
+              Revenue is the top line, not take-home. Open any one for the cost
+              stack, the tax, and what is left for an owner.
             </p>
             <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {topIndustries.map((ind) => {
@@ -257,9 +255,10 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
          was always present). */}
       {regions.length > 0 ? (
         <section id="regions" className={`py-8 ${getToneClass("regions")}`}>
-          <div className="text-xs uppercase tracking-wide text-atlas-700 font-semibold mb-3">
+          <SectionEyebrow className="mb-3">Go local</SectionEyebrow>
+          <h2 className="text-xl md:text-2xl font-semibold text-ink-900 mb-3">
             Regions of {countryName}
-          </div>
+          </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 text-sm">
             {regions.map((r) => (
               <Link
@@ -280,19 +279,45 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
         </section>
       ) : null}
 
-      {/* 6. tax-overview: Plan v13 Wave 4a (D2): stub removed. The real
-         tax panel will be added when the component exists; until then the
-         section silently does not render. */}
+      {/* 6. tax-overview: the friction-adjusted tax read (bible Section 5;
+         Section 6 module 10, free-basic tier). Fills the registered
+         tax-overview slot, previously empty since the Wave 4a stub was
+         pulled. Pure restatement of the sales-tax row + small-business
+         regime the page already loaded, with one honest worked figure
+         tied to the densest activity. Self-omits when neither rate exists. */}
+      <section id="tax-overview" className={`py-8 ${getToneClass("tax-overview")}`}>
+        <CountryTaxReality
+          countryName={meta.name}
+          vat={vatRow}
+          regime={smbRegime}
+          topActivity={densestActivity}
+          fmt={(n) => fmtMoney(n)}
+        />
+      </section>
 
-      {/* 7. related-countries: Compare CTA. Kept because it's an evergreen
-         navigation aid, not a data-dependent section. */}
+      {/* 6.5. Country signature panel (demographics, signature sectors,
+          culture spectrum, government scores). Moved below the decision
+          flow: it is supporting demographic context, not one of the
+          climate-to-industries decision beats, so it no longer interrupts
+          the climate strip and the activities grid. No section id, so it
+          stays out of the canonical skeleton order. Renders null when the
+          country has no signature entry. */}
+      <section className="py-6">
+        <CountrySignaturePanel iso2={iso2} countryName={meta.name} />
+      </section>
+
+      {/* 7. related-countries: Compare CTA. The closing beat of the flow:
+         once the read is formed, send the visitor sideways to put this
+         country against its peers. Evergreen navigation, not data-dependent. */}
       <section id="related-countries" className={`py-10 ${getToneClass("related-countries")}`}>
         <div className="card-cream">
+          <SectionEyebrow className="mb-2">Next move</SectionEyebrow>
           <h2 className="text-lg font-semibold text-ink-900">
-            Compare {meta.name} to other countries
+            Put {meta.name} against its peers
           </h2>
-          <p className="mt-1 text-sm text-ink-800">
-            Pick any industry and put {meta.name} side-by-side with up to three other countries.
+          <p className="mt-1 text-sm text-ink-800 max-w-2xl leading-relaxed">
+            Pick any activity and set {meta.name} side by side with up to three
+            other countries: revenue, the cost stack, and what an owner keeps.
           </p>
           <a
             href="/compare"
