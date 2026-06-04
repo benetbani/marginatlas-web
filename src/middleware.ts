@@ -179,6 +179,19 @@ export function middleware(req: NextRequest) {
   }
   // --- end Plan v13 Wave 4b redirect handler ---
 
+  // --- Retired sector pages → /industries (308, preserves SEO equity) ---
+  // Browse-by-sector was retired: /sectors and /sectors/<id> no longer
+  // render. Permanently redirect both to the activity directory so the old
+  // URLs never 404 and link equity flows to /industries.
+  if (!path.startsWith("/api/") && !path.startsWith("/_next")) {
+    if (/^\/sectors($|\/[a-z0-9_-]+$)/.test(path)) {
+      const url = req.nextUrl.clone();
+      url.pathname = "/industries";
+      return NextResponse.redirect(url, 308);
+    }
+  }
+  // --- end retired sector pages redirect ---
+
   // 1. AI crawlers — 451 Unavailable For Legal Reasons
   for (const re of AI_CRAWLER_PATTERNS) {
     if (re.test(ua)) {
@@ -246,7 +259,6 @@ const CACHEABLE_PATTERNS: RegExp[] = [
   /^\/coverage($|\/)/,
   /^\/industries($|\/[a-z0-9-]+$)/,
   /^\/learn($|\/[a-z0-9-]+$)/,
-  /^\/sectors($|\/[a-z0-9_-]+$)/,
   /^\/world$/,
   /^\/pricing$/,
   /^\/calculator$/,

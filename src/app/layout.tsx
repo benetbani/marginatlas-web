@@ -154,7 +154,6 @@ export default function RootLayout({
                   <li><a href="/countries" className="hover:text-atlas-500">All countries</a></li>
                   <li><a href="/cities" className="hover:text-atlas-500">All cities</a></li>
                   <li><a href="/industries" className="hover:text-atlas-500">All activities</a></li>
-                  <li><a href="/sectors/manufacturing" className="hover:text-atlas-500">Sectors</a></li>
                 </ul>
               </div>
               <div>

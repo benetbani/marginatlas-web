@@ -1,8 +1,8 @@
 /**
  * Sector icon map for visual differentiation.
  *
- * Used on /industries (sector group headings), /sectors index, country
- * pages, and anywhere else sectors are listed without an icon.
+ * Used on /industries (sector group headings), country pages, and
+ * anywhere else sectors are listed without an icon.
  * Returns a single-emoji glyph that survives in plain text and works
  * across platforms without font dependencies.
  */

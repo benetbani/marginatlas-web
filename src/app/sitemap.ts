@@ -6,7 +6,7 @@
  * Google's 50,000-URL / 50MB cap.
  *
  * Buckets:
- *   id=0 → static + 195 country pages + 25 sectors + coverage/world/status
+ *   id=0 → static + 195 country pages + coverage/world/status
  *          + Plan v14 C.7: 195 /[country]/industries hubs
  *   id=1 → top 5,000 US cells_master entries
  *   id=2 → top 20,000 regional_cells entries (filtered to quality_10 >= 4)
@@ -17,7 +17,7 @@
  */
 import type { MetadataRoute } from "next";
 import { getTopCells, getTopRegionalCells, slugify, regionalCellUrl, withBudget } from "@/lib/cells";
-import { COUNTRIES, SECTORS_ORDERED } from "@/lib/taxonomy";
+import { COUNTRIES } from "@/lib/taxonomy";
 import { hasRegionalCoverage } from "@/lib/coverage/regional";
 import { getAdmin1Regions } from "@/lib/coverage/admin1";
 import { isPathSuppressed } from "@/lib/quality/thin_pages";
@@ -61,7 +61,6 @@ async function staticAndContainersSitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/compare`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/world`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE_URL}/coverage`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
-    { url: `${BASE_URL}/sectors`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.7 },
     { url: `${BASE_URL}/pricing`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/about-data`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE_URL}/blog`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.5 },
@@ -76,13 +75,6 @@ async function staticAndContainersSitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  const sectorUrls: MetadataRoute.Sitemap = SECTORS_ORDERED.map((s) => ({
-    url: `${BASE_URL}/sectors/${s.id}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly",
-    priority: 0.7,
-  }));
-
   // /[Country]/industries hub per country (~195 URLs).
   // High-value internal-link nexus for the country topical-authority play.
   const countryHubUrls: MetadataRoute.Sitemap = COUNTRIES.map((c) => ({
@@ -92,7 +84,7 @@ async function staticAndContainersSitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.75,
   }));
 
-  return [...staticUrls, ...countryUrls, ...sectorUrls, ...countryHubUrls];
+  return [...staticUrls, ...countryUrls, ...countryHubUrls];
 }
 
 async function usCellsSitemap(): Promise<MetadataRoute.Sitemap> {

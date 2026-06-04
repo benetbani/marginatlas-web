@@ -1,6 +1,5 @@
 import { NavigatorForm } from "@/components/NavigatorForm";
 import { FeaturedCellTile, type FeaturedTileSpec } from "@/components/FeaturedCellTile";
-import { SectorMasterMenu } from "@/components/SectorMasterMenu";
 import { WorldMapSection } from "@/components/home/WorldMapSection";
 import { WhatAtlasWeighs } from "@/components/home/WhatAtlasWeighs";
 import HomepageEditorialBlocks, { type AtlasQuestion } from "@/components/HomepageEditorialBlocks";
@@ -209,14 +208,11 @@ export default function HomePage() {
         </div>
       </ToneBand>
 
-      {/* Plan v32 (audit Sprint A3) — SectorMasterMenu lifted from 8th
-         scroll position to immediately under the world map. The three
-         primary navigation paths (map / sector / featured cells) now
-         cluster early in the page instead of being interrupted by
-         tertiary content. */}
-      <ToneBand tone="home-sectors">
-        <SectorMasterMenu />
-      </ToneBand>
+      {/* Browse-by-sector retired: the SectorMasterMenu grid (a grid of
+         /sectors/[id] tiles) was removed when sector pages were retired. A
+         sector is too diluted to be a useful destination; the world map and
+         the featured cells below carry the primary navigation. The sector
+         taxonomy still groups activities elsewhere. */}
 
       {/* Decision-factors strip (bible Section 25/26). States the thesis
           plainly before the page shows any tile: the average margin is not

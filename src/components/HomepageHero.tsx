@@ -125,7 +125,7 @@ export default function HomepageHero(_props?: HomepageHeroProps) {
             Pick a country
           </Link>
           <Link
-            href="/sectors"
+            href="/industries"
             className="inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-semibold border border-cocoa-700/25 text-cocoa-700 hover:bg-parchment transition-colors"
           >
             Browse industries

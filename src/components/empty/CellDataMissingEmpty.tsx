@@ -64,7 +64,7 @@ export default function CellDataMissingEmpty({
           label: `See all industries in ${geographyName}`,
         },
         {
-          href: "/sectors",
+          href: "/industries",
           label: "Try a different industry",
         },
       ]}

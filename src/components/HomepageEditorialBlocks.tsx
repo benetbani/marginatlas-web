@@ -30,7 +30,7 @@ export type AtlasQuestion = { text: string; href: string };
 
 const DEFAULT_QUESTIONS: AtlasQuestion[] = [
   { text: "How much does a bakery make in Lisbon?",        href: "/pt/lisbon/bakeries" },
-  { text: "What's a healthy margin for a small law firm?", href: "/sectors/professional_services/law-firms" },
+  { text: "What's a healthy margin for a small law firm?", href: "/industries/legal-services" },
   { text: "Which industries thrive in Singapore?",          href: "/sg" },
   { text: "How much should a Nairobi salon owner pay?",     href: "/ke/nairobi/salons#wages" },
   { text: "What does a Berlin software studio earn?",       href: "/de/berlin/software-studios" },

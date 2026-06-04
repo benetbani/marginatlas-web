@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { COUNTRIES, industryToSlug, visibleIndustries, visibleSectors } from "@/lib/taxonomy";
+import { COUNTRIES, industryToSlug, visibleIndustries } from "@/lib/taxonomy";
 import { CountryFlag } from "@/components/CountryFlag";
 
 function readClientGate(): { revealMixed: boolean; revealCorp: boolean } {
@@ -20,17 +20,16 @@ function readClientGate(): { revealMixed: boolean; revealCorp: boolean } {
 }
 
 type SearchResult = {
-  kind: "industry" | "country" | "sector";
+  kind: "industry" | "country";
   id: string;
   label: string;
   /** ISO-2 country code — set for kind === "country" so we can render <CountryFlag>. */
   iso2?: string;
-  icon?: string;
   examples?: string[];
 };
 
 /**
- * GlobalSearch — header-bar search that matches industries, countries, sectors.
+ * GlobalSearch: header-bar search that matches industries and countries.
  * Triggered by ⌘K / Ctrl+K or by clicking the search icon.
  */
 export function GlobalSearch() {
@@ -94,22 +93,6 @@ export function GlobalSearch() {
             label: c.name,
             iso2: c.code,
           })),
-        // Sectors — only visible ones, in curated display order
-        ...visibleSectors(gate)
-          .filter(
-            (s) =>
-              s.name.toLowerCase().includes(q) ||
-              (s.examples || []).some((e) => e.toLowerCase().includes(q)) ||
-              (s.tagline || "").toLowerCase().includes(q)
-          )
-          .slice(0, 4)
-          .map((s) => ({
-            kind: "sector" as const,
-            id: s.id,
-            label: s.name,
-            icon: s.icon,
-            examples: s.examples,
-          })),
       ];
 
   function pickResult(r: SearchResult) {
@@ -117,8 +100,6 @@ export function GlobalSearch() {
       router.push(`/us/california/${industryToSlug(r.id)}`);
     } else if (r.kind === "country") {
       router.push(`/${r.id.toLowerCase()}`);
-    } else if (r.kind === "sector") {
-      router.push(`/sectors/${r.id}`);
     }
     setOpen(false);
     setQuery("");
@@ -183,7 +164,7 @@ export function GlobalSearch() {
                     pickResult(results[focusIdx]);
                   }
                 }}
-                placeholder="Search industries, countries, sectors…"
+                placeholder="Search industries and countries…"
                 className="flex-1 outline-none text-sm text-ink-900 placeholder:text-ink-500"
               />
               <kbd className="text-xs text-ink-500 px-1.5 py-0.5 rounded border border-ink-200">Esc</kbd>
@@ -202,9 +183,6 @@ export function GlobalSearch() {
                     <span className="pill bg-cream-200 text-cocoa-700">{r.kind}</span>
                     {r.iso2 && (
                       <CountryFlag iso2={r.iso2} label={r.label} className="w-5" />
-                    )}
-                    {r.icon && (
-                      <span className="text-lg" aria-hidden>{r.icon}</span>
                     )}
                     <div className="flex-1">
                       <div className="text-sm font-medium text-ink-900">{r.label}</div>
@@ -225,7 +203,7 @@ export function GlobalSearch() {
               <div className="px-4 py-8 text-sm text-ink-600">
                 <div className="mb-3 text-xs uppercase tracking-wide text-ink-500">Try searching for</div>
                 <div className="flex flex-wrap gap-2">
-                  {["restaurants", "bakeries", "plumbers", "software", "Germany", "Manufacturing"].map((t) => (
+                  {["restaurants", "bakeries", "plumbers", "software", "Germany", "France"].map((t) => (
                     <button
                       key={t}
                       onClick={() => setQuery(t)}

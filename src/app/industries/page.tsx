@@ -2,16 +2,14 @@
  * /industries — top-level industry directory.
  *
  * The previous page was ugly except
- * for the A-Z section. Restructured into three clear blocks:
+ * for the A-Z section. Two clear blocks remain:
  *
  *   1. Hero (center-aligned, consistent with home)
- *   2. Sector grid (same compact cards as the homepage SectorMasterMenu,
- *      so the visual language is consistent across the site)
- *   3. A-Z list (kept; founder explicit: this part is good)
+ *   2. A-Z list (kept; founder explicit: this part is good)
  *
  * The 'Popular industries' middle section is removed (duplicates the
- * homepage navigator and the Featured grid). The 'By sector' pill cloud
- * is replaced with the compact card grid used elsewhere.
+ * homepage navigator and the Featured grid). The browse-by-sector card
+ * grid was removed when sector pages were retired.
  */
 import Link from "next/link";
 import {
@@ -19,7 +17,6 @@ import {
   industryToSlug,
   isDefaultVisible,
 } from "@/lib/taxonomy";
-import { SectorMasterMenu } from "@/components/SectorMasterMenu";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 
 export const revalidate = 86400;
@@ -51,9 +48,9 @@ export default function IndustriesIndex() {
         </p>
       </section>
 
-      {/* Sector grid — same component used on the homepage so the
-         visual language stays consistent across the site. */}
-      <SectorMasterMenu />
+      {/* Browse-by-sector grid retired alongside the sector pages: it
+         linked to /sectors/[id], a destination too diluted to keep. The
+         A-Z activity list below is now the primary directory. */}
 
       {/* A-Z list — founder-approved as-is. */}
       <section className="py-10 md:py-14 border-t border-ink-100">

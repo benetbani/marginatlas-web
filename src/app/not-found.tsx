@@ -14,7 +14,7 @@ export const metadata = {
 
 const HATCHES = [
   { label: "Browse cities",           desc: "245 cities across the atlas",                 href: "/cities" },
-  { label: "Browse industries",       desc: "223 sectors, ranked and explained",           href: "/sectors" },
+  { label: "Browse industries",       desc: "Every activity we cover",                     href: "/industries" },
   { label: "Pick a country",          desc: "Start from the world map on the homepage",    href: "/" },
   { label: "Read the knowledge base", desc: "Methodology, glossary, atlas guides",         href: "/learn" },
   { label: "Compare two places",      desc: "Side-by-side country, city, or sector",       href: "/compare" },

@@ -32,7 +32,7 @@ type Category = { icon: PhIcon; label: string; subtitle: string; href: string };
 
 const CATEGORIES: Category[] = [
   { icon: Globe,      label: "Pick a country",    subtitle: "196 economies",                    href: "/" },
-  { icon: Storefront, label: "Browse industries", subtitle: "223 sectors",                      href: "/sectors" },
+  { icon: Storefront, label: "Browse industries", subtitle: "All activities",                   href: "/industries" },
   /* useless-tile-ok: dead component, not mounted anywhere; pending deletion */
   { icon: MapPin,     label: "Browse cities",     subtitle: "245 measured cities",              href: "/cities" },
   { icon: BookOpen,   label: "Knowledge base",    subtitle: "Methodology and atlas guides",     href: "/learn" },

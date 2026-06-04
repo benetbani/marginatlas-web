@@ -72,7 +72,7 @@ export default function MobileCellHero({
   p90Revenue,
   coverageTier,
   pickCountryHref = "/",
-  browseIndustriesHref = "/sectors",
+  browseIndustriesHref = "/industries",
 }: MobileCellHeroProps) {
   const ref = useRef<HTMLElement | null>(null);
   const [stickyVisible, setStickyVisible] = useState(false);
