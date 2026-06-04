@@ -19,6 +19,7 @@ import cityListJson from "../../../data/cities/city_list_v1.json";
 type CityEntry = {
   slug: string;
   tier?: number;
+  pop_m?: number;
 };
 
 const CITIES = (cityListJson as { cities: CityEntry[] }).cities;
@@ -33,6 +34,20 @@ const TIER_BY_SLUG: Map<string, 1 | 2 | 3> = (() => {
   return m;
 })();
 
+// Metro population (residents) by city slug. pop_m is approximate metro
+// population in millions; we store it as a raw resident count so callers can
+// derive per-capita density directly.
+const POP_BY_SLUG: Map<string, number> = (() => {
+  const m = new Map<string, number>();
+  for (const c of CITIES) {
+    if (!c.slug) continue;
+    if (typeof c.pop_m === "number" && Number.isFinite(c.pop_m) && c.pop_m > 0) {
+      m.set(c.slug.toLowerCase(), c.pop_m * 1_000_000);
+    }
+  }
+  return m;
+})();
+
 /**
  * Resolve a geo slug to its city tier (1/2/3) when it's a known city.
  * Returns null when the slug isn't in the city list — typically a
@@ -42,4 +57,15 @@ const TIER_BY_SLUG: Map<string, 1 | 2 | 3> = (() => {
 export function getCityTier(geoSlug: string | null | undefined): 1 | 2 | 3 | null {
   if (!geoSlug) return null;
   return TIER_BY_SLUG.get(geoSlug.toLowerCase()) ?? null;
+}
+
+/**
+ * Resolve a geo slug to its metro population in residents (a raw count, not
+ * millions) when it's a known city. Returns null when the slug isn't in the
+ * city list (a state or region slug) or has no population on file. Callers
+ * should treat null as "not a city" rather than zero.
+ */
+export function getCityPopulation(geoSlug: string | null | undefined): number | null {
+  if (!geoSlug) return null;
+  return POP_BY_SLUG.get(geoSlug.toLowerCase()) ?? null;
 }

@@ -10,19 +10,17 @@ import {
   slugify,
   distinctSizeBands,
   distinctYears,
-  buildTimeSeries,
   listUsStates,
   withBudget,
 } from "@/lib/cells";
 import { INDUSTRIES, industryToSlug } from "@/lib/taxonomy";
 import { computeBreakeven, fmtAov, fmtOrders } from "@/lib/economics/breakeven";
-import { getCityTier } from "@/lib/cities/city_tier";
+import { getCityTier, getCityPopulation } from "@/lib/cities/city_tier";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { iso2ToName } from "@/lib/countries";
 import { RevenueTiles } from "@/components/RevenueTiles";
 import { RevenueDistribution } from "@/components/RevenueDistribution";
 // MarginWaterfall import removed; redundant with SmartWaterfall
-import { Tooltip } from "@/components/Tooltip";
 import { DimensionSwitcher } from "@/components/DimensionSwitcher";
 import { TypicalFirmCard } from "@/components/TypicalFirmCard";
 import { PostTaxToggle } from "@/components/PostTaxToggle";
@@ -71,8 +69,9 @@ import {
 } from "@/lib/extrapolations/fill_missing";
 import { HeroBenchmark } from "@/components/HeroBenchmark";
 import { VerdictHero } from "@/components/cell/VerdictHero";
-import { ScorePanel } from "@/components/cell/ScorePanel";
+import { CellDashboard } from "@/components/cell/CellDashboard";
 import { computeScores } from "@/lib/scores";
+import { buildCellDashboard } from "@/lib/scores/cell_dashboard";
 import { generateVerdict } from "@/lib/scores/verdict";
 import { CityHero } from "@/components/CityHero";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
@@ -282,11 +281,6 @@ export default async function CellPage({
   if (!cell) notFound();
   const availableSizes = distinctSizeBands(variants);
   const availableYears = distinctYears(variants);
-  const timeSeries = buildTimeSeries(variants);
-
-  // YoY change for headline stats. Compares current year to prior year on the
-  // same series.
-  const yoy = computeYoY(timeSeries, cell.year);
 
   // Fan out the remaining data fetches concurrently. None block the others.
   // Every one wrapped in withBudget so a single slow query cannot hang the
@@ -423,12 +417,53 @@ export default async function CellPage({
     if (n >= 1_000) return `$${Math.round(n / 1_000)}K`;
     return `$${Math.round(n)}`;
   };
+  // City tier drives both the score context and the break-even AOV
+  // adjustment; resolve it once here and reuse it below.
+  const cityTier = getCityTier(geo);
   const scoreSet = computeScores(cell, {
-    cityTier: getCityTier(geo),
+    cityTier,
     netMargin: computedNetMargin,
     netProfit: adjustedNetTakeHome,
   });
   const heroVerdict = generateVerdict(cell, scoreSet, compactUsd);
+
+  // Top-of-page dashboard inputs. Hoisted here so each is computed ONCE and
+  // reused both in the dashboard and in the deeper sections below (the
+  // break-even section and the revenue-tiles anchor previously each recomputed
+  // these inside their own IIFE).
+  //
+  // Break-even (orders/day to survive). Reused by the break-even detail section.
+  const be = cell.industry_id
+    ? computeBreakeven(
+        cell.industry_id,
+        cell.revenue_per_firm ?? cell.rev_p50 ?? null,
+        cityTier,
+      )
+    : null;
+  // People working + wage per employee, with the same extrapolation fallback
+  // the headline tiles use (fill rule: never a blank figure when an estimate
+  // is computable).
+  const employeesEstimate =
+    cell.n_employees ?? estimateEmployeesFromFirms(cell.industry_id, cell.n_enterprises);
+  const wageEstimate =
+    cell.payroll_per_employee ?? estimateWagePerEmployee(country, cell.industry_id, geo);
+  // City population (residents) when the geo slug is a known city; null for
+  // state/region slugs. Drives the market-density read.
+  const cityPopulation = getCityPopulation(geo);
+
+  const dash = buildCellDashboard({
+    cell,
+    typicalRevenue: cell.revenue_per_firm ?? cell.rev_p50 ?? null,
+    grossMarginPct: marginRow.gross_margin ?? null,
+    netMarginPct: computedNetMargin,
+    ownerTakeHome: adjustedNetTakeHome,
+    breakevenOrdersDaily: be?.breakevenOrdersDaily ?? null,
+    typicalOrdersDaily: be?.currentOrdersDaily ?? null,
+    peopleWorking: employeesEstimate ?? null,
+    wagePerEmployee: wageEstimate ?? null,
+    cityPopulation,
+    fmtMoney: formatMoney,
+  });
 
   // FAQPage JSON-LD payload. The question text matches
   // the phrase universe (scripts/seo/build_phrase_universe.py), so any organic
@@ -625,6 +660,19 @@ export default async function CellPage({
         })()}
       </div>
 
+      {/* Data-first dashboard. The economics the page proves, perceivable in
+          one glance, before any prose. A non-<section> wrapper (like the hero's
+          id="headline" div) so it leads the page without registering an extra
+          id with the canonical skeleton gate. Carries the proprietary scores
+          strip, "The numbers", and "The market"; each row self-omits when its
+          value is null, and whole blocks vanish when empty. The deeper sections
+          below (break-even, take-home, distribution) keep the full treatment. */}
+      <CellDashboard
+        scores={scoreSet.scores}
+        opportunity={scoreSet.opportunity}
+        data={dash}
+      />
+
       {/* One quiet meta row under the hero, merged from three former
           stripes (coverage badge + currency switcher + the compact
           coverage-indicator). Density reform 2026-06-04: the separate
@@ -651,13 +699,11 @@ export default async function CellPage({
         />
       ) : null}
 
-      {/* Decision layer: the proprietary scores, right under the verdict
-          (bible Section 10). Self-omits when nothing is computable. */}
-      {scoreSet.scores.length > 0 ? (
-        <section className="py-6 md:py-8">
-          <ScorePanel scores={scoreSet.scores} />
-        </section>
-      ) : null}
+      {/* Decision layer: the proprietary scores moved into the top-of-page
+          CellDashboard (data-first reform). The standalone ScorePanel section
+          here was pure duplication of the dashboard's scores strip and was
+          removed. The full-prose ScorePanel cards are retired from this page in
+          favour of the compact chips. */}
 
       {/* Plan v32 Sprint G — sub-industry picker. Renders only when the
          parent industry has at least one data_ready variant. Otherwise
@@ -690,49 +736,14 @@ export default async function CellPage({
         );
       })()}
 
-      {/* Plan v19 Block B — fill rule. Headline tiles fall back to
-         extrapolations when source data is null. People-working uses
-         n_enterprises × industry-typical headcount/firm. Wage uses
-         country median × industry multiplier. Tiles only suppress
-         themselves when even the extrapolation can't produce a number.
-         No more blank "-" tiles per founder rule. */}
-      {(() => {
-        const employeesEstimate =
-          cell.n_employees ?? estimateEmployeesFromFirms(cell.industry_id, cell.n_enterprises);
-        const employeesIsEstimate = cell.n_employees == null && employeesEstimate != null;
-        // Goldmines Wave 2 — pass the geo slug so cells in cities
-        // covered by city_wage_premium_v1 use city-specific wages
-        // instead of the country average. Cells in regions or states
-        // ignore the city lookup and fall back to country.
-        const wageEstimate =
-          cell.payroll_per_employee ?? estimateWagePerEmployee(country, cell.industry_id, geo);
-        const wageIsEstimate = cell.payroll_per_employee == null && wageEstimate != null;
-        return (
-          <section id="revenue-tiles" className={`grid grid-cols-1 md:grid-cols-3 gap-4 py-6 ${getToneClass("revenue-tiles")}`}>
-            {employeesEstimate != null ? (
-              <Stat
-                label={employeesIsEstimate ? "People working (estimate)" : "People working"}
-                value={employeesEstimate.toLocaleString()}
-                yoy={yoy.n_employees}
-              />
-            ) : null}
-            <Stat
-              label="Typical yearly revenue"
-              value={formatMoney(cell.revenue_per_firm)}
-              tooltip="The middle firm: half make more, half make less. Often called the median."
-              yoy={yoy.revenue_per_firm}
-            />
-            {wageEstimate != null ? (
-              <Stat
-                label={wageIsEstimate ? "Wage per employee (estimate)" : "Wage per employee"}
-                value={formatMoney(wageEstimate)}
-                tooltip="Average annual pay across all employees in this industry."
-                yoy={yoy.payroll_per_employee}
-              />
-            ) : null}
-          </section>
-        );
-      })()}
+      {/* Headline revenue tiles (People working / Typical revenue / Wage per
+         employee) moved INTO the top-of-page CellDashboard "The numbers" grid
+         (data-first reform). The canonical skeleton registers "revenue-tiles"
+         as a beat, so the <section id> anchor is kept present here as a
+         zero-height marker rather than re-rendering the same three figures a
+         second time. The dashboard already self-omits any tile whose value is
+         null, preserving the no-blank-tiles rule. */}
+      <section id="revenue-tiles" aria-hidden className="sr-only" />
 
       {/* ATO Phase 2 — Key Benchmark banner. Surfaces ONE ratio per
          industry as the headline answer to "am I normal?". Sits with the
@@ -812,17 +823,11 @@ export default async function CellPage({
           tokenized off raw hex (2026-06-04): moss for healthy headroom,
           atlas at the line, clay when under water. */}
       {(() => {
-        // Wave 2 AOV city-tier (2026-05-26): when geo is a known city slug,
-        // scale AOV by the city's tier. When geo is a state/region (most
-        // US/EU cells), pass null and the AOV stays at the global baseline.
-        const cityTier = getCityTier(geo);
-        const be = cell.industry_id
-          ? computeBreakeven(
-              cell.industry_id,
-              cell.revenue_per_firm ?? cell.rev_p50 ?? null,
-              cityTier,
-            )
-          : null;
+        // Break-even is computed once at the top of the page (alongside the
+        // dashboard inputs) using the resolved city tier, so the dashboard and
+        // this detail section never recompute it. Wave 2 AOV city-tier
+        // (2026-05-26): cities scale AOV by tier, state/region slugs stay at
+        // the global baseline.
         if (!be) return null;
         const coveragePct = Math.round((be.coverageRatio - 1) * 100);
         // Moss when there is healthy headroom above the line, atlas right at
@@ -1094,78 +1099,6 @@ export default async function CellPage({
       <CellPageNav />
     </div>
   );
-}
-
-function Stat({
-  label,
-  value,
-  tooltip,
-  yoy,
-}: {
-  label: string;
-  value: string;
-  tooltip?: string;
-  yoy?: number | null;
-}) {
-  return (
-    <div className="card">
-      <div className="text-xs uppercase tracking-wide text-ink-700/60 font-medium flex items-center">
-        {label}
-        {tooltip && <Tooltip text={tooltip} />}
-      </div>
-      <div className="mt-2 text-2xl font-semibold text-ink-900">{value}</div>
-      {yoy != null && isFinite(yoy) && (
-        <span
-          className={`mt-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium ${
-            yoy >= 0
-              ? "bg-moss-100 text-moss-700"
-              : "bg-clay-100 text-clay-700"
-          }`}
-          title="Year-over-year change"
-        >
-          <span>{yoy >= 0 ? "▲" : "▼"}</span>
-          <span>
-            {yoy >= 0 ? "+" : ""}
-            {(yoy * 100).toFixed(1)}% YoY
-          </span>
-        </span>
-      )}
-    </div>
-  );
-}
-
-type YoYResult = {
-  n_enterprises: number | null;
-  n_employees: number | null;
-  revenue_per_firm: number | null;
-  payroll_per_employee: number | null;
-};
-
-function computeYoY(
-  series: { year: number; revenue_per_firm: number | null; n_enterprises: number | null; n_employees: number | null; payroll_per_employee: number | null }[],
-  currentYear: number
-): YoYResult {
-  const out: YoYResult = {
-    n_enterprises: null,
-    n_employees: null,
-    revenue_per_firm: null,
-    payroll_per_employee: null,
-  };
-  const curr = series.find((p) => p.year === currentYear);
-  if (!curr) return out;
-  // Find most recent prior year
-  const priors = series.filter((p) => p.year < currentYear).sort((a, b) => b.year - a.year);
-  const prev = priors[0];
-  if (!prev) return out;
-  function ratio(a: number | null, b: number | null): number | null {
-    if (a == null || b == null || b === 0) return null;
-    return (a - b) / b;
-  }
-  out.n_enterprises = ratio(curr.n_enterprises, prev.n_enterprises);
-  out.n_employees = ratio(curr.n_employees, prev.n_employees);
-  out.revenue_per_firm = ratio(curr.revenue_per_firm, prev.revenue_per_firm);
-  out.payroll_per_employee = ratio(curr.payroll_per_employee, prev.payroll_per_employee);
-  return out;
 }
 
 function formatMoney(v: number | null | undefined): string {
