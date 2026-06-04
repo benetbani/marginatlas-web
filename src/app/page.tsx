@@ -192,8 +192,11 @@ export default function HomePage() {
           </div>
           {/* Navigator sits inside the same band immediately under the
              hero copy. Tightened top spacing so it reads as one
-             continuous section, not two stacked. */}
-          <div className="mt-6 md:mt-8 max-w-5xl mx-auto">
+             continuous section, not two stacked. relative z-30 lifts the
+             form (and its ComboField dropdown, which now extends below the
+             card) above the following opaque ink-dark city-picker band so
+             the open list stays fully visible and scrollable. */}
+          <div className="relative z-30 mt-6 md:mt-8 max-w-5xl mx-auto">
             <NavigatorForm />
           </div>
         </section>

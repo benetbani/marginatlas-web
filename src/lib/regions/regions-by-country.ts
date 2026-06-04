@@ -1,18 +1,24 @@
 /**
- * Public wrapper around the auto-generated
- * regions + subdivisions table.
+ * Public wrapper around the country region + subdivision tables.
  *
- * Source of truth: REGIONS_BY_COUNTRY_AUTO in regions_generated.ts,
- * built by scripts/regions/build_regions_table.ts from regional_cells.
- * Currently covers 199 countries with 1163 region entries plus their
- * parent relationships for subdivision cascading.
+ * Top-level regions (getRegionsForCountry) are sourced from the admin1
+ * manifest via getAdmin1Regions: a country's BIGGEST first-level
+ * territorial entities only (GB = the 4 nations, AU = 6 states + 2
+ * territories, JP = 47 prefectures, DE = 16 Lander). This matches the
+ * region links built on the country page (/{iso2}/{admin1.slug}), so the
+ * region landing page resolves its label cleanly.
+ *
+ * Subdivisions (getSubdivisionsForRegion) still come from
+ * REGIONS_BY_COUNTRY_AUTO in regions_generated.ts, built by
+ * scripts/regions/build_regions_table.ts from regional_cells, which
+ * carries the parent relationships used for cascading.
  *
  * US is overridden with the canonical state-slug list because cell pages
- * for US states (cells_master) use slugs like "california", not the
- * regional_cells geo_id form. Subdivisions for US states map via the
- * FIPS-to-state-slug table below.
+ * for US states (cells_master) use slugs like "california". Subdivisions
+ * for US states map via the FIPS-to-state-slug table below.
  */
 import { REGIONS_BY_COUNTRY_AUTO } from "./regions_generated";
+import { getAdmin1Regions } from "@/lib/coverage/admin1";
 
 export type RegionOption = {
   value: string;
@@ -94,23 +100,20 @@ const US_STATE_TO_FIPS: Record<string, string> = {
 };
 
 /**
- * Top-level regions for a given country.
+ * Top-level regions for a given country: its biggest first-level
+ * territorial entities only.
  * - US returns the 50 states (+ DC) override
- * - Other countries return entries from the auto-generated table where
- *   parent === null (top-level only)
- * - Countries with no data get a single "All of {country}" option
+ * - Other countries map the admin1 manifest (getAdmin1Regions): slug →
+ *   value, name → label. This is the same source the country page uses to
+ *   build region links, so the region landing page resolves cleanly.
+ * - Countries with no admin1 data get a single "All of {country}" option
  */
 export function getRegionsForCountry(iso2: string, countryName: string): RegionOption[] {
   const upper = iso2.toUpperCase();
   if (upper === "US") return US_STATES;
-  const auto = REGIONS_BY_COUNTRY_AUTO[upper];
-  if (auto && auto.length > 0) {
-    const topLevel = auto.filter((e) => e.parent === null);
-    if (topLevel.length === 0) {
-      // Fallback if everything has a parent (shouldn't happen)
-      return auto.map((e) => ({ value: e.value, label: e.label }));
-    }
-    return topLevel.map((e) => ({ value: e.value, label: e.label }));
+  const admin1 = getAdmin1Regions(upper);
+  if (admin1.length > 0) {
+    return admin1.map((r) => ({ value: r.slug, label: r.name }));
   }
   const slug = countryName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
   return [{ value: slug, label: `All of ${countryName}` }];

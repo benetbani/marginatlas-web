@@ -218,6 +218,15 @@ export function NavigatorForm() {
     }
   }
 
+  /*
+   * Root deliberately has NO overflow-hidden: it clipped the ComboField
+   * search dropdown (an absolutely-positioned list that extends below the
+   * card and scrolls on its own via max-h-[60vh] overflow-auto). The
+   * rounded-2xl corners are preserved; the two square-cornered edge
+   * backgrounds (top rule, footer) round their own outer corners
+   * (rounded-t-2xl / rounded-b-2xl) so nothing bleeds past the radius
+   * without re-clipping the dropdown.
+   */
   return (
     <form
       action="/api/go"
@@ -226,7 +235,7 @@ export function NavigatorForm() {
         e.preventDefault();
         submit();
       }}
-      className="relative rounded-2xl atlas-paper-card border border-ink-200 hover:border-ink-300 transition-colors shadow-[0_1px_3px_rgba(0,0,0,0.05),_0_8px_28px_rgba(0,0,0,0.06)] overflow-hidden"
+      className="relative rounded-2xl atlas-paper-card border border-ink-200 hover:border-ink-300 transition-colors shadow-[0_1px_3px_rgba(0,0,0,0.05),_0_8px_28px_rgba(0,0,0,0.06)]"
     >
       {/* Hidden inputs mirror the React state so the native HTML
          form-submit fallback (action="/api/go") works without JS. If
@@ -243,7 +252,7 @@ export function NavigatorForm() {
           generic SaaS form. */}
       <div
         aria-hidden="true"
-        className="h-[3px] w-full bg-gradient-to-r from-atlas-700 via-atlas-500 to-atlas-700"
+        className="h-[3px] w-full rounded-t-2xl bg-gradient-to-r from-atlas-700 via-atlas-500 to-atlas-700"
       />
 
       {/* Card header strip. Editorial caption + meta count. Reads as
@@ -367,7 +376,7 @@ export function NavigatorForm() {
       </div>
 
       {/* Footer bar. Editorial sample line + the two CTAs. */}
-      <div className="border-t border-ink-200/60 bg-cream-50/60 px-5 md:px-8 py-4 md:py-5">
+      <div className="rounded-b-2xl border-t border-ink-200/60 bg-cream-50/60 px-5 md:px-8 py-4 md:py-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <p className="text-[11px] md:text-xs text-cocoa-700/80 leading-relaxed">
             <span className="font-semibold uppercase tracking-[0.12em] text-atlas-700 mr-1.5">

@@ -7,9 +7,9 @@
  * CountryCityShortcuts) and regions (via the admin1 region list).
  * Connected structure: nav -> countries -> country -> cities.
  *
- * Layout mirrors /cities for visual consistency: continent header,
- * then a CSS multi-column country index with flag + name + optional
- * city count. Compact, encyclopedia-like, no wasted whitespace.
+ * Layout: per-continent section with a heading, then a responsive
+ * grid of compact country cards (flag + name + optional city count),
+ * mirroring the /world CountryTile. Compact, no wasted whitespace.
  *
  * No client JS. Server-rendered, revalidate 24h.
  */
@@ -152,37 +152,25 @@ export default function CountriesHub() {
                 &middot; {sorted.length} countries
               </span>
             </h2>
-            <style>
-              {`
-                @media (min-width: 640px) { .atlas-countries-columns { column-count: 2; } }
-                @media (min-width: 1024px) { .atlas-countries-columns { column-count: 3; } }
-                @media (min-width: 1280px) { .atlas-countries-columns { column-count: 4; } }
-              `}
-            </style>
-            <div
-              className="atlas-countries-columns"
-              style={{ columnCount: 1, columnGap: "2rem", columnFill: "balance" }}
-            >
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
               {sorted.map((country) => {
                 const cityCount = CITY_COUNT_BY_ISO2.get(country.code) || 0;
                 return (
                   <Link
                     key={country.code}
                     href={`/${country.code.toLowerCase()}`}
-                    className="group flex items-baseline gap-2.5 mb-2.5 hover:text-atlas-700 transition-colors"
-                    style={{ breakInside: "avoid", pageBreakInside: "avoid" }}
+                    className="group flex items-baseline gap-2.5 rounded-lg border border-parchment bg-cream-50 p-3 transition-colors hover:border-atlas-500 hover:bg-cream-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
                   >
                     <CountryFlag
                       iso2={country.code}
                       className="w-7 shrink-0 translate-y-[2px]"
                     />
-                    <span className="font-display text-base md:text-lg font-semibold text-ink-900 group-hover:text-atlas-700">
+                    <span className="truncate text-sm font-semibold text-ink-900 group-hover:text-atlas-700">
                       {country.name}
                     </span>
                     {cityCount > 0 ? (
-                      <span className="text-[11px] font-normal text-cocoa-700/55 tabular-nums">
-                        {cityCount}{" "}
-                        {cityCount === 1 ? "city" : "cities"}
+                      <span className="text-xs text-cocoa-700/60 tabular-nums">
+                        {cityCount}
                       </span>
                     ) : null}
                   </Link>
