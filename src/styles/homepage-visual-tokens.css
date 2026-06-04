@@ -11,8 +11,8 @@
   --cream-50:  #ffffff;
   --cream-100: #f7f6f4;
   --parchment: #e4e2dd;
-  --atlas-500: #c03d2b;
-  --atlas-700: #8a2618;
+  --atlas-500: #e62200;
+  --atlas-700: #991600;
   --cocoa-700: #534231;
   --ink-900:   #211810;
 }
@@ -22,14 +22,14 @@
    pattern reads as paper texture and stops competing with cards. */
 .atlas-dot-grid {
   background-color: var(--cream-50);
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><circle cx='4' cy='4' r='1' fill='%23c03d2b' fill-opacity='0.06'/></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><circle cx='4' cy='4' r='1' fill='%23e62200' fill-opacity='0.06'/></svg>");
 }
 
 /* Slightly denser variant for the homepage hero.
    Frontend-design pass 2026-05-25: opacity 0.18 -> 0.08, density unchanged. */
 .atlas-dot-grid-dense {
   background-color: var(--cream-50);
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><circle cx='4' cy='4' r='1' fill='%23c03d2b' fill-opacity='0.08'/></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><circle cx='4' cy='4' r='1' fill='%23e62200' fill-opacity='0.08'/></svg>");
 }
 
 /* Horizontal rule with a small amber diamond in the middle. */

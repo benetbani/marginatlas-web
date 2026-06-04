@@ -145,18 +145,16 @@ export const SECTION_TONES: Record<string, SectionTone> = {
   // Neighborhood overview
   "neighborhood-industries": "cream-50",
 
-  // Homepage. Plan v14 6d: hero is a quiet editorial masthead on
-  // cream-100 paper (was ink-dark cinematic video frame). The slight
-  // warmth distinguishes it from the cream-50 body and the cream-50
-  // navigator section directly below, preserving the alternation.
-  // Homepage tone map rewritten after the Sprint B kill round.
+  // Homepage. Final accent retone 2026-06-04: hero masthead is now a pure
+  // white band (was cream-100 paper). The home-hero tone is used by this
+  // section only, so flipping it to white here does not affect any other
+  // section. Active sections below alternate paper (let pattern show through,
+  // cards pop) and white (clean band that hides the pattern) for rhythm.
   // Old half of the entries (cell-of-the-week, tax-overlay, ask, quality,
   // stats, recently-added, spotlight, primary-ctas, what-youll-see,
   // whats-hot, methodology, global-coverage) are dead sections kept here
-  // as deliberate no-ops in case the route revives. Active sections
-  // alternate paper (let pattern show through, cards pop) and white
-  // (clean band that hides the pattern) for visual rhythm.
-  "home-hero": "cream-100",
+  // as deliberate no-ops in case the route revives.
+  "home-hero": "white",
   "home-navigator": "paper",
   "home-city-picker": "ink-dark",
   "home-sectors": "white",

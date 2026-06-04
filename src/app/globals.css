@@ -29,7 +29,7 @@
     --card-foreground: 33 24 16;     /* ink-900 */
     --popover: 255 255 255;          /* cream-50 */
     --popover-foreground: 33 24 16;  /* ink-900 */
-    --primary: 138 38 24;            /* atlas-700 #883A14, burnt sienna */
+    --primary: 153 22 0;             /* atlas-700 #991600 */
     --primary-foreground: 255 255 255; /* cream-50 */
     --secondary: 247 246 244;        /* cream-100 */
     --secondary-foreground: 33 24 16; /* ink-900 */
@@ -41,7 +41,7 @@
     --destructive-foreground: 255 253 248; /* cream-50 */
     --border: 228 226 221;           /* cream-300 #E2D2B9, warm taupe */
     --input: 228 226 221;            /* cream-300 */
-    --ring: 138 38 24;               /* atlas-700, used with /40 alpha in primitives */
+    --ring: 153 22 0;                /* atlas-700 #991600, used with /40 alpha in primitives */
     --radius: 1rem;
 
     /* Legacy hex variables that are consumed directly by CSS rules below
@@ -71,7 +71,7 @@
     /* Hairlines — barely visible warm-ink, not gray */
     --atlas-hairline: rgba(38, 33, 28, 0.07);
     --atlas-hairline-strong: rgba(38, 33, 28, 0.12);
-    --atlas-hairline-vermillion: rgba(192, 61, 43, 0.30);
+    --atlas-hairline-vermillion: rgba(230, 34, 0, 0.30);
 
     /* Elevation scale — warm cocoa-tinted shadows, never gray.
        1 = card at rest. 2 = card hover. 3 = modal / popover / sticky. */
@@ -230,7 +230,7 @@
 @layer components {
   /* Brand name treatment — burnt amber gradient, used sparingly */
   .gradient-name {
-    background: linear-gradient(90deg, #cd5947 0%, #c03d2b 50%, #a52f20 100%);
+    background: linear-gradient(90deg, #f24e2f 0%, #e62200 50%, #c11c00 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;

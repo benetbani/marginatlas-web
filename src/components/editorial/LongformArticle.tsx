@@ -45,7 +45,7 @@ const LF_CSS = `
   --lf-soft: #FBF8F2;
   --lf-ink: #1A1410;
   --lf-cocoa: #5A3A1A;
-  --lf-accent: #8a2618;
+  --lf-accent: #991600;
   --lf-line: #F4EAD5;
   background: var(--lf-paper);
   color: var(--lf-ink);

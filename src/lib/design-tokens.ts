@@ -47,19 +47,19 @@
  */
 export const colors = {
   atlas: {
-    // Reformation v2 2026-06-04: retoned from terracotta to a brighter brick
-    // red (clearly red, less orange/brown), keeping the same lightness ladder
-    // so every contrast relationship still holds.
-    50: "#fbf1ef",
-    100: "#f6d9d3",
-    200: "#ecb2a8",
-    300: "#de8678",
-    400: "#cd5947",
-    500: "#c03d2b", // primary accent (surfaces), terracotta
-    600: "#a52f20", // hover / pressed
-    700: "#8a2618", // primary accent (text + headline), burnt sienna
-    800: "#671a10",
-    900: "#45110a",
+    // Final accent retone 2026-06-04: vivid red base (#e62200). Brighter and
+    // more clearly red than the prior brick ramp, keeping a clean lightness
+    // ladder so every contrast relationship still holds.
+    50: "#fff1ee",
+    100: "#ffd9d0",
+    200: "#ffb3a3",
+    300: "#fb8469",
+    400: "#f24e2f",
+    500: "#e62200", // primary accent (surfaces), vivid red
+    600: "#c11c00", // hover / pressed
+    700: "#991600", // primary accent (text + headline)
+    800: "#701000",
+    900: "#4a0a00",
   },
   cream: {
     // Warm paper ladder. 50 = warm white (cards/popovers, lightest),
@@ -130,9 +130,9 @@ export const colors = {
    * or blue (the v2 components hardcoded a blue dot, which this retires).
    */
   tier: {
-    deep: "#8a2618", //    = atlas-700, measured / primary
-    good: "#c03d2b", //    = atlas-500, regional
-    starter: "#de8678", // = atlas-300, thin
+    deep: "#991600", //    = atlas-700, measured / primary
+    good: "#e62200", //    = atlas-500, regional
+    starter: "#fb8469", // = atlas-300, thin
     modeled: "#87745d", // = cocoa-500, estimated
   },
   /**
@@ -142,8 +142,8 @@ export const colors = {
    */
   delta: {
     positive: "#4a6018", // = moss-700, above par
-    atpar: "#8a2618", //    = atlas-700, at par
-    caution: "#de8678", //  = atlas-300, watch
+    atpar: "#991600", //    = atlas-700, at par
+    caution: "#fb8469", //  = atlas-300, watch
     negative: "#991b1b", // = clay-700, below par
   },
   parchment: "#e4e2dd", // warm taupe = cream-300
