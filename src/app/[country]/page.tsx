@@ -24,6 +24,10 @@ import { COUNTRY_PAGE_SECTIONS, getToneClass } from "@/lib/page-layout/section-o
 import { getCountryAnchor } from "@/lib/content/country-anchors";
 import { fmtMoney } from "@/lib/format/money";
 import { CountrySignaturePanel } from "@/components/countries/CountrySignaturePanel";
+import { CountryViabilityLede } from "@/components/countries/CountryViabilityLede";
+import { generateCountryVerdict } from "@/lib/scores/country_verdict";
+import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
+import { getSmbRegime, getVatRow } from "@/lib/tax/smb_effective_rates";
 
 // Keep section-order constant referenced for type checking — sections render in this exact order below.
 void COUNTRY_PAGE_SECTIONS;
@@ -87,6 +91,36 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
   const regions = getAdmin1Regions(iso2);
   const countryName = meta.name;
 
+  // Country-level decision lede (bible Section 5, friction-adjusted view).
+  // Pure synthesis from data the page already loads: the economics snapshot,
+  // the small-business tax regime, the headline sales tax, and the densest
+  // local activity. No new queries, no invented numbers. Each clause inside
+  // the verdict self-omits when its input is missing, so low-coverage
+  // countries get a short honest paragraph instead of a fabricated one.
+  const snapshot = getCountryEconomicsSnapshot(iso2);
+  const smbRegime = getSmbRegime(iso2);
+  const vatRow = getVatRow(iso2);
+  const densestActivity = topIndustries[0]
+    ? {
+        name: topIndustries[0].industry_name,
+        typicalRevenue: topIndustries[0].revenue_per_firm,
+      }
+    : null;
+  const countryVerdict = generateCountryVerdict({
+    countryName,
+    snapshot,
+    smbEffectiveRate: smbRegime?.effective_rate ?? null,
+    vatStandard: vatRow?.standard ?? null,
+    topActivity: densestActivity,
+    fmt: (n) => fmtMoney(n),
+  });
+  // Mount the lede only when the synthesis produced real signal: at least one
+  // qualitative signal tile, or a money sentence (a known densest activity).
+  // Otherwise it would be the generic thin-coverage line, which we omit
+  // rather than show as an apology.
+  const showVerdict =
+    countryVerdict.signals.length > 0 || densestActivity != null;
+
   return (
     <div>
       {/* Breadcrumb */}
@@ -106,22 +140,24 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
         so sister country pages always have identical structure.
       */}
 
-      {/* 1. hero: Plan v32 — photo removed (founder flagged photos as
-         unprofessional). Hero now carries information, not decoration:
-         compact title + tagline + a 5-stat at-a-glance row so the first
-         frame tells the user the depth of coverage, the scale of typical
-         businesses, the local SMB sector mix, and the after-CIT owner
-         take in one glance. No background colour: the section sits on
-         the site-wide atlas-paper pattern from layout.tsx. */}
+      {/* 1. hero: photo removed long ago (founder flagged photos as
+         unprofessional). Reformation (bible Section 5): the hero now leads
+         with the decision frame, not just the country name. The H1 carries
+         the search-sensible "Small business economics in {country}" formula;
+         the country's commercial character sits under it as a quiet framing
+         line; the blunt "where the money is and what gets in the way" answer
+         lives in the viability lede directly below the at-a-glance. No
+         background colour: the section sits on the site-wide atlas-paper
+         pattern from layout.tsx. */}
       <section id="hero" className="pt-2 pb-6">
         <div className="text-xs uppercase tracking-wide text-atlas-700 font-semibold">
-          Country
+          Local profit intelligence
         </div>
         <h1 className="mt-2 text-3xl md:text-5xl font-semibold tracking-tight text-ink-900 flex items-center gap-3 flex-wrap">
           <span className="inline-flex pl-1">
             <CountryFlag iso2={iso2} className="w-10 md:w-14" />
           </span>
-          <span>{meta.name}</span>
+          <span>Small business economics in {meta.name}</span>
         </h1>
         <p className="mt-3 text-base md:text-lg text-ink-700 max-w-3xl leading-relaxed">
           {getCountryAnchor(iso2, meta.name)}
@@ -129,6 +165,14 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
 
         <CountryAtAGlance iso2={iso2} topIndustries={topIndustries} />
       </section>
+
+      {/* 1.5. Viability lede (bible Section 5, friction-adjusted view). The
+         opinionated country-level read: where the money tends to be, the
+         operating reality that gets in the way, and the condition under
+         which a business actually clears a wage. Pure synthesis from the
+         economics snapshot + tax regime already loaded above; mounts only
+         when that synthesis produced real signal (see showVerdict). */}
+      {showVerdict ? <CountryViabilityLede verdict={countryVerdict} /> : null}
 
       {/* 2. country-stats: Track FF.2 tax overlay tiles. The standalone
          quality-summary card was rolled up into the at-a-glance above. */}
@@ -143,21 +187,25 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
         <CountrySignaturePanel iso2={iso2} countryName={meta.name} />
       </section>
 
-      {/* 3. industry-mix-grid: top activities in this country. Country-page
-         rebuild §5 (2026-05-25): retitled to "What people actually run" to
-         describe what the section actually is (a curated index of the
-         densest local SMB activities), not a "biggest revenue" leaderboard.
-         Section reads only if §3 returned >= 1 plausible activity. */}
+      {/* 3. industry-mix-grid: top activities in this country. Reformation
+         (bible Section 5, "where the typical money lands"): the section leads
+         with the densest local activities and the typical revenue each one
+         turns over, framed as a starting point for a decision, not a "biggest
+         revenue" leaderboard. The blunt caveat keeps revenue honest: it is
+         not take-home. Section reads only if the query returned >= 1
+         plausible activity. */}
       {topIndustries.length > 0 && (
         <section id="industry-mix-grid" className={getToneClass("industry-mix-grid")}>
           <div className="py-8">
             <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
-              What people actually run in {meta.name}
+              Where the typical money lands in {meta.name}
             </h2>
             {/* useless-tile-ok: subtitle describes the ranking criterion, not a count of things we cover */}
-            <p className="mt-1 text-sm text-ink-700/70">
-              Activities ranked by how often they show up in the local small-business
-              mix. Click any tile for the full benchmark.
+            <p className="mt-1 text-sm text-ink-700/70 max-w-2xl">
+              The activities that show up most in the local small-business mix,
+              with what the typical firm turns over. Revenue is the top line,
+              not take-home. Open any one for the cost stack, tax, and what is
+              left for an owner.
             </p>
             <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {topIndustries.map((ind) => {
