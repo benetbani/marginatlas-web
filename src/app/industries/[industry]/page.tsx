@@ -32,11 +32,13 @@
 import { notFound } from "next/navigation";
 import {
   INDUSTRIES,
+  INDUSTRIES_BY_SECTOR,
   INDUSTRY_BY_ID,
   SECTOR_BY_ID,
   industryToSlug,
   slugToIndustry,
   resolveToMeasuredIndustry,
+  isDefaultVisible,
 } from "@/lib/taxonomy";
 import { MarginWaterfall } from "@/components/MarginWaterfall";
 import industryMarginsJson from "@/lib/finance/industry_margins.json";
@@ -109,6 +111,13 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
   // queries: the opinionated business-model read and the cost-stage anatomy
   // come from the curated margin structure this page already loads, plus the
   // activity character when one is written. Every clause self-omits on null.
+  //
+  // The activity-character edge and watch-out are deliberately NOT fed to the
+  // verdict here: they each own a dedicated module further down the flow (the
+  // best-operators note inside the lede, and the failure-mechanics card below
+  // the waterfall). Withholding them from the verdict lets its closing line
+  // speak the structural failure read from the margin shape instead of
+  // repeating a sentence the page already shows in full.
   const verdict = generateIndustryVerdict({
     industryName: ind.name,
     margins: {
@@ -117,14 +126,26 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
       netMargin: margin.net_margin ?? null,
       assetIntensity: margin.asset_intensity ?? null,
     },
-    edge: character?.edge ?? null,
-    watchOut: character?.watchOut ?? null,
   });
 
   // The visible H1 is the search-sensible money question (bible Section 5
   // headline formula). The page <title> stays the benchmark phrasing, set in
   // generateMetadata above.
   const moneyQuestion = `How ${ind.name.toLowerCase()} businesses make money`;
+
+  // The single most punishing cost stage, read straight from the verdict
+  // anatomy this page already computes. It anchors the failure-mechanics module
+  // below the waterfall: the structural reason weak operators run out of room.
+  // Falls back to null when no stage reads "bad", so the module self-suppresses.
+  const worstSignal = verdict.signals.find((s) => s.tone === "bad") ?? null;
+
+  // Related activities (bible Section 6 module 28, a FREE module): the other
+  // small-business models that sit in the same sector. This is taxonomy data
+  // the page already loads, NOT a cross-place ranking. It self-suppresses when
+  // a sector has no other measured siblings. Capped so the rail stays scannable.
+  const relatedActivities = (INDUSTRIES_BY_SECTOR[ind.sector_id] || [])
+    .filter((sib) => sib.id !== ind.id && isDefaultVisible(sib))
+    .slice(0, 8);
 
   void INDUSTRY_BY_ID;
 
@@ -205,21 +226,24 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
          industry-verdict synthesis module. This is the "found nowhere else"
          decision layer. The block always renders (margins fall back to a
          conservative SMB default), but every individual clause and signal
-         self-omits when its input is missing. The activity-character watch-out
-         carries the verdict's closing line; the edge shows as a side note. */}
+         self-omits when its input is missing. When an activity character is
+         written, its one-line hook frames the lede and the hand-written
+         mechanics add the depth the margin synthesis alone cannot reach. */}
       <section id="how-it-works" className="py-8 md:py-10">
         <IndustryModelLede verdict={verdict} edge={character?.edge ?? null} />
         {character && (
-          <div className="mt-8 max-w-3xl space-y-4">
-            {/* The hand-written mechanics. The verdict's closing line already
-               carries the watch-out, so it is not repeated here; this card
-               adds the "how the money actually works" depth the model summary
-               cannot. */}
-            <div className="rounded-xl border border-parchment bg-cream-50 p-4">
-              <div className="text-[10px] uppercase tracking-[0.16em] text-atlas-700 font-semibold mb-1.5">
+          <div className="mt-8 max-w-3xl space-y-5">
+            {/* The hand-written mechanics: how the money actually works, in the
+               operator's own terms. This is the editorial depth a margin
+               readout cannot carry. */}
+            <div className="rounded-xl border border-parchment bg-cream-50 p-5">
+              <div className="text-[10px] uppercase tracking-[0.16em] text-atlas-700 font-semibold mb-2">
                 How the money actually works
               </div>
-              <p className="text-sm text-ink-900 leading-relaxed">{character.economics}</p>
+              <p className="font-serif text-base leading-snug text-ink-900 mb-2">
+                {character.hook}
+              </p>
+              <p className="text-sm text-graphite leading-relaxed">{character.economics}</p>
             </div>
             {character.categoryNote && (
               <p className="text-sm text-cocoa-700/85 italic leading-relaxed border-l-2 border-atlas-300 pl-3">
@@ -235,13 +259,13 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
          activity (a restaurant's payroll-as-share-of-revenue is similar in
          Berlin and Brazil). The cell page scales them against country-specific
          revenue; here they carry the model anatomy. */}
-      <section id="margin-waterfall" className={`py-6 ${getToneClass("margin-waterfall")}`}>
+      <section id="margin-waterfall" className={`py-8 ${getToneClass("margin-waterfall")}`}>
         <SectionEyebrow className="mb-3">Where each dollar goes</SectionEyebrow>
-        <p className="max-w-2xl text-base leading-relaxed text-graphite mb-2">
-          The bars below trace a typical sale down the cost stack: what survives
-          the direct cost of what is sold, what running the business leaves, and
-          what reaches the bottom line. The gap between the top bar and the
-          bottom one is the whole game.
+        <p className="max-w-2xl text-base leading-relaxed text-graphite mb-4">
+          Each bar takes a typical sale one cut deeper: what survives the direct
+          cost of goods, what running the business leaves, and what reaches the
+          bottom line. The gap between the top bar and the bottom one is the
+          whole game.
         </p>
         <MarginWaterfall
           grossMargin={margin.gross_margin}
@@ -255,28 +279,72 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
         )}
       </section>
 
-      {/* 3. country chooser. Country-specific revenue, employment, and cost
+      {/* 3. what kills weak operators (bible Section 6 module 22, a FREE
+         module). The flow beat between "where each dollar goes" and "where this
+         plays out": once the reader sees how little survives, name what takes
+         the rest of it from the weak operators. Built only from data already
+         loaded: the hand-written watch-out, and the single most punishing cost
+         stage read from the verdict anatomy. No <section id=>, so it sits
+         OUTSIDE the canonical industry-page skeleton (hero / how-it-works /
+         margin-waterfall) without disturbing the gate. The whole block
+         self-suppresses when neither input exists. */}
+      {(character?.watchOut?.trim() || worstSignal) && (
+        <section className="py-8 bg-cream-50">
+          <SectionEyebrow className="mb-2">What kills the weak operators</SectionEyebrow>
+          <h2 className="text-xl font-semibold text-ink-900">
+            Where the margin gets taken back
+          </h2>
+          <div className="mt-5 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-2">
+            {character?.watchOut?.trim() && (
+              <div className="rounded-xl border-l-2 border-clay-700 border-y border-r border-parchment bg-white p-5">
+                <div className="text-xs font-semibold uppercase tracking-wide text-clay-700">
+                  The trap
+                </div>
+                <p className="mt-2 text-sm leading-relaxed text-ink-900">
+                  {character.watchOut}
+                </p>
+              </div>
+            )}
+            {worstSignal && (
+              <div className="rounded-xl border border-parchment bg-white p-5">
+                <div className="text-xs font-semibold uppercase tracking-wide text-cocoa-500">
+                  The structural reason
+                </div>
+                <p className="mt-2 text-sm leading-relaxed text-graphite">
+                  <span className="font-serif capitalize text-clay-700">
+                    {worstSignal.label}: {worstSignal.word}.
+                  </span>{" "}
+                  {worstSignal.note}
+                </p>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* 4. country chooser. Country-specific revenue, employment, and cost
          benchmarks live on the cell page (/[country]/[geo]/[industry]). This
          is a chooser, not a ranking: the same activity reads very differently
          once local rent, wages, and tax land on it, so the reader picks the
          place that matters to the decision and sees the real numbers there. */}
       <section className="py-8">
-        <div className="rounded-2xl bg-white border border-parchment p-5">
-          <h2 className="text-lg font-semibold text-ink-900">
-            See where this plays out
+        <SectionEyebrow className="mb-3">Where this plays out</SectionEyebrow>
+        <div className="rounded-2xl bg-white border border-parchment p-6">
+          <h2 className="text-xl font-semibold text-ink-900">
+            The same model, priced by where you run it
           </h2>
-          <p className="mt-1 text-sm text-cocoa-700/85 max-w-2xl">
-            The model above is the same wherever you run it. What changes the
-            outcome is local rent, wages, tax, and competition. Open a country
-            to see real revenue and cost numbers for {ind.name.toLowerCase()},
-            then drill into regions and cities.
+          <p className="mt-2 text-sm leading-relaxed text-cocoa-700/85 max-w-2xl">
+            The anatomy above holds everywhere. What changes the outcome is local
+            rent, wages, tax, and competition. Open a country for real revenue
+            and cost numbers on {ind.name.toLowerCase()}, then drill into regions
+            and cities.
           </p>
-          <div className="mt-4 flex flex-wrap gap-2">
+          <div className="mt-5 flex flex-wrap gap-2">
             {(["us","gb","de","fr","it","es","nl","jp","br","mx","au","in"] as const).map((cc) => (
               <a
                 key={cc}
                 href={`/${cc}/${cc === "us" ? "california" : cc}/${industryToSlug(ind.id)}`}
-                className="px-3 py-1.5 rounded-full bg-cream-100 hover:bg-cream-200 border border-parchment text-sm text-ink-900 transition"
+                className="px-3.5 py-1.5 rounded-full bg-cream-100 hover:bg-cream-200 border border-parchment text-sm font-medium text-ink-900 transition-colors"
               >
                 {cc.toUpperCase()}
               </a>
@@ -284,12 +352,48 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
           </div>
           <a
             href="/"
-            className="mt-4 inline-flex items-center gap-1 text-sm text-atlas-700 hover:text-atlas-900 font-medium"
+            className="mt-5 inline-flex items-center gap-1 text-sm text-atlas-700 hover:text-atlas-900 font-medium"
           >
             Or use the navigator on the homepage &rarr;
           </a>
         </div>
       </section>
+
+      {/* 5. related activities (bible Section 6 module 28, a FREE module). The
+         closing rail: the other small-business models in this sector, so a
+         reader who has learned to read one model anatomy can jump to a
+         neighbouring one. Pure taxonomy, NOT a cross-place ranking. No
+         <section id=>, so it stays outside the canonical skeleton; the whole
+         block self-suppresses when the sector has no other measured siblings. */}
+      {relatedActivities.length > 0 && (
+        <section className="py-8 border-t border-parchment">
+          <SectionEyebrow className="mb-1">Related activities</SectionEyebrow>
+          <h2 className="text-xl font-semibold text-ink-900">
+            Other ways to make money{sector ? ` in ${sector.name.toLowerCase()}` : ""}
+          </h2>
+          <p className="mt-2 text-sm leading-relaxed text-cocoa-700/85 max-w-2xl">
+            Each reads its own way once the cost stack and the capital bar land.
+          </p>
+          <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {relatedActivities.map((sib) => (
+              <a
+                key={sib.id}
+                href={`/industries/${industryToSlug(sib.id)}`}
+                className="group rounded-xl border border-parchment bg-white p-4 transition-colors hover:bg-cream-50"
+              >
+                <div className="text-sm font-semibold text-ink-900 group-hover:text-atlas-700">
+                  {sib.name}
+                </div>
+                {sib.examples && sib.examples.length > 0 && (
+                  <div className="mt-1 text-xs leading-relaxed text-cocoa-500 line-clamp-2">
+                    {sib.examples.slice(0, 3).join(", ")}
+                  </div>
+                )}
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }
