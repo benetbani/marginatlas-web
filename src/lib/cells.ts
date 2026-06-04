@@ -5,6 +5,7 @@
  * from v1.5). Applies the friendly sector + industry taxonomy at query time
  * via the local taxonomy.ts module — no DB migration required.
  */
+import { cache } from "react";
 import { supabaseAdmin } from "./supabase";
 import { applyCurrencyCorrection, CURRENCY_FX_CORRECTIONS } from "./qa/currency_corrections";
 import {
@@ -462,46 +463,78 @@ export async function withBudget<T>(
   return result;
 }
 
-export async function getCellBySlug(
+/**
+ * Request-scoped dedupe. On every cell render getCellBySlug runs once in
+ * generateMetadata and once in the page body with identical args; React
+ * cache() collapses the heaviest lookup (the regional -> extrapolated ->
+ * sector -> synthesize chain plus the lazy turnover-band import) to a single
+ * execution per request. The cache is keyed on PRIMITIVE args, not the
+ * CellSelector object: object literals compare by reference, so the two call
+ * sites (which each build a separate {sizeBand,year} literal) would miss a
+ * selector-keyed cache. The exported wrapper normalizes to primitives so both
+ * sites land on one cache entry. Behavior is otherwise identical to the prior
+ * implementation.
+ */
+const _getCellBySlugCached = cache(
+  async (
+    country: string,
+    geoSlug: string,
+    industrySlug: string,
+    sizeBand: string | null,
+    year: number | null,
+  ): Promise<Cell> => {
+    const selector: CellSelector = { sizeBand, year };
+    const real = await withTimeout(
+      getCellBySlugRaw(country, geoSlug, industrySlug, selector),
+      CELL_LOOKUP_BUDGET_MS,
+    );
+    let cell: Cell;
+    if (real) {
+      cell = enforceSanity(fillMissingFields(real));
+    } else {
+      cell = enforceSanity(
+        synthesizeCell(country, industrySlug, {
+          geoSlug,
+          geoName: geoNameFromSlug(country, geoSlug),
+          year: year || undefined,
+        }),
+      );
+    }
+    // Apply the manual / friendly city-alias
+    // display label UNIVERSALLY at the end of the lookup chain. Previously
+    // this override lived only in getRegionalCell, so when the chain fell
+    // through to getExtrapolatedCell (typical on production with limited
+    // RLS access) the page rendered country-level geo_name ("DE") instead
+    // of "Frankfurt am Main". Applying it here covers every code path.
+    const friendlyLabel = geoNameFromSlug(country, geoSlug);
+    if (friendlyLabel) cell.geo_name = friendlyLabel;
+    // Stamp the turnover band on the way out. Computed
+    // from revenue_per_firm + industry's parent-sector thresholds.
+    // Imported lazily to avoid pulling the band data file into every
+    // module that depends on cells.ts.
+    {
+      const { classifyTurnoverBand } = await import("./finance/turnover_band");
+      cell.turnover_band = classifyTurnoverBand(cell.revenue_per_firm ?? cell.rev_p50, cell.industry_id);
+    }
+    return cell;
+  },
+);
+
+export function getCellBySlug(
   countrySlug: string,
   geoSlug: string,
   industrySlug: string,
   selector: CellSelector = {}
 ): Promise<Cell> {
-  const country = countrySlug.toUpperCase();
-  const real = await withTimeout(
-    getCellBySlugRaw(country, geoSlug, industrySlug, selector),
-    CELL_LOOKUP_BUDGET_MS,
+  // Normalize to primitive cache keys (uppercased country, null-coalesced
+  // selector) so generateMetadata and the page body share one cache entry.
+  return _getCellBySlugCached(
+    countrySlug.toUpperCase(),
+    geoSlug,
+    industrySlug,
+    selector.sizeBand ?? null,
+    selector.year ?? null,
   );
-  let cell: Cell;
-  if (real) {
-    cell = enforceSanity(fillMissingFields(real));
-  } else {
-    cell = enforceSanity(
-      synthesizeCell(country, industrySlug, {
-        geoSlug,
-        geoName: geoNameFromSlug(country, geoSlug),
-        year: selector.year || undefined,
-      }),
-    );
-  }
-  // Apply the manual / friendly city-alias
-  // display label UNIVERSALLY at the end of the lookup chain. Previously
-  // this override lived only in getRegionalCell, so when the chain fell
-  // through to getExtrapolatedCell (typical on production with limited
-  // RLS access) the page rendered country-level geo_name ("DE") instead
-  // of "Frankfurt am Main". Applying it here covers every code path.
-  const friendlyLabel = geoNameFromSlug(country, geoSlug);
-  if (friendlyLabel) cell.geo_name = friendlyLabel;
-  // Stamp the turnover band on the way out. Computed
-  // from revenue_per_firm + industry's parent-sector thresholds.
-  // Imported lazily to avoid pulling the band data file into every
-  // module that depends on cells.ts.
-  {
-    const { classifyTurnoverBand } = await import("./finance/turnover_band");
-    cell.turnover_band = classifyTurnoverBand(cell.revenue_per_firm ?? cell.rev_p50, cell.industry_id);
-  }
-  return cell;
 }
 
 /**
