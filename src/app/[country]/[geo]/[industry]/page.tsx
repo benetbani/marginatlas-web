@@ -14,18 +14,14 @@ import {
   withBudget,
 } from "@/lib/cells";
 import { INDUSTRIES, industryToSlug } from "@/lib/taxonomy";
-import { computeBreakeven, fmtAov, fmtOrders } from "@/lib/economics/breakeven";
+import { computeBreakeven } from "@/lib/economics/breakeven";
 import { getCityTier, getCityPopulation } from "@/lib/cities/city_tier";
-import { ProgressBar } from "@/components/ui/progress-bar";
 import { iso2ToName } from "@/lib/countries";
 import { RevenueTiles } from "@/components/RevenueTiles";
 import { RevenueDistribution } from "@/components/RevenueDistribution";
 // MarginWaterfall import removed; redundant with SmartWaterfall
 import { DimensionSwitcher } from "@/components/DimensionSwitcher";
-import { TypicalFirmCard } from "@/components/TypicalFirmCard";
-import { PostTaxToggle } from "@/components/PostTaxToggle";
 import { NetProfitWaterfall } from "@/components/NetProfitWaterfall";
-import { CountryEconomicsBreakdown } from "@/components/CountryEconomicsBreakdown";
 import { AcrossStatesStrip } from "@/components/AcrossStatesStrip";
 import { CellPageNav } from "@/components/CellPageNav";
 // CellActions import removed (save/copy/CSV/embed buttons stripped)
@@ -38,7 +34,6 @@ import { SECTOR_BY_ID, INDUSTRY_BY_ID, slugToIndustry, resolveToMeasuredIndustry
 import { CellDataset, Breadcrumbs } from "@/components/StructuredData";
 import { RelatedIndustriesStrip } from "@/components/RelatedIndustriesStrip";
 import { getToneClass } from "@/lib/page-layout/section-order";
-import { SectionEmpty } from "@/components/sections/SectionEmpty";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { CellWarningChips } from "@/components/CellWarningChips";
 // EmptyStateCard import removed; we degrade silently now.
@@ -78,30 +73,21 @@ import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { ComparableCitiesRibbon } from "@/components/ComparableCitiesRibbon";
 import { LocalContextCard } from "@/components/LocalContextCard";
 // TrendSparkline import removed; synthesized 5-year trend was too speculative
-import { DistributionVisual } from "@/components/DistributionVisual";
 // Reverted 2026-05-25: QuartileMarkers + gateValue temporarily removed
 // pending diagnosis of cell-page load failure. Re-add once the root
 // cause is found and isolated.
 // import { QuartileMarkers } from "@/components/monetization";
 // import { gateValue } from "@/lib/monetization/viewer_tier";
-import { NetProfitSummary } from "@/components/NetProfitSummary";
-import { SmartWaterfall } from "@/components/SmartWaterfall";
 import { CellFallbackBanner } from "@/components/CellFallbackBanner";
 // Sanity-§8: EstimatedBadge purged. The standalone CoverageIndicator was
 // retired in the density reform (2026-06-04): CoverageBadge now carries the
 // only coverage read on the page, with its own "How we know this" link.
 import { CoverageBadge } from "@/components/CoverageBadge";
-// Industry deepening sections. All three self-suppress
+// Industry deepening sections. Both self-suppress
 // when their data isn't on the cell, so they're safe to mount before any
 // cell has been deepened (Phase 1 will populate the data).
 import { SubIndustryPicker } from "@/components/sections/SubIndustryPicker";
 import { SetupCostBlock } from "@/components/sections/SetupCostBlock";
-import { AnnualCostStack } from "@/components/sections/AnnualCostStack";
-// Plan v32 Sprint G Tier-1 features. Each self-suppresses when its
-// supporting data is absent (industries without operating-units data,
-// without failure-modes coverage, without setup_costs).
-import { TangibleUnits } from "@/components/sections/TangibleUnits";
-import { KeyBenchmarkBanner } from "@/components/sections/KeyBenchmarkBanner";
 import { AuPrimaryDataBadge } from "@/components/AuPrimaryDataBadge";
 // Reverted: InlineMidArticle temporarily removed.
 // import { InlineMidArticle } from "@/components/newsletter/NewsletterSignupVariants";
@@ -321,18 +307,6 @@ export default async function CellPage({
       slug: industryToSlug(i.id),
     }))
     .sort((a, b) => a.name.localeCompare(b.name));
-
-  // Sub-project 1.2 (no dead sections): the revenue-distribution section is a
-  // registered skeleton beat, so it must never render as an empty toned band.
-  // DistributionVisual needs all three of p10/p50/p90 to draw a spread; when
-  // any is missing we render SectionEmpty with onward links to cells that DO
-  // have the full distribution (drawn from the already-fetched comparables).
-  const hasDistribution =
-    cell.rev_p10 != null && cell.rev_p50 != null && cell.rev_p90 != null;
-  const distributionSuggestions = comparables.slice(0, 3).map((c) => ({
-    label: `${c.industry_name ?? "Similar"} in ${c.geo_name ?? "nearby"}`,
-    href: cellUrl(c),
-  }));
 
   // Caveat resolution: which industry record did the URL hit, and are we
   // displaying parent-fallback numbers?
@@ -737,12 +711,6 @@ export default async function CellPage({
          marker rather than re-rendering the same figures a second time. */}
       <section id="revenue-tiles" aria-hidden className="sr-only" />
 
-      {/* ATO Phase 2 — Key Benchmark banner. Surfaces ONE ratio per
-         industry as the headline answer to "am I normal?". Sits with the
-         profit snapshot so the reader sees the headline ratio before the
-         distribution chart. */}
-      <KeyBenchmarkBanner cell={cell} />
-
       {/* AU Phase 1c — primary data badge. Shown only when:
          - country is AU
          - industry maps to a parsed ATO entry
@@ -752,200 +720,6 @@ export default async function CellPage({
       <div className="my-2">
         <AuPrimaryDataBadge cell={cell} />
       </div>
-
-      {/* Plan v32 Sprint G Tier-1 — tangible units. Translates revenue
-         into daily transactions + average ticket + texture note. Closes
-         the profit-snapshot group: what the number feels like in practice. */}
-      <TangibleUnits cell={cell} />
-
-      {/* Distribution band (the spread of operators), distribution-first per
-         the canonical cell skeleton. Sub-project 1.2 (no dead sections):
-         when the spread is missing, render an honest "not yet, see nearby"
-         state instead of an empty toned band. */}
-      <section id="revenue-distribution" className={`py-6 ${getToneClass("revenue-distribution")}`}>
-        {hasDistribution ? (
-          <DistributionVisual
-            p10={cell.rev_p10 ?? null}
-            p50={cell.rev_p50 ?? null}
-            p90={cell.rev_p90 ?? null}
-          />
-        ) : (
-          <SectionEmpty
-            title="Full distribution coming for this cell"
-            body={`We have a typical figure but not yet the full bottom-to-top spread for ${cell.industry_name ?? "this business"}${cell.geo_name ? ` in ${cell.geo_name}` : ""}. These nearby cells already show it.`}
-            suggestions={distributionSuggestions}
-          />
-        )}
-      </section>
-
-      {/* COST STRUCTURE: where the margin goes. Grouped under the canonical
-          "margin-waterfall" skeleton id (2026-06-04). The SmartWaterfall
-          decomposes every cost line with provenance; the AnnualCostStack
-          gives the dollar version of the same split; the country breakdown
-          adds the local cost mix and firm-size context. Each self-omits
-          when its data is thin, so a thin cell collapses to nothing. */}
-      <section id="margin-waterfall" className={`py-6 ${getToneClass("margin-waterfall")}`}>
-        {cell.revenue_per_firm && cell.revenue_per_firm > 0 && cell.industry_id ? (
-          <SmartWaterfall
-            iso2={country.toUpperCase()}
-            industryId={cell.industry_id}
-            sizeBand="medium"
-            grossRevenue={cell.revenue_per_firm}
-            costStackOverride={cell.cost_stack ?? null}
-            geoId={cell.geo_id ?? null}
-          />
-        ) : null}
-
-        {/* Eight-line annual cost breakdown in dollars. Suppressed when
-            cost_stack is absent. */}
-        <AnnualCostStack cell={cell} />
-
-        {/* Country-specific cost split + firm-size mix from the research drops
-            (Phase 2 enrichment). Self-suppresses when the cell has no drop data. */}
-        <CountryEconomicsBreakdown
-          costStructure={cell.cost_structure}
-          firmDistribution={cell.firm_distribution}
-          industryName={cell.industry_name}
-        />
-      </section>
-
-      {/* BREAK-EVEN: the sales floor. Promoted out of the tax panel to stand
-          on its own (2026-06-04), because "how many sales a day just to
-          survive" is one of the sharpest decision reads on the page. Colors
-          tokenized off raw hex (2026-06-04): moss for healthy headroom,
-          atlas at the line, clay when under water. */}
-      {(() => {
-        // Break-even is computed once at the top of the page (alongside the
-        // dashboard inputs) using the resolved city tier, so the dashboard and
-        // this detail section never recompute it. Wave 2 AOV city-tier
-        // (2026-05-26): cities scale AOV by tier, state/region slugs stay at
-        // the global baseline.
-        if (!be) return null;
-        const coveragePct = Math.round((be.coverageRatio - 1) * 100);
-        // Moss when there is healthy headroom above the line, atlas right at
-        // the line, clay once the typical operator is under water.
-        const safetyTone =
-          be.coverageRatio >= 1.3
-            ? "text-moss-700"
-            : be.coverageRatio >= 1.0
-              ? "text-atlas-700"
-              : "text-clay-700";
-        return (
-          <section className="atlas-card p-4 md:p-6 my-6">
-            <div className="text-[10px] uppercase tracking-[0.16em] text-atlas-700 font-semibold mb-3">
-              Break-even, in orders per day
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
-              <div>
-                <div className="text-[10px] uppercase tracking-wide text-cocoa-500 font-semibold">
-                  Avg order
-                </div>
-                <div className="font-display text-xl md:text-2xl font-semibold text-ink-900 tabular-nums leading-tight mt-1">
-                  {fmtAov(be.aov)}
-                </div>
-              </div>
-              <div>
-                <div className="text-[10px] uppercase tracking-wide text-cocoa-500 font-semibold">
-                  Orders / day to break even
-                </div>
-                <div className="font-display text-xl md:text-2xl font-semibold text-atlas-700 tabular-nums leading-tight mt-1">
-                  {fmtOrders(be.breakevenOrdersDaily)}
-                </div>
-              </div>
-              <div>
-                <div className="text-[10px] uppercase tracking-wide text-cocoa-500 font-semibold">
-                  Typical daily orders
-                </div>
-                <div className="font-display text-xl md:text-2xl font-semibold text-ink-900 tabular-nums leading-tight mt-1">
-                  {fmtOrders(be.currentOrdersDaily)}
-                </div>
-              </div>
-              <div>
-                <div className="text-[10px] uppercase tracking-wide text-cocoa-500 font-semibold">
-                  Margin of safety
-                </div>
-                <div
-                  className={`font-display text-xl md:text-2xl font-semibold tabular-nums leading-tight mt-1 ${safetyTone}`}
-                >
-                  {coveragePct >= 0 ? "+" : ""}
-                  {coveragePct}%
-                </div>
-                {/* Visual gauge: how far above breakeven (0% = at
-                    breakeven; bar fills to 100% at double breakeven).
-                    When under water, render an empty bar so the
-                    absence is loud. Tone tracks coveragePct. */}
-                <ProgressBar
-                  className="mt-2"
-                  value={Math.max(0, coveragePct)}
-                  max={100}
-                  size="sm"
-                  tone={
-                    coveragePct >= 30
-                      ? "success"
-                      : coveragePct >= 0
-                        ? "default"
-                        : coveragePct >= -30
-                          ? "warning"
-                          : "danger"
-                  }
-                />
-              </div>
-            </div>
-            <p className="mt-3 text-xs text-cocoa-500 leading-relaxed">
-              Break-even holds fixed costs (rent + payroll + utilities
-              + insurance + regulatory) constant at the typical
-              revenue level and asks: at $
-              {fmtAov(be.aov).replace("$", "")} per order and a{" "}
-              {Math.round(be.grossMargin * 100)}% gross margin, how
-              many orders a day cover those costs?
-              {be.cityTierMultiplier !== 1 ? (
-                <>
-                  {" "}Order value is tier-adjusted for this metro
-                  ({be.cityTierMultiplier > 1 ? "+" : ""}
-                  {Math.round((be.cityTierMultiplier - 1) * 100)}%
-                  vs the global average of{" "}
-                  {fmtAov(be.baselineAov)}).
-                </>
-              ) : null}
-            </p>
-          </section>
-        );
-      })()}
-
-      {/* OWNER TAKE-HOME: the bottom line. Canonical "tax-and-cost-panel"
-          skeleton id. The typical-firm ratios frame the per-employee
-          economics; PostTaxToggle and NetProfitSummary carry the after-tax
-          take-home the verdict and scores are built on. */}
-      <section id="tax-and-cost-panel" className={`py-6 ${getToneClass("tax-and-cost-panel")}`}>
-        <div>
-          <TypicalFirmCard cell={cell} currencySymbol="$" />
-          <PostTaxToggle
-            country={country}
-            regionId={cell.geo_id || geo}
-            grossRevenue={cell.revenue_per_firm ?? cell.rev_p50 ?? null}
-            payroll={
-              cell.payroll_per_employee != null && cell.n_employees != null && cell.n_enterprises
-                ? (cell.payroll_per_employee * cell.n_employees) / cell.n_enterprises
-                : null
-            }
-          />
-          {/* Open by default. Single-line take-home figure plus the full
-              waterfall on demand. */}
-          <NetProfitSummary
-            iso2={country.toUpperCase()}
-            geoId={cell.geo_id || geo}
-            industryId={cell.industry_id || null}
-            sectorId={cell.sector_id || null}
-            grossRevenue={cell.revenue_per_firm ?? cell.rev_p50 ?? null}
-            payroll={
-              cell.payroll_per_employee != null && cell.n_employees != null && cell.n_enterprises
-                ? (cell.payroll_per_employee * cell.n_employees) / cell.n_enterprises
-                : null
-            }
-            takeHome={adjustedNetTakeHome}
-          />
-        </div>
-      </section>
 
       {/* COST TO OPEN: what it takes to start, demoted below the "does it
           work" economics (2026-06-04). SetupCostBlock gives the one-time
