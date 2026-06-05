@@ -24,7 +24,7 @@ export const revalidate = 86400;
 export const metadata = {
   title: "All activities: Margin Atlas",
   description:
-    "Every activity covered in Margin Atlas. Pick one to see how it earns across the whole world.",
+    "Every activity covered in Margin Atlas. Pick one to see its cost shape and the revenue range it runs depending on the city.",
   alternates: { canonical: "/industries" },
 };
 
@@ -42,9 +42,10 @@ export default function IndustriesIndex() {
           Every kind of small business we cover
         </h1>
         <p className="mt-4 max-w-2xl mx-auto text-base md:text-lg text-ink-800 leading-relaxed">
-          Pick an activity to see how it earns worldwide: typical revenue,
-          employment, after-tax owner take-home, and where every business
-          lands from bottom 10% to top 10%.
+          Pick an activity to see how it earns: the cost shape that holds
+          everywhere, and a revenue range that runs from roughly one figure to
+          several times that depending on the city, plus after-tax owner
+          take-home. There is no single worldwide number, so we show the spread.
         </p>
       </section>
 
@@ -60,8 +61,9 @@ export default function IndustriesIndex() {
             {visibleIndustries.length} activities, A to Z
           </h2>
           <p className="mt-2 text-sm md:text-base text-ink-700 max-w-2xl mx-auto">
-            Each name opens its worldwide benchmark page: typical revenue,
-            employment, and how the activity varies country by country.
+            Each name opens its benchmark page: the place-stable cost shape, a
+            revenue range rather than one misleading average, and how the
+            activity varies country by country.
           </p>
         </div>
 

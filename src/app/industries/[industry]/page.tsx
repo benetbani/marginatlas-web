@@ -30,6 +30,7 @@
  * {industry}). The country chooser hands users off to the country page.
  */
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import {
   INDUSTRIES,
   INDUSTRIES_BY_SECTOR,
@@ -43,11 +44,29 @@ import {
 import { MarginWaterfall } from "@/components/MarginWaterfall";
 import industryMarginsJson from "@/lib/finance/industry_margins.json";
 import { INDUSTRY_PAGE_SECTIONS, getToneClass } from "@/lib/page-layout/section-order";
-import { getIndustryHero } from "@/lib/images/industry_heroes";
 import { getActivityCharacter } from "@/lib/content/activity_character";
 import { generateIndustryVerdict } from "@/lib/scores/industry_verdict";
 import { IndustryModelLede } from "@/components/industries/IndustryModelLede";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
+import {
+  getSameIndustryAcrossCountries,
+  getSameIndustryAcrossStates,
+  cellUrl,
+  withBudget,
+  type Cell,
+} from "@/lib/cells";
+import { iso2ToName } from "@/lib/countries";
+import { estimateNetProfit } from "@/lib/finance/net_profit";
+import { clampMargin } from "@/lib/finance/margin_floor";
+import { BoardHero } from "@/components/board/BoardHero";
+import { DataSection } from "@/components/board/DataSection";
+import { fmtUSD, fmtPct } from "@/components/board/format";
+import {
+  buildActivityBoard,
+  summarizeActivityPlaces,
+  getActivitySurvivalArchetype,
+  type ActivityPlaceInput,
+} from "@/lib/scores/activity_board";
 
 void INDUSTRY_PAGE_SECTIONS;
 
@@ -104,8 +123,69 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
 
   const sector = ind ? SECTOR_BY_ID[ind.sector_id] : null;
   const margin = lookupIndustryMargin(ind.id);
-  const hero = getIndustryHero(ind.id);
   const character = getActivityCharacter(ind.id);
+  const activitySlug = industryToSlug(ind.id);
+
+  // Cross-place slate for the data board's revenue range and the "where it
+  // works" table. Both fetches are wrapped in withBudget so a slow query
+  // degrades to an empty slate (the range dashes, the table omits) instead of
+  // hanging the route. The cross-country query already drops rows outside the
+  // per-industry SMB revenue envelope (the same bounds the triage layer uses),
+  // so the obvious garbage tails the founder named are gone before they reach
+  // this page; the board applies a second median-relative trim on top. US
+  // states come from the trusted Census-backed table (same currency, same wage
+  // scale); the bogus exclude id "US-00" passes the query's "US-" guard while
+  // excluding nothing real.
+  //
+  // IMPORTANT: never a single worldwide revenue average. These rows feed a
+  // defensible p10..p90 band (see summarizeActivityPlaces), not a mean.
+  const [acrossCountries, acrossStates] = await Promise.all([
+    withBudget(
+      getSameIndustryAcrossCountries(activitySlug, "", 24),
+      [],
+      4_000,
+      "activityAcrossCountries",
+    ),
+    withBudget(
+      getSameIndustryAcrossStates(activitySlug, "US-00", 24),
+      [],
+      4_000,
+      "activityAcrossStates",
+    ),
+  ]);
+
+  // One covered place, with its activity's typical revenue and the modeled
+  // after-tax owner take-home computed by the same tax-aware estimator the cell
+  // page uses. Pure per-place compute, no extra query. Net margin is floored
+  // defensively (never a sub-3% net reaches the page), exactly as the cell page
+  // does. Rows without a usable revenue are dropped; the board ranks and trims
+  // whatever remains.
+  const placeInputs: ActivityPlaceInput[] = [...acrossStates, ...acrossCountries]
+    .map((c) => activityPlaceFromCell(c, ind.id))
+    .filter((p): p is ActivityPlaceInput => p !== null);
+
+  // Defensible cross-place summary: trimmed revenue + take-home bands and the
+  // ranked rows for the table. Thin slates yield all-null bands (dashes) and a
+  // short or empty table, never an invented spread.
+  const placesSummary = summarizeActivityPlaces(placeInputs);
+
+  // The activity data board. Structural margins (place-stable) plus the trimmed
+  // cross-place bands plus a representative survival curve for the activity.
+  // Every section and every row is always present; a datum we do not hold shows
+  // as the board's dash. This is the activity-altitude sibling of the cell,
+  // country, and city boards.
+  const board = buildActivityBoard({
+    margins: {
+      grossMargin: margin.gross_margin ?? null,
+      operatingMargin: margin.operating_margin ?? null,
+      netMargin: margin.net_margin ?? null,
+    },
+    revenue: placesSummary.revenue,
+    takeHome: placesSummary.takeHome,
+    survival: getActivitySurvivalArchetype(activitySlug),
+  });
+  // Cap the table so it stays scannable; the board already carries the spread.
+  const placeRows = placesSummary.rows.slice(0, 12);
 
   // Reformation decision layer (bible Sections 4, 5, 25). Pure compute, no
   // queries: the opinionated business-model read and the cost-stage anatomy
@@ -128,9 +208,9 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
     },
   });
 
-  // The visible H1 is the search-sensible money question (bible Section 5
-  // headline formula). The page <title> stays the benchmark phrasing, set in
-  // generateMetadata above.
+  // The search-sensible money question (bible Section 5 headline formula). It
+  // is now the how-it-works section H2 (the board title is the plain H1); the
+  // page <title> stays the benchmark phrasing, set in generateMetadata above.
   const moneyQuestion = `How ${ind.name.toLowerCase()} businesses make money`;
 
   // The single most punishing cost stage, read straight from the verdict
@@ -160,64 +240,93 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
         <span>{ind.name}</span>
       </nav>
 
-      {/* 1. hero. Founder direction 2026-05-25: each activity surfaces
-         a representative photograph from the curated industries
-         manifest. When an image is available the hero is a full-bleed
-         photo with the activity name overlaid bottom-left, otherwise
-         it falls back to the legacy ink-dark editorial frame.
-         Reformation (2026-06-04): the H1 is now the decision-framed money
-         question; the activity name reads as the eyebrow above it. */}
-      {hero ? (
-        <section
-          id="hero"
-          className="relative w-full h-[320px] md:h-[480px] overflow-hidden bg-ink-900 mb-8 -mx-4 md:-mx-6 rounded-none md:rounded-xl"
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={hero.url}
-            alt={hero.alt}
-            className="w-full h-full object-cover"
-            style={{ filter: "contrast(1.04) saturate(0.92)" }}
-            loading="eager"
-          />
-          {/* Dark gradient for text legibility against any photograph. */}
-          <div className="absolute inset-0 bg-gradient-to-t from-ink-900/90 via-ink-900/35 to-ink-900/15" />
-          <div className="absolute inset-x-0 bottom-0 p-6 md:p-10">
-            <div className="max-w-6xl mx-auto">
-              <div className="text-xs md:text-sm uppercase tracking-[0.18em] text-cream-200/85 font-semibold mb-2">
-                {ind.name}
-                {sector ? <span className="text-cream-200/60"> in {sector.name}</span> : null}
-              </div>
-              <h1
-                className="font-display text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.04] text-cream-50"
-                style={{ whiteSpace: "normal" }}
-              >
-                {moneyQuestion}
-              </h1>
-              {ind.examples && ind.examples.length > 0 && (
-                <p className="mt-3 text-base md:text-lg text-cream-200/85 max-w-2xl leading-relaxed">
-                  {ind.examples.slice(0, 4).join(", ")}
-                </p>
-              )}
-            </div>
-          </div>
-        </section>
-      ) : (
-        <section id="hero" className={`py-8 ${getToneClass("hero")}`}>
-          <header>
-            <div className="text-xs uppercase tracking-wide text-cream-300/80 font-medium">
-              {ind.name}
-              {sector ? <span className="text-cream-200/70"> in {sector.name}</span> : null}
-            </div>
-            <h1 className="mt-2 text-4xl md:text-6xl font-semibold tracking-tight text-cream-50">
-              {moneyQuestion}
-            </h1>
-            {ind.examples && ind.examples.length > 0 && (
-              <p className="mt-4 text-lg text-cream-200/85 max-w-2xl leading-relaxed">
-                {ind.examples.slice(0, 4).join(", ")}
-              </p>
-            )}
-          </header>
+      {/* 1. hero. Rebuilt on the board kit (2026-06-05) to match the cell,
+         country, and city pages. The heavy full-bleed photo hero with the
+         money-question H1 overlaid was replaced by the quiet BoardHero (plain
+         activity name) plus the activity data board, so the figures reach above
+         the fold in the same fixed scaffold the reader learns once and reads on
+         every page. An activity has no single Atlas score, so the score strip is
+         passed empty and renders as a dash. The country eyebrow becomes a small
+         sector eyebrow above the title. The decision-framed money question and
+         the cost-stage anatomy keep their full prose treatment in how-it-works
+         directly below. The id="hero" anchor is kept so the section-order gate
+         sees the canonical first beat. */}
+      <section id="hero" className="pb-2">
+        {sector ? (
+          <SectionEyebrow size="md" className="mt-4">
+            {sector.name}
+          </SectionEyebrow>
+        ) : null}
+        <BoardHero title={ind.name} score={{ overall: null, parts: [] }} />
+      </section>
+
+      {/* The activity data board. Five fixed sections the reader can learn once
+         and read on every activity, rendered immediately under the masthead.
+         The economics section carries the structural margins and the defensible
+         cross-place revenue range (a p10..p90 band, never a single worldwide
+         average); the modeled sections carry the representative survival curve
+         and honest dashes where no worldwide figure is held. Each section always
+         renders all of its rows; a datum we do not hold shows as the board's
+         dash, so the page shape never depends on the data. */}
+      <div className="mt-2">
+        {board.map((s) => (
+          <DataSection section={s} key={s.key} />
+        ))}
+      </div>
+
+      {/* Where it works. The covered places where this activity keeps the most
+         for its owner, ranked by modeled after-tax take-home, best at the top.
+         Each row links to that place's full benchmark for this activity. Built
+         from the cross-place slate the board already loaded and trimmed; garbage
+         tails are dropped upstream, so a corrupt place can never headline. The
+         whole block omits cleanly when the slate is thin (fewer than two
+         places), never showing an invented ranking. No count-of-things copy. */}
+      {placeRows.length >= 2 && (
+        <section className="mt-10">
+          <SectionEyebrow>Where it works</SectionEyebrow>
+          <h2 className="mt-1 font-display text-2xl md:text-3xl font-medium tracking-tight text-balance text-ink-900">
+            Where {ind.name.toLowerCase()} keep the most
+          </h2>
+          <p className="mt-1.5 mb-5 max-w-2xl text-sm md:text-base leading-relaxed text-cocoa-700/80">
+            The places we cover for {ind.name.toLowerCase()}, ranked by what a
+            typical owner keeps after tax. Best at the top. Open any row for the
+            full revenue, cost stack, and survival read. Modeled from local
+            business demography. Directional.
+          </p>
+          <ul className="divide-y divide-parchment border-y border-parchment">
+            {placeRows.map((p, i) => (
+              <li key={`${p.href}-${i}`}>
+                <Link
+                  href={p.href}
+                  className="group flex items-baseline justify-between gap-3 py-2.5 transition-colors"
+                >
+                  <span className="flex min-w-0 items-baseline gap-2.5">
+                    <span className="w-5 shrink-0 text-[11px] tabular-nums text-cocoa-500">
+                      {i + 1}
+                    </span>
+                    <span className="truncate text-sm font-medium text-ink-900 transition-colors group-hover:text-atlas-700">
+                      {p.name}
+                    </span>
+                  </span>
+                  <span className="flex shrink-0 items-baseline gap-3">
+                    {p.netMarginPct != null && (
+                      <span className="hidden text-[11px] tabular-nums text-cocoa-500 sm:inline">
+                        {fmtPct(p.netMarginPct)} net
+                      </span>
+                    )}
+                    <span className="font-display text-base font-semibold tabular-nums text-ink-900">
+                      {fmtUSD(p.takeHome)}
+                    </span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-3 text-[11px] text-cocoa-500">
+            Owner take-home is after tax, for a typical single-site operator. The
+            same activity reads differently once local rent, wages, and tax land
+            on it.
+          </p>
         </section>
       )}
 
@@ -230,6 +339,12 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
          written, its one-line hook frames the lede and the hand-written
          mechanics add the depth the margin synthesis alone cannot reach. */}
       <section id="how-it-works" className="py-8 md:py-10">
+        {/* The decision-framed money question is the page's primary search
+           heading. It moved here from the retired photo hero so the H1 above
+           can stay the plain board title; this reads as the section H2. */}
+        <h2 className="mb-4 font-display text-2xl md:text-3xl font-medium tracking-tight text-balance text-ink-900">
+          {moneyQuestion}
+        </h2>
         <IndustryModelLede verdict={verdict} edge={character?.edge ?? null} />
         {character && (
           <div className="mt-8 max-w-3xl space-y-5">
@@ -396,4 +511,46 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
       )}
     </div>
   );
+}
+
+/**
+ * Turn one cross-place Cell into a place row for the activity board's range +
+ * "where it works" table, or null when the place has no usable typical revenue
+ * (those are dropped rather than guessed).
+ *
+ * Owner take-home is the modeled after-tax net profit from the same tax-aware
+ * estimator the cell page uses, so the worldwide table and the per-place cell
+ * page agree on the method. The net margin is floored defensively (clampMargin)
+ * exactly as on the cell page, so no sub-3% net leaks into the table. The href
+ * points at that place's cell page for this activity via the shared cellUrl
+ * shape, so every row resolves to a real benchmark.
+ */
+function activityPlaceFromCell(cell: Cell, industryId: string | null): ActivityPlaceInput | null {
+  const typicalRevenue = cell.revenue_per_firm ?? cell.rev_p50 ?? null;
+  if (typicalRevenue == null || !(typicalRevenue > 0)) return null;
+
+  const net = estimateNetProfit({
+    iso2: cell.country.toUpperCase(),
+    geoId: cell.geo_id || null,
+    industryId: industryId,
+    sectorId: cell.sector_id || null,
+    grossRevenue: typicalRevenue,
+    payroll: null,
+  });
+  const netMarginPct =
+    net.net_margin != null
+      ? clampMargin(net.net_margin, "net", industryId) * 100
+      : null;
+  const takeHome = net.net_profit ?? null;
+
+  const name =
+    cell.geo_name || iso2ToName(cell.country) || cell.country.toUpperCase();
+
+  return {
+    name,
+    href: cellUrl(cell),
+    typicalRevenue,
+    takeHome: takeHome != null && takeHome > 0 ? takeHome : null,
+    netMarginPct,
+  };
 }
