@@ -155,7 +155,7 @@ function densityPer10k(
 ): number | null {
   if (!isNum(competitors)) return null;
   if (!isNum(cityPopulation) || cityPopulation <= 0) return null;
-  const per10k = (competitors / (cityPopulation / 10000)) * 10;
+  const per10k = competitors / (cityPopulation / 10000);
   return Math.round(per10k * 10) / 10;
 }
 
@@ -291,7 +291,12 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
   );
 
   // -- B. The market (modeled) ----------------------------------------------
-  const competitors = cell.n_enterprises ?? null;
+  // Competitor count and density are place-specific. A cell that fell back to
+  // the country level (geo_level "country") carries a national firm count, not
+  // a local one, so suppress them rather than imply a local figure under a city
+  // title. They return when a real city or region cell exists.
+  const isLocalCell = cell.geo_level !== "country";
+  const competitors = isLocalCell ? (cell.n_enterprises ?? null) : null;
   const per10k = densityPer10k(competitors, cityPopulation);
 
   const marketRows: StatRow[] = [
