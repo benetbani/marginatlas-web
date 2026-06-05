@@ -8,6 +8,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTopIndustriesForCountry, slugify } from "@/lib/cells";
+import { getCitiesForCountry } from "@/lib/cities";
 import {
   COUNTRIES,
   INDUSTRY_BY_ID,
@@ -30,6 +31,9 @@ import { CountryTaxReality } from "@/components/countries/CountryTaxReality";
 import { generateCountryVerdict } from "@/lib/scores/country_verdict";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import { getSmbRegime, getVatRow } from "@/lib/tax/smb_effective_rates";
+import { BoardHero } from "@/components/board/BoardHero";
+import { DataSection } from "@/components/board/DataSection";
+import { buildCountryBoard } from "@/lib/scores/country_board";
 
 // Keep section-order constant referenced for type checking — sections render in this exact order below.
 void COUNTRY_PAGE_SECTIONS;
@@ -90,9 +94,12 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
   void showRegions;
 
   // Admin-1 sub-region navigation list. All 194 countries
-  // (except SG) have admin1 data. Empty array → silent omission per Wave 4a
-  // (D2): no "Regions not available" banner.
+  // (except SG) have admin1 data. The regions section now renders cities
+  // grouped by region (see citiesByRegion below) rather than a flat admin-1
+  // grid, so this list is retained only as a coverage signal for any future
+  // use and is intentionally not rendered directly.
   const regions = getAdmin1Regions(iso2);
+  void regions;
   const countryName = meta.name;
 
   // Country-level decision lede (bible Section 5, friction-adjusted view).
@@ -125,6 +132,38 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
   const showVerdict =
     countryVerdict.signals.length > 0 || densestActivity != null;
 
+  // Country data board. Built from values the page already loads (the
+  // economics snapshot, the small-business tax regime, the headline sales
+  // tax); no new query, no invented number. Every section and every row is
+  // always present, so a datum we do not hold shows as the board's dash and
+  // the page shape never depends on the data. This is the country-altitude
+  // sibling of the cell page's A-J board.
+  const board = buildCountryBoard({
+    econ: snapshot,
+    smbEffectiveRate: smbRegime?.effective_rate ?? null,
+    vatStandard: vatRow?.standard ?? null,
+  });
+
+  // Regions-and-cities nav (founder spec): each region is a non-link heading,
+  // and the cities under it are clickable chips. We group the country's
+  // curated cities by their region name; each chip links to the same city
+  // route the rest of the site uses (the city's default-industry cell). Cities
+  // carry a real region_name and display name, so no slug-to-label munging is
+  // needed and the grouping works for every covered country. Regions with no
+  // cities simply do not appear; the section omits when the country has none.
+  const citiesByRegion = (() => {
+    const groups = new Map<string, { name: string; slug: string }[]>();
+    for (const c of getCitiesForCountry(iso2)) {
+      const region = c.region_name?.trim() || countryName;
+      if (!groups.has(region)) groups.set(region, []);
+      groups.get(region)!.push({ name: c.name, slug: c.slug });
+    }
+    return Array.from(groups.entries()).map(([region, cities]) => ({
+      region,
+      cities,
+    }));
+  })();
+
   return (
     <div>
       {/* Breadcrumb */}
@@ -144,24 +183,35 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
         so sister country pages always have identical structure.
       */}
 
-      {/* 1. hero: photo removed long ago (founder flagged photos as
-         unprofessional). Reformation (bible Section 5): the hero now leads
-         with the decision frame, not just the country name. The H1 carries
-         the search-sensible "Small business economics in {country}" formula;
-         the country's commercial character sits under it as a quiet framing
-         line; the blunt "where the money is and what gets in the way" answer
-         lives in the viability lede directly below the at-a-glance. No
-         background colour: the section sits on the site-wide atlas-paper
-         pattern from layout.tsx. */}
+      {/* 1. hero: rebuilt on the board kit to match the cell page. The heavy
+         editorial masthead (big flag H1 + framing line) is replaced by the
+         quiet BoardHero, with the country data board rendered immediately
+         under it so the figures reach above the fold, exactly as on the cell
+         page. The plain country name is the H1; the country page computes no
+         single opportunity score, so the score strip is passed empty (overall
+         null, no parts) and renders as a dash. The country's commercial
+         character + the blunt "where the money is and what gets in the way"
+         answer still follow in the viability lede directly below. The compact
+         at-a-glance strip stays under the board as supporting context. */}
       <section id="hero" className="pt-2 pb-6">
-        <SectionEyebrow size="md">Local profit intelligence</SectionEyebrow>
-        <h1 className="mt-2 text-3xl md:text-5xl font-semibold tracking-tight text-ink-900 flex items-center gap-3 flex-wrap">
-          <span className="inline-flex pl-1">
-            <CountryFlag iso2={iso2} className="w-10 md:w-14" />
-          </span>
-          <span>Small business economics in {meta.name}</span>
-        </h1>
-        <p className="mt-3 text-base md:text-lg text-ink-700 max-w-3xl leading-relaxed">
+        <div className="flex items-center gap-3">
+          <CountryFlag iso2={iso2} className="w-8 md:w-10" />
+          <SectionEyebrow size="md">Local profit intelligence</SectionEyebrow>
+        </div>
+        <BoardHero title={meta.name} score={{ overall: null, parts: [] }} />
+
+        {/* The country data board. Five fixed sections the reader can learn
+           once and read on every country, rendered immediately under the
+           masthead. Each section always renders all of its rows; a datum we do
+           not hold shows as the board's dash, so the page shape never depends
+           on the data. */}
+        <div className="mt-2">
+          {board.map((s) => (
+            <DataSection section={s} key={s.key} />
+          ))}
+        </div>
+
+        <p className="mt-6 text-base md:text-lg text-ink-700 max-w-3xl leading-relaxed">
           {getCountryAnchor(iso2, meta.name)}
         </p>
 
@@ -249,33 +299,36 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
         <CountryCityShortcuts iso2={iso2} />
       </section>
 
-      {/* 5. regions: Plan v13 Wave 4d. Admin-1 sub-region navigation list
-         for all 194 countries with admin1 data. Country-page rebuild §4
-         (2026-05-25): tile chrome bumped to match the activities grid so
-         the region tile READS as clickable (was visually subdued, founder
-         flagged "regions are not even clickable" though the Link element
-         was always present). */}
-      {regions.length > 0 ? (
+      {/* 5. regions: founder spec. Each region is a non-link heading and the
+         cities under it are clickable chips. Built by grouping the country's
+         curated cities by region name (citiesByRegion above). The region label
+         is plain text (an <h3>, deliberately not a link); the city chips link
+         to the same city route the rest of the site uses. NO best/worst table
+         here. Omits cleanly when the country has no curated cities. */}
+      {citiesByRegion.length > 0 ? (
         <section id="regions" className={`py-8 ${getToneClass("regions")}`}>
           <SectionEyebrow className="mb-3">Go local</SectionEyebrow>
-          <h2 className="text-xl md:text-2xl font-semibold text-ink-900 mb-3">
-            Regions of {countryName}
+          <h2 className="text-xl md:text-2xl font-semibold text-ink-900 mb-4">
+            Regions and cities of {countryName}
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 text-sm">
-            {regions.map((r) => (
-              <Link
-                key={r.admin1_code}
-                href={`/${iso2.toLowerCase()}/${r.slug}`}
-                className="atlas-card group flex items-center justify-between gap-2 px-4 py-3 text-ink-900"
-              >
-                <span className="font-medium">{r.name}</span>
-                <span
-                  aria-hidden="true"
-                  className="text-atlas-700 opacity-50 group-hover:opacity-100 transition-opacity"
-                >
-                  &rarr;
-                </span>
-              </Link>
+          <div className="space-y-6">
+            {citiesByRegion.map((group) => (
+              <div key={group.region}>
+                <h3 className="text-base font-semibold text-ink-900">
+                  {group.region}
+                </h3>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {group.cities.map((city) => (
+                    <Link
+                      key={city.slug}
+                      href={`/${iso2.toLowerCase()}/${city.slug}/restaurants`}
+                      className="inline-flex items-center rounded-full border border-parchment bg-white px-3 py-1.5 text-sm font-medium text-ink-900 transition-colors hover:border-atlas-500 hover:text-atlas-700"
+                    >
+                      {city.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </section>
