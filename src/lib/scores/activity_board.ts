@@ -52,6 +52,11 @@ import type { BoardSection } from "@/components/board/DataSection";
 import type { StatRow } from "@/components/board/StatGrid";
 import { fmtUSD, fmtPct } from "@/components/board/format";
 import { SpreadBar } from "@/components/board/charts/SpreadBar";
+import {
+  clampMargin,
+  clampNetMarginPct,
+  boundSurvivalCurve,
+} from "@/lib/finance/margin_floor";
 import londonJson from "../../../data/london/london_market_v1.json";
 
 /**
@@ -202,8 +207,11 @@ export function buildActivityBoard(input: ActivityBoardInput): BoardSection[] {
     },
     {
       label: "Net margin",
+      // Net margin (fraction) passes through the shared clamp (floor 3%, global
+      // net ceiling: this altitude carries no single industry id) so it can
+      // never render an implausible value.
       value: isNum(margins.netMargin)
-        ? fmtPct(margins.netMargin, { fromFraction: true })
+        ? fmtPct(clampMargin(margins.netMargin, "net"), { fromFraction: true })
         : null,
     },
     {
@@ -268,20 +276,25 @@ export function buildActivityBoard(input: ActivityBoardInput): BoardSection[] {
   // A single representative survival curve for the activity (the curated
   // directional read the cell and city boards also use), labeled
   // representative. Blank when no curve is held. Closure rate is not held.
+  // Bound the curve (0 <= yr5 <= yr3 <= yr1 <= 100; non-finite dashes) so it
+  // can never print a rising or out-of-range survival series; the
+  // "representative" hint keys off the original input so it shows iff a curve
+  // was supplied, matching the prior behaviour.
   const hasSurvival = isNum(survival.yr1) || isNum(survival.yr3) || isNum(survival.yr5);
+  const boundedSurvival = boundSurvivalCurve(survival);
   const survivalRows: StatRow[] = [
     {
       label: "1-year survival",
-      value: isNum(survival.yr1) ? `${Math.round(survival.yr1)}%` : null,
+      value: isNum(boundedSurvival.yr1) ? `${Math.round(boundedSurvival.yr1)}%` : null,
       hint: hasSurvival ? "representative for the activity" : undefined,
     },
     {
       label: "3-year",
-      value: isNum(survival.yr3) ? `${Math.round(survival.yr3)}%` : null,
+      value: isNum(boundedSurvival.yr3) ? `${Math.round(boundedSurvival.yr3)}%` : null,
     },
     {
       label: "5-year",
-      value: isNum(survival.yr5) ? `${Math.round(survival.yr5)}%` : null,
+      value: isNum(boundedSurvival.yr5) ? `${Math.round(boundedSurvival.yr5)}%` : null,
     },
     { label: "Closure rate", value: null },
   ];
@@ -442,7 +455,9 @@ export function summarizeActivityPlaces(
       name: p.name,
       href: p.href,
       takeHome: isNum(p.takeHome) ? p.takeHome : null,
-      netMarginPct: isNum(p.netMarginPct) ? p.netMarginPct : null,
+      // Net margin (percent) through the shared clamp so a table row can never
+      // surface an implausible margin either.
+      netMarginPct: isNum(p.netMarginPct) ? clampNetMarginPct(p.netMarginPct) : null,
     }))
     .sort((a, b) => (b.takeHome ?? -Infinity) - (a.takeHome ?? -Infinity));
 

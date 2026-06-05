@@ -48,6 +48,12 @@ import { CostBar } from "@/components/board/charts/CostBar";
 import { CrowdingGauge } from "@/components/board/charts/CrowdingGauge";
 import { RentGauge } from "@/components/board/charts/RentGauge";
 import { SurvivalCurve } from "@/components/board/charts/SurvivalCurve";
+import {
+  clampMargin,
+  clampNetMarginPct,
+  boundSurvivalCurve,
+  displayDensityPer10k,
+} from "@/lib/finance/margin_floor";
 import londonJson from "../../../data/london/london_market_v1.json";
 
 /**
@@ -235,14 +241,29 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
   const rentSharePct = costStructure ? pctShare(costStructure.rent) : null;
   const laborSharePct = costStructure ? pctShare(costStructure.labor) : null;
 
+  // Net-margin sanity clamp. The displayed net margin always passes through the
+  // shared margin clamp (floor 3%, per-industry hard ceiling) so it can never
+  // render an implausible value, whichever shape it arrived in: the curated
+  // London figure is a whole-number percent (clampNetMarginPct), the country
+  // fallback is a fraction (clampMargin). Computed once here as a FRACTION and
+  // formatted in the row below, so an out-of-band net margin is impossible.
+  const netMarginFraction =
+    LE && isNum(LE.net_margin_pct)
+      ? clampNetMarginPct(LE.net_margin_pct, cell.industry_id ?? null) / 100
+      : isNum(netMarginPct)
+        ? clampMargin(netMarginPct, "net", cell.industry_id ?? null)
+        : null;
+
   // Margin-ladder guard. On a London cell the net margin is the modeled London
   // figure while gross and operating stay on the structural inputs, so a
   // high-net activity could otherwise print net above operating (or gross). The
   // net floor suppresses any structural margin that would sit below it, so the
   // displayed ladder is always gross >= operating >= net. Off London cells the
-  // floor is null and both margins show unchanged.
+  // floor is null and both margins show unchanged. The floor uses the CLAMPED
+  // London net fraction, so the guard tracks the same bounded number the net
+  // row prints (scope unchanged: still null on every non-London cell).
   const netFloorFraction =
-    LE && isNum(LE.net_margin_pct) ? LE.net_margin_pct / 100 : null;
+    LE && isNum(LE.net_margin_pct) ? netMarginFraction : null;
   const showOperatingMargin =
     isNum(operatingMarginPct) &&
     (netFloorFraction == null || operatingMarginPct >= netFloorFraction);
@@ -286,11 +307,9 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
     },
     {
       label: "Net margin",
-      value: LE && isNum(LE.net_margin_pct)
-        ? fmtPct(LE.net_margin_pct, { fromFraction: false })
-        : isNum(netMarginPct)
-          ? fmtPct(netMarginPct, { fromFraction: true })
-          : null,
+      value: isNum(netMarginFraction)
+        ? fmtPct(netMarginFraction, { fromFraction: true })
+        : null,
     },
     {
       label: "Owner take-home",
@@ -365,6 +384,10 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
   const per10k = LE
     ? densityPer10k(LE.firms, LONDON_POPULATION)
     : densityPer10k(competitors, cityPopulation);
+  // Sanity-capped density for DISPLAY: an absurd firms-per-10k (a wrong-geo or
+  // wrong-scale artifact) becomes null and the row dashes. The raw per10k still
+  // drives the crowding gauge below, which saturates on its own.
+  const per10kDisplay = displayDensityPer10k(per10k);
 
   const marketRows: StatRow[] = [
     {
@@ -374,7 +397,9 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
     },
     {
       label: "Density",
-      value: isNum(per10k) ? `${fmtNum(per10k)} per 10k residents` : null,
+      value: isNum(per10kDisplay)
+        ? `${fmtNum(per10kDisplay)} per 10k residents`
+        : null,
     },
     { label: "Market structure", value: L ? textOrNull(L.typology) : null },
     { label: "Concentration", value: L ? textOrNull(L.concentration) : null },
@@ -496,19 +521,22 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
   ];
 
   // -- J. Survival and fragility (modeled) ----------------------------------
-  const survival = L?.survival ?? null;
+  // Bound the curve once (0 <= yr5 <= yr3 <= yr1 <= 100; non-finite dashes) so
+  // the rows and the chart share one sanitised triple and can never disagree
+  // or print an impossible (rising or out-of-range) survival curve.
+  const survival = boundSurvivalCurve(L?.survival ?? {});
   const survivalRows: StatRow[] = [
     {
       label: "1-year survival",
-      value: survival && isNum(survival.yr1) ? `${survival.yr1}%` : null,
+      value: isNum(survival.yr1) ? `${survival.yr1}%` : null,
     },
     {
       label: "3-year",
-      value: survival && isNum(survival.yr3) ? `${survival.yr3}%` : null,
+      value: isNum(survival.yr3) ? `${survival.yr3}%` : null,
     },
     {
       label: "5-year",
-      value: survival && isNum(survival.yr5) ? `${survival.yr5}%` : null,
+      value: isNum(survival.yr5) ? `${survival.yr5}%` : null,
     },
     { label: "Closure rate", value: null },
     { label: "Seasonality", value: L ? textOrNull(L.seasonality) : null },
@@ -516,9 +544,9 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
     { label: "Rent-shock sensitivity", value: null },
   ];
   const survivalChart = React.createElement(SurvivalCurve, {
-    yr1: survival?.yr1 ?? null,
-    yr3: survival?.yr3 ?? null,
-    yr5: survival?.yr5 ?? null,
+    yr1: survival.yr1,
+    yr3: survival.yr3,
+    yr5: survival.yr5,
   });
 
   return [

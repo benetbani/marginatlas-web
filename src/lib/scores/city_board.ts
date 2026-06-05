@@ -47,6 +47,7 @@
 import type { BoardSection } from "@/components/board/DataSection";
 import type { StatRow } from "@/components/board/StatGrid";
 import { fmtUSD, fmtInt, fmtNum } from "@/components/board/format";
+import { boundSurvivalCurve, clampNetMarginPct } from "@/lib/finance/margin_floor";
 import londonJson from "../../../data/london/london_market_v1.json";
 
 /**
@@ -263,21 +264,25 @@ export function buildCityBoard(input: CityBoardInput): BoardSection[] {
   // -- survival. Survival baseline (modeled). -------------------------------
   // The London representative survival curve (mean across activities) fills the
   // three survival rows for London and blanks them for every other city.
-  // Closure rate is not held.
-  const survival = L?.survival ?? null;
+  // Closure rate is not held. The curve is bounded (0 <= yr5 <= yr3 <= yr1 <=
+  // 100; non-finite dashes) so an averaged curve can never print a rising or
+  // out-of-range survival series; the "representative" hint keys off whether a
+  // curve exists at all (London), matching the prior behaviour.
+  const hasSurvivalCurve = L?.survival != null;
+  const survival = boundSurvivalCurve(L?.survival ?? {});
   const survivalRows: StatRow[] = [
     {
       label: "1-year survival",
-      value: survival && isNum(survival.yr1) ? `${survival.yr1}%` : null,
-      hint: survival ? "representative across activities" : undefined,
+      value: isNum(survival.yr1) ? `${survival.yr1}%` : null,
+      hint: hasSurvivalCurve ? "representative across activities" : undefined,
     },
     {
       label: "3-year",
-      value: survival && isNum(survival.yr3) ? `${survival.yr3}%` : null,
+      value: isNum(survival.yr3) ? `${survival.yr3}%` : null,
     },
     {
       label: "5-year",
-      value: survival && isNum(survival.yr5) ? `${survival.yr5}%` : null,
+      value: isNum(survival.yr5) ? `${survival.yr5}%` : null,
     },
     { label: "Closure rate", value: null },
   ];
@@ -358,8 +363,12 @@ export function buildCityActivities(input: {
       const econ = entry.economics ?? null;
       const takeHome =
         econ && isNum(econ.owner_take_home) ? econ.owner_take_home : null;
+      // Net margin (percent form) passes through the shared clamp so a table
+      // row can never surface an implausible margin either.
       const netMarginPct =
-        econ && isNum(econ.net_margin_pct) ? econ.net_margin_pct : null;
+        econ && isNum(econ.net_margin_pct)
+          ? clampNetMarginPct(econ.net_margin_pct)
+          : null;
       return {
         name: slugToName(activitySlug),
         slug: activitySlug,
