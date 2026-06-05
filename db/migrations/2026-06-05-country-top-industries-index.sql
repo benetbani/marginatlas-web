@@ -15,10 +15,14 @@
 -- This composite serves the WHERE filter and the ORDER BY in one index
 -- range scan, so the limit-500 read returns without a separate sort step.
 --
--- CONCURRENTLY + IF NOT EXISTS: safe on a live database, idempotent on
--- partial failure. Postgres refuses CONCURRENTLY inside a transaction, so
--- run this statement on its own in the Supabase SQL Editor (do NOT wrap
--- it). Build time on the current row count is a few seconds.
+-- NON-concurrent on purpose. The Supabase SQL Editor wraps statements in a
+-- transaction, and CREATE INDEX CONCURRENTLY cannot run inside one
+-- (ERROR 25001). extrapolated_cells is read-heavy and written only by the
+-- offline data pipeline, never by the website, so a plain CREATE INDEX is
+-- safe: it takes a brief SHARE lock that blocks writes for the few seconds
+-- of the build but never blocks reads. IF NOT EXISTS keeps it idempotent.
+-- (If you would rather build it CONCURRENTLY, run it from psql / a direct
+-- connection that is not wrapped in a transaction.)
 --
 -- Expected impact:
 --   - getTopIndustriesForCountry (non-US): ~10s -> ~tens of ms
@@ -30,7 +34,7 @@
 --
 -- 2026-06-05.
 
-CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_extrapolated_country_quality
+CREATE INDEX IF NOT EXISTS idx_extrapolated_country_quality
   ON extrapolated_cells (country_iso3, quality_score DESC NULLS LAST);
 
 ANALYZE extrapolated_cells;
