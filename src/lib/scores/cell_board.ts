@@ -68,13 +68,29 @@ export type LondonEntry = {
   seasonality: string;
   rent_pressure: string;
   labor_pressure: string;
+  /**
+   * Modeled London economics for this activity (USD). Present only on London
+   * cells; when present the board PREFERS these over the country-fallback
+   * figures for the money and market rows (see buildCellBoard).
+   */
+  economics?: {
+    revenue: number;
+    net_margin_pct: number;
+    owner_take_home: number;
+    firms: number;
+  };
 };
 
 type LondonFile = {
   activities: Record<string, LondonEntry>;
+  /** London resident population, used for the per-10k density figure. */
+  london_population: number;
 };
 
 const LONDON = londonJson as LondonFile;
+
+/** London resident population for density math (firms per 10k residents). */
+const LONDON_POPULATION = LONDON.london_population;
 
 /**
  * Look up the curated London entry for a cell. Only GB cells qualify; the
@@ -196,6 +212,17 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
   } = input;
 
   const L = londonEntry;
+  // Modeled London economics, present only on a London cell. When set, the
+  // money rows (A) and the market rows (B) prefer these real London figures
+  // over the country-fallback values the page passed in. When absent (every
+  // non-London cell), the board behaves exactly as before.
+  const LE = L?.economics ?? null;
+
+  // London revenue anchors drive both the A revenue row and the SpreadBar:
+  // p10 = half the median, p90 = 1.8x the median, median = the modeled figure.
+  const lonRevenue = LE ? LE.revenue : null;
+  const lonRevP10 = LE ? LE.revenue * 0.5 : null;
+  const lonRevP90 = LE ? LE.revenue * 1.8 : null;
 
   // -- A. The numbers --------------------------------------------------------
   // Revenue per employee, derived once (typical revenue spread over the people
@@ -208,41 +235,70 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
   const rentSharePct = costStructure ? pctShare(costStructure.rent) : null;
   const laborSharePct = costStructure ? pctShare(costStructure.labor) : null;
 
+  // Margin-ladder guard. On a London cell the net margin is the modeled London
+  // figure while gross and operating stay on the structural inputs, so a
+  // high-net activity could otherwise print net above operating (or gross). The
+  // net floor suppresses any structural margin that would sit below it, so the
+  // displayed ladder is always gross >= operating >= net. Off London cells the
+  // floor is null and both margins show unchanged.
+  const netFloorFraction =
+    LE && isNum(LE.net_margin_pct) ? LE.net_margin_pct / 100 : null;
+  const showOperatingMargin =
+    isNum(operatingMarginPct) &&
+    (netFloorFraction == null || operatingMarginPct >= netFloorFraction);
+  const showGrossMargin =
+    isNum(grossMarginPct) &&
+    (netFloorFraction == null || grossMarginPct >= netFloorFraction) &&
+    (!showOperatingMargin ||
+      (isNum(operatingMarginPct) && grossMarginPct >= operatingMarginPct));
+
   const numbersRows: StatRow[] = [
     {
       label: "Typical revenue",
-      value: isNum(typicalRevenue) ? fmtUSD(typicalRevenue) : null,
+      value: isNum(lonRevenue)
+        ? fmtUSD(lonRevenue)
+        : isNum(typicalRevenue)
+          ? fmtUSD(typicalRevenue)
+          : null,
       hint: "median firm",
     },
     {
       label: "Revenue range",
       value:
-        isNum(revP10) && isNum(revP90)
-          ? `${fmtUSD(revP10)} to ${fmtUSD(revP90)}`
-          : null,
+        isNum(lonRevP10) && isNum(lonRevP90)
+          ? `${fmtUSD(lonRevP10)} to ${fmtUSD(lonRevP90)}`
+          : isNum(revP10) && isNum(revP90)
+            ? `${fmtUSD(revP10)} to ${fmtUSD(revP90)}`
+            : null,
       hint: "bottom tenth to top tenth",
     },
     {
       label: "Gross margin",
-      value: isNum(grossMarginPct)
+      value: showGrossMargin
         ? fmtPct(grossMarginPct, { fromFraction: true })
         : null,
     },
     {
       label: "Operating margin",
-      value: isNum(operatingMarginPct)
+      value: showOperatingMargin
         ? fmtPct(operatingMarginPct, { fromFraction: true })
         : null,
     },
     {
       label: "Net margin",
-      value: isNum(netMarginPct)
-        ? fmtPct(netMarginPct, { fromFraction: true })
-        : null,
+      value: LE && isNum(LE.net_margin_pct)
+        ? fmtPct(LE.net_margin_pct, { fromFraction: false })
+        : isNum(netMarginPct)
+          ? fmtPct(netMarginPct, { fromFraction: true })
+          : null,
     },
     {
       label: "Owner take-home",
-      value: isNum(ownerTakeHome) ? fmtUSD(ownerTakeHome) : null,
+      value: LE && isNum(LE.owner_take_home)
+        ? fmtUSD(LE.owner_take_home)
+        : isNum(ownerTakeHome)
+          ? fmtUSD(ownerTakeHome)
+          : null,
     },
     {
       label: "Break-even",
@@ -283,9 +339,9 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
     React.Fragment,
     null,
     React.createElement(SpreadBar, {
-      p10: revP10,
-      median: typicalRevenue,
-      p90: revP90,
+      p10: LE ? lonRevP10 : revP10,
+      median: LE ? lonRevenue : typicalRevenue,
+      p90: LE ? lonRevP90 : revP90,
     }),
     React.createElement(CostBar, { shares: costShares }),
   );
@@ -295,9 +351,20 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
   // the country level (geo_level "country") carries a national firm count, not
   // a local one, so suppress them rather than imply a local figure under a city
   // title. They return when a real city or region cell exists.
-  const isLocalCell = cell.geo_level !== "country";
-  const competitors = isLocalCell ? (cell.n_enterprises ?? null) : null;
-  const per10k = densityPer10k(competitors, cityPopulation);
+  //
+  // A London cell is the exception: when modeled London economics are present
+  // (LE), the firm count and density come from the real London figures, so
+  // treat it as local even though the underlying cell fell back to the country
+  // level, and override the suppression with the London numbers.
+  const isLocalCell = LE != null || cell.geo_level !== "country";
+  const competitors = LE
+    ? LE.firms
+    : isLocalCell
+      ? (cell.n_enterprises ?? null)
+      : null;
+  const per10k = LE
+    ? densityPer10k(LE.firms, LONDON_POPULATION)
+    : densityPer10k(competitors, cityPopulation);
 
   const marketRows: StatRow[] = [
     {
