@@ -57,6 +57,24 @@ import { SlideUp } from "@/components/ui/motion/SlideUp";
 import { Stagger } from "@/components/ui/motion/Stagger";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 
+import { StatGrid, type StatRow as BoardStatRow } from "@/components/board/StatGrid";
+import { DataSection, type BoardSection as BoardSectionData } from "@/components/board/DataSection";
+import { ScoreStrip } from "@/components/board/ScoreStrip";
+import { BoardHero } from "@/components/board/BoardHero";
+import { FailureCards } from "@/components/board/FailureCards";
+import { SpreadBar } from "@/components/board/charts/SpreadBar";
+import { CostBar } from "@/components/board/charts/CostBar";
+import { SurvivalCurve } from "@/components/board/charts/SurvivalCurve";
+import { CrowdingGauge } from "@/components/board/charts/CrowdingGauge";
+import { RentGauge } from "@/components/board/charts/RentGauge";
+import {
+  MISSING,
+  fmtUSD,
+  fmtPct,
+  fmtInt,
+  fmtNum,
+} from "@/components/board/format";
+
 import { colors, fontFamily, fontSize, radius, elevation, duration, easing, z } from "@/lib/design-tokens";
 
 export const dynamic = "force-dynamic";
@@ -87,6 +105,7 @@ export default async function DesignCatalogPage({
         <ButtonsSection />
         <PillsSection />
         <S1PrimitivesSection />
+        <DataBoardSection />
         <FormFeedbackSection />
         <NumericSection />
         <LinksSection />
@@ -433,6 +452,201 @@ function S1PrimitivesSection() {
           <StatRow label="Profit kept" value="12%" />
           <StatRow label="Multi-year trend" value={null} divider={false} />
         </div>
+      </SubSection>
+    </Section>
+  );
+}
+
+function DataBoardSection() {
+  // A full section: real, formatted values plus a chart above the grid.
+  const fullSection: BoardSectionData = {
+    key: "numbers",
+    title: "The numbers",
+    chart: (
+      <SpreadBar p10={180_000} median={420_000} p90={1_250_000} />
+    ),
+    rows: [
+      { label: "Typical revenue", value: fmtUSD(420_000), hint: "per firm" },
+      { label: "Bottom tenth", value: fmtUSD(180_000) },
+      { label: "Top tenth", value: fmtUSD(1_250_000) },
+      { label: "Net margin", value: fmtPct(0.12, { fromFraction: true }) },
+      { label: "People working", value: fmtInt(4) },
+      { label: "Wage per person", value: fmtUSD(52_000) },
+    ],
+  };
+
+  // An all-blank section: every value is null, so the grid shows dashes and the
+  // section still renders. Proves "never filter, blanks are information".
+  const blankSection: BoardSectionData = {
+    key: "blank",
+    title: "Survival (no data yet)",
+    rows: [
+      { label: "Year 1", value: null },
+      { label: "Year 3", value: null },
+      { label: "Year 5", value: fmtUSD(null) },
+      { label: "Closures", value: MISSING },
+    ],
+  };
+
+  // A long section: more than eight rows, so rows 9+ fold into ShowMore. Also
+  // marked modeled to show the directional footnote.
+  const longSection: BoardSectionData = {
+    key: "market",
+    title: "The market",
+    modeled: true,
+    rows: [
+      { label: "Firms in market", value: fmtInt(12_400) },
+      { label: "Per 100k people", value: fmtNum(38.5) },
+      { label: "New per year", value: fmtInt(820) },
+      { label: "Closed per year", value: fmtInt(640) },
+      { label: "Net change", value: fmtInt(180) },
+      { label: "Avg headcount", value: fmtInt(4) },
+      { label: "Median age", value: "9 yrs" },
+      { label: "Franchise share", value: fmtPct(18) },
+      { label: "Single-site share", value: fmtPct(71) },
+      { label: "VAT-registered", value: fmtPct(64) },
+      { label: "Employer firms", value: fmtPct(52) },
+    ],
+  };
+
+  // Score sample, shaped like the proprietary score set.
+  const scoreParts = [
+    { label: "Profit", score: 72 },
+    { label: "Rent", score: 48 },
+    { label: "Owner pay", score: 61 },
+    { label: "Market", score: 33 },
+  ];
+
+  const failureCards = [
+    {
+      title: "Rent creep",
+      body: "A lease renewal that resets rent above the margin can sink an otherwise fine operator inside a year.",
+    },
+    {
+      title: "Thin pricing",
+      body: "Competing on price in a crowded field leaves no room for a slow month. The first bad quarter ends it.",
+    },
+    {
+      title: "Undercapitalised",
+      body: "Opening without a runway for the first lean year means borrowing at the worst possible time.",
+    },
+    {
+      title: "Owner burnout",
+      body: "When the take barely clears a wage, the owner is working two jobs for one income. Few last five years.",
+    },
+  ];
+
+  return (
+    <Section
+      title="Data board"
+      description="The board primitive kit. Every data page composes only from these: format helpers, StatGrid, DataSection, ScoreStrip, BoardHero, the five charts, and FailureCards. Source: src/components/board/."
+    >
+      <SubSection title="format helpers" caption="board/format.ts (MISSING = plain hyphen)">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm md:grid-cols-3">
+          <div className="text-cocoa-700">fmtUSD(1_250_000)</div>
+          <div className="tabular-nums text-ink-900">{fmtUSD(1_250_000)}</div>
+          <div className="text-cocoa-700">fmtUSD(340_000)</div>
+          <div className="tabular-nums text-ink-900">{fmtUSD(340_000)}</div>
+          <div className="text-cocoa-700">fmtUSD(12_000)</div>
+          <div className="tabular-nums text-ink-900">{fmtUSD(12_000)}</div>
+          <div className="text-cocoa-700">fmtPct(0.42, fromFraction)</div>
+          <div className="tabular-nums text-ink-900">{fmtPct(0.42, { fromFraction: true })}</div>
+          <div className="text-cocoa-700">fmtPct(42)</div>
+          <div className="tabular-nums text-ink-900">{fmtPct(42)}</div>
+          <div className="text-cocoa-700">fmtInt(1_234_567)</div>
+          <div className="tabular-nums text-ink-900">{fmtInt(1_234_567)}</div>
+          <div className="text-cocoa-700">fmtNum(3141.59)</div>
+          <div className="tabular-nums text-ink-900">{fmtNum(3141.59)}</div>
+          <div className="text-cocoa-700">fmtUSD(null)</div>
+          <div className="tabular-nums text-cocoa-400">{fmtUSD(null)}</div>
+          <div className="text-cocoa-700">fmtPct(NaN)</div>
+          <div className="tabular-nums text-cocoa-400">{fmtPct(NaN)}</div>
+        </div>
+      </SubSection>
+
+      <SubSection title="StatGrid" caption="board/StatGrid.tsx (renders every row, dashes for blanks)">
+        <StatGrid
+          rows={[
+            { label: "Typical revenue", value: fmtUSD(420_000), hint: "per firm" },
+            { label: "Net margin", value: fmtPct(0.12, { fromFraction: true }) },
+            { label: "People working", value: fmtInt(4) },
+            { label: "Wage per person", value: fmtUSD(52_000) },
+            { label: "Multi-year trend", value: null },
+            { label: "Closures", value: MISSING },
+          ] satisfies BoardStatRow[]}
+        />
+      </SubSection>
+
+      <SubSection title="DataSection (full, with chart)" caption="board/DataSection.tsx">
+        <DataSection section={fullSection} />
+      </SubSection>
+
+      <SubSection title="DataSection (all blank)" caption="renders anyway, all dashes">
+        <DataSection section={blankSection} />
+      </SubSection>
+
+      <SubSection title="DataSection (>8 rows + modeled)" caption="rows 9+ fold into ShowMore">
+        <DataSection section={longSection} />
+      </SubSection>
+
+      <SubSection title="ScoreStrip (with parts)" caption="board/ScoreStrip.tsx (native details disclosure)">
+        <ScoreStrip overall={58} parts={scoreParts} />
+      </SubSection>
+
+      <SubSection title="ScoreStrip (no parts, and null overall)">
+        <div className="flex flex-wrap items-start gap-12">
+          <ScoreStrip overall={81} parts={[]} />
+          <ScoreStrip overall={null} parts={[]} />
+        </div>
+      </SubSection>
+
+      <SubSection title="BoardHero" caption="board/BoardHero.tsx (plain h1 + score + switcher slot)">
+        <BoardHero
+          title="Independent coffee shops in Lisbon"
+          score={{ overall: 58, parts: scoreParts }}
+          switcher={
+            <Pill variant="outline">Portugal · all sizes</Pill>
+          }
+        />
+      </SubSection>
+
+      <SubSection title="Charts" caption="board/charts/* (visx, compact, null-safe)">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div>
+            <div className="mb-2 text-[11px] uppercase tracking-wide text-cocoa-500">SpreadBar</div>
+            <SpreadBar p10={180_000} median={420_000} p90={1_250_000} />
+          </div>
+          <div>
+            <div className="mb-2 text-[11px] uppercase tracking-wide text-cocoa-500">CostBar</div>
+            <CostBar
+              shares={[
+                { label: "Labour", pct: 32 },
+                { label: "Rent", pct: 14 },
+                { label: "Goods", pct: 28 },
+                { label: "Other", pct: 14 },
+                { label: "Profit", pct: 12 },
+              ]}
+            />
+          </div>
+          <div>
+            <div className="mb-2 text-[11px] uppercase tracking-wide text-cocoa-500">SurvivalCurve</div>
+            <SurvivalCurve yr1={82} yr3={58} yr5={44} />
+          </div>
+          <div className="flex gap-8">
+            <div className="w-32">
+              <div className="mb-2 text-[11px] uppercase tracking-wide text-cocoa-500">CrowdingGauge</div>
+              <CrowdingGauge value={71} />
+            </div>
+            <div className="w-32">
+              <div className="mb-2 text-[11px] uppercase tracking-wide text-cocoa-500">RentGauge</div>
+              <RentGauge value={38} />
+            </div>
+          </div>
+        </div>
+      </SubSection>
+
+      <SubSection title="FailureCards" caption="board/FailureCards.tsx">
+        <FailureCards cards={failureCards} />
       </SubSection>
     </Section>
   );
