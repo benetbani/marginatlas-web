@@ -67,12 +67,12 @@ import {
   estimateWagePerEmployee,
   estimateEmployeesFromFirms,
 } from "@/lib/extrapolations/fill_missing";
-import { HeroBenchmark } from "@/components/HeroBenchmark";
-import { VerdictHero } from "@/components/cell/VerdictHero";
-import { CellDashboard } from "@/components/cell/CellDashboard";
+import { BoardHero } from "@/components/board/BoardHero";
+import { DataSection } from "@/components/board/DataSection";
+import { FailureCards } from "@/components/board/FailureCards";
 import { computeScores } from "@/lib/scores";
-import { buildCellDashboard, getLondonEntry } from "@/lib/scores/cell_dashboard";
-import { generateVerdict } from "@/lib/scores/verdict";
+import { buildCellBoard, getLondonEntry } from "@/lib/scores/cell_board";
+import { getFailureModes } from "@/lib/qa/industry_failure_modes";
 import { CityHero } from "@/components/CityHero";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { ComparableCitiesRibbon } from "@/components/ComparableCitiesRibbon";
@@ -103,7 +103,6 @@ import { AnnualCostStack } from "@/components/sections/AnnualCostStack";
 import { TangibleUnits } from "@/components/sections/TangibleUnits";
 import { KeyBenchmarkBanner } from "@/components/sections/KeyBenchmarkBanner";
 import { AuPrimaryDataBadge } from "@/components/AuPrimaryDataBadge";
-import { FailureModes } from "@/components/sections/FailureModes";
 // Reverted: InlineMidArticle temporarily removed.
 // import { InlineMidArticle } from "@/components/newsletter/NewsletterSignupVariants";
 import { IfYouOpenedToday } from "@/components/sections/IfYouOpenedToday";
@@ -408,15 +407,9 @@ export default async function CellPage({
   const computedNetMargin = rawNetMargin != null ? clampMargin(rawNetMargin, "net", cell.industry_id || null) : null;
 
   // Reformation decision layer (bible Sections 6, 10, 21, 25). Pure compute,
-  // no new queries: the proprietary scores and the opinionated verdict come
-  // from the cell's own economics, using the same tax-aware net numbers the
-  // rest of the page shows. Each score self-omits when it cannot be defended.
-  const compactUsd = (n: number): string => {
-    if (!Number.isFinite(n)) return "";
-    if (n >= 1_000_000) return `$${(n / 1_000_000).toFixed(1)}M`;
-    if (n >= 1_000) return `$${Math.round(n / 1_000)}K`;
-    return `$${Math.round(n)}`;
-  };
+  // no new queries: the proprietary scores come from the cell's own economics,
+  // using the same tax-aware net numbers the rest of the page shows. Each score
+  // self-omits when it cannot be defended. They feed the BoardHero score strip.
   // City tier drives both the score context and the break-even AOV
   // adjustment; resolve it once here and reuse it below.
   const cityTier = getCityTier(geo);
@@ -425,7 +418,6 @@ export default async function CellPage({
     netMargin: computedNetMargin,
     netProfit: adjustedNetTakeHome,
   });
-  const heroVerdict = generateVerdict(cell, scoreSet, compactUsd);
 
   // Top-of-page dashboard inputs. Hoisted here so each is computed ONCE and
   // reused both in the dashboard and in the deeper sections below (the
@@ -451,10 +443,21 @@ export default async function CellPage({
   // state/region slugs. Drives the market-density read.
   const cityPopulation = getCityPopulation(geo);
 
-  const dash = buildCellDashboard({
+  // Full A-J data board. Built from the values already computed above so no
+  // figure is recomputed: the money rows reuse the tax-aware net numbers and
+  // the floored take-home; the market/density rows reuse the city population;
+  // the modeled qualitative reads come from the curated London dataset (GB
+  // cells only, blanks elsewhere). Every section and every row is always
+  // present; missing data renders as the board's dash. econSnap is the
+  // country-economics snapshot already computed above for the take-home floor;
+  // corporateTaxRate is the effective rate from the net-profit waterfall.
+  const board = buildCellBoard({
     cell,
     typicalRevenue: cell.revenue_per_firm ?? cell.rev_p50 ?? null,
+    revP10: cell.rev_p10 ?? null,
+    revP90: cell.rev_p90 ?? null,
     grossMarginPct: marginRow.gross_margin ?? null,
+    operatingMarginPct: marginRow.operating_margin ?? null,
     netMarginPct: computedNetMargin,
     ownerTakeHome: adjustedNetTakeHome,
     breakevenOrdersDaily: be?.breakevenOrdersDaily ?? null,
@@ -462,17 +465,19 @@ export default async function CellPage({
     peopleWorking: employeesEstimate ?? null,
     wagePerEmployee: wageEstimate ?? null,
     cityPopulation,
-    // econSnap is the country-economics snapshot already computed above for
-    // the take-home floor; reused here so the climate section needs no second
-    // lookup. costStructure + setupCosts are the cell's own enrichment fields;
-    // londonEntry is the curated, clearly-modeled London market dataset (GB
-    // cells only, self-omits otherwise).
     econ: econSnap,
+    corporateTaxRate: netProfitResult?.effective_cit_rate ?? null,
     costStructure: cell.cost_structure ?? null,
-    setupCosts: cell.setup_costs ?? null,
     londonEntry: getLondonEntry(cell),
-    fmtMoney: formatMoney,
   });
+
+  // Board failure cards: the handful of specific operational misjudgments that
+  // sink weak operators in this business, mapped from the curated failure-mode
+  // set (the same source the FailureModes panel reads). Empty array for
+  // industries without an entry, which renders nothing.
+  const failureCards = (
+    cell.industry_id ? getFailureModes(cell.industry_id) ?? [] : []
+  ).map((m) => ({ title: m.label, body: m.explanation }));
 
   // FAQPage JSON-LD payload. The question text matches
   // the phrase universe (scripts/seo/build_phrase_universe.py), so any organic
@@ -631,56 +636,36 @@ export default async function CellPage({
         altOverride={`${cell.geo_name || geo} - ${cell.industry_name || industry}`}
       />
 
-      {/* Hero. Decision-first: the verdict and the headline number lead.
+      {/* Board masthead. Plain left-aligned H1 ("<activity> in <place>") plus
+          the compact Atlas-score strip. Deliberately quieter and shorter than
+          the old VerdictHero so the data board itself reaches above the fold.
           Wrapped in a div (not a section) carrying id="headline" so the
-          right-rail TOC anchor resolves without registering an extra
-          section id with the canonical skeleton gate. */}
+          right-rail TOC anchor resolves without registering an extra section
+          id with the canonical skeleton gate. The richer search-friendly
+          phrasing stays in generateMetadata; the visible H1 is now plain. */}
       <div id="headline">
-        {(() => {
-          const industryName = cell.industry_name || industry.replace(/-/g, " ");
-          const question = `How much does a ${industryName.toLowerCase().replace(/s$/, "")} make in ${cell.geo_name || iso2ToName(country) || country.toUpperCase()}?`;
-          const typical = cell.revenue_per_firm ?? cell.rev_p50 ?? 0;
-          const p10 = cell.rev_p10 ?? typical * 0.32;
-          const p90 = cell.rev_p90 ?? typical * 2.6;
-          return typical > 0 ? (
-            <VerdictHero
-              sectorLabel={cell.sector_name || null}
-              question={question}
-              verdict={heroVerdict}
-              opportunity={scoreSet.opportunity}
-              typical={typical}
-              p10={p10}
-              p90={p90}
-              fmt={compactUsd}
-            />
-          ) : (
-            // Fallback to the legacy hero if revenue is missing entirely.
-            <HeroBenchmark
-              iso2={country.toUpperCase()}
-              countryName={iso2ToName(country) || country.toUpperCase()}
-              geoName={cell.geo_name || iso2ToName(country) || country.toUpperCase()}
-              industryName={industryName}
-              industryExamples={cell.industry_examples}
-              sectorName={cell.sector_name || null}
-              revenue={cell.revenue_per_firm ?? null}
-              currencySymbol="$"
-            />
-          );
-        })()}
+        <BoardHero
+          title={`${cell.industry_name || industry.replace(/-/g, " ")} in ${
+            cell.geo_name || iso2ToName(country) || country.toUpperCase()
+          }`}
+          score={{
+            overall: scoreSet.opportunity?.value ?? null,
+            parts: scoreSet.scores.map((s) => ({ label: s.label, score: s.value })),
+          }}
+        />
       </div>
 
-      {/* Data-first dashboard. The economics the page proves, perceivable in
-          one glance, before any prose. A non-<section> wrapper (like the hero's
-          id="headline" div) so it leads the page without registering an extra
-          id with the canonical skeleton gate. Carries the proprietary scores
-          strip, "The numbers", and "The market"; each row self-omits when its
-          value is null, and whole blocks vanish when empty. The deeper sections
-          below (break-even, take-home, distribution) keep the full treatment. */}
-      <CellDashboard
-        scores={scoreSet.scores}
-        opportunity={scoreSet.opportunity}
-        data={dash}
-      />
+      {/* The full A-J data board. Ten fixed sections the reader can learn once
+          and read on every page, rendered immediately under the masthead. Each
+          section always renders all of its rows; a datum we do not hold shows
+          as the board's dash, so the page shape never depends on the data. The
+          deeper sections below (break-even, take-home, distribution, waterfall)
+          keep their full prose treatment. */}
+      <div className="mt-2">
+        {board.map((s) => (
+          <DataSection section={s} key={s.key} />
+        ))}
+      </div>
 
       {/* One quiet meta row under the hero, merged from three former
           stripes (coverage badge + currency switcher + the compact
@@ -708,11 +693,11 @@ export default async function CellPage({
         />
       ) : null}
 
-      {/* Decision layer: the proprietary scores moved into the top-of-page
-          CellDashboard (data-first reform). The standalone ScorePanel section
-          here was pure duplication of the dashboard's scores strip and was
-          removed. The full-prose ScorePanel cards are retired from this page in
-          favour of the compact chips. */}
+      {/* Decision layer: the proprietary scores now ride in the BoardHero score
+          strip at the top of the page. The standalone ScorePanel section here
+          was pure duplication of that strip and was removed. The full-prose
+          ScorePanel cards are retired from this page in favour of the compact
+          score strip. */}
 
       {/* Plan v32 Sprint G — sub-industry picker. Renders only when the
          parent industry has at least one data_ready variant. Otherwise
@@ -746,12 +731,10 @@ export default async function CellPage({
       })()}
 
       {/* Headline revenue tiles (People working / Typical revenue / Wage per
-         employee) moved INTO the top-of-page CellDashboard "The numbers" grid
-         (data-first reform). The canonical skeleton registers "revenue-tiles"
-         as a beat, so the <section id> anchor is kept present here as a
-         zero-height marker rather than re-rendering the same three figures a
-         second time. The dashboard already self-omits any tile whose value is
-         null, preserving the no-blank-tiles rule. */}
+         employee) now live in the top-of-page data board's "The numbers"
+         section (A). The canonical skeleton registers "revenue-tiles" as a
+         beat, so the <section id> anchor is kept present here as a zero-height
+         marker rather than re-rendering the same figures a second time. */}
       <section id="revenue-tiles" aria-hidden className="sr-only" />
 
       {/* ATO Phase 2 — Key Benchmark banner. Surfaces ONE ratio per
@@ -1009,11 +992,12 @@ export default async function CellPage({
         industryName={cell.industry_name || undefined}
       />
 
-      {/* Plan v32 Sprint G Tier-1 — "Why these businesses fail" panel.
-         Five specific failure modes per industry; sourced from SBA
-         survival data + industry trade press. Self-suppresses for
-         industries without curated entries. */}
-      <FailureModes cell={cell} />
+      {/* "What kills weak operators" — the board-kit failure cards. The same
+         curated set of specific operational misjudgments the old FailureModes
+         panel carried, now in the compact board card grid (the part a would-be
+         operator should screenshot). Renders nothing when the industry has no
+         curated entry (empty cards array). */}
+      <FailureCards cards={failureCards} />
 
       {/* v34 Phase G: inline email capture after the failure-modes
          section. High-intent placement: users who scrolled this far
