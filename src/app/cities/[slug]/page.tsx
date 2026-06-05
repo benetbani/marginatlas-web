@@ -3,24 +3,31 @@
  *
  * Route: /cities/[slug]
  *
- * Sections (server-rendered):
- *   1. Hero (full-bleed Unsplash if cached, fallback initial card)
- *   2. Meta strip (country, population, GDP, currency)
- *   3. Industry mosaic — 10 representative SMB industries with median revenue
- *   4. Neighborhood mini-strip (only if the city has a scheme; deep-link
- *      to the neighborhood hub)
- *   5. Curiosities preview (deep-link to /curiosities)
- *   6. Sister cities ribbon
- *   7. Compare-with deep-links
+ * Rebuilt on the board kit (2026-06-05) to match the cell page and the country
+ * page. The heavy full-bleed hero with its overlaid stat table was replaced by
+ * the quiet BoardHero plus the four-section city data board (Demand depth,
+ * Location and rent, Market structure, Survival baseline), so the figures reach
+ * above the fold in the same fixed scaffold the reader learns once and reads on
+ * every page. A city has no single Atlas score, so the score strip is empty.
  *
- * No client JS. revalidate: 12h.
+ * Sections (server-rendered):
+ *   1. BoardHero (plain city name, country eyebrow, empty score strip)
+ *   2. City data board (buildCityBoard: demand / location / market / survival)
+ *   3. Ranked activities table (buildCityActivities: best owner take-home
+ *      first; London sourced from the curated dataset, other cities omit)
+ *   4. Industry mosaic. 10 representative SMB industries
+ *   5. Neighborhood mini-strip (only if the city has a scheme)
+ *   6. Curiosities preview (deep-link to /curiosities)
+ *   7. Sister cities ribbon
+ *   8. Compare-with deep-links
+ *
+ * No client JS beyond the board's ShowMore toggle. revalidate: 12h.
  */
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import cityListJson from "../../../../data/cities/city_list_v1.json";
 import neighborhoodsJson from "../../../../data/cities/neighborhoods_v1.json";
-import { getCityHero } from "@/lib/images/city_heroes";
 import { CountryFlag } from "@/components/CountryFlag";
 import { COUNTRIES } from "@/lib/taxonomy";
 import { MoreDepthBanner } from "@/components/monetization";
@@ -33,7 +40,12 @@ import { ComparableCitiesRibbon } from "@/components/ComparableCitiesRibbon";
 import { CitySignaturePanel } from "@/components/cities/CitySignaturePanel";
 import { BusinessFormationCosts } from "@/components/cities/BusinessFormationCosts";
 import { CoverageIndicator } from "@/components/CoverageIndicator";
-import { getGuidingWord, type Metric } from "@/lib/cities/guiding_word";
+import { SectionEyebrow } from "@/components/ui/section-eyebrow";
+import { BoardHero } from "@/components/board/BoardHero";
+import { DataSection } from "@/components/board/DataSection";
+import { fmtUSD, fmtPct } from "@/components/board/format";
+import { buildCityBoard, buildCityActivities } from "@/lib/scores/city_board";
+import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 
 export const revalidate = 43200; // 12 hours
 
@@ -117,165 +129,133 @@ export default async function CityPage({
   const city = CITIES_BY_SLUG.get(slug);
   if (!city) notFound();
 
-  const heroRecord = getCityHero(city.slug);
-  // Sanity §7 — only render the <img> when we have a real photo. Pattern
-  // fallbacks (variant=pattern) drop to the cream/cocoa gradient block.
-  const hero =
-    heroRecord && heroRecord.variant !== "pattern" && heroRecord.image_url_full
-      ? heroRecord
-      : undefined;
   const countryName = COUNTRIES.find((c) => c.code === city.iso2)?.name || city.iso2;
   const scheme = NEIGHBORHOODS[city.slug];
 
+  // City data board. Built from values the page already holds (the city record)
+  // plus the country economics snapshot for the country the city sits in; no
+  // new query, no invented number. Every section and every row is always
+  // present, so a datum we do not hold shows as the board's dash and the page
+  // shape never depends on the data. This is the city-altitude sibling of the
+  // cell page's A-J board and the country page's five-section board.
+  const econSnap = getCountryEconomicsSnapshot(city.iso2);
+  const board = buildCityBoard({
+    city: {
+      slug: city.slug,
+      popM: city.pop_m ?? null,
+      avgGrossSalaryUsdYear: city.avg_gross_salary_usd_year ?? null,
+      costOfLivingIndex: city.cost_of_living_index ?? null,
+      touristArrivalsM: city.tourist_arrivals_m ?? null,
+    },
+    econ: {
+      selfEmploymentPct: econSnap.selfEmploymentPct,
+      avgMonthlySalary: econSnap.avgMonthlySalary,
+    },
+  });
+
+  // Ranked activities in this city, best owner take-home first. London is
+  // sourced from the curated dataset (every activity, its modeled after-tax
+  // take-home and net margin); every other city returns an empty list and the
+  // table omits cleanly. Each row links to that activity's cell page under the
+  // city, the same /{iso2}/{slug}/{activity} shape the industry mosaic uses.
+  const activities = buildCityActivities({
+    slug: city.slug,
+    countryIso2: city.iso2,
+  });
+
   return (
     <article className="pb-16">
-      {/* Cities §4 founder layout: hero image full-bleed, cards
-         overlaid at the bottom. City name in bottom-LEFT, stat cards
-         in bottom-CENTER + bottom-RIGHT. The image stays as the
-         dominant visual but the page does not waste the whole first
-         frame on it alone. */}
-      <section className="relative w-full h-[480px] md:h-[600px] overflow-hidden bg-stone-100 mb-8 md:mb-12">
-        {hero ? (
-          <>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={hero.image_url_full}
-              alt={hero.alt}
-              className="w-full h-full object-cover"
-              style={{ filter: "contrast(1.06) saturate(0.88)" }}
-            />
-            {/* Heavier bottom gradient so the overlaid cards have
-               enough contrast against any photograph. */}
-            <div className="absolute inset-0 bg-gradient-to-t from-ink-900/85 via-ink-900/35 to-transparent" />
-          </>
-        ) : (
-          <div className="w-full h-full bg-gradient-to-br from-cream-100 via-parchment to-cocoa-100" />
-        )}
-
-        {/* Founder layout 2026-05-25: city name bottom-LEFT, 8-cell
-           data TABLE (4 cols, 2 rows) bottom-RIGHT. The cells share
-           one outer border and hairline dividers, not 8 separate
-           rounded cards. Reads like a broadsheet market table sitting
-           on a photograph, not a row of utility chips. */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-end">
-            {/* LEFT: city name + country + flag (5 of 12 cols on md+) */}
-            <div className="text-white md:col-span-5">
-              <div className="flex items-center gap-2 text-xs md:text-sm uppercase tracking-[0.18em] font-semibold mb-2 opacity-90">
-                <CountryFlag iso2={city.iso2} className="w-5" />
-                <span>{countryName}</span>
-              </div>
-              <h1
-                className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.04]"
-                style={{ whiteSpace: "nowrap" }}
-              >
-                {city.name}
-              </h1>
-            </div>
-
-            {/* RIGHT: 4-col x 2-row unified data table (7 of 12 cols on md+) */}
-            <div className="md:col-span-7">
-              <CityStatTable
-                cards={[
-                  {
-                    label: "Metro pop",
-                    value: `${city.pop_m.toFixed(1)}M`,
-                    metric: "metro_pop_m",
-                    rawValue: city.pop_m,
-                  },
-                  {
-                    label: "Metro GDP",
-                    value: `$${city.gdp_b.toFixed(0)}B`,
-                    metric: "metro_gdp_b",
-                    rawValue: city.gdp_b,
-                  },
-                  {
-                    label: "Salary / mo",
-                    value: city.avg_gross_salary_usd_year
-                      ? `$${Math.round(city.avg_gross_salary_usd_year / 12 / 100) * 100}`
-                      : "-",
-                    metric: "gross_salary_usd_mo",
-                    rawValue: city.avg_gross_salary_usd_year
-                      ? city.avg_gross_salary_usd_year / 12
-                      : null,
-                  },
-                  {
-                    label: "HDI",
-                    value: city.hdi != null ? city.hdi.toFixed(3) : "-",
-                    metric: "hdi",
-                    rawValue: city.hdi ?? null,
-                  },
-                  {
-                    label: "Gini",
-                    value: city.gini != null ? city.gini.toFixed(1) : "-",
-                    metric: "gini",
-                    rawValue: city.gini ?? null,
-                  },
-                  {
-                    label: "Cost of living",
-                    value:
-                      city.cost_of_living_index != null
-                        ? city.cost_of_living_index.toFixed(0)
-                        : "-",
-                    metric: "cost_of_living_index",
-                    rawValue: city.cost_of_living_index ?? null,
-                  },
-                  {
-                    label: "Unemployment",
-                    value:
-                      city.unemployment_pct != null
-                        ? `${city.unemployment_pct.toFixed(1)}%`
-                        : "-",
-                    metric: "unemployment_pct",
-                    rawValue: city.unemployment_pct ?? null,
-                  },
-                  {
-                    label: "Tourism / yr",
-                    value:
-                      city.tourist_arrivals_m != null
-                        ? `${city.tourist_arrivals_m.toFixed(1)}M`
-                        : "-",
-                    metric: "tourist_arrivals_m",
-                    rawValue: city.tourist_arrivals_m ?? null,
-                  },
-                ]}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
       <div className="max-w-6xl mx-auto px-4 md:px-6">
+        {/* Board masthead (rebuilt 2026-06-05 to match the cell + country
+           pages). The heavy full-bleed photo hero with its overlaid stat
+           table was removed: it duplicated the population / salary / cost /
+           tourism figures the data board now carries, and the board reaches
+           the figures above the fold in the shared scaffold. Plain city name
+           is the H1; a city has no single Atlas score, so the score strip is
+           passed empty (overall null, no parts) and renders as a dash. The
+           country eyebrow keeps the place context the old hero carried. */}
+        <div className="flex items-center gap-2 pt-4">
+          <CountryFlag iso2={city.iso2} className="w-5" />
+          <SectionEyebrow size="md">{countryName}</SectionEyebrow>
+        </div>
+        <BoardHero title={city.name} score={{ overall: null, parts: [] }} />
+
+        {/* The city data board. Four fixed sections the reader can learn once
+           and read on every city, rendered immediately under the masthead.
+           Each section always renders all of its rows; a datum we do not hold
+           shows as the board's dash, so the page shape never depends on the
+           data. */}
+        <div className="mt-2">
+          {board.map((s) => (
+            <DataSection section={s} key={s.key} />
+          ))}
+        </div>
+
+        {/* Activities in this city, ranked by what an owner keeps after tax,
+           best at top and hardest at the bottom. London is sourced from the
+           curated activity dataset; every other city omits this block cleanly
+           (empty list) rather than show invented take-home. Each row links to
+           that activity's full cell benchmark under the city. */}
+        {activities.length > 0 && (
+          <section className="mt-10">
+            <SectionEyebrow>Activities ranked</SectionEyebrow>
+            <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mt-1">
+              What an owner keeps in {city.name}
+            </h2>
+            <p className="text-sm md:text-base text-cocoa-700/80 mt-1.5 mb-5 max-w-2xl leading-relaxed">
+              Every activity we cover in {city.name}, ranked by typical after-tax
+              owner take-home. Best at the top, hardest at the bottom. Open any
+              row for the full revenue, cost stack, and survival read. Modeled
+              from local business demography. Directional.
+            </p>
+            <ul className="divide-y divide-parchment border-y border-parchment">
+              {activities.map((a, i) => (
+                <li key={a.slug}>
+                  <Link
+                    href={a.href}
+                    className="group flex items-baseline justify-between gap-3 py-2.5 transition-colors"
+                  >
+                    <span className="flex min-w-0 items-baseline gap-2.5">
+                      <span className="w-5 shrink-0 text-[11px] tabular-nums text-cocoa-500">
+                        {i + 1}
+                      </span>
+                      <span className="truncate text-sm font-medium text-ink-900 group-hover:text-atlas-700 transition-colors">
+                        {a.name}
+                      </span>
+                    </span>
+                    <span className="flex shrink-0 items-baseline gap-3">
+                      {a.netMarginPct != null && (
+                        <span className="hidden text-[11px] tabular-nums text-cocoa-500 sm:inline">
+                          {fmtPct(a.netMarginPct)} net
+                        </span>
+                      )}
+                      <span className="font-display text-base font-semibold tabular-nums text-ink-900">
+                        {fmtUSD(a.takeHome)}
+                      </span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-3 text-[11px] text-cocoa-500">
+              Owner take-home is after tax, for a typical single-site operator.
+            </p>
+          </section>
+        )}
 
         {/* Sanity-§8: apologetic expanded CoverageIndicator banner
             replaced with a quiet inline methodology link. */}
-        <section className="mb-10">
+        <section className="mb-10 mt-10">
           <CoverageIndicator
             tier={city.tier === 1 ? "regional" : "estimated"}
             variant="compact"
           />
         </section>
 
-        {/* Source disclosure footnote for the hero stats. Quiet so the
-           page stays editorial; visible enough to be honest about
-           which figures are city-specific and which fall through to a
-           national fallback. */}
-        {(city.sources?.gini || city.sources?.hdi) && (
-          <p className="text-xs text-cocoa-700/60 mb-8 max-w-3xl leading-relaxed">
-            {city.sources?.gini?.startsWith("National") ? (
-              <>
-                Gini coefficient shown at the national level (city-level
-                inequality data is not consistently published).{" "}
-              </>
-            ) : null}
-            {city.sources?.hdi?.startsWith("Extrapolated") ? (
-              <>
-                HDI extrapolated from the country baseline plus a city-tier
-                adjustment.{" "}
-              </>
-            ) : null}
-          </p>
-        )}
+        {/* The old Gini / HDI source-disclosure footnote was removed with the
+           heavy hero (2026-06-05): the rebuilt board does not surface Gini or
+           HDI, so a disclaimer for absent figures only confused. The board's
+           own per-section modeled footnotes carry the honesty now. */}
 
         {/* Founder direction 2026-05-26: dropped TopProfitableActivities
             (most / least profitable, was sec 6) and MostSaturatedActivities
@@ -439,61 +419,5 @@ export default async function CityPage({
         />
       </div>
     </article>
-  );
-}
-
-/** City stat TABLE overlaid on the hero image. Founder spec 2026-05-25:
- * NOT 8 separate utility cards with rounded corners. ONE unified table,
- * 4 columns x 2 rows, with a single outer border and hairline dividers
- * between cells. Reads like a broadsheet market table sitting on the
- * photograph. Bigger labels, bigger values, guiding word in color. */
-type StatCard = {
-  label: string;
-  value: string;
-  metric: Metric;
-  rawValue: number | null;
-};
-
-function CityStatTable({ cards }: { cards: StatCard[] }) {
-  return (
-    <div className="rounded-lg overflow-hidden bg-cream-50/95 backdrop-blur-sm shadow-[0_8px_24px_rgba(0,0,0,0.18)] ring-1 ring-cocoa-700/15">
-      <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-cocoa-700/12">
-        {cards.slice(0, 4).map((c) => (
-          <StatTableCell key={c.label} card={c} />
-        ))}
-      </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-cocoa-700/12 border-t border-cocoa-700/12">
-        {cards.slice(4, 8).map((c) => (
-          <StatTableCell key={c.label} card={c} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function StatTableCell({ card }: { card: StatCard }) {
-  const guiding =
-    card.rawValue != null ? getGuidingWord(card.metric, card.rawValue) : null;
-  return (
-    <div className="px-3 py-2.5 md:px-4 md:py-3">
-      <div className="text-[10px] md:text-[11px] uppercase tracking-[0.1em] text-cocoa-700/70 font-semibold leading-none mb-1.5">
-        {card.label}
-      </div>
-      <div className="font-display text-xl md:text-2xl font-medium text-ink-900 tabular-nums leading-none">
-        {card.value}
-      </div>
-      {guiding && guiding.word ? (
-        <div
-          className="mt-1.5 text-[11px] md:text-xs font-semibold leading-none"
-          style={{ color: guiding.color }}
-        >
-          {guiding.word}
-        </div>
-      ) : (
-        <div className="mt-1.5 text-[11px] md:text-xs text-cocoa-700/40 leading-none">
-          not measured
-        </div>
-      )}
-    </div>
   );
 }
