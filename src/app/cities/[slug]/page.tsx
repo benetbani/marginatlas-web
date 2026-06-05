@@ -198,7 +198,7 @@ export default async function CityPage({
            that activity's full cell benchmark under the city. */}
         {activities.length > 0 && (
           <section className="mt-10">
-            <SectionEyebrow>Activities ranked</SectionEyebrow>
+            <SectionEyebrow>Best and hardest</SectionEyebrow>
             <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mt-1">
               What an owner keeps in {city.name}
             </h2>
