@@ -28,7 +28,7 @@ export function FailureCards({ cards }: FailureCardsProps) {
             key={`${card.title}-${i}`}
             className="rounded-lg border border-parchment bg-cream-50 p-3"
           >
-            <h3 className="font-semibold text-ink-900">{card.title}</h3>
+            <h3 data-typography="custom" className="font-semibold text-ink-900">{card.title}</h3>
             <p className="mt-1 text-sm text-cocoa-700">{card.body}</p>
           </article>
         ))}
