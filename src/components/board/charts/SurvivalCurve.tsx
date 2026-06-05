@@ -52,7 +52,7 @@ export function SurvivalCurve({ yr1, yr3, yr5 }: Props) {
     .join(", ");
 
   return (
-    <figure className="w-full">
+    <figure className="w-full max-w-[400px]">
       <svg
         viewBox={`0 0 ${W} ${H}`}
         className="h-auto w-full"

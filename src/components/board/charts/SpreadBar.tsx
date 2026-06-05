@@ -45,7 +45,7 @@ export function SpreadBar({ p10, median, p90 }: Props) {
     median != null && Number.isFinite(median);
 
   return (
-    <figure className="w-full">
+    <figure className="w-full max-w-[400px]">
       <svg
         viewBox={`0 0 ${W} ${H}`}
         className="h-auto w-full"

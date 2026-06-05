@@ -44,10 +44,10 @@ export function RentGauge({ value }: Props) {
   const cy = H - 8;
 
   return (
-    <figure className="w-full">
+    <figure className="w-[150px]">
       <svg
         viewBox={`0 0 ${W} ${H}`}
-        className="mx-auto h-auto w-full"
+        className="h-auto w-full"
         role="img"
         aria-label={`Rent-to-revenue pressure ${Math.round(v)} out of 100, where higher is more pressure.`}
       >
