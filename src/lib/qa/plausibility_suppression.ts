@@ -231,6 +231,13 @@ export function applyPlausibilitySuppression(cell: Cell): Cell {
     // the narrowed union types.
     (out as unknown as Record<string, unknown>)[key] = null;
   }
+  // Mark a headline-revenue suppression so the downstream fill step does not
+  // resurrect the dash with a synthesized in-bounds figure. Only the headline
+  // matters here: when revenue_per_firm is nulled, fillMissingFields must leave
+  // the whole revenue group dashed rather than re-deriving a "typical".
+  if (analysis.fields.revenue_per_firm) {
+    out._revenueSuppressed = true;
+  }
   return out;
 }
 

@@ -142,6 +142,14 @@ export type Cell = {
   // (small / medium / large) or "unknown". Computed at read time;
   // not persisted. See src/lib/finance/turnover_band.ts.
   turnover_band?: import("./finance/turnover_band").TurnoverBand;
+  // Transient render-layer marker. Set true by applyPlausibilitySuppression
+  // when it nulls revenue_per_firm because the raw value was catastrophically
+  // implausible (> industry hi × 3). It tells the downstream fill step
+  // (fillMissingFields) NOT to resurrect the dashed revenue with a synthesized
+  // in-bounds figure, so a deliberate suppression survives to the board as a
+  // dash instead of a fabricated number. Never persisted (cells are read-only
+  // at this layer).
+  _revenueSuppressed?: boolean;
 };
 
 /**

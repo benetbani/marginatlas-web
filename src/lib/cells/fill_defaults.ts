@@ -32,6 +32,7 @@ import {
   REVENUE_PER_FIRM_BOUNDS,
   DEFAULT_REVENUE_BOUNDS,
 } from "../qa/smb_bounds";
+import { getCatastropheCeiling } from "../qa/plausibility_suppression";
 import {
   INDUSTRY_BY_ID,
   SECTOR_BY_ID,
@@ -275,6 +276,31 @@ export function synthesizeCell(
 }
 
 /**
+ * Wage sanity. Catches local-currency-as-USD bugs (e.g., 6,000,000 yen leaked
+ * as a $6M wage). Absolute SMB wage ceiling is $250K/yr/employee; floor is
+ * $1.2K (anything below is likely a monthly figure mistaken for annual).
+ *
+ * Mutates the cell in place. Independent of revenue, so it runs on every cell
+ * including ones whose revenue was dashed as catastrophic.
+ */
+function sanitizeWage(out: Cell): void {
+  if (out.payroll_per_employee != null) {
+    if (out.payroll_per_employee > 250_000) {
+      // Looks like a currency or scale error — fall back to country median.
+      const cb = COUNTRY_BASELINE.countries[(out.country || "").toUpperCase()] || COUNTRY_BASELINE.default_fallback;
+      out.payroll_per_employee = cb.payroll_per_employee_usd;
+    } else if (out.payroll_per_employee > 0 && out.payroll_per_employee < 1200) {
+      // Possibly monthly. Multiply by 12; if still in range use it, else fall back.
+      const annualized = out.payroll_per_employee * 12;
+      const cb = COUNTRY_BASELINE.countries[(out.country || "").toUpperCase()] || COUNTRY_BASELINE.default_fallback;
+      out.payroll_per_employee = annualized <= 250_000 && annualized >= 1200
+        ? annualized
+        : cb.payroll_per_employee_usd;
+    }
+  }
+}
+
+/**
  * Common-sense math.
  *
  * Ensures the cell's numbers add up:
@@ -290,13 +316,69 @@ export function synthesizeCell(
  */
 export function enforceSanity(cell: Cell): Cell {
   const out: Cell = { ...cell };
-  // Hard revenue ceiling at read time. Per-industry
-  // SMB bounds clamp revenue_per_firm BEFORE downstream consumers
-  // (margin estimator, comparator, narrative) see it. This catches
-  // extrapolated rows where industry × country produced absurd values
-  // (e.g. utilities at SMB-size-band in tax havens).
+  // Revenue dash-or-clamp gate at read time. Per-industry SMB bounds govern
+  // revenue_per_firm BEFORE downstream consumers (margin estimator, comparator,
+  // narrative) see it. This catches extrapolated / regional rows where
+  // industry × country produced absurd values (e.g. utilities at SMB-size-band
+  // in tax havens, or whole-sector revenue posing as per-firm).
+  //
+  // Three-way rule, sharing ONE source of truth with the plausibility
+  // suppression chokepoint (getCatastropheCeiling = bounds.hi ×
+  // REVENUE_CATASTROPHIC_MULTIPLIER, same REVENUE_PER_FIRM_BOUNDS lookup):
+  //
+  //   - headline revenue > hi × 3 (catastrophic): DASH. Null the whole revenue
+  //     group (headline + every percentile) plus the derived profit/margin
+  //     fields, so the page shows the board's honest dash, never a number we
+  //     are suppressing. This makes the dash decision live at the same place as
+  //     the clamp: a catastrophic value can no longer be clamped down to `hi`
+  //     and rendered as a clean "typical", which is exactly the bug where the
+  //     clamp pre-empted the suppression.
+  //   - hi < revenue ≤ hi × 3: clamp to hi (unchanged — a mildly-high value is
+  //     still a usable benchmark capped at the industry ceiling).
+  //   - revenue ≤ hi: untouched.
+  //
+  // The catastrophe test reads the headline (revenue_per_firm, or rev_p50 when
+  // the headline is absent) so the decision tracks the figure the board prints
+  // as "Typical revenue". When it dashes, the range and spread cannot survive
+  // as [x, hi]: every percentile is nulled here too, at the data layer.
   const indId = out.industry_id || "default";
   const bounds = REVENUE_PER_FIRM_BOUNDS[indId] || DEFAULT_REVENUE_BOUNDS;
+  const catastropheCeiling = getCatastropheCeiling(out.industry_id);
+  const headlineRevenue =
+    out.revenue_per_firm != null ? out.revenue_per_firm : out.rev_p50 ?? null;
+  const revenueIsCatastrophic =
+    headlineRevenue != null && headlineRevenue > catastropheCeiling;
+
+  if (revenueIsCatastrophic) {
+    // Dash the entire revenue waterfall together.
+    for (const key of [
+      "revenue_per_firm",
+      "rev_p10",
+      "rev_p25",
+      "rev_p50",
+      "rev_p75",
+      "rev_p90",
+      "total_revenue",
+      "total_revenue_usd",
+      "gross_profit",
+      "operating_profit",
+      "net_profit",
+    ] as const) {
+      (out as Record<string, unknown>)[key] = null;
+    }
+    // Mark the suppression so any later fill step (e.g. the wrapper re-running
+    // fillMissingFields) cannot resurrect the dash with a synthesized figure.
+    // enforceSanity is normally the last transform, so this is belt-and-braces
+    // against future reordering, but it costs nothing and removes the hazard.
+    out._revenueSuppressed = true;
+    // Early return: with no revenue there is nothing for the clamp,
+    // monotonicity, employee-ratio, or profit-floor steps below to act on, and
+    // re-deriving any of them would resurrect the figure we just dashed.
+    // Wage sanity is independent of revenue, so apply it before returning.
+    sanitizeWage(out);
+    return out;
+  }
+
   if (out.revenue_per_firm != null && out.revenue_per_firm > bounds.hi) {
     out.revenue_per_firm = bounds.hi;
   }
@@ -328,24 +410,7 @@ export function enforceSanity(cell: Cell): Cell {
     }
   }
 
-  // Wage sanity. Catches local-currency-as-USD bugs
-  // (e.g., 6,000,000 yen leaked as $6M wage). Absolute SMB wage ceiling
-  // is $250K/yr/employee; floor is $1.2K (anything below is likely
-  // monthly mistaken for annual).
-  if (out.payroll_per_employee != null) {
-    if (out.payroll_per_employee > 250_000) {
-      // Looks like a currency or scale error — fall back to country median.
-      const cb = COUNTRY_BASELINE.countries[(out.country || "").toUpperCase()] || COUNTRY_BASELINE.default_fallback;
-      out.payroll_per_employee = cb.payroll_per_employee_usd;
-    } else if (out.payroll_per_employee > 0 && out.payroll_per_employee < 1200) {
-      // Possibly monthly. Multiply by 12; if still in range use it, else fall back.
-      const annualized = out.payroll_per_employee * 12;
-      const cb = COUNTRY_BASELINE.countries[(out.country || "").toUpperCase()] || COUNTRY_BASELINE.default_fallback;
-      out.payroll_per_employee = annualized <= 250_000 && annualized >= 1200
-        ? annualized
-        : cb.payroll_per_employee_usd;
-    }
-  }
+  sanitizeWage(out);
 
   const wage = out.payroll_per_employee || 0;
   const rev = out.revenue_per_firm || 0;
@@ -391,13 +456,22 @@ export function fillMissingFields(cell: Cell): Cell {
   const econ = resolveEconomics(industryId, iso2);
 
   const out: Cell = { ...cell };
-  const typical = out.revenue_per_firm || pickTypicalRevenue(industryId, iso2);
-  if (out.revenue_per_firm == null) out.revenue_per_firm = typical;
-  if (out.rev_p50 == null) out.rev_p50 = typical;
-  if (out.rev_p10 == null) out.rev_p10 = typical * PCT_MULTIPLIERS.p10;
-  if (out.rev_p25 == null) out.rev_p25 = typical * PCT_MULTIPLIERS.p25;
-  if (out.rev_p75 == null) out.rev_p75 = typical * PCT_MULTIPLIERS.p75;
-  if (out.rev_p90 == null) out.rev_p90 = typical * PCT_MULTIPLIERS.p90;
+  // Honor an upstream catastrophic-revenue suppression: when the headline
+  // revenue was deliberately nulled (raw > industry hi × 3), do NOT resurrect
+  // it or its percentiles with a synthesized in-bounds figure. Re-deriving here
+  // would launder the suppression into a fabricated "typical" and defeat the
+  // dash. The non-revenue defaults (wage, employees, margins) below still fill
+  // so the rest of the page renders. This is the data-layer half of the
+  // coupling the board also enforces (null median -> null range + omitted bar).
+  if (!out._revenueSuppressed) {
+    const typical = out.revenue_per_firm || pickTypicalRevenue(industryId, iso2);
+    if (out.revenue_per_firm == null) out.revenue_per_firm = typical;
+    if (out.rev_p50 == null) out.rev_p50 = typical;
+    if (out.rev_p10 == null) out.rev_p10 = typical * PCT_MULTIPLIERS.p10;
+    if (out.rev_p25 == null) out.rev_p25 = typical * PCT_MULTIPLIERS.p25;
+    if (out.rev_p75 == null) out.rev_p75 = typical * PCT_MULTIPLIERS.p75;
+    if (out.rev_p90 == null) out.rev_p90 = typical * PCT_MULTIPLIERS.p90;
+  }
   if (out.payroll_per_employee == null)
     out.payroll_per_employee = country.payroll_per_employee_usd;
   if (out.n_employees == null) out.n_employees = DEFAULT_EMPLOYEES;
