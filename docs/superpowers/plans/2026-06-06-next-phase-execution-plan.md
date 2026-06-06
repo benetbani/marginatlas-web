@@ -71,3 +71,27 @@ A premium reference cited by buyers, and a paid API, both rest on one thing: the
 
 ## What I would execute first (recommended kickoff)
 **Phase 1a + 1b**, immediately: harden the trust gate everywhere, then dry-run and tighten the loose bounds. It is fast, it is the foundation, and it makes everything that follows credible. Then **Phase 2** (competition density -> the break-in score), the decisive product. The magazine soul (Phase 4) runs alongside as a continuous voice-and-craft pass.
+
+---
+
+## Refinement from the 20-question follow-up (2026-06-06)
+
+**Headline: DEPTH first.** The founder's #1 "next big thing" is **deeper data** (the product "feels thin"), and the 6-month win is **a trusted reference everyone cites**. So reorder toward real-data depth before new surfaces and before monetization.
+
+**Locked specifics:**
+- **The break-in rating:** a SIMPLE single **0-100 overall** score (NOT sub-ratings), rewarding **time-to-break-even** above all, with ease-of-entry and take-home folded in.
+- **Lead metric everywhere:** **owner take-home**.
+- **Next datasets, in order:** **startup capital**, then **competition density** (a **blend** of real + modeled, labelled). Go **deeper in big economies** (depth over breadth). **Yearly** refresh.
+- **Cost-to-open:** the **full checklist** (capital, time, permits, first hires, estimates where needed).
+- **Editorial stories:** **skip for now**; warm voice only (no story-writing layer yet).
+- **Product, kept lean:** **no login**, **no site-wide search** yet; **enhance the existing compare builder** (not a new recommender); **polish the homepage** as the standing priority.
+- **Monetization:** **much later** (product-first). When it comes: **gate the deepest data** (freemium-depth), not pure API-first.
+- **Growth:** **shareable content** (the Extremes hub, rankings, surprising stats) over pure SEO.
+- **Biggest risk to retire:** the product feeling thin -> answered by depth.
+
+**Reordered next phase (supersedes the phase order above where they conflict):**
+1. **Data depth** (finish Phase 1 trust + add startup-capital data + competition density + deeper big-economy coverage). The antidote to "thin."
+2. **The simple 0-100 break-in rating** (take-home + speed-to-profit + ease of entry), one number, everywhere.
+3. **Cost-to-open full checklists.**
+4. **Homepage polish + warm-voice pass + the shareable Extremes/rankings front.**
+5. **Much later:** gated-depth monetization, then the API.
