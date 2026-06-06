@@ -15,7 +15,7 @@ import {
 } from "@/lib/cells";
 import { INDUSTRIES, industryToSlug, isExcludedFromDiscovery } from "@/lib/taxonomy";
 import { computeBreakeven } from "@/lib/economics/breakeven";
-import { getCityTier, getCityPopulation } from "@/lib/cities/city_tier";
+import { getCityTier, getCityPopulation, getCityCostOfLivingIndex } from "@/lib/cities/city_tier";
 import { iso2ToName } from "@/lib/countries";
 import { RevenueTiles } from "@/components/RevenueTiles";
 import { RevenueDistribution } from "@/components/RevenueDistribution";
@@ -420,6 +420,10 @@ export default async function CellPage({
   // City population (residents) when the geo slug is a known city; null for
   // state/region slugs. Drives the market-density read.
   const cityPopulation = getCityPopulation(geo);
+  // City cost-of-living index (NYC = 100) when the geo slug is a known city;
+  // null for state/region slugs. Place-adjusts the modeled "Cost to open"
+  // figure so the same business reads higher in a costly metro.
+  const cityCostOfLivingIndex = getCityCostOfLivingIndex(geo);
 
   // Masthead atmosphere image. Resolve the geo's city hero photo (the same
   // source CityHero / the city page use, keyed by the geo slug) and pass only
@@ -455,6 +459,7 @@ export default async function CellPage({
     peopleWorking: employeesEstimate ?? null,
     wagePerEmployee: wageEstimate ?? null,
     cityPopulation,
+    cityCostOfLivingIndex,
     econ: econSnap,
     corporateTaxRate: netProfitResult?.effective_cit_rate ?? null,
     costStructure: cell.cost_structure ?? null,

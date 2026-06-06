@@ -44,7 +44,8 @@ import { isTrustedLocalCell } from "@/lib/cells/trust";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { clampMargin, clampNetMarginPct, boundSurvivalCurve, displayDensityPer10k } from "@/lib/finance/margin_floor";
 import { computeBreakeven } from "@/lib/economics/breakeven";
-import { getCityTier } from "@/lib/cities/city_tier";
+import { getCityTier, getCityCostOfLivingIndex } from "@/lib/cities/city_tier";
+import { placeAdjustedStartupCapital } from "@/lib/markets/startup_capital_archetypes";
 import { getLondonEntry } from "@/lib/scores/cell_board";
 import { getActivitySurvivalArchetype } from "@/lib/scores/activity_board";
 import { INDUSTRY_BY_ID, industryToSlug } from "@/lib/taxonomy";
@@ -187,6 +188,14 @@ export interface CityColumn {
   netMarginFraction: number | null;
   /** Competitors per 10k residents (local cells only), else null. */
   densityPer10k: number | null;
+  /**
+   * The modeled, place-adjusted one-time cost to open this activity here, USD.
+   * The per-industry archetype scaled by this city's cost-of-living index (NYC =
+   * 100) inside the capped multiplier band. Always present and bounded (it is a
+   * pure model, never a per-place measurement), so it ranks cleanly across the
+   * trusted slate without dashing. Directional, labelled modeled where shown.
+   */
+  startupCostUsd: number | null;
   /** Break-even orders per day, and the typical daily count, where held. */
   breakevenDaily: number | null;
   typicalDaily: number | null;
@@ -360,6 +369,14 @@ async function resolveCity(
     takeHome,
     netMarginFraction,
     densityPer10k: densityPer10kOf(cell, city.population),
+    // Modeled, place-adjusted cost to open here: the per-industry archetype
+    // scaled by this city's cost-of-living index (NYC = 100), capped. The cell
+    // carries the expected industry_id (the trust gate guarantees it), so the
+    // archetype is keyed correctly. Always a finite, bounded figure.
+    startupCostUsd: placeAdjustedStartupCapital({
+      industryId: cell.industry_id || expectIndustryId,
+      costOfLivingIndex: getCityCostOfLivingIndex(city.slug),
+    }),
     breakevenDaily: be ? be.breakevenOrdersDaily : null,
     typicalDaily: be ? be.currentOrdersDaily : null,
     survivalYr5,

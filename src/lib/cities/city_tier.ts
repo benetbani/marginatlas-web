@@ -20,6 +20,7 @@ type CityEntry = {
   slug: string;
   tier?: number;
   pop_m?: number;
+  cost_of_living_index?: number;
 };
 
 const CITIES = (cityListJson as { cities: CityEntry[] }).cities;
@@ -48,6 +49,25 @@ const POP_BY_SLUG: Map<string, number> = (() => {
   return m;
 })();
 
+// Cost-of-living index by city slug. The city list anchors this to NYC = 100;
+// a higher index is a more expensive metro, a lower one cheaper. Used to
+// place-adjust the modeled startup-capital ("cost to open") figure, so the same
+// business reads higher in a costly city than in a cheap one.
+const COL_BY_SLUG: Map<string, number> = (() => {
+  const m = new Map<string, number>();
+  for (const c of CITIES) {
+    if (!c.slug) continue;
+    if (
+      typeof c.cost_of_living_index === "number" &&
+      Number.isFinite(c.cost_of_living_index) &&
+      c.cost_of_living_index > 0
+    ) {
+      m.set(c.slug.toLowerCase(), c.cost_of_living_index);
+    }
+  }
+  return m;
+})();
+
 /**
  * Resolve a geo slug to its city tier (1/2/3) when it's a known city.
  * Returns null when the slug isn't in the city list — typically a
@@ -68,4 +88,17 @@ export function getCityTier(geoSlug: string | null | undefined): 1 | 2 | 3 | nul
 export function getCityPopulation(geoSlug: string | null | undefined): number | null {
   if (!geoSlug) return null;
   return POP_BY_SLUG.get(geoSlug.toLowerCase()) ?? null;
+}
+
+/**
+ * Resolve a geo slug to its cost-of-living index (NYC = 100) when it's a known
+ * city. Returns null when the slug isn't in the city list (a state or region
+ * slug) or has no index on file. Callers should treat null as "no local cost
+ * signal" and fall back to a country proxy rather than assume the baseline.
+ */
+export function getCityCostOfLivingIndex(
+  geoSlug: string | null | undefined,
+): number | null {
+  if (!geoSlug) return null;
+  return COL_BY_SLUG.get(geoSlug.toLowerCase()) ?? null;
 }

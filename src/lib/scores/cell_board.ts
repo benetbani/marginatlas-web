@@ -42,6 +42,7 @@ import type { Cell } from "@/lib/cells";
 import { industryToSlug } from "@/lib/taxonomy";
 import { isTrustedLocalCell } from "@/lib/cells/trust";
 import { densityArchetypePer10k } from "@/lib/markets/density_archetypes";
+import { placeAdjustedStartupCapital } from "@/lib/markets/startup_capital_archetypes";
 import type { BoardSection } from "@/components/board/DataSection";
 import type { StatRow } from "@/components/board/StatGrid";
 import { fmtUSD, fmtPct, fmtInt, fmtNum } from "@/components/board/format";
@@ -133,6 +134,24 @@ export interface CellBoardInput {
   wagePerEmployee: number | null;
   /** Residents in the geo when it is a known city; null for state/region. */
   cityPopulation: number | null;
+  /**
+   * The geo's cost-of-living index (NYC = 100) when it is a known city; null
+   * for a state/region slug. Place-adjusts the modeled "Cost to open" figure so
+   * the same business reads higher in a costly metro than in a cheap one. When
+   * null, the board falls back to a country wage proxy (from econ) before the
+   * baseline. Never disturbs any other row.
+   */
+  cityCostOfLivingIndex: number | null;
+  /**
+   * A trustworthy REAL one-time startup / formation cost for this cell (USD), or
+   * null when none is held. When present (and the cell passes the trusted-local
+   * gate) the board PREFERS this over the modeled place-adjusted archetype for
+   * the "Cost to open" row, exactly as the density blend prefers a real local
+   * density. No such real per-cell source exists yet, so in practice this is
+   * null everywhere and the row is modeled, labelled so. The slot keeps the
+   * blend real-first for the day a trusted figure lands.
+   */
+  realStartupCostUsd?: number | null;
   /** Country economics snapshot (getCountryEconomicsSnapshot). */
   econ: {
     gdpPerCapita: number | null;
@@ -213,6 +232,8 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
     peopleWorking,
     wagePerEmployee,
     cityPopulation,
+    cityCostOfLivingIndex,
+    realStartupCostUsd,
     econ,
     corporateTaxRate,
     costStructure,
@@ -261,6 +282,33 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
 
   const rentSharePct = costStructure ? pctShare(costStructure.rent) : null;
   const laborSharePct = costStructure ? pctShare(costStructure.labor) : null;
+
+  // Cost to open: the one-time entry capital, blended exactly like the density
+  // row. A trustworthy REAL startup/formation cost is preferred, but ONLY when
+  // the cell is a trusted local measurement (the shared four-way trust gate),
+  // so a country aggregate or an extrapolated cell can never put a "real" figure
+  // under a local title. Otherwise the figure is the MODELED per-industry
+  // archetype, place-adjusted by the city's cost-of-living index (NYC = 100)
+  // when known, else a country wage proxy, else the baseline, all inside a
+  // capped multiplier band so neither the cheapest nor the priciest place prints
+  // an absurd entry figure. The modeled branch carries a quiet "modeled" hint on
+  // the row, the same honesty marker the density row uses. The archetype always
+  // returns a finite, bounded figure, so this row stops dashing wherever we can
+  // estimate it (which is everywhere), and never shows a wrong-scale value.
+  const hasRealStartupCost =
+    isNum(realStartupCostUsd) &&
+    realStartupCostUsd > 0 &&
+    isTrustedLocalCell(cell);
+  const modeledStartupCost = placeAdjustedStartupCapital({
+    industryId: cell.industry_id ?? null,
+    costOfLivingIndex: cityCostOfLivingIndex,
+    avgYearlySalary:
+      econ && isNum(econ.avgMonthlySalary) ? econ.avgMonthlySalary * 12 : null,
+  });
+  const startupCostIsModeled = !hasRealStartupCost;
+  const startupCost = hasRealStartupCost
+    ? (realStartupCostUsd as number)
+    : modeledStartupCost;
 
   // Net-margin sanity clamp. The displayed net margin always passes through the
   // shared margin clamp (floor 3%, per-industry hard ceiling) so it can never
@@ -342,6 +390,14 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
       hint: isNum(typicalOrdersDaily)
         ? `vs ${Math.round(typicalOrdersDaily)} typical`
         : undefined,
+    },
+    {
+      label: "Cost to open",
+      value: isNum(startupCost) ? fmtUSD(startupCost) : null,
+      // Quiet honesty marker: when the entry figure is the place-adjusted
+      // archetype rather than a trusted real cost for this cell, the row says so,
+      // matching the density row's "modeled" hint.
+      hint: startupCostIsModeled && isNum(startupCost) ? "modeled" : undefined,
     },
     {
       label: "People working",

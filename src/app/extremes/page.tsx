@@ -33,6 +33,7 @@ import {
   loadExtremes,
   type ExtremeLeaderboard,
   type DensityLeaderboard,
+  type StartupLeaderboard,
 } from "@/lib/extremes/leaderboards";
 
 export const revalidate = 86400;
@@ -147,8 +148,57 @@ function DensityLeaderboardSection({ board }: { board: DensityLeaderboard }) {
   );
 }
 
+/**
+ * One startup-capital leaderboard: the same warm framing and cream card as the
+ * boards above, but the ranked figure is the modeled one-time cost to open the
+ * business in that place (the per-industry archetype scaled by the city's cost
+ * of living, capped). Each row links to the full cell. The figure is a model,
+ * not a per-place measurement, so the note labels it modeled.
+ */
+function StartupLeaderboardSection({ board }: { board: StartupLeaderboard }) {
+  return (
+    <section className="border-t border-parchment pt-10 first:border-t-0 first:pt-0">
+      <SectionEyebrow size="md" className="mb-2">
+        {board.eyebrow}
+      </SectionEyebrow>
+      <h2 className="font-display text-2xl font-semibold tracking-tight text-balance text-ink-900 md:text-3xl">
+        {board.title}
+      </h2>
+      <p className="mt-2 mb-5 max-w-2xl text-sm leading-relaxed text-cocoa-700 md:text-base">
+        {board.intro}
+      </p>
+
+      <div
+        className="rounded-lg border border-parchment bg-cream-50 p-4 md:p-5"
+        style={{ boxShadow: elevation.card }}
+      >
+        <div className="mb-2 flex items-baseline justify-end">
+          <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-cocoa-500">
+            {board.valueCaption}
+          </span>
+        </div>
+        {board.rows.map((row, i) => (
+          <RankRow
+            key={row.href}
+            rank={i + 1}
+            label={row.name}
+            href={row.href}
+            value={fmtUSD(row.startupCostUsd)}
+          />
+        ))}
+      </div>
+      <p className="mt-3 text-[11px] leading-relaxed text-cocoa-500">
+        Cost to open is the typical one-time capital to get the doors open: the
+        fit-out, kit, deposits, and working capital before the first customer.
+        Modeled from the trade and adjusted for how expensive the place is.
+        Directional.
+      </p>
+    </section>
+  );
+}
+
 export default async function ExtremesPage() {
-  const { leaderboards, densityBoards } = await loadExtremes();
+  const { leaderboards, densityBoards, startupBoards } = await loadExtremes();
 
   // The hub is data-gated like every other surface: if too few leaderboards
   // resolve cleanly (a wide Supabase outage), render the hero and an honest
@@ -158,6 +208,10 @@ export default async function ExtremesPage() {
   // The density pair is shown only when BOTH the crowded and still-room boards
   // resolved cleanly, so the "room to enter" block never appears one-sided.
   const hasDensity = densityBoards.length >= 2;
+  // The startup pair is shown only when BOTH the cheapest and highest-barrier
+  // boards resolved cleanly, so the "cost to open" block never appears
+  // one-sided either.
+  const hasStartup = startupBoards.length >= 2;
 
   return (
     <div className="pb-16">
@@ -215,6 +269,32 @@ export default async function ExtremesPage() {
           <div className="space-y-10">
             {densityBoards.map((board) => (
               <DensityLeaderboardSection key={board.key} board={board} />
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      {/* Startup-capital block: the "cost to open" read, ranked. Its own
+         labelled pair (cheapest to start / highest barrier) so it reads as a
+         distinct lens, the entry figure rather than the running economics.
+         Self-omits entirely unless both directions resolved above the floor. */}
+      {hasStartup ? (
+        <div className="mt-12 border-t border-parchment pt-10">
+          <SectionEyebrow size="md" className="mb-3">
+            What it costs to get in
+          </SectionEyebrow>
+          <h2 className="max-w-3xl text-balance font-display text-3xl font-semibold tracking-tight text-ink-900 md:text-4xl">
+            Cost to open
+          </h2>
+          <p className="mt-3 mb-8 max-w-2xl text-base leading-relaxed text-cocoa-700 md:text-lg">
+            Before the first customer there is a bill: the fit-out, the kit, the
+            deposits, the working capital to open the doors. It separates the
+            trades you can start from a laptop from the ones that need a builder,
+            and it shifts with how expensive the place is to set up in.
+          </p>
+          <div className="space-y-10">
+            {startupBoards.map((board) => (
+              <StartupLeaderboardSection key={board.key} board={board} />
             ))}
           </div>
         </div>

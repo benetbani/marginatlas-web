@@ -458,11 +458,205 @@ async function loadDensityBoards(): Promise<DensityLeaderboard[]> {
   return buildDensityBoards(acrossById);
 }
 
+// --- startup-capital leaderboards -------------------------------------------
+//
+// The "what it costs to open" read, ranked across the trusted slate: the
+// cheapest businesses to start anywhere we cover, and the highest barriers to
+// entry. These rank the MODELED, place-adjusted cost-to-open the cell board now
+// shows (the per-industry archetype scaled by the city's cost-of-living index,
+// capped), the entry-figure sibling of the density and take-home boards above.
+//
+// Source of truth: the SAME trusted-city slate buildAcrossCities resolves for
+// the density boards, so a row here is only ever a genuinely local cell (right
+// activity, not synthetic, not the extrapolated tier, not a country aggregate).
+// To make "cheapest businesses" honest, we span a SET of activities, from the
+// laptop trades to the premises-heavy builds, and rank every (activity, city)
+// pair the slate resolves, so the cheap end is a light trade in a low-cost
+// metro and the barrier end is a heavy build in a costly one. The figure is the
+// pure model, so it never dashes; a board self-omits below MIN_ROWS clean rows,
+// exactly like the density boards.
+
+/** One ranked row on a startup-capital leaderboard. */
+export interface StartupRow {
+  /** Row label, the activity and place, e.g. "Restaurants in Paris". */
+  name: string;
+  /** Cell-page href for the full read. */
+  href: string;
+  /** ISO2 country slug (lowercased), for a small flag. */
+  country: string;
+  /** Modeled, place-adjusted one-time cost to open, USD (the ranked figure). */
+  startupCostUsd: number;
+}
+
+/** One resolved startup-capital leaderboard: framing plus the ranked rows. */
+export interface StartupLeaderboard {
+  /** Stable key for React + section anchors. */
+  key: string;
+  /** Small uppercase eyebrow above the title. */
+  eyebrow: string;
+  /** Warm leaderboard title. */
+  title: string;
+  /** One-line editorial intro that names the read. */
+  intro: string;
+  /** The label for the right-hand value column. */
+  valueCaption: string;
+  /** Ranked rows, best-for-the-framing first. */
+  rows: StartupRow[];
+}
+
+/**
+ * The activity set the startup boards rank across. A deliberate spread from the
+ * lightest opens (a consultant or a cleaner starts from a laptop and a van) to
+ * the premises-heavy builds (a full venue, a clinic, a hotel), so the two
+ * boards capture a real range rather than one trade. All are widely covered
+ * activities, so the trusted slate resolves several cities for each, keeping the
+ * flattened pool well above the row floor.
+ */
+const STARTUP_ACTIVITY_IDS: string[] = [
+  "cleaning_services",
+  "management_consulting",
+  "marketing_design",
+  "software_development",
+  "barbershops",
+  "hair_salons_full",
+  "real_estate_agencies",
+  "restaurants",
+  "cafes_coffee",
+  "sports_fitness",
+  "grocery_stores",
+  "auto_repair_shops",
+  "dental_practices",
+  "veterinary_pet_care",
+  "hotels_lodging",
+];
+
+/**
+ * A startup-board request: every (activity, city) pair across the trusted slate,
+ * ranked one way by the modeled cost to open.
+ */
+interface StartupSpec {
+  key: string;
+  eyebrow: string;
+  title: string;
+  intro: string;
+  valueCaption: string;
+  /**
+   * Ranking direction by cost to open. "low" puts the cheapest open first (the
+   * lowest barrier to entry); "high" puts the priciest first (the highest
+   * barrier).
+   */
+  direction: "high" | "low";
+}
+
+/**
+ * The startup-board slate. Two opposite reads of the SAME entry figure: the
+ * cheapest businesses to start, and the steepest barriers to entry. The pair is
+ * the cost-to-open row made browsable, the same way the density pair is the
+ * crowding gauge made browsable.
+ */
+const STARTUP_SPECS: StartupSpec[] = [
+  {
+    key: "cheapest-to-start",
+    eyebrow: "The low bar",
+    title: "The cheapest businesses to start",
+    intro:
+      "Not every business needs a fit-out and a lease. These are the openings that ask the least up front across everywhere we cover, the trades you can start from a laptop, a van, or a single chair. Low to enter is not the same as easy to win, but the bill to begin is small.",
+    valueCaption: "to open",
+    direction: "low",
+  },
+  {
+    key: "highest-barriers",
+    eyebrow: "The high bar",
+    title: "The highest barriers to entry",
+    intro:
+      "The other end of the same scale: the openings that ask the most before the first customer. A full venue, a fitted clinic, a hotel, in the costliest places to build one. The figure is the price of the front door, and it is what keeps these trades from filling up overnight.",
+    valueCaption: "to open",
+    direction: "high",
+  },
+];
+
+/** A finite, positive cost we can rank and show. */
+function rankableStartupCost(c: CityColumn): number | null {
+  return isPos(c.startupCostUsd) ? c.startupCostUsd : null;
+}
+
+/**
+ * Build both startup-capital boards from the pre-resolved across-cities cache.
+ * Flattens every resolved (activity, city) column across the activity set into
+ * one pool, then each spec ranks that shared pool by the modeled cost to open
+ * (ascending for the cheapest board, descending for the barriers board). A
+ * board self-omits below MIN_ROWS clean rows. Because the columns come straight
+ * from buildAcrossCities, every row is a trust-gated local cell; the figure
+ * itself is the bounded model, so it never dashes or shows a wrong-scale value.
+ */
+function buildStartupBoards(
+  acrossById: Map<string, Awaited<ReturnType<typeof buildAcrossCities>>>,
+): StartupLeaderboard[] {
+  // One flat pool of (activity, city) rows: the activity name for the label,
+  // the city column for the place + figure. Across reads that did not resolve
+  // (null) simply contribute nothing.
+  type Pooled = { activityName: string; col: CityColumn; cost: number };
+  const pool: Pooled[] = [];
+  for (const id of STARTUP_ACTIVITY_IDS) {
+    const across = acrossById.get(id);
+    if (!across) continue;
+    for (const col of across.cities) {
+      const cost = rankableStartupCost(col);
+      if (cost === null) continue;
+      pool.push({ activityName: across.activityName, col, cost });
+    }
+  }
+
+  const boards: StartupLeaderboard[] = [];
+  for (const spec of STARTUP_SPECS) {
+    if (pool.length < MIN_ROWS) continue;
+    const ordered = [...pool].sort((a, b) =>
+      spec.direction === "high" ? b.cost - a.cost : a.cost - b.cost,
+    );
+    boards.push({
+      key: spec.key,
+      eyebrow: spec.eyebrow,
+      title: spec.title,
+      intro: spec.intro,
+      valueCaption: spec.valueCaption,
+      rows: ordered.slice(0, MAX_ROWS).map(({ activityName, col, cost }) => ({
+        name: `${activityName} in ${col.name}`,
+        href: col.href,
+        country: col.country,
+        startupCostUsd: cost,
+      })),
+    });
+  }
+  return boards;
+}
+
+/**
+ * Resolve the across-cities data for every activity the startup boards span,
+ * ONCE each, then build the boards from that shared cache. Each across read is
+ * the builder's own budgeted, trust-gated resolve, so a slow or thin activity
+ * simply contributes no rows rather than hanging the hub.
+ */
+async function loadStartupBoards(): Promise<StartupLeaderboard[]> {
+  const uniqueIds = Array.from(new Set(STARTUP_ACTIVITY_IDS));
+  const acrossById = new Map<
+    string,
+    Awaited<ReturnType<typeof buildAcrossCities>>
+  >();
+  await Promise.all(
+    uniqueIds.map(async (id) => {
+      acrossById.set(id, await buildAcrossCities(id));
+    }),
+  );
+  return buildStartupBoards(acrossById);
+}
+
 /** The full hub payload: the leaderboards that resolved cleanly, in spec order. */
 export interface ExtremesPayload {
   leaderboards: ExtremeLeaderboard[];
   /** Competition-density leaderboards (crowded / still-room), or empty. */
   densityBoards: DensityLeaderboard[];
+  /** Startup-capital leaderboards (cheapest / highest barrier), or empty. */
+  startupBoards: StartupLeaderboard[];
 }
 
 /**
@@ -513,15 +707,20 @@ async function resolveWithPool(
  * The page decides whether it has enough to render at all.
  */
 export async function loadExtremes(): Promise<ExtremesPayload> {
-  // The take-home boards (US-state reads) and the density boards (across-cities
-  // reads) hit different surfaces, so run them in parallel; each self-omits on a
-  // thin or failed read without affecting the other.
-  const [results, densityBoards] = await Promise.all([
+  // The take-home boards (US-state reads), the density boards, and the startup
+  // boards (both across-cities reads) hit different surfaces and self-omit on a
+  // thin or failed read, so run them in parallel without affecting each other.
+  // The density and startup boards each resolve their own across-cities slate;
+  // restaurants overlap between them, but each builder budgets its own reads, so
+  // the small duplication is cheaper than threading one shared cache through two
+  // differently-shaped board sets.
+  const [results, densityBoards, startupBoards] = await Promise.all([
     resolveWithPool(LEADERBOARD_SPECS),
     loadDensityBoards(),
+    loadStartupBoards(),
   ]);
   const leaderboards = results.filter(
     (b): b is ExtremeLeaderboard => b !== null,
   );
-  return { leaderboards, densityBoards };
+  return { leaderboards, densityBoards, startupBoards };
 }
