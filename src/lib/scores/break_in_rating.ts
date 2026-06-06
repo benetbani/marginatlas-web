@@ -13,7 +13,7 @@
  *      take-home means the money comes back fast, and a fast payback is the
  *      single best proxy for "easy to win here". This is the dominant term
  *      (58% of the raw score): the payback in years is mapped onto a 0-100
- *      curve that falls steeply as the road to your money back gets longer.
+ *      curve that falls steeply as the road back to profit gets longer.
  *   2. EASE OF ENTRY as friction (24%): how long from the decision to the doors
  *      opening. A quick open is a low barrier; a year-long licensed build is a
  *      high one. (The dollar cost of entry is already inside payback; this term
@@ -121,7 +121,7 @@ function interpolate(anchors: readonly Anchor[], x: number): number {
 
 /**
  * PAYBACK curve (the dominant term). Maps payback in YEARS to a 0..100 score
- * that falls steeply as the road to your money back lengthens. A quarter-year
+ * that falls steeply as the road back to profit lengthens. A quarter-year
  * payback is as good as it gets (100); a one-year payback is a strong 80; by
  * three years the score sits at a true midpoint (50); five years has fallen to
  * the mid-30s; a decade-plus payback is near the floor. These anchors are the
@@ -233,9 +233,9 @@ function headlineFor(band: BreakInBand): string {
     case "manageable":
       return "A fair price of entry and a payback you can plan around. Doable on a real budget if you go in with your eyes open.";
     case "demanding":
-      return "The money back takes a while and the build is real, so come in funded and patient or not at all.";
+      return "Earning it back takes a while and the build is real, so come in funded and patient or not at all.";
     case "brutal":
-      return "Heavy to open and a long road to your money back, this is a hard room to break into without deep pockets and staying power.";
+      return "Heavy to open and a long road back to profit, this is a hard room to break into without deep pockets and staying power.";
   }
 }
 

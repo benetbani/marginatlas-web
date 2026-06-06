@@ -729,7 +729,7 @@ const BREAK_IN_SPECS: BreakInSpec[] = [
     eyebrow: "The steep climb",
     title: "The hardest to break into",
     intro:
-      "The other end of the same scale: heavy to open, a long road to your money back, and a crowded room when you get there. These ask the most patience and the deepest pockets, the businesses you do not walk into without a plan.",
+      "The other end of the same scale: heavy to open, a long road back to profit, and a crowded room when you get there. These ask the most patience and the deepest pockets, the businesses you do not walk into without a plan.",
     valueCaption: "break-in rating",
     direction: "low",
   },
