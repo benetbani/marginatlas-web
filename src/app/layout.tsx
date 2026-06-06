@@ -112,6 +112,7 @@ export default function RootLayout({
                 <a href="/countries" className="hover:text-atlas-600 transition-colors">Countries</a>
                 <a href="/industries" className="hover:text-atlas-600 transition-colors">Activities</a>
                 <a href="/cities" className="hover:text-atlas-600 transition-colors">Cities</a>
+                <a href="/extremes" className="hover:text-atlas-600 transition-colors">Extremes</a>
                 <a href="/decide" className="hover:text-atlas-600 transition-colors">Decide</a>
                 <a href="/check" className="hover:text-atlas-600 transition-colors">Check</a>
                 <a href="/compare" className="hover:text-atlas-600 transition-colors">Compare</a>
