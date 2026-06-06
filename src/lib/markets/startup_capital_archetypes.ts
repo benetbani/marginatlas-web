@@ -121,6 +121,83 @@ const STARTUP_CAPITAL_ARCHETYPE_USD: Record<string, number> = {
   "automotive-electrical-services": 120_000,
   "electronics-phone-repair": 40_000,
 
+  // Construction and the building trades: a crew, plant, a yard, insurance, and
+  // the working capital to float a job before the client pays. Far heavier than
+  // a one-van home-service call: a residential builder runs equipment and
+  // subcontractors, a commercial builder carries bonding and a bigger float, and
+  // the specialty trades sit lower because the kit is narrower.
+  "residential-construction": 120_000,
+  "commercial-construction": 160_000,
+  "civil-engineering": 180_000,
+  "specialty-construction-services": 85_000,
+  "specialty-trades-mixed": 85_000,
+  "bricklaying-services": 60_000,
+  "blocklaying-services": 60_000,
+  "cement-rendering-services": 60_000,
+  "carpet-laying-services": 45_000,
+  "carpentry-services": 50_000,
+  "carpenters-finish-work": 50_000,
+  "roofing-services": 70_000,
+  "tiling-services": 45_000,
+  "plastering-services": 50_000,
+  "painting-services": 25_000,
+  "plumbing-services": 35_000,
+  "flooring-installers": 50_000,
+  "cabinet-making": 90_000,
+
+  // Manufacturing: a small plant, not a one-room workshop. Even a light line
+  // means a leased unit, machines, power, and a stock of raw material before the
+  // first order ships, so none of these belong on the laptop-trade default. The
+  // tiers track how heavy the kit is: light assembly, printing, and apparel sit
+  // near the floor; food, wood, furniture, and plastics in the middle; metal,
+  // machinery, and chemical lines are the heaviest small-plant opens.
+  // Light assembly / printing / apparel / leather (~200k).
+  "textiles-fabric-manufacturing": 200_000,
+  "apparel-manufacturing": 200_000,
+  "custom-apparel-uniforms": 200_000,
+  "small-leather-goods": 200_000,
+  "paper-printing-manufacturing": 200_000,
+  "print-shops-offset-digital": 200_000,
+  "sign-shops-graphics-fab": 200_000,
+  "custom-jewelers-mfg": 200_000,
+  "soap-candle-makers": 200_000,
+  "electronics-semiconductors": 200_000,
+  "electrical-equipment": 200_000,
+  "miscellaneous-manufacturing": 200_000,
+  // Food / wood / furniture / plastics (~300k).
+  "food-manufacturing": 300_000,
+  "beverage-manufacturing": 300_000,
+  "craft-breweries-taprooms": 300_000,
+  "specialty-food-production": 300_000,
+  "wood-products-manufacturing": 300_000,
+  "custom-furniture-makers": 300_000,
+  "furniture-manufacturing": 300_000,
+  "plastics-rubber-products": 300_000,
+  // Metal / machinery / chemical (~400k).
+  "fabricated-metal-manufacturing": 400_000,
+  "primary-metal-manufacturing": 400_000,
+  "metal-fabrication-machine-shops": 400_000,
+  "machinery-manufacturing": 400_000,
+  "chemical-pharma-manufacturing": 400_000,
+  "petroleum-coal-products": 450_000,
+  "motor-vehicles-parts": 400_000,
+  "aerospace-other-transport-mfg": 450_000,
+
+  // Other capital-heavy opens that were defaulting low: a facility, a yard, a
+  // fleet, or a floor of inventory is the cost, not an operator with a laptop.
+  // An auto dealer floors a lot of cars; a rental house buys the fleet it rents;
+  // a warehouse and a campground are land-and-structure plays; a funeral home
+  // carries premises, vehicles, and plant.
+  "auto-dealers": 400_000,
+  "equipment-rental-leasing": 250_000,
+  "warehousing-storage": 250_000,
+  "building-garden-supply-stores": 200_000,
+  "garden-centers-nurseries": 150_000,
+  "campgrounds-rv-parks": 250_000,
+  "funeral-services": 300_000,
+  "gambling-amusement": 300_000,
+  "air-conditioning-refrigeration": 60_000,
+
   // Professional services: the lightest opens on the site. A desk, software,
   // and credentials; almost no capital plant. Consulting and software are the
   // floor; a clinical practice that needs equipment sits far higher (below).

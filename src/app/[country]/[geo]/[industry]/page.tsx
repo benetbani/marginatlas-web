@@ -67,7 +67,6 @@ import { MastheadImage } from "@/components/board/MastheadImage";
 import { getCityHero, isPatternHero } from "@/lib/images/city_heroes";
 import { DataSection } from "@/components/board/DataSection";
 import { FailureCards } from "@/components/board/FailureCards";
-import { computeScores } from "@/lib/scores";
 import { buildCellBoard, getLondonEntry } from "@/lib/scores/cell_board";
 import { getFailureModes } from "@/lib/qa/industry_failure_modes";
 import { CityHero } from "@/components/CityHero";
@@ -384,18 +383,16 @@ export default async function CellPage({
   // Defensive floor — never let a sub-3% net margin reach the page.
   const computedNetMargin = rawNetMargin != null ? clampMargin(rawNetMargin, "net", cell.industry_id || null) : null;
 
-  // Reformation decision layer (bible Sections 6, 10, 21, 25). Pure compute,
-  // no new queries: the proprietary scores come from the cell's own economics,
-  // using the same tax-aware net numbers the rest of the page shows. Each score
-  // self-omits when it cannot be defended. They feed the BoardHero score strip.
-  // City tier drives both the score context and the break-even AOV
-  // adjustment; resolve it once here and reuse it below.
+  // City tier drives the break-even AOV adjustment and the cost-of-living place
+  // signals below; resolve it once here and reuse it.
+  //
+  // The masthead's single headline score is now the break-in rating, computed
+  // inside buildCellBoard from this cell's real annual owner take-home and its
+  // real-or-modeled entry costs (see the BoardHero call below). The former
+  // multi-part opportunity strip (computeScores / scoreSet) no longer feeds this
+  // page's masthead, so it is not recomputed here; the computeScores module
+  // itself is untouched and still serves the surfaces that use it.
   const cityTier = getCityTier(geo);
-  const scoreSet = computeScores(cell, {
-    cityTier,
-    netMargin: computedNetMargin,
-    netProfit: adjustedNetTakeHome,
-  });
 
   // Top-of-page dashboard inputs. Hoisted here so each is computed ONCE and
   // reused both in the dashboard and in the deeper sections below (the
@@ -445,7 +442,7 @@ export default async function CellPage({
   // present; missing data renders as the board's dash. econSnap is the
   // country-economics snapshot already computed above for the take-home floor;
   // corporateTaxRate is the effective rate from the net-profit waterfall.
-  const board = buildCellBoard({
+  const { sections: boardSections, breakInRating } = buildCellBoard({
     cell,
     typicalRevenue: cell.revenue_per_firm ?? cell.rev_p50 ?? null,
     revP10: cell.rev_p10 ?? null,
@@ -632,8 +629,9 @@ export default async function CellPage({
       />
 
       {/* Board masthead. Plain left-aligned H1 ("<activity> in <place>") plus
-          the compact Atlas-score strip. Deliberately quieter and shorter than
-          the old VerdictHero so the data board itself reaches above the fold.
+          the single break-in rating (one headline score). Deliberately quieter
+          and shorter than the old VerdictHero so the data board reaches above
+          the fold.
           The richer search-friendly phrasing stays in generateMetadata; the
           visible H1 is now plain.
 
@@ -649,14 +647,20 @@ export default async function CellPage({
       <div className="relative overflow-hidden rounded-2xl">
         <MastheadImage src={mastheadSrc} />
         <div id="headline" className="relative">
+          {/* The masthead carries exactly ONE headline score: the break-in
+              rating (the single 0-100 "how easy is it to break in and win"
+              number, computed in buildCellBoard from this cell's real annual
+              owner take-home and its real-or-modeled entry costs). It replaces
+              the former multi-part Atlas/opportunity strip here so the top of
+              the page is never two competing scores; that prior score's data
+              plumbing (scoreSet) is untouched elsewhere. When the rating cannot
+              be defended (no take-home or no capital) breakInRating is null and
+              the masthead simply omits the score, never a placeholder. */}
           <BoardHero
             title={`${cell.industry_name || industry.replace(/-/g, " ")} in ${
               cell.geo_name || iso2ToName(country) || country.toUpperCase()
             }`}
-            score={{
-              overall: scoreSet.opportunity?.value ?? null,
-              parts: scoreSet.scores.map((s) => ({ label: s.label, score: s.value })),
-            }}
+            breakIn={breakInRating}
           />
         </div>
       </div>
@@ -668,7 +672,7 @@ export default async function CellPage({
           deeper sections below (break-even, take-home, distribution, waterfall)
           keep their full prose treatment. */}
       <div className="mt-2">
-        {board.map((s) => (
+        {boardSections.map((s) => (
           <DataSection section={s} key={s.key} />
         ))}
       </div>
@@ -699,11 +703,10 @@ export default async function CellPage({
         />
       ) : null}
 
-      {/* Decision layer: the proprietary scores now ride in the BoardHero score
-          strip at the top of the page. The standalone ScorePanel section here
-          was pure duplication of that strip and was removed. The full-prose
-          ScorePanel cards are retired from this page in favour of the compact
-          score strip. */}
+      {/* Decision layer: the masthead now carries the single break-in rating as
+          the one headline score, with its "why this rating" breakdown folded
+          into the "What it takes to open" section above. The older standalone
+          ScorePanel section was pure duplication and stays removed. */}
 
       {/* Plan v32 Sprint G — sub-industry picker. Renders only when the
          parent industry has at least one data_ready variant. Otherwise

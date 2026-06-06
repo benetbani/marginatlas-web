@@ -57,6 +57,11 @@ import { CostBar } from "@/components/board/charts/CostBar";
 import { CrowdingGauge } from "@/components/board/charts/CrowdingGauge";
 import { RentGauge } from "@/components/board/charts/RentGauge";
 import { SurvivalCurve } from "@/components/board/charts/SurvivalCurve";
+import { BreakInWhy } from "@/components/board/BreakInScore";
+import {
+  computeBreakInRating,
+  type BreakInRating,
+} from "@/lib/scores/break_in_rating";
 import {
   clampMargin,
   clampNetMarginPct,
@@ -219,11 +224,28 @@ function crowdingScore(per10k: number | null): number | null {
 }
 
 /**
+ * What buildCellBoard hands back: the fixed A-J sections AND the cell's single
+ * headline break-in rating (or null when it cannot be defended). The rating is
+ * computed here, from the SAME resolved inputs the "What it takes to open"
+ * section uses (real-or-modeled capital, modeled permits + time, real-or-modeled
+ * density, the cell's real annual owner take-home), so the masthead score, the
+ * "why this rating" breakdown folded into the opening section, and the opening
+ * figures themselves can never disagree. The page reads `breakInRating` for the
+ * masthead and renders `sections` as the board.
+ */
+export interface CellBoardResult {
+  sections: BoardSection[];
+  /** The single headline break-in rating, or null when core inputs are missing. */
+  breakInRating: BreakInRating | null;
+}
+
+/**
  * Build the full A-J board for a cell. Deterministic and side-effect free:
  * the same inputs always yield the same ten sections, every section and every
- * row present, in the fixed order documented at the top of the file.
+ * row present, in the fixed order documented at the top of the file, plus the
+ * cell's single break-in rating (null when it cannot be defended).
  */
-export function buildCellBoard(input: CellBoardInput): BoardSection[] {
+export function buildCellBoard(input: CellBoardInput): CellBoardResult {
   const {
     cell,
     typicalRevenue,
@@ -539,6 +561,38 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
   // so it saturates on a real reading but is no longer empty on a modeled one.
   const gaugePer10k = densityIsModeled ? modeledPer10k : realPer10k;
 
+  // -- The break-in rating (the cell's single headline score) ----------------
+  // One 0-100 number, higher = easier to break in and win, computed from the
+  // SAME resolved inputs the opening section and the market section already use,
+  // so the masthead score and the page's figures can never disagree:
+  //   - entry capital: the real trusted cost where held, else the place-adjusted
+  //     modeled archetype (the exact `startupCost` the "Capital to start" row shows);
+  //   - permits + time: the modeled, place-adjusted opening archetypes;
+  //   - density: the real local firms-per-10k where held, else the modeled
+  //     archetype (the exact `per10kDisplay` the "Density" row shows);
+  //   - annual owner take-home: the cell's REAL after-tax take-home the page
+  //     computed (London prefers its curated figure), already an annual USD figure
+  //     (the lead "what the owner keeps" number in section A), passed straight
+  //     through. The module refuses to score (returns null) without a real
+  //     take-home AND a real capital, so a thin cell shows no score rather than
+  //     a confident wrong one.
+  // restsOnModeled is true when the capital or the density is the modeled branch
+  // (it almost always is), which marks the rating directional on the surface.
+  const ratingTakeHome =
+    LE && isNum(LE.owner_take_home)
+      ? LE.owner_take_home
+      : isNum(ownerTakeHome)
+        ? ownerTakeHome
+        : null;
+  const breakInRating = computeBreakInRating({
+    startupCapitalUsd: isNum(startupCost) ? startupCost : null,
+    permitsUsd: isNum(openPermitsUsd) ? openPermitsUsd : null,
+    annualOwnerTakeHomeUsd: ratingTakeHome,
+    timeToOpenWeeks: isNum(openTimeWeeks) ? openTimeWeeks : null,
+    densityPer10k: isNum(per10kDisplay) ? per10kDisplay : null,
+    restsOnModeled: startupCostIsModeled || densityIsModeled,
+  });
+
   const marketRows: StatRow[] = [
     {
       label: "Competitors",
@@ -702,13 +756,19 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
     yr5: survival.yr5,
   });
 
-  return [
+  const sections: BoardSection[] = [
     { key: "numbers", title: "The numbers", rows: numbersRows, chart: numbersChart },
     {
       key: "opening",
       title: "What it takes to open",
       dek: "The cost, the calendar, and the crew before your first customer. Modeled estimates, shaped by the trade and the local cost of doing business.",
       rows: openingRows,
+      // The "why this rating" breakdown sits at the head of this section, so the
+      // single headline score from the masthead is never a black box: the
+      // payback in plain words and the three drivers (entry cost, speed to open,
+      // room to grow) read right above the figures that produced them. Self-omits
+      // (renders nothing) when the cell carries no rating.
+      chart: React.createElement(BreakInWhy, { rating: breakInRating }),
     },
     { key: "market", title: "The market", rows: marketRows, modeled: true, chart: marketChart },
     { key: "pricing", title: "Pricing power", rows: pricingRows, modeled: true },
@@ -720,4 +780,6 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
     { key: "labor", title: "Labor and skills", rows: laborRows, modeled: true },
     { key: "survival", title: "Survival and fragility", rows: survivalRows, modeled: true, chart: survivalChart },
   ];
+
+  return { sections, breakInRating };
 }

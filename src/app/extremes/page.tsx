@@ -32,6 +32,7 @@ import { elevation } from "@/lib/design-tokens";
 import {
   loadExtremes,
   type ExtremeLeaderboard,
+  type BreakInLeaderboard,
   type DensityLeaderboard,
   type StartupLeaderboard,
 } from "@/lib/extremes/leaderboards";
@@ -197,14 +198,67 @@ function StartupLeaderboardSection({ board }: { board: StartupLeaderboard }) {
   );
 }
 
+/**
+ * One break-in-rating leaderboard: the same warm framing and cream card as the
+ * boards above, but the ranked figure is the single break-in rating (0-100,
+ * higher = easier to break in), with the band word as the row texture. Each row
+ * links to the full cell. The rating rests on a real local take-home and modeled
+ * entry costs, which the note states plainly.
+ */
+function BreakInLeaderboardSection({ board }: { board: BreakInLeaderboard }) {
+  return (
+    <section className="border-t border-parchment pt-10 first:border-t-0 first:pt-0">
+      <SectionEyebrow size="md" className="mb-2">
+        {board.eyebrow}
+      </SectionEyebrow>
+      <h2 className="font-display text-2xl font-semibold tracking-tight text-balance text-ink-900 md:text-3xl">
+        {board.title}
+      </h2>
+      <p className="mt-2 mb-5 max-w-2xl text-sm leading-relaxed text-cocoa-700 md:text-base">
+        {board.intro}
+      </p>
+
+      <div
+        className="rounded-lg border border-parchment bg-cream-50 p-4 md:p-5"
+        style={{ boxShadow: elevation.card }}
+      >
+        <div className="mb-2 flex items-baseline justify-end">
+          <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-cocoa-500">
+            {board.valueCaption}
+          </span>
+        </div>
+        {board.rows.map((row, i) => (
+          <RankRow
+            key={row.href}
+            rank={i + 1}
+            label={row.name}
+            href={row.href}
+            value={String(row.score)}
+            texture={row.band}
+          />
+        ))}
+      </div>
+      <p className="mt-3 text-[11px] leading-relaxed text-cocoa-500">
+        The break-in rating is one number from 0 to 100, higher meaning easier to
+        break in and win: fast to earn back, quick to open, and room to stand out.
+        Based on real local earnings and modeled entry costs. Directional.
+      </p>
+    </section>
+  );
+}
+
 export default async function ExtremesPage() {
-  const { leaderboards, densityBoards, startupBoards } = await loadExtremes();
+  const { leaderboards, breakInBoards, densityBoards, startupBoards } =
+    await loadExtremes();
 
   // The hub is data-gated like every other surface: if too few leaderboards
   // resolve cleanly (a wide Supabase outage), render the hero and an honest
   // note rather than a thin or broken page. In normal operation all of them
   // resolve.
   const hasEnough = leaderboards.length >= MIN_BOARDS;
+  // The break-in pair is shown only when BOTH the easiest and hardest boards
+  // resolved cleanly, so the headline-rating block never appears one-sided.
+  const hasBreakIn = breakInBoards.length >= 2;
   // The density pair is shown only when BOTH the crowded and still-room boards
   // resolved cleanly, so the "room to enter" block never appears one-sided.
   const hasDensity = densityBoards.length >= 2;
@@ -247,6 +301,33 @@ export default async function ExtremesPage() {
           browse the activities and cities in the meantime.
         </p>
       )}
+
+      {/* Break-in-rating block: the single headline score made browsable, ranked
+         both ways (easiest to break into / hardest). Shown as its own labelled
+         pair so it reads as the one number the cell mastheads carry, not another
+         money board. Leads the lens blocks because it is the headline read.
+         Self-omits entirely unless both directions resolved above the row floor. */}
+      {hasBreakIn ? (
+        <div className="mt-12 border-t border-parchment pt-10">
+          <SectionEyebrow size="md" className="mb-3">
+            How hard it is to break in
+          </SectionEyebrow>
+          <h2 className="max-w-3xl text-balance font-display text-3xl font-semibold tracking-tight text-ink-900 md:text-4xl">
+            The break-in rating
+          </h2>
+          <p className="mt-3 mb-8 max-w-2xl text-base leading-relaxed text-cocoa-700 md:text-lg">
+            One number for the whole question a would-be owner actually asks: how
+            easy is it to break in and win here? It rewards a fast payback above
+            all, then a quick open and room to stand out. Here is where that door
+            swings widest, and where it barely opens at all.
+          </p>
+          <div className="space-y-10">
+            {breakInBoards.map((board) => (
+              <BreakInLeaderboardSection key={board.key} board={board} />
+            ))}
+          </div>
+        </div>
+      ) : null}
 
       {/* Competition-density block: the "room to enter" read, ranked. Shown as
          its own labelled pair (most crowded / still room) so it reads as a

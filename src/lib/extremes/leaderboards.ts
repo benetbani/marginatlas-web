@@ -53,6 +53,9 @@ import {
   type ActivityPlaceInput,
 } from "@/lib/scores/activity_board";
 import { buildAcrossCities, type CityColumn } from "@/lib/markets/across_cities";
+import { computeBreakInRating } from "@/lib/scores/break_in_rating";
+import { densityArchetypePer10k } from "@/lib/markets/density_archetypes";
+import { timeToOpenWeeks } from "@/lib/markets/opening_archetypes";
 
 /** A finite, positive real. */
 function isPos(n: number | null | undefined): n is number {
@@ -630,29 +633,193 @@ function buildStartupBoards(
   return boards;
 }
 
+// --- break-in-rating leaderboards -------------------------------------------
+//
+// The headline "how easy is it to break in and win" read, ranked across the
+// trusted slate: the easiest businesses to break into anywhere we cover, and the
+// hardest. These rank the SAME single break-in rating the cell masthead shows
+// (src/lib/scores/break_in_rating.ts), so the hub and the cell page agree on the
+// one number, the way the take-home / density / startup boards already mirror
+// their cell rows.
+//
+// Defensible by construction: the rating is built per (activity, city) column
+// from buildAcrossCities, whose columns are already trust-gated (right activity,
+// not synthetic, not the extrapolated tier, not a country aggregate) and only
+// carry a take-home when the cell is a real LOCAL measurement. Crucially, the
+// rating's anchor, the annual owner take-home, is therefore a TRUSTED-REAL
+// figure on every ranked row (the module refuses to score without it). The entry
+// costs (capital, time) and the crowding fall back to the modeled, place-adjusted
+// archetypes, so the supporting line says the ranking rests on real local
+// earnings and modeled entry costs. A board self-omits below MIN_ROWS clean rows,
+// exactly like the boards above.
+
+/** One ranked row on a break-in-rating leaderboard. */
+export interface BreakInRow {
+  /** Row label, the activity and place, e.g. "Restaurants in Paris". */
+  name: string;
+  /** Cell-page href for the full read. */
+  href: string;
+  /** ISO2 country slug (lowercased), for a small flag. */
+  country: string;
+  /** The single break-in rating, 0..100 (the ranked figure). Higher = easier. */
+  score: number;
+  /** The band word for the row texture ("forgiving", "brutal", ...). */
+  band: string;
+}
+
+/** One resolved break-in leaderboard: editorial framing plus the ranked rows. */
+export interface BreakInLeaderboard {
+  /** Stable key for React + section anchors. */
+  key: string;
+  /** Small uppercase eyebrow above the title. */
+  eyebrow: string;
+  /** Warm leaderboard title. */
+  title: string;
+  /** One-line editorial intro that names the read. */
+  intro: string;
+  /** The label for the right-hand value column. */
+  valueCaption: string;
+  /** Ranked rows, best-for-the-framing first. */
+  rows: BreakInRow[];
+}
+
 /**
- * Resolve the across-cities data for every activity the startup boards span,
- * ONCE each, then build the boards from that shared cache. Each across read is
- * the builder's own budgeted, trust-gated resolve, so a slow or thin activity
- * simply contributes no rows rather than hanging the hub.
+ * The activity set the break-in boards rank across. The SAME spread the startup
+ * boards span (laptop trades to premises-heavy builds), so the easy end is a
+ * light, fast-payback trade and the hard end is a heavy, slow-payback build, and
+ * both boards clear the row floor on the widely-covered activities.
  */
-async function loadStartupBoards(): Promise<StartupLeaderboard[]> {
-  const uniqueIds = Array.from(new Set(STARTUP_ACTIVITY_IDS));
-  const acrossById = new Map<
-    string,
-    Awaited<ReturnType<typeof buildAcrossCities>>
-  >();
-  await Promise.all(
-    uniqueIds.map(async (id) => {
-      acrossById.set(id, await buildAcrossCities(id));
-    }),
-  );
-  return buildStartupBoards(acrossById);
+const BREAK_IN_ACTIVITY_IDS: string[] = STARTUP_ACTIVITY_IDS;
+
+/**
+ * A break-in-board request: every (activity, city) pair across the trusted
+ * slate, ranked one way by the single break-in rating.
+ */
+interface BreakInSpec {
+  key: string;
+  eyebrow: string;
+  title: string;
+  intro: string;
+  valueCaption: string;
+  /**
+   * Ranking direction by the break-in rating. "high" puts the easiest to break
+   * into first; "low" puts the hardest first.
+   */
+  direction: "high" | "low";
+}
+
+/**
+ * The break-in-board slate. Two opposite reads of the SAME headline rating: the
+ * easiest businesses to break into, and the hardest. The pair is the masthead
+ * score made browsable, the same way the density pair is the crowding gauge and
+ * the startup pair is the cost-to-open row.
+ */
+const BREAK_IN_SPECS: BreakInSpec[] = [
+  {
+    key: "easiest-to-break-in",
+    eyebrow: "The open door",
+    title: "The easiest businesses to break into",
+    intro:
+      "Cheap to enter, quick to earn back, and room to stand out: these are the openings that ask the least and reward the soonest across everywhere we cover. Easy to break into is not a promise you will win, but the door is genuinely open.",
+    valueCaption: "break-in rating",
+    direction: "high",
+  },
+  {
+    key: "hardest-to-break-in",
+    eyebrow: "The steep climb",
+    title: "The hardest to break into",
+    intro:
+      "The other end of the same scale: heavy to open, a long road to your money back, and a crowded room when you get there. These ask the most patience and the deepest pockets, the businesses you do not walk into without a plan.",
+    valueCaption: "break-in rating",
+    direction: "low",
+  },
+];
+
+/**
+ * Compute the break-in rating for one trusted (activity, city) column, or null
+ * when it carries no real take-home (then the module returns null and the row
+ * drops). The take-home is the column's TRUSTED-REAL after-tax figure; the
+ * capital is the column's modeled, place-adjusted cost to open; the crowding is
+ * the real local density where held, else the per-industry modeled archetype;
+ * the time to open is the modeled, place-invariant weeks for the trade. So every
+ * ranked row's rating rests on real local earnings and modeled entry costs.
+ */
+function breakInRowFromColumn(
+  activityId: string,
+  activityName: string,
+  col: CityColumn,
+): BreakInRow | null {
+  const rating = computeBreakInRating({
+    // Modeled, place-adjusted cost to open (the column already baked the city's
+    // cost of living into it). Permits ride inside the entry cost on the cell
+    // board; here the smaller regulatory term is left to the module's zero
+    // default rather than re-deriving a place signal the column does not expose.
+    startupCapitalUsd: col.startupCostUsd,
+    permitsUsd: null,
+    // The crux: the rating's anchor is the column's trusted-real annual take-home.
+    annualOwnerTakeHomeUsd: col.takeHome,
+    timeToOpenWeeks: timeToOpenWeeks(activityId),
+    // Real local density where the column holds one, else the modeled archetype,
+    // exactly as the cell board blends the room signal.
+    densityPer10k: col.densityPer10k ?? densityArchetypePer10k(activityId),
+    // Capital and (usually) density are modeled, so the rating is directional.
+    restsOnModeled: true,
+  });
+  if (rating == null) return null;
+  return {
+    name: `${activityName} in ${col.name}`,
+    href: col.href,
+    country: col.country,
+    score: rating.score,
+    band: rating.band,
+  };
+}
+
+/**
+ * Build both break-in boards from the pre-resolved across-cities cache. Flattens
+ * every resolved (activity, city) column into one pool of rated rows (columns
+ * without a trusted-real take-home yield no rating and drop), then each spec
+ * ranks that shared pool by the break-in rating (descending for the easiest
+ * board, ascending for the hardest). A board self-omits below MIN_ROWS clean
+ * rows. Because the columns come straight from buildAcrossCities, every row is a
+ * trust-gated local cell whose rating rests on a real local take-home.
+ */
+function buildBreakInBoards(
+  acrossById: Map<string, Awaited<ReturnType<typeof buildAcrossCities>>>,
+): BreakInLeaderboard[] {
+  const pool: BreakInRow[] = [];
+  for (const id of BREAK_IN_ACTIVITY_IDS) {
+    const across = acrossById.get(id);
+    if (!across) continue;
+    for (const col of across.cities) {
+      const row = breakInRowFromColumn(id, across.activityName, col);
+      if (row !== null) pool.push(row);
+    }
+  }
+
+  const boards: BreakInLeaderboard[] = [];
+  for (const spec of BREAK_IN_SPECS) {
+    if (pool.length < MIN_ROWS) continue;
+    const ordered = [...pool].sort((a, b) =>
+      spec.direction === "high" ? b.score - a.score : a.score - b.score,
+    );
+    boards.push({
+      key: spec.key,
+      eyebrow: spec.eyebrow,
+      title: spec.title,
+      intro: spec.intro,
+      valueCaption: spec.valueCaption,
+      rows: ordered.slice(0, MAX_ROWS),
+    });
+  }
+  return boards;
 }
 
 /** The full hub payload: the leaderboards that resolved cleanly, in spec order. */
 export interface ExtremesPayload {
   leaderboards: ExtremeLeaderboard[];
+  /** Break-in-rating leaderboards (easiest / hardest), or empty. */
+  breakInBoards: BreakInLeaderboard[];
   /** Competition-density leaderboards (crowded / still-room), or empty. */
   densityBoards: DensityLeaderboard[];
   /** Startup-capital leaderboards (cheapest / highest barrier), or empty. */
@@ -707,20 +874,56 @@ async function resolveWithPool(
  * The page decides whether it has enough to render at all.
  */
 export async function loadExtremes(): Promise<ExtremesPayload> {
-  // The take-home boards (US-state reads), the density boards, and the startup
-  // boards (both across-cities reads) hit different surfaces and self-omit on a
-  // thin or failed read, so run them in parallel without affecting each other.
-  // The density and startup boards each resolve their own across-cities slate;
-  // restaurants overlap between them, but each builder budgets its own reads, so
-  // the small duplication is cheaper than threading one shared cache through two
-  // differently-shaped board sets.
-  const [results, densityBoards, startupBoards] = await Promise.all([
+  // The take-home boards (US-state reads), the density boards, and the startup +
+  // break-in boards (across-cities reads) hit different surfaces and self-omit on
+  // a thin or failed read, so run them in parallel without affecting each other.
+  //
+  // The startup and break-in boards span the SAME activity set, so their
+  // across-cities slates are resolved ONCE (the union of their ids) and both
+  // board sets are built from that one shared cache, halving the Supabase reads
+  // they would otherwise duplicate. The density boards resolve their own (mostly
+  // restaurants) slate; the small remaining overlap is cheaper than threading one
+  // cache through every differently-shaped board set.
+  const [results, densityBoards, startupAndBreakIn] = await Promise.all([
     resolveWithPool(LEADERBOARD_SPECS),
     loadDensityBoards(),
-    loadStartupBoards(),
+    loadStartupAndBreakInBoards(),
   ]);
   const leaderboards = results.filter(
     (b): b is ExtremeLeaderboard => b !== null,
   );
-  return { leaderboards, densityBoards, startupBoards };
+  return {
+    leaderboards,
+    breakInBoards: startupAndBreakIn.breakInBoards,
+    densityBoards,
+    startupBoards: startupAndBreakIn.startupBoards,
+  };
+}
+
+/**
+ * Resolve the across-cities slate shared by the startup and break-in boards
+ * ONCE (the union of both activity sets), then build both board sets from that
+ * single cache. Each across read is the builder's own budgeted, trust-gated
+ * resolve, so a slow or thin activity simply contributes no rows to either set.
+ */
+async function loadStartupAndBreakInBoards(): Promise<{
+  startupBoards: StartupLeaderboard[];
+  breakInBoards: BreakInLeaderboard[];
+}> {
+  const uniqueIds = Array.from(
+    new Set([...STARTUP_ACTIVITY_IDS, ...BREAK_IN_ACTIVITY_IDS]),
+  );
+  const acrossById = new Map<
+    string,
+    Awaited<ReturnType<typeof buildAcrossCities>>
+  >();
+  await Promise.all(
+    uniqueIds.map(async (id) => {
+      acrossById.set(id, await buildAcrossCities(id));
+    }),
+  );
+  return {
+    startupBoards: buildStartupBoards(acrossById),
+    breakInBoards: buildBreakInBoards(acrossById),
+  };
 }
