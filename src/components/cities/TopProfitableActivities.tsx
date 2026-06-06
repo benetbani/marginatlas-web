@@ -21,7 +21,7 @@
  */
 
 import industryMarginsJson from "@/lib/finance/industry_margins.json";
-import { INDUSTRY_BY_ID, industryToSlug, isExcludedSolo } from "@/lib/taxonomy";
+import { INDUSTRY_BY_ID, industryToSlug, isExcludedFromDiscovery } from "@/lib/taxonomy";
 import { BarList } from "@/components/ui/bar-list";
 
 type Row = {
@@ -82,8 +82,8 @@ function buildRankings(): Ranked[] {
     const ind = INDUSTRY_BY_ID[id];
     if (!ind) continue;
 
-    // Founder-approved exclusion: drop the inherently solo-professional rows.
-    if (isExcludedSolo(ind)) continue;
+    // Founder-approved exclusion: drop solo-professional and non-SMB rows.
+    if (isExcludedFromDiscovery(ind)) continue;
 
     // CitiesFix2 sec 8: drop sole-practitioner-by-design rows.
     if (SOLE_PRACTITIONER_BLOCKLIST.has(id)) continue;

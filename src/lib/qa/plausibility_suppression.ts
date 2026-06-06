@@ -41,7 +41,9 @@ import {
   REVENUE_PER_FIRM_BOUNDS,
   DEFAULT_REVENUE_BOUNDS,
   PAYROLL_BOUNDS,
+  type SmbBounds,
 } from "@/lib/qa/smb_bounds";
+import { LEGACY_DB_TO_TAXONOMY } from "@/lib/cells/industry_resolution";
 
 /**
  * A value above industry.hi × this is implausible per-firm revenue and is
@@ -62,10 +64,37 @@ const PAYROLL_CATASTROPHIC_USD = PAYROLL_BOUNDS.hi * 1.5; // $300K
 /** Minimum sensible employees-per-firm; below 1 = data error. */
 const MIN_EMPLOYEES_PER_FIRM = 1;
 
+/**
+ * Resolve the revenue bound for a cell's stored industry id.
+ *
+ * A cell can reach suppression carrying EITHER the taxonomy id (extrapolated
+ * read paths label the cell with the display/taxonomy id) OR the raw legacy
+ * data id (regional read paths pass `industry_id` through untouched, and
+ * `applyTaxonomy` only rewrites it when the id is already a taxonomy entry).
+ * The previous lookup keyed `REVENUE_PER_FIRM_BOUNDS[industryId]` on the raw
+ * id only, so a legacy-tagged cell (e.g. `auto_dealers_gas`) missed a bound
+ * keyed on its taxonomy id (`auto_dealers`) and fell through to the $50M
+ * DEFAULT, clamping junk to a wrong-looking "$50M typical".
+ *
+ * Fix: try the raw id first, then the same `LEGACY_DB_TO_TAXONOMY` crosswalk
+ * the rest of the codebase uses, so a taxonomy-keyed bound fires for a cell
+ * that stores the legacy/data id. Falls back to DEFAULT only when neither id
+ * has a bound.
+ */
+function resolveRevenueBounds(industryId: string | null | undefined): SmbBounds {
+  if (!industryId) return DEFAULT_REVENUE_BOUNDS;
+  const direct = REVENUE_PER_FIRM_BOUNDS[industryId];
+  if (direct) return direct;
+  const taxId = LEGACY_DB_TO_TAXONOMY[industryId];
+  if (taxId) {
+    const viaCrosswalk = REVENUE_PER_FIRM_BOUNDS[taxId];
+    if (viaCrosswalk) return viaCrosswalk;
+  }
+  return DEFAULT_REVENUE_BOUNDS;
+}
+
 function revenueCatastropheCeiling(industryId: string | null | undefined): number {
-  if (!industryId) return DEFAULT_REVENUE_BOUNDS.hi * REVENUE_CATASTROPHIC_MULTIPLIER;
-  const bounds = REVENUE_PER_FIRM_BOUNDS[industryId] ?? DEFAULT_REVENUE_BOUNDS;
-  return bounds.hi * REVENUE_CATASTROPHIC_MULTIPLIER;
+  return resolveRevenueBounds(industryId).hi * REVENUE_CATASTROPHIC_MULTIPLIER;
 }
 
 /**
@@ -76,9 +105,7 @@ function revenueCatastropheCeiling(industryId: string | null | undefined): numbe
  * typical Mexican art gallery."
  */
 function revenueCatastropheFloor(industryId: string | null | undefined): number {
-  if (!industryId) return DEFAULT_REVENUE_BOUNDS.lo / 10;
-  const bounds = REVENUE_PER_FIRM_BOUNDS[industryId] ?? DEFAULT_REVENUE_BOUNDS;
-  return bounds.lo / 10;
+  return resolveRevenueBounds(industryId).lo / 10;
 }
 
 /**

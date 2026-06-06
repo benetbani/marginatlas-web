@@ -178,6 +178,7 @@
       "id": "oil_gas_extraction",
       "name": "Oil & gas extraction",
       "audience": "corp_only",
+      "non_smb": true,
       "examples": [
         "crude petroleum",
         "natural gas",
@@ -272,6 +273,7 @@
       "id": "electricity_gas_utilities",
       "name": "Electricity & gas utilities",
       "audience": "corp_only",
+      "non_smb": true,
       "examples": [
         "power generation",
         "transmission",
@@ -301,6 +303,7 @@
       "id": "water_waste",
       "name": "Water & waste management",
       "audience": "mixed_caution",
+      "non_smb": true,
       "examples": [
         "water supply",
         "sewerage",
@@ -3079,6 +3082,7 @@
       "id": "broadcasting",
       "name": "Broadcasting",
       "audience": "corp_only",
+      "non_smb": true,
       "examples": [
         "radio stations",
         "television broadcasting"
@@ -3138,6 +3142,7 @@
       "id": "banking",
       "name": "Banking",
       "audience": "corp_only",
+      "non_smb": true,
       "examples": [
         "commercial banks",
         "credit unions",
@@ -4235,6 +4240,7 @@
       "id": "hospitals",
       "name": "Hospitals",
       "audience": "corp_only",
+      "non_smb": true,
       "examples": [
         "general hospitals",
         "specialty hospitals",

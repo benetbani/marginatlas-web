@@ -48,6 +48,16 @@ export type Industry = {
    * switchers) while their direct URLs still resolve. Orthogonal to `audience`.
    */
   solo_professional?: boolean;
+  /**
+   * Founder-approved exclusion: categories that are not small businesses
+   * (utilities, telecom/broadcasting, oil & gas extraction, banking, water &
+   * waste, hospitals). Hidden from every discovery surface exactly like
+   * `solo_professional`, including under the Pro `revealCorp` gate, while
+   * their direct URLs still resolve. Orthogonal to `audience`: several of
+   * these are also `corp_only`, but `non_smb` removes them from discovery
+   * unconditionally rather than merely gating them behind Pro.
+   */
+  non_smb?: boolean;
   /** For SMB sub-niches: parent industry ID with actual measurements. */
   parent_id?: string;
 };
@@ -400,8 +410,29 @@ export function isExcludedSolo(ind: Industry): boolean {
   return ind.solo_professional === true;
 }
 
+/**
+ * Founder-approved exclusion. True for categories flagged `non_smb: true`
+ * (utilities, telecom/broadcasting, oil & gas extraction, banking, water &
+ * waste, hospitals). Same effect as `isExcludedSolo`: removed from every
+ * discovery surface unconditionally (even under the Pro `revealCorp` gate),
+ * while direct URLs keep resolving.
+ */
+export function isExcludedNonSmb(ind: Industry): boolean {
+  return ind.non_smb === true;
+}
+
+/**
+ * Single discovery-exclusion predicate. An industry hidden from nav,
+ * directory, search, pickers, and switchers regardless of the audience gate.
+ * Combines the two founder-approved exclusion flags so every visibility
+ * filter shares one source of truth.
+ */
+export function isExcludedFromDiscovery(ind: Industry): boolean {
+  return isExcludedSolo(ind) || isExcludedNonSmb(ind);
+}
+
 export function isDefaultVisible(ind: Industry): boolean {
-  if (isExcludedSolo(ind)) return false;
+  if (isExcludedFromDiscovery(ind)) return false;
   const tag = ind.audience || "smb_friendly";
   return DEFAULT_VISIBLE.includes(tag);
 }
@@ -423,7 +454,7 @@ export function audienceLabel(tag: AudienceTag | undefined): string {
  */
 export function visibleIndustries(opts: { revealMixed?: boolean; revealCorp?: boolean } = {}): Industry[] {
   return INDUSTRIES.filter((i) => {
-    if (isExcludedSolo(i)) return false;
+    if (isExcludedFromDiscovery(i)) return false;
     const tag = i.audience || "smb_friendly";
     if (DEFAULT_VISIBLE.includes(tag)) return true;
     if (tag === "mixed_caution" && opts.revealMixed) return true;
@@ -548,7 +579,7 @@ export type Gate = { revealMixed?: boolean; revealCorp?: boolean };
 export function sectorHasVisibleIndustries(sectorId: string, gate: Gate = {}): boolean {
   const list = INDUSTRIES_BY_SECTOR[sectorId] || [];
   for (const ind of list) {
-    if (isExcludedSolo(ind)) continue;
+    if (isExcludedFromDiscovery(ind)) continue;
     const tag = ind.audience || "smb_friendly";
     if (DEFAULT_VISIBLE.includes(tag)) return true;
     if (tag === "mixed_caution" && gate.revealMixed) return true;
@@ -578,7 +609,7 @@ export function visibleIndustriesInSector(sectorId: string, gate: Gate = {}): In
   const list = INDUSTRIES_BY_SECTOR[sectorId] || [];
   return list
     .filter((i) => {
-      if (isExcludedSolo(i)) return false;
+      if (isExcludedFromDiscovery(i)) return false;
       const tag = i.audience || "smb_friendly";
       if (DEFAULT_VISIBLE.includes(tag)) return true;
       if (tag === "mixed_caution" && gate.revealMixed) return true;

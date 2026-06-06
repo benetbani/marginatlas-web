@@ -45,25 +45,38 @@ export const REVENUE_PER_FIRM_BOUNDS: Record<string, SmbBounds> = {
   // Hospitality
   hotels_lodging: { lo: 80_000, hi: 25_000_000, reason: "Boutique to mid-size; $200K-$15M" },
   // Professional services
-  legal_services: { lo: 100_000, hi: 30_000_000, reason: "Solo-to-mid; $200K-$15M" },
-  management_consulting: { lo: 80_000, hi: 30_000_000, reason: "Solo-to-mid; $200K-$15M" },
+  legal_services: { lo: 100_000, hi: 5_000_000, reason: "Solo-to-mid law firm $200K-$3M per firm; above $5M is wrong-scale (aggregate sector or a national mega-firm, not an SMB benchmark)" },
+  management_consulting: { lo: 80_000, hi: 4_000_000, reason: "Solo-to-small advisory $150K-$2M per firm; above $4M is wrong-scale (Big-Four-style aggregate, not an SMB benchmark)" },
   accounting_bookkeeping: { lo: 50_000, hi: 10_000_000, reason: "Solo-to-mid; $100K-$5M" },
   // Tech
-  software_development: { lo: 80_000, hi: 50_000_000, reason: "Wider tail; SF/Silicon Valley pushes high" },
+  software_development: { lo: 80_000, hi: 8_000_000, reason: "Solo-to-small studio $150K-$4M per firm; above $8M is wrong-scale (a scaled product company, not the SMB benchmark)" },
   custom_software_contract: { lo: 80_000, hi: 30_000_000, reason: "Solo-to-mid shops" },
   web_mobile_dev_shops: { lo: 60_000, hi: 15_000_000, reason: "Most under $5M" },
+  it_services_hosting: { lo: 60_000, hi: 6_000_000, reason: "IT services & hosting shop $150K-$3M per firm; above $6M is wrong-scale" },
   // Trades + construction
-  residential_construction: { lo: 100_000, hi: 30_000_000, reason: "Solo contractor to mid-sized firm; $200K-$15M typical. Anything above $30M is wrong-scale." },
+  residential_construction: { lo: 100_000, hi: 20_000_000, reason: "Solo contractor to mid-sized firm $200K-$12M typical; above $20M is wrong-scale" },
+  civil_engineering: { lo: 150_000, hi: 15_000_000, reason: "Civil engineering firm $300K-$8M per firm; above $15M is a major contractor, not an SMB benchmark" },
+  specialty_trades: { lo: 60_000, hi: 8_000_000, reason: "Specialty-trade contractor $150K-$4M per firm; above $8M is wrong-scale" },
   auto_repair_shops: { lo: 80_000, hi: 5_000_000, reason: "Independent shop $200K-$2M" },
   // Manufacturing (SMB tier — large firms hidden behind Pro gate)
-  fabricated_metal_mfg: { lo: 200_000, hi: 50_000_000, reason: "Wider; Mittelstand pushes higher" },
+  fabricated_metal_mfg: { lo: 200_000, hi: 25_000_000, reason: "Fabricated-metal shop $400K-$12M per firm; above $25M is a large plant, not the SMB benchmark" },
   primary_metal_mfg: { lo: 500_000, hi: 50_000_000, reason: "Higher capital intensity" },
-  machinery_mfg: { lo: 300_000, hi: 50_000_000, reason: "Wider; Mittelstand precision shops" },
+  machinery_mfg: { lo: 300_000, hi: 25_000_000, reason: "Machinery shop $600K-$12M per firm; above $25M is a large plant, not the SMB benchmark" },
+  chemical_pharma_mfg: { lo: 300_000, hi: 30_000_000, reason: "Chemical/pharma SMB plant $600K-$15M per firm; above $30M is wrong-scale" },
+  plastics_rubber_mfg: { lo: 200_000, hi: 25_000_000, reason: "Plastics/rubber products plant $400K-$12M per firm; above $25M is wrong-scale" },
+  motor_vehicles_mfg: { lo: 300_000, hi: 30_000_000, reason: "Vehicle/parts SMB supplier $600K-$15M per firm; above $30M is a tier-1 OEM, not an SMB benchmark" },
+  food_mfg: { lo: 150_000, hi: 25_000_000, reason: "Food manufacturer $400K-$12M per firm; above $25M is wrong-scale" },
+  electrical_equipment_mfg: { lo: 200_000, hi: 25_000_000, reason: "Electrical-equipment plant $400K-$12M per firm; above $25M is wrong-scale" },
+  electronics_mfg: { lo: 200_000, hi: 25_000_000, reason: "Electronics/semiconductor SMB plant $400K-$12M per firm; above $25M is wrong-scale" },
+  other_transport_mfg: { lo: 300_000, hi: 25_000_000, reason: "Aerospace/other transport SMB plant $600K-$12M per firm; above $25M is wrong-scale" },
+  wood_products_mfg: { lo: 150_000, hi: 20_000_000, reason: "Wood-products plant $300K-$10M per firm; above $20M is wrong-scale" },
+  furniture_mfg: { lo: 150_000, hi: 20_000_000, reason: "Furniture manufacturer $300K-$10M per firm; above $20M is wrong-scale" },
+  textiles_fabric_mfg: { lo: 150_000, hi: 20_000_000, reason: "Textiles/fabric manufacturer $300K-$10M per firm; above $20M is wrong-scale" },
   // Health
   doctors_clinics: { lo: 100_000, hi: 10_000_000, reason: "Solo practice to small group; $200K-$5M" },
   dental_practices: { lo: 100_000, hi: 5_000_000, reason: "Solo dentist to multi-doc; $300K-$3M" },
   // Real estate
-  real_estate_agencies: { lo: 50_000, hi: 10_000_000, reason: "Solo agent to mid agency; $100K-$5M" },
+  real_estate_agencies: { lo: 50_000, hi: 6_000_000, reason: "Solo agent to small agency $100K-$3M per firm; above $6M is a brokerage chain, not an SMB benchmark" },
   // Pet services
   veterinary_pet_care: { lo: 80_000, hi: 5_000_000, reason: "Solo vet to multi-vet practice" },
   pet_services: { lo: 30_000, hi: 2_000_000, reason: "Grooming + boarding small firms" },
@@ -83,7 +96,11 @@ export const REVENUE_PER_FIRM_BOUNDS: Record<string, SmbBounds> = {
   pest_control: { lo: 50_000, hi: 3_000_000, reason: "Pest control $150K-$1.5M per firm" },
 
   // Auto + transport
-  auto_dealers: { lo: 300_000, hi: 50_000_000, reason: "Auto dealers $1M-$30M per firm; capital-intensive inventory" },
+  auto_dealers: { lo: 300_000, hi: 30_000_000, reason: "Auto dealers $1M-$20M per firm; capital-intensive inventory. Above $30M is aggregate-vs-per-firm, not a dealership benchmark" },
+  // Data-side override: non-US cells store this legacy id (crosswalks to
+  // auto_dealers). Keyed here too so the ceiling fires on paths that pass the
+  // raw id through without crosswalking.
+  auto_dealers_gas: { lo: 300_000, hi: 30_000_000, reason: "Auto dealers (legacy data id), same bound as auto_dealers" },
   gas_stations: { lo: 150_000, hi: 10_000_000, reason: "Gas stations $500K-$5M per firm" },
   auto_parts_retail: { lo: 80_000, hi: 5_000_000, reason: "Auto parts $200K-$2M" },
   taxi_rideshare_local: { lo: 30_000, hi: 1_500_000, reason: "Independent operator small fleet" },
@@ -120,6 +137,49 @@ export const REVENUE_PER_FIRM_BOUNDS: Record<string, SmbBounds> = {
   car_washes: { lo: 50_000, hi: 3_000_000, reason: "Car washes $150K-$1.5M" },
   laundromats: { lo: 30_000, hi: 1_500_000, reason: "Laundromats $80K-$800K" },
   dry_cleaning: { lo: 30_000, hi: 2_000_000, reason: "Dry cleaning $80K-$1M" },
+
+  // No-wrong-numbers ceiling tightening (founder-approved). These industries
+  // were clamping junk to the $50M/$30M DEFAULT because the bound was missing
+  // or too loose. Bounds key on the TAXONOMY id (the id Part 1's crosswalk
+  // resolves a legacy cell to); legacy data ids get an explicit override below
+  // so the ceiling also fires on read paths that pass the raw id through.
+
+  // Wholesale + logistics
+  wholesale_food: { lo: 150_000, hi: 30_000_000, reason: "Food/beverage wholesaler $400K-$15M per firm; above $30M is wrong-scale" },
+  warehousing_storage: { lo: 100_000, hi: 15_000_000, reason: "Warehousing & storage operator $300K-$8M per firm; above $15M is wrong-scale" },
+  postal_service: { lo: 80_000, hi: 12_000_000, reason: "Postal/courier SMB $200K-$6M per firm; above $12M is a national carrier, not an SMB benchmark" },
+  trucking_freight: { lo: 80_000, hi: 15_000_000, reason: "Trucking/freight carrier $200K-$8M per firm; above $15M is a large fleet, not the SMB benchmark" },
+
+  // Real estate leasing
+  real_estate_leasing: { lo: 50_000, hi: 20_000_000, reason: "Property leasing/landlord $150K-$10M per firm; above $20M is an institutional portfolio, not an SMB benchmark" },
+
+  // Resources
+  mining_quarrying: { lo: 200_000, hi: 30_000_000, reason: "Quarry/small-mine operator $500K-$15M per firm; above $30M is a major miner, not an SMB benchmark" },
+
+  // Business services
+  office_support: { lo: 40_000, hi: 4_000_000, reason: "Office & business support $100K-$2M per firm; above $4M is wrong-scale" },
+  employment_services: { lo: 60_000, hi: 8_000_000, reason: "Staffing/employment agency $150K-$4M per firm; above $8M is a national staffing chain, not the SMB benchmark" },
+  security_services: { lo: 50_000, hi: 6_000_000, reason: "Security-services firm $120K-$3M per firm; above $6M is wrong-scale" },
+  engineering_architecture: { lo: 80_000, hi: 6_000_000, reason: "Engineering/architecture practice $150K-$3M per firm; above $6M is a large multidisciplinary firm, not the SMB benchmark" },
+  marketing_design: { lo: 40_000, hi: 4_000_000, reason: "Marketing/design agency $100K-$2M per firm; above $4M is wrong-scale" },
+
+  // Media
+  news_periodical_publishing: { lo: 50_000, hi: 8_000_000, reason: "News/periodical publisher $120K-$4M per firm; above $8M is a media group, not the SMB benchmark" },
+
+  // Legacy data-side overrides.
+  // Non-US cells store these coarse legacy industry_ids (see
+  // LEGACY_DB_TO_TAXONOMY). Part 1's crosswalk resolves them to the taxonomy
+  // id above, but read paths that pass the raw id through unchanged also need
+  // the ceiling, so each legacy id is keyed to the SAME bound as its taxonomy
+  // equivalent.
+  metal_products_mfg: { lo: 200_000, hi: 25_000_000, reason: "Fabricated-metal (legacy data id), same bound as fabricated_metal_mfg" },
+  food_beverage_mfg: { lo: 150_000, hi: 25_000_000, reason: "Food manufacturing (legacy data id), same bound as food_mfg" },
+  wood_paper_mfg: { lo: 150_000, hi: 20_000_000, reason: "Wood products (legacy data id), same bound as wood_products_mfg" },
+  furniture_other_mfg: { lo: 150_000, hi: 20_000_000, reason: "Furniture (legacy data id), same bound as furniture_mfg" },
+  textile_apparel_mfg: { lo: 150_000, hi: 20_000_000, reason: "Textiles/fabric (legacy data id), same bound as textiles_fabric_mfg" },
+  property_leasing: { lo: 50_000, hi: 20_000_000, reason: "Property leasing (legacy data id), same bound as real_estate_leasing" },
+  postal_courier: { lo: 80_000, hi: 12_000_000, reason: "Postal/courier (legacy data id), same bound as postal_service" },
+  media_publishing: { lo: 50_000, hi: 8_000_000, reason: "News/periodical publishing (legacy data id), same bound as news_periodical_publishing" },
 };
 
 export const DEFAULT_REVENUE_BOUNDS: SmbBounds = {

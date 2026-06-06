@@ -13,7 +13,7 @@ import {
   listUsStates,
   withBudget,
 } from "@/lib/cells";
-import { INDUSTRIES, industryToSlug, isExcludedSolo } from "@/lib/taxonomy";
+import { INDUSTRIES, industryToSlug, isExcludedFromDiscovery } from "@/lib/taxonomy";
 import { computeBreakeven } from "@/lib/economics/breakeven";
 import { getCityTier, getCityPopulation } from "@/lib/cities/city_tier";
 import { iso2ToName } from "@/lib/countries";
@@ -298,10 +298,10 @@ export default async function CellPage({
   // Build region + industry option lists for switcher
   const regions = listUsStates();
   // Audience filter: switcher only shows SMB-relevant industries by default,
-  // and never the excluded-solo activities.
+  // and never the discovery-excluded (solo-professional or non-SMB) activities.
   const industryOpts = INDUSTRIES
     .filter((i) => {
-      if (isExcludedSolo(i)) return false;
+      if (isExcludedFromDiscovery(i)) return false;
       const a = i.audience || "smb_friendly";
       return a === "smb_core" || a === "smb_friendly";
     })

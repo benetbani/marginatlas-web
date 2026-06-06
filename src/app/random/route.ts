@@ -9,7 +9,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { getTopCells, cellUrl } from "@/lib/cells";
-import { INDUSTRY_BY_ID, isExcludedSolo } from "@/lib/taxonomy";
+import { INDUSTRY_BY_ID, isExcludedFromDiscovery } from "@/lib/taxonomy";
 
 export const revalidate = 600; // 10 minutes
 
@@ -22,11 +22,12 @@ export async function GET(req: NextRequest) {
     return NextResponse.redirect(new URL("/us/california/restaurants", req.url));
   }
 
-  // Excluded-solo activities never land in /random, even with ?pro=1.
+  // Discovery-excluded (solo-professional or non-SMB) activities never land in
+  // /random, even with ?pro=1.
   top = top.filter((c) => {
     if (!c.industry_id) return true;
     const ind = INDUSTRY_BY_ID[c.industry_id];
-    return !ind || !isExcludedSolo(ind);
+    return !ind || !isExcludedFromDiscovery(ind);
   });
 
   if (!allowCorp) {

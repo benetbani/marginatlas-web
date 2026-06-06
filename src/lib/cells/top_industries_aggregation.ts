@@ -19,7 +19,7 @@ import {
   REVENUE_PER_FIRM_BOUNDS,
   DEFAULT_REVENUE_BOUNDS,
 } from "../qa/smb_bounds";
-import { INDUSTRY_BY_ID, isExcludedSolo } from "../taxonomy";
+import { INDUSTRY_BY_ID, isExcludedFromDiscovery } from "../taxonomy";
 
 export type TopIndustryRow = {
   industry_id: string;
@@ -232,7 +232,7 @@ export function aggregateExtrapolatedByIndustry(
     if (g.values.length < 3) continue;
     const ind = INDUSTRY_BY_ID[id];
     if (!ind) continue;
-    if (isExcludedSolo(ind)) continue;
+    if (isExcludedFromDiscovery(ind)) continue;
     const audience = ind.audience || "smb_friendly";
     if (audience !== "smb_core" && audience !== "smb_friendly") continue;
     const sorted = [...g.values].sort((a, b) => a - b);

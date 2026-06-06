@@ -33,7 +33,7 @@ import {
   resolveToMeasuredIndustry,
   industryToSlug,
   INDUSTRIES,
-  isExcludedSolo,
+  isExcludedFromDiscovery,
 } from "@/lib/taxonomy";
 import { CountryFlag } from "@/components/CountryFlag";
 import {
@@ -158,12 +158,12 @@ function rationaleFor(
   return byTag[primary] || "Mixed local economy.";
 }
 
-// Build the activity selector options once at module load. Excluded-solo
-// activities are hidden from the selector too.
+// Build the activity selector options once at module load. Discovery-excluded
+// (solo-professional or non-SMB) activities are hidden from the selector too.
 const ACTIVITY_OPTIONS = INDUSTRIES.filter(
   (i) =>
     ((i.audience || "smb_friendly") === "smb_core" || (i.audience || "smb_friendly") === "smb_friendly") &&
-    !isExcludedSolo(i),
+    !isExcludedFromDiscovery(i),
 )
   .map((i) => ({ value: industryToSlug(i.id), label: i.name }))
   .sort((a, b) => a.label.localeCompare(b.label));
