@@ -45,6 +45,7 @@ import {
   withBudget,
   type Cell,
 } from "@/lib/cells";
+import { isTrustedLocalCell } from "@/lib/cells/trust";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { clampMargin } from "@/lib/finance/margin_floor";
 import {
@@ -162,10 +163,12 @@ async function resolveLeaderboard(
     `extremes:${spec.slug}`,
   );
 
-  // Only states that genuinely carry this activity (guard the misroute) and are
-  // a real measurement (not synthesized).
+  // Only states that genuinely carry this activity, via the shared trust gate
+  // (src/lib/cells/trust.ts): right activity, not synthetic, not the
+  // extrapolated tier, not a country aggregate. US-state cells are trusted
+  // same-currency measurements, so in practice only the rare misroute drops.
   const inputs: ActivityPlaceInput[] = slate
-    .filter((c) => c.industry_id === spec.expectIndustryId && !c.is_synthetic)
+    .filter((c) => isTrustedLocalCell(c, spec.expectIndustryId))
     .map(placeInputFromCell)
     .filter((p): p is ActivityPlaceInput => p !== null);
 

@@ -40,6 +40,7 @@ import {
   withBudget,
   type Cell,
 } from "@/lib/cells";
+import { isTrustedLocalCell } from "@/lib/cells/trust";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { clampMargin, clampNetMarginPct, boundSurvivalCurve, displayDensityPer10k } from "@/lib/finance/margin_floor";
 import { computeBreakeven } from "@/lib/economics/breakeven";
@@ -318,15 +319,15 @@ async function resolveCity(
   );
   if (!cell) return null;
   // Trust gate: a column must be a real LOCAL measurement of the activity it
-  // claims. This is stricter than the homepage beats guard on purpose. beats.ts
-  // resolves only US-state cells and curated London, both trusted same-currency
-  // tables; here we resolve arbitrary world cities, where getCellBySlug falls
-  // back to extrapolated_cells and a country-baseline fill. Those cross-country
-  // extrapolated reads are exactly the poisoned source (inflated tails, country
-  // aggregates wearing a city name), and they carry is_synthetic=false, so the
-  // beats guard alone would let them through (it did: Dubai/Sydney/Singapore
-  // surfaced $30M law firms). So we exclude FOUR ways, every one a real signal
-  // seen in the data:
+  // claims. This is the SHARED four-way guard (src/lib/cells/trust.ts), the same
+  // definition the homepage beats and the extremes hub now apply, so every
+  // surface agrees on what "trustworthy" means. Here we resolve arbitrary world
+  // cities, where getCellBySlug falls back to extrapolated_cells and a
+  // country-baseline fill: those cross-country reads are the poisoned source
+  // (inflated tails, country aggregates wearing a city name) and carry
+  // is_synthetic=false, so the right-activity-plus-not-synthetic guard alone let
+  // them through (it did: Dubai/Sydney/Singapore surfaced $30M law firms). The
+  // helper excludes FOUR ways, every one a real signal seen in the data:
   //   1. wrong activity   - slug misrouted onto another NAICS
   //   2. synthesized      - the always-render stand-in (is_synthetic)
   //   3. coverage_tier X  - the estimated/extrapolated tier (both the synthesis
@@ -334,10 +335,7 @@ async function resolveCity(
   //      sub-national measurements are tier S or P
   //   4. country level    - a national aggregate resolved under a city slug
   // Curated London is tier P at lad level, so it is unaffected.
-  if (cell.industry_id !== expectIndustryId) return null;
-  if (cell.is_synthetic) return null;
-  if ((cell.coverage_tier ?? "").toUpperCase() === "X") return null;
-  if (cell.geo_level === "country") return null;
+  if (!isTrustedLocalCell(cell, expectIndustryId)) return null;
 
   const revenue = typicalRevenueOf(cell);
   if (revenue == null) return null;

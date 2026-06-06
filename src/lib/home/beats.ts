@@ -35,6 +35,7 @@ import {
   withBudget,
   type Cell,
 } from "@/lib/cells";
+import { isTrustedLocalCell } from "@/lib/cells/trust";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { clampMargin, clampNetMarginPct } from "@/lib/finance/margin_floor";
 import { computeBreakeven } from "@/lib/economics/breakeven";
@@ -183,10 +184,14 @@ async function resolveCard(spec: CardSpec): Promise<BeatCard | null> {
     `homeCard:${spec.geo}/${spec.industry}`,
   );
   if (!cell) return null;
-  // Guard against slug misrouting and synthesized stand-ins: a card must be a
-  // real measurement of the activity it claims.
-  if (cell.industry_id !== spec.expectIndustryId) return null;
-  if (cell.is_synthetic) return null;
+  // Trust gate (shared with across-cities + extremes, src/lib/cells/trust.ts): a
+  // card must be a real LOCAL measurement of the activity it claims. Beyond the
+  // right-activity and not-synthetic checks this also excludes the extrapolated
+  // tier (coverage_tier "X") and national aggregates resolved under a city slug
+  // (geo_level "country"), so a poisoned cross-country read can never headline a
+  // card. The curated Barcelona/London/Miami cards are real sub-national cells,
+  // so they are unaffected.
+  if (!isTrustedLocalCell(cell, spec.expectIndustryId)) return null;
 
   const revenue = typicalRevenueOf(cell);
   if (revenue == null) return null;
@@ -248,9 +253,12 @@ async function resolveGymLeaderboard(): Promise<BeatLeaderboard | null> {
     4_000,
     "homeLeaderboard:sports-fitness",
   );
-  // Only states that genuinely carry the gym activity (guard the rare misroute).
+  // Only states that genuinely carry the gym activity, via the shared trust gate
+  // (src/lib/cells/trust.ts): right activity, not synthetic, not the
+  // extrapolated tier, not a country aggregate. US-state cells are trusted
+  // same-currency measurements, so in practice only the rare misroute drops.
   const inputs: ActivityPlaceInput[] = slate
-    .filter((c) => c.industry_id === "sports_fitness" && !c.is_synthetic)
+    .filter((c) => isTrustedLocalCell(c, "sports_fitness"))
     .map(placeInputFromCell)
     .filter((p): p is ActivityPlaceInput => p !== null);
 
@@ -296,8 +304,12 @@ async function resolveSpread(): Promise<BeatSpread | null> {
     ),
   ]);
   if (!humbleCell || !prestigeCell) return null;
-  if (humbleCell.industry_id !== "restaurants" || humbleCell.is_synthetic) return null;
-  if (prestigeCell.industry_id !== "legal_services" || prestigeCell.is_synthetic) return null;
+  // Both legs must clear the shared trust gate (src/lib/cells/trust.ts): right
+  // activity, not synthetic, not the extrapolated tier, not a country aggregate.
+  // Miami restaurants is a real US-state cell; London legal services is the
+  // curated tier-P lad entry, so both pass.
+  if (!isTrustedLocalCell(humbleCell, "restaurants")) return null;
+  if (!isTrustedLocalCell(prestigeCell, "legal_services")) return null;
 
   const humbleTake = ownerEconomicsOf(humbleCell).takeHome;
   const prestigeTake = ownerEconomicsOf(prestigeCell).takeHome;
