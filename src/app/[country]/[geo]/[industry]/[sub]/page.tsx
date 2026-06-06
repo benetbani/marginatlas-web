@@ -226,7 +226,7 @@ export default async function NeighborhoodCellPage({
           currencySymbol="$"
         />
 
-        <section className="bg-cream-100 border-l-4 border-l-atlas-700 py-5 md:py-6">
+        <section className="bg-white border-l-4 border-l-atlas-700 py-5 md:py-6">
           <div className="text-xs md:text-sm font-bold uppercase tracking-[0.14em] text-atlas-700 mb-2">
             Neighborhood character
           </div>

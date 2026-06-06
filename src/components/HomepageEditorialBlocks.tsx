@@ -39,7 +39,7 @@ const DEFAULT_QUESTIONS: AtlasQuestion[] = [
 
 function BlockA({ questions = DEFAULT_QUESTIONS }: { questions?: AtlasQuestion[] }) {
   return (
-    <section aria-labelledby="block-a-h2" className="w-full bg-white">
+    <section aria-labelledby="block-a-h2" className="w-full bg-white border-t border-parchment/60">
       <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
         <SectionEyebrow size="md">What you can ask Atlas</SectionEyebrow>
         <div className="mt-3 grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-14 items-start">
@@ -111,7 +111,7 @@ const STEPS: Step[] = [
 
 function BlockB() {
   return (
-    <section aria-labelledby="block-b-h2" className="w-full bg-cream-50">
+    <section aria-labelledby="block-b-h2" className="w-full bg-white border-t border-parchment/60">
       <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
         <SectionEyebrow size="md">How the numbers are built</SectionEyebrow>
         <h2
@@ -195,7 +195,7 @@ const AUDIENCES: Audience[] = [
 
 function BlockC() {
   return (
-    <section aria-labelledby="block-c-h2" className="w-full bg-parchment">
+    <section aria-labelledby="block-c-h2" className="w-full bg-white border-t border-parchment/60">
       <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
         <SectionEyebrow size="md">Who uses Atlas</SectionEyebrow>
         <h2

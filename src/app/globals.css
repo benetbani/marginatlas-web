@@ -22,8 +22,10 @@
        for opacity utilities. */
     /* Warm Atlas reformation 2026-06-04: shadcn tokens re-toned to warm
        sand paper, warm-white cards, warm brown-black ink, terracotta
-       accent. Token names unchanged; only the values warmed. */
-    --background: 247 246 244;       /* cream-100 #F7EFE1, warm sand paper */
+       accent. Token names unchanged; only the values warmed.
+       White-reset 2026-06-06 (founder): the page surface is now pure white.
+       --background flipped from warm sand to white; cards stay white. */
+    --background: 255 255 255;       /* pure white page surface */
     --foreground: 33 24 16;          /* ink-900 #211810, warm near-black */
     --card: 255 255 255;             /* cream-50 #FFFDF8, warm white card */
     --card-foreground: 33 24 16;     /* ink-900 */
@@ -44,10 +46,9 @@
     --ring: 153 22 0;                /* atlas-700 #991600, used with /40 alpha in primitives */
     --radius: 1rem;
 
-    /* Legacy hex variables that are consumed directly by CSS rules below
-       (html background, body gradient). Kept alongside the RGB triplets
-       to preserve unchanged visual output. */
-    --hero-fade: #f7f6f4;            /* cream-100, soft warm wash under hero */
+    /* White-reset 2026-06-06: the legacy --hero-fade cream wash variable was
+       removed. The page surface is pure white; there is no warm wash under the
+       hero. (No rule consumed it after the body gradient was deleted.) */
 
     /* ==========================================================================
        Atlas card + elevation system (2026-05-25, /frontend-design pass).
@@ -62,11 +63,16 @@
        — but as call sites migrate to .atlas-card the look unifies.
        ========================================================================== */
 
-    /* Card surfaces — Warm Atlas: sand paper body, warm-white cards. */
-    --atlas-surface-paper: #f7f6f4;          /* body paper, warm sand */
-    --atlas-surface-card: #ffffff;           /* canonical card surface, warm white */
-    --atlas-surface-card-soft: #efeeeb;      /* secondary card within a card section */
-    --atlas-surface-band: #ffffff;           /* warm-white section band, no pattern */
+    /* Card surfaces — White-reset 2026-06-06: the body paper is now pure
+       white (no warm sand, no texture). Cards are white articles separated
+       from the page by hairlines + elevation, not by a tint delta. The
+       former warm-cream "soft" card surface is now white too; its callout
+       distinction is carried by a stronger hairline border (see
+       .atlas-card-soft below), not by a fill tint. */
+    --atlas-surface-paper: #ffffff;          /* body paper, pure white */
+    --atlas-surface-card: #ffffff;           /* canonical card surface, white */
+    --atlas-surface-card-soft: #ffffff;      /* secondary card within a card section */
+    --atlas-surface-band: #ffffff;           /* white section band, no pattern */
 
     /* Hairlines — barely visible warm-ink, not gray */
     --atlas-hairline: rgba(38, 33, 28, 0.07);
@@ -95,29 +101,16 @@
     color: rgb(var(--foreground));
   }
 
-  /* Page surface: warm paper with a barely-visible compass pattern at the
-     top edge fading to clean cream by 800px. The pattern reads as paper
-     texture, not as decorative dots. Cards sit on this surface; their
-     warm shadows do the seating work. */
+  /* Page surface: pure white. White-reset 2026-06-06 (founder) — the warm
+     compass-star paper texture and the cream top-edge wash are removed so
+     every surface reads clean white and the graphics carry the page. Cards
+     sit on this surface; hairlines + elevation do the seating work. */
   body {
     font-feature-settings: "ss01" on, "cv11" on;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     background-color: var(--atlas-surface-paper);
-    background-image:
-      linear-gradient(
-        180deg,
-        rgba(232, 230, 226, 0.5) 0%,
-        rgba(250, 250, 250, 0) 800px
-      ),
-      radial-gradient(
-        circle at 1px 1px,
-        rgba(138, 38, 24, 0.04) 1px,
-        transparent 0
-      );
-    background-size: auto, 22px 22px;
-    background-attachment: scroll, scroll;
-    background-repeat: no-repeat, repeat;
+    background-image: none;
     /* Plan v14 A.1 (T-A1.2) — kill the brief horizontal scrollbar that the
        homepage hero's full-bleed trick (`-mx-[50vw] w-screen`) can introduce
        on viewports with a vertical scrollbar. `w-screen` resolves to 100vw,
@@ -309,13 +302,14 @@
   }
 
   /* Soft variant — for "secondary content within a primary card section",
-     e.g., a footnote panel inside a card, or a Premium teaser block. The
-     surface is a quiet warm cream that hangs together with the body paper
-     but reads as a distinct callout. No top-edge accent on hover. */
+     e.g., a footnote panel inside a card, or a Premium teaser block.
+     White-reset 2026-06-06: the surface is now white (was warm cream), so the
+     callout is delineated by a slightly stronger hairline instead of a fill
+     tint. No top-edge accent on hover. */
   .atlas-card-soft {
     background: var(--atlas-surface-card-soft);
     border-radius: 6px;
-    border: 1px solid var(--atlas-hairline);
+    border: 1px solid var(--atlas-hairline-strong);
     box-shadow: none;
   }
 

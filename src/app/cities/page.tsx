@@ -111,7 +111,24 @@ export default function CitiesHub() {
 
   return (
     <article className="max-w-6xl mx-auto px-4 md:px-6 py-12 md:py-16">
-      <nav aria-label="Breadcrumb" className="text-sm text-cocoa-700/70 mb-8">
+      {/* White-reset 2026-06-06 (founder): the world map is hoisted to the
+          very TOP of the page, above the breadcrumb and the intro. It is the
+          first thing a reader meets on /cities; the breadcrumb, the editorial
+          intro, the visitor read, and the grouped list all follow below it.
+          Data + props are unchanged. */}
+      <section aria-labelledby="cities-map-heading">
+        <h2 id="cities-map-heading" className="sr-only">
+          Map of covered cities
+        </h2>
+        <div
+          className="rounded-2xl bg-white border border-parchment p-2 md:p-3"
+          style={{ boxShadow: elevation.card }}
+        >
+          <CitiesWorldMap cities={MAP_CITIES} />
+        </div>
+      </section>
+
+      <nav aria-label="Breadcrumb" className="text-sm text-cocoa-700/70 mt-10 md:mt-12 mb-8">
         <Link href="/" className="hover:text-atlas-700">
           Home
         </Link>
@@ -145,27 +162,14 @@ export default function CitiesHub() {
         </p>
       </header>
 
-      {/* Cities §1: the geographic map stays as the page anchor, one marker per
-          covered city, each linking to its city page. */}
-      <section className="mt-10 md:mt-12" aria-labelledby="cities-map-heading">
-        <h2 id="cities-map-heading" className="sr-only">
-          Map of covered cities
-        </h2>
-        <div
-          className="rounded-2xl bg-white border border-parchment p-2 md:p-3"
-          style={{ boxShadow: elevation.card }}
-        >
-          <CitiesWorldMap cities={MAP_CITIES} />
-        </div>
-      </section>
-
       {/* The honest tourism read (bible: tourism signal, not tourism fluff).
           The cities where visitors most outnumber residents, named plainly so
           the reader can find the markets whose economics tilt to the visitor.
-          Self-omits if no city carries both numbers. */}
+          Self-omits if no city carries both numbers. White-reset: the panel is
+          now white with a hairline, no cream tint. */}
       {visitorLed.length > 0 ? (
         <section
-          className="mt-10 md:mt-12 rounded-2xl bg-cream-100 border border-parchment px-5 py-6 md:px-7 md:py-7"
+          className="mt-10 md:mt-12 rounded-2xl bg-white border border-parchment px-5 py-6 md:px-7 md:py-7"
           aria-labelledby="visitor-led-heading"
         >
           <h2

@@ -4,48 +4,34 @@
    graphite #3A3A3A surface with white text. */
 
 :root {
-  /* Warm Atlas reformation 2026-06-04: warm sand paper, warm dark brown. */
-  --atlas-paper-bg: #f7f6f4;
+  /* White-reset 2026-06-06 (founder): the light Atlas paper surfaces are now
+     pure white with NO compass-star pattern. The body, the map containers,
+     and the navigator card all read clean white; hairlines + elevation carry
+     separation. The dark mirror variants below are unchanged (still used by
+     dark-on-dark surfaces such as the footer). */
+  --atlas-paper-bg: #ffffff;
   --atlas-paper-bg-dark: #2E2418;
   --atlas-pattern-url: url("/atlas-pattern.svg");
   --atlas-pattern-url-dark: url("/atlas-pattern-dark.svg");
 }
 
-/* ---- Section-grade Atlas paper ---- */
+/* ---- Section-grade Atlas paper: flat white, pattern removed ---- */
 .atlas-paper {
   background-color: var(--atlas-paper-bg);
-  background-image: var(--atlas-pattern-url);
-  background-repeat: repeat;
-  background-size: 80px 80px;
+  background-image: none;
 }
 
-/* ---- Dimmer variant: 50% pattern density via white overlay ---- */
+/* ---- Dimmer variant: flat white, pattern removed ---- */
 .atlas-paper-dim {
   background-color: var(--atlas-paper-bg);
-  background-image:
-    linear-gradient(rgba(247, 239, 225, 0.5), rgba(247, 239, 225, 0.5)),
-    var(--atlas-pattern-url);
-  background-repeat: no-repeat, repeat;
-  background-size: 100% 100%, 80px 80px;
+  background-image: none;
 }
 
-/* ---- Card variant: smaller stars, fades at edges, pattern on a layer below content ---- */
+/* ---- Card variant: flat white, no edge-faded pattern ---- */
 .atlas-paper-card {
   position: relative;
   background-color: var(--atlas-paper-bg);
   isolation: isolate;
-}
-.atlas-paper-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: var(--atlas-pattern-url);
-  background-repeat: repeat;
-  background-size: 64px 64px;
-  -webkit-mask-image: radial-gradient(ellipse at center, #000 45%, transparent 95%);
-          mask-image: radial-gradient(ellipse at center, #000 45%, transparent 95%);
-  pointer-events: none;
-  z-index: -1;
 }
 
 /* ====================================================================

@@ -111,7 +111,9 @@ function Tile({
   currencySymbol: string;
   tone: "muted" | "accent";
 }) {
-  const bg = tone === "accent" ? "bg-cream-100 border-atlas-300" : "bg-cream-50 border-parchment";
+  // White-reset 2026-06-06: both tiles are white surfaces; the accent tile is
+  // distinguished by its vermillion border + accent icon/text, not a cream fill.
+  const bg = tone === "accent" ? "bg-white border-atlas-300" : "bg-white border-parchment";
   const txt = tone === "accent" ? "text-ink-900" : "text-ink-800";
   const iconColor = tone === "accent" ? "text-atlas-600" : "text-ink-500";
   return (

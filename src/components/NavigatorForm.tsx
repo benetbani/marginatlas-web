@@ -15,11 +15,13 @@ import {
 import { getRegionsForCountry, getSubdivisionsForRegion } from "@/lib/regions/regions-by-country";
 import { getDefaultRegionForCountry } from "@/lib/regions/default_region_by_country";
 import { CITIES_BY_STATE } from "@/lib/cities/city_aliases_generated";
+import { elevation } from "@/lib/design-tokens";
 // CitiesFix2 §3: navigator table redesign. Visual upgrades only; the
 // submit mechanic (router.push + ComboField state) is preserved exactly
 // as it was, per the founder's "do not change the submit mechanic"
 // directive. The visual changes are:
-//  - card chrome wrapped in atlas-paper-card (paper texture, edge fade)
+//  - card chrome wrapped in atlas-paper-card (white surface post white-reset;
+//    the paper texture was removed site-wide) with an elevation-token shadow
 //  - 6 fields grouped into two editorial sections, "Where" + "What",
 //    each with a font-display heading and small ordinal cue
 //  - on desktop, the two sections sit side by side with a vermillion
@@ -235,7 +237,8 @@ export function NavigatorForm() {
         e.preventDefault();
         submit();
       }}
-      className="relative rounded-2xl atlas-paper-card border border-ink-200 hover:border-ink-300 transition-colors shadow-[0_1px_3px_rgba(0,0,0,0.05),_0_8px_28px_rgba(0,0,0,0.06)]"
+      className="relative rounded-2xl atlas-paper-card border border-ink-200 hover:border-ink-300 transition-colors"
+      style={{ boxShadow: elevation.card }}
     >
       {/* Hidden inputs mirror the React state so the native HTML
          form-submit fallback (action="/api/go") works without JS. If
@@ -257,7 +260,7 @@ export function NavigatorForm() {
 
       {/* Card header strip. Editorial caption + meta count. Reads as
           a section title, not a marketing pitch. */}
-      <div className="flex items-baseline justify-between gap-4 px-5 md:px-8 pt-5 md:pt-7 pb-3 border-b border-ink-200/60">
+      <div className="flex items-baseline justify-between gap-4 px-5 md:px-8 pt-5 md:pt-7 pb-3 border-b border-ink-200">
         <div>
           <div className="text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.18em] text-atlas-700">
             The Navigator
@@ -274,9 +277,9 @@ export function NavigatorForm() {
 
       {/* Two editorial sections: WHERE (geography) and WHAT (line of work).
           Side by side on md+; stacked with a hairline divider on mobile. */}
-      <div className="grid md:grid-cols-2 md:divide-x md:divide-ink-200/60 divide-y md:divide-y-0 divide-ink-200/60">
+      <div className="grid md:grid-cols-2 md:divide-x md:divide-ink-200 divide-y md:divide-y-0 divide-ink-200">
         {/* WHERE */}
-        <section className="px-5 md:px-8 py-5 md:py-7">
+        <section className="px-5 md:px-8 py-6 md:py-8">
           <header className="flex items-baseline gap-3 mb-4 md:mb-5">
             <span className="font-display text-atlas-700 text-base md:text-lg tabular-nums leading-none">
               01
@@ -290,7 +293,7 @@ export function NavigatorForm() {
               </div>
             </div>
           </header>
-          <div className="space-y-3.5">
+          <div className="space-y-4 md:space-y-5">
             <ComboField
               id="country"
               label="Country"
@@ -328,7 +331,7 @@ export function NavigatorForm() {
         </section>
 
         {/* WHAT */}
-        <section className="px-5 md:px-8 py-5 md:py-7">
+        <section className="px-5 md:px-8 py-6 md:py-8">
           <header className="flex items-baseline gap-3 mb-4 md:mb-5">
             <span className="font-display text-atlas-700 text-base md:text-lg tabular-nums leading-none">
               02
@@ -342,7 +345,7 @@ export function NavigatorForm() {
               </div>
             </div>
           </header>
-          <div className="space-y-3.5">
+          <div className="space-y-4 md:space-y-5">
             <ComboField
               id="sector"
               label="Sector"
@@ -375,8 +378,9 @@ export function NavigatorForm() {
         </section>
       </div>
 
-      {/* Footer bar. Editorial sample line + the two CTAs. */}
-      <div className="rounded-b-2xl border-t border-ink-200/60 bg-cream-50/60 px-5 md:px-8 py-4 md:py-5">
+      {/* Footer bar. Editorial sample line + the two CTAs. White-reset:
+          clean white footer with a crisp top rule (was cream-50/60). */}
+      <div className="rounded-b-2xl border-t border-ink-200 bg-white px-5 md:px-8 py-4 md:py-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <p className="text-[11px] md:text-xs text-cocoa-700/80 leading-relaxed">
             <span className="font-semibold uppercase tracking-[0.12em] text-atlas-700 mr-1.5">

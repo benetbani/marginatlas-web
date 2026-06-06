@@ -137,8 +137,9 @@ export default async function RegionLandingPage({
 
   return (
     <div>
-      {/* Hero */}
-      <section id="hero" className="py-10 md:py-14 bg-cream-100">
+      {/* Hero. White-reset 2026-06-06: was bg-cream-100, now pure white like
+          every other hero band; no rule above it (first section). */}
+      <section id="hero" className="py-10 md:py-14 bg-white">
         <nav className="text-sm text-cocoa-700/70 mb-4">
           <Link href="/" className="hover:text-atlas-700">Home</Link>
           <span className="mx-2">/</span>

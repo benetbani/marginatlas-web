@@ -37,7 +37,7 @@ export function MoreDepthBanner({
   return (
     <div
       data-v34-section="more-depth-banner"
-      className="my-8 rounded-xl border border-atlas-200 bg-atlas-50 px-4 py-3 flex items-center justify-between gap-3 text-sm text-ink-800"
+      className="my-8 rounded-xl border border-atlas-200 bg-white px-4 py-3 flex items-center justify-between gap-3 text-sm text-ink-800"
     >
       <span>{headline}</span>
       <LockPill

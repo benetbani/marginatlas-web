@@ -96,12 +96,12 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
         <Organization />
-        {/* Plan v32 hotfix — header now 50% taller, logo larger,
-           nav items more spread out + larger font. Removed the
-           bottom border (was reading as an orphan line below the
-           header). The pattern background under it provides the
-           visual separation. */}
-        <header className="bg-cream-50 sticky top-0 z-10">
+        {/* Plan v32 hotfix — header 50% taller, logo larger, nav items more
+           spread out + larger font. White-reset 2026-06-06: the header is pure
+           white and, now that the paper texture that used to separate it from
+           the page is gone, carries a thin bottom hairline so the sticky bar
+           stays defined as content scrolls beneath it. */}
+        <header className="bg-white border-b border-parchment sticky top-0 z-10">
           <div className="max-w-7xl mx-auto px-6 py-5 md:py-6 flex items-center justify-between">
             <a href="/" aria-label="Margin Atlas home" className="inline-flex items-center">
               {/* Cities §10: bump 32 to 40 on desktop, 36 on mobile per founder request. */}
@@ -138,11 +138,13 @@ export default function RootLayout({
         {/* Plan v30 Bundle 5 — site-wide newsletter signup bar; calm,
             non-aggressive, slim. Sits above the main footer. */}
         <FooterNewsletterBar />
-        {/* Plan v32 — footer carries the dark Atlas paper pattern. Editorial
-           anchor at the end of every page; the cream→dark transition under
-           the parchment newsletter strip reads as a soft drop into a
-           dedicated metadata band. */}
-        <footer className="atlas-paper-dark border-t border-ink-800">
+        {/* White-reset 2026-06-06 (founder): the footer is now TRUE BLACK
+           (was graphite atlas-paper-dark). It is the single dark anchor at
+           the end of an all-white site; the white newsletter strip drops
+           straight into pure black for a crisp, intentional close. Text is
+           white with bumped muted contrast so every line stays legible on
+           pure black. */}
+        <footer className="bg-black text-white border-t border-white/10">
           <div className="max-w-7xl mx-auto px-6 py-12">
             <div className="mb-8">
               <LogoWordmark size={22} labeled tone="dark" />
@@ -189,11 +191,11 @@ export default function RootLayout({
                   <li><a href="/pricing" className="hover:text-atlas-500">Pricing</a></li>
                   <li><a href="/status" className="hover:text-atlas-500">Status</a></li>
                   <li><a href="/api" className="hover:text-atlas-500">API</a></li>
-                  <li className="text-white/40">v1.18.0</li>
+                  <li className="text-white/55">v1.18.0</li>
                 </ul>
               </div>
             </div>
-            <div className="mt-10 pt-6 border-t border-white/15 flex flex-wrap items-center justify-between gap-3 text-xs text-white/60">
+            <div className="mt-10 pt-6 border-t border-white/15 flex flex-wrap items-center justify-between gap-3 text-xs text-white/70">
               <span>© Tesseract Research · marginatlas.com</span>
               <span>Covering small businesses worldwide · free to browse</span>
             </div>

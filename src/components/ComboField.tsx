@@ -116,7 +116,7 @@ export function ComboField({
     <div ref={wrapRef} className="relative">
       <label
         htmlFor={id}
-        className="block text-[11px] font-semibold uppercase tracking-wider text-cocoa-700 mb-1.5"
+        className="block text-xs font-semibold uppercase tracking-wider text-cocoa-700 mb-1.5"
       >
         {label}
         {required && <span className="text-atlas-600 ml-0.5">*</span>}
@@ -131,7 +131,7 @@ export function ComboField({
         )}
       </label>
       <div
-        className={`flex items-center px-3.5 py-2.5 rounded-xl border transition-all ${
+        className={`flex items-center px-3.5 py-3 rounded-xl border transition-all ${
           open
             ? "border-atlas-500 ring-2 ring-atlas-500/30 shadow-sm"
             : "border-parchment hover:border-atlas-300"

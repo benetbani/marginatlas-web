@@ -68,7 +68,10 @@ function useNewsletterSubmit(source: Source, endpoint: string) {
 export function FooterNewsletterBar({ endpoint = "/api/newsletter" }: Props) {
   const { status, email, setEmail, submit } = useNewsletterSubmit("footer", endpoint);
   return (
-    <div id="newsletter" className="w-full bg-parchment scroll-mt-20">
+    {/* White-reset 2026-06-06: the newsletter band was warm parchment; it is
+        now white, separated from the content above by a hairline and from the
+        true-black footer directly below by the colour break. */}
+    <div id="newsletter" className="w-full bg-white border-t border-parchment scroll-mt-20">
       <form
         onSubmit={submit}
         className="mx-auto max-w-6xl px-6 h-14 flex items-center gap-3 sm:gap-5 flex-wrap sm:flex-nowrap"

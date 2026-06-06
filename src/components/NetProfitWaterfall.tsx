@@ -96,7 +96,7 @@ export function NetProfitWaterfall({
         </div>
       </div>
 
-      <div className="mt-3 rounded-lg bg-cream-100 border border-parchment p-3 text-xs text-ink-800 leading-relaxed">
+      <div className="mt-3 rounded-lg bg-white border border-parchment p-3 text-xs text-ink-800 leading-relaxed">
         <strong className="text-ink-900">Estimate only, not financial or tax advice.</strong>{" "}
         Cost of goods is pulled from typical industry numbers. Pay is
         worked out from the typical labor share when it isn&apos;t measured

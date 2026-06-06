@@ -163,9 +163,12 @@ export default function HomePage() {
         crawlers; the words rotate client-side.
       */}
       <ToneBand tone="home-hero">
-        <section className="pt-6 pb-4 md:pt-10 md:pb-6 lg:pt-12">
+        {/* White-reset 2026-06-06: hero rhythm tightened (pt / mb / mt cut by
+            roughly a third) so the eyebrow, headline, and subtitle sit higher
+            and the navigator lifts up into view on a clean white band. */}
+        <section className="pt-4 pb-3 md:pt-7 md:pb-4 lg:pt-8">
           <div className="max-w-4xl mx-auto text-center">
-            <SectionEyebrow size="md" className="mb-4 md:mb-5 text-center">
+            <SectionEyebrow size="md" className="mb-2.5 md:mb-3 text-center">
               The #1 atlas of local profit intelligence
             </SectionEyebrow>
             <h1 className="font-display text-[1.75rem] sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-ink-900 leading-[1.08] text-balance">
@@ -186,17 +189,17 @@ export default function HomePage() {
               </span>
               ?
             </h1>
-            <p className="mt-4 md:mt-6 max-w-2xl mx-auto text-base md:text-lg text-graphite leading-relaxed">
+            <p className="mt-2.5 md:mt-4 max-w-2xl mx-auto text-base md:text-lg text-graphite leading-relaxed">
               Know if a business works before you risk your money.
             </p>
           </div>
           {/* Navigator sits inside the same band immediately under the
              hero copy. Tightened top spacing so it reads as one
              continuous section, not two stacked. relative z-30 lifts the
-             form (and its ComboField dropdown, which now extends below the
-             card) above the following opaque ink-dark city-picker band so
-             the open list stays fully visible and scrollable. */}
-          <div className="relative z-30 mt-6 md:mt-8 max-w-5xl mx-auto">
+             form (and its ComboField dropdown, which extends below the
+             card) above the following world-map band so the open list
+             stays fully visible and scrollable. */}
+          <div className="relative z-30 mt-4 md:mt-5 max-w-5xl mx-auto">
             <NavigatorForm />
           </div>
         </section>
