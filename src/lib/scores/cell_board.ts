@@ -230,12 +230,31 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
   const lonRevP10 = LE ? LE.revenue * 0.5 : null;
   const lonRevP90 = LE ? LE.revenue * 1.8 : null;
 
+  // Effective revenue triple (median, p10, p90), London-first then the
+  // country fallback, computed ONCE so the "Typical revenue" row, the
+  // "Revenue range" row, and the SpreadBar always read the same numbers and
+  // can never disagree.
+  //
+  // Suppression coupling (founder data-quality rule): per-firm revenue above
+  // the industry plausibility ceiling is nulled upstream by the shared
+  // plausibility chokepoint, so an implausible cell arrives here with a null
+  // median. When the median is missing we MUST NOT show a range or a spread
+  // around a number we are dashing: a null median forces the p10/p90 anchors
+  // to null too, so the range row dashes and the SpreadBar self-omits. London
+  // medians (LE.revenue) are always present and well inside the ceiling, so
+  // London is unaffected. The dash is honest, never a capped/invented figure.
+  const effMedian = isNum(lonRevenue) ? lonRevenue : isNum(typicalRevenue) ? typicalRevenue : null;
+  const effRevP10 =
+    effMedian == null ? null : isNum(lonRevP10) ? lonRevP10 : isNum(revP10) ? revP10 : null;
+  const effRevP90 =
+    effMedian == null ? null : isNum(lonRevP90) ? lonRevP90 : isNum(revP90) ? revP90 : null;
+
   // -- A. The numbers --------------------------------------------------------
   // Revenue per employee, derived once (typical revenue spread over the people
   // working at a typical firm).
   const revenuePerEmployee =
-    isNum(typicalRevenue) && isNum(peopleWorking) && peopleWorking > 0
-      ? typicalRevenue / peopleWorking
+    isNum(effMedian) && isNum(peopleWorking) && peopleWorking > 0
+      ? effMedian / peopleWorking
       : null;
 
   const rentSharePct = costStructure ? pctShare(costStructure.rent) : null;
@@ -276,21 +295,15 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
   const numbersRows: StatRow[] = [
     {
       label: "Typical revenue",
-      value: isNum(lonRevenue)
-        ? fmtUSD(lonRevenue)
-        : isNum(typicalRevenue)
-          ? fmtUSD(typicalRevenue)
-          : null,
+      value: isNum(effMedian) ? fmtUSD(effMedian) : null,
       hint: "median firm",
     },
     {
       label: "Revenue range",
       value:
-        isNum(lonRevP10) && isNum(lonRevP90)
-          ? `${fmtUSD(lonRevP10)} to ${fmtUSD(lonRevP90)}`
-          : isNum(revP10) && isNum(revP90)
-            ? `${fmtUSD(revP10)} to ${fmtUSD(revP90)}`
-            : null,
+        isNum(effRevP10) && isNum(effRevP90)
+          ? `${fmtUSD(effRevP10)} to ${fmtUSD(effRevP90)}`
+          : null,
       hint: "bottom tenth to top tenth",
     },
     {
@@ -358,9 +371,12 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
     React.Fragment,
     null,
     React.createElement(SpreadBar, {
-      p10: LE ? lonRevP10 : revP10,
-      median: LE ? lonRevenue : typicalRevenue,
-      p90: LE ? lonRevP90 : revP90,
+      // Same effective triple as the rows above: a suppressed (null) median
+      // forces p10/p90 to null, so the bar self-omits rather than drawing a
+      // spread around a number we are dashing.
+      p10: effRevP10,
+      median: effMedian,
+      p90: effRevP90,
     }),
     React.createElement(CostBar, { shares: costShares }),
   );

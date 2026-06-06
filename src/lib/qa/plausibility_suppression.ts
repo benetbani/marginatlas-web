@@ -19,8 +19,12 @@
  *
  * Suppression policy:
  *
- *   - If revenue_per_firm > industry.hi × CATASTROPHIC_MULTIPLIER (default 10),
- *     null it out. The user sees "-" or the tile is suppressed.
+ *   - If revenue_per_firm > industry.hi × REVENUE_CATASTROPHIC_MULTIPLIER
+ *     (default 3), null it out. The user sees the board's missing dash; we
+ *     NEVER cap-and-show an invented number. This is the shared revenue
+ *     chokepoint for every cell read path, so the dash is consistent
+ *     everywhere a cell is rendered (cell page, comparison rails, country
+ *     and cross-country reads). A value at or below hi × 3 is unchanged.
  *   - If employees_per_firm < 1 (zero employees), null it out so the
  *     downstream estimator kicks in.
  *   - If payroll_per_employee > $300K (over the SMB bound × 1.5),
@@ -39,8 +43,18 @@ import {
   PAYROLL_BOUNDS,
 } from "@/lib/qa/smb_bounds";
 
-/** A value above industry.hi × this is treated as a catastrophic error. */
-const REVENUE_CATASTROPHIC_MULTIPLIER = 10;
+/**
+ * A value above industry.hi × this is implausible per-firm revenue and is
+ * suppressed to a dash (never capped to a number).
+ *
+ * Founder-approved data-quality fix: lowered from 10 to 3 so clearly-
+ * implausible revenue DASHES instead of rendering a wrong-looking "typical"
+ * figure. This matches countryPagePlausibilityCeiling (already hi × 3), so the
+ * cell page and the country / cross-country paths now agree on one ceiling:
+ * revenue dashes at hi × 3 on EVERY path. Non-revenue suppression (payroll,
+ * employees) is unchanged.
+ */
+const REVENUE_CATASTROPHIC_MULTIPLIER = 3;
 
 /** Payroll above this absolute USD is implausible for SMB-wage averages. */
 const PAYROLL_CATASTROPHIC_USD = PAYROLL_BOUNDS.hi * 1.5; // $300K

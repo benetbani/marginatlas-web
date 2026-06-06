@@ -179,11 +179,11 @@ export const SMB_DENSITY_RANK: Record<string, number> = {
 };
 
 /**
- * For the country page only: tighter plausibility ceiling than the
- * site-wide catastrophe ceiling. Returns industry.hi * 3 (vs the
- * site-wide x10). At the country level, anything above 3x the bound
- * is almost certainly a wrong-aggregation row that would skew the
- * median upward when grouped.
+ * Country-page plausibility ceiling. Returns industry.hi * 3, the same
+ * revenue ceiling the site-wide suppression chokepoint now uses
+ * (REVENUE_CATASTROPHIC_MULTIPLIER = 3), so every revenue path agrees:
+ * anything above 3x the per-industry bound is treated as a wrong-aggregation
+ * row, dropped here before the median and dashed elsewhere on read.
  */
 export function countryPagePlausibilityCeiling(industryId: string): number {
   const bounds = REVENUE_PER_FIRM_BOUNDS[industryId] ?? DEFAULT_REVENUE_BOUNDS;

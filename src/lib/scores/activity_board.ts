@@ -187,7 +187,15 @@ export function buildActivityBoard(input: ActivityBoardInput): BoardSection[] {
   // average): the trimmed p10..p90 band the caller computed across covered
   // places, with the median as the typical anchor. Owner take-home is the same
   // trimmed-band treatment. Any figure we cannot defend dashes.
-  const hasRevenueRange = isNum(revenue.p10) && isNum(revenue.p90) && revenue.p90 > revenue.p10;
+  // Suppression coupling (founder data-quality rule), matching cell_board.ts:
+  // never show a revenue range or a spread around a median we are dashing. When
+  // the median is absent (the trimmed band was too thin to defend, or every
+  // per-place revenue was suppressed upstream as implausible), the range row
+  // and the SpreadBar both omit. A null median forces the range + chart to
+  // null; the dash is honest, never a capped/invented number.
+  const hasMedian = isNum(revenue.median);
+  const hasRevenueRange =
+    hasMedian && isNum(revenue.p10) && isNum(revenue.p90) && revenue.p90 > revenue.p10;
   const hasTakeHomeRange =
     isNum(takeHome.p10) && isNum(takeHome.p90) && takeHome.p90 > takeHome.p10;
 
@@ -238,10 +246,12 @@ export function buildActivityBoard(input: ActivityBoardInput): BoardSection[] {
   // Revenue spread chart: the same trimmed band as the rows above (p10..p90
   // track, median marked). SpreadBar self-omits when the range is absent, so
   // attaching it unconditionally is safe.
+  // Same coupling as the rows: a suppressed (null) median omits the spread
+  // rather than drawing a band around a number we are dashing.
   const numbersChart = React.createElement(SpreadBar, {
-    p10: revenue.p10,
+    p10: hasMedian ? revenue.p10 : null,
     median: revenue.median,
-    p90: revenue.p90,
+    p90: hasMedian ? revenue.p90 : null,
   });
 
   // -- market. Market structure (modeled). ---------------------------------
