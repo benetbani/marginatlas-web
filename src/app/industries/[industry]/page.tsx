@@ -283,6 +283,25 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
         <div className="mt-4">
           <ActivityPlacePicker activityId={ind.id} activityName={ind.name} />
         </div>
+
+        {/* Across-cities comparison CTA (founder's chosen comparison default).
+           A reader who has not settled on a place yet wants to see this one
+           business laid out across the major world cities, side by side. The
+           programmatic comparison lives at /industries/{slug}/across; it self-
+           omits cleanly when too few cities resolve, so the link is always safe
+           to show (it lands on a graceful pointer in the rare thin case). */}
+        <Link
+          href={`/industries/${activitySlug}/across`}
+          className="group mt-3 inline-flex items-center gap-2 rounded-full border border-parchment bg-cream-50 px-4 py-2 text-sm font-medium text-ink-900 transition-colors hover:border-atlas-300 hover:bg-cream-100"
+        >
+          <span>
+            Not sure where? See {ind.name.toLowerCase()} across the world&apos;s
+            cities
+          </span>
+          <span aria-hidden="true" className="text-atlas-700 transition-transform group-hover:translate-x-0.5">
+            &rarr;
+          </span>
+        </Link>
       </section>
 
       {/* The activity economics, demoted (founder feedback, 2026-06-06). This
