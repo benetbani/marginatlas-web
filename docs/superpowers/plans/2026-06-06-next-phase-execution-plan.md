@@ -113,3 +113,16 @@ A premium reference cited by buyers, and a paid API, both rest on one thing: the
 - **Then:** a dedicated, shareable **cost-to-open page** (the section already exists; a standalone URL per flagship business-and-place is the shareable-content play), big-economy depth, and the homepage polish + warm-voice pass.
 
 The break-in rating is the right next chunk: it is the literal answer to "where can I break in and win," and its data foundation is now fully in place.
+
+**2026-06-06 (cont.) — the break-in rating shipped to production (commits `976690f8` + copy fix `79ce94d7`).** The marquee feature, the centerpiece of this whole plan, is live.
+- **One single 0-100 score** (`src/lib/scores/break_in_rating.ts`), payback-dominant (58% payback / 24% speed-to-open / 18% room-to-grow), computed from REAL per-cell owner take-home plus real-or-modeled entry costs. Returns null (shows nothing) when take-home or capital is missing, so no cell ever shows a wrong score. Founder chose the **Balanced** calibration; the dry-run spread is 24 to 97 with the middle genuinely mid (London restaurants 43, dental 66, hotel 24).
+- **It replaced the old multi-part Atlas opportunity score on the cell masthead** (the founder wanted one simple number, not sub-ratings). `computeScores` is untouched for any other surface; only the masthead display changed. `BreakInScore.tsx` renders the masthead number + band + warm headline, and a "Why this rating" panel (payback line + three driver bars + modeled footnote) at the head of the "What it takes to open" section.
+- **Extremes gained two shareable rankings:** "The easiest businesses to break into" (consulting in Tokyo, ~99) and "The hardest" (restaurants in Madrid, ~17), trust-gated on real local take-home.
+- **Bonus honesty fix:** calibration exposed 55 capital-heavy industries (all manufacturing, construction, auto dealers, warehousing, funeral services) silently defaulting to ~$80K; they now carry honest capital archetypes, which also corrects their live "Cost to open" row and the barrier leaderboard.
+- **Build lessons:** two preview-build failures caught before prod. (1) A broad `git add scripts/` swept in unrelated WIP that registered a missing test in `prebuild_all.ts`; fixed by precise per-file staging thereafter. (2) The warm headlines used "money back" (meaning recoup investment), which tripped the `no_money_back_copy` v34 gate; reworded to "road back to profit". Both fixed forward; nothing wrong reached production.
+
+**Plan status now:** depth (density, startup-capital, opening-checklist, +55 capital fixes) and the marquee 0-100 rating are DONE and live. Remaining, in priority order:
+1. **Homepage** (the founder's standing priority) + the shareable front: bring the break-in rating and the new rankings onto the homepage, and a warm-voice polish pass. Growth = shareable content, and the rankings are now the shareable asset.
+2. **Big-economy depth:** deeper real data in the large economies (the breadth-vs-depth call was depth).
+3. **A dedicated, shareable cost-to-open page** (the section exists; a standalone URL per flagship business-and-place is the link-earning play).
+4. **Much later:** gated-depth monetization, then the API.
