@@ -95,3 +95,17 @@ A premium reference cited by buyers, and a paid API, both rest on one thing: the
 3. **Cost-to-open full checklists.**
 4. **Homepage polish + warm-voice pass + the shareable Extremes/rankings front.**
 5. **Much later:** gated-depth monetization, then the API.
+
+---
+
+## Progress log
+
+**2026-06-06 — depth shipped to production (branch `reform-v2/palette-brick` fast-forwarded to `main`):**
+- **Competition-density layer (live).** Real firms-per-10k where trusted, else modeled archetype labelled "modeled", sanity-capped and place-adjusted. Density row on the cell board; density leaderboards on `/extremes`.
+- **Startup-capital layer (live, commit `56181e05`).** Per-industry one-time capital archetype (`src/lib/markets/startup_capital_archetypes.ts`, 98 keyed entries) place-adjusted by city cost-of-living (0.4x to 2.5x, $4K to $6M bounds). New **"Cost to open"** row on the cell board section A (real where trusted, else modeled-with-hint). Verified: London restaurants reads **$225K**. Two new `/extremes` boards: "cheapest businesses to start" (#1 cleaning in Madrid, $8,250) and "highest barriers to entry" (#1 hotels in New York, $2,000,000). `startupCostUsd` also threaded into the across-cities comparison columns.
+
+**Immediate next chunk (the second half of the founder-approved "Build it all" entry-cost advancement):**
+- **Cost-to-open FULL CHECKLIST pages.** A dedicated page type per business-and-place that assembles the entry picture in one place: capital (have it, from the startup-capital layer), realistic time-to-open, permits/licensing cost (new modeled band, per place), and first hires (new modeled count, per business). Both new modeled inputs labelled modeled, sanity-bounded, and dry-run + shown before shipping per the standing rule. Cross-linked from cells, comparison, and Extremes.
+- **Then:** the single 0-100 break-in rating (take-home + speed-to-profit + ease-of-entry, one number, everywhere), built on top of density + startup-capital + friction.
+
+This chunk is a net-new page type plus two new modeled datasets; it is the right size for a fresh session so the dry-run and the modeling get full attention against the no-wrong-numbers bar.
