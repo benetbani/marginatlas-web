@@ -1,7 +1,8 @@
 import { NavigatorForm } from "@/components/NavigatorForm";
-import { FeaturedCellTile, type FeaturedTileSpec } from "@/components/FeaturedCellTile";
 import { WorldMapSection } from "@/components/home/WorldMapSection";
 import { WhatAtlasWeighs } from "@/components/home/WhatAtlasWeighs";
+import { MoneyBeats } from "@/components/home/MoneyBeats";
+import { loadHomepageBeats } from "@/lib/home/beats";
 import HomepageEditorialBlocks, { type AtlasQuestion } from "@/components/HomepageEditorialBlocks";
 import Image from "next/image";
 import { RotatingWord } from "@/components/RotatingWord";
@@ -25,26 +26,6 @@ function ToneBand({ tone, children }: { tone: string; children: React.ReactNode 
 }
 
 export const revalidate = 86400; // 1 day
-
-/**
- * Founder-specified set, 3×3 symmetric grid. Every tuple
- * must resolve in the data layer; FeaturedCellTile returns null on miss,
- * which would break the grid, so any tuple here must be pre-validated.
- * Tiles use measured parent industries (no sub-niches) per Plan v4 Step 16.
- */
-const FEATURED: FeaturedTileSpec[] = [
-  { iso2: "US", geo: "california",   industry: "software-development", title: "Software development", region: "San Francisco",  glyph: "💻" },
-  { iso2: "GB", geo: "gb",           industry: "legal-services",       title: "Legal services",       region: "United Kingdom", glyph: "⚖️" },
-  { iso2: "DE", geo: "de21",         industry: "fabricated-metal-mfg", title: "Metal manufacturing",  region: "Bavaria",        glyph: "🔩" },
-  { iso2: "ES", geo: "es511",        industry: "restaurants",          title: "Restaurants",          region: "Barcelona",      glyph: "🥘" },
-  { iso2: "MX", geo: "mx-roo",       industry: "hotels-lodging",       title: "Hotels",               region: "Cancún",         glyph: "🏨" },
-  // Six is the symmetric grid size (2 rows × 3 cols on md). All six are
-  // verified resolvable in the current snapshot. Tuples for Tokyo ramen,
-  // LA gyms, Milan boutiques, Paris jewelry were dropped because the
-  // underlying data isn't currently in cells_master / regional_cells
-  // and the founder rule (Plan v24 Block 2) says no half-empty grids.
-  { iso2: "US", geo: "california",   industry: "restaurants",          title: "Restaurants",          region: "California",     glyph: "🍽️" },
-];
 
 /**
  * Decision-first prompts for the editorial "What you can ask Atlas" block
@@ -148,8 +129,12 @@ function formatPostDate(iso: string): string {
   }
 }
 
-export default function HomePage() {
+export default async function HomePage() {
   const { posts: blogPosts } = loadBlogRail();
+  // Three data-rich beats (editorial cards, gym leaderboard, surprising spread)
+  // resolved server-side at build/ISR time. Every read is budget-wrapped and
+  // self-omits on a miss, so this never blocks or breaks the homepage render.
+  const beats = await loadHomepageBeats();
   return (
     <div>
       {/*
@@ -274,32 +259,16 @@ export default function HomePage() {
         </section>
       </ToneBand>
 
-      {/* Featured benchmarks. Plan v16 Block E: 9 tiles in 3×3 symmetric grid. */}
+      {/* Three data-rich money beats (replaced the featured-tiles grid,
+          2026-06-06): three editorial cards each carrying a real
+          industry-in-place with its typical revenue, after-tax owner take-home,
+          and a hook that names the upside and the killer; a ranked leaderboard
+          of the US states where a gym keeps the most for its owner; and a
+          verified surprising spread where a humble business out-earns a
+          prestigious one. Every figure is resolved from real cells server-side
+          (src/lib/home/beats), and each beat self-omits on a miss. */}
       <ToneBand tone="home-featured">
-        <section className="py-10">
-          <SectionEyebrow size="md" className="mb-2">Start somewhere real</SectionEyebrow>
-          <div className="flex items-baseline justify-between gap-4 flex-wrap mb-4">
-            <h2 className="font-display text-2xl md:text-3xl font-semibold tracking-tight text-ink-900">
-              See where the money actually is
-            </h2>
-            <a
-              href="/browse"
-              className="text-sm text-atlas-700 hover:text-atlas-900 font-medium"
-            >
-              Browse everything →
-            </a>
-          </div>
-          <p className="text-sm text-cocoa-700 max-w-2xl mb-6">
-            Six businesses people recognize on sight. Open any one for the full
-            read: typical revenue, where the margin goes, how many operators are
-            already there, and whether it clears for the owner.
-          </p>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3 auto-rows-fr">
-            {FEATURED.map((spec) => (
-              <FeaturedCellTile key={`${spec.iso2}-${spec.geo}-${spec.industry}`} spec={spec} />
-            ))}
-          </div>
-        </section>
+        <MoneyBeats beats={beats} />
       </ToneBand>
 
       {/*
