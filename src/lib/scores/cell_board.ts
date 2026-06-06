@@ -40,6 +40,8 @@
 import * as React from "react";
 import type { Cell } from "@/lib/cells";
 import { industryToSlug } from "@/lib/taxonomy";
+import { isTrustedLocalCell } from "@/lib/cells/trust";
+import { densityArchetypePer10k } from "@/lib/markets/density_archetypes";
 import type { BoardSection } from "@/components/board/DataSection";
 import type { StatRow } from "@/components/board/StatGrid";
 import { fmtUSD, fmtPct, fmtInt, fmtNum } from "@/components/board/format";
@@ -382,28 +384,55 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
   );
 
   // -- B. The market (modeled) ----------------------------------------------
-  // Competitor count and density are place-specific. A cell that fell back to
-  // the country level (geo_level "country") carries a national firm count, not
-  // a local one, so suppress them rather than imply a local figure under a city
-  // title. They return when a real city or region cell exists.
+  // Competitor COUNT is place-specific and real-only. A cell that fell back to
+  // the country level (geo_level "country"), or is synthesized / extrapolated,
+  // carries a national or estimated firm count, not a local one, so the absolute
+  // "Competitors" figure is suppressed there rather than implying a local count
+  // under a city title. It returns only for a genuinely local measurement.
   //
-  // A London cell is the exception: when modeled London economics are present
-  // (LE), the firm count and density come from the real London figures, so
-  // treat it as local even though the underlying cell fell back to the country
-  // level, and override the suppression with the London numbers.
-  const isLocalCell = LE != null || cell.geo_level !== "country";
-  const competitors = LE
+  // A London cell is the documented exception: when modeled London economics are
+  // present (LE), the firm count and the REAL density come from the curated
+  // London figures, so it is treated as local even though the underlying cell
+  // falls back to the country level.
+  //
+  // DENSITY is the blended "room to enter" signal and aims NOT to dash. It is
+  // REAL (firms per 10k residents) when the cell is a trusted local measurement
+  // (the shared four-way trust gate) AND both a local firm count and a
+  // population are held; otherwise it is MODELED from the per-industry archetype
+  // on the same firms-per-10k scale, labelled modeled on the row. The archetype
+  // is already a per-10k rate, so it applies directly whether or not this place
+  // has a population on file; population only matters for deriving a real count,
+  // which we never fabricate. Either way the figure passes the same display
+  // sanity cap, so a modeled value can never sit outside the band a real one is
+  // allowed to show.
+  const isLondonLocal = LE != null;
+  // Real local firm count: London's curated figure, else the cell's own count
+  // but ONLY when the cell is a trusted local measurement of this activity (not
+  // a country aggregate, not synthesized, not the extrapolated tier).
+  const trustedLocal = isLondonLocal || isTrustedLocalCell(cell);
+  const competitors = isLondonLocal
     ? LE.firms
-    : isLocalCell
+    : trustedLocal
       ? (cell.n_enterprises ?? null)
       : null;
-  const per10k = LE
+  // Real density: only from a trusted-local cell holding both a firm count and a
+  // population. London uses its curated population; every other cell uses the
+  // city population the page resolved (null for a state/region slug).
+  const realPer10k = isLondonLocal
     ? densityPer10k(LE.firms, LONDON_POPULATION)
-    : densityPer10k(competitors, cityPopulation);
-  // Sanity-capped density for DISPLAY: an absurd firms-per-10k (a wrong-geo or
-  // wrong-scale artifact) becomes null and the row dashes. The raw per10k still
-  // drives the crowding gauge below, which saturates on its own.
-  const per10kDisplay = displayDensityPer10k(per10k);
+    : trustedLocal
+      ? densityPer10k(competitors, cityPopulation)
+      : null;
+  const realPer10kDisplay = displayDensityPer10k(realPer10k);
+  // Modeled fallback: the per-industry archetype, used for the Density row (and
+  // the crowding gauge) wherever a real local density is not available. Directional.
+  const modeledPer10k = densityArchetypePer10k(cell.industry_id ?? null);
+  // The figure the row + gauge actually use: real where we have it, else modeled.
+  const densityIsModeled = !isNum(realPer10kDisplay);
+  const per10kDisplay = densityIsModeled ? modeledPer10k : realPer10kDisplay;
+  // The gauge reads the same blended density (real raw where held, else modeled),
+  // so it saturates on a real reading but is no longer empty on a modeled one.
+  const gaugePer10k = densityIsModeled ? modeledPer10k : realPer10k;
 
   const marketRows: StatRow[] = [
     {
@@ -416,6 +445,9 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
       value: isNum(per10kDisplay)
         ? `${fmtNum(per10kDisplay)} per 10k residents`
         : null,
+      // Quiet honesty marker: when the density is the per-industry archetype
+      // rather than this place's own firm count, the row says so.
+      hint: densityIsModeled && isNum(per10kDisplay) ? "modeled" : undefined,
     },
     { label: "Market structure", value: L ? textOrNull(L.typology) : null },
     { label: "Concentration", value: L ? textOrNull(L.concentration) : null },
@@ -429,7 +461,7 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
     },
   ];
   const marketChart = React.createElement(CrowdingGauge, {
-    value: crowdingScore(per10k),
+    value: crowdingScore(gaugePer10k),
   });
 
   // -- C. Pricing power (modeled) -------------------------------------------

@@ -52,6 +52,7 @@ import {
   summarizeActivityPlaces,
   type ActivityPlaceInput,
 } from "@/lib/scores/activity_board";
+import { buildAcrossCities, type CityColumn } from "@/lib/markets/across_cities";
 
 /** A finite, positive real. */
 function isPos(n: number | null | undefined): n is number {
@@ -295,9 +296,173 @@ const LEADERBOARD_SPECS: LeaderboardSpec[] = [
   },
 ];
 
+// --- competition-density leaderboards ---------------------------------------
+//
+// The "room to enter" read, ranked across places: where a business is thickest
+// on the ground (the most crowded corners) and where it is thinnest (where
+// there is still room). These rank a REAL, local competition density, firms per
+// 10k residents, never an absolute revenue figure, so they are the density
+// sibling of the take-home boards above.
+//
+// Source of truth: the curated trusted-city slate that the across-cities
+// comparison already resolves (buildAcrossCities). That builder resolves each
+// (city, activity) pair through the SAME four-way trust gate this file uses
+// (right activity, not synthetic, not the extrapolated tier, not a country
+// aggregate), pairs each clean cell with a curated metro population, and
+// sanity-caps the firms-per-10k so a wrong-scale artifact drops. So a density
+// row here is only ever a genuinely local reading, apples to apples across the
+// trusted set. A board self-omits below MIN_ROWS clean readings, exactly like
+// the take-home boards, so a thin activity drops rather than showing a stub.
+
+/** One ranked row on a competition-density leaderboard. */
+export interface DensityRow {
+  /** Place name, e.g. "Paris". */
+  name: string;
+  /** Cell-page href for the full read. */
+  href: string;
+  /** ISO2 country slug (lowercased), for a small flag. */
+  country: string;
+  /** Competition density, firms per 10k residents (the ranked figure). */
+  densityPer10k: number;
+}
+
+/** One resolved density leaderboard: editorial framing plus the ranked rows. */
+export interface DensityLeaderboard {
+  /** Stable key for React + section anchors. */
+  key: string;
+  /** Small uppercase eyebrow above the title. */
+  eyebrow: string;
+  /** Warm leaderboard title. */
+  title: string;
+  /** One-line editorial intro that names the read. */
+  intro: string;
+  /** The label for the right-hand value column. */
+  valueCaption: string;
+  /** Ranked rows, best-for-the-framing first. */
+  rows: DensityRow[];
+}
+
+/**
+ * A density-board request: one activity, resolved across the trusted city
+ * slate, ranked one way by competition density.
+ */
+interface DensitySpec {
+  key: string;
+  eyebrow: string;
+  title: string;
+  intro: string;
+  valueCaption: string;
+  /** Industry id whose across-cities density we rank, e.g. "restaurants". */
+  industryId: string;
+  /**
+   * Ranking direction by density. "high" puts the most crowded place first (the
+   * most-crowded-corners board); "low" puts the least crowded first (the
+   * still-room board).
+   */
+  direction: "high" | "low";
+}
+
+/**
+ * The density-board slate. Two opposite reads of the SAME signal so the pair is
+ * the crowding gauge made browsable: where a common, well-covered activity is
+ * thickest on the ground, and where it is thinnest. Restaurants are the densest
+ * and most widely covered activity, so the trusted set is richest there, which
+ * keeps both boards above the row floor.
+ */
+const DENSITY_SPECS: DensitySpec[] = [
+  {
+    key: "crowded-corners",
+    eyebrow: "The room to enter",
+    title: "The most crowded corners",
+    intro:
+      "Some places already have a restaurant on every corner. These are the cities where the trade is thickest on the ground, the most competitors per resident we see, the hardest rooms to walk into as the newcomer.",
+    valueCaption: "per 10k residents",
+    industryId: "restaurants",
+    direction: "high",
+  },
+  {
+    key: "still-room",
+    eyebrow: "The room to enter",
+    title: "Where there is still room",
+    intro:
+      "The flip side of the same map: cities where restaurants are thinnest on the ground, the fewest competitors per resident. Thin can mean genuinely open, or it can mean quiet demand, so read it as where there is room to try, not a promise it pays.",
+    valueCaption: "per 10k residents",
+    industryId: "restaurants",
+    direction: "low",
+  },
+];
+
+/** A finite, positive density we can rank and show. */
+function rankableDensity(c: CityColumn): number | null {
+  return isPos(c.densityPer10k) ? c.densityPer10k : null;
+}
+
+/**
+ * Build both density leaderboards from a pre-resolved across-cities cache. Each
+ * spec ranks the shared city columns by their local density (descending for the
+ * crowded board, ascending for the still-room board); a board self-omits below
+ * MIN_ROWS clean readings. Because buildAcrossCities already trust-gates,
+ * population-pairs, and sanity-caps the density, a row here can never be a
+ * country aggregate, a synthetic stand-in, or an out-of-scale figure.
+ */
+function buildDensityBoards(
+  acrossById: Map<string, Awaited<ReturnType<typeof buildAcrossCities>>>,
+): DensityLeaderboard[] {
+  const boards: DensityLeaderboard[] = [];
+  for (const spec of DENSITY_SPECS) {
+    const across = acrossById.get(spec.industryId);
+    if (!across) continue;
+    const withDensity = across.cities
+      .map((c) => ({ c, d: rankableDensity(c) }))
+      .filter((r): r is { c: CityColumn; d: number } => r.d !== null);
+    if (withDensity.length < MIN_ROWS) continue;
+    // Ties keep the across-cities order (richest revenue first).
+    withDensity.sort((a, b) =>
+      spec.direction === "high" ? b.d - a.d : a.d - b.d,
+    );
+    boards.push({
+      key: spec.key,
+      eyebrow: spec.eyebrow,
+      title: spec.title,
+      intro: spec.intro,
+      valueCaption: spec.valueCaption,
+      rows: withDensity.slice(0, MAX_ROWS).map(({ c, d }) => ({
+        name: c.name,
+        href: c.href,
+        country: c.country,
+        densityPer10k: d,
+      })),
+    });
+  }
+  return boards;
+}
+
+/**
+ * Resolve the across-cities data for every distinct activity the density boards
+ * need, ONCE each (both directions of a business share one slate), then build
+ * the boards from that shared cache. Each across read is the builder's own
+ * budgeted, trust-gated resolve, so a slow or thin activity simply yields no
+ * board rather than hanging the hub.
+ */
+async function loadDensityBoards(): Promise<DensityLeaderboard[]> {
+  const uniqueIds = Array.from(new Set(DENSITY_SPECS.map((s) => s.industryId)));
+  const acrossById = new Map<
+    string,
+    Awaited<ReturnType<typeof buildAcrossCities>>
+  >();
+  await Promise.all(
+    uniqueIds.map(async (id) => {
+      acrossById.set(id, await buildAcrossCities(id));
+    }),
+  );
+  return buildDensityBoards(acrossById);
+}
+
 /** The full hub payload: the leaderboards that resolved cleanly, in spec order. */
 export interface ExtremesPayload {
   leaderboards: ExtremeLeaderboard[];
+  /** Competition-density leaderboards (crowded / still-room), or empty. */
+  densityBoards: DensityLeaderboard[];
 }
 
 /**
@@ -348,9 +513,15 @@ async function resolveWithPool(
  * The page decides whether it has enough to render at all.
  */
 export async function loadExtremes(): Promise<ExtremesPayload> {
-  const results = await resolveWithPool(LEADERBOARD_SPECS);
+  // The take-home boards (US-state reads) and the density boards (across-cities
+  // reads) hit different surfaces, so run them in parallel; each self-omits on a
+  // thin or failed read without affecting the other.
+  const [results, densityBoards] = await Promise.all([
+    resolveWithPool(LEADERBOARD_SPECS),
+    loadDensityBoards(),
+  ]);
   const leaderboards = results.filter(
     (b): b is ExtremeLeaderboard => b !== null,
   );
-  return { leaderboards };
+  return { leaderboards, densityBoards };
 }
