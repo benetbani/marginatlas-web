@@ -111,6 +111,23 @@ export function fmtMillions(millions: number | null | undefined): string {
 }
 
 /**
+ * A duration to opening day, written warmly and compactly. A short open reads in
+ * weeks ("~6 weeks"); from nine weeks up it rounds to months ("~3 months",
+ * weeks / 4.33 rounded) so a long build does not print an unwieldy week count.
+ * Singular "1 week" / "1 month" is handled so the phrasing never jars. Null,
+ * NaN, or Infinity collapse to MISSING like every other helper. No em-dashes.
+ */
+export function fmtWeeksToOpen(weeks: number | null | undefined): string {
+  if (!isReal(weeks)) return MISSING;
+  const w = Math.round(weeks);
+  if (w < 9) {
+    return w === 1 ? "~1 week" : `~${w} weeks`;
+  }
+  const months = Math.round(w / 4.33);
+  return months === 1 ? "~1 month" : `~${months} months`;
+}
+
+/**
  * One decimal place, but drop a trailing ".0" so "1,200,000" reads "1.2"
  * while "2,000,000" reads "2" rather than "2.0". Shared by the compact
  * money branches above.

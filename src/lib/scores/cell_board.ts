@@ -43,9 +43,15 @@ import { industryToSlug } from "@/lib/taxonomy";
 import { isTrustedLocalCell } from "@/lib/cells/trust";
 import { densityArchetypePer10k } from "@/lib/markets/density_archetypes";
 import { placeAdjustedStartupCapital } from "@/lib/markets/startup_capital_archetypes";
+import {
+  timeToOpenWeeks,
+  placeAdjustedPermitsUsd,
+  firstHiresCount,
+  firstHiresRoleHint,
+} from "@/lib/markets/opening_archetypes";
 import type { BoardSection } from "@/components/board/DataSection";
 import type { StatRow } from "@/components/board/StatGrid";
-import { fmtUSD, fmtPct, fmtInt, fmtNum } from "@/components/board/format";
+import { fmtUSD, fmtPct, fmtInt, fmtNum, fmtWeeksToOpen } from "@/components/board/format";
 import { SpreadBar } from "@/components/board/charts/SpreadBar";
 import { CostBar } from "@/components/board/charts/CostBar";
 import { CrowdingGauge } from "@/components/board/charts/CrowdingGauge";
@@ -283,27 +289,34 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
   const rentSharePct = costStructure ? pctShare(costStructure.rent) : null;
   const laborSharePct = costStructure ? pctShare(costStructure.labor) : null;
 
-  // Cost to open: the one-time entry capital, blended exactly like the density
-  // row. A trustworthy REAL startup/formation cost is preferred, but ONLY when
-  // the cell is a trusted local measurement (the shared four-way trust gate),
-  // so a country aggregate or an extrapolated cell can never put a "real" figure
-  // under a local title. Otherwise the figure is the MODELED per-industry
-  // archetype, place-adjusted by the city's cost-of-living index (NYC = 100)
-  // when known, else a country wage proxy, else the baseline, all inside a
-  // capped multiplier band so neither the cheapest nor the priciest place prints
-  // an absurd entry figure. The modeled branch carries a quiet "modeled" hint on
-  // the row, the same honesty marker the density row uses. The archetype always
-  // returns a finite, bounded figure, so this row stops dashing wherever we can
-  // estimate it (which is everywhere), and never shows a wrong-scale value.
+  // Capital to start: the one-time entry capital, the lead figure of the "What
+  // it takes to open" section below, blended exactly like the density row. A
+  // trustworthy REAL startup/formation cost is preferred, but ONLY when the cell
+  // is a trusted local measurement (the shared four-way trust gate), so a country
+  // aggregate or an extrapolated cell can never put a "real" figure under a local
+  // title. Otherwise the figure is the MODELED per-industry archetype,
+  // place-adjusted by the city's cost-of-living index (NYC = 100) when known,
+  // else a country wage proxy, else the baseline, all inside a capped multiplier
+  // band so neither the cheapest nor the priciest place prints an absurd entry
+  // figure. The modeled branch carries a quiet "modeled" hint on the row, the
+  // same honesty marker the density row uses. The archetype always returns a
+  // finite, bounded figure, so this row stops dashing wherever we can estimate it
+  // (which is everywhere), and never shows a wrong-scale value. The figure lives
+  // ONLY in that section now, never in section A, so the dollar amount shows once.
   const hasRealStartupCost =
     isNum(realStartupCostUsd) &&
     realStartupCostUsd > 0 &&
     isTrustedLocalCell(cell);
+  // The country wage proxy (annualised average salary) is the second-choice
+  // place signal for every place-adjusted opening figure, used when the geo is a
+  // state/region slug with no city cost-of-living index. Derived once here so the
+  // capital and the permits rows place-adjust off the same number.
+  const countryWageProxy =
+    econ && isNum(econ.avgMonthlySalary) ? econ.avgMonthlySalary * 12 : null;
   const modeledStartupCost = placeAdjustedStartupCapital({
     industryId: cell.industry_id ?? null,
     costOfLivingIndex: cityCostOfLivingIndex,
-    avgYearlySalary:
-      econ && isNum(econ.avgMonthlySalary) ? econ.avgMonthlySalary * 12 : null,
+    avgYearlySalary: countryWageProxy,
   });
   const startupCostIsModeled = !hasRealStartupCost;
   const startupCost = hasRealStartupCost
@@ -392,14 +405,6 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
         : undefined,
     },
     {
-      label: "Cost to open",
-      value: isNum(startupCost) ? fmtUSD(startupCost) : null,
-      // Quiet honesty marker: when the entry figure is the place-adjusted
-      // archetype rather than a trusted real cost for this cell, the row says so,
-      // matching the density row's "modeled" hint.
-      hint: startupCostIsModeled && isNum(startupCost) ? "modeled" : undefined,
-    },
-    {
       label: "People working",
       value: isNum(peopleWorking) ? fmtInt(peopleWorking) : null,
     },
@@ -438,6 +443,50 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
     }),
     React.createElement(CostBar, { shares: costShares }),
   );
+
+  // -- What it takes to open ------------------------------------------------
+  // The opening checklist: the four things a would-be owner asks after the
+  // economics. Capital to start reuses the blended entry figure above (real
+  // trusted cost where held, else the place-adjusted modeled archetype). The
+  // other three are modeled archetypes from opening_archetypes.ts: time to open
+  // is place-invariant weeks; permits are place-adjusted off the SAME place
+  // signals the capital uses (city cost-of-living index, else the country wage
+  // proxy); first hires is a place-invariant headcount with a warm role hint as
+  // its supporting text. Each modeled row carries the quiet "modeled" hint, the
+  // same honesty marker the density row uses. Every archetype returns a finite,
+  // bounded figure, so none of these rows dash.
+  const openTimeWeeks = timeToOpenWeeks(cell.industry_id ?? null);
+  const openPermitsUsd = placeAdjustedPermitsUsd({
+    industryId: cell.industry_id ?? null,
+    costOfLivingIndex: cityCostOfLivingIndex,
+    avgYearlySalary: countryWageProxy,
+  });
+  const openFirstHires = firstHiresCount(cell.industry_id ?? null);
+  const openHiresHint = firstHiresRoleHint(cell.industry_id ?? null);
+  const openingRows: StatRow[] = [
+    {
+      label: "Capital to start",
+      value: isNum(startupCost) ? fmtUSD(startupCost) : null,
+      hint: startupCostIsModeled && isNum(startupCost) ? "modeled" : undefined,
+    },
+    {
+      label: "Time to open",
+      value: isNum(openTimeWeeks) ? fmtWeeksToOpen(openTimeWeeks) : null,
+      hint: "modeled",
+    },
+    {
+      label: "Permits and licensing",
+      value: isNum(openPermitsUsd) ? fmtUSD(openPermitsUsd) : null,
+      hint: "modeled",
+    },
+    {
+      label: "First hires",
+      value: isNum(openFirstHires) ? fmtInt(openFirstHires) : null,
+      // The role hint is the row's supporting text; the "modeled" marker rides
+      // alongside it so the figure stays honest about being an archetype.
+      hint: openHiresHint ? `${openHiresHint}, modeled` : "modeled",
+    },
+  ];
 
   // -- B. The market (modeled) ----------------------------------------------
   // Competitor COUNT is place-specific and real-only. A cell that fell back to
@@ -655,6 +704,12 @@ export function buildCellBoard(input: CellBoardInput): BoardSection[] {
 
   return [
     { key: "numbers", title: "The numbers", rows: numbersRows, chart: numbersChart },
+    {
+      key: "opening",
+      title: "What it takes to open",
+      dek: "The cost, the calendar, and the crew before your first customer. Modeled estimates, shaped by the trade and the local cost of doing business.",
+      rows: openingRows,
+    },
     { key: "market", title: "The market", rows: marketRows, modeled: true, chart: marketChart },
     { key: "pricing", title: "Pricing power", rows: pricingRows, modeled: true },
     { key: "deformation", title: "Market deformation", rows: deformationRows, modeled: true },

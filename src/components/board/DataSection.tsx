@@ -27,7 +27,8 @@ import { ShowMore } from "./ShowMore";
 /**
  * One section of the board. `rows` is rendered in full (first eight inline,
  * the rest behind ShowMore). `modeled` flags directional figures. `chart` is
- * an optional visual rendered above the grid.
+ * an optional visual rendered above the grid. `dek` is an optional short warm
+ * line under the title that frames the section before its numbers.
  */
 export type BoardSection = {
   key: string;
@@ -35,6 +36,7 @@ export type BoardSection = {
   rows: StatRow[];
   modeled?: boolean;
   chart?: React.ReactNode;
+  dek?: string;
 };
 
 /** How many rows render before the ShowMore fold. */
@@ -47,6 +49,10 @@ export function DataSection({ section }: { section: BoardSection }) {
   return (
     <section className="mt-8">
       <SectionEyebrow>{section.title}</SectionEyebrow>
+
+      {section.dek ? (
+        <p className="mt-1 text-sm text-cocoa-700">{section.dek}</p>
+      ) : null}
 
       {section.chart ? <div className="mt-3">{section.chart}</div> : null}
 
