@@ -59,6 +59,7 @@ const GOVERNMENT_FIELDS = [
   "task_efficiency",
   "time_efficiency",
   "judicial_impartiality",
+  "innovation_capacity",
 ];
 
 // Banned only as the headline label. Blurbs may mention banking/agriculture in

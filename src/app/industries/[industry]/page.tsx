@@ -60,6 +60,8 @@ import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { clampMargin } from "@/lib/finance/margin_floor";
 import { BoardHero } from "@/components/board/BoardHero";
 import { DataSection } from "@/components/board/DataSection";
+import { StatCard } from "@/components/board/StatCard";
+import { ActivityPlacePicker } from "@/components/industries/ActivityPlacePicker";
 import { fmtUSD, fmtPct } from "@/components/board/format";
 import {
   buildActivityBoard,
@@ -187,6 +189,18 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
   // Cap the table so it stays scannable; the board already carries the spread.
   const placeRows = placesSummary.rows.slice(0, 12);
 
+  // Split the board for the reframed layout (founder feedback, 2026-06-06). The
+  // economics section ("numbers") keeps its full DataSection treatment (the
+  // structural margins, the cross-place revenue RANGE, the SpreadBar) and is
+  // demoted BELOW the place picker as "the shape before you pick a place". The
+  // four qualitative sections (market structure, pricing power, labor, survival)
+  // each render as their own small titled table (the StatCard look) rather than
+  // one flat run of mostly-dashed rows, so each reads as an intentional little
+  // table even where a field is genuinely unheld. The split is by key, so the
+  // board module stays the single source of section content.
+  const economicsSection = board.find((s) => s.key === "numbers") ?? null;
+  const qualitativeSections = board.filter((s) => s.key !== "numbers");
+
   // Reformation decision layer (bible Sections 4, 5, 25). Pure compute, no
   // queries: the opinionated business-model read and the cost-stage anatomy
   // come from the curated margin structure this page already loads, plus the
@@ -243,14 +257,14 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
       {/* 1. hero. Rebuilt on the board kit (2026-06-05) to match the cell,
          country, and city pages. The heavy full-bleed photo hero with the
          money-question H1 overlaid was replaced by the quiet BoardHero (plain
-         activity name) plus the activity data board, so the figures reach above
-         the fold in the same fixed scaffold the reader learns once and reads on
-         every page. An activity has no single Atlas score, so the score strip is
-         passed empty and renders as a dash. The country eyebrow becomes a small
-         sector eyebrow above the title. The decision-framed money question and
-         the cost-stage anatomy keep their full prose treatment in how-it-works
-         directly below. The id="hero" anchor is kept so the section-order gate
-         sees the canonical first beat. */}
+         activity name), so the title reaches above the fold in the same fixed
+         scaffold the reader learns once and reads on every page. An activity
+         has no single Atlas score, so the score strip is passed empty and
+         renders as a dash. The country eyebrow becomes a small sector eyebrow
+         above the title. The decision-framed money question and the cost-stage
+         anatomy keep their full prose treatment in how-it-works directly below.
+         The id="hero" anchor is kept so the section-order gate sees the
+         canonical first beat. */}
       <section id="hero" className="pb-2">
         {sector ? (
           <SectionEyebrow size="md" className="mt-4">
@@ -258,19 +272,60 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
           </SectionEyebrow>
         ) : null}
         <BoardHero title={ind.name} score={{ overall: null, parts: [] }} />
+
+        {/* The hero action (founder feedback, 2026-06-06). A visitor who clicked
+           their own line of work does not want the place-agnostic worldwide
+           numbers first; they want to pick THEIR place. So the page leads with a
+           prominent country + city picker that routes straight to that
+           activity's cell page for the chosen place
+           (/{country}/{city}/{activity}). The worldwide shape is demoted below
+           it. */}
+        <div className="mt-4">
+          <ActivityPlacePicker activityId={ind.id} activityName={ind.name} />
+        </div>
       </section>
 
-      {/* The activity data board. Five fixed sections the reader can learn once
-         and read on every activity, rendered immediately under the masthead.
-         The economics section carries the structural margins and the defensible
-         cross-place revenue range (a p10..p90 band, never a single worldwide
-         average); the modeled sections carry the representative survival curve
-         and honest dashes where no worldwide figure is held. Each section always
-         renders all of its rows; a datum we do not hold shows as the board's
-         dash, so the page shape never depends on the data. */}
-      <div className="mt-2">
-        {board.map((s) => (
-          <DataSection section={s} key={s.key} />
+      {/* The activity economics, demoted (founder feedback, 2026-06-06). This
+         was the board's lead section; it now sits BELOW the place picker, framed
+         as the worldwide shape a reader sees before choosing a place. It keeps
+         the structural margins and the defensible cross-place revenue RANGE (a
+         p10..p90 band, never a single worldwide average) with its SpreadBar. The
+         DataSection always renders every row; a datum we do not hold shows as
+         the board's dash, so the shape never depends on the data. */}
+      {economicsSection ? (
+        <div className="mt-8">
+          <SectionEyebrow size="md">
+            The shape, before you pick a place
+          </SectionEyebrow>
+          <p className="mt-1.5 mb-1 max-w-2xl text-sm leading-relaxed text-cocoa-700/80">
+            What holds across places: the cost shape, and the low-to-high revenue
+            spread. The dollars themselves land once you pick a place above.
+          </p>
+          <DataSection section={economicsSection} />
+        </div>
+      ) : null}
+
+      {/* The qualitative reads, each as its own small titled table (founder
+         feedback, 2026-06-06). Market structure, pricing power, labor and
+         skills, and the survival baseline used to render as one flat run of
+         mostly-dashed rows. Each is now its own branded StatCard table, clearly
+         delineated, so a section reads as an intentional small table even where
+         a field is genuinely unheld (it shows the board dash). Survival carries
+         a representative archetype where one is held; the others are named-but-
+         unheld at this worldwide altitude today and fill in as archetypes are
+         curated. The cards sit two-up from md so they stay scannable. */}
+      <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+        {qualitativeSections.map((s) => (
+          <StatCard
+            key={s.key}
+            title={s.title}
+            stats={s.rows}
+            footnote={
+              s.modeled
+                ? "Modeled from national business demography. Directional."
+                : undefined
+            }
+          />
         ))}
       </div>
 

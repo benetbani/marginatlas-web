@@ -107,7 +107,8 @@
         "low_bribery": 9,
         "task_efficiency": 6,
         "time_efficiency": 5,
-        "judicial_impartiality": 9
+        "judicial_impartiality": 9,
+        "innovation_capacity": 9
       },
       "notes": "NYC-specific commercial-permit timelines drag time_efficiency; state + city taxes stack onto federal so the tax_predictability is moderate. Strong rule of law and very low bribery. Direct, ambitious culture as expected for the global archetype."
     },

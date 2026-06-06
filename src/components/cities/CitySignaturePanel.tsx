@@ -39,6 +39,14 @@ type Government = {
   task_efficiency: number;
   time_efficiency: number;
   judicial_impartiality: number;
+  // Institutional innovation / R&D capacity (0-10, higher = stronger
+  // research base, R&D investment, patent output, and innovation
+  // institutions). This is the INSTITUTIONAL-OUTPUT counterpart to the
+  // cultural `innovation` spectrum above: culture.innovation measures an
+  // attitude (tradition-bound vs embraces-new-ideas), whereas this measures
+  // what the country's institutions actually produce. Modeled directional
+  // value, anchored to the global innovation-index family.
+  innovation_capacity: number;
 };
 type CommercialStreet = {
   name: string;
@@ -344,9 +352,10 @@ export function CitySignaturePanel({
             <ScoreBar value={sig.government.task_efficiency} label="Task efficiency" />
             <ScoreBar value={sig.government.time_efficiency} label="Time efficiency" />
             <ScoreBar value={sig.government.judicial_impartiality} label="Judicial impartiality" />
+            <ScoreBar value={sig.government.innovation_capacity} label="Innovation and R&D capacity" />
           </div>
           <p className="mt-4 text-[11px] text-cocoa-700/55 leading-relaxed">
-            Higher is better in all five. Anchored to business-environment indices, operator surveys, and judicial-independence rankings.
+            Higher is better in all six. Modeled from business-environment indices, operator surveys, judicial-independence rankings, and the research and innovation-output record.
           </p>
         </div>
       </div>

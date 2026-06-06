@@ -32,7 +32,8 @@ import { generateCountryVerdict } from "@/lib/scores/country_verdict";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import { getSmbRegime, getVatRow } from "@/lib/tax/smb_effective_rates";
 import { BoardHero } from "@/components/board/BoardHero";
-import { DataSection } from "@/components/board/DataSection";
+import { BoardSectionTable } from "@/components/board/BoardSectionTable";
+import { CountryMastheadImage } from "@/components/countries/CountryMastheadImage";
 import { buildCountryBoard } from "@/lib/scores/country_board";
 
 // Keep section-order constant referenced for type checking — sections render in this exact order below.
@@ -202,20 +203,35 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
          answer still follow in the viability lede directly below. The compact
          at-a-glance strip stays under the board as supporting context. */}
       <section id="hero" className="pt-2 pb-6">
-        <div className="flex items-center gap-3">
-          <CountryFlag iso2={iso2} className="w-8 md:w-10" />
-          <SectionEyebrow size="md">Local profit intelligence</SectionEyebrow>
+        {/* The masthead carries the deliberate exception to the pure-white
+           system: a low-opacity duotone country photo sits behind the flag,
+           eyebrow, and title as atmosphere, then fades to white so the data
+           board below reads on a clean surface. The image self-omits when the
+           country has no resolvable photo (see CountryMastheadImage), so the
+           masthead degrades to plain white rather than a broken frame. The
+           masthead content sits in a relative layer above the image. */}
+        <div className="relative overflow-hidden rounded-2xl">
+          <CountryMastheadImage iso2={iso2} countryName={meta.name} />
+          <div className="relative px-4 pt-4 pb-2 md:px-6 md:pt-6">
+            <div className="flex items-center gap-3">
+              <CountryFlag iso2={iso2} className="w-8 md:w-10" />
+              <SectionEyebrow size="md">Local profit intelligence</SectionEyebrow>
+            </div>
+            <BoardHero title={meta.name} score={{ overall: null, parts: [] }} />
+          </div>
         </div>
-        <BoardHero title={meta.name} score={{ overall: null, parts: [] }} />
 
         {/* The country data board. Five fixed sections the reader can learn
            once and read on every country, rendered immediately under the
-           masthead. Each section always renders all of its rows; a datum we do
-           not hold shows as the board's dash, so the page shape never depends
-           on the data. */}
-        <div className="mt-2">
+           masthead. Founder direction: each section is its own DISTINCT small
+           table (a titled white card with hairline rows, the StatCard look),
+           laid out in a responsive grid so the page scans as a SET of small
+           structured tables rather than one undifferentiated stack. Each
+           section still renders all of its rows; a datum we do not hold shows
+           as the board's dash, so the page shape never depends on the data. */}
+        <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-4 lg:grid-cols-3">
           {board.map((s) => (
-            <DataSection section={s} key={s.key} />
+            <BoardSectionTable section={s} key={s.key} />
           ))}
         </div>
 
