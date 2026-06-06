@@ -63,6 +63,8 @@ import {
   estimateEmployeesFromFirms,
 } from "@/lib/extrapolations/fill_missing";
 import { BoardHero } from "@/components/board/BoardHero";
+import { MastheadImage } from "@/components/board/MastheadImage";
+import { getCityHero, isPatternHero } from "@/lib/images/city_heroes";
 import { DataSection } from "@/components/board/DataSection";
 import { FailureCards } from "@/components/board/FailureCards";
 import { computeScores } from "@/lib/scores";
@@ -419,6 +421,18 @@ export default async function CellPage({
   // state/region slugs. Drives the market-density read.
   const cityPopulation = getCityPopulation(geo);
 
+  // Masthead atmosphere image. Resolve the geo's city hero photo (the same
+  // source CityHero / the city page use, keyed by the geo slug) and pass only
+  // its URL to the shared <MastheadImage> behind the board masthead. Self-omits
+  // to plain white for state/region slugs, cities without a curated photo, or
+  // pattern-card fallbacks, so the masthead degrades cleanly rather than
+  // showing a broken frame.
+  const geoHero = getCityHero(geo);
+  const mastheadSrc =
+    geoHero && !isPatternHero(geoHero)
+      ? geoHero.image_url_regular || geoHero.image_url_full || null
+      : null;
+
   // Full A-J data board. Built from the values already computed above so no
   // figure is recomputed: the money rows reuse the tax-aware net numbers and
   // the floored take-home; the market/density rows reuse the city population;
@@ -615,20 +629,31 @@ export default async function CellPage({
       {/* Board masthead. Plain left-aligned H1 ("<activity> in <place>") plus
           the compact Atlas-score strip. Deliberately quieter and shorter than
           the old VerdictHero so the data board itself reaches above the fold.
-          Wrapped in a div (not a section) carrying id="headline" so the
-          right-rail TOC anchor resolves without registering an extra section
-          id with the canonical skeleton gate. The richer search-friendly
-          phrasing stays in generateMetadata; the visible H1 is now plain. */}
-      <div id="headline">
-        <BoardHero
-          title={`${cell.industry_name || industry.replace(/-/g, " ")} in ${
-            cell.geo_name || iso2ToName(country) || country.toUpperCase()
-          }`}
-          score={{
-            overall: scoreSet.opportunity?.value ?? null,
-            parts: scoreSet.scores.map((s) => ({ label: s.label, score: s.value })),
-          }}
-        />
+          The richer search-friendly phrasing stays in generateMetadata; the
+          visible H1 is now plain.
+
+          The masthead carries the same deliberate exception to the pure-white
+          system the country + city pages do: a low-opacity duotone photo of
+          the cell's city sits behind the title as atmosphere, then fades to
+          white so the data board below reads on a clean surface. The image
+          self-omits for state/region slugs and cities without a photo (see
+          MastheadImage), so the masthead degrades to plain white. The inner
+          layer keeps id="headline" so the right-rail TOC anchor resolves to the
+          title block without registering an extra section id with the canonical
+          skeleton gate, and sits in a relative layer above the image. */}
+      <div className="relative overflow-hidden rounded-2xl">
+        <MastheadImage src={mastheadSrc} />
+        <div id="headline" className="relative">
+          <BoardHero
+            title={`${cell.industry_name || industry.replace(/-/g, " ")} in ${
+              cell.geo_name || iso2ToName(country) || country.toUpperCase()
+            }`}
+            score={{
+              overall: scoreSet.opportunity?.value ?? null,
+              parts: scoreSet.scores.map((s) => ({ label: s.label, score: s.value })),
+            }}
+          />
+        </div>
       </div>
 
       {/* The full A-J data board. Ten fixed sections the reader can learn once

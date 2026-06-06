@@ -25,9 +25,16 @@
  * the same policy CityHero follows): the photo is wallpaper, not a credited
  * figure. Decorative only, so it is aria-hidden and carries empty alt.
  *
+ * The treatment itself (low opacity, duotone filter, warm-white wash, the
+ * aria-hidden decorative frame) now lives in the shared <MastheadImage> so the
+ * country, city, and cell mastheads stay identical; this component only owns
+ * the country-specific source resolution and self-omit policy and hands the
+ * resolved URL to that shared treatment.
+ *
  * Server component. Tokens / Tailwind classes plus rgba() gradient layers
  * (rgba is not a raw hex literal, matching CityHero); mobile-first.
  */
+import { MastheadImage } from "@/components/board/MastheadImage";
 import { getCountryHero, isPatternCountryHero } from "@/lib/images/country_heroes";
 
 export function CountryMastheadImage({
@@ -48,29 +55,5 @@ export function CountryMastheadImage({
   const src = hero.image_url_regular || hero.image_url_full;
   if (!src) return null;
 
-  return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-      {/* The photo, low-opacity and desaturated so it reads as a tinted
-         backdrop rather than a foreground image. */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={src}
-        alt=""
-        loading="lazy"
-        decoding="async"
-        className="absolute inset-0 h-full w-full object-cover opacity-20"
-        style={{ filter: "grayscale(0.55) contrast(1.02) saturate(0.7)" }}
-      />
-      {/* Warm-white duotone wash: pulls the photo toward the site's cream and
-         lifts the lower portion to near-solid white so the masthead text and
-         the data board immediately below stay fully legible. */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(180deg, rgba(255,247,230,0.55) 0%, rgba(255,247,230,0.78) 55%, rgba(255,247,230,0.97) 100%)",
-        }}
-      />
-    </div>
-  );
+  return <MastheadImage src={src} />;
 }

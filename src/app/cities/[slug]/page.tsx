@@ -42,6 +42,8 @@ import { BusinessFormationCosts } from "@/components/cities/BusinessFormationCos
 import { CoverageIndicator } from "@/components/CoverageIndicator";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { BoardHero } from "@/components/board/BoardHero";
+import { MastheadImage } from "@/components/board/MastheadImage";
+import { getCityHero, isPatternHero } from "@/lib/images/city_heroes";
 import { DataSection } from "@/components/board/DataSection";
 import { fmtUSD, fmtPct } from "@/components/board/format";
 import { buildCityBoard, buildCityActivities } from "@/lib/scores/city_board";
@@ -132,6 +134,16 @@ export default async function CityPage({
   const countryName = COUNTRIES.find((c) => c.code === city.iso2)?.name || city.iso2;
   const scheme = NEIGHBORHOODS[city.slug];
 
+  // Masthead atmosphere image. Resolve this city's hero photo (the same source
+  // CityHero uses), and pass only its URL to the shared <MastheadImage>
+  // treatment behind the board masthead. Self-omits to plain white when the
+  // city has no curated photo or only a pattern-card fallback.
+  const cityHero = getCityHero(city.slug);
+  const mastheadSrc =
+    cityHero && !isPatternHero(cityHero)
+      ? cityHero.image_url_regular || cityHero.image_url_full || null
+      : null;
+
   // City data board. Built from values the page already holds (the city record)
   // plus the country economics snapshot for the country the city sits in; no
   // new query, no invented number. Every section and every row is always
@@ -173,12 +185,25 @@ export default async function CityPage({
            the figures above the fold in the shared scaffold. Plain city name
            is the H1; a city has no single Atlas score, so the score strip is
            passed empty (overall null, no parts) and renders as a dash. The
-           country eyebrow keeps the place context the old hero carried. */}
-        <div className="flex items-center gap-2 pt-4">
-          <CountryFlag iso2={city.iso2} className="w-5" />
-          <SectionEyebrow size="md">{countryName}</SectionEyebrow>
+           country eyebrow keeps the place context the old hero carried.
+
+           The masthead carries the same deliberate exception to the pure-white
+           system the country page does: a low-opacity duotone city photo sits
+           behind the flag, eyebrow, and title as atmosphere, then fades to
+           white so the data board below reads on a clean surface. The image
+           self-omits when the city has no resolvable photo (see MastheadImage),
+           so the masthead degrades to plain white rather than a broken frame.
+           The masthead content sits in a relative layer above the image. */}
+        <div className="relative overflow-hidden rounded-2xl">
+          <MastheadImage src={mastheadSrc} />
+          <div className="relative">
+            <div className="flex items-center gap-2 pt-4">
+              <CountryFlag iso2={city.iso2} className="w-5" />
+              <SectionEyebrow size="md">{countryName}</SectionEyebrow>
+            </div>
+            <BoardHero title={city.name} score={{ overall: null, parts: [] }} />
+          </div>
         </div>
-        <BoardHero title={city.name} score={{ overall: null, parts: [] }} />
 
         {/* The city data board. Four fixed sections the reader can learn once
            and read on every city, rendered immediately under the masthead.
