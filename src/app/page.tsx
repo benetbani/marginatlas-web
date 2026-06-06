@@ -4,7 +4,6 @@ import { WhatAtlasWeighs } from "@/components/home/WhatAtlasWeighs";
 import { MoneyBeats } from "@/components/home/MoneyBeats";
 import { loadHomepageBeats } from "@/lib/home/beats";
 import HomepageEditorialBlocks, { type AtlasQuestion } from "@/components/HomepageEditorialBlocks";
-import Image from "next/image";
 import { RotatingWord } from "@/components/RotatingWord";
 import { HERO_BUSINESSES, HERO_CITIES } from "@/lib/hero-words";
 import { getToneClass } from "@/lib/page-layout/section-order";
@@ -32,13 +31,26 @@ export const revalidate = 86400; // 1 day
  * (bible Section 25 voice: the questions a skeptical operator actually asks
  * before risking money, not feature marketing). Each lands on a live cell.
  */
+/**
+ * Three real, curated flagship districts for the "Drilled to the neighborhood"
+ * panel. Each district and its economic character come straight from the
+ * hand-curated neighborhood intensity set (grade A), the same data that drives
+ * the per-cell neighborhood adjustment. No fabricated figures: the panel shows
+ * what Atlas already classifies, proving the resolution the copy claims.
+ */
+const NEIGHBORHOOD_PROOF: { district: string; city: string; character: string }[] = [
+  { district: "Midtown", city: "Manhattan", character: "Tourist zone" },
+  { district: "Champs / Opera", city: "Paris", character: "Financial core" },
+  { district: "Central wards", city: "Tokyo", character: "Financial core" },
+];
+
 const HOME_QUESTIONS: AtlasQuestion[] = [
-  { text: "Can a restaurant in Barcelona actually pay its owner?", href: "/es/es511/restaurants" },
-  { text: "Is software in San Francisco worth the cost base?",     href: "/us/california/software-development" },
-  { text: "How crowded is the legal market in the UK?",            href: "/gb/gb/legal-services" },
-  { text: "Do Cancún hotels make money once rent is paid?",        href: "/mx/mx-roo/hotels-lodging" },
-  { text: "What does metal manufacturing in Bavaria really earn?", href: "/de/de21/fabricated-metal-mfg" },
-  { text: "Where do California restaurant margins go?",            href: "/us/california/restaurants" },
+  { text: "Can a restaurant in Barcelona actually pay its owner?", href: "/es/es511/restaurants",              teaser: "Owner take-home, after rent and wages." },
+  { text: "Is software in San Francisco worth the cost base?",     href: "/us/california/software-development", teaser: "Margin against the highest wage bill anywhere." },
+  { text: "How crowded is the legal market in the UK?",            href: "/gb/gb/legal-services",               teaser: "Firms per capita, and what that does to fees." },
+  { text: "Do Cancún hotels make money once rent is paid?",        href: "/mx/mx-roo/hotels-lodging",           teaser: "Net margin once the lease is paid." },
+  { text: "What does metal manufacturing in Bavaria really earn?", href: "/de/de21/fabricated-metal-mfg",       teaser: "Revenue per firm, and the slice left as profit." },
+  { text: "Where do California restaurant margins go?",            href: "/us/california/restaurants",          teaser: "Every cent lost to rent, labour, and tax." },
 ];
 
 /**
@@ -219,14 +231,17 @@ export default async function HomePage() {
          + "By line of work" CTAs duplicate the World map + Sector menu
          that sit directly above. */}
 
-      {/* Plan v31 — cities section anchored by a stylized cartographic
-          rendering of central London. Vermillion-tinted streets, green
-          parks, black Thames. Crops to a horizontal letterbox so the
-          dense central area always shows. */}
+      {/* Cities section. The decorative London render was dropped
+          (founder, 2026-06-06: reads as decoration, not data). The right
+          column now carries real curated districts and the economic
+          character Atlas already holds for each, so the panel proves the
+          neighborhood resolution the copy claims instead of illustrating
+          it. White throughout, hairline-separated, no fabricated figures.
+          Copy is unchanged (it is liked); the Browse cities CTA stays. */}
       <ToneBand tone="home-cities-placeholder">
         <section className="py-10 md:py-14">
-          <div className="rounded-2xl bg-white border border-ink-200 overflow-hidden">
-            <div className="grid md:grid-cols-[1fr_minmax(0,640px)] gap-0 items-stretch">
+          <div className="rounded-2xl bg-white border border-parchment overflow-hidden">
+            <div className="grid md:grid-cols-2 gap-0 items-stretch">
               <div className="px-6 py-8 md:px-10 md:py-12">
                 <SectionEyebrow size="md" className="mb-3">Top 200 cities</SectionEyebrow>
                 <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight text-ink-900">
@@ -244,15 +259,34 @@ export default async function HomePage() {
                   Browse cities <span aria-hidden>→</span>
                 </a>
               </div>
-              <div className="relative aspect-[4/3] md:aspect-auto md:min-h-[360px]">
-                <Image
-                  src="/london-cities.png"
-                  alt="Stylized cartographic rendering of central London showing parks, streets, and the Thames"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 640px"
-                  className="object-cover object-center"
-                  priority={false}
-                />
+              <div className="border-t border-parchment md:border-t-0 md:border-l md:border-parchment px-6 py-8 md:px-10 md:py-12 flex flex-col justify-center">
+                <p className="text-[11px] uppercase tracking-[0.18em] font-semibold text-cocoa-700/70">
+                  Same block, different economy
+                </p>
+                <dl className="mt-4 divide-y divide-parchment">
+                  {NEIGHBORHOOD_PROOF.map((n) => (
+                    <div
+                      key={n.district}
+                      className="flex items-baseline justify-between gap-4 py-3"
+                    >
+                      <dt className="min-w-0">
+                        <span className="font-display text-base font-semibold tracking-tight text-ink-900">
+                          {n.district}
+                        </span>
+                        <span className="block text-xs text-cocoa-700/70">
+                          {n.city}
+                        </span>
+                      </dt>
+                      <dd className="shrink-0 text-sm font-medium text-atlas-700">
+                        {n.character}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+                <p className="mt-4 text-xs text-cocoa-700/70 leading-relaxed">
+                  A pharmacy two stops apart can rent for twice as much and earn
+                  it back, or not. The neighborhood decides.
+                </p>
               </div>
             </div>
           </div>

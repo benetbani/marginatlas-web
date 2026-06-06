@@ -26,15 +26,19 @@ import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 // ============================================================================
 // Block A — What you can ask Atlas
 // ============================================================================
-export type AtlasQuestion = { text: string; href: string };
+// Each question carries a teaser: the shape of the answer it lands on (a
+// figure or a verdict word), so the block reads "ask this, get this" instead
+// of listing questions with no payoff. The teaser is the promise; the cell
+// behind the link is the proof.
+export type AtlasQuestion = { text: string; href: string; teaser?: string };
 
 const DEFAULT_QUESTIONS: AtlasQuestion[] = [
-  { text: "How much does a bakery make in Lisbon?",        href: "/pt/lisbon/bakeries" },
-  { text: "What's a healthy margin for a small law firm?", href: "/industries/legal-services" },
-  { text: "Which industries thrive in Singapore?",          href: "/sg" },
-  { text: "How much should a Nairobi salon owner pay?",     href: "/ke/nairobi/salons#wages" },
-  { text: "What does a Berlin software studio earn?",       href: "/de/berlin/software-studios" },
-  { text: "How are Mexico City restaurants doing in 2026?", href: "/mx/mexico-city/restaurants" },
+  { text: "How much does a bakery make in Lisbon?",        href: "/pt/lisbon/bakeries",            teaser: "Revenue per shop, and what survives as profit." },
+  { text: "What's a healthy margin for a small law firm?", href: "/industries/legal-services",     teaser: "The net margin a solo practice should clear." },
+  { text: "Which industries thrive in Singapore?",          href: "/sg",                            teaser: "The lines that keep the most for their owners." },
+  { text: "How much should a Nairobi salon owner pay?",     href: "/ke/nairobi/salons#wages",       teaser: "Typical wage, against what the chair brings in." },
+  { text: "What does a Berlin software studio earn?",       href: "/de/berlin/software-studios",    teaser: "Take-home, against a rising wage bill." },
+  { text: "How are Mexico City restaurants doing in 2026?", href: "/mx/mexico-city/restaurants",    teaser: "Net margin once rent and staff are paid." },
 ];
 
 function BlockA({ questions = DEFAULT_QUESTIONS }: { questions?: AtlasQuestion[] }) {
@@ -51,24 +55,34 @@ function BlockA({ questions = DEFAULT_QUESTIONS }: { questions?: AtlasQuestion[]
               The simple questions a working operator actually asks.
             </h2>
             <p className="mt-4 text-base text-cocoa-700 leading-relaxed">
-              Atlas turns public data, primary surveys, and operator filings into answers you can compare across borders. Pick a question to land on the cell that holds the numbers.
+              Ask one, get the figure it lands on. Every line below opens the cell that holds the real numbers, comparable across borders.
             </p>
           </div>
 
           <div className="md:col-span-7">
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6">
-              {questions.map((q, i) => (
+              {questions.map((q) => (
                 <li key={q.text} className="border-b border-parchment last:border-b-0 sm:[&:nth-last-child(2)]:border-b-0">
                   <Link
                     href={q.href}
-                    className="group flex items-center justify-between gap-4 py-4 text-base text-ink-900 hover:text-atlas-700 transition-colors"
+                    className="group flex items-start justify-between gap-4 py-4 text-base text-ink-900 hover:text-atlas-700 transition-colors"
                   >
-                    <span className="font-medium">{q.text}</span>
+                    <span className="min-w-0">
+                      <span className="block font-medium leading-snug">{q.text}</span>
+                      {q.teaser && (
+                        <span className="mt-1 flex items-baseline gap-1.5 text-sm text-cocoa-700/80">
+                          <span aria-hidden="true" className="text-atlas-700">
+                            &rarr;
+                          </span>
+                          {q.teaser}
+                        </span>
+                      )}
+                    </span>
                     <span
                       aria-hidden="true"
-                      className="shrink-0 text-cocoa-700/50 group-hover:text-atlas-700 transition-colors translate-x-0 group-hover:translate-x-0.5 transition-transform"
+                      className="shrink-0 pt-1 text-cocoa-700/50 group-hover:text-atlas-700 transition-colors translate-x-0 group-hover:translate-x-0.5 transition-transform"
                     >
-                      →
+                      &rarr;
                     </span>
                   </Link>
                 </li>
@@ -82,30 +96,33 @@ function BlockA({ questions = DEFAULT_QUESTIONS }: { questions?: AtlasQuestion[]
 }
 
 // ============================================================================
-// Block B — How the numbers are built (3-step pipeline)
+// Block B — How we know, and how sure we are (3 plain steps)
 // ============================================================================
+// Rewritten 2026-06-06 (founder: the tier/pipeline language was too
+// technical). Three plain operator sentences: where the number came from and
+// how sure we are of it. No "coverage tiers", no "calibrated", no pipeline.
 type Step = {
   icon: PhIcon;
-  title: string;       // exactly three words
-  explain: string;     // around twelve words
+  title: string;       // one plain word
+  explain: string;     // one plain sentence
 };
 
 const STEPS: Step[] = [
   {
     icon: Database,
-    /* useless-tile-ok: methodology-tier label, not a count-of-things tile */
-    title: "Measured primary data",
-    explain: "Audited filings and operator surveys feed cells where the sample is large enough.",
+    /* useless-tile-ok: plain-language confidence label, not a count-of-things tile */
+    title: "Measured",
+    explain: "Where governments publish the figures, we use them as reported.",
   },
   {
     icon: MapPin,
-    title: "Regional benchmarks",
-    explain: "Where a city is sparse we lean on the region, flagged honestly in the chip.",
+    title: "Benchmarked",
+    explain: "Where they do not, we borrow from the region next door and say so.",
   },
   {
     icon: Calculator,
-    title: "Calibrated estimates",
-    explain: "Sparse cells are modeled from peers, then recalibrated each quarter as filings arrive.",
+    title: "Estimated",
+    explain: "For the long tail, we estimate, and we label it as such.",
   },
 ];
 
@@ -118,7 +135,7 @@ function BlockB() {
           id="block-b-h2"
           className="font-display mt-3 text-3xl sm:text-4xl font-semibold tracking-tight text-balance text-ink-900 leading-[1.1] max-w-3xl"
         >
-          Every cell carries one of three coverage tiers, never hidden.
+          How we know, and how sure we are.
         </h2>
 
         <div className="atlas-pipeline mt-10">
@@ -150,7 +167,8 @@ function BlockB() {
         </div>
 
         <p className="mt-6 text-sm text-cocoa-700/85">
-          Read the full methodology, the source list, and the refresh cadence on the
+          Every cell says which of the three it is, in plain sight. See where each
+          number comes from on the
           {" "}
           <Link href="/methodology" className="font-semibold text-atlas-700 underline-offset-4 hover:underline">
             methodology page

@@ -5,61 +5,64 @@
  * first-angles). It makes the hero promise concrete: the average margin is
  * not the point. What decides whether a business works is what eats the
  * margin before the owner sees a cent. This block names those forces in the
- * blunt, skeptical register and lands the reader on the page that holds the
+ * blunt, operator register and lands the reader on the page that holds the
  * real numbers.
  *
- * Server component, no client JS. Warm editorial layout, all colour and type
- * from tokens. The five factors map to the bible's first five information
- * angles: owner take-home, rent pressure, market saturation, break-even,
- * pricing power.
+ * Reworked 2026-06-06 (founder: the old five-card icon grid read vague and
+ * feeling-less). Eight forces now, each written as a FELT consequence with a
+ * concrete texture: a real number or a hard verdict, not an abstraction. The
+ * decorative house/car/customer iconography is gone. Each row is a clean,
+ * number-forward line on a hairline-separated list, white throughout. A
+ * single restrained vermillion tick is the only mark.
+ *
+ * Server component, no client JS. All colour and type from tokens.
  *
  * Design system: application section. Page-local (one consumer, the
  * homepage), so it lives beside the other home/* sections rather than in
  * the ui/ system layer.
  */
 import * as React from "react";
-import {
-  Wallet,
-  Buildings,
-  UsersThree,
-  Scales,
-  TrendUp,
-} from "@phosphor-icons/react/dist/ssr";
-import type { Icon as PhIcon } from "@phosphor-icons/react";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 
 type Factor = {
-  icon: PhIcon;
+  /** The force, in two or three plain words. */
   label: string;
-  /** One blunt line: what this force does to the margin, and the catch. */
+  /** The felt consequence: a real number or a hard verdict, with texture. */
   note: string;
 };
 
 const FACTORS: Factor[] = [
   {
-    icon: Wallet,
-    label: "Owner take-home",
-    note: "A business can create jobs without paying its owner a decent wage. That is not the same as a good business.",
+    label: "Rent",
+    note: "On the wrong street, rent alone eats a fifth of every sale before payroll.",
   },
   {
-    icon: Buildings,
-    label: "Rent pressure",
-    note: "High rent is not automatically fatal. It only works above a revenue threshold, and most concepts never clear it.",
-  },
-  {
-    icon: UsersThree,
     label: "Competition",
-    note: "The revenue can be there while the margin is gone, because too many operators are already splitting the same demand.",
+    note: "Forty barbershops in one district and nobody is ever full.",
   },
   {
-    icon: Scales,
-    label: "Taxes and friction",
-    note: "Payroll taxes, permits, and informal rivals quietly widen the gap between the spreadsheet and the operating reality.",
+    label: "Owner take-home",
+    note: "A million in sales can still leave the owner under fifty thousand.",
   },
   {
-    icon: TrendUp,
+    label: "Wages",
+    note: "When staff is most of the cost, one extra hire is the difference between a wage and a loss.",
+  },
+  {
     label: "Pricing power",
-    note: "Whether you can raise prices, or have to discount to survive, usually decides the business before the costs do.",
+    note: "Whether you set the price, or the market sets it for you.",
+  },
+  {
+    label: "Taxes and friction",
+    note: "What the taxman and the paperwork take before you see a cent.",
+  },
+  {
+    label: "Foot traffic",
+    note: "The same shop clears double on a corner that thousands pass and dies on the quiet one.",
+  },
+  {
+    label: "Break-even",
+    note: "High costs are survivable above a revenue line that most concepts never reach.",
   },
 ];
 
@@ -74,35 +77,32 @@ export function WhatAtlasWeighs() {
           id="weigh-h2"
           className="font-display text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight text-ink-900 leading-tight"
         >
-          The average margin is the least useful number in the room
+          Eight forces decide whether you keep anything
         </h2>
         <p className="mt-3 md:mt-4 text-base md:text-lg text-graphite leading-relaxed">
-          What separates a business that works from one that quietly drains
-          its owner is what eats the margin first. Atlas reads each city and
-          industry through the forces that actually move the answer.
+          The average margin hides all of them. Atlas reads each city and
+          industry through the forces that actually move the answer, the ones
+          that drain an owner long before the spreadsheet admits it.
         </p>
       </div>
 
-      <dl className="mt-8 md:mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-        {FACTORS.map((f) => {
-          const Icon = f.icon;
-          return (
-            <div
-              key={f.label}
-              className="rounded-lg border border-parchment bg-cream-50 p-5"
-            >
-              <div className="flex items-center gap-2 text-atlas-700">
-                <Icon size={20} weight="duotone" aria-hidden="true" />
-                <dt className="font-display text-lg font-semibold tracking-tight text-ink-900">
-                  {f.label}
-                </dt>
-              </div>
-              <dd className="mt-2 text-sm text-graphite leading-relaxed">
-                {f.note}
-              </dd>
-            </div>
-          );
-        })}
+      <dl className="mt-8 md:mt-10 border-t border-parchment">
+        {FACTORS.map((f) => (
+          <div
+            key={f.label}
+            className="grid grid-cols-1 sm:grid-cols-[minmax(0,11rem)_1fr] gap-x-6 gap-y-1 border-b border-parchment py-4 md:py-5"
+          >
+            <dt className="flex items-baseline gap-2 font-display text-base md:text-lg font-semibold tracking-tight text-ink-900">
+              <span aria-hidden="true" className="text-atlas-700">
+                /
+              </span>
+              {f.label}
+            </dt>
+            <dd className="text-sm md:text-base text-graphite leading-relaxed">
+              {f.note}
+            </dd>
+          </div>
+        ))}
       </dl>
     </section>
   );
