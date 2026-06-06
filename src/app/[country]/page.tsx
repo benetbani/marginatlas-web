@@ -51,19 +51,27 @@ type Params = { country: string };
 // per-country tagline is now sourced from getCountryAnchor(), and the
 // signature glyph is no longer used anywhere on the country page.
 
-// Build-time prerender DISABLED (2026-06-04). Mirrors the region page
-// (src/app/[country]/[geo]/page.tsx): getTopIndustriesForCountry is a heavy
-// Supabase aggregate with no budget wrapper, and prerendering even the top 25
-// countries fired 25 such reads concurrently against a cold (and recently
-// spend-capped) DB. Each country page then exceeded Vercel's 300s per-route
-// static-gen cap, retried 3x, and the build blew the 45-minute limit and
-// failed the production deploy (build-log evidence, deploy ks27agr69).
-// dynamicParams=true (above) means every country still renders on first
-// request and is then cached for `revalidate` seconds, so visitors see no
-// difference. Re-enable a small prerender list once the country
-// top-industries read is materialized or the DB is bumped off NANO.
+// Build-time prerender for the major economies (re-enabled 2026-06-06).
+// Prerender was disabled 2026-06-04 because getTopIndustriesForCountry was an
+// unindexed aggregate: firing it for many countries concurrently against the
+// cold NANO DB blew Vercel's 300s per-route static-gen cap and the 45-minute
+// build limit (deploy ks27agr69). The 2026-06-05 index
+// (idx_extrapolated_country_quality) makes that read fast (tens of ms), so
+// prerendering the highest-traffic countries is safe again: a couple dozen
+// fast reads add a few seconds to the build, not minutes. The long tail still
+// renders on demand (dynamicParams=true) and caches for `revalidate` seconds,
+// so coverage is unchanged; only the popular pages get the static,
+// zero-cold-start treatment. Codes are filtered against COUNTRIES so an
+// uncovered code can never prerender a notFound page.
+const PRERENDER_COUNTRIES = [
+  "US", "GB", "DE", "FR", "CA", "AU", "IT", "ES", "NL",
+  "JP", "IN", "BR", "MX", "SE", "PL", "IE", "NZ", "SG",
+];
 export async function generateStaticParams(): Promise<Params[]> {
-  return [];
+  const covered = new Set(COUNTRIES.map((c) => c.code));
+  return PRERENDER_COUNTRIES.filter((code) => covered.has(code)).map(
+    (code) => ({ country: code.toLowerCase() }),
+  );
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }) {
