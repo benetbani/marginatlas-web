@@ -1,47 +1,65 @@
 /**
- * /industries — top-level industry directory.
+ * /industries — the activities directory.
  *
- * The previous page was ugly except
- * for the A-Z section. Two clear blocks remain:
+ * Two blocks: a centered hero, then the directory itself. The directory
+ * used to be a flat A-Z grid; it is now grouped by sector (mirroring the
+ * per-continent grouping on /countries) with a live search bar on top.
  *
- *   1. Hero (center-aligned, consistent with home)
- *   2. A-Z list (kept; founder explicit: this part is good)
+ * Split of concerns:
+ *   - This server component computes the categorized list ONCE, purely
+ *     from the taxonomy (visibleSectors -> visibleIndustriesInSector),
+ *     and passes it down as serializable props.
+ *   - <ActivitySearch> (client) owns the search input, the live filter,
+ *     and the grouped rendering.
  *
- * The 'Popular industries' middle section is removed (duplicates the
- * homepage navigator and the Featured grid). The browse-by-sector card
- * grid was removed when sector pages were retired.
+ * Site reform v3, Phase B (2026-06-06): categorize + search. The old
+ * flat A-Z list and the retired browse-by-sector card grid are gone.
  */
-import Link from "next/link";
 import {
-  INDUSTRIES,
+  visibleSectors,
+  visibleIndustriesInSector,
   industryToSlug,
-  isDefaultVisible,
 } from "@/lib/taxonomy";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
+import {
+  ActivitySearch,
+  type SectorGroup,
+} from "@/components/industries/ActivitySearch";
 
 export const revalidate = 86400;
 
 export const metadata = {
   title: "All activities: Margin Atlas",
   description:
-    "Every activity covered in Margin Atlas. Pick one to see its cost shape and the revenue range it runs depending on the city.",
+    "Every activity covered in Margin Atlas, grouped by sector. Pick one to see its cost shape and the revenue range it runs depending on the city.",
   alternates: { canonical: "/industries" },
 };
 
 export default function IndustriesIndex() {
-  const visibleIndustries = INDUSTRIES.filter(isDefaultVisible).sort((a, b) =>
-    a.name.localeCompare(b.name),
-  );
+  // Build the categorized list from the taxonomy. Default gate (no pro
+  // reveal), matching the audience-default visibility the old flat list
+  // used. Sectors come back in curated display order; activities are
+  // alphabetical within each sector. Empty sectors are dropped by
+  // visibleSectors itself, so every group here has at least one activity.
+  const groups: SectorGroup[] = visibleSectors().map((sector) => ({
+    sector: sector.name,
+    activities: visibleIndustriesInSector(sector.id).map((ind) => ({
+      slug: industryToSlug(ind.id),
+      name: ind.name,
+    })),
+  }));
 
   return (
     <div>
       {/* Hero */}
-      <section className="py-10 md:py-14 text-center">
-        <SectionEyebrow size="md" className="mb-3">Activities</SectionEyebrow>
-        <h1 className="font-display text-3xl md:text-5xl font-medium tracking-tight text-ink-900 leading-tight max-w-3xl mx-auto">
+      <section className="py-10 text-center md:py-14">
+        <SectionEyebrow size="md" className="mb-3">
+          Activities
+        </SectionEyebrow>
+        <h1 className="mx-auto max-w-3xl font-display text-3xl font-medium leading-tight tracking-tight text-ink-900 md:text-5xl">
           Every kind of small business we cover
         </h1>
-        <p className="mt-4 max-w-2xl mx-auto text-base md:text-lg text-ink-800 leading-relaxed">
+        <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-ink-800 md:text-lg">
           Pick an activity to see how it earns: the cost shape that holds
           everywhere, and a revenue range that runs from roughly one figure to
           several times that depending on the city, plus after-tax owner
@@ -49,35 +67,10 @@ export default function IndustriesIndex() {
         </p>
       </section>
 
-      {/* Browse-by-sector grid retired alongside the sector pages: it
-         linked to /sectors/[id], a destination too diluted to keep. The
-         A-Z activity list below is now the primary directory. */}
-
-      {/* A-Z list — founder-approved as-is. */}
-      <section className="py-10 md:py-14 border-t border-ink-100">
-        <div className="text-center mb-6 md:mb-8">
-          <SectionEyebrow size="md">All activities</SectionEyebrow>
-          <h2 className="mt-2 font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900">
-            {visibleIndustries.length} activities, A to Z
-          </h2>
-          <p className="mt-2 text-sm md:text-base text-ink-700 max-w-2xl mx-auto">
-            Each name opens its benchmark page: the place-stable cost shape, a
-            revenue range rather than one misleading average, and how the
-            activity varies country by country.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-6 gap-y-2 text-sm max-w-6xl mx-auto">
-          {visibleIndustries.map((ind) => (
-            <Link
-              key={ind.id}
-              href={`/industries/${industryToSlug(ind.id)}`}
-              className="text-ink-900 hover:text-atlas-700 transition-colors truncate py-1"
-            >
-              {ind.name}
-            </Link>
-          ))}
-        </div>
+      {/* Directory: search bar + sector-grouped activity grids. Sits on
+          its own hairline-separated band below the hero. */}
+      <section className="border-t border-parchment/60 py-8 md:py-12">
+        <ActivitySearch groups={groups} />
       </section>
     </div>
   );

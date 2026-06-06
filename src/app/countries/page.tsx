@@ -159,7 +159,7 @@ export default function CountriesHub() {
                   <Link
                     key={country.code}
                     href={`/${country.code.toLowerCase()}`}
-                    className="group flex items-baseline gap-2.5 rounded-lg border border-parchment bg-cream-50 p-3 transition-colors hover:border-atlas-500 hover:bg-cream-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
+                    className="group flex items-baseline gap-2.5 rounded-lg border border-parchment bg-white p-3 transition-colors hover:border-atlas-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
                   >
                     <CountryFlag
                       iso2={country.code}
