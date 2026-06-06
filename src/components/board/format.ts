@@ -81,6 +81,36 @@ export function fmtNum(n: number | null | undefined): string {
 }
 
 /**
+ * USD already expressed in billions, compacted to the natural scale word.
+ * The city list stores metro GDP as a plain billions figure (gdp_b), so this
+ * keeps that grain without a re-multiply round-trip: 680 reads "$680B", 2000
+ * reads "$2T", 0.4 reads "$400M". Negatives keep the sign ahead of the dollar.
+ */
+export function fmtUSDBillions(billions: number | null | undefined): string {
+  if (!isReal(billions)) return MISSING;
+  const sign = billions < 0 ? "-" : "";
+  const abs = Math.abs(billions);
+  if (abs >= 1_000) {
+    return `${sign}$${trimDecimal(abs / 1_000)}T`;
+  }
+  if (abs >= 1) {
+    return `${sign}$${trimDecimal(abs)}B`;
+  }
+  // Sub-billion metros: drop to millions rather than show "$0.4B".
+  return `${sign}$${trimDecimal(abs * 1_000)}M`;
+}
+
+/**
+ * A count already expressed in millions, rendered with the "M" scale word:
+ * 12.4 reads "12.4M", 11 reads "11M". For fields the source stores in
+ * millions (visitor arrivals), so the displayed grain matches the stored one.
+ */
+export function fmtMillions(millions: number | null | undefined): string {
+  if (!isReal(millions)) return MISSING;
+  return `${trimDecimal(millions)}M`;
+}
+
+/**
  * One decimal place, but drop a trailing ".0" so "1,200,000" reads "1.2"
  * while "2,000,000" reads "2" rather than "2.0". Shared by the compact
  * money branches above.

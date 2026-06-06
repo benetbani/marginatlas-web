@@ -8,27 +8,30 @@
  * sector read (src/lib/scores/sector_economics) and the country read
  * (src/lib/scores/country_verdict).
  *
- * Same voice, straight from the bible (Section 25): blunt, practical,
- * skeptical of easy money. It frames the directory so a reader can find a
- * city by the thing that actually moves small-business economics, how deep
- * the local market is, what the locals can pay, and how much of the demand
- * walks in as a visitor.
+ * White-reset 2026-06-06 (founder): the directory stopped restating figures as
+ * qualitative words and now hands the page two concrete shapes instead:
+ *
+ *   1. topVisitorRatio - the ten cities where visitors most outnumber
+ *      residents (tourist_arrivals_m / pop_m), ranked, for a "the customer is a
+ *      visitor, not a local" strip. No good/bad floor; it simply surfaces the
+ *      most visitor-skewed markets among cities that carry both numbers.
+ *   2. showcase - a curated, single-column set of the deepest markets (the top
+ *      tier), each carrying three real figures: visitor arrivals, average
+ *      salary, and metro GDP. This replaces the old grouped "metropolis / major
+ *      / secondary" dump; the long tail stays reachable via the map and the
+ *      country pages.
  *
  * It invents NO numbers. It only restates the figures the cities page already
- * loads (metro population, gross salary, cost-of-living index, visitor
- * arrivals, city scale) as the same qualitative words the city hero and stat
- * tiles use, by reading them through the shared break tables in
- * src/lib/cities/guiding_word. Where a city is missing a field, that clause
- * self-omits, so a thin entry degrades to a plain link instead of a fabricated
- * one (bible: hide weakness, no apologetic placeholder).
+ * loads (metro population, gross salary, visitor arrivals, metro GDP, city
+ * scale). Where a city is missing a field, that figure degrades to the board
+ * dash at render time, so a thin entry is still an honest, usable card (bible:
+ * hide weakness, no apologetic placeholder).
  *
- * Pure module: no Supabase, no network. It consumes only the static city list
- * and the guiding-word break tables, so it is trivially testable and cannot
- * trip the layering gate.
+ * Pure module: no Supabase, no network. It consumes only the static city list,
+ * so it is trivially testable and cannot trip the layering gate.
  *
  * Constraint-safe by construction: no em-dashes, no source-agency names.
  */
-import { getGuidingWord } from "@/lib/cities/guiding_word";
 
 /** The fields of one city the directory actually reads. */
 export interface DirectoryCityInput {
@@ -38,85 +41,63 @@ export interface DirectoryCityInput {
   continent: string;
   tier: number;
   pop_m: number;
+  gdp_b?: number | null;
   avg_gross_salary_usd_year?: number | null;
   cost_of_living_index?: number | null;
   tourist_arrivals_m?: number | null;
 }
 
 /**
- * One qualitative signal on a city row. Neutral by design: a directory entry
- * is a place to start reading, not a verdict, so the words describe size and
- * pull (atlas tone), they do not grade the city good or bad.
+ * A city resolved to the concrete figures the directory renders. No qualitative
+ * words: the card shows the real numbers (or the board dash when a field is
+ * absent), and the page formats them through the board format helpers.
  */
-export interface CitySignal {
-  /** Short label, e.g. "Market", "Local pay", "Visitors". */
-  label: string;
-  /** Qualitative word from the shared break tables, e.g. "large", "comfortable". */
-  word: string;
-}
-
-/** A city resolved to its reading group plus its computable signals. */
 export interface DirectoryCity {
   slug: string;
   name: string;
   iso2: string;
-  /** Metro population in millions, kept for the in-group ordering. */
+  tier: number;
+  /** Metro population in millions, kept for the showcase ordering. */
   pop_m: number;
+  /** Metro GDP in USD billions, or null when unknown. */
+  gdp_b: number | null;
+  /** Average gross annual salary in USD, or null when unknown. */
+  avg_gross_salary_usd_year: number | null;
+  /** Visitor arrivals per year in millions, or null when unknown. */
+  tourist_arrivals_m: number | null;
   /**
    * Arrivals per resident, when both numbers exist. Surfaces the cities where
    * the demand is mostly visitors rather than locals, which the bible flags as
    * the real tourism signal (Section 5, Section 20) as opposed to fluff.
    */
   touristIntensity: number | null;
-  /** Up to three computable qualitative signals, thin fields omitted. */
-  signals: CitySignal[];
+}
+
+/** A city placed in the ranked visitor-led strip, with its rank and texture. */
+export interface VisitorRankedCity {
+  slug: string;
+  name: string;
+  iso2: string;
+  /** 1-based rank by visitor-to-resident ratio (most extreme first). */
+  rank: number;
+  /** Arrivals per resident; always present in this list (both fields exist). */
+  ratio: number;
+  /** One-word read of how visitor-skewed the market is. */
+  texture: string;
 }
 
 // ----------------------------------------------------------------------------
-// reading groups: the editorial spine that replaces the alphabetical dump
+// city tier -> reading depth (kept only for showcase curation)
 // ----------------------------------------------------------------------------
 
 /**
- * The three reading groups the directory sorts cities into, by the depth of
- * the local market. This mirrors the city-list tier field (1 = the largest
- * metros, 2 = major and capital cities, 3 = secondary cities), which is the
- * single signal that most changes how a small business reads a place: a deeper
- * market forgives a narrower concept, a shallow one does not.
+ * Map the city-list tier integer to a market-depth band. The directory no
+ * longer renders these as groups; the band is used only to decide which cities
+ * make the curated showcase (the deepest markets first). 1 = the largest
+ * metros, 2 = major and capital cities, 3 = secondary cities.
  */
 export type CityTier = "metropolis" | "major" | "secondary";
 
-export interface CityTierMeta {
-  id: CityTier;
-  /** Short label for the group heading. */
-  title: string;
-  /** One blunt line of what unites the group, in the house voice. */
-  blurb: string;
-}
-
-export const CITY_TIERS: Record<CityTier, CityTierMeta> = {
-  metropolis: {
-    id: "metropolis",
-    title: "Global metropolises",
-    blurb:
-      "The deepest demand pools on the map. Almost any concept finds enough customers here, which is exactly why the rent and the wage bill come for the margin first. Volume is rarely the problem; keeping what you earn is.",
-  },
-  major: {
-    id: "major",
-    title: "Major and capital cities",
-    blurb:
-      "Enough people and money to support most businesses without the megacity cost base. The middle of the map, where a tight operator has the most room and the competition is real but not yet brutal.",
-  },
-  secondary: {
-    id: "secondary",
-    title: "Secondary cities",
-    blurb:
-      "Smaller markets where demand is shallower and pricing power is thinner, but rent and wages usually are too. A focused concept can own a niche here; a broad one can run out of customers before it runs out of money.",
-  },
-};
-
-export const CITY_TIER_ORDER: CityTier[] = ["metropolis", "major", "secondary"];
-
-/** Map the city-list tier integer to a reading group. */
 export function tierGroup(tier: number): CityTier {
   if (tier <= 1) return "metropolis";
   if (tier === 2) return "major";
@@ -124,133 +105,134 @@ export function tierGroup(tier: number): CityTier {
 }
 
 // ----------------------------------------------------------------------------
-// signals: restated through the shared break tables, never re-banded here
+// resolve one city to its rendered figures
 // ----------------------------------------------------------------------------
 
-function marketSignal(popM: number | null | undefined): CitySignal | null {
-  if (popM == null || !Number.isFinite(popM)) return null;
-  const { word } = getGuidingWord("metro_pop_m", popM);
-  return word ? { label: "Market", word } : null;
-}
-
-function paySignal(salaryYear: number | null | undefined): CitySignal | null {
-  if (salaryYear == null || !Number.isFinite(salaryYear) || salaryYear <= 0)
-    return null;
-  // The break table reads monthly gross; the city list stores annual.
-  const { word } = getGuidingWord("gross_salary_usd_mo", salaryYear / 12);
-  return word ? { label: "Local pay", word } : null;
-}
-
-function visitorSignal(
-  arrivalsM: number | null | undefined,
-): CitySignal | null {
-  if (arrivalsM == null || !Number.isFinite(arrivalsM) || arrivalsM <= 0)
-    return null;
-  const { word } = getGuidingWord("tourist_arrivals_m", arrivalsM);
-  return word ? { label: "Visitors", word } : null;
+function finite(n: number | null | undefined): number | null {
+  return typeof n === "number" && Number.isFinite(n) ? n : null;
 }
 
 /**
- * Resolve one city to its directory shape: the same qualitative words the city
- * page uses, plus the visitor-to-resident ratio when both numbers exist. Each
- * signal self-omits when its field is missing.
+ * Resolve one city to its directory shape: the concrete figures the cards
+ * render, plus the visitor-to-resident ratio when both numbers exist.
  */
 export function buildDirectoryCity(c: DirectoryCityInput): DirectoryCity {
-  const signals: CitySignal[] = [];
-  const market = marketSignal(c.pop_m);
-  if (market) signals.push(market);
-  const pay = paySignal(c.avg_gross_salary_usd_year);
-  if (pay) signals.push(pay);
-  const visitors = visitorSignal(c.tourist_arrivals_m);
-  if (visitors) signals.push(visitors);
+  const popM = finite(c.pop_m);
+  const arrivalsM = finite(c.tourist_arrivals_m);
 
   const touristIntensity =
-    c.tourist_arrivals_m != null &&
-    Number.isFinite(c.tourist_arrivals_m) &&
-    c.tourist_arrivals_m > 0 &&
-    c.pop_m != null &&
-    Number.isFinite(c.pop_m) &&
-    c.pop_m > 0
-      ? c.tourist_arrivals_m / c.pop_m
+    arrivalsM != null && arrivalsM > 0 && popM != null && popM > 0
+      ? arrivalsM / popM
       : null;
 
   return {
     slug: c.slug,
     name: c.name,
     iso2: c.iso2,
+    tier: c.tier,
     pop_m: c.pop_m,
+    gdp_b: finite(c.gdp_b),
+    avg_gross_salary_usd_year: finite(c.avg_gross_salary_usd_year),
+    tourist_arrivals_m: arrivalsM,
     touristIntensity,
-    signals,
   };
-}
-
-// ----------------------------------------------------------------------------
-// the grouped directory
-// ----------------------------------------------------------------------------
-
-export interface DirectoryGroup {
-  meta: CityTierMeta;
-  cities: DirectoryCity[];
-}
-
-export interface CityDirectory {
-  /** The reading groups, in order, each already sorted and non-empty. */
-  groups: DirectoryGroup[];
-  /** Total cities placed (every input is placed; none is dropped). */
-  total: number;
-  /**
-   * The handful of cities where visitors most outnumber residents, the honest
-   * tourism signal the bible asks for instead of tourism fluff. Empty when no
-   * city carries both an arrivals and a population number.
-   */
-  visitorLed: DirectoryCity[];
 }
 
 /**
- * Build the whole directory from the raw city list. Pure compute: it places
- * every city into a reading group, orders each group by market depth (the
- * deepest markets read first), and surfaces the visitor-led outliers. It owns
- * no visibility policy; the caller decides which cities to pass in.
+ * A one-word read of how visitor-dominated a market is, from the ratio alone.
+ * Neutral and short, for the texture slot on a ranked row: it describes the
+ * skew, it does not grade the city.
+ */
+function visitorTexture(ratio: number): string {
+  if (ratio >= 10) return "overwhelming";
+  if (ratio >= 7) return "heavy";
+  if (ratio >= 4) return "strong";
+  return "seasonal";
+}
+
+// ----------------------------------------------------------------------------
+// the directory
+// ----------------------------------------------------------------------------
+
+export interface CityDirectory {
+  /** Total cities placed (every input is read; none is dropped from the count). */
+  total: number;
+  /**
+   * The ten cities where visitors most outnumber residents, ranked, with no
+   * good/bad floor. Only cities carrying BOTH an arrivals and a population
+   * number qualify. Empty when fewer than that exist.
+   */
+  topVisitorRatio: VisitorRankedCity[];
+  /**
+   * The curated single-column showcase: the deepest markets (the top tier),
+   * sorted by population. The long tail is reachable via the map and the
+   * country pages, not dumped here.
+   */
+  showcase: DirectoryCity[];
+}
+
+/** How many cities the ranked visitor-led strip surfaces at most. */
+const VISITOR_RANK_COUNT = 10;
+/** Floor below which the showcase pulls in the next tier to stay substantial. */
+const SHOWCASE_MIN = 24;
+/** Ceiling so the showcase stays a showcase, not a dump. */
+const SHOWCASE_CAP = 36;
+
+/**
+ * Build the whole directory from the raw city list. Pure compute: it ranks the
+ * most visitor-skewed markets and curates the deepest-market showcase. It owns
+ * no visibility policy beyond the curation cap; the caller decides which cities
+ * to pass in.
  */
 export function buildCityDirectory(
   input: DirectoryCityInput[],
-  opts?: { visitorLedCount?: number; visitorLedMinRatio?: number },
+  opts?: {
+    visitorRankCount?: number;
+    showcaseMin?: number;
+    showcaseCap?: number;
+  },
 ): CityDirectory {
-  const visitorLedCount = opts?.visitorLedCount ?? 6;
-  const visitorLedMinRatio = opts?.visitorLedMinRatio ?? 3;
+  const visitorRankCount = opts?.visitorRankCount ?? VISITOR_RANK_COUNT;
+  const showcaseMin = opts?.showcaseMin ?? SHOWCASE_MIN;
+  const showcaseCap = opts?.showcaseCap ?? SHOWCASE_CAP;
 
-  const buckets: Record<CityTier, DirectoryCity[]> = {
-    metropolis: [],
-    major: [],
-    secondary: [],
-  };
+  const all = input.map(buildDirectoryCity);
 
-  const all: DirectoryCity[] = [];
-  for (const c of input) {
-    const dc = buildDirectoryCity(c);
-    all.push(dc);
-    buckets[tierGroup(c.tier)].push(dc);
-  }
-
-  // Deepest markets first inside each group, then alphabetical so the order is
-  // stable and a reader can still scan for a name.
-  for (const tier of CITY_TIER_ORDER) {
-    buckets[tier].sort(
-      (a, b) => b.pop_m - a.pop_m || a.name.localeCompare(b.name),
-    );
-  }
-
-  const groups: DirectoryGroup[] = CITY_TIER_ORDER.map((tier) => ({
-    meta: CITY_TIERS[tier],
-    cities: buckets[tier],
-  })).filter((g) => g.cities.length > 0);
-
-  const visitorLed = all
-    .filter(
-      (c) => c.touristIntensity != null && c.touristIntensity >= visitorLedMinRatio,
+  // 1. Ranked visitor-led strip: top N by ratio among cities with both
+  //    numbers, most extreme first, no floor.
+  const topVisitorRatio: VisitorRankedCity[] = all
+    .filter((c): c is DirectoryCity & { touristIntensity: number } =>
+      c.touristIntensity != null,
     )
-    .sort((a, b) => (b.touristIntensity ?? 0) - (a.touristIntensity ?? 0))
-    .slice(0, visitorLedCount);
+    .sort((a, b) => b.touristIntensity - a.touristIntensity)
+    .slice(0, visitorRankCount)
+    .map((c, i) => ({
+      slug: c.slug,
+      name: c.name,
+      iso2: c.iso2,
+      rank: i + 1,
+      ratio: c.touristIntensity,
+      texture: visitorTexture(c.touristIntensity),
+    }));
 
-  return { groups, total: all.length, visitorLed };
+  // 2. Showcase: the deepest markets, sorted by population. Start with the top
+  //    tier (metropolis); if that is thin, pull in the next tier until the set
+  //    is substantial, then cap so it stays a showcase.
+  const byDepthThenPop = (a: DirectoryCity, b: DirectoryCity): number =>
+    b.pop_m - a.pop_m || a.name.localeCompare(b.name);
+
+  const metropolis = all
+    .filter((c) => tierGroup(c.tier) === "metropolis")
+    .sort(byDepthThenPop);
+
+  let showcase = metropolis;
+  if (showcase.length < showcaseMin) {
+    const major = all
+      .filter((c) => tierGroup(c.tier) === "major")
+      .sort(byDepthThenPop);
+    showcase = [...metropolis, ...major];
+  }
+  showcase = showcase.slice(0, showcaseCap);
+
+  return { total: all.length, topVisitorRatio, showcase };
 }

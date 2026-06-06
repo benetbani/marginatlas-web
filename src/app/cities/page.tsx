@@ -1,20 +1,21 @@
 /**
  * Cities directory - /cities.
  *
- * Reformation (bible Section 14, the City directory row: "local discovery"
- * with key modules "industries, rent, demand, rankings", whose stated things
- * to avoid are "tourism fluff" and, for any directory, an "alphabetical dump
- * only"). The page now leads with a blunt read of what the directory is for,
- * keeps the geographic map as the anchor, then groups the cities by the depth
- * of the local market instead of listing them flat by alphabet. Each city
- * carries the real signal the city page already loads: how deep the market is,
- * what the locals can pay, and how much of the demand walks in as a visitor.
+ * Reformation (bible Section 14, the City directory row: "local discovery" with
+ * key modules "industries, rent, demand, rankings", whose stated things to avoid
+ * are "tourism fluff" and, for any directory, an "alphabetical dump only").
  *
- * The reading groups and the per-city words come from a pure synthesis module
- * (src/lib/scores/city_directory) fed only the city list the page already
- * imports. It invents no numbers; it restates the same figures through the
- * same break tables the city hero uses, and any city missing a field degrades
- * to a plain link (bible: hide weakness, no apologetic placeholder).
+ * White-reset 2026-06-06 (founder): the page leads with the geographic map, then
+ * a ranked strip of the most visitor-skewed markets, then a curated single column
+ * of city cards. Each card carries three real figures (visitors a year, average
+ * salary, metro GDP) instead of qualitative words, and any missing figure shows
+ * the board dash. The old grouped "metropolis / major / secondary" dump and the
+ * per-city word-signals are retired; the long tail stays reachable through the
+ * map and the country pages.
+ *
+ * The two shapes the page renders (the ranked visitor list and the curated
+ * showcase) come from a pure synthesis module (src/lib/scores/city_directory)
+ * fed only the city list the page already imports. It invents no numbers.
  *
  * Plan v27 Lane C anchored this hub at /cities; v34 added the full-bleed map.
  * Both are preserved: URL, metadata, and revalidate are unchanged, and every
@@ -29,6 +30,9 @@ import CitiesWorldMap, {
   type CitiesWorldMapCity,
 } from "@/components/cities/CitiesWorldMap";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
+import { StatCard } from "@/components/board/StatCard";
+import { RankRow } from "@/components/board/RankRow";
+import { fmtUSD, fmtUSDBillions, fmtMillions } from "@/components/board/format";
 import { elevation } from "@/lib/design-tokens";
 import {
   buildCityDirectory,
@@ -54,10 +58,9 @@ type CityCoord = { slug: string; lat: number; lon: number };
 const COORDS = (cityCoordsJson as { coordinates: CityCoord[] }).coordinates;
 const COORD_BY_SLUG = new Map(COORDS.map((c) => [c.slug, c]));
 
-// Join the city list to the coordinates table. v34 sanity sweep section
-// 2 hard target 2.4: render exactly the full set, do not silently drop.
-// A city missing coords at 0,0 would distort the map, so we filter it out of
-// the map only; it still appears in the grouped list below.
+// Join the city list to the coordinates table. A city missing coords at 0,0
+// would distort the map, so we filter it out of the map only; the full set
+// still reaches a reader through the map markers and the country pages.
 const MAP_CITIES: CitiesWorldMapCity[] = CITIES.map((c) => {
   const coord = COORD_BY_SLUG.get(c.slug);
   if (!coord) return null;
@@ -74,48 +77,50 @@ const MAP_CITIES: CitiesWorldMapCity[] = CITIES.map((c) => {
 const DIRECTORY = buildCityDirectory(CITIES);
 
 /**
- * One city, rendered as an editorial directory row: the flag, the name as the
- * link, and the real signals as quiet qualitative words. Each signal self-omits
- * when its field is thin, so a sparse city is still a usable, honest link.
+ * One curated city, rendered as a board StatCard: the flag and the city name as
+ * the link, then three real figures. Any figure the city is missing degrades to
+ * the board dash inside the card. The modeled note is one line for the whole
+ * section, not a badge per card, so it lives on the section rather than here.
  */
-function CityRow({ city }: { city: DirectoryCity }) {
+function CityStatCard({ city }: { city: DirectoryCity }) {
   return (
-    <article className="border-t border-parchment py-3.5">
-      <div className="flex items-center gap-2.5">
-        <CountryFlag iso2={city.iso2} className="w-5 shrink-0" />
-        <Link
-          href={`/cities/${city.slug}`}
-          className="font-display text-base md:text-lg font-semibold text-ink-900 hover:text-atlas-700 transition-colors"
-        >
-          {city.name}
-        </Link>
-      </div>
-      {city.signals.length > 0 ? (
-        <dl className="mt-1.5 flex flex-wrap gap-x-5 gap-y-1 pl-[1.875rem]">
-          {city.signals.map((s) => (
-            <div key={s.label} className="flex items-baseline gap-1.5">
-              <dt className="text-[10px] font-medium uppercase tracking-[0.12em] text-cocoa-500">
-                {s.label}
-              </dt>
-              <dd className="text-[13px] capitalize text-graphite">{s.word}</dd>
-            </div>
-          ))}
-        </dl>
-      ) : null}
-    </article>
+    <StatCard
+      title={city.name}
+      href={`/cities/${city.slug}`}
+      leading={<CountryFlag iso2={city.iso2} className="w-6" />}
+      stats={[
+        {
+          label: "Visitors",
+          hint: "per year",
+          value:
+            city.tourist_arrivals_m != null
+              ? fmtMillions(city.tourist_arrivals_m)
+              : null,
+        },
+        {
+          label: "Average salary",
+          value:
+            city.avg_gross_salary_usd_year != null
+              ? fmtUSD(city.avg_gross_salary_usd_year)
+              : null,
+        },
+        {
+          label: "Metro GDP",
+          value: city.gdp_b != null ? fmtUSDBillions(city.gdp_b) : null,
+        },
+      ]}
+    />
   );
 }
 
 export default function CitiesHub() {
-  const { groups, total, visitorLed } = DIRECTORY;
+  const { total, topVisitorRatio, showcase } = DIRECTORY;
 
   return (
     <article className="max-w-6xl mx-auto px-4 md:px-6 py-12 md:py-16">
-      {/* White-reset 2026-06-06 (founder): the world map is hoisted to the
-          very TOP of the page, above the breadcrumb and the intro. It is the
-          first thing a reader meets on /cities; the breadcrumb, the editorial
-          intro, the visitor read, and the grouped list all follow below it.
-          Data + props are unchanged. */}
+      {/* The world map is the first thing a reader meets on /cities; the
+          breadcrumb, the header, the ranked visitor strip, and the curated
+          cards all follow below it. */}
       <section aria-labelledby="cities-map-heading">
         <h2 id="cities-map-heading" className="sr-only">
           Map of covered cities
@@ -148,90 +153,86 @@ export default function CitiesHub() {
           The numbers bend with the city: rent, wages, and what people will pay
           all shift from one place to the next.{" "}
           <span className="text-ink-900">
-            So the cities below are grouped by the depth of the local market,
-            not by alphabet. A deeper market forgives a narrow concept; a shallow
-            one punishes it.
-          </span>{" "}
-          Pick a city to see its industries, costs, and rankings.
+            Open a city for its industries, costs, and rankings, or start with
+            the deepest markets below.
+          </span>
         </p>
         <p className="mt-4 text-sm text-cocoa-700/85 tabular-nums">
-          <span className="text-ink-900 font-medium">{total}</span> cities
-          across{" "}
-          <span className="text-ink-900 font-medium">{groups.length}</span>{" "}
-          reading groups.
+          <span className="text-ink-900 font-medium">{total}</span> cities on
+          the map.
         </p>
       </header>
 
-      {/* The honest tourism read (bible: tourism signal, not tourism fluff).
-          The cities where visitors most outnumber residents, named plainly so
-          the reader can find the markets whose economics tilt to the visitor.
-          Self-omits if no city carries both numbers. White-reset: the panel is
-          now white with a hairline, no cream tint. */}
-      {visitorLed.length > 0 ? (
+      {/* The honest tourism read (bible: tourism signal, not tourism fluff): the
+          cities where visitors most outnumber residents, ranked. Self-omits when
+          fewer than three cities carry both numbers. */}
+      {topVisitorRatio.length >= 3 ? (
         <section
-          className="mt-10 md:mt-12 rounded-2xl bg-white border border-parchment px-5 py-6 md:px-7 md:py-7"
+          className="mt-12 md:mt-16 rounded-2xl bg-white border border-parchment px-5 py-6 md:px-7 md:py-7"
           aria-labelledby="visitor-led-heading"
+          style={{ boxShadow: elevation.card }}
         >
+          <SectionEyebrow className="mb-2">The visitor economy</SectionEyebrow>
           <h2
             id="visitor-led-heading"
             className="font-display text-xl md:text-2xl font-semibold tracking-tight text-ink-900"
           >
-            Where the customers are visitors, not locals
+            Where the customer is a visitor, not a local
           </h2>
-          <p className="mt-2 text-sm text-graphite leading-relaxed max-w-2xl">
-            In these cities, arrivals outnumber residents by a wide margin. That
-            lifts revenue and pricing power in the season and pulls both back out
-            of it, so plan for the swing before you sign a year-round lease.
+          <p className="mt-2 max-w-2xl text-sm text-graphite leading-relaxed">
+            In these cities, arrivals outnumber residents by the widest margin on
+            the map. That lifts revenue and pricing power in the season and pulls
+            both back out of it, so plan for the swing before you sign a
+            year-round lease.
           </p>
-          <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
-            {visitorLed.map((c) => (
-              <Link
+          <div className="mt-5">
+            {topVisitorRatio.map((c) => (
+              <RankRow
                 key={c.slug}
+                rank={c.rank}
+                label={c.name}
                 href={`/cities/${c.slug}`}
-                className="inline-flex items-center gap-2 text-[15px] text-cocoa-700 hover:text-atlas-700 transition-colors"
-              >
-                <CountryFlag iso2={c.iso2} className="w-4" />
-                <span className="font-medium text-ink-900">{c.name}</span>
-              </Link>
+                value={`${c.ratio.toFixed(1)}x visitors vs residents`}
+                texture={c.texture}
+              />
             ))}
           </div>
         </section>
       ) : null}
 
-      {/* The reading groups. Each is a real section with a real heading; a group
-          with no cities self-omits. The grouping is the editorial spine that
-          replaces the alphabetical dump. */}
-      <div className="mt-14 md:mt-20 space-y-14 md:space-y-20">
-        {groups.map((group) => (
-          <section key={group.meta.id} aria-labelledby={`group-${group.meta.id}`}>
-            <div className="max-w-3xl">
-              <h2
-                id={`group-${group.meta.id}`}
-                className="font-display text-2xl md:text-3xl font-semibold tracking-tight text-ink-900 leading-tight"
-              >
-                {group.meta.title}{" "}
-                <span className="text-base font-normal text-cocoa-700/60 tabular-nums">
-                  {group.cities.length}
-                </span>
-              </h2>
-              <p className="mt-3 text-base text-graphite leading-relaxed">
-                {group.meta.blurb}
-              </p>
-            </div>
-            <div className="mt-6 md:mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-0">
-              {group.cities.map((city) => (
-                <CityRow key={city.slug} city={city} />
-              ))}
-            </div>
-          </section>
-        ))}
-      </div>
+      {/* The curated showcase: the deepest markets, one card each, single
+          column. Three real figures per city; a missing figure shows the board
+          dash. The long tail stays reachable via the map and the country pages,
+          so this stays a showcase rather than a dump. */}
+      {showcase.length > 0 ? (
+        <section className="mt-14 md:mt-20" aria-labelledby="showcase-heading">
+          <SectionEyebrow className="mb-2">The deepest markets</SectionEyebrow>
+          <h2
+            id="showcase-heading"
+            className="font-display text-2xl md:text-3xl font-semibold tracking-tight text-ink-900 leading-tight"
+          >
+            The biggest metros, by the numbers
+          </h2>
+          <p className="mt-3 max-w-2xl text-base text-graphite leading-relaxed">
+            The deepest demand pools on the map: almost any concept finds enough
+            customers here, which is exactly why the rent and the wage bill come
+            for the margin first. The figures below frame the size of each
+            market before you open it.
+          </p>
 
-      <p className="mt-16 pt-8 border-t border-parchment text-xs text-cocoa-700/70 max-w-2xl leading-relaxed">
-        Reading groups follow the depth of the local market, the single signal
-        that most changes how a small business reads a place. The words on each
-        city are a starting point, not a verdict. Open a city for the figures.
-      </p>
+          <div className="mt-6 md:mt-8 flex flex-col gap-3 md:gap-4">
+            {showcase.map((city) => (
+              <CityStatCard key={city.slug} city={city} />
+            ))}
+          </div>
+
+          <p className="mt-6 max-w-2xl text-xs leading-relaxed text-cocoa-700/70">
+            Visitor, salary, and metro GDP figures are approximate and modeled to
+            stay consistent across cities, so they read as comparisons rather than
+            audited accounts. Open a city for the fuller picture.
+          </p>
+        </section>
+      ) : null}
     </article>
   );
 }

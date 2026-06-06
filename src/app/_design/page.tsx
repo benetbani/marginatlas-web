@@ -62,6 +62,8 @@ import { DataSection, type BoardSection as BoardSectionData } from "@/components
 import { ScoreStrip } from "@/components/board/ScoreStrip";
 import { BoardHero } from "@/components/board/BoardHero";
 import { FailureCards } from "@/components/board/FailureCards";
+import { StatCard } from "@/components/board/StatCard";
+import { RankRow } from "@/components/board/RankRow";
 import { SpreadBar } from "@/components/board/charts/SpreadBar";
 import { CostBar } from "@/components/board/charts/CostBar";
 import { SurvivalCurve } from "@/components/board/charts/SurvivalCurve";
@@ -73,6 +75,8 @@ import {
   fmtPct,
   fmtInt,
   fmtNum,
+  fmtUSDBillions,
+  fmtMillions,
 } from "@/components/board/format";
 
 import { colors, fontFamily, fontSize, radius, elevation, duration, easing, z } from "@/lib/design-tokens";
@@ -557,6 +561,12 @@ function DataBoardSection() {
           <div className="tabular-nums text-ink-900">{fmtInt(1_234_567)}</div>
           <div className="text-cocoa-700">fmtNum(3141.59)</div>
           <div className="tabular-nums text-ink-900">{fmtNum(3141.59)}</div>
+          <div className="text-cocoa-700">fmtUSDBillions(680)</div>
+          <div className="tabular-nums text-ink-900">{fmtUSDBillions(680)}</div>
+          <div className="text-cocoa-700">fmtUSDBillions(2000)</div>
+          <div className="tabular-nums text-ink-900">{fmtUSDBillions(2000)}</div>
+          <div className="text-cocoa-700">fmtMillions(12.4)</div>
+          <div className="tabular-nums text-ink-900">{fmtMillions(12.4)}</div>
           <div className="text-cocoa-700">fmtUSD(null)</div>
           <div className="tabular-nums text-cocoa-400">{fmtUSD(null)}</div>
           <div className="text-cocoa-700">fmtPct(NaN)</div>
@@ -647,6 +657,35 @@ function DataBoardSection() {
 
       <SubSection title="FailureCards" caption="board/FailureCards.tsx">
         <FailureCards cards={failureCards} />
+      </SubSection>
+
+      <SubSection
+        title="StatCard"
+        caption="board/StatCard.tsx (titled white card, label-left / value-right, null shows the dash)"
+      >
+        <div className="max-w-sm">
+          <StatCard
+            title="Tokyo"
+            href="#"
+            stats={[
+              { label: "Visitors", hint: "per year", value: fmtMillions(11) },
+              { label: "Average salary", value: fmtUSD(34_800) },
+              { label: "Metro GDP", value: fmtUSDBillions(2000) },
+            ]}
+            footnote="Approximate and modeled to stay consistent across cities."
+          />
+        </div>
+      </SubSection>
+
+      <SubSection
+        title="RankRow"
+        caption="board/RankRow.tsx (rank badge, label, right-aligned value, optional texture)"
+      >
+        <div className="max-w-md">
+          <RankRow rank={1} label="Nantes" href="#" value="12.5x visitors vs residents" texture="overwhelming" />
+          <RankRow rank={2} label="Nice" href="#" value="12.5x visitors vs residents" texture="overwhelming" />
+          <RankRow rank={3} label="Edinburgh" href="#" value="12.3x visitors vs residents" texture="overwhelming" />
+        </div>
       </SubSection>
     </Section>
   );
