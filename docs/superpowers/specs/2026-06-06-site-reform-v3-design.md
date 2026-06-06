@@ -79,3 +79,27 @@ AI agency (541690 closest), creator/influencer agency, email/CRM/lifecycle agenc
 - Ship **Phase A** first (pure UI, fast, reversible, high visual payoff), then B, then the data phases C/D/E which each gate on a dry-run + founder sign-off.
 - All work stays on the branch with preview screenshots before any fast-forward to main.
 - Hard constraints respected throughout: no URL renames, no em-dashes, tokens only, gates green.
+
+---
+
+## Phase D resolution (2026-06-06): CURATE the agency economics
+
+A read-only data dry-run found that adding the 8 agencies as plain taxonomy entries would FAIL: the resolver only uses 3-digit NAICS and the US read runs `naics_6 LIKE '541%'`, so all seven "541" agencies (advertising, PR, SEO, branding, web-dev, MSP, cybersecurity) collapse to the SAME blended professional-services population, i.e. identical numbers under different names. Founder decision: **curate the agency economics** (modeled, like the London dataset), distinct and global, labelled modeled. This sidesteps the resolver; the research already showed modern-agency economics are directional/blog-sourced, so curation is the honest source.
+
+**Per-agency reality (from the dry-run), to drive the curation + taxonomy work:**
+- ALREADY EXIST (surface/relabel, do not duplicate): advertising = `marketing_design`; branding = `marketing_design`; web/app = `software_development` / `web_mobile_dev_shops`; video/podcast = `motion_picture_recording`.
+- SUB-SLICES of `marketing_design` (add as children if wanted): PR/communications, SEO/content.
+- GENUINELY NEW: cybersecurity (no existing entry).
+- MIS-CODED (1-line fix, not a new page): the existing `it_services_msp` is wired to NAICS `518`; it does not pull the 541512 MSP population.
+- SECONDARY BUG (pre-existing, worth fixing): the reverse map `naics6ToIndustry` is first-write-wins, so every raw 541 US row is mislabelled `software_development` on country-page aggregates. Fix the ordering / make it explicit.
+
+**Curation data model (to design):** unlike London (per-city x per-activity), agency economics are relatively place-stable, so the curated record is per-ACTIVITY (typical revenue, gross/net margin, owner take-home, revenue-per-head, pricing model), with place adjustment (wages / cost-of-living) for individual cells. Source numbers: the Phase D research note (MSP gross ~52% RPE ~$142k; advertising net 15-25%; branding ~$153k RPE; web-dev ~$212k RPE; video/podcast 512110 clean; etc.) - treat as directional, label modeled, never display as precise.
+
+## Live state at this checkpoint (on marginatlas.com)
+
+Board reform (all page types) + white redesign + black footer + lifted hero + cities-map-on-top + activities search/categorization + solo-exclusion (12 hidden, 212->200) + revenue suppression (C1). All shipped to main and verified live.
+
+## Remaining
+
+- **Phase D execution:** design the agency curation record, curate the 8 (then the 5 Wave-2), wire the activity/cell pages to prefer it, handle the 4 existing (relabel) + 2 sub-slices + cyber (new) + MSP re-map + the reverse-map bug. Dry-run + show.
+- **Phase E:** tighten loose per-industry bounds (the real wrong-numbers fix), currency-beyond-Mexico, wrong-industry remaps, extrapolated_cells band dedupe. Each dry-run + show.
