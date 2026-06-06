@@ -30,6 +30,7 @@ import {
   slugToIndustry,
   industryToSlug,
   resolveToMeasuredIndustry,
+  isExcludedSolo,
 } from "./taxonomy";
 import { iso2ToIso3, iso3ToIso2, iso2ToName } from "./countries";
 import {
@@ -722,6 +723,7 @@ export async function getTopIndustriesForCountry(
     for (const [indId, v] of byIndustry.entries()) {
       const ind = INDUSTRY_BY_ID[indId];
       if (!ind) continue;
+      if (isExcludedSolo(ind)) continue;
       const a = ind.audience || "smb_friendly";
       if (a !== "smb_core" && a !== "smb_friendly") continue;
       rows.push({

@@ -28,6 +28,7 @@ import {
   INDUSTRIES,
   industryToSlug,
   resolveToMeasuredIndustry,
+  isExcludedSolo,
 } from "@/lib/taxonomy";
 import industryMarginsJson from "@/lib/finance/industry_margins.json";
 import cityListJson from "../../../data/cities/city_list_v1.json";
@@ -61,10 +62,12 @@ const INDUSTRY_MARGINS = industryMarginsJson as unknown as {
 };
 
 // SMB-relevant activities only (the audience the founder decision is for).
+// Excluded-solo activities are hidden from the picker too.
 const SMB_INDUSTRIES = INDUSTRIES.filter(
   (i) =>
-    (i.audience || "smb_friendly") === "smb_core" ||
-    (i.audience || "smb_friendly") === "smb_friendly",
+    ((i.audience || "smb_friendly") === "smb_core" ||
+      (i.audience || "smb_friendly") === "smb_friendly") &&
+    !isExcludedSolo(i),
 );
 
 // Activity options for the picker, alphabetical.

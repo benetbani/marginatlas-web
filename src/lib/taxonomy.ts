@@ -42,6 +42,12 @@ export type Industry = {
   nace_divisions?: string[];
   /** Audience tag (Plan v3.0 §L). Falls back to "smb_friendly" if absent. */
   audience?: AudienceTag;
+  /**
+   * Founder-approved exclusion: inherently solo-professional activities that
+   * are hidden from every discovery surface (nav, directory, search, pickers,
+   * switchers) while their direct URLs still resolve. Orthogonal to `audience`.
+   */
+  solo_professional?: boolean;
   /** For SMB sub-niches: parent industry ID with actual measurements. */
   parent_id?: string;
 };
@@ -383,7 +389,19 @@ export function resolveSector(slug: string): Sector | null {
 /** Default-visible audiences (what the founder/SMB user actually wants). */
 const DEFAULT_VISIBLE: AudienceTag[] = ["smb_core", "smb_friendly"];
 
+/**
+ * Founder-approved exclusion. True for the inherently solo-professional
+ * activities flagged `solo_professional: true` in industries.json. These drop
+ * out of every discovery surface (nav, directory, search, pickers, switchers)
+ * yet keep resolving on a direct URL hit. This is an ADDITIONAL filter layered
+ * on top of audience gating, not a replacement for it.
+ */
+export function isExcludedSolo(ind: Industry): boolean {
+  return ind.solo_professional === true;
+}
+
 export function isDefaultVisible(ind: Industry): boolean {
+  if (isExcludedSolo(ind)) return false;
   const tag = ind.audience || "smb_friendly";
   return DEFAULT_VISIBLE.includes(tag);
 }
@@ -405,6 +423,7 @@ export function audienceLabel(tag: AudienceTag | undefined): string {
  */
 export function visibleIndustries(opts: { revealMixed?: boolean; revealCorp?: boolean } = {}): Industry[] {
   return INDUSTRIES.filter((i) => {
+    if (isExcludedSolo(i)) return false;
     const tag = i.audience || "smb_friendly";
     if (DEFAULT_VISIBLE.includes(tag)) return true;
     if (tag === "mixed_caution" && opts.revealMixed) return true;
@@ -529,6 +548,7 @@ export type Gate = { revealMixed?: boolean; revealCorp?: boolean };
 export function sectorHasVisibleIndustries(sectorId: string, gate: Gate = {}): boolean {
   const list = INDUSTRIES_BY_SECTOR[sectorId] || [];
   for (const ind of list) {
+    if (isExcludedSolo(ind)) continue;
     const tag = ind.audience || "smb_friendly";
     if (DEFAULT_VISIBLE.includes(tag)) return true;
     if (tag === "mixed_caution" && gate.revealMixed) return true;
@@ -558,6 +578,7 @@ export function visibleIndustriesInSector(sectorId: string, gate: Gate = {}): In
   const list = INDUSTRIES_BY_SECTOR[sectorId] || [];
   return list
     .filter((i) => {
+      if (isExcludedSolo(i)) return false;
       const tag = i.audience || "smb_friendly";
       if (DEFAULT_VISIBLE.includes(tag)) return true;
       if (tag === "mixed_caution" && gate.revealMixed) return true;

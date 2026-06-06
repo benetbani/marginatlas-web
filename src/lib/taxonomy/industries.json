@@ -2933,6 +2933,7 @@
     },
     {
       "id": "custom_software_contract",
+      "solo_professional": true,
       "name": "Custom software / contract dev",
       "audience": "smb_core",
       "parent_id": "software_development",
@@ -3249,6 +3250,7 @@
     },
     {
       "id": "insurance_brokers",
+      "solo_professional": true,
       "name": "Independent insurance brokers",
       "audience": "smb_core",
       "parent_id": "insurance",
@@ -3377,6 +3379,7 @@
     },
     {
       "id": "sole_law_firms",
+      "solo_professional": true,
       "name": "Sole-practitioner law firms",
       "audience": "smb_core",
       "parent_id": "legal_services",
@@ -3424,6 +3427,7 @@
     },
     {
       "id": "sole_accounting",
+      "solo_professional": true,
       "name": "Sole-practitioner accountants",
       "audience": "smb_core",
       "parent_id": "accounting_tax",
@@ -3440,6 +3444,7 @@
     },
     {
       "id": "management_consulting",
+      "solo_professional": true,
       "name": "Management consulting",
       "audience": "smb_core",
       "examples": [
@@ -3546,6 +3551,7 @@
     },
     {
       "id": "videography_services",
+      "solo_professional": true,
       "name": "Videography services",
       "audience": "smb_core",
       "parent_id": "marketing_design",
@@ -3563,6 +3569,7 @@
     },
     {
       "id": "wedding_planning",
+      "solo_professional": true,
       "name": "Wedding planning & coordination",
       "audience": "smb_core",
       "parent_id": "marketing_design",
@@ -4160,6 +4167,7 @@
     },
     {
       "id": "mental_health_practice",
+      "solo_professional": true,
       "name": "Mental health practices (small)",
       "audience": "smb_core",
       "parent_id": "doctors_clinics",
@@ -4179,6 +4187,7 @@
     },
     {
       "id": "nutritionist",
+      "solo_professional": true,
       "name": "Nutritionist / dietician practices",
       "audience": "smb_core",
       "parent_id": "doctors_clinics",
@@ -4430,6 +4439,7 @@
     },
     {
       "id": "personal_training",
+      "solo_professional": true,
       "name": "Personal training",
       "audience": "smb_core",
       "parent_id": "sports_fitness",
@@ -4928,6 +4938,7 @@
     },
     {
       "id": "pet_walking_sitting",
+      "solo_professional": true,
       "name": "Pet walking & sitting",
       "audience": "smb_core",
       "examples": [
@@ -4945,6 +4956,7 @@
     },
     {
       "id": "pet_training",
+      "solo_professional": true,
       "name": "Pet training",
       "audience": "smb_core",
       "examples": [
