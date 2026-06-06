@@ -1,6 +1,7 @@
 import { NavigatorForm } from "@/components/NavigatorForm";
 import { WorldMapSection } from "@/components/home/WorldMapSection";
 import { WhatAtlasWeighs } from "@/components/home/WhatAtlasWeighs";
+import { BreakInBeat } from "@/components/home/BreakInBeat";
 import { MoneyBeats } from "@/components/home/MoneyBeats";
 import { loadHomepageBeats } from "@/lib/home/beats";
 import HomepageEditorialBlocks, { type AtlasQuestion } from "@/components/HomepageEditorialBlocks";
@@ -224,6 +225,19 @@ export default async function HomePage() {
           cluster above and the curated cells below. */}
       <ToneBand tone="home-featured">
         <WhatAtlasWeighs />
+      </ToneBand>
+
+      {/* LEAD data beat (2026-06-06): the break-in rating, the single 0-100
+          "how easy is it to break in and win here" score, made the front-page
+          hook. It is the first data-rich payoff after the thesis strip, so a
+          visitor sees the headline rating right after the hero, the map, and the
+          thesis. Both ends of the live break-in board (the five easiest and the
+          five hardest places to break into right now) come straight from the
+          same data the /extremes hub and the cell mastheads use; nothing is
+          recomputed. The whole beat self-omits when its data cannot resolve both
+          ends, so the homepage always renders. */}
+      <ToneBand tone="home-featured">
+        <BreakInBeat breakIn={beats.breakIn} />
       </ToneBand>
 
       {/* Plan v32 Sprint B — ExploreCards removed. Was using Pexels stock

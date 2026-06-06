@@ -927,3 +927,27 @@ async function loadStartupAndBreakInBoards(): Promise<{
     breakInBoards: buildBreakInBoards(acrossById),
   };
 }
+
+/**
+ * Resolve ONLY the break-in-rating boards (easiest / hardest), for callers that
+ * want the headline rating without paying for the take-home, density, and
+ * startup reads the full hub does. The homepage uses this for its lead break-in
+ * beat: it reuses the EXACT board builder and rating math the hub and the cell
+ * masthead share (no recomputation), just over the break-in activity slate
+ * alone. Each across read is the builder's own budgeted, trust-gated resolve, so
+ * a slow or thin activity simply yields fewer (or no) rows, and the caller
+ * self-omits when the pair is incomplete.
+ */
+export async function loadBreakInBoards(): Promise<BreakInLeaderboard[]> {
+  const uniqueIds = Array.from(new Set(BREAK_IN_ACTIVITY_IDS));
+  const acrossById = new Map<
+    string,
+    Awaited<ReturnType<typeof buildAcrossCities>>
+  >();
+  await Promise.all(
+    uniqueIds.map(async (id) => {
+      acrossById.set(id, await buildAcrossCities(id));
+    }),
+  );
+  return buildBreakInBoards(acrossById);
+}

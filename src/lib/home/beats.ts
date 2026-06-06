@@ -45,6 +45,7 @@ import {
   summarizeActivityPlaces,
   type ActivityPlaceInput,
 } from "@/lib/scores/activity_board";
+import { loadBreakInBoards } from "@/lib/extremes/leaderboards";
 
 /** A finite, positive real. */
 function isPos(n: number | null | undefined): n is number {
@@ -138,8 +139,36 @@ export interface BeatSpread {
   prestige: { label: string; href: string; takeHome: number };
 }
 
+/** One ranked break-in row: a business-in-place, its 0-100 score, and band. */
+export interface BeatBreakInRow {
+  /** "{Business} in {Place}", straight off the live break-in board row. */
+  label: string;
+  href: string;
+  /** The single break-in rating, 0..100. Higher = easier to break in. */
+  score: number;
+  /** The band word for the row texture ("forgiving", "brutal", ...). */
+  band: string;
+}
+
+/**
+ * The break-in beat: the top few easiest and hardest places to break into right
+ * now, both ends of the SAME live break-in rating the cell mastheads and the
+ * /extremes hub carry. Shown only when both ends resolve, so it never reads
+ * one-sided.
+ */
+export interface BeatBreakIn {
+  easiest: BeatBreakInRow[];
+  hardest: BeatBreakInRow[];
+}
+
 /** The full payload the homepage renders (any field may be null / short). */
 export interface HomepageBeats {
+  /**
+   * The lead break-in beat (easiest / hardest to break into), sourced from the
+   * live break-in boards. Null when the rating cannot resolve both ends, so the
+   * homepage renders without it.
+   */
+  breakIn: BeatBreakIn | null;
   cards: BeatCard[];
   leaderboard: BeatLeaderboard | null;
   spread: BeatSpread | null;
@@ -451,19 +480,58 @@ function trim(n: number): string {
   return Number.isInteger(r) ? String(r) : r.toFixed(1);
 }
 
+/** How many rows each end of the break-in beat shows: a tight, scannable top five. */
+const BREAK_IN_TOP_N = 5;
+
 /**
- * Build the full homepage beats payload. Resolves the three cards, the gym
- * leaderboard, and the surprising spread concurrently; every piece self-omits
- * on a miss. The page renders only the cards that resolved (it requires at least
+ * Resolve the lead break-in beat from the live break-in boards (the SAME builder
+ * and rating math the cell masthead and the /extremes hub use, no recomputation
+ * here). The board set is ordered easiest-first then hardest-first; we take the
+ * top five of each end. The whole beat self-omits to null unless BOTH ends
+ * resolve above the floor, so it never reads one-sided, and a failed or thin read
+ * simply drops the beat (the homepage still renders). Budget-wrapped, like every
+ * other read in this file.
+ */
+async function resolveBreakIn(): Promise<BeatBreakIn | null> {
+  const boards = await withBudget(loadBreakInBoards(), [], 6_000, "homeBreakIn");
+  // The builder yields the easiest board (direction "high") first and the
+  // hardest (direction "low") second. Match by key so a future reorder cannot
+  // silently flip the two ends.
+  const easiestBoard = boards.find((b) => b.key === "easiest-to-break-in");
+  const hardestBoard = boards.find((b) => b.key === "hardest-to-break-in");
+  if (!easiestBoard || !hardestBoard) return null;
+
+  const toRows = (rows: typeof easiestBoard.rows): BeatBreakInRow[] =>
+    rows.slice(0, BREAK_IN_TOP_N).map((r) => ({
+      label: r.name,
+      href: r.href,
+      score: r.score,
+      band: r.band,
+    }));
+
+  const easiest = toRows(easiestBoard.rows);
+  const hardest = toRows(hardestBoard.rows);
+  if (easiest.length < BREAK_IN_TOP_N || hardest.length < BREAK_IN_TOP_N) {
+    return null;
+  }
+  return { easiest, hardest };
+}
+
+/**
+ * Build the full homepage beats payload. Resolves the lead break-in beat, the
+ * three cards, the gym leaderboard, and the surprising spread concurrently;
+ * every piece self-omits on a miss. The page leads with the break-in beat when
+ * it resolves, then renders only the cards that resolved (it requires at least
  * two), the leaderboard when it has four or more clean places, and the spread
  * only when the humble business genuinely wins.
  */
 export async function loadHomepageBeats(): Promise<HomepageBeats> {
-  const [cardResults, leaderboard, spread] = await Promise.all([
+  const [breakIn, cardResults, leaderboard, spread] = await Promise.all([
+    resolveBreakIn(),
     Promise.all(CARD_SPECS.map(resolveCard)),
     resolveGymLeaderboard(),
     resolveSpread(),
   ]);
   const cards = cardResults.filter((c): c is BeatCard => c !== null);
-  return { cards, leaderboard, spread };
+  return { breakIn, cards, leaderboard, spread };
 }
