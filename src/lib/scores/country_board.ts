@@ -280,6 +280,16 @@ export interface EasiestBreakInRow {
   score: number;
   /** The band word driving the badge tone (moss / atlas / clay). */
   band: BreakInBand;
+  /**
+   * The cost-to-open ("/opening") href, set ONLY when the destination cell is a
+   * TRUSTED LOCAL measurement (the same isTrustedLocalCell gate buildOpeningPage
+   * applies). For aggregate / extrapolated cells the /opening sub-page notFound()s,
+   * so this is null and the panel renders no "Cost to open" link for that row. The
+   * row itself (its cell-page link and ranking) is still shown, in line with the
+   * cell page's own "gate the link, not the surface" rule; only the cross-link
+   * that would land on a not-found page is withheld.
+   */
+  openingHref: string | null;
 }
 
 /**
@@ -408,6 +418,12 @@ const MIN_PANEL_ROWS = 3;
  * and sorted by score descending. Ties keep the input order (the place's own
  * activity order, densest first). Returns an empty array when fewer than a few
  * activities resolve a score, so the caller can self-omit the whole panel.
+ *
+ * Each row also carries an openingHref: the "/opening" cross-link, set only when
+ * the cell passes the stricter isTrustedLocalCell gate (the one buildOpeningPage
+ * uses). Aggregate / extrapolated cells render a cell page but their /opening
+ * notFound()s, so those rows keep their cell-page link and ranking but withhold
+ * the cost-to-open link, instead of being dropped from the panel.
  */
 export function buildEasiestToBreakIn(
   input: EasiestBreakInInput,
