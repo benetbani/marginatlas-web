@@ -104,3 +104,16 @@ The shareable front (Phase 1) converts what we built into reach and citations no
 ## Recommended kickoff
 
 **Phase 1, the cost-to-open page**, immediately: it is the most concrete next payoff, it is shareable and link-earning, and it converts everything already built into reach. I would execute it as: (1) build + dry-run the `opening_page.ts` data builder, (2) build the route + components, (3) screenshot desktop + mobile, (4) ship, (5) wire the cross-links, then move to Phase 2.
+
+---
+
+## Progress log
+
+**2026-06-07 (during Phase 1) — a live lead-metric bug found and FIXED to production (commit `15c823d2`, shipped in `ea52118d`).** Building the cost-to-open data builder surfaced that owner take-home (the lead metric) was printing implausible NEGATIVES on a broad set of live cells (Paris cafe -$250K, NY hotels -$476K, Chicago auto -$370K, ~21 of 35 sampled). A live breach of the no-wrong-numbers bar, pre-existing and unnoticed. Founder approved "fix the foundation now."
+- **Root cause:** (A) `enforceSanity` (`src/lib/cells/fill_defaults.ts`) overwrote the region-TOTAL `n_employees` with an inflated per-firm cap, which the page trusted as per-firm, overstating payroll 2x-5x; (B) `estimateNetProfit` has an upper margin clamp but no lower floor, so stacked costs drove it deeply negative; (C) the take-home logic was DUPLICATED in `page.tsx` and `opening_page.ts`, and the display vs the score read different values.
+- **Fix:** (A) divide region total to per-firm BEFORE the affordability cap; (B+C) one shared `src/lib/finance/owner_take_home.ts` `resolveOwnerTakeHome()` used by BOTH the cell page and the cost-to-open builder, returning `max(structural net profit, clampMargin(net margin) x revenue)` then the larger-firm floor, so display and score always agree and nothing prints negative. Verified: 21/35 negatives to 0, healthy cells a proven no-op (35,574-combo equivalence), break-in score lights up across cities, all gates + build green, live cells confirmed positive.
+- **Noted follow-up (Phase 3 refinement, not blocking):** the `hospitality = 1200 sqm` floorplate in `fixed_costs.ts` over-states rent for small inns, so NY hotels floors to ~$19K rather than reading structurally. Right-size the hospitality sqm (or scale sqm to revenue) to lift it off the floor.
+
+**Phase 1 resume point:** the `opening_page.ts` data builder is DONE and now uses the shared take-home (so every previously-negative cell reads positive there too). The dry-run is clean. NEXT is step (2): build the route (`src/app/[country]/[geo]/[industry]/opening/page.tsx`, flagship-prerendered + ISR) and the components (`OpeningHero`, `OpeningChecklist`, `OpeningPayback`, `OpeningComparisons`), screenshot, ship, then cross-link.
+
+**Vision refinement folded in (2026-06-07 third taste pass, see `docs/strategy/2026-06-06-VISION-AND-ROADMAP.md`):** design as a CLEAN DATA TOOL not a magazine; craft into the CELL PAGES; a real freemium-depth business model is a THIS-YEAR goal (premium depth gated), not deferred; method kept private; tagged estimates (not dashes) when unsure. Build the cost-to-open page in the clean-data-tool register accordingly.
