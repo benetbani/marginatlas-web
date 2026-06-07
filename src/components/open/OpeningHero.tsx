@@ -21,9 +21,15 @@ import Link from "next/link";
 import { BreakInMasthead } from "@/components/board/BreakInScore";
 import { fmtUSD } from "@/components/board/format";
 import { T_H1 } from "@/lib/ui/typography";
+import { dealbreakerFor } from "@/lib/open/dealbreakers";
 import type { OpeningPage } from "@/lib/open/opening_page";
 
 export function OpeningHero({ page }: { page: OpeningPage }) {
+  // The one condition that has to be true, for the handful of businesses where a
+  // single condition truly dominates. Null for everything else, so most pages
+  // render nothing here.
+  const dealbreaker = dealbreakerFor(page.industryId);
+
   return (
     <header className="pb-2">
       <div className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-atlas-700">
@@ -59,6 +65,16 @@ export function OpeningHero({ page }: { page: OpeningPage }) {
       <p className="mt-6 max-w-2xl text-base leading-relaxed text-cocoa-700 md:text-lg">
         {page.verdict}
       </p>
+
+      {/* The single dealbreaker, only where one condition truly dominates.
+          Renders nothing for every other business. */}
+      {dealbreaker ? (
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-cocoa-700">
+          <span className="font-semibold text-ink-900">Do not open unless</span>{" "}
+          {dealbreaker}. Directional, and worth being honest with yourself about
+          before anything else.
+        </p>
+      ) : null}
 
       {/* Quiet link back to the full economics. */}
       <Link

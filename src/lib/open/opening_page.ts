@@ -168,6 +168,12 @@ export interface OtherBusinessHere {
 export interface OpeningPage {
   /** Business (activity) display name, e.g. "Restaurants". */
   businessName: string;
+  /**
+   * Canonical industry id of the resolved cell (e.g. "restaurants"). The render
+   * layer keys the optional dealbreaker line on this; it is the same id every
+   * shared lookup on the page already uses.
+   */
+  industryId: string;
   /** Place display name, e.g. "London". */
   placeName: string;
   /** ISO2 country slug (lowercased). */
@@ -634,6 +640,7 @@ export async function buildOpeningPage(
 
   return {
     businessName,
+    industryId,
     placeName,
     country: country.toLowerCase(),
     cellHref,
