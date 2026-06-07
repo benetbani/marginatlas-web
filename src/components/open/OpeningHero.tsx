@@ -76,13 +76,22 @@ export function OpeningHero({ page }: { page: OpeningPage }) {
         </p>
       ) : null}
 
-      {/* Quiet link back to the full economics. */}
-      <Link
-        href={page.cellHref}
-        className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-atlas-700 transition-colors hover:text-atlas-900"
-      >
-        See the full economics &rarr;
-      </Link>
+      {/* Quiet links: back to the full economics, and across to the buy-or-start
+          companion page (would it be smarter to buy an existing one instead). */}
+      <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2">
+        <Link
+          href={page.cellHref}
+          className="inline-flex items-center gap-1 text-sm font-medium text-atlas-700 transition-colors hover:text-atlas-900"
+        >
+          See the full economics &rarr;
+        </Link>
+        <Link
+          href={`${page.cellHref}/buy-or-start`}
+          className="inline-flex items-center gap-1 text-sm font-medium text-atlas-700 transition-colors hover:text-atlas-900"
+        >
+          Buy one instead of starting? &rarr;
+        </Link>
+      </div>
     </header>
   );
 }
