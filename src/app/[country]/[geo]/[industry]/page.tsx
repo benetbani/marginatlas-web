@@ -771,7 +771,7 @@ export default async function CellPage({
             <div className="max-w-prose">
               {lead && (
                 <p className="text-base md:text-lg leading-[1.6] text-cocoa-700 mb-6 border-l-4 border-atlas-700 pl-4 italic">
-                  {lead.sentence}
+                  {lead?.sentence}
                 </p>
               )}
               {narrative && (
