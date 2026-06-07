@@ -27,11 +27,19 @@ import Link from "next/link";
 import {
   INDUSTRIES,
   industryToSlug,
+  slugToIndustry,
   resolveToMeasuredIndustry,
   isExcludedFromDiscovery,
 } from "@/lib/taxonomy";
 import industryMarginsJson from "@/lib/finance/industry_margins.json";
 import cityListJson from "../../../data/cities/city_list_v1.json";
+import neighborhoodsJson from "../../../data/cities/neighborhoods_v1.json";
+import {
+  getNeighborhoodNetMargin,
+  hasNeighborhoodIntensity,
+  type NeighborhoodTag,
+} from "@/lib/economics/neighborhood_multipliers";
+import { INDUSTRY_BASELINES } from "@/lib/qa/industry_baselines";
 import {
   generateFounderDecision,
   type FounderActivityInput,
@@ -106,53 +114,143 @@ const FOUNDER_ACTIVITIES: FounderActivityInput[] = SMB_INDUSTRIES.map((i) => {
 
 const FOUNDER_DECISION = generateFounderDecision({ activities: FOUNDER_ACTIVITIES });
 
-// Worked examples that surface the framework's strongest point: different
-// activities have different best neighborhoods in the same city. These are
-// illustrations of the method, not a ranking. Each links to the live
-// neighborhood ranking for that activity and city.
-const WORKED_EXAMPLES: Array<{
+// Worked examples that surface the framework's strongest point: the best corner
+// for a trade is rarely the busiest one, because rent moves with revenue. These
+// are NOT a leaderboard and NOT hand-written numbers. Each is resolved here, at
+// build time, through the SAME path the live /decide/[activity]/[city] ranking
+// uses: the curated activity margin, the activity-aware revenue and rent
+// multipliers per neighborhood, and the net-margin sort. The card prints the
+// winning neighborhood's real net margin and links to that live ranking. If a
+// candidate does not resolve cleanly (city or neighborhood data absent, the
+// activity does not map to its own measured shape, or the top neighborhood is
+// not hand-curated), it self-omits, and the whole section hides below three.
+
+// Candidate (activity, city) pairs, hand-chosen to read as distinct best-corner
+// stories across different cities and trade types. The numbers are not here; the
+// resolver computes them. Each candidate is verified to resolve to its own
+// measured activity, so the card label never contradicts the destination page.
+const WORKED_EXAMPLE_CANDIDATES: ReadonlyArray<{
+  activity: string;
+  city: string;
+}> = [
+  { activity: "legal-services", city: "london" },
+  { activity: "real-estate-agencies", city: "london" },
+  { activity: "travel-agencies", city: "dubai" },
+  { activity: "guest-houses-pensions", city: "paris" },
+  { activity: "legal-services", city: "amsterdam" },
+];
+
+type NeighborhoodEntry = { slug: string; name: string };
+const NEIGHBORHOODS_BY_CITY = (
+  neighborhoodsJson as unknown as {
+    cities: Record<string, { neighborhoods: NeighborhoodEntry[] }>;
+  }
+).cities;
+const CITIES_BY_SLUG = new Map(CITIES.map((c) => [c.slug, c]));
+
+// Rent occupancy share for the rent-drag math, mirroring the wizard page.
+function baselineRentShareFor(activityId: string): number {
+  const row = INDUSTRY_BASELINES[activityId];
+  if (row && typeof row.rent_occupancy === "number") return row.rent_occupancy;
+  return 0.08;
+}
+
+// One short, true clause keyed off the winning neighborhood's leading tag. It
+// names WHY this corner keeps the most, in plain language, never a number this
+// module invents (the only number rendered is the resolved net margin).
+function bestCornerWhy(tags: NeighborhoodTag[]): string {
+  const active = tags.filter((t) => t !== "residential_only");
+  if (active.includes("financial_cbd")) {
+    return "the business core wins outright: the work follows the offices, and the rent is earned back";
+  }
+  if (active.includes("luxury_district")) {
+    return "the premium quarter carries it, where pricing power absorbs the steepest rent in the city";
+  }
+  if (active.includes("tourist_zone")) {
+    return "the visitor quarter takes it, where the footfall lifts revenue faster than the rent climbs";
+  }
+  if (active.includes("tech_corridor")) {
+    return "the tech corridor edges ahead: high-earning demand against rent that has not fully caught up";
+  }
+  if (active.includes("gentrifying_edge")) {
+    return "the rising edge clears the centre, where demand is climbing but the rent has not chased it yet";
+  }
+  if (active.includes("nightlife_zone")) {
+    return "the late-night quarter takes it on the evening trade, at a rent the centre cannot match";
+  }
+  if (active.includes("university_district")) {
+    return "the student quarter holds it: steady local demand at a far gentler rent than the core";
+  }
+  return "the quieter address keeps the most, where the rent never outruns the revenue";
+}
+
+type WorkedExample = {
   activity: string;
   city: string;
   label: string;
-  rationale: string;
-}> = [
-  {
-    activity: "pharmacies-drug-stores",
-    city: "new-york",
-    label: "Pharmacy in New York",
-    rationale: "Harlem and Brooklyn clear Midtown once the rent is counted.",
+  cityName: string;
+  neighborhood: string;
+  marginPct: string;
+  why: string;
+};
+
+// Resolve every candidate through the live ranking path; keep only the clean,
+// curated, self-named winners. No numbers are written here; all are computed.
+const WORKED_EXAMPLES: WorkedExample[] = WORKED_EXAMPLE_CANDIDATES.map(
+  ({ activity, city }): WorkedExample | null => {
+    const raw = slugToIndustry(activity);
+    const measured = raw ? resolveToMeasuredIndustry(raw) || raw : null;
+    // Skip if the activity does not map to its own measured shape: the
+    // destination page would then show a different activity name than the card.
+    if (!raw || !measured || measured.id !== raw.id) return null;
+
+    const cityRow = CITIES_BY_SLUG.get(city);
+    const scheme = NEIGHBORHOODS_BY_CITY[city];
+    if (!cityRow || !scheme || scheme.neighborhoods.length < 2) return null;
+
+    const baselineNetMargin =
+      INDUSTRY_MARGINS.industries[measured.id]?.net_margin ??
+      INDUSTRY_MARGINS.default_fallback?.net_margin ??
+      0.08;
+    const baselineRentShare = baselineRentShareFor(measured.id);
+
+    const ranked = scheme.neighborhoods
+      .map((n) => ({
+        n,
+        breakdown: getNeighborhoodNetMargin(
+          city,
+          n.slug,
+          measured.id,
+          baselineNetMargin,
+          baselineRentShare,
+        ),
+        isCurated: hasNeighborhoodIntensity(city, n.slug),
+      }))
+      .sort((a, b) => {
+        if (a.isCurated !== b.isCurated) return a.isCurated ? -1 : 1;
+        return b.breakdown.neighborhoodNetMargin - a.breakdown.neighborhoodNetMargin;
+      });
+
+    const top = ranked[0];
+    // The card claims a real best-corner read, so the winner must be a
+    // hand-curated neighborhood with a defensibly positive net margin.
+    if (!top.isCurated || top.breakdown.neighborhoodNetMargin < 0.08) return null;
+
+    return {
+      activity,
+      city,
+      label: `${raw.name} in ${cityRow.name}`,
+      cityName: cityRow.name,
+      neighborhood: top.n.name,
+      marginPct: (top.breakdown.neighborhoodNetMargin * 100).toFixed(1),
+      why: bestCornerWhy(top.breakdown.appliedTags),
+    };
   },
-  {
-    activity: "pet-stores",
-    city: "new-york",
-    label: "Pet shop in New York",
-    rationale: "Brooklyn and the Upper East Side tie: one on volume, one on premium.",
-  },
-  {
-    activity: "cafes-coffee",
-    city: "london",
-    label: "Cafe in London",
-    rationale: "East London edges the City of London once rent is in the math.",
-  },
-  {
-    activity: "restaurants",
-    city: "paris",
-    label: "Restaurant in Paris",
-    rationale: "Tourist quarters lift revenue; Saint-Germain holds the net margin.",
-  },
-  {
-    activity: "jewelry-stores",
-    city: "tokyo",
-    label: "Jewelry in Tokyo",
-    rationale: "The central luxury district pulls clear of everywhere else.",
-  },
-  {
-    activity: "fitness-gyms",
-    city: "berlin",
-    label: "Gym in Berlin",
-    rationale: "The gentrifying east: rising incomes against rent that has not caught up.",
-  },
-];
+).filter((e): e is WorkedExample => e != null);
+
+// The section earns its place only with at least three clean reads; below that
+// it self-omits rather than show a thin or lopsided row.
+const SHOW_WORKED_EXAMPLES = WORKED_EXAMPLES.length >= 3;
 
 export default function DecideLanding() {
   return (
@@ -241,40 +339,50 @@ export default function DecideLanding() {
         </div>
       </section>
 
-      {/* Worked examples: the method in action, not a leaderboard. */}
-      <section className="mb-12">
-        <SectionEyebrow className="mb-3">See the method work</SectionEyebrow>
-        <h2 className="mb-2 font-display text-2xl font-medium tracking-tight text-ink-900 md:text-3xl">
-          Different business, different best corner
-        </h2>
-        <p className="mb-5 max-w-2xl text-base leading-relaxed text-graphite">
-          Each of these opens the live neighborhood ranking. They are picked to
-          show the same point from different angles, not to rank cities against
-          each other.
-        </p>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {WORKED_EXAMPLES.map((q) => (
-            <Link
-              key={`${q.activity}-${q.city}`}
-              href={`/decide/${q.activity}/${q.city}`}
-              className="atlas-card flex flex-col gap-2 p-5"
-            >
-              <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-atlas-700">
-                {q.city.replace(/-/g, " ")}
-              </div>
-              <h3 className="font-display text-lg font-medium leading-tight text-ink-900">
-                {q.label}
-              </h3>
-              <p className="flex-1 text-sm leading-relaxed text-graphite">
-                {q.rationale}
-              </p>
-              <div className="pt-1 text-[11px] font-medium text-atlas-700">
-                Open the ranking &rarr;
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
+      {/* Worked examples: the method in action, not a leaderboard. Each card is
+          resolved from live data at build time; the figure is the winning
+          neighborhood's real net margin. The section self-omits below three. */}
+      {SHOW_WORKED_EXAMPLES && (
+        <section className="mb-12">
+          <SectionEyebrow className="mb-3">See the method work</SectionEyebrow>
+          <h2 className="mb-2 font-display text-2xl font-medium tracking-tight text-ink-900 md:text-3xl">
+            Different business, different best corner
+          </h2>
+          <p className="mb-5 max-w-2xl text-base leading-relaxed text-graphite">
+            Each card opens the live neighborhood ranking it came from. The figure
+            is the net margin the activity holds in its strongest neighborhood,
+            not a city average. They are picked to show the same point from
+            different angles, not to rank cities against each other.
+          </p>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {WORKED_EXAMPLES.map((q) => (
+              <Link
+                key={`${q.activity}-${q.city}`}
+                href={`/decide/${q.activity}/${q.city}`}
+                className="atlas-card flex flex-col gap-2 p-5"
+              >
+                <div className="flex items-baseline justify-between gap-3">
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-atlas-700">
+                    {q.cityName}
+                  </div>
+                  <div className="font-display text-2xl font-semibold tabular-nums leading-none text-atlas-800">
+                    {q.marginPct}%
+                  </div>
+                </div>
+                <h3 className="font-display text-lg font-medium leading-tight text-ink-900">
+                  {q.label}
+                </h3>
+                <p className="flex-1 text-sm leading-relaxed text-graphite">
+                  Best corner: {q.neighborhood}, where {q.why}.
+                </p>
+                <div className="pt-1 text-[11px] font-medium text-atlas-700">
+                  Open the ranking &rarr;
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Methodology footnote. */}
       <section className="max-w-2xl text-xs leading-relaxed text-cocoa-500">
