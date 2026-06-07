@@ -13,6 +13,7 @@ import {
   listUsStates,
   withBudget,
 } from "@/lib/cells";
+import { isTrustedLocalCell } from "@/lib/cells/trust";
 import { INDUSTRIES, industryToSlug, isExcludedFromDiscovery } from "@/lib/taxonomy";
 import { computeBreakeven } from "@/lib/economics/breakeven";
 import { getCityTier, getCityPopulation, getCityCostOfLivingIndex } from "@/lib/cities/city_tier";
@@ -487,9 +488,18 @@ export default async function CellPage({
   // cost can step straight into the deeper, comparison-rich view. Attached here
   // (not inside the pure board builder) so cell_board.ts stays free of route
   // slugs and the cells data layer. Every other section is untouched.
+  //
+  // The /opening (and the /buy-or-start it feeds) sub-pages only resolve for a
+  // TRUSTED LOCAL cell: buildOpeningPage applies isTrustedLocalCell and
+  // notFound()s otherwise, so a country-aggregate or extrapolated cell (which
+  // still renders THIS page) would 404 on those sub-pages. Mirror that gate here,
+  // and only surface the cross-link when the sub-page will actually resolve, so a
+  // working cell page never links to a 404.
+  const expectedIndustryId = requestedIndustry?.id ?? cell.industry_id ?? undefined;
+  const opensTrusted = isTrustedLocalCell(cell, expectedIndustryId) && !!cell.industry_id;
   const openingHref = `/${country.toLowerCase()}/${geo.toLowerCase()}/${industry.toLowerCase()}/opening`;
   const boardSectionsWithLinks = boardSections.map((s) =>
-    s.key === "opening"
+    s.key === "opening" && opensTrusted
       ? {
           ...s,
           footer: (

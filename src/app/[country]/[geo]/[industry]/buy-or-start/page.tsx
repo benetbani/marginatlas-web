@@ -47,44 +47,52 @@ type Params = { country: string; geo: string; industry: string };
 
 /**
  * Prerender ONLY a small bounded flagship set so the static build stays cheap.
- * This MIRRORS the cost-to-open route's own curated generateStaticParams list (the
- * six homepage FEATURED tiles, the top US states x highest-traffic industries, and
- * the top non-US countries x restaurants), because the flagship buy-or-start pages
- * a visitor is most likely to deep-link are exactly the flagship cells. That is 20
- * URLs, deliberately well under the ceiling; every other page renders on demand
- * via dynamicParams + the daily revalidate above.
+ * Every entry here MUST resolve to a trusted local cell, because buildBuyVsStart
+ * reads the START side off buildOpeningPage, which self-omits (and this route
+ * notFound()s) for any cell that is not a trusted local measurement. The cell page
+ * prerenders some country-aggregate (geo == country) and region geos that render
+ * fine as a cell page but are NOT trusted local cells (gb/gb, es511, de/de, fr/fr,
+ * it/it, jp/jp), so this list deliberately uses the trusted city-level geo for
+ * every non-US flagship instead. That keeps all 20 URLs rendering instead of
+ * prerendering to a 404; every other page renders on demand via dynamicParams +
+ * the daily revalidate above.
  *
- * Kept in sync by hand with the opening route's list and the homepage FEATURED
- * array. We do NOT enumerate the full cell slate here: a second large prerender
- * would balloon the build for no traffic benefit.
+ * This list is IDENTICAL to the opening route's list (the two routes share a geo
+ * slate). Verified end to end with scripts/audit/dryrun_flagship_static_params.ts
+ * (each entry returns a non-null buildBuyVsStart). Keep the two lists in sync by
+ * hand; re-run that dry-run after any change.
  */
 export async function generateStaticParams(): Promise<Params[]> {
   return [
-    // The 6 FEATURED tiles from the homepage.
-    { country: "us", geo: "california", industry: "software-development" },
-    { country: "gb", geo: "gb",         industry: "legal-services" },
+    // US restaurants, hotels, and software resolve a trusted local cell at state
+    // level; cafes / hairdressers / auto-repair are extrapolated at state level
+    // and only resolve at city level, so those use the metro geo. US
+    // legal-services is extrapolated everywhere, so the legal flagship is the
+    // curated gb/london one below.
+    { country: "us", geo: "california",  industry: "software-development" },
+    { country: "us", geo: "california",  industry: "restaurants" },
+    { country: "us", geo: "new-york",    industry: "restaurants" },
+    { country: "us", geo: "texas",       industry: "restaurants" },
+    { country: "us", geo: "florida",     industry: "restaurants" },
+    { country: "us", geo: "california",  industry: "hotels-lodging" },
+    { country: "us", geo: "new-york",    industry: "hotels-lodging" },
+    { country: "us", geo: "los-angeles", industry: "cafes-coffee" },
+    { country: "us", geo: "los-angeles", industry: "hairdressers-beauty" },
+    { country: "us", geo: "los-angeles", industry: "auto-repair-shops" },
+
+    // Non-US flagships at trusted city / region resolution. The cell page's
+    // featured aggregates (gb/gb legal, es511 restaurants, de/de, fr/fr, it/it,
+    // jp/jp) do not resolve a trusted local cell, so the city geo is used here.
+    { country: "gb", geo: "london",     industry: "legal-services" },
+    { country: "gb", geo: "london",     industry: "restaurants" },
+    { country: "gb", geo: "london",     industry: "cafes-coffee" },
     { country: "de", geo: "de21",       industry: "fabricated-metal-mfg" },
-    { country: "es", geo: "es511",      industry: "restaurants" },
+    { country: "de", geo: "berlin",     industry: "restaurants" },
+    { country: "es", geo: "barcelona",  industry: "restaurants" },
     { country: "mx", geo: "mx-roo",     industry: "hotels-lodging" },
-    { country: "us", geo: "california", industry: "restaurants" },
-
-    // Top US states x highest-traffic industries.
-    { country: "us", geo: "new-york",   industry: "restaurants" },
-    { country: "us", geo: "texas",      industry: "restaurants" },
-    { country: "us", geo: "florida",    industry: "restaurants" },
-    { country: "us", geo: "california", industry: "cafes-coffee" },
-    { country: "us", geo: "california", industry: "hairdressers-beauty" },
-    { country: "us", geo: "california", industry: "auto-repair-shops" },
-    { country: "us", geo: "california", industry: "hotels-lodging" },
-    { country: "us", geo: "california", industry: "legal-services" },
-
-    // Top non-US countries x restaurants (and GB cafes).
-    { country: "gb", geo: "gb",         industry: "restaurants" },
-    { country: "gb", geo: "gb",         industry: "cafes-coffee" },
-    { country: "de", geo: "de",         industry: "restaurants" },
-    { country: "fr", geo: "fr",         industry: "restaurants" },
-    { country: "it", geo: "it",         industry: "restaurants" },
-    { country: "jp", geo: "jp",         industry: "restaurants" },
+    { country: "fr", geo: "paris",      industry: "restaurants" },
+    { country: "it", geo: "rome",       industry: "restaurants" },
+    { country: "jp", geo: "tokyo",      industry: "restaurants" },
   ];
 }
 
