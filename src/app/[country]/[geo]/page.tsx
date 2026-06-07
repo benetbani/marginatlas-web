@@ -12,7 +12,10 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { COUNTRIES, INDUSTRY_BY_ID, SECTOR_BY_ID, industryToSlug } from "@/lib/taxonomy";
-import { getTopIndustriesForCountry, slugify } from "@/lib/cells";
+import { getTopIndustriesForCountry, getCellBySlug, withBudget, slugify } from "@/lib/cells";
+import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
+import { buildEasiestToBreakIn, type PlaceActivityCell } from "@/lib/scores/country_board";
+import { EasiestToBreakIn } from "@/components/countries/EasiestToBreakIn";
 import { CountryFlag } from "@/components/CountryFlag";
 import { CITIES_BY_STATE } from "@/lib/cities/city_aliases_generated";
 import { iso2ToName } from "@/lib/countries";
@@ -106,6 +109,43 @@ export default async function RegionLandingPage({
   // Top SMB industries for the country (state-specific listing not yet
   // wired, so we surface the country-level top 9 here).
   const topIndustries = (await getTopIndustriesForCountry(iso2, 9)) ?? [];
+
+  // "The easiest businesses to break into here" panel, the place-level flip side
+  // of the across-cities comparison. It ranks THIS place's activities by the
+  // single break-in rating (the same 0..100 score each business shows on its own
+  // masthead). The cell-page links here resolve a genuinely sub-national cell for
+  // a known city (a county / nuts2 / lad measurement, not a country aggregate),
+  // so the score is the real local read and matches that city cell's masthead. We
+  // resolve the destination cell for each top activity at THIS geo (a bounded,
+  // budgeted set of reads) and hand them to the pure place-board builder, which
+  // scores each through the SAME break-in path the masthead uses and drops any
+  // activity whose cell misrouted, is synthesized, or carries no defensible
+  // take-home, so a row is never a wrong number. The builder self-omits a thin
+  // ranking, and the section below renders nothing in that case. Each read is
+  // budgeted, so a slow one degrades that one activity rather than the page.
+  const geoLower = geo.toLowerCase();
+  const resolvedActivities: PlaceActivityCell[] = await Promise.all(
+    topIndustries.map(async (ind) => ({
+      industryId: ind.industry_id,
+      industryName:
+        ind.industry_name || INDUSTRY_BY_ID[ind.industry_id]?.name || ind.industry_id,
+      cell: await withBudget(
+        getCellBySlug(country.toLowerCase(), geoLower, industryToSlug(ind.industry_id), {
+          sizeBand: null,
+          year: null,
+        }),
+        null,
+        4_000,
+        `easiest-break-in:${iso2}/${geoLower}/${ind.industry_id}`,
+      ),
+    })),
+  );
+  const easiestBreakIn = buildEasiestToBreakIn({
+    iso2,
+    geo: geoLower,
+    activities: resolvedActivities,
+    econ: { avgMonthlySalary: getCountryEconomicsSnapshot(iso2).avgMonthlySalary },
+  });
 
   // Place-level decision lede (bible Section 5, the City page move: "best and
   // hardest businesses", using the actual economic modules, not a listicle).
@@ -299,6 +339,20 @@ export default async function RegionLandingPage({
           </div>
         </section>
       )}
+
+      {/* The easiest businesses to break into here. The place-level flip side of
+         the across-cities comparison: it ranks this place's activities by the
+         single break-in rating (the same 0..100 score each business shows on its
+         own masthead). It follows the top-industries grid as the deeper read of
+         the same activities: after which categories the place holds, which of
+         them are actually the easiest to get started in. Self-omits when too few
+         activities resolve a defensible score. Deliberately no registered section
+         id, so it stays out of the region-page canonical skeleton order. */}
+      {easiestBreakIn.length > 0 ? (
+        <section className="py-10 md:py-14">
+          <EasiestToBreakIn rows={easiestBreakIn} placeName={regionLabel} />
+        </section>
+      ) : null}
     </div>
   );
 }

@@ -7,7 +7,7 @@
 
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getTopIndustriesForCountry, slugify } from "@/lib/cells";
+import { getTopIndustriesForCountry, getCellBySlug, withBudget, slugify } from "@/lib/cells";
 import { getCitiesForCountry } from "@/lib/cities";
 import {
   COUNTRIES,
@@ -34,7 +34,8 @@ import { getSmbRegime, getVatRow } from "@/lib/tax/smb_effective_rates";
 import { BoardHero } from "@/components/board/BoardHero";
 import { BoardSectionTable } from "@/components/board/BoardSectionTable";
 import { CountryMastheadImage } from "@/components/countries/CountryMastheadImage";
-import { buildCountryBoard } from "@/lib/scores/country_board";
+import { buildCountryBoard, buildEasiestToBreakIn, type PlaceActivityCell } from "@/lib/scores/country_board";
+import { EasiestToBreakIn } from "@/components/countries/EasiestToBreakIn";
 
 // Keep section-order constant referenced for type checking — sections render in this exact order below.
 void COUNTRY_PAGE_SECTIONS;
@@ -151,6 +152,46 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
     econ: snapshot,
     smbEffectiveRate: smbRegime?.effective_rate ?? null,
     vatStandard: vatRow?.standard ?? null,
+  });
+
+  // The geo segment every cell-page link on this country page uses: California
+  // stands in for the US (it has the deepest state coverage), the country-name
+  // slug elsewhere. Hoisted here so the industries grid and the break-in panel
+  // below resolve and link to the exact same destination cell, and the panel's
+  // score therefore matches that cell's own masthead.
+  const placeGeo = iso2 === "US" ? "california" : slugify(meta.name);
+
+  // "The easiest businesses to break into here" panel. The flip side of the
+  // across-cities comparison: it ranks THIS place's activities by the single
+  // break-in rating (the same 0..100 score each business shows on its own
+  // masthead). We resolve the destination cell for each top activity (a bounded,
+  // budgeted set of reads, the same pattern the across comparison uses) and hand
+  // them to the pure place-board builder, which scores each through the SAME
+  // break-in path the masthead uses and drops any activity whose cell misrouted,
+  // is synthesized, or carries no defensible take-home, so a row is never a wrong
+  // number. The builder self-omits a thin ranking (fewer than a few scored), and
+  // the section below renders nothing in that case. Each read is budgeted, so a
+  // slow one degrades that one activity rather than the page.
+  const resolvedActivities: PlaceActivityCell[] = await Promise.all(
+    topIndustries.map(async (ind) => ({
+      industryId: ind.industry_id,
+      industryName: ind.industry_name,
+      cell: await withBudget(
+        getCellBySlug(iso2.toLowerCase(), placeGeo, industryToSlug(ind.industry_id), {
+          sizeBand: null,
+          year: null,
+        }),
+        null,
+        4_000,
+        `easiest-break-in:${iso2}/${placeGeo}/${ind.industry_id}`,
+      ),
+    })),
+  );
+  const easiestBreakIn = buildEasiestToBreakIn({
+    iso2,
+    geo: placeGeo,
+    activities: resolvedActivities,
+    econ: { avgMonthlySalary: snapshot.avgMonthlySalary },
   });
 
   // Regions-and-cities nav (founder spec): each region is a non-link heading,
@@ -286,11 +327,10 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
                 const indRecord = INDUSTRY_BY_ID[ind.industry_id];
                 const sector = indRecord ? SECTOR_BY_ID[indRecord.sector_id] : null;
                 const slug = industryToSlug(ind.industry_id);
-                const geo = iso2 === "US" ? "california" : slugify(meta.name);
                 return (
                   <a
                     key={ind.industry_id}
-                    href={`/${iso2.toLowerCase()}/${geo}/${slug}`}
+                    href={`/${iso2.toLowerCase()}/${placeGeo}/${slug}`}
                     className="atlas-card block px-4 py-3"
                   >
                     <div className="flex items-center gap-2 text-[10px] uppercase tracking-wider text-atlas-700 font-semibold">
@@ -317,6 +357,25 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
           </div>
         </section>
       )}
+
+      {/* 3.5. Easiest businesses to break into here. The flip side of the
+         across-cities comparison: where that fixes one business and ranks
+         places, this fixes this country and ranks its own activities by the
+         single break-in rating (the same 0..100 score each business shows on
+         its own masthead). It sits directly under the "where the money lands"
+         grid as the natural next read: after the densest activities and what
+         they turn over, which of them are actually the easiest to get started
+         in. The panel self-omits when too few activities resolve a defensible
+         score (buildEasiestToBreakIn returns an empty list), so a thin-coverage
+         country simply does not show it. Deliberately no registered section id,
+         so it stays out of the canonical skeleton order (it is an extra beat,
+         not one of the registered data sections), exactly like the viability
+         lede and the signature panel. */}
+      {easiestBreakIn.length > 0 ? (
+        <section className="py-8 border-t border-parchment/60">
+          <EasiestToBreakIn rows={easiestBreakIn} placeName={meta.name} />
+        </section>
+      ) : null}
 
       {/* 4. top-cities: Track N (Wave 2). CountryCityShortcuts handles its own silent omission. */}
       <section id="top-cities" className={`py-6 ${getToneClass("top-cities")}`}>

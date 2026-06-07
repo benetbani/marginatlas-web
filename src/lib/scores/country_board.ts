@@ -38,6 +38,24 @@
 import type { BoardSection } from "@/components/board/DataSection";
 import type { StatRow } from "@/components/board/StatGrid";
 import { fmtUSD, fmtPct } from "@/components/board/format";
+import type { Cell } from "@/lib/cells";
+import { industryToSlug } from "@/lib/taxonomy";
+import { estimateNetProfit } from "@/lib/finance/net_profit";
+import { resolveOwnerTakeHome } from "@/lib/finance/owner_take_home";
+import { placeAdjustedStartupCapital } from "@/lib/markets/startup_capital_archetypes";
+import {
+  timeToOpenWeeks,
+  placeAdjustedPermitsUsd,
+} from "@/lib/markets/opening_archetypes";
+import { densityArchetypePer10k } from "@/lib/markets/density_archetypes";
+import { displayDensityPer10k } from "@/lib/finance/margin_floor";
+import { getCityCostOfLivingIndex, getCityPopulation } from "@/lib/cities/city_tier";
+import { isTrustedLocalCell } from "@/lib/cells/trust";
+import { getLondonEntry } from "@/lib/scores/cell_board";
+import {
+  computeBreakInRating,
+  type BreakInBand,
+} from "@/lib/scores/break_in_rating";
 
 /**
  * The country-level economics the board reads. This is the shape the country
@@ -202,4 +220,256 @@ export function buildCountryBoard(input: CountryBoardInput): BoardSection[] {
     { key: "survival", title: "Survival baseline", rows: survivalRows, modeled: true },
     { key: "market", title: "Market structure", rows: marketRows, modeled: true },
   ];
+}
+
+/* ===========================================================================
+ * Easiest businesses to break into here (the place-level break-in ranking)
+ * ===========================================================================
+ *
+ * The flip side of the across-cities comparison: that surface fixes ONE
+ * business and ranks PLACES; this one fixes ONE place and ranks the place's own
+ * BUSINESSES by the single break-in rating (0..100, higher = easier to break in
+ * and win). It answers the question a buyer landing on a country or city asks:
+ * "of the activities here, which are the easiest to get started in?".
+ *
+ * The score is the SAME number the business's own cell masthead shows. It is
+ * computed for the EXACT cell the panel links to (the place's destination cell
+ * for that activity), through the SAME functions the masthead uses:
+ *   - owner take-home: resolveOwnerTakeHome over estimateNetProfit on the cell's
+ *     own revenue (London prefers its curated take-home), the single take-home
+ *     source of truth;
+ *   - entry capital + permits: the place-adjusted modeled archetypes, adjusted by
+ *     the city's cost-of-living index when the geo is a known city, else a
+ *     country wage proxy, exactly as the cell board does;
+ *   - time to open: the place-invariant modeled archetype;
+ *   - density: the real local firms-per-10k where the cell is a trusted local
+ *     measurement holding both a firm count and a population, else the modeled
+ *     per-industry archetype, mirroring the cell board's density blend;
+ *   - computeBreakInRating folds them, payback dominant, into the one score.
+ * So the badge on this panel and the badge on that cell's masthead are the same.
+ *
+ * HONESTY GUARD (no wrong numbers): a destination cell enters the ranking only
+ * when it is the activity it claims (it carries the expected industry_id, so a
+ * slug that misrouted onto a parent or sibling cell is dropped rather than ranked
+ * under the requested name) and is not the synthesized always-render stand-in.
+ * The rating module itself then refuses to score without a real take-home and a
+ * real entry capital, so a thin activity gets a null score and is omitted, never
+ * shown as a confident wrong one. The panel self-omits entirely when fewer than a
+ * few activities resolve a score, so the page never shows a one-row "ranking".
+ *
+ * Pure: the cell resolution happens in the page (a bounded, budgeted set of
+ * reads, the same pattern across_cities.ts uses); this builder only does the math
+ * over already-resolved cells, so country_board.ts stays free of Supabase and the
+ * page stays a thin renderer.
+ */
+
+/** One resolved destination cell plus the activity it is meant to represent. */
+export interface PlaceActivityCell {
+  /** The expected taxonomy industry id for this activity (e.g. "restaurants"). */
+  industryId: string;
+  /** The activity's display name, for the panel row. */
+  industryName: string;
+  /** The cell getCellBySlug resolved for this place + activity, or null on a miss. */
+  cell: Cell | null;
+}
+
+/** Country economics the break-in panel needs: the country wage proxy source. */
+export interface PlaceBreakInEcon {
+  /** Average gross monthly salary, USD (annualized for the place wage proxy). */
+  avgMonthlySalary: number | null;
+}
+
+export interface EasiestBreakInInput {
+  /** ISO2 country slug (lowercased) for the cell-page links. */
+  iso2: string;
+  /**
+   * The geo slug the destination cells were resolved under and the panel links
+   * to (e.g. "california" for the US, the country-name slug otherwise). Drives
+   * the place cost-of-living adjustment and the real-density population read,
+   * exactly as the cell board's geo does, so the score matches that geo's masthead.
+   */
+  geo: string;
+  /** The place's activities, each with its resolved destination cell. */
+  activities: PlaceActivityCell[];
+  /** Country economics snapshot (for the country wage proxy). */
+  econ: PlaceBreakInEcon | null;
+}
+
+/** One ranked business in the "easiest to break into here" panel. */
+export interface EasiestBreakInRow {
+  industryId: string;
+  industryName: string;
+  /** Friendly URL slug for the cell-page link. */
+  industrySlug: string;
+  /** The cell-page href for this activity in this place. */
+  href: string;
+  /** The single break-in score, 0..100, higher = easier. Always present here. */
+  score: number;
+  /** The band word driving the badge tone (moss / atlas / clay). */
+  band: BreakInBand;
+}
+
+/**
+ * The cell's after-tax owner take-home, derived EXACTLY as the cell page does
+ * (estimateNetProfit + resolveOwnerTakeHome over the cell's own revenue and
+ * per-firm payroll), so the break-in score this feeds matches the masthead. The
+ * larger-firm 2x floor uses the country average income; the size band is read
+ * off the cell (a place-level destination cell carries a null band, so the floor
+ * never fires, matching the masthead). Returns null when no take-home is defensible.
+ */
+function ownerTakeHomeForCell(cell: Cell, annualIncome: number | null): number | null {
+  const revenue = cell.revenue_per_firm ?? cell.rev_p50 ?? null;
+  if (!isNum(revenue) || revenue <= 0) return null;
+
+  // Per-firm payroll, with the same unit-detection the cell page uses (a source
+  // may store n_employees as a firm total or already per-firm).
+  let payroll: number | null = null;
+  if (isNum(cell.payroll_per_employee) && isNum(cell.n_employees)) {
+    const empPerFirm =
+      isNum(cell.n_enterprises) && cell.n_enterprises > 0
+        ? cell.n_employees < cell.n_enterprises
+          ? cell.n_employees // already per-firm
+          : cell.n_employees / cell.n_enterprises
+        : cell.n_employees;
+    payroll = cell.payroll_per_employee * Math.max(1, empPerFirm);
+  }
+
+  const net = estimateNetProfit({
+    iso2: cell.country.toUpperCase(),
+    geoId: cell.geo_id || null,
+    industryId: cell.industry_id || null,
+    sectorId: cell.sector_id || null,
+    grossRevenue: revenue,
+    payroll,
+  });
+  const isLargerFirm =
+    !!cell.size_band && ["10-19", "20-49", "50-99", "100+"].includes(cell.size_band);
+  return resolveOwnerTakeHome({
+    structuralNetProfit: net.net_profit,
+    rawNetMargin: net.net_margin,
+    revenue,
+    industryId: cell.industry_id || null,
+    isLargerFirm,
+    annualIncome,
+  });
+}
+
+/**
+ * The single break-in rating for one resolved destination cell in a place, or
+ * null when it cannot be defended. Mirrors buildCellBoard's break-in inputs
+ * exactly (place-adjusted capital + permits, modeled time, real-or-modeled
+ * density, the cell's real take-home), so the score equals that cell's masthead.
+ */
+function breakInForCell(
+  cell: Cell,
+  geo: string,
+  annualIncome: number | null,
+): { score: number; band: BreakInBand } | null {
+  const industryId = cell.industry_id ?? null;
+  const costOfLivingIndex = getCityCostOfLivingIndex(geo);
+  const avgYearlySalary = isNum(annualIncome) ? annualIncome : null;
+
+  // Owner take-home: London prefers its curated figure (matching the cell board),
+  // else the structural take-home over the cell's own revenue.
+  const london = getLondonEntry(cell)?.economics ?? null;
+  const takeHome =
+    london && isNum(london.owner_take_home)
+      ? london.owner_take_home
+      : ownerTakeHomeForCell(cell, annualIncome);
+
+  // Entry capital + permits: the place-adjusted modeled archetypes (the same
+  // figures the "What it takes to open" rows show on the masthead).
+  const startupCapitalUsd = placeAdjustedStartupCapital({
+    industryId,
+    costOfLivingIndex,
+    avgYearlySalary,
+  });
+  const permitsUsd = placeAdjustedPermitsUsd({
+    industryId,
+    costOfLivingIndex,
+    avgYearlySalary,
+  });
+
+  // Density: the blended firms-per-10k the cell board feeds the rating. It is
+  // REAL (firms divided by residents per 10k) only when the cell is a trusted
+  // local measurement holding both a firm count and a population AND the figure
+  // passes the same display sanity cap the board applies (a wrong-scale count
+  // dashes there and falls back to the archetype, so we mirror that here to stay
+  // exactly on the masthead's number); otherwise it is the modeled per-industry
+  // archetype. London's curated population path lives on the cell page; the
+  // archetype is the safe place-level fallback for a London read here.
+  let realPer10k: number | null = null;
+  if (london == null) {
+    const pop = getCityPopulation(geo);
+    if (isTrustedLocalCell(cell) && isNum(cell.n_enterprises) && isNum(pop) && pop > 0) {
+      realPer10k = displayDensityPer10k(
+        Math.round((cell.n_enterprises / (pop / 10_000)) * 10) / 10,
+      );
+    }
+  }
+  const densityPer10k = isNum(realPer10k)
+    ? realPer10k
+    : densityArchetypePer10k(industryId);
+
+  const rating = computeBreakInRating({
+    startupCapitalUsd,
+    permitsUsd,
+    annualOwnerTakeHomeUsd: takeHome,
+    timeToOpenWeeks: timeToOpenWeeks(industryId),
+    densityPer10k,
+    // The entry capital and crowding lean on modeled estimates, so the rating is
+    // directional, matching the board everywhere.
+    restsOnModeled: true,
+  });
+  if (rating == null) return null;
+  return { score: rating.score, band: rating.band };
+}
+
+/** The minimum number of scored activities before the panel is worth showing. */
+const MIN_PANEL_ROWS = 3;
+
+/**
+ * Build the "easiest businesses to break into here" ranking for a place, easiest
+ * first. Each destination cell is scored through breakInForCell (the masthead's
+ * own score), kept only when it is the activity it claims and is not synthesized,
+ * and sorted by score descending. Ties keep the input order (the place's own
+ * activity order, densest first). Returns an empty array when fewer than a few
+ * activities resolve a score, so the caller can self-omit the whole panel.
+ */
+export function buildEasiestToBreakIn(
+  input: EasiestBreakInInput,
+): EasiestBreakInRow[] {
+  const { iso2, geo, activities, econ } = input;
+  const annualIncome =
+    econ && isNum(econ.avgMonthlySalary) ? econ.avgMonthlySalary * 12 : null;
+
+  const rows: EasiestBreakInRow[] = [];
+  const seen = new Set<string>();
+  for (const a of activities) {
+    const cell = a.cell;
+    if (!cell) continue;
+    // No wrong numbers: the destination cell must be the activity it claims (no
+    // misroute onto a parent/sibling) and must not be the synthesized stand-in.
+    if (cell.industry_id !== a.industryId) continue;
+    if (cell.is_synthetic) continue;
+    if (seen.has(a.industryId)) continue;
+
+    const rating = breakInForCell(cell, geo, annualIncome);
+    if (rating == null) continue; // null take-home or capital: omit, never guess
+
+    seen.add(a.industryId);
+    const slug = industryToSlug(a.industryId);
+    rows.push({
+      industryId: a.industryId,
+      industryName: a.industryName,
+      industrySlug: slug,
+      href: `/${iso2.toLowerCase()}/${geo}/${slug}`,
+      score: rating.score,
+      band: rating.band,
+    });
+  }
+
+  if (rows.length < MIN_PANEL_ROWS) return [];
+  rows.sort((x, y) => y.score - x.score);
+  return rows;
 }
