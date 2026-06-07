@@ -53,9 +53,6 @@ import {
   type ActivityPlaceInput,
 } from "@/lib/scores/activity_board";
 import { buildAcrossCities, type CityColumn } from "@/lib/markets/across_cities";
-import { computeBreakInRating } from "@/lib/scores/break_in_rating";
-import { densityArchetypePer10k } from "@/lib/markets/density_archetypes";
-import { timeToOpenWeeks } from "@/lib/markets/opening_archetypes";
 
 /** A finite, positive real. */
 function isPos(n: number | null | undefined): n is number {
@@ -736,42 +733,25 @@ const BREAK_IN_SPECS: BreakInSpec[] = [
 ];
 
 /**
- * Compute the break-in rating for one trusted (activity, city) column, or null
- * when it carries no real take-home (then the module returns null and the row
- * drops). The take-home is the column's TRUSTED-REAL after-tax figure; the
- * capital is the column's modeled, place-adjusted cost to open; the crowding is
- * the real local density where held, else the per-industry modeled archetype;
- * the time to open is the modeled, place-invariant weeks for the trade. So every
- * ranked row's rating rests on real local earnings and modeled entry costs.
+ * Build one ranked break-in row from a trusted (activity, city) column, or null
+ * when the column carries no break-in rating (it had no real take-home, so the
+ * rating module returned null and the row drops). The rating itself is computed
+ * ONCE, where the column is built (breakInForColumn in across_cities.ts), and
+ * carried on the column as breakInScore / breakInBand, so this only reads that
+ * stored figure. That keeps the extremes board, the across page, and the cell
+ * masthead on the IDENTICAL number, with no second computation to drift.
  */
 function breakInRowFromColumn(
-  activityId: string,
   activityName: string,
   col: CityColumn,
 ): BreakInRow | null {
-  const rating = computeBreakInRating({
-    // Modeled, place-adjusted cost to open (the column already baked the city's
-    // cost of living into it). Permits ride inside the entry cost on the cell
-    // board; here the smaller regulatory term is left to the module's zero
-    // default rather than re-deriving a place signal the column does not expose.
-    startupCapitalUsd: col.startupCostUsd,
-    permitsUsd: null,
-    // The crux: the rating's anchor is the column's trusted-real annual take-home.
-    annualOwnerTakeHomeUsd: col.takeHome,
-    timeToOpenWeeks: timeToOpenWeeks(activityId),
-    // Real local density where the column holds one, else the modeled archetype,
-    // exactly as the cell board blends the room signal.
-    densityPer10k: col.densityPer10k ?? densityArchetypePer10k(activityId),
-    // Capital and (usually) density are modeled, so the rating is directional.
-    restsOnModeled: true,
-  });
-  if (rating == null) return null;
+  if (col.breakInScore == null || col.breakInBand == null) return null;
   return {
     name: `${activityName} in ${col.name}`,
     href: col.href,
     country: col.country,
-    score: rating.score,
-    band: rating.band,
+    score: col.breakInScore,
+    band: col.breakInBand,
   };
 }
 
@@ -792,7 +772,7 @@ function buildBreakInBoards(
     const across = acrossById.get(id);
     if (!across) continue;
     for (const col of across.cities) {
-      const row = breakInRowFromColumn(id, across.activityName, col);
+      const row = breakInRowFromColumn(across.activityName, col);
       if (row !== null) pool.push(row);
     }
   }

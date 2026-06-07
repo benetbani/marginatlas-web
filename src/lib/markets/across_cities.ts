@@ -49,6 +49,12 @@ import { placeAdjustedStartupCapital } from "@/lib/markets/startup_capital_arche
 import { getLondonEntry } from "@/lib/scores/cell_board";
 import { getActivitySurvivalArchetype } from "@/lib/scores/activity_board";
 import { INDUSTRY_BY_ID, industryToSlug } from "@/lib/taxonomy";
+import {
+  computeBreakInRating,
+  type BreakInBand,
+} from "@/lib/scores/break_in_rating";
+import { densityArchetypePer10k } from "@/lib/markets/density_archetypes";
+import { timeToOpenWeeks } from "@/lib/markets/opening_archetypes";
 
 /**
  * The curated major-world-city slate the comparison draws from. Each entry is
@@ -201,6 +207,48 @@ export interface CityColumn {
   typicalDaily: number | null;
   /** Five-year survival percent (curated archetype), where held. */
   survivalYr5: number | null;
+  /**
+   * The single break-in rating for this activity here, 0..100 (higher = easier
+   * to break in and win), or null when the column carries no defensible owner
+   * take-home (the rating module refuses to score without it, and a null here
+   * shows a dash, never a wrong number). Computed by breakInForColumn below, the
+   * SAME path the extremes board and the cost-to-open comparison use, so the
+   * score on every surface agrees.
+   */
+  breakInScore: number | null;
+  /** The break-in band word driving the badge tone, or null when unscored. */
+  breakInBand: BreakInBand | null;
+}
+
+/**
+ * The single break-in rating for one trusted (activity, city) column, or null
+ * when the column carries no real owner take-home (the rating module refuses to
+ * score without it). THE ONE PLACE this rating is computed from a CityColumn, so
+ * the across page, the extremes break-in board, and the cost-to-open comparison
+ * all read the identical number. The inputs mirror the cell masthead exactly:
+ * the column's modeled, place-adjusted cost to open as the entry capital; the
+ * column's trusted-real annual take-home as the money anchor; the modeled,
+ * place-invariant weeks-to-open for the trade; and the real local density where
+ * the column holds one, else the per-industry modeled archetype. Permits ride
+ * inside the entry cost on the board; here the smaller regulatory term is left
+ * to the module's zero default rather than re-deriving a place signal the column
+ * does not expose. The rating leans on modeled entry costs, so restsOnModeled is
+ * true (directional), matching the board.
+ */
+export function breakInForColumn(
+  activityId: string,
+  col: CityColumn,
+): { score: number; band: BreakInBand } | null {
+  const rating = computeBreakInRating({
+    startupCapitalUsd: col.startupCostUsd,
+    permitsUsd: null,
+    annualOwnerTakeHomeUsd: col.takeHome,
+    timeToOpenWeeks: timeToOpenWeeks(activityId),
+    densityPer10k: col.densityPer10k ?? densityArchetypePer10k(activityId),
+    restsOnModeled: true,
+  });
+  if (rating == null) return null;
+  return { score: rating.score, band: rating.band };
 }
 
 /**
@@ -359,7 +407,7 @@ async function resolveCity(
   const revP10 = london ? london.revenue * 0.5 : (isPos(cell.rev_p10) ? cell.rev_p10 : null);
   const revP90 = london ? london.revenue * 1.8 : (isPos(cell.rev_p90) ? cell.rev_p90 : null);
 
-  return {
+  const column: CityColumn = {
     name: cell.geo_name || city.name,
     country: city.country,
     href: cellUrl(cell),
@@ -380,7 +428,24 @@ async function resolveCity(
     breakevenDaily: be ? be.breakevenOrdersDaily : null,
     typicalDaily: be ? be.currentOrdersDaily : null,
     survivalYr5,
+    // Filled just below from the figures above, via the shared rating path, so
+    // every consumer (the across page, the extremes board, the cost-to-open
+    // comparison) reads the identical number.
+    breakInScore: null,
+    breakInBand: null,
   };
+
+  // The single break-in rating, computed from this column's own entry cost,
+  // trusted-real take-home, and crowding through the SAME helper the extremes
+  // break-in board uses. Null-safe: a column without a defensible take-home gets
+  // null here (a quiet dash on the page), never a wrong score.
+  const breakIn = breakInForColumn(cell.industry_id || expectIndustryId, column);
+  if (breakIn) {
+    column.breakInScore = breakIn.score;
+    column.breakInBand = breakIn.band;
+  }
+
+  return column;
 }
 
 /**
