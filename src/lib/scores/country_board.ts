@@ -437,8 +437,12 @@ export function buildEasiestToBreakIn(
   for (const a of activities) {
     const cell = a.cell;
     if (!cell) continue;
-    // No wrong numbers: the destination cell must be the activity it claims (no
-    // misroute onto a parent/sibling) and must not be the synthesized stand-in.
+    // Row membership (no wrong numbers): the destination cell must be the activity
+    // it claims (no misroute onto a parent/sibling) and must not be the synthesized
+    // stand-in. This is deliberately NOT the stricter trusted-local gate: country
+    // pages resolve national-aggregate cells that still render a real cell page,
+    // and dropping them would empty the panel on most countries. The /opening
+    // cross-link is what gets gated below, not the row.
     if (cell.industry_id !== a.industryId) continue;
     if (cell.is_synthetic) continue;
     if (seen.has(a.industryId)) continue;
@@ -448,13 +452,23 @@ export function buildEasiestToBreakIn(
 
     seen.add(a.industryId);
     const slug = industryToSlug(a.industryId);
+    const href = `/${iso2.toLowerCase()}/${geo}/${slug}`;
+    // The cost-to-open cross-link is gated on the STRICTER isTrustedLocalCell, the
+    // exact predicate buildOpeningPage uses. An aggregate / extrapolated cell
+    // renders a cell page but its /opening sub-page notFound()s, so for those we
+    // withhold the link (openingHref null) rather than drop the row, the same
+    // "gate the link, not the surface" rule the cell page's cost-to-open link uses.
+    const openingHref = isTrustedLocalCell(cell, a.industryId)
+      ? `${href}/opening`
+      : null;
     rows.push({
       industryId: a.industryId,
       industryName: a.industryName,
       industrySlug: slug,
-      href: `/${iso2.toLowerCase()}/${geo}/${slug}`,
+      href,
       score: rating.score,
       band: rating.band,
+      openingHref,
     });
   }
 

@@ -74,8 +74,10 @@ export interface EasiestToBreakInProps {
  * The panel. A short warm lead, then a scannable set of the place's businesses
  * ranked easiest first: each row is the business name, its band-toned break-in
  * badge (the masthead score), and a quiet link to that business's full read in
- * this place, with the cost-to-open page (where the score is broken down) one tap
- * away. Renders nothing when there are too few rows to rank honestly.
+ * this place. Rows whose cell has a trusted-local cost-to-open page also show a
+ * quiet "Cost to open" link one tap away; rows backed by an aggregate cell (whose
+ * /opening would notFound()) omit it. Renders nothing when there are too few rows
+ * to rank honestly.
  */
 export function EasiestToBreakIn({ rows, placeName, limit = 8 }: EasiestToBreakInProps) {
   if (!rows || rows.length < 3) return null;
@@ -119,12 +121,14 @@ export function EasiestToBreakIn({ rows, placeName, limit = 8 }: EasiestToBreakI
                 <span>{bandWord(r.band)}</span>
               </span>
             </Link>
-            <Link
-              href={`${r.href}/opening`}
-              className="mt-1 inline-flex items-center text-[11px] font-medium text-cocoa-500 transition-colors hover:text-atlas-700"
-            >
-              Cost to open
-            </Link>
+            {r.openingHref && (
+              <Link
+                href={r.openingHref}
+                className="mt-1 inline-flex items-center text-[11px] font-medium text-cocoa-500 transition-colors hover:text-atlas-700"
+              >
+                Cost to open
+              </Link>
+            )}
           </li>
         ))}
       </ul>
