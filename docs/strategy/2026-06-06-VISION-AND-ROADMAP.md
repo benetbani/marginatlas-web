@@ -51,3 +51,27 @@ The product today is a stark-white, blunt, lean data tool. The founder's taste i
 - Every new section: does it help a buyer judge "can I break in and win here," and does it read warm and premium, not cold?
 - Every page: dashboard-first data, then a story, then atmosphere. Honest dashes stay.
 - Every number: still no fake figures. The warmth is in the voice and the design, never in inflating the data.
+
+---
+
+## Update 2026-06-07 (third taste-and-vision pass, 20 questions)
+
+A later 20-question pass, taken after the depth work and the break-in rating shipped. It CONFIRMS the spine and meaningfully EVOLVES the look and the money. Where this conflicts with the original above, this update wins.
+
+**Confirmed (unchanged):**
+- **Audience:** investor and buyer, sharpened. Comparative, returns-minded, hunting the mispriced opportunity.
+- **Feel + identity:** a trusted reference, "the Wikipedia of local business economics." Cited everywhere is the win.
+- **The money is sacred:** the one thing never to get wrong is the money numbers. (This is why the negative-take-home bug was a stop-everything fix.)
+- **The score:** stays ONE simple 0-100, anchored hardest on speed to profit (time to break even), said twice now. It should suggest, not command. Next score to add: profit potential.
+- **Voice:** a warm mentor. Discovery: search / SEO.
+
+**Evolved (these change what we build):**
+- **Look: a CLEAN DATA TOOL, not a magazine.** This reverses the original's "magazine-rich, full-editorial, away from minimalism." The founder now wants restraint and function in the design, warm only in the words. Do NOT pursue heavy photography or a magazine redesign. Crisp, numbers-first, beautiful through clarity.
+- **Editorial: a little, numbers lead.** Light captions and one-liners, not written stories. The data carries it. (Supersedes the "story layer" and "full editorial" lines above.)
+- **Craft focus: the CELL PAGES**, where the investor actually decides, ahead of the homepage or the shareables.
+- **Monetization moved UP: "a real business model" is the ONE thing to nail THIS YEAR**, not "much later." The mechanism is **gated premium depth** (the deepest numbers and tools behind a paywall), ahead of the API. Free to view the site; pay for the deepest layer.
+- **Method stays PRIVATE:** show results and quality grades, keep the recipe as the moat (no full open methodology).
+- **When unsure of a number:** show a single number clearly tagged as an estimate (not a dash, not a range). Modeled figures keep a subtle "modeled" label.
+- **Success metric:** the most complete dataset (coverage + depth is the moat), alongside being cited.
+
+**Net effect on the roadmap:** keep the cost-to-open pages, the woven score, and the depth, but design them as a clean data tool, not a magazine; put the craft into the cell pages; and bring a real freemium-depth business model into THIS year rather than deferring it. The warm voice stays; the magazine aesthetic is retired.
