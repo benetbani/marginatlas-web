@@ -51,6 +51,13 @@ export type RatioVerdict = {
   status: RatioStatus;
   /** One-sentence operator-facing message. */
   message: string;
+  /**
+   * True when the typical range is a sector-level read carried by a
+   * generic profile rather than a profile measured for this specific
+   * group. The UI marks these as an estimate so a soft number is never
+   * read as a precise one.
+   */
+  estimated: boolean;
 };
 
 export type CheckVerdict = {
@@ -64,6 +71,12 @@ export type CheckVerdict = {
   headline: string;
   /** The key benchmark designation for this industry. */
   keyBenchmark: KeyBenchmark;
+  /**
+   * True when the comparison rests on a generic profile because no
+   * profile was matched for this group. Every typical range in the
+   * verdict is then an estimate.
+   */
+  estimated: boolean;
 };
 
 type ICP = {
@@ -85,13 +98,30 @@ for (const ind of (industriesJson as { industries: Array<{ id: string; name: str
 
 const ICP_FILE = icpJson as { default_fallback: ICP; sectors: Record<string, ICP> };
 
-function getICP(industryId: string): ICP {
+/**
+ * Resolve the cost profile for an industry. Every industry resolves to
+ * its parent group's profile; an unmatched group falls back to the
+ * generic profile. `estimated` is true only on that generic fallback,
+ * so the verdict can be marked as a soft read rather than a measured
+ * one. A precise wrong number is never invented.
+ */
+function getICP(industryId: string): { icp: ICP; estimated: boolean } {
   const sector = INDUSTRY_TO_SECTOR.get(industryId);
-  if (!sector) return ICP_FILE.default_fallback;
-  return ICP_FILE.sectors[sector] || ICP_FILE.default_fallback;
+  if (!sector) return { icp: ICP_FILE.default_fallback, estimated: true };
+  const match = ICP_FILE.sectors[sector];
+  if (!match) return { icp: ICP_FILE.default_fallback, estimated: true };
+  return { icp: match, estimated: false };
 }
 
 const HALF_WIDTH = 0.04;
+
+/**
+ * Floor below which a ratio carries no usable benchmark for a group:
+ * the typical share is so small that a +/- band would read as a wrong
+ * number. When the operator did not supply that line either, the ratio
+ * self-omits rather than show a misleading range.
+ */
+const BENCHMARK_FLOOR = 0.015;
 
 function classify(share: number | null, range: { low: number; high: number }): RatioStatus {
   if (share == null || !isFinite(share)) return "unknown";
@@ -121,7 +151,7 @@ function ratioRange(centerShare: number): { low: number; high: number } {
 }
 
 export function computeVerdict(input: CheckInput): CheckVerdict {
-  const icp = getICP(input.industryId);
+  const { icp, estimated } = getICP(input.industryId);
   const { kb } = getKeyBenchmarkForIndustry(input.industryId);
   const band = classifyTurnoverBand(input.revenueUsd, input.industryId);
   const industryLabel = INDUSTRY_NAME.get(input.industryId) ?? input.industryId;
@@ -132,40 +162,41 @@ export function computeVerdict(input: CheckInput): CheckVerdict {
   const rentShare = input.rentUsd && input.revenueUsd ? input.rentUsd / input.revenueUsd : null;
   const motorShare = input.motorVehicleUsd && input.revenueUsd ? input.motorVehicleUsd / input.revenueUsd : null;
 
-  const ratios: RatioVerdict[] = [
-    {
-      ratio: "cogs",
-      label: "Cost of sales",
-      yourShare: cogsShare,
-      range: ratioRange(icp.cogs_share),
-      status: classify(cogsShare, ratioRange(icp.cogs_share)),
-      message: "",
-    },
-    {
-      ratio: "labor",
-      label: "Labour",
-      yourShare: labourShare,
-      range: ratioRange(icp.labor_share),
-      status: classify(labourShare, ratioRange(icp.labor_share)),
-      message: "",
-    },
-    {
-      ratio: "rent",
-      label: "Rent",
-      yourShare: rentShare,
-      range: ratioRange(icp.rent_share),
-      status: classify(rentShare, ratioRange(icp.rent_share)),
-      message: "",
-    },
+  // Candidate ratios. Each carries the benchmark center for this group
+  // and the operator-supplied share. A ratio self-omits when its
+  // benchmark center is below the floor AND the operator left that line
+  // blank: there is no usable typical to compare against, so we show
+  // nothing rather than a misleading band.
+  type Candidate = {
+    ratio: RatioVerdict["ratio"];
+    label: string;
+    center: number;
+    yourShare: number | null;
+  };
+  const candidates: Candidate[] = [
+    { ratio: "cogs", label: "Cost of sales", center: icp.cogs_share, yourShare: cogsShare },
+    { ratio: "labor", label: "Labour", center: icp.labor_share, yourShare: labourShare },
+    { ratio: "rent", label: "Rent", center: icp.rent_share, yourShare: rentShare },
+    { ratio: "motor_vehicle", label: "Motor vehicle", center: icp.motor_vehicle_share, yourShare: motorShare },
   ];
-  if (icp.motor_vehicle_share > 0.01 || motorShare != null) {
+
+  const ratios: RatioVerdict[] = [];
+  for (const c of candidates) {
+    const hasBenchmark = c.center >= BENCHMARK_FLOOR;
+    // Self-omit: no usable benchmark and nothing supplied for the line.
+    if (!hasBenchmark && c.yourShare == null) continue;
+    const range = ratioRange(c.center);
     ratios.push({
-      ratio: "motor_vehicle",
-      label: "Motor vehicle",
-      yourShare: motorShare,
-      range: ratioRange(icp.motor_vehicle_share),
-      status: classify(motorShare, ratioRange(icp.motor_vehicle_share)),
+      ratio: c.ratio,
+      label: c.label,
+      yourShare: c.yourShare,
+      range,
+      status: classify(c.yourShare, range),
       message: "",
+      // A ratio is an estimate when the whole profile is a generic
+      // fallback, or when this specific line has no usable benchmark
+      // yet the operator supplied a value we still want to place.
+      estimated: estimated || !hasBenchmark,
     });
   }
   for (const r of ratios) {
@@ -208,5 +239,6 @@ export function computeVerdict(input: CheckInput): CheckVerdict {
     ratios,
     headline,
     keyBenchmark: kb,
+    estimated,
   };
 }

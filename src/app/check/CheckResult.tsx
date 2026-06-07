@@ -99,6 +99,11 @@ export function CheckResult({ verdict }: Props) {
               </span>
               <span>
                 Typical: <span className="tabular-nums">{pct(r.range.low)} to {pct(r.range.high)}</span>
+                {r.estimated && (
+                  <span className="ml-1.5 inline-flex items-center px-1.5 py-0.5 rounded text-[10px] uppercase tracking-wide font-semibold bg-ink-50 text-ink-500 border border-ink-200">
+                    Estimate
+                  </span>
+                )}
               </span>
             </div>
             <p className="text-xs md:text-sm text-cocoa-700/75 leading-relaxed">
@@ -107,6 +112,16 @@ export function CheckResult({ verdict }: Props) {
           </li>
         ))}
       </ul>
+
+      {verdict.estimated && (
+        <div className="px-5 py-4 md:px-8 md:py-5 bg-cream-50 border-t border-ink-100">
+          <p className="text-xs text-cocoa-700/70 leading-relaxed">
+            Typical ranges here are read at the sector level. Treat them
+            as orientation, not a measured benchmark for this exact
+            group.
+          </p>
+        </div>
+      )}
     </section>
   );
 }

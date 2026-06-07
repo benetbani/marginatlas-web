@@ -11,33 +11,32 @@
 import * as React from "react";
 import { useState, useMemo } from "react";
 import { computeVerdict, type CheckInput } from "@/lib/check/verdict_engine";
+import {
+  visibleSectors,
+  visibleIndustriesInSector,
+  searchIndustries,
+  INDUSTRY_BY_ID,
+  type Industry,
+} from "@/lib/taxonomy";
 import { CheckResult } from "./CheckResult";
 
-// Subset of industries to expose in the picker. Phase 7 ships the
-// founder-validated set; future iterations can swap to a typeahead
-// against the full INDUSTRIES list.
-const PICKER: Array<{ id: string; label: string }> = [
-  { id: "restaurants", label: "Restaurants" },
-  { id: "cafes_coffee", label: "Cafes & coffee shops" },
-  { id: "bakeries", label: "Bakeries" },
-  { id: "hairdressers_beauty", label: "Hair & beauty" },
-  { id: "barbershops", label: "Barbershops" },
-  { id: "auto_repair_shops", label: "Auto repair" },
-  { id: "dental_practices", label: "Dental practice" },
-  { id: "doctors_clinics", label: "Doctors clinic" },
-  { id: "legal_services", label: "Legal services" },
-  { id: "accounting_tax", label: "Accounting & tax" },
-  { id: "real_estate_agencies", label: "Real estate agency" },
-  { id: "residential_construction", label: "Residential construction" },
-  { id: "plumbing_services", label: "Plumbing" },
-  { id: "carpentry_services", label: "Carpentry" },
-  { id: "bricklaying_services", label: "Bricklaying" },
-  { id: "grocery_stores", label: "Grocery store" },
-  { id: "clothing_stores", label: "Clothing retail" },
-  { id: "book_retailing", label: "Bookshop" },
-  { id: "sports_fitness", label: "Gym / fitness" },
-  { id: "veterinary_pet_care", label: "Veterinary clinic" },
-];
+// Full picker source. Every business we cover, grouped by sector and
+// kept in the curated display order. The discovery gate drops the
+// solo-professional, non-SMB, and large-firm-only categories that do
+// not fit an owner self-comparison, leaving the businesses a real
+// operator would pick. A search box filters the long list; the grouped
+// select stays usable on mobile as a native control.
+type PickerGroup = { sectorId: string; sectorName: string; items: Industry[] };
+
+const PICKER_GROUPS: PickerGroup[] = visibleSectors().map((s) => ({
+  sectorId: s.id,
+  sectorName: s.name,
+  items: visibleIndustriesInSector(s.id),
+}));
+
+const SECTOR_OF_VISIBLE = new Set(
+  PICKER_GROUPS.flatMap((g) => g.items.map((i) => i.id))
+);
 
 type FormState = {
   industryId: string;
@@ -65,6 +64,31 @@ function parseNumber(s: string): number {
 export function CheckForm() {
   const [form, setForm] = useState<FormState>(INITIAL);
   const [submitted, setSubmitted] = useState(false);
+  const [query, setQuery] = useState("");
+
+  // Groups narrowed by the search box. With no query we show every
+  // group; with a query we keep only matching industries (and only the
+  // groups that still have at least one match). Search runs against the
+  // same discovery-visible pool the picker draws from.
+  const groups = useMemo<PickerGroup[]>(() => {
+    const q = query.trim();
+    if (!q) return PICKER_GROUPS;
+    const matched = new Set(
+      searchIndustries(q)
+        .filter((i) => SECTOR_OF_VISIBLE.has(i.id))
+        .map((i) => i.id)
+    );
+    return PICKER_GROUPS.map((g) => ({
+      ...g,
+      items: g.items.filter((i) => matched.has(i.id)),
+    })).filter((g) => g.items.length > 0);
+  }, [query]);
+
+  // Keep a selected industry visible in the list even when a search
+  // would otherwise hide it, so the choice never silently clears.
+  const selectedIndustry = form.industryId ? INDUSTRY_BY_ID[form.industryId] : undefined;
+  const selectionHidden =
+    !!selectedIndustry && !groups.some((g) => g.items.some((i) => i.id === selectedIndustry.id));
 
   const verdict = useMemo(() => {
     if (!submitted || !form.industryId || !form.revenueUsd) return null;
@@ -96,24 +120,46 @@ export function CheckForm() {
         className="rounded-2xl bg-white border border-ink-200 p-5 md:p-8"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-          <label className="flex flex-col gap-1.5">
-            <span className="text-xs font-semibold uppercase tracking-wide text-cocoa-700">
+          <div className="md:col-span-2 flex flex-col gap-1.5">
+            <label htmlFor="check-industry-search" className="text-xs font-semibold uppercase tracking-wide text-cocoa-700">
               Industry
-            </span>
+            </label>
+            <input
+              id="check-industry-search"
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search businesses, e.g. bakery, plumber, dentist"
+              className="rounded-lg border border-ink-200 bg-cream-50 px-3 py-2 text-sm text-ink-900"
+              aria-label="Filter the industry list"
+            />
             <select
               required
+              aria-label="Industry"
               value={form.industryId}
               onChange={(e) => update("industryId", e.target.value)}
               className="rounded-lg border border-ink-200 bg-cream-50 px-3 py-2 text-sm text-ink-900"
             >
               <option value="">Pick one</option>
-              {PICKER.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.label}
-                </option>
+              {selectionHidden && selectedIndustry && (
+                <option value={selectedIndustry.id}>{selectedIndustry.name}</option>
+              )}
+              {groups.map((g) => (
+                <optgroup key={g.sectorId} label={g.sectorName}>
+                  {g.items.map((i) => (
+                    <option key={i.id} value={i.id}>
+                      {i.name}
+                    </option>
+                  ))}
+                </optgroup>
               ))}
+              {groups.length === 0 && (
+                <option value="" disabled>
+                  No match. Clear the search to see all.
+                </option>
+              )}
             </select>
-          </label>
+          </div>
 
           <label className="flex flex-col gap-1.5">
             <span className="text-xs font-semibold uppercase tracking-wide text-cocoa-700">
