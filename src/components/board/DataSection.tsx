@@ -28,7 +28,10 @@ import { ShowMore } from "./ShowMore";
  * One section of the board. `rows` is rendered in full (first eight inline,
  * the rest behind ShowMore). `modeled` flags directional figures. `chart` is
  * an optional visual rendered above the grid. `dek` is an optional short warm
- * line under the title that frames the section before its numbers.
+ * line under the title that frames the section before its numbers. `footer` is
+ * an optional quiet node rendered at the foot of the section (e.g. a subtle
+ * cross-link to a deeper page); it sits below the modeled footnote so it never
+ * crowds the figures.
  */
 export type BoardSection = {
   key: string;
@@ -37,6 +40,7 @@ export type BoardSection = {
   modeled?: boolean;
   chart?: React.ReactNode;
   dek?: string;
+  footer?: React.ReactNode;
 };
 
 /** How many rows render before the ShowMore fold. */
@@ -71,6 +75,8 @@ export function DataSection({ section }: { section: BoardSection }) {
           Modeled from national business demography. Directional.
         </p>
       ) : null}
+
+      {section.footer ? <div className="mt-3">{section.footer}</div> : null}
     </section>
   );
 }

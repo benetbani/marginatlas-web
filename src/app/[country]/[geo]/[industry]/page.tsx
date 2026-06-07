@@ -481,6 +481,29 @@ export default async function CellPage({
     cell.industry_id ? getFailureModes(cell.industry_id) ?? [] : []
   ).map((m) => ({ title: m.label, body: m.explanation }));
 
+  // Discovery cross-link into the dedicated opening page. The "What it takes to
+  // open" board section gets a single quiet footer link to the full opening
+  // guide (/[country]/[geo]/[industry]/opening), so a reader weighing the entry
+  // cost can step straight into the deeper, comparison-rich view. Attached here
+  // (not inside the pure board builder) so cell_board.ts stays free of route
+  // slugs and the cells data layer. Every other section is untouched.
+  const openingHref = `/${country.toLowerCase()}/${geo.toLowerCase()}/${industry.toLowerCase()}/opening`;
+  const boardSectionsWithLinks = boardSections.map((s) =>
+    s.key === "opening"
+      ? {
+          ...s,
+          footer: (
+            <a
+              href={openingHref}
+              className="inline-flex items-center gap-1 text-sm font-medium text-atlas-700 transition-colors hover:text-atlas-900"
+            >
+              See the full opening guide &rarr;
+            </a>
+          ),
+        }
+      : s,
+  );
+
   // FAQPage JSON-LD payload. The question text matches
   // the phrase universe (scripts/seo/build_phrase_universe.py), so any organic
   // search for "how much does a pharmacy make in California" surfaces this
@@ -682,7 +705,7 @@ export default async function CellPage({
           deeper sections below (break-even, take-home, distribution, waterfall)
           keep their full prose treatment. */}
       <div className="mt-2">
-        {boardSections.map((s) => (
+        {boardSectionsWithLinks.map((s) => (
           <DataSection section={s} key={s.key} />
         ))}
       </div>
