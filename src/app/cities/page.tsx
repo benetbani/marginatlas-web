@@ -5,16 +5,16 @@
  * key modules "industries, rent, demand, rankings", whose stated things to avoid
  * are "tourism fluff" and, for any directory, an "alphabetical dump only").
  *
- * White-reset 2026-06-06 (founder): the page leads with the geographic map, then
- * a ranked strip of the most visitor-skewed markets, then a curated single column
- * of city cards. Each card carries three real figures (visitors a year, average
- * salary, metro GDP) instead of qualitative words, and any missing figure shows
- * the board dash. The old grouped "metropolis / major / secondary" dump and the
- * per-city word-signals are retired; the long tail stays reachable through the
- * map and the country pages.
+ * The page leads with the geographic map, then a by-name search box (a client
+ * island) directly under it, then the breadcrumb, the header, and the city
+ * showcase grouped by world region (Europe, Asia, Americas, Middle East and
+ * Africa, Oceania). Each card carries three real figures (visitors a year,
+ * average salary, metro GDP) instead of qualitative words, and any missing
+ * figure shows the board dash. A region with no cities self-omits.
  *
- * The two shapes the page renders (the ranked visitor list and the curated
- * showcase) come from a pure synthesis module (src/lib/scores/city_directory)
+ * Each city is resolved to its rendered figures by buildDirectoryCity from the
+ * pure synthesis module (src/lib/scores/city_directory) and placed into one of
+ * the five buckets by worldRegionForCity (src/lib/regions/world_region), both
  * fed only the city list the page already imports. It invents no numbers.
  *
  * Plan v27 Lane C anchored this hub at /cities; v34 added the full-bleed map.
@@ -29,16 +29,24 @@ import { CountryFlag } from "@/components/CountryFlag";
 import CitiesWorldMap, {
   type CitiesWorldMapCity,
 } from "@/components/cities/CitiesWorldMap";
+import {
+  CitySearchBox,
+  type CitySearchItem,
+} from "@/components/cities/CitySearchBox";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { StatCard } from "@/components/board/StatCard";
-import { RankRow } from "@/components/board/RankRow";
 import { fmtUSD, fmtUSDBillions, fmtMillions } from "@/components/board/format";
 import { elevation } from "@/lib/design-tokens";
 import {
-  buildCityDirectory,
+  buildDirectoryCity,
   type DirectoryCity,
   type DirectoryCityInput,
 } from "@/lib/scores/city_directory";
+import {
+  WORLD_REGIONS,
+  worldRegionForCity,
+  type WorldRegion,
+} from "@/lib/regions/world_region";
 
 export const revalidate = 86400;
 
@@ -73,8 +81,40 @@ const MAP_CITIES: CitiesWorldMapCity[] = CITIES.map((c) => {
   };
 }).filter((c): c is CitiesWorldMapCity => c !== null);
 
-// The whole directory, computed once at build time. Pure; no queries.
-const DIRECTORY = buildCityDirectory(CITIES);
+// Total cities placed: every input is read, none dropped from the count.
+const TOTAL = CITIES.length;
+
+// The by-name search list handed to the client box: only the three fields it
+// needs to match and link. Sorted by name so any equal-rank matches read in a
+// stable order.
+const SEARCH_CITIES: CitySearchItem[] = CITIES.map((c) => ({
+  name: c.name,
+  slug: c.slug,
+  iso2: c.iso2,
+})).sort((a, b) => a.name.localeCompare(b.name));
+
+// The showcase, grouped by world region. Every city is resolved to its
+// rendered figures and placed in exactly one of the five buckets (Europe,
+// Asia, Americas, Middle East and Africa, Oceania); within a bucket the
+// largest metros lead, then ties break by name. A region with zero cities is
+// dropped so it never renders an empty heading.
+type RegionGroup = { region: WorldRegion; cities: DirectoryCity[] };
+
+const REGION_GROUPS: RegionGroup[] = (() => {
+  const byRegion = new Map<WorldRegion, DirectoryCity[]>();
+  for (const c of CITIES) {
+    const region = worldRegionForCity(c.continent, c.iso2);
+    const bucket = byRegion.get(region) ?? [];
+    bucket.push(buildDirectoryCity(c));
+    byRegion.set(region, bucket);
+  }
+  return WORLD_REGIONS.map((region) => ({
+    region,
+    cities: (byRegion.get(region) ?? []).sort(
+      (a, b) => b.pop_m - a.pop_m || a.name.localeCompare(b.name),
+    ),
+  })).filter((g) => g.cities.length > 0);
+})();
 
 /**
  * One curated city, rendered as a board StatCard: the flag and the city name as
@@ -114,13 +154,11 @@ function CityStatCard({ city }: { city: DirectoryCity }) {
 }
 
 export default function CitiesHub() {
-  const { total, topVisitorRatio, showcase } = DIRECTORY;
-
   return (
     <article className="max-w-6xl mx-auto px-4 md:px-6 py-12 md:py-16">
-      {/* The world map is the first thing a reader meets on /cities; the
-          breadcrumb, the header, the ranked visitor strip, and the curated
-          cards all follow below it. */}
+      {/* The world map is the first thing a reader meets on /cities, with the
+          by-name search directly under it; the breadcrumb, the header, and the
+          region-grouped cards all follow below. */}
       <section aria-labelledby="cities-map-heading">
         <h2 id="cities-map-heading" className="sr-only">
           Map of covered cities
@@ -131,6 +169,10 @@ export default function CitiesHub() {
         >
           <CitiesWorldMap cities={MAP_CITIES} />
         </div>
+        {/* The by-name way in. A client island: it filters the covered-city
+            list in the browser and links to each /cities/{slug}. With JS off
+            the input is inert and the grouped directory below still works. */}
+        <CitySearchBox cities={SEARCH_CITIES} />
       </section>
 
       <nav aria-label="Breadcrumb" className="text-sm text-cocoa-700/70 mt-10 md:mt-12 mb-8">
@@ -153,80 +195,53 @@ export default function CitiesHub() {
           The numbers bend with the city: rent, wages, and what people will pay
           all shift from one place to the next.{" "}
           <span className="text-ink-900">
-            Open a city for its industries, costs, and rankings, or start with
-            the deepest markets below.
+            Open a city for its industries, costs, and rankings, or browse the
+            covered cities by region below.
           </span>
         </p>
         <p className="mt-4 text-sm text-cocoa-700/85 tabular-nums">
-          <span className="text-ink-900 font-medium">{total}</span> cities on
+          <span className="text-ink-900 font-medium">{TOTAL}</span> cities on
           the map.
         </p>
       </header>
 
-      {/* The honest tourism read (bible: tourism signal, not tourism fluff): the
-          cities where visitors most outnumber residents, ranked. Self-omits when
-          fewer than three cities carry both numbers. */}
-      {topVisitorRatio.length >= 3 ? (
-        <section
-          className="mt-12 md:mt-16 rounded-2xl bg-white border border-parchment px-5 py-6 md:px-7 md:py-7"
-          aria-labelledby="visitor-led-heading"
-          style={{ boxShadow: elevation.card }}
-        >
-          <SectionEyebrow className="mb-2">The visitor economy</SectionEyebrow>
+      {/* The showcase, grouped by world region. Each region heading is
+          followed by a compact card per city carrying the same three real
+          figures (visitors a year, average salary, metro GDP); a missing
+          figure shows the board dash. A region with no cities self-omits, so
+          there is never an empty heading. The modeled note sits once at the
+          end, under the last region. */}
+      {REGION_GROUPS.length > 0 ? (
+        <section className="mt-14 md:mt-20" aria-labelledby="by-region-heading">
+          <SectionEyebrow className="mb-2">By region</SectionEyebrow>
           <h2
-            id="visitor-led-heading"
-            className="font-display text-xl md:text-2xl font-semibold tracking-tight text-ink-900"
-          >
-            Where the customer is a visitor, not a local
-          </h2>
-          <p className="mt-2 max-w-2xl text-sm text-graphite leading-relaxed">
-            In these cities, arrivals outnumber residents by the widest margin on
-            the map. That lifts revenue and pricing power in the season and pulls
-            both back out of it, so plan for the swing before you sign a
-            year-round lease.
-          </p>
-          <div className="mt-5">
-            {topVisitorRatio.map((c) => (
-              <RankRow
-                key={c.slug}
-                rank={c.rank}
-                label={c.name}
-                href={`/cities/${c.slug}`}
-                value={`${c.ratio.toFixed(1)}x visitors vs residents`}
-                texture={c.texture}
-              />
-            ))}
-          </div>
-        </section>
-      ) : null}
-
-      {/* The curated showcase: the deepest markets, one card each, single
-          column. Three real figures per city; a missing figure shows the board
-          dash. The long tail stays reachable via the map and the country pages,
-          so this stays a showcase rather than a dump. */}
-      {showcase.length > 0 ? (
-        <section className="mt-14 md:mt-20" aria-labelledby="showcase-heading">
-          <SectionEyebrow className="mb-2">The deepest markets</SectionEyebrow>
-          <h2
-            id="showcase-heading"
+            id="by-region-heading"
             className="font-display text-2xl md:text-3xl font-semibold tracking-tight text-ink-900 leading-tight"
           >
-            The biggest metros, by the numbers
+            The covered cities, region by region
           </h2>
           <p className="mt-3 max-w-2xl text-base text-graphite leading-relaxed">
-            The deepest demand pools on the map: almost any concept finds enough
-            customers here, which is exactly why the rent and the wage bill come
-            for the margin first. The figures below frame the size of each
-            market before you open it.
+            Each city carries three real figures: visitors a year, the average
+            salary, and metro GDP. They frame the size of a market before you
+            open in it, and the largest metros lead each region.
           </p>
 
-          <div className="mt-6 md:mt-8 flex flex-col gap-3 md:gap-4">
-            {showcase.map((city) => (
-              <CityStatCard key={city.slug} city={city} />
+          <div className="mt-8 md:mt-10 flex flex-col gap-10 md:gap-14">
+            {REGION_GROUPS.map((group) => (
+              <div key={group.region}>
+                <h3 className="font-display text-lg md:text-xl font-semibold tracking-tight text-ink-900">
+                  {group.region}
+                </h3>
+                <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-4 lg:grid-cols-3">
+                  {group.cities.map((city) => (
+                    <CityStatCard key={city.slug} city={city} />
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
 
-          <p className="mt-6 max-w-2xl text-xs leading-relaxed text-cocoa-700/70">
+          <p className="mt-10 max-w-2xl text-xs leading-relaxed text-cocoa-700/70">
             Visitor, salary, and metro GDP figures are approximate and modeled to
             stay consistent across cities, so they read as comparisons rather than
             audited accounts. Open a city for the fuller picture.
