@@ -46,3 +46,11 @@ next-env.d.ts
 .claude/
 .superpowers/
 design-assets/incoming/
+
+# Ephemeral verification + scratch (added 2026-06-07)
+screens/
+tsconfig.tsbuildinfo
+err.txt
+data/audit/_log.txt
+data/quality/revenue_clamp_dryrun.csv
+*slugcheck*

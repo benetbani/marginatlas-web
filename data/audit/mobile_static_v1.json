@@ -1,7 +1,7 @@
 {
   "counters": {
     "fixed-px-width": 0,
-    "large-text-no-mobile": 2,
+    "large-text-no-mobile": 4,
     "high-col-no-breakpoint": 12,
     "tiny-tap-target": 0,
     "nowrap-on-content": 14
@@ -15,24 +15,38 @@
       "snippet": "className={`inline-flex items-center gap-1.5 px-3 h-9 rounded-md text-sm font-semibold whitespace-nowrap ${"
     },
     {
+      "type": "large-text-no-mobile",
+      "severity": "warn",
+      "file": "./src/app/blog/page.tsx",
+      "line": 28,
+      "snippet": "<span className=\"font-display text-5xl md:text-6xl font-semibold text-white/85\">"
+    },
+    {
+      "type": "large-text-no-mobile",
+      "severity": "warn",
+      "file": "./src/app/blog/[slug]/page.tsx",
+      "line": 50,
+      "snippet": "<span className=\"font-display text-6xl md:text-7xl font-semibold text-white/85\">"
+    },
+    {
       "type": "nowrap-on-content",
       "severity": "info",
       "file": "./src/app/cities/[slug]/page.tsx",
-      "line": 310,
+      "line": 317,
       "snippet": "className=\"px-4 py-2.5 rounded-full bg-atlas-700 hover:bg-atlas-800 text-cream-50 text-sm font-semibold shadow-sm transition text-center whitespace-nowrap\""
     },
     {
       "type": "nowrap-on-content",
       "severity": "info",
       "file": "./src/app/cities/[slug]/page.tsx",
-      "line": 316,
+      "line": 323,
       "snippet": "className=\"px-4 py-2.5 rounded-full bg-white hover:bg-cream-100 border border-ink-200 hover:border-atlas-700 text-ink-900 text-sm font-semibold transition text-"
     },
     {
       "type": "nowrap-on-content",
       "severity": "info",
       "file": "./src/app/cities/[slug]/page.tsx",
-      "line": 322,
+      "line": 329,
       "snippet": "className=\"px-4 py-2.5 rounded-full bg-white hover:bg-cream-100 border border-ink-200 hover:border-atlas-700 text-ink-900 text-sm font-semibold transition text-"
     },
     {

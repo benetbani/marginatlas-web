@@ -1,13 +1,13 @@
 # Mobile static audit (Plan v24 Block 9)
 
-Generated 2026-05-26T01:35:29.472Z.
+Generated 2026-05-26T12:05:14.312Z.
 
-Scanned 282 TS/TSX source files.
+Scanned 285 TS/TSX source files.
 
 ## Findings
 
 - **fixed-px-width**: 0
-- **large-text-no-mobile**: 2
+- **large-text-no-mobile**: 4
 - **high-col-no-breakpoint**: 12
 - **tiny-tap-target**: 0
 - **nowrap-on-content**: 14
@@ -17,8 +17,16 @@ Scanned 282 TS/TSX source files.
 - **warn** — likely to break mobile layout. Fix before next mobile sweep.
 - **info** — worth a manual check. May be fine in context.
 
-## large-text-no-mobile (2)
+## large-text-no-mobile (4)
 
+- [warn] `./src/app/blog/page.tsx:28`  
+  ```
+  <span className="font-display text-5xl md:text-6xl font-semibold text-white/85">
+  ```
+- [warn] `./src/app/blog/[slug]/page.tsx:50`  
+  ```
+  <span className="font-display text-6xl md:text-7xl font-semibold text-white/85">
+  ```
 - [warn] `./src/app/not-found.tsx:29`  
   ```
   <p aria-hidden="true" className="font-display text-6xl sm:text-7xl font-semibold text-atlas-700 leading-none">
@@ -85,15 +93,15 @@ Scanned 282 TS/TSX source files.
   ```
   className={`inline-flex items-center gap-1.5 px-3 h-9 rounded-md text-sm font-semibold whitespace-nowrap ${
   ```
-- [info] `./src/app/cities/[slug]/page.tsx:310`  
+- [info] `./src/app/cities/[slug]/page.tsx:317`  
   ```
   className="px-4 py-2.5 rounded-full bg-atlas-700 hover:bg-atlas-800 text-cream-50 text-sm font-semibold shadow-sm transition text-center whitespace-nowrap"
   ```
-- [info] `./src/app/cities/[slug]/page.tsx:316`  
+- [info] `./src/app/cities/[slug]/page.tsx:323`  
   ```
   className="px-4 py-2.5 rounded-full bg-white hover:bg-cream-100 border border-ink-200 hover:border-atlas-700 text-ink-900 text-sm font-semibold transition text-
   ```
-- [info] `./src/app/cities/[slug]/page.tsx:322`  
+- [info] `./src/app/cities/[slug]/page.tsx:329`  
   ```
   className="px-4 py-2.5 rounded-full bg-white hover:bg-cream-100 border border-ink-200 hover:border-atlas-700 text-ink-900 text-sm font-semibold transition text-
   ```

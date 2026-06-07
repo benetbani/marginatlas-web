@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-30T05:57:44.345Z",
+  "generated_at": "2026-05-31T16:15:28.430Z",
   "sample_size": 19,
   "synthetic_count": 0,
   "synthesis_rate": 0,
@@ -37,16 +37,16 @@
       "preserved": false
     },
     {
-      "db_industry": "auto_dealers_gas",
-      "via_slug": "auto-dealers-gas",
-      "resolved_to": "auto_dealers",
+      "db_industry": "crop_farming",
+      "via_slug": "crop-farming",
+      "resolved_to": "grain_farming",
       "preserved": false
     },
     {
-      "db_industry": "livestock_farming",
-      "via_slug": "livestock-farming",
-      "resolved_to": "livestock_farming",
-      "preserved": true
+      "db_industry": "textile_apparel_mfg",
+      "via_slug": "textile-apparel-mfg",
+      "resolved_to": "apparel_mfg",
+      "preserved": false
     },
     {
       "db_industry": "metal_products_mfg",
@@ -93,9 +93,15 @@
       "preserved": false
     },
     {
-      "db_industry": "auto_dealers_gas",
-      "via_slug": "auto-dealers-gas",
-      "resolved_to": "auto_dealers",
+      "db_industry": "crop_farming",
+      "via_slug": "crop-farming",
+      "resolved_to": "grain_farming",
+      "preserved": false
+    },
+    {
+      "db_industry": "textile_apparel_mfg",
+      "via_slug": "textile-apparel-mfg",
+      "resolved_to": "apparel_mfg",
       "preserved": false
     },
     {
@@ -233,10 +239,10 @@
       "reachability_bug": false
     },
     {
-      "label": "roundtrip:JP/JP-01000/auto_dealers_gas",
+      "label": "roundtrip:JP/JP-01000/crop_farming",
       "country": "jp",
       "geoSlug": "jp-01000",
-      "industrySlug": "auto-dealers-gas",
+      "industrySlug": "crop-farming",
       "db_geo_id": "JP-01000",
       "resolved_geo_id": "JP-01000",
       "tier": "regional",
@@ -245,10 +251,10 @@
       "reachability_bug": false
     },
     {
-      "label": "roundtrip:MX/MX-AGU/livestock_farming",
+      "label": "roundtrip:MX/MX-AGU/textile_apparel_mfg",
       "country": "mx",
       "geoSlug": "mx-agu",
-      "industrySlug": "livestock-farming",
+      "industrySlug": "textile-apparel-mfg",
       "db_geo_id": "MX-AGU",
       "resolved_geo_id": "MX-AGU",
       "tier": "regional",

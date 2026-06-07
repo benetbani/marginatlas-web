@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-05-22T18:48:54.299Z",
+  "generated_at": "2026-05-31T16:49:27.185Z",
   "base": "https://www.marginatlas.com",
   "total": 112,
-  "passed": 107,
-  "failed": 5,
+  "passed": 100,
+  "failed": 12,
   "results": [
     {
       "id": "A1",
@@ -12,7 +12,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 756,
+      "duration_ms": 469,
       "note": ""
     },
     {
@@ -22,7 +22,7 @@
       "url": "/industries",
       "pass": true,
       "status": 200,
-      "duration_ms": 585,
+      "duration_ms": 567,
       "note": ""
     },
     {
@@ -32,7 +32,7 @@
       "url": "/industries/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 4040,
+      "duration_ms": 1578,
       "note": ""
     },
     {
@@ -42,7 +42,7 @@
       "url": "/us",
       "pass": true,
       "status": 200,
-      "duration_ms": 394,
+      "duration_ms": 586,
       "note": ""
     },
     {
@@ -52,7 +52,7 @@
       "url": "/de",
       "pass": true,
       "status": 200,
-      "duration_ms": 375,
+      "duration_ms": 412,
       "note": ""
     },
     {
@@ -62,7 +62,7 @@
       "url": "/us/california/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 14451,
+      "duration_ms": 421,
       "note": ""
     },
     {
@@ -72,7 +72,7 @@
       "url": "/de/frankfurt/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 3888,
+      "duration_ms": 30008,
       "note": ""
     },
     {
@@ -82,7 +82,7 @@
       "url": "/fr/lyon/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 1337,
+      "duration_ms": 29788,
       "note": ""
     },
     {
@@ -92,7 +92,7 @@
       "url": "/us/new-york/manhattan/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 2058,
+      "duration_ms": 1143,
       "note": ""
     },
     {
@@ -102,7 +102,7 @@
       "url": "/xx/yy/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 9340,
+      "duration_ms": 29617,
       "note": ""
     },
     {
@@ -112,7 +112,7 @@
       "url": "/sectors/food_drink",
       "pass": true,
       "status": 200,
-      "duration_ms": 543,
+      "duration_ms": 552,
       "note": ""
     },
     {
@@ -122,7 +122,7 @@
       "url": "/world",
       "pass": true,
       "status": 200,
-      "duration_ms": 558,
+      "duration_ms": 485,
       "note": ""
     },
     {
@@ -132,7 +132,7 @@
       "url": "/coverage",
       "pass": true,
       "status": 200,
-      "duration_ms": 449,
+      "duration_ms": 383,
       "note": ""
     },
     {
@@ -142,7 +142,7 @@
       "url": "/og/cell?country=us&geo=california&industry=restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 3189,
+      "duration_ms": 25475,
       "note": ""
     },
     {
@@ -152,7 +152,7 @@
       "url": "/admin/data-quality",
       "pass": true,
       "status": 200,
-      "duration_ms": 570,
+      "duration_ms": 910,
       "note": ""
     },
     {
@@ -162,7 +162,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 156,
+      "duration_ms": 119,
       "note": ""
     },
     {
@@ -172,7 +172,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 96,
+      "duration_ms": 99,
       "note": ""
     },
     {
@@ -182,7 +182,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 89,
+      "duration_ms": 127,
       "note": ""
     },
     {
@@ -190,10 +190,10 @@
       "category": "B. Content",
       "description": "/industries has Popular section",
       "url": "/industries",
-      "pass": true,
+      "pass": false,
       "status": 200,
-      "duration_ms": 108,
-      "note": ""
+      "duration_ms": 118,
+      "note": "assertion returned false"
     },
     {
       "id": "B5",
@@ -202,7 +202,7 @@
       "url": "/industries",
       "pass": true,
       "status": 200,
-      "duration_ms": 89,
+      "duration_ms": 95,
       "note": ""
     },
     {
@@ -210,20 +210,20 @@
       "category": "B. Content",
       "description": "/industries has A-Z section",
       "url": "/industries",
-      "pass": true,
+      "pass": false,
       "status": 200,
-      "duration_ms": 89,
-      "note": ""
+      "duration_ms": 94,
+      "note": "assertion returned false"
     },
     {
       "id": "B7",
       "category": "B. Content",
       "description": "/industries shows sector emojis",
       "url": "/industries",
-      "pass": true,
+      "pass": false,
       "status": 200,
-      "duration_ms": 85,
-      "note": ""
+      "duration_ms": 100,
+      "note": "assertion returned false"
     },
     {
       "id": "B8",
@@ -232,7 +232,7 @@
       "url": "/us/california/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 102,
+      "duration_ms": 119,
       "note": ""
     },
     {
@@ -242,7 +242,7 @@
       "url": "/us/california/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 85,
+      "duration_ms": 128,
       "note": ""
     },
     {
@@ -252,7 +252,7 @@
       "url": "/us/california/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 95,
+      "duration_ms": 117,
       "note": ""
     },
     {
@@ -262,7 +262,7 @@
       "url": "/us/california/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 86,
+      "duration_ms": 111,
       "note": ""
     },
     {
@@ -272,7 +272,7 @@
       "url": "/de/frankfurt/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 85,
+      "duration_ms": 140,
       "note": ""
     },
     {
@@ -282,7 +282,7 @@
       "url": "/fr/lyon/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 98,
+      "duration_ms": 117,
       "note": ""
     },
     {
@@ -290,20 +290,20 @@
       "category": "B. Content",
       "description": "Synth cell shows Estimated badge",
       "url": "/xx/yy/restaurants",
-      "pass": true,
+      "pass": false,
       "status": 200,
-      "duration_ms": 86,
-      "note": ""
+      "duration_ms": 120,
+      "note": "assertion returned false"
     },
     {
       "id": "B15",
       "category": "B. Content",
       "description": "Neighborhood page shows character chip",
       "url": "/us/new-york/manhattan/restaurants",
-      "pass": true,
+      "pass": false,
       "status": 200,
-      "duration_ms": 1193,
-      "note": ""
+      "duration_ms": 603,
+      "note": "assertion returned false"
     },
     {
       "id": "B16",
@@ -312,7 +312,7 @@
       "url": "/us",
       "pass": true,
       "status": 200,
-      "duration_ms": 85,
+      "duration_ms": 89,
       "note": ""
     },
     {
@@ -332,7 +332,7 @@
       "url": "/world",
       "pass": true,
       "status": 200,
-      "duration_ms": 87,
+      "duration_ms": 98,
       "note": ""
     },
     {
@@ -342,7 +342,7 @@
       "url": "/sectors/food_drink",
       "pass": true,
       "status": 200,
-      "duration_ms": 96,
+      "duration_ms": 82,
       "note": ""
     },
     {
@@ -350,10 +350,10 @@
       "category": "B. Content",
       "description": "Admin dashboard has table inventory",
       "url": "/admin/data-quality",
-      "pass": true,
+      "pass": false,
       "status": 200,
-      "duration_ms": 185,
-      "note": ""
+      "duration_ms": 404,
+      "note": "assertion returned false"
     },
     {
       "id": "C1",
@@ -362,7 +362,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 192,
+      "duration_ms": 90,
       "note": ""
     },
     {
@@ -372,7 +372,7 @@
       "url": "/us/california/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 115,
+      "duration_ms": 108,
       "note": ""
     },
     {
@@ -382,7 +382,7 @@
       "url": "/us/california/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 279,
+      "duration_ms": 120,
       "note": ""
     },
     {
@@ -392,7 +392,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 192,
+      "duration_ms": 114,
       "note": ""
     },
     {
@@ -402,7 +402,7 @@
       "url": "/us/california/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 146,
+      "duration_ms": 115,
       "note": ""
     },
     {
@@ -412,7 +412,7 @@
       "url": "/us",
       "pass": true,
       "status": 200,
-      "duration_ms": 85,
+      "duration_ms": 93,
       "note": ""
     },
     {
@@ -420,10 +420,10 @@
       "category": "C. Consistency",
       "description": "No em-dashes in homepage user-visible text",
       "url": "/",
-      "pass": false,
+      "pass": true,
       "status": 200,
-      "duration_ms": 102,
-      "note": "assertion returned false"
+      "duration_ms": 97,
+      "note": ""
     },
     {
       "id": "C8",
@@ -432,7 +432,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 98,
+      "duration_ms": 112,
       "note": ""
     },
     {
@@ -442,7 +442,7 @@
       "url": "/us/california/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 88,
+      "duration_ms": 114,
       "note": ""
     },
     {
@@ -452,7 +452,7 @@
       "url": "/industries",
       "pass": true,
       "status": 200,
-      "duration_ms": 100,
+      "duration_ms": 94,
       "note": ""
     },
     {
@@ -462,7 +462,7 @@
       "url": "/us/california/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 90,
+      "duration_ms": 122,
       "note": ""
     },
     {
@@ -472,7 +472,7 @@
       "url": "/de/frankfurt/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 97,
+      "duration_ms": 138,
       "note": ""
     },
     {
@@ -482,7 +482,7 @@
       "url": "/us/california/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 132,
+      "duration_ms": 125,
       "note": ""
     },
     {
@@ -492,7 +492,7 @@
       "url": "/us/california/restaurants",
       "pass": false,
       "status": 200,
-      "duration_ms": 93,
+      "duration_ms": 111,
       "note": "assertion returned false"
     },
     {
@@ -502,7 +502,7 @@
       "url": "/de/frankfurt/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 89,
+      "duration_ms": 118,
       "note": ""
     },
     {
@@ -512,7 +512,7 @@
       "url": "/us/new-york/manhattan/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 2429,
+      "duration_ms": 277,
       "note": ""
     },
     {
@@ -522,7 +522,7 @@
       "url": "/xx/yy/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 110,
+      "duration_ms": 135,
       "note": ""
     },
     {
@@ -532,7 +532,7 @@
       "url": "/us/california/restaurants",
       "pass": false,
       "status": 200,
-      "duration_ms": 88,
+      "duration_ms": 120,
       "note": "assertion returned false"
     },
     {
@@ -542,7 +542,7 @@
       "url": "/us/california/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 88,
+      "duration_ms": 112,
       "note": ""
     },
     {
@@ -552,7 +552,7 @@
       "url": "/us/california/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 87,
+      "duration_ms": 121,
       "note": ""
     },
     {
@@ -562,7 +562,7 @@
       "url": "/de/frankfurt/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 88,
+      "duration_ms": 106,
       "note": ""
     },
     {
@@ -572,7 +572,7 @@
       "url": "/xx/yy/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 92,
+      "duration_ms": 127,
       "note": ""
     },
     {
@@ -582,7 +582,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 87,
+      "duration_ms": 83,
       "note": ""
     },
     {
@@ -602,7 +602,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 90,
+      "duration_ms": 101,
       "note": ""
     },
     {
@@ -612,7 +612,7 @@
       "url": "/",
       "pass": false,
       "status": 200,
-      "duration_ms": 90,
+      "duration_ms": 100,
       "note": "assertion returned false"
     },
     {
@@ -622,7 +622,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 120,
+      "duration_ms": 85,
       "note": ""
     },
     {
@@ -632,7 +632,7 @@
       "url": "/us/california/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 90,
+      "duration_ms": 111,
       "note": ""
     },
     {
@@ -642,7 +642,7 @@
       "url": "/us/california/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 86,
+      "duration_ms": 119,
       "note": ""
     },
     {
@@ -652,7 +652,7 @@
       "url": "/us/california/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 106,
+      "duration_ms": 126,
       "note": ""
     },
     {
@@ -662,7 +662,7 @@
       "url": "/admin/data-quality",
       "pass": true,
       "status": 200,
-      "duration_ms": 95,
+      "duration_ms": 360,
       "note": ""
     },
     {
@@ -672,7 +672,7 @@
       "url": "/robots.txt",
       "pass": true,
       "status": 200,
-      "duration_ms": 292,
+      "duration_ms": 338,
       "note": ""
     },
     {
@@ -682,7 +682,7 @@
       "url": "/robots.txt",
       "pass": true,
       "status": 200,
-      "duration_ms": 71,
+      "duration_ms": 143,
       "note": ""
     },
     {
@@ -692,7 +692,7 @@
       "url": "/us",
       "pass": true,
       "status": 200,
-      "duration_ms": 79,
+      "duration_ms": 96,
       "note": ""
     },
     {
@@ -702,7 +702,7 @@
       "url": "/industries/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 83,
+      "duration_ms": 220,
       "note": ""
     },
     {
@@ -712,7 +712,7 @@
       "url": "/us/california/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 128,
+      "duration_ms": 256,
       "note": ""
     },
     {
@@ -722,7 +722,7 @@
       "url": "/us/california/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 104,
+      "duration_ms": 137,
       "note": ""
     },
     {
@@ -732,7 +732,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 115,
+      "duration_ms": 91,
       "note": ""
     },
     {
@@ -742,7 +742,7 @@
       "url": "/us/california/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 93,
+      "duration_ms": 139,
       "note": ""
     },
     {
@@ -752,7 +752,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 81,
+      "duration_ms": 111,
       "note": ""
     },
     {
@@ -762,7 +762,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 101,
+      "duration_ms": 100,
       "note": ""
     },
     {
@@ -772,7 +772,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 108,
+      "duration_ms": 86,
       "note": ""
     },
     {
@@ -782,7 +782,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 73,
+      "duration_ms": 85,
       "note": ""
     },
     {
@@ -792,7 +792,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 161,
+      "duration_ms": 91,
       "note": ""
     },
     {
@@ -802,7 +802,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 153,
+      "duration_ms": 86,
       "note": ""
     },
     {
@@ -812,7 +812,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 98,
+      "duration_ms": 96,
       "note": ""
     },
     {
@@ -822,7 +822,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 91,
+      "duration_ms": 90,
       "note": ""
     },
     {
@@ -832,7 +832,7 @@
       "url": "/us/california/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 94,
+      "duration_ms": 122,
       "note": ""
     },
     {
@@ -842,7 +842,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 112,
+      "duration_ms": 105,
       "note": ""
     },
     {
@@ -852,7 +852,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 79,
+      "duration_ms": 94,
       "note": ""
     },
     {
@@ -862,7 +862,7 @@
       "url": "/us/california/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 86,
+      "duration_ms": 103,
       "note": ""
     },
     {
@@ -872,7 +872,7 @@
       "url": "/",
       "pass": false,
       "status": 200,
-      "duration_ms": 96,
+      "duration_ms": 221,
       "note": "assertion returned false"
     },
     {
@@ -882,7 +882,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 109,
+      "duration_ms": 104,
       "note": ""
     },
     {
@@ -892,7 +892,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 111,
+      "duration_ms": 83,
       "note": ""
     },
     {
@@ -902,7 +902,7 @@
       "url": "/us/california/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 95,
+      "duration_ms": 118,
       "note": ""
     },
     {
@@ -912,7 +912,7 @@
       "url": "/us/california/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 90,
+      "duration_ms": 109,
       "note": ""
     },
     {
@@ -922,7 +922,7 @@
       "url": "/industries",
       "pass": true,
       "status": 200,
-      "duration_ms": 90,
+      "duration_ms": 86,
       "note": ""
     },
     {
@@ -932,7 +932,7 @@
       "url": "/us",
       "pass": true,
       "status": 200,
-      "duration_ms": 102,
+      "duration_ms": 87,
       "note": ""
     },
     {
@@ -940,10 +940,10 @@
       "category": "H. Links",
       "description": "Neighborhood page links to sibling neighborhoods",
       "url": "/us/new-york/manhattan/restaurants",
-      "pass": true,
+      "pass": false,
       "status": 200,
-      "duration_ms": 627,
-      "note": ""
+      "duration_ms": 368,
+      "note": "assertion returned false"
     },
     {
       "id": "H7",
@@ -952,7 +952,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 80,
+      "duration_ms": 158,
       "note": ""
     },
     {
@@ -962,7 +962,7 @@
       "url": "/us/california/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 92,
+      "duration_ms": 108,
       "note": ""
     },
     {
@@ -970,10 +970,10 @@
       "category": "H. Links",
       "description": "Neighborhood page links to city",
       "url": "/us/new-york/manhattan/restaurants",
-      "pass": true,
+      "pass": false,
       "status": 200,
-      "duration_ms": 763,
-      "note": ""
+      "duration_ms": 237,
+      "note": "assertion returned false"
     },
     {
       "id": "H10",
@@ -982,7 +982,7 @@
       "url": "/industries",
       "pass": true,
       "status": 200,
-      "duration_ms": 84,
+      "duration_ms": 142,
       "note": ""
     },
     {
@@ -992,7 +992,7 @@
       "url": "/sitemap/0.xml",
       "pass": true,
       "status": 200,
-      "duration_ms": 435,
+      "duration_ms": 362,
       "note": ""
     },
     {
@@ -1002,7 +1002,7 @@
       "url": "/sitemap/1.xml",
       "pass": true,
       "status": 200,
-      "duration_ms": 552,
+      "duration_ms": 481,
       "note": ""
     },
     {
@@ -1012,7 +1012,7 @@
       "url": "/sitemap/2.xml",
       "pass": true,
       "status": 200,
-      "duration_ms": 430,
+      "duration_ms": 401,
       "note": ""
     },
     {
@@ -1022,7 +1022,7 @@
       "url": "/sitemap/3.xml",
       "pass": true,
       "status": 200,
-      "duration_ms": 409,
+      "duration_ms": 356,
       "note": ""
     },
     {
@@ -1032,7 +1032,7 @@
       "url": "/sitemap/4.xml",
       "pass": true,
       "status": 200,
-      "duration_ms": 410,
+      "duration_ms": 528,
       "note": ""
     },
     {
@@ -1042,7 +1042,7 @@
       "url": "/sitemap/5.xml",
       "pass": true,
       "status": 200,
-      "duration_ms": 518,
+      "duration_ms": 722,
       "note": ""
     },
     {
@@ -1052,7 +1052,7 @@
       "url": "/sitemap/0.xml",
       "pass": true,
       "status": 200,
-      "duration_ms": 85,
+      "duration_ms": 88,
       "note": ""
     },
     {
@@ -1062,7 +1062,7 @@
       "url": "/robots.txt",
       "pass": true,
       "status": 200,
-      "duration_ms": 62,
+      "duration_ms": 86,
       "note": ""
     },
     {
@@ -1072,7 +1072,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 139,
+      "duration_ms": 88,
       "note": ""
     },
     {
@@ -1082,7 +1082,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 84,
+      "duration_ms": 103,
       "note": ""
     },
     {
@@ -1092,7 +1092,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 125,
+      "duration_ms": 88,
       "note": ""
     },
     {
@@ -1102,7 +1102,7 @@
       "url": "/us/california/restaurants",
       "pass": true,
       "status": 200,
-      "duration_ms": 103,
+      "duration_ms": 113,
       "note": ""
     },
     {
@@ -1112,7 +1112,7 @@
       "url": "/industries",
       "pass": true,
       "status": 200,
-      "duration_ms": 89,
+      "duration_ms": 112,
       "note": ""
     },
     {
@@ -1122,7 +1122,7 @@
       "url": "/",
       "pass": true,
       "status": 200,
-      "duration_ms": 99,
+      "duration_ms": 121,
       "note": ""
     }
   ]

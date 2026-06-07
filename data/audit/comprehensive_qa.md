@@ -1,31 +1,36 @@
 # Comprehensive QA audit
 
-Generated 2026-05-22T18:48:54.303Z against https://www.marginatlas.com.
+Generated 2026-05-31T16:49:27.193Z against https://www.marginatlas.com.
 
 ## Summary
 
-**107 / 112 pass (95.5%)**
+**100 / 112 pass (89.3%)**
 
 ### By category
 
 | Category | Pass | Total | % |
 |---|---:|---:|---:|
 | A. Routing | 15 | 15 | 100% |
-| B. Content | 20 | 20 | 100% |
-| C. Consistency | 9 | 10 | 90% |
+| B. Content | 14 | 20 | 70% |
+| C. Consistency | 10 | 10 | 100% |
 | D. Data sanity | 10 | 12 | 83% |
 | E. SEO | 14 | 15 | 93% |
 | F. A11y | 8 | 8 | 100% |
 | G. Performance | 7 | 8 | 88% |
-| H. Links | 10 | 10 | 100% |
+| H. Links | 8 | 10 | 80% |
 | I. Sitemap | 8 | 8 | 100% |
 | J. Mobile | 6 | 6 | 100% |
 
 ## Failures
 
-### C. Consistency
+### B. Content
 
-- C7: No em-dashes in homepage user-visible text — assertion returned false
+- B4: /industries has Popular section — assertion returned false
+- B6: /industries has A-Z section — assertion returned false
+- B7: /industries shows sector emojis — assertion returned false
+- B14: Synth cell shows Estimated badge — assertion returned false
+- B15: Neighborhood page shows character chip — assertion returned false
+- B20: Admin dashboard has table inventory — assertion returned false
 
 ### D. Data sanity
 
@@ -39,6 +44,11 @@ Generated 2026-05-22T18:48:54.303Z against https://www.marginatlas.com.
 ### G. Performance
 
 - G7: Speed Insights script wired — assertion returned false
+
+### H. Links
+
+- H6: Neighborhood page links to sibling neighborhoods — assertion returned false
+- H9: Neighborhood page links to city — assertion returned false
 
 ## All assertions (passed + failed)
 
@@ -62,30 +72,30 @@ Generated 2026-05-22T18:48:54.303Z against https://www.marginatlas.com.
 | B1 | B. Content | Homepage has hero question | PASS | 200 |
 | B2 | B. Content | Homepage has at least 6 featured tiles | PASS | 200 |
 | B3 | B. Content | Homepage has no 'Click for details' placeholder | PASS | 200 |
-| B4 | B. Content | /industries has Popular section | PASS | 200 |
+| B4 | B. Content | /industries has Popular section | FAIL | 200 |
 | B5 | B. Content | /industries has By sector section | PASS | 200 |
-| B6 | B. Content | /industries has A-Z section | PASS | 200 |
-| B7 | B. Content | /industries shows sector emojis | PASS | 200 |
+| B6 | B. Content | /industries has A-Z section | FAIL | 200 |
+| B7 | B. Content | /industries shows sector emojis | FAIL | 200 |
 | B8 | B. Content | Cell page has h1 | PASS | 200 |
 | B9 | B. Content | Cell page has revenue tiles | PASS | 200 |
 | B10 | B. Content | Cell page has distribution visual | PASS | 200 |
 | B11 | B. Content | Cell page has profit waterfall section | PASS | 200 |
 | B12 | B. Content | Frankfurt page shows 'Frankfurt am Main' label | PASS | 200 |
 | B13 | B. Content | Lyon page shows Lyon label | PASS | 200 |
-| B14 | B. Content | Synth cell shows Estimated badge | PASS | 200 |
-| B15 | B. Content | Neighborhood page shows character chip | PASS | 200 |
+| B14 | B. Content | Synth cell shows Estimated badge | FAIL | 200 |
+| B15 | B. Content | Neighborhood page shows character chip | FAIL | 200 |
 | B16 | B. Content | Country page lists industries | PASS | 200 |
 | B17 | B. Content | Coverage page renders | PASS | 200 |
 | B18 | B. Content | World page renders | PASS | 200 |
 | B19 | B. Content | Sector page renders sector name | PASS | 200 |
-| B20 | B. Content | Admin dashboard has table inventory | PASS | 200 |
+| B20 | B. Content | Admin dashboard has table inventory | FAIL | 200 |
 | C1 | C. Consistency | Header brand 'Margin Atlas' on all pages | PASS | 200 |
 | C2 | C. Consistency | Cell page has header brand | PASS | 200 |
 | C3 | C. Consistency | Footer present on cell page | PASS | 200 |
 | C4 | C. Consistency | Tesseract Research credit in footer (homepage) | PASS | 200 |
 | C5 | C. Consistency | $ formatting present (not blank) | PASS | 200 |
 | C6 | C. Consistency | Currency symbol consistent on country page | PASS | 200 |
-| C7 | C. Consistency | No em-dashes in homepage user-visible text | FAIL | 200 |
+| C7 | C. Consistency | No em-dashes in homepage user-visible text | PASS | 200 |
 | C8 | C. Consistency | No source-agency names leak in homepage | PASS | 200 |
 | C9 | C. Consistency | No source-agency names leak in cell page | PASS | 200 |
 | C10 | C. Consistency | /industries doesn't link to /us/california | PASS | 200 |
@@ -137,10 +147,10 @@ Generated 2026-05-22T18:48:54.303Z against https://www.marginatlas.com.
 | H3 | H. Links | Cell page has >= 12 outgoing internal links | PASS | 200 |
 | H4 | H. Links | /industries page links to actual industry pages | PASS | 200 |
 | H5 | H. Links | Country page links to industries | PASS | 200 |
-| H6 | H. Links | Neighborhood page links to sibling neighborhoods | PASS | 200 |
+| H6 | H. Links | Neighborhood page links to sibling neighborhoods | FAIL | 200 |
 | H7 | H. Links | Footer has navigation links | PASS | 200 |
 | H8 | H. Links | Cell page links to country (back-link) | PASS | 200 |
-| H9 | H. Links | Neighborhood page links to city | PASS | 200 |
+| H9 | H. Links | Neighborhood page links to city | FAIL | 200 |
 | H10 | H. Links | /industries Popular section has >= 8 links | PASS | 200 |
 | I1 | I. Sitemap | Sitemap shard 0 > 1 KB | PASS | 200 |
 | I2 | I. Sitemap | Sitemap shard 1 > 1 KB | PASS | 200 |

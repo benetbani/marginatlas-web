@@ -52,6 +52,7 @@ const GATES: Gate[] = [
   { name: "v34-research-rules", script: "scripts/verify_v34_research_rules.ts" },
   { name: "no-internal-notes", script: "scripts/verify_no_internal_notes.ts" },
   { name: "top-industries-plausibility", script: "tests/cells/top_industries_plausibility.test.ts" },
+  { name: "all-sizes-blend", script: "tests/cells/extrapolated_all_sizes_blend.test.ts" },
   { name: "geo-region-name", script: "tests/cells/geo_region_name.test.ts" },
   { name: "useless-tiles", script: "scripts/audit/find_useless_tiles.ts" },
   { name: "typography", script: "scripts/verify_typography_consistency.ts" },

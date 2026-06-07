@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-05-22T23:35:47.953Z",
-  "total_issues": 532,
+  "generated_at": "2026-05-26T11:51:57.617Z",
+  "total_issues": 449,
   "by_severity": {
-    "block": 500,
+    "block": 417,
     "warn": 32
   },
   "by_code": {
-    "rev_too_high_for_smb": 336,
-    "currency_likely_local": 164,
+    "rev_too_high_for_smb": 280,
+    "currency_likely_local": 137,
     "rev_too_low_for_smb": 32
   },
   "issues": [
@@ -2907,13 +2907,277 @@
     {
       "table": "regional_cells",
       "iso3": "CH",
+      "industry": "civil_engineering",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $122,793,333.22 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 122793333.22,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "civil_engineering",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 122,793,333.22 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 122793333.22,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "chemical_pharma_mfg",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $183,488,629.88 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 183488629.88,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "chemical_pharma_mfg",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 183,488,629.88 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 183488629.88,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "grocery_stores",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $154,595,090.65 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 154595090.65,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "grocery_stores",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 154,595,090.65 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 154595090.65,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "trucking_freight",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $88,129,180.04 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 88129180.04,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "electrical_equipment_mfg",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $107,513,482.22 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 107513482.22,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "electrical_equipment_mfg",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 107,513,482.22 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 107513482.22,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "banking",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $71,071,819.21 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 71071819.21,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "media_publishing",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $93,784,405.66 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 93784405.66,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "software_development",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $83,944,600.06 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 83944600.06,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "warehousing_storage",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $125,011,333.28 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 125011333.28,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "warehousing_storage",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 125,011,333.28 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 125011333.28,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "plastics_rubber_mfg",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $110,212,896.33 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 110212896.33,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "plastics_rubber_mfg",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 110,212,896.33 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 110212896.33,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "furniture_other_mfg",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $61,110,547.4 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 61110547.4,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "marketing_design",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $76,283,392.76 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 76283392.76,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "water_waste",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $68,477,075.64 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 68477075.64,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "travel_agencies",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $104,371,630.57 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 104371630.57,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "travel_agencies",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 104,371,630.57 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 104371630.57,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "veterinary_pet_care",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $69,674,731.28 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 69674731.28,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
       "industry": "metal_products_mfg",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $162,612,595.41 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $127,041,090.16 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 162612595.41,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 127041090.16,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
@@ -2922,10 +3186,10 @@
       "industry": "metal_products_mfg",
       "size_band": "50-249",
       "code": "currency_likely_local",
-      "message": "Revenue 162,612,595.41 is in the band where local currency was likely mistaken for USD.",
+      "message": "Revenue 127,041,090.16 is in the band where local currency was likely mistaken for USD.",
       "values": {
-        "revenue": 162612595.41,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 127041090.16,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
@@ -2934,10 +3198,10 @@
       "industry": "electronics_mfg",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $130,225,012.58 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $101,738,291.08 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 130225012.58,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 101738291.08,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
@@ -2946,10 +3210,10 @@
       "industry": "electronics_mfg",
       "size_band": "50-249",
       "code": "currency_likely_local",
-      "message": "Revenue 130,225,012.58 is in the band where local currency was likely mistaken for USD.",
+      "message": "Revenue 101,738,291.08 is in the band where local currency was likely mistaken for USD.",
       "values": {
-        "revenue": 130225012.58,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 101738291.08,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
@@ -2958,10 +3222,10 @@
       "industry": "wood_paper_mfg",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $131,543,790.8 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $102,768,586.56 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 131543790.8,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 102768586.56,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
@@ -2970,10 +3234,10 @@
       "industry": "wood_paper_mfg",
       "size_band": "50-249",
       "code": "currency_likely_local",
-      "message": "Revenue 131,543,790.8 is in the band where local currency was likely mistaken for USD.",
+      "message": "Revenue 102,768,586.56 is in the band where local currency was likely mistaken for USD.",
       "values": {
-        "revenue": 131543790.8,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 102768586.56,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
@@ -2982,10 +3246,10 @@
       "industry": "specialty_trades",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $89,531,194.45 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $69,946,245.66 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 89531194.45,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 69946245.66,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
@@ -2994,10 +3258,10 @@
       "industry": "wholesale_food",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $400,069,154.67 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $312,554,027.09 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 400069154.67,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 312554027.09,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
@@ -3006,10 +3270,10 @@
       "industry": "wholesale_food",
       "size_band": "50-249",
       "code": "currency_likely_local",
-      "message": "Revenue 400,069,154.67 is in the band where local currency was likely mistaken for USD.",
+      "message": "Revenue 312,554,027.09 is in the band where local currency was likely mistaken for USD.",
       "values": {
-        "revenue": 400069154.67,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 312554027.09,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
@@ -3018,22 +3282,10 @@
       "industry": "wholesale_food",
       "size_band": "20-49",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $107,398,380.93 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $83,904,985.1 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 107398380.93,
-        "geo_id": "CH-CITY-zurich"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "wholesale_food",
-      "size_band": "20-49",
-      "code": "currency_likely_local",
-      "message": "Revenue 107,398,380.93 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 107398380.93,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 83904985.1,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
@@ -3042,10 +3294,10 @@
       "industry": "auto_dealers_gas",
       "size_band": "20-49",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $95,301,203.78 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $74,454,065.45 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 95301203.78,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 74454065.45,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
@@ -3054,10 +3306,10 @@
       "industry": "auto_dealers_gas",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $477,940,715.66 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $373,391,184.11 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 477940715.66,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 373391184.11,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
@@ -3066,10 +3318,10 @@
       "industry": "auto_dealers_gas",
       "size_band": "50-249",
       "code": "currency_likely_local",
-      "message": "Revenue 477,940,715.66 is in the band where local currency was likely mistaken for USD.",
+      "message": "Revenue 373,391,184.11 is in the band where local currency was likely mistaken for USD.",
       "values": {
-        "revenue": 477940715.66,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 373391184.11,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
@@ -3078,22 +3330,10 @@
       "industry": "machinery_mfg",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $115,896,590.42 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $90,544,211.26 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 115896590.42,
-        "geo_id": "CH-CITY-zurich"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "machinery_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 115,896,590.42 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 115896590.42,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 90544211.26,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
@@ -3102,10 +3342,10 @@
       "industry": "motor_vehicles_mfg",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $171,547,145.34 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $134,021,207.3 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 171547145.34,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 134021207.3,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
@@ -3114,10 +3354,10 @@
       "industry": "motor_vehicles_mfg",
       "size_band": "50-249",
       "code": "currency_likely_local",
-      "message": "Revenue 171,547,145.34 is in the band where local currency was likely mistaken for USD.",
+      "message": "Revenue 134,021,207.3 is in the band where local currency was likely mistaken for USD.",
       "values": {
-        "revenue": 171547145.34,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 134021207.3,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
@@ -3126,10 +3366,10 @@
       "industry": "broadcasting_telecom",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $159,813,092.86 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $124,853,978.8 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 159813092.86,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 124853978.8,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
@@ -3138,10 +3378,10 @@
       "industry": "broadcasting_telecom",
       "size_band": "50-249",
       "code": "currency_likely_local",
-      "message": "Revenue 159,813,092.86 is in the band where local currency was likely mistaken for USD.",
+      "message": "Revenue 124,853,978.8 is in the band where local currency was likely mistaken for USD.",
       "values": {
-        "revenue": 159813092.86,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 124853978.8,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
@@ -3150,10 +3390,10 @@
       "industry": "it_services_hosting",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $86,434,608.27 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $67,527,037.71 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 86434608.27,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 67527037.71,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
@@ -3162,22 +3402,10 @@
       "industry": "other_transport_mfg",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $127,171,808.27 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $99,352,975.21 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 127171808.27,
-        "geo_id": "CH-CITY-zurich"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "other_transport_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 127,171,808.27 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 127171808.27,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 99352975.21,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
@@ -3186,10 +3414,10 @@
       "industry": "postal_courier",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $97,774,246.21 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $76,386,129.85 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 97774246.21,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 76386129.85,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
@@ -3198,10 +3426,10 @@
       "industry": "real_estate_agencies",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $90,260,333.41 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $70,515,885.48 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 90260333.41,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 70515885.48,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
@@ -3210,10 +3438,10 @@
       "industry": "oil_gas_extraction",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $187,273,750.37 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $146,307,617.47 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 187273750.37,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 146307617.47,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
@@ -3222,10 +3450,10 @@
       "industry": "oil_gas_extraction",
       "size_band": "50-249",
       "code": "currency_likely_local",
-      "message": "Revenue 187,273,750.37 is in the band where local currency was likely mistaken for USD.",
+      "message": "Revenue 146,307,617.47 is in the band where local currency was likely mistaken for USD.",
       "values": {
-        "revenue": 187273750.37,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 146307617.47,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
@@ -3234,10 +3462,10 @@
       "industry": "electricity_gas_utilities",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $602,174,430.93 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $470,448,774.16 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 602174430.93,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 470448774.16,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
@@ -3246,2890 +3474,1666 @@
       "industry": "electricity_gas_utilities",
       "size_band": "50-249",
       "code": "currency_likely_local",
-      "message": "Revenue 602,174,430.93 is in the band where local currency was likely mistaken for USD.",
+      "message": "Revenue 470,448,774.16 is in the band where local currency was likely mistaken for USD.",
       "values": {
-        "revenue": 602174430.93,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 470448774.16,
+        "geo_id": "CH-CITY-lugano"
       }
     },
     {
       "table": "regional_cells",
       "iso3": "CH",
+      "industry": "food_beverage_mfg",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $145,149,260 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 145149260,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "food_beverage_mfg",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 145,149,260 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 145149260,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "mining_quarrying",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $75,488,347.61 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 75488347.61,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "engineering_architecture",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $68,755,330.95 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 68755330.95,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "management_consulting",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $79,693,681.09 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 79693681.09,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "legal_services",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $65,974,182.12 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 65974182.12,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "residential_construction",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $116,322,436.64 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 116322436.64,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "residential_construction",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 116,322,436.64 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 116322436.64,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "property_leasing",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $134,829,523.07 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 134829523.07,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "CH",
+      "industry": "property_leasing",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 134,829,523.07 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 134829523.07,
+        "geo_id": "CH-CITY-lugano"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "AD",
+      "industry": "wholesale_food",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $93,835,504.59 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 93835504.59,
+        "geo_id": "AD-CITY-andorra-la-vella"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "AD",
+      "industry": "auto_dealers_gas",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $81,932,760.54 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 81932760.54,
+        "geo_id": "AD-CITY-andorra-la-vella"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "AD",
       "industry": "oil_gas_extraction",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $62,273,136.96 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 62273136.96,
+        "geo_id": "AD-CITY-andorra-la-vella"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "AD",
+      "industry": "electricity_gas_utilities",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $168,766,664.35 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 168766664.35,
+        "geo_id": "AD-CITY-andorra-la-vella"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "AD",
+      "industry": "electricity_gas_utilities",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 168,766,664.35 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 168766664.35,
+        "geo_id": "AD-CITY-andorra-la-vella"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "civil_engineering",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $88,202,387.89 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 88202387.89,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "chemical_pharma_mfg",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $204,636,633.52 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 204636633.52,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "chemical_pharma_mfg",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 204,636,633.52 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 204636633.52,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "trucking_freight",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $69,338,429.03 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 69338429.03,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "electrical_equipment_mfg",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $129,760,626.46 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 129760626.46,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "electrical_equipment_mfg",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 129,760,626.46 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 129760626.46,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "banking",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $195,790,270.18 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 195790270.18,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "banking",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 195,790,270.18 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 195790270.18,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "media_publishing",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $81,855,298.21 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 81855298.21,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "software_development",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $101,170,801.35 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 101170801.35,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "software_development",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 101,170,801.35 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 101170801.35,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "warehousing_storage",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $125,800,575.86 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 125800575.86,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "warehousing_storage",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 125,800,575.86 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 125800575.86,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "plastics_rubber_mfg",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $87,737,589.87 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 87737589.87,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "furniture_other_mfg",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $141,104,428.04 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 141104428.04,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "furniture_other_mfg",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 141,104,428.04 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 141104428.04,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "marketing_design",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $76,627,208.97 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 76627208.97,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "water_waste",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $169,331,621.18 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 169331621.18,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "water_waste",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 169,331,621.18 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 169331621.18,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "travel_agencies",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $224,779,927.36 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 224779927.36,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "travel_agencies",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 224,779,927.36 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 224779927.36,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "office_support",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $71,781,536.81 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 71781536.81,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "metal_products_mfg",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $101,417,775.56 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 101417775.56,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "metal_products_mfg",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 101,417,775.56 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 101417775.56,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "electronics_mfg",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $142,698,008.87 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 142698008.87,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "electronics_mfg",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 142,698,008.87 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 142698008.87,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "wood_paper_mfg",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $125,562,041.72 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 125562041.72,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "wood_paper_mfg",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 125,562,041.72 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 125562041.72,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "wholesale_food",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $356,021,422.45 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 356021422.45,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "wholesale_food",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 356,021,422.45 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 356021422.45,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "wholesale_food",
       "size_band": "20-49",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $66,574,601.15 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $78,516,011.09 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 66574601.15,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 78516011.09,
+        "geo_id": "LI-CITY-vaduz"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "LI",
+      "industry": "auto_dealers_gas",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $220,752,598.55 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 220752598.55,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "auto_dealers_gas",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 220,752,598.55 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 220752598.55,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "machinery_mfg",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $149,691,425.34 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 149691425.34,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "machinery_mfg",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 149,691,425.34 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 149691425.34,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "motor_vehicles_mfg",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $108,073,171.12 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 108073171.12,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "motor_vehicles_mfg",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 108,073,171.12 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 108073171.12,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "broadcasting_telecom",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $233,872,440.76 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 233872440.76,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "broadcasting_telecom",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 233,872,440.76 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 233872440.76,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "it_services_hosting",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $147,419,691.47 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 147419691.47,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "it_services_hosting",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 147,419,691.47 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 147419691.47,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "other_transport_mfg",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $165,881,280.72 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 165881280.72,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "other_transport_mfg",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 165,881,280.72 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 165881280.72,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "residential_construction",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $102,560,304.92 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 102560304.92,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "residential_construction",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 102,560,304.92 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 102560304.92,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "property_leasing",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $175,569,226.52 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 175569226.52,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "property_leasing",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 175,569,226.52 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 175569226.52,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "property_leasing",
+      "size_band": "20-49",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $62,263,607.44 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 62263607.44,
+        "geo_id": "LI-CITY-vaduz"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "civil_engineering",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $79,666,672.93 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 79666672.93,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "chemical_pharma_mfg",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $184,833,088.34 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 184833088.34,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "chemical_pharma_mfg",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 184,833,088.34 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 184833088.34,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "trucking_freight",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $62,628,258.48 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 62628258.48,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "electrical_equipment_mfg",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $117,203,146.48 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 117203146.48,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "electrical_equipment_mfg",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 117,203,146.48 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 117203146.48,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "banking",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $176,842,824.68 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 176842824.68,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "banking",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 176,842,824.68 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 176842824.68,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "media_publishing",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $73,933,817.73 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 73933817.73,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "software_development",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $91,380,078.63 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 91380078.63,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "warehousing_storage",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $113,626,326.58 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 113626326.58,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "warehousing_storage",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 113,626,326.58 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 113626326.58,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "plastics_rubber_mfg",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $79,246,855.36 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 79246855.36,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "furniture_other_mfg",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $127,449,160.81 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 127449160.81,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "furniture_other_mfg",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 127,449,160.81 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 127449160.81,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "marketing_design",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $69,211,672.62 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 69211672.62,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "water_waste",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $152,944,690.1 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 152944690.1,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "water_waste",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 152,944,690.1 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 152944690.1,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "travel_agencies",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $203,027,031.16 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 203027031.16,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "travel_agencies",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 203,027,031.16 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 203027031.16,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "office_support",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $64,834,936.48 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 64834936.48,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "metal_products_mfg",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $91,603,152.12 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 91603152.12,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "electronics_mfg",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $128,888,524.14 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 128888524.14,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "electronics_mfg",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 128,888,524.14 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 128888524.14,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "wood_paper_mfg",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $113,410,876.39 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 113410876.39,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "wood_paper_mfg",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 113,410,876.39 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 113410876.39,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "wholesale_food",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $321,567,736.41 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 321567736.41,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "wholesale_food",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 321,567,736.41 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 321567736.41,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "wholesale_food",
+      "size_band": "20-49",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $70,917,687.43 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 70917687.43,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "auto_dealers_gas",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $199,389,443.85 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 199389443.85,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "auto_dealers_gas",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 199,389,443.85 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 199389443.85,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "machinery_mfg",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $135,205,158.37 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 135205158.37,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "machinery_mfg",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 135,205,158.37 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 135205158.37,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "motor_vehicles_mfg",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $97,614,477.14 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 97614477.14,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "broadcasting_telecom",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $211,239,623.92 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 211239623.92,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "broadcasting_telecom",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 211,239,623.92 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 211239623.92,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "it_services_hosting",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $133,153,269.72 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 133153269.72,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "it_services_hosting",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 133,153,269.72 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 133153269.72,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "other_transport_mfg",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $149,828,253.55 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 149828253.55,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "other_transport_mfg",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 149,828,253.55 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 149828253.55,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "real_estate_agencies",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $160,063,647.28 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 160063647.28,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "real_estate_agencies",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 160,063,647.28 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 160063647.28,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "oil_gas_extraction",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $312,412,999.43 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 312412999.43,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "oil_gas_extraction",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 312,412,999.43 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 312412999.43,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "electricity_gas_utilities",
+      "size_band": "50-249",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $702,475,285.99 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 702475285.99,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
+      "industry": "electricity_gas_utilities",
+      "size_band": "50-249",
+      "code": "currency_likely_local",
+      "message": "Revenue 702,475,285.99 is in the band where local currency was likely mistaken for USD.",
+      "values": {
+        "revenue": 702475285.99,
+        "geo_id": "LI-CITY-schaan"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "LI",
       "industry": "electricity_gas_utilities",
       "size_band": "10-19",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $68,013,035.01 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $81,811,516.21 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 68013035.01,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 81811516.21,
+        "geo_id": "LI-CITY-schaan"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "LI",
       "industry": "electricity_gas_utilities",
       "size_band": "20-49",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $134,977,789.89 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $199,809,469.23 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 134977789.89,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 199809469.23,
+        "geo_id": "LI-CITY-schaan"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "LI",
       "industry": "electricity_gas_utilities",
       "size_band": "20-49",
       "code": "currency_likely_local",
-      "message": "Revenue 134,977,789.89 is in the band where local currency was likely mistaken for USD.",
+      "message": "Revenue 199,809,469.23 is in the band where local currency was likely mistaken for USD.",
       "values": {
-        "revenue": 134977789.89,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 199809469.23,
+        "geo_id": "LI-CITY-schaan"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "LI",
       "industry": "food_beverage_mfg",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $185,791,052.8 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $148,903,393.88 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 185791052.8,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 148903393.88,
+        "geo_id": "LI-CITY-schaan"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "LI",
       "industry": "food_beverage_mfg",
       "size_band": "50-249",
       "code": "currency_likely_local",
-      "message": "Revenue 185,791,052.8 is in the band where local currency was likely mistaken for USD.",
+      "message": "Revenue 148,903,393.88 is in the band where local currency was likely mistaken for USD.",
       "values": {
-        "revenue": 185791052.8,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 148903393.88,
+        "geo_id": "LI-CITY-schaan"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "LI",
       "industry": "mining_quarrying",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $96,625,084.94 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $156,234,827.29 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 96625084.94,
-        "geo_id": "CH-CITY-zurich"
+        "revenue": 156234827.29,
+        "geo_id": "LI-CITY-schaan"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "engineering_architecture",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $88,006,823.62 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 88006823.62,
-        "geo_id": "CH-CITY-zurich"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "management_consulting",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $102,007,911.79 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 102007911.79,
-        "geo_id": "CH-CITY-zurich"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "management_consulting",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 102,007,911.79 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 102007911.79,
-        "geo_id": "CH-CITY-zurich"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "legal_services",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $84,446,953.12 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 84446953.12,
-        "geo_id": "CH-CITY-zurich"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "residential_construction",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $148,892,718.9 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 148892718.9,
-        "geo_id": "CH-CITY-zurich"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "residential_construction",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 148,892,718.9 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 148892718.9,
-        "geo_id": "CH-CITY-zurich"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "property_leasing",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $172,581,789.54 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 172581789.54,
-        "geo_id": "CH-CITY-zurich"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "property_leasing",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 172,581,789.54 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 172581789.54,
-        "geo_id": "CH-CITY-zurich"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "civil_engineering",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $152,263,733.2 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 152263733.2,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "civil_engineering",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 152,263,733.2 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 152263733.2,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "chemical_pharma_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $227,525,901.05 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 227525901.05,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "chemical_pharma_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 227,525,901.05 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 227525901.05,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "grocery_stores",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $191,697,912.41 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 191697912.41,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "grocery_stores",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 191,697,912.41 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 191697912.41,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "trucking_freight",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $109,280,183.25 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 109280183.25,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "trucking_freight",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 109,280,183.25 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 109280183.25,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "electrical_equipment_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $133,316,717.96 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 133316717.96,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "electrical_equipment_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 133,316,717.96 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 133316717.96,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "banking",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $88,129,055.82 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 88129055.82,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "media_publishing",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $116,292,663.02 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 116292663.02,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "media_publishing",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 116,292,663.02 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 116292663.02,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "software_development",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $104,091,304.08 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 104091304.08,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "software_development",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 104,091,304.08 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 104091304.08,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "warehousing_storage",
-      "size_band": "20-49",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $62,804,985.4 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 62804985.4,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "warehousing_storage",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $155,014,053.26 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 155014053.26,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "warehousing_storage",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 155,014,053.26 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 155014053.26,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "plastics_rubber_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $136,663,991.44 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 136663991.44,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "plastics_rubber_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 136,663,991.44 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 136663991.44,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "furniture_other_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $75,777,078.78 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 75777078.78,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "marketing_design",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $94,591,407.03 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 94591407.03,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "water_waste",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $84,911,573.79 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 84911573.79,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "travel_agencies",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $129,420,821.91 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 129420821.91,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "travel_agencies",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 129,420,821.91 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 129420821.91,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "veterinary_pet_care",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $86,396,666.78 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 86396666.78,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "metal_products_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $157,530,951.8 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 157530951.8,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "metal_products_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 157,530,951.8 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 157530951.8,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "electronics_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $126,155,480.93 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 126155480.93,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "electronics_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 126,155,480.93 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 126155480.93,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "wood_paper_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $127,433,047.34 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 127433047.34,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "wood_paper_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 127,433,047.34 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 127433047.34,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "specialty_trades",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $86,733,344.62 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 86733344.62,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "wholesale_food",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $387,566,993.59 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 387566993.59,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "wholesale_food",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 387,566,993.59 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 387566993.59,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "wholesale_food",
-      "size_band": "20-49",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $104,042,181.52 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 104042181.52,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "wholesale_food",
-      "size_band": "20-49",
-      "code": "currency_likely_local",
-      "message": "Revenue 104,042,181.52 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 104042181.52,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "auto_dealers_gas",
-      "size_band": "20-49",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $92,323,041.16 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 92323041.16,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "auto_dealers_gas",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $463,005,068.3 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 463005068.3,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "auto_dealers_gas",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 463,005,068.3 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 463005068.3,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "machinery_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $112,274,821.97 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 112274821.97,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "machinery_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 112,274,821.97 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 112274821.97,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "motor_vehicles_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $166,186,297.05 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 166186297.05,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "motor_vehicles_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 166,186,297.05 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 166186297.05,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "broadcasting_telecom",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $154,818,933.71 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 154818933.71,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "broadcasting_telecom",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 154,818,933.71 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 154818933.71,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "it_services_hosting",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $83,733,526.76 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 83733526.76,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "other_transport_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $123,197,689.26 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 123197689.26,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "other_transport_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 123,197,689.26 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 123197689.26,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "postal_courier",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $94,718,801.01 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 94718801.01,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "real_estate_agencies",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $87,439,697.99 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 87439697.99,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "oil_gas_extraction",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $181,421,445.67 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 181421445.67,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "oil_gas_extraction",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 181,421,445.67 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 181421445.67,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "electricity_gas_utilities",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $583,356,479.96 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 583356479.96,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "electricity_gas_utilities",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 583,356,479.96 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 583356479.96,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "oil_gas_extraction",
-      "size_band": "20-49",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $64,494,144.87 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 64494144.87,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "electricity_gas_utilities",
-      "size_band": "10-19",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $65,887,627.66 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 65887627.66,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "electricity_gas_utilities",
-      "size_band": "20-49",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $130,759,733.95 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 130759733.95,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "electricity_gas_utilities",
-      "size_band": "20-49",
-      "code": "currency_likely_local",
-      "message": "Revenue 130,759,733.95 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 130759733.95,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "food_beverage_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $179,985,082.4 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 179985082.4,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "food_beverage_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 179,985,082.4 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 179985082.4,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "LI",
       "industry": "mining_quarrying",
       "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $93,605,551.04 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "code": "currency_likely_local",
+      "message": "Revenue 156,234,827.29 is in the band where local currency was likely mistaken for USD.",
       "values": {
-        "revenue": 93605551.04,
-        "geo_id": "CH-CITY-geneva"
+        "revenue": 156234827.29,
+        "geo_id": "LI-CITY-schaan"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "LI",
       "industry": "engineering_architecture",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $85,256,610.38 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $73,482,266.73 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 85256610.38,
-        "geo_id": "CH-CITY-geneva"
+        "revenue": 73482266.73,
+        "geo_id": "LI-CITY-schaan"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "LI",
       "industry": "management_consulting",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $98,820,164.55 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $104,407,990.44 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 98820164.55,
-        "geo_id": "CH-CITY-geneva"
+        "revenue": 104407990.44,
+        "geo_id": "LI-CITY-schaan"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "legal_services",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $81,807,985.84 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 81807985.84,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "residential_construction",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $144,239,821.43 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 144239821.43,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "residential_construction",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 144,239,821.43 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 144239821.43,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "property_leasing",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $167,188,608.61 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 167188608.61,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "property_leasing",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 167,188,608.61 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 167188608.61,
-        "geo_id": "CH-CITY-geneva"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "civil_engineering",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $137,528,533.21 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 137528533.21,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "civil_engineering",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 137,528,533.21 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 137528533.21,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "chemical_pharma_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $205,507,265.46 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 205507265.46,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "chemical_pharma_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 205,507,265.46 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 205507265.46,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "grocery_stores",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $173,146,501.53 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 173146501.53,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "grocery_stores",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 173,146,501.53 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 173146501.53,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "trucking_freight",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $98,704,681.64 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 98704681.64,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "electrical_equipment_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $120,415,100.09 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 120415100.09,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "electrical_equipment_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 120,415,100.09 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 120415100.09,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "banking",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $79,600,437.52 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 79600437.52,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "media_publishing",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $105,038,534.34 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 105038534.34,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "media_publishing",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 105,038,534.34 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 105038534.34,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "software_development",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $94,017,952.07 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 94017952.07,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "warehousing_storage",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $140,012,693.27 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 140012693.27,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "warehousing_storage",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 140,012,693.27 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 140012693.27,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "plastics_rubber_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $123,438,443.88 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 123438443.88,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "plastics_rubber_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 123,438,443.88 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 123438443.88,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "furniture_other_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $68,443,813.09 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 68443813.09,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "marketing_design",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $85,437,399.89 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 85437399.89,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "water_waste",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $76,694,324.71 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 76694324.71,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "travel_agencies",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $116,896,226.24 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 116896226.24,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "travel_agencies",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 116,896,226.24 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 116896226.24,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "veterinary_pet_care",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $78,035,699.03 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 78035699.03,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "metal_products_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $142,286,020.98 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 142286020.98,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "metal_products_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 142,286,020.98 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 142286020.98,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "electronics_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $113,946,886 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 113946886,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "electronics_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 113,946,886 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 113946886,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "wood_paper_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $115,100,816.95 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 115100816.95,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "wood_paper_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 115,100,816.95 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 115100816.95,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "specialty_trades",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $78,339,795.14 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 78339795.14,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "wholesale_food",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $350,060,510.34 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 350060510.34,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "wholesale_food",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 350,060,510.34 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 350060510.34,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "wholesale_food",
-      "size_band": "20-49",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $93,973,583.31 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 93973583.31,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "auto_dealers_gas",
-      "size_band": "20-49",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $83,388,553.3 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 83388553.3,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "auto_dealers_gas",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $418,198,126.21 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 418198126.21,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "auto_dealers_gas",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 418,198,126.21 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 418198126.21,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "machinery_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $101,409,516.61 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 101409516.61,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "machinery_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 101,409,516.61 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 101409516.61,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "motor_vehicles_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $150,103,752.18 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 150103752.18,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "motor_vehicles_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 150,103,752.18 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 150103752.18,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "broadcasting_telecom",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $139,836,456.26 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 139836456.26,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "broadcasting_telecom",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 139,836,456.26 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 139836456.26,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "it_services_hosting",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $75,630,282.24 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 75630282.24,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "other_transport_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $111,275,332.24 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 111275332.24,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "other_transport_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 111,275,332.24 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 111275332.24,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "postal_courier",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $85,552,465.43 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 85552465.43,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "real_estate_agencies",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $78,977,791.73 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 78977791.73,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "oil_gas_extraction",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $163,864,531.57 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 163864531.57,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "oil_gas_extraction",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 163,864,531.57 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 163864531.57,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "electricity_gas_utilities",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $526,902,627.06 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 526902627.06,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "electricity_gas_utilities",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 526,902,627.06 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 526902627.06,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "electricity_gas_utilities",
-      "size_band": "20-49",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $118,105,566.15 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 118105566.15,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "electricity_gas_utilities",
-      "size_band": "20-49",
-      "code": "currency_likely_local",
-      "message": "Revenue 118,105,566.15 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 118105566.15,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "food_beverage_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $162,567,171.2 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 162567171.2,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "food_beverage_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 162,567,171.2 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 162567171.2,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "mining_quarrying",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $84,546,949.33 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 84546949.33,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "engineering_architecture",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $77,005,970.66 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 77005970.66,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "LI",
       "industry": "management_consulting",
       "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $89,256,922.82 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "code": "currency_likely_local",
+      "message": "Revenue 104,407,990.44 is in the band where local currency was likely mistaken for USD.",
       "values": {
-        "revenue": 89256922.82,
-        "geo_id": "CH-CITY-basel"
+        "revenue": 104407990.44,
+        "geo_id": "LI-CITY-schaan"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "LI",
       "industry": "legal_services",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $73,891,083.98 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $79,293,017.41 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 73891083.98,
-        "geo_id": "CH-CITY-basel"
+        "revenue": 79293017.41,
+        "geo_id": "LI-CITY-schaan"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "LI",
       "industry": "residential_construction",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $130,281,129.03 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $92,635,114.12 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 130281129.03,
-        "geo_id": "CH-CITY-basel"
+        "revenue": 92635114.12,
+        "geo_id": "LI-CITY-schaan"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "residential_construction",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 130,281,129.03 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 130281129.03,
-        "geo_id": "CH-CITY-basel"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "LI",
       "industry": "property_leasing",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $151,009,065.84 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $158,578,656.21 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 151009065.84,
-        "geo_id": "CH-CITY-basel"
+        "revenue": 158578656.21,
+        "geo_id": "LI-CITY-schaan"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "LI",
       "industry": "property_leasing",
       "size_band": "50-249",
       "code": "currency_likely_local",
-      "message": "Revenue 151,009,065.84 is in the band where local currency was likely mistaken for USD.",
+      "message": "Revenue 158,578,656.21 is in the band where local currency was likely mistaken for USD.",
       "values": {
-        "revenue": 151009065.84,
-        "geo_id": "CH-CITY-basel"
+        "revenue": 158578656.21,
+        "geo_id": "LI-CITY-schaan"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "MC",
       "industry": "civil_engineering",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $127,705,066.55 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $126,602,347.93 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 127705066.55,
-        "geo_id": "CH-CITY-bern"
+        "revenue": 126602347.93,
+        "geo_id": "MC-CITY-monaco"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "MC",
       "industry": "civil_engineering",
       "size_band": "50-249",
       "code": "currency_likely_local",
-      "message": "Revenue 127,705,066.55 is in the band where local currency was likely mistaken for USD.",
+      "message": "Revenue 126,602,347.93 is in the band where local currency was likely mistaken for USD.",
       "values": {
-        "revenue": 127705066.55,
-        "geo_id": "CH-CITY-bern"
+        "revenue": 126602347.93,
+        "geo_id": "MC-CITY-monaco"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "MC",
+      "industry": "chemical_pharma_mfg",
+      "size_band": "20-49",
+      "code": "rev_too_high_for_smb",
+      "message": "Revenue per firm $89,222,704.11 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "values": {
+        "revenue": 89222704.11,
+        "geo_id": "MC-CITY-monaco"
+      }
+    },
+    {
+      "table": "regional_cells",
+      "iso3": "MC",
       "industry": "chemical_pharma_mfg",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $190,828,175.07 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $309,736,148.01 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 190828175.07,
-        "geo_id": "CH-CITY-bern"
+        "revenue": 309736148.01,
+        "geo_id": "MC-CITY-monaco"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "MC",
       "industry": "chemical_pharma_mfg",
       "size_band": "50-249",
       "code": "currency_likely_local",
-      "message": "Revenue 190,828,175.07 is in the band where local currency was likely mistaken for USD.",
+      "message": "Revenue 309,736,148.01 is in the band where local currency was likely mistaken for USD.",
       "values": {
-        "revenue": 190828175.07,
-        "geo_id": "CH-CITY-bern"
+        "revenue": 309736148.01,
+        "geo_id": "MC-CITY-monaco"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "MC",
       "industry": "grocery_stores",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $160,778,894.28 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $76,550,917.32 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 160778894.28,
-        "geo_id": "CH-CITY-bern"
+        "revenue": 76550917.32,
+        "geo_id": "MC-CITY-monaco"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "grocery_stores",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 160,778,894.28 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 160778894.28,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "MC",
       "industry": "trucking_freight",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $91,654,347.24 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $100,624,992.65 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 91654347.24,
-        "geo_id": "CH-CITY-bern"
+        "revenue": 100624992.65,
+        "geo_id": "MC-CITY-monaco"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "electrical_equipment_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $111,814,021.51 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 111814021.51,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "electrical_equipment_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 111,814,021.51 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 111814021.51,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "banking",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $73,914,691.98 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 73914691.98,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "media_publishing",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $97,535,781.89 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 97535781.89,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "software_development",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $87,302,384.06 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 87302384.06,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "warehousing_storage",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $130,011,786.61 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 130011786.61,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "warehousing_storage",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 130,011,786.61 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 130011786.61,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "plastics_rubber_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $114,621,412.18 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 114621412.18,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "plastics_rubber_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 114,621,412.18 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 114621412.18,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "furniture_other_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $63,554,969.3 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 63554969.3,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "marketing_design",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $79,334,728.47 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 79334728.47,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "water_waste",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $71,216,158.66 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 71216158.66,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "travel_agencies",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $108,546,495.8 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 108546495.8,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "travel_agencies",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 108,546,495.8 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 108546495.8,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "veterinary_pet_care",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $72,461,720.53 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 72461720.53,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "metal_products_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $132,122,733.77 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 132122733.77,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "metal_products_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 132,122,733.77 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 132122733.77,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "electronics_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $105,807,822.72 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 105807822.72,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "electronics_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 105,807,822.72 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 105807822.72,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "wood_paper_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $106,879,330.03 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 106879330.03,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "wood_paper_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 106,879,330.03 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 106879330.03,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "specialty_trades",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $72,744,095.49 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 72744095.49,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "wholesale_food",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $325,056,188.17 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 325056188.17,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "wholesale_food",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 325,056,188.17 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 325056188.17,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "wholesale_food",
-      "size_band": "20-49",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $87,261,184.5 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 87261184.5,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "auto_dealers_gas",
-      "size_band": "20-49",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $77,432,228.07 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 77432228.07,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "auto_dealers_gas",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $388,326,831.48 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 388326831.48,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "auto_dealers_gas",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 388,326,831.48 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 388326831.48,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "machinery_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $94,165,979.71 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 94165979.71,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "motor_vehicles_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $139,382,055.59 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 139382055.59,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "motor_vehicles_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 139,382,055.59 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 139382055.59,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "broadcasting_telecom",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $129,848,137.95 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 129848137.95,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "broadcasting_telecom",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 129,848,137.95 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 129848137.95,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "it_services_hosting",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $70,228,119.22 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 70228119.22,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "other_transport_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $103,327,094.22 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 103327094.22,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "other_transport_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 103,327,094.22 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 103327094.22,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "postal_courier",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $79,441,575.04 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 79441575.04,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "real_estate_agencies",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $73,336,520.89 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 73336520.89,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "oil_gas_extraction",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $152,159,922.17 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 152159922.17,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "oil_gas_extraction",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 152,159,922.17 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 152159922.17,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "electricity_gas_utilities",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $489,266,725.13 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 489266725.13,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "electricity_gas_utilities",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 489,266,725.13 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 489266725.13,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "electricity_gas_utilities",
-      "size_band": "20-49",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $109,669,454.28 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 109669454.28,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "electricity_gas_utilities",
-      "size_band": "20-49",
-      "code": "currency_likely_local",
-      "message": "Revenue 109,669,454.28 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 109669454.28,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "food_beverage_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $150,955,230.4 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 150955230.4,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "food_beverage_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 150,955,230.4 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 150955230.4,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "mining_quarrying",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $78,507,881.52 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 78507881.52,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "engineering_architecture",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $71,505,544.19 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 71505544.19,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "management_consulting",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $82,881,428.33 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 82881428.33,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "legal_services",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $68,613,149.41 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 68613149.41,
-        "geo_id": "CH-CITY-bern"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "civil_engineering",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $132,616,799.88 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 132616799.88,
-        "geo_id": "CH-CITY-lausanne"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "civil_engineering",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 132,616,799.88 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 132616799.88,
-        "geo_id": "CH-CITY-lausanne"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "chemical_pharma_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $198,167,720.27 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 198167720.27,
-        "geo_id": "CH-CITY-lausanne"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "chemical_pharma_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 198,167,720.27 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 198167720.27,
-        "geo_id": "CH-CITY-lausanne"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "grocery_stores",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $166,962,697.9 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 166962697.9,
-        "geo_id": "CH-CITY-lausanne"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "grocery_stores",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 166,962,697.9 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 166962697.9,
-        "geo_id": "CH-CITY-lausanne"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "MC",
       "industry": "trucking_freight",
       "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $95,179,514.44 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "code": "currency_likely_local",
+      "message": "Revenue 100,624,992.65 is in the band where local currency was likely mistaken for USD.",
       "values": {
-        "revenue": 95179514.44,
-        "geo_id": "CH-CITY-lausanne"
+        "revenue": 100624992.65,
+        "geo_id": "MC-CITY-monaco"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "MC",
       "industry": "electrical_equipment_mfg",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $116,114,560.8 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $198,284,824.49 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 116114560.8,
-        "geo_id": "CH-CITY-lausanne"
+        "revenue": 198284824.49,
+        "geo_id": "MC-CITY-monaco"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "MC",
       "industry": "electrical_equipment_mfg",
       "size_band": "50-249",
       "code": "currency_likely_local",
-      "message": "Revenue 116,114,560.8 is in the band where local currency was likely mistaken for USD.",
+      "message": "Revenue 198,284,824.49 is in the band where local currency was likely mistaken for USD.",
       "values": {
-        "revenue": 116114560.8,
-        "geo_id": "CH-CITY-lausanne"
+        "revenue": 198284824.49,
+        "geo_id": "MC-CITY-monaco"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "banking",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $76,757,564.75 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 76757564.75,
-        "geo_id": "CH-CITY-lausanne"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "MC",
       "industry": "media_publishing",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $101,287,158.12 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $120,285,732.37 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 101287158.12,
-        "geo_id": "CH-CITY-lausanne"
+        "revenue": 120285732.37,
+        "geo_id": "MC-CITY-monaco"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "MC",
       "industry": "media_publishing",
       "size_band": "50-249",
       "code": "currency_likely_local",
-      "message": "Revenue 101,287,158.12 is in the band where local currency was likely mistaken for USD.",
+      "message": "Revenue 120,285,732.37 is in the band where local currency was likely mistaken for USD.",
       "values": {
-        "revenue": 101287158.12,
-        "geo_id": "CH-CITY-lausanne"
+        "revenue": 120285732.37,
+        "geo_id": "MC-CITY-monaco"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
+      "iso3": "MC",
       "industry": "software_development",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $90,660,168.07 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $154,570,723.56 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 90660168.07,
-        "geo_id": "CH-CITY-lausanne"
+        "revenue": 154570723.56,
+        "geo_id": "MC-CITY-monaco"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "warehousing_storage",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $135,012,239.94 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 135012239.94,
-        "geo_id": "CH-CITY-lausanne"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "warehousing_storage",
+      "iso3": "MC",
+      "industry": "software_development",
       "size_band": "50-249",
       "code": "currency_likely_local",
-      "message": "Revenue 135,012,239.94 is in the band where local currency was likely mistaken for USD.",
+      "message": "Revenue 154,570,723.56 is in the band where local currency was likely mistaken for USD.",
       "values": {
-        "revenue": 135012239.94,
-        "geo_id": "CH-CITY-lausanne"
+        "revenue": 154570723.56,
+        "geo_id": "MC-CITY-monaco"
       }
     },
     {
       "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "plastics_rubber_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $119,029,928.03 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 119029928.03,
-        "geo_id": "CH-CITY-lausanne"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "plastics_rubber_mfg",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 119,029,928.03 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 119029928.03,
-        "geo_id": "CH-CITY-lausanne"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "furniture_other_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $65,999,391.19 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 65999391.19,
-        "geo_id": "CH-CITY-lausanne"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "marketing_design",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $82,386,064.18 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 82386064.18,
-        "geo_id": "CH-CITY-lausanne"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CH",
-      "industry": "water_waste",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $73,955,241.69 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 73955241.69,
-        "geo_id": "CH-CITY-lausanne"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "KR",
+      "iso3": "CL",
       "industry": "electricity_gas_utilities",
       "size_band": "50-249",
       "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $101,963,017.51 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
+      "message": "Revenue per firm $67,854,107.67 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
       "values": {
-        "revenue": 101963017.51,
-        "geo_id": "KR-CITY-daejeon"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "KR",
-      "industry": "electricity_gas_utilities",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 101,963,017.51 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 101963017.51,
-        "geo_id": "KR-CITY-daejeon"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "HK",
-      "industry": "chemical_pharma_mfg",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $67,747,476.3 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 67747476.3,
-        "geo_id": "HK-CITY-hong-kong"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "HK",
-      "industry": "wholesale_food",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $116,655,306.85 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 116655306.85,
-        "geo_id": "HK-CITY-hong-kong"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "HK",
-      "industry": "wholesale_food",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 116,655,306.85 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 116655306.85,
-        "geo_id": "HK-CITY-hong-kong"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "HK",
-      "industry": "auto_dealers_gas",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $99,636,152.34 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 99636152.34,
-        "geo_id": "HK-CITY-hong-kong"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "HK",
-      "industry": "broadcasting_telecom",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $60,105,501.2 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 60105501.2,
-        "geo_id": "HK-CITY-hong-kong"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "HK",
-      "industry": "oil_gas_extraction",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $79,341,865.93 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 79341865.93,
-        "geo_id": "HK-CITY-hong-kong"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "HK",
-      "industry": "electricity_gas_utilities",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $212,453,669.2 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 212453669.2,
-        "geo_id": "HK-CITY-hong-kong"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "HK",
-      "industry": "electricity_gas_utilities",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 212,453,669.2 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 212453669.2,
-        "geo_id": "HK-CITY-hong-kong"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "NZ",
-      "industry": "electricity_gas_utilities",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $155,491,186.53 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 155491186.53,
-        "geo_id": "NZ-CITY-christchurch"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "NZ",
-      "industry": "electricity_gas_utilities",
-      "size_band": "50-249",
-      "code": "currency_likely_local",
-      "message": "Revenue 155,491,186.53 is in the band where local currency was likely mistaken for USD.",
-      "values": {
-        "revenue": 155491186.53,
-        "geo_id": "NZ-CITY-christchurch"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "UY",
-      "industry": "electricity_gas_utilities",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $91,836,990.26 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 91836990.26,
-        "geo_id": "UY-CITY-montevideo"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "CR",
-      "industry": "electricity_gas_utilities",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $67,259,953.67 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 67259953.67,
-        "geo_id": "CR-CITY-san-jose"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "BS",
-      "industry": "wholesale_food",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $84,414,441.81 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 84414441.81,
-        "geo_id": "BS-CITY-nassau"
-      }
-    },
-    {
-      "table": "regional_cells",
-      "iso3": "BS",
-      "industry": "auto_dealers_gas",
-      "size_band": "50-249",
-      "code": "rev_too_high_for_smb",
-      "message": "Revenue per firm $77,734,296.09 exceeds SMB ceiling of $60,000,000. Likely aggregate-vs-per-firm confusion or currency error.",
-      "values": {
-        "revenue": 77734296.09,
-        "geo_id": "BS-CITY-nassau"
+        "revenue": 67854107.67,
+        "geo_id": "CL-CITY-santiago"
       }
     }
   ]
