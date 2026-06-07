@@ -10,6 +10,11 @@ import { HERO_BUSINESSES, HERO_CITIES } from "@/lib/hero-words";
 import { getToneClass } from "@/lib/page-layout/section-order";
 import { getAllPosts, type BlogPost } from "@/lib/blog";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
+import {
+  getNeighborhoodsForCity,
+  type Neighborhood,
+  type NeighborhoodCharacter,
+} from "@/lib/cities/neighborhoods";
 
 /**
  * Full-bleed tone wrapper for homepage sections. The inner
@@ -33,17 +38,79 @@ export const revalidate = 86400; // 1 day
  * before risking money, not feature marketing). Each lands on a live cell.
  */
 /**
- * Three real, curated flagship districts for the "Drilled to the neighborhood"
- * panel. Each district and its economic character come straight from the
- * hand-curated neighborhood intensity set (grade A), the same data that drives
- * the per-cell neighborhood adjustment. No fabricated figures: the panel shows
- * what Atlas already classifies, proving the resolution the copy claims.
+ * The "Drilled to the neighborhood" panel reads REAL districts from the curated
+ * neighborhood scheme (data/cities/neighborhoods_v1.json, via
+ * getNeighborhoodsForCity). Nothing here is invented: the district names and the
+ * character classification are exactly what the neighborhood pages already
+ * resolve, so the panel proves the resolution the copy claims.
+ *
+ * The selection anchors on the three flagship cities the panel copy names
+ * (New York, Paris, Tokyo) and prefers three districts with DIFFERENT real
+ * characters, so the "same block, different economy" line is literally true. If
+ * an anchor is missing it degrades to that city's first district; if fewer than
+ * three resolve, the caller drops the whole section rather than show a short or
+ * fabricated panel.
  */
-const NEIGHBORHOOD_PROOF: { district: string; city: string; character: string }[] = [
-  { district: "Midtown", city: "Manhattan", character: "Tourist zone" },
-  { district: "Champs / Opera", city: "Paris", character: "Financial core" },
-  { district: "Central wards", city: "Tokyo", character: "Financial core" },
+type NeighborhoodProof = { district: string; city: string; character: string };
+
+/** The flagship cities + preferred districts the panel anchors on. */
+const NEIGHBORHOOD_ANCHORS: { city: string; citySlug: string; prefer: string }[] = [
+  { city: "New York", citySlug: "new-york", prefer: "manhattan-soho-tribeca" },
+  { city: "Paris", citySlug: "paris", prefer: "louvre-marais" },
+  { city: "Tokyo", citySlug: "tokyo", prefer: "central" },
 ];
+
+/**
+ * Humanize the curated character enum into a clean, user-facing label. The
+ * enum values themselves are the real classification; this only formats them.
+ */
+const CHARACTER_LABELS: Record<NeighborhoodCharacter, string> = {
+  "central-business": "Business core",
+  "affluent-residential": "Affluent residential",
+  "mid-residential": "Mid residential",
+  "working-residential": "Working residential",
+  industrial: "Industrial",
+  tourist: "Tourist heavy",
+  "mixed-urban": "Mixed urban",
+  academic: "Academic",
+};
+
+/**
+ * Resolve the three-district proof panel from live neighborhood data. Picks the
+ * preferred district per flagship city (falling back to that city's first), then
+ * keeps a set that favours distinct characters so the panel reads as contrast,
+ * not repetition. Returns null when fewer than three districts resolve, so the
+ * section self-omits instead of rendering a thin or invented panel.
+ */
+function loadNeighborhoodProof(): NeighborhoodProof[] | null {
+  const picked: NeighborhoodProof[] = [];
+  const seenCharacters = new Set<NeighborhoodCharacter>();
+
+  for (const anchor of NEIGHBORHOOD_ANCHORS) {
+    const list = getNeighborhoodsForCity(anchor.citySlug);
+    if (!list || list.length === 0) continue;
+
+    // Prefer the anchored district, then the first district whose character is
+    // not already on the panel, then simply the first district.
+    const byPrefer = list.find((n) => n.slug === anchor.prefer);
+    const byFresh = list.find((n) => !seenCharacters.has(n.character));
+    const chosen: Neighborhood | undefined =
+      (byPrefer && !seenCharacters.has(byPrefer.character) ? byPrefer : null) ??
+      byFresh ??
+      byPrefer ??
+      list[0];
+    if (!chosen) continue;
+
+    seenCharacters.add(chosen.character);
+    picked.push({
+      district: chosen.name,
+      city: anchor.city,
+      character: CHARACTER_LABELS[chosen.character] ?? chosen.character,
+    });
+  }
+
+  return picked.length >= 3 ? picked.slice(0, 3) : null;
+}
 
 const HOME_QUESTIONS: AtlasQuestion[] = [
   { text: "Can a restaurant in Barcelona actually pay its owner?", href: "/es/es511/restaurants",              teaser: "Owner take-home, after rent and wages." },
@@ -144,6 +211,10 @@ function formatPostDate(iso: string): string {
 
 export default async function HomePage() {
   const { posts: blogPosts } = loadBlogRail();
+  // Live districts for the "Drilled to the neighborhood" panel, resolved from
+  // the curated neighborhood scheme. Null when fewer than three resolve, which
+  // drops the whole section rather than showing a thin or fabricated panel.
+  const neighborhoodProof = loadNeighborhoodProof();
   // Three data-rich beats (editorial cards, gym leaderboard, surprising spread)
   // resolved server-side at build/ISR time. Every read is budget-wrapped and
   // self-omits on a miss, so this never blocks or breaks the homepage render.
@@ -247,11 +318,15 @@ export default async function HomePage() {
 
       {/* Cities section. The decorative London render was dropped
           (founder, 2026-06-06: reads as decoration, not data). The right
-          column now carries real curated districts and the economic
-          character Atlas already holds for each, so the panel proves the
-          neighborhood resolution the copy claims instead of illustrating
-          it. White throughout, hairline-separated, no fabricated figures.
-          Copy is unchanged (it is liked); the Browse cities CTA stays. */}
+          column now carries REAL curated districts and the economic
+          character Atlas already holds for each, resolved live from the
+          neighborhood scheme (loadNeighborhoodProof), so the panel proves the
+          neighborhood resolution the copy claims instead of illustrating it.
+          White throughout, hairline-separated, no fabricated figures. The
+          left copy is unchanged (it is liked); the Browse cities CTA stays.
+          The whole section self-omits when fewer than three districts resolve,
+          so the homepage always renders. */}
+      {neighborhoodProof && (
       <ToneBand tone="home-cities-placeholder">
         <section className="py-10 md:py-14">
           <div className="rounded-2xl bg-white border border-parchment overflow-hidden">
@@ -278,7 +353,7 @@ export default async function HomePage() {
                   Same block, different economy
                 </p>
                 <dl className="mt-4 divide-y divide-parchment">
-                  {NEIGHBORHOOD_PROOF.map((n) => (
+                  {neighborhoodProof.map((n) => (
                     <div
                       key={n.district}
                       className="flex items-baseline justify-between gap-4 py-3"
@@ -306,15 +381,18 @@ export default async function HomePage() {
           </div>
         </section>
       </ToneBand>
+      )}
 
-      {/* Three data-rich money beats (replaced the featured-tiles grid,
-          2026-06-06): three editorial cards each carrying a real
-          industry-in-place with its typical revenue, after-tax owner take-home,
-          and a hook that names the upside and the killer; a ranked leaderboard
-          of the US states where a gym keeps the most for its owner; and a
-          verified surprising spread where a humble business out-earns a
-          prestigious one. Every figure is resolved from real cells server-side
-          (src/lib/home/beats), and each beat self-omits on a miss. */}
+      {/* Money beat (trimmed to essentials, 2026-06-07): the single strongest
+          MoneyBeats sub-beat, the ranked leaderboard of the US states where a gym
+          keeps the most for its owner. The editorial-cards and surprising-spread
+          sub-beats were retired from the homepage to let the data and the search
+          lead; loadHomepageBeats no longer resolves them, so MoneyBeats self-omits
+          both and renders the leaderboard alone. Every figure is resolved from
+          real cells server-side (src/lib/home/beats), ranked with the activity
+          page's own outlier fence, and the beat self-omits when fewer than four
+          clean places resolve. MoneyBeats still renders all three shapes, so
+          restoring a beat is a one-line change in loadHomepageBeats. */}
       <ToneBand tone="home-featured">
         <MoneyBeats beats={beats} />
       </ToneBand>

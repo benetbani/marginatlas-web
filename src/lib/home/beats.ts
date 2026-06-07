@@ -518,20 +518,36 @@ async function resolveBreakIn(): Promise<BeatBreakIn | null> {
 }
 
 /**
- * Build the full homepage beats payload. Resolves the lead break-in beat, the
- * three cards, the gym leaderboard, and the surprising spread concurrently;
- * every piece self-omits on a miss. The page leads with the break-in beat when
- * it resolves, then renders only the cards that resolved (it requires at least
- * two), the leaderboard when it has four or more clean places, and the spread
- * only when the humble business genuinely wins.
+ * Build the homepage beats payload.
+ *
+ * Editorial trim (2026-06-07, founder: "trim to essentials, let data and search
+ * lead"): the homepage now carries only the lead break-in beat and the single
+ * strongest MoneyBeats sub-beat, the ranked gym leaderboard. The editorial-cards
+ * and surprising-spread sub-beats are no longer resolved here, so they no longer
+ * render. Nothing is deleted: resolveCard/CARD_SPECS and resolveSpread stay
+ * defined and importable, and the MoneyBeats component still renders all three
+ * shapes (each self-omits on an empty/null value), so restoring any of them is a
+ * one-line change back to resolving it.
+ *
+ * The leaderboard is the kept beat: it resolves cleanly from the trusted
+ * same-currency US-state slate (real per-state owner take-home, ranked with the
+ * activity page's own outlier fence), so it is the most reliable standalone
+ * payoff. The spread depends on two specific cross-country cells and can thin to
+ * nothing when either side's revenue is briefly absent, which would leave the
+ * block empty; the leaderboard does not have that single-cell fragility.
+ *
+ * Both resolved pieces still self-omit on a miss: the break-in beat needs both
+ * ends, the leaderboard needs four or more clean places, and every read stays
+ * budget-wrapped, so the homepage always renders.
  */
 export async function loadHomepageBeats(): Promise<HomepageBeats> {
-  const [breakIn, cardResults, leaderboard, spread] = await Promise.all([
+  const [breakIn, leaderboard] = await Promise.all([
     resolveBreakIn(),
-    Promise.all(CARD_SPECS.map(resolveCard)),
     resolveGymLeaderboard(),
-    resolveSpread(),
   ]);
-  const cards = cardResults.filter((c): c is BeatCard => c !== null);
-  return { breakIn, cards, leaderboard, spread };
+  // Cards and the spread are intentionally not resolved while the homepage
+  // editorial is trimmed to essentials. MoneyBeats self-omits both on these
+  // values, so the page renders the leaderboard alone. Restore by resolving them
+  // here again (the resolvers are unchanged).
+  return { breakIn, cards: [], leaderboard, spread: null };
 }
