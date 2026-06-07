@@ -24,10 +24,12 @@
  * question because cost structure varies massively by country. The page keeps
  * only what is true worldwide: the curated cost-structure margins and the
  * model anatomy built from them. There is NO cross-place ranking here on
- * purpose; the country row is a chooser, not a leaderboard.
+ * purpose.
  *
- * Country-specific revenue lives on the cell page (/{country}/{geo}/
- * {industry}). The country chooser hands users off to the country page.
+ * Place selection happens ONCE, at the top: the reader picks a country and
+ * city in the lead place picker right under the hero, which routes straight to
+ * that activity's cell page (/{country}/{geo}/{industry}), where the
+ * country-specific revenue, employment, and cost benchmarks live.
  */
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -511,44 +513,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
         </section>
       )}
 
-      {/* 4. country chooser. Country-specific revenue, employment, and cost
-         benchmarks live on the cell page (/[country]/[geo]/[industry]). This
-         is a chooser, not a ranking: the same activity reads very differently
-         once local rent, wages, and tax land on it, so the reader picks the
-         place that matters to the decision and sees the real numbers there. */}
-      <section className="py-8">
-        <SectionEyebrow className="mb-3">Where this plays out</SectionEyebrow>
-        <div className="rounded-2xl bg-white border border-parchment p-6">
-          <h2 className="text-xl font-semibold text-ink-900">
-            The same model, priced by where you run it
-          </h2>
-          <p className="mt-2 text-sm leading-relaxed text-cocoa-700/85 max-w-2xl">
-            The anatomy above holds everywhere. What changes the outcome is local
-            rent, wages, tax, and competition. Open a country for real revenue
-            and cost numbers on {ind.name.toLowerCase()}, then drill into regions
-            and cities.
-          </p>
-          <div className="mt-5 flex flex-wrap gap-2">
-            {(["us","gb","de","fr","it","es","nl","jp","br","mx","au","in"] as const).map((cc) => (
-              <a
-                key={cc}
-                href={`/${cc}/${cc === "us" ? "california" : cc}/${industryToSlug(ind.id)}`}
-                className="px-3.5 py-1.5 rounded-full bg-cream-100 hover:bg-cream-200 border border-parchment text-sm font-medium text-ink-900 transition-colors"
-              >
-                {cc.toUpperCase()}
-              </a>
-            ))}
-          </div>
-          <a
-            href="/"
-            className="mt-5 inline-flex items-center gap-1 text-sm text-atlas-700 hover:text-atlas-900 font-medium"
-          >
-            Or use the navigator on the homepage &rarr;
-          </a>
-        </div>
-      </section>
-
-      {/* 5. related activities (bible Section 6 module 28, a FREE module). The
+      {/* 4. related activities (bible Section 6 module 28, a FREE module). The
          closing rail: the other small-business models in this sector, so a
          reader who has learned to read one model anatomy can jump to a
          neighbouring one. Pure taxonomy, NOT a cross-place ranking. No
