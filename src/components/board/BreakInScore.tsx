@@ -74,7 +74,18 @@ function bandPill(band: BreakInBand): string {
  * single headline score for the cell; render nothing when the caller has no
  * rating (the page omits the score gracefully rather than showing a placeholder).
  */
-export function BreakInMasthead({ rating }: { rating: BreakInRating | null }) {
+export function BreakInMasthead({
+  rating,
+  showHeadline = true,
+}: {
+  rating: BreakInRating | null;
+  /**
+   * Whether to print the warm one-line headline under the score. Default true
+   * (the cell masthead). The opening page carries the same line as its own
+   * full-width verdict, so it passes false here to avoid showing it twice.
+   */
+  showHeadline?: boolean;
+}) {
   if (!rating) return null;
   return (
     <div className="flex flex-col gap-2">
@@ -99,9 +110,11 @@ export function BreakInMasthead({ rating }: { rating: BreakInRating | null }) {
           </span>
         </span>
       </div>
-      <p className="max-w-xl text-sm leading-relaxed text-cocoa-700">
-        {rating.headline}
-      </p>
+      {showHeadline ? (
+        <p className="max-w-xl text-sm leading-relaxed text-cocoa-700">
+          {rating.headline}
+        </p>
+      ) : null}
     </div>
   );
 }

@@ -48,7 +48,9 @@ export function OpeningHero({ page }: { page: OpeningPage }) {
 
         {page.breakIn ? (
           <div className="sm:border-l sm:border-parchment sm:pl-12">
-            <BreakInMasthead rating={page.breakIn} />
+            {/* Score + band only here; the warm headline is carried once, below,
+                as the full-width verdict, so it never reads twice. */}
+            <BreakInMasthead rating={page.breakIn} showHeadline={false} />
           </div>
         ) : null}
       </div>
