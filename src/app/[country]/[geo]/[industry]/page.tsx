@@ -54,6 +54,7 @@ import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import industryMarginsJson from "@/lib/finance/industry_margins.json";
 import { clampMargin } from "@/lib/finance/margin_floor";
+import { resolveOwnerTakeHome } from "@/lib/finance/owner_take_home";
 import { generateFAQs } from "@/lib/seo/faq_generator";
 import { FAQSchema } from "@/components/FAQSchema";
 import { getCellNarrative } from "@/lib/content/narratives";
@@ -374,14 +375,23 @@ export default async function CellPage({
   const econSnap = getCountryEconomicsSnapshot(country.toUpperCase());
   const annualIncome =
     econSnap.avgMonthlySalary != null ? econSnap.avgMonthlySalary * 12 : null;
-  const takeHomeFloor =
-    isLargerFirm && annualIncome ? annualIncome * 2 : null;
-  const adjustedNetTakeHome =
-    takeHomeFloor != null && netTakeHome != null && netTakeHome < takeHomeFloor
-      ? takeHomeFloor
-      : netTakeHome;
-  // Defensive floor — never let a sub-3% net margin reach the page.
+  // Defensive floor — never let a sub-3% net margin reach the page. Still needed
+  // for the margin row; the take-home floors consistently with this same shown
+  // margin inside resolveOwnerTakeHome.
   const computedNetMargin = rawNetMargin != null ? clampMargin(rawNetMargin, "net", cell.industry_id || null) : null;
+  // One owner take-home, shared by the take-home row AND the break-in score (and
+  // the cost-to-open page), resolved by the single source of truth so the card
+  // can never show a take-home that contradicts its own net-margin row (the bug
+  // where a cell printed "3% net" and a negative take-home and a null score at
+  // once). See src/lib/finance/owner_take_home.ts for the rule.
+  const adjustedNetTakeHome = resolveOwnerTakeHome({
+    structuralNetProfit: netTakeHome,
+    rawNetMargin,
+    revenue: grossRevenueForMargin,
+    industryId: cell.industry_id || null,
+    isLargerFirm,
+    annualIncome,
+  });
 
   // City tier drives the break-even AOV adjustment and the cost-of-living place
   // signals below; resolve it once here and reuse it.

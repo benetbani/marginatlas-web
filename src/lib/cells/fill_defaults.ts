@@ -415,15 +415,37 @@ export function enforceSanity(cell: Cell): Cell {
   const wage = out.payroll_per_employee || 0;
   const rev = out.revenue_per_firm || 0;
   const empl = out.n_employees || 0;
+  const ents = out.n_enterprises || 0;
 
-  // 1. Cap employees so revenue / (employees × wage) ≥ 1.4.
-  //    Only applies when we have all three numbers.
-  if (wage > 0 && rev > 0 && empl > 0) {
-    const ratio = rev / (empl * wage);
-    if (ratio < 1.4) {
-      const maxEmployees = Math.max(1, Math.floor(rev / (wage * 1.4)));
-      out.n_employees = maxEmployees;
+  // 1. Normalise n_employees to a PER-FIRM count, then cap it so revenue /
+  //    (employees × wage) ≥ 1.4 (40% non-payroll headroom).
+  //
+  //    Unit collision fix. Regional rows store n_employees as the REGION TOTAL
+  //    (headcount across every firm), while the documented contract for the
+  //    field downstream — the cell page's payroll math and its "People working"
+  //    row — is a PER-FIRM count. When the value is a total (n_employees >
+  //    n_enterprises, with a real enterprise count) we divide down to per-firm
+  //    FIRST, then apply the affordability guard to that per-firm figure. The
+  //    old code skipped the divide and applied the guard to the total, which
+  //    produced an inflated per-firm ceiling (e.g. a Paris cafe stored as ~20
+  //    when the truth is ~4); the page then read that as "already per-firm",
+  //    multiplied by the wage, and overstated payroll several-fold, driving net
+  //    profit negative. Dividing first makes the stored value honor its
+  //    per-firm contract, so the payroll math and the headcount both read true.
+  //
+  //    When the value is already per-firm (n_employees ≤ n_enterprises) or there
+  //    is no enterprise count to divide by, behaviour is unchanged: the guard is
+  //    applied to the value as-is. The result is always a per-firm integer ≥ 1.
+  if (wage > 0 && empl > 0) {
+    const perFirm = ents > 0 && empl > ents ? empl / ents : empl;
+    let normalized = perFirm;
+    if (rev > 0) {
+      const ratio = rev / (perFirm * wage);
+      if (ratio < 1.4) {
+        normalized = Math.max(1, Math.floor(rev / (wage * 1.4)));
+      }
     }
+    out.n_employees = Math.max(1, Math.round(normalized));
   }
 
   // 2. Net profit must be positive. If the inherited net_margin is
