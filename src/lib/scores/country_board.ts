@@ -19,11 +19,17 @@
  *     which renders one quiet footnote per section, not a badge per row.
  *
  * Sections, in fixed order, ALWAYS emitted:
- *   climate    Tax and climate: corporate / small-business tax, registration, VAT
  *   friction   Institutional friction (modeled)
  *   labor      Labor and skills (modeled): wages, GDP per head, skills
  *   survival   Survival baseline (modeled): country-level business survival
  *   market     Market structure (modeled): informality, concentration
+ *
+ * The tax + registration read (sales tax, the small-business regime, and the
+ * days to register a business) is NOT a board section. It lives once, in the
+ * CountryTaxReality panel further down the page, which carries the richest
+ * worked-figure treatment. The board used to duplicate those rows in a
+ * "climate" section; that section was removed so the figures appear in exactly
+ * one place.
  *
  * Pure module: no Supabase, no fs, no runtime side effects. The board consumes
  * numbers the country page has already computed (the economics snapshot, the
@@ -80,14 +86,6 @@ export interface CountryBoardEcon {
 export interface CountryBoardInput {
   /** Country-economics snapshot, or null when the country has no entry. */
   econ: CountryBoardEcon | null;
-  /**
-   * Effective small-business / corporate income-tax burden as a share (0..1),
-   * or null. This is the country-level analogue of the cell board's corporate
-   * tax row: the rate the typical small business actually pays.
-   */
-  smbEffectiveRate: number | null;
-  /** Standard VAT / sales-tax rate as a share (0..1), or null. */
-  vatStandard: number | null;
 }
 
 /** A finite, real number (not null, not NaN, not Infinity). */
@@ -106,40 +104,16 @@ function textOrNull(s: string | null | undefined): string | null {
  * present, in the fixed order documented at the top of the file.
  */
 export function buildCountryBoard(input: CountryBoardInput): BoardSection[] {
-  const { econ, smbEffectiveRate, vatStandard } = input;
+  const { econ } = input;
 
   // Avoid an unused-helper warning while keeping textOrNull available for the
   // qualitative rows that are null today and will carry words once curated.
   void textOrNull;
 
-  // -- climate. Tax and climate. -------------------------------------------
-  // The two tax rows are real country-level figures the page already loads;
-  // everything else here is honestly blank until curated.
-  const climateRows: StatRow[] = [
-    {
-      label: "Corporate tax rate",
-      value: isNum(smbEffectiveRate)
-        ? fmtPct(smbEffectiveRate, { fromFraction: true })
-        : null,
-      hint: "typical small business",
-    },
-    {
-      label: "Days to register a business",
-      value:
-        econ && isNum(econ.daysToStart)
-          ? `${Math.round(econ.daysToStart)} ${
-              Math.round(econ.daysToStart) === 1 ? "day" : "days"
-            }`
-          : null,
-    },
-    {
-      label: "Sales tax",
-      value: isNum(vatStandard) ? fmtPct(vatStandard, { fromFraction: true }) : null,
-    },
-    { label: "Payroll tax", value: null },
-    { label: "Effective tax wedge", value: null },
-    { label: "Licensing cost", value: null },
-  ];
+  // The tax + registration read (sales tax, the small-business regime, and the
+  // days to register a business) is NOT built here. It lives once, in the
+  // CountryTaxReality panel further down the page. The former "climate"
+  // section is intentionally gone so those figures appear in exactly one place.
 
   // -- friction. Institutional friction (modeled). -------------------------
   const frictionRows: StatRow[] = [
@@ -214,7 +188,6 @@ export function buildCountryBoard(input: CountryBoardInput): BoardSection[] {
   ];
 
   return [
-    { key: "climate", title: "Tax and climate", rows: climateRows, modeled: true },
     { key: "friction", title: "Institutional friction", rows: frictionRows, modeled: true },
     { key: "labor", title: "Labor and skills", rows: laborRows, modeled: true },
     { key: "survival", title: "Survival baseline", rows: survivalRows, modeled: true },

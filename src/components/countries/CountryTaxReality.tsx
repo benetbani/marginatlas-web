@@ -18,6 +18,13 @@
  * sales-tax row nor the regime exists, so thin-coverage countries simply
  * do not render it.
  *
+ * Alongside what the government takes, the panel also carries the "how hard
+ * it is to set up" beat: the typical days to register a sole trader. This is
+ * the single home for both the tax burden and the setup friction, so the
+ * figure that used to repeat in the board climate card and the cost-of-doing-
+ * business strip now lives here once. The setup card self-omits when the
+ * days figure is absent, exactly like the rate cards.
+ *
  * Server component, no client JS. All colour and type from tokens.
  *
  * Design system: application section. Consumes the tax domain
@@ -35,8 +42,20 @@ export interface CountryTaxRealityProps {
   regime: SmbRegime | null;
   /** Densest local activity, if the top-industries query returned one. */
   topActivity: { name: string; typicalRevenue: number | null } | null;
+  /**
+   * Typical days to register a sole trader, or null when uncurated. The
+   * "how hard it is to set up" signal, folded here from the former board
+   * climate card and cost-of-doing-business strip so it lives once.
+   */
+  daysToRegister: number | null;
   /** Currency-aware money formatter supplied by the page. */
   fmt: (n: number) => string;
+}
+
+/** Round the days-to-register figure into a plain "N days" word. */
+function daysWord(days: number): string {
+  const n = Math.round(days);
+  return n === 1 ? "1 day" : `${n} days`;
 }
 
 function pctWord(decimal: number): string {
@@ -50,10 +69,13 @@ export function CountryTaxReality({
   vat,
   regime,
   topActivity,
+  daysToRegister,
   fmt,
 }: CountryTaxRealityProps) {
-  // Self-omit when there is nothing real to say.
-  if (!vat && !regime) return null;
+  // Self-omit when there is nothing real to say. The setup figure rides
+  // alongside the tax read, so it can also carry the panel on its own.
+  const hasSetup = daysToRegister != null && daysToRegister > 0;
+  if (!vat && !regime && !hasSetup) return null;
 
   const revenue =
     topActivity && topActivity.typicalRevenue != null
@@ -72,14 +94,15 @@ export function CountryTaxReality({
 
   return (
     <div>
-      <SectionEyebrow className="mb-2">What the tax actually takes</SectionEyebrow>
+      <SectionEyebrow className="mb-2">What the government takes, and how hard it is to set up</SectionEyebrow>
       <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
         The tax that lands on a {countryName} small business
       </h2>
       <p className="mt-1 max-w-2xl text-sm text-graphite leading-relaxed">
         Two charges shape the cash a small operator keeps: the sales tax the
         customer pays on every order, and the regime that taxes what the
-        business earns. Here is how each one reads locally.
+        business earns. The time it takes to register sets how fast a new
+        operator can start trading. Here is how each one reads locally.
       </p>
 
       <div className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -118,6 +141,26 @@ export function CountryTaxReality({
             </p>
             <p className="mt-2 text-sm text-graphite leading-relaxed">
               {regime.notes}
+            </p>
+          </div>
+        ) : null}
+
+        {/* Time to set up: the registration-friction signal, folded here from
+           the former board climate card and cost-of-doing-business strip. */}
+        {hasSetup ? (
+          <div className="atlas-card px-5 py-4">
+            <div className="flex items-baseline justify-between gap-3">
+              <span className="text-[11px] uppercase tracking-[0.16em] font-medium text-ink-700/70">
+                Time to register a business
+              </span>
+              <span className="font-display text-2xl font-semibold tabular-nums text-ink-900">
+                {daysWord(daysToRegister!)}
+              </span>
+            </div>
+            <p className="mt-2 text-sm text-graphite leading-relaxed">
+              The typical time to register a sole trader and start trading. It
+              measures the paperwork drag at the front, not the running cost,
+              so a short window means a new operator can open quickly.
             </p>
           </div>
         ) : null}

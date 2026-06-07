@@ -150,8 +150,6 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
   // sibling of the cell page's A-J board.
   const board = buildCountryBoard({
     econ: snapshot,
-    smbEffectiveRate: smbRegime?.effective_rate ?? null,
-    vatStandard: vatRow?.standard ?? null,
   });
 
   // The geo segment every cell-page link on this country page uses: California
@@ -291,12 +289,14 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
          when that synthesis produced real signal (see showVerdict). */}
       {showVerdict ? <CountryViabilityLede verdict={countryVerdict} /> : null}
 
-      {/* 2. country-stats: the business-climate signals (sales tax, the
-         small-business regime, time to launch, inflation). This is the second
-         beat in the decision flow: after the lede says whether a business can
-         make money here, the climate strip says what the operating ground
-         costs. The standalone quality-summary card was rolled up into the
-         at-a-glance above. */}
+      {/* 2. country-stats: the non-tax operating signal (inflation over the
+         last 12 months). This is the second beat in the decision flow: after
+         the lede says whether a business can make money here, the strip says
+         what the operating ground feels like. The tax + registration figures
+         (sales tax, the small-business regime, time to launch) used to live
+         here too; they were consolidated into the single CountryTaxReality
+         panel below, so they appear in exactly one place. The strip self-omits
+         when the inflation signal is absent. */}
       <section id="country-stats" className={`py-8 ${getToneClass("country-stats")}`}>
         <CountryStatsStrip iso2={iso2} />
       </section>
@@ -429,6 +429,7 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
           vat={vatRow}
           regime={smbRegime}
           topActivity={densestActivity}
+          daysToRegister={snapshot.daysToStart}
           fmt={(n) => fmtMoney(n)}
         />
       </section>
