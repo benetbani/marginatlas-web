@@ -1,18 +1,26 @@
 /**
  * State/region landing page.
  *
- * Handles URLs like `/us/california`, `/de/de2`, etc. Renders:
+ * Handles URLs like `/us/california`, `/de/de2`, etc. The region page is an
+ * INDEX into its cities: the defensible numbers live at the city level, so the
+ * region reads as "here is this region, here are its cities, go into one." It
+ * renders:
  *   - Hero with region name + flag
- *   - Top cities in the region (curated, cards linking to city pages)
- *   - Top industries in the region (cards linking to cell pages)
+ *   - The best/hardest-activities lede (synthesis, self-omits when thin)
+ *   - The region's cities (curated, cards linking to city pages) as the
+ *     primary content
+ *
+ * It no longer surfaces a top-industries list. That block showed the country's
+ * top industries on every region of a country (the same nine everywhere, a
+ * known misrepresentation), so it was removed; the cities now carry the page.
  *
  * Previously /us/california returned 404 because no route matched the
  * [country]/[geo] 2-segment pattern. This page adds that.
  */
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { COUNTRIES, INDUSTRY_BY_ID, SECTOR_BY_ID, industryToSlug } from "@/lib/taxonomy";
-import { getTopIndustriesForCountry, getCellBySlug, withBudget, slugify } from "@/lib/cells";
+import { COUNTRIES, INDUSTRY_BY_ID, industryToSlug } from "@/lib/taxonomy";
+import { getTopIndustriesForCountry, getCellBySlug, withBudget } from "@/lib/cells";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import { buildEasiestToBreakIn, type PlaceActivityCell } from "@/lib/scores/country_board";
 import { EasiestToBreakIn } from "@/components/countries/EasiestToBreakIn";
@@ -20,7 +28,6 @@ import { CountryFlag } from "@/components/CountryFlag";
 import { CITIES_BY_STATE } from "@/lib/cities/city_aliases_generated";
 import { iso2ToName } from "@/lib/countries";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
-import { fmtMoney } from "@/lib/format/money";
 import { getNeighborhoodsForCity } from "@/lib/cities/neighborhoods";
 // City character. Renders only when this geo has
 // a hand-curated entry in src/lib/places/city_character.ts. Self-suppresses
@@ -106,8 +113,13 @@ export default async function RegionLandingPage({
   const regionLabel = regionEntry.label;
   const curatedCities = CITIES_BY_STATE[iso2]?.[geo.toLowerCase()] || [];
 
-  // Top SMB industries for the country (state-specific listing not yet
-  // wired, so we surface the country-level top 9 here).
+  // Country-level dense SMB activities, used ONLY as the internal feed for the
+  // best/hardest lede and the easiest-to-break-in panel below. It is no longer
+  // surfaced as a region industry LIST: that list was the same nine activities
+  // on every region of a country (a known misrepresentation), so it was
+  // removed. The lede and the break-in panel re-resolve each activity at THIS
+  // geo and self-omit anything that does not produce a defensible local read,
+  // so they stay honest even though the seed is country-level.
   const topIndustries = (await getTopIndustriesForCountry(iso2, 9)) ?? [];
 
   // "The easiest businesses to break into here" panel, the place-level flip side
@@ -263,16 +275,20 @@ export default async function RegionLandingPage({
         );
       })()}
 
-      {/* Top cities */}
+      {/* Cities in this region. The region page is an index into its cities:
+         the real numbers live at the city level, so this is the page's primary
+         content. It leads after the hero and the best/hardest lede, and
+         self-omits when a region has no curated cities (the page still renders
+         with the lede and whatever else resolves). */}
       {curatedCities.length > 0 && (
         <section id="top-cities" className="py-10 md:py-14">
           <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900">
-            Top cities in {regionLabel}
+            Cities in {regionLabel}
           </h2>
           <p className="mt-2 text-sm md:text-base text-cocoa-700/80 max-w-2xl">
-            Where the most small-business activity concentrates. Each card
-            opens the city&apos;s benchmark for restaurants by default; switch
-            industries on the next page.
+            The numbers for {regionLabel} live at the city level. Pick a city to
+            see its small-business benchmarks. Each card opens the city&apos;s
+            restaurants benchmark by default; switch industries on the next page.
           </p>
           <div className="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
             {curatedCities.map((citySlug) => (
@@ -297,57 +313,14 @@ export default async function RegionLandingPage({
         </section>
       )}
 
-      {/* Top industries */}
-      {topIndustries.length > 0 && (
-        <section id="top-industries" className="py-10 md:py-14 bg-cream-50">
-          <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900">
-            Top small-business industries in {regionLabel}
-          </h2>
-          <p className="mt-2 text-sm md:text-base text-cocoa-700/80 max-w-2xl">
-            Most-covered SMB categories at this level of geography.
-          </p>
-          <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
-            {topIndustries.map((ind) => {
-              const indRecord = INDUSTRY_BY_ID[ind.industry_id];
-              const sector = indRecord ? SECTOR_BY_ID[indRecord.sector_id] : null;
-              const slug = industryToSlug(ind.industry_id);
-              return (
-                <Link
-                  key={ind.industry_id}
-                  href={`/${country.toLowerCase()}/${geo.toLowerCase()}/${slug}`}
-                  className="block px-4 py-4 rounded-xl border border-cream-300 bg-white hover:border-atlas-500 hover:shadow-[0_6px_18px_rgba(120,53,15,0.08)] transition"
-                >
-                  <div className="flex items-center gap-2 text-[10px] uppercase tracking-wider text-atlas-700 font-semibold">
-                    <span>{sector?.name || "Industry"}</span>
-                  </div>
-                  <div className="mt-1 text-sm md:text-base font-semibold text-ink-900">
-                    {ind.industry_name || indRecord?.name || ind.industry_id}
-                  </div>
-                  <div className="mt-1.5 text-xs text-cocoa-700">
-                    {ind.revenue_per_firm != null ? (
-                      <>
-                        Typical revenue:{" "}
-                        <strong className="text-ink-900">{fmtMoney(ind.revenue_per_firm)}</strong>
-                      </>
-                    ) : (
-                      <span className="text-ink-700/60">Open for full numbers →</span>
-                    )}
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        </section>
-      )}
-
       {/* The easiest businesses to break into here. The place-level flip side of
          the across-cities comparison: it ranks this place's activities by the
          single break-in rating (the same 0..100 score each business shows on its
-         own masthead). It follows the top-industries grid as the deeper read of
-         the same activities: after which categories the place holds, which of
-         them are actually the easiest to get started in. Self-omits when too few
-         activities resolve a defensible score. Deliberately no registered section
-         id, so it stays out of the region-page canonical skeleton order. */}
+         own masthead). It is the deeper read under the cities index: which of
+         this place's activities are actually the easiest to get started in.
+         Self-omits when too few activities resolve a defensible score.
+         Deliberately no registered section id, so it stays out of the
+         region-page canonical skeleton order. */}
       {easiestBreakIn.length > 0 ? (
         <section className="py-10 md:py-14">
           <EasiestToBreakIn rows={easiestBreakIn} placeName={regionLabel} />
@@ -356,6 +329,3 @@ export default async function RegionLandingPage({
     </div>
   );
 }
-
-// Suppress unused-import warning when slugify isn't called above.
-void slugify;
