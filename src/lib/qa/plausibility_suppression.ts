@@ -44,6 +44,99 @@ import {
   type SmbBounds,
 } from "@/lib/qa/smb_bounds";
 import { LEGACY_DB_TO_TAXONOMY } from "@/lib/cells/industry_resolution";
+import { getIndustryGlobalMedian } from "@/lib/economic_profile/industry_medians";
+import countryBaselineJson from "@/lib/cells/country_smb_baseline.json";
+
+type CountryBaselineRow = { revenue_multiplier: number };
+const COUNTRY_BASELINE = countryBaselineJson as unknown as {
+  default_fallback: CountryBaselineRow;
+  countries: Record<string, CountryBaselineRow>;
+};
+
+/**
+ * Country wealth / price-tier multiplier (US 1.7, AU 1.55, CA 1.45, QA 1.40,
+ * ...). The same scalar synthesis uses to size a country's typical firm. Used
+ * here to wealth-normalize the relative-outlier test so a legitimately rich
+ * country's high-but-real per-firm revenue is NOT punished. Falls back to the
+ * generic emerging-market baseline when the iso2 is unknown.
+ */
+function countryRevenueMultiplier(iso2: string | null | undefined): number {
+  if (!iso2) return COUNTRY_BASELINE.default_fallback.revenue_multiplier;
+  return (
+    COUNTRY_BASELINE.countries[iso2.toUpperCase()] ||
+    COUNTRY_BASELINE.default_fallback
+  ).revenue_multiplier;
+}
+
+/**
+ * Relative-outlier DASH threshold (founder data-quality fix, 2026-06-07).
+ *
+ * A cell whose per-firm revenue exceeds this multiple of (the industry's GLOBAL
+ * median revenue x the country's wealth multiplier) is a wrong-SCALE value, not
+ * a rich-country value, and is dashed. This catches the AU/CA/IL/QA-class bug
+ * where whole-sector revenue (or a wrong-scale per-country "median") masquerades
+ * as per-firm revenue in small / mis-aggregated economies: the absolute hi x 3
+ * dash is blind to a 3x-12x RELATIVE overstatement that still lands under the
+ * SMB-physical ceiling.
+ *
+ * Why the GLOBAL median, not the per-country one: the per-country medians in
+ * industry_medians_v1.json are exactly the corrupted inputs (CA software
+ * $6.3M, QA software $441M, and even the US entry is ~15x off). The GLOBAL
+ * median is the cross-country anchor and is robust to that handful of bad rows.
+ *
+ * Why wealth-normalize: dividing by the country multiplier asks "does this value
+ * exceed what this country's wealth predicts", so US grocery / GB+DE software
+ * (genuinely high, genuinely rich) pass while a wrong-scale value does not.
+ *
+ * Threshold = 2.5 sits in a clean gap measured on the live pipeline: the worst
+ * KEPT legitimate control is US grocery at 1.51x; the worst DASHED wrong-scale
+ * suspect threshold is CA restaurants at 3.11x. 2.5 has margin on both sides.
+ * The guard is SKIPPED (no-op) when no global median exists for the industry:
+ * with no anchor there is no basis to judge, so we never dash blindly.
+ */
+export const RELATIVE_OUTLIER_DASH_MULTIPLIER = 2.5;
+
+/**
+ * Path-agnostic wealth-normalized relative-outlier test. Returns true when the
+ * cell's per-firm revenue is implausibly high RELATIVE to the industry's global
+ * median scaled by the country's wealth tier, i.e. it should be dashed.
+ *
+ * Pure. Returns false (do nothing) whenever there is no basis to judge: a
+ * missing/non-positive revenue, or an industry with no global median anchor.
+ * Shared by analyzePlausibility (the suppression chokepoint that covers the
+ * regional / extrapolated / normalizeRow read paths) and enforceSanity (which
+ * covers the sector-fallback path and the final getCellBySlug wrap), so every
+ * render path applies the identical rule from one definition.
+ */
+export function isRelativeRevenueOutlier(
+  industryId: string | null | undefined,
+  iso2: string | null | undefined,
+  revenuePerFirm: number | null | undefined,
+): boolean {
+  const n = relativeRevenueNormalized(industryId, iso2, revenuePerFirm);
+  return n != null && n > RELATIVE_OUTLIER_DASH_MULTIPLIER;
+}
+
+/**
+ * The wealth-normalized ratio behind isRelativeRevenueOutlier:
+ * revenue_per_firm / (industry global median x country wealth multiplier).
+ * Returns null when there is no basis to judge (missing/non-positive revenue or
+ * no global median). Exposed for audit / attribution so a verify pass can report
+ * the exact ratio and isolate relative-outlier dashes from absolute-ceiling ones
+ * without re-deriving the formula.
+ */
+export function relativeRevenueNormalized(
+  industryId: string | null | undefined,
+  iso2: string | null | undefined,
+  revenuePerFirm: number | null | undefined,
+): number | null {
+  if (typeof revenuePerFirm !== "number" || !(revenuePerFirm > 0)) return null;
+  const globalMedian = getIndustryGlobalMedian(industryId);
+  if (globalMedian == null || !(globalMedian > 0)) return null;
+  const expected = globalMedian * countryRevenueMultiplier(iso2);
+  if (!(expected > 0)) return null;
+  return revenuePerFirm / expected;
+}
 
 /**
  * A value above industry.hi × this is implausible per-firm revenue and is
@@ -131,6 +224,7 @@ export type PlausibilityFlag =
   | "ok"
   | "revenue_above_ceiling"
   | "revenue_below_floor"
+  | "revenue_relative_outlier"
   | "total_revenue_per_firm_above_ceiling"
   | "payroll_above_ceiling"
   | "employees_below_minimum";
@@ -183,6 +277,50 @@ export function analyzePlausibility(cell: Cell): PlausibilityFlags {
     if (typeof v === "number") {
       if (v > ceiling) flags[field] = "revenue_above_ceiling";
       else if (v < floor) flags[field] = "revenue_below_floor";
+    }
+  }
+
+  // Wealth-normalized relative-outlier DASH. Independent of the absolute hi x 3
+  // ceiling above: a value can sit comfortably under the SMB-physical ceiling
+  // yet be a 3x-12x RELATIVE overstatement for its (industry, country) wealth
+  // tier, the wrong-SCALE class of bug the ceiling cannot see. When the headline
+  // revenue trips the relative test we flag the WHOLE revenue group (headline +
+  // every present percentile) so the entire waterfall dashes together exactly
+  // like the ceiling path; the profit-cascade block below then tags the derived
+  // figures, and applyPlausibilitySuppression sets _revenueSuppressed off the
+  // headline flag so fillMissingFields never resurrects it. Skipped when the
+  // industry has no global median (isRelativeRevenueOutlier returns false).
+  const headlineRevenue =
+    typeof cell.revenue_per_firm === "number"
+      ? cell.revenue_per_firm
+      : typeof cell.rev_p50 === "number"
+        ? cell.rev_p50
+        : null;
+  if (isRelativeRevenueOutlier(cell.industry_id, cell.country, headlineRevenue)) {
+    // Null the SAME field set the absolute-ceiling path dashes (headline + every
+    // percentile + the two total-revenue aggregates), so a relative-outlier cell
+    // dashes identically on every read path, including the comparison-rail /
+    // variant paths that run applyPlausibilitySuppression WITHOUT a later
+    // enforceSanity. Matches the field list enforceSanity uses for its dash.
+    for (const field of [
+      "revenue_per_firm",
+      "rev_p10",
+      "rev_p25",
+      "rev_p50",
+      "rev_p75",
+      "rev_p90",
+      "total_revenue",
+      "total_revenue_usd",
+    ] as const) {
+      if (typeof cell[field] === "number" && !flags[field]) {
+        flags[field] = "revenue_relative_outlier";
+      }
+    }
+    // Ensure the headline carries a flag even when revenue_per_firm is absent
+    // and rev_p50 supplied the headline, so the cascade + _revenueSuppressed
+    // marker fire on a p50-led cell too.
+    if (!flags.revenue_per_firm) {
+      flags.revenue_per_firm = "revenue_relative_outlier";
     }
   }
 

@@ -32,7 +32,10 @@ import {
   REVENUE_PER_FIRM_BOUNDS,
   DEFAULT_REVENUE_BOUNDS,
 } from "../qa/smb_bounds";
-import { getCatastropheCeiling } from "../qa/plausibility_suppression";
+import {
+  getCatastropheCeiling,
+  isRelativeRevenueOutlier,
+} from "../qa/plausibility_suppression";
 import {
   INDUSTRY_BY_ID,
   SECTOR_BY_ID,
@@ -346,8 +349,17 @@ export function enforceSanity(cell: Cell): Cell {
   const catastropheCeiling = getCatastropheCeiling(out.industry_id);
   const headlineRevenue =
     out.revenue_per_firm != null ? out.revenue_per_firm : out.rev_p50 ?? null;
+  // Two independent dash tests share ONE cascade below:
+  //   - absolute: headline > industry hi x 3 (the long-standing catastrophe gate).
+  //   - relative: headline is a wealth-normalized outlier for this (industry,
+  //     country), i.e. a 3x-12x wrong-SCALE overstatement that still lands under
+  //     the absolute ceiling (the AU/CA/IL/QA-class bug). Same source of truth
+  //     as the suppression chokepoint (isRelativeRevenueOutlier), so the
+  //     sector-fallback path (which skips applyPlausibilitySuppression) and the
+  //     final getCellBySlug wrap dash on the identical rule.
   const revenueIsCatastrophic =
-    headlineRevenue != null && headlineRevenue > catastropheCeiling;
+    (headlineRevenue != null && headlineRevenue > catastropheCeiling) ||
+    isRelativeRevenueOutlier(out.industry_id, out.country, headlineRevenue);
 
   if (revenueIsCatastrophic) {
     // Dash the entire revenue waterfall together.
