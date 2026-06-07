@@ -421,10 +421,14 @@ export function buildEasiestToBreakIn(
   for (const a of activities) {
     const cell = a.cell;
     if (!cell) continue;
-    // No wrong numbers: the destination cell must be the activity it claims (no
-    // misroute onto a parent/sibling) and must not be the synthesized stand-in.
-    if (cell.industry_id !== a.industryId) continue;
-    if (cell.is_synthetic) continue;
+    // No wrong numbers, and no 404 cross-links: the destination cell must be a
+    // TRUSTED local measurement of the activity it claims. isTrustedLocalCell is
+    // the same gate buildOpeningPage applies, so it covers the activity-id match
+    // and the synthesized stand-in AND drops the extrapolated tier "X" and the
+    // national-aggregate (geo_level "country") cells. Those last two still render
+    // a cell page but their /opening (and /buy-or-start) sub-pages notFound(), so
+    // gating here keeps every emitted row's "Cost to open" link resolvable.
+    if (!isTrustedLocalCell(cell, a.industryId)) continue;
     if (seen.has(a.industryId)) continue;
 
     const rating = breakInForCell(cell, geo, annualIncome);
