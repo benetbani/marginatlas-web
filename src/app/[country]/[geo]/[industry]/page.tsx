@@ -756,8 +756,14 @@ export default async function CellPage({
           2026-06-04). The standalone EditorialNote and the activity-
           character aside were removed: three stacked prose blocks read as
           filler. This single narrative carries the comparative-voice lead
-          and the cached editorial prose with the drop-cap treatment. */}
-      {(() => {
+          and the cached editorial prose with the drop-cap treatment.
+
+          NUMBERS-ONLY (2026-06-07, founder): the editorial narrative section
+          is no longer rendered. The cell page leads with figures, not prose.
+          The block is kept verbatim, commented out, so reviving it is a
+          one-block revert (uncomment). The narrative + getComparativeLead
+          plumbing above stays intact for the same reason. */}
+      {false && (() => {
         const lead = cell.industry_id ? getComparativeLead(cell.industry_id) : null;
         if (!narrative && !lead) return null;
         return (
@@ -779,11 +785,13 @@ export default async function CellPage({
       })()}
 
       {/* Headline revenue tiles (People working / Typical revenue / Wage per
-         employee) now live in the top-of-page data board's "The numbers"
-         section (A). The canonical skeleton registers "revenue-tiles" as a
-         beat, so the <section id> anchor is kept present here as a zero-height
-         marker rather than re-rendering the same figures a second time. */}
-      <section id="revenue-tiles" aria-hidden className="sr-only" />
+         employee) live in the top-of-page data board's "The numbers"
+         section (A). The former zero-height sr-only revenue-tiles section
+         marker was removed (2026-06-07): the canonical skeleton is a
+         subsequence test, so an absent beat is legal and the empty
+         sr-only anchor added nothing. The revenue-tiles beat stays
+         registered in section-order.ts in case a real tiles section ever
+         returns here. */}
 
       {/* AU Phase 1c — primary data badge. Shown only when:
          - country is AU
@@ -799,13 +807,19 @@ export default async function CellPage({
           work" economics (2026-06-04). SetupCostBlock gives the one-time
           number; IfYouOpenedToday turns it into calendar dates; the local
           context card frames every figure against the local economy. Each
-          self-suppresses when its data is thin. */}
+          self-suppresses when its data is thin.
+
+          NUMBERS-ONLY (2026-06-07, founder): the IfYouOpenedToday timeline
+          and the LocalContextCard are no longer rendered (prose framing, not
+          figures). SetupCostBlock stays: it carries the one-time cost number.
+          The two removed lines are kept verbatim, commented out, so reviving
+          either is a one-line revert (uncomment). Imports stay intact. */}
       <SetupCostBlock cell={cell} />
-      <IfYouOpenedToday cell={cell} />
-      <LocalContextCard
+      {/* <IfYouOpenedToday cell={cell} /> */}
+      {/* <LocalContextCard
         iso2={country.toUpperCase()}
         countryName={iso2ToName(country) || country.toUpperCase()}
-      />
+      /> */}
 
       {/* Plan v13 Wave 1: time series chart removed:
          multi-year coverage is too uneven across cells to display honestly. */}
@@ -813,6 +827,28 @@ export default async function CellPage({
       {/* Plan v13 Wave 1 follow-up: Data Quality section removed.
          The 10/10 confidence score and ★★★★★ rating exposed engineering
          provenance the founder explicitly said never to display. */}
+
+      {/* Usefulness-ordered tail (2026-06-07, founder). The post-board
+          sections run by decreasing decision value: first what kills weak
+          operators (the screenshot-worthy warning), then the same business
+          elsewhere (across-states + peer-city rails), then other businesses
+          here (comparable cells), then sibling industries, then the
+          knowledge-base footer. Each section keeps its own self-omit, so a
+          thin cell still renders cleanly. */}
+
+      {/* "What kills weak operators" — the board-kit failure cards. The same
+         curated set of specific operational misjudgments the old FailureModes
+         panel carried, now in the compact board card grid (the part a would-be
+         operator should screenshot). Renders nothing when the industry has no
+         curated entry (empty cards array). */}
+      <FailureCards cards={failureCards} />
+
+      {/* v34 Phase G: inline email capture after the failure-modes
+         section. High-intent placement: users who scrolled this far
+         are reading carefully. Posts to /api/newsletter (Supabase
+         newsletter_signups table). Sender swap to ConvertKit happens
+         in a follow-up once Tesseract Research sender is configured. */}
+      {/* <InlineMidArticle /> reverted with v34 Phase G */}
 
       {/* Same activity across US states. Within-country comparison
          only: same currency, same wage scale, same Census source.
@@ -839,20 +875,6 @@ export default async function CellPage({
         industrySlug={industry}
         industryName={cell.industry_name || undefined}
       />
-
-      {/* "What kills weak operators" — the board-kit failure cards. The same
-         curated set of specific operational misjudgments the old FailureModes
-         panel carried, now in the compact board card grid (the part a would-be
-         operator should screenshot). Renders nothing when the industry has no
-         curated entry (empty cards array). */}
-      <FailureCards cards={failureCards} />
-
-      {/* v34 Phase G: inline email capture after the failure-modes
-         section. High-intent placement: users who scrolled this far
-         are reading carefully. Posts to /api/newsletter (Supabase
-         newsletter_signups table). Sender swap to ConvertKit happens
-         in a follow-up once Tesseract Research sender is configured. */}
-      {/* <InlineMidArticle /> reverted with v34 Phase G */}
 
       {/* Comparable cells.
          Plan v14 A.1 (T-A1.4): legacy id="comparable" renamed to canonical
