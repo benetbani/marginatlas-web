@@ -524,14 +524,20 @@ export default async function CellPage({
   // regional_cells, or extrapolated_cells.
   const resolvedIndustryForNarrative =
     slugToIndustry(industry)?.id || cell.industry_id;
-  const narrative = resolvedIndustryForNarrative
-    ? getCellNarrative(
-        country,
-        cell.geo_id || geo,
-        resolvedIndustryForNarrative,
-        cell.size_band || "total"
-      )
-    : null;
+  // Suppress the pre-generated narrative when the cell's revenue is dashed.
+  // The cached prose is revenue-led ("brings in roughly $X in annual revenue")
+  // and is frozen text, so on a cell whose revenue is suppressed (wrong-scale
+  // outlier, or any null-revenue cell) it would leak a number the stats no
+  // longer show. No revenue on the page, no revenue-citing narrative.
+  const narrative =
+    resolvedIndustryForNarrative && cell.revenue_per_firm != null
+      ? getCellNarrative(
+          country,
+          cell.geo_id || geo,
+          resolvedIndustryForNarrative,
+          cell.size_band || "total"
+        )
+      : null;
 
   const url = `https://www.marginatlas.com/${country}/${geo}/${industry}`;
   return (
