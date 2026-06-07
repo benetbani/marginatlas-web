@@ -119,6 +119,50 @@ export function BreakInMasthead({
   );
 }
 
+/**
+ * The CITY masthead score, made visible. The city attractiveness score
+ * (src/lib/scores/city_attractiveness.ts) is the city-altitude sibling of the
+ * break-in rating: a single 0-100 number, higher = a better city to open a small
+ * business in. The founder chose that cities carry a headline score while
+ * countries and industries do not, so this is the only score the city masthead
+ * shows and it reuses the exact band tones and markup of <BreakInMasthead> so the
+ * badge reads identically across pages.
+ *
+ * Takes the already-computed score object (the caller owns the math), so this is
+ * pure presentation. Renders nothing when the caller has no score (a thin city
+ * with no demand signal omits the badge gracefully rather than showing a dash).
+ */
+export function CityScoreMasthead({
+  score,
+}: {
+  score: { score: number; band: BreakInBand } | null;
+}) {
+  if (!score) return null;
+  return (
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+      <span
+        className={`font-display text-4xl font-semibold leading-none tabular-nums md:text-5xl ${bandText(
+          score.band,
+        )}`}
+      >
+        {score.score}
+      </span>
+      <span className="flex flex-col gap-1">
+        <span className="text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
+          City score
+        </span>
+        <span
+          className={`inline-flex w-fit items-center rounded-full border px-2 py-0.5 text-[11px] font-semibold ${bandPill(
+            score.band,
+          )}`}
+        >
+          {bandWord(score.band)}
+        </span>
+      </span>
+    </div>
+  );
+}
+
 /** One driver row: a plain label, a token-toned bar filled to the sub-score. */
 function DriverBar({
   label,

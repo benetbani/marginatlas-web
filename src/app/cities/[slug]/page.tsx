@@ -42,11 +42,16 @@ import { BusinessFormationCosts } from "@/components/cities/BusinessFormationCos
 import { CoverageIndicator } from "@/components/CoverageIndicator";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { BoardHero } from "@/components/board/BoardHero";
+import { CityScoreMasthead } from "@/components/board/BreakInScore";
 import { MastheadImage } from "@/components/board/MastheadImage";
 import { getCityHero, isPatternHero } from "@/lib/images/city_heroes";
 import { DataSection } from "@/components/board/DataSection";
 import { fmtUSD, fmtPct } from "@/components/board/format";
-import { buildCityBoard, buildCityActivities } from "@/lib/scores/city_board";
+import {
+  buildCityBoard,
+  buildCityActivities,
+  buildCityScore,
+} from "@/lib/scores/city_board";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 
 export const revalidate = 43200; // 12 hours
@@ -151,7 +156,7 @@ export default async function CityPage({
   // shape never depends on the data. This is the city-altitude sibling of the
   // cell page's A-J board and the country page's five-section board.
   const econSnap = getCountryEconomicsSnapshot(city.iso2);
-  const board = buildCityBoard({
+  const boardInput = {
     city: {
       slug: city.slug,
       popM: city.pop_m ?? null,
@@ -163,7 +168,15 @@ export default async function CityPage({
       selfEmploymentPct: econSnap.selfEmploymentPct,
       avgMonthlySalary: econSnap.avgMonthlySalary,
     },
-  });
+  };
+  const board = buildCityBoard(boardInput);
+
+  // The city's ONE headline score (the founder chose: cities get a headline
+  // score; countries and industries do not). Built from the same board signals,
+  // banded on the same thresholds as the cell break-in rating so the badge reads
+  // identically. Null for a thin city with no demand signal, so the masthead
+  // omits the badge cleanly rather than showing a wrong number.
+  const cityScore = buildCityScore(boardInput);
 
   // Ranked activities in this city, best owner take-home first. London is
   // sourced from the curated dataset (every activity, its modeled after-tax
@@ -183,8 +196,11 @@ export default async function CityPage({
            table was removed: it duplicated the population / salary / cost /
            tourism figures the data board now carries, and the board reaches
            the figures above the fold in the shared scaffold. Plain city name
-           is the H1; a city has no single Atlas score, so the score strip is
-           passed empty (overall null, no parts) and renders as a dash. The
+           is the H1, and the city's ONE headline score (the founder chose:
+           cities carry a headline score, countries and industries do not)
+           renders as a band-toned badge beneath it, reusing the exact
+           BreakInMasthead markup so the badge reads identically to the cell
+           page's. It omits entirely for a thin city with no demand signal. The
            country eyebrow keeps the place context the old hero carried.
 
            The masthead carries the same deliberate exception to the pure-white
@@ -201,7 +217,12 @@ export default async function CityPage({
               <CountryFlag iso2={city.iso2} className="w-5" />
               <SectionEyebrow size="md">{countryName}</SectionEyebrow>
             </div>
-            <BoardHero title={city.name} score={{ overall: null, parts: [] }} />
+            <BoardHero title={city.name} />
+            {cityScore ? (
+              <div className="pb-3">
+                <CityScoreMasthead score={cityScore} />
+              </div>
+            ) : null}
           </div>
         </div>
 

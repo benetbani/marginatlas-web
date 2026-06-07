@@ -48,6 +48,10 @@ import type { BoardSection } from "@/components/board/DataSection";
 import type { StatRow } from "@/components/board/StatGrid";
 import { fmtUSD, fmtInt, fmtNum } from "@/components/board/format";
 import { boundSurvivalCurve, clampNetMarginPct } from "@/lib/finance/margin_floor";
+import {
+  cityAttractivenessScore,
+  type CityAttractivenessScore,
+} from "@/lib/scores/city_attractiveness";
 import londonJson from "../../../data/london/london_market_v1.json";
 
 /**
@@ -293,6 +297,58 @@ export function buildCityBoard(input: CityBoardInput): BoardSection[] {
     { key: "market", title: "Market structure", rows: marketRows, modeled: true },
     { key: "survival", title: "Survival baseline", rows: survivalRows, modeled: true },
   ];
+}
+
+// --- the city's ONE headline score (the masthead badge) ---------------------
+
+/**
+ * Build the city's single 0-100 attractiveness score from the same board inputs.
+ * This is the city-altitude sibling of the cell masthead's break-in rating: one
+ * number, higher = a better city to open a small business in, banded on the
+ * exact same thresholds so the badge reads identically on both mastheads.
+ *
+ * It maps the board's own signals onto the score's inputs: demand depth
+ * (population, the income proxy the demand section already resolves, and the
+ * footfall proxy), market structure (the country self-employment share that
+ * drives the board's informality row), rent pressure (the cost-of-living index),
+ * and the survival baseline (the London representative one-year survival rate
+ * where we hold a curve). The pure scoring math, the normalization anchors, and
+ * the banding all live in city_attractiveness.ts; this is the thin adapter from
+ * the board's input shape to the score's.
+ *
+ * Returns null when the city carries no demand signal at all, so a thin city
+ * shows no badge rather than a confident wrong number. restsOnModeled is true
+ * whenever the score leans on a modeled input: the country-level informality
+ * proxy and the cost-of-living index are modeled, so any real city scored here
+ * rests on modeled inputs and the surface marks it as directional.
+ */
+export function buildCityScore(
+  input: CityBoardInput,
+): CityAttractivenessScore | null {
+  const { city, econ } = input;
+  const L = londonSummary(city.slug);
+
+  // Income proxy mirrors the demand section exactly: the city's own annual gross
+  // salary, falling back to the country's annualised monthly salary.
+  const cityIncome = isNum(city.avgGrossSalaryUsdYear)
+    ? city.avgGrossSalaryUsdYear
+    : null;
+  const countryIncome =
+    econ && isNum(econ.avgMonthlySalary) ? econ.avgMonthlySalary * 12 : null;
+  const incomeProxy = cityIncome ?? countryIncome;
+
+  return cityAttractivenessScore({
+    popM: city.popM,
+    incomeProxyUsdYear: incomeProxy,
+    touristArrivalsM: city.touristArrivalsM,
+    costOfLivingIndex: city.costOfLivingIndex,
+    selfEmploymentPct: econ?.selfEmploymentPct ?? null,
+    survivalYr1Pct: L?.survival?.yr1 ?? null,
+    // The score always leans on at least one modeled input for a real city (the
+    // country-level informality proxy and the modeled cost-of-living index), so
+    // it is directional by construction.
+    restsOnModeled: true,
+  });
 }
 
 // --- ranked activities table (the page's main content, not a board section) --
