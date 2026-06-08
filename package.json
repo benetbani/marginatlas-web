@@ -72,6 +72,7 @@
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
     "simple-statistics": "^7.8.9",
+    "stripe": "^22.2.0",
     "tailwind-merge": "^3.6.0",
     "tailwindcss-animate": "^1.0.7",
     "world-atlas": "^2.0.2"
