@@ -65,6 +65,17 @@ export function isAccountPreviewEnabled(): boolean {
 }
 
 /**
+ * Supabase magic-link auth + free accounts (Milestone 1). Default OFF until the
+ * founder enables Supabase Auth (email provider + redirect-URL allowlist) and
+ * applies the saved-cells migration. With this OFF the site is unchanged: no
+ * sign-in UI, CellActions stays on localStorage, /account shows "coming soon",
+ * and no auth code runs. Flip to "1" (in Vercel) to activate M1.
+ */
+export function isAuthEnabled(): boolean {
+  return parseFlag(process.env.NEXT_PUBLIC_AUTH_ENABLED, false);
+}
+
+/**
  * Snapshot of every flag's current value. Useful for `/status` and
  * for the audit / debug surfaces.
  */
@@ -72,5 +83,6 @@ export function snapshotFlags(): Record<string, boolean> {
   return {
     NEXT_PUBLIC_AU_PRIMARY_DATA: isAuPrimaryDataEnabled(),
     NEXT_PUBLIC_ACCOUNT_PREVIEW: isAccountPreviewEnabled(),
+    NEXT_PUBLIC_AUTH_ENABLED: isAuthEnabled(),
   };
 }
