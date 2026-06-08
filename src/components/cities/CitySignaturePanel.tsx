@@ -81,6 +81,20 @@ type PartialCitySignature = {
 const FILE = signatureJson as { cities: Record<string, PartialCitySignature> };
 const COUNTRY_FILE = countrySignatureJson as { countries: Record<string, CitySignature> };
 
+/** What the panel renders. On the city page (cityScoped) demographics and sectors
+ * come ONLY from the city's own entry, so a city without curated data shows no
+ * country clone; culture and government are hidden there and may be absent. On the
+ * country page the full country baseline applies. */
+type ResolvedSignature = {
+  foreign_born_pct?: number;
+  foreign_owned_pct?: number;
+  signature_sectors: SignatureSector[];
+  commercial_streets?: CommercialStreet[];
+  culture?: Culture;
+  government?: Government;
+  notes?: string;
+};
+
 /**
  * Resolve a city's signature data. Priority:
  *   1. Country-level baseline from country_signature_v1.json (always
@@ -91,10 +105,29 @@ const COUNTRY_FILE = countrySignatureJson as { countries: Record<string, CitySig
  * Partial overrides are supported — a city can ship just
  * commercial_streets and inherit everything else from its country.
  */
-function resolveSignature(citySlug: string, iso2: string): CitySignature | null {
+function resolveSignature(
+  citySlug: string,
+  iso2: string,
+  cityScoped: boolean,
+): ResolvedSignature | null {
   const country = COUNTRY_FILE.countries[iso2.toUpperCase()];
   const city = FILE.cities[citySlug];
   if (!country && !city) return null;
+
+  if (cityScoped) {
+    // City page: demographics and sectors come ONLY from the city's own entry,
+    // never the country baseline, so a city without curated data shows no generic
+    // clone (those blocks simply omit). Culture and government are hidden here.
+    if (!city) return null;
+    return {
+      foreign_born_pct: city.foreign_born_pct,
+      foreign_owned_pct: city.foreign_owned_pct,
+      signature_sectors: city.signature_sectors ?? [],
+      commercial_streets: city.commercial_streets,
+      notes: city.notes,
+    };
+  }
+
   if (!country) {
     // City-only entry. Must be complete on its own — narrow by hand.
     const c = city as CitySignature;
@@ -235,8 +268,19 @@ export function CitySignaturePanel({
   // false and the country page passes true.
   showInstitutions?: boolean;
 }) {
-  const sig = resolveSignature(citySlug, iso2);
+  const cityScoped = !showInstitutions;
+  const sig = resolveSignature(citySlug, iso2, cityScoped);
   if (!sig) return null;
+
+  const hasForeignBorn = sig.foreign_born_pct != null;
+  const hasForeignOwned = sig.foreign_owned_pct != null;
+  const hasDemographics = hasForeignBorn || hasForeignOwned;
+  const hasSectors = sig.signature_sectors.length > 0;
+  const hasStreets = !!(sig.commercial_streets && sig.commercial_streets.length > 0);
+
+  // On the city page, if nothing city-specific resolves, render nothing rather
+  // than a thin or country-cloned panel.
+  if (cityScoped && !hasDemographics && !hasSectors && !hasStreets) return null;
 
   return (
     <section className="mb-12 md:mb-16">
@@ -248,58 +292,72 @@ export function CitySignaturePanel({
       </h2>
       <p className="text-sm md:text-base text-cocoa-700/80 mb-8 max-w-2xl">
         {showInstitutions
-          ? "Demographics, the three sectors that characterise the place, the cultural spectrum operators feel, and the government environment they navigate."
-          : "Demographics, the three sectors that characterise the metro, and where its commerce physically happens."}
+          ? "Demographics, the sectors that characterise the place, the cultural spectrum operators feel, and the government environment they navigate."
+          : "What sets this place apart."}
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-6">
-        {/* Block 1: demographics */}
-        <div className="md:col-span-4 atlas-card p-5 md:p-6">
-          <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700/65 mb-3">
-            People
-          </div>
-          <div className="flex flex-col gap-4">
-            <div>
-              <div className="font-display text-3xl md:text-4xl font-semibold text-ink-900 tabular-nums leading-none">
-                {sig.foreign_born_pct}%
-              </div>
-              <div className="text-sm text-cocoa-700/80 mt-1">
-                of residents were born outside the country
-              </div>
+        {/* Block 1: demographics. City-specific only (cityScoped); each stat shows
+            only when present, so a city without one shows neither a clone nor a blank. */}
+        {hasDemographics ? (
+          <div className="md:col-span-4 atlas-card p-5 md:p-6">
+            <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700/65 mb-3">
+              People
             </div>
-            <div className="border-t border-[rgba(76,39,18,0.06)] pt-4">
-              <div className="font-display text-3xl md:text-4xl font-semibold text-ink-900 tabular-nums leading-none">
-                {sig.foreign_owned_pct}%
-              </div>
-              <div className="text-sm text-cocoa-700/80 mt-1">
-                of local SMBs have at least one foreign owner
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Block 2: signature sectors */}
-        <div className="md:col-span-8 atlas-card p-5 md:p-6">
-          <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700/65 mb-3">
-            Three sectors that say &ldquo;{cityName}&rdquo;
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {sig.signature_sectors.map((s) => (
-              <a
-                key={s.label}
-                href={industryHref(iso2, citySlug, s.industry_slug)}
-                className="block group"
-              >
-                <div className="font-display text-lg font-semibold text-ink-900 leading-tight group-hover:text-atlas-700 transition-colors">
-                  {s.label}
+            <div className="flex flex-col gap-4">
+              {hasForeignBorn ? (
+                <div>
+                  <div className="font-display text-3xl md:text-4xl font-semibold text-ink-900 tabular-nums leading-none">
+                    {sig.foreign_born_pct}%
+                  </div>
+                  <div className="text-sm text-cocoa-700/80 mt-1">
+                    of residents were born outside the country
+                  </div>
                 </div>
-                <p className="mt-2 text-sm text-cocoa-700/85 leading-relaxed">
-                  {s.blurb}
-                </p>
-              </a>
-            ))}
+              ) : null}
+              {hasForeignOwned ? (
+                <div
+                  className={
+                    hasForeignBorn ? "border-t border-[rgba(76,39,18,0.06)] pt-4" : undefined
+                  }
+                >
+                  <div className="font-display text-3xl md:text-4xl font-semibold text-ink-900 tabular-nums leading-none">
+                    {sig.foreign_owned_pct}%
+                  </div>
+                  <div className="text-sm text-cocoa-700/80 mt-1">
+                    of local SMBs have at least one foreign owner
+                  </div>
+                </div>
+              ) : null}
+            </div>
           </div>
-        </div>
+        ) : null}
+
+        {/* Block 2: the city's distinctive trades. Renders only when the city has
+            its own curated sectors, never a country clone. */}
+        {hasSectors ? (
+          <div className="md:col-span-8 atlas-card p-5 md:p-6">
+            <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700/65 mb-3">
+              What stands out here
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {sig.signature_sectors.map((s) => (
+                <a
+                  key={s.label}
+                  href={industryHref(iso2, citySlug, s.industry_slug)}
+                  className="block group"
+                >
+                  <div className="font-display text-lg font-semibold text-ink-900 leading-tight group-hover:text-atlas-700 transition-colors">
+                    {s.label}
+                  </div>
+                  <p className="mt-2 text-sm text-cocoa-700/85 leading-relaxed">
+                    {s.blurb}
+                  </p>
+                </a>
+              ))}
+            </div>
+          </div>
+        ) : null}
 
         {/* Block 2.5: commercial streets and zones. Sits between
             "what the city is about" (signature sectors) and "how
@@ -335,7 +393,7 @@ export function CitySignaturePanel({
             rhythm (text-[11px] label line + h-3 bar + gap-5) and identical
             eyebrow size/weight/margin, so row N of culture aligns with row N
             of government. */}
-        {showInstitutions ? (
+        {showInstitutions && sig.culture && sig.government ? (
           <>
             {/* Block 3: culture spectrums.
                 Founder direction 2026-05-26: single column.
