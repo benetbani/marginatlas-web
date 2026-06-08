@@ -230,7 +230,7 @@ export default async function CityPage({
            so the masthead degrades to plain white rather than a broken frame.
            The masthead content sits in a relative layer above the image. */}
         <div className="relative overflow-hidden rounded-2xl">
-          <MastheadImage src={mastheadSrc} />
+          <MastheadImage src={mastheadSrc} filter={false} />
           <div className="relative">
             <div className="flex items-center gap-2 pt-4">
               <CountryFlag iso2={city.iso2} className="w-5" />

@@ -30,9 +30,13 @@
 
 export function MastheadImage({
   src,
+  filter = true,
 }: {
   /** The already-resolved photo URL for this place. Omit / null to self-omit. */
   src?: string | null;
+  /** When false, render the photo in full colour (no grayscale/saturate filter).
+   *  The city page passes false (founder 2026-06-08); the country page keeps true. */
+  filter?: boolean;
 }) {
   if (!src) return null;
 
@@ -47,7 +51,7 @@ export function MastheadImage({
         loading="lazy"
         decoding="async"
         className="absolute inset-0 h-full w-full object-cover opacity-20"
-        style={{ filter: "grayscale(0.55) contrast(1.02) saturate(0.7)" }}
+        style={filter ? { filter: "grayscale(0.55) contrast(1.02) saturate(0.7)" } : undefined}
       />
       {/* Warm-white duotone wash: pulls the photo toward the site's cream and
          lifts the lower portion to near-solid white so the masthead text and
