@@ -68,6 +68,22 @@ function bandPill(band: BreakInBand): string {
   }
 }
 
+/** City Business Climate Score band words. Higher = a better climate to do
+ * business in. Separate from bandWord (which labels cell break-in difficulty) so
+ * the cell masthead is unaffected. */
+function climateWord(band: BreakInBand): string {
+  switch (band) {
+    case "forgiving":
+      return "Excellent";
+    case "manageable":
+      return "Strong";
+    case "demanding":
+      return "Moderate";
+    case "brutal":
+      return "Difficult";
+  }
+}
+
 /**
  * The masthead score. A large band-toned figure, the band word as a quiet pill,
  * the "break-in rating" caption, and the warm headline underneath. This is the
@@ -140,23 +156,28 @@ export function CityScoreMasthead({
   if (!score) return null;
   return (
     <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-      <span
-        className={`font-display text-4xl font-semibold leading-none tabular-nums md:text-5xl ${bandText(
-          score.band,
-        )}`}
-      >
-        {score.score}
+      <span className="flex items-baseline gap-0.5">
+        <span
+          className={`font-display text-4xl font-semibold leading-none tabular-nums md:text-5xl ${bandText(
+            score.band,
+          )}`}
+        >
+          {score.score}
+        </span>
+        <span className="font-display text-xl font-semibold leading-none tabular-nums text-cocoa-400 md:text-2xl">
+          /100
+        </span>
       </span>
       <span className="flex flex-col gap-1">
         <span className="text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
-          City score
+          Business Climate Score
         </span>
         <span
           className={`inline-flex w-fit items-center rounded-full border px-2 py-0.5 text-[11px] font-semibold ${bandPill(
             score.band,
           )}`}
         >
-          {bandWord(score.band)}
+          {climateWord(score.band)}
         </span>
       </span>
     </div>
