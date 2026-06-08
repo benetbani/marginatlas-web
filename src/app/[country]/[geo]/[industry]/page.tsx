@@ -472,6 +472,7 @@ export default async function CellPage({
     corporateTaxRate: netProfitResult?.effective_cit_rate ?? null,
     costStructure: cell.cost_structure ?? null,
     londonEntry: getLondonEntry(cell),
+    cellRef: { country, geo, industry },
   });
 
   // Board failure cards: the handful of specific operational misjudgments that

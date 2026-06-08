@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect, Fragment } from "react";
+import { useState, useMemo, useEffect, Fragment, type ReactNode } from "react";
 import { ComboField, type ComboOption } from "@/components/ComboField";
 import { COUNTRIES, INDUSTRIES, INDUSTRY_BY_ID } from "@/lib/taxonomy";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
@@ -13,6 +13,9 @@ import {
   MISSING,
 } from "@/components/board/format";
 import { SpreadBar } from "@/components/board/charts/SpreadBar";
+import { isGatingEnabled } from "@/lib/feature_flags";
+import { GatedTakeHome } from "@/components/monetization/GatedTakeHome";
+import { RedactedNumber } from "@/components/monetization/RedactedNumber";
 
 type Slot = { country: string; industry: string; region: string };
 
@@ -81,12 +84,45 @@ type MetricRow = {
   higherIsStronger?: boolean;
   /** Whether this row is eligible for the biggest-difference callout. */
   differ?: boolean;
+  /** Optional render escape: a node shown INSTEAD of `value` (used for the
+   * paywalled owner take-home, so the real figure is never in the grid HTML for
+   * a free viewer). When set, the cell renders this instead of the string. */
+  node?: (c: CompactCell) => ReactNode;
 };
 
 type MetricGroup = { key: string; title: string; rows: MetricRow[] };
 
 const pctWhole = (v: number | null): string =>
   isNum(v) ? `${Math.round(v)}%` : MISSING;
+
+/**
+ * The owner-take-home cell under the paywall (Milestone 2). Renders the redacted
+ * placeholder plus the authed per-cell reveal, resolved from the compared cell's
+ * URL, so the real figure is never in the grid for a free viewer. Only mounted
+ * when gating is on (the API also redacts the value to null in that case).
+ */
+function CompareTakeHome({ cellUrl }: { cellUrl: string | null }) {
+  const parts = (cellUrl ?? "").split("/").filter(Boolean);
+  if (parts.length >= 3) {
+    const [country, geo, industry] = parts;
+    return (
+      <GatedTakeHome
+        country={country}
+        geo={geo}
+        industry={industry}
+        tier="basic"
+        ariaLabel="Owner take-home, unlock with Basic"
+      />
+    );
+  }
+  return (
+    <RedactedNumber
+      tier="basic"
+      entry="cell_owner_take_home"
+      ariaLabel="Owner take-home, unlock with Basic"
+    />
+  );
+}
 
 // The decisive rows, grouped to match the cell-page board sections A,B,C,H,I,J.
 // Labels and fmt helpers are the board's, so the comparison speaks the same
@@ -117,6 +153,9 @@ const GROUPS: MetricGroup[] = [
         numeric: (c) => c.owner_take_home,
         higherIsStronger: true,
         differ: true,
+        node: isGatingEnabled()
+          ? (c) => <CompareTakeHome cellUrl={c.cellUrl} />
+          : undefined,
       },
     ],
   },
@@ -648,7 +687,7 @@ function GroupBlock({
                   key={i}
                   className={`px-3 py-2.5 align-top tabular-nums ${tone}`}
                 >
-                  {display}
+                  {row.node ? row.node(c) : display}
                 </td>
               );
             })}

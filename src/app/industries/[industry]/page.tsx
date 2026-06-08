@@ -64,7 +64,8 @@ import { BoardHero } from "@/components/board/BoardHero";
 import { DataSection } from "@/components/board/DataSection";
 import { StatCard } from "@/components/board/StatCard";
 import { ActivityPlacePicker } from "@/components/industries/ActivityPlacePicker";
-import { fmtUSD, fmtPct } from "@/components/board/format";
+import { fmtPct } from "@/components/board/format";
+import { TakeHomeValue } from "@/components/monetization/TakeHomeValue";
 import {
   buildActivityBoard,
   summarizeActivityPlaces,
@@ -391,7 +392,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
                       </span>
                     )}
                     <span className="font-display text-base font-semibold tabular-nums text-ink-900">
-                      {fmtUSD(p.takeHome)}
+                      <TakeHomeValue takeHome={p.takeHome} cellHref={p.href} />
                     </span>
                   </span>
                 </Link>

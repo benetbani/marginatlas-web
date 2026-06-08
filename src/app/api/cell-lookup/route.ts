@@ -29,6 +29,7 @@ import {
   estimateEmployeesFromFirms,
 } from "@/lib/extrapolations/fill_missing";
 import { getLondonEntry } from "@/lib/scores/cell_board";
+import { isGatingEnabled } from "@/lib/feature_flags";
 
 // Cache for 1 day on Vercel's edge cache
 export const revalidate = 86400;
@@ -243,7 +244,11 @@ export async function GET(req: NextRequest) {
     rev_p75: cell.rev_p75 ?? null,
     rev_p90: revP90,
     net_margin: netMargin,
-    owner_take_home: ownerTakeHome,
+    // Paywall gate (Milestone 2, dormant): the Compare grid is fed by this
+    // edge-cached PUBLIC response, so per-user gating is impossible here. When
+    // the gate is on we redact the figure for everyone; an entitled viewer's
+    // browser re-fetches the real number per cell from the authed reveal API.
+    owner_take_home: isGatingEnabled() ? null : ownerTakeHome,
     n_enterprises: competitors,
     density_per_10k: density,
     n_employees: employees ?? null,

@@ -25,6 +25,7 @@ export const MODAL_HEADLINES: Record<PaywallEntryPoint, string> = {
   cell_seasonality: "See the seasonality calendar",
   cell_peers: "See public-company peers",
   cell_equipment: "See the equipment shopping list",
+  cell_owner_take_home: "See what an owner keeps",
   industry_topregions_p25_p75: "See the full quartiles",
   industry_truncated_regions: "See every region we cover",
   city_topindustries_p25_p75: "See the full quartiles",

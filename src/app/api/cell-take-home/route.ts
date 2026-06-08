@@ -18,6 +18,7 @@ import { getCellBySlug, type Cell } from "@/lib/cells";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { resolveOwnerTakeHome } from "@/lib/finance/owner_take_home";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
+import { londonOwnerTakeHome } from "@/lib/london/take_home";
 
 export const dynamic = "force-dynamic";
 
@@ -82,7 +83,7 @@ export async function GET(request: NextRequest) {
     if (!cell) return NextResponse.json({ value: null });
     const econ = getCountryEconomicsSnapshot(cell.country.toUpperCase());
     const annualIncome = isNum(econ.avgMonthlySalary) ? econ.avgMonthlySalary * 12 : null;
-    const value = cellTakeHome(cell, annualIncome);
+    const value = londonOwnerTakeHome(cell) ?? cellTakeHome(cell, annualIncome);
     return NextResponse.json(
       { value: isNum(value) ? value : null },
       { headers: { "cache-control": "private, no-store" } },

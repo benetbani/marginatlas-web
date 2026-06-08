@@ -46,7 +46,8 @@ import { CityScoreMasthead } from "@/components/board/BreakInScore";
 import { MastheadImage } from "@/components/board/MastheadImage";
 import { getCityHero, isPatternHero } from "@/lib/images/city_heroes";
 import { DataSection } from "@/components/board/DataSection";
-import { fmtUSD, fmtPct, MISSING } from "@/components/board/format";
+import { fmtPct } from "@/components/board/format";
+import { TakeHomeValue } from "@/components/monetization/TakeHomeValue";
 import {
   buildCityBoard,
   buildCityActivities,
@@ -416,7 +417,7 @@ export default async function CityPage({
                             </span>
                           )}
                           <span className="font-display text-base font-semibold tabular-nums text-ink-900">
-                            {a.takeHome != null ? fmtUSD(a.takeHome) : MISSING}
+                            <TakeHomeValue takeHome={a.takeHome} cellHref={a.href} />
                           </span>
                         </span>
                       </Link>

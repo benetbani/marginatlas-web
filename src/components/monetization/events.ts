@@ -20,6 +20,7 @@ export type PaywallEntryPoint =
   | "cell_seasonality"
   | "cell_peers"
   | "cell_equipment"
+  | "cell_owner_take_home"
   | "industry_topregions_p25_p75"
   | "industry_truncated_regions"
   | "city_topindustries_p25_p75"

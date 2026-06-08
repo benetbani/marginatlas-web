@@ -36,6 +36,13 @@ export type StatRow = {
   hint?: string;
   /** Optional one-line explanation shown as a "?" tooltip (ruled variant only). */
   tip?: string;
+  /**
+   * Optional render escape: when present, this node is rendered in the value
+   * cell INSTEAD of `value`. Used to mount an interactive / gated value (the
+   * paywalled owner take-home) without ever emitting the real number into the
+   * static HTML. Keep `value` null when you set this, so blanks still read right.
+   */
+  node?: React.ReactNode;
 };
 
 export function StatGrid({
@@ -51,7 +58,7 @@ export function StatGrid({
     return (
       <dl className="grid grid-cols-1 gap-x-12 md:grid-cols-2">
         {rows.map((row) => {
-          const blank = row.value == null || row.value === MISSING;
+          const blank = (row.value == null || row.value === MISSING) && !row.node;
           return (
             <div
               key={row.label}
@@ -70,7 +77,7 @@ export function StatGrid({
                     : "font-display text-[15px] font-semibold tabular-nums text-ink-900"
                 }
               >
-                {blank ? MISSING : row.value}
+                {row.node ?? (blank ? MISSING : row.value)}
               </dd>
             </div>
           );
@@ -82,7 +89,7 @@ export function StatGrid({
   return (
     <dl className="grid grid-cols-2 gap-x-6 gap-y-3 md:grid-cols-3">
       {rows.map((row) => {
-        const blank = row.value == null || row.value === MISSING;
+        const blank = (row.value == null || row.value === MISSING) && !row.node;
         return (
           <div
             key={row.label}
@@ -98,7 +105,7 @@ export function StatGrid({
                   : "font-display text-lg font-semibold tabular-nums text-ink-900"
               }
             >
-              {blank ? MISSING : row.value}
+              {row.node ?? (blank ? MISSING : row.value)}
             </dd>
             {row.hint ? (
               <dd className="mt-0.5 text-[11px] text-cocoa-500">{row.hint}</dd>

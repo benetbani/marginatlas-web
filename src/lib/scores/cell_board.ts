@@ -52,6 +52,8 @@ import {
 import type { BoardSection } from "@/components/board/DataSection";
 import type { StatRow } from "@/components/board/StatGrid";
 import { fmtUSD, fmtPct, fmtInt, fmtNum, fmtWeeksToOpen } from "@/components/board/format";
+import { isGatingEnabled } from "@/lib/feature_flags";
+import { GatedTakeHome } from "@/components/monetization/GatedTakeHome";
 import { SpreadBar } from "@/components/board/charts/SpreadBar";
 import { CostBar } from "@/components/board/charts/CostBar";
 import { CrowdingGauge } from "@/components/board/charts/CrowdingGauge";
@@ -175,6 +177,12 @@ export interface CellBoardInput {
   costStructure: { cogs: number; labor: number; rent: number; other: number } | null;
   /** Curated London entry, or null (non-GB / not in dataset). */
   londonEntry: LondonEntry | null;
+  /**
+   * The cell's own URL slugs (country / geo / industry route segments), used to
+   * mount the authed take-home reveal when the paywall gate is on. When absent,
+   * the gated row still redacts (no leak) but cannot offer the per-user reveal.
+   */
+  cellRef?: { country: string; geo: string; industry: string } | null;
 }
 
 /** A finite, real number (not null, not NaN, not Infinity). */
@@ -266,6 +274,7 @@ export function buildCellBoard(input: CellBoardInput): CellBoardResult {
     corporateTaxRate,
     costStructure,
     londonEntry,
+    cellRef,
   } = input;
 
   const L = londonEntry;
@@ -377,6 +386,32 @@ export function buildCellBoard(input: CellBoardInput): CellBoardResult {
     (!showOperatingMargin ||
       (isNum(operatingMarginPct) && grossMarginPct >= operatingMarginPct));
 
+  // Owner take-home, resolved once: the curated London figure when present, else
+  // the page's floored after-tax take-home. Reused by both the section-A row and
+  // the break-in rating below, so the two can never disagree.
+  const realTakeHome =
+    LE && isNum(LE.owner_take_home)
+      ? LE.owner_take_home
+      : isNum(ownerTakeHome)
+        ? ownerTakeHome
+        : null;
+  // Paywall gate (Milestone 2, dormant behind NEXT_PUBLIC_GATING_ENABLED). When
+  // the gate is on we must NEVER emit the real figure into the static HTML: the
+  // row value goes null and a client island (GatedTakeHome) renders the redacted
+  // placeholder, then reveals the real number only for an entitled viewer over an
+  // authed, uncached request. Gate off (the default) shows the number as before.
+  const hideTakeHome = isGatingEnabled() && isNum(realTakeHome);
+  const takeHomeNode =
+    hideTakeHome && cellRef
+      ? React.createElement(GatedTakeHome, {
+          country: cellRef.country,
+          geo: cellRef.geo,
+          industry: cellRef.industry,
+          tier: "basic" as const,
+          ariaLabel: "Owner take-home, unlock with Basic",
+        })
+      : undefined;
+
   const numbersRows: StatRow[] = [
     {
       label: "Typical revenue",
@@ -411,11 +446,8 @@ export function buildCellBoard(input: CellBoardInput): CellBoardResult {
     },
     {
       label: "Owner take-home",
-      value: LE && isNum(LE.owner_take_home)
-        ? fmtUSD(LE.owner_take_home)
-        : isNum(ownerTakeHome)
-          ? fmtUSD(ownerTakeHome)
-          : null,
+      value: hideTakeHome ? null : isNum(realTakeHome) ? fmtUSD(realTakeHome) : null,
+      node: takeHomeNode,
     },
     {
       label: "Break-even",
@@ -578,16 +610,10 @@ export function buildCellBoard(input: CellBoardInput): CellBoardResult {
   //     a confident wrong one.
   // restsOnModeled is true when the capital or the density is the modeled branch
   // (it almost always is), which marks the rating directional on the surface.
-  const ratingTakeHome =
-    LE && isNum(LE.owner_take_home)
-      ? LE.owner_take_home
-      : isNum(ownerTakeHome)
-        ? ownerTakeHome
-        : null;
   const breakInRating = computeBreakInRating({
     startupCapitalUsd: isNum(startupCost) ? startupCost : null,
     permitsUsd: isNum(openPermitsUsd) ? openPermitsUsd : null,
-    annualOwnerTakeHomeUsd: ratingTakeHome,
+    annualOwnerTakeHomeUsd: realTakeHome,
     timeToOpenWeeks: isNum(openTimeWeeks) ? openTimeWeeks : null,
     densityPer10k: isNum(per10kDisplay) ? per10kDisplay : null,
     restsOnModeled: startupCostIsModeled || densityIsModeled,

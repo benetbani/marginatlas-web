@@ -13,7 +13,7 @@ import * as React from "react";
 import { isAuthEnabled } from "@/lib/feature_flags";
 import { RedactedNumber } from "@/components/monetization/RedactedNumber";
 import { fmtUSD } from "@/components/board/format";
-import type { ViewerTier } from "@/lib/monetization/viewer_tier";
+import type { PaywallTier } from "@/components/monetization/events";
 
 export function GatedTakeHome({
   country,
@@ -25,7 +25,7 @@ export function GatedTakeHome({
   country: string;
   geo: string;
   industry: string;
-  tier?: ViewerTier;
+  tier?: PaywallTier;
   ariaLabel?: string;
 }) {
   const [value, setValue] = React.useState<number | null>(null);
