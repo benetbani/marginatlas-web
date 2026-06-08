@@ -8,7 +8,7 @@
  * claims (isTrustedLocalCell, so no invented number ranks), scores each through
  * the SAME break-in path its own masthead uses, attaches owner take-home + net
  * margin through the SAME single source of truth the cell page uses, ranks by
- * break-in score descending (easiest first, ties by take-home), and self-omits
+ * owner take-home descending (highest first, ties by break-in), and self-omits
  * the whole list below three rows.
  *
  * This proves it by calling the new async buildCityActivities for a representative
@@ -226,7 +226,7 @@ async function main(): Promise<void> {
   console.log("=".repeat(96));
   console.log(`A: no NaN / negative / non-finite score or take-home; no dupes ... ${aViol === 0 ? "PASS" : `FAIL(${aViol})`}`);
   console.log(`B: every score 0..100, take-home positive and under ceiling ..... ${bViol === 0 ? "PASS" : `FAIL(${bViol})`}`);
-  console.log(`C: rows sorted by break-in score descending .................... ${cViol === 0 ? "PASS" : `FAIL(${cViol})`}`);
+  console.log(`C: rows sorted by owner take-home descending ................. ${cViol === 0 ? "PASS" : `FAIL(${cViol})`}`);
   console.log(`D: London produces a healthy list (>= 8 rows) .................. ${dPass ? "PASS" : `FAIL(${londonRows.length})`}`);
   console.log(`E: a thin city returns < 3 rows (section omits) ................ ${ePass ? "PASS" : `FAIL(${thinRows.length})`}`);
   console.log("=".repeat(96));
