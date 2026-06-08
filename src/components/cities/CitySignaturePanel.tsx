@@ -182,9 +182,8 @@ function ScoreBar({ value, label }: { value: number; label: string }) {
   const v = Math.max(0, Math.min(10, value));
   const pct = (v / 10) * 100;
   // Brand-token tone by value: positive (moss) / caution (amber) / poor (clay).
-  // moss has no 600 step (50/100/300/500/700/900), so high uses moss-500.
   const tone =
-    v >= 7 ? "bg-moss-500" : v >= 4 ? "bg-amber-500" : "bg-clay-500";
+    v >= 7 ? "bg-moss-600" : v >= 4 ? "bg-amber-500" : "bg-clay-500";
   return (
     <div>
       {/* Same label type as the culture column so the two columns share a

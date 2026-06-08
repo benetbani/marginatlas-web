@@ -97,10 +97,17 @@ export const colors = {
     900: "#221910",
   },
   moss: {
+    // Positive-delta ramp. The even steps 200/400/600 were filled 2026-06-08
+    // so the profit waterfall and 1-to-10 score scales resolve the gradation
+    // they reference. Each is the midpoint blend of its two neighbors, so the
+    // lightness ladder stays monotonic.
     50: "#f6fbe8",
     100: "#e9f6c8",
+    200: "#d2e899",
     300: "#bcd96a",
+    400: "#96b448",
     500: "#6f8f25",
+    600: "#5c781e",
     700: "#4a6018",
     900: "#222e09",
   },
