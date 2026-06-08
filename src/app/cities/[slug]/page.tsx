@@ -210,6 +210,17 @@ export default async function CityPage({
                 <CityScoreMasthead score={cityScore} />
               </div>
             ) : null}
+            {/* Thin-coverage marker. Tier 2 and Tier 3 cities hold fewer real
+               figures, so a quiet, factual chip says so plainly (honest, not
+               broken, and not apologetic per the Sanity pass). Flagship Tier 1
+               cities omit it. */}
+            {city.tier !== 1 ? (
+              <div className="pb-3">
+                <span className="text-[10px] uppercase tracking-wide font-semibold text-cocoa-700/60 bg-cream-100 border border-parchment rounded-full px-2 py-0.5">
+                  Lighter coverage
+                </span>
+              </div>
+            ) : null}
           </div>
         </div>
 
@@ -220,7 +231,7 @@ export default async function CityPage({
            data. */}
         <div className="mt-2">
           {board.map((s) => (
-            <DataSection section={s} key={s.key} />
+            <DataSection section={s} key={s.key} muteEmpty />
           ))}
         </div>
 

@@ -46,7 +46,15 @@ export type BoardSection = {
 /** How many rows render before the ShowMore fold. */
 const INLINE_ROWS = 8;
 
-export function DataSection({ section }: { section: BoardSection }) {
+export function DataSection({
+  section,
+  muteEmpty = false,
+}: {
+  section: BoardSection;
+  /** When set, blank rows recede further (used by the city board, which is
+   *  mostly blanks off the flagship cities). Off for the cell + country boards. */
+  muteEmpty?: boolean;
+}) {
   const inline = section.rows.slice(0, INLINE_ROWS);
   const overflow = section.rows.slice(INLINE_ROWS);
 
@@ -61,12 +69,12 @@ export function DataSection({ section }: { section: BoardSection }) {
       {section.chart ? <div className="mt-3">{section.chart}</div> : null}
 
       <div className="mt-3">
-        <StatGrid rows={inline} />
+        <StatGrid rows={inline} muteEmpty={muteEmpty} />
       </div>
 
       {overflow.length > 0 ? (
         <ShowMore>
-          <StatGrid rows={overflow} />
+          <StatGrid rows={overflow} muteEmpty={muteEmpty} />
         </ShowMore>
       ) : null}
 

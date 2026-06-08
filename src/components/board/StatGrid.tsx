@@ -14,6 +14,10 @@
  *     decision, not this grid's.
  *   - A value that is null or exactly MISSING renders the MISSING token in a
  *     muted tone, so blanks read as deliberate rather than broken.
+ *   - With `muteEmpty`, a blank row recedes further (the whole cell drops in
+ *     contrast), so a board that is mostly blanks at a given altitude (the city
+ *     board off the flagship cities) reads calm rather than broken. Opt-in, so
+ *     the cell and country boards are unchanged.
  *
  * Server component. Tokens only, mobile-first (two columns, three from md).
  */
@@ -31,13 +35,22 @@ export type StatRow = {
   hint?: string;
 };
 
-export function StatGrid({ rows }: { rows: StatRow[] }) {
+export function StatGrid({
+  rows,
+  muteEmpty = false,
+}: {
+  rows: StatRow[];
+  muteEmpty?: boolean;
+}) {
   return (
     <dl className="grid grid-cols-2 gap-x-6 gap-y-3 md:grid-cols-3">
       {rows.map((row) => {
         const blank = row.value == null || row.value === MISSING;
         return (
-          <div key={row.label}>
+          <div
+            key={row.label}
+            className={blank && muteEmpty ? "opacity-60" : undefined}
+          >
             <dt className="text-[11px] uppercase tracking-wide text-cocoa-500">
               {row.label}
             </dt>
