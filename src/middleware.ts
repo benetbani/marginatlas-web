@@ -255,7 +255,7 @@ const CACHEABLE_PATTERNS: RegExp[] = [
   /^\/about-data$/,
   /^\/browse$/,
   /^\/blog($|\/)/,
-  /^\/cities($|\/[a-z0-9-]+($|\/(?:neighborhoods|curiosities))$)/,
+  /^\/cities($|\/[a-z0-9-]+($|\/neighborhoods)$)/,
   /^\/coverage($|\/)/,
   /^\/industries($|\/[a-z0-9-]+$)/,
   /^\/learn($|\/[a-z0-9-]+$)/,

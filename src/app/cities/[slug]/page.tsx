@@ -13,13 +13,14 @@
  * Sections (server-rendered):
  *   1. BoardHero (plain city name, country eyebrow, empty score strip)
  *   2. City data board (buildCityBoard: demand / location / market / survival)
- *   3. Ranked activities table (buildCityActivities: best owner take-home
+ *   3. Coverage indicator (quiet inline methodology line)
+ *   4. CitySignaturePanel (demographics + signature sectors + culture +
+ *      government scores; null until the city is curated)
+ *   5. Business formation costs by legal tier
+ *   6. Neighborhood mini-strip (only if the city has a scheme)
+ *   7. Ranked activities table (buildCityActivities: best owner take-home
  *      first; London sourced from the curated dataset, other cities omit)
- *   4. Industry mosaic. 10 representative SMB industries
- *   5. Neighborhood mini-strip (only if the city has a scheme)
- *   6. Curiosities preview (deep-link to /curiosities)
- *   7. Sister cities ribbon
- *   8. Compare-with deep-links
+ *   8. Sister cities ribbon
  *
  * No client JS beyond the board's ShowMore toggle. revalidate: 12h.
  */
@@ -30,7 +31,6 @@ import cityListJson from "../../../../data/cities/city_list_v1.json";
 import neighborhoodsJson from "../../../../data/cities/neighborhoods_v1.json";
 import { CountryFlag } from "@/components/CountryFlag";
 import { COUNTRIES } from "@/lib/taxonomy";
-import { MoreDepthBanner } from "@/components/monetization";
 import { ComparableCitiesRibbon } from "@/components/ComparableCitiesRibbon";
 // TopProfitableActivities + MostSaturatedActivities dropped per
 // founder direction 2026-05-26. Replaced by CitySignaturePanel
@@ -91,19 +91,6 @@ type NeighborhoodScheme = {
 const CITIES = (cityListJson as { cities: City[] }).cities;
 const CITIES_BY_SLUG = new Map(CITIES.map((c) => [c.slug, c]));
 const NEIGHBORHOODS = (neighborhoodsJson as { cities: Record<string, NeighborhoodScheme> }).cities;
-
-const HEADLINE_INDUSTRIES = [
-  { id: "restaurants", name: "Restaurants" },
-  { id: "coffee_shops", name: "Coffee shops" },
-  { id: "law_offices", name: "Law offices" },
-  { id: "hair_salons", name: "Hair salons" },
-  { id: "construction_residential", name: "Construction" },
-  { id: "software_dev_services", name: "Software services" },
-  { id: "fitness_centers", name: "Fitness centers" },
-  { id: "specialty_retail", name: "Specialty retail" },
-  { id: "auto_repair", name: "Auto repair" },
-  { id: "real_estate_brokerage", name: "Real estate" },
-];
 
 export async function generateStaticParams() {
   // Pre-render Tier 1 only at build (~20 cities).
@@ -237,6 +224,77 @@ export default async function CityPage({
           ))}
         </div>
 
+        {/* Sanity-§8: apologetic expanded CoverageIndicator banner
+            replaced with a quiet inline methodology link. */}
+        <section className="mb-10 mt-10">
+          <CoverageIndicator
+            tier={city.tier === 1 ? "regional" : "estimated"}
+            variant="compact"
+          />
+        </section>
+
+        {/* The old Gini / HDI source-disclosure footnote was removed with the
+           heavy hero (2026-06-05): the rebuilt board does not surface Gini or
+           HDI, so a disclaimer for absent figures only confused. The board's
+           own per-section modeled footnotes carry the honesty now. */}
+
+        {/* Founder direction 2026-05-26: dropped TopProfitableActivities
+            (most / least profitable, was sec 6) and MostSaturatedActivities
+            (most crowded fields). Replaced by the CitySignaturePanel
+            below (demographics + signature sectors + culture spectrums
+            + government scores). Renders null when the city has no
+            curated entry in city_signature_v1.json. */}
+        <CitySignaturePanel
+          citySlug={city.slug}
+          cityName={city.name}
+          iso2={city.iso2}
+        />
+
+        {/* Cities sec 6: business formation costs by legal tier. */}
+        <BusinessFormationCosts
+          countryIso2={city.iso2}
+          countryName={countryName}
+        />
+
+        {/* Neighborhood mini-strip */}
+        {scheme && scheme.neighborhoods.length > 0 && (
+          <section className="mb-12 md:mb-16">
+            <div className="text-xs uppercase tracking-wide text-atlas-600 font-semibold mb-2">
+              Neighborhoods
+            </div>
+            <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mb-2">
+              The {scheme.neighborhoods.length} sub-areas
+            </h2>
+            <p className="text-sm md:text-base text-cocoa-700/80 mb-6 max-w-2xl">
+              The shape of {city.name} below the headline figure.
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+              {scheme.neighborhoods.map((n) => (
+                <Link
+                  key={n.slug}
+                  href={`/${city.iso2.toLowerCase()}/${city.slug}/${n.slug}`}
+                  className="group block rounded-xl border border-parchment hover:border-atlas-500 bg-cream-50 p-3 transition-colors"
+                >
+                  <div className="font-medium text-sm text-ink-900 group-hover:text-atlas-700 leading-tight">
+                    {n.name}
+                  </div>
+                  <div className="text-[11px] text-cocoa-700/60 mt-1 capitalize">
+                    {n.character.replace(/-/g, " ")}
+                  </div>
+                </Link>
+              ))}
+            </div>
+            <div className="mt-4">
+              <Link
+                href={`/cities/${city.slug}/neighborhoods`}
+                className="text-sm text-atlas-700 font-medium underline decoration-atlas-300 hover:decoration-atlas-700 underline-offset-2"
+              >
+                Explore all neighborhoods →
+              </Link>
+            </div>
+          </section>
+        )}
+
         {/* Activities in this city, ranked by what an owner keeps after tax,
            best at top and hardest at the bottom. London is sourced from the
            curated activity dataset; every other city omits this block cleanly
@@ -288,174 +346,6 @@ export default async function CityPage({
             </p>
           </section>
         )}
-
-        {/* Sanity-§8: apologetic expanded CoverageIndicator banner
-            replaced with a quiet inline methodology link. */}
-        <section className="mb-10 mt-10">
-          <CoverageIndicator
-            tier={city.tier === 1 ? "regional" : "estimated"}
-            variant="compact"
-          />
-        </section>
-
-        {/* The old Gini / HDI source-disclosure footnote was removed with the
-           heavy hero (2026-06-05): the rebuilt board does not surface Gini or
-           HDI, so a disclaimer for absent figures only confused. The board's
-           own per-section modeled footnotes carry the honesty now. */}
-
-        {/* Founder direction 2026-05-26: dropped TopProfitableActivities
-            (most / least profitable, was sec 6) and MostSaturatedActivities
-            (most crowded fields). Replaced by the CitySignaturePanel
-            below (demographics + signature sectors + culture spectrums
-            + government scores). Renders null when the city has no
-            curated entry in city_signature_v1.json. */}
-        <CitySignaturePanel
-          citySlug={city.slug}
-          cityName={city.name}
-          iso2={city.iso2}
-        />
-
-        {/* Cities sec 6: business formation costs by legal tier. */}
-        <BusinessFormationCosts
-          countryIso2={city.iso2}
-          countryName={countryName}
-        />
-
-        {/* Decision wizard CTA. Phase 2 framework discoverability. */}
-        <section className="mb-12 md:mb-16">
-          <div className="atlas-card p-5 md:p-7 flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="flex-1 min-w-0">
-              <div className="text-[10px] uppercase tracking-[0.16em] text-atlas-700 font-semibold mb-2">
-                Decision wizard
-              </div>
-              <h2 className="font-display text-xl md:text-2xl font-semibold text-ink-900 leading-tight mb-1.5">
-                Where in {city.name} should you open?
-              </h2>
-              <p className="text-sm text-cocoa-700/80 max-w-xl leading-relaxed">
-                Pick any activity. Atlas ranks every neighborhood by
-                expected net margin, weighing commuter density, tourism,
-                anomaly zones, and rent drag.
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-2 shrink-0">
-              <Link
-                href={`/decide/restaurants/${city.slug}`}
-                className="px-4 py-2.5 rounded-full bg-atlas-700 hover:bg-atlas-800 text-cream-50 text-sm font-semibold shadow-sm transition text-center whitespace-nowrap"
-              >
-                Restaurants &rarr;
-              </Link>
-              <Link
-                href={`/decide/pharmacies-drug-stores/${city.slug}`}
-                className="px-4 py-2.5 rounded-full bg-white hover:bg-cream-100 border border-ink-200 hover:border-atlas-700 text-ink-900 text-sm font-semibold transition text-center whitespace-nowrap"
-              >
-                Pharmacies &rarr;
-              </Link>
-              <Link
-                href={`/decide`}
-                className="px-4 py-2.5 rounded-full bg-white hover:bg-cream-100 border border-ink-200 hover:border-atlas-700 text-ink-900 text-sm font-semibold transition text-center whitespace-nowrap"
-              >
-                Other activity
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* Industry mosaic */}
-        <section className="mb-12 md:mb-16">
-          <div className="text-xs uppercase tracking-wide text-atlas-600 font-semibold mb-2">
-            Ten industries
-          </div>
-          <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mb-2">
-            What small businesses in {city.name} look like
-          </h2>
-          <p className="text-sm md:text-base text-cocoa-700/80 mb-6 max-w-2xl">
-            A starting grid of the most-shared SMB categories. Each card
-            opens the full benchmark for {city.name}.
-          </p>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
-            {HEADLINE_INDUSTRIES.map((ind) => (
-              <Link
-                key={ind.id}
-                href={`/${city.iso2.toLowerCase()}/${city.slug}/${ind.id.replace(/_/g, "-")}`}
-                className="group block rounded-2xl border border-parchment hover:border-atlas-500 bg-white p-4 transition-colors"
-              >
-                <div className="font-display text-base md:text-lg font-medium tracking-tight text-ink-900 group-hover:text-atlas-700 transition-colors leading-tight">
-                  {ind.name}
-                </div>
-                <div className="mt-3 text-xs text-cocoa-700/70 flex items-center gap-1.5 font-medium border-b border-atlas-200 group-hover:border-atlas-500 pb-0.5 transition-colors w-fit">
-                  See benchmark
-                  <span aria-hidden>→</span>
-                </div>
-              </Link>
-            ))}
-          </div>
-          {/* v34 Phase C city-page lock: depth on quartiles + the
-             full list of industries beyond the headline ten. */}
-          <MoreDepthBanner
-            headline={`See every industry covered in ${city.name}, plus lower-mid and upper-mid quartiles per cell.`}
-            tier="basic"
-            entry="city_truncated_industries"
-          />
-        </section>
-
-        {/* Neighborhood mini-strip */}
-        {scheme && scheme.neighborhoods.length > 0 && (
-          <section className="mb-12 md:mb-16">
-            <div className="text-xs uppercase tracking-wide text-atlas-600 font-semibold mb-2">
-              Neighborhoods
-            </div>
-            <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mb-2">
-              The {scheme.neighborhoods.length} sub-areas
-            </h2>
-            <p className="text-sm md:text-base text-cocoa-700/80 mb-6 max-w-2xl">
-              The shape of {city.name} below the headline figure.
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-              {scheme.neighborhoods.map((n) => (
-                <Link
-                  key={n.slug}
-                  href={`/${city.iso2.toLowerCase()}/${city.slug}/${n.slug}`}
-                  className="group block rounded-xl border border-parchment hover:border-atlas-500 bg-cream-50 p-3 transition-colors"
-                >
-                  <div className="font-medium text-sm text-ink-900 group-hover:text-atlas-700 leading-tight">
-                    {n.name}
-                  </div>
-                  <div className="text-[11px] text-cocoa-700/60 mt-1 capitalize">
-                    {n.character.replace(/-/g, " ")}
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <div className="mt-4">
-              <Link
-                href={`/cities/${city.slug}/neighborhoods`}
-                className="text-sm text-atlas-700 font-medium underline decoration-atlas-300 hover:decoration-atlas-700 underline-offset-2"
-              >
-                Explore all neighborhoods →
-              </Link>
-            </div>
-          </section>
-        )}
-
-        {/* Curiosities preview */}
-        <section className="mb-12 md:mb-16">
-          <div className="text-xs uppercase tracking-wide text-atlas-600 font-semibold mb-2">
-            Curiosities
-          </div>
-          <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mb-2">
-            What stands out in {city.name}
-          </h2>
-          <p className="text-sm md:text-base text-cocoa-700/80 mb-6 max-w-2xl">
-            The most expensive trade, the most crowded category, the
-            biggest surprise.{" "}
-            <Link
-              href={`/cities/${city.slug}/curiosities`}
-              className="text-atlas-700 font-medium underline decoration-atlas-300 hover:decoration-atlas-700 underline-offset-2"
-            >
-              See the full set →
-            </Link>
-          </p>
-        </section>
 
         {/* Sister cities ribbon */}
         <ComparableCitiesRibbon

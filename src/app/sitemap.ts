@@ -232,7 +232,7 @@ async function neighborhoodSitemap(): Promise<MetadataRoute.Sitemap> {
 
 
 /** Cities deep build: metropolis + neighborhood hub +
- *  curiosities + city-vs-city comparison pages. */
+ *  city-vs-city comparison pages. */
 async function citiesSitemap(): Promise<MetadataRoute.Sitemap> {
   type CityListEntry = { slug: string; tier: number };
   type Pair = { left: string; right: string };
@@ -244,9 +244,6 @@ async function citiesSitemap(): Promise<MetadataRoute.Sitemap> {
   out.push({ url: `${BASE_URL}/cities`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 });
   for (const c of cities) {
     out.push({ url: `${BASE_URL}/cities/${c.slug}`, lastModified: new Date(), changeFrequency: "weekly", priority: c.tier === 1 ? 0.85 : c.tier === 2 ? 0.75 : 0.6 });
-    if (c.tier <= 2) {
-      out.push({ url: `${BASE_URL}/cities/${c.slug}/curiosities`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.65 });
-    }
   }
   for (const slug of Object.keys(neighborhoodCities)) {
     out.push({ url: `${BASE_URL}/cities/${slug}/neighborhoods`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 });

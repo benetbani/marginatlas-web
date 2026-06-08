@@ -74,8 +74,8 @@ export function TopCitiesMosaic({ limit = 16 }: Props) {
       </h2>
       <p className="text-base md:text-lg text-cocoa-700/80 mb-10 max-w-2xl">
         Two hundred metros, from megacities to wealth-concentrated micros.
-        Each card opens a deeper page: neighborhoods, curiosities, and
-        comparisons with sister cities.
+        Each card opens a deeper page: neighborhoods and comparisons with
+        sister cities.
       </p>
 
       {CONTINENT_ORDER.map((continent) => {

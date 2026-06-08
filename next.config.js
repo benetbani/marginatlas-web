@@ -81,6 +81,18 @@ const nextConfig = {
     ];
   },
 
+  // The per-city curiosities page was retired; its old URLs 308-redirect
+  // to the city page so existing SEO equity carries over to the parent.
+  async redirects() {
+    return [
+      {
+        source: "/cities/:slug/curiosities",
+        destination: "/cities/:slug",
+        permanent: true,
+      },
+    ];
+  },
+
 };
 
 // Sentry build wrapper: uploads source maps + injects the SDK.
