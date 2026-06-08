@@ -139,7 +139,19 @@ export function getCityPeerSet(
     else usedCountries.add(c.iso2);
   };
 
-  // 1) Local competitor: nearest same country, else same continent, else anywhere.
+  // 1) Classic rival FIRST, so the competitor step below cannot poach it: the
+  //    curated rival if present and takeable (editorial truth, so it ignores the
+  //    population band); else the nearest cross-country peer.
+  const rivalSlug = RIVALS[seed.slug];
+  const rivalEntry = rivalSlug ? BY_SLUG[rivalSlug] : undefined;
+  const rival =
+    rivalEntry && rivalEntry.slug !== seed.slug && canTake(rivalEntry)
+      ? rivalEntry
+      : rankBySimilarity(seed, pool.filter((c) => c.iso2 !== seed.iso2)).find(canTake);
+  if (rival) take(rival, "rival");
+
+  // 2) Local competitor: nearest same country, else same continent, else anywhere.
+  //    The rival is already reserved, so a same-continent competitor is next best.
   const competitor =
     rankBySimilarity(seed, pool.filter((c) => c.iso2 === seed.iso2)).find(canTake) ??
     rankBySimilarity(
@@ -148,16 +160,6 @@ export function getCityPeerSet(
     ).find(canTake) ??
     rankBySimilarity(seed, pool).find(canTake);
   if (competitor) take(competitor, "competitor");
-
-  // 2) Classic rival: the curated rival if present and takeable (editorial truth,
-  //    so it ignores the population band); else the nearest cross-country peer.
-  const rivalSlug = RIVALS[seed.slug];
-  const rivalEntry = rivalSlug ? BY_SLUG[rivalSlug] : undefined;
-  const rival =
-    rivalEntry && rivalEntry.slug !== seed.slug && canTake(rivalEntry)
-      ? rivalEntry
-      : rankBySimilarity(seed, pool.filter((c) => c.iso2 !== seed.iso2)).find(canTake);
-  if (rival) take(rival, "rival");
 
   // 3) Peer abroad: nearest from a different continent than the seed.
   const intl =
@@ -174,5 +176,8 @@ export function getCityPeerSet(
     }
   }
 
-  return picks.slice(0, 3);
+  // Display in the founder's order regardless of selection order: a local
+  // competitor, then the classic rival, then the peer abroad.
+  const order: Record<PeerRole, number> = { competitor: 0, rival: 1, international: 2 };
+  return picks.sort((a, b) => order[a.role] - order[b.role]).slice(0, 3);
 }
