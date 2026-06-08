@@ -214,29 +214,34 @@ export function buildCityBoard(input: CityBoardInput): BoardSection[] {
   // annual tourist arrivals (a proxy, labeled as visitors). Households is not
   // held at this altitude, so it blanks.
   const population = isNum(city.popM) ? Math.round(city.popM * 1_000_000) : null;
-  const cityIncome = isNum(city.avgGrossSalaryUsdYear)
-    ? city.avgGrossSalaryUsdYear
+  const cityMonthly = isNum(city.avgGrossSalaryUsdYear)
+    ? city.avgGrossSalaryUsdYear / 12
     : null;
-  const countryIncome =
-    econ && isNum(econ.avgMonthlySalary) ? econ.avgMonthlySalary * 12 : null;
-  const incomeProxy = cityIncome ?? countryIncome;
+  const countryMonthly =
+    econ && isNum(econ.avgMonthlySalary) ? econ.avgMonthlySalary : null;
+  const monthlyIncome = cityMonthly ?? countryMonthly;
   const demandRows: StatRow[] = [
     {
-      label: "Population",
+      label: "Metro population",
       value: isNum(population) ? fmtInt(population) : null,
-      hint: "metro residents",
-    },
-    { label: "Households", value: null },
-    {
-      label: "Income proxy",
-      value: isNum(incomeProxy) ? fmtUSD(incomeProxy) : null,
-      hint: "average gross salary per year",
+      tip: "Resident population of the wider metro area.",
     },
     {
-      label: "Footfall",
+      label: "Average net wealth per citizen",
+      value: null,
+      tip: "Average net wealth held per resident.",
+    },
+    {
+      label: "Average salary",
+      value: isNum(monthlyIncome) ? `${fmtUSD(monthlyIncome)}/mo` : null,
+      tip: "Average gross salary, per month, before tax.",
+    },
+    {
+      label: "Annual visitors",
       value: isNum(city.touristArrivalsM)
-        ? `${fmtNum(city.touristArrivalsM)}M visitors/year`
+        ? `${fmtNum(city.touristArrivalsM)}M`
         : null,
+      tip: "Tourist arrivals per year, a proxy for street footfall.",
     },
   ];
 
@@ -249,15 +254,14 @@ export function buildCityBoard(input: CityBoardInput): BoardSection[] {
     {
       label: "Rent pressure",
       value: L ? textOrNull(L.rentPressure) : null,
-      hint: L && L.rentPressure ? "representative across activities" : undefined,
+      tip: "The most common rent-pressure level across local trades.",
     },
-    { label: "Prime rent", value: null },
     {
-      label: "Cost tier",
+      label: "Cost of living",
       value: isNum(city.costOfLivingIndex)
         ? fmtNum(city.costOfLivingIndex)
         : null,
-      hint: "cost-of-living index, leading metro at 100",
+      tip: "Cost-of-living index. A leading metro sits at 100.",
     },
   ];
 
@@ -267,16 +271,13 @@ export function buildCityBoard(input: CityBoardInput): BoardSection[] {
   // country's self-employment share (a broad but correlated proxy, the same
   // read the cell and country boards use), labeled as a country-level figure.
   const marketRows: StatRow[] = [
-    { label: "Saturation", value: null },
-    { label: "Business density", value: null },
     {
-      label: "Informality",
+      label: "Self-employment",
       value:
         econ && isNum(econ.selfEmploymentPct)
-          ? `${Math.round(econ.selfEmploymentPct)}% self-employed`
+          ? `${Math.round(econ.selfEmploymentPct)}%`
           : null,
-      hint:
-        econ && isNum(econ.selfEmploymentPct) ? "country-level" : undefined,
+      tip: "Share of workers who are self-employed. A country-level figure.",
     },
   ];
 
@@ -287,23 +288,21 @@ export function buildCityBoard(input: CityBoardInput): BoardSection[] {
   // 100; non-finite dashes) so an averaged curve can never print a rising or
   // out-of-range survival series; the "representative" hint keys off whether a
   // curve exists at all (London), matching the prior behaviour.
-  const hasSurvivalCurve = L?.survival != null;
   const survival = boundSurvivalCurve(L?.survival ?? {});
   const survivalRows: StatRow[] = [
     {
       label: "1-year survival",
       value: isNum(survival.yr1) ? `${survival.yr1}%` : null,
-      hint: hasSurvivalCurve ? "representative across activities" : undefined,
+      tip: "Share of new businesses still trading after a year. Representative across local trades.",
     },
     {
-      label: "3-year",
+      label: "3-year survival",
       value: isNum(survival.yr3) ? `${survival.yr3}%` : null,
     },
     {
-      label: "5-year",
+      label: "5-year survival",
       value: isNum(survival.yr5) ? `${survival.yr5}%` : null,
     },
-    { label: "Closure rate", value: null },
   ];
 
   return [

@@ -49,18 +49,29 @@ const INLINE_ROWS = 8;
 export function DataSection({
   section,
   muteEmpty = false,
+  variant = "grid",
 }: {
   section: BoardSection;
   /** When set, blank rows recede further (used by the city board, which is
    *  mostly blanks off the flagship cities). Off for the cell + country boards. */
   muteEmpty?: boolean;
+  /** "ruled" gives the city board hairline row separators, a larger title, and
+   *  "?" tooltips; "grid" is the original cell + country look. Opt-in, so the
+   *  cell and country boards are unchanged. */
+  variant?: "grid" | "ruled";
 }) {
   const inline = section.rows.slice(0, INLINE_ROWS);
   const overflow = section.rows.slice(INLINE_ROWS);
 
   return (
     <section className="mt-8">
-      <SectionEyebrow>{section.title}</SectionEyebrow>
+      {variant === "ruled" ? (
+        <h3 className="font-display text-base font-semibold tracking-tight text-ink-900 md:text-lg">
+          {section.title}
+        </h3>
+      ) : (
+        <SectionEyebrow>{section.title}</SectionEyebrow>
+      )}
 
       {section.dek ? (
         <p className="mt-1 text-sm text-cocoa-700">{section.dek}</p>
@@ -69,12 +80,12 @@ export function DataSection({
       {section.chart ? <div className="mt-3">{section.chart}</div> : null}
 
       <div className="mt-3">
-        <StatGrid rows={inline} muteEmpty={muteEmpty} />
+        <StatGrid rows={inline} muteEmpty={muteEmpty} variant={variant} />
       </div>
 
       {overflow.length > 0 ? (
         <ShowMore>
-          <StatGrid rows={overflow} muteEmpty={muteEmpty} />
+          <StatGrid rows={overflow} muteEmpty={muteEmpty} variant={variant} />
         </ShowMore>
       ) : null}
 

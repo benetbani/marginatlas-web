@@ -263,7 +263,7 @@ export default async function CityPage({
            data. */}
         <div className="mt-2">
           {board.map((s) => (
-            <DataSection section={s} key={s.key} muteEmpty />
+            <DataSection section={s} key={s.key} muteEmpty variant="ruled" />
           ))}
         </div>
 

@@ -23,6 +23,7 @@
  */
 import * as React from "react";
 import { MISSING } from "./format";
+import { InfoDot } from "./InfoDot";
 
 /**
  * One cell of the board. `value` is a pre-formatted string (route numbers
@@ -33,15 +34,51 @@ export type StatRow = {
   label: string;
   value: string | null;
   hint?: string;
+  /** Optional one-line explanation shown as a "?" tooltip (ruled variant only). */
+  tip?: string;
 };
 
 export function StatGrid({
   rows,
   muteEmpty = false,
+  variant = "grid",
 }: {
   rows: StatRow[];
   muteEmpty?: boolean;
+  variant?: "grid" | "ruled";
 }) {
+  if (variant === "ruled") {
+    return (
+      <dl className="grid grid-cols-1 gap-x-12 md:grid-cols-2">
+        {rows.map((row) => {
+          const blank = row.value == null || row.value === MISSING;
+          return (
+            <div
+              key={row.label}
+              className={`flex items-baseline justify-between gap-3 border-b border-parchment py-2.5 ${
+                blank && muteEmpty ? "opacity-60" : ""
+              }`}
+            >
+              <dt className="flex items-center text-[13px] text-cocoa-700">
+                <span>{row.label}</span>
+                {row.tip ? <InfoDot tip={row.tip} /> : null}
+              </dt>
+              <dd
+                className={
+                  blank
+                    ? "font-display text-[15px] font-semibold tabular-nums text-cocoa-400"
+                    : "font-display text-[15px] font-semibold tabular-nums text-ink-900"
+                }
+              >
+                {blank ? MISSING : row.value}
+              </dd>
+            </div>
+          );
+        })}
+      </dl>
+    );
+  }
+
   return (
     <dl className="grid grid-cols-2 gap-x-6 gap-y-3 md:grid-cols-3">
       {rows.map((row) => {
