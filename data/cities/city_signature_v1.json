@@ -174,7 +174,24 @@
       "culture": {
         "openness_to_foreigners": 8,
         "innovation": 7
-      }
+      },
+      "signature_sectors": [
+        {
+          "label": "Technology and startups",
+          "industry_slug": "software-development",
+          "blurb": "One of Europe's strongest startup ecosystems, with roughly 90,000 tech jobs across about 3,000 companies, much of it clustered in the 22@ innovation district."
+        },
+        {
+          "label": "Design and creative industries",
+          "industry_slug": "marketing-design-agencies",
+          "blurb": "A deep creative economy of nearly 190,000 jobs spanning design, architecture, advertising, and media. The city is the World Capital of Architecture in 2026."
+        },
+        {
+          "label": "Tourism and hospitality",
+          "industry_slug": "hotels-lodging",
+          "blurb": "A defining pillar of the local economy, drawing millions of visitors a year to a dense core of hotels, restaurants, and cultural venues."
+        }
+      ]
     },
     "beijing": {
       "commercial_streets": [
