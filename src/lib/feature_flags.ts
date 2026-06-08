@@ -76,6 +76,18 @@ export function isAuthEnabled(): boolean {
 }
 
 /**
+ * The owner-take-home paywall gate (Milestone 2). Default OFF: every number shows
+ * in full, exactly as today. When ON, the static page ships a redacted placeholder
+ * for owner take-home and a subscriber's browser reveals the real value via the
+ * authed /api/cell-take-home. Do NOT flip this on until all four surfaces (cell
+ * board, city table, industry table, Compare) are gated, or the value leaks.
+ * Requires auth + Stripe configured.
+ */
+export function isGatingEnabled(): boolean {
+  return parseFlag(process.env.NEXT_PUBLIC_GATING_ENABLED, false);
+}
+
+/**
  * Snapshot of every flag's current value. Useful for `/status` and
  * for the audit / debug surfaces.
  */
@@ -84,5 +96,6 @@ export function snapshotFlags(): Record<string, boolean> {
     NEXT_PUBLIC_AU_PRIMARY_DATA: isAuPrimaryDataEnabled(),
     NEXT_PUBLIC_ACCOUNT_PREVIEW: isAccountPreviewEnabled(),
     NEXT_PUBLIC_AUTH_ENABLED: isAuthEnabled(),
+    NEXT_PUBLIC_GATING_ENABLED: isGatingEnabled(),
   };
 }
