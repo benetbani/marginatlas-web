@@ -16,6 +16,7 @@ import { Newsreader, Inter } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Organization } from "@/components/StructuredData";
 import { HeaderSearch } from "@/components/HeaderSearch";
+import { HeaderAuth } from "@/components/HeaderAuth";
 import { FooterNewsletterBar } from "@/components/newsletter/NewsletterSignupVariants";
 import { LogoWordmark } from "@/components/brand/LogoWordmark";
 import { PaywallModalRoot } from "@/components/monetization";
@@ -119,6 +120,7 @@ export default function RootLayout({
                 <a href="/tools" className="hover:text-atlas-600 transition-colors">Tools</a>
                 <a href="/compare" className="hover:text-atlas-600 transition-colors">Compare</a>
                 <a href="/blog" className="hover:text-atlas-600 transition-colors">Blog</a>
+                <HeaderAuth />
                 {/* Plan v32 — pricing promoted to button-style CTA so
                    it's visually distinct from the rest of the nav. */}
                 <a
