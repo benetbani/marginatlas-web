@@ -46,7 +46,7 @@ import { CityScoreMasthead } from "@/components/board/BreakInScore";
 import { MastheadImage } from "@/components/board/MastheadImage";
 import { getCityHero, isPatternHero } from "@/lib/images/city_heroes";
 import { DataSection } from "@/components/board/DataSection";
-import { fmtUSD, fmtPct } from "@/components/board/format";
+import { fmtUSD, fmtPct, MISSING } from "@/components/board/format";
 import {
   buildCityBoard,
   buildCityActivities,
@@ -346,53 +346,63 @@ export default async function CityPage({
            that activity's full cell benchmark under the city. */}
         {activities.length > 0 && (
           <section className="mt-10">
-            <SectionEyebrow>Best and hardest</SectionEyebrow>
+            <SectionEyebrow>Everyday trades</SectionEyebrow>
             <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mt-1">
               What an owner keeps in {city.name}
             </h2>
             <p className="text-sm md:text-base text-cocoa-700/80 mt-1.5 mb-5 max-w-2xl leading-relaxed">
-              Every activity we cover in {city.name}, ranked by what a typical
-              owner keeps after tax. The badge is the same 0 to 100 break-in read
-              each business shows on its own page, higher means easier to get
-              started. Modeled from local business demography. Directional.
+              The everyday businesses you find in almost any city, and what a
+              typical owner keeps after tax in {city.name}. The badge is the same 0
+              to 100 break-in read each business shows on its own page, higher means
+              easier to get started. Modeled from local business demography.
+              Directional.
             </p>
-            <ul className="divide-y divide-parchment border-y border-parchment">
-              {activities.map((a, i) => (
-                <li key={a.slug}>
-                  <Link
-                    href={a.href}
-                    className="group flex items-baseline justify-between gap-3 py-2.5 transition-colors"
-                  >
-                    <span className="flex min-w-0 items-baseline gap-2.5">
-                      <span className="w-5 shrink-0 text-[11px] tabular-nums text-cocoa-500">
-                        {i + 1}
-                      </span>
-                      <span className="truncate text-sm font-medium text-ink-900 group-hover:text-atlas-700 transition-colors">
-                        {a.name}
-                      </span>
-                      <span
-                        className={`inline-flex shrink-0 items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-semibold ${breakInBadge(
-                          a.breakInBand,
-                        )}`}
+            <div className="grid grid-cols-1 gap-x-10 md:grid-cols-2">
+              {[
+                activities.slice(0, Math.ceil(activities.length / 2)),
+                activities.slice(Math.ceil(activities.length / 2)),
+              ].map((col, ci) => (
+                <ul
+                  key={ci}
+                  className="divide-y divide-parchment border-y border-parchment"
+                >
+                  {col.map((a) => (
+                    <li key={a.slug}>
+                      <Link
+                        href={a.href}
+                        className="group flex items-baseline justify-between gap-3 py-2.5 transition-colors"
                       >
-                        <span className="tabular-nums">{a.breakInScore}</span>
-                        <span>{breakInWord(a.breakInBand)}</span>
-                      </span>
-                    </span>
-                    <span className="flex shrink-0 items-baseline gap-3">
-                      {a.netMarginPct != null && (
-                        <span className="hidden text-[11px] tabular-nums text-cocoa-500 sm:inline">
-                          {fmtPct(a.netMarginPct)} net
+                        <span className="flex min-w-0 items-baseline gap-2.5">
+                          <span className="truncate text-sm font-medium text-ink-900 group-hover:text-atlas-700 transition-colors">
+                            {a.name}
+                          </span>
+                          {a.breakInScore != null && a.breakInBand != null ? (
+                            <span
+                              className={`inline-flex shrink-0 items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-semibold ${breakInBadge(
+                                a.breakInBand,
+                              )}`}
+                            >
+                              <span className="tabular-nums">{a.breakInScore}</span>
+                              <span>{breakInWord(a.breakInBand)}</span>
+                            </span>
+                          ) : null}
                         </span>
-                      )}
-                      <span className="font-display text-base font-semibold tabular-nums text-ink-900">
-                        {fmtUSD(a.takeHome)}
-                      </span>
-                    </span>
-                  </Link>
-                </li>
+                        <span className="flex shrink-0 items-baseline gap-3">
+                          {a.netMarginPct != null && (
+                            <span className="hidden text-[11px] tabular-nums text-cocoa-500 sm:inline">
+                              {fmtPct(a.netMarginPct)} net
+                            </span>
+                          )}
+                          <span className="font-display text-base font-semibold tabular-nums text-ink-900">
+                            {a.takeHome != null ? fmtUSD(a.takeHome) : MISSING}
+                          </span>
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               ))}
-            </ul>
+            </div>
             <p className="mt-3 text-[11px] text-cocoa-500">
               Owner take-home is after tax, for a typical single-site operator.
             </p>

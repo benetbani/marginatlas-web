@@ -55,7 +55,6 @@ import {
   type CityAttractivenessScore,
 } from "@/lib/scores/city_attractiveness";
 import {
-  getTopIndustriesForCountry,
   getCellBySlug,
   withBudget,
   type Cell,
@@ -381,10 +380,10 @@ export interface CityActivityRow {
   slug: string;
   /** Cell-page href, e.g. "/gb/london/dental-practices". */
   href: string;
-  /** Break-in score, integer 0..100, higher = easier (the masthead's own read). */
-  breakInScore: number;
-  /** The band word driving the per-row badge tone (moss / atlas / clay). */
-  breakInBand: BreakInBand;
+  /** Break-in score, integer 0..100, or null when no trusted local cell exists. */
+  breakInScore: number | null;
+  /** The band word driving the per-row badge tone, or null. */
+  breakInBand: BreakInBand | null;
   /** After-tax owner take-home, USD, or null (never invented). */
   takeHome: number | null;
   /** Net margin, percent (0..100), or null. */
@@ -396,10 +395,21 @@ export interface CityActivityRow {
  * "ranking" is not a ranking), matching the country break-in panel's floor. */
 const MIN_CITY_ACTIVITY_ROWS = 3;
 
-/** How many candidate activities to resolve per city before ranking. The same
- * slate width the country break-in panel resolves, so a city's list is drawn
- * from the same depth of coverage. */
-const CITY_ACTIVITY_SLATE = 18;
+/** The ten everyday trades shown on every city, in a stable order. Each resolves
+ * to a real industry in the taxonomy. Pharmacies are intentionally absent (not
+ * modeled yet, founder 2026-06-08); revisit when a pharmacies industry exists. */
+const POPULAR_TRADES: string[] = [
+  "restaurants",
+  "grocery_stores",
+  "doctors_clinics",
+  "auto_repair_shops",
+  "hairdressers_beauty",
+  "clothing_stores",
+  "cafes_coffee",
+  "bars_nightclubs",
+  "dental_practices",
+  "sports_fitness",
+];
 
 /**
  * The cell's after-tax owner take-home AND its displayed net margin percent,
@@ -497,12 +507,12 @@ export async function buildCityActivities(input: {
   const annualIncome =
     isNum(econSnap.avgMonthlySalary) ? econSnap.avgMonthlySalary * 12 : null;
 
-  // The city's candidate activities (the same densest-first slate the country
-  // page resolves), each resolved to its destination cell UNDER THE CITY SLUG.
-  const tops = await getTopIndustriesForCountry(iso2Upper, CITY_ACTIVITY_SLATE);
+  // The fixed slate of everyday trades (founder 2026-06-08), each resolved to its
+  // destination cell UNDER THE CITY SLUG. Unlike the old densest-first ranking,
+  // the slate is constant so every city shows the same recognisable businesses.
   const resolved = await Promise.all(
-    tops.map(async (ind) => {
-      const activitySlug = industryToSlug(ind.industry_id);
+    POPULAR_TRADES.map(async (industryId) => {
+      const activitySlug = industryToSlug(industryId);
       const cell = await withBudget(
         getCellBySlug(iso2Lower, citySlug, activitySlug, {
           sizeBand: null,
@@ -510,57 +520,62 @@ export async function buildCityActivities(input: {
         }),
         null,
         4_000,
-        `city-activities:${iso2Lower}/${citySlug}/${ind.industry_id}`,
+        `city-activities:${iso2Lower}/${citySlug}/${industryId}`,
       );
-      return { industryId: ind.industry_id, activitySlug, cell };
+      return { industryId, activitySlug, cell };
     }),
   );
 
   const rows: CityActivityRow[] = [];
-  const seen = new Set<string>();
+  let withFigures = 0;
   for (const r of resolved) {
-    const cell = r.cell;
-    if (!cell) continue;
-    if (seen.has(r.industryId)) continue;
-    // No wrong numbers: the cell must be a trusted local measurement of the exact
-    // activity it claims. This drops synthetic stand-ins, extrapolated tier "X"
-    // reads, national aggregates resolved under the city slug, and friendly-slug
-    // misroutes, so a row can only carry a real local figure.
-    if (!isTrustedLocalCell(cell, r.industryId)) continue;
-
-    // The break-in read (the same 0..100 score this activity shows on its own
-    // masthead). Null when the cell carries no defensible take-home or entry
-    // cost, in which case the row is omitted, never shown as a wrong number.
-    const rating = breakInForCell(cell, citySlug, annualIncome);
-    if (rating == null) continue;
-
-    const { takeHome, netMarginPct } = takeHomeAndMarginForCell(cell, annualIncome);
-
     const ind = INDUSTRY_BY_ID[r.industryId];
     const name = ind?.name ?? r.activitySlug.replace(/-/g, " ");
-    seen.add(r.industryId);
-    rows.push({
+    const base = {
       name,
       slug: r.activitySlug,
       href: `/${iso2Lower}/${citySlug}/${r.activitySlug}`,
-      breakInScore: rating.score,
-      breakInBand: rating.band,
-      takeHome,
-      netMarginPct,
+    };
+
+    const cell = r.cell;
+    // No wrong numbers: only a trusted local measurement of the exact activity it
+    // claims may carry figures (this drops synthetic, extrapolated tier "X", and
+    // national-aggregate cells). A trade without one stays on the slate with a
+    // dash rather than a borrowed or invented number.
+    if (cell && isTrustedLocalCell(cell, r.industryId)) {
+      const rating = breakInForCell(cell, citySlug, annualIncome);
+      const { takeHome, netMarginPct } = takeHomeAndMarginForCell(cell, annualIncome);
+      if (rating != null && isNum(takeHome)) {
+        withFigures += 1;
+        rows.push({
+          ...base,
+          breakInScore: rating.score,
+          breakInBand: rating.band,
+          takeHome,
+          netMarginPct,
+        });
+        continue;
+      }
+    }
+    rows.push({
+      ...base,
+      breakInScore: null,
+      breakInBand: null,
+      takeHome: null,
+      netMarginPct: null,
     });
   }
 
-  if (rows.length < MIN_CITY_ACTIVITY_ROWS) return [];
+  // A slate of all dashes is not worth showing; require at least three real reads.
+  if (withFigures < MIN_CITY_ACTIVITY_ROWS) return [];
 
-  // By owner take-home, highest first: the table answers "what earns the most
-  // here", a different question than the masthead's break-in score (ease of
-  // entry), so the two do not duplicate. Rows without a take-home sink to the
-  // bottom; the break-in score breaks ties as a real secondary signal.
+  // By owner take-home, highest first, so the most lucrative everyday trades lead;
+  // trades without a figure sink to the bottom, break-in score breaking ties.
   rows.sort((a, b) => {
     const ta = a.takeHome ?? -Infinity;
     const tb = b.takeHome ?? -Infinity;
     if (tb !== ta) return tb - ta;
-    return b.breakInScore - a.breakInScore;
+    return (b.breakInScore ?? -Infinity) - (a.breakInScore ?? -Infinity);
   });
   return rows;
 }
