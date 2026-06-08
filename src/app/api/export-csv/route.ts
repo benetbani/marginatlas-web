@@ -14,6 +14,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { getCellBySlug, getCellVariants, buildTimeSeries, slugify } from "@/lib/cells";
 import { industryToSlug } from "@/lib/taxonomy";
 import { checkRateLimit, clientIp } from "@/lib/rate_limit";
+import { getSessionTier } from "@/lib/monetization/entitlement";
+import { isGatingEnabled, isAuthEnabled } from "@/lib/feature_flags";
 
 // Slug shape — same as /api/go. Anything that doesn't match returns
 // 400 fast so a malformed param can't burn a Supabase round-trip.
@@ -87,7 +89,16 @@ export async function GET(req: NextRequest) {
 
   lines.push(row(cell as FetchedCell));
 
-  if (includeHistory) {
+  // Premium gate on the year-by-year history export (Milestone 3, dormant). With
+  // the gate off it stays free for everyone, exactly as today. With the gate on
+  // the time series is a Premium unlock; a history request is then resolved
+  // per-user and never edge-cached (see the cache header below), so one viewer's
+  // entitlement is never served to another from the shared cache.
+  const historyIsGated = includeHistory && isGatingEnabled() && isAuthEnabled();
+  const allowHistory =
+    includeHistory && (!historyIsGated || (await getSessionTier()) === "premium");
+
+  if (allowHistory) {
     const variants = await getCellVariants(country, region, industry);
     const ts = buildTimeSeries(variants);
     if (ts.length > 1) {
@@ -100,6 +111,11 @@ export async function GET(req: NextRequest) {
         );
       }
     }
+  } else if (historyIsGated) {
+    lines.push("");
+    lines.push(
+      "# Year-by-year history is a Premium export. Upgrade at marginatlas.com/pricing",
+    );
   }
 
   const filename = `atlas-${slugify(country)}-${slugify(region)}-${industryToSlug(industry)}.csv`;
@@ -108,7 +124,9 @@ export async function GET(req: NextRequest) {
     headers: {
       "Content-Type": "text/csv; charset=utf-8",
       "Content-Disposition": `attachment; filename="${filename}"`,
-      "Cache-Control": "public, max-age=3600",
+      // The free single-row export stays edge-cached; a per-user gated history
+      // response must not be shared across viewers.
+      "Cache-Control": historyIsGated ? "private, no-store" : "public, max-age=3600",
     },
   });
 }
