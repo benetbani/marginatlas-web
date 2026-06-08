@@ -54,3 +54,7 @@ err.txt
 data/audit/_log.txt
 data/quality/revenue_clamp_dryrun.csv
 *slugcheck*
+
+# city-data pipeline: generated backlog + staged drafts (state.json is tracked)
+data/cities/_pipeline/coverage.json
+data/cities/_staged/
