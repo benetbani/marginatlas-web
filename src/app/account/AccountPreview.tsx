@@ -402,23 +402,21 @@ function Toggle({ defaultOn, ariaLabel }: { defaultOn?: boolean; ariaLabel?: str
       aria-checked={on}
       aria-label={ariaLabel}
       onClick={() => setOn((v) => !v)}
-      className="inline-flex items-center"
+      className={`inline-flex items-center ${on ? "bg-atlas-600" : "bg-ink-200"}`}
       style={{
         width: 40,
         height: 22,
         borderRadius: 999,
-        background: on ? "#D73A14" : "#DDDDDD",
         padding: 2,
         transition: "background 160ms ease",
       }}
     >
       <span
+        className="block bg-white"
         style={{
-          display: "block",
           width: 18,
           height: 18,
           borderRadius: 999,
-          background: "#FFFFFF",
           transform: on ? "translateX(18px)" : "translateX(0)",
           transition: "transform 160ms ease",
           boxShadow: "0 1px 2px rgba(26,26,26,0.15)",
