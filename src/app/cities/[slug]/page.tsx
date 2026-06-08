@@ -20,7 +20,8 @@
  *   6. Neighborhood mini-strip (only if the city has a scheme)
  *   7. Ranked activities table (buildCityActivities: easiest to break in
  *      first; every city resolves through the cell engine, self-omits if thin)
- *   8. Sister cities ribbon
+ *   8. Cities-like-this peer comparison (peers by economic similarity, each
+ *      with its own headline city score, each linking to that peer's city page)
  *
  * No client JS beyond the board's ShowMore toggle. revalidate: 12h.
  */
@@ -31,7 +32,7 @@ import cityListJson from "../../../../data/cities/city_list_v1.json";
 import neighborhoodsJson from "../../../../data/cities/neighborhoods_v1.json";
 import { CountryFlag } from "@/components/CountryFlag";
 import { COUNTRIES } from "@/lib/taxonomy";
-import { ComparableCitiesRibbon } from "@/components/ComparableCitiesRibbon";
+import { CityPeers } from "@/components/cities/CityPeers";
 // TopProfitableActivities + MostSaturatedActivities dropped per
 // founder direction 2026-05-26. Replaced by CitySignaturePanel
 // (demographics + 3 signature sectors + culture spectrums +
@@ -140,7 +141,7 @@ export async function generateMetadata({
   if (!city) return { title: "City not found | Margin Atlas" };
   return {
     title: `${city.name} small business benchmarks | Margin Atlas`,
-    description: `Revenue, employment, and wage benchmarks for small businesses in ${city.name}. Neighborhoods, sister cities, and industry deep-dives.`,
+    description: `Revenue, employment, and wage benchmarks for small businesses in ${city.name}. Neighborhoods, comparable cities, and industry deep-dives.`,
   };
 }
 
@@ -400,12 +401,13 @@ export default async function CityPage({
           </section>
         )}
 
-        {/* Sister cities ribbon */}
-        <ComparableCitiesRibbon
-          citySlug={city.slug}
-          industrySlug="restaurants"
-          industryName="restaurants"
-        />
+        {/* Cities like this: a real peer comparison (replaces the old
+           restaurants-hardcoded sister-cities ribbon). Peers are chosen by
+           economic similarity (size, wealth, cost) with a different-country
+           preference and at most one per country, each carries its OWN headline
+           0 to 100 city score on the same scale as this page's masthead, and
+           each card links to that peer's CITY page. Self-omits below two peers. */}
+        <CityPeers citySlug={city.slug} cityName={city.name} />
       </div>
     </article>
   );
