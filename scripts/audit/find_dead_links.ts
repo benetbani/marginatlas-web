@@ -94,12 +94,14 @@ function pathExists(path: string, patterns: RegExp[]): boolean {
   return false;
 }
 
+// /account left this set 2026-06-08: Milestone 1 makes it a real route (server
+// wrapper + saved cells), so links to it are valid. The rest stay blocked until
+// their routes are built.
 const KNOWN_DEFERRED = new Set([
   "/sign-up",
   "/sign-in",
   "/login",
   "/logout",
-  "/account",
   "/dashboard",
 ]);
 
