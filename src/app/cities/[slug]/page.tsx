@@ -18,8 +18,8 @@
  *      government scores; null until the city is curated)
  *   5. Business formation costs by legal tier
  *   6. Neighborhood mini-strip (only if the city has a scheme)
- *   7. Ranked activities table (buildCityActivities: best owner take-home
- *      first; London sourced from the curated dataset, other cities omit)
+ *   7. Ranked activities table (buildCityActivities: easiest to break in
+ *      first; every city resolves through the cell engine, self-omits if thin)
  *   8. Sister cities ribbon
  *
  * No client JS beyond the board's ShowMore toggle. revalidate: 12h.
@@ -52,9 +52,39 @@ import {
   buildCityActivities,
   buildCityScore,
 } from "@/lib/scores/city_board";
+import type { BreakInBand } from "@/lib/scores/break_in_rating";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 
 export const revalidate = 43200; // 12 hours
+
+/** Band to the per-row break-in badge tone, the EXACT moss / atlas / clay scale
+ * the break-in masthead and the country "easiest to break in" panel use, so the
+ * badge reads identically here. Higher = easier = warmer. Tokens only, no hex. */
+function breakInBadge(band: BreakInBand): string {
+  switch (band) {
+    case "forgiving":
+      return "border-moss-300 bg-moss-50 text-moss-700";
+    case "manageable":
+    case "demanding":
+      return "border-atlas-300 bg-atlas-100/60 text-atlas-700";
+    case "brutal":
+      return "border-clay-300 bg-clay-100/60 text-clay-700";
+  }
+}
+
+/** The one-word band label, plain and direction-true, matching the masthead. */
+function breakInWord(band: BreakInBand): string {
+  switch (band) {
+    case "forgiving":
+      return "Forgiving";
+    case "manageable":
+      return "Manageable";
+    case "demanding":
+      return "Demanding";
+    case "brutal":
+      return "Brutal";
+  }
+}
 
 type City = {
   slug: string;
@@ -165,12 +195,14 @@ export default async function CityPage({
   // omits the badge cleanly rather than showing a wrong number.
   const cityScore = buildCityScore(boardInput);
 
-  // Ranked activities in this city, best owner take-home first. London is
-  // sourced from the curated dataset (every activity, its modeled after-tax
-  // take-home and net margin); every other city returns an empty list and the
-  // table omits cleanly. Each row links to that activity's cell page under the
-  // city, the same /{iso2}/{slug}/{activity} shape the industry mosaic uses.
-  const activities = buildCityActivities({
+  // Ranked activities in this city, easiest to break in first. Every city now
+  // resolves through the cell engine: each candidate activity's destination cell
+  // is scored through the same break-in path its own masthead uses, kept only
+  // when it is a trusted local measurement (so no invented number ranks), and the
+  // list self-omits when fewer than three activities resolve. Each row links to
+  // that activity's cell page under the city, the same /{iso2}/{slug}/{activity}
+  // shape the industry mosaic uses. Async (it reads the engine, budgeted).
+  const activities = await buildCityActivities({
     slug: city.slug,
     countryIso2: city.iso2,
   });
@@ -306,10 +338,12 @@ export default async function CityPage({
           </section>
         )}
 
-        {/* Activities in this city, ranked by what an owner keeps after tax,
-           best at top and hardest at the bottom. London is sourced from the
-           curated activity dataset; every other city omits this block cleanly
-           (empty list) rather than show invented take-home. Each row links to
+        {/* Activities in this city, ranked by owner take-home (highest first).
+           The masthead score already answers "easiest to break in", so this table
+           answers "what earns the most here"; each row still carries the break-in
+           badge so ease stays visible. Every city resolves through the cell engine,
+           and only trusted local measurements rank, so a row never carries an
+           invented number; the list self-omits below three rows. Each row links to
            that activity's full cell benchmark under the city. */}
         {activities.length > 0 && (
           <section className="mt-10">
@@ -318,10 +352,10 @@ export default async function CityPage({
               What an owner keeps in {city.name}
             </h2>
             <p className="text-sm md:text-base text-cocoa-700/80 mt-1.5 mb-5 max-w-2xl leading-relaxed">
-              Every activity we cover in {city.name}, ranked by typical after-tax
-              owner take-home. Best at the top, hardest at the bottom. Open any
-              row for the full revenue, cost stack, and survival read. Modeled
-              from local business demography. Directional.
+              Every activity we cover in {city.name}, ranked by what a typical
+              owner keeps after tax. The badge is the same 0 to 100 break-in read
+              each business shows on its own page, higher means easier to get
+              started. Modeled from local business demography. Directional.
             </p>
             <ul className="divide-y divide-parchment border-y border-parchment">
               {activities.map((a, i) => (
@@ -336,6 +370,14 @@ export default async function CityPage({
                       </span>
                       <span className="truncate text-sm font-medium text-ink-900 group-hover:text-atlas-700 transition-colors">
                         {a.name}
+                      </span>
+                      <span
+                        className={`inline-flex shrink-0 items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-semibold ${breakInBadge(
+                          a.breakInBand,
+                        )}`}
+                      >
+                        <span className="tabular-nums">{a.breakInScore}</span>
+                        <span>{breakInWord(a.breakInBand)}</span>
                       </span>
                     </span>
                     <span className="flex shrink-0 items-baseline gap-3">

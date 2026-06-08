@@ -34,13 +34,15 @@
  * other city leaves those rows null, because we do not hold an honest
  * city-level figure for them.
  *
- * Pure module: no Supabase, no fs, no runtime side effects. The board consumes
- * numbers the city page has already loaded (the city record and the country
- * economics snapshot) plus the static London JSON; it does not fetch. Kit types
- * are type-only imports, exactly like country_board.ts, so this stays trivially
- * testable and cannot trip the layering gate (which only walks src/app +
- * src/components). No chart is attached at the city level today, so the module
- * stays plain TypeScript with no React dependency.
+ * Mostly pure: buildCityBoard and buildCityScore consume numbers the city page
+ * has already loaded (the city record and the country economics snapshot) plus
+ * the static London JSON, and do not fetch. The ONE engine-backed export is
+ * buildCityActivities, which resolves the city's activity cells through the cell
+ * engine (getTopIndustriesForCountry + getCellBySlug) so every city renders a
+ * real ranked activity list; it is async and budgeted, the same pattern the
+ * country break-in panel uses. No chart is attached at the city level today, so
+ * the module stays plain TypeScript with no React dependency, and it cannot trip
+ * the layering gate (which only walks src/app + src/components).
  *
  * Constraint-safe by construction: no em-dashes, no source-agency names.
  */
@@ -52,6 +54,19 @@ import {
   cityAttractivenessScore,
   type CityAttractivenessScore,
 } from "@/lib/scores/city_attractiveness";
+import {
+  getTopIndustriesForCountry,
+  getCellBySlug,
+  withBudget,
+  type Cell,
+} from "@/lib/cells";
+import { industryToSlug, INDUSTRY_BY_ID } from "@/lib/taxonomy";
+import { estimateNetProfit } from "@/lib/finance/net_profit";
+import { resolveOwnerTakeHome } from "@/lib/finance/owner_take_home";
+import { isTrustedLocalCell } from "@/lib/cells/trust";
+import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
+import { breakInForCell } from "@/lib/scores/country_board";
+import type { BreakInBand } from "@/lib/scores/break_in_rating";
 import londonJson from "../../../data/london/london_market_v1.json";
 
 /**
@@ -354,9 +369,11 @@ export function buildCityScore(
 // --- ranked activities table (the page's main content, not a board section) --
 
 /**
- * One row of the "activities in this city" table: an activity, what its owner
- * keeps after tax (USD), an optional net margin, and the cell URL to open for
- * the full numbers. Ranked by takeHome descending by buildCityActivities.
+ * One row of the "activities in this city" table: an activity, its break-in
+ * read (the same 0..100 score the activity shows on its own cell masthead),
+ * what its owner keeps after tax (USD), an optional net margin, and the cell URL
+ * to open for the full numbers. Ranked by breakInScore descending (easiest to
+ * break in first) by buildCityActivities.
  */
 export interface CityActivityRow {
   /** Display name, e.g. "Dental practices". */
@@ -365,77 +382,186 @@ export interface CityActivityRow {
   slug: string;
   /** Cell-page href, e.g. "/gb/london/dental-practices". */
   href: string;
-  /** After-tax owner take-home, USD, or null (never invented off London). */
+  /** Break-in score, integer 0..100, higher = easier (the masthead's own read). */
+  breakInScore: number;
+  /** The band word driving the per-row badge tone (moss / atlas / clay). */
+  breakInBand: BreakInBand;
+  /** After-tax owner take-home, USD, or null (never invented). */
   takeHome: number | null;
   /** Net margin, percent (0..100), or null. */
   netMarginPct: number | null;
 }
 
+/** The minimum number of scored activities before the city table is worth
+ * showing. Below this the page omits the section entirely (a one or two row
+ * "ranking" is not a ranking), matching the country break-in panel's floor. */
+const MIN_CITY_ACTIVITY_ROWS = 3;
+
+/** How many candidate activities to resolve per city before ranking. The same
+ * slate width the country break-in panel resolves, so a city's list is drawn
+ * from the same depth of coverage. */
+const CITY_ACTIVITY_SLATE = 18;
+
 /**
- * Title-case a London activity slug into a display name, e.g.
- * "hair-salons-full-service" becomes "Hair salons full service". Pure string
- * work; the dataset keys are clean URL slugs, so this is just hyphen-to-space
- * with a leading capital.
+ * The cell's after-tax owner take-home AND its displayed net margin percent,
+ * derived EXACTLY as the cell page does (estimateNetProfit + resolveOwnerTakeHome
+ * over the cell's own revenue and per-firm payroll, with the same n_employees
+ * unit-detection), so the city table never disagrees with the cell page. Returns
+ * nulls when no defensible figure exists. The take-home value is the same one the
+ * break-in score is computed from, so the badge and the secondary figure agree.
  */
-function slugToName(slug: string): string {
-  const spaced = slug.replace(/-/g, " ").trim();
-  if (spaced.length === 0) return slug;
-  return spaced.charAt(0).toUpperCase() + spaced.slice(1);
+function takeHomeAndMarginForCell(
+  cell: Cell,
+  annualIncome: number | null,
+): { takeHome: number | null; netMarginPct: number | null } {
+  const revenue = cell.revenue_per_firm ?? cell.rev_p50 ?? null;
+  if (!isNum(revenue) || revenue <= 0) {
+    return { takeHome: null, netMarginPct: null };
+  }
+
+  // Per-firm payroll, with the same unit-detection the cell page uses (a source
+  // may store n_employees as a firm total or already per-firm).
+  let payroll: number | null = null;
+  if (isNum(cell.payroll_per_employee) && isNum(cell.n_employees)) {
+    const empPerFirm =
+      isNum(cell.n_enterprises) && cell.n_enterprises > 0
+        ? cell.n_employees < cell.n_enterprises
+          ? cell.n_employees // already per-firm
+          : cell.n_employees / cell.n_enterprises
+        : cell.n_employees;
+    payroll = cell.payroll_per_employee * Math.max(1, empPerFirm);
+  }
+
+  const net = estimateNetProfit({
+    iso2: cell.country.toUpperCase(),
+    geoId: cell.geo_id || null,
+    industryId: cell.industry_id || null,
+    sectorId: cell.sector_id || null,
+    grossRevenue: revenue,
+    payroll,
+  });
+  const isLargerFirm =
+    !!cell.size_band && ["10-19", "20-49", "50-99", "100+"].includes(cell.size_band);
+  const takeHome = resolveOwnerTakeHome({
+    structuralNetProfit: net.net_profit,
+    rawNetMargin: net.net_margin,
+    revenue,
+    industryId: cell.industry_id || null,
+    isLargerFirm,
+    annualIncome,
+  });
+  // Net margin (percent form) through the same clamp the cell page's margin row
+  // applies (net.net_margin is a fraction, clampNetMarginPct takes a percent), so
+  // a table row can never surface an implausible or sub-floor margin either.
+  const netMarginPct = isNum(net.net_margin)
+    ? clampNetMarginPct(net.net_margin * 100, cell.industry_id || null)
+    : null;
+  return { takeHome, netMarginPct };
 }
 
-type LondonActivityEconomics = {
-  economics?: { owner_take_home?: number; net_margin_pct?: number };
-};
-type LondonActivitiesFile = {
-  activities: Record<string, LondonActivityEconomics>;
-};
-const LONDON_ACTIVITIES = londonJson as unknown as LondonActivitiesFile;
-
 /**
- * Build the ranked activities table for a city, best owner take-home first.
+ * Build the ranked activities table for a city, by owner take-home (highest
+ * first). The masthead's 0..100 score already answers "easiest to break in", so
+ * this table answers the complementary question, "what earns the most here", and
+ * the two never duplicate. The break-in read still travels on every row (shown as
+ * a badge) so ease stays visible alongside the income ranking.
  *
- * London (slug "london", country GB) is sourced directly from the curated
- * dataset: every activity, its modeled after-tax owner take-home and net
- * margin, sorted by take-home descending. Each row's href points at that
- * activity's cell page under the city, using the same /{iso2}/{slug}/{activity}
- * shape the rest of the page links with.
+ * Every city goes through the cell engine, exactly like the country page's
+ * "easiest to break into here" panel does at the country geo. For each of the
+ * city's candidate activities we resolve its destination cell under the city's
+ * own slug, keep it only when it is a TRUSTED LOCAL measurement of the activity
+ * it claims (isTrustedLocalCell drops synthetic, extrapolated tier "X", and
+ * national-aggregate cells, so no invented number ever ranks), score it through
+ * the SAME break-in path the cell masthead uses (breakInForCell), and compute its
+ * owner take-home + net margin through the SAME single source of truth the cell
+ * page uses. Rows are deduped by industry, sorted by owner take-home descending
+ * (ties by break-in descending), and the whole list self-omits (empty array)
+ * when fewer than three activities resolve a defensible score, so a thin city's
+ * page drops the section cleanly rather than show a one-row "ranking".
  *
- * For every other city this returns an empty array: we do not hold per-activity
- * take-home at the city altitude, and inventing it is forbidden. The page reads
- * the empty array and omits the table cleanly. (A future non-London city with a
- * real per-activity feed can pass its own rows by extending this function; it
- * must never synthesise take-home from nothing.)
+ * Async because it reads the engine (getTopIndustriesForCountry + getCellBySlug,
+ * each budgeted so a slow read degrades that one activity, not the page). London
+ * is no longer a curated special case for this table: it resolves through the
+ * engine like every other city.
  */
-export function buildCityActivities(input: {
+export async function buildCityActivities(input: {
   slug: string;
   countryIso2: string;
-}): CityActivityRow[] {
-  const slug = input.slug;
-  const iso2 = input.countryIso2.toLowerCase();
-  if (slug !== "london") return [];
+}): Promise<CityActivityRow[]> {
+  const citySlug = input.slug;
+  const iso2Upper = input.countryIso2.toUpperCase();
+  const iso2Lower = input.countryIso2.toLowerCase();
 
-  const rows: CityActivityRow[] = Object.entries(LONDON_ACTIVITIES.activities ?? {})
-    .map(([activitySlug, entry]) => {
-      const econ = entry.economics ?? null;
-      const takeHome =
-        econ && isNum(econ.owner_take_home) ? econ.owner_take_home : null;
-      // Net margin (percent form) passes through the shared clamp so a table
-      // row can never surface an implausible margin either.
-      const netMarginPct =
-        econ && isNum(econ.net_margin_pct)
-          ? clampNetMarginPct(econ.net_margin_pct)
-          : null;
-      return {
-        name: slugToName(activitySlug),
-        slug: activitySlug,
-        href: `/${iso2}/${slug}/${activitySlug}`,
-        takeHome,
-        netMarginPct,
-      };
-    })
-    // Rank by take-home descending. Rows without a take-home (none today on
-    // London) sink to the bottom rather than jumping the order.
-    .sort((a, b) => (b.takeHome ?? -Infinity) - (a.takeHome ?? -Infinity));
+  // The country wage proxy the break-in score and the larger-firm take-home floor
+  // both read, annualised from the monthly salary, exactly as every other surface.
+  const econSnap = getCountryEconomicsSnapshot(iso2Upper);
+  const annualIncome =
+    isNum(econSnap.avgMonthlySalary) ? econSnap.avgMonthlySalary * 12 : null;
 
+  // The city's candidate activities (the same densest-first slate the country
+  // page resolves), each resolved to its destination cell UNDER THE CITY SLUG.
+  const tops = await getTopIndustriesForCountry(iso2Upper, CITY_ACTIVITY_SLATE);
+  const resolved = await Promise.all(
+    tops.map(async (ind) => {
+      const activitySlug = industryToSlug(ind.industry_id);
+      const cell = await withBudget(
+        getCellBySlug(iso2Lower, citySlug, activitySlug, {
+          sizeBand: null,
+          year: null,
+        }),
+        null,
+        4_000,
+        `city-activities:${iso2Lower}/${citySlug}/${ind.industry_id}`,
+      );
+      return { industryId: ind.industry_id, activitySlug, cell };
+    }),
+  );
+
+  const rows: CityActivityRow[] = [];
+  const seen = new Set<string>();
+  for (const r of resolved) {
+    const cell = r.cell;
+    if (!cell) continue;
+    if (seen.has(r.industryId)) continue;
+    // No wrong numbers: the cell must be a trusted local measurement of the exact
+    // activity it claims. This drops synthetic stand-ins, extrapolated tier "X"
+    // reads, national aggregates resolved under the city slug, and friendly-slug
+    // misroutes, so a row can only carry a real local figure.
+    if (!isTrustedLocalCell(cell, r.industryId)) continue;
+
+    // The break-in read (the same 0..100 score this activity shows on its own
+    // masthead). Null when the cell carries no defensible take-home or entry
+    // cost, in which case the row is omitted, never shown as a wrong number.
+    const rating = breakInForCell(cell, citySlug, annualIncome);
+    if (rating == null) continue;
+
+    const { takeHome, netMarginPct } = takeHomeAndMarginForCell(cell, annualIncome);
+
+    const ind = INDUSTRY_BY_ID[r.industryId];
+    const name = ind?.name ?? r.activitySlug.replace(/-/g, " ");
+    seen.add(r.industryId);
+    rows.push({
+      name,
+      slug: r.activitySlug,
+      href: `/${iso2Lower}/${citySlug}/${r.activitySlug}`,
+      breakInScore: rating.score,
+      breakInBand: rating.band,
+      takeHome,
+      netMarginPct,
+    });
+  }
+
+  if (rows.length < MIN_CITY_ACTIVITY_ROWS) return [];
+
+  // By owner take-home, highest first: the table answers "what earns the most
+  // here", a different question than the masthead's break-in score (ease of
+  // entry), so the two do not duplicate. Rows without a take-home sink to the
+  // bottom; the break-in score breaks ties as a real secondary signal.
+  rows.sort((a, b) => {
+    const ta = a.takeHome ?? -Infinity;
+    const tb = b.takeHome ?? -Infinity;
+    if (tb !== ta) return tb - ta;
+    return b.breakInScore - a.breakInScore;
+  });
   return rows;
 }

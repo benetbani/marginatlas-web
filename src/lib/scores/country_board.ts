@@ -300,7 +300,7 @@ export interface EasiestBreakInRow {
  * off the cell (a place-level destination cell carries a null band, so the floor
  * never fires, matching the masthead). Returns null when no take-home is defensible.
  */
-function ownerTakeHomeForCell(cell: Cell, annualIncome: number | null): number | null {
+export function ownerTakeHomeForCell(cell: Cell, annualIncome: number | null): number | null {
   const revenue = cell.revenue_per_firm ?? cell.rev_p50 ?? null;
   if (!isNum(revenue) || revenue <= 0) return null;
 
@@ -343,7 +343,7 @@ function ownerTakeHomeForCell(cell: Cell, annualIncome: number | null): number |
  * exactly (place-adjusted capital + permits, modeled time, real-or-modeled
  * density, the cell's real take-home), so the score equals that cell's masthead.
  */
-function breakInForCell(
+export function breakInForCell(
   cell: Cell,
   geo: string,
   annualIncome: number | null,
