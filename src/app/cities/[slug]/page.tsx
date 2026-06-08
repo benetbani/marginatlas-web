@@ -14,13 +14,13 @@
  *   1. BoardHero (plain city name, country eyebrow, empty score strip)
  *   2. City data board (buildCityBoard: demand / location / market / survival)
  *   3. Coverage indicator (quiet inline methodology line)
- *   4. CitySignaturePanel (demographics + signature sectors + culture +
- *      government scores; null until the city is curated)
- *   5. Business formation costs by legal tier
- *   6. Neighborhood mini-strip (only if the city has a scheme)
- *   7. Ranked activities table (buildCityActivities: easiest to break in
+ *   4. CitySignaturePanel (demographics + signature sectors + commercial
+ *      streets; culture + government scores are country-only and suppressed
+ *      here via showInstitutions=false; null until the city is curated)
+ *   5. Neighborhood mini-strip (only if the city has a scheme)
+ *   6. Ranked activities table (buildCityActivities: easiest to break in
  *      first; every city resolves through the cell engine, self-omits if thin)
- *   8. Cities-like-this peer comparison (peers by economic similarity, each
+ *   7. Cities-like-this peer comparison (peers by economic similarity, each
  *      with its own headline city score, each linking to that peer's city page)
  *
  * No client JS beyond the board's ShowMore toggle. revalidate: 12h.
@@ -39,7 +39,6 @@ import { CityPeers } from "@/components/cities/CityPeers";
 // government scores). NYC ships first; other cities show null
 // until their data is curated.
 import { CitySignaturePanel } from "@/components/cities/CitySignaturePanel";
-import { BusinessFormationCosts } from "@/components/cities/BusinessFormationCosts";
 import { CoverageIndicator } from "@/components/CoverageIndicator";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { BoardHero } from "@/components/board/BoardHero";
@@ -285,19 +284,18 @@ export default async function CityPage({
         {/* Founder direction 2026-05-26: dropped TopProfitableActivities
             (most / least profitable, was sec 6) and MostSaturatedActivities
             (most crowded fields). Replaced by the CitySignaturePanel
-            below (demographics + signature sectors + culture spectrums
-            + government scores). Renders null when the city has no
-            curated entry in city_signature_v1.json. */}
+            below (demographics + signature sectors + commercial streets).
+            The culture-spectrum and government-score blocks are
+            country-altitude reads, so showInstitutions is false here and
+            those blocks render on the country page only. The business
+            formation costs table likewise moved to the country page.
+            Renders null when the city has no curated entry in
+            city_signature_v1.json. */}
         <CitySignaturePanel
           citySlug={city.slug}
           cityName={city.name}
           iso2={city.iso2}
-        />
-
-        {/* Cities sec 6: business formation costs by legal tier. */}
-        <BusinessFormationCosts
-          countryIso2={city.iso2}
-          countryName={countryName}
+          showInstitutions={false}
         />
 
         {/* Neighborhood mini-strip */}

@@ -19,6 +19,7 @@
 import signatureJson from "../../../data/cities/city_signature_v1.json";
 import countrySignatureJson from "../../../data/cities/country_signature_v1.json";
 import { INDUSTRIES, industryToSlug } from "@/lib/taxonomy";
+import { colors } from "@/lib/design-tokens";
 
 type SignatureSector = {
   label: string;
@@ -122,18 +123,17 @@ function resolveSignature(citySlug: string, iso2: string): CitySignature | null 
 // ---------------------------------------------------------------------------
 
 /**
- * Spectrum bar — 2026-05-26 redesign per founder direction.
+ * Spectrum bar, rebranded 2026-06-08 to the site palette (country page only).
  *
  * One row per dimension:
- *  - Left label (red tint) = the "Pakistan-like" / loose-traditional end
- *  - Right label (blue tint) = the "US-like" / strict-modern end
- *  - Track is a gradient red → neutral → blue
- *  - The city's position is a bold vertical bar handle (looks like a
- *    toggle switch dropped onto the track)
+ *  - Left label = the loose / traditional end, in the brand brick-red (atlas).
+ *  - Right label = the strict / modern end, in warm dark gray (ink/graphite).
+ *  - Track is a brand gradient: brick-red, through neutral, to dark gray.
+ *  - The position is a bold vertical bar handle (a toggle dropped on the track).
  *
- * `invert=true` flips the displayed position so that high data values
- * land on the LEFT (used for acceptance_of_corruption: value 10 =
- * tolerates = Pakistan-like = left side).
+ * `invert=true` flips the displayed position so that high data values land on
+ * the LEFT (used for the corruption-tolerance dimension, where a high value
+ * means more tolerated, the loose end).
  */
 function SpectrumBar({
   value,
@@ -154,14 +154,13 @@ function SpectrumBar({
   return (
     <div className="py-1">
       <div className="flex items-baseline justify-between text-[11px] uppercase tracking-[0.08em] font-medium mb-2">
-        <span className="text-[#B23A2A]">{leftLabel}</span>
-        <span className="text-[#2A5BA8]">{rightLabel}</span>
+        <span className="text-atlas-700">{leftLabel}</span>
+        <span className="text-ink-700">{rightLabel}</span>
       </div>
       <div
         className="relative h-3 rounded-full overflow-visible"
         style={{
-          background:
-            "linear-gradient(90deg, rgba(178,58,42,0.55) 0%, rgba(178,58,42,0.18) 30%, rgba(232,232,232,0.85) 50%, rgba(42,91,168,0.18) 70%, rgba(42,91,168,0.55) 100%)",
+          background: `linear-gradient(90deg, ${colors.atlas[600]} 0%, ${colors.atlas[200]} 30%, ${colors.cream[300]} 50%, ${colors.ink[300]} 70%, ${colors.graphite} 100%)`,
         }}
       >
         {/* Switch handle: bold vertical bar like a dropped toggle. */}
@@ -182,17 +181,21 @@ function SpectrumBar({
 function ScoreBar({ value, label }: { value: number; label: string }) {
   const v = Math.max(0, Math.min(10, value));
   const pct = (v / 10) * 100;
+  // Brand-token tone by value: positive (moss) / caution (amber) / poor (clay).
+  // moss has no 600 step (50/100/300/500/700/900), so high uses moss-500.
   const tone =
-    v >= 7 ? "bg-emerald-700" : v >= 4 ? "bg-amber-600" : "bg-atlas-700";
+    v >= 7 ? "bg-moss-500" : v >= 4 ? "bg-amber-500" : "bg-clay-500";
   return (
     <div>
-      <div className="flex items-baseline justify-between text-xs text-cocoa-700/80 mb-1.5">
-        <span className="font-medium">{label}</span>
+      {/* Same label type as the culture column so the two columns share a
+          row rhythm and align (text-[11px] uppercase tracking line + h-3 bar). */}
+      <div className="flex items-baseline justify-between text-[11px] uppercase tracking-[0.08em] font-medium text-cocoa-700/80 mb-2">
+        <span>{label}</span>
         <span className="tabular-nums font-semibold text-ink-900">
           {v}/10
         </span>
       </div>
-      <div className="h-2 w-full rounded-sm bg-cream-200 overflow-hidden">
+      <div className="h-3 w-full rounded-full bg-cream-200 overflow-hidden">
         <div className={"h-full " + tone} style={{ width: `${pct}%` }} />
       </div>
     </div>
@@ -222,10 +225,16 @@ export function CitySignaturePanel({
   citySlug,
   cityName,
   iso2,
+  showInstitutions = true,
 }: {
   citySlug: string;
   cityName: string;
   iso2: string;
+  // When false, the culture-spectrum and government-score blocks are
+  // suppressed. People + sectors + streets always render. These two
+  // institution blocks are country-altitude reads, so the city page passes
+  // false and the country page passes true.
+  showInstitutions?: boolean;
 }) {
   const sig = resolveSignature(citySlug, iso2);
   if (!sig) return null;
@@ -239,9 +248,9 @@ export function CitySignaturePanel({
         What makes {cityName}, {cityName}
       </h2>
       <p className="text-sm md:text-base text-cocoa-700/80 mb-8 max-w-2xl">
-        Demographics, the three sectors that characterise the metro, the
-        cultural spectrum operators feel, and the government environment
-        they navigate.
+        {showInstitutions
+          ? "Demographics, the three sectors that characterise the place, the cultural spectrum operators feel, and the government environment they navigate."
+          : "Demographics, the three sectors that characterise the metro, and where its commerce physically happens."}
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-6">
@@ -320,44 +329,54 @@ export function CitySignaturePanel({
           </div>
         ) : null}
 
-        {/* Block 3: culture spectrums.
-            Founder direction 2026-05-26: single column, full width.
-            Left = "Pakistan-like" / loose / traditional / red tint.
-            Right = "US-like" / strict / modern / blue tint.
-            The vertical handle marks where the city sits.
-            acceptance_of_corruption is inverted (value 10 = tolerates
-            = Pakistan-like = LEFT side). */}
-        <div className="md:col-span-7 atlas-card p-5 md:p-7">
-          <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700/65 mb-5">
-            Culture, as locals feel it
-          </div>
-          <div className="flex flex-col gap-5">
-            <SpectrumBar value={sig.culture.punctuality} leftLabel="Loose on time" rightLabel="Strict on time" />
-            <SpectrumBar value={sig.culture.openness_to_foreigners} leftLabel="Insular" rightLabel="Welcoming" />
-            <SpectrumBar value={sig.culture.innovation} leftLabel="Tradition-bound" rightLabel="Embraces new ideas" />
-            <SpectrumBar value={sig.culture.communication_directness} leftLabel="Indirect" rightLabel="Direct" />
-            <SpectrumBar value={sig.culture.corruption_rejection} leftLabel="Corruption tolerated" rightLabel="Rejects corruption" />
-            <SpectrumBar value={sig.culture.ambition_chest_beating} leftLabel="Humble" rightLabel="Self-promoting" />
-          </div>
-        </div>
+        {/* Blocks 3 + 4: institution reads (culture spectrum + government
+            scores). Country-altitude per founder direction: gated behind
+            showInstitutions so the city page suppresses them and only the
+            country page shows them. The two columns share an identical row
+            rhythm (text-[11px] label line + h-3 bar + gap-5) and identical
+            eyebrow size/weight/margin, so row N of culture aligns with row N
+            of government. */}
+        {showInstitutions ? (
+          <>
+            {/* Block 3: culture spectrums.
+                Founder direction 2026-05-26: single column.
+                Left = loose / traditional / brand brick-red tint.
+                Right = strict / modern / warm dark tint.
+                The vertical handle marks where the place sits.
+                corruption_rejection reads left = tolerated, right = rejected. */}
+            <div className="md:col-span-7 atlas-card p-5 md:p-7">
+              <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700/65 mb-4">
+                Culture, as locals feel it
+              </div>
+              <div className="flex flex-col gap-5">
+                <SpectrumBar value={sig.culture.punctuality} leftLabel="Loose on time" rightLabel="Strict on time" />
+                <SpectrumBar value={sig.culture.openness_to_foreigners} leftLabel="Insular" rightLabel="Welcoming" />
+                <SpectrumBar value={sig.culture.innovation} leftLabel="Tradition-bound" rightLabel="Embraces new ideas" />
+                <SpectrumBar value={sig.culture.communication_directness} leftLabel="Indirect" rightLabel="Direct" />
+                <SpectrumBar value={sig.culture.corruption_rejection} leftLabel="Corruption tolerated" rightLabel="Rejects corruption" />
+                <SpectrumBar value={sig.culture.ambition_chest_beating} leftLabel="Humble" rightLabel="Self-promoting" />
+              </div>
+            </div>
 
-        {/* Block 4: government */}
-        <div className="md:col-span-5 atlas-card p-5 md:p-6">
-          <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700/65 mb-4">
-            Government, from a business desk
-          </div>
-          <div className="flex flex-col gap-4">
-            <ScoreBar value={sig.government.tax_predictability} label="Tax predictability" />
-            <ScoreBar value={sig.government.low_bribery} label="Low bribery" />
-            <ScoreBar value={sig.government.task_efficiency} label="Task efficiency" />
-            <ScoreBar value={sig.government.time_efficiency} label="Time efficiency" />
-            <ScoreBar value={sig.government.judicial_impartiality} label="Judicial impartiality" />
-            <ScoreBar value={sig.government.innovation_capacity} label="Innovation and R&D capacity" />
-          </div>
-          <p className="mt-4 text-[11px] text-cocoa-700/55 leading-relaxed">
-            Higher is better in all six. Modeled from business-environment indices, operator surveys, judicial-independence rankings, and the research and innovation-output record.
-          </p>
-        </div>
+            {/* Block 4: government */}
+            <div className="md:col-span-5 atlas-card p-5 md:p-7">
+              <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700/65 mb-4">
+                Government, from a business desk
+              </div>
+              <div className="flex flex-col gap-5">
+                <ScoreBar value={sig.government.tax_predictability} label="Tax predictability" />
+                <ScoreBar value={sig.government.low_bribery} label="Low bribery" />
+                <ScoreBar value={sig.government.task_efficiency} label="Task efficiency" />
+                <ScoreBar value={sig.government.time_efficiency} label="Time efficiency" />
+                <ScoreBar value={sig.government.judicial_impartiality} label="Judicial impartiality" />
+                <ScoreBar value={sig.government.innovation_capacity} label="Innovation and R&D capacity" />
+              </div>
+              <p className="mt-4 text-[11px] text-cocoa-700/55 leading-relaxed">
+                Higher is better in all six. Modeled from business-environment indices, operator surveys, judicial-independence rankings, and the research and innovation-output record.
+              </p>
+            </div>
+          </>
+        ) : null}
       </div>
     </section>
   );

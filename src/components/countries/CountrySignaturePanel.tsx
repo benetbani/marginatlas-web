@@ -22,11 +22,14 @@ export function CountrySignaturePanel({
 }) {
   // Reuses CitySignaturePanel with a synthetic citySlug ("") so the
   // city-override lookup misses and the country baseline applies.
+  // showInstitutions=true: the culture-spectrum and government-score blocks
+  // are country-altitude reads and render here (the city page passes false).
   return (
     <CitySignaturePanel
       citySlug=""
       cityName={countryName}
       iso2={iso2}
+      showInstitutions={true}
     />
   );
 }

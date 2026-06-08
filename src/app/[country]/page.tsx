@@ -26,6 +26,7 @@ import { COUNTRY_PAGE_SECTIONS, getToneClass } from "@/lib/page-layout/section-o
 import { getCountryAnchor } from "@/lib/content/country-anchors";
 import { fmtMoney } from "@/lib/format/money";
 import { CountrySignaturePanel } from "@/components/countries/CountrySignaturePanel";
+import { BusinessFormationCosts } from "@/components/cities/BusinessFormationCosts";
 import { CountryViabilityLede } from "@/components/countries/CountryViabilityLede";
 import { CountryTaxReality } from "@/components/countries/CountryTaxReality";
 import { generateCountryVerdict } from "@/lib/scores/country_verdict";
@@ -443,6 +444,17 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
           country has no signature entry. */}
       <section className="py-6">
         <CountrySignaturePanel iso2={iso2} countryName={meta.name} />
+      </section>
+
+      {/* 6.6. Business formation costs by legal tier. Moved here from the city
+          page (2026-06-08): the cost + setup-days to register a business is a
+          country-level legal fact (the legal tiers and government fees are
+          national, not per-city), so it belongs on the country page next to
+          the country signature read, not duplicated under every city. Renders a
+          quiet empty state when the country has no curated tier breakdown. No
+          section id, so it stays out of the canonical skeleton order. */}
+      <section className="py-6">
+        <BusinessFormationCosts countryIso2={iso2} countryName={meta.name} />
       </section>
 
       {/* 7. related-countries: Compare CTA. The closing beat of the flow:
