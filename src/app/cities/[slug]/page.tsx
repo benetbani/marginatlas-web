@@ -122,6 +122,14 @@ const CITIES = (cityListJson as { cities: City[] }).cities;
 const CITIES_BY_SLUG = new Map(CITIES.map((c) => [c.slug, c]));
 const NEIGHBORHOODS = (neighborhoodsJson as { cities: Record<string, NeighborhoodScheme> }).cities;
 
+/** Up to four neighborhoods to feature per city (founder 2026-06-08), the famous
+ * ones everyone knows. Cities absent here fall back to the first four in their
+ * scheme. Slugs must match data/cities/neighborhoods_v1.json. */
+const FEATURED_NEIGHBORHOODS: Record<string, string[]> = {
+  "new-york": ["manhattan-midtown", "brooklyn", "queens", "bronx"],
+  london: ["city-of-london", "west-end", "south-bank", "east-london"],
+};
+
 export async function generateStaticParams() {
   // Pre-render Tier 1 only at build (~20 cities).
   // Tier 2+3 land on-demand via ISR. Was Tier 1+2 (90+ pages) which
@@ -155,6 +163,17 @@ export default async function CityPage({
 
   const countryName = COUNTRIES.find((c) => c.code === city.iso2)?.name || city.iso2;
   const scheme = NEIGHBORHOODS[city.slug];
+
+  // Up to four featured neighborhoods (founder 2026-06-08): flagship cities curate
+  // which four lead, any other city falls back to the first four in its scheme.
+  let shownNeighborhoods: Neighborhood[] = [];
+  if (scheme && scheme.neighborhoods.length > 0) {
+    const bySlug = new Map(scheme.neighborhoods.map((n) => [n.slug, n]));
+    const featured = (FEATURED_NEIGHBORHOODS[city.slug] ?? [])
+      .map((s) => bySlug.get(s))
+      .filter((n): n is Neighborhood => Boolean(n));
+    shownNeighborhoods = (featured.length > 0 ? featured : scheme.neighborhoods).slice(0, 4);
+  }
 
   // Masthead atmosphere image. Resolve this city's hero photo (the same source
   // CityHero uses), and pass only its URL to the shared <MastheadImage>
@@ -298,24 +317,27 @@ export default async function CityPage({
           showInstitutions={false}
         />
 
-        {/* Neighborhood mini-strip */}
-        {scheme && scheme.neighborhoods.length > 0 && (
+        {/* Neighborhoods: up to four featured areas (founder 2026-06-08), with the
+           full list one click away. The redundant full grid, the "N sub-areas"
+           heading, and the "shape of {city}" subtitle were removed. */}
+        {shownNeighborhoods.length > 0 && (
           <section className="mb-12 md:mb-16">
             <div className="text-xs uppercase tracking-wide text-atlas-600 font-semibold mb-2">
               Neighborhoods
             </div>
             <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mb-2">
-              The {scheme.neighborhoods.length} sub-areas
+              Where {city.name} does business
             </h2>
             <p className="text-sm md:text-base text-cocoa-700/80 mb-6 max-w-2xl">
-              The shape of {city.name} below the headline figure.
+              The areas that set the tone, each with its own pace and prices. Open
+              one for its street-level numbers.
             </p>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-              {scheme.neighborhoods.map((n) => (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {shownNeighborhoods.map((n) => (
                 <Link
                   key={n.slug}
                   href={`/${city.iso2.toLowerCase()}/${city.slug}/${n.slug}`}
-                  className="group block rounded-xl border border-parchment hover:border-atlas-500 bg-cream-50 p-3 transition-colors"
+                  className="group block rounded-xl border border-parchment hover:border-atlas-500 bg-cream-50 p-4 transition-colors"
                 >
                   <div className="font-medium text-sm text-ink-900 group-hover:text-atlas-700 leading-tight">
                     {n.name}
