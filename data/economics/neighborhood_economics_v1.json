@@ -1,0 +1,15 @@
+{
+  "version": "1",
+  "convention": "Per-neighborhood prime commercial streets and local spend. Keyed citySlug.neighborhoodSlug. prime_streets[].rent_vs_city and spend_per_visit_usd are optional and self-omit when absent (the pipeline fills them).",
+  "neighborhoods": {
+    "new-york.manhattan-midtown": {
+      "prime_streets": [
+        { "name": "Fifth Avenue", "sells": "Luxury flagship retail: Tiffany, Bergdorf Goodman, Saks, the Apple Cube. Among the most expensive retail frontage in the world." },
+        { "name": "Times Square and Broadway", "sells": "Destination retail at scale plus the theater district: flagship stores, entertainment, and the Broadway houses." },
+        { "name": "Garment District", "sells": "The wholesale back-end of US fashion: fabric and trim suppliers, showrooms, and sample-makers around Seventh Avenue." },
+        { "name": "Diamond District", "sells": "One of the most concentrated jewelry markets in the world, retail and wholesale, along 47th Street." }
+      ],
+      "notes": "Seeded from the curated New York commercial-streets set, re-homed to Midtown. Per-street rent and spend-per-visit await the pipeline."
+    }
+  }
+}

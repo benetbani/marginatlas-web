@@ -96,15 +96,40 @@ for (const [key, t] of Object.entries<Record<string, unknown>>(targets)) {
       }
     }
   } else if (key === "nbhd_economics") {
-    // Per-neighborhood driver mix must sum to ~100; spend/rent bounded.
-    const hoods = (values.neighborhoods ?? []) as Array<Record<string, unknown>>;
-    for (const h of hoods) {
-      const mix = (h.demand_drivers ?? {}) as Record<string, number>;
-      const sum = Object.values(mix).reduce((a, b) => a + (Number(b) || 0), 0);
-      if (mix && Object.keys(mix).length && Math.abs(sum - 100) > 1)
-        fails.push(`nbhd_economics[${h.slug}]: demand-driver mix sums to ${sum}, not 100`);
-      if ("spend_per_visit_usd" in h) bound(`nbhd[${h.slug}]`, "spend_per_visit_usd", h.spend_per_visit_usd, 1, 5000);
-      if ("rent_vs_city" in h) bound(`nbhd[${h.slug}]`, "rent_vs_city", h.rent_vs_city, 0.2, 5);
+    const hoods = values.neighborhoods;
+    if (Array.isArray(hoods)) {
+      // Legacy per-neighborhood row shape: driver mix must sum to ~100;
+      // spend/rent bounded.
+      for (const h of hoods as Array<Record<string, unknown>>) {
+        const mix = (h.demand_drivers ?? {}) as Record<string, number>;
+        const sum = Object.values(mix).reduce((a, b) => a + (Number(b) || 0), 0);
+        if (mix && Object.keys(mix).length && Math.abs(sum - 100) > 1)
+          fails.push(`nbhd_economics[${h.slug}]: demand-driver mix sums to ${sum}, not 100`);
+        if ("spend_per_visit_usd" in h) bound(`nbhd[${h.slug}]`, "spend_per_visit_usd", h.spend_per_visit_usd, 1, 5000);
+        if ("rent_vs_city" in h) bound(`nbhd[${h.slug}]`, "rent_vs_city", h.rent_vs_city, 0.2, 5);
+      }
+    } else if (hoods && typeof hoods === "object") {
+      // Prime-streets map shape: `${citySlug}.${nbSlug}` -> { prime_streets,
+      // notes }. Each street: name + sells non-empty, no em-dash / no source
+      // agency on sells; optional spend_per_visit_usd in [1, 5000] and
+      // rent_vs_city in [0.2, 5].
+      for (const [hk, hv] of Object.entries(hoods as Record<string, unknown>)) {
+        const entry = (hv ?? {}) as Record<string, unknown>;
+        const streets = entry.prime_streets;
+        if (!Array.isArray(streets) || streets.length < 1) {
+          fails.push(`nbhd_economics[${hk}]: prime_streets must have at least one street`);
+          continue;
+        }
+        for (const st of streets as Array<Record<string, unknown>>) {
+          const nm = String(st.name ?? "");
+          checkText(`nbhd[${hk}]`, "street name", st.name);
+          checkText(`nbhd[${hk}]`, `sells[${nm}]`, st.sells);
+          if ("spend_per_visit_usd" in st)
+            bound(`nbhd[${hk}]`, `spend_per_visit_usd[${nm}]`, st.spend_per_visit_usd, 1, 5000);
+          if ("rent_vs_city" in st)
+            bound(`nbhd[${hk}]`, `rent_vs_city[${nm}]`, st.rent_vs_city, 0.2, 5);
+        }
+      }
     }
   }
 }

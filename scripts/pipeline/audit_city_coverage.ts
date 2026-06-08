@@ -36,9 +36,13 @@ import { resolve, dirname } from "node:path";
 
 const ROOT = process.cwd();
 const DATA = resolve(ROOT, "data", "cities");
+const ECON = resolve(ROOT, "data", "economics");
 
 function loadJson<T>(rel: string): T {
   return JSON.parse(readFileSync(resolve(DATA, rel), "utf-8")) as T;
+}
+function loadEconJson<T>(rel: string): T {
+  return JSON.parse(readFileSync(resolve(ECON, rel), "utf-8")) as T;
 }
 
 type CityRecord = {
@@ -67,6 +71,23 @@ const countryBaseline = loadJson<{ countries: Record<string, SignatureEntry> }>(
 const schemes = loadJson<{ cities: Record<string, Scheme> }>(
   "neighborhoods_v1.json",
 ).cities;
+
+// Per-neighborhood prime-streets feed (the NEW vertical). Keyed
+// `${citySlug}.${neighborhoodSlug}` -> { prime_streets[], notes? }. A city
+// counts as having nbhd_economics once ANY of its neighborhoods carries an
+// entry with at least one prime_street. Dependency-light: read the static JSON
+// directly rather than import the loader.
+type NbhdEconEntry = { prime_streets?: unknown[] };
+const nbhdEcon = loadEconJson<{ neighborhoods?: Record<string, NbhdEconEntry> }>(
+  "neighborhood_economics_v1.json",
+).neighborhoods ?? {};
+const citiesWithNbhdEcon = new Set<string>();
+for (const [k, v] of Object.entries(nbhdEcon)) {
+  const citySlug = k.split(".")[0];
+  if (citySlug && Array.isArray(v?.prime_streets) && v.prime_streets.length >= 1) {
+    citiesWithNbhdEcon.add(citySlug);
+  }
+}
 
 function has(n: number | null | undefined): boolean {
   return typeof n === "number" && Number.isFinite(n);
@@ -105,7 +126,8 @@ const TABLES: TableCheck[] = [
   {
     key: "nbhd_economics",
     label: "Neighborhood economics (streets, spend, drivers, dynamics)",
-    present: () => false, // NEW vertical: no city holds this yet.
+    // A city counts once any of its neighborhoods has a prime-streets entry.
+    present: (c) => citiesWithNbhdEcon.has(c.slug),
   },
 ];
 

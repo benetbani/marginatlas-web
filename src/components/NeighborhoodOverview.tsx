@@ -32,6 +32,8 @@ import {
   tagLabel,
   type NeighborhoodTag,
 } from "@/lib/economics/neighborhood_multipliers";
+import { getNeighborhoodEconomics } from "@/lib/economics/neighborhood_economics";
+import { fmtUSD } from "@/components/board/format";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 
 type City = { slug: string; name: string; iso2: string; pop_m: number };
@@ -222,6 +224,11 @@ export function NeighborhoodOverview({
   const flavor = getNeighborhoodFlavor(city.slug, nb.slug);
   const siblings = listSiblingNeighborhoods(city.slug, nb.slug);
   const cc = country.toLowerCase();
+
+  // Prime commercial streets + per-street spend for THIS neighborhood. Null
+  // until the pipeline fills the pair; the streets section below self-omits.
+  const economics = getNeighborhoodEconomics(city.slug, nb.slug);
+  const primeStreets = economics?.prime_streets ?? [];
 
   // The local-economics row: primary tag, anomaly tags, intensities. Null for a
   // neighborhood that has not been curated yet (then the engine falls back to
@@ -457,10 +464,66 @@ export function NeighborhoodOverview({
       )}
 
       {/* 6) PRIME STREETS + SPEND.
-          Not rendered: the street-level + per-capita-spend data does not exist
-          yet. The pipeline will fill data/economics/nbhd_economics; when it
-          lands, the prime-streets and local-spend section mounts here, between
-          rent and texture. Self-omitted until then, no placeholder. */}
+          Mounts only when this (city, neighborhood) has a curated streets
+          record with at least one street. Per-street rent and spend figures
+          self-omit when the pipeline has not filled them. */}
+      {primeStreets.length > 0 && (
+        <section className="mb-10">
+          <SectionEyebrow size="sm" className="mb-2">
+            Prime streets
+          </SectionEyebrow>
+          <p className="text-sm text-cocoa-700 mb-4 max-w-2xl">
+            Where commerce concentrates in {nb.name}.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {primeStreets.map((s) => {
+              const rentPct =
+                typeof s.rent_vs_city === "number" && Number.isFinite(s.rent_vs_city)
+                  ? Math.round((s.rent_vs_city - 1) * 100)
+                  : null;
+              const spend =
+                typeof s.spend_per_visit_usd === "number" &&
+                Number.isFinite(s.spend_per_visit_usd)
+                  ? s.spend_per_visit_usd
+                  : null;
+              return (
+                <div
+                  key={s.name}
+                  className="rounded-2xl border border-parchment bg-white p-4 md:p-5"
+                >
+                  <div className="font-display text-base md:text-lg font-medium text-ink-900 leading-tight mb-1">
+                    {s.name}
+                  </div>
+                  <div className="text-sm text-cocoa-700 leading-relaxed">
+                    {s.sells}
+                  </div>
+                  {(rentPct !== null && rentPct !== 0) || spend !== null ? (
+                    <div className="flex items-center gap-4 mt-3 flex-wrap">
+                      {rentPct !== null && rentPct !== 0 && (
+                        <span className="text-xs font-semibold tabular-nums">
+                          <span className="text-cocoa-700/70 font-medium">rent </span>
+                          <span style={{ color: multColor(s.rent_vs_city as number) }}>
+                            {rentPct > 0 ? "+" : ""}
+                            {rentPct}%
+                          </span>
+                          <span className="text-cocoa-700/70 font-medium"> vs city</span>
+                        </span>
+                      )}
+                      {spend !== null && (
+                        <span className="text-xs font-semibold tabular-nums text-ink-900">
+                          <span className="text-cocoa-700/70 font-medium">spend </span>
+                          {fmtUSD(spend)}
+                          <span className="text-cocoa-700/70 font-medium"> per visit</span>
+                        </span>
+                      )}
+                    </div>
+                  ) : null}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       {/* 7) TEXTURE -------------------------------------------------------- */}
       {(flavor?.food_scene || flavor?.dont_miss) && (

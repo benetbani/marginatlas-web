@@ -14,7 +14,7 @@
  *   sectors         -> city_signature_v1.json   cities[slug].signature_sectors
  *   demographics    -> city_signature_v1.json   cities[slug].foreign_born_pct / _owned_pct
  *   board_economics -> city_list_v1.json        record fields
- *   nbhd_economics  -> held (no live target file yet; reported, not merged)
+ *   nbhd_economics  -> neighborhood_economics_v1.json  neighborhoods[citySlug.nbSlug]
  *
  * Run: npx tsx scripts/pipeline/promote_staged.ts <slug>
  */
@@ -24,6 +24,7 @@ import { execFileSync } from "node:child_process";
 
 const ROOT = process.cwd();
 const DATA = resolve(ROOT, "data", "cities");
+const ECON = resolve(ROOT, "data", "economics");
 const slug = process.argv[2];
 if (!slug) {
   console.error("usage: npx tsx scripts/pipeline/promote_staged.ts <slug>");
@@ -56,6 +57,12 @@ function readJson(rel: string): unknown {
 }
 function writeJson(rel: string, obj: unknown): void {
   writeFileSync(resolve(DATA, rel), JSON.stringify(obj, null, 2) + "\n");
+}
+function readEconJson(rel: string): unknown {
+  return JSON.parse(readFileSync(resolve(ECON, rel), "utf-8"));
+}
+function writeEconJson(rel: string, obj: unknown): void {
+  writeFileSync(resolve(ECON, rel), JSON.stringify(obj, null, 2) + "\n");
 }
 
 const changed: string[] = [];
@@ -97,9 +104,27 @@ if (econT?.status === "filled") {
   }
 }
 
-// --- nbhd_economics: held (no live target file yet) -----------------------
-if (targets.nbhd_economics?.status === "filled") {
-  held.push("nbhd_economics (no live neighborhood-economics file yet; build that surface first)");
+// --- neighborhood_economics_v1.json (prime streets + spend) ---------------
+// Merge the staged `values.neighborhoods` map (keyed `${citySlug}.${nbSlug}`
+// -> { prime_streets, notes }) into the live file under `.neighborhoods`,
+// preserving the file's 2-space indent + key order, exactly like the
+// city_signature merge above.
+const nbhdT = targets.nbhd_economics;
+if (nbhdT?.status === "filled") {
+  const sta = nbhdT.values?.neighborhoods as Record<string, unknown> | undefined;
+  if (sta && typeof sta === "object" && Object.keys(sta).length > 0) {
+    const econ = readEconJson("neighborhood_economics_v1.json") as {
+      neighborhoods: Record<string, unknown>;
+    };
+    econ.neighborhoods = econ.neighborhoods ?? {};
+    for (const [k, v] of Object.entries(sta)) {
+      econ.neighborhoods[k] = v;
+    }
+    writeEconJson("neighborhood_economics_v1.json", econ);
+    changed.push("neighborhood_economics_v1.json: prime streets");
+  } else {
+    held.push("nbhd_economics (filled but no neighborhoods map to merge)");
+  }
 }
 
 // --- state ----------------------------------------------------------------

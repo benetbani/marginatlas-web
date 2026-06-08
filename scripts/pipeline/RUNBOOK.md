@@ -77,17 +77,25 @@ covered industry or drop that sector. `blurb` is one or two plain sentences, no
 em-dashes, no source-agency names, warm-but-spare. Validate: exactly 3, distinct,
 each slug resolves.
 
-### nbhd_economics  (-> a NEW staged file the neighborhood pages will read)
-For each neighborhood in the city's scheme, research/extrapolate the micro-market
-profile designed 2026-06-08: prime commercial streets (`name`, `sells`), the street's
-rent level vs the city (a multiplier near 1.0), the average consumer spend per visit
-(USD), the demand-driver mix (commuter / tourist / resident / student shares summing
-to 100), and the time-of-day/week rhythm (a short factual phrase). Most of this is
-hard to source directly: fill streets and rhythm from real local knowledge where
-findable, and EXTRAPOLATE spend/rent from the city's cost index and the neighborhood
-character, always graded `estimated`. Omit a neighborhood's economics rather than
-guess wildly. (This target lands last per city because it is the most extrapolation-
-heavy; a city can be promoted on the other three first.)
+### nbhd_economics  (-> data/economics/neighborhood_economics_v1.json, a LIVE target)
+LIVE as of 2026-06-08 (no longer held): promote merges the staged `neighborhoods`
+map into `data/economics/neighborhood_economics_v1.json` under `.neighborhoods`, keyed
+`${citySlug}.${neighborhoodSlug}`. The neighborhood page (NeighborhoodOverview) reads
+it via `getNeighborhoodEconomics` and renders the prime-streets section. For each
+neighborhood in the city's scheme, research/extrapolate the micro-market profile
+designed 2026-06-08: prime commercial streets (`name`, `sells`), the street's rent
+level vs the city (`rent_vs_city`, a multiplier near 1.0), the average consumer spend
+per visit (`spend_per_visit_usd`), and (for the legacy row form) the demand-driver mix
+(commuter / tourist / resident / student shares summing to 100) and time-of-day/week
+rhythm. Stage the map form the promote step merges: `values.neighborhoods` =
+`{ "<city>.<nbhd>": { "prime_streets": [{ "name", "sells", "rent_vs_city"?,
+"spend_per_visit_usd"? }], "notes"? } }`. `rent_vs_city` and `spend_per_visit_usd` are
+optional and self-omit on the page when absent. Most of this is hard to source
+directly: fill streets from real local knowledge where findable, and EXTRAPOLATE
+spend/rent from the city's cost index and the neighborhood character, always graded
+`estimated`. Omit a neighborhood's economics rather than guess wildly. (This target
+lands last per city because it is the most extrapolation-heavy; a city can be promoted
+on the other three first.)
 
 ## Staging file schema  (data/cities/_staged/<slug>.json)
 
@@ -125,8 +133,11 @@ heavy; a city can be promoted on the other three first.)
 
 Before writing, every staged value passes `npx tsx scripts/pipeline/validate_staged.ts
 <slug>`: bounds per field (above), taxonomy resolution for every `sectors` slug, the
-no-em-dash / no-source-agency check on every rendered string (`blurb`s), and the
-driver-mix-sums-to-100 check. A failing field is downgraded to `skipped`, not shipped.
+no-em-dash / no-source-agency check on every rendered string (`blurb`s and street
+`sells`), the driver-mix-sums-to-100 check (legacy row form), and the prime-streets
+shape (each street: `name` and `sells` non-empty, optional `spend_per_visit_usd` in
+[1, 5000], optional `rent_vs_city` in [0.2, 5]). A failing field is downgraded to
+`skipped`, not shipped.
 
 ## Review and promote (human-gated)
 
