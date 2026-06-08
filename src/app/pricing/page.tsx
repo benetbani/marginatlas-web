@@ -32,7 +32,10 @@ import {
   CANCEL_ANYTIME_BLOCK,
   METHODOLOGY_HREF,
   METHODOLOGY_LABEL,
+  PRIMARY_CTA,
 } from "@/components/monetization";
+import { CheckoutButton } from "@/components/monetization/CheckoutButton";
+import { isAuthEnabled } from "@/lib/feature_flags";
 
 export const metadata = {
   title: "Pricing - Margin Atlas",
@@ -238,6 +241,10 @@ function PaidCard({
     tier === "basic"
       ? "bg-atlas-700 text-cream-50 hover:bg-atlas-800"
       : "bg-ink-900 text-cream-50 hover:bg-ink-800";
+  // Billing is live only when auth is on AND Stripe is configured (server-only
+  // env). Read at build time, so the pricing page keeps its newsletter CTA until
+  // the founder activates Stripe, then auto-switches to real checkout.
+  const billingLive = isAuthEnabled() && !!process.env.STRIPE_SECRET_KEY;
   return (
     <div className={`rounded-2xl p-6 h-full flex flex-col ${wrapperClasses}`}>
       <div className="flex items-center justify-between">
@@ -262,20 +269,31 @@ function PaidCard({
       <p className="mt-4 text-sm text-ink-800 leading-relaxed flex-1">
         {spec.description}
       </p>
-      {/* Pre-Phase-D: Stripe is parked per founder. CTAs scroll to the
-         site-wide newsletter signup with the refusal microcopy in the
-         caption. Phase D will swap the href to a Stripe Checkout URL
-         and the caption disappears. */}
+      {/* The CTA. When billing is live (auth on AND Stripe configured) the
+         button starts a Checkout session; until then it stays parked on the
+         site-wide newsletter signup with the "we will email you" caption. The
+         switch is build-time, so production is unchanged until activation. */}
       <div className="mt-6">
-        <a
-          href="#newsletter"
-          className={`inline-flex w-full justify-center items-center gap-1.5 rounded-full py-2.5 text-sm font-semibold transition-colors ${buttonClasses}`}
-        >
-          {tier === "basic" ? "Notify me when Basic opens" : "Notify me when Premium opens"}
-        </a>
-        <p className="mt-2 text-[11px] text-cocoa-700/80 text-center">
-          We will email you when paid plans open.
-        </p>
+        {billingLive ? (
+          <CheckoutButton
+            tier={tier}
+            className={`inline-flex w-full cursor-pointer justify-center items-center gap-1.5 rounded-full py-2.5 text-sm font-semibold transition-colors disabled:opacity-60 ${buttonClasses}`}
+          >
+            {PRIMARY_CTA[tier]}
+          </CheckoutButton>
+        ) : (
+          <>
+            <a
+              href="#newsletter"
+              className={`inline-flex w-full justify-center items-center gap-1.5 rounded-full py-2.5 text-sm font-semibold transition-colors ${buttonClasses}`}
+            >
+              {tier === "basic" ? "Notify me when Basic opens" : "Notify me when Premium opens"}
+            </a>
+            <p className="mt-2 text-[11px] text-cocoa-700/80 text-center">
+              We will email you when paid plans open.
+            </p>
+          </>
+        )}
       </div>
     </div>
   );
