@@ -30,6 +30,7 @@ import { CountryFlag } from "@/components/CountryFlag";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { buildCityPeers } from "@/lib/scores/city_peers";
 import type { BreakInBand } from "@/lib/scores/break_in_rating";
+import type { PeerRole } from "@/lib/cities/comparable_cities";
 
 /** Band to the score-badge tone, the EXACT moss / atlas / clay scale the city
  * masthead and the country "easiest to break in" panel use, so a peer's badge
@@ -60,6 +61,18 @@ function bandWord(band: BreakInBand): string {
   }
 }
 
+/** Why this city is shown as a peer. */
+function roleLabel(role: PeerRole): string {
+  switch (role) {
+    case "competitor":
+      return "Local competitor";
+    case "rival":
+      return "Classic rival";
+    case "international":
+      return "Peer abroad";
+  }
+}
+
 export interface CityPeersProps {
   /** The seed city's slug, used to select its peers. */
   citySlug: string;
@@ -82,7 +95,7 @@ export function CityPeers({ citySlug, cityName }: CityPeersProps) {
     <section className="py-10 md:py-14">
       <SectionEyebrow className="mb-2">Cities like {cityName}</SectionEyebrow>
       <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mb-2 max-w-3xl">
-        Peers by size, wealth, and cost
+        A local competitor, a classic rival, and a peer abroad
       </h2>
       {/* useless-tile-ok: describes the peer comparison, not a count of things we cover */}
       <p className="text-sm md:text-base text-cocoa-700/80 mb-6 max-w-2xl">
@@ -99,7 +112,7 @@ export function CityPeers({ citySlug, cityName }: CityPeersProps) {
             <div className="flex items-center justify-between gap-2 mb-2">
               <div className="flex items-center gap-2 text-xs uppercase tracking-wide text-cocoa-700/60 font-semibold">
                 <CountryFlag iso2={p.iso2} className="w-4" />
-                <span>{p.continent}</span>
+                <span>{roleLabel(p.role)}</span>
               </div>
               {p.score != null && p.band != null ? (
                 <span

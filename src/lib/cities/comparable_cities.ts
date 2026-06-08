@@ -18,6 +18,7 @@
  * concern.
  */
 import cityListJson from "../../../data/cities/city_list_v1.json";
+import cityRivalsJson from "../../../data/cities/city_rivals_v1.json";
 
 type CityEntry = {
   slug: string;
@@ -78,4 +79,100 @@ export function getComparableCities(
     if (out.length >= limit) break;
   }
   return out;
+}
+
+// --- structured city-page peer set (founder 2026-06-08) ---------------------
+// The city page shows three peers with distinct roles, not three nearest-by-size
+// metros: a local competitor (same country if possible), the historical rival
+// (curated, e.g. London and Paris), and a peer abroad. All within a population
+// band, with at most one peer sharing the seed's country (two for the US, China,
+// and India, large enough to field two). getComparableCities above is left intact
+// for the cell page's comparable-cities ribbon.
+
+const RIVALS = (cityRivalsJson as { rivals: Record<string, string> }).rivals;
+const BIG_COUNTRIES = new Set(["US", "CN", "IN"]);
+
+export type PeerRole = "competitor" | "rival" | "international";
+export type CityPeerPick = CityEntry & { role: PeerRole };
+
+/** Keep a candidate within a sane population band of the seed (default within 3x
+ * either way). A missing population does not exclude, so we never over-filter. */
+function withinPopRange(seed: CityEntry, c: CityEntry, ratio = 3): boolean {
+  if (!(seed.pop_m > 0) || !(c.pop_m > 0)) return true;
+  const r = c.pop_m / seed.pop_m;
+  return r >= 1 / ratio && r <= ratio;
+}
+
+function rankBySimilarity(seed: CityEntry, pool: CityEntry[]): CityEntry[] {
+  return pool
+    .map((c) => ({ c, d: similarityDistance(seed, c) }))
+    .sort((a, b) => a.d - b.d)
+    .map((x) => x.c);
+}
+
+export function getCityPeerSet(
+  citySlug: string | null | undefined,
+): CityPeerPick[] {
+  if (!citySlug) return [];
+  const seed = BY_SLUG[citySlug.toLowerCase()];
+  if (!seed) return [];
+
+  const all = CITIES.filter((c) => c.slug !== seed.slug);
+  const inRange = all.filter((c) => withinPopRange(seed, c));
+  const pool = inRange.length >= 6 ? inRange : all;
+
+  const picks: CityPeerPick[] = [];
+  const usedSlugs = new Set<string>();
+  const usedCountries = new Set<string>();
+  const sameCountryCap = BIG_COUNTRIES.has(seed.iso2) ? 2 : 1;
+  let sameCountryUsed = 0;
+
+  const canTake = (c: CityEntry): boolean => {
+    if (usedSlugs.has(c.slug)) return false;
+    if (c.iso2 === seed.iso2) return sameCountryUsed < sameCountryCap;
+    return !usedCountries.has(c.iso2);
+  };
+  const take = (c: CityEntry, role: PeerRole): void => {
+    picks.push({ ...c, role });
+    usedSlugs.add(c.slug);
+    if (c.iso2 === seed.iso2) sameCountryUsed += 1;
+    else usedCountries.add(c.iso2);
+  };
+
+  // 1) Local competitor: nearest same country, else same continent, else anywhere.
+  const competitor =
+    rankBySimilarity(seed, pool.filter((c) => c.iso2 === seed.iso2)).find(canTake) ??
+    rankBySimilarity(
+      seed,
+      pool.filter((c) => c.iso2 !== seed.iso2 && c.continent === seed.continent),
+    ).find(canTake) ??
+    rankBySimilarity(seed, pool).find(canTake);
+  if (competitor) take(competitor, "competitor");
+
+  // 2) Classic rival: the curated rival if present and takeable (editorial truth,
+  //    so it ignores the population band); else the nearest cross-country peer.
+  const rivalSlug = RIVALS[seed.slug];
+  const rivalEntry = rivalSlug ? BY_SLUG[rivalSlug] : undefined;
+  const rival =
+    rivalEntry && rivalEntry.slug !== seed.slug && canTake(rivalEntry)
+      ? rivalEntry
+      : rankBySimilarity(seed, pool.filter((c) => c.iso2 !== seed.iso2)).find(canTake);
+  if (rival) take(rival, "rival");
+
+  // 3) Peer abroad: nearest from a different continent than the seed.
+  const intl =
+    rankBySimilarity(seed, pool.filter((c) => c.continent !== seed.continent)).find(
+      canTake,
+    ) ?? rankBySimilarity(seed, pool.filter((c) => c.iso2 !== seed.iso2)).find(canTake);
+  if (intl) take(intl, "international");
+
+  // Backfill to three if a role could not be filled.
+  if (picks.length < 3) {
+    for (const c of rankBySimilarity(seed, pool)) {
+      if (picks.length >= 3) break;
+      if (canTake(c)) take(c, "international");
+    }
+  }
+
+  return picks.slice(0, 3);
 }

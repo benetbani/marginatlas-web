@@ -28,7 +28,7 @@
  * USD-only.
  */
 import cityListJson from "../../../data/cities/city_list_v1.json";
-import { getComparableCities } from "@/lib/cities/comparable_cities";
+import { getCityPeerSet, type PeerRole } from "@/lib/cities/comparable_cities";
 import { buildCityScore } from "@/lib/scores/city_board";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import type { BreakInBand } from "@/lib/scores/break_in_rating";
@@ -64,6 +64,8 @@ export type CityPeer = {
   iso2: string;
   /** Continent label, e.g. "Europe". */
   continent: string;
+  /** Why this city is a peer: a local competitor, a classic rival, or a peer abroad. */
+  role: PeerRole;
   /** This peer's headline 0-100 city score, or null when it cannot be scored. */
   score: number | null;
   /** The score's band (same scale as the cell break-in rating), or null. */
@@ -78,7 +80,7 @@ export type CityPeer = {
  * the same path the city page uses for its own score. Deterministic and pure.
  */
 export function buildCityPeers(citySlug: string, limit = 3): CityPeer[] {
-  const peers = getComparableCities(citySlug, limit);
+  const peers = getCityPeerSet(citySlug).slice(0, limit);
   const out: CityPeer[] = [];
 
   for (const peer of peers) {
@@ -107,6 +109,7 @@ export function buildCityPeers(citySlug: string, limit = 3): CityPeer[] {
       name: peer.name,
       iso2: peer.iso2,
       continent: peer.continent,
+      role: peer.role,
       score: scored ? scored.score : null,
       band: scored ? scored.band : null,
     });
