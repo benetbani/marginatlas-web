@@ -18,7 +18,7 @@
  *
  * Run: npx tsx scripts/pipeline/promote_staged.ts <slug>
  */
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, mkdirSync, rmSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { execFileSync } from "node:child_process";
 
@@ -112,6 +112,10 @@ const state: State = existsSync(statePath)
 const today = new Date().toISOString().slice(0, 10);
 state.cities[slug] = { status: "promoted", at: today };
 writeFileSync(statePath, JSON.stringify(state, null, 2) + "\n");
+
+// The draft has been merged into live; remove it so it leaves the review queue
+// (state.json now records the promotion, so the loop will not re-stage it).
+rmSync(stagedPath);
 
 console.log(`\nPROMOTED ${slug}`);
 for (const c of changed) console.log(`  + ${c}`);
