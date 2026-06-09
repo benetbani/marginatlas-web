@@ -18,8 +18,6 @@ import {
 import { CountryFlag } from "@/components/CountryFlag";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { CountryCityShortcuts } from "@/components/CountryCityShortcuts";
-import { CountryStatsStrip } from "@/components/CountryStatsStrip";
-import { CountryAtAGlance } from "@/components/CountryAtAGlance";
 import { hasRegionalCoverage } from "@/lib/coverage/regional";
 import { getAdmin1Regions } from "@/lib/coverage/admin1";
 import { COUNTRY_PAGE_SECTIONS, getToneClass } from "@/lib/page-layout/section-order";
@@ -279,7 +277,6 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
           {getCountryAnchor(iso2, meta.name)}
         </p>
 
-        <CountryAtAGlance iso2={iso2} topIndustries={topIndustries} />
       </section>
 
       {/* 1.5. Viability lede (bible Section 5, friction-adjusted view). The
@@ -289,18 +286,6 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
          economics snapshot + tax regime already loaded above; mounts only
          when that synthesis produced real signal (see showVerdict). */}
       {showVerdict ? <CountryViabilityLede verdict={countryVerdict} /> : null}
-
-      {/* 2. country-stats: the non-tax operating signal (inflation over the
-         last 12 months). This is the second beat in the decision flow: after
-         the lede says whether a business can make money here, the strip says
-         what the operating ground feels like. The tax + registration figures
-         (sales tax, the small-business regime, time to launch) used to live
-         here too; they were consolidated into the single CountryTaxReality
-         panel below, so they appear in exactly one place. The strip self-omits
-         when the inflation signal is absent. */}
-      <section id="country-stats" className={`py-8 ${getToneClass("country-stats")}`}>
-        <CountryStatsStrip iso2={iso2} />
-      </section>
 
       {/* 3. industry-mix-grid: top activities in this country. Reformation
          (bible Section 5, "where the typical money lands"): the section leads

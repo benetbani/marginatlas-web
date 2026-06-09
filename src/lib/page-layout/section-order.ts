@@ -21,7 +21,6 @@ export const CELL_PAGE_SECTIONS = [
 
 export const COUNTRY_PAGE_SECTIONS = [
   "hero",
-  "country-stats",
   "industry-mix-grid",
   "top-cities",
   "regions",
@@ -124,7 +123,6 @@ export const SECTION_TONES: Record<string, SectionTone> = {
   "related-cells": "white",
 
   // Country page
-  "country-stats": "white",
   "industry-mix-grid": "white",
   "top-cities": "white",
   "regions": "white",
