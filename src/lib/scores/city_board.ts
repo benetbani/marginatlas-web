@@ -88,14 +88,17 @@ export interface CityBoardCity {
 
 /**
  * The country economics the board reads for the country the city sits in. This
- * is the shape getCountryEconomicsSnapshot already returns, narrowed to the two
- * fields the city board uses. Both are nullable; a null becomes a dash.
+ * is the shape getCountryEconomicsSnapshot already returns, narrowed to the
+ * fields the city board uses. All nullable; a null becomes a dash.
  */
 export interface CityBoardEcon {
   /** Self-employment share of total employment, percent (0..100). */
   selfEmploymentPct: number | null;
   /** Average gross monthly salary, USD (country-level fallback for income). */
   avgMonthlySalary: number | null;
+  /** Median net wealth per adult, USD (national; shown as a city estimate).
+   * Optional so score-only callers (peers) may omit it; the board dashes it. */
+  netWealthPerAdult?: number | null;
 }
 
 export interface CityBoardInput {
@@ -219,6 +222,19 @@ export function buildCityBoard(input: CityBoardInput): BoardSection[] {
   const countryMonthly =
     econ && isNum(econ.avgMonthlySalary) ? econ.avgMonthlySalary : null;
   const monthlyIncome = cityMonthly ?? countryMonthly;
+  // Net wealth per citizen: the national median per adult, scaled by the city's
+  // income premium over the national average (a city-level estimate, founder
+  // 2026-06-09). The factor is clamped to a sane band so an outlier city salary
+  // can never print an absurd figure, and the result rounds to a clean $1,000.
+  // Flat national value when the city has no own salary on file.
+  const wealthIncomeFactor =
+    isNum(cityMonthly) && isNum(countryMonthly) && countryMonthly > 0
+      ? Math.max(0.5, Math.min(2.5, cityMonthly / countryMonthly))
+      : 1;
+  const cityNetWealth =
+    econ && isNum(econ.netWealthPerAdult)
+      ? Math.round((econ.netWealthPerAdult * wealthIncomeFactor) / 1000) * 1000
+      : null;
   const demandRows: StatRow[] = [
     {
       label: "Metro population",
@@ -227,8 +243,8 @@ export function buildCityBoard(input: CityBoardInput): BoardSection[] {
     },
     {
       label: "Average net wealth per citizen",
-      value: null,
-      tip: "Average net wealth held per resident.",
+      value: isNum(cityNetWealth) ? fmtUSD(cityNetWealth) : null,
+      tip: "National median net wealth per adult, scaled to this city's income. Estimate.",
     },
     {
       label: "Average salary",

@@ -48,6 +48,7 @@ import { getCityHero, isPatternHero } from "@/lib/images/city_heroes";
 import { DataSection } from "@/components/board/DataSection";
 import { fmtPct } from "@/components/board/format";
 import { TakeHomeValue } from "@/components/monetization/TakeHomeValue";
+import { BreakInStrip } from "@/components/cities/BreakInStrip";
 import {
   buildCityBoard,
   buildCityActivities,
@@ -204,6 +205,7 @@ export default async function CityPage({
     econ: {
       selfEmploymentPct: econSnap.selfEmploymentPct,
       avgMonthlySalary: econSnap.avgMonthlySalary,
+      netWealthPerAdult: econSnap.netWealthPerAdult,
     },
   };
   const board = buildCityBoard(boardInput);
@@ -300,6 +302,21 @@ export default async function CityPage({
            heavy hero (2026-06-05): the rebuilt board does not surface Gini or
            HDI, so a disclaimer for absent figures only confused. The board's
            own per-section modeled footnotes carry the honesty now. */}
+
+        {/* The break-in spread: one dot per everyday trade on a 0-100 difficulty
+           track, the one branded city signature visualization and the visual
+           companion to the Business Climate Score above. Built from the same
+           activity scores the ranked table below uses; self-omits below three. */}
+        <BreakInStrip
+          cityName={city.name}
+          items={activities
+            .filter((a) => a.breakInScore != null && a.breakInBand != null)
+            .map((a) => ({
+              name: a.name,
+              score: a.breakInScore as number,
+              band: a.breakInBand as BreakInBand,
+            }))}
+        />
 
         {/* Founder direction 2026-05-26: dropped TopProfitableActivities
             (most / least profitable, was sec 6) and MostSaturatedActivities
