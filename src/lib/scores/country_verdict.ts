@@ -99,14 +99,6 @@ function daysGoodness(v: number): number {
   if (v <= 60) return 0.25;
   return 0;
 }
-function inflationGoodness(v: number): number {
-  if (v <= 0) return 0;
-  if (v <= 2) return 0.5;
-  if (v <= 5) return 1;
-  if (v <= 10) return 0.5;
-  if (v <= 25) return 0.25;
-  return 0;
-}
 function selfEmpGoodness(): number {
   // Density is not strictly good or bad, so it always reads flat.
   return 0.5;
@@ -155,13 +147,6 @@ export function generateCountryVerdict(
     daysGoodness,
   );
   if (launch) signals.push(launch);
-  const inflation = readSignal(
-    "Price stability",
-    "inflation_pct_yoy",
-    snapshot.inflationPctYoy,
-    inflationGoodness,
-  );
-  if (inflation) signals.push(inflation);
 
   // --- lead sentence 1: where the money tends to be ---
   const moneySentences: string[] = [];
@@ -212,9 +197,6 @@ export function generateCountryVerdict(
   if (launch && (launch.tone === "bad" || launch.tone === "flat")) {
     frictionClauses.push(`getting registered is ${launch.word}`);
   }
-  if (inflation && inflation.tone === "bad") {
-    frictionClauses.push(`prices are moving ${inflation.word}`);
-  }
   if (
     density &&
     (snapshot.selfEmploymentPct ?? 0) >= 35 &&
@@ -245,12 +227,9 @@ export function generateCountryVerdict(
     smbEffectiveRate != null &&
     vatStandard != null;
   const saturated = (snapshot.selfEmploymentPct ?? 0) >= 45;
-  const highInflation = (snapshot.inflationPctYoy ?? 0) > 10;
 
   let close: string;
-  if (highInflation) {
-    close = `Pick the activity and the location with care. With prices moving this fast, the businesses that hold up are the ones that can reprice quickly and do not carry much fixed cost.`;
-  } else if (saturated) {
+  if (saturated) {
     close = `Pick the activity and the location with care. In a market this crowded, a plain copy of what everyone else runs competes only on price, which is the fastest way to give the margin back.`;
   } else if (heavyTax) {
     close = `Pick the activity and the location with care. With the tax load this heavy, the numbers only work above a real revenue threshold, not at hobby scale.`;
