@@ -11,13 +11,10 @@ import { getTopIndustriesForCountry, getCellBySlug, withBudget, slugify } from "
 import { getCitiesForCountry } from "@/lib/cities";
 import {
   COUNTRIES,
-  INDUSTRY_BY_ID,
-  SECTOR_BY_ID,
   industryToSlug,
 } from "@/lib/taxonomy";
 import { CountryFlag } from "@/components/CountryFlag";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
-import { CountryCityShortcuts } from "@/components/CountryCityShortcuts";
 import { hasRegionalCoverage } from "@/lib/coverage/regional";
 import { getAdmin1Regions } from "@/lib/coverage/admin1";
 import { COUNTRY_PAGE_SECTIONS, getToneClass } from "@/lib/page-layout/section-order";
@@ -28,13 +25,14 @@ import { BusinessFormationCosts } from "@/components/cities/BusinessFormationCos
 import { CountryViabilityLede } from "@/components/countries/CountryViabilityLede";
 import { CountryTaxReality } from "@/components/countries/CountryTaxReality";
 import { generateCountryVerdict } from "@/lib/scores/country_verdict";
-import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
+import { getCountryEconomicsSnapshot, getCityEconBySlug } from "@/lib/economics/country_metrics";
 import { getSmbRegime, getVatRow } from "@/lib/tax/smb_effective_rates";
 import { BoardHero } from "@/components/board/BoardHero";
 import { BoardSectionTable } from "@/components/board/BoardSectionTable";
 import { CountryMastheadImage } from "@/components/countries/CountryMastheadImage";
 import { buildCountryBoard, buildEasiestToBreakIn, type PlaceActivityCell } from "@/lib/scores/country_board";
 import { EasiestToBreakIn } from "@/components/countries/EasiestToBreakIn";
+import { buildCityScore } from "@/lib/scores/city_board";
 
 // Keep section-order constant referenced for type checking — sections render in this exact order below.
 void COUNTRY_PAGE_SECTIONS;
@@ -198,9 +196,10 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
   // carry a real region_name and display name, so no slug-to-label munging is
   // needed and the grouping works for every covered country. Regions with no
   // cities simply do not appear; the section omits when the country has none.
+  const allCities = getCitiesForCountry(iso2);
   const citiesByRegion = (() => {
     const groups = new Map<string, { name: string; slug: string }[]>();
-    for (const c of getCitiesForCountry(iso2)) {
+    for (const c of allCities) {
       const region = c.region_name?.trim() || countryName;
       if (!groups.has(region)) groups.set(region, []);
       groups.get(region)!.push({ name: c.name, slug: c.slug });
@@ -210,6 +209,44 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
       cities,
     }));
   })();
+
+  // Best/worst city highlight. For each displayed city, build its Business
+  // Climate Score using per-city salary and cost-of-living from city_list_v1
+  // so the ranking reflects real per-city economics, not city size alone.
+  // getCityEconBySlug looks up the city slug in city_list_v1.json and returns
+  // nulls for cities absent from that list (score falls back to population +
+  // country econ in those cases). buildCityScore returns null when the city
+  // carries no usable demand signal; those cities are excluded. The highlight
+  // self-omits when fewer than 2 cities produce a score.
+  const cityScores: { name: string; slug: string; score: number }[] = [];
+  for (const c of allCities) {
+    const eco = getCityEconBySlug(c.slug);
+    const r = buildCityScore({
+      city: {
+        slug: c.slug,
+        popM: c.population / 1_000_000,
+        avgGrossSalaryUsdYear: eco.avgGrossSalaryUsdYear,
+        costOfLivingIndex: eco.costOfLivingIndex,
+        touristArrivalsM: null,
+      },
+      econ: {
+        selfEmploymentPct: snapshot.selfEmploymentPct,
+        avgMonthlySalary: snapshot.avgMonthlySalary,
+        netWealthPerAdult: snapshot.netWealthPerAdult,
+      },
+    });
+    if (r != null) {
+      cityScores.push({ name: c.name, slug: c.slug, score: r.score });
+    }
+  }
+  const bestCity =
+    cityScores.length >= 2
+      ? cityScores.reduce((a, b) => (b.score > a.score ? b : a))
+      : null;
+  const worstCity =
+    cityScores.length >= 2
+      ? cityScores.reduce((a, b) => (b.score < a.score ? b : a))
+      : null;
 
   return (
     <div>
@@ -224,30 +261,18 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
       </nav>
 
       {/*
-        Plan v13 Wave 2b: canonical country page section order.
-        Sections render in the exact order defined in COUNTRY_PAGE_SECTIONS.
-        Sections degrade with an empty-state fallback rather than disappearing,
-        so sister country pages always have identical structure.
+        SP2 section order (reform-v2/palette-brick):
+        1. hero (masthead + data board + country-anchor paragraph)
+        2. viability lede
+        3. tax-overview + business formation costs (set-up and run area)
+        4. easiest businesses to break into here
+        5. cities (merged: best/worst highlight + regions list)
+        6. country character panel (signature panel)
+        7. related-countries CTA
       */}
 
-      {/* 1. hero: rebuilt on the board kit to match the cell page. The heavy
-         editorial masthead (big flag H1 + framing line) is replaced by the
-         quiet BoardHero, with the country data board rendered immediately
-         under it so the figures reach above the fold, exactly as on the cell
-         page. The plain country name is the H1; the country page computes no
-         single opportunity score, so the score strip is passed empty (overall
-         null, no parts) and renders as a dash. The country's commercial
-         character + the blunt "where the money is and what gets in the way"
-         answer still follow in the viability lede directly below. The compact
-         at-a-glance strip stays under the board as supporting context. */}
+      {/* 1. hero: rebuilt on the board kit to match the cell page. */}
       <section id="hero" className="pt-2 pb-6">
-        {/* The masthead carries the deliberate exception to the pure-white
-           system: a low-opacity duotone country photo sits behind the flag,
-           eyebrow, and title as atmosphere, then fades to white so the data
-           board below reads on a clean surface. The image self-omits when the
-           country has no resolvable photo (see CountryMastheadImage), so the
-           masthead degrades to plain white rather than a broken frame. The
-           masthead content sits in a relative layer above the image. */}
         <div className="relative overflow-hidden rounded-2xl">
           <CountryMastheadImage iso2={iso2} countryName={meta.name} />
           <div className="relative px-4 pt-4 pb-2 md:px-6 md:pt-6">
@@ -259,14 +284,6 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
           </div>
         </div>
 
-        {/* The country data board. Five fixed sections the reader can learn
-           once and read on every country, rendered immediately under the
-           masthead. Founder direction: each section is its own DISTINCT small
-           table (a titled white card with hairline rows, the StatCard look),
-           laid out in a responsive grid so the page scans as a SET of small
-           structured tables rather than one undifferentiated stack. Each
-           section still renders all of its rows; a datum we do not hold shows
-           as the board's dash, so the page shape never depends on the data. */}
         <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-4 lg:grid-cols-3">
           {board.map((s) => (
             <BoardSectionTable section={s} key={s.key} />
@@ -276,139 +293,19 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
         <p className="mt-6 text-base md:text-lg text-ink-700 max-w-3xl leading-relaxed">
           {getCountryAnchor(iso2, meta.name)}
         </p>
-
       </section>
 
-      {/* 1.5. Viability lede (bible Section 5, friction-adjusted view). The
-         opinionated country-level read: where the money tends to be, the
-         operating reality that gets in the way, and the condition under
-         which a business actually clears a wage. Pure synthesis from the
-         economics snapshot + tax regime already loaded above; mounts only
-         when that synthesis produced real signal (see showVerdict). */}
+      {/* 2. Viability lede. Opinionated country-level read: where the money
+         tends to be, the operating reality that gets in the way, and the
+         condition under which a business actually clears a wage. Mounts only
+         when the synthesis produced real signal. */}
       {showVerdict ? <CountryViabilityLede verdict={countryVerdict} /> : null}
 
-      {/* 3. industry-mix-grid: top activities in this country. Reformation
-         (bible Section 5, "where the typical money lands"): the section leads
-         with the densest local activities and the typical revenue each one
-         turns over, framed as a starting point for a decision, not a "biggest
-         revenue" leaderboard. The blunt caveat keeps revenue honest: it is
-         not take-home. Section reads only if the query returned >= 1
-         plausible activity. */}
-      {topIndustries.length > 0 && (
-        <section id="industry-mix-grid" className={getToneClass("industry-mix-grid")}>
-          <div className="py-8">
-            <SectionEyebrow className="mb-2">Where the money is</SectionEyebrow>
-            <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
-              Where the typical money lands in {meta.name}
-            </h2>
-            {/* useless-tile-ok: subtitle describes the ranking criterion, not a count of things we cover */}
-            <p className="mt-1 text-sm text-graphite max-w-2xl leading-relaxed">
-              The activities that fill the local small-business mix, ranked by how
-              commonly they show up, with what the typical firm turns over.
-              Revenue is the top line, not take-home. Open any one for the cost
-              stack, the tax, and what is left for an owner.
-            </p>
-            <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {topIndustries.map((ind) => {
-                const indRecord = INDUSTRY_BY_ID[ind.industry_id];
-                const sector = indRecord ? SECTOR_BY_ID[indRecord.sector_id] : null;
-                const slug = industryToSlug(ind.industry_id);
-                return (
-                  <a
-                    key={ind.industry_id}
-                    href={`/${iso2.toLowerCase()}/${placeGeo}/${slug}`}
-                    className="atlas-card block px-4 py-3"
-                  >
-                    <div className="flex items-center gap-2 text-[10px] uppercase tracking-wider text-atlas-700 font-semibold">
-                      {sector && <span aria-hidden>{sector.icon}</span>}
-                      <span>{sector?.name || "Activity"}</span>
-                    </div>
-                    <div className="mt-1 text-sm font-semibold text-ink-900">
-                      {ind.industry_name}
-                    </div>
-                    <div className="mt-1.5 text-xs text-cocoa-700">
-                      {ind.revenue_per_firm != null ? (
-                        <>
-                          Typical revenue:{" "}
-                          <strong className="text-ink-900">{fmtMoney(ind.revenue_per_firm)}</strong>
-                        </>
-                      ) : (
-                        <span className="text-ink-700/60">Open for full numbers →</span>
-                      )}
-                    </div>
-                  </a>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* 3.5. Easiest businesses to break into here. The flip side of the
-         across-cities comparison: where that fixes one business and ranks
-         places, this fixes this country and ranks its own activities by the
-         single break-in rating (the same 0..100 score each business shows on
-         its own masthead). It sits directly under the "where the money lands"
-         grid as the natural next read: after the densest activities and what
-         they turn over, which of them are actually the easiest to get started
-         in. The panel self-omits when too few activities resolve a defensible
-         score (buildEasiestToBreakIn returns an empty list), so a thin-coverage
-         country simply does not show it. Deliberately no registered section id,
-         so it stays out of the canonical skeleton order (it is an extra beat,
-         not one of the registered data sections), exactly like the viability
-         lede and the signature panel. */}
-      {easiestBreakIn.length > 0 ? (
-        <section className="py-8 border-t border-parchment/60">
-          <EasiestToBreakIn rows={easiestBreakIn} placeName={meta.name} />
-        </section>
-      ) : null}
-
-      {/* 4. top-cities: Track N (Wave 2). CountryCityShortcuts handles its own silent omission. */}
-      <section id="top-cities" className={`py-6 ${getToneClass("top-cities")}`}>
-        <CountryCityShortcuts iso2={iso2} />
-      </section>
-
-      {/* 5. regions: founder spec. Each region is a non-link heading and the
-         cities under it are clickable chips. Built by grouping the country's
-         curated cities by region name (citiesByRegion above). The region label
-         is plain text (an <h3>, deliberately not a link); the city chips link
-         to the same city route the rest of the site uses. NO best/worst table
-         here. Omits cleanly when the country has no curated cities. */}
-      {citiesByRegion.length > 0 ? (
-        <section id="regions" className={`py-8 ${getToneClass("regions")}`}>
-          <SectionEyebrow className="mb-3">Go local</SectionEyebrow>
-          <h2 className="text-xl md:text-2xl font-semibold text-ink-900 mb-4">
-            Regions and cities of {countryName}
-          </h2>
-          <div className="space-y-6">
-            {citiesByRegion.map((group) => (
-              <div key={group.region}>
-                <h3 className="text-base font-semibold text-ink-900">
-                  {group.region}
-                </h3>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {group.cities.map((city) => (
-                    <Link
-                      key={city.slug}
-                      href={`/${iso2.toLowerCase()}/${city.slug}/restaurants`}
-                      className="inline-flex items-center rounded-full border border-parchment bg-white px-3 py-1.5 text-sm font-medium text-ink-900 transition-colors hover:border-atlas-500 hover:text-atlas-700"
-                    >
-                      {city.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      ) : null}
-
-      {/* 6. tax-overview: the friction-adjusted tax read (bible Section 5;
-         Section 6 module 10, free-basic tier). Fills the registered
-         tax-overview slot, previously empty since the Wave 4a stub was
-         pulled. Pure restatement of the sales-tax row + small-business
-         regime the page already loaded, with one honest worked figure
-         tied to the densest activity. Self-omits when neither rate exists. */}
+      {/* 3. Tax and set-up area. The tax block is moved up to here so the
+         "what does it cost to get started and what does the tax regime look
+         like" question is answered before the activity ranking, not buried
+         after it. The formation-costs block sits immediately under it as the
+         natural companion: both are country-level legal facts, not per-city. */}
       <section id="tax-overview" className={`py-8 ${getToneClass("tax-overview")}`}>
         <CountryTaxReality
           countryName={meta.name}
@@ -419,32 +316,101 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
           fmt={(n) => fmtMoney(n)}
         />
       </section>
-
-      {/* 6.5. Country signature panel (demographics, signature sectors,
-          culture spectrum, government scores). Moved below the decision
-          flow: it is supporting demographic context, not one of the
-          climate-to-industries decision beats, so it no longer interrupts
-          the climate strip and the activities grid. No section id, so it
-          stays out of the canonical skeleton order. Renders null when the
-          country has no signature entry. */}
-      <section className="py-6">
-        <CountrySignaturePanel iso2={iso2} countryName={meta.name} />
-      </section>
-
-      {/* 6.6. Business formation costs by legal tier. Moved here from the city
-          page (2026-06-08): the cost + setup-days to register a business is a
-          country-level legal fact (the legal tiers and government fees are
-          national, not per-city), so it belongs on the country page next to
-          the country signature read, not duplicated under every city. Renders a
-          quiet empty state when the country has no curated tier breakdown. No
-          section id, so it stays out of the canonical skeleton order. */}
       <section className="py-6">
         <BusinessFormationCosts countryIso2={iso2} countryName={meta.name} />
       </section>
 
-      {/* 7. related-countries: Compare CTA. The closing beat of the flow:
-         once the read is formed, send the visitor sideways to put this
-         country against its peers. Evergreen navigation, not data-dependent. */}
+      {/* 4. Easiest businesses to break into here. Ranks this country's own
+         activities by break-in rating. Self-omits when too few activities
+         resolve a defensible score. */}
+      {easiestBreakIn.length > 0 ? (
+        <section className="py-8 border-t border-parchment/60">
+          <EasiestToBreakIn rows={easiestBreakIn} placeName={meta.name} />
+        </section>
+      ) : null}
+
+      {/* 5. Cities: merged section. Replaces the old #top-cities +
+         #regions pair. Leads with a best/worst city highlight (by Business
+         Climate Score) when at least 2 cities score, then the full
+         regions-and-cities list. The #top-cities section is removed from
+         this page; its id is retained in section-order.ts for other pages. */}
+      {(bestCity != null && worstCity != null) || citiesByRegion.length > 0 ? (
+        <section id="regions" className={`py-8 ${getToneClass("regions")}`}>
+          <SectionEyebrow className="mb-3">Go local</SectionEyebrow>
+          <h2 className="text-xl md:text-2xl font-semibold text-ink-900 mb-4">
+            Cities of {countryName}
+          </h2>
+
+          {/* Best/worst highlight. Only shown when at least 2 cities scored.
+              Self-omits cleanly when cityScores.length < 2. */}
+          {bestCity != null && worstCity != null ? (
+            <div className="mb-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <Link
+                href={`/cities/${bestCity.slug}`}
+                className="rounded-xl border border-parchment bg-cream-50 p-4 block hover:border-atlas-500 transition-colors"
+              >
+                <div className="text-[10px] uppercase tracking-wider font-semibold text-moss-700 mb-1">
+                  Easiest to start in
+                </div>
+                <div className="text-base font-semibold text-ink-900">
+                  {bestCity.name}
+                </div>
+                <div className="text-sm text-cocoa-700 mt-0.5">
+                  Business Climate Score: <strong className="text-ink-900">{bestCity.score}</strong>
+                </div>
+              </Link>
+              <Link
+                href={`/cities/${worstCity.slug}`}
+                className="rounded-xl border border-parchment bg-cream-50 p-4 block hover:border-atlas-500 transition-colors"
+              >
+                <div className="text-[10px] uppercase tracking-wider font-semibold text-clay-600 mb-1">
+                  Hardest to start in
+                </div>
+                <div className="text-base font-semibold text-ink-900">
+                  {worstCity.name}
+                </div>
+                <div className="text-sm text-cocoa-700 mt-0.5">
+                  Business Climate Score: <strong className="text-ink-900">{worstCity.score}</strong>
+                </div>
+              </Link>
+            </div>
+          ) : null}
+
+          {/* Regions-and-cities list. */}
+          {citiesByRegion.length > 0 ? (
+            <div className="space-y-6">
+              {citiesByRegion.map((group) => (
+                <div key={group.region}>
+                  <h3 className="text-base font-semibold text-ink-900">
+                    {group.region}
+                  </h3>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {group.cities.map((city) => (
+                      <Link
+                        key={city.slug}
+                        href={`/${iso2.toLowerCase()}/${city.slug}/restaurants`}
+                        className="inline-flex items-center rounded-full border border-parchment bg-white px-3 py-1.5 text-sm font-medium text-ink-900 transition-colors hover:border-atlas-500 hover:text-atlas-700"
+                      >
+                        {city.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : null}
+        </section>
+      ) : null}
+
+      {/* 6. Country character panel. Demographics, culture spectrum, and
+         government scores. Signature sectors are suppressed on the country
+         page (showSectors=false via CountrySignaturePanel). Supporting
+         demographic context, not a decision beat. */}
+      <section className="py-6">
+        <CountrySignaturePanel iso2={iso2} countryName={meta.name} />
+      </section>
+
+      {/* 7. related-countries: Compare CTA. Closing beat of the flow. */}
       <section id="related-countries" className={`py-10 ${getToneClass("related-countries")}`}>
         <div className="card-cream">
           <SectionEyebrow className="mb-2">Next move</SectionEyebrow>

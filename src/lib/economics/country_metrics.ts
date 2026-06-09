@@ -68,9 +68,11 @@ type FormationFile = {
 type CityFile = {
   cities: Array<{
     iso2: string;
+    slug?: string;
     tier?: number;
     pop_m?: number;
     avg_gross_salary_usd_year?: number;
+    cost_of_living_index?: number;
   }>;
 };
 
@@ -137,6 +139,51 @@ const DAYS_TO_START_BY_ISO2: Map<string, number> = (() => {
   }
   return out;
 })();
+
+// ---------------------------------------------------------------------------
+// Per-city econ lookup: salary + cost-of-living index, keyed by slug.
+// ---------------------------------------------------------------------------
+
+/**
+ * Module-level map from city slug (lowercased) to its per-city economics.
+ * Built once at import time from cityListJson. Only cities that carry at
+ * least one finite value are stored; slugs absent from the list are a miss.
+ */
+const CITY_ECON_BY_SLUG: Map<string, { sal: number | null; col: number | null }> = (() => {
+  const out = new Map<string, { sal: number | null; col: number | null }>();
+  for (const c of CITIES.cities) {
+    const slug = typeof c.slug === "string" ? c.slug.toLowerCase() : null;
+    if (!slug) continue;
+    const sal =
+      typeof c.avg_gross_salary_usd_year === "number" &&
+      Number.isFinite(c.avg_gross_salary_usd_year) &&
+      c.avg_gross_salary_usd_year > 0
+        ? c.avg_gross_salary_usd_year
+        : null;
+    const col =
+      typeof c.cost_of_living_index === "number" &&
+      Number.isFinite(c.cost_of_living_index) &&
+      c.cost_of_living_index > 0
+        ? c.cost_of_living_index
+        : null;
+    out.set(slug, { sal, col });
+  }
+  return out;
+})();
+
+/**
+ * Per-city economic inputs (salary + cost of living) from the city list,
+ * keyed by city slug. Used to score a country's cities meaningfully rather
+ * than by population alone. Returns nulls when the slug is not in the list.
+ */
+export function getCityEconBySlug(slug: string): {
+  avgGrossSalaryUsdYear: number | null;
+  costOfLivingIndex: number | null;
+} {
+  const entry = CITY_ECON_BY_SLUG.get(slug.toLowerCase());
+  if (!entry) return { avgGrossSalaryUsdYear: null, costOfLivingIndex: null };
+  return { avgGrossSalaryUsdYear: entry.sal, costOfLivingIndex: entry.col };
+}
 
 // ---------------------------------------------------------------------------
 // Region inference (for fallbacks). Uses the brain country master.

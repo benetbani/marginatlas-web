@@ -30,6 +30,7 @@ export function CountrySignaturePanel({
       cityName={countryName}
       iso2={iso2}
       showInstitutions={true}
+      showSectors={false}
     />
   );
 }

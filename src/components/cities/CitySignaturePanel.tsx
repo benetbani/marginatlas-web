@@ -258,6 +258,7 @@ export function CitySignaturePanel({
   cityName,
   iso2,
   showInstitutions = true,
+  showSectors = true,
 }: {
   citySlug: string;
   cityName: string;
@@ -267,6 +268,9 @@ export function CitySignaturePanel({
   // institution blocks are country-altitude reads, so the city page passes
   // false and the country page passes true.
   showInstitutions?: boolean;
+  // When false, the signature-sectors block ("What stands out here") is
+  // suppressed. Defaults to true so city pages are unaffected.
+  showSectors?: boolean;
 }) {
   const cityScoped = !showInstitutions;
   const sig = resolveSignature(citySlug, iso2, cityScoped);
@@ -334,8 +338,9 @@ export function CitySignaturePanel({
         ) : null}
 
         {/* Block 2: the city's distinctive trades. Renders only when the city has
-            its own curated sectors, never a country clone. */}
-        {hasSectors ? (
+            its own curated sectors, never a country clone, and showSectors is
+            not explicitly set to false (country page passes false to suppress). */}
+        {showSectors && hasSectors ? (
           <div className="md:col-span-8 atlas-card p-5 md:p-6">
             <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700/65 mb-3">
               What stands out here
