@@ -19,10 +19,11 @@
  *     which renders one quiet footnote per section, not a badge per row.
  *
  * Sections, in fixed order, ALWAYS emitted:
- *   friction   Institutional friction (modeled)
- *   labor      Labor and skills (modeled): wages, GDP per head, skills
- *   survival   Survival baseline (modeled): country-level business survival
+ *   demand     Demand depth (modeled): market size, purchasing power, customer wealth
+ *   labor      Labor and skills (modeled): wages, skills
  *   market     Market structure (modeled): informality, concentration
+ *   friction   Institutional friction (modeled)
+ *   survival   Survival baseline (modeled): country-level business survival
  *
  * The tax + registration read (sales tax, the small-business regime, and the
  * days to register a business) is NOT a board section. It lives once, in the
@@ -43,7 +44,7 @@
  */
 import type { BoardSection } from "@/components/board/DataSection";
 import type { StatRow } from "@/components/board/StatGrid";
-import { fmtUSD, fmtPct } from "@/components/board/format";
+import { fmtUSD } from "@/components/board/format";
 import type { Cell } from "@/lib/cells";
 import { industryToSlug } from "@/lib/taxonomy";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
@@ -124,10 +125,30 @@ export function buildCountryBoard(input: CountryBoardInput): BoardSection[] {
     { label: "Inspection risk", value: null },
   ];
 
+  // -- demand. Demand depth (modeled). -------------------------------------
+  // Market size (population) is not held at country altitude today, so it
+  // dashes (a data-phase slot). Purchasing power reads off GDP per capita and
+  // customer wealth off the median net wealth per adult; both move here from
+  // the labor / market sections so the board leads with the size and depth of
+  // the opportunity, mirroring the cell and city boards' demand section.
+  const demandRows: StatRow[] = [
+    { label: "Market size", value: null, hint: "population" },
+    {
+      label: "Purchasing power",
+      value: econ && isNum(econ.gdpPerCapita) ? fmtUSD(econ.gdpPerCapita) : null,
+      hint: "GDP per capita",
+    },
+    {
+      label: "Customer wealth",
+      value: econ && isNum(econ.netWealthPerAdult) ? fmtUSD(econ.netWealthPerAdult) : null,
+      hint: "net wealth per adult",
+    },
+  ];
+
   // -- labor. Labor and skills (modeled). ----------------------------------
   // Average wage comes from the snapshot's monthly salary (annualized for the
-  // yearly read); GDP per head is the snapshot figure. Skills availability is
-  // a qualitative row we do not yet hold, so it blanks.
+  // yearly read). GDP per head moved up to the demand section. Skills and
+  // hiring are qualitative rows we do not yet hold, so they blank.
   const annualWage =
     econ && isNum(econ.avgMonthlySalary) ? econ.avgMonthlySalary * 12 : null;
   const laborRows: StatRow[] = [
@@ -140,10 +161,6 @@ export function buildCountryBoard(input: CountryBoardInput): BoardSection[] {
       label: "Monthly salary",
       value: econ && isNum(econ.avgMonthlySalary) ? fmtUSD(econ.avgMonthlySalary) : null,
     },
-    {
-      label: "GDP per capita",
-      value: econ && isNum(econ.gdpPerCapita) ? fmtUSD(econ.gdpPerCapita) : null,
-    },
     { label: "Skills availability", value: null },
     { label: "Hiring difficulty", value: null },
     { label: "Minimum-wage pressure", value: null },
@@ -151,7 +168,8 @@ export function buildCountryBoard(input: CountryBoardInput): BoardSection[] {
 
   // -- survival. Survival baseline (modeled). ------------------------------
   // Country-level business survival is not held today; the rows are present so
-  // the field is named, and blank so nothing is invented.
+  // the field is named, and blank so nothing is invented. Filled in a later
+  // sub-project (the data-phase modeled fills).
   const survivalRows: StatRow[] = [
     { label: "1-year survival", value: null },
     { label: "3-year", value: null },
@@ -160,9 +178,10 @@ export function buildCountryBoard(input: CountryBoardInput): BoardSection[] {
   ];
 
   // -- market. Market structure (modeled). ---------------------------------
-  // Informality reads off the snapshot's self-employment share (a broad but
-  // correlated proxy); household savings depth is the snapshot figure;
-  // concentration is a qualitative summary we do not yet hold.
+  // Informality reads off the snapshot's self-employment share. Net wealth
+  // moved up to the demand section as customer wealth; inflation was dropped
+  // (not central to a start-a-business decision). Concentration is a
+  // qualitative summary we do not yet hold.
   const marketRows: StatRow[] = [
     {
       label: "Informality",
@@ -171,27 +190,16 @@ export function buildCountryBoard(input: CountryBoardInput): BoardSection[] {
           ? `${Math.round(econ.selfEmploymentPct)}% self-employed`
           : null,
     },
-    {
-      label: "Household savings",
-      value: econ && isNum(econ.netWealthPerAdult) ? fmtUSD(econ.netWealthPerAdult) : null,
-      hint: "per adult",
-    },
-    {
-      label: "Price stability",
-      value:
-        econ && isNum(econ.inflationPctYoy)
-          ? `${fmtPct(econ.inflationPctYoy)} inflation`
-          : null,
-    },
     { label: "Concentration", value: null },
     { label: "Chain share", value: null },
   ];
 
   return [
-    { key: "friction", title: "Institutional friction", rows: frictionRows, modeled: true },
+    { key: "demand", title: "Demand depth", rows: demandRows, modeled: true },
     { key: "labor", title: "Labor and skills", rows: laborRows, modeled: true },
-    { key: "survival", title: "Survival baseline", rows: survivalRows, modeled: true },
     { key: "market", title: "Market structure", rows: marketRows, modeled: true },
+    { key: "friction", title: "Institutional friction", rows: frictionRows, modeled: true },
+    { key: "survival", title: "Survival baseline", rows: survivalRows, modeled: true },
   ];
 }
 
