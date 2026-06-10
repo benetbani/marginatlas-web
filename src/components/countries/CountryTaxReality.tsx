@@ -1,34 +1,18 @@
 /**
- * CountryTaxReality — the "how the tax actually lands" panel for the
- * country page (bible Section 5, the friction-adjusted view; Section 6
- * module 10, tax/compliance burden, free-basic tier).
+ * CountryTaxReality — the "what it takes to set up and run a business here"
+ * panel, the decisive read on the country page (founder 2026-06-09: tax + setup
+ * friction is the country page's most decisive read, so this block leads, right
+ * after the verdict). It states the OWNER's real cost burden: the business tax
+ * on profit, the cost and time to register, and the payroll tax on staff. Sales
+ * tax is demoted to a single secondary line (customers carry it). No worked
+ * example: a quiet link points down to a specific business for the after-tax math.
  *
- * Fills the registered `tax-overview` slot in the canonical country-page
- * skeleton (src/lib/page-layout/section-order COUNTRY_PAGE_SECTIONS),
- * which has been an empty slot since the Wave 4a stub was pulled. It is a
- * pure restatement of data the page already loads: the headline sales-tax
- * row (getVatRow) and the typical small-business regime (getSmbRegime).
- * It invents no numbers and runs no query.
+ * Pure restatement of data the page already loads (the SMB regime, the employer
+ * payroll rate, the typical registration cost + days). Invents no numbers and
+ * runs no query. Self-omits when none of the figures exist. The full legal-tier
+ * cost breakdown sits in BusinessFormationCosts directly below this block.
  *
- * The one worked figure is an honest arithmetic restatement, not a model:
- * for the densest local activity's typical revenue, it shows the sales tax
- * the customer pays on top and the slice the small-business regime takes.
- * Framed as illustrative, not a benchmark, so it cannot read as fake
- * precision. The whole block self-omits (returns null) when neither the
- * sales-tax row nor the regime exists, so thin-coverage countries simply
- * do not render it.
- *
- * Alongside what the government takes, the panel also carries the "how hard
- * it is to set up" beat: the typical days to register a sole trader. This is
- * the single home for both the tax burden and the setup friction, so the
- * figure that used to repeat in the board climate card and the cost-of-doing-
- * business strip now lives here once. The setup card self-omits when the
- * days figure is absent, exactly like the rate cards.
- *
- * Server component, no client JS. All colour and type from tokens.
- *
- * Design system: application section. Consumes the tax domain
- * (src/lib/tax/smb_effective_rates). 2026-06-04.
+ * Server component, no client JS. Tokens only, no em-dashes, no source agencies.
  */
 import * as React from "react";
 import type { SmbRegime, VatRow } from "@/lib/tax/smb_effective_rates";
@@ -36,23 +20,22 @@ import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 
 export interface CountryTaxRealityProps {
   countryName: string;
-  /** Headline sales-tax row, or null when uncurated. */
+  /** Headline sales-tax row (demoted to a secondary line), or null. */
   vat: VatRow | null;
-  /** Typical small-business regime, or null when uncurated. */
+  /** Typical small-business tax regime (the lead "business tax"), or null. */
   regime: SmbRegime | null;
-  /** Densest local activity, if the top-industries query returned one. */
-  topActivity: { name: string; typicalRevenue: number | null } | null;
-  /**
-   * Typical days to register a sole trader, or null when uncurated. The
-   * "how hard it is to set up" signal, folded here from the former board
-   * climate card and cost-of-doing-business strip so it lives once.
-   */
+  /** Typical days to register a sole trader, or null. */
   daysToRegister: number | null;
+  /** Typical one-time government cost to register (USD), or null. */
+  registrationCostUsd: number | null;
+  /** Employer payroll / social-contribution rate as a decimal, or null. */
+  payrollRate: number | null;
+  /** The densest local activity name + its cell-page href, for the down-link. */
+  topActivity: { name: string; href: string } | null;
   /** Currency-aware money formatter supplied by the page. */
   fmt: (n: number) => string;
 }
 
-/** Round the days-to-register figure into a plain "N days" word. */
 function daysWord(days: number): string {
   const n = Math.round(days);
   return n === 1 ? "1 day" : `${n} days`;
@@ -68,136 +51,113 @@ export function CountryTaxReality({
   countryName,
   vat,
   regime,
-  topActivity,
   daysToRegister,
+  registrationCostUsd,
+  payrollRate,
+  topActivity,
   fmt,
 }: CountryTaxRealityProps) {
-  // Self-omit when there is nothing real to say. The setup figure rides
-  // alongside the tax read, so it can also carry the panel on its own.
-  const hasSetup = daysToRegister != null && daysToRegister > 0;
-  if (!vat && !regime && !hasSetup) return null;
-
-  const revenue =
-    topActivity && topActivity.typicalRevenue != null
-      ? topActivity.typicalRevenue
-      : null;
-
-  // The single honest worked figure: pure arithmetic on the typical
-  // revenue we already display, not a margin model. Only computed when
-  // both a revenue and at least one rate exist.
-  const salesTaxOnOrder =
-    revenue != null && vat && vat.standard > 0 ? revenue * vat.standard : null;
-  const smbTaxSlice =
-    revenue != null && regime && regime.effective_rate > 0
-      ? revenue * regime.effective_rate
-      : null;
+  const hasDays = daysToRegister != null && daysToRegister > 0;
+  const hasCost = registrationCostUsd != null && registrationCostUsd >= 0;
+  const hasRegister = hasDays || hasCost;
+  const hasPayroll = payrollRate != null && payrollRate > 0;
+  // Self-omit when there is nothing real to say about setting up or running.
+  if (!regime && !hasRegister && !hasPayroll && !vat) return null;
 
   return (
     <div>
-      <SectionEyebrow className="mb-2">What the government takes, and how hard it is to set up</SectionEyebrow>
+      <SectionEyebrow className="mb-2">What it takes to set up and run a business here</SectionEyebrow>
       <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
-        The tax that lands on a {countryName} small business
+        Setting up and running a {countryName} business
       </h2>
       <p className="mt-1 max-w-2xl text-sm text-graphite leading-relaxed">
-        Two charges shape the cash a small operator keeps: the sales tax the
-        customer pays on every order, and the regime that taxes what the
-        business earns. The time it takes to register sets how fast a new
-        operator can start trading. Here is how each one reads locally.
+        The charges that actually land on an owner: the tax on what the business
+        earns, the cost and time to register, and the payroll tax on every
+        employee. Together they shape the cash a small operator keeps.
       </p>
 
-      <div className="mt-5 grid gap-3 sm:grid-cols-2">
-        {/* Sales tax */}
-        {vat ? (
-          <div className="atlas-card px-5 py-4">
-            <div className="flex items-baseline justify-between gap-3">
-              <span className="text-[11px] uppercase tracking-[0.16em] font-medium text-ink-700/70">
-                Sales tax on every order
-              </span>
-              <span className="font-display text-2xl font-semibold tabular-nums text-ink-900">
-                {pctWord(vat.standard)}
-              </span>
-            </div>
-            <p className="mt-2 text-sm text-graphite leading-relaxed">
-              The headline {vat.local_name} rate. It rides on top of the price,
-              so the customer carries it, but it sets the gap between the sticker
-              and what reaches the till.
-            </p>
-          </div>
-        ) : null}
-
-        {/* SMB regime */}
+      <div className="mt-5 grid gap-3 sm:grid-cols-3">
+        {/* Business tax (the lead): the typical small-business regime. */}
         {regime ? (
           <div className="atlas-card px-5 py-4">
             <div className="flex items-baseline justify-between gap-3">
               <span className="text-[11px] uppercase tracking-[0.16em] font-medium text-ink-700/70">
-                Typical small-business tax
+                Business tax
               </span>
               <span className="font-display text-2xl font-semibold tabular-nums text-ink-900">
                 {pctWord(regime.effective_rate)}
               </span>
             </div>
-            <p className="mt-1 text-xs font-medium text-atlas-700">
-              {regime.local_name}
-            </p>
+            <p className="mt-1 text-xs font-medium text-atlas-700">{regime.local_name}</p>
+            <p className="mt-2 text-sm text-graphite leading-relaxed">{regime.notes}</p>
+          </div>
+        ) : null}
+
+        {/* Cost and time to register. */}
+        {hasRegister ? (
+          <div className="atlas-card px-5 py-4">
+            <div className="flex items-baseline justify-between gap-3">
+              <span className="text-[11px] uppercase tracking-[0.16em] font-medium text-ink-700/70">
+                Cost to register
+              </span>
+              <span className="font-display text-2xl font-semibold tabular-nums text-ink-900">
+                {hasCost
+                  ? registrationCostUsd === 0
+                    ? "Free"
+                    : fmt(registrationCostUsd!)
+                  : daysWord(daysToRegister!)}
+              </span>
+            </div>
             <p className="mt-2 text-sm text-graphite leading-relaxed">
-              {regime.notes}
+              {hasCost && hasDays
+                ? `The typical government fee to register a small business, and about ${daysWord(
+                    daysToRegister!,
+                  )} to be trading. Professional fees on top vary widely.`
+                : hasCost
+                  ? "The typical government fee to register a small business. Professional fees on top vary widely."
+                  : `About ${daysWord(daysToRegister!)} to register a sole trader and start trading.`}
             </p>
           </div>
         ) : null}
 
-        {/* Time to set up: the registration-friction signal, folded here from
-           the former board climate card and cost-of-doing-business strip. */}
-        {hasSetup ? (
+        {/* Payroll tax on staff: the employer social-contribution rate. */}
+        {hasPayroll ? (
           <div className="atlas-card px-5 py-4">
             <div className="flex items-baseline justify-between gap-3">
               <span className="text-[11px] uppercase tracking-[0.16em] font-medium text-ink-700/70">
-                Time to register a business
+                Payroll tax on staff
               </span>
               <span className="font-display text-2xl font-semibold tabular-nums text-ink-900">
-                {daysWord(daysToRegister!)}
+                {pctWord(payrollRate!)}
               </span>
             </div>
             <p className="mt-2 text-sm text-graphite leading-relaxed">
-              The typical time to register a sole trader and start trading. It
-              measures the paperwork drag at the front, not the running cost,
-              so a short window means a new operator can open quickly.
+              The employer social contribution added on top of gross wages for
+              every employee. It sets the real cost of hiring beyond the salary.
             </p>
           </div>
         ) : null}
       </div>
 
-      {/* One honest worked figure, tied to the densest activity. */}
-      {topActivity && revenue != null && (salesTaxOnOrder != null || smbTaxSlice != null) ? (
+      {/* Sales tax, demoted: customers carry it, so it is secondary. */}
+      {vat && vat.standard > 0 ? (
         <p className="mt-4 max-w-2xl text-sm text-cocoa-700 leading-relaxed">
-          To make it concrete: a typical {topActivity.name.toLowerCase()} here
-          turns over about <strong className="text-ink-900">{fmt(revenue)}</strong> a
-          year.
-          {salesTaxOnOrder != null ? (
-            <>
-              {" "}
-              At {pctWord(vat!.standard)}, the customer pays roughly{" "}
-              <strong className="text-ink-900">{fmt(salesTaxOnOrder)}</strong> of
-              sales tax on top of that.
-            </>
-          ) : null}
-          {smbTaxSlice != null ? (
-            <>
-              {" "}
-              The small-business regime then takes about{" "}
-              <strong className="text-ink-900">{fmt(smbTaxSlice)}</strong> of what
-              the business earns.
-            </>
-          ) : null}{" "}
-          Treat these as round illustrations, not a filing. The real bill turns
-          on the sector, the deductions, and the revenue band.
+          Sales tax ({vat.local_name}) adds {pctWord(vat.standard)} on top of the
+          price, but the customer carries it, so it is not the owner's burden.
         </p>
-      ) : (
-        <p className="mt-4 max-w-2xl text-xs text-ink-700/70 leading-relaxed">
-          Headline rates only. The effective burden moves with sector,
-          deductions, and revenue band. Open a specific activity for the full
-          after-tax breakdown.
+      ) : null}
+
+      {/* No worked example: send the reader to a specific business for the math. */}
+      {topActivity ? (
+        <p className="mt-3 text-sm">
+          <a
+            href={topActivity.href}
+            className="text-atlas-700 hover:text-atlas-900 font-medium"
+          >
+            See what a typical {topActivity.name.toLowerCase()} keeps after tax &rarr;
+          </a>
         </p>
-      )}
+      ) : null}
     </div>
   );
 }

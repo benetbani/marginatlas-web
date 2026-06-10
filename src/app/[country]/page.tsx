@@ -27,6 +27,7 @@ import { CountryTaxReality } from "@/components/countries/CountryTaxReality";
 import { generateCountryVerdict } from "@/lib/scores/country_verdict";
 import { getCountryEconomicsSnapshot, getCityEconBySlug } from "@/lib/economics/country_metrics";
 import { getSmbRegime, getVatRow } from "@/lib/tax/smb_effective_rates";
+import { getCountryRates, getTypicalFormationCostUsd } from "@/lib/tax/country_rates";
 import { BoardHero } from "@/components/board/BoardHero";
 import { BoardSectionTable } from "@/components/board/BoardSectionTable";
 import { CountryMastheadImage } from "@/components/countries/CountryMastheadImage";
@@ -118,6 +119,8 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
   const snapshot = getCountryEconomicsSnapshot(iso2);
   const smbRegime = getSmbRegime(iso2);
   const vatRow = getVatRow(iso2);
+  const countryRates = getCountryRates(iso2);
+  const registrationCostUsd = getTypicalFormationCostUsd(iso2);
   const densestActivity = topIndustries[0]
     ? {
         name: topIndustries[0].industry_name,
@@ -155,6 +158,15 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
   // below resolve and link to the exact same destination cell, and the panel's
   // score therefore matches that cell's own masthead.
   const placeGeo = iso2 === "US" ? "california" : slugify(meta.name);
+
+  // The down-link target for the set-up cost block: the densest activity's cell
+  // page, where the after-tax "what an owner keeps" math actually lives.
+  const taxTopActivity = topIndustries[0]
+    ? {
+        name: topIndustries[0].industry_name,
+        href: `/${iso2.toLowerCase()}/${placeGeo}/${industryToSlug(topIndustries[0].industry_id)}`,
+      }
+    : null;
 
   // "The easiest businesses to break into here" panel. The flip side of the
   // across-cities comparison: it ranks THIS place's activities by the single
@@ -311,8 +323,10 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
           countryName={meta.name}
           vat={vatRow}
           regime={smbRegime}
-          topActivity={densestActivity}
+          topActivity={taxTopActivity}
           daysToRegister={snapshot.daysToStart}
+          registrationCostUsd={registrationCostUsd}
+          payrollRate={countryRates.employerSocial}
           fmt={(n) => fmtMoney(n)}
         />
       </section>
