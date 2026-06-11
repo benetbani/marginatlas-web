@@ -1,41 +1,38 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { ComboField, type ComboOption } from "./ComboField";
 import {
   COUNTRIES,
-  SIZE_BANDS,
   industryToSlug,
-  visibleSectors,
-  visibleIndustriesInSector,
   visibleIndustries,
   type Gate,
 } from "@/lib/taxonomy";
-import { getRegionsForCountry, getSubdivisionsForRegion } from "@/lib/regions/regions-by-country";
 import { getDefaultRegionForCountry } from "@/lib/regions/default_region_by_country";
-import { CITIES_BY_STATE } from "@/lib/cities/city_aliases_generated";
+import { getCitiesForCountryCode, CASCADE_PREFILLS } from "@/lib/home/search_cascade";
 import { elevation } from "@/lib/design-tokens";
-// CitiesFix2 §3: navigator table redesign. Visual upgrades only; the
-// submit mechanic (router.push + ComboField state) is preserved exactly
-// as it was, per the founder's "do not change the submit mechanic"
-// directive. The visual changes are:
-//  - card chrome wrapped in atlas-paper-card (white surface post white-reset;
-//    the paper texture was removed site-wide) with an elevation-token shadow
-//  - 6 fields grouped into two editorial sections, "Where" + "What",
-//    each with a font-display heading and small ordinal cue
-//  - on desktop, the two sections sit side by side with a vermillion
-//    hairline divider between them; on mobile they stack with a
-//    horizontal hairline between the two blocks
-//  - the form has a brand top rule (vermillion accent bar) and an
-//    editorial caption row at the bottom of the card with the
-//    sample-prompt copy and the two CTAs aligned end-of-line
-// Emoji flagFromIso2 removed from dropdown labels
-// (ComboField input is a plain text field and can't host the SVG CountryFlag
-// image without an invasive rewrite). Flags still render on the destination
-// pages via <CountryFlag>.
 
-/** Client-side gate read — matches lib/audience.ts on the server. */
+/**
+ * NavigatorForm: the homepage search, reworked into a three-field guided cascade
+ * (country to city to business) per the homepage reform SP3. The submit mechanic
+ * is unchanged (router.push to `/{country}/{geo}/{industry}`, with the native
+ * action="/api/go" fallback for no-JS), per the founder's standing directive.
+ *
+ * What changed from the six-field Navigator:
+ *  - Three visible fields, in order: Country, City, Business. Region, sector,
+ *    and size are gone from the UI. The region is resolved behind the scenes: a
+ *    picked city slug IS the URL geo, and "Anywhere in {country}" resolves to
+ *    that country's curated default region, so the result link still works.
+ *  - The form pre-fills with a rotating real example so it never reads blank;
+ *    the rotation stops for good on the first user interaction.
+ *  - Business is NOT narrowed by city (activities are not city-specific in the
+ *    data), so the full forgiving activity list stays available.
+ *
+ * The card chrome (top rule, header strip, footer CTAs, Surprise me) is reused.
+ */
+
+/** Client-side gate read. Matches lib/audience.ts on the server. */
 function readClientGate(): Gate {
   if (typeof window === "undefined") return { revealMixed: false, revealCorp: false };
   const params = new URLSearchParams(window.location.search);
@@ -52,30 +49,39 @@ function readClientGate(): Gate {
 
 export function NavigatorForm() {
   const router = useRouter();
-  // StartTransition was suppressing Next.js's
-  // built-in loading.tsx skeleton, leaving the user staring at the
-  // homepage with a spinner for many seconds (looks like the button
-  // is broken). Drop startTransition entirely; use a plain isLoading
-  // flag that clears on a brief timeout so the button itself still
-  // gives instant feedback. The actual page transition is then
-  // handled by Next.js with the loading.tsx skeleton, which is
-  // what we wanted from the start.
   const [isLoading, setIsLoading] = useState(false);
-  const [country, setCountry] = useState("US");
-  const [region, setRegion] = useState("");
-  const [subdivision, setSubdivision] = useState("");
-  const [sector, setSector] = useState("");
-  const [industry, setIndustry] = useState("");
-  const [size, setSize] = useState("");
+  // Deterministic initial example (the first curated prefill) so the server and
+  // first client render match (no hydration mismatch). The rotation below takes
+  // over after mount.
+  const [country, setCountry] = useState(CASCADE_PREFILLS[0].country);
+  const [city, setCity] = useState(CASCADE_PREFILLS[0].city);
+  const [business, setBusiness] = useState(CASCADE_PREFILLS[0].business);
   const [gate, setGate] = useState<Gate>({ revealMixed: false, revealCorp: false });
+  // True once the user touches any field; freezes the rotating pre-fill.
+  const [touched, setTouched] = useState(false);
+  const prefillIdx = useRef(0);
 
-  // Client-side gate (Plan v3.0 §P) — re-runs at mount so ?pro=1 + cookies
-  // can unhide corp_only / mixed_caution industries in the dropdown.
+  // Client gate so ?pro=1 / cookies can widen the activity list.
   useEffect(() => {
     setGate(readClientGate());
   }, []);
 
-  // Country options — alphabetical. (Flag emoji prefix removed in Wave 4a.)
+  // Rotating pre-fill: cycle the three fields through the curated examples every
+  // few seconds until the user interacts. ComboField is controlled, so setting
+  // the values updates the displayed selection. The effect re-runs when
+  // `touched` flips true and its cleanup clears the interval, freezing the form.
+  useEffect(() => {
+    if (touched) return;
+    const id = window.setInterval(() => {
+      prefillIdx.current = (prefillIdx.current + 1) % CASCADE_PREFILLS.length;
+      const ex = CASCADE_PREFILLS[prefillIdx.current];
+      setCountry(ex.country);
+      setCity(ex.city);
+      setBusiness(ex.business);
+    }, 4000);
+    return () => window.clearInterval(id);
+  }, [touched]);
+
   const countryOptions: ComboOption[] = useMemo(
     () =>
       COUNTRIES.map((c) => ({
@@ -86,120 +92,51 @@ export function NavigatorForm() {
     []
   );
 
-  // Region options — depends on country. Resolves from the per-country
-  // region table (see src/lib/regions/regions-by-country.ts).
-  const regionOptions: ComboOption[] = useMemo(() => {
-    const name = COUNTRIES.find((c) => c.code === country)?.name || country;
-    return getRegionsForCountry(country, name);
+  // City options depend on country: a leading "Anywhere in {country}" (value "")
+  // plus the country's curated cities (each slug is a URL-resolving geo).
+  const cityOptions: ComboOption[] = useMemo(() => {
+    const countryName = COUNTRIES.find((c) => c.code === country)?.name || country;
+    const anywhere: ComboOption = { value: "", label: `Anywhere in ${countryName}` };
+    const cities = getCitiesForCountryCode(country).map((c) => ({
+      value: c.slug,
+      label: c.label,
+      keywords: [c.slug, c.label.toLowerCase()],
+    }));
+    return [anywhere, ...cities];
   }, [country]);
 
-  // City dropdown (replaces the previous
-  // subdivision dropdown). For US, region is a state slug and the cities
-  // come from CITIES_BY_STATE[country][stateSlug] (curated top cities
-  // with friendly slugs like "los-angeles"). For non-US, falls back to
-  // getSubdivisionsForRegion which uses the geo_id parent relation.
-  const subdivisionOptions: ComboOption[] = useMemo(() => {
-    if (!region) return [{ value: "", label: "Pick a region first" }];
-    const upper = country.toUpperCase();
-    const curatedCities = CITIES_BY_STATE[upper]?.[region.toLowerCase()];
-    if (curatedCities && curatedCities.length > 0) {
-      return [{ value: "", label: "Any city" } as ComboOption].concat(
-        curatedCities.map((slug) => ({
-          value: slug,
-          label: slug.split("-").map((w) => w[0]?.toUpperCase() + w.slice(1)).join(" "),
+  // Business options: the full forgiving activity list (audience-gated),
+  // alphabetical. NOT narrowed by city (activities are not city-specific).
+  const businessOptions: ComboOption[] = useMemo(
+    () =>
+      visibleIndustries(gate)
+        .slice()
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map((i) => ({
+          value: i.id,
+          label: i.name,
+          examples: i.examples,
+          keywords: i.keywords,
         })),
-      );
-    }
-    // Non-curated fallback: regional_cells subdivision cascade
-    const subs = getSubdivisionsForRegion(country, region);
-    if (subs.length === 0) {
-      return [{ value: "", label: "No deeper subdivisions covered" }];
-    }
-    return [{ value: "", label: "Any subdivision" } as ComboOption].concat(
-      subs.map((s) => ({ value: s.value, label: s.label })),
-    );
-  }, [country, region]);
-
-  // Sector options — curated display order, NOT alphabetical (Plan v4.0)
-  const sectorOptions: ComboOption[] = useMemo(
-    () =>
-      [{ value: "", label: "Any sector" } as ComboOption].concat(
-        visibleSectors(gate).map((s) => ({
-          value: s.id,
-          label: `${s.icon || ""}  ${s.name}`.trim(),
-          examples: s.examples,
-          keywords: [s.id, s.name.toLowerCase(), ...(s.examples || []).map((e) => e.toLowerCase())],
-        }))
-      ),
     [gate]
-  );
-
-  // Industry options — filtered by selected sector, audience-gated, alphabetical within sector
-  const industryOptions: ComboOption[] = useMemo(() => {
-    const pool = sector
-      ? visibleIndustriesInSector(sector, gate)
-      : visibleIndustries(gate).sort((a, b) => a.name.localeCompare(b.name));
-    return pool.map((i) => ({
-      value: i.id,
-      label: i.name,
-      examples: i.examples,
-      keywords: i.keywords,
-    }));
-  }, [sector, gate]);
-
-  // Size band options
-  const sizeOptions: ComboOption[] = useMemo(
-    () =>
-      [{ value: "", label: "Any size" } as ComboOption].concat(
-        SIZE_BANDS.map((s) => ({ value: s.id, label: s.label }))
-      ),
-    []
   );
 
   function submit() {
     try {
-      if (!industry) {
-        alert("Pick an activity to find the data you're looking for.");
+      if (!business) {
+        alert("Pick a business to find the data you're looking for.");
         return;
       }
       const cc = country.toLowerCase();
-      // Resolve region slug. v34 sanity sweep §7: if the user did not pick
-      // a region, use the curated default for that country (the largest
-      // economy or best-data region). This is a deliberate departure from
-      // the previous "first alphabetical region" behavior which landed US
-      // users on Alabama (low traffic, low data quality).
-      let r = region;
-      if (!r) {
-        const curated = getDefaultRegionForCountry(country);
-        if (curated) {
-          r = curated;
-        } else {
-          const opts = regionOptions;
-          const firstWithValue = opts.find((o) => o.value);
-          if (firstWithValue) {
-            r = firstWithValue.value;
-          } else if (cc === "us") {
-            r = "california";
-          } else {
-            const countryName = COUNTRIES.find((c) => c.code === country)?.name || country;
-            r = countryName.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-          }
-        }
-      }
-      const indSlug = industryToSlug(industry);
-      // If a subdivision is selected, navigate to
-      // that finer-grained URL (e.g. `/us/us-06-037/restaurants` for
-      // Los Angeles County). Otherwise stay at the region level.
-      const targetGeo = subdivision || r;
-      const path = `/${cc}/${targetGeo}/${indSlug}`;
+      // Submit mechanic unchanged: navigate to /{country}/{geo}/{industry}.
+      // geo precedence: the picked city slug (a resolving geo), else this
+      // country's curated default region, else the country code itself.
+      const geo = city || getDefaultRegionForCountry(country) || cc;
+      const path = `/${cc}/${geo}/${industryToSlug(business)}`;
       setIsLoading(true);
       router.push(path);
-      // Safety: clear the loading flag after 3s in case the user
-      // never navigates away (back-button etc.). The actual
-      // navigation UI is handled by Next.js loading.tsx.
       window.setTimeout(() => setIsLoading(false), 3000);
     } catch (err) {
-      // Defensive fallback: hard navigation if the router push throws.
       if (typeof window !== "undefined") {
         // eslint-disable-next-line no-console
         console.error("NavigatorForm submit failed", err);
@@ -220,15 +157,11 @@ export function NavigatorForm() {
     }
   }
 
-  /*
-   * Root deliberately has NO overflow-hidden: it clipped the ComboField
-   * search dropdown (an absolutely-positioned list that extends below the
-   * card and scrolls on its own via max-h-[60vh] overflow-auto). The
-   * rounded-2xl corners are preserved; the two square-cornered edge
-   * backgrounds (top rule, footer) round their own outer corners
-   * (rounded-t-2xl / rounded-b-2xl) so nothing bleeds past the radius
-   * without re-clipping the dropdown.
-   */
+  // Native-fallback geo (no-JS via /api/go): subdivision carries the city;
+  // region carries the curated default when no city is picked, so the native
+  // submit still lands on a cell (/api/go prefers subdivision, then region).
+  const fallbackRegion = city ? "" : getDefaultRegionForCountry(country) || "";
+
   return (
     <form
       action="/api/go"
@@ -240,159 +173,88 @@ export function NavigatorForm() {
       className="relative rounded-2xl atlas-paper-card border border-ink-200 hover:border-ink-300 transition-colors"
       style={{ boxShadow: elevation.card }}
     >
-      {/* Hidden inputs mirror the React state so the native HTML
-         form-submit fallback (action="/api/go") works without JS. If
-         JS loads, the onSubmit handler above takes over and these are
-         never submitted. CitiesFix2 §4 bulletproof: the button now
-         works in every browser/network state. */}
+      {/* Hidden inputs mirror state for the no-JS native submit (action="/api/go"). */}
       <input type="hidden" name="country" value={country.toLowerCase()} />
-      <input type="hidden" name="region" value={region.toLowerCase()} />
-      <input type="hidden" name="subdivision" value={subdivision.toLowerCase()} />
-      <input type="hidden" name="industry" value={industry ? industryToSlug(industry) : ""} />
-      <input type="hidden" name="sector" value={sector.toLowerCase()} />
-      <input type="hidden" name="size" value={size.toLowerCase()} />
-      {/* Vermillion top rule. Anchors the card as an Atlas surface, not a
-          generic SaaS form. */}
+      <input type="hidden" name="region" value={fallbackRegion.toLowerCase()} />
+      <input type="hidden" name="subdivision" value={city.toLowerCase()} />
+      <input type="hidden" name="industry" value={business ? industryToSlug(business) : ""} />
+
+      {/* Vermillion top rule. */}
       <div
         aria-hidden="true"
         className="h-[3px] w-full rounded-t-2xl bg-gradient-to-r from-atlas-700 via-atlas-500 to-atlas-700"
       />
 
-      {/* Card header strip. Editorial caption + meta count. Reads as
-          a section title, not a marketing pitch. */}
+      {/* Card header strip. */}
       <div className="flex items-baseline justify-between gap-4 px-5 md:px-8 pt-5 md:pt-7 pb-3 border-b border-ink-200">
         <div>
           <div className="text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.18em] text-atlas-700">
             The Navigator
           </div>
           <h2 className="mt-1 font-display text-lg md:text-xl text-ink-900 leading-tight">
-            Pick a place. Pick a line of work.
+            Pick a country, a city, and a business.
           </h2>
         </div>
         <div className="hidden sm:block text-right text-[10px] md:text-[11px] uppercase tracking-[0.14em] text-cocoa-700/70 font-medium leading-tight">
           <div>105 countries</div>
-          <div>900+ activities</div>
+          <div>200+ activities</div>
         </div>
       </div>
 
-      {/* Two editorial sections: WHERE (geography) and WHAT (line of work).
-          Side by side on md+; stacked with a hairline divider on mobile. */}
-      <div className="grid md:grid-cols-2 md:divide-x md:divide-ink-200 divide-y md:divide-y-0 divide-ink-200">
-        {/* WHERE */}
-        <section className="px-5 md:px-8 py-6 md:py-8">
-          <header className="flex items-baseline gap-3 mb-4 md:mb-5">
-            <span className="font-display text-atlas-700 text-base md:text-lg tabular-nums leading-none">
-              01
-            </span>
-            <div className="flex-1">
-              <div className="font-display text-base md:text-lg text-ink-900 leading-tight">
-                Where
-              </div>
-              <div className="text-[11px] md:text-xs text-cocoa-700/80 leading-snug mt-0.5">
-                Country, region, city.
-              </div>
-            </div>
-          </header>
-          <div className="space-y-4 md:space-y-5">
-            <ComboField
-              id="country"
-              label="Country"
-              required
-              options={countryOptions}
-              value={country}
-              onChange={(v) => {
-                setCountry(v);
-                setRegion("");
-                setSubdivision("");
-              }}
-              tooltip="Where the business is located. United States has state-level depth; other countries are country-level for now."
-            />
-            <ComboField
-              id="region"
-              label="Region"
-              options={regionOptions}
-              value={region}
-              onChange={(v) => {
-                setRegion(v);
-                setSubdivision("");
-              }}
-              tooltip="First-level administrative division: like US states, French regions, or Japanese prefectures."
-            />
-            <ComboField
-              id="subdivision"
-              label="City"
-              options={subdivisionOptions}
-              value={subdivision}
-              onChange={setSubdivision}
-              disabled={!region}
-              tooltip="Major cities within the picked region (when covered)."
-            />
-          </div>
-        </section>
-
-        {/* WHAT */}
-        <section className="px-5 md:px-8 py-6 md:py-8">
-          <header className="flex items-baseline gap-3 mb-4 md:mb-5">
-            <span className="font-display text-atlas-700 text-base md:text-lg tabular-nums leading-none">
-              02
-            </span>
-            <div className="flex-1">
-              <div className="font-display text-base md:text-lg text-ink-900 leading-tight">
-                What
-              </div>
-              <div className="text-[11px] md:text-xs text-cocoa-700/80 leading-snug mt-0.5">
-                Sector, activity, employees.
-              </div>
-            </div>
-          </header>
-          <div className="space-y-4 md:space-y-5">
-            <ComboField
-              id="sector"
-              label="Sector"
-              options={sectorOptions}
-              value={sector}
-              onChange={(v) => {
-                setSector(v);
-                setIndustry("");
-              }}
-              tooltip="Broad small-business sector. Pick one to narrow the activity list below."
-            />
-            <ComboField
-              id="industry"
-              label="Activity"
-              required
-              options={industryOptions}
-              value={industry}
-              onChange={setIndustry}
-              placeholder="Type a name or example: restaurants, barbers, plumbers"
-            />
-            <ComboField
-              id="size"
-              label="Employees"
-              options={sizeOptions}
-              value={size}
-              onChange={setSize}
-              tooltip="Number of people working at the business."
-            />
-          </div>
-        </section>
+      {/* Three-field cascade: Country, then City, then Business. */}
+      <div className="px-5 md:px-8 py-6 md:py-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
+          <ComboField
+            id="country"
+            label="Country"
+            required
+            options={countryOptions}
+            value={country}
+            onChange={(v) => {
+              setTouched(true);
+              setCountry(v);
+              setCity("");
+            }}
+            tooltip="Where the business is. The United States has city-level depth; many countries are country-level for now."
+          />
+          <ComboField
+            id="city"
+            label="City"
+            options={cityOptions}
+            value={city}
+            onChange={(v) => {
+              setTouched(true);
+              setCity(v);
+            }}
+            tooltip="A major city we cover, or leave it on Anywhere to see the country's strongest region."
+          />
+          <ComboField
+            id="business"
+            label="Business"
+            required
+            options={businessOptions}
+            value={business}
+            onChange={(v) => {
+              setTouched(true);
+              setBusiness(v);
+            }}
+            placeholder="Type a business: restaurants, barbers, plumbers"
+          />
+        </div>
       </div>
 
-      {/* Footer bar. Editorial sample line + the two CTAs. White-reset:
-          clean white footer with a crisp top rule (was cream-50/60). */}
+      {/* Footer bar: sample line + Surprise me + submit. */}
       <div className="rounded-b-2xl border-t border-ink-200 bg-white px-5 md:px-8 py-4 md:py-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <p className="text-[11px] md:text-xs text-cocoa-700/80 leading-relaxed">
             <span className="font-semibold uppercase tracking-[0.12em] text-atlas-700 mr-1.5">
               Try
             </span>
-            restaurants in California
+            restaurants in Los Angeles
             <span aria-hidden="true" className="mx-1.5 text-cocoa-700/40">·</span>
-            cafés in Italy
+            law firms in the UK
             <span aria-hidden="true" className="mx-1.5 text-cocoa-700/40">·</span>
-            plumbers in Texas
-            <span aria-hidden="true" className="mx-1.5 text-cocoa-700/40">·</span>
-            clothing boutiques in France
+            software in San Francisco
           </p>
           <div className="flex items-center gap-2 shrink-0">
             <button
@@ -419,7 +281,7 @@ export function NavigatorForm() {
                   Loading...
                 </>
               ) : (
-                <>Show me the numbers <span aria-hidden="true">→</span></>
+                <>Show me the numbers <span aria-hidden="true">&rarr;</span></>
               )}
             </button>
           </div>
