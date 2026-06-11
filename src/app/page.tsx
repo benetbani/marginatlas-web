@@ -1,10 +1,7 @@
 import { NavigatorForm } from "@/components/NavigatorForm";
 import { WorldMapSection } from "@/components/home/WorldMapSection";
-import { BreakInBeat } from "@/components/home/BreakInBeat";
-import { loadHomepageBeats } from "@/lib/home/beats";
 import { ExampleTiles } from "@/components/home/ExampleTiles";
 import { loadExampleTiles } from "@/lib/home/example_tiles";
-import { HowItWorks } from "@/components/home/HowItWorks";
 import { AudienceBand } from "@/components/home/AudienceBand";
 import { UpgradeTeaser } from "@/components/home/UpgradeTeaser";
 import { HomeNewsletter } from "@/components/home/HomeNewsletter";
@@ -204,10 +201,6 @@ export default async function HomePage() {
   // the curated neighborhood scheme. Null when fewer than three resolve, which
   // drops the whole section rather than showing a thin or fabricated panel.
   const neighborhoodProof = loadNeighborhoodProof();
-  // Three data-rich beats (editorial cards, gym leaderboard, surprising spread)
-  // resolved server-side at build/ISR time. Every read is budget-wrapped and
-  // self-omits on a miss, so this never blocks or breaks the homepage render.
-  const beats = await loadHomepageBeats();
   const exampleTiles = await loadExampleTiles();
   return (
     <div>
@@ -286,19 +279,6 @@ export default async function HomePage() {
          the featured cells below carry the primary navigation. The sector
          taxonomy still groups activities elsewhere. */}
 
-      {/* LEAD data beat (2026-06-06): the break-in rating, the single 0-100
-          "how easy is it to break in and win here" score, made the front-page
-          hook. It is the first data-rich payoff after the thesis strip, so a
-          visitor sees the headline rating right after the hero, the map, and the
-          thesis. Both ends of the live break-in board (the five easiest and the
-          five hardest places to break into right now) come straight from the
-          same data the /extremes hub and the cell mastheads use; nothing is
-          recomputed. The whole beat self-omits when its data cannot resolve both
-          ends, so the homepage always renders. */}
-      <ToneBand tone="home-featured">
-        <BreakInBeat breakIn={beats.breakIn} />
-      </ToneBand>
-
       {/* Plan v32 Sprint B — ExploreCards removed. Was using Pexels stock
          photos (founder rule: no stock imagery), and the "By geography"
          + "By line of work" CTAs duplicate the World map + Sector menu
@@ -371,13 +351,9 @@ export default async function HomePage() {
       </ToneBand>
       )}
 
-      {/* Marketing band (homepage reform SP2): how-it-works, who-it-is-for, and
-          the free-vs-premium upgrade teaser. Pure presentational, tokens only;
+      {/* Marketing band (homepage reform SP2): who-it-is-for, and the
+          free-vs-premium upgrade teaser. Pure presentational, tokens only;
           the upgrade CTA points to /pricing (no checkout from the homepage). */}
-      <ToneBand tone="home-how-it-works">
-        <HowItWorks />
-      </ToneBand>
-
       <ToneBand tone="home-audience">
         <AudienceBand />
       </ToneBand>

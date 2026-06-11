@@ -68,7 +68,7 @@ export default function LeadMagnetForm({
         <button
           type="submit"
           disabled={status === "loading"}
-          className="h-11 px-5 rounded-md text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-atlas-500 text-white disabled:opacity-70"
+          className="h-11 px-5 rounded-md text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-atlas-700 hover:bg-atlas-800 text-white disabled:opacity-70"
         >
           {status === "loading" ? (
             <>
