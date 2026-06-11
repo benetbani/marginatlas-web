@@ -215,6 +215,7 @@ export function NavigatorForm() {
               setCountry(v);
               setCity("");
             }}
+            onFocus={() => setTouched(true)}
             tooltip="Where the business is. The United States has city-level depth; many countries are country-level for now."
           />
           <ComboField
@@ -226,6 +227,7 @@ export function NavigatorForm() {
               setTouched(true);
               setCity(v);
             }}
+            onFocus={() => setTouched(true)}
             tooltip="A major city we cover, or leave it on Anywhere to see the country's strongest region."
           />
           <ComboField
@@ -238,6 +240,7 @@ export function NavigatorForm() {
               setTouched(true);
               setBusiness(v);
             }}
+            onFocus={() => setTouched(true)}
             placeholder="Type a business: restaurants, barbers, plumbers"
           />
         </div>

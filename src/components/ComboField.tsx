@@ -17,6 +17,7 @@ type Props = {
   options: ComboOption[];
   value: string;
   onChange: (value: string) => void;
+  onFocus?: () => void; // fired when the field gains focus (homepage uses it to freeze the prefill rotation)
   disabled?: boolean;
   tooltip?: string; // ? icon explanation
   required?: boolean;
@@ -35,6 +36,7 @@ export function ComboField({
   options,
   value,
   onChange,
+  onFocus,
   disabled = false,
   tooltip,
   required = false,
@@ -146,7 +148,11 @@ export function ComboField({
             setQuery(e.target.value);
             setOpen(true);
           }}
-          onFocus={() => !disabled && setOpen(true)}
+          onFocus={() => {
+            if (disabled) return;
+            setOpen(true);
+            onFocus?.();
+          }}
           onKeyDown={onKey}
           onBlur={() => {
             // Auto-commit the top match if the user typed something but
