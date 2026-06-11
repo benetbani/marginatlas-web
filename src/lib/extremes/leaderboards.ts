@@ -231,7 +231,7 @@ const LEADERBOARD_SPECS: LeaderboardSpec[] = [
   {
     key: "code-that-pays",
     eyebrow: "The modern surprise",
-    title: "Where a software shop pays its founder most",
+    title: "Where a software firm pays its founder most",
     intro:
       "A two-person development studio has no storefront and no stock, so what it bills drops most of the way to the owner. It rewards the best states handsomely. The quiet cost is that you are selling your own hours, and a slow quarter shows up directly in the take-home.",
     valueCaption: "owner keeps",
