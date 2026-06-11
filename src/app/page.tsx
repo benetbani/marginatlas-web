@@ -4,6 +4,10 @@ import { BreakInBeat } from "@/components/home/BreakInBeat";
 import { loadHomepageBeats } from "@/lib/home/beats";
 import { ExampleTiles } from "@/components/home/ExampleTiles";
 import { loadExampleTiles } from "@/lib/home/example_tiles";
+import { HowItWorks } from "@/components/home/HowItWorks";
+import { AudienceBand } from "@/components/home/AudienceBand";
+import { UpgradeTeaser } from "@/components/home/UpgradeTeaser";
+import { HomeNewsletter } from "@/components/home/HomeNewsletter";
 import { RotatingWord } from "@/components/RotatingWord";
 import { HERO_BUSINESSES, HERO_CITIES } from "@/lib/hero-words";
 import { getToneClass } from "@/lib/page-layout/section-order";
@@ -367,6 +371,21 @@ export default async function HomePage() {
       </ToneBand>
       )}
 
+      {/* Marketing band (homepage reform SP2): how-it-works, who-it-is-for, and
+          the free-vs-premium upgrade teaser. Pure presentational, tokens only;
+          the upgrade CTA points to /pricing (no checkout from the homepage). */}
+      <ToneBand tone="home-how-it-works">
+        <HowItWorks />
+      </ToneBand>
+
+      <ToneBand tone="home-audience">
+        <AudienceBand />
+      </ToneBand>
+
+      <ToneBand tone="home-upgrade">
+        <UpgradeTeaser />
+      </ToneBand>
+
       {/*
         *  - DidYouKnow: rotating factoid card. The blog rail covers
         *    the same editorial-curiosity slot more usefully.
@@ -440,6 +459,13 @@ export default async function HomePage() {
             ))}
           </div>
         </section>
+      </ToneBand>
+
+      {/* Prominent free-report lead magnet (homepage reform SP2), above the
+          global FooterNewsletterBar. No id="newsletter" here: the footer bar
+          owns that anchor. */}
+      <ToneBand tone="home-newsletter">
+        <HomeNewsletter />
       </ToneBand>
 
       {/* Plan v32 Sprint B — homepage NewsletterSignup card removed.

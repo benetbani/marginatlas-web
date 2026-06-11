@@ -149,6 +149,9 @@ export const SECTION_TONES: Record<string, SectionTone> = {
   "home-sectors": "white",
   "home-cities-placeholder": "white",
   "home-featured": "white",
+  "home-how-it-works": "white",
+  "home-audience": "white",
+  "home-upgrade": "white",
   "home-blog-rail": "white",
 
   // Legacy / dead routes — kept defined for safety, all white.
