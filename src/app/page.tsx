@@ -2,6 +2,8 @@ import { NavigatorForm } from "@/components/NavigatorForm";
 import { WorldMapSection } from "@/components/home/WorldMapSection";
 import { ExampleTiles } from "@/components/home/ExampleTiles";
 import { loadExampleTiles } from "@/lib/home/example_tiles";
+import { StateComparison } from "@/components/home/StateComparison";
+import { loadStateComparisons } from "@/lib/home/state_comparison";
 import { AudienceBand } from "@/components/home/AudienceBand";
 import { UpgradeTeaser } from "@/components/home/UpgradeTeaser";
 import { HomeNewsletter } from "@/components/home/HomeNewsletter";
@@ -123,6 +125,10 @@ export default async function HomePage() {
   // flavor entry is dropped, and the section self-omits below four cards, so the
   // homepage never shows a thin or fabricated panel.
   const neighborhoodCards = loadNeighborhoodCards();
+  // Like-for-like US-states revenue comparison, resolved live and trusted-local
+  // only (synthetic / extrapolated / national reads self-omit). Empty when
+  // nothing resolves, which drops the section rather than showing fabricated rows.
+  const stateComparisons = await loadStateComparisons();
   const exampleTiles = await loadExampleTiles();
   return (
     <div>
@@ -193,6 +199,15 @@ export default async function HomePage() {
         <div id="pick-a-country" className="scroll-mt-20">
           <WorldMapSection />
         </div>
+      </ToneBand>
+
+      {/* Like-for-like US-states comparison (homepage v2 Pass A): the SAME trade
+          across four large US states, real revenue resolved live and trusted-local
+          only. Uses only the clean-resolving US slugs; a trade with fewer than
+          three resolving states is dropped and the section self-omits when nothing
+          resolves, so every number is real or the row is absent. */}
+      <ToneBand tone="home-featured">
+        <StateComparison comparisons={stateComparisons} />
       </ToneBand>
 
       {/* Browse-by-sector retired: the SectorMasterMenu grid (a grid of
