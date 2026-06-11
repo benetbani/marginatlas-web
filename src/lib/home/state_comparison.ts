@@ -48,7 +48,15 @@ export async function loadStateComparisons(): Promise<TradeComparison[]> {
       if (rev == null) continue;
       rows.push({ state: s.label, href: `/us/${s.slug}/${t.slug}`, revenue: fmtMoney(rev) });
     }
-    if (rows.length >= 3) out.push({ trade: t.label, rows });
+    // Common-sense gate: a real comparison needs spread, not the same number
+    // repeated. Some trades (e.g. grocery stores) resolve to a single national
+    // figure that is identical for every state, which is not a comparison at
+    // all. Require the displayed values to be meaningfully distinct, else drop
+    // the trade.
+    const distinct = new Set(rows.map((r) => r.revenue)).size;
+    if (rows.length >= 3 && distinct >= Math.max(2, rows.length - 1)) {
+      out.push({ trade: t.label, rows });
+    }
   }
   return out;
 }
