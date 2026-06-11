@@ -10,11 +10,8 @@ import { HERO_BUSINESSES, HERO_CITIES } from "@/lib/hero-words";
 import { getToneClass } from "@/lib/page-layout/section-order";
 import { getAllPosts, type BlogPost } from "@/lib/blog";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
-import {
-  getNeighborhoodsForCity,
-  type Neighborhood,
-  type NeighborhoodCharacter,
-} from "@/lib/cities/neighborhoods";
+import { NeighborhoodCards } from "@/components/home/NeighborhoodCards";
+import { loadNeighborhoodCards } from "@/lib/home/neighborhood_cards";
 
 /**
  * Full-bleed tone wrapper for homepage sections. The inner
@@ -31,81 +28,6 @@ function ToneBand({ tone, children }: { tone: string; children: React.ReactNode 
 }
 
 export const revalidate = 86400; // 1 day
-
-/**
- * The "Drilled to the neighborhood" panel reads REAL districts from the curated
- * neighborhood scheme (data/cities/neighborhoods_v1.json, via
- * getNeighborhoodsForCity). Nothing here is invented: the district names and the
- * character classification are exactly what the neighborhood pages already
- * resolve, so the panel proves the resolution the copy claims.
- *
- * The selection anchors on the three flagship cities the panel copy names
- * (New York, Paris, Tokyo) and prefers three districts with DIFFERENT real
- * characters, so the "same block, different economy" line is literally true. If
- * an anchor is missing it degrades to that city's first district; if fewer than
- * three resolve, the caller drops the whole section rather than show a short or
- * fabricated panel.
- */
-type NeighborhoodProof = { district: string; city: string; character: string };
-
-/** The flagship cities + preferred districts the panel anchors on. */
-const NEIGHBORHOOD_ANCHORS: { city: string; citySlug: string; prefer: string }[] = [
-  { city: "New York", citySlug: "new-york", prefer: "manhattan-soho-tribeca" },
-  { city: "Paris", citySlug: "paris", prefer: "louvre-marais" },
-  { city: "Tokyo", citySlug: "tokyo", prefer: "central" },
-];
-
-/**
- * Humanize the curated character enum into a clean, user-facing label. The
- * enum values themselves are the real classification; this only formats them.
- */
-const CHARACTER_LABELS: Record<NeighborhoodCharacter, string> = {
-  "central-business": "Business core",
-  "affluent-residential": "Affluent residential",
-  "mid-residential": "Mid residential",
-  "working-residential": "Working residential",
-  industrial: "Industrial",
-  tourist: "Tourist heavy",
-  "mixed-urban": "Mixed urban",
-  academic: "Academic",
-};
-
-/**
- * Resolve the three-district proof panel from live neighborhood data. Picks the
- * preferred district per flagship city (falling back to that city's first), then
- * keeps a set that favours distinct characters so the panel reads as contrast,
- * not repetition. Returns null when fewer than three districts resolve, so the
- * section self-omits instead of rendering a thin or invented panel.
- */
-function loadNeighborhoodProof(): NeighborhoodProof[] | null {
-  const picked: NeighborhoodProof[] = [];
-  const seenCharacters = new Set<NeighborhoodCharacter>();
-
-  for (const anchor of NEIGHBORHOOD_ANCHORS) {
-    const list = getNeighborhoodsForCity(anchor.citySlug);
-    if (!list || list.length === 0) continue;
-
-    // Prefer the anchored district, then the first district whose character is
-    // not already on the panel, then simply the first district.
-    const byPrefer = list.find((n) => n.slug === anchor.prefer);
-    const byFresh = list.find((n) => !seenCharacters.has(n.character));
-    const chosen: Neighborhood | undefined =
-      (byPrefer && !seenCharacters.has(byPrefer.character) ? byPrefer : null) ??
-      byFresh ??
-      byPrefer ??
-      list[0];
-    if (!chosen) continue;
-
-    seenCharacters.add(chosen.character);
-    picked.push({
-      district: chosen.name,
-      city: anchor.city,
-      character: CHARACTER_LABELS[chosen.character] ?? chosen.character,
-    });
-  }
-
-  return picked.length >= 3 ? picked.slice(0, 3) : null;
-}
 
 /**
  * Blog rail. Pulls live posts when available, falls
@@ -197,10 +119,10 @@ function formatPostDate(iso: string): string {
 
 export default async function HomePage() {
   const { posts: blogPosts } = loadBlogRail();
-  // Live districts for the "Drilled to the neighborhood" panel, resolved from
-  // the curated neighborhood scheme. Null when fewer than three resolve, which
-  // drops the whole section rather than showing a thin or fabricated panel.
-  const neighborhoodProof = loadNeighborhoodProof();
+  // Neighborhood cards resolved from the real flavor data. A candidate with no
+  // flavor entry is dropped, and the section self-omits below four cards, so the
+  // homepage never shows a thin or fabricated panel.
+  const neighborhoodCards = loadNeighborhoodCards();
   const exampleTiles = await loadExampleTiles();
   return (
     <div>
@@ -284,72 +206,14 @@ export default async function HomePage() {
          + "By line of work" CTAs duplicate the World map + Sector menu
          that sit directly above. */}
 
-      {/* Cities section. The decorative London render was dropped
-          (founder, 2026-06-06: reads as decoration, not data). The right
-          column now carries REAL curated districts and the economic
-          character Atlas already holds for each, resolved live from the
-          neighborhood scheme (loadNeighborhoodProof), so the panel proves the
-          neighborhood resolution the copy claims instead of illustrating it.
-          White throughout, hairline-separated, no fabricated figures. The
-          left copy is unchanged (it is liked); the Browse cities CTA stays.
-          The whole section self-omits when fewer than three districts resolve,
-          so the homepage always renders. */}
-      {neighborhoodProof && (
+      {/* Neighborhood cards (homepage v2 Pass A): six clickable cards built from
+          the REAL deep flavor data (signature businesses, a specific not-on-Google
+          detail, a price tier), each linking to that city's neighborhoods hub. A
+          candidate with no flavor entry is dropped and the section self-omits below
+          four cards, so nothing here is invented and the homepage always renders. */}
       <ToneBand tone="home-cities-placeholder">
-        <section className="py-10 md:py-14">
-          <div className="rounded-2xl bg-white border border-parchment overflow-hidden">
-            <div className="grid md:grid-cols-2 gap-0 items-stretch">
-              <div className="px-6 py-8 md:px-10 md:py-12">
-                <SectionEyebrow size="md" className="mb-3">Top 200 cities</SectionEyebrow>
-                <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight text-ink-900">
-                  Drilled to the neighborhood
-                </h2>
-                <p className="mt-3 md:mt-4 max-w-xl text-base md:text-lg text-cocoa-700 leading-relaxed">
-                  Manhattan blocks. Central Tokyo wards. Paris arrondissements.
-                  The same benchmarks at neighborhood resolution, rolling out
-                  city by city.
-                </p>
-                <a
-                  href="/cities"
-                  className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-atlas-700 hover:text-atlas-500 transition-colors"
-                >
-                  Browse cities <span aria-hidden>→</span>
-                </a>
-              </div>
-              <div className="border-t border-parchment md:border-t-0 md:border-l md:border-parchment px-6 py-8 md:px-10 md:py-12 flex flex-col justify-center">
-                <p className="text-[11px] uppercase tracking-[0.18em] font-semibold text-cocoa-700/70">
-                  Same block, different economy
-                </p>
-                <dl className="mt-4 divide-y divide-parchment">
-                  {neighborhoodProof.map((n) => (
-                    <div
-                      key={n.district}
-                      className="flex items-baseline justify-between gap-4 py-3"
-                    >
-                      <dt className="min-w-0">
-                        <span className="font-display text-base font-semibold tracking-tight text-ink-900">
-                          {n.district}
-                        </span>
-                        <span className="block text-xs text-cocoa-700/70">
-                          {n.city}
-                        </span>
-                      </dt>
-                      <dd className="shrink-0 text-sm font-medium text-atlas-700">
-                        {n.character}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-                <p className="mt-4 text-xs text-cocoa-700/70 leading-relaxed">
-                  A pharmacy two stops apart can rent for twice as much and earn
-                  it back, or not. The neighborhood decides.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+        <NeighborhoodCards cards={neighborhoodCards} />
       </ToneBand>
-      )}
 
       {/* Marketing band (homepage reform SP2): who-it-is-for, and the
           free-vs-premium upgrade teaser. Pure presentational, tokens only;
