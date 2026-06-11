@@ -1,10 +1,9 @@
 import { NavigatorForm } from "@/components/NavigatorForm";
 import { WorldMapSection } from "@/components/home/WorldMapSection";
-import { WhatAtlasWeighs } from "@/components/home/WhatAtlasWeighs";
 import { BreakInBeat } from "@/components/home/BreakInBeat";
-import { MoneyBeats } from "@/components/home/MoneyBeats";
 import { loadHomepageBeats } from "@/lib/home/beats";
-import HomepageEditorialBlocks, { type AtlasQuestion } from "@/components/HomepageEditorialBlocks";
+import { ExampleTiles } from "@/components/home/ExampleTiles";
+import { loadExampleTiles } from "@/lib/home/example_tiles";
 import { RotatingWord } from "@/components/RotatingWord";
 import { HERO_BUSINESSES, HERO_CITIES } from "@/lib/hero-words";
 import { getToneClass } from "@/lib/page-layout/section-order";
@@ -32,11 +31,6 @@ function ToneBand({ tone, children }: { tone: string; children: React.ReactNode 
 
 export const revalidate = 86400; // 1 day
 
-/**
- * Decision-first prompts for the editorial "What you can ask Atlas" block
- * (bible Section 25 voice: the questions a skeptical operator actually asks
- * before risking money, not feature marketing). Each lands on a live cell.
- */
 /**
  * The "Drilled to the neighborhood" panel reads REAL districts from the curated
  * neighborhood scheme (data/cities/neighborhoods_v1.json, via
@@ -111,15 +105,6 @@ function loadNeighborhoodProof(): NeighborhoodProof[] | null {
 
   return picked.length >= 3 ? picked.slice(0, 3) : null;
 }
-
-const HOME_QUESTIONS: AtlasQuestion[] = [
-  { text: "Can a restaurant in Barcelona actually pay its owner?", href: "/es/es511/restaurants",              teaser: "Owner take-home, after rent and wages." },
-  { text: "Is software in San Francisco worth the cost base?",     href: "/us/california/software-development", teaser: "Margin against the highest wage bill anywhere." },
-  { text: "How crowded is the legal market in the UK?",            href: "/gb/gb/legal-services",               teaser: "Firms per capita, and what that does to fees." },
-  { text: "Do Cancún hotels make money once rent is paid?",        href: "/mx/mx-roo/hotels-lodging",           teaser: "Net margin once the lease is paid." },
-  { text: "What does metal manufacturing in Bavaria really earn?", href: "/de/de21/fabricated-metal-mfg",       teaser: "Revenue per firm, and the slice left as profit." },
-  { text: "Where do California restaurant margins go?",            href: "/us/california/restaurants",          teaser: "Every cent lost to rent, labour, and tax." },
-];
 
 /**
  * Blog rail. Pulls live posts when available, falls
@@ -219,6 +204,7 @@ export default async function HomePage() {
   // resolved server-side at build/ISR time. Every read is budget-wrapped and
   // self-omits on a miss, so this never blocks or breaks the homepage render.
   const beats = await loadHomepageBeats();
+  const exampleTiles = await loadExampleTiles();
   return (
     <div>
       {/*
@@ -274,6 +260,13 @@ export default async function HomePage() {
         </section>
       </ToneBand>
 
+      {/* Lead data hook: curated business-in-city example tiles with real
+          headline numbers, the "open a real one" helper right under the search.
+          Replaces the old pointed-question list. Self-omits below three. */}
+      <ToneBand tone="home-featured">
+        <ExampleTiles tiles={exampleTiles} />
+      </ToneBand>
+
       {/* Plan v30 hotfix v3 - world map moved to the absolute top of
           the page, directly under the hero + navigator form. Founder
           wants it "just below the actual table at the start". */}
@@ -288,15 +281,6 @@ export default async function HomePage() {
          sector is too diluted to be a useful destination; the world map and
          the featured cells below carry the primary navigation. The sector
          taxonomy still groups activities elsewhere. */}
-
-      {/* Decision-factors strip (bible Section 25/26). States the thesis
-          plainly before the page shows any tile: the average margin is not
-          the point; what eats it first is. Reuses the home-featured white
-          tone so it reads as a clean editorial band between the navigation
-          cluster above and the curated cells below. */}
-      <ToneBand tone="home-featured">
-        <WhatAtlasWeighs />
-      </ToneBand>
 
       {/* LEAD data beat (2026-06-06): the break-in rating, the single 0-100
           "how easy is it to break in and win here" score, made the front-page
@@ -383,20 +367,6 @@ export default async function HomePage() {
       </ToneBand>
       )}
 
-      {/* Money beat (trimmed to essentials, 2026-06-07): the single strongest
-          MoneyBeats sub-beat, the ranked leaderboard of the US states where a gym
-          keeps the most for its owner. The editorial-cards and surprising-spread
-          sub-beats were retired from the homepage to let the data and the search
-          lead; loadHomepageBeats no longer resolves them, so MoneyBeats self-omits
-          both and renders the leaderboard alone. Every figure is resolved from
-          real cells server-side (src/lib/home/beats), ranked with the activity
-          page's own outlier fence, and the beat self-omits when fewer than four
-          clean places resolve. MoneyBeats still renders all three shapes, so
-          restoring a beat is a one-line change in loadHomepageBeats. */}
-      <ToneBand tone="home-featured">
-        <MoneyBeats beats={beats} />
-      </ToneBand>
-
       {/*
         *  - DidYouKnow: rotating factoid card. The blog rail covers
         *    the same editorial-curiosity slot more usefully.
@@ -411,12 +381,6 @@ export default async function HomePage() {
         * GlobalCoverageStrip was killed earlier (v31). Every remaining
         * section earns its place.
         */}
-
-
-      {/* Editorial spine: the skeptical questions a working operator asks
-          (passed in from HOME_QUESTIONS, bible Section 25 voice) followed by
-          the three-tier methodology pipeline that carries the trust message. */}
-      <HomepageEditorialBlocks questions={HOME_QUESTIONS} />
 
       {/* Plan v31 hotfix — bottom TopCitiesMosaic removed (founder: "just
          a dump"). The top mosaic up near the world map already shows the
