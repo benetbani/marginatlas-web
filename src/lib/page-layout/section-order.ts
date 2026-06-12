@@ -140,19 +140,22 @@ export const SECTION_TONES: Record<string, SectionTone> = {
   // Neighborhood overview
   "neighborhood-industries": "white",
 
-  // Homepage. The hero masthead, the navigator band, the world-map band
-  // (was ink-dark), and every editorial band are pure white. Separation is
-  // carried by the ToneBand hairline + spacing, not by tint.
-  "home-hero": "white",
-  "home-navigator": "white",
-  "home-city-picker": "white",
-  "home-sectors": "white",
-  "home-cities-placeholder": "white",
-  "home-featured": "white",
-  "home-how-it-works": "white",
-  "home-audience": "white",
-  "home-upgrade": "white",
-  "home-blog-rail": "white",
+  // Homepage. SaaS reformation 2026-06-12 (founder): every home band is
+  // "paper" (transparent), so the warm app ground (cream-75, set on the
+  // body) runs the whole page and the modules inside each section carry
+  // the separation as seated white cards. The white-band-plus-hairline
+  // rhythm read as flat newsprint; the ground-plus-cards rhythm reads as
+  // a layered product surface.
+  "home-hero": "paper",
+  "home-navigator": "paper",
+  "home-city-picker": "paper",
+  "home-sectors": "paper",
+  "home-cities-placeholder": "paper",
+  "home-featured": "paper",
+  "home-how-it-works": "paper",
+  "home-audience": "paper",
+  "home-upgrade": "paper",
+  "home-blog-rail": "paper",
 
   // Legacy / dead routes — kept defined for safety, all white.
   "home-global-coverage": "white",
@@ -209,6 +212,10 @@ function sectionHairline(sectionId: string): string {
 export function getToneClass(sectionId: string, withSeparation = true): string {
   const tone = SECTION_TONES[sectionId] || "white";
   const bg = TONE_CLASSES[tone];
+  // "paper" bands are transparent: the app ground shows through and the
+  // section's own cards carry separation, so a band hairline would just
+  // draw a stray rule across the ground (SaaS reformation 2026-06-12).
+  if (tone === "paper") return "";
   if (!withSeparation) return bg;
   const hairline = sectionHairline(sectionId);
   return hairline ? `${bg} ${hairline}` : bg;
