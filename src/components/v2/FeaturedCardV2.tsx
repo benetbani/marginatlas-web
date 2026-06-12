@@ -6,6 +6,8 @@
 import * as React from "react";
 import type { Icon } from "@phosphor-icons/react";
 
+import { colors } from "@/lib/design-tokens";
+
 type CoverageTier = "measured" | "regional" | "estimated";
 
 interface FeaturedCardV2Props {
@@ -25,10 +27,10 @@ const COVERAGE: Record<
   CoverageTier,
   { dot: string; title: string }
 > = {
-  /* useless-tile-ok: tooltip text describing the green coverage dot, not a count tile */
-  measured: { dot: "#1F8A4C", title: "Measured from primary data" },
-  regional: { dot: "#2563EB", title: "Regional benchmark applied here" },
-  estimated: { dot: "#B45309", title: "Derived from country and industry averages" },
+  /* useless-tile-ok: tooltip text describing the coverage dot, not a count tile */
+  measured: { dot: colors.tier.deep, title: "Measured from primary data" },
+  regional: { dot: colors.tier.good, title: "Regional benchmark applied here" },
+  estimated: { dot: colors.tier.starter, title: "Derived from country and industry averages" },
 };
 
 function formatRevenue(n: number): { prefix: string; value: string; suffix: string } {

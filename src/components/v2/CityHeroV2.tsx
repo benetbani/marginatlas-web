@@ -5,6 +5,8 @@
 import * as React from "react";
 import { HowWeKnowThis } from "@/components/HowWeKnowThis";
 
+import { colors } from "@/lib/design-tokens";
+
 type CoverageTier = "measured" | "regional" | "estimated";
 
 interface CityHeroV2Props {
@@ -24,9 +26,9 @@ interface CityHeroV2Props {
 // Sanity-§8: apologetic "Estimated" label removed. Quiet dot stays
 // as a trust signal; the inline link below opens methodology.
 const COVERAGE: Record<CoverageTier, { dot: string; anchor: string }> = {
-  measured: { dot: "#1F8A4C", anchor: "measured" },
-  regional: { dot: "#2563EB", anchor: "regional" },
-  estimated: { dot: "#B45309", anchor: "estimated" },
+  measured: { dot: colors.tier.deep, anchor: "measured" },
+  regional: { dot: colors.tier.good, anchor: "regional" },
+  estimated: { dot: colors.tier.starter, anchor: "estimated" },
 };
 
 function iso2ToFlag(iso: string): string {

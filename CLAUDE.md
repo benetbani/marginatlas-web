@@ -77,7 +77,8 @@ website/
 
 ## Latest handoff
 
-- `docs/handoff/2026-06-02-session-handoff.md` is the current full handoff (both-repo map + intensive bootstrap prompt). Read it first.
+- **`docs/handoff/2026-06-12-session-handoff.md` is the current handoff — READ IT FIRST.** It is the live "continue here" bridge: the brand + design system + the two-pipeline (Fable / Sonnet) operating model are complete in `docs/brand/`, and the whole program now runs by choosing "Fable or Sonnet" (see `docs/brand/pipelines-control.md`).
+- `docs/handoff/2026-06-02-session-handoff.md` is the older both-repo map + bootstrap prompt (still useful background).
 
 ## Manual actions outstanding
 

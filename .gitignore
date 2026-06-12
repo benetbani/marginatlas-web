@@ -59,3 +59,8 @@ data/quality/revenue_clamp_dryrun.csv
 data/cities/_pipeline/coverage.json
 data/cities/_staged/
 data/cities/_pipeline/.lock
+
+# brand: raw design-tool exports are staging only (~70MB); the curated assets land in src/ per docs/brand/visual-assets.md
+docs/brand/assets/incoming/
+# working scratch (quiz trackers etc.); the synthesized docs in docs/brand/ are the source of truth
+scratch/
