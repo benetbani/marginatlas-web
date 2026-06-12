@@ -60,6 +60,13 @@ modern execution. A whisper of paper and engraving on a fundamentally clean surf
 heritage is a soul, never a costume: no sepia filters, no parchment cosplay, no antique
 typefaces. Editorial magazine with cartographic heritage, executed with current tools.
 
+*Amendment (founder, 2026-06-12):* the execution layer is a modern SaaS product surface,
+not a printed page. Editorial bones (serif headlines, eyebrows, the honest voice) stay;
+the surfaces read as layered product UI: white cards with soft layered shadows on a warm
+app ground, generous radii, sans for UI chrome with serif reserved for headlines and
+numbers. The almanac is the soul; the product surface is the body. Reference vocabulary:
+`docs/brand/assets/incoming/2026-06-12-saas-refresh/` (spec only, retoned to tokens).
+
 ### Article 5: Answer first, spread always
 The eye hits the answer in one line plus the key number before anything else. One confident
 anchor number per masthead, sized to anchor and never to shout, and the spread shown beside
@@ -174,7 +181,7 @@ never type hex.
 
 | Family | Job | Key steps |
 |---|---|---|
-| `cream` | Paper. All surfaces. | 50 `#ffffff` warm white (cards), 100 `#f7f6f4` warm sand (page paper), 300 `#e4e2dd` hairlines |
+| `cream` | Paper. All surfaces. | 50 `#ffffff` warm white (cards), 75 `#fbfaf7` warm app ground (the page surface behind cards; SaaS reformation 2026-06-12), 100 `#f7f6f4` warm sand (muted surfaces), 300 `#e4e2dd` hairlines |
 | `ink` | Text. The warm brown-black ladder. | 900 `#211810` headlines, 800 body-dark, 700 `#463726` secondary, 500 `#7d6c58` muted |
 | `cocoa` | Muted copy + the "structure and costs" data color. | 500 `#87745d`, 700 `#534231` |
 | `atlas` | THE accent. Vermillion. Rare, meaningful. | 700 `#991600` deep vermillion-maroon (accent text, headlines, primary), 500 `#e62200` bright vermillion (marks, fills, surfaces), 50 `#fff1ee` tint |
@@ -364,15 +371,21 @@ two radii on sibling cards in one grid.
 
 ## 7. Elevation
 
-Token source: `elevation` in `design-tokens.ts`. The philosophy: **Atlas is paper, and
-paper lies nearly flat.** Hairlines carry structure; shadow communicates interactivity and
-layering only. A page where everything floats is a page where nothing does.
+Token source: `elevation` in `design-tokens.ts`.
+
+*Amended 2026-06-12 (founder SaaS direction).* The philosophy: **Atlas is a layered
+product surface on warm paper.** Cards visibly sit ON the app ground; the shadow language
+is warm ink-tinted, two layers each (a tight contact shadow + a soft long-throw with
+negative spread, so depth reads without grey halos). Hairlines still carry structure
+WITHIN a surface; elevation now also separates surfaces from the ground, not only
+interactivity. Restraint still applies: the scale is shallow, the tint is warm, and a page
+where everything floats is still a page where nothing does.
 
 | Token | Use | Notes |
 |---|---|---|
-| `flat` | Default. Bands, tables, in-flow panels | Structure via parchment hairlines + surface shifts |
-| `subtle` | Resting interactive cards, sticky bars when scrolled | Barely-there lift |
-| `card` | The standard paper card (the NavigatorForm style) | Two-layer soft shadow; the workhorse |
+| `flat` | In-flow panels inside a card, table areas | Structure via parchment hairlines + surface shifts |
+| `subtle` | The resting card on the app ground | The default card seat |
+| `card` | Feature frames, hero surfaces, the workhorse panels | The signature layered shadow |
 | `lift` | Hover state of interactive cards; dropdowns, popovers | Communicates "you can pick this up" |
 | `modal` | Dialogs, command palette, drawers | The only heavy shadow; one per screen at most |
 

@@ -83,11 +83,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${newsreader.variable} ${inter.variable}`}>
-      {/* Plan v31 — site-wide background uses the Atlas paper pattern
-          (light gray with tiny four-point compass stars). Cards and
-          panels override with bg-white where content needs full
-          contrast against the patterned canvas. */}
-      <body className="min-h-screen atlas-paper text-ink-900 font-sans">
+      {/* SaaS reformation 2026-06-12 — the body is the warm app ground
+          (cream-75 via the `body` rule in globals.css). The .atlas-paper
+          class stays on map containers and white panels only; white cards
+          sit on this ground, seated by the elevation scale. */}
+      <body className="min-h-screen text-ink-900 font-sans">
         {/* Microsoft Clarity — heatmaps + session recordings, free forever.
             The src URL is Clarity's loader; it injects the actual tracking
             script after load. afterInteractive so it never blocks render. */}

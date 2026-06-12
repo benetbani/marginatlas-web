@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
-import { tailwindColors, fontFamily } from "./src/lib/design-tokens";
+import { tailwindColors, fontFamily, elevation } from "./src/lib/design-tokens";
 
 // Palette + font-family values are imported from src/lib/design-tokens.ts
 // so the design-system module is the single source of truth. Edit the
@@ -14,6 +14,15 @@ const config: Config = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 0.25rem)",
         sm: "calc(var(--radius) - 0.5rem)",
+      },
+      boxShadow: {
+        // Elevation scale from src/lib/design-tokens.ts (SaaS reformation
+        // 2026-06-12). Use shadow-subtle / shadow-card / shadow-lift /
+        // shadow-modal; never hand-rolled box-shadow values in components.
+        subtle: elevation.subtle,
+        card: elevation.card,
+        lift: elevation.lift,
+        modal: elevation.modal,
       },
       colors: {
         // Semantic aliases driven by CSS variables on :root in globals.css.

@@ -10,7 +10,7 @@
      separation. The dark mirror variants below are unchanged (still used by
      dark-on-dark surfaces such as the footer). */
   --atlas-paper-bg: #ffffff;
-  --atlas-paper-bg-dark: #2E2418;
+  --atlas-paper-bg-dark: #2c2015; /* ink-800 (conformed 2026-06-12; was #2E2418) */
   --atlas-pattern-url: url("/atlas-pattern.svg");
   --atlas-pattern-url-dark: url("/atlas-pattern-dark.svg");
 }

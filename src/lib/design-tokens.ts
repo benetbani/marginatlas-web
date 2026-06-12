@@ -67,7 +67,12 @@ export const colors = {
     // climbing into warm sand (page paper, borders). Replaces the cold
     // white-to-gray surfaces that the pre-reformation system used.
     50: "#ffffff", // warm white card / popover surface
-    100: "#f7f6f4", // warm sand page paper / muted surface
+    // SaaS reformation 2026-06-12 (founder): the app ground. White cards sit
+    // on this barely-warm field so surfaces read as layered product UI, not
+    // a flat sheet. Sits between the white card (50) and the warm sand (100);
+    // supersedes the 2026-06-06 white-reset page ground.
+    75: "#fbfaf7", // warm app ground (page surface behind cards)
+    100: "#f7f6f4", // warm sand muted surface
     200: "#efeeeb",
     300: "#e4e2dd", // warm taupe hairline / border step
     400: "#c3bfb7",
@@ -185,7 +190,7 @@ export const colors = {
  * classes for anything that might need theming later.
  */
 export const semanticColors = {
-  background: colors.cream[100], // warm sand page paper
+  background: colors.cream[75], // warm app ground (SaaS reformation 2026-06-12)
   foreground: colors.ink[900],
   card: colors.cream[50], // warm white article card
   cardForeground: colors.ink[900],
@@ -278,15 +283,23 @@ export const radius = {
 // =============================================================
 
 /**
- * Shadow scale. Codifies the ad-hoc shadows in use. `card` is the
- * NavigatorForm paper-card style (two-layer soft shadow).
+ * Shadow scale. SaaS reformation 2026-06-12 (founder direction: modern
+ * product surfaces, not flat newsprint): every step is a warm ink-tinted
+ * (rgb 33 24 16 = ink-900) two-layer shadow with a tight contact layer
+ * plus a soft long-throw layer. Negative spread keeps the throw under
+ * the card so depth reads without grey halos.
+ *
+ *   subtle — resting card on the app ground
+ *   card   — feature frames / hero surfaces (the workhorse)
+ *   lift   — hover state of interactive cards; dropdowns, popovers
+ *   modal  — dialogs, command palette; one per screen at most
  */
 export const elevation = {
   flat: "none",
-  subtle: "0 1px 2px rgb(0 0 0 / 0.04)",
-  card: "0 1px 3px rgb(0 0 0 / 0.05), 0 8px 28px rgb(0 0 0 / 0.06)",
-  lift: "0 4px 12px rgb(0 0 0 / 0.08), 0 12px 32px rgb(0 0 0 / 0.08)",
-  modal: "0 12px 24px rgb(0 0 0 / 0.12), 0 24px 48px rgb(0 0 0 / 0.12)",
+  subtle: "0 1px 2px rgb(33 24 16 / 0.05), 0 2px 6px rgb(33 24 16 / 0.04)",
+  card: "0 1px 2px rgb(33 24 16 / 0.04), 0 14px 30px -18px rgb(33 24 16 / 0.20)",
+  lift: "0 2px 4px rgb(33 24 16 / 0.05), 0 18px 38px -18px rgb(33 24 16 / 0.24)",
+  modal: "0 2px 4px rgb(33 24 16 / 0.04), 0 30px 60px -28px rgb(33 24 16 / 0.30)",
 } as const;
 
 // =============================================================

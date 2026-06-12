@@ -23,9 +23,12 @@
     /* Warm Atlas reformation 2026-06-04: shadcn tokens re-toned to warm
        sand paper, warm-white cards, warm brown-black ink, terracotta
        accent. Token names unchanged; only the values warmed.
-       White-reset 2026-06-06 (founder): the page surface is now pure white.
-       --background flipped from warm sand to white; cards stay white. */
-    --background: 255 255 255;       /* pure white page surface */
+       White-reset 2026-06-06 (founder): page surface flipped to pure white.
+       SaaS reformation 2026-06-12 (founder): the page surface is the warm
+       app ground (cream-75 #fbfaf7) so white cards read as layered product
+       surfaces, not lines on a flat sheet. Supersedes the white-reset for
+       the GROUND only; cards stay white. */
+    --background: 251 250 247;       /* cream-75 warm app ground */
     --foreground: 33 24 16;          /* ink-900 #211810, warm near-black */
     --card: 255 255 255;             /* cream-50 #FFFDF8, warm white card */
     --card-foreground: 33 24 16;     /* ink-900 */
@@ -63,13 +66,13 @@
        — but as call sites migrate to .atlas-card the look unifies.
        ========================================================================== */
 
-    /* Card surfaces — White-reset 2026-06-06: the body paper is now pure
-       white (no warm sand, no texture). Cards are white articles separated
-       from the page by hairlines + elevation, not by a tint delta. The
-       former warm-cream "soft" card surface is now white too; its callout
-       distinction is carried by a stronger hairline border (see
-       .atlas-card-soft below), not by a fill tint. */
-    --atlas-surface-paper: #ffffff;          /* body paper, pure white */
+    /* Card surfaces — SaaS reformation 2026-06-12 (founder): the body is
+       the warm app ground (cream-75); cards are WHITE surfaces laid on it,
+       seated by the layered elevation scale below. The ground/card delta
+       is deliberately small (barely-warm vs white) so the page stays calm
+       while surfaces still read as layered. Soft cards keep their stronger
+       hairline; bands may go full white for contrast stripes. */
+    --atlas-surface-paper: #fbfaf7;          /* body: warm app ground (cream-75) */
     --atlas-surface-card: #ffffff;           /* canonical card surface, white */
     --atlas-surface-card-soft: #ffffff;      /* secondary card within a card section */
     --atlas-surface-band: #ffffff;           /* white section band, no pattern */
@@ -79,17 +82,20 @@
     --atlas-hairline-strong: rgba(38, 33, 28, 0.12);
     --atlas-hairline-vermillion: rgba(230, 34, 0, 0.30);
 
-    /* Elevation scale — warm cocoa-tinted shadows, never gray.
-       1 = card at rest. 2 = card hover. 3 = modal / popover / sticky. */
+    /* Elevation scale — SaaS reformation 2026-06-12. Warm ink-tinted
+       (ink-900 rgb 33 24 16), two layers each: a tight contact shadow plus
+       a soft long-throw with negative spread (the throw stays under the
+       card, no grey halo). Mirrors `elevation` in design-tokens.ts.
+       1 = card at rest. 2 = hover / feature frames. 3 = modal / popover. */
     --atlas-elev-1:
-      0 1px 2px rgba(38, 33, 28, 0.05),
-      0 2px 8px rgba(38, 33, 28, 0.04);
+      0 1px 2px rgba(33, 24, 16, 0.05),
+      0 2px 6px rgba(33, 24, 16, 0.04);
     --atlas-elev-2:
-      0 2px 4px rgba(38, 33, 28, 0.06),
-      0 12px 28px rgba(55, 45, 38, 0.08);
+      0 1px 2px rgba(33, 24, 16, 0.04),
+      0 14px 30px -18px rgba(33, 24, 16, 0.20);
     --atlas-elev-3:
-      0 4px 8px rgba(38, 33, 28, 0.07),
-      0 24px 56px rgba(55, 45, 38, 0.12);
+      0 2px 4px rgba(33, 24, 16, 0.04),
+      0 30px 60px -28px rgba(33, 24, 16, 0.30);
 
     /* Section alternation tones used by getToneClass + .section-band */
     --atlas-tone-paper: var(--atlas-surface-paper);
@@ -242,20 +248,18 @@
      up. No 4-sided border-color flash, no glass-blur, no ring.
      ========================================================================== */
 
-  /* Founder direction 2026-05-26: tightened radius from rounded-2xl
-     (16px) to 6px across all three variants. Editorial-reference
-     look, not SaaS look. Card and background can never share the
-     same colour — the three variants are picked so:
-       atlas-card        = white #FFFFFF  → use on PAPER sections
-       atlas-card-soft   = warm cream     → use on WHITE sections
-       atlas-card-band   = off-white #FCFBF8 → use on WHITE sections
-                                              when the card should
-                                              feel lighter than the
-                                              cream soft variant */
+  /* Founder direction 2026-05-26 tightened radius to 6px ("editorial, not
+     SaaS"). REVERSED by founder direction 2026-06-12: the site moves to a
+     modern SaaS product surface (warm Atlas palette unchanged). Cards are
+     back on the constitutional radius (--radius, 16px; design-system.md
+     section 6). Card and background can never share the same colour:
+       atlas-card        = white  → sits on the warm app ground
+       atlas-card-soft   = white + stronger hairline (callouts in cards)
+       atlas-card-band   = white, lighter shadow → on white section bands */
   .atlas-card {
     position: relative;
     background: var(--atlas-surface-card);
-    border-radius: 6px;
+    border-radius: var(--radius);
     border: 1px solid var(--atlas-hairline);
     box-shadow: var(--atlas-elev-1);
     transition:
@@ -265,13 +269,13 @@
   }
 
   /* Vermillion top edge that appears on hover — like dog-earing a page.
-     Inset reduced (1rem -> 0.5rem) to match the tighter 6px corner radius. */
+     Inset matches the 16px corner radius so the edge never clips the curve. */
   .atlas-card::before {
     content: "";
     position: absolute;
     top: 0;
-    left: 0.5rem;
-    right: 0.5rem;
+    left: 1rem;
+    right: 1rem;
     height: 2px;
     background: linear-gradient(
       90deg,
@@ -308,7 +312,7 @@
      tint. No top-edge accent on hover. */
   .atlas-card-soft {
     background: var(--atlas-surface-card-soft);
-    border-radius: 6px;
+    border-radius: var(--radius);
     border: 1px solid var(--atlas-hairline-strong);
     box-shadow: none;
   }
@@ -318,12 +322,8 @@
      seating work. Still uses the top-edge hover accent. */
   .atlas-card-band {
     position: relative;
-    /* Warm off-white #FDFAF3 so the card never collides with a warm
-       white section background. The small delta from #FFFDF8 is
-       enough to visually separate the surfaces without breaking
-       the calm reading rhythm. */
     background: #ffffff;
-    border-radius: 6px;
+    border-radius: var(--radius);
     border: 1px solid var(--atlas-hairline);
     box-shadow:
       0 1px 1px rgba(76, 39, 18, 0.03);
