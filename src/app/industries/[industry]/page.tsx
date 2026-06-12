@@ -45,7 +45,7 @@ import {
 } from "@/lib/taxonomy";
 import { MarginWaterfall } from "@/components/MarginWaterfall";
 import industryMarginsJson from "@/lib/finance/industry_margins.json";
-import { INDUSTRY_PAGE_SECTIONS, getToneClass } from "@/lib/page-layout/section-order";
+import { INDUSTRY_PAGE_SECTIONS } from "@/lib/page-layout/section-order";
 import { getActivityCharacter } from "@/lib/content/activity_character";
 import { generateIndustryVerdict } from "@/lib/scores/industry_verdict";
 import { IndustryModelLede } from "@/components/industries/IndustryModelLede";
@@ -359,9 +359,11 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
          whole block omits cleanly when the slate is thin (fewer than two
          places), never showing an invented ranking. No count-of-things copy. */}
       {placeRows.length >= 2 && (
-        <section className="mt-10">
+        // SaaS reformation 2026-06-12: seated card sections on the app
+        // ground, matching the board language site-wide.
+        <section className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
           <SectionEyebrow>Where it works</SectionEyebrow>
-          <h2 className="mt-1 font-display text-2xl md:text-3xl font-medium tracking-tight text-balance text-ink-900">
+          <h2 className="mt-1 font-display text-xl md:text-2xl font-medium tracking-tight text-balance text-ink-900">
             Where {ind.name.toLowerCase()} keep the most
           </h2>
           <p className="mt-1.5 mb-5 max-w-2xl text-sm md:text-base leading-relaxed text-cocoa-700/80">
@@ -415,7 +417,10 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
          self-omits when its input is missing. When an activity character is
          written, its one-line hook frames the lede and the hand-written
          mechanics add the depth the margin synthesis alone cannot reach. */}
-      <section id="how-it-works" className="py-8 md:py-10">
+      <section
+        id="how-it-works"
+        className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+      >
         {/* The decision-framed money question is the page's primary search
            heading. It moved here from the retired photo hero so the H1 above
            can stay the plain board title; this reads as the section H2. */}
@@ -451,7 +456,10 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
          activity (a restaurant's payroll-as-share-of-revenue is similar in
          Berlin and Brazil). The cell page scales them against country-specific
          revenue; here they carry the model anatomy. */}
-      <section id="margin-waterfall" className={`py-8 ${getToneClass("margin-waterfall")}`}>
+      <section
+        id="margin-waterfall"
+        className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+      >
         <SectionEyebrow className="mb-3">Where each dollar goes</SectionEyebrow>
         <p className="max-w-2xl text-base leading-relaxed text-graphite mb-4">
           Each bar takes a typical sale one cut deeper: what survives the direct
@@ -481,9 +489,9 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
          margin-waterfall) without disturbing the gate. The whole block
          self-suppresses when neither input exists. */}
       {(character?.watchOut?.trim() || worstSignal) && (
-        <section className="py-8 bg-cream-50">
+        <section className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
           <SectionEyebrow className="mb-2">What kills the weak operators</SectionEyebrow>
-          <h2 className="text-xl font-semibold text-ink-900">
+          <h2 className="font-display text-lg md:text-xl font-semibold tracking-tight text-ink-900">
             Where the margin gets taken back
           </h2>
           <div className="mt-5 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-2">
@@ -521,9 +529,9 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
          <section id=>, so it stays outside the canonical skeleton; the whole
          block self-suppresses when the sector has no other measured siblings. */}
       {relatedActivities.length > 0 && (
-        <section className="py-8 border-t border-parchment">
+        <section className="mt-5 mb-8 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
           <SectionEyebrow className="mb-1">Related activities</SectionEyebrow>
-          <h2 className="text-xl font-semibold text-ink-900">
+          <h2 className="font-display text-lg md:text-xl font-semibold tracking-tight text-ink-900">
             Other ways to make money{sector ? ` in ${sector.name.toLowerCase()}` : ""}
           </h2>
           <p className="mt-2 text-sm leading-relaxed text-cocoa-700/85 max-w-2xl">

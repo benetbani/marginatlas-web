@@ -17,7 +17,7 @@ import { CountryFlag } from "@/components/CountryFlag";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { hasRegionalCoverage } from "@/lib/coverage/regional";
 import { getAdmin1Regions } from "@/lib/coverage/admin1";
-import { COUNTRY_PAGE_SECTIONS, getToneClass } from "@/lib/page-layout/section-order";
+import { COUNTRY_PAGE_SECTIONS } from "@/lib/page-layout/section-order";
 import { getCountryAnchor } from "@/lib/content/country-anchors";
 import { fmtMoney } from "@/lib/format/money";
 import { CountrySignaturePanel } from "@/components/countries/CountrySignaturePanel";
@@ -318,7 +318,12 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
          like" question is answered before the activity ranking, not buried
          after it. The formation-costs block sits immediately under it as the
          natural companion: both are country-level legal facts, not per-city. */}
-      <section id="tax-overview" className={`py-8 ${getToneClass("tax-overview")}`}>
+      {/* SaaS reformation 2026-06-12: country sections are seated cards on
+          the app ground, matching the cell-page board language. */}
+      <section
+        id="tax-overview"
+        className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+      >
         <CountryTaxReality
           countryName={meta.name}
           vat={vatRow}
@@ -330,7 +335,7 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
           fmt={(n) => fmtMoney(n)}
         />
       </section>
-      <section className="py-6">
+      <section className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
         <BusinessFormationCosts countryIso2={iso2} countryName={meta.name} />
       </section>
 
@@ -338,7 +343,7 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
          activities by break-in rating. Self-omits when too few activities
          resolve a defensible score. */}
       {easiestBreakIn.length > 0 ? (
-        <section className="py-8 border-t border-parchment/60">
+        <section className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
           <EasiestToBreakIn rows={easiestBreakIn} placeName={meta.name} />
         </section>
       ) : null}
@@ -349,9 +354,12 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
          regions-and-cities list. The #top-cities section is removed from
          this page; its id is retained in section-order.ts for other pages. */}
       {(bestCity != null && worstCity != null) || citiesByRegion.length > 0 ? (
-        <section id="regions" className={`py-8 ${getToneClass("regions")}`}>
+        <section
+          id="regions"
+          className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+        >
           <SectionEyebrow className="mb-3">Go local</SectionEyebrow>
-          <h2 className="text-xl md:text-2xl font-semibold text-ink-900 mb-4">
+          <h2 className="font-display text-lg md:text-xl font-semibold tracking-tight text-ink-900 mb-4">
             Cities of {countryName}
           </h2>
 
@@ -420,13 +428,13 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
          government scores. Signature sectors are suppressed on the country
          page (showSectors=false via CountrySignaturePanel). Supporting
          demographic context, not a decision beat. */}
-      <section className="py-6">
+      <section className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
         <CountrySignaturePanel iso2={iso2} countryName={meta.name} />
       </section>
 
       {/* 7. related-countries: Compare CTA. Closing beat of the flow. */}
-      <section id="related-countries" className={`py-10 ${getToneClass("related-countries")}`}>
-        <div className="card-cream">
+      <section id="related-countries" className="mt-5 mb-8">
+        <div className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
           <SectionEyebrow className="mb-2">Next move</SectionEyebrow>
           <h2 className="text-lg font-semibold text-ink-900">
             Put {meta.name} against its peers
