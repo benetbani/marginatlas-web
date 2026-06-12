@@ -38,13 +38,15 @@ export const revalidate = 86400; // 1 day
 // Fallback gradient cover for placeholder blog posts (per the
 // founder rule: every blog card must have an image).
 function placeholderImage(slug: string): BlogPost["image"] {
+  // Token-anchored ramps, mirroring GRADIENT_PALETTE in src/lib/blog.ts
+  // (conformed 2026-06-12; the navy pair retired for the sanctioned teal).
   const palette = [
-    "linear-gradient(135deg, #952509 0%, #C97347 100%)",
-    "linear-gradient(135deg, #1F3D32 0%, #5B8770 100%)",
-    "linear-gradient(135deg, #3A3A3A 0%, #6E6E6E 100%)",
-    "linear-gradient(135deg, #4C2712 0%, #8B5E3C 100%)",
-    "linear-gradient(135deg, #5C3A0A 0%, #B07A2C 100%)",
-    "linear-gradient(135deg, #0F2A4A 0%, #2F5A8B 100%)",
+    "linear-gradient(135deg, #991600 0%, #f24e2f 100%)",
+    "linear-gradient(135deg, #4a6018 0%, #96b448 100%)",
+    "linear-gradient(135deg, #463726 0%, #7d6c58 100%)",
+    "linear-gradient(135deg, #534231 0%, #c3b39c 100%)",
+    "linear-gradient(135deg, #8a510a 0%, #eda12f 100%)",
+    "linear-gradient(135deg, #345a47 0%, #4d7c64 100%)",
   ];
   let h = 0;
   for (let i = 0; i < slug.length; i++) h = (h * 31 + slug.charCodeAt(i)) & 0xfffffff;

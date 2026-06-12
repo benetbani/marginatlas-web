@@ -11,6 +11,7 @@
  */
 import { sampleVariance, mean } from "simple-statistics";
 import { formatMoney } from "@/lib/format/money";
+import { colors } from "@/lib/design-tokens";
 
 type Props = {
   p10?: number | null;
@@ -100,8 +101,8 @@ export function RevenueDistribution({
         role="img"
         aria-label="Smooth curve showing where every business lands by revenue"
       >
-        <path d={areaPath} fill="#86C3B9" fillOpacity="0.35" />
-        <path d={linePath} fill="none" stroke="#3A7268" strokeWidth="2" />
+        <path d={areaPath} fill={colors.teal[500]} fillOpacity="0.25" />
+        <path d={linePath} fill="none" stroke={colors.teal[700]} strokeWidth="2" />
         {markers.map((m) => (
           <g key={m.label}>
             <line
@@ -109,7 +110,7 @@ export function RevenueDistribution({
               x2={sx(m.x)}
               y1={padY}
               y2={H - padY}
-              stroke="#3A7268"
+              stroke={colors.teal[700]}
               strokeWidth="1"
               strokeDasharray="2,3"
               opacity="0.5"
@@ -118,7 +119,7 @@ export function RevenueDistribution({
               x={sx(m.x)}
               y={padY + 12}
               fontSize="10"
-              fill="#3A7268"
+              fill={colors.teal[700]}
               textAnchor="middle"
               fontFamily="ui-sans-serif, system-ui, sans-serif"
               fontWeight="500"
@@ -129,7 +130,7 @@ export function RevenueDistribution({
               x={sx(m.x)}
               y={H + 18}
               fontSize="10"
-              fill="#3A3A3A"
+              fill={colors.ink[700]}
               textAnchor="middle"
               fontFamily="ui-sans-serif, system-ui, sans-serif"
             >

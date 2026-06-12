@@ -19,6 +19,7 @@
  */
 import { notFound } from "next/navigation";
 import { getCellBySlug } from "@/lib/cells";
+import { colors } from "@/lib/design-tokens";
 import { iso2ToName } from "@/lib/countries";
 import {
   industryToSlug,
@@ -190,12 +191,12 @@ export default async function NeighborhoodCellPage({
                 style={{
                   color:
                     fwMult.final > 1.15
-                      ? "#14532D"
+                      ? colors.moss[900]
                       : fwMult.final > 1.0
-                        ? "#16A34A"
+                        ? colors.delta.positive
                         : fwMult.final > 0.85
-                          ? "#CA8A04"
-                          : "#7F1D1D",
+                          ? colors.delta.caution
+                          : colors.delta.negative,
                 }}
               >
                 {Math.round((fwMult.final - 1) * 100) >= 0 ? "+" : ""}

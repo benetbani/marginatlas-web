@@ -4,6 +4,7 @@
 
 import * as React from "react";
 import type { Icon as PhosphorIcon } from "@phosphor-icons/react";
+import { colors } from "@/lib/design-tokens";
 
 interface SectorCardV2Props {
   sectorId: string;
@@ -83,7 +84,7 @@ function FittedChipRow({
   }, [chips, extraMore]);
 
   const chipClass =
-    "shrink-0 inline-flex items-center font-sans text-xs leading-none text-[#3A3A3A] bg-[#F5F5F5] rounded-full px-2.5 py-1 whitespace-nowrap";
+    "shrink-0 inline-flex items-center font-sans text-xs leading-none text-ink-700 bg-cream-100 rounded-full px-2.5 py-1 whitespace-nowrap";
 
   return (
     <div
@@ -122,7 +123,7 @@ export default function SectorCardV2({
         group flex flex-col
         h-[120px] md:h-[140px]
         bg-white
-        border border-[#E5E5E5] hover:border-[#3A3A3A]
+        border border-parchment hover:border-ink-700
         px-3.5 py-3
         transition-colors duration-150
         no-underline
@@ -130,13 +131,13 @@ export default function SectorCardV2({
     >
       {/* Top row: icon left, count chip right */}
       <div className="flex items-center justify-between">
-        <Icon size={16} weight="fill" color="#D73A14" />
+        <Icon size={16} weight="fill" color={colors.atlas[500]} />
         <span
           className="
             inline-flex items-center
             font-sans text-[11px] tabular-nums
-            text-[#3A3A3A] group-hover:text-black
-            bg-[#F5F5F5] group-hover:bg-[#E5E5E5]
+            text-ink-700 group-hover:text-ink-900
+            bg-cream-100 group-hover:bg-cream-200
             rounded-full px-2 py-0.5
             transition-colors duration-150
           "
@@ -147,19 +148,18 @@ export default function SectorCardV2({
 
       {/* Category name */}
       <h3
-        className="mt-1.5 font-display text-lg font-medium leading-tight text-black truncate"
-        style={{ fontFamily: "Newsreader, serif" }}
+        className="mt-1.5 font-display text-lg font-medium leading-tight text-ink-900 truncate"
       >
         {sectorLabel}
       </h3>
 
       {/* Description */}
-      <p className="mt-0.5 font-sans text-sm text-[#3A3A3A] truncate">
+      <p className="mt-0.5 font-sans text-sm text-ink-700 truncate">
         {description}
       </p>
 
       {/* Hairline + sample-industry chips that fit dynamically */}
-      <div className="mt-auto pt-2 border-t border-[#E5E5E5]">
+      <div className="mt-auto pt-2 border-t border-parchment">
         <FittedChipRow chips={visibleChips} extraMore={baseExtra} />
       </div>
     </a>

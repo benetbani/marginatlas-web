@@ -12,6 +12,7 @@
  */
 import { notFound } from "next/navigation";
 import { Key } from "@phosphor-icons/react/dist/ssr";
+import { colors } from "@/lib/design-tokens";
 import { timingSafeEqualString } from "@/lib/rate_limit";
 import {
   RedactedNumber,
@@ -124,14 +125,14 @@ export default async function MonetizedPreview({
             p10, p50, p90 stay readable; p25 and p75 are ghosted with a key cue. <KeyCue />
           </p>
           <svg viewBox="0 0 300 90" className="w-full" role="img" aria-label="Distribution with ghosted inner quartiles">
-            <rect x="20" y="50" width="24" height="30" fill="#D47706" opacity="0.85" rx="2" />
+            <rect x="20" y="50" width="24" height="30" fill={colors.atlas[300]} opacity="0.85" rx="2" />
             <GhostBar x={80} y={35} width={24} height={45} tier="basic" entry="cell_distribution_p25_p75" ariaLabel="p25, unlock with Basic" />
-            <rect x="140" y="20" width="24" height="60" fill="#c03d2b" rx="2" />
+            <rect x="140" y="20" width="24" height="60" fill={colors.atlas[600]} rx="2" />
             <GhostBar x={200} y={35} width={24} height={45} tier="basic" entry="cell_distribution_p25_p75" ariaLabel="p75, unlock with Basic" />
-            <rect x="260" y="55" width="24" height="25" fill="#D47706" opacity="0.85" rx="2" />
-            <text x="32" y="88" fontSize="8" textAnchor="middle" fill="#5A3A1A">p10</text>
-            <text x="152" y="88" fontSize="8" textAnchor="middle" fill="#5A3A1A">p50</text>
-            <text x="272" y="88" fontSize="8" textAnchor="middle" fill="#5A3A1A">p90</text>
+            <rect x="260" y="55" width="24" height="25" fill={colors.atlas[300]} opacity="0.85" rx="2" />
+            <text x="32" y="88" fontSize="8" textAnchor="middle" fill={colors.ink[700]}>p10</text>
+            <text x="152" y="88" fontSize="8" textAnchor="middle" fill={colors.ink[700]}>p50</text>
+            <text x="272" y="88" fontSize="8" textAnchor="middle" fill={colors.ink[700]}>p90</text>
           </svg>
         </Panel>
       </div>

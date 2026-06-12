@@ -44,13 +44,15 @@ type Props = {
 // very light gray across all maps so the editorial markers (cities,
 // hover state) pop. Unified to ECECEC with both the homepage
 // WorldMapPicker for visual consistency.
-const GEO_FILL = "#ECECEC";        // very light gray
-const GEO_STROKE = "#C8C8C8";      // slightly darker gray border
-const MARKER_FILL = "#952509";     // atlas-700, vermillion
-const MARKER_STROKE = "#6F1A06";   // atlas-800, deeper vermillion
-const TOOLTIP_BG = "#FFFFFF";
-const TOOLTIP_BORDER = "#B2A48A";
-const TOOLTIP_TEXT = "#0A2540";
+// Conformed to design-tokens 2026-06-12: warm cream continents, live
+// atlas marker values, warm ink tooltip text (the cool navy is banned).
+const GEO_FILL = "#efeeeb"; //   cream-200, very light warm
+const GEO_STROKE = "#c3bfb7"; // cream-400 border
+const MARKER_FILL = "#991600"; // atlas-700, vermillion
+const MARKER_STROKE = "#701000"; // atlas-800, deeper vermillion
+const TOOLTIP_BG = "#ffffff"; //  cream-50
+const TOOLTIP_BORDER = "#c3bfb7"; // cream-400
+const TOOLTIP_TEXT = "#211810"; // ink-900
 
 const GEO_URL = "https://unpkg.com/world-atlas@2/countries-110m.json";
 

@@ -48,6 +48,10 @@ const CITIES: City[] = [
   { x: 736, y: 275 },   // Sydney
 ];
 
+// Conformed to the warm token palette 2026-06-12: parchment guide lines,
+// vermillion covered-city markers (matching CitiesWorldMap), cocoa rest.
+import { colors } from "@/lib/design-tokens";
+
 export function CitiesDotsMap() {
   return (
     <svg
@@ -58,12 +62,12 @@ export function CitiesDotsMap() {
       aria-label="Stylized world dots representing covered cities."
     >
       {/* faint guide grid: equator + a few latitude / longitude hints */}
-      <g stroke="#D9D2C4" strokeWidth="0.6" strokeDasharray="2 3" fill="none">
+      <g stroke={colors.parchment} strokeWidth="0.6" strokeDasharray="2 3" fill="none">
         <line x1="0" y1="160" x2="800" y2="160" />
         <line x1="400" y1="0" x2="400" y2="320" />
       </g>
       {/* faint continent suggestion: rough archipelagos of small dots */}
-      <g fill="#DDDDDD">
+      <g fill={colors.parchment}>
         {Array.from({ length: 90 }).map((_, i) => {
           // pseudo-random scatter biased to a continental belt
           const seed = (i * 9301 + 49297) % 233280;
@@ -78,11 +82,11 @@ export function CitiesDotsMap() {
         {CITIES.map((c, i) =>
           c.active ? (
             <g key={`city-${i}`}>
-              <circle cx={c.x} cy={c.y} r="9" fill="none" stroke="#0F766E" strokeWidth="1.2" opacity="0.45" />
-              <circle cx={c.x} cy={c.y} r="4.5" fill="#0F766E" />
+              <circle cx={c.x} cy={c.y} r="9" fill="none" stroke={colors.atlas[700]} strokeWidth="1.2" opacity="0.45" />
+              <circle cx={c.x} cy={c.y} r="4.5" fill={colors.atlas[700]} />
             </g>
           ) : (
-            <circle key={`city-${i}`} cx={c.x} cy={c.y} r="3" fill="#475569" />
+            <circle key={`city-${i}`} cx={c.x} cy={c.y} r="3" fill={colors.cocoa[500]} />
           ),
         )}
       </g>

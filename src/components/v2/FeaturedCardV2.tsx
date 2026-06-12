@@ -67,8 +67,8 @@ export default function FeaturedCardV2({
         group
         flex flex-col
         w-[280px] h-[180px]
-        bg-white hover:bg-[#F5F5F5]
-        border border-[#E5E5E5] hover:border-[#3A3A3A]
+        bg-white hover:bg-cream-100
+        border border-parchment hover:border-ink-700
         px-4 py-3
         transition-[background-color,border-color,box-shadow,transform] duration-150
         hover:shadow-[0_1px_0_0_rgba(0,0,0,0.08)]
@@ -78,34 +78,33 @@ export default function FeaturedCardV2({
     >
       {/* Row 1: sector + flag + geo, one tight line */}
       <div className="flex items-center gap-1.5 min-w-0">
-        <SectorIcon size={14} weight="fill" color="#D73A14" />
-        <span className="font-sans text-xs uppercase tracking-wide text-[#3A3A3A] whitespace-nowrap">
+        <SectorIcon size={14} weight="fill" color={colors.atlas[500]} />
+        <span className="font-sans text-xs uppercase tracking-wide text-ink-700 whitespace-nowrap">
           {sector}
         </span>
-        <span className="text-[#3A3A3A]">&middot;</span>
+        <span className="text-ink-700">&middot;</span>
         <span className="text-sm leading-none" aria-hidden="true">
           {flagEmoji}
         </span>
-        <span className="font-sans text-xs uppercase tracking-wide text-[#3A3A3A] truncate">
+        <span className="font-sans text-xs uppercase tracking-wide text-ink-700 truncate">
           {geo}
         </span>
       </div>
 
-      {/* Row 2: industry headline, Newsreader, up to 2 lines */}
+      {/* Row 2: industry headline, display serif, up to 2 lines */}
       <h3
         className="
           mt-2
           font-display text-lg font-medium leading-snug
-          text-black
+          text-ink-900
           line-clamp-2
         "
-        style={{ fontFamily: "Newsreader, serif" }}
       >
         {industry}
       </h3>
 
       {/* Row 3: hairline */}
-      <div className="mt-auto h-px w-full bg-[#E5E5E5]" />
+      <div className="mt-auto h-px w-full bg-parchment" />
 
       {/* Row 4: typical revenue label + figure */}
       <div className="mt-2 flex items-end justify-between gap-3">
@@ -113,13 +112,13 @@ export default function FeaturedCardV2({
           <span
             className="
               font-sans text-[10px] uppercase tracking-wide
-              text-[#3A3A3A] group-hover:text-[#D73A14]
+              text-ink-700 group-hover:text-atlas-600
               transition-colors duration-150
             "
           >
             Typical revenue
           </span>
-          <span className="font-sans tabular-nums text-black leading-none mt-1">
+          <span className="font-sans tabular-nums text-ink-900 leading-none mt-1">
             <span className="text-xl font-semibold align-baseline">{rev.prefix}</span>
             <span className="text-3xl font-semibold align-baseline">{rev.value}</span>
             {rev.suffix && (

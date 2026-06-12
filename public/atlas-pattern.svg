@@ -1,6 +1,6 @@
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
-  <g fill="#EEEEEE">
+  <g fill="#e4e2dd">
     <path d="M0,-5L1.4,-1.4L5,0L1.4,1.4L0,5L-1.4,1.4L-5,0L-1.4,-1.4Z" transform="translate(10 10)"></path>
     <path d="M0,-5L1.4,-1.4L5,0L1.4,1.4L0,5L-1.4,1.4L-5,0L-1.4,-1.4Z" transform="translate(50 10)"></path>
     <path d="M0,-5L1.4,-1.4L5,0L1.4,1.4L0,5L-1.4,1.4L-5,0L-1.4,-1.4Z" transform="translate(30 50)"></path>

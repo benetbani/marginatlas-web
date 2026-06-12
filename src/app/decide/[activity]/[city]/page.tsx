@@ -45,6 +45,7 @@ import {
 import { INDUSTRY_BASELINES } from "@/lib/qa/industry_baselines";
 import DecideActivitySelector from "@/components/DecideActivitySelector";
 import { ProgressBar } from "@/components/ui/progress-bar";
+import { colors } from "@/lib/design-tokens";
 
 export const revalidate = 43200;
 
@@ -293,12 +294,12 @@ export default async function DecideWizard({
                 const rentPct = Math.round((b.rentMultiplier - 1) * 100);
                 const color =
                   b.neighborhoodNetMargin >= 0.15
-                    ? "#14532D"
+                    ? colors.moss[900]
                     : b.neighborhoodNetMargin >= 0.08
-                      ? "#16A34A"
+                      ? colors.delta.positive
                       : b.neighborhoodNetMargin >= 0
-                        ? "#CA8A04"
-                        : "#7F1D1D";
+                        ? colors.delta.caution
+                        : colors.delta.negative;
                 const tone =
                   b.neighborhoodNetMargin >= 0.15
                     ? "success"
@@ -397,12 +398,12 @@ export default async function DecideWizard({
                     const rentPct = Math.round((b.rentMultiplier - 1) * 100);
                     const color =
                       b.neighborhoodNetMargin >= 0.15
-                        ? "#14532D"
+                        ? colors.moss[900]
                         : b.neighborhoodNetMargin >= 0.08
-                          ? "#16A34A"
+                          ? colors.delta.positive
                           : b.neighborhoodNetMargin >= 0
-                            ? "#CA8A04"
-                            : "#7F1D1D";
+                            ? colors.delta.caution
+                            : colors.delta.negative;
                     return (
                       <tr
                         key={r.neighborhood.slug}

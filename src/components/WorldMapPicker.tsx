@@ -36,6 +36,7 @@ import {
   ZoomableGroup,
 } from "react-simple-maps";
 import { ISO_NUMERIC_TO_ALPHA2 } from "@/lib/iso-codes";
+import { colors as tokenColors } from "@/lib/design-tokens";
 
 // Kosovo has no `id` in world-atlas@2's countries-110m
 // TopoJSON (Natural Earth tags it as a disputed territory and omits the
@@ -54,19 +55,21 @@ const GEO_URL = "https://unpkg.com/world-atlas@2/countries-110m.json";
 // they don't exist"). Stroke darkened from #DDDDDD (near-invisible
 // on a white bg) to #3A3A3A (graphite — clearly readable). Stroke
 // width also bumped (see Geography style below from 0.5 to 0.8).
+// Conformed to the warm token palette (2026-06-12 stale-palette sweep):
+// cool greys map to the cream/ink ladder, the stale vermillion ramp to
+// the live atlas tokens. Values read from design-tokens.ts.
 const COLORS = {
-  bg: "#FFFFFF",
-  // Founder direction 2026-05-26: continents in very light gray for
-  // the atlas look (was "#DDDDDD" medium gray, too dark; was "#F5F0E6"
-  // warm cream on the cities map). Unified across all maps to ECECEC.
-  parchment: "#ECECEC",
-  amber: "#D73A14",        // vermillion on hover
-  amberActive: "#B82F0F",  // pressed state
-  atlas700: "#952509",     // selected country fill (deep vermillion)
-  stroke: "#3A3A3A",       // PRONOUNCED country borders (graphite)
-  cocoa700: "#3A3A3A",     // text (slot 4 in picker)
-  cocoa900: "#000000",     // tooltip background (pure black)
-  disputedStroke: "#737373",
+  bg: tokenColors.cream[50], // map card surface, white
+  // Continents stay very light per founder 2026-05-26, now the warm
+  // cream-200 step instead of the cool #ECECEC.
+  parchment: tokenColors.cream[200],
+  amber: tokenColors.atlas[500], // vermillion on hover
+  amberActive: tokenColors.atlas[600], // pressed state
+  atlas700: tokenColors.atlas[700], // selected country fill (deep vermillion)
+  stroke: tokenColors.ink[700], // PRONOUNCED country borders (warm graphite)
+  cocoa700: tokenColors.ink[700], // text (slot 4 in picker)
+  cocoa900: tokenColors.ink[900], // tooltip background (warm near-black)
+  disputedStroke: tokenColors.ink[500],
 };
 
 const ANTARCTICA_ID = "010";

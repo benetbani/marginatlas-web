@@ -8,6 +8,7 @@
  */
 import { estimateNetProfit, type NetProfitWaterfall as Waterfall } from "@/lib/finance/net_profit";
 import { fmtMoney } from "@/lib/format/money";
+import { colors } from "@/lib/design-tokens";
 
 type Props = {
   iso2: string;
@@ -168,12 +169,14 @@ function Divider() {
 }
 
 function WaterfallBar({ w }: { w: Waterfall }) {
+  // Color jobs (design-system 3.2): cocoa/ink ladder carries the cost
+  // structure; the kept row is the one moss moment on the bar.
   const segments: Array<{ label: string; value: number; color: string }> = [
-    { label: "Cost of goods", value: w.cogs, color: "#D5C4A1" },
-    { label: "Pay + employer taxes", value: w.payroll + w.employer_social, color: "#C19A6B" },
-    { label: "Rent, insurance, other", value: w.fixed_costs.total, color: "#A0826D" },
-    { label: "Tax", value: w.corporate_income_tax, color: "#7F5539" },
-    { label: "Profit kept", value: Math.max(w.net_profit, 0), color: "#B82F0F" },
+    { label: "Cost of goods", value: w.cogs, color: colors.cocoa[300] },
+    { label: "Pay + employer taxes", value: w.payroll + w.employer_social, color: colors.cocoa[500] },
+    { label: "Rent, insurance, other", value: w.fixed_costs.total, color: colors.ink[600] },
+    { label: "Tax", value: w.corporate_income_tax, color: colors.cocoa[700] },
+    { label: "Profit kept", value: Math.max(w.net_profit, 0), color: colors.moss[600] },
   ];
   const totalPositive = segments.reduce((s, x) => s + Math.max(x.value, 0), 0);
   if (totalPositive <= 0) return null;

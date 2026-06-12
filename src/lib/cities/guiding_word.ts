@@ -15,6 +15,8 @@
  * with a neutral atlas tone, NOT the red-to-green palette.
  */
 
+import { colors } from "@/lib/design-tokens";
+
 export type Metric =
   | "metro_pop_m"
   | "metro_gdp_b"
@@ -31,13 +33,16 @@ export type Metric =
   | "days_to_start"
   | "inflation_pct_yoy";
 
-// Gradient stops in HSL for interpolation, 0.0 = "very bad" to 1.0 = "very good".
+// Gradient stops for interpolation, 0.0 = "very bad" to 1.0 = "very good".
+// Conformed to the warm token palette (2026-06-12 stale-palette sweep):
+// clay carries the bad end (deep maroon, never brand red), amber the middle,
+// moss the good end. Values mirror colors.clay/amber/moss in design-tokens.ts.
 const GRADIENT_STOPS: Array<[number, string]> = [
-  [0.0, "#7F1D1D"], // dark red
-  [0.25, "#DC2626"], // red
-  [0.5, "#CA8A04"], // amber
-  [0.75, "#16A34A"], // green
-  [1.0, "#14532D"], // dark green
+  [0.0, colors.clay[700]], // very bad (deep maroon)
+  [0.25, colors.clay[500]], // bad
+  [0.5, colors.amber[600]], // middling
+  [0.75, colors.moss[600]], // good
+  [1.0, colors.moss[700]], // very good
 ];
 
 // Break tables. Each is ordered low-to-high VALUE; the descriptor and the

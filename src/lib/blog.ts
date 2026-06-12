@@ -24,13 +24,15 @@ export type BlogImage =
   | { kind: "url"; src: string; alt: string }
   | { kind: "gradient"; gradient: string; initial: string };
 
+// Cover gradients anchored to the live token ramps (conformed 2026-06-12;
+// the old navy pair was off-palette blue, replaced by the sanctioned teal).
 const GRADIENT_PALETTE = [
-  "linear-gradient(135deg, #952509 0%, #C97347 100%)",  // vermillion → terracotta
-  "linear-gradient(135deg, #1F3D32 0%, #5B8770 100%)",  // moss → sage
-  "linear-gradient(135deg, #3A3A3A 0%, #6E6E6E 100%)",  // graphite → slate
-  "linear-gradient(135deg, #4C2712 0%, #8B5E3C 100%)",  // cocoa → fawn
-  "linear-gradient(135deg, #5C3A0A 0%, #B07A2C 100%)",  // amber → tan
-  "linear-gradient(135deg, #0F2A4A 0%, #2F5A8B 100%)",  // navy → steel
+  "linear-gradient(135deg, #991600 0%, #f24e2f 100%)",  // atlas-700 → atlas-400
+  "linear-gradient(135deg, #4a6018 0%, #96b448 100%)",  // moss-700 → moss-400
+  "linear-gradient(135deg, #463726 0%, #7d6c58 100%)",  // ink-700 → ink-500
+  "linear-gradient(135deg, #534231 0%, #c3b39c 100%)",  // cocoa-700 → cocoa-300
+  "linear-gradient(135deg, #8a510a 0%, #eda12f 100%)",  // amber-700 → amber-400
+  "linear-gradient(135deg, #345a47 0%, #4d7c64 100%)",  // teal-700 → teal-500
 ];
 
 function gradientFor(slug: string): BlogImage {

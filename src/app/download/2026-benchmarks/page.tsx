@@ -5,6 +5,7 @@
 
 import { Suspense } from "react";
 import LeadMagnetForm from "@/components/newsletter/LeadMagnetForm";
+import { colors } from "@/lib/design-tokens";
 
 export const metadata = {
   title: "Get the 2026 small business benchmarks PDF · Margin Atlas",
@@ -61,7 +62,7 @@ export default function LeadMagnetPage() {
               <div
                 className="rounded-md aspect-[3/4] flex flex-col p-6 sm:p-8 text-cream-50"
                 style={{
-                  background: "linear-gradient(160deg, #952509 0%, #3A3A3A 100%)",
+                  background: `linear-gradient(160deg, ${colors.atlas[700]} 0%, ${colors.ink[800]} 100%)`,
                   boxShadow: "0 1px 2px rgba(26,26,26,0.1), 0 30px 60px rgba(26,26,26,0.22)",
                   border: "1px solid rgba(254, 251, 246, 0.08)",
                 }}
@@ -175,7 +176,7 @@ function Distribution() {
           className="flex-1 rounded-sm"
           style={{
             height: `${b}%`,
-            background: i === 5 ? "#952509" : "#D73A14",
+            background: i === 5 ? colors.atlas[700] : colors.atlas[500],
             opacity: i === 5 ? 1 : 0.7,
           }}
         />
@@ -185,20 +186,22 @@ function Distribution() {
 }
 
 function Waterfall() {
+  // Color jobs per design-system.md 3.2: cocoa = structure and costs,
+  // moss = what is kept. The profit row is the page's one moss moment.
   const lines = [
-    { label: "Revenue", w: "100%", c: "#952509" },
-    { label: "Food",    w: "32%",  c: "#952509" },
-    { label: "Labor",   w: "30%",  c: "#D73A14" },
-    { label: "Rent",    w: "9%",   c: "#E8A23A" },
-    { label: "Other",   w: "17%",  c: "#B8A57A" },
-    { label: "Profit",  w: "12%",  c: "#000000", profit: true },
+    { label: "Revenue", w: "100%", c: colors.cocoa[700] },
+    { label: "Food",    w: "32%",  c: colors.cocoa[500] },
+    { label: "Labor",   w: "30%",  c: colors.cocoa[500] },
+    { label: "Rent",    w: "9%",   c: colors.cocoa[300] },
+    { label: "Other",   w: "17%",  c: colors.cocoa[300] },
+    { label: "Profit",  w: "12%",  c: colors.moss[600], profit: true },
   ];
   return (
     <ul className="space-y-1.5">
       {lines.map((l) => (
         <li key={l.label} className="grid grid-cols-12 items-center gap-2 text-[11px]">
           <span
-            className={`col-span-4 ${l.profit ? "text-atlas-700 font-semibold" : "text-ink-900 font-medium"}`}
+            className={`col-span-4 ${l.profit ? "text-moss-700 font-semibold" : "text-ink-900 font-medium"}`}
           >
             {l.label}
           </span>
@@ -233,7 +236,7 @@ function Ranges() {
             <span
               aria-hidden="true"
               className="absolute inset-y-0 rounded-full"
-              style={{ left: `${r.l}%`, width: `${r.h - r.l}%`, background: "#D73A14", opacity: 0.7 }}
+              style={{ left: `${r.l}%`, width: `${r.h - r.l}%`, background: colors.atlas[500], opacity: 0.7 }}
             />
             <span
               aria-hidden="true"
@@ -243,7 +246,7 @@ function Ranges() {
                 top: -2,
                 bottom: -2,
                 width: 2,
-                background: "#952509",
+                background: colors.atlas[700],
                 borderRadius: 2,
                 transform: "translateX(-50%)",
               }}

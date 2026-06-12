@@ -17,6 +17,7 @@ import {
 
 } from "@phosphor-icons/react/dist/ssr";
 import type { Icon as PhIcon } from "@phosphor-icons/react";
+import { colors } from "@/lib/design-tokens";
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -354,7 +355,7 @@ export function DivergentBars({
                     className="h-2.5 rounded-l-sm"
                     style={{
                       width: `${wA}%`,
-                      background: aWins ? "#952509" : "#D73A14",
+                      background: aWins ? colors.atlas[700] : colors.atlas[500],
                       opacity: aWins ? 1 : 0.65,
                     }}
                   />
@@ -365,7 +366,7 @@ export function DivergentBars({
                     className="h-2.5 rounded-r-sm"
                     style={{
                       width: `${wB}%`,
-                      background: !aWins ? "#952509" : "#D73A14",
+                      background: !aWins ? colors.atlas[700] : colors.atlas[500],
                       opacity: !aWins ? 1 : 0.65,
                     }}
                   />

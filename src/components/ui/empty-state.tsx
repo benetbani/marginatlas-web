@@ -59,10 +59,12 @@ const emptyStateVariants = cva(
 );
 
 // Diagonal hatch background for the "intentionally not measured" variant.
+// Warm cream surface + parchment hatch lines (conformed 2026-06-12; the
+// cool #F5F5F5 grey is banned by design-system.md 3.3).
 const HATCH_STYLE: React.CSSProperties = {
-  backgroundColor: "#F5F5F5",
+  backgroundColor: "rgb(247 246 244)", // cream-100
   backgroundImage:
-    "repeating-linear-gradient(135deg, transparent 0px, transparent 14px, rgba(232, 221, 199, 0.5) 14px, rgba(232, 221, 199, 0.5) 15px)",
+    "repeating-linear-gradient(135deg, transparent 0px, transparent 14px, rgba(228, 226, 221, 0.6) 14px, rgba(228, 226, 221, 0.6) 15px)", // parchment lines
 };
 
 export type EmptyStateSuggestion = {

@@ -12,6 +12,7 @@ import {
   synthesizeTrendMultipliers,
   trendDirection,
 } from "@/lib/cells/trend_synthesizer";
+import { colors } from "@/lib/design-tokens";
 
 type Props = {
   industryId?: string | null;
@@ -42,12 +43,14 @@ export function TrendSparkline({ industryId, width = 120, height = 32 }: Props) 
     })
     .join(" ");
 
+  // Delta semantics (design-system 3.1): rising = positive moss, softening
+  // is a caution (amber), never brand red; flat stays neutral cocoa.
   const stroke =
     dir.label === "rising"
-      ? "#15803d" // moss-700 (Atlas green)
+      ? colors.delta.positive
       : dir.label === "softening"
-        ? "#B82F0F" // clay-700
-        : "#78716c"; // cocoa-500
+        ? colors.delta.caution
+        : colors.cocoa[500];
 
   const last = points[points.length - 1];
   const lastX = padX + w;

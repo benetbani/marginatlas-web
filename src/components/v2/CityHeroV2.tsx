@@ -62,22 +62,22 @@ function parseDensity(s: string): { head: string; tail: string } {
 function StylizedPlaceholder({ cityName }: { cityName: string }) {
   const heights = [0.45, 0.7, 0.55, 0.85, 0.6, 1.0, 0.4, 0.75, 0.5, 0.9, 0.55, 0.7, 0.45];
   return (
-    <div className="absolute inset-0 bg-[#F5F5F5] overflow-hidden">
+    <div className="absolute inset-0 bg-cream-100 overflow-hidden">
       {/* sun accent */}
       <div
-        className="absolute rounded-full bg-[#D73A14]"
+        className="absolute rounded-full bg-atlas-500"
         style={{ top: "22%", right: "16%", width: "22%", paddingBottom: "22%", height: 0 }}
       />
       {/* skyline */}
       <div className="absolute bottom-0 left-0 right-0 h-[58%] flex items-end gap-[2px] px-[6%]">
         {heights.map((h, i) => (
-          <div key={i} className="flex-1 bg-[#3A3A3A]" style={{ height: h * 100 + "%" }} />
+          <div key={i} className="flex-1 bg-ink-700" style={{ height: h * 100 + "%" }} />
         ))}
       </div>
       {/* ground */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-[#000]" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-ink-900" />
       {/* corner label */}
-      <div className="absolute top-3 left-3 font-sans text-[10px] uppercase tracking-wide text-[#3A3A3A]">
+      <div className="absolute top-3 left-3 font-sans text-[10px] uppercase tracking-wide text-ink-700">
         {cityName}
       </div>
     </div>
@@ -95,12 +95,12 @@ function Stat({
 }) {
   return (
     <div>
-      <div className="font-sans text-[10px] uppercase tracking-wide text-[#3A3A3A]">{label}</div>
+      <div className="font-sans text-[10px] uppercase tracking-wide text-ink-700">{label}</div>
       <div className="mt-1 font-sans tabular-nums font-semibold text-2xl leading-tight text-black">
         {value}
       </div>
       {tail && (
-        <div className="mt-0.5 font-sans text-[11px] text-[#3A3A3A]">{tail}</div>
+        <div className="mt-0.5 font-sans text-[11px] text-ink-700">{tail}</div>
       )}
     </div>
   );
@@ -132,7 +132,7 @@ export default function CityHeroV2({
             {/* country line */}
             <div className="flex items-center gap-1.5">
               <span aria-hidden="true" className="text-sm leading-none">{flag}</span>
-              <span className="font-sans text-xs uppercase tracking-wide text-[#3A3A3A]">
+              <span className="font-sans text-xs uppercase tracking-wide text-ink-700">
                 {countryName}
               </span>
             </div>
@@ -149,12 +149,12 @@ export default function CityHeroV2({
             </h1>
 
             {/* blurb */}
-            <p className="mt-4 font-sans text-base text-[#3A3A3A] max-w-[58ch] leading-relaxed">
+            <p className="mt-4 font-sans text-base text-ink-700 max-w-[58ch] leading-relaxed">
               {editorialBlurb}
             </p>
 
             {/* stats */}
-            <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-5 border-t border-[#E5E5E5] pt-5">
+            <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-5 border-t border-parchment pt-5">
               <Stat label="Population" value={population} />
               <Stat label="Metro GDP" value={metroGdp} />
               <Stat label="Median wage" value={formatMoney(medianWageUsd)} />
@@ -164,7 +164,7 @@ export default function CityHeroV2({
             {/* typical revenue anchor + coverage chip */}
             <div className="mt-6 flex items-center justify-between gap-4 flex-wrap">
               <div className="flex items-baseline gap-2">
-                <span className="font-sans text-[10px] uppercase tracking-wide text-[#3A3A3A]">
+                <span className="font-sans text-[10px] uppercase tracking-wide text-ink-700">
                   Typical SMB revenue
                 </span>
                 <span className="font-sans tabular-nums font-semibold text-black">
@@ -184,7 +184,7 @@ export default function CityHeroV2({
 
           {/* RIGHT */}
           <div className="order-1 md:order-2">
-            <div className="relative w-full aspect-[16/9] md:aspect-[4/3] overflow-hidden rounded-2xl border border-[#E5E5E5] bg-[#F5F5F5]">
+            <div className="relative w-full aspect-[16/9] md:aspect-[4/3] overflow-hidden rounded-2xl border border-parchment bg-cream-100">
               {photoUrl ? (
                 <>
                   <img
@@ -196,12 +196,12 @@ export default function CityHeroV2({
                   {/* duotone: warm vermillion in shadows */}
                   <div
                     className="absolute inset-0 pointer-events-none"
-                    style={{ backgroundColor: "#D73A14", opacity: 0.14, mixBlendMode: "multiply" }}
+                    style={{ backgroundColor: colors.atlas[500], opacity: 0.14, mixBlendMode: "multiply" }}
                   />
                   {/* lift highlights */}
                   <div
                     className="absolute inset-0 pointer-events-none"
-                    style={{ backgroundColor: "#F5F5F5", opacity: 0.08, mixBlendMode: "screen" }}
+                    style={{ backgroundColor: colors.cream[100], opacity: 0.08, mixBlendMode: "screen" }}
                   />
                 </>
               ) : (
