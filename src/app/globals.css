@@ -383,4 +383,16 @@
   a.atlas-link {
     @apply text-atlas-600 hover:text-atlas-700 transition-colors;
   }
+
+  /* ma- glyph family (AtlasIcon / AtlasPictogram, Fable P1-05): the single
+     sanctioned vermillion accent inside a glyph. Values mirror the tokens
+     (atlas-500 #e62200 in design-tokens.ts); the ink lines ride
+     currentColor from the component. */
+  .ma-glyph .a {
+    stroke: #e62200;
+  }
+  .ma-glyph .af {
+    fill: #e62200;
+    stroke: none;
+  }
 }

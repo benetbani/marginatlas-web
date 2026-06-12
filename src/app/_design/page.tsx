@@ -80,6 +80,8 @@ import {
 } from "@/components/board/format";
 
 import { colors, fontFamily, fontSize, radius, elevation, duration, easing, z } from "@/lib/design-tokens";
+import { AtlasIcon, ATLAS_ICONS } from "@/components/brand/icons";
+import { AtlasPictogram, ATLAS_PICTOGRAMS } from "@/components/brand/pictograms";
 
 export const dynamic = "force-dynamic";
 
@@ -116,6 +118,7 @@ export default async function DesignCatalogPage({
         <StateSection />
         <SkeletonsSection />
         <MotionSection />
+        <BrandGlyphsSection />
         <ExistingPrimitivesSection />
       </main>
     </div>
@@ -904,6 +907,93 @@ function SkeletonsSection() {
       <SubSection title="LoadingSkeleton (card-grid layout)">
         <div className="bg-cream-50 -mx-6 px-0 py-2 rounded-md">
           <LoadingSkeleton variant="card-grid" />
+        </div>
+      </SubSection>
+    </Section>
+  );
+}
+
+function BrandGlyphsSection() {
+  const iconGroups = [...new Set(ATLAS_ICONS.map((d) => d.group))];
+  const pictoGroups = [...new Set(ATLAS_PICTOGRAMS.map((d) => d.group))];
+  return (
+    <Section
+      title="Brand glyphs (ma- family)"
+      description="The 40 UI icons and 64 trade/venue pictograms ported from the design export (Fable P1-05). One family: 32-unit grid, 1.6 stroke, currentColor ink, at most one vermillion accent per glyph. Decorative usage is aria-hidden; icon-only controls need aria-label."
+    >
+      <SubSection title="AtlasIcon (40, by group, at 24px)">
+        <div className="space-y-6">
+          {iconGroups.map((g) => (
+            <div key={g}>
+              <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-ink-500">
+                {g.replace(/-/g, " ")}
+              </div>
+              <div className="grid grid-cols-3 gap-3 sm:grid-cols-5 lg:grid-cols-8">
+                {ATLAS_ICONS.filter((d) => d.group === g).map((d) => (
+                  <div
+                    key={d.id}
+                    className="flex flex-col items-center gap-1.5 rounded-md border border-parchment bg-white px-2 py-3 text-center"
+                  >
+                    <AtlasIcon id={d.id} size={24} className="text-ink-700" />
+                    <span className="text-[10px] leading-tight text-cocoa-700">
+                      {d.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </SubSection>
+      <SubSection title="AtlasPictogram (64, by trade family, at 32px)">
+        <div className="space-y-6">
+          {pictoGroups.map((g) => (
+            <div key={g}>
+              <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-ink-500">
+                {g.replace(/-/g, " ")}
+              </div>
+              <div className="grid grid-cols-3 gap-3 sm:grid-cols-5 lg:grid-cols-8">
+                {ATLAS_PICTOGRAMS.filter((d) => d.group === g).map((d) => (
+                  <div
+                    key={d.id}
+                    className="flex flex-col items-center gap-1.5 rounded-md border border-parchment bg-white px-2 py-3 text-center"
+                  >
+                    <AtlasPictogram id={d.id} size={32} className="text-ink-700" />
+                    <span className="text-[10px] leading-tight text-cocoa-700">
+                      {d.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </SubSection>
+      <SubSection title="Sizes and states">
+        <div className="flex flex-wrap items-end gap-6">
+          {[16, 20, 24].map((s) => (
+            <div key={s} className="flex flex-col items-center gap-1">
+              <AtlasIcon id="owner-keeps" size={s} className="text-ink-700" />
+              <span className="text-[10px] text-cocoa-700">{s}px</span>
+            </div>
+          ))}
+          <div className="flex flex-col items-center gap-1">
+            <AtlasIcon id="owner-keeps" size={24} className="text-ink-900" />
+            <span className="text-[10px] text-cocoa-700">ink-900 (hover)</span>
+          </div>
+          <div className="flex flex-col items-center gap-1">
+            <AtlasIcon id="owner-keeps" size={24} className="text-atlas-700" />
+            <span className="text-[10px] text-cocoa-700">atlas-700 (active)</span>
+          </div>
+          <div className="flex flex-col items-center gap-1">
+            <AtlasIcon
+              id="search"
+              size={24}
+              className="text-ink-700"
+              aria-label="Search"
+            />
+            <span className="text-[10px] text-cocoa-700">icon-only (labeled)</span>
+          </div>
         </div>
       </SubSection>
     </Section>
