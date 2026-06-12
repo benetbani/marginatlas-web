@@ -18,15 +18,11 @@ conformed to the warm tokens, the font showcase is live for your display-face de
 and the US wrong-industry bug (legal-services rendering software numbers) is root-caused
 and fixed with dry-run evidence. Seven commits, each independently revertable.
 
-## The preview
+## The preview (the complete run, all 29 gates + tsc green)
 
-A second preview with the complete run deploys at the end of the session; the first
-validated preview (all 29 gates + tsc green, everything except the final glyph commit):
+    https://marginatlas-web-twtl-puficuave-benets-projects-3110e8e1.vercel.app
 
-    https://marginatlas-web-twtl-co1az82ef-benets-projects-3110e8e1.vercel.app
-
-(needs the protection-bypass header or your logged-in Vercel session; the final preview
-URL is in the session terminal output.)
+(open it logged into Vercel, or with the protection-bypass header)
 
 ## What to try (in order)
 
