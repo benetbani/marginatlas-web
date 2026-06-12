@@ -31,6 +31,7 @@ import {
   industryToSlug,
   resolveToMeasuredIndustry,
   isExcludedFromDiscovery,
+  type Industry,
 } from "./taxonomy";
 import { iso2ToIso3, iso3ToIso2, iso2ToName } from "./countries";
 import {
@@ -40,6 +41,7 @@ import {
   MANUAL_DISPLAY_LABEL,
 } from "./cities/manual_city_aliases";
 import { isCellSuppressed, applyCellOverrides } from "./cells/triage";
+import { pickMatchingRow } from "./cells/us_industry_match";
 import { getPopularPlaceName } from "./geo/popular_place_overrides";
 import {
   REVENUE_PER_FIRM_BOUNDS,
@@ -347,6 +349,23 @@ export async function getRegionalCellVariants(
     .filter((c): c is Cell => c !== null);
 }
 
+/**
+ * Stamp a KNOWN industry onto a cell (foundation fix 2026-06-12). The US
+ * lookup validates which industry a row truly is; this overrides the
+ * naics-3 guess in applyTaxonomy (first-3-digits mapping renamed a Legal
+ * Services row "Software development" because both live in 541). The row's
+ * own industry_description is left untouched: it is the provenance truth.
+ */
+function stampIndustry(cell: Cell, ind: Industry): Cell {
+  cell.industry_id = ind.id;
+  cell.industry_name = ind.name;
+  cell.industry_examples = ind.examples;
+  cell.sector_id = ind.sector_id;
+  const sec = SECTOR_BY_ID[ind.sector_id];
+  if (sec) cell.sector_name = sec.name;
+  return cell;
+}
+
 /** Add industry_id / industry_name / sector via taxonomy. */
 function applyTaxonomy(c: Cell): Cell {
   const industryId = c.industry_id ?? naics6ToIndustry(c.naics_6);
@@ -578,11 +597,26 @@ async function getCellBySlugRaw(
     return null;
   }
 
-  // First try friendly industry slug → industry_id → matching NAICS-3 prefix.
+  // Friendly industry slug → taxonomy industry → NAICS-3 candidate set,
+  // VALIDATED against the requested industry (foundation fix 2026-06-12).
+  //
+  // The old query took the single largest-n row in the NAICS-3 group, so
+  // /us/california/legal-services silently rendered Software development
+  // (the biggest 541 row) under a legal URL. Now: fetch the group, keep the
+  // (year, n) preference ORDER, but only return a row whose description
+  // actually reads as the requested industry, or as a TRUE parent_id
+  // ancestor (sub-niches honestly inherit their parent's row). The curated
+  // proxy fallbacks (pharmacy -> grocery) are excluded on purpose; with no
+  // honest match we return null and the caller synthesizes a modeled cell
+  // NAMED for the requested industry instead of mislabeling a sibling's.
   const rawInd = slugToIndustry(industrySlug);
   const ind = resolveToMeasuredIndustry(rawInd);
-  if (ind && (ind.naics_3 || []).length) {
-    const naics3Prefixes = (ind.naics_3 || []).map((n) => `${n}%`);
+  // NAICS prefixes come from the slug's own industry when it has them,
+  // else from the measured parent (sub-niches usually carry none).
+  const naicsSource =
+    rawInd && (rawInd.naics_3 || []).length ? rawInd : ind;
+  if (rawInd && naicsSource && (naicsSource.naics_3 || []).length) {
+    const naics3Prefixes = (naicsSource.naics_3 || []).map((n) => `${n}%`);
     let q = supabaseAdmin
       .from("cells_master")
       .select("*")
@@ -590,18 +624,28 @@ async function getCellBySlugRaw(
       .eq("geo_id", geoId)
       .order("year", { ascending: false, nullsFirst: false })
       .order("n", { ascending: false, nullsFirst: false })
-      .limit(1);
+      // A state's NAICS-3 group can exceed 300 rows (grain duplicates x
+      // size bands x years); a short slice can cut off the right industry
+      // entirely (FL real-estate agents sat past row 200).
+      .limit(1000);
     if (selector.sizeBand) q = q.eq("size_band", selector.sizeBand);
     if (selector.year) q = q.eq("year", selector.year);
     const orClauses = naics3Prefixes.map((p) => `naics_6.like.${p}`).join(",");
     q = q.or(orClauses);
     const { data, error } = await q;
     if (!error && data && data.length > 0) {
-      return normalizeRow(data[0] as Record<string, unknown>);
+      const picked = pickMatchingRow(
+        data as Array<Record<string, unknown>>,
+        rawInd,
+      );
+      if (picked) {
+        return stampIndustry(normalizeRow(picked.row), picked.matchedIndustry);
+      }
     }
   }
 
-  // Fallback: fuzzy industry_description search.
+  // Fallback: fuzzy industry_description search, gated by the same
+  // validation so a loose ilike can no longer land on a sibling industry.
   const fuzzy = industrySlug.replace(/-/g, "%");
   let q2 = supabaseAdmin
     .from("cells_master")
@@ -611,11 +655,22 @@ async function getCellBySlugRaw(
     .ilike("industry_description", `%${fuzzy}%`)
     .order("year", { ascending: false, nullsFirst: false })
     .order("n", { ascending: false, nullsFirst: false })
-    .limit(1);
+    .limit(50);
   if (selector.sizeBand) q2 = q2.eq("size_band", selector.sizeBand);
   if (selector.year) q2 = q2.eq("year", selector.year);
   const { data, error } = await q2;
   if (error || !data || data.length === 0) return null;
+  if (rawInd) {
+    const picked = pickMatchingRow(
+      data as Array<Record<string, unknown>>,
+      rawInd,
+    );
+    return picked
+      ? stampIndustry(normalizeRow(picked.row), picked.matchedIndustry)
+      : null;
+  }
+  // Unknown slug (no taxonomy entry): the ilike itself matched the slug's
+  // own words, which is the only signal we have; keep prior behavior.
   return normalizeRow(data[0] as Record<string, unknown>);
 }
 
@@ -638,9 +693,11 @@ export async function getCellVariants(
   }
 
   const ind = slugToIndustry(industrySlug);
-  if (!ind || !(ind.naics_3 || []).length) return [];
+  const variantNaicsSource =
+    ind && (ind.naics_3 || []).length ? ind : resolveToMeasuredIndustry(ind);
+  if (!ind || !variantNaicsSource || !(variantNaicsSource.naics_3 || []).length) return [];
 
-  const naics3Prefixes = (ind.naics_3 || []).map((n) => `${n}%`);
+  const naics3Prefixes = (variantNaicsSource.naics_3 || []).map((n) => `${n}%`);
   const orClauses = naics3Prefixes.map((p) => `naics_6.like.${p}`).join(",");
   const { data, error } = await supabaseAdmin
     .from("cells_master")
@@ -650,9 +707,18 @@ export async function getCellVariants(
     .or(orClauses)
     .order("year", { ascending: false, nullsFirst: false })
     .order("n", { ascending: false, nullsFirst: false })
-    .limit(200);
+    .limit(1000);
   if (error || !data) return [];
-  return data.map((r) => normalizeRow(r as Record<string, unknown>));
+  // Variants must be the SAME industry as the canonical pick, not the whole
+  // NAICS-3 group (foundation fix 2026-06-12: the group mixes siblings, so
+  // unvalidated variants let a legal page switch into software size bands).
+  const rows = data as Array<Record<string, unknown>>;
+  const picked = pickMatchingRow(rows, ind);
+  if (!picked) return [];
+  const canonicalDesc = picked.row.industry_description as string | null;
+  return rows
+    .filter((r) => (r.industry_description as string | null) === canonicalDesc)
+    .map((r) => stampIndustry(normalizeRow(r), picked.matchedIndustry));
 }
 
 // Time-series helpers moved to cells/time_series.ts.

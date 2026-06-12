@@ -85,14 +85,23 @@ export function CellWarningChips({
   // to public visitors. `year` prop is retained for type compatibility.
   void year;
 
-  // AA.9 — industry-mapping warning
+  // AA.9 — industry-mapping warning. Slug-normalize both sides: the old
+  // substring check compared a dashed slug against a spaced name, so
+  // "legal-services" vs "Legal services" false-positived the banner even
+  // when the page showed exactly what the URL asked for.
+  const asSlug = (s: string) =>
+    s
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[̀-ͯ]/g, "")
+      .replace(/&/g, " and ")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
   if (
     requestedIndustrySlug &&
     resolvedIndustryName &&
     resolvedIndustryUrl &&
-    !requestedIndustrySlug
-      .toLowerCase()
-      .includes(resolvedIndustryName.toLowerCase().slice(0, 6))
+    asSlug(requestedIndustrySlug) !== asSlug(resolvedIndustryName)
   ) {
     chips.push(
       <span

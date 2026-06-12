@@ -314,13 +314,18 @@ export default async function CellPage({
     .sort((a, b) => a.name.localeCompare(b.name));
 
   // Caveat resolution: which industry record did the URL hit, and are we
-  // displaying parent-fallback numbers?
+  // displaying different-industry numbers? Since the foundation fix
+  // (2026-06-12) the CELL carries the industry it truly is (the validated
+  // US lookup stamps it), so the honest comparison is request vs cell, not
+  // request vs the static taxonomy collapse.
   const requestedIndustry = slugToIndustry(industry);
   const measuredIndustry = resolveToMeasuredIndustry(requestedIndustry);
+  const displayedIndustry =
+    (cell.industry_id && INDUSTRY_BY_ID[cell.industry_id]) || measuredIndustry;
   const usingParentData = !!(
     requestedIndustry &&
-    measuredIndustry &&
-    requestedIndustry.id !== measuredIndustry.id
+    displayedIndustry &&
+    requestedIndustry.id !== displayedIndustry.id
   );
   // Silence eslint unused — INDUSTRY_BY_ID may not be used directly here
   void INDUSTRY_BY_ID;
@@ -605,10 +610,10 @@ export default async function CellPage({
       <CellWarningChips
         year={cell.year}
         requestedIndustrySlug={industry}
-        resolvedIndustryName={measuredIndustry?.name}
+        resolvedIndustryName={displayedIndustry?.name}
         resolvedIndustryUrl={
-          measuredIndustry
-            ? `/${country.toLowerCase()}/${geo}/${industryToSlug(measuredIndustry.id)}`
+          displayedIndustry
+            ? `/${country.toLowerCase()}/${geo}/${industryToSlug(displayedIndustry.id)}`
             : undefined
         }
         country={country.toUpperCase()}
