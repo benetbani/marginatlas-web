@@ -86,8 +86,11 @@ export function StatGrid({
     );
   }
 
+  // SaaS reformation 2026-06-12: stat values step up to display weight
+  // (serif, tighter tracking) and rows get more air, so each cell reads as
+  // a small KPI tile rather than a ledger line. Labels stay micro-caps.
   return (
-    <dl className="grid grid-cols-2 gap-x-6 gap-y-3 md:grid-cols-3">
+    <dl className="grid grid-cols-2 gap-x-6 gap-y-5 md:grid-cols-3">
       {rows.map((row) => {
         const blank = (row.value == null || row.value === MISSING) && !row.node;
         return (
@@ -95,14 +98,14 @@ export function StatGrid({
             key={row.label}
             className={blank && muteEmpty ? "opacity-60" : undefined}
           >
-            <dt className="text-[11px] uppercase tracking-wide text-cocoa-500">
+            <dt className="text-[11px] uppercase tracking-wide text-ink-500">
               {row.label}
             </dt>
             <dd
               className={
                 blank
-                  ? "font-display text-lg font-semibold tabular-nums text-cocoa-400"
-                  : "font-display text-lg font-semibold tabular-nums text-ink-900"
+                  ? "mt-1 font-display text-xl font-semibold tabular-nums tracking-tight text-cocoa-400 md:text-2xl"
+                  : "mt-1 font-display text-xl font-semibold tabular-nums tracking-tight text-ink-900 md:text-2xl"
               }
             >
               {row.node ?? (blank ? MISSING : row.value)}

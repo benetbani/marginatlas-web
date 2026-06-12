@@ -20,7 +20,6 @@
  * client/server decision and returns null when its core data is absent).
  */
 import * as React from "react";
-import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { StatGrid, type StatRow } from "./StatGrid";
 import { ShowMore } from "./ShowMore";
 
@@ -64,22 +63,23 @@ export function DataSection({
   const overflow = section.rows.slice(INLINE_ROWS);
 
   return (
-    <section className="mt-8">
-      {variant === "ruled" ? (
-        <h3 className="font-display text-base font-semibold tracking-tight text-ink-900 md:text-lg">
-          {section.title}
-        </h3>
-      ) : (
-        <SectionEyebrow>{section.title}</SectionEyebrow>
-      )}
+    // SaaS reformation 2026-06-12 (founder direction): each board section is
+    // a seated white card on the warm app ground, not a hairline stripe on a
+    // flat sheet. The section title is a real serif heading (a scanning
+    // anchor), with the old eyebrow treatment kept above it as the quiet
+    // category voice. One surface per section; the ground breathes between.
+    <section className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
+      <h3 className="font-display text-lg font-semibold tracking-tight text-ink-900 md:text-xl">
+        {section.title}
+      </h3>
 
       {section.dek ? (
-        <p className="mt-1 text-sm text-cocoa-700">{section.dek}</p>
+        <p className="mt-1.5 text-sm leading-relaxed text-cocoa-700">{section.dek}</p>
       ) : null}
 
-      {section.chart ? <div className="mt-3">{section.chart}</div> : null}
+      {section.chart ? <div className="mt-4">{section.chart}</div> : null}
 
-      <div className="mt-3">
+      <div className="mt-4">
         <StatGrid rows={inline} muteEmpty={muteEmpty} variant={variant} />
       </div>
 

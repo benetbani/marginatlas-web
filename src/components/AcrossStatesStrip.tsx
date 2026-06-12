@@ -32,15 +32,16 @@ export function AcrossStatesStrip({ industryName, currentGeoName, cells }: Props
   if (ranked.length === 0) return null;
 
   return (
-    <section className="py-8">
-      <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
+    // SaaS reformation 2026-06-12: seated card section on the app ground.
+    <section className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
+      <h2 className="font-display text-lg md:text-xl font-semibold tracking-tight text-ink-900">
         {industryName} across the country
       </h2>
-      <p className="text-sm text-ink-700/70 mt-1">
+      <p className="text-sm text-ink-700/70 mt-1.5">
         How {currentGeoName} stacks up against the other states. Bars and
         numbers both show typical revenue per firm.
       </p>
-      <div className="mt-4 atlas-card p-4 md:p-5">
+      <div className="mt-4">
         <BarList
           size="compact"
           data={ranked.map((c) => ({

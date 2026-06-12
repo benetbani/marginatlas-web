@@ -10,7 +10,6 @@
  * empty heading). Server component. Tokens only, mobile-first.
  */
 import * as React from "react";
-import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 
 export interface FailureCardsProps {
   cards: { title: string; body: string }[];
@@ -20,16 +19,20 @@ export function FailureCards({ cards }: FailureCardsProps) {
   if (!cards || cards.length === 0) return null;
 
   return (
-    <section className="mt-8">
-      <SectionEyebrow>What kills weak operators</SectionEyebrow>
-      <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+    // SaaS reformation 2026-06-12: seated card section; the warning cards
+    // inside go white-on-card with the amber caution accent on the title.
+    <section className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
+      <h3 className="font-display text-lg font-semibold tracking-tight text-ink-900 md:text-xl">
+        What kills weak operators
+      </h3>
+      <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
         {cards.map((card, i) => (
           <article
             key={`${card.title}-${i}`}
-            className="rounded-lg border border-parchment bg-cream-50 p-3"
+            className="rounded-md border border-parchment bg-white p-4"
           >
-            <h3 data-typography="custom" className="font-semibold text-ink-900">{card.title}</h3>
-            <p className="mt-1 text-sm text-cocoa-700">{card.body}</p>
+            <h4 data-typography="custom" className="font-semibold text-ink-900">{card.title}</h4>
+            <p className="mt-1 text-sm leading-relaxed text-cocoa-700">{card.body}</p>
           </article>
         ))}
       </div>

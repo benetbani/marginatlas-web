@@ -50,14 +50,17 @@ export function BoardHero({ title, breakIn, score, switcher }: BoardHeroProps) {
   const showBreakIn = breakIn != null;
   const showScore = !showBreakIn && score != null;
 
+  // SaaS reformation 2026-06-12: the masthead grows into a confident hero.
+  // The H1 takes the full display step (the page's one serif anchor moment);
+  // the score row keeps its quiet seat underneath.
   return (
-    <header className="pb-3 pt-6">
-      <h1 className="text-balance font-display text-2xl font-semibold tracking-tight text-ink-900 md:text-3xl">
+    <header className="pb-4 pt-7 md:pt-9">
+      <h1 className="text-balance font-display text-3xl font-medium tracking-tight text-ink-900 md:text-4xl">
         {title}
       </h1>
 
       {showBreakIn || showScore || switcher ? (
-        <div className="mt-3 flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
+        <div className="mt-4 flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
           {showBreakIn ? (
             <BreakInMasthead rating={breakIn} />
           ) : showScore ? (
