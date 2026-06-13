@@ -10,6 +10,12 @@ export const metadata = {
     "Put the same small business in up to three cities side by side: typical revenue, net margin, owner take-home, rent and labor pressure, and the spread.",
 };
 
+// Render per request: the default matchup is resolved server-side via live cell
+// reads, so the page must not be statically prerendered at build time (that would
+// run the database reads during the build and could ship a stale default). At
+// request time the production database resolves the three budgeted reads quickly.
+export const dynamic = "force-dynamic";
+
 /**
  * The matchup the page lands on. Kept in lockstep with DEFAULT_SLOTS in
  * CompareClient: the page fetches the cells for exactly these slots server-side
