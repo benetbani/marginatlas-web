@@ -37,6 +37,7 @@ import { fmtUSD } from "@/components/board/format";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { AtlasPictogram } from "@/components/brand/pictograms";
 import { industryPictogramId } from "@/lib/brand/industry_pictogram";
+import { NeighborhoodCover } from "@/components/cities/NeighborhoodCover";
 
 type City = { slug: string; name: string; iso2: string; pop_m: number };
 export type Neighborhood = {
@@ -275,6 +276,14 @@ export function NeighborhoodOverview({
 
   return (
     <article className="pb-16 max-w-5xl mx-auto px-4 md:px-6 pt-2 md:pt-4">
+      {/* Cover banner: an honest designed placeholder (gradient + engraved
+          street grid), not a photo of the place. */}
+      <NeighborhoodCover
+        name={nb.name}
+        seed={`${city.slug}-${nb.slug}`}
+        className="h-28 md:h-40 rounded-2xl mb-5"
+      />
+
       {/* 1) HEADLINE -------------------------------------------------------- */}
       <div className="flex items-center gap-2 text-xs uppercase tracking-wide text-cocoa-700 font-semibold mb-3 flex-wrap">
         <Link href={`/cities/${city.slug}`} className="hover:text-atlas-700 transition-colors">

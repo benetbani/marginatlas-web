@@ -24,6 +24,23 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
+import { colors } from "@/lib/design-tokens";
+
+// Rank ramp for the gradient mode: the leader takes the deepest vermillion,
+// descending down the order. The shade ENCODES rank, so it stays honest, not
+// decorative. Token steps only.
+const RANK_RAMP = [
+  colors.atlas[700],
+  colors.atlas[600],
+  colors.atlas[500],
+  colors.atlas[400],
+] as const;
+
+function rampColor(idx: number, n: number): string {
+  if (n <= 1) return RANK_RAMP[0];
+  const t = idx / (n - 1);
+  return RANK_RAMP[Math.min(RANK_RAMP.length - 1, Math.round(t * (RANK_RAMP.length - 1)))];
+}
 
 export type BarListItem = {
   name: string;
@@ -39,6 +56,12 @@ export interface BarListProps extends React.HTMLAttributes<HTMLDivElement> {
   valueFormatter?: (n: number) => string;
   /** Bar color (any CSS color). Default vermillion atlas-700. */
   color?: string;
+  /**
+   * Rank-shaded gradient fill (2026-06-13): each bar is a left-to-right
+   * vermillion sheen whose depth encodes rank, the leader deepest. Off by
+   * default so existing single-color consumers are unchanged.
+   */
+  gradient?: boolean;
   /** Optional sort. Default: data order preserved. */
   sortOrder?: "asc" | "desc" | "none";
   /** "default" (24px bar) or "compact" (18px bar). */
@@ -56,7 +79,8 @@ const DEFAULT_FORMATTER = (n: number) => n.toFixed(2);
 export function BarList({
   data,
   valueFormatter = DEFAULT_FORMATTER,
-  color = "rgb(149 37 9)" /* atlas-700 */,
+  color = colors.atlas[700],
+  gradient = false,
   sortOrder = "none",
   size = "default",
   nameColWidth = "minmax(0, 1fr)",
@@ -121,7 +145,17 @@ export function BarList({
               >
                 <div
                   className="h-full rounded-sm"
-                  style={{ width: `${pct}%`, backgroundColor: color }}
+                  style={
+                    gradient
+                      ? {
+                          width: `${pct}%`,
+                          backgroundImage: `linear-gradient(90deg, ${colors.atlas[300]} 0%, ${rampColor(
+                            idx,
+                            sorted.length,
+                          )} 100%)`,
+                        }
+                      : { width: `${pct}%`, backgroundColor: color }
+                  }
                 />
               </div>
             </div>

@@ -44,6 +44,7 @@ export function AcrossStatesStrip({ industryName, currentGeoName, cells }: Props
       <div className="mt-4">
         <BarList
           size="compact"
+          gradient
           data={ranked.map((c) => ({
             name: c.geo_name || c.geo_id,
             value: c.revenue_per_firm || 0,

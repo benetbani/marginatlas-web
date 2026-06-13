@@ -66,7 +66,7 @@ export function CityPeers({ citySlug, cityName }: CityPeersProps) {
   if (peers.length < 2) return null;
 
   return (
-    <section className="py-10 md:py-14">
+    <section className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
       <SectionEyebrow className="mb-2">Cities like {cityName}</SectionEyebrow>
       <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mb-2 max-w-3xl">
         How {cityName} compares to similar cities

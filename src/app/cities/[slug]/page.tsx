@@ -61,6 +61,7 @@ import { getNeighborhoodEconomics } from "@/lib/economics/neighborhood_economics
 import { slugToIndustry } from "@/lib/taxonomy";
 import { AtlasPictogram } from "@/components/brand/pictograms";
 import { industryPictogramId } from "@/lib/brand/industry_pictogram";
+import { NeighborhoodCover } from "@/components/cities/NeighborhoodCover";
 
 export const revalidate = 43200; // 12 hours
 
@@ -331,7 +332,7 @@ export default async function CityPage({
            full list one click away. The redundant full grid, the "N sub-areas"
            heading, and the "shape of {city}" subtitle were removed. */}
         {shownNeighborhoods.length > 0 && (
-          <section className="mb-12 md:mb-16">
+          <section className="mb-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
             <div className="text-xs uppercase tracking-wide text-atlas-600 font-semibold mb-2">
               Neighborhoods
             </div>
@@ -357,19 +358,26 @@ export default async function CityPage({
                   <Link
                     key={n.slug}
                     href={`/${city.iso2.toLowerCase()}/${city.slug}/${n.slug}`}
-                    className="group block rounded-xl border border-parchment hover:border-atlas-500 bg-cream-50 p-4 transition-colors"
+                    className="group block overflow-hidden rounded-xl border border-parchment bg-white shadow-subtle transition-all hover:-translate-y-px hover:border-atlas-300 hover:shadow-lift"
                   >
-                    <div className="font-medium text-sm text-ink-900 group-hover:text-atlas-700 leading-tight">
-                      {n.name}
-                    </div>
-                    <div className="text-[11px] text-cocoa-700/60 mt-1 capitalize">
-                      {n.character.replace(/-/g, " ")}
-                    </div>
-                    {streets.length > 0 ? (
-                      <div className="text-[11px] text-cocoa-700/80 mt-2 leading-snug">
-                        {streets.join(", ")}
+                    <NeighborhoodCover
+                      name={n.name}
+                      seed={`${city.slug}-${n.slug}`}
+                      className="h-20"
+                    />
+                    <div className="p-4">
+                      <div className="font-medium text-sm text-ink-900 group-hover:text-atlas-700 leading-tight">
+                        {n.name}
                       </div>
-                    ) : null}
+                      <div className="text-[11px] text-cocoa-700/60 mt-1 capitalize">
+                        {n.character.replace(/-/g, " ")}
+                      </div>
+                      {streets.length > 0 ? (
+                        <div className="text-[11px] text-cocoa-700/80 mt-2 leading-snug">
+                          {streets.join(", ")}
+                        </div>
+                      ) : null}
+                    </div>
                   </Link>
                 );
               })}
@@ -393,7 +401,7 @@ export default async function CityPage({
            invented number; the list self-omits below three rows. Each row links to
            that activity's full cell benchmark under the city. */}
         {activities.length > 0 && (
-          <section className="mt-10">
+          <section className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
             <SectionEyebrow>Everyday trades</SectionEyebrow>
             <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mt-1">
               What an owner keeps in {city.name}
