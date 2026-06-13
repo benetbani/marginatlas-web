@@ -8,10 +8,11 @@
 
 ## The preview
 
-    <PREVIEW_URL>
+    https://marginatlas-web-twtl-ilu8dpgk2-benets-projects-3110e8e1.vercel.app
 
-(open logged into Vercel, or with the protection-bypass header). The remote build runs the
-full gate suite + tsc + all pages, so a green deploy is a real end-to-end check.
+(open logged into Vercel, or with the protection-bypass header). The remote build ran the
+full 30-gate suite + tsc + all ~615 pages and came back READY, so this is a real end-to-end
+green check, not just a local one.
 
 ## What to look at first
 
