@@ -158,6 +158,11 @@ function resolveActivityCellSlug(activityId: string): string | null {
 function pctLabel(final: number): string {
   const pct = Math.round((final - 1) * 100);
   if (pct === 0) return "par";
+  // The multiplier is clamped to about 0.4x..3.0x, so strong trades pin to the
+  // +200% ceiling. Show an honest band at the rails rather than a wall of
+  // identical false-precise "+200%" figures. Mirrors the view-model helper.
+  if (pct >= 195) return "2x or more";
+  if (pct <= -58) return "less than half";
   return `${pct > 0 ? "+" : ""}${pct}%`;
 }
 
@@ -456,7 +461,7 @@ export function NeighborhoodOverview({
               id="adjacent"
               eyebrow="Versus the areas next door"
               heading={`${nb.name} against the districts beside it`}
-              lede={`The same trade, one city, comparable prices, so the stronger area is marked.`}
+              lede={`The same trade, one city, comparable prices. Where one area clearly leads it is marked; several can sit at the top together.`}
               columns={view.adjacent.columns}
               rows={view.adjacent.rows}
               footnote={view.adjacent.footnote}

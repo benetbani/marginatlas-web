@@ -96,6 +96,12 @@ export type NeighborhoodOverviewView = {
 function pctLabel(final: number): string {
   const pct = Math.round((final - 1) * 100);
   if (pct === 0) return "par";
+  // The underlying multiplier is clamped to a sane band (about 0.4x to 3.0x), so
+  // many strong trades pin to the +200% ceiling. Printing an identical exact
+  // "+200%" for half a dozen trades reads as fabricated; at the rails we show an
+  // honest "2x or more" / "less than half" band instead of a false-precise number.
+  if (pct >= 195) return "2x or more";
+  if (pct <= -58) return "less than half";
   return `${pct > 0 ? "+" : ""}${pct}%`;
 }
 
@@ -221,10 +227,9 @@ export function buildNeighborhoodOverviewView(
       ? ` It reads as a ${flavor.price_tier} area to operate in.`
       : "";
     operatingCost = {
-      headline:
-        rentPct > 0
-          ? `Commercial rent runs about +${rentPct}% versus the rest of ${cityName}.`
-          : `Commercial rent runs about ${rentPct}% versus the rest of ${cityName}.`,
+      headline: `Commercial rent runs about ${pctLabel(
+        rentMult,
+      )} versus the rest of ${cityName}.`,
       detail:
         (rentPct > 0
           ? "Budget for the premium before the revenue lift talks you into the site: the two rarely move at the same pace."
@@ -339,6 +344,6 @@ function buildAdjacent(
   return {
     columns: cols,
     rows,
-    footnote: `Lift is modeled against the city baseline for the same trade, so the leader is marked. Character is the area's dominant pull.`,
+    footnote: `Lift is modeled against the city baseline for the same trade; where one area clearly leads it is marked. Character is the area's dominant pull.`,
   };
 }
