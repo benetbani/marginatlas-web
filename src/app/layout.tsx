@@ -12,7 +12,7 @@ import type { Metadata } from "next";
 export const preferredRegion = "fra1";
 
 import Script from "next/script";
-import { Newsreader, Inter } from "next/font/google";
+import { Fraunces, Inter } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Organization } from "@/components/StructuredData";
 import { HeaderSearch } from "@/components/HeaderSearch";
@@ -21,16 +21,19 @@ import { FooterNewsletterBar } from "@/components/newsletter/NewsletterSignupVar
 import { LogoWordmark } from "@/components/brand/LogoWordmark";
 import { PaywallModalRoot } from "@/components/monetization";
 
-// Typography reset.
-// Newsreader: warm, bookish editorial serif designed for screen reading.
-// Used for H1/H2/H3 and the single hero number per page.
-// Inter: clean, neutral sans for body text + ALL numbers in tables, stats,
-// and waterfall lines (with tabular-nums enabled). Replaces Cormorant
-// Garamond which read too thin at large sizes and was unreadable on
-// 7-digit dollar numbers.
-const newsreader = Newsreader({
+// Typography.
+// Display face decision 2026-06-13 (Fable, founder-delegated): Fraunces, a warm,
+// distinctive editorial serif with characterful display-size numerals, replaces
+// Newsreader (which read generic) on the open --font-display slot. The brand
+// brief calls for "a signature face worth investing in"; Fraunces carries the
+// almanac soul while staying confident on a 7-figure anchor number. Loaded as
+// the variable font (opsz optical sizing) so headings and the masthead figure
+// get the display cut. Literata is the documented fallback if it reads too
+// characterful live (a one-line swap back to this slot).
+// Inter: clean, neutral sans for body text + ALL numbers in tables, stats, and
+// waterfall lines (with tabular-nums enabled).
+const fraunces = Fraunces({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   display: "swap",
   variable: "--font-display",
   style: ["normal", "italic"],
@@ -82,7 +85,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${newsreader.variable} ${inter.variable}`}>
+    <html lang="en" className={`${fraunces.variable} ${inter.variable}`}>
       {/* SaaS reformation 2026-06-12 — the body is the warm app ground
           (cream-75 via the `body` rule in globals.css). The .atlas-paper
           class stays on map containers and white panels only; white cards
