@@ -22,6 +22,25 @@
 import * as React from "react";
 import { StatGrid, type StatRow } from "./StatGrid";
 import { ShowMore } from "./ShowMore";
+import { AtlasIcon } from "@/components/brand/icons";
+import type { AtlasIconId } from "@/components/brand/icons";
+
+// Quiet ma- mark per board section, keyed by the section key the builders use
+// (cell / city / country boards share these). A recurring section always reads
+// with the same glyph, the design-system "one mark per recurring concept" rule.
+const SECTION_ICON: Record<string, AtlasIconId> = {
+  numbers: "revenue",
+  opening: "startup-cost",
+  market: "competition",
+  pricing: "spending-power",
+  deformation: "compare",
+  tax: "taxes",
+  friction: "red-tape",
+  demand: "best-areas",
+  location: "commercial-rent",
+  labor: "wages",
+  survival: "first-year",
+};
 
 /**
  * One section of the board. `rows` is rendered in full (first eight inline,
@@ -69,7 +88,14 @@ export function DataSection({
     // anchor), with the old eyebrow treatment kept above it as the quiet
     // category voice. One surface per section; the ground breathes between.
     <section className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
-      <h3 className="font-display text-lg font-semibold tracking-tight text-ink-900 md:text-xl">
+      <h3 className="flex items-center gap-2 font-display text-lg font-semibold tracking-tight text-ink-900 md:text-xl">
+        {SECTION_ICON[section.key] ? (
+          <AtlasIcon
+            id={SECTION_ICON[section.key]}
+            size={19}
+            className="shrink-0 text-atlas-700/80"
+          />
+        ) : null}
         {section.title}
       </h3>
 
