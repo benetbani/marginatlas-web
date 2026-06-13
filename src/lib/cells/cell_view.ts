@@ -88,6 +88,12 @@ export type CellViewInput = {
   /** Like-for-like peers (same trade, comparable places, same country). */
   peers: Array<{ name: string; href: string; value: number | null }>;
   narrative: string | null;
+  /**
+   * Suppress the London invented city-peers fallback. Set by the neighbourhood
+   * cell route: a one-square-mile district must not be compared to whole UK
+   * cities (Manchester, Edinburgh), which is a like-for-like category error.
+   */
+  suppressInventedPeers?: boolean;
 };
 
 /* ------------------------------ helpers --------------------------------- */
@@ -134,6 +140,7 @@ export function buildCellView(input: CellViewInput): CellView {
     employees,
     peers,
     industrySlug,
+    suppressInventedPeers,
   } = input;
 
   const isLondon = !!L?.economics;
@@ -210,9 +217,16 @@ export function buildCellView(input: CellViewInput): CellView {
   const honestTake = buildHonestTake(input, isLondon, moneyShown);
 
   /* -- money goes (per $100) ----------------------------------------- */
+  // Gated on moneyShown, like ownerKeeps and the masthead anchor. A modeled cell
+  // that dashes its revenue and take-home must not print the cost split whose
+  // kept slice IS the take-home: it read as "What the owner keeps $3" two cards
+  // above a dashed "what the owner takes home" section, and beside the masthead's
+  // dashed take-home. Show the split and the take-home together, or neither.
   // London fills a plausible cost split when the cell carries none (sanctioned);
-  // elsewhere the section only shows when a real cost structure exists.
-  const csForMoney = costStructure ?? (isLondon ? londonCostStructure(slug) : null);
+  // a trusted-local cell uses its real cost structure.
+  const csForMoney = moneyShown
+    ? costStructure ?? (isLondon ? londonCostStructure(slug) : null)
+    : null;
   const moneyGoes = buildMoneyGoes(csForMoney, netMarginPct);
 
   /* -- plain terms ---------------------------------------------------- */
@@ -261,9 +275,11 @@ export function buildCellView(input: CellViewInput): CellView {
       .filter((p) => p.name)
       .slice(0, 6)
       .map((p) => ({ name: p.name, href: p.href, value: p.value }));
-  } else if (isLondon && isNum(typicalRevenue)) {
+  } else if (isLondon && isNum(typicalRevenue) && !suppressInventedPeers) {
     // London exemplar: comparable UK cities (one country, comparable prices),
     // scaled from the London figure. Invented for the exemplar (sanctioned).
+    // Suppressed for a district (a square-mile neighbourhood is not a peer of
+    // whole cities); the neighbourhood route passes suppressInventedPeers.
     const r = typicalRevenue;
     nearby = [
       { name: "Manchester", href: hrefFor("manchester"), value: Math.round(r * 0.7), sub: "lower rent, thinner spend" },

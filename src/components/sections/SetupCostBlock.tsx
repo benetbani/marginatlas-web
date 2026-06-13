@@ -21,6 +21,8 @@ import { fmtMoney } from "@/lib/format/money";
 
 type Props = {
   cell: Cell;
+  /** Anchor id for the sticky section nav (the manifest "startup-cost" id). */
+  id?: string;
 };
 
 const REGISTRATION_LINES: Array<{ field: keyof SetupRegistration; label: string }> = [
@@ -39,7 +41,25 @@ const CAPITAL_LINES: Array<{ field: keyof SetupCapital; label: string }> = [
   { field: "pre_opening_marketing", label: "Pre-opening marketing" },
 ];
 
-export function SetupCostBlock({ cell }: Props) {
+/** Whether SetupCostBlock will render a real card for this cell. The cell page
+ * uses this to decide between the block and the always-present empty placeholder
+ * (so the "startup-cost" section and its nav anchor are never silently dropped).
+ */
+export function hasSetupCostData(cell: Cell): boolean {
+  const setup = cell.setup_costs;
+  if (!setup) return false;
+  const reg = setup.registration;
+  const cap = setup.capital;
+  const regTotal =
+    reg?.total_estimated ??
+    REGISTRATION_LINES.reduce((acc, line) => acc + (toNumber(reg?.[line.field]) ?? 0), 0);
+  const capTotal =
+    cap?.total_estimated ??
+    CAPITAL_LINES.reduce((acc, line) => acc + (toNumber(cap?.[line.field]) ?? 0), 0);
+  return regTotal + capTotal > 0;
+}
+
+export function SetupCostBlock({ cell, id }: Props) {
   const setup = cell.setup_costs;
   if (!setup) return null;
 
@@ -61,6 +81,7 @@ export function SetupCostBlock({ cell }: Props) {
 
   return (
     <section
+      id={id}
       aria-labelledby="setup-cost-heading"
       className="my-8 rounded-2xl border border-ink-200 bg-white overflow-hidden"
     >

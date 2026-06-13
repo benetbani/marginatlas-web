@@ -603,14 +603,12 @@ function buildNeighbours(
       isNum(n.daysToStart) ? daysWord(n.daysToStart) : null,
     ),
   };
-  const payRow = {
-    label: "Typical monthly pay",
-    cells: cellMap(all, (n) =>
-      isNum(n.avgMonthlySalary) ? usdCompact(n.avgMonthlySalary) : null,
-    ),
-  };
-
-  const rows = [taxRow, payrollRow, registerRow, daysRow, payRow].filter((row) =>
+  // The "typical monthly pay" row was dropped from the neighbour FACTS table:
+  // it is the only money row here, it rests on a GDP-share salary heuristic that
+  // mis-reads on some peer economies (it printed a 2.5x gap between high-wage
+  // neighbours that are in truth close), and unlike tax / payroll / setup it is
+  // not a clean like-for-like fact. The genuinely comparable set-up facts stay.
+  const rows = [taxRow, payrollRow, registerRow, daysRow].filter((row) =>
     Object.values(row.cells).some((v) => v != null),
   );
   if (rows.length < 2) return null;

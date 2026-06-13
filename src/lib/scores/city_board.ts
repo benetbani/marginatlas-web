@@ -113,6 +113,14 @@ export interface CityBoardInput {
 type LondonActivity = {
   rent_pressure?: string;
   survival?: { yr1: number; yr3: number; yr5: number };
+  /** Curated London per-activity economics (USD); the sanctioned exemplar source
+   * the cell page prefers. Present only for London activities. */
+  economics?: {
+    revenue: number;
+    net_margin_pct: number;
+    owner_take_home: number;
+    firms: number;
+  };
 };
 type LondonFile = {
   activities: Record<string, LondonActivity>;
@@ -554,6 +562,31 @@ export async function buildCityActivities(input: {
     };
 
     const cell = r.cell;
+
+    // London is the sanctioned fully-filled exemplar. Its per-activity economics
+    // live in the curated dataset (the same source the cell page prefers), not in
+    // a trusted DB cell, so resolve London's take-home + margin from there and
+    // score break-in from the resolved cell when one exists. Without this London's
+    // cells fail the trusted-local gate and the flagship city renders emptier than
+    // New York (owners-keep dashed, the break-in strip gone).
+    if (citySlug === "london") {
+      const ec = LONDON.activities[r.activitySlug]?.economics;
+      if (ec && isNum(ec.owner_take_home)) {
+        const rating = cell ? breakInForCell(cell, citySlug, annualIncome) : null;
+        withFigures += 1;
+        rows.push({
+          ...base,
+          breakInScore: rating?.score ?? null,
+          breakInBand: rating?.band ?? null,
+          takeHome: ec.owner_take_home,
+          netMarginPct: isNum(ec.net_margin_pct)
+            ? clampNetMarginPct(ec.net_margin_pct, r.industryId)
+            : null,
+        });
+        continue;
+      }
+    }
+
     // No wrong numbers: only a trusted local measurement of the exact activity it
     // claims may carry figures (this drops synthetic, extrapolated tier "X", and
     // national-aggregate cells). A trade without one stays on the slate with a
@@ -580,6 +613,31 @@ export async function buildCityActivities(input: {
       takeHome: null,
       netMarginPct: null,
     });
+  }
+
+  // Common-sense outlier guard. Some "per firm" revenues are establishment
+  // aggregates (a US grocery cell read $4.5M per firm, so its owner take-home
+  // came out at ~$497K, 5x the next everyday trade and 10x the rest, and topped
+  // the ranking). We do not surface a single-site take-home that is wildly out of
+  // line with the comparable trades in the SAME city: a figure that is both a
+  // large multiple of the cohort median AND above a single-owner-draw ceiling is
+  // almost certainly an aggregate, so we dash it rather than rank a wrong number.
+  const figured = rows.map((r) => r.takeHome).filter(isNum).sort((a, b) => a - b);
+  if (figured.length >= 3) {
+    const median = figured[Math.floor(figured.length / 2)];
+    const OUTLIER_MULTIPLE = 3;
+    const SINGLE_OWNER_CEILING = 250_000;
+    for (const row of rows) {
+      if (
+        isNum(row.takeHome) &&
+        row.takeHome > SINGLE_OWNER_CEILING &&
+        row.takeHome > median * OUTLIER_MULTIPLE
+      ) {
+        row.takeHome = null;
+        row.netMarginPct = null; // its twin money figure goes too
+        withFigures -= 1;
+      }
+    }
   }
 
   // A slate of all dashes is not worth showing; require at least three real reads.

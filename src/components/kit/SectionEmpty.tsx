@@ -3,11 +3,16 @@
  *
  * The founder's rule (2026-06-13): every section a page type should have is
  * ALWAYS present, even when we hold no data for this instance. A required
- * section with no data renders THIS, never self-omits and never a wall of
- * dashes. It carries the same eyebrow + heading as the filled section (so the
- * page reads as one complete, consistent structure) and one calm line saying we
- * do not hold it yet. A dashed border + muted ground distinguishes it from a
- * filled card at a glance, so it reads as intentional scaffolding, not broken.
+ * section with no data still renders, keeps its anchor, and reads as intentional
+ * scaffolding, never as a broken or fabricated card.
+ *
+ * Round 5: this is now COMPACT, a single quiet row (eyebrow + heading on the
+ * left, a "Not held yet" tag on the right), not a full-height dashed card. A run
+ * of these no longer reads as a long TODO list on a thin page, while every
+ * section stays present and its nav anchor still resolves. The tag (a dot plus
+ * words) is a non-colour affordance, so the empty state never depends on the
+ * dashed border alone. Solid muted tokens (cocoa-700) clear WCAG AA on the cream
+ * grounds; no opacity-faded ink.
  *
  * Tokens only, no raw color, no em-dashes, no source-agency names. No fabricated
  * data ever appears here, it is an honest "not yet" placeholder.
@@ -22,9 +27,9 @@ export type SectionEmptyProps = {
   heading?: string | null;
   /** Anchor id for the sticky nav (same id the filled section uses). */
   id?: string;
-  /** Optional place name, woven into the default line ("for London yet"). */
+  /** Optional place name (kept for API compatibility; folded into the aria label). */
   place?: string | null;
-  /** Optional override for the placeholder line. */
+  /** Optional short override line, shown quietly under the heading when set. */
   note?: string | null;
   className?: string;
 };
@@ -37,32 +42,31 @@ export function SectionEmpty({
   note,
   className,
 }: SectionEmptyProps) {
-  const line =
-    note ??
-    (place
-      ? `We do not hold this for ${place} yet. It fills in as our coverage deepens.`
-      : "We do not hold this yet. It fills in as our coverage deepens.");
   return (
     <section
       id={id}
-      aria-label={heading || eyebrow}
+      aria-label={`${heading || eyebrow}${place ? `, for ${place}, not held yet` : ", not held yet"}`}
       className={[
-        "rounded-lg border border-dashed border-parchment bg-cream-50/50",
-        "px-5 py-5 md:px-7 md:py-6",
+        "flex items-center justify-between gap-4 rounded-lg border border-dashed border-parchment bg-cream-50/50",
+        "px-5 py-3.5 md:px-7",
         className,
       ]
         .filter(Boolean)
         .join(" ")}
     >
-      <SectionEyebrow className="mb-1">{eyebrow}</SectionEyebrow>
-      {heading ? (
-        <h2 className="font-display text-xl font-medium tracking-tight text-balance text-cocoa-700/80 md:text-2xl">
-          {heading}
-        </h2>
-      ) : null}
-      <p className="mt-2 max-w-2xl text-sm leading-relaxed text-cocoa-500">
-        {line}
-      </p>
+      <div className="min-w-0">
+        <SectionEyebrow>{eyebrow}</SectionEyebrow>
+        {heading ? (
+          <h2 className="mt-0.5 font-display text-base font-medium tracking-tight text-balance text-cocoa-700 md:text-lg">
+            {heading}
+          </h2>
+        ) : null}
+        {note ? <p className="mt-1 text-sm leading-relaxed text-cocoa-700">{note}</p> : null}
+      </div>
+      <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-parchment bg-cream-100 px-2.5 py-1 text-[11px] font-medium text-cocoa-700">
+        <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-cocoa-300" />
+        Not held yet
+      </span>
     </section>
   );
 }

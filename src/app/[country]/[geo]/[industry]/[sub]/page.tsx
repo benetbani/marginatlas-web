@@ -253,7 +253,9 @@ export default async function NeighborhoodCellPage({
   // here, so the money sections only show when the London exemplar is on.
   const trustedLocalCell = isTrustedLocalCell(cell, ind.id);
 
-  const placeName = `${nb.name}, ${cityName}`;
+  // Avoid a doubled place name when the district label already carries the city
+  // (e.g. "City of London" beside "London" read as "City of London, London").
+  const placeName = nb.name.includes(cityName) ? nb.name : `${nb.name}, ${cityName}`;
   const tradeName = ind.name;
   const tradeNoun = tradeName.toLowerCase().replace(/s$/, "");
   const viewRevenue = Le?.revenue ?? cell.revenue_per_firm ?? cell.rev_p50 ?? null;
@@ -263,17 +265,15 @@ export default async function NeighborhoodCellPage({
       ? computedNetMargin * 100
       : null;
   const viewTakeHome = Le?.owner_take_home ?? adjustedNetTakeHome ?? null;
-  const viewFirms = Le?.firms ?? cell.n_enterprises ?? null;
+  // A district carries no honest district-level firm count and must never borrow
+  // the parent city's (a square-mile district is not the city's whole firm
+  // count). The masthead "Firms in {place}" stat dashes instead.
 
-  // Same business nearby: left to the view model. We deliberately do NOT feed
-  // intra-city neighborhood peers here, because this page's cell figures come
-  // from the character-multiplier model while the adjustment band reads the
-  // intensity engine; scaling one by the other would mix two models on the
-  // same row. Passing no peers lets buildCellView fall back to its own honest
-  // behavior: the curated London exemplar shows its comparable-UK-cities slate,
-  // and everywhere else the section self-omits. The cross-district read lives
-  // on the neighborhood OVERVIEW page (the adjacent-district like-for-like),
-  // which stays on a single model end to end.
+  // Same business nearby: a district is NOT compared to whole cities. We pass no
+  // peers AND suppress the London invented city-peers fallback, because scaling a
+  // square-mile district against Manchester or Edinburgh is a like-for-like
+  // category error. The cross-district read lives on the neighborhood OVERVIEW
+  // page (the adjacent-district like-for-like), which stays on a single model.
   const cellView = buildCellView({
     cell,
     londonEntry,
@@ -284,7 +284,7 @@ export default async function NeighborhoodCellPage({
     typicalRevenue: viewRevenue,
     netMarginPct: viewNetMarginPct,
     ownerTakeHome: viewTakeHome,
-    firms: viewFirms,
+    firms: null,
     breakInRating: null,
     isTrustedLocal: trustedLocalCell,
     costStructure: cell.cost_structure ?? null,
@@ -294,6 +294,7 @@ export default async function NeighborhoodCellPage({
     wagePerEmployee: wageEstimate ?? null,
     peers: [],
     narrative: null,
+    suppressInventedPeers: true,
   });
   const navSections = cellViewNav(cellView);
 

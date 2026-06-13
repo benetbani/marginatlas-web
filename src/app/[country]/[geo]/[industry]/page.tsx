@@ -83,7 +83,7 @@ import { CoverageBadge } from "@/components/CoverageBadge";
 // Industry deepening sections. Both self-suppress
 // when their data isn't on the cell, so they're safe to mount before any
 // cell has been deepened (Phase 1 will populate the data).
-import { SetupCostBlock } from "@/components/sections/SetupCostBlock";
+import { SetupCostBlock, hasSetupCostData } from "@/components/sections/SetupCostBlock";
 import { AuPrimaryDataBadge } from "@/components/AuPrimaryDataBadge";
 // Reverted: InlineMidArticle temporarily removed.
 // import { InlineMidArticle } from "@/components/newsletter/NewsletterSignupVariants";
@@ -820,7 +820,11 @@ export default async function CellPage({
         <CellDecisionStack
           view={cellView}
           place={placeName}
-          startupCost={<SetupCostBlock cell={cell} />}
+          startupCost={
+            hasSetupCostData(cell) ? (
+              <SetupCostBlock cell={cell} id="startup-cost" />
+            ) : null
+          }
           related={relatedTail}
         />
       </div>

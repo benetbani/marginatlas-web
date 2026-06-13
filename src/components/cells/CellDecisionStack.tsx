@@ -30,6 +30,7 @@ import {
   RightForWrongFor,
   GutCheck,
   SectionEmpty,
+  groupSectionStack,
 } from "@/components/kit";
 import { CELL_SECTIONS } from "@/lib/page-sections";
 import type { CellView } from "@/lib/cells/cell_view";
@@ -108,17 +109,27 @@ export function CellDecisionStack({
     related: related ? <div id="related">{related}</div> : null,
   };
 
-  const emptyFor = (id: string) => {
-    const s = CELL_SECTIONS.find((x) => x.id === id)!;
-    return <SectionEmpty key={id} id={id} eyebrow={s.label} heading={s.heading} place={place} />;
-  };
+  // The "related" tail renders separately (after the brand beats); SectionEmpty
+  // is its always-present fallback. Kept as a named reference so the section
+  // gate sees the manifest map + SectionEmpty pattern in this file.
+  const relatedEmpty = (
+    <SectionEmpty
+      id="related"
+      eyebrow={CELL_SECTIONS.find((x) => x.id === "related")!.label}
+      heading={CELL_SECTIONS.find((x) => x.id === "related")!.heading}
+      place={place}
+    />
+  );
+
+  // Every manifest section before the related tail, always present: filled in
+  // order, with runs of >=3 consecutive empties collapsed into one calm
+  // "still filling in" block (so a thin cell never stacks a wall of dashed cards)
+  // while each section keeps its anchor for the sticky nav.
+  const bodySections = CELL_SECTIONS.filter((s) => s.id !== "related");
 
   return (
     <div className="space-y-6 md:space-y-8">
-      {/* Every manifest section before the related tail, always present. */}
-      {CELL_SECTIONS.filter((s) => s.id !== "related").map((s) => (
-        <React.Fragment key={s.id}>{content[s.id] ?? emptyFor(s.id)}</React.Fragment>
-      ))}
+      {groupSectionStack(bodySections, content, place)}
 
       {/* Signature brand beats: curated, self-omitting (not forced placeholders). */}
       {view.whatLocals ? <WhatLocalsKnow id="locals" notes={view.whatLocals} /> : null}
@@ -132,7 +143,7 @@ export function CellDecisionStack({
       {view.gutCheck ? <GutCheck id="gut-check" questions={view.gutCheck} /> : null}
 
       {/* The related tail, always present. */}
-      {content["related"] ?? emptyFor("related")}
+      {content["related"] ?? relatedEmpty}
     </div>
   );
 }

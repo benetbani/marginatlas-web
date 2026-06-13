@@ -76,12 +76,20 @@ for (const [type, ids] of Object.entries(CANONICAL)) {
   }
   const src = readFileSync(abs, "utf-8");
 
-  // Pattern A: the page maps the manifest with the always-present SectionEmpty
-  // fallback (presence is structural).
+  // Pattern A: the page renders the manifest with the always-present empty
+  // fallback (presence is structural). Two equivalent forms qualify:
+  //   - it maps the manifest and renders a per-section SectionEmpty fallback; or
+  //   - it passes the manifest to groupSectionStack, which maps it internally and
+  //     collapses long runs of empties into StillFillingIn while keeping every
+  //     section's anchor (round 5).
+  const usesGroupedHelper =
+    src.includes(constName) && src.includes("groupSectionStack");
   const mapsManifest =
-    src.includes(constName) && src.includes(".map(") && src.includes("SectionEmpty");
+    src.includes(constName) &&
+    src.includes(".map(") &&
+    (src.includes("SectionEmpty") || src.includes("StillFillingIn"));
 
-  if (mapsManifest) continue; // covered structurally
+  if (usesGroupedHelper || mapsManifest) continue; // covered structurally
 
   // Pattern B: the page carries each id literally (bespoke sections). Every
   // canonical id must appear as "<id>" somewhere in the file.

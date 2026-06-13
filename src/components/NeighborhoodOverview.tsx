@@ -126,6 +126,46 @@ const REP_ACTIVITIES: Array<{ id: string; name: string }> = [
   { id: "auto_repair_shops", name: "Auto repair" },
 ];
 
+// Character-defining trades to surface FIRST for a tagged district, so the
+// answer-first headline crowns a trade the district actually rewards, not a
+// generic SMB winner lifted only by footfall (a luxury street's strongest trade
+// is jewelry or a spa, not a tourism-lifted pharmacy). These ids carry the tag
+// multipliers in the neighborhood-multiplier engine, so they rank on top for
+// their tag; the generic set then fills out the rest of the ranking. Only the
+// two tags whose reward set is sharply distinct from the generic SMB set are
+// special-cased; every other tag (and an untagged district) keeps the generic
+// set unchanged.
+const TAG_LEAD_ACTIVITIES: Partial<Record<NeighborhoodTag, Array<{ id: string; name: string }>>> = {
+  luxury_district: [
+    { id: "jewelry_stores", name: "Jewelry" },
+    { id: "designer_fashion", name: "Designer fashion" },
+    { id: "day_spas", name: "Day spas" },
+    { id: "boutique_clothing", name: "Boutique clothing" },
+  ],
+  university_district: [
+    { id: "cafes_coffee", name: "Cafes" },
+    { id: "bars_nightclubs", name: "Bars and nightlife" },
+    { id: "bookstores_indie", name: "Bookshops" },
+  ],
+};
+
+/**
+ * The representative activity set for the "what thrives here" ranking, made
+ * tag-aware. For a district whose primary tag rewards a sharply different trade
+ * mix than the generic SMB set (a luxury district, a university district), the
+ * character-defining trades are prepended so the headline winner is one of
+ * them; the generic set follows, de-duplicated by id. For every other tag and
+ * for an untagged district the generic set is returned unchanged.
+ */
+function repActivitiesForTag(
+  primaryTag: NeighborhoodTag | undefined,
+): Array<{ id: string; name: string }> {
+  const lead = primaryTag ? TAG_LEAD_ACTIVITIES[primaryTag] : undefined;
+  if (!lead) return REP_ACTIVITIES;
+  const seen = new Set(lead.map((a) => a.id));
+  return [...lead, ...REP_ACTIVITIES.filter((a) => !seen.has(a.id))];
+}
+
 // The representative activity for the headline breakdown and the adjacent-area
 // comparison. Restaurants is the most universal SMB benchmark.
 const REP_ACTIVITY_ID = "restaurants";
@@ -204,8 +244,10 @@ export function NeighborhoodOverview({
   const primaryTag = row?.primary_tag;
 
   // The trade ranking, built ONCE: feeds the headline winner, the "what thrives
-  // here" zone, and the view model. Sorted by final multiplier descending.
-  const ranked = REP_ACTIVITIES.map((a) => {
+  // here" zone, and the view model. Sorted by final multiplier descending. The
+  // activity set is tag-aware, so a tagged district (luxury, university) leads
+  // with the trades it actually rewards rather than a generic SMB winner.
+  const ranked = repActivitiesForTag(primaryTag).map((a) => {
     const m = getNeighborhoodMultiplier(city.slug, nb.slug, a.id);
     return {
       id: a.id,

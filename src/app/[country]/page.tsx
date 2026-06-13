@@ -430,7 +430,11 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
               id="break-in"
               className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
             >
-              <EasiestToBreakIn rows={easiestBreakIn} placeName={meta.name} />
+              <EasiestToBreakIn
+                rows={easiestBreakIn}
+                placeName={meta.name}
+                showScores={easiestBreakIn.some((r) => r.openingHref != null)}
+              />
             </section>
           ) : null}
 

@@ -55,6 +55,15 @@ export interface EasiestToBreakInProps {
   placeName: string;
   /** How many rows to show. The scannable top set; defaults to 8. */
   limit?: number;
+  /**
+   * Whether to print the numeric 0..100 badge. When the panel rests only on
+   * modeled archetypes (no trusted-local cell grounds any row), the score is
+   * effectively country-invariant (Software 97 / Marketing 95 / Legal 94 came up
+   * identically on Uganda, Nepal, the UK and the Netherlands), so we show the
+   * ranking ORDER and the ease tone but withhold the false-precise number. The
+   * caller sets this true only when at least one row is a trusted-local read.
+   */
+  showScores?: boolean;
 }
 
 /**
@@ -66,7 +75,12 @@ export interface EasiestToBreakInProps {
  * /opening would notFound()) omit it. Renders nothing when there are too few rows
  * to rank honestly.
  */
-export function EasiestToBreakIn({ rows, placeName, limit = 8 }: EasiestToBreakInProps) {
+export function EasiestToBreakIn({
+  rows,
+  placeName,
+  limit = 8,
+  showScores = true,
+}: EasiestToBreakInProps) {
   if (!rows || rows.length < 3) return null;
   const shown = rows.slice(0, Math.max(3, limit));
 
@@ -78,10 +92,9 @@ export function EasiestToBreakIn({ rows, placeName, limit = 8 }: EasiestToBreakI
       </h2>
       {/* useless-tile-ok: describes the break-in ranking, not a count of things we cover */}
       <p className="mt-1 max-w-2xl text-sm leading-relaxed text-graphite">
-        The activities here ranked by the break-in rating, the single 0 to 100
-        read of how easy it is to break in and win, higher is easier. It is the
-        same score each business shows on its own page. Open one for the full
-        cost, tax, and what is left for an owner.
+        {showScores
+          ? "The activities here ranked by the break-in rating, the single 0 to 100 read of how easy it is to break in and win, higher is easier. It is the same score each business shows on its own page. Open one for the full cost, tax, and what is left for an owner."
+          : "The activities here ordered from easiest to hardest to break into and win, based on the modeled pattern for each trade. Open one for the full cost, tax, and what is left for an owner in this place."}
       </p>
 
       <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -104,7 +117,7 @@ export function EasiestToBreakIn({ rows, placeName, limit = 8 }: EasiestToBreakI
                   r.band,
                 )}`}
               >
-                <span className="tabular-nums">{r.score}</span>
+                {showScores && <span className="tabular-nums">{r.score}</span>}
                 <span>{breakInWord(r.band)}</span>
               </span>
             </Link>

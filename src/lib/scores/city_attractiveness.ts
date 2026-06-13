@@ -264,20 +264,36 @@ const WEIGHT_SURVIVAL = 0.1;
  * genuine middle near 52 while pulling a strong blend up and a weak one down so
  * the badge differentiates. Anchors were set against the raw-blend distribution
  * over the full ~250-city record: raw 52 -> 52 (the true middle holds), raw 65
- * -> 76 (a strong city clears into manageable/forgiving), raw 72 -> 86 (a top
- * global metro reads forgiving), raw 44 -> 30 and raw 30 -> 14 (thin cities fall
- * into demanding/brutal). The band thresholds are then read on this expanded
- * headline, so they keep the cell rating's meaning.
+ * -> 74 (a strong city clears into manageable/forgiving), raw 44 -> 30 and raw 30
+ * -> 14 (thin cities fall into demanding/brutal). The band thresholds are then
+ * read on this expanded headline, so they keep the cell rating's meaning.
+ *
+ * DE-SATURATION at the top (founder 2026-06-13). The peer flagship metros sit in
+ * a very tight raw band (London 75.2, New York 75.3, Tokyo 75.4) because each is
+ * strong on a different leg (Tokyo on population, New York on income, London
+ * balanced), so the old curve, which mapped raw 72..80 onto 86..96 at a gentle
+ * 1.25 slope, rounded all three to exactly 90 and made the masthead anchor look
+ * decorative. The flagship band (raw ~74.5..76) is now STEEPER, so a small raw
+ * gap opens into a visible headline gap: the strongest metros spread across the
+ * low-to-mid 90s with gaps instead of piling on one number, and the ceiling is
+ * lifted (raw 84 -> 100) so the very top has room and no longer pins early. The
+ * second tier (Paris ~73.9, Los Angeles ~72.2) lands in the high-to-mid 80s,
+ * clearly below the leaders. The curve stays strictly monotonic, so ordering is
+ * unchanged, and the middle and bottom anchors are essentially untouched, so no
+ * weak or mid city is lifted by this re-anchoring.
  */
 const EXPANSION_ANCHORS: readonly Anchor[] = [
   { x: 30, y: 14 },
   { x: 40, y: 30 },
   { x: 48, y: 44 },
   { x: 52, y: 52 },
-  { x: 58, y: 64 },
-  { x: 65, y: 76 },
-  { x: 72, y: 86 },
-  { x: 80, y: 96 },
+  { x: 58, y: 63 },
+  { x: 65, y: 74 },
+  { x: 72, y: 84 },
+  { x: 74.5, y: 88 },
+  { x: 76, y: 95 },
+  { x: 80, y: 99 },
+  { x: 84, y: 100 },
 ];
 
 /** Neutral baselines for secondary terms whose input is absent, so a missing

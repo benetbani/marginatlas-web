@@ -44,6 +44,16 @@ function isNum(n: number | null | undefined): n is number {
   return n != null && Number.isFinite(n);
 }
 
+/**
+ * Common-sense floor for an owner-take-home headline tile. A tile sits on the
+ * homepage as proof the numbers are real, so an implausibly low owner-keep
+ * (e.g. a hotel clearing only about $5K a year) reads as broken next to the
+ * six-figure tiles. Below this floor we do not surface the take-home headline;
+ * the tile falls through to its revenue headline, and if that is also missing
+ * the tile is dropped and the next curated one fills its place.
+ */
+const MIN_OWNER_TAKE_HOME_USD = 15_000;
+
 export async function loadExampleTiles(): Promise<ExampleTile[]> {
   const resolved = await Promise.all(
     CURATED.map(async (c): Promise<ExampleTile | null> => {
@@ -60,7 +70,12 @@ export async function loadExampleTiles(): Promise<ExampleTile[]> {
       const takeHome = ownerTakeHomeForCell(cell, annualIncome);
       const revenue = cell.revenue_per_firm ?? cell.rev_p50 ?? null;
       let headline: string | null = null;
-      if (isNum(takeHome) && takeHome > 0) {
+      // Sanity floor: only surface an owner-keep headline when it clears a
+      // low-but-nonzero floor. A sub-floor take-home (e.g. a hotel clearing
+      // about $5K a year) reads as broken beside the six-figure tiles, so we
+      // fall through to the revenue headline instead, and drop the tile only if
+      // that is also missing. The next curated tile then fills the row.
+      if (isNum(takeHome) && takeHome >= MIN_OWNER_TAKE_HOME_USD) {
         headline = `Owner keeps about ${fmtMoney(takeHome)} a year`;
       } else if (isNum(revenue) && revenue > 0) {
         headline = `About ${fmtMoney(revenue)} a year in revenue`;
