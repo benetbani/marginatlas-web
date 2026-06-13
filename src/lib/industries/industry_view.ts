@@ -144,7 +144,7 @@ export function buildIndustryView(input: IndustryViewInput): IndustryView {
   const anchor =
     hasBand && isNum(revenue.median)
       ? {
-          label: "Typical revenue a year, across the places we cover",
+          label: "Typical revenue a year, across the US markets we measure",
           value: revenue.median as number,
           format: "usd-compact" as NumberFormatSpec,
         }

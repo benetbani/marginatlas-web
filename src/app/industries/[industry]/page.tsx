@@ -182,10 +182,23 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
     ...acrossCountries.map((c) => activityPlaceFromCell(c, ind.id, "country")),
   ].filter((p): p is ActivityPlaceInput => p !== null);
 
-  // Defensible cross-place summary: trimmed revenue + take-home bands and the
-  // ranked rows for the table. Thin slates yield all-null bands (dashes) and a
-  // short or empty table, never an invented spread.
-  const placesSummary = summarizeActivityPlaces(placeInputs);
+  // Each like-for-like cohort is summarised SEPARATELY, so a cohort's outlier
+  // fence is anchored on its OWN median, never the other's. This is the fix for
+  // a real data trap: the extrapolated country cells often report restaurant
+  // revenue near $5M; summarised together with the US states they (a) land a
+  // visibly-wrong $5M "typical" and (b) outnumber the states enough to pull the
+  // shared median up so far that the real US figures fall below median/6 and get
+  // clipped out as "low outliers". Splitting first keeps each cohort honest. The
+  // HEADLINE band comes from the US-state cohort only (Census-backed, one
+  // currency, comparable prices), the same WS1 trust principle the cell-lookup
+  // and compare surfaces use; when US coverage is thin the band dashes and the
+  // masthead honestly leads with the verdict, no number.
+  const bandSummary = summarizeActivityPlaces(
+    placeInputs.filter((p) => p.cohort === "us-state"),
+  );
+  const countrySummary = summarizeActivityPlaces(
+    placeInputs.filter((p) => p.cohort === "country"),
+  );
 
   // The representative survival archetype for the activity (the same curated
   // directional read the cell and city boards use). All-null when none is held.
@@ -199,11 +212,8 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
   // "a poorer country out-earns a richer one" failure). The board already
   // carries the cross-place spread, so these tables are about which places to
   // open next, not a single global league table.
-  const stateRows = placesSummary.rows
-    .filter((r) => r.cohort === "us-state")
-    .slice(0, 12);
-  const countryRows = placesSummary.rows
-    .filter((r) => r.cohort === "country")
+  const stateRows = bandSummary.rows.slice(0, 12);
+  const countryRows = countrySummary.rows
     .slice()
     .sort((a, b) => a.name.localeCompare(b.name))
     .slice(0, 12);
@@ -255,8 +265,8 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
     },
     verdict,
     character,
-    revenue: placesSummary.revenue,
-    takeHome: placesSummary.takeHome,
+    revenue: bandSummary.revenue,
+    takeHome: bandSummary.takeHome,
     survival,
   });
 
