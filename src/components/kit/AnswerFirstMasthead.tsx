@@ -124,15 +124,6 @@ export function AnswerFirstMasthead({
           </p>
         ) : null}
 
-        {/* break-in demoted to a quiet chip */}
-        {breakIn ? (
-          <div className="mt-4">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-parchment bg-cream-100 px-3 py-1 text-xs font-medium text-cocoa-700">
-              {breakIn}
-            </span>
-          </div>
-        ) : null}
-
         {/* the anchor number with its spread */}
         {anchor && isNum(anchor.value) ? (
           <div className="mt-7 grid gap-6 md:grid-cols-[minmax(0,auto)_minmax(0,1fr)] md:items-end md:gap-10">
@@ -171,6 +162,17 @@ export function AnswerFirstMasthead({
               p90={spread!.p90}
               format={spread!.format}
             />
+          </div>
+        ) : null}
+
+        {/* break-in demoted to a quiet chip, placed AFTER the anchor so the
+            headline number leads the eye (answer-first): the figure comes before
+            any difficulty judgment. */}
+        {breakIn ? (
+          <div className="mt-5">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-parchment bg-cream-100 px-3 py-1 text-xs font-medium text-cocoa-700">
+              {breakIn}
+            </span>
           </div>
         ) : null}
 

@@ -189,7 +189,9 @@ export default async function LearnArticlePage({
             items={view.pnl.rows}
           />
         </section>
-      ) : (
+      ) : article.family === "C" ? null : (
+        // A concept article ("how to read benchmarks") has no trade, so a worked
+        // P&L is not applicable rather than "not yet": self-omit for family C.
         <div className="mb-10">
           <SectionEmpty
             id="pnl"
@@ -260,7 +262,7 @@ export default async function LearnArticlePage({
             note="Each opens its own explainer. Read the typical revenue, then the margin, before the dollars."
           />
         </section>
-      ) : (
+      ) : article.family === "C" ? null : (
         <div className="mb-10">
           <SectionEmpty
             id="other-businesses"
@@ -298,7 +300,7 @@ export default async function LearnArticlePage({
             ))}
           </div>
         </section>
-      ) : (
+      ) : article.family === "C" ? null : (
         <div className="mb-10">
           <SectionEmpty
             id="benchmarks"
