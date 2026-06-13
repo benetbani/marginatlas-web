@@ -10,6 +10,7 @@
  * empty heading). Server component. Tokens only, mobile-first.
  */
 import * as React from "react";
+import { AtlasSpot } from "@/components/brand/spots";
 
 export interface FailureCardsProps {
   cards: { title: string; body: string }[];
@@ -22,9 +23,17 @@ export function FailureCards({ cards }: FailureCardsProps) {
     // SaaS reformation 2026-06-12: seated card section; the warning cards
     // inside go white-on-card with the amber caution accent on the title.
     <section className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
-      <h3 className="font-display text-lg font-semibold tracking-tight text-ink-900 md:text-xl">
-        What kills weak operators
-      </h3>
+      <div className="flex items-start justify-between gap-6">
+        <h3 className="font-display text-lg font-semibold tracking-tight text-ink-900 md:text-xl">
+          What kills weak operators
+        </h3>
+        {/* The reality-check spot: one brand illustration on this beat. */}
+        <AtlasSpot
+          id="reality-check"
+          width={104}
+          className="hidden shrink-0 text-ink-800 sm:block"
+        />
+      </div>
       <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
         {cards.map((card, i) => (
           <article

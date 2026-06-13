@@ -5,6 +5,7 @@
  */
 import { ChartLineUp, Megaphone, Briefcase, Storefront } from "@phosphor-icons/react/dist/ssr";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
+import { AtlasSpot } from "@/components/brand/spots";
 
 const AUDIENCES: { who: string; use: string; Icon: typeof Briefcase }[] = [
   { who: "Private equity and investors", use: "Size a market and sanity-check a target before the first call.", Icon: ChartLineUp },
@@ -16,10 +17,20 @@ const AUDIENCES: { who: string; use: string; Icon: typeof Briefcase }[] = [
 export function AudienceBand() {
   return (
     <section className="py-12 md:py-16">
-      <SectionEyebrow size="md" className="mb-2">Who it's for</SectionEyebrow>
-      <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mb-8 md:mb-10">
-        Built for the people who price a business for a living
-      </h2>
+      <div className="mb-8 flex items-start justify-between gap-6 md:mb-10">
+        <div>
+          <SectionEyebrow size="md" className="mb-2">Who it's for</SectionEyebrow>
+          <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900">
+            Built for the people who price a business for a living
+          </h2>
+        </div>
+        {/* One brand spot per band (design-system 9.3): the four audience roles. */}
+        <AtlasSpot
+          id="four-roles"
+          width={132}
+          className="hidden shrink-0 text-ink-800 lg:block"
+        />
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
         {AUDIENCES.map(({ who, use, Icon }) => (
           <div key={who} className="atlas-card px-5 py-6">

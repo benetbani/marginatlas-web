@@ -395,4 +395,10 @@
     fill: #e62200;
     stroke: none;
   }
+
+  /* AtlasSpot (Fable P1-07): the thin secondary ink lines in the spot
+     illustrations ride a lighter stroke weight than the main line. */
+  .atlas-spot .thin {
+    stroke-width: 1.3;
+  }
 }

@@ -10,6 +10,7 @@ import {
   AtlasPictogram,
   ATLAS_PICTOGRAMS,
 } from "@/components/brand/pictograms";
+import { AtlasSpot, ATLAS_SPOTS } from "@/components/brand/spots";
 
 export const metadata: Metadata = {
   title: "Brand glyphs preview",
@@ -57,6 +58,24 @@ export default function BrandGlyphsPreview() {
                     </div>
                   ))}
                 </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
+          <h2 className="font-display text-lg md:text-xl font-semibold tracking-tight text-ink-900">
+            AtlasSpot (12 editorial illustrations)
+          </h2>
+          <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+            {ATLAS_SPOTS.map((s) => (
+              <div
+                key={s.id}
+                className="flex flex-col items-center gap-2 rounded-md border border-parchment bg-white px-3 py-4 text-center text-ink-800"
+              >
+                <AtlasSpot id={s.id} width={160} />
+                <span className="text-xs font-semibold text-ink-900">{s.title}</span>
+                <span className="text-[11px] leading-snug text-cocoa-700">{s.caption}</span>
               </div>
             ))}
           </div>
