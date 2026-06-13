@@ -18,11 +18,9 @@ import { INDUSTRIES, industryToSlug, isExcludedFromDiscovery } from "@/lib/taxon
 import { computeBreakeven } from "@/lib/economics/breakeven";
 import { getCityTier, getCityPopulation, getCityCostOfLivingIndex } from "@/lib/cities/city_tier";
 import { iso2ToName } from "@/lib/countries";
-import { RevenueTiles } from "@/components/RevenueTiles";
-import { RevenueDistribution } from "@/components/RevenueDistribution";
-// MarginWaterfall import removed; redundant with SmartWaterfall
+// RevenueTiles / RevenueDistribution / NetProfitWaterfall retired (WS3): the
+// content-map stack (AnswerFirstMasthead + CellDecisionStack) replaces them.
 import { DimensionSwitcher } from "@/components/DimensionSwitcher";
-import { NetProfitWaterfall } from "@/components/NetProfitWaterfall";
 import { AcrossStatesStrip } from "@/components/AcrossStatesStrip";
 import { CellPageNav } from "@/components/CellPageNav";
 // CellActions import removed (save/copy/CSV/embed buttons stripped)
@@ -64,12 +62,11 @@ import {
   estimateWagePerEmployee,
   estimateEmployeesFromFirms,
 } from "@/lib/extrapolations/fill_missing";
-import { BoardHero } from "@/components/board/BoardHero";
-import { MastheadImage } from "@/components/board/MastheadImage";
-import { getCityHero, isPatternHero } from "@/lib/images/city_heroes";
-import { DataSection } from "@/components/board/DataSection";
 import { FailureCards } from "@/components/board/FailureCards";
 import { buildCellBoard, getLondonEntry } from "@/lib/scores/cell_board";
+import { AnswerFirstMasthead, StickySectionNav } from "@/components/kit";
+import { buildCellView, cellViewNav } from "@/lib/cells/cell_view";
+import { CellDecisionStack } from "@/components/cells/CellDecisionStack";
 import { getFailureModes } from "@/lib/qa/industry_failure_modes";
 import { CityHero } from "@/components/CityHero";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
@@ -459,17 +456,9 @@ export default async function CellPage({
   // figure so the same business reads higher in a costly metro.
   const cityCostOfLivingIndex = getCityCostOfLivingIndex(geo);
 
-  // Masthead atmosphere image. Resolve the geo's city hero photo (the same
-  // source CityHero / the city page use, keyed by the geo slug) and pass only
-  // its URL to the shared <MastheadImage> behind the board masthead. Self-omits
-  // to plain white for state/region slugs, cities without a curated photo, or
-  // pattern-card fallbacks, so the masthead degrades cleanly rather than
-  // showing a broken frame.
-  const geoHero = getCityHero(geo);
-  const mastheadSrc =
-    geoHero && !isPatternHero(geoHero)
-      ? geoHero.image_url_regular || geoHero.image_url_full || null
-      : null;
+  // The masthead atmosphere image was retired with BoardHero (WS3): the
+  // AnswerFirstMasthead carries the faint survey-grid motif instead, and the
+  // cinematic CityHero photo still renders above it for cities that have one.
 
   // Full A-J data board. Built from the values already computed above so no
   // figure is recomputed: the money rows reuse the tax-aware net numbers and
@@ -479,7 +468,10 @@ export default async function CellPage({
   // present; missing data renders as the board's dash. econSnap is the
   // country-economics snapshot already computed above for the take-home floor;
   // corporateTaxRate is the effective rate from the net-profit waterfall.
-  const { sections: boardSections, breakInRating } = buildCellBoard({
+  // Only the break-in rating is still consumed (the masthead chip). The board's
+  // dense reference rows were retired into the content-map sections (WS3), so
+  // the section list itself is no longer rendered.
+  const { breakInRating } = buildCellBoard({
     cell,
     typicalRevenue: cell.revenue_per_firm ?? cell.rev_p50 ?? null,
     revP10: cell.rev_p10 ?? null,
@@ -525,21 +517,6 @@ export default async function CellPage({
   const expectedIndustryId = requestedIndustry?.id ?? cell.industry_id ?? undefined;
   const opensTrusted = isTrustedLocalCell(cell, expectedIndustryId) && !!cell.industry_id;
   const openingHref = `/${country.toLowerCase()}/${geo.toLowerCase()}/${industry.toLowerCase()}/opening`;
-  const boardSectionsWithLinks = boardSections.map((s) =>
-    s.key === "opening" && opensTrusted
-      ? {
-          ...s,
-          footer: (
-            <a
-              href={openingHref}
-              className="inline-flex items-center gap-1 text-sm font-medium text-atlas-700 transition-colors hover:text-atlas-900"
-            >
-              See the full opening guide &rarr;
-            </a>
-          ),
-        }
-      : s,
-  );
 
   // FAQPage JSON-LD payload. The question text matches
   // the phrase universe (scripts/seo/build_phrase_universe.py), so any organic
@@ -575,6 +552,58 @@ export default async function CellPage({
           cell.size_band || "total"
         )
       : null;
+
+  // -- WS3 content-map view model. Maps the figures already computed above into
+  // the Atlas Page Kit's section props (the answer-first masthead + the decision
+  // stack), fully filling the curated London exemplar and self-omitting
+  // elsewhere. Pure data; the JSX below is a thin renderer.
+  const londonEntry = getLondonEntry(cell);
+  const Le = londonEntry?.economics ?? null;
+  const trustedLocalCell = isTrustedLocalCell(cell, expectedIndustryId);
+  const placeName =
+    cell.geo_name || iso2ToName(country) || country.toUpperCase();
+  const tradeName = cell.industry_name || industry.replace(/-/g, " ");
+  const tradeNoun = tradeName.toLowerCase().replace(/s$/, "");
+  const viewRevenue = Le?.revenue ?? cell.revenue_per_firm ?? cell.rev_p50 ?? null;
+  const viewNetMarginPct = Le
+    ? Le.net_margin_pct
+    : computedNetMargin != null
+      ? computedNetMargin * 100
+      : null;
+  const viewTakeHome = Le?.owner_take_home ?? adjustedNetTakeHome ?? null;
+  const viewFirms = Le?.firms ?? cell.n_enterprises ?? null;
+  // Same business nearby: the across-states slate (same trade, comparable US
+  // places, same currency). London fills its own UK peers in the view model.
+  const nearbyPeers = (isUsCell ? acrossStates : [])
+    .filter((c) => (c.geo_name || "") && (c.geo_name || "") !== (cell.geo_name || ""))
+    .map((c) => ({
+      name: c.geo_name || "",
+      href: cellUrl(c),
+      value: c.revenue_per_firm ?? c.rev_p50 ?? null,
+    }));
+
+  const cellView = buildCellView({
+    cell,
+    londonEntry,
+    placeName,
+    tradeName,
+    tradeNoun,
+    industrySlug: industry,
+    typicalRevenue: viewRevenue,
+    netMarginPct: viewNetMarginPct,
+    ownerTakeHome: viewTakeHome,
+    firms: viewFirms,
+    breakInRating,
+    isTrustedLocal: trustedLocalCell,
+    costStructure: cell.cost_structure ?? null,
+    breakevenOrdersDaily: be?.breakevenOrdersDaily ?? null,
+    typicalOrdersDaily: be?.currentOrdersDaily ?? null,
+    employees: employeesEstimate ?? null,
+    wagePerEmployee: wageEstimate ?? null,
+    peers: nearbyPeers,
+    narrative,
+  });
+  const navSections = cellViewNav(cellView, true);
 
   const url = `https://www.marginatlas.com/${country}/${geo}/${industry}`;
   return (
@@ -722,38 +751,53 @@ export default async function CellPage({
           layer keeps id="headline" so the right-rail TOC anchor resolves to the
           title block without registering an extra section id with the canonical
           skeleton gate, and sits in a relative layer above the image. */}
-      <div className="relative overflow-hidden rounded-2xl">
-        <MastheadImage src={mastheadSrc} />
-        <div id="headline" className="relative">
-          {/* The masthead carries exactly ONE headline score: the break-in
-              rating (the single 0-100 "how easy is it to break in and win"
-              number, computed in buildCellBoard from this cell's real annual
-              owner take-home and its real-or-modeled entry costs). It replaces
-              the former multi-part Atlas/opportunity strip here so the top of
-              the page is never two competing scores; that prior score's data
-              plumbing (scoreSet) is untouched elsewhere. When the rating cannot
-              be defended (no take-home or no capital) breakInRating is null and
-              the masthead simply omits the score, never a placeholder. */}
-          <BoardHero
-            title={`${cell.industry_name || industry.replace(/-/g, " ")} in ${
-              cell.geo_name || iso2ToName(country) || country.toUpperCase()
-            }`}
-            breakIn={breakInRating}
-          />
-        </div>
+      {/* WS3 content-map masthead. Answer-first: the assertion headline, the
+          one-line read, the anchor revenue number WITH its 7-gradation spread,
+          a quiet stat row, and break-in demoted to a chip. Replaces the former
+          BoardHero + A-J board wall; the board's reference rows now live inside
+          the decision stack's content-map sections. */}
+      <AnswerFirstMasthead
+        id="headline"
+        eyebrow={`${tradeName} · ${placeName} · ${
+          iso2ToName(country) || country.toUpperCase()
+        }`}
+        tier={cellView.masthead.tier}
+        title={cellView.masthead.title}
+        answer={cellView.masthead.answer}
+        anchor={cellView.masthead.anchor}
+        spread={
+          cellView.masthead.spread
+            ? { ...cellView.masthead.spread, format: formatMoney }
+            : null
+        }
+        stats={cellView.masthead.stats}
+        breakIn={cellView.masthead.breakIn}
+      />
+
+      {/* The decision stack: the honest take, the money picture, the editorial
+          beats, in the content-map reading order. The startup-cost block is
+          slotted into its content-map position (after pay by role). London is
+          fully filled; a thin cell shows a clean short page. */}
+      <div className="mt-8">
+        <CellDecisionStack
+          view={cellView}
+          startupCost={<SetupCostBlock cell={cell} />}
+        />
       </div>
 
-      {/* The full A-J data board. Ten fixed sections the reader can learn once
-          and read on every page, rendered immediately under the masthead. Each
-          section always renders all of its rows; a datum we do not hold shows
-          as the board's dash, so the page shape never depends on the data. The
-          deeper sections below (break-even, take-home, distribution, waterfall)
-          keep their full prose treatment. */}
-      <div className="mt-2">
-        {boardSectionsWithLinks.map((s) => (
-          <DataSection section={s} key={s.key} />
-        ))}
-      </div>
+      {/* Next step: the full opening guide, surfaced only when the sub-page will
+          actually resolve for this cell (trusted local), so a working cell page
+          never links to a 404. */}
+      {opensTrusted ? (
+        <div className="mt-6">
+          <a
+            href={openingHref}
+            className="inline-flex items-center gap-1.5 rounded-full border border-atlas-200 bg-atlas-50 px-4 py-2 text-sm font-medium text-atlas-700 transition-colors hover:bg-atlas-100"
+          >
+            See the full opening guide &rarr;
+          </a>
+        </div>
+      ) : null}
 
       {/* One quiet meta row under the hero, merged from three former
           stripes (coverage badge + currency switcher + the compact
@@ -841,23 +885,9 @@ export default async function CellPage({
         <AuPrimaryDataBadge cell={cell} />
       </div>
 
-      {/* COST TO OPEN: what it takes to start, demoted below the "does it
-          work" economics (2026-06-04). SetupCostBlock gives the one-time
-          number; IfYouOpenedToday turns it into calendar dates; the local
-          context card frames every figure against the local economy. Each
-          self-suppresses when its data is thin.
-
-          NUMBERS-ONLY (2026-06-07, founder): the IfYouOpenedToday timeline
-          and the LocalContextCard are no longer rendered (prose framing, not
-          figures). SetupCostBlock stays: it carries the one-time cost number.
-          The two removed lines are kept verbatim, commented out, so reviving
-          either is a one-line revert (uncomment). Imports stay intact. */}
-      <SetupCostBlock cell={cell} />
-      {/* <IfYouOpenedToday cell={cell} /> */}
-      {/* <LocalContextCard
-        iso2={country.toUpperCase()}
-        countryName={iso2ToName(country) || country.toUpperCase()}
-      /> */}
+      {/* COST TO OPEN (SetupCostBlock) now renders inside CellDecisionStack at
+          its content-map position (after pay by role), so the standalone copy
+          here was removed to avoid showing the cost-to-open block twice. */}
 
       {/* Plan v13 Wave 1: time series chart removed:
          multi-year coverage is too uneven across cells to display honestly. */}
@@ -1002,7 +1032,7 @@ export default async function CellPage({
         </section>
       )}
       </div>
-      <CellPageNav />
+      <StickySectionNav sections={navSections} />
     </div>
   );
 }
