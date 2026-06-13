@@ -63,9 +63,9 @@ export function MoneyGoesBreakdown({
   id,
   className,
 }: MoneyGoesBreakdownProps) {
-  const clean = items.filter((it) => isNum(it.perHundred)) as Array<
-    Required<Pick<MoneyGoesItem, "perHundred">> & MoneyGoesItem
-  >;
+  const clean = items.filter(
+    (it): it is MoneyGoesItem & { perHundred: number } => isNum(it.perHundred),
+  );
   const total = clean.reduce((s, it) => s + it.perHundred, 0);
   // Silence out unless the items form a believable $100 decomposition.
   if (clean.length < 2 || total < 80 || total > 120) return null;

@@ -362,8 +362,12 @@ export interface ActivityPlaceInput {
   takeHome: number | null;
   /** Net margin, percent (0..100). */
   netMarginPct: number | null;
-  /** Like-for-like cohort (see ActivityPlaceRow.cohort). */
-  cohort: "us-state" | "country";
+  /**
+   * Like-for-like cohort (see ActivityPlaceRow.cohort). Optional: callers that
+   * do not split cohorts (the extremes leaderboard, the homepage beats) may omit
+   * it and it defaults to "country" on the row.
+   */
+  cohort?: "us-state" | "country";
 }
 
 /** The defensible cross-place summary the activity page renders. */
@@ -479,7 +483,7 @@ export function summarizeActivityPlaces(
       // Net margin (percent) through the shared clamp so a table row can never
       // surface an implausible margin either.
       netMarginPct: isNum(p.netMarginPct) ? clampNetMarginPct(p.netMarginPct) : null,
-      cohort: p.cohort,
+      cohort: p.cohort ?? "country",
     }))
     .sort((a, b) => (b.takeHome ?? -Infinity) - (a.takeHome ?? -Infinity));
 

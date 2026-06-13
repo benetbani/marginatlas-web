@@ -593,7 +593,7 @@ export default async function CellPage({
     netMarginPct: viewNetMarginPct,
     ownerTakeHome: viewTakeHome,
     firms: viewFirms,
-    breakInRating,
+    breakInRating: breakInRating?.score ?? null,
     isTrustedLocal: trustedLocalCell,
     costStructure: cell.cost_structure ?? null,
     breakevenOrdersDaily: be?.breakevenOrdersDaily ?? null,
