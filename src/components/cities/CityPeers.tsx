@@ -30,7 +30,7 @@ import { CountryFlag } from "@/components/CountryFlag";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { buildCityPeers } from "@/lib/scores/city_peers";
 import type { BreakInBand } from "@/lib/scores/break_in_rating";
-import type { PeerRole } from "@/lib/cities/comparable_cities";
+import { climateWord } from "@/lib/scores/band_labels";
 
 /** Band to the score-badge tone, the EXACT moss / atlas / clay scale the city
  * masthead and the country "easiest to break in" panel use, so a peer's badge
@@ -44,32 +44,6 @@ function bandBadge(band: BreakInBand): string {
       return "border-atlas-300 bg-atlas-100/60 text-atlas-700";
     case "brutal":
       return "border-clay-300 bg-clay-100/60 text-clay-700";
-  }
-}
-
-/** The one-word band label, plain and direction-true, matching the masthead. */
-function bandWord(band: BreakInBand): string {
-  switch (band) {
-    case "forgiving":
-      return "Forgiving";
-    case "manageable":
-      return "Manageable";
-    case "demanding":
-      return "Demanding";
-    case "brutal":
-      return "Brutal";
-  }
-}
-
-/** Why this city is shown as a peer. */
-function roleLabel(role: PeerRole): string {
-  switch (role) {
-    case "competitor":
-      return "Local competitor";
-    case "rival":
-      return "Classic rival";
-    case "international":
-      return "Peer abroad";
   }
 }
 
@@ -95,11 +69,11 @@ export function CityPeers({ citySlug, cityName }: CityPeersProps) {
     <section className="py-10 md:py-14">
       <SectionEyebrow className="mb-2">Cities like {cityName}</SectionEyebrow>
       <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mb-2 max-w-3xl">
-        A local competitor, a classic rival, and a peer abroad
+        How {cityName} compares to similar cities
       </h2>
       {/* useless-tile-ok: describes the peer comparison, not a count of things we cover */}
       <p className="text-sm md:text-base text-cocoa-700/80 mb-6 max-w-2xl">
-        Comparable metros, ranked by the same 0 to 100 city score on this page,
+        Comparable metros, scored on the same 0 to 100 scale as this page,
         higher means a friendlier place to open a small business.
       </p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
@@ -112,7 +86,7 @@ export function CityPeers({ citySlug, cityName }: CityPeersProps) {
             <div className="flex items-center justify-between gap-2 mb-2">
               <div className="flex items-center gap-2 text-xs uppercase tracking-wide text-cocoa-700/60 font-semibold">
                 <CountryFlag iso2={p.iso2} className="w-4" />
-                <span>{roleLabel(p.role)}</span>
+                <span>{p.continent}</span>
               </div>
               {p.score != null && p.band != null ? (
                 <span
@@ -121,7 +95,7 @@ export function CityPeers({ citySlug, cityName }: CityPeersProps) {
                   )}`}
                 >
                   <span className="tabular-nums">{p.score}</span>
-                  <span>{bandWord(p.band)}</span>
+                  <span>{climateWord(p.band)}</span>
                 </span>
               ) : (
                 <span className="shrink-0 text-[10px] font-medium uppercase tracking-wide text-cocoa-500">

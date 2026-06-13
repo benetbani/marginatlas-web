@@ -30,6 +30,7 @@ import * as React from "react";
 import Link from "next/link";
 import type { EasiestBreakInRow } from "@/lib/scores/country_board";
 import type { BreakInBand } from "@/lib/scores/break_in_rating";
+import { breakInWord } from "@/lib/scores/band_labels";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 
 /** Band to the badge tone. Higher = easier = warmer, the EXACT moss / atlas /
@@ -44,20 +45,6 @@ function bandBadge(band: BreakInBand): string {
       return "border-atlas-300 bg-atlas-100/60 text-atlas-700";
     case "brutal":
       return "border-clay-300 bg-clay-100/60 text-clay-700";
-  }
-}
-
-/** The one-word band label, plain and direction-true, matching the masthead. */
-function bandWord(band: BreakInBand): string {
-  switch (band) {
-    case "forgiving":
-      return "Forgiving";
-    case "manageable":
-      return "Manageable";
-    case "demanding":
-      return "Demanding";
-    case "brutal":
-      return "Brutal";
   }
 }
 
@@ -118,7 +105,7 @@ export function EasiestToBreakIn({ rows, placeName, limit = 8 }: EasiestToBreakI
                 )}`}
               >
                 <span className="tabular-nums">{r.score}</span>
-                <span>{bandWord(r.band)}</span>
+                <span>{breakInWord(r.band)}</span>
               </span>
             </Link>
             {r.openingHref && (

@@ -26,6 +26,7 @@ import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { CountryFlag } from "@/components/CountryFlag";
 import { fmtUSD } from "@/components/board/format";
 import type { BreakInBand } from "@/lib/scores/break_in_rating";
+import { breakInWord } from "@/lib/scores/band_labels";
 import type {
   OpeningPage,
   PeerPlace,
@@ -45,19 +46,6 @@ function bandBadge(band: BreakInBand): string {
   }
 }
 
-/** The one-word band label, plain and direction-true. */
-function bandWord(band: BreakInBand): string {
-  switch (band) {
-    case "forgiving":
-      return "Forgiving";
-    case "manageable":
-      return "Manageable";
-    case "demanding":
-      return "Demanding";
-    case "brutal":
-      return "Brutal";
-  }
-}
 
 /** A small break-in band badge, or nothing when the place/business is unscored. */
 function BandBadge({
@@ -75,7 +63,7 @@ function BandBadge({
       )}`}
     >
       <span className="tabular-nums">{score}</span>
-      <span>{bandWord(band)}</span>
+      <span>{breakInWord(band)}</span>
     </span>
   );
 }

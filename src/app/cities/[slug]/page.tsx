@@ -55,7 +55,9 @@ import {
   buildCityScore,
 } from "@/lib/scores/city_board";
 import type { BreakInBand } from "@/lib/scores/break_in_rating";
+import { breakInWord } from "@/lib/scores/band_labels";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
+import { getNeighborhoodEconomics } from "@/lib/economics/neighborhood_economics";
 
 export const revalidate = 43200; // 12 hours
 
@@ -71,20 +73,6 @@ function breakInBadge(band: BreakInBand): string {
       return "border-atlas-300 bg-atlas-100/60 text-atlas-700";
     case "brutal":
       return "border-clay-300 bg-clay-100/60 text-clay-700";
-  }
-}
-
-/** The one-word band label, plain and direction-true, matching the masthead. */
-function breakInWord(band: BreakInBand): string {
-  switch (band) {
-    case "forgiving":
-      return "Forgiving";
-    case "manageable":
-      return "Manageable";
-    case "demanding":
-      return "Demanding";
-    case "brutal":
-      return "Brutal";
   }
 }
 
@@ -333,6 +321,7 @@ export default async function CityPage({
           cityName={city.name}
           iso2={city.iso2}
           showInstitutions={false}
+          showStreets={shownNeighborhoods.length === 0}
         />
 
         {/* Neighborhoods: up to four featured areas (founder 2026-06-08), with the
@@ -351,20 +340,36 @@ export default async function CityPage({
               one for its street-level numbers.
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {shownNeighborhoods.map((n) => (
-                <Link
-                  key={n.slug}
-                  href={`/${city.iso2.toLowerCase()}/${city.slug}/${n.slug}`}
-                  className="group block rounded-xl border border-parchment hover:border-atlas-500 bg-cream-50 p-4 transition-colors"
-                >
-                  <div className="font-medium text-sm text-ink-900 group-hover:text-atlas-700 leading-tight">
-                    {n.name}
-                  </div>
-                  <div className="text-[11px] text-cocoa-700/60 mt-1 capitalize">
-                    {n.character.replace(/-/g, " ")}
-                  </div>
-                </Link>
-              ))}
+              {shownNeighborhoods.map((n) => {
+                // Merge 2026-06-13: commercial streets fold UNDER their
+                // neighborhood. The top prime streets for this area surface on
+                // the card, so the city has one places model (neighborhoods)
+                // with streets nested, not two overlapping lists.
+                const streets = (
+                  getNeighborhoodEconomics(city.slug, n.slug)?.prime_streets ?? []
+                )
+                  .map((s) => s.name)
+                  .slice(0, 2);
+                return (
+                  <Link
+                    key={n.slug}
+                    href={`/${city.iso2.toLowerCase()}/${city.slug}/${n.slug}`}
+                    className="group block rounded-xl border border-parchment hover:border-atlas-500 bg-cream-50 p-4 transition-colors"
+                  >
+                    <div className="font-medium text-sm text-ink-900 group-hover:text-atlas-700 leading-tight">
+                      {n.name}
+                    </div>
+                    <div className="text-[11px] text-cocoa-700/60 mt-1 capitalize">
+                      {n.character.replace(/-/g, " ")}
+                    </div>
+                    {streets.length > 0 ? (
+                      <div className="text-[11px] text-cocoa-700/80 mt-2 leading-snug">
+                        {streets.join(", ")}
+                      </div>
+                    ) : null}
+                  </Link>
+                );
+              })}
             </div>
             <div className="mt-4">
               <Link

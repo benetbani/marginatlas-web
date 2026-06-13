@@ -38,6 +38,7 @@ import {
 } from "@/lib/taxonomy";
 import { buildAcrossCities, type CityColumn, type AcrossMetric } from "@/lib/markets/across_cities";
 import type { BreakInBand } from "@/lib/scores/break_in_rating";
+import { breakInWord } from "@/lib/scores/band_labels";
 import { CountryFlag } from "@/components/CountryFlag";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { SpreadBar } from "@/components/board/charts/SpreadBar";
@@ -132,19 +133,8 @@ function bandBadge(band: BreakInBand): string {
   }
 }
 
-/** The one-word band label, plain and direction-true, matching the masthead. */
-function bandWord(band: BreakInBand): string {
-  switch (band) {
-    case "forgiving":
-      return "Forgiving";
-    case "manageable":
-      return "Manageable";
-    case "demanding":
-      return "Demanding";
-    case "brutal":
-      return "Brutal";
-  }
-}
+// The one-word band label now lives in @/lib/scores/band_labels (imported as
+// breakInWord); these columns are business break-in scores.
 
 /**
  * The cost-to-open page href for a city column. The column href is the cell page
@@ -329,7 +319,7 @@ export default async function AcrossCitiesPage({
                 )}`}
               >
                 <span className="tabular-nums">{easiest.breakInScore}</span>
-                <span>{bandWord(easiest.breakInBand)}</span>
+                <span>{breakInWord(easiest.breakInBand)}</span>
               </span>
             </span>
           </div>
@@ -478,7 +468,7 @@ export default async function AcrossCitiesPage({
                           )} ${isEasiest ? "ring-1 ring-moss-300" : ""}`}
                         >
                           <span className="tabular-nums">{c.breakInScore}</span>
-                          <span>{bandWord(c.breakInBand as BreakInBand)}</span>
+                          <span>{breakInWord(c.breakInBand as BreakInBand)}</span>
                         </span>
                       ) : (
                         <span className="text-cocoa-400">{MISSING}</span>

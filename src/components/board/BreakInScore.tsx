@@ -27,6 +27,7 @@
  */
 import * as React from "react";
 import type { BreakInRating, BreakInBand } from "@/lib/scores/break_in_rating";
+import { breakInWord, climateWord } from "@/lib/scores/band_labels";
 
 /** Band to the headline number's text color. Higher = easier = warmer. */
 function bandText(band: BreakInBand): string {
@@ -41,20 +42,6 @@ function bandText(band: BreakInBand): string {
   }
 }
 
-/** The one-word label shown next to the number, plain and direction-true. */
-function bandWord(band: BreakInBand): string {
-  switch (band) {
-    case "forgiving":
-      return "Forgiving";
-    case "manageable":
-      return "Manageable";
-    case "demanding":
-      return "Demanding";
-    case "brutal":
-      return "Brutal";
-  }
-}
-
 /** Band to a small dot/chip tone, used on the band word pill. */
 function bandPill(band: BreakInBand): string {
   switch (band) {
@@ -65,22 +52,6 @@ function bandPill(band: BreakInBand): string {
       return "border-atlas-300 bg-atlas-100/60 text-atlas-700";
     case "brutal":
       return "border-clay-300 bg-clay-100/60 text-clay-700";
-  }
-}
-
-/** City Business Climate Score band words. Higher = a better climate to do
- * business in. Separate from bandWord (which labels cell break-in difficulty) so
- * the cell masthead is unaffected. */
-function climateWord(band: BreakInBand): string {
-  switch (band) {
-    case "forgiving":
-      return "Excellent";
-    case "manageable":
-      return "Strong";
-    case "demanding":
-      return "Moderate";
-    case "brutal":
-      return "Difficult";
   }
 }
 
@@ -122,7 +93,7 @@ export function BreakInMasthead({
               rating.band,
             )}`}
           >
-            {bandWord(rating.band)}
+            {breakInWord(rating.band)}
           </span>
         </span>
       </div>

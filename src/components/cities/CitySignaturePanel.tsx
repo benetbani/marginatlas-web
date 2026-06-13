@@ -259,6 +259,7 @@ export function CitySignaturePanel({
   iso2,
   showInstitutions = true,
   showSectors = true,
+  showStreets = true,
 }: {
   citySlug: string;
   cityName: string;
@@ -271,6 +272,12 @@ export function CitySignaturePanel({
   // When false, the signature-sectors block ("What stands out here") is
   // suppressed. Defaults to true so city pages are unaffected.
   showSectors?: boolean;
+  // When false, the city-level commercial-streets block ("Where commerce
+  // happens") is suppressed. Merge 2026-06-13 (founder): on a city WITH a
+  // neighborhood scheme the neighborhoods section is the single "areas"
+  // model and streets fold under each neighborhood, so the city page passes
+  // false there; a city with no scheme keeps the block as its one areas list.
+  showStreets?: boolean;
 }) {
   const cityScoped = !showInstitutions;
   const sig = resolveSignature(citySlug, iso2, cityScoped);
@@ -280,7 +287,8 @@ export function CitySignaturePanel({
   const hasForeignOwned = sig.foreign_owned_pct != null;
   const hasDemographics = hasForeignBorn || hasForeignOwned;
   const hasSectors = sig.signature_sectors.length > 0;
-  const hasStreets = !!(sig.commercial_streets && sig.commercial_streets.length > 0);
+  const hasStreets =
+    showStreets && !!(sig.commercial_streets && sig.commercial_streets.length > 0);
 
   // On the city page, if nothing city-specific resolves, render nothing rather
   // than a thin or country-cloned panel.
@@ -364,11 +372,10 @@ export function CitySignaturePanel({
           </div>
         ) : null}
 
-        {/* Block 2.5: commercial streets and zones. Sits between
-            "what the city is about" (signature sectors) and "how
-            the city feels" (culture). The thematic bridge: where
-            the city's commerce physically happens. */}
-        {sig.commercial_streets && sig.commercial_streets.length > 0 ? (
+        {/* Block 2.5: commercial streets and zones. Shown only when the city
+            has no neighborhood scheme (showStreets); where neighborhoods exist
+            they are the single areas model and streets fold under them. */}
+        {hasStreets && sig.commercial_streets ? (
           <div className="md:col-span-12 atlas-card p-5 md:p-6">
             <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700/65 mb-4">
               Where commerce happens
