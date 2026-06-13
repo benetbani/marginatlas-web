@@ -543,15 +543,11 @@ export function CompareClient() {
     <div className="xl:flex xl:gap-12">
       <div className="min-w-0 flex-1 space-y-12 md:space-y-16">
       {/* ----- Pick the matchup ----- */}
-      <section id="compare-pickers" aria-labelledby="compare-pickers-heading">
-        <SectionEyebrow className="mb-3">Set the matchup</SectionEyebrow>
-        <h2
-          id="compare-pickers-heading"
-          className="font-display text-2xl font-medium tracking-tight text-ink-900 md:text-3xl"
-        >
-          Up to three cities, side by side
-        </h2>
-        <p className="mt-2 max-w-2xl text-base leading-relaxed text-graphite">
+      <section id="compare-pickers" aria-label="Set the matchup">
+        {/* The masthead H1 owns the headline; the pickers carry only their quiet
+            eyebrow + instruction, not a second near-duplicate H2. */}
+        <SectionEyebrow className="mb-1">Set the matchup</SectionEyebrow>
+        <p className="mt-1 max-w-2xl text-base leading-relaxed text-graphite">
           Pick a country, region, and activity for each column. The grid below
           updates as you change them.
         </p>

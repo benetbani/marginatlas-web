@@ -31,7 +31,7 @@ export function FreshnessStamp({
   return (
     <div
       className={[
-        "flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-cocoa-500",
+        "flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-cocoa-700",
         className,
       ]
         .filter(Boolean)
@@ -69,7 +69,7 @@ export function FlagIt({
   return (
     <div
       className={[
-        "flex flex-wrap items-baseline gap-x-2 gap-y-1 text-sm text-cocoa-700/80",
+        "flex flex-wrap items-baseline gap-x-2 gap-y-1 text-sm text-cocoa-700",
         className,
       ]
         .filter(Boolean)
@@ -78,7 +78,7 @@ export function FlagIt({
       <span>{label}</span>
       <a
         href={href}
-        className="font-medium text-atlas-700 underline decoration-atlas-200 underline-offset-2 transition-colors hover:decoration-atlas-700"
+        className="rounded-sm font-medium text-atlas-700 underline decoration-atlas-200 underline-offset-2 transition-colors hover:decoration-atlas-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50"
       >
         {cta}
       </a>

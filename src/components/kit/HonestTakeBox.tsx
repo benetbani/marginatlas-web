@@ -84,7 +84,7 @@ export function HonestTakeBox({
               {cleanPoints.map((pt, i) => (
                 <li
                   key={i}
-                  className="flex gap-2.5 text-sm leading-relaxed text-cocoa-700/90"
+                  className="flex gap-2.5 text-sm leading-relaxed text-cocoa-700"
                 >
                   <span
                     aria-hidden="true"

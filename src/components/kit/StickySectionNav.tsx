@@ -72,7 +72,7 @@ export function StickySectionNav({
         aria-label={title}
         className="hidden xl:block sticky top-[120px] ml-4 w-[180px] shrink-0 self-start text-xs"
       >
-        <div className="mb-2 pl-3 text-[10px] font-semibold uppercase tracking-wider text-cocoa-500">
+        <div className="mb-2 pl-3 text-[10px] font-semibold uppercase tracking-wider text-cocoa-700">
           {title}
         </div>
         <ul className="space-y-0.5 border-l border-ink-200">
@@ -84,9 +84,10 @@ export function StickySectionNav({
                   href={`#${s.id}`}
                   className={[
                     "-ml-px block border-l py-1.5 pl-3 transition-colors",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50",
                     isActive
                       ? "border-atlas-500 font-medium text-atlas-700"
-                      : "border-transparent text-cocoa-700/70 hover:text-ink-900",
+                      : "border-transparent text-cocoa-700 hover:text-ink-900",
                   ].join(" ")}
                 >
                   {s.label}
@@ -111,6 +112,7 @@ export function StickySectionNav({
                   href={`#${s.id}`}
                   className={[
                     "inline-flex whitespace-nowrap rounded-full border px-3 py-1 text-xs font-medium transition-colors",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-75",
                     isActive
                       ? "border-atlas-300 bg-atlas-50 text-atlas-700"
                       : "border-parchment bg-cream-50 text-cocoa-700 hover:text-ink-900",

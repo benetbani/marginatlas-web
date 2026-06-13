@@ -94,7 +94,7 @@ export function MoneyGoesBreakdown({
         {heading}
       </h2>
       {lede ? (
-        <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-cocoa-700/80 md:text-base">
+        <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-cocoa-700 md:text-base">
           {lede}
         </p>
       ) : null}
@@ -133,13 +133,13 @@ export function MoneyGoesBreakdown({
                   "text-sm",
                   it.kept
                     ? "font-semibold text-moss-700"
-                    : "text-cocoa-700/90",
+                    : "text-cocoa-700",
                 ].join(" ")}
               >
                 {it.label}
               </span>
               {it.hint ? (
-                <span className="mt-0.5 block text-[11px] text-cocoa-500">
+                <span className="mt-0.5 block text-[11px] text-cocoa-700">
                   {it.hint}
                 </span>
               ) : null}
@@ -157,7 +157,7 @@ export function MoneyGoesBreakdown({
           </div>
         ))}
       </dl>
-      <p className="mt-3 text-[11px] text-cocoa-500">
+      <p className="mt-3 text-[11px] text-cocoa-700">
         Read as dollars out of every $100 a typical firm takes in. Modeled from
         the cost structure; the local market shifts the exact split.
       </p>

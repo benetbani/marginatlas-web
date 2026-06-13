@@ -19,11 +19,12 @@ const eyebrowVariants = cva("uppercase font-semibold leading-none", {
   variants: {
     tone: {
       default: "text-atlas-700",
-      muted: "text-cocoa-700/70",
+      muted: "text-cocoa-700",
       inverse: "text-atlas-300", // on dark bands (atlas-paper-dark)
     },
     size: {
-      sm: "text-[10px] tracking-[0.16em]",
+      // 12px is the floor: nothing smaller renders. The old 10px `sm` is gone.
+      sm: "text-xs tracking-[0.16em]",
       md: "text-xs tracking-[0.18em]",
     },
   },

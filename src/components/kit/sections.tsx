@@ -51,9 +51,9 @@ export function PlainTerms({
             <dd className="font-display text-2xl font-semibold tabular-nums tracking-tight text-ink-900">
               {it.value}
             </dd>
-            <dt className="mt-0.5 text-sm font-medium text-cocoa-700/80">{it.label}</dt>
+            <dt className="mt-0.5 text-sm font-medium text-cocoa-700">{it.label}</dt>
             {hasText(it.hint) ? (
-              <p className="mt-0.5 text-[11px] leading-relaxed text-cocoa-500">{it.hint}</p>
+              <p className="mt-0.5 text-[11px] leading-relaxed text-cocoa-700">{it.hint}</p>
             ) : null}
           </div>
         ))}
@@ -95,7 +95,7 @@ export function BreakEvenLine({
         </p>
       ) : null}
       {hasText(note) ? (
-        <p className="mt-3 text-[11px] text-cocoa-500">{note}</p>
+        <p className="mt-3 text-[11px] text-cocoa-700">{note}</p>
       ) : null}
     </BeatCard>
   );
@@ -185,7 +185,7 @@ export function WagesByRole({
         })}
       </ul>
       {hasText(note) ? (
-        <p className="mt-3.5 text-[11px] text-cocoa-500">{note}</p>
+        <p className="mt-3.5 text-[11px] text-cocoa-700">{note}</p>
       ) : null}
     </BeatCard>
   );
@@ -283,7 +283,7 @@ export function RealisticFirstYear({
       {items.length > 0 ? (
         <ul className={["space-y-2.5", hasText(headline) ? "mt-3" : ""].join(" ")}>
           {items.map((b, i) => (
-            <li key={i} className="flex gap-3 text-sm leading-relaxed text-cocoa-700/90 md:text-base">
+            <li key={i} className="flex gap-3 text-sm leading-relaxed text-cocoa-700 md:text-base">
               <span aria-hidden="true" className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-cocoa-500" />
               <span>{b}</span>
             </li>
@@ -335,7 +335,7 @@ export function SameBusinessNearby({
                   {r.name}
                 </span>
                 {hasText(r.sub) ? (
-                  <span className="block text-[11px] text-cocoa-500">{r.sub}</span>
+                  <span className="block text-[11px] text-cocoa-700">{r.sub}</span>
                 ) : null}
               </span>
               {isNum(r.value) && format ? (
@@ -350,7 +350,7 @@ export function SameBusinessNearby({
               {hasText(r.href) ? (
                 <a
                   href={r.href}
-                  className="group flex items-baseline justify-between gap-3 py-2.5 transition-colors hover:text-atlas-700"
+                  className="group flex items-baseline justify-between gap-3 rounded-sm py-2.5 transition-colors hover:text-atlas-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50"
                 >
                   {inner}
                 </a>
@@ -362,7 +362,7 @@ export function SameBusinessNearby({
         })}
       </ul>
       {hasText(valueLabel) || hasText(note) ? (
-        <p className="mt-3 text-[11px] text-cocoa-500">
+        <p className="mt-3 text-[11px] text-cocoa-700">
           {[valueLabel, note].filter(hasText).join(" ")}
         </p>
       ) : null}

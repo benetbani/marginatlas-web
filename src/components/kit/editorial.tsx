@@ -174,7 +174,7 @@ export function RightForWrongFor({
             </div>
             <ul className="space-y-2">
               {right.map((r, i) => (
-                <li key={i} className="flex gap-2.5 text-sm leading-relaxed text-cocoa-700/90">
+                <li key={i} className="flex gap-2.5 text-sm leading-relaxed text-cocoa-700">
                   <span aria-hidden="true" className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-moss-500" />
                   <span>{r}</span>
                 </li>
@@ -189,7 +189,7 @@ export function RightForWrongFor({
             </div>
             <ul className="space-y-2">
               {wrong.map((w, i) => (
-                <li key={i} className="flex gap-2.5 text-sm leading-relaxed text-cocoa-700/90">
+                <li key={i} className="flex gap-2.5 text-sm leading-relaxed text-cocoa-700">
                   <span aria-hidden="true" className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-atlas-500" />
                   <span>{w}</span>
                 </li>
@@ -291,8 +291,8 @@ export function MythVsReality({
       <ul className="divide-y divide-parchment border-y border-parchment">
         {rows.map((p, i) => (
           <li key={i} className="grid gap-1 py-3 sm:grid-cols-2 sm:gap-6">
-            <p className="text-sm leading-relaxed text-cocoa-700/80">
-              <span className="mr-1.5 text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
+            <p className="text-sm leading-relaxed text-cocoa-700">
+              <span className="mr-1.5 text-[11px] font-semibold uppercase tracking-wider text-cocoa-700">
                 Myth
               </span>
               {p.myth}

@@ -135,7 +135,7 @@ export function AnswerFirstMasthead({
                   <CountUpNumber value={anchor.value} format={anchor.format} />
                 )}
               </div>
-              <div className="mt-1.5 text-sm font-medium text-cocoa-700/80">
+              <div className="mt-1.5 text-sm font-medium text-cocoa-700">
                 {anchor.label}
               </div>
             </div>

@@ -216,7 +216,7 @@ export function RangeStrip({
               x={x0}
               y={trackY - 16}
               textAnchor="middle"
-              className="fill-cocoa-500"
+              className="fill-cocoa-700"
               fontSize="11.5"
               letterSpacing="0.04em"
             >
@@ -237,7 +237,7 @@ export function RangeStrip({
               x={x1}
               y={trackY - 16}
               textAnchor="middle"
-              className="fill-cocoa-500"
+              className="fill-cocoa-700"
               fontSize="11.5"
               letterSpacing="0.04em"
             >
@@ -279,7 +279,7 @@ export function RangeStrip({
         ) : null}
       </svg>
       {compact ? (
-        <div className="mt-1 flex justify-between text-[11px] tabular-nums text-cocoa-500">
+        <div className="mt-1 flex justify-between text-[11px] tabular-nums text-cocoa-700">
           <span>{format(p10)}</span>
           <span className="font-semibold text-ink-900">{format(p50)}</span>
           <span>{format(p90)}</span>

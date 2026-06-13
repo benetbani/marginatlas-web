@@ -110,7 +110,7 @@ export function LikeForLikeTable({
         </h2>
       ) : null}
       {hasText(lede) ? (
-        <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-cocoa-700/80 md:text-base">
+        <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-cocoa-700 md:text-base">
           {lede}
         </p>
       ) : null}
@@ -119,7 +119,7 @@ export function LikeForLikeTable({
         <table className="w-full min-w-[34rem] border-collapse text-sm">
           <thead>
             <tr className="border-b border-parchment text-left align-bottom">
-              <th className="w-44 py-2 pr-4 text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
+              <th className="w-44 py-2 pr-4 text-[11px] font-semibold uppercase tracking-wide text-cocoa-700">
                 Metric
               </th>
               {cols.map((c) => (
@@ -128,7 +128,7 @@ export function LikeForLikeTable({
                     {c.label}
                   </span>
                   {hasText(c.sub) ? (
-                    <span className="block text-[11px] font-normal text-cocoa-500">{c.sub}</span>
+                    <span className="block text-[11px] font-normal text-cocoa-700">{c.sub}</span>
                   ) : null}
                 </th>
               ))}
@@ -142,7 +142,7 @@ export function LikeForLikeTable({
                   <td className="py-2.5 pr-4 align-top text-cocoa-500">
                     {row.label}
                     {hasText(row.hint) ? (
-                      <span className="mt-0.5 block text-[11px] text-cocoa-400">{row.hint}</span>
+                      <span className="mt-0.5 block text-[11px] text-cocoa-700">{row.hint}</span>
                     ) : null}
                   </td>
                   {cols.map((c) => {
@@ -155,7 +155,7 @@ export function LikeForLikeTable({
                         className={[
                           "px-3 py-2.5 align-top tabular-nums",
                           blank
-                            ? "text-cocoa-400"
+                            ? "text-cocoa-700"
                             : isLeader
                               ? "font-semibold text-atlas-700"
                               : "text-ink-900",
@@ -173,7 +173,7 @@ export function LikeForLikeTable({
       </div>
 
       {hasText(footnote) ? (
-        <p className="mt-3 text-[11px] text-cocoa-500">{footnote}</p>
+        <p className="mt-3 text-[11px] text-cocoa-700">{footnote}</p>
       ) : null}
     </section>
   );

@@ -35,7 +35,7 @@ export function Breadcrumb({ items, maxVisible = 4 }: Props) {
   return (
     <nav
       aria-label="Breadcrumb"
-      className="text-sm text-ink-700/70 mb-4 flex items-center gap-1 flex-wrap"
+      className="text-sm text-ink-700 mb-4 flex items-center gap-1 flex-wrap"
     >
       {visible.map((crumb, i) => {
         const isLast = i === visible.length - 1;
@@ -55,7 +55,7 @@ export function Breadcrumb({ items, maxVisible = 4 }: Props) {
             {crumb.href && !isLast ? (
               <Link
                 href={crumb.href}
-                className="hover:text-atlas-700 transition-colors inline-flex items-center gap-1"
+                className="text-atlas-700 hover:text-atlas-700 transition-colors inline-flex items-center gap-1 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50"
               >
                 {crumb.iso2 ? (
                   <CountryFlag iso2={crumb.iso2} label={crumb.label} className="w-4" />
