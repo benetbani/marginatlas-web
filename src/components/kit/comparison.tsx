@@ -115,8 +115,10 @@ export function LikeForLikeTable({
         </p>
       ) : null}
 
-      <div className="mt-5 overflow-x-auto">
-        <table className="w-full min-w-[34rem] border-collapse text-sm">
+      {/* sm and up: the full comparison table. Below sm it is hidden so the
+          primary content never sits behind horizontal scroll. */}
+      <div className="mt-5 hidden sm:block">
+        <table className="w-full border-collapse text-sm">
           <thead>
             <tr className="border-b border-parchment text-left align-bottom">
               <th className="w-44 py-2 pr-4 text-[11px] font-semibold uppercase tracking-wide text-cocoa-700">
@@ -170,6 +172,57 @@ export function LikeForLikeTable({
             })}
           </tbody>
         </table>
+      </div>
+
+      {/* Below sm: the same data reflowed into a stacked, labeled list so every
+          column stays readable without horizontal scroll. One group per metric;
+          inside, one labeled row per place. CSS-only toggle, no JS. */}
+      <div className="mt-5 space-y-4 sm:hidden">
+        {validRows.map((row, ri) => {
+          const leader = leaderKey(row);
+          return (
+            <div
+              key={ri}
+              className="rounded-md border border-parchment/70 bg-cream-75 px-4 py-3"
+            >
+              <div className="text-[11px] font-semibold uppercase tracking-wide text-cocoa-700">
+                {row.label}
+              </div>
+              {hasText(row.hint) ? (
+                <div className="mt-0.5 text-[11px] text-cocoa-700">{row.hint}</div>
+              ) : null}
+              <dl className="mt-2.5 space-y-2">
+                {cols.map((c) => {
+                  const disp = row.cells[c.key];
+                  const blank = !hasText(disp);
+                  const isLeader = leader === c.key;
+                  return (
+                    <div key={c.key} className="flex items-baseline justify-between gap-3">
+                      <dt className="min-w-0 text-sm text-cocoa-500">
+                        <span className="block truncate font-medium text-ink-900">{c.label}</span>
+                        {hasText(c.sub) ? (
+                          <span className="block truncate text-[11px] text-cocoa-700">{c.sub}</span>
+                        ) : null}
+                      </dt>
+                      <dd
+                        className={[
+                          "shrink-0 text-right text-sm tabular-nums",
+                          blank
+                            ? "text-cocoa-700"
+                            : isLeader
+                              ? "font-semibold text-atlas-700"
+                              : "text-ink-900",
+                        ].join(" ")}
+                      >
+                        {blank ? DASH : disp}
+                      </dd>
+                    </div>
+                  );
+                })}
+              </dl>
+            </div>
+          );
+        })}
       </div>
 
       {hasText(footnote) ? (

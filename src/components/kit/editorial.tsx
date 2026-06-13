@@ -31,6 +31,12 @@ export type BeatCardProps = {
   heading?: string | null;
   /** A spot illustration, hosted top-right. Use sparingly. */
   spot?: AtlasSpotId | null;
+  /**
+   * Lead/feature surface: lifts the card one elevation step (shadow-card)
+   * above the resting cards (shadow-subtle). Use for the section a page
+   * should read first; leave false for the resting beats.
+   */
+  feature?: boolean;
   id?: string;
   className?: string;
   children: React.ReactNode;
@@ -40,6 +46,7 @@ export function BeatCard({
   eyebrow,
   heading,
   spot,
+  feature = false,
   id,
   className,
   children,
@@ -49,7 +56,8 @@ export function BeatCard({
       id={id}
       aria-label={heading || eyebrow}
       className={[
-        "rounded-lg border border-parchment bg-cream-50 shadow-subtle",
+        "rounded-lg border border-parchment bg-cream-50",
+        feature ? "shadow-card" : "shadow-subtle",
         "px-5 py-5 md:px-7 md:py-6",
         className,
       ]

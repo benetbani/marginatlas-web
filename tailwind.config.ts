@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
-import { tailwindColors, fontFamily, elevation } from "./src/lib/design-tokens";
+import { tailwindColors, fontFamily, elevation, z } from "./src/lib/design-tokens";
 
 // Palette + font-family values are imported from src/lib/design-tokens.ts
 // so the design-system module is the single source of truth. Edit the
@@ -109,6 +109,19 @@ const config: Config = {
         sans: [...fontFamily.sans],
         serif: [...fontFamily.serif],
         display: [...fontFamily.display],
+      },
+      zIndex: {
+        // Z-index scale from src/lib/design-tokens.ts (the `z` token).
+        // Wiring it here makes z-raised / z-sticky / z-dropdown etc. real
+        // Tailwind utilities so components stop hand-rolling z-10/z-20 and
+        // the layering order stays centralized. Keys mirror the token names.
+        raised: `${z.raised}`,
+        sticky: `${z.sticky}`,
+        dropdown: `${z.dropdown}`,
+        overlay: `${z.overlay}`,
+        tooltip: `${z.tooltip}`,
+        modal: `${z.modal}`,
+        toast: `${z.toast}`,
       },
     },
   },

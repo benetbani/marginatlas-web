@@ -115,6 +115,18 @@ export function RangeStrip({
       p90,
     )} at the top tenth, typical ${format(p50)}.`;
 
+  // Where a value sits along the plotted track, as a percent of the band, so the
+  // mobile HTML markers land at the same spot the SVG accents do. Clamped a touch
+  // off each edge so a marker never collides with an endpoint label.
+  const trackPct = (v: number, edge: number) => {
+    const span = x1 - x0;
+    if (span <= 0) return 50;
+    const pct = ((xp(v) - x0) / span) * 100;
+    return Math.max(edge, Math.min(100 - edge, pct));
+  };
+  const p50Pos = trackPct(p50, 6);
+  const youPos = isNum(you) ? trackPct(you, 2) : null;
+
   return (
     <figure className={className ? `w-full ${className}` : "w-full"}>
       {tier ? (
@@ -122,9 +134,66 @@ export function RangeStrip({
           <TierDot tier={tier} showLabel />
         </figcaption>
       ) : null}
+      {/* Mobile (below sm): the SVG's baked-in 11..17px text scales to roughly
+          5..8px in a phone column, illegible. Show the signature as real HTML at
+          a readable size instead, gated CSS-only so it stays server-rendered with
+          no hydration. The desktop SVG below is untouched. The default masthead
+          size is the one that renders SVG-only on phones; the compact size keeps
+          its own HTML row, so this mobile view is reserved for the default. */}
+      {!compact ? (
+        <div className="block sm:hidden" role="img" aria-label={label}>
+          <div className="flex items-end justify-between gap-2">
+            <div className="min-w-0 text-left">
+              <div className="text-[11px] font-medium uppercase tracking-wide text-cocoa-700">
+                Bottom 10%
+              </div>
+              <div className="text-base font-semibold tabular-nums text-ink-700">
+                {format(p10)}
+              </div>
+            </div>
+            <div className="min-w-0 text-center">
+              <div className="text-[11px] font-semibold uppercase tracking-wide text-atlas-700">
+                Typical
+              </div>
+              <div className="text-lg font-bold tabular-nums text-ink-900">
+                {format(p50)}
+              </div>
+            </div>
+            <div className="min-w-0 text-right">
+              <div className="text-[11px] font-medium uppercase tracking-wide text-cocoa-700">
+                Top 10%
+              </div>
+              <div className="text-base font-semibold tabular-nums text-ink-700">
+                {format(p90)}
+              </div>
+            </div>
+          </div>
+          {/* The spread as a horizontal track: the seven-tone ramp in a gradient
+              bar, the typical carrying the lone accent tick. Tokens only. */}
+          <div className="relative mt-2 h-2 w-full rounded-full bg-gradient-to-r from-cream-200 via-cocoa-300 to-cream-200">
+            <span
+              className="absolute top-1/2 h-4 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-atlas-500"
+              style={{ left: `${p50Pos}%` }}
+              aria-hidden="true"
+            />
+            {youPos != null ? (
+              <span
+                className="absolute top-1/2 h-4 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-ink-900"
+                style={{ left: `${youPos}%` }}
+                aria-hidden="true"
+              />
+            ) : null}
+          </div>
+          {isNum(you) ? (
+            <div className="mt-1.5 text-[11px] font-semibold tabular-nums text-ink-900">
+              You: {format(you)}
+            </div>
+          ) : null}
+        </div>
+      ) : null}
       <svg
         viewBox={`0 0 ${W} ${H}`}
-        className="h-auto w-full"
+        className={compact ? "h-auto w-full" : "hidden h-auto w-full sm:block"}
         role="img"
         aria-label={label}
       >

@@ -98,10 +98,15 @@ export function StickySectionNav({
         </ul>
       </nav>
 
-      {/* Below xl: the sticky chip row. */}
+      {/* Below xl: the sticky chip row. It sticks just below the real header,
+          whose height is published as the shared --atlas-header-h custom
+          property on the root (layout.tsx), so the old magic top-[56px] (which
+          undershot the ~80px header and overlapped it) is gone. z-sticky (20)
+          puts the row above page content and above the header's z-raised (10),
+          so it can never hide under the header. */}
       <nav
         aria-label={title}
-        className="sticky top-[56px] z-raised -mx-4 mb-6 overflow-x-auto border-b border-parchment/70 bg-cream-75/90 px-4 py-2 backdrop-blur xl:hidden"
+        className="sticky top-[var(--atlas-header-h)] z-sticky -mx-4 mb-6 overflow-x-auto border-b border-parchment/70 bg-cream-75/90 px-4 py-2 backdrop-blur xl:hidden"
       >
         <ul className="flex w-max gap-2">
           {present.map((s) => {

@@ -19,6 +19,7 @@ import { HeaderSearch } from "@/components/HeaderSearch";
 import { HeaderAuth } from "@/components/HeaderAuth";
 import { FooterNewsletterBar } from "@/components/newsletter/NewsletterSignupVariants";
 import { LogoWordmark } from "@/components/brand/LogoWordmark";
+import { MobileNav } from "@/components/MobileNav";
 import { PaywallModalRoot } from "@/components/monetization";
 
 // Typography.
@@ -85,7 +86,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${inter.variable}`}>
+    <html
+      lang="en"
+      className={`${fraunces.variable} ${inter.variable} [--atlas-header-h:80px] md:[--atlas-header-h:88px]`}
+    >
       {/* SaaS reformation 2026-06-12 — the body is the warm app ground
           (cream-75 via the `body` rule in globals.css). The .atlas-paper
           class stays on map containers and white panels only; white cards
@@ -105,7 +109,7 @@ export default function RootLayout({
            white and, now that the paper texture that used to separate it from
            the page is gone, carries a thin bottom hairline so the sticky bar
            stays defined as content scrolls beneath it. */}
-        <header className="bg-white border-b border-parchment sticky top-0 z-10">
+        <header className="bg-white border-b border-parchment sticky top-0 z-raised">
           <div className="max-w-7xl mx-auto px-6 py-5 md:py-6 flex items-center justify-between">
             <a href="/" aria-label="Margin Atlas home" className="inline-flex items-center">
               {/* Cities §10: bump 32 to 40 on desktop, 36 on mobile per founder request. */}
@@ -134,6 +138,10 @@ export default function RootLayout({
                 </a>
               </nav>
               <HeaderSearch />
+              {/* Mobile chrome (R5 Part 8): below md the desktop nav above is
+                  hidden, so this hamburger is the only navigation. It toggles a
+                  token-styled menu of the same primary links. */}
+              <MobileNav />
             </div>
           </div>
         </header>
