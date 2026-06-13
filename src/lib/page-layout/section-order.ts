@@ -19,14 +19,25 @@ export const CELL_PAGE_SECTIONS = [
   "related-cells",
 ] as const;
 
-// Country page, rebuilt on the Atlas Page Kit (WS4, 2026-06-13). The decisive
-// read (tax + register cost + payroll + time-to-start) is "formation"; the
-// honest take, how-hard-to-hire, and compare-to-neighbours bands ride on
-// <div id> anchors (not registered <section>s, by the same convention the
-// industry page uses), so only the structural <section> ids are listed here.
+// Country page, on the Atlas Page Kit (Round 5, 2026-06-14). Reading order:
+// the masthead, THEN the honest take (the brand through-line leads the body,
+// before the data), THEN the decisive read (tax + time-to-start + payroll, with
+// the per-tier formation cost table folded directly beneath it, so "cost to
+// open" is no longer a standalone band), the hire read, the neighbour facts,
+// the activity break-in panel, the cities, the country character, and the
+// compare CTA. Most bands render through kit components (BeatCard, HonestTakeBox,
+// SectionEmpty) whose <section> lives in the component file, not the page, so the
+// section-order gate (which scans literal <section id=> in the PAGE source) only
+// sees the bespoke "hero" and "break-in" sections. The full reading order is
+// listed here anyway as the authoritative skeleton; the gate's subsequence test
+// passes because the page's literal sections are a subsequence of this list.
 export const COUNTRY_PAGE_SECTIONS = [
   "hero",
+  "honest-take",
+  "decisive",
   "formation",
+  "hire",
+  "neighbours",
   "break-in",
   "cities",
   "character",

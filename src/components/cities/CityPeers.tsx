@@ -66,13 +66,13 @@ export function CityPeers({ citySlug, cityName }: CityPeersProps) {
   if (peers.length < 2) return null;
 
   return (
-    <section className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
-      <SectionEyebrow className="mb-2">Cities like {cityName}</SectionEyebrow>
-      <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mb-2 max-w-3xl">
+    <section className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
+      <SectionEyebrow className="mb-1">Cities like {cityName}</SectionEyebrow>
+      <h2 className="font-display text-xl font-medium tracking-tight text-balance text-ink-900 md:text-2xl max-w-3xl">
         How {cityName} compares to similar cities
       </h2>
       {/* useless-tile-ok: describes the peer comparison, not a count of things we cover */}
-      <p className="text-sm md:text-base text-cocoa-700/80 mb-6 max-w-2xl">
+      <p className="mt-3 mb-6 max-w-2xl text-sm leading-relaxed text-cocoa-700 md:text-base">
         Comparable metros, scored on the same 0 to 100 scale as this page,
         higher means a friendlier place to open a small business.
       </p>
@@ -84,7 +84,7 @@ export function CityPeers({ citySlug, cityName }: CityPeersProps) {
             className="group block rounded-2xl border border-parchment hover:border-atlas-500 bg-white p-5 transition-colors"
           >
             <div className="flex items-center justify-between gap-2 mb-2">
-              <div className="flex items-center gap-2 text-xs uppercase tracking-wide text-cocoa-700/60 font-semibold">
+              <div className="flex items-center gap-2 text-xs uppercase tracking-wide text-cocoa-700 font-semibold">
                 <CountryFlag iso2={p.iso2} className="w-4" />
                 <span>{p.continent}</span>
               </div>
@@ -103,10 +103,10 @@ export function CityPeers({ citySlug, cityName }: CityPeersProps) {
                 </span>
               )}
             </div>
-            <div className="font-display text-xl md:text-2xl font-medium tracking-tight text-ink-900 group-hover:text-atlas-700 transition-colors">
+            <div className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900 group-hover:text-atlas-700 transition-colors">
               {p.name}
             </div>
-            <div className="mt-3 text-xs text-cocoa-700/70 flex items-center gap-1.5 font-medium border-b border-atlas-200 group-hover:border-atlas-500 pb-0.5 transition-colors w-fit">
+            <div className="mt-3 text-xs text-cocoa-700 flex items-center gap-1.5 font-medium border-b border-atlas-200 group-hover:border-atlas-500 pb-0.5 transition-colors w-fit">
               See the city
               <span aria-hidden>{"→"}</span>
             </div>

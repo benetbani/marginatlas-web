@@ -30,7 +30,6 @@ import { COUNTRIES } from "@/lib/taxonomy";
 import { CityPeers } from "@/components/cities/CityPeers";
 import { buildCityPeers } from "@/lib/scores/city_peers";
 import { CitySignaturePanel } from "@/components/cities/CitySignaturePanel";
-import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { breakInWord } from "@/lib/scores/band_labels";
 import { BreakInStrip } from "@/components/cities/BreakInStrip";
 import {
@@ -48,6 +47,7 @@ import { industryPictogramId } from "@/lib/brand/industry_pictogram";
 import { NeighborhoodCover } from "@/components/cities/NeighborhoodCover";
 import {
   AnswerFirstMasthead,
+  BeatCard,
   HonestTakeBox,
   RangeStrip,
   StickySectionNav,
@@ -264,7 +264,9 @@ export default async function CityPage({
   // dead anchor on mount, so listing them all is safe.
   const navSections: Array<{ id: string; label: string }> = [
     { id: "headline", label: "Overview" },
-    ...(view.honestTake ? [{ id: "honest-take", label: "The honest take" }] : []),
+    // The honest take is always present (filled or a calm placeholder), so the
+    // anchor is always listed.
+    { id: "honest-take", label: "The honest take" },
     { id: "customer", label: "The local customer" },
     { id: "space", label: "What space costs" },
     { id: "visitors", label: "Tourist vs local" },
@@ -300,7 +302,10 @@ export default async function CityPage({
           />
 
           <div className="mt-8 space-y-6 md:space-y-8">
-            {/* The honest take, right after the headline numbers. */}
+            {/* The honest take, right after the headline numbers. The brand
+               heartbeat box is ALWAYS present: on a thin city with no read yet it
+               falls back to the calm SectionEmpty placeholder rather than
+               silently vanishing, so the through-line never disappears. */}
             {view.honestTake ? (
               <HonestTakeBox
                 id="honest-take"
@@ -309,21 +314,25 @@ export default async function CityPage({
               >
                 {view.honestTake.body}
               </HonestTakeBox>
-            ) : null}
+            ) : (
+              <SectionEmpty
+                id="honest-take"
+                eyebrow="The honest take"
+                heading={`The honest take on ${city.name}`}
+                place={city.name}
+              />
+            )}
 
             {/* Who the local customer is: spending power, with a real income
                spread where one exists (the 7-gradation strip). */}
             {view.customer ? (
-              <section
+              <BeatCard
                 id="customer"
-                className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+                eyebrow="The local customer"
+                heading="Who you are selling to, and how freely they spend"
               >
-                <SectionEyebrow className="mb-1">The local customer</SectionEyebrow>
-                <h2 className="font-display text-xl font-medium tracking-tight text-ink-900 md:text-2xl">
-                  Who you are selling to, and how freely they spend
-                </h2>
                 {view.customer.note ? (
-                  <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-cocoa-700/80 md:text-base">
+                  <p className="max-w-2xl text-sm leading-relaxed text-cocoa-700 md:text-base">
                     {view.customer.note}
                   </p>
                 ) : null}
@@ -333,7 +342,7 @@ export default async function CityPage({
                       <dd className="font-display text-2xl font-semibold tabular-nums tracking-tight text-ink-900">
                         {s.value}
                       </dd>
-                      <dt className="mt-0.5 text-sm font-medium text-cocoa-700/80">{s.label}</dt>
+                      <dt className="mt-0.5 text-sm font-medium text-cocoa-700">{s.label}</dt>
                       {s.hint ? (
                         <p className="mt-0.5 text-[11px] leading-relaxed text-cocoa-500">{s.hint}</p>
                       ) : null}
@@ -355,7 +364,7 @@ export default async function CityPage({
                     />
                   </div>
                 ) : null}
-              </section>
+              </BeatCard>
             ) : (
               <SectionEmpty
                 id="customer"
@@ -379,7 +388,7 @@ export default async function CityPage({
                   <dl className="mt-3 grid gap-x-8 gap-y-3 rounded-lg border border-parchment bg-cream-50 px-5 py-4 shadow-subtle sm:grid-cols-2 md:px-7">
                     {view.space.stats.map((s, i) => (
                       <div key={i} className="flex items-baseline justify-between gap-4">
-                        <dt className="min-w-0 text-sm text-cocoa-700/90">
+                        <dt className="min-w-0 text-sm text-cocoa-700">
                           {s.label}
                           {s.hint ? (
                             <span className="mt-0.5 block text-[11px] text-cocoa-500">{s.hint}</span>
@@ -405,14 +414,14 @@ export default async function CityPage({
             {/* Tourist money vs local money: ALWAYS rendered (founder). The
                split reuses the per-100 stacked bar, read as "where your trade
                comes from" rather than money out. */}
-            <div id="visitors">
-              <section className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
-                <SectionEyebrow className="mb-1">Tourist vs local</SectionEyebrow>
-                <h2 className="font-display text-xl font-medium tracking-tight text-balance text-ink-900 md:text-2xl">
-                  {view.visitorSplit.headline}
-                </h2>
+            <BeatCard
+              id="visitors"
+              eyebrow="Tourist vs local"
+              heading={view.visitorSplit.headline}
+            >
+              <>
                 {view.visitorSplit.body ? (
-                  <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-cocoa-700/80 md:text-base">
+                  <p className="max-w-2xl text-sm leading-relaxed text-cocoa-700 md:text-base">
                     {view.visitorSplit.body}
                   </p>
                 ) : null}
@@ -434,7 +443,7 @@ export default async function CityPage({
                           {items.map((it, i) => (
                             <div
                               key={i}
-                              className={it.kept ? "bg-cocoa-300" : "bg-atlas-500"}
+                              className={it.kept ? "bg-atlas-500" : "bg-cocoa-300"}
                               style={{ width: `${(it.perHundred / total) * 100}%` }}
                               title={`${it.label}: ${Math.round(it.perHundred)} in 100`}
                             />
@@ -443,10 +452,10 @@ export default async function CityPage({
                         <dl className="mt-4 divide-y divide-parchment border-y border-parchment">
                           {items.map((it, i) => (
                             <div key={i} className="flex items-baseline justify-between gap-4 py-2.5">
-                              <dt className="flex items-center gap-2 text-sm text-cocoa-700/90">
+                              <dt className="flex items-center gap-2 text-sm text-cocoa-700">
                                 <span
                                   aria-hidden="true"
-                                  className={`h-2.5 w-2.5 rounded-sm ${it.kept ? "bg-cocoa-300" : "bg-atlas-500"}`}
+                                  className={`h-2.5 w-2.5 rounded-sm ${it.kept ? "bg-atlas-500" : "bg-cocoa-300"}`}
                                 />
                                 {it.label}
                               </dt>
@@ -464,39 +473,34 @@ export default async function CityPage({
                     );
                   })()
                 ) : null}
-              </section>
-            </div>
-
-            {/* The break-in spread: one dot per everyday trade on a 0-100
-               difficulty track, the branded city-signature visualization and the
-               visual companion to the Business Climate Score. Self-omits below
-               three trades. */}
-            <BreakInStrip
-              cityName={city.name}
-              items={activities
-                .filter((a) => a.breakInScore != null && a.breakInBand != null)
-                .map((a) => ({
-                  name: a.name,
-                  score: a.breakInScore as number,
-                  band: a.breakInBand as BreakInBand,
-                }))}
-            />
+              </>
+            </BeatCard>
 
             {/* What an owner keeps across the everyday trades. Every city resolves
                through the cell engine; only trusted local measurements rank, so a
                row never carries an invented number; the list self-omits below
                three rows. Each row links to that activity's full cell benchmark
-               under the city. */}
+               under the city. The break-in spread (BreakInStrip) is folded in as
+               the visual header of this same section: it reads the same break-in
+               signal the per-row badges do, so it is the companion to the table,
+               not a second top-level section. */}
             {activities.length > 0 ? (
-              <section
+              <BeatCard
                 id="owners-keep"
-                className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+                eyebrow="What owners keep"
+                heading={`What an owner keeps in ${city.name}`}
               >
-                <SectionEyebrow className="mb-1">What owners keep</SectionEyebrow>
-                <h2 className="font-display text-xl font-medium tracking-tight text-ink-900 md:text-2xl">
-                  What an owner keeps in {city.name}
-                </h2>
-                <p className="mt-1.5 mb-5 max-w-2xl text-sm leading-relaxed text-cocoa-700/80 md:text-base">
+                <BreakInStrip
+                  cityName={city.name}
+                  items={activities
+                    .filter((a) => a.breakInScore != null && a.breakInBand != null)
+                    .map((a) => ({
+                      name: a.name,
+                      score: a.breakInScore as number,
+                      band: a.breakInBand as BreakInBand,
+                    }))}
+                />
+                <p className="mb-5 max-w-2xl text-sm leading-relaxed text-cocoa-700 md:text-base">
                   The everyday businesses you find in almost any city, and what a
                   typical owner keeps after tax here. The badge is the same 0 to
                   100 break-in read each business shows on its own page; higher
@@ -522,7 +526,7 @@ export default async function CityPage({
                               <AtlasPictogram
                                 id={industryPictogramId(slugToIndustry(a.slug)?.id)}
                                 size={18}
-                                className="shrink-0 text-cocoa-700/70 transition-colors group-hover:text-atlas-700"
+                                className="shrink-0 text-cocoa-700 transition-colors group-hover:text-atlas-700"
                               />
                               <span className="truncate text-sm font-medium text-ink-900 transition-colors group-hover:text-atlas-700">
                                 {a.name}
@@ -557,7 +561,7 @@ export default async function CityPage({
                 <p className="mt-3 text-[11px] text-cocoa-500">
                   Owner take-home is after tax, for a typical single-site operator.
                 </p>
-              </section>
+              </BeatCard>
             ) : (
               <SectionEmpty
                 id="owners-keep"
@@ -571,15 +575,12 @@ export default async function CityPage({
                business. The curated London exemplar; self-omits elsewhere until
                a city's own areas are curated. */}
             {bestAreas ? (
-              <section
+              <BeatCard
                 id="best-areas"
-                className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+                eyebrow="Best areas"
+                heading="Where to set up, by what you are opening"
               >
-                <SectionEyebrow className="mb-1">Best areas</SectionEyebrow>
-                <h2 className="font-display text-xl font-medium tracking-tight text-ink-900 md:text-2xl">
-                  Where to set up, by what you are opening
-                </h2>
-                <p className="mt-1.5 mb-5 max-w-2xl text-sm leading-relaxed text-cocoa-700/80 md:text-base">
+                <p className="mb-5 max-w-2xl text-sm leading-relaxed text-cocoa-700 md:text-base">
                   No single area suits every business. These are the parts of {city.name} that fit a given trade, and the reason they do.
                 </p>
                 <ul className="divide-y divide-parchment border-y border-parchment">
@@ -591,13 +592,13 @@ export default async function CityPage({
                         </span>
                         <span className="text-sm font-medium text-atlas-700">{a.suits}</span>
                       </div>
-                      <p className="mt-1 max-w-2xl text-sm leading-relaxed text-cocoa-700/85">
+                      <p className="mt-1 max-w-2xl text-sm leading-relaxed text-cocoa-700">
                         {a.why}
                       </p>
                     </li>
                   ))}
                 </ul>
-              </section>
+              </BeatCard>
             ) : (
               <SectionEmpty
                 id="best-areas"
@@ -622,15 +623,12 @@ export default async function CityPage({
             {/* Neighbourhoods: up to four featured areas, with the full list one
                click away. The drilled-down districts, clickable, real flavour. */}
             {shownNeighborhoods.length > 0 ? (
-              <section
+              <BeatCard
                 id="neighbourhoods"
-                className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+                eyebrow="Neighbourhoods"
+                heading={`Where ${city.name} does business`}
               >
-                <SectionEyebrow className="mb-1">Neighbourhoods</SectionEyebrow>
-                <h2 className="font-display text-xl font-medium tracking-tight text-ink-900 md:text-2xl">
-                  Where {city.name} does business
-                </h2>
-                <p className="mt-1.5 mb-5 max-w-2xl text-sm leading-relaxed text-cocoa-700/80 md:text-base">
+                <p className="mb-5 max-w-2xl text-sm leading-relaxed text-cocoa-700 md:text-base">
                   The areas that set the tone, each with its own pace and prices.
                   Open one for its street-level numbers.
                 </p>
@@ -656,11 +654,11 @@ export default async function CityPage({
                           <div className="text-sm font-medium leading-tight text-ink-900 group-hover:text-atlas-700">
                             {n.name}
                           </div>
-                          <div className="mt-1 text-[11px] capitalize text-cocoa-700/60">
+                          <div className="mt-1 text-[11px] capitalize text-cocoa-500">
                             {n.character.replace(/-/g, " ")}
                           </div>
                           {streets.length > 0 ? (
-                            <div className="mt-2 text-[11px] leading-snug text-cocoa-700/80">
+                            <div className="mt-2 text-[11px] leading-snug text-cocoa-700">
                               {streets.join(", ")}
                             </div>
                           ) : null}
@@ -677,7 +675,7 @@ export default async function CityPage({
                     Explore all neighbourhoods &rarr;
                   </Link>
                 </div>
-              </section>
+              </BeatCard>
             ) : (
               <SectionEmpty
                 id="neighbourhoods"
@@ -702,7 +700,7 @@ export default async function CityPage({
                     {view.changing.points.map((p, i) => (
                       <li
                         key={i}
-                        className="flex gap-3 text-sm leading-relaxed text-cocoa-700/90 md:text-base"
+                        className="flex gap-3 text-sm leading-relaxed text-cocoa-700 md:text-base"
                       >
                         <span
                           aria-hidden="true"

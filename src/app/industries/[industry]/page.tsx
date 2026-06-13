@@ -66,6 +66,7 @@ import { AtlasPictogram } from "@/components/brand/pictograms/AtlasPictogram";
 import { industryPictogramId } from "@/lib/brand/industry_pictogram";
 import {
   AnswerFirstMasthead,
+  BeatCard,
   HonestTakeBox,
   MoneyGoesBreakdown,
   PlainTerms,
@@ -73,7 +74,11 @@ import {
   SectionEmpty,
   formatWithSpec,
 } from "@/components/kit";
-import { buildIndustryView, industryViewNav } from "@/lib/industries/industry_view";
+import {
+  buildIndustryView,
+  industryViewNav,
+  cleanTradeName,
+} from "@/lib/industries/industry_view";
 import {
   summarizeActivityPlaces,
   getActivitySurvivalArchetype,
@@ -244,11 +249,20 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
     },
   });
 
+  // The trade name cleaned for prose headings: strips the taxonomy's
+  // parenthetical qualifier (e.g. "Hair salons (full service)" becomes "Hair
+  // salons") so a sentence heading does not leak the qualifier or stack two
+  // nouns. The full ind.name keeps its qualifier in the breadcrumb and the page
+  // title; only prose headings read the clean form.
+  const tradeHeadingNoun = cleanTradeName(ind.name).toLowerCase();
+
   // The search-sensible money question (bible Section 5 headline formula). It
   // is now the how-it-works section H2 (the page hero headline is the verdict
   // model read); the page <title> stays the benchmark phrasing, set in
-  // generateMetadata above.
-  const moneyQuestion = `How ${ind.name.toLowerCase()} businesses make money`;
+  // generateMetadata above. The gerund/plural form reads as one clause ("How
+  // restaurants make money"), not the old double-noun ("How restaurants
+  // businesses make money"), and the parenthetical is stripped.
+  const moneyQuestion = `How ${tradeHeadingNoun} make money`;
 
   // The pure view model (src/lib/industries/industry_view): maps the place-
   // stable margin shape, the verdict, the activity character, the cross-place
@@ -292,16 +306,16 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
 
   void INDUSTRY_BY_ID;
 
-  // The sticky in-page jump nav, in reading order. The four required content-map
+  // The sticky in-page jump nav, in reading order. The required content-map
   // sections (typical-operator, where-it-earns, margin-waterfall, related-links)
-  // are ALWAYS present now (content or a calm SectionEmpty), so they are always
-  // listed. The signature flourishes (the honest take, the per-$100 split) stay
-  // conditional on their data. StickySectionNav additionally drops any id whose
-  // anchor is missing on mount, so the list never dead-links.
+  // and the honest take are ALWAYS present now (content or a calm SectionEmpty),
+  // so they are always listed. Only the per-$100 split stays conditional on its
+  // data. StickySectionNav additionally drops any id whose anchor is missing on
+  // mount, so the list never dead-links.
   void industryViewNav;
   const nav: Array<{ id: string; label: string }> = [
     { id: "hero", label: "Overview" },
-    ...(view.honestTake ? [{ id: "honest-take", label: "The honest take" }] : []),
+    { id: "honest-take", label: "The honest take" },
     { id: "how-it-works", label: "How it makes money" },
     ...(view.moneyGoes ? [{ id: "money", label: "Where the money goes" }] : []),
     { id: "typical-operator", label: "A typical operator" },
@@ -352,26 +366,25 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
              confidence read. The place picker and the across-cities link are the
              hero actions below. id="hero" is the canonical first beat. */}
           <section id="hero">
-            <div className="flex items-start gap-4">
-              <span className="mt-1 hidden shrink-0 text-ink-900 sm:block" aria-hidden="true">
-                <AtlasPictogram id={pictogramId} size={56} />
-              </span>
-              <div className="min-w-0 flex-1">
-                <AnswerFirstMasthead
-                  eyebrow={view.masthead.eyebrow ?? ind.name}
-                  title={view.masthead.title}
-                  answer={view.masthead.answer}
-                  anchor={view.masthead.anchor}
-                  spread={
-                    view.masthead.spread
-                      ? { ...view.masthead.spread, format: usdCompact }
-                      : null
-                  }
-                  stats={view.masthead.stats}
-                  motif={false}
-                />
-              </div>
-            </div>
+            <AnswerFirstMasthead
+              eyebrow={
+                <span className="inline-flex items-center gap-2">
+                  <span className="shrink-0 text-ink-900" aria-hidden="true">
+                    <AtlasPictogram id={pictogramId} size={24} />
+                  </span>
+                  <span>{view.masthead.eyebrow ?? ind.name}</span>
+                </span>
+              }
+              title={view.masthead.title}
+              answer={view.masthead.answer}
+              anchor={view.masthead.anchor}
+              spread={
+                view.masthead.spread
+                  ? { ...view.masthead.spread, format: usdCompact }
+                  : null
+              }
+              stats={view.masthead.stats}
+            />
 
             <div className="mt-5">
               <ActivityPlacePicker activityId={ind.id} activityName={ind.name} />
@@ -386,7 +399,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
               className="group mt-3 inline-flex items-center gap-2 rounded-full border border-parchment bg-cream-50 px-4 py-2 text-sm font-medium text-ink-900 transition-colors hover:border-atlas-300 hover:bg-cream-100"
             >
               <span>
-                Not sure where? See {ind.name.toLowerCase()} across the
+                Not sure where? See {tradeHeadingNoun} across the
                 world&apos;s cities
               </span>
               <span
@@ -402,9 +415,13 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
              through-line). The verdict close is the one-line read, the lead
              traces the money top-to-bottom, and the model anatomy (plus the
              activity character's watch-out when written) is the supporting
-             points. Self-omits when there is nothing honest to say. The id lives
-             on a div wrapper, not the kit <section>, so the gate sees no stray
-             id. */}
+             points. The id lives on a div wrapper, not the kit <section>, so the
+             gate sees no stray id. The box is ALWAYS present: a thin trade whose
+             honest take cannot form falls back to a calm SectionEmpty (still
+             carrying the honest-take anchor) rather than dropping the beat, so
+             the page silhouette matches across trades. The fallback rides the
+             same div wrapper, with no id on SectionEmpty itself, so no stray
+             <section id=> reaches the section-order gate. */}
           {view.honestTake ? (
             <div id="honest-take">
               <HonestTakeBox
@@ -414,7 +431,15 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
                 {view.honestTake.body}
               </HonestTakeBox>
             </div>
-          ) : null}
+          ) : (
+            <div id="honest-take">
+              <SectionEmpty
+                eyebrow="The honest take"
+                heading="What to know before you commit"
+                place={ind.name}
+              />
+            </div>
+          )}
 
           {/* 4. How it makes money. The decision-framed money question is the
              page's primary search heading (H2). The verdict prose and the
@@ -423,20 +448,15 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
              the margin synthesis cannot reach. The block always renders (the
              margins fall back to a conservative default), but every clause and
              signal self-omits on a missing input. */}
-          <section
+          <BeatCard
             id="how-it-works"
-            className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+            eyebrow="How this business makes money"
+            heading={moneyQuestion}
+            feature
           >
-            <SectionEyebrow className="mb-1">
-              How this business makes money
-            </SectionEyebrow>
-            <h2 className="font-display text-xl font-medium tracking-tight text-balance text-ink-900 md:text-2xl">
-              {moneyQuestion}
-            </h2>
-
             {/* The money-trace lead only. The bottom-line verdict (verdict.close)
                 lives in the honest-take box above, so it is not reprinted here. */}
-            <div className="mt-3 max-w-2xl space-y-3 text-base leading-relaxed text-graphite">
+            <div className="max-w-2xl space-y-3 text-base leading-relaxed text-graphite">
               <p>{verdict.lead}</p>
             </div>
 
@@ -516,7 +536,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
                 ) : null}
               </div>
             ) : null}
-          </section>
+          </BeatCard>
 
           {/* 5. A typical operator. The content-map's "what a typical one looks
              like": the place-stable structure read into tangible operator facts
@@ -528,7 +548,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
             <div id="typical-operator">
               <PlainTerms
                 eyebrow="A typical operator"
-                heading={`What a typical ${ind.name.toLowerCase()} operator looks like`}
+                heading={`What a typical ${tradeHeadingNoun} operator looks like`}
                 items={view.typicalOperator}
               />
             </div>
@@ -547,18 +567,20 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
              not reliable enough to order or to headline, and country money is
              read on each country page. Garbage tails are dropped upstream, so a
              corrupt place can never headline; the block omits cleanly when the
-             slate is thin. The id lives on a div wrapper; the inner block keeps
-             its seated-card grammar. */}
+             slate is thin. The id rides the BeatCard, which carries the seated-
+             card grammar. */}
           {hasPlaceCohorts ? (
-            <div
+            // BeatCard carries the anchor id directly. The section-order gate
+            // scans the page source for literal lowercase <section id=> blocks
+            // only; BeatCard renders its <section> in the kit file, so the id
+            // here is never read as an unregistered literal section. The
+            // page-sections gate sees the "where-it-earns" literal it needs.
+            <BeatCard
               id="where-it-earns"
-              className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+              eyebrow="Where it earns most"
+              heading={`Where ${tradeHeadingNoun} earn more, and where less`}
             >
-              <SectionEyebrow>Where it earns most</SectionEyebrow>
-              <h2 className="mt-1 font-display text-xl md:text-2xl font-medium tracking-tight text-balance text-ink-900">
-                Where {ind.name.toLowerCase()} earn more, and where less
-              </h2>
-              <p className="mt-1.5 mb-5 max-w-2xl text-sm md:text-base leading-relaxed text-cocoa-700/80">
+              <p className="mb-5 max-w-2xl text-sm md:text-base leading-relaxed text-cocoa-700">
                 Across US states, which sit on one currency and one tax system, so
                 a like-for-like ranking by what a typical owner keeps is honest.
                 Open any row for the full revenue, cost stack, and survival read.
@@ -617,7 +639,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
                 The same activity reads differently once local rent, wages, and
                 tax land on it.
               </p>
-            </div>
+            </BeatCard>
           ) : (
             <SectionEmpty
               id="where-it-earns"
@@ -632,11 +654,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
              against country-specific revenue; here they carry the model anatomy
              one cut deeper than the per-$100 bar. id="margin-waterfall" is the
              last canonical beat. */}
-          <section
-            id="margin-waterfall"
-            className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
-          >
-            <SectionEyebrow className="mb-3">The cost stack, cut by cut</SectionEyebrow>
+          <BeatCard id="margin-waterfall" eyebrow="The cost stack, cut by cut">
             <p className="max-w-2xl text-base leading-relaxed text-graphite mb-4">
               Each bar takes a typical sale one cut deeper: what survives the
               direct cost of goods, what running the business leaves, and what
@@ -653,23 +671,23 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
                 {margin.notes}
               </p>
             )}
-          </section>
+          </BeatCard>
 
           {/* 8. Related activities (a FREE module). The closing rail: the other
              small-business models in this sector, so a reader who has learned to
              read one model anatomy can jump to a neighbouring one. Pure taxonomy,
-             NOT a cross-place ranking. The id is on a div wrapper. Self-
+             NOT a cross-place ranking. The id rides the BeatCard. Self-
              suppresses when the sector has no other measured siblings. */}
           {relatedActivities.length > 0 ? (
-            <div
+            // BeatCard carries the anchor id directly (see the where-it-earns
+            // note); the trailing margin rides BeatCard's className.
+            <BeatCard
               id="related-links"
-              className="mb-8 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+              eyebrow="Related activities"
+              heading={`Other ways to make money${sector ? ` in ${sector.name.toLowerCase()}` : ""}`}
+              className="mb-8"
             >
-              <SectionEyebrow className="mb-1">Related activities</SectionEyebrow>
-              <h2 className="font-display text-lg md:text-xl font-semibold tracking-tight text-ink-900">
-                Other ways to make money{sector ? ` in ${sector.name.toLowerCase()}` : ""}
-              </h2>
-              <p className="mt-2 text-sm leading-relaxed text-cocoa-700/85 max-w-2xl">
+              <p className="text-sm leading-relaxed text-cocoa-700 max-w-2xl">
                 Each reads its own way once the cost stack and the capital bar
                 land.
               </p>
@@ -701,7 +719,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
                   </a>
                 ))}
               </div>
-            </div>
+            </BeatCard>
           ) : (
             <SectionEmpty
               id="related-links"

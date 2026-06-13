@@ -221,7 +221,7 @@ function ScoreBar({ value, label }: { value: number; label: string }) {
     <div>
       {/* Same label type as the culture column so the two columns share a
           row rhythm and align (text-[11px] uppercase tracking line + h-3 bar). */}
-      <div className="flex items-baseline justify-between text-[11px] uppercase tracking-[0.08em] font-medium text-cocoa-700/80 mb-2">
+      <div className="flex items-baseline justify-between text-[11px] uppercase tracking-[0.08em] font-medium text-cocoa-700 mb-2">
         <span>{label}</span>
         <span className="tabular-nums font-semibold text-ink-900">
           {v}/10
@@ -286,26 +286,43 @@ export function CitySignaturePanel({
   const hasForeignBorn = sig.foreign_born_pct != null;
   const hasForeignOwned = sig.foreign_owned_pct != null;
   const hasDemographics = hasForeignBorn || hasForeignOwned;
-  const hasSectors = sig.signature_sectors.length > 0;
+  const hasSectors = showSectors && sig.signature_sectors.length > 0;
   const hasStreets =
     showStreets && !!(sig.commercial_streets && sig.commercial_streets.length > 0);
+  const hasInstitutions = showInstitutions && !!(sig.culture && sig.government);
 
   // On the city page, if nothing city-specific resolves, render nothing rather
   // than a thin or country-cloned panel.
   if (cityScoped && !hasDemographics && !hasSectors && !hasStreets) return null;
 
+  // A thin city carries only the demographics block (e.g. two stats). The
+  // sweeping "What makes X distinct" / "What sets this place apart" header
+  // over-promises there: a two-stat card should not sit under a grand
+  // distinctness headline. So when nothing but demographics resolves (no sectors,
+  // no streets, no institution blocks), soften the header to a modest, accurate
+  // "Who lives and works here" read. The country page, which always carries the
+  // institution blocks, keeps the distinctness header.
+  const demographicsOnly =
+    hasDemographics && !hasSectors && !hasStreets && !hasInstitutions;
+  const heading = demographicsOnly
+    ? `Who lives and works in ${cityName}`
+    : `What makes ${cityName} distinct`;
+  const lead = demographicsOnly
+    ? "A quick read on who makes up the local market."
+    : showInstitutions
+      ? "Demographics, the sectors that characterise the place, the cultural spectrum operators feel, and the government environment they navigate."
+      : "What sets this place apart.";
+
   return (
-    <section className="mb-12 md:mb-16">
-      <div className="text-xs uppercase tracking-wide text-atlas-600 font-semibold mb-2">
+    <section>
+      <div className="text-xs uppercase tracking-[0.16em] text-atlas-700 font-semibold mb-1">
         Signature
       </div>
-      <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mb-2">
-        What makes {cityName} distinct
+      <h2 className="font-display text-xl md:text-2xl font-medium tracking-tight text-balance text-ink-900">
+        {heading}
       </h2>
-      <p className="text-sm md:text-base text-cocoa-700/80 mb-8 max-w-2xl">
-        {showInstitutions
-          ? "Demographics, the sectors that characterise the place, the cultural spectrum operators feel, and the government environment they navigate."
-          : "What sets this place apart."}
+      <p className="mt-3 mb-6 text-sm md:text-base leading-relaxed text-cocoa-700 max-w-2xl">
+        {lead}
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-6">
@@ -313,7 +330,7 @@ export function CitySignaturePanel({
             only when present, so a city without one shows neither a clone nor a blank. */}
         {hasDemographics ? (
           <div className="md:col-span-4 atlas-card p-5 md:p-6">
-            <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700/65 mb-3">
+            <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700 mb-3">
               People
             </div>
             <div className="flex flex-col gap-4">
@@ -322,21 +339,17 @@ export function CitySignaturePanel({
                   <div className="font-display text-3xl md:text-4xl font-semibold text-ink-900 tabular-nums leading-none">
                     {sig.foreign_born_pct}%
                   </div>
-                  <div className="text-sm text-cocoa-700/80 mt-1">
+                  <div className="text-sm text-cocoa-700 mt-1">
                     of residents were born outside the country
                   </div>
                 </div>
               ) : null}
               {hasForeignOwned ? (
-                <div
-                  className={
-                    hasForeignBorn ? "border-t border-[rgba(76,39,18,0.06)] pt-4" : undefined
-                  }
-                >
+                <div className={hasForeignBorn ? "border-t border-parchment pt-4" : undefined}>
                   <div className="font-display text-3xl md:text-4xl font-semibold text-ink-900 tabular-nums leading-none">
                     {sig.foreign_owned_pct}%
                   </div>
-                  <div className="text-sm text-cocoa-700/80 mt-1">
+                  <div className="text-sm text-cocoa-700 mt-1">
                     of local SMBs have at least one foreign owner
                   </div>
                 </div>
@@ -348,9 +361,9 @@ export function CitySignaturePanel({
         {/* Block 2: the city's distinctive trades. Renders only when the city has
             its own curated sectors, never a country clone, and showSectors is
             not explicitly set to false (country page passes false to suppress). */}
-        {showSectors && hasSectors ? (
+        {hasSectors ? (
           <div className="md:col-span-8 atlas-card p-5 md:p-6">
-            <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700/65 mb-3">
+            <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700 mb-3">
               What stands out here
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -363,7 +376,7 @@ export function CitySignaturePanel({
                   <div className="font-display text-lg font-semibold text-ink-900 leading-tight group-hover:text-atlas-700 transition-colors">
                     {s.label}
                   </div>
-                  <p className="mt-2 text-sm text-cocoa-700/85 leading-relaxed">
+                  <p className="mt-2 text-sm text-cocoa-700 leading-relaxed">
                     {s.blurb}
                   </p>
                 </a>
@@ -377,7 +390,7 @@ export function CitySignaturePanel({
             they are the single areas model and streets fold under them. */}
         {hasStreets && sig.commercial_streets ? (
           <div className="md:col-span-12 atlas-card p-5 md:p-6">
-            <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700/65 mb-4">
+            <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700 mb-4">
               Where commerce happens
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-x-5 gap-y-5">
@@ -386,10 +399,10 @@ export function CitySignaturePanel({
                   <div className="font-display text-base font-semibold text-ink-900 leading-tight">
                     {s.name}
                   </div>
-                  <div className="text-[11px] text-cocoa-700/60 uppercase tracking-wide mt-0.5">
+                  <div className="text-[11px] text-cocoa-500 uppercase tracking-wide mt-0.5">
                     {s.area}
                   </div>
-                  <p className="mt-2 text-sm text-cocoa-700/85 leading-relaxed">
+                  <p className="mt-2 text-sm text-cocoa-700 leading-relaxed">
                     {s.sells}
                   </p>
                 </div>
@@ -414,7 +427,7 @@ export function CitySignaturePanel({
                 The vertical handle marks where the place sits.
                 corruption_rejection reads left = tolerated, right = rejected. */}
             <div className="md:col-span-7 atlas-card p-5 md:p-7">
-              <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700/65 mb-4">
+              <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700 mb-4">
                 Culture, as locals feel it
               </div>
               <div className="flex flex-col gap-5">
@@ -429,7 +442,7 @@ export function CitySignaturePanel({
 
             {/* Block 4: government */}
             <div className="md:col-span-5 atlas-card p-5 md:p-7">
-              <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700/65 mb-4">
+              <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700 mb-4">
                 Government, from a business desk
               </div>
               <div className="flex flex-col gap-5">
@@ -440,7 +453,7 @@ export function CitySignaturePanel({
                 <ScoreBar value={sig.government.judicial_impartiality} label="Judicial impartiality" />
                 <ScoreBar value={sig.government.innovation_capacity} label="Innovation and R&D capacity" />
               </div>
-              <p className="mt-4 text-[11px] text-cocoa-700/55 leading-relaxed">
+              <p className="mt-4 text-[11px] text-cocoa-500 leading-relaxed">
                 Higher is better in all six. Modeled from business-environment indices, operator surveys, judicial-independence rankings, and the research and innovation-output record.
               </p>
             </div>

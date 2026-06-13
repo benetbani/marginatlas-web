@@ -126,7 +126,9 @@ export function buildIndustryView(input: IndustryViewInput): IndustryView {
   // single sentence), else the verdict close (what kills the weak operators),
   // and as a last resort a plain framing of the trade, so a thinly-described
   // activity still opens with a real read rather than a blank.
-  const title = verdict.headline;
+  // The verdict headline is a single assertion, so it ends in a full stop to
+  // match the cell, city, and country verdict H1s (consistent masthead grammar).
+  const title = endWithPeriod(verdict.headline);
   const answer =
     textOrNull(character?.hook) ??
     textOrNull(verdict.close) ??
@@ -141,6 +143,18 @@ export function buildIndustryView(input: IndustryViewInput): IndustryView {
     isNum(revenue.p90) &&
     (revenue.p90 as number) > (revenue.p10 as number);
 
+  // The masthead always carries an anchor so the hero silhouette matches across
+  // trades. The strong anchor is the cross-place typical revenue, shown only
+  // when a defensible band exists. A thin trade (no US-state band) would
+  // otherwise open with no number, no spread, and no anchor, so it falls back to
+  // the place-stable kept share: how much of every $100 of sales reaches the
+  // owner. This is a structural ratio the activity holds worldwide (not a
+  // fabricated dollar figure), clearly labeled so it never reads as revenue.
+  // True when the masthead is leading with the kept-share fallback anchor (no
+  // revenue band). The net-margin stat is then dropped from the stat row below,
+  // because the fallback anchor already IS the net margin (no number twice).
+  const usingKeptShareAnchor = !hasBand && isNum(margins.netMargin);
+
   const anchor =
     hasBand && isNum(revenue.median)
       ? {
@@ -148,7 +162,13 @@ export function buildIndustryView(input: IndustryViewInput): IndustryView {
           value: revenue.median as number,
           format: "usd-compact" as NumberFormatSpec,
         }
-      : null;
+      : usingKeptShareAnchor
+        ? {
+            label: "Kept by the owner per $100 of sales, before any place is picked",
+            value: Math.round((margins.netMargin as number) * 100),
+            format: "usd-full" as NumberFormatSpec,
+          }
+        : null;
 
   const spread = hasBand
     ? {
@@ -166,7 +186,12 @@ export function buildIndustryView(input: IndustryViewInput): IndustryView {
   const stats: IndustryViewMasthead["stats"] = [
     {
       label: "Net margin, typical",
-      value: isNum(margins.netMargin) ? pct(margins.netMargin) : null,
+      // Dropped when the kept-share fallback anchor is leading the masthead, so
+      // the same net-margin figure never prints twice in the hero.
+      value:
+        !usingKeptShareAnchor && isNum(margins.netMargin)
+          ? pct(margins.netMargin)
+          : null,
     },
     {
       label: "Survives direct costs",
@@ -216,6 +241,31 @@ export function buildIndustryView(input: IndustryViewInput): IndustryView {
 
 function textOrNull(s: string | null | undefined): string | null {
   return typeof s === "string" && s.trim().length > 0 ? s : null;
+}
+
+/**
+ * Clean a trade name for use inside prose headings. Strips the parenthetical
+ * qualifier the taxonomy carries on some trades (e.g. "Hair salons (full
+ * service)" becomes "Hair salons"), and collapses any double spacing left
+ * behind. The qualifier is useful in the page title and the breadcrumb, but it
+ * leaks awkwardly into a sentence heading ("How hair salons (full service)
+ * make money"), so headings read the clean form. The bare name passes through
+ * unchanged.
+ */
+export function cleanTradeName(name: string): string {
+  return name
+    .replace(/\s*\([^)]*\)\s*/g, " ")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
+/** Ensure a single-assertion headline ends in a full stop, like the cell,
+ * city, and country verdict H1s (a verdict is one assertion). Leaves an
+ * existing terminal . ! or ? in place. */
+function endWithPeriod(s: string): string {
+  const t = s.trim();
+  if (t.length === 0) return t;
+  return /[.!?]$/.test(t) ? t : `${t}.`;
 }
 
 function buildHonestTake(

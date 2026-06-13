@@ -1,5 +1,7 @@
 import { Suspense } from "react";
-import { CompareClient } from "./CompareClient";
+import { NextRequest } from "next/server";
+import { CompareClient, type CompactCell } from "./CompareClient";
+import { GET as cellLookup } from "@/app/api/cell-lookup/route";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 
 export const metadata = {
@@ -8,7 +10,69 @@ export const metadata = {
     "Put the same small business in up to three cities side by side: typical revenue, net margin, owner take-home, rent and labor pressure, and the spread.",
 };
 
-export default function ComparePage() {
+/**
+ * The matchup the page lands on. Kept in lockstep with DEFAULT_SLOTS in
+ * CompareClient: the page fetches the cells for exactly these slots server-side
+ * so the first paint (and a no-JS / crawler view) shows real rows, then the
+ * client hydrates the same slots and keeps the grid interactive.
+ */
+const DEFAULT_SLOTS = [
+  { country: "US", industry: "restaurants", region: "california" },
+  { country: "US", industry: "restaurants", region: "texas" },
+  { country: "US", industry: "restaurants", region: "new-york" },
+] as const;
+
+/**
+ * Resolve the default matchup's cells server-side by calling the same route the
+ * client fetches from, so the figures are derived through one code path (no
+ * duplicated finance logic) and there is no internal-origin guesswork. Each slot
+ * resolves independently and fails soft to null, so a single miss never blocks
+ * the page: the client refetches any missing slot after hydration.
+ */
+async function loadDefaultCells(): Promise<Record<number, CompactCell>> {
+  const results = await Promise.all(
+    DEFAULT_SLOTS.map((slot) => fetchSlotCell(slot)),
+  );
+  const out: Record<number, CompactCell> = {};
+  results.forEach((cell, i) => {
+    if (cell != null) out[i] = cell;
+  });
+  return out;
+}
+
+async function fetchSlotCell(slot: {
+  country: string;
+  industry: string;
+  region: string;
+}): Promise<CompactCell | null> {
+  try {
+    const qs = new URLSearchParams({
+      country: slot.country,
+      industry: slot.industry,
+      region: slot.region,
+    });
+    const req = new NextRequest(
+      `https://marginatlas.com/api/cell-lookup?${qs.toString()}`,
+    );
+    const res = await cellLookup(req);
+    const json = (await res.json()) as { cell?: CompactCell | null };
+    return json?.cell ?? null;
+  } catch {
+    return null;
+  }
+}
+
+export default async function ComparePage() {
+  // The default matchup's cells, resolved server-side so the first paint shows
+  // real rows. Fails soft to an empty map: if the fetch throws or returns
+  // nothing, the page still renders and the client fetches after hydration.
+  let initialCells: Record<number, CompactCell> = {};
+  try {
+    initialCells = await loadDefaultCells();
+  } catch {
+    initialCells = {};
+  }
+
   return (
     <div>
       <header className="border-b border-parchment/60 py-8 sm:py-10">
@@ -36,7 +100,7 @@ export default function ComparePage() {
           </div>
         }
       >
-        <CompareClient />
+        <CompareClient initialCells={initialCells} />
       </Suspense>
     </div>
   );

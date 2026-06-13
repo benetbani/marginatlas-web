@@ -105,6 +105,27 @@ function pctLabel(final: number): string {
   return `${pct > 0 ? "+" : ""}${pct}%`;
 }
 
+/**
+ * The indefinite article ("a" / "an") for a word, chosen by its leading vowel
+ * SOUND, not just its first letter. Covers the price-tier words and the
+ * neighbourhood / city names this view interpolates ("an expensive area", "an
+ * East London read"), while still saying "a university" (consonant "y" sound)
+ * and "an hour" (silent h). Conservative: a small set of known exceptions, then
+ * the plain vowel-letter rule.
+ */
+function articleFor(word: string): "a" | "an" {
+  const w = word.trim().toLowerCase();
+  if (!w) return "a";
+  // Words that start with a vowel letter but a consonant sound ("a university",
+  // "a one-off"), and words that start with a consonant letter but a vowel sound
+  // ("an hour", "an honest"). Matched on the leading token.
+  const consonantSoundVowelStart = /^(uni|use|user|usu|eu|ewe|once|one|u[bcdfgklmnprstv])/;
+  const vowelSoundConsonantStart = /^(hour|honest|honou?r|heir)/;
+  if (vowelSoundConsonantStart.test(w)) return "an";
+  if (consonantSoundVowelStart.test(w)) return "a";
+  return /^[aeiou]/.test(w) ? "an" : "a";
+}
+
 /** A short human phrase for what the catchment runs on, keyed off the tag. */
 function catchmentPhrase(primary: NeighborhoodTag | undefined): string {
   switch (primary) {
@@ -180,7 +201,9 @@ export function buildNeighborhoodOverviewView(
     Math.round((topWinner.final - 1) * 100) !== 0
   ) {
     honestPoints.push(
-      `The same trade can read very differently a few streets over, so a ${neighborhoodName} read is not a ${cityName} read.`,
+      `The same trade can read very differently a few streets over, so ${articleFor(
+        neighborhoodName,
+      )} ${neighborhoodName} read is not ${articleFor(cityName)} ${cityName} read.`,
     );
   }
   if (rentMult > 1.1) {
@@ -224,7 +247,7 @@ export function buildNeighborhoodOverviewView(
   let operatingCost: NeighborhoodOverviewView["operatingCost"] = null;
   if (rentPct !== 0) {
     const tierClause = flavor?.price_tier
-      ? ` It reads as a ${flavor.price_tier} area to operate in.`
+      ? ` It reads as ${articleFor(flavor.price_tier)} ${flavor.price_tier} area to operate in.`
       : "";
     operatingCost = {
       headline: `Commercial rent runs about ${pctLabel(
@@ -239,7 +262,9 @@ export function buildNeighborhoodOverviewView(
   } else if (flavor?.price_tier) {
     // No honest rent signal, but the curated price tier is still a real read.
     operatingCost = {
-      headline: `${neighborhoodName} reads as a ${flavor.price_tier} area to operate in.`,
+      headline: `${neighborhoodName} reads as ${articleFor(
+        flavor.price_tier,
+      )} ${flavor.price_tier} area to operate in.`,
       detail: null,
     };
   }

@@ -253,14 +253,43 @@ export function buildCountryView(
   // The one anchor that matters for a country: the typical small-business tax
   // burden (the charge that actually lands on an owner), when known. It is a
   // real, like-for-like-safe number, unlike raw money which cannot be ranked.
-  const anchor =
-    regime != null
-      ? {
-          label: "Typical small-business tax",
-          value: Math.round(regime.effective_rate * 100),
-          format: "percent" as NumberFormatSpec,
-        }
-      : null;
+  // On a thin country with no SMB tax regime, answer-first still needs ONE
+  // headline figure, so we promote the strongest held set-up fact into the
+  // anchor: days-to-start first, then the registration cost, then the self-
+  // employed share. Every country opens with a number, never two bare chips.
+  // Which set-up fact (if any) was promoted into the anchor, so we can drop the
+  // matching stat chip below and never print the same figure twice.
+  let anchorPromotedFrom: "days" | "self-employed" | null = null;
+  let anchor: CountryViewMasthead["anchor"];
+  if (regime != null) {
+    anchor = {
+      label: "Typical small-business tax",
+      value: Math.round(regime.effective_rate * 100),
+      format: "percent" as NumberFormatSpec,
+    };
+  } else if (isNum(snapshot.daysToStart) && snapshot.daysToStart > 0) {
+    anchor = {
+      label: "Days to register and start",
+      value: Math.round(snapshot.daysToStart),
+      format: "int" as NumberFormatSpec,
+    };
+    anchorPromotedFrom = "days";
+  } else if (isNum(registrationCostUsd) && registrationCostUsd >= 0) {
+    anchor = {
+      label: "Cost to register",
+      value: Math.round(registrationCostUsd),
+      format: "usd-compact" as NumberFormatSpec,
+    };
+  } else if (isNum(snapshot.selfEmploymentPct)) {
+    anchor = {
+      label: "Self-employed share",
+      value: Math.round(snapshot.selfEmploymentPct),
+      format: "percent" as NumberFormatSpec,
+    };
+    anchorPromotedFrom = "self-employed";
+  } else {
+    anchor = null;
+  }
 
   const eyebrow = `Small-business economics · ${countryName}`;
   const title = isExemplar
@@ -275,15 +304,22 @@ export function buildCountryView(
     // both ends (it printed ~$16-22/month on thin-coverage countries and a
     // London-weighted ~$5K/month on the UK that contradicted the hire box). The
     // hiring read below carries pay where we can defend it.
+    //
+    // A stat that was promoted into the anchor above is dropped here, so the same
+    // figure never appears as both the headline number and a chip beside it.
     {
       label: "Time to register",
-      value: isNum(snapshot.daysToStart) ? daysWord(snapshot.daysToStart) : null,
+      value:
+        anchorPromotedFrom === "days" || !isNum(snapshot.daysToStart)
+          ? null
+          : daysWord(snapshot.daysToStart),
     },
     {
       label: "Self-employed share",
-      value: isNum(snapshot.selfEmploymentPct)
-        ? `${Math.round(snapshot.selfEmploymentPct)}%`
-        : null,
+      value:
+        anchorPromotedFrom === "self-employed" || !isNum(snapshot.selfEmploymentPct)
+          ? null
+          : `${Math.round(snapshot.selfEmploymentPct)}%`,
     },
   ];
 
@@ -340,13 +376,17 @@ export function countryViewNav(
   // cost-to-open, easiest-to-start, and the editorial beats are extras/flourishes
   // that self-omit, so they stay conditional.
   void hasCities; // cities is always present now
+  void hasFormation; // formation is folded into the decisive read, no own anchor
+  // The honest take now leads the body (the brand through-line, before the
+  // decisive read), so it sits first in the nav too. Cost to open is no longer
+  // a standalone nav stop: the formation tier table is folded under the decisive
+  // read, so it shares that anchor.
   const nav: Array<{ id: string; label: string }> = [
     { id: "hero", label: "Overview" },
-    { id: "decisive", label: "The decisive read" },
   ];
-  if (view.honestTake) nav.push({ id: "honest-take", label: "The honest take" });
+  nav.push({ id: "honest-take", label: "The honest take" });
+  nav.push({ id: "decisive", label: "The decisive read" });
   nav.push({ id: "hire", label: "Hiring here" });
-  if (hasFormation) nav.push({ id: "formation", label: "Cost to open" });
   nav.push({ id: "neighbours", label: "Vs neighbours" });
   if (hasBreakIn) nav.push({ id: "break-in", label: "Easiest to start" });
   nav.push({ id: "cities", label: "Cities" });
@@ -393,24 +433,14 @@ function buildDecisive(input: CountryViewInput): CountryView["decisive"] {
     });
   }
 
+  // De-dup (Round 5): the cost-to-register figure is NOT restated as a step
+  // here. The per-tier formation table is folded directly under this read (its
+  // spec home), so the cost shows once, with its tier breakdown. The decisive
+  // steps carry only what the table does not: the tax, the time to get going,
+  // and the payroll on-cost. The time step is the single home for the days
+  // figure, so it never prints twice across the cost and time lines.
   const hasCost = isNum(registrationCostUsd) && registrationCostUsd >= 0;
   const hasDays = isNum(snapshot.daysToStart) && snapshot.daysToStart > 0;
-  if (hasCost || hasDays) {
-    const value = hasCost
-      ? registrationCostUsd === 0
-        ? "Free"
-        : usdCompact(registrationCostUsd!)
-      : daysWord(snapshot.daysToStart!);
-    const hint =
-      hasCost && hasDays
-        ? `The government fee to register, and about ${daysWord(
-            snapshot.daysToStart!,
-          )} to be trading. Professional fees on top vary widely.`
-        : hasCost
-          ? "The government fee to register. Professional fees on top vary widely."
-          : `About ${daysWord(snapshot.daysToStart!)} to register and start trading.`;
-    steps.push({ label: "Cost to register", value, hint });
-  }
 
   if (isNum(payrollRate) && payrollRate > 0) {
     steps.push({
@@ -424,11 +454,15 @@ function buildDecisive(input: CountryViewInput): CountryView["decisive"] {
     steps.push({
       label: "Time to get going",
       value: daysWord(snapshot.daysToStart!),
-      hint: "Registration to legally trading. The paperwork, not the fit-out or the first customer.",
+      hint: "Registration to legally trading. The paperwork, not the fit-out or the first customer. The fee by legal tier is in the table below.",
     });
   }
 
-  if (steps.length < 2) return null;
+  // The decisive read folds the formation table beneath it, so it stands even
+  // with a single headline step (the table carries the cost breakdown). It
+  // self-omits only when it has neither a step nor a cost figure to anchor.
+  void hasCost;
+  if (steps.length === 0) return null;
 
   const salesTaxNote =
     vat != null && vat.standard > 0
@@ -438,8 +472,11 @@ function buildDecisive(input: CountryViewInput): CountryView["decisive"] {
       : null;
 
   return {
-    heading: `Setting up and running a ${countryName} business`,
-    lede: "The charges that actually land on an owner: the tax on what the business earns, the cost and time to register, and the payroll tax on every employee.",
+    // Heading deliberately avoids the "setting up a business in X" phrasing: the
+    // folded formation cost table carries that framing, so the read leads on the
+    // charges instead and the two headings do not echo.
+    heading: `What it costs to run a business in ${countryName}`,
+    lede: "The charges that actually land on an owner: the tax on what the business earns, the time to register, and the payroll tax on every employee. The fee to register, by legal tier, is in the table below.",
     steps,
     salesTaxNote,
     downLink: topActivity

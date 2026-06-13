@@ -46,6 +46,8 @@ import { AtlasPictogram } from "@/components/brand/pictograms";
 import { industryPictogramId } from "@/lib/brand/industry_pictogram";
 import { NeighborhoodCover } from "@/components/cities/NeighborhoodCover";
 import {
+  AnswerFirstMasthead,
+  BeatCard,
   HonestTakeBox,
   WhatLocalsKnow,
   BreakEvenLine,
@@ -257,6 +259,21 @@ export function NeighborhoodOverview({
     };
   }).sort((x, y) => y.final - x.final);
 
+  // The masthead's non-money anchor stat: the top trade's lift versus the city.
+  // This page has only relative figures (no absolute money), so the strongest
+  // trade's lift rides as a labeled stat. Self-omits (null) at par, so the
+  // masthead drops it cleanly rather than printing a hollow "par".
+  const topTrade = ranked[0];
+  const topTradeLiftLabel =
+    topTrade && Math.round((topTrade.final - 1) * 100) !== 0
+      ? pctLabel(topTrade.final)
+      : null;
+
+  // Economic-character tags for the role-chip row (the masthead break-in chip
+  // already carries the "what kind of place" character, so these are scoped to
+  // the economic tags only). Residential-only is implicit, not a chip.
+  const visibleTags = tags.filter((t) => t !== "residential_only").slice(0, 3);
+
   // Representative-activity component breakdown for the demand drivers + table.
   const rep = getNeighborhoodMultiplier(city.slug, nb.slug, REP_ACTIVITY_ID);
 
@@ -312,62 +329,83 @@ export function NeighborhoodOverview({
           className="h-28 md:h-40 rounded-2xl mb-5"
         />
 
-        {/* ZONE 1: ANSWER-FIRST HEADER ------------------------------------ */}
-        <div id="headline">
-          <div className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-wide text-cocoa-700 mb-3">
-            <Link href={`/cities/${city.slug}`} className="transition-colors hover:text-atlas-700">
-              {city.name}
-            </Link>
-            <span aria-hidden>·</span>
-            <CountryFlag iso2={city.iso2} className="w-3.5" />
-            <span>{countryName}</span>
-            <span aria-hidden>·</span>
-            <Link
-              href={`/cities/${city.slug}/neighborhoods`}
-              className="transition-colors hover:text-atlas-700"
-            >
-              all neighborhoods
-            </Link>
-          </div>
-
-          <div className="mb-3 flex flex-wrap items-baseline gap-3">
-            <h1 className="font-display text-3xl md:text-4xl font-medium tracking-tight text-ink-900">
-              {nb.name}
-            </h1>
-            <span className="rounded-full border border-parchment bg-cream-100 px-2.5 py-0.5 text-[11px] font-medium capitalize text-cocoa-700">
-              {nb.character.replace(/-/g, " ")}
+        {/* ZONE 1: ANSWER-FIRST MASTHEAD ---------------------------------
+            Composed from the SHARED AnswerFirstMasthead every other page type
+            opens with (cell / country / city / industry), so the neighbourhood
+            page reads identically. The winner headline is the answer-first line;
+            the neighbourhood name is the H1 title; the coordinate links sit in
+            the eyebrow; the character is the demoted break-in chip; and the
+            top-trade lift rides as a labeled NON-money stat (this page carries
+            only relative "+X% vs city" figures, no absolute money anchor, which
+            is acceptable). The differentiated role chips (price tier, tags) sit
+            just under the band so the reader can tell them apart. */}
+        <AnswerFirstMasthead
+          id="headline"
+          eyebrow={
+            <span className="inline-flex flex-wrap items-center gap-2">
+              <Link
+                href={`/cities/${city.slug}`}
+                className="transition-colors hover:text-atlas-700"
+              >
+                {city.name}
+              </Link>
+              <span aria-hidden>·</span>
+              <CountryFlag iso2={city.iso2} className="w-4" />
+              <span>{countryName}</span>
+              <span aria-hidden>·</span>
+              <Link
+                href={`/cities/${city.slug}/neighborhoods`}
+                className="transition-colors hover:text-atlas-700"
+              >
+                all neighbourhoods
+              </Link>
             </span>
+          }
+          title={nb.name}
+          answer={view.winnerHeadline ?? view.leadLine}
+          breakIn={nb.character.replace(/-/g, " ")}
+          stats={[
+            {
+              label: `Top trade lift vs ${city.name}`,
+              value: topTradeLiftLabel,
+            },
+          ]}
+        />
+
+        {/* The character paragraph sits below the band when the winner headline
+            has already taken the answer slot, so the lead line is never lost. */}
+        {view.winnerHeadline && view.leadLine && (
+          <p className="mt-5 max-w-2xl text-base md:text-lg leading-relaxed text-cocoa-700">
+            {view.leadLine}
+          </p>
+        )}
+
+        {/* DIFFERENTIATED ROLE CHIPS: the price tier (how pricey) reads as a
+            tinted, captioned pill so it cannot be mistaken for the economic
+            tags; the tags (economic character) stay quiet cream pills. The
+            "what kind of place" role lives in the masthead break-in chip above,
+            so the three roles are visually distinct. */}
+        {(flavor?.price_tier || visibleTags.length > 0) && (
+          <div className="mt-5 flex flex-wrap items-center gap-2">
             {flavor?.price_tier && (
-              <span className="rounded-full border border-parchment bg-cream-100 px-2.5 py-0.5 text-[11px] font-medium text-cocoa-700">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-atlas-300 bg-atlas-50 px-3 py-1 text-xs font-medium capitalize text-atlas-700">
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-atlas-700">
+                  Cost
+                </span>
+                <span aria-hidden className="h-3 w-px bg-atlas-300" />
                 {flavor.price_tier}
               </span>
             )}
-            {tags
-              .filter((t) => t !== "residential_only")
-              .slice(0, 3)
-              .map((t) => (
-                <span
-                  key={t}
-                  className="rounded-full border border-parchment bg-cream-100 px-2.5 py-0.5 text-[11px] font-medium text-cocoa-700"
-                >
-                  {tagLabel(t)}
-                </span>
-              ))}
+            {visibleTags.map((t) => (
+              <span
+                key={t}
+                className="rounded-full border border-parchment bg-cream-100 px-3 py-1 text-xs font-medium text-cocoa-700"
+              >
+                {tagLabel(t)}
+              </span>
+            ))}
           </div>
-
-          {/* Answer-first: the single strongest trade, up top. */}
-          {view.winnerHeadline && (
-            <p className="mb-3 max-w-2xl font-display text-xl md:text-2xl font-medium leading-snug tracking-tight text-balance text-ink-900">
-              {view.winnerHeadline}
-            </p>
-          )}
-
-          {view.leadLine && (
-            <p className="mb-6 max-w-2xl text-base md:text-lg leading-relaxed text-cocoa-700">
-              {view.leadLine}
-            </p>
-          )}
-        </div>
+        )}
 
         {/* ZONE 1 (cont): THE HONEST TAKE, right after the headline. ------ */}
         {view.honestTake && (
@@ -396,23 +434,36 @@ export function NeighborhoodOverview({
             below.
           </p>
 
-          {/* The demand-driver components: what the headline multiplier is
-              made of, so the reader can see what is doing the lifting. */}
-          <div className="mb-5 grid max-w-md grid-cols-3 gap-3">
-            {[
-              { label: "Commuter", v: rep.commuter },
-              { label: "Tourism", v: rep.tourism },
-              { label: "Local tags", v: rep.tags },
-            ].map((c) => (
-              <div key={c.label}>
-                <div className="mb-1 text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
-                  {c.label}
+          {/* The demand-driver components for the REPRESENTATIVE trade only.
+              Scoped explicitly: this decomposes one trade ({REP_ACTIVITY_NAME}),
+              NOT the whole ranking below, so a flat "Local tags 1.00x" no longer
+              reads as a claim about every trade. The figures multiply together
+              into that one trade's lift; a 1.00x part simply does not move it. */}
+          <div className="mb-5 max-w-md rounded-lg border border-parchment bg-cream-50 px-4 py-3.5">
+            <div className="mb-2.5 text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
+              What lifts a typical {REP_ACTIVITY_NAME.toLowerCase()} here
+            </div>
+            <div className="grid grid-cols-3 gap-3">
+              {[
+                { label: "Commuter", v: rep.commuter },
+                { label: "Tourism", v: rep.tourism },
+                { label: "Local tags", v: rep.tags },
+              ].map((c) => (
+                <div key={c.label}>
+                  <div className="mb-1 text-[11px] font-medium text-cocoa-500">
+                    {c.label}
+                  </div>
+                  <div className="font-display text-lg font-semibold tabular-nums text-ink-900">
+                    {c.v.toFixed(2)}x
+                  </div>
                 </div>
-                <div className="font-display text-lg font-semibold tabular-nums text-ink-900">
-                  {c.v.toFixed(2)}x
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            <p className="mt-2.5 text-[11px] leading-relaxed text-cocoa-500">
+              One trade, broken into its parts. A 1.00x part is neutral here: it
+              neither lifts nor drags. The other trades below each carry their
+              own mix.
+            </p>
           </div>
 
           <div className="overflow-hidden rounded-lg border border-parchment">
@@ -624,21 +675,21 @@ export function NeighborhoodOverview({
           </section>
         )}
 
-        {/* ZONE 3 (cont): THE BUSINESSES HERE (sibling rail) -------------- */}
+        {/* ZONE 3 (cont): THE BUSINESSES HERE (sibling rail) --------------
+            Routed through BeatCard so it shares the one card grammar with every
+            other section; id="businesses-here" preserved for the section gate. */}
         {siblings.length > 0 ? (
-          <section id="businesses-here">
-            <SectionEyebrow size="md" className="mb-2">
-              Elsewhere in {city.name}
-            </SectionEyebrow>
-            <h2 className="mb-4 font-display text-xl md:text-2xl font-medium tracking-tight text-ink-900">
-              Other neighborhoods
-            </h2>
+          <BeatCard
+            id="businesses-here"
+            eyebrow={`Elsewhere in ${city.name}`}
+            heading="Other neighbourhoods"
+          >
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 md:gap-3">
               {siblings.map((n) => (
                 <Link
                   key={n.slug}
                   href={`/${cc}/${city.slug}/${n.slug}`}
-                  className="group block rounded-lg border border-parchment bg-cream-50 p-3 shadow-subtle transition-colors hover:border-atlas-300"
+                  className="group block rounded-lg border border-parchment bg-cream-100 p-3 transition-colors hover:border-atlas-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-300"
                 >
                   <div className="text-sm font-medium leading-tight text-ink-900 transition-colors group-hover:text-atlas-700">
                     {n.name}
@@ -649,7 +700,7 @@ export function NeighborhoodOverview({
                 </Link>
               ))}
             </div>
-          </section>
+          </BeatCard>
         ) : (
           <SectionEmpty
             id="businesses-here"

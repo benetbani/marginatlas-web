@@ -247,7 +247,7 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
 
   const nav = countryViewNav(
     view,
-    true, // formation costs section always renders
+    true, // formation is folded into the decisive read (no own nav stop)
     easiestBreakIn.length > 0,
     hasCities,
   );
@@ -293,14 +293,40 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
           </p>
         </section>
 
-        <div className="mt-6 space-y-5 md:space-y-6">
-          {/* 2. The decisive read: tax + cost to register + payroll + time-to-
-              start, as steps. The page's lead beat. */}
+        <div className="mt-6 space-y-6 md:space-y-8">
+          {/* 2. The honest take: THE brand through-line, so it leads the body on
+              every page type. Moved ahead of the decisive read here too, right
+              after the masthead. Always present (a thin-coverage country gets an
+              honest line, never the old shared anchor; a country with no read at
+              all gets the calm placeholder). */}
+          {view.honestTake ? (
+            <HonestTakeBox
+              id="honest-take"
+              verdict={view.honestTake.verdict}
+              points={view.honestTake.points}
+            >
+              {view.honestTake.body}
+            </HonestTakeBox>
+          ) : (
+            <SectionEmpty
+              id="honest-take"
+              eyebrow="The honest take"
+              heading={`The honest read on ${meta.name}`}
+              place={meta.name}
+            />
+          )}
+
+          {/* 3. The decisive read: tax + time-to-start + payroll, as steps, with
+              the per-tier formation cost table folded directly beneath (its spec
+              home), so the cost-to-register figure shows once with its tier
+              breakdown rather than restated as a separate step and again two
+              sections later. The page's lead data beat. */}
           {view.decisive ? (
             <BeatCard
               id="decisive"
               eyebrow="The decisive read"
               heading={view.decisive.heading}
+              feature
             >
               {view.decisive.lede ? (
                 <p className="max-w-2xl text-sm leading-relaxed text-graphite md:text-base">
@@ -317,7 +343,7 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
                       {s.value}
                     </dd>
                     {s.hint ? (
-                      <p className="mt-1 max-w-prose text-[13px] leading-relaxed text-cocoa-700/80">
+                      <p className="mt-1 max-w-prose text-[13px] leading-relaxed text-cocoa-700">
                         {s.hint}
                       </p>
                     ) : null}
@@ -329,6 +355,12 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
                   {view.decisive.salesTaxNote}
                 </p>
               ) : null}
+              {/* Folded-in: the legal-tier formation cost table. This is the one
+                  place the cost-to-register figure appears, so it never doubles
+                  with a standalone section below. */}
+              <div className="mt-6 border-t border-parchment/60 pt-6">
+                <BusinessFormationCosts countryIso2={iso2} countryName={meta.name} />
+              </div>
               {view.decisive.downLink ? (
                 <p className="mt-3 text-sm">
                   <a
@@ -341,25 +373,17 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
               ) : null}
             </BeatCard>
           ) : (
-            <SectionEmpty
+            <BeatCard
               id="decisive"
               eyebrow="The decisive read"
-              heading="Setting up and running a business here"
-              place={meta.name}
-            />
-          )}
-
-          {/* 3. The honest take: unconditional. The 185 thin-coverage countries
-              get an honest thin-coverage line, not the old shared anchor. */}
-          {view.honestTake ? (
-            <HonestTakeBox
-              id="honest-take"
-              verdict={view.honestTake.verdict}
-              points={view.honestTake.points}
+              heading={`What it costs to run a business in ${meta.name}`}
+              feature
             >
-              {view.honestTake.body}
-            </HonestTakeBox>
-          ) : null}
+              <div id="formation">
+                <BusinessFormationCosts countryIso2={iso2} countryName={meta.name} />
+              </div>
+            </BeatCard>
+          )}
 
           {/* 4. How hard it is to hire here: staff cost + typical pay + wage
               floor. Self-omits when no pay or payroll figure exists. */}
@@ -394,16 +418,11 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
             />
           )}
 
-          {/* 5. Cost to open: the legal-tier formation breakdown. */}
-          <section
-            id="formation"
-            className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
-          >
-            <BusinessFormationCosts countryIso2={iso2} countryName={meta.name} />
-          </section>
-
-          {/* 6. Compare to neighbours: the like-for-like FACTS table. Never an
-              ordinal money rank across borders, so the kit gets noLeaderMark. */}
+          {/* 5. Compare to neighbours: the like-for-like FACTS table. Never an
+              ordinal money rank across borders, so the kit gets noLeaderMark.
+              (Cost to open is no longer a standalone section here: the formation
+              tier table is folded under the decisive read above, so the cost
+              figure shows once.) */}
           {view.neighbours ? (
             <LikeForLikeTable
               id="neighbours"
@@ -424,7 +443,14 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
             />
           )}
 
-          {/* 7. The easiest businesses to break into here. */}
+          {/* 7. The easiest businesses to break into here (ranks ACTIVITIES, not
+              cities). EasiestToBreakIn renders its own card-internal header
+              ("Where it is easiest to get started in X"), so it rides a bare
+              seated <section> rather than a BeatCard, which would stack a second
+              eyebrow on top of the component's own. Same convention the city page
+              uses for the header-owning CityPeers panel. The card class string
+              here is exactly the BeatCard surface (rounded-lg + parchment border +
+              cream-50 + shadow-subtle), so the grammar still reads as one hand. */}
           {easiestBreakIn.length > 0 ? (
             <section
               id="break-in"
@@ -438,25 +464,24 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
             </section>
           ) : null}
 
-          {/* 8. Cities: best + worst highlight, then the regions-and-cities list. */}
+          {/* 8. Cities: best + worst highlight, then the regions-and-cities
+              list. On the shared card grammar (BeatCard). The best-city callout
+              is labelled "Best city to start in" (a place ranking), distinct
+              from the activity ranking in the break-in panel. */}
           {hasCities ? (
-            <section
+            <BeatCard
               id="cities"
-              className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+              eyebrow="Go local"
+              heading={`Cities of ${countryName}`}
             >
-              <SectionEyebrow className="mb-3">Go local</SectionEyebrow>
-              <h2 className="mb-4 font-display text-lg font-semibold tracking-tight text-ink-900 md:text-xl">
-                Cities of {countryName}
-              </h2>
-
               {bestCity != null && worstCity != null ? (
                 <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <Link
                     href={`/cities/${bestCity.slug}`}
-                    className="block rounded-xl border border-parchment bg-cream-50 p-4 transition-colors hover:border-atlas-500"
+                    className="block rounded-xl border border-parchment bg-cream-50 p-4 transition-colors hover:border-atlas-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500 focus-visible:ring-offset-2"
                   >
                     <div className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-moss-700">
-                      Easiest to start in
+                      Best city to start in
                     </div>
                     <div className="text-base font-semibold text-ink-900">
                       {bestCity.name}
@@ -468,10 +493,10 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
                   </Link>
                   <Link
                     href={`/cities/${worstCity.slug}`}
-                    className="block rounded-xl border border-parchment bg-cream-50 p-4 transition-colors hover:border-atlas-500"
+                    className="block rounded-xl border border-parchment bg-cream-50 p-4 transition-colors hover:border-atlas-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500 focus-visible:ring-offset-2"
                   >
                     <div className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-atlas-700">
-                      Hardest to start in
+                      Toughest city to start in
                     </div>
                     <div className="text-base font-semibold text-ink-900">
                       {worstCity.name}
@@ -504,7 +529,7 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
                             <Link
                               key={city.slug}
                               href={`/${iso2.toLowerCase()}/${city.slug}/restaurants`}
-                              className="inline-flex items-center rounded-full border border-parchment bg-white px-3 py-1.5 text-sm font-medium text-ink-900 transition-colors hover:border-atlas-500 hover:text-atlas-700"
+                              className="inline-flex items-center rounded-full border border-parchment bg-white px-3 py-1.5 text-sm font-medium text-ink-900 transition-colors hover:border-atlas-500 hover:text-atlas-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500 focus-visible:ring-offset-2"
                             >
                               {city.name}
                             </Link>
@@ -515,7 +540,7 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
                   })}
                 </div>
               ) : null}
-            </section>
+            </BeatCard>
           ) : (
             <SectionEmpty
               id="cities"
@@ -545,26 +570,24 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
               renders the calm placeholder when we hold no character read). */}
           <CountryCharacter iso2={iso2} countryName={meta.name} id="character" />
 
-          {/* 12. Related: the Compare CTA, the closing beat. */}
-          <section
+          {/* 12. Related: the Compare CTA, the closing beat. On the shared card
+              grammar (BeatCard). */}
+          <BeatCard
             id="related"
-            className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+            eyebrow="Next move"
+            heading={`Put ${meta.name} against its peers`}
           >
-            <SectionEyebrow className="mb-2">Next move</SectionEyebrow>
-            <h2 className="text-lg font-semibold text-ink-900">
-              Put {meta.name} against its peers
-            </h2>
-            <p className="mt-1 max-w-2xl text-sm leading-relaxed text-ink-800">
+            <p className="max-w-2xl text-sm leading-relaxed text-ink-800">
               Pick any activity and set {meta.name} side by side with up to three
               other countries: revenue, the cost stack, and what an owner keeps.
             </p>
             <a
               href="/compare"
-              className="mt-4 inline-block rounded-lg bg-atlas-600 px-4 py-2 text-sm font-medium text-cream-50 transition hover:bg-atlas-700"
+              className="mt-4 inline-flex min-h-11 items-center rounded-lg bg-atlas-600 px-4 py-2 text-sm font-medium text-cream-50 transition hover:bg-atlas-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500 focus-visible:ring-offset-2"
             >
               Open Compare
             </a>
-          </section>
+          </BeatCard>
 
           {/* Closing furniture: the freshness stamp and the honest flag-it line. */}
           <div className="space-y-3 pt-1 pb-8">

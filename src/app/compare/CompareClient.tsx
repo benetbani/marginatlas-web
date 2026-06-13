@@ -1,6 +1,12 @@
 "use client";
 
-import { useState, useMemo, useEffect, type ReactNode } from "react";
+import {
+  useState,
+  useMemo,
+  useEffect,
+  useRef,
+  type ReactNode,
+} from "react";
 import { ComboField, type ComboOption } from "@/components/ComboField";
 import { COUNTRIES, INDUSTRIES, INDUSTRY_BY_ID } from "@/lib/taxonomy";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
@@ -33,7 +39,7 @@ type Slot = { country: string; industry: string; region: string };
  * /api/cell-lookup route returns: the decisive A/B/C/H/I/J figures of the
  * cell-page board, already derived server-side so the client only formats them.
  */
-type CompactCell = {
+export type CompactCell = {
   country: string;
   region: string | null;
   industry: string;
@@ -65,11 +71,24 @@ type CompactCell = {
 /** Up to three cities, side by side. */
 const SLOT_COUNT = 3;
 
+/**
+ * The matchup the page lands on. The activity is set here (not filled in a mount
+ * effect) so the server render and the client's first render are identical: the
+ * same three slots, the same default industry. compare/page.tsx fetches the
+ * cells for exactly these slots server-side and hands them in as initialCells,
+ * so the first paint (and a no-JS / crawler view) shows real rows.
+ */
 const DEFAULT_SLOTS: Slot[] = [
-  { country: "US", industry: "", region: "california" },
-  { country: "US", industry: "", region: "texas" },
-  { country: "US", industry: "", region: "new-york" },
+  { country: "US", industry: "restaurants", region: "california" },
+  { country: "US", industry: "restaurants", region: "texas" },
+  { country: "US", industry: "restaurants", region: "new-york" },
 ];
+
+/** A stable key for a slot's data identity, used to decide whether a seeded
+ * cell still matches the slot (so we skip the redundant first-paint refetch). */
+function slotKey(s: Slot): string {
+  return `${s.country}|${s.industry}|${s.region}`;
+}
 
 /** A finite, real number. */
 function isNum(v: number | null | undefined): v is number {
@@ -265,17 +284,35 @@ const GROUPS: MetricGroup[] = [
   },
 ];
 
-export function CompareClient() {
-  const [slots, setSlots] = useState<Slot[]>(DEFAULT_SLOTS);
-  const [cells, setCells] = useState<Record<number, CompactCell | null>>({});
+/**
+ * @param initialSlots  The matchup to render first (defaults to DEFAULT_SLOTS).
+ * @param initialCells  The cells already resolved server-side for those slots.
+ *   Seeding both means the client's first render equals the server render (no
+ *   hydration mismatch), then the effects below hydrate ?q= and keep the grid
+ *   live as the user edits.
+ */
+export function CompareClient({
+  initialSlots = DEFAULT_SLOTS,
+  initialCells = {},
+}: {
+  initialSlots?: Slot[];
+  initialCells?: Record<number, CompactCell | null>;
+} = {}) {
+  const [slots, setSlots] = useState<Slot[]>(initialSlots);
+  const [cells, setCells] =
+    useState<Record<number, CompactCell | null>>(initialCells);
   const [loading, setLoading] = useState<Record<number, boolean>>({});
 
-  // Default industry on mount.
-  useEffect(() => {
-    setSlots((prev) =>
-      prev.map((s) => (s.industry ? s : { ...s, industry: "restaurants" })),
-    );
-  }, []);
+  // The data identity of each slot as it was first rendered. A slot whose
+  // current key still matches its seed already carries the server-fetched cell,
+  // so the first-paint fetch skips it (no redundant request, no flicker). Once
+  // the user edits a slot its key changes and the fetch runs normally. A ref, so
+  // reading it never triggers a render and it is fixed at mount.
+  const seededKeys = useRef<Record<number, string | undefined>>(
+    Object.fromEntries(
+      initialSlots.map((s, i) => [i, initialCells[i] != null ? slotKey(s) : undefined]),
+    ),
+  );
 
   const countryOptions: ComboOption[] = useMemo(
     () =>
@@ -305,6 +342,14 @@ export function CompareClient() {
     slots.forEach((slot, idx) => {
       if (!slot.country || !slot.industry) {
         setCells((c) => ({ ...c, [idx]: null }));
+        return;
+      }
+      // Skip the slots whose cell was already resolved server-side and has not
+      // changed since: refetching them would only re-request the same figures
+      // and flicker the first paint. The guard clears itself once consumed, so
+      // a later edit back to the seeded value still fetches normally.
+      if (seededKeys.current[idx] === slotKey(slot)) {
+        seededKeys.current[idx] = undefined;
         return;
       }
       setLoading((l) => ({ ...l, [idx]: true }));
@@ -775,47 +820,71 @@ export function CompareClient() {
             comparison.
           </p>
         ) : (
-          <div className="mt-6 overflow-x-auto">
-            <table className="w-full min-w-[34rem] border-collapse text-sm">
-              <thead>
-                <tr className="border-b border-parchment text-left align-bottom">
-                  <th className="w-44 py-2 pr-4 text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
-                    Metric
-                  </th>
-                  {activeCols.map((i) => (
-                    <th key={i} className="px-3 py-2 align-bottom">
-                      <span className="block font-display text-base font-semibold text-ink-900">
-                        {slotLabel(i)}
-                      </span>
-                      <span className="block text-[11px] font-normal text-cocoa-500">
-                        {activityLabel(i)}
-                      </span>
+          <>
+            {/* sm and up: the full side-by-side table. Hidden below sm so the
+                primary comparison never sits behind horizontal scroll. */}
+            <div className="mt-6 hidden overflow-x-auto sm:block">
+              <table className="w-full min-w-[34rem] border-collapse text-sm">
+                <thead>
+                  <tr className="border-b border-parchment text-left align-bottom">
+                    <th className="w-44 py-2 pr-4 text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
+                      Metric
                     </th>
+                    {activeCols.map((i) => (
+                      <th key={i} className="px-3 py-2 align-bottom">
+                        <span className="block font-display text-base font-semibold text-ink-900">
+                          {slotLabel(i)}
+                        </span>
+                        <span className="block text-[11px] font-normal text-cocoa-500">
+                          {activityLabel(i)}
+                        </span>
+                      </th>
+                    ))}
+                    {anyLoading && activeCols.length === 0 ? (
+                      <th className="px-3 py-2 text-[11px] font-normal text-cocoa-500">
+                        loading
+                      </th>
+                    ) : null}
+                  </tr>
+                </thead>
+                <tbody className="text-ink-900">
+                  {/* The revenue spread was lifted out of this table into its own
+                      seven-stop RangeStrip section above the grid, so the numbers
+                      group now reads as clean rows. */}
+                  {GROUPS.map((group) => (
+                    <GroupBlock
+                      key={group.key}
+                      group={group}
+                      activeCols={activeCols}
+                      cells={cells}
+                      rowLeader={rowLeader}
+                      spansCountries={spansCountries}
+                    />
                   ))}
-                  {anyLoading && activeCols.length === 0 ? (
-                    <th className="px-3 py-2 text-[11px] font-normal text-cocoa-500">
-                      loading
-                    </th>
-                  ) : null}
-                </tr>
-              </thead>
-              <tbody className="text-ink-900">
-                {/* The revenue spread was lifted out of this table into its own
-                    seven-stop RangeStrip section above the grid, so the numbers
-                    group now reads as clean rows. */}
-                {GROUPS.map((group) => (
-                  <GroupBlock
-                    key={group.key}
-                    group={group}
-                    activeCols={activeCols}
-                    cells={cells}
-                    rowLeader={rowLeader}
-                    spansCountries={spansCountries}
-                  />
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Below sm: the same figures reflowed into stacked, labeled groups
+                so every city column stays readable without horizontal scroll.
+                One card per metric row; inside, one labeled line per city. The
+                leader marks, money caveat, and spansCountries suppression all
+                carry over from the table above. CSS-only toggle, no JS. */}
+            <div className="mt-6 space-y-6 sm:hidden">
+              {GROUPS.map((group) => (
+                <GroupBlockStacked
+                  key={group.key}
+                  group={group}
+                  activeCols={activeCols}
+                  cells={cells}
+                  rowLeader={rowLeader}
+                  spansCountries={spansCountries}
+                  slotLabel={slotLabel}
+                  activityLabel={activityLabel}
+                />
+              ))}
+            </div>
+          </>
         )}
       </section>
       </div>
@@ -910,5 +979,107 @@ function GroupBlock({
         );
       })}
     </>
+  );
+}
+
+/**
+ * The mobile reflow of one comparison group (below the 'sm' breakpoint). Mirrors
+ * GroupBlock's data exactly, but stacks the figures so every city column is read
+ * top to bottom without horizontal scroll: a group header, then one card per
+ * metric row, and inside each card one labelled line per active city (the place
+ * name and activity on the left, its value on the right). The strongest value in
+ * a row carries the same weight + moss cue as the table, suppressed across
+ * countries; the money caveat sits under the group title just as it does there.
+ * No new JS: this is the same derived data, laid out for narrow screens.
+ */
+function GroupBlockStacked({
+  group,
+  activeCols,
+  cells,
+  rowLeader,
+  spansCountries,
+  slotLabel,
+  activityLabel,
+}: {
+  group: MetricGroup;
+  activeCols: number[];
+  cells: Record<number, CompactCell | null>;
+  rowLeader: (row: MetricRow) => { best: number | null; worst: number | null };
+  spansCountries: boolean;
+  slotLabel: (i: number) => string;
+  activityLabel: (i: number) => string;
+}) {
+  const moneyCaveat = spansCountries && group.key === "numbers";
+  const isRowPresent = (row: MetricRow) =>
+    activeCols.some((i) => row.value(cells[i] as CompactCell) !== MISSING);
+  const visibleRows = group.rows.filter(isRowPresent);
+  if (visibleRows.length === 0) return null;
+  return (
+    <section aria-label={group.title}>
+      <SectionEyebrow size="md">{group.title}</SectionEyebrow>
+      {moneyCaveat ? (
+        <span className="mt-0.5 block text-[11px] text-cocoa-500">
+          USD, not adjusted for local prices.
+        </span>
+      ) : null}
+      <div className="mt-3 space-y-3">
+        {visibleRows.map((row) => {
+          const { best, worst } = rowLeader(row);
+          const canRank = best != null && worst != null && best !== worst;
+          return (
+            <div
+              key={row.label}
+              className="rounded-md border border-parchment/70 bg-cream-75 px-4 py-3"
+            >
+              <div className="text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
+                {row.label}
+              </div>
+              {row.hint ? (
+                <div className="mt-0.5 text-[11px] text-cocoa-500">
+                  {row.hint}
+                </div>
+              ) : null}
+              <dl className="mt-2.5 space-y-2">
+                {activeCols.map((i) => {
+                  const c = cells[i] as CompactCell;
+                  const display = row.value(c);
+                  const blank = display === MISSING;
+                  const raw = row.numeric ? row.numeric(c) : null;
+                  const isBest =
+                    canRank &&
+                    isNum(raw) &&
+                    raw === (row.higherIsStronger === false ? worst : best);
+                  const tone = blank
+                    ? "text-cocoa-400"
+                    : isBest
+                      ? "font-semibold text-moss-700"
+                      : "text-ink-900";
+                  return (
+                    <div
+                      key={i}
+                      className="flex items-baseline justify-between gap-3"
+                    >
+                      <dt className="min-w-0 text-sm text-cocoa-500">
+                        <span className="block truncate font-medium text-ink-900">
+                          {slotLabel(i)}
+                        </span>
+                        <span className="block truncate text-[11px] text-cocoa-500">
+                          {activityLabel(i)}
+                        </span>
+                      </dt>
+                      <dd
+                        className={`shrink-0 text-right text-sm tabular-nums ${tone}`}
+                      >
+                        {row.node ? row.node(c) : display}
+                      </dd>
+                    </div>
+                  );
+                })}
+              </dl>
+            </div>
+          );
+        })}
+      </div>
+    </section>
   );
 }

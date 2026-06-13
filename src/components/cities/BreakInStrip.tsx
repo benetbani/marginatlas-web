@@ -22,6 +22,12 @@ function dotTone(band: BreakInBand): string {
  * companion to the Business Climate Score: it shows at a glance whether a city's
  * common businesses cluster easy or hard. Self-omits below three scored trades,
  * the same floor as the everyday-trades table. Server component, tokens only.
+ *
+ * Folded into the "What owners keep" section (R5, 2026-06-13): it no longer
+ * carries its own section heading or top-level spacing, because it shows the same
+ * break-in signal the table's per-row badges do. It renders as a compact strip
+ * with a small caption, the visual header that sits above the everyday-trades
+ * table inside one card.
  */
 export function BreakInStrip({
   items,
@@ -32,17 +38,10 @@ export function BreakInStrip({
 }) {
   if (items.length < 3) return null;
   return (
-    <section className="mb-12 md:mb-16">
-      <div className="text-xs uppercase tracking-wide text-atlas-600 font-semibold mb-2">
-        Break-in spread
-      </div>
-      <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mb-2">
-        How hard the everyday trades are to break into
-      </h2>
-      <p className="text-sm md:text-base text-cocoa-700/80 mb-6 max-w-2xl">
+    <div className="mb-6">
+      <p className="mb-3 text-sm leading-relaxed text-cocoa-700 md:text-base">
         Each dot is one common trade in {cityName}, placed by how easy it is to
-        break in and win. Further right is easier. Modeled from local business
-        demography. Directional.
+        break in and win. Further right is easier.
       </p>
       <div className="relative h-2 rounded-full bg-cream-100">
         {items.map((it) => (
@@ -60,6 +59,6 @@ export function BreakInStrip({
         <span>Harder to break in</span>
         <span>Easier</span>
       </div>
-    </section>
+    </div>
   );
 }
