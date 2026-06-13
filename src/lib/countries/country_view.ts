@@ -335,16 +335,21 @@ export function countryViewNav(
   hasBreakIn: boolean,
   hasCities: boolean,
 ): Array<{ id: string; label: string }> {
+  // The numbered content-map sections are ALWAYS present now (filled or a
+  // placeholder), so the nav lists them unconditionally. The honest-take,
+  // cost-to-open, easiest-to-start, and the editorial beats are extras/flourishes
+  // that self-omit, so they stay conditional.
+  void hasCities; // cities is always present now
   const nav: Array<{ id: string; label: string }> = [
     { id: "hero", label: "Overview" },
+    { id: "decisive", label: "The decisive read" },
   ];
-  if (view.decisive) nav.push({ id: "decisive", label: "The decisive read" });
   if (view.honestTake) nav.push({ id: "honest-take", label: "The honest take" });
-  if (view.hire) nav.push({ id: "hire", label: "Hiring here" });
+  nav.push({ id: "hire", label: "Hiring here" });
   if (hasFormation) nav.push({ id: "formation", label: "Cost to open" });
-  if (view.neighbours) nav.push({ id: "neighbours", label: "Vs neighbours" });
+  nav.push({ id: "neighbours", label: "Vs neighbours" });
   if (hasBreakIn) nav.push({ id: "break-in", label: "Easiest to start" });
-  if (hasCities) nav.push({ id: "cities", label: "Cities" });
+  nav.push({ id: "cities", label: "Cities" });
   if (view.whatLocals) nav.push({ id: "locals", label: "What locals know" });
   if (view.contrarian) nav.push({ id: "contrarian", label: "Against the grain" });
   nav.push({ id: "character", label: "Character" });

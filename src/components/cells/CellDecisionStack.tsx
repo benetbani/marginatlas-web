@@ -1,10 +1,16 @@
 /**
  * CellDecisionStack - the business/cell page body, composed from the Atlas Page
- * Kit in the content-map reading order. Takes a CellView (pure view model) and
- * renders only the sections it carries, so a thin cell shows a clean short page
- * and the London exemplar shows the full stack. The masthead is rendered by the
- * page above this; the startup-cost block is passed in as a slot so the page can
- * keep its existing data wiring.
+ * Kit in the content-map reading order. It maps the CELL_SECTIONS manifest, so
+ * EVERY required section is always present: filled where the view-model carries
+ * data, and a calm SectionEmpty placeholder where it does not (founder rule
+ * 2026-06-13: sections are never self-omitted). The masthead (sections 1 and 4)
+ * is rendered by the page above this; the startup-cost block and the related
+ * tail are passed in as slots so the page keeps its existing data wiring.
+ *
+ * The signature brand beats (what-locals-know, contrarian, myth-vs-reality,
+ * right-for/wrong-for, gut-check) are curated flourishes, not guaranteed
+ * sections; they fill on the exemplar and self-omit elsewhere, woven in just
+ * before the related tail.
  *
  * Tokens only via the kit; no raw color, no em-dashes, no source-agency names.
  */
@@ -23,7 +29,9 @@ import {
   MythVsReality,
   RightForWrongFor,
   GutCheck,
+  SectionEmpty,
 } from "@/components/kit";
+import { CELL_SECTIONS } from "@/lib/page-sections";
 import type { CellView } from "@/lib/cells/cell_view";
 
 function usdFull(n: number): string {
@@ -38,107 +46,131 @@ function usd(n: number): string {
 
 export function CellDecisionStack({
   view,
+  place,
   startupCost,
+  related,
 }: {
   view: CellView;
-  /** The page's existing startup-cost block, slotted into reading order. */
+  /** Place name, woven into the empty-state placeholder line. */
+  place?: string | null;
+  /** The page's existing startup-cost block (section 10), slotted in. */
   startupCost?: React.ReactNode;
+  /** The page's related-pages tail (section 14), slotted in. */
+  related?: React.ReactNode;
 }) {
+  // The filled node for each manifest section, or null when the view holds no
+  // data for it (the map below substitutes the placeholder).
+  const content: Record<string, React.ReactNode | null> = {
+    "honest-take": view.honestTake ? (
+      <HonestTakeBox id="honest-take" verdict={view.honestTake.verdict} points={view.honestTake.points}>
+        {view.honestTake.body}
+      </HonestTakeBox>
+    ) : null,
+    narrative: view.narrative ? (
+      <section id="narrative" className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
+        <p className="max-w-2xl text-base leading-relaxed text-graphite md:text-lg">
+          {view.narrative}
+        </p>
+      </section>
+    ) : null,
+    "plain-terms": view.plainTerms ? <PlainTerms id="plain-terms" items={view.plainTerms} /> : null,
+    money: view.moneyGoes ? (
+      <MoneyGoesBreakdown
+        id="money"
+        items={view.moneyGoes}
+        lede="Where each $100 a typical firm takes in actually goes."
+      />
+    ) : null,
+    "owner-take-home": view.ownerKeeps ? (
+      <OwnerKeeps id="owner-take-home" takeHome={view.ownerKeeps.takeHome} marginPct={view.ownerKeeps.marginPct} />
+    ) : null,
+    "break-even": view.breakEven ? (
+      <BreakEvenLine id="break-even" headline={view.breakEven.headline} detail={view.breakEven.detail} />
+    ) : null,
+    wages: view.wages ? (
+      <WagesByRole
+        id="wages"
+        roles={view.wages}
+        format={usdFull}
+        note="A guide to local pay before on-costs. The right people cost more than the floor, and keep the doors open."
+      />
+    ) : null,
+    "startup-cost": startupCost ?? null,
+    seasonality: view.seasonality ? (
+      <Seasonality id="seasonality" monthly={view.seasonality.monthly} note={view.seasonality.note} />
+    ) : null,
+    "first-year": view.firstYear ? (
+      <RealisticFirstYear id="first-year" headline={view.firstYear.headline} bullets={view.firstYear.bullets} />
+    ) : null,
+    nearby: view.nearby ? (
+      <SameBusinessNearby id="nearby" rows={view.nearby} format={usd} valueLabel="Typical revenue a year." />
+    ) : null,
+    related: related ? <div id="related">{related}</div> : null,
+  };
+
+  const emptyFor = (id: string) => {
+    const s = CELL_SECTIONS.find((x) => x.id === id)!;
+    return <SectionEmpty key={id} id={id} eyebrow={s.label} heading={s.heading} place={place} />;
+  };
+
   return (
     <div className="space-y-6 md:space-y-8">
-      {view.honestTake ? (
-        <HonestTakeBox
-          id="honest-take"
-          verdict={view.honestTake.verdict}
-          points={view.honestTake.points}
-        >
-          {view.honestTake.body}
-        </HonestTakeBox>
-      ) : null}
+      {/* Every manifest section before the related tail, always present. */}
+      {CELL_SECTIONS.filter((s) => s.id !== "related").map((s) => (
+        <React.Fragment key={s.id}>{content[s.id] ?? emptyFor(s.id)}</React.Fragment>
+      ))}
 
-      {view.narrative ? (
-        <section id="narrative" className="max-w-3xl">
-          <p className="text-base leading-relaxed text-graphite md:text-lg">
-            {view.narrative}
-          </p>
-        </section>
-      ) : null}
-
-      {view.plainTerms ? <PlainTerms id="plain-terms" items={view.plainTerms} /> : null}
-
-      {view.moneyGoes ? (
-        <MoneyGoesBreakdown
-          id="money"
-          items={view.moneyGoes}
-          lede="Where each $100 a typical firm takes in actually goes."
-        />
-      ) : null}
-
-      {view.breakEven ? (
-        <BreakEvenLine
-          id="break-even"
-          headline={view.breakEven.headline}
-          detail={view.breakEven.detail}
-        />
-      ) : null}
-
-      {view.wages ? (
-        <WagesByRole
-          id="wages"
-          roles={view.wages}
-          format={usdFull}
-          note="A guide to local pay before on-costs. The right people cost more than the floor, and keep the doors open."
-        />
-      ) : null}
-
-      {startupCost ? <div id="startup-cost">{startupCost}</div> : null}
-
-      {view.seasonality ? (
-        <Seasonality
-          id="seasonality"
-          monthly={view.seasonality.monthly}
-          note={view.seasonality.note}
-        />
-      ) : null}
-
-      {view.firstYear ? (
-        <RealisticFirstYear
-          id="first-year"
-          headline={view.firstYear.headline}
-          bullets={view.firstYear.bullets}
-        />
-      ) : null}
-
-      {view.nearby ? (
-        <SameBusinessNearby
-          id="nearby"
-          rows={view.nearby}
-          format={usd}
-          valueLabel="Typical revenue a year."
-        />
-      ) : null}
-
+      {/* Signature brand beats: curated, self-omitting (not forced placeholders). */}
       {view.whatLocals ? <WhatLocalsKnow id="locals" notes={view.whatLocals} /> : null}
-
       {view.contrarian ? (
-        <ContrarianInsight
-          id="contrarian"
-          insight={view.contrarian.insight}
-          body={view.contrarian.body}
-        />
+        <ContrarianInsight id="contrarian" insight={view.contrarian.insight} body={view.contrarian.body} />
       ) : null}
-
       {view.myths ? <MythVsReality id="myths" pairs={view.myths} /> : null}
-
       {view.rightWrong ? (
-        <RightForWrongFor
-          id="fit"
-          rightFor={view.rightWrong.rightFor}
-          wrongFor={view.rightWrong.wrongFor}
-        />
+        <RightForWrongFor id="fit" rightFor={view.rightWrong.rightFor} wrongFor={view.rightWrong.wrongFor} />
       ) : null}
-
       {view.gutCheck ? <GutCheck id="gut-check" questions={view.gutCheck} /> : null}
+
+      {/* The related tail, always present. */}
+      {content["related"] ?? emptyFor("related")}
     </div>
+  );
+}
+
+/** The dedicated "what the owner takes home" section (content-map #7). Real
+ * money only; the page gates this on a trusted/curated cell. */
+function OwnerKeeps({
+  id,
+  takeHome,
+  marginPct,
+}: {
+  id: string;
+  takeHome: number | null;
+  marginPct: number | null;
+}) {
+  if (takeHome == null || !Number.isFinite(takeHome)) return null;
+  return (
+    <section
+      id={id}
+      aria-label="What the owner takes home"
+      className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+    >
+      <div className="text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
+        What the owner keeps
+      </div>
+      <div className="mt-2 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+        <span className="font-display text-3xl font-semibold tabular-nums tracking-tight text-ink-900 md:text-4xl">
+          {usdFull(takeHome)}
+        </span>
+        <span className="text-sm font-medium text-cocoa-700/80">
+          a year, for a typical single-site owner
+          {Number.isFinite(marginPct as number) ? `, about ${Math.round(marginPct as number)}% of sales` : ""}
+        </span>
+      </div>
+      <p className="mt-2.5 max-w-2xl text-sm leading-relaxed text-graphite">
+        After the stock, the staff, the rent, and tax. Before the owner&apos;s own
+        time, which a typical operator works a great deal of.
+      </p>
+    </section>
   );
 }

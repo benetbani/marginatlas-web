@@ -21,7 +21,6 @@ import { iso2ToName } from "@/lib/countries";
 // RevenueTiles / RevenueDistribution / NetProfitWaterfall retired (WS3): the
 // content-map stack (AnswerFirstMasthead + CellDecisionStack) replaces them.
 import { DimensionSwitcher } from "@/components/DimensionSwitcher";
-import { AcrossStatesStrip } from "@/components/AcrossStatesStrip";
 import { CellPageNav } from "@/components/CellPageNav";
 // CellActions import removed (save/copy/CSV/embed buttons stripped)
 // AtlasScore retired (2026-06-02): founder ruling that a single composite
@@ -62,12 +61,10 @@ import {
   estimateWagePerEmployee,
   estimateEmployeesFromFirms,
 } from "@/lib/extrapolations/fill_missing";
-import { FailureCards } from "@/components/board/FailureCards";
 import { buildCellBoard, getLondonEntry } from "@/lib/scores/cell_board";
-import { AnswerFirstMasthead, StickySectionNav } from "@/components/kit";
+import { AnswerFirstMasthead, StickySectionNav, FreshnessStamp, FlagIt } from "@/components/kit";
 import { buildCellView, cellViewNav } from "@/lib/cells/cell_view";
 import { CellDecisionStack } from "@/components/cells/CellDecisionStack";
-import { getFailureModes } from "@/lib/qa/industry_failure_modes";
 import { CityHero } from "@/components/CityHero";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { ComparableCitiesRibbon } from "@/components/ComparableCitiesRibbon";
@@ -493,13 +490,8 @@ export default async function CellPage({
     cellRef: { country, geo, industry },
   });
 
-  // Board failure cards: the handful of specific operational misjudgments that
-  // sink weak operators in this business, mapped from the curated failure-mode
-  // set (the same source the FailureModes panel reads). Empty array for
-  // industries without an entry, which renders nothing.
-  const failureCards = (
-    cell.industry_id ? getFailureModes(cell.industry_id) ?? [] : []
-  ).map((m) => ({ title: m.label, body: m.explanation }));
+  // FailureCards ("why these fail") removed: the founder's content map rejects
+  // it on business pages, so the failure-mode lookup is no longer computed.
 
   // Discovery cross-link into the dedicated opening page. The "What it takes to
   // open" board section gets a single quiet footer link to the full opening
@@ -603,7 +595,53 @@ export default async function CellPage({
     peers: nearbyPeers,
     narrative,
   });
-  const navSections = cellViewNav(cellView, true);
+  const navSections = cellViewNav(cellView);
+
+  // The related-pages tail (content-map section 14), passed into the decision
+  // stack so it renders at its content-map position (and the section is never an
+  // empty placeholder when we DO have links). Other industries in this place +
+  // the sibling-sector strip. Null when neither exists, so the stack shows the
+  // honest placeholder instead.
+  const hasRelated = comparables.length > 0 || !!measuredIndustry?.sector_id;
+  const relatedTail = hasRelated ? (
+    <div className="space-y-5">
+      {comparables.length > 0 ? (
+        <div>
+          <SectionEyebrow size="md" className="mb-2">Compare</SectionEyebrow>
+          <h3 className="font-display text-lg md:text-xl font-semibold tracking-tight text-ink-900">
+            Other industries in {cell.geo_name || iso2ToName(country) || country.toUpperCase()}
+          </h3>
+          <p className="text-sm text-cocoa-700/70 mt-1.5">
+            How this compares to other businesses in the same place.
+          </p>
+          <div className="mt-4 grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+            {comparables.map((c) => (
+              <a
+                key={`${c.geo_id}-${c.naics_6}-${c.year}`}
+                href={cellUrl(c)}
+                className="block px-4 py-3 rounded-md border border-parchment bg-white shadow-subtle hover:shadow-lift hover:border-cream-400 hover:-translate-y-px transition"
+              >
+                <div className="text-sm font-medium text-ink-900 line-clamp-1">
+                  {c.industry_name || c.industry_description || c.naics_6}
+                </div>
+                <div className="text-xs text-cocoa-700/70 mt-1">
+                  {formatMoney(c.revenue_per_firm)} typical revenue
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      ) : null}
+      {measuredIndustry?.sector_id ? (
+        <RelatedIndustriesStrip
+          country={country}
+          geo={geo}
+          currentIndustryId={measuredIndustry.id}
+          sectorId={measuredIndustry.sector_id}
+        />
+      ) : null}
+    </div>
+  ) : null;
 
   const url = `https://www.marginatlas.com/${country}/${geo}/${industry}`;
   return (
@@ -781,7 +819,9 @@ export default async function CellPage({
       <div className="mt-8">
         <CellDecisionStack
           view={cellView}
+          place={placeName}
           startupCost={<SetupCostBlock cell={cell} />}
+          related={relatedTail}
         />
       </div>
 
@@ -904,35 +944,10 @@ export default async function CellPage({
           knowledge-base footer. Each section keeps its own self-omit, so a
           thin cell still renders cleanly. */}
 
-      {/* "What kills weak operators" — the board-kit failure cards. The same
-         curated set of specific operational misjudgments the old FailureModes
-         panel carried, now in the compact board card grid (the part a would-be
-         operator should screenshot). Renders nothing when the industry has no
-         curated entry (empty cards array). */}
-      <FailureCards cards={failureCards} />
-
-      {/* v34 Phase G: inline email capture after the failure-modes
-         section. High-intent placement: users who scrolled this far
-         are reading carefully. Posts to /api/newsletter (Supabase
-         newsletter_signups table). Sender swap to ConvertKit happens
-         in a follow-up once Tesseract Research sender is configured. */}
-      {/* <InlineMidArticle /> reverted with v34 Phase G */}
-
-      {/* Same activity across US states. Within-country comparison
-         only: same currency, same wage scale, same Census source.
-         Country-page rebuild §8 (2026-05-25): cross-country
-         AcrossCountriesStrip was removed because the inter-country
-         revenue dispersion is dominated by wrong-aggregation tails
-         (India carpenters $11.6M next to Germany at $118K). The
-         within-US version is preserved. */}
-      <div id="across-states" />
-      {isUsCell && (
-        <AcrossStatesStrip
-          industryName={cell.industry_name || industry.replace(/-/g, " ")}
-          currentGeoName={cell.geo_name || geo}
-          cells={acrossStates}
-        />
-      )}
+      {/* FailureCards ("why these fail") was REMOVED: the founder's content map
+          rejects it on business pages. The across-states strip was also removed:
+          it duplicated the decision stack's "same business nearby" section
+          (content-map #13), which now carries the US-state peers. */}
 
       {/* Reformation idea #4 — comparable-cities ribbon. Sends users
          to 3 peer cities (similar scale, often different country)
@@ -944,51 +959,16 @@ export default async function CellPage({
         industryName={cell.industry_name || undefined}
       />
 
-      {/* Comparable cells.
-         Plan v14 A.1 (T-A1.4): legacy id="comparable" renamed to canonical
-         "related-cells". */}
-      {comparables.length > 0 && (
-        // SaaS reformation 2026-06-12: seated card section (the band +
-        // hairline treatment retired with the rest of the board).
-        <section
-          id="related-cells"
-          className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
-        >
-          <SectionEyebrow size="md" className="mb-2">Compare</SectionEyebrow>
-          <h2 className="font-display text-lg md:text-xl font-semibold tracking-tight text-ink-900">
-            Other industries in {cell.geo_name}
-          </h2>
-          <p className="text-sm text-ink-700/70 mt-1.5">
-            See how this compares to other businesses in the same state.
-          </p>
-          <div className="mt-4 grid md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {comparables.map((c) => (
-              <a
-                key={`${c.geo_id}-${c.naics_6}-${c.year}`}
-                href={cellUrl(c)}
-                className="block px-4 py-3 rounded-md border border-parchment bg-white shadow-subtle hover:shadow-lift hover:border-cream-400 hover:-translate-y-px transition"
-              >
-                <div className="text-sm font-medium text-ink-900 line-clamp-1">
-                  {c.industry_name || c.industry_description || c.naics_6}
-                </div>
-                <div className="text-xs text-ink-700/70 mt-1">
-                  {formatMoney(c.revenue_per_firm)} typical revenue
-                </div>
-              </a>
-            ))}
-          </div>
-        </section>
-      )}
+      {/* The comparable-cells ("Other industries here") + sibling-sector strip
+          now render inside the decision stack as the content-map "related"
+          section (#14), via the relatedTail slot, so they are not repeated here. */}
 
-      {/* Related industries (sibling sector links): DD.4 internal linking */}
-      {measuredIndustry?.sector_id ? (
-        <RelatedIndustriesStrip
-          country={country}
-          geo={geo}
-          currentIndustryId={measuredIndustry.id}
-          sectorId={measuredIndustry.sector_id}
-        />
-      ) : null}
+      {/* Close furniture: when this read was last refreshed + an honest flag-it,
+          per the brand layer. */}
+      <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-parchment/60 pt-5">
+        <FreshnessStamp updated={cell.year ? String(cell.year) : "this year"} />
+        <FlagIt />
+      </div>
 
       {/* Send a correction */}
       <CorrectionForm cellUrl={`/${country}/${geo}/${industry}`} />

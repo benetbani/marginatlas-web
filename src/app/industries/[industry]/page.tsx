@@ -70,6 +70,7 @@ import {
   MoneyGoesBreakdown,
   PlainTerms,
   StickySectionNav,
+  SectionEmpty,
   formatWithSpec,
 } from "@/components/kit";
 import { buildIndustryView, industryViewNav } from "@/lib/industries/industry_view";
@@ -291,10 +292,23 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
 
   void INDUSTRY_BY_ID;
 
-  // The sticky in-page jump nav, built from what will actually render in reading
-  // order. StickySectionNav additionally drops any id whose anchor is missing on
-  // mount, so a thin page never dead-links.
-  const nav = industryViewNav(view, hasPlaceCohorts, relatedActivities.length > 0);
+  // The sticky in-page jump nav, in reading order. The four required content-map
+  // sections (typical-operator, where-it-earns, margin-waterfall, related-links)
+  // are ALWAYS present now (content or a calm SectionEmpty), so they are always
+  // listed. The signature flourishes (the honest take, the per-$100 split) stay
+  // conditional on their data. StickySectionNav additionally drops any id whose
+  // anchor is missing on mount, so the list never dead-links.
+  void industryViewNav;
+  const nav: Array<{ id: string; label: string }> = [
+    { id: "hero", label: "Overview" },
+    ...(view.honestTake ? [{ id: "honest-take", label: "The honest take" }] : []),
+    { id: "how-it-works", label: "How it makes money" },
+    ...(view.moneyGoes ? [{ id: "money", label: "Where the money goes" }] : []),
+    { id: "typical-operator", label: "A typical operator" },
+    { id: "where-it-earns", label: "Where it earns most" },
+    { id: "margin-waterfall", label: "The cost stack" },
+    { id: "related-links", label: "Go deeper" },
+  ];
 
   return (
     <div>
@@ -517,7 +531,14 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
                 items={view.typicalOperator}
               />
             </div>
-          ) : null}
+          ) : (
+            <SectionEmpty
+              id="typical-operator"
+              eyebrow="A typical operator"
+              heading="What a typical operator looks like"
+              place={ind.name}
+            />
+          )}
 
           {/* 6. Where it earns most. The trusted US-state cohort only (one
              currency, one tax system), ordered by what a typical owner keeps.
@@ -527,7 +548,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
              corrupt place can never headline; the block omits cleanly when the
              slate is thin. The id lives on a div wrapper; the inner block keeps
              its seated-card grammar. */}
-          {hasPlaceCohorts && (
+          {hasPlaceCohorts ? (
             <div
               id="where-it-earns"
               className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
@@ -596,6 +617,13 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
                 tax land on it.
               </p>
             </div>
+          ) : (
+            <SectionEmpty
+              id="where-it-earns"
+              eyebrow="Where it earns most"
+              heading="Where this business earns more, and less"
+              place={ind.name}
+            />
           )}
 
           {/* 7. The cost stack. The curated cost-structure margins are stable
@@ -631,9 +659,9 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
              read one model anatomy can jump to a neighbouring one. Pure taxonomy,
              NOT a cross-place ranking. The id is on a div wrapper. Self-
              suppresses when the sector has no other measured siblings. */}
-          {relatedActivities.length > 0 && (
+          {relatedActivities.length > 0 ? (
             <div
-              id="related"
+              id="related-links"
               className="mb-8 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
             >
               <SectionEyebrow className="mb-1">Related activities</SectionEyebrow>
@@ -673,6 +701,13 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
                 ))}
               </div>
             </div>
+          ) : (
+            <SectionEmpty
+              id="related-links"
+              eyebrow="Go deeper"
+              heading="Into the places and businesses"
+              place={ind.name}
+            />
           )}
         </div>
 

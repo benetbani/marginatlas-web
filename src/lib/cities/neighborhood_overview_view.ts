@@ -260,24 +260,32 @@ export function buildNeighborhoodOverviewView(
   };
 }
 
-/** The sticky-nav sections that will actually render, in reading order. */
+/**
+ * The sticky-nav sections, in reading order.
+ *
+ * The five NUMBERED content-map sections (thrives, who, operating-cost,
+ * adjacent, businesses-here) are ALWAYS listed: they always render now, as
+ * content or a calm SectionEmpty, so they are always real anchors. The honest
+ * take is a brand beat and the streets / ground zones are curated flourishes
+ * that still self-omit, so they stay conditional. StickySectionNav drops any
+ * dead anchor on mount, so a listed-but-absent flourish is harmless.
+ */
 export function neighborhoodOverviewNav(
   view: NeighborhoodOverviewView,
   hasStreets: boolean,
   hasTexture: boolean,
-  hasSiblings: boolean,
 ): Array<{ id: string; label: string }> {
   const nav: Array<{ id: string; label: string }> = [
     { id: "headline", label: "Overview" },
   ];
   if (view.honestTake) nav.push({ id: "honest-take", label: "The honest take" });
   nav.push({ id: "thrives", label: "What thrives here" });
-  if (view.whoLivesHere) nav.push({ id: "who", label: "Who shops here" });
-  if (view.operatingCost) nav.push({ id: "operating-cost", label: "Cost to operate" });
-  if (view.adjacent) nav.push({ id: "adjacent", label: "Vs nearby areas" });
+  nav.push({ id: "who", label: "Who shops here" });
+  nav.push({ id: "operating-cost", label: "Cost to operate" });
+  nav.push({ id: "adjacent", label: "Vs nearby areas" });
   if (hasStreets) nav.push({ id: "streets", label: "Prime streets" });
   if (hasTexture) nav.push({ id: "ground", label: "On the ground" });
-  if (hasSiblings) nav.push({ id: "siblings", label: "Other areas" });
+  nav.push({ id: "businesses-here", label: "The businesses here" });
   return nav;
 }
 

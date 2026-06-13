@@ -28,6 +28,7 @@ import neighborhoodsJson from "../../../../data/cities/neighborhoods_v1.json";
 import { CountryFlag } from "@/components/CountryFlag";
 import { COUNTRIES } from "@/lib/taxonomy";
 import { CityPeers } from "@/components/cities/CityPeers";
+import { buildCityPeers } from "@/lib/scores/city_peers";
 import { CitySignaturePanel } from "@/components/cities/CitySignaturePanel";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { breakInWord } from "@/lib/scores/band_labels";
@@ -52,10 +53,10 @@ import {
   StickySectionNav,
   RealityCheck,
   ContrarianInsight,
+  SectionEmpty,
 } from "@/components/kit";
 import {
   buildCityView,
-  cityViewNav,
   cityFmtUsdFull,
   type CityView,
 } from "@/lib/cities/city_view";
@@ -251,15 +252,28 @@ export default async function CityPage({
   // The best-areas read: the curated London exemplar, or a self-omit elsewhere.
   const bestAreas = BEST_AREAS[city.slug] ?? null;
 
-  // The sticky-nav sections: the view-owned bands plus the page-owned data
-  // bands, both gated on what actually renders. StickySectionNav drops any dead
-  // anchor on mount, so a missing data section never leaves a dangling link.
-  const navSections: Array<{ id: string; label: string }> = [...cityViewNav(view)];
-  if (activities.length > 0) navSections.push({ id: "owners-keep", label: "What owners keep" });
-  if (bestAreas) navSections.push({ id: "best-areas", label: "Best areas" });
-  if (shownNeighborhoods.length > 0) navSections.push({ id: "neighborhoods", label: "Neighbourhoods" });
-  if (view.changing) navSections.push({ id: "changing", label: "How it is changing" });
-  navSections.push({ id: "peers", label: "Similar cities" });
+  // Peer cities: the same selection CityPeers renders, resolved here so the
+  // "peers" section is ALWAYS present (CityPeers itself draws when two or more
+  // peers resolve, a calm placeholder otherwise). Mirrors the component's own
+  // two-peer floor without regressing it.
+  const peerCount = buildCityPeers(city.slug, 3).length;
+
+  // The sticky-nav sections. Every required city section now ALWAYS renders
+  // (content or a calm placeholder), so the nav lists all eight, after the lead
+  // anchors (overview, the honest take). StickySectionNav drops any genuinely
+  // dead anchor on mount, so listing them all is safe.
+  const navSections: Array<{ id: string; label: string }> = [
+    { id: "headline", label: "Overview" },
+    ...(view.honestTake ? [{ id: "honest-take", label: "The honest take" }] : []),
+    { id: "customer", label: "The local customer" },
+    { id: "space", label: "What space costs" },
+    { id: "visitors", label: "Tourist vs local" },
+    { id: "owners-keep", label: "What owners keep" },
+    { id: "best-areas", label: "Best areas" },
+    { id: "neighbourhoods", label: "Neighbourhoods" },
+    { id: "changing", label: "How it is changing" },
+    { id: "peers", label: "Rival and peer cities" },
+  ];
 
   return (
     <article className="pb-16">
@@ -342,7 +356,14 @@ export default async function CityPage({
                   </div>
                 ) : null}
               </section>
-            ) : null}
+            ) : (
+              <SectionEmpty
+                id="customer"
+                eyebrow="Your customer"
+                heading="Who the local customer is"
+                place={city.name}
+              />
+            )}
 
             {/* What shop and office space costs: the commercial-rent character.
                A RealityCheck beat so it reads as an honest read, not a data
@@ -372,7 +393,14 @@ export default async function CityPage({
                   </dl>
                 ) : null}
               </div>
-            ) : null}
+            ) : (
+              <SectionEmpty
+                id="space"
+                eyebrow="What space costs"
+                heading="What shop and office space costs"
+                place={city.name}
+              />
+            )}
 
             {/* Tourist money vs local money: ALWAYS rendered (founder). The
                split reuses the per-100 stacked bar, read as "where your trade
@@ -459,7 +487,7 @@ export default async function CityPage({
                row never carries an invented number; the list self-omits below
                three rows. Each row links to that activity's full cell benchmark
                under the city. */}
-            {activities.length > 0 && (
+            {activities.length > 0 ? (
               <section
                 id="owners-keep"
                 className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
@@ -530,6 +558,13 @@ export default async function CityPage({
                   Owner take-home is after tax, for a typical single-site operator.
                 </p>
               </section>
+            ) : (
+              <SectionEmpty
+                id="owners-keep"
+                eyebrow="What owners keep"
+                heading="What an owner keeps across the everyday trades"
+                place={city.name}
+              />
             )}
 
             {/* The best areas to set up: which neighbourhood suits which
@@ -563,7 +598,14 @@ export default async function CityPage({
                   ))}
                 </ul>
               </section>
-            ) : null}
+            ) : (
+              <SectionEmpty
+                id="best-areas"
+                eyebrow="Best areas"
+                heading="The best areas to set up"
+                place={city.name}
+              />
+            )}
 
             {/* Signature panel: demographics + signature sectors + commercial
                streets. Culture + government are country-altitude reads, so
@@ -579,9 +621,9 @@ export default async function CityPage({
 
             {/* Neighbourhoods: up to four featured areas, with the full list one
                click away. The drilled-down districts, clickable, real flavour. */}
-            {shownNeighborhoods.length > 0 && (
+            {shownNeighborhoods.length > 0 ? (
               <section
-                id="neighborhoods"
+                id="neighbourhoods"
                 className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
               >
                 <SectionEyebrow className="mb-1">Neighbourhoods</SectionEyebrow>
@@ -636,6 +678,13 @@ export default async function CityPage({
                   </Link>
                 </div>
               </section>
+            ) : (
+              <SectionEmpty
+                id="neighbourhoods"
+                eyebrow="Neighbourhoods"
+                heading="The districts, drilled down"
+                place={city.name}
+              />
             )}
 
             {/* How the city is changing: a real direction, or an honest
@@ -665,14 +714,30 @@ export default async function CityPage({
                   </ul>
                 ) : null}
               </div>
-            ) : null}
+            ) : (
+              <SectionEmpty
+                id="changing"
+                eyebrow="How it is changing"
+                heading="How the city is changing"
+                place={city.name}
+              />
+            )}
 
             {/* Rival + peer cities: a real peer comparison, each carrying its OWN
                headline city score on the same scale as this page, each linking to
                that peer's city page. Self-omits below two peers. */}
-            <div id="peers">
-              <CityPeers citySlug={city.slug} cityName={city.name} />
-            </div>
+            {peerCount >= 2 ? (
+              <div id="peers">
+                <CityPeers citySlug={city.slug} cityName={city.name} />
+              </div>
+            ) : (
+              <SectionEmpty
+                id="peers"
+                eyebrow="Rival and peer cities"
+                heading="Rival and peer cities"
+                place={city.name}
+              />
+            )}
           </div>
         </div>
 

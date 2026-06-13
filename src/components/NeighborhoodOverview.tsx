@@ -51,6 +51,7 @@ import {
   BreakEvenLine,
   LikeForLikeTable,
   StickySectionNav,
+  SectionEmpty,
 } from "@/components/kit";
 import {
   buildNeighborhoodOverviewView,
@@ -256,7 +257,6 @@ export function NeighborhoodOverview({
     view,
     primeStreets.length > 0,
     hasTexture,
-    siblings.length > 0,
   );
 
   return (
@@ -431,32 +431,46 @@ export function NeighborhoodOverview({
         </section>
 
         {/* ZONE 2 (cont): WHO LIVES AND SHOPS HERE ------------------------ */}
-        {view.whoLivesHere && (
-          <div className="mb-8">
+        <div className="mb-8">
+          {view.whoLivesHere ? (
             <WhatLocalsKnow
               id="who"
               eyebrow="Who shops here"
               heading={view.whoLivesHere.heading}
               notes={view.whoLivesHere.notes}
             />
-          </div>
-        )}
+          ) : (
+            <SectionEmpty
+              id="who"
+              eyebrow="Who shops here"
+              heading="Who lives and shops here"
+              place={nb.name}
+            />
+          )}
+        </div>
 
         {/* ZONE 2 (cont): COST TO OPERATE (rent / price tier) ------------- */}
-        {view.operatingCost && (
-          <div className="mb-8">
+        <div className="mb-8">
+          {view.operatingCost ? (
             <BreakEvenLine
               id="operating-cost"
               eyebrow="Cost to operate"
               headline={view.operatingCost.headline}
               detail={view.operatingCost.detail}
             />
-          </div>
-        )}
+          ) : (
+            <SectionEmpty
+              id="operating-cost"
+              eyebrow="Cost to operate"
+              heading="How pricey it is to operate here"
+              place={nb.name}
+            />
+          )}
+        </div>
 
         {/* ZONE 3: VS NEARBY AREAS (adjacent-district like-for-like) ------ */}
-        {view.adjacent && (
-          <div className="mb-8">
+        <div className="mb-8">
+          {view.adjacent ? (
             <LikeForLikeTable
               id="adjacent"
               eyebrow="Versus the areas next door"
@@ -466,8 +480,15 @@ export function NeighborhoodOverview({
               rows={view.adjacent.rows}
               footnote={view.adjacent.footnote}
             />
-          </div>
-        )}
+          ) : (
+            <SectionEmpty
+              id="adjacent"
+              eyebrow="Versus next door"
+              heading="How this area compares to the ones beside it"
+              place={nb.name}
+            />
+          )}
+        </div>
 
         {/* ZONE 3 (cont): PRIME STREETS.
             Mounts only when this (city, neighborhood) has a curated streets
@@ -561,9 +582,9 @@ export function NeighborhoodOverview({
           </section>
         )}
 
-        {/* ZONE 3 (cont): OTHER AREAS (sibling rail) ---------------------- */}
-        {siblings.length > 0 && (
-          <section id="siblings">
+        {/* ZONE 3 (cont): THE BUSINESSES HERE (sibling rail) -------------- */}
+        {siblings.length > 0 ? (
+          <section id="businesses-here">
             <SectionEyebrow size="md" className="mb-2">
               Elsewhere in {city.name}
             </SectionEyebrow>
@@ -587,6 +608,13 @@ export function NeighborhoodOverview({
               ))}
             </div>
           </section>
+        ) : (
+          <SectionEmpty
+            id="businesses-here"
+            eyebrow="The businesses here"
+            heading="The businesses of this district"
+            place={nb.name}
+          />
         )}
       </article>
       <StickySectionNav sections={navSections} />

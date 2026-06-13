@@ -61,3 +61,4 @@ export {
 // Navigation + furniture
 export { StickySectionNav, type NavSection } from "./StickySectionNav";
 export { FreshnessStamp, FlagIt } from "./furniture";
+export { SectionEmpty, type SectionEmptyProps } from "./SectionEmpty";

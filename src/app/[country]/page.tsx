@@ -27,7 +27,6 @@ import { hasRegionalCoverage } from "@/lib/coverage/regional";
 import { getAdmin1Regions } from "@/lib/coverage/admin1";
 import { COUNTRY_PAGE_SECTIONS } from "@/lib/page-layout/section-order";
 import { getCountryAnchor } from "@/lib/content/country-anchors";
-import { CountrySignaturePanel } from "@/components/countries/CountrySignaturePanel";
 import { BusinessFormationCosts } from "@/components/cities/BusinessFormationCosts";
 import { getCountryEconomicsSnapshot, getCityEconBySlug } from "@/lib/economics/country_metrics";
 import { getSmbRegime, getVatRow } from "@/lib/tax/smb_effective_rates";
@@ -46,7 +45,9 @@ import {
   FreshnessStamp,
   FlagIt,
   BeatCard,
+  SectionEmpty,
 } from "@/components/kit";
+import { CountryCharacter } from "@/components/countries/CountryCharacter";
 import {
   buildCountryView,
   countryViewNav,
@@ -339,7 +340,14 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
                 </p>
               ) : null}
             </BeatCard>
-          ) : null}
+          ) : (
+            <SectionEmpty
+              id="decisive"
+              eyebrow="The decisive read"
+              heading="Setting up and running a business here"
+              place={meta.name}
+            />
+          )}
 
           {/* 3. The honest take: unconditional. The 185 thin-coverage countries
               get an honest thin-coverage line, not the old shared anchor. */}
@@ -377,7 +385,14 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
                 ))}
               </ul>
             </BeatCard>
-          ) : null}
+          ) : (
+            <SectionEmpty
+              id="hire"
+              eyebrow="Hiring here"
+              heading="How hard it is to hire here"
+              place={meta.name}
+            />
+          )}
 
           {/* 5. Cost to open: the legal-tier formation breakdown. */}
           <section
@@ -400,7 +415,14 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
               rows={view.neighbours.rows}
               footnote={view.neighbours.footnote}
             />
-          ) : null}
+          ) : (
+            <SectionEmpty
+              id="neighbours"
+              eyebrow="Vs neighbours"
+              heading="How this country compares to its neighbours"
+              place={meta.name}
+            />
+          )}
 
           {/* 7. The easiest businesses to break into here. */}
           {easiestBreakIn.length > 0 ? (
@@ -460,28 +482,44 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
 
               {citiesByRegion.length > 0 ? (
                 <div className="space-y-6">
-                  {citiesByRegion.map((group) => (
-                    <div key={group.region}>
-                      <h3 className="text-base font-semibold text-ink-900">
-                        {group.region}
-                      </h3>
-                      <div className="mt-2 flex flex-wrap gap-2">
-                        {group.cities.map((city) => (
-                          <Link
-                            key={city.slug}
-                            href={`/${iso2.toLowerCase()}/${city.slug}/restaurants`}
-                            className="inline-flex items-center rounded-full border border-parchment bg-white px-3 py-1.5 text-sm font-medium text-ink-900 transition-colors hover:border-atlas-500 hover:text-atlas-700"
-                          >
-                            {city.name}
-                          </Link>
-                        ))}
+                  {citiesByRegion.map((group) => {
+                    // Dedup: the best and worst cities are already featured in
+                    // the callout above, so drop them from the region list. No
+                    // city ever appears twice on the page.
+                    const cities = group.cities.filter(
+                      (c) => c.slug !== bestCity?.slug && c.slug !== worstCity?.slug,
+                    );
+                    if (cities.length === 0) return null;
+                    return (
+                      <div key={group.region}>
+                        <h3 className="text-base font-semibold text-ink-900">
+                          {group.region}
+                        </h3>
+                        <div className="mt-2 flex flex-wrap gap-2">
+                          {cities.map((city) => (
+                            <Link
+                              key={city.slug}
+                              href={`/${iso2.toLowerCase()}/${city.slug}/restaurants`}
+                              className="inline-flex items-center rounded-full border border-parchment bg-white px-3 py-1.5 text-sm font-medium text-ink-900 transition-colors hover:border-atlas-500 hover:text-atlas-700"
+                            >
+                              {city.name}
+                            </Link>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               ) : null}
             </section>
-          ) : null}
+          ) : (
+            <SectionEmpty
+              id="cities"
+              eyebrow="Go local"
+              heading={`The cities of ${countryName}`}
+              place={countryName}
+            />
+          )}
 
           {/* 9. What locals know (exemplar-only invented detail; self-omits). */}
           {view.whatLocals ? (
@@ -497,13 +535,11 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
             />
           ) : null}
 
-          {/* 11. Country character: demographics, culture, government. */}
-          <section
-            id="character"
-            className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
-          >
-            <CountrySignaturePanel iso2={iso2} countryName={meta.name} />
-          </section>
+          {/* 11. Country character: demographics, culture, government, in a
+              dedicated country-scale layout. Replaces the old reused city
+              signature panel (the "zombie"); always present (CountryCharacter
+              renders the calm placeholder when we hold no character read). */}
+          <CountryCharacter iso2={iso2} countryName={meta.name} id="character" />
 
           {/* 12. Related: the Compare CTA, the closing beat. */}
           <section

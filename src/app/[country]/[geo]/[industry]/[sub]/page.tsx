@@ -295,7 +295,7 @@ export default async function NeighborhoodCellPage({
     peers: [],
     narrative: null,
   });
-  const navSections = cellViewNav(cellView, false);
+  const navSections = cellViewNav(cellView);
 
   return (
     <div className="xl:flex xl:gap-16">

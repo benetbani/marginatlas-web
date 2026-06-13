@@ -70,6 +70,7 @@ const GATES: Gate[] = [
   { name: "layering", script: "scripts/verify_layering.ts" },
   { name: "section-order", script: "scripts/verify_section_order.ts" },
   { name: "cross-geography-guard", script: "scripts/verify_cross_geography_guard.ts" },
+  { name: "page-sections", script: "scripts/verify_page_sections.ts" },
 ];
 
 /** CLI arg parsing. */

@@ -15,7 +15,12 @@ import {
 import { isGatingEnabled } from "@/lib/feature_flags";
 import { GatedTakeHome } from "@/components/monetization/GatedTakeHome";
 import { RedactedNumber } from "@/components/monetization/RedactedNumber";
-import { HonestTakeBox, RangeStrip, StickySectionNav } from "@/components/kit";
+import {
+  HonestTakeBox,
+  RangeStrip,
+  SectionEmpty,
+  StickySectionNav,
+} from "@/components/kit";
 import {
   generateCompareVerdict,
   type CompareSide,
@@ -522,14 +527,17 @@ export function CompareClient() {
   // so an absent block never leaves a dead anchor. Shows once the page is long
   // enough to be worth jumping around (StickySectionNav itself hides under two).
   const navSections = useMemo(() => {
+    // Every required section (pickers, where-each-wins, grid) is always present
+    // now, so the nav lists all three in DOM order. The revenue-spread block is
+    // a curated extra, so it joins the nav only when it carries data.
     const nav: Array<{ id: string; label: string }> = [
       { id: "compare-pickers", label: "Set the matchup" },
+      { id: "where-each-wins", label: "Where each wins" },
     ];
-    if (verdict && verdict.wins.length > 0) nav.push({ id: "where-each-wins", label: "Where each wins" });
     if (spreadCols.length > 0) nav.push({ id: "revenue-spread", label: "Revenue spread" });
     nav.push({ id: "compare-grid", label: "Side by side" });
     return nav;
-  }, [verdict, spreadCols]);
+  }, [spreadCols]);
 
   return (
     <div className="xl:flex xl:gap-12">
@@ -617,7 +625,11 @@ export function CompareClient() {
         </div>
       </section>
 
-      {/* ----- Where each one wins (the balanced verdict) ----- */}
+      {/* ----- Where each one wins (the balanced verdict) -----
+          Always present (the founder's section contract): the balanced verdict
+          when at least two columns are loaded and the verdict crowns a win, a
+          calm placeholder otherwise. It never self-omits. The spansCountries
+          guard above still withholds the money wins inside the verdict. */}
       {verdict && verdict.wins.length > 0 ? (
         <section id="where-each-wins" aria-label="Where each one wins">
           <HonestTakeBox eyebrow="Where each one wins" verdict={verdict.headline}>
@@ -643,7 +655,14 @@ export function CompareClient() {
             ))}
           </div>
         </section>
-      ) : null}
+      ) : (
+        <SectionEmpty
+          id="where-each-wins"
+          eyebrow="Where each wins"
+          heading="Where each one wins"
+          note="Pick two places to see where each one wins, and the catch in each."
+        />
+      )}
 
       {/* ----- The revenue spread (lifted out of the table) ----- */}
       {spreadCols.length > 0 ? (

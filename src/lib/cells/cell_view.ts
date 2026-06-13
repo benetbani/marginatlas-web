@@ -22,6 +22,7 @@
 import type { Cell } from "@/lib/cells";
 import type { LondonEntry } from "@/lib/scores/cell_board";
 import type { NumberFormatSpec } from "@/components/kit/numberFormat";
+import { CELL_SECTIONS } from "@/lib/page-sections";
 
 /* ----------------------------- output shape ----------------------------- */
 
@@ -45,6 +46,8 @@ export type CellView = {
   masthead: CellViewMasthead;
   honestTake: { verdict: string; points: string[]; body: string | null } | null;
   narrative: string | null;
+  /** The dedicated "what the owner takes home" section (#7). */
+  ownerKeeps: { takeHome: number | null; marginPct: number | null } | null;
   moneyGoes: Array<{ label: string; perHundred: number; kept?: boolean; hint?: string }> | null;
   plainTerms: Array<{ label: string; value: string; hint?: string }> | null;
   breakEven: { headline: string; detail: string | null } | null;
@@ -270,14 +273,35 @@ export function buildCellView(input: CellViewInput): CellView {
     ];
   }
 
+  // Narrative (#3): a SHORT line derived live from the figures on the page, so
+  // it can never contradict them (the old cached prose did, and was retired).
+  // No bespoke copywriting; just the numbers said in a sentence. Untrusted cells
+  // dash money, so they carry no narrative line (the section shows the
+  // placeholder instead).
+  const narrative =
+    moneyShown && isNum(typicalRevenue)
+      ? isNum(ownerTakeHome)
+        ? `A typical ${tradeNoun} in ${placeName} brings in around ${usd(
+            typicalRevenue,
+          )} a year. After the stock, the staff, the rent, and tax, a typical owner keeps about ${usd(
+            ownerTakeHome,
+          )} of that.`
+        : `A typical ${tradeNoun} in ${placeName} brings in around ${usd(
+            typicalRevenue,
+          )} a year before the stock, staff, rent, and tax come out.`
+      : null;
+
+  // Owner-keeps (#7): the dedicated take-home section. Real money only.
+  const ownerKeeps =
+    moneyShown && isNum(ownerTakeHome)
+      ? { takeHome: ownerTakeHome, marginPct: isNum(netMarginPct) ? netMarginPct : null }
+      : null;
+
   return {
     masthead,
     honestTake,
-    // The cached editorial prose is frozen text with baked-in numbers from an
-    // older data snapshot, so it contradicted the live masthead (e.g. $420K in
-    // the prose vs $503K in the anchor). The honest-take box and the sections
-    // are the data-driven read now; the stale prose is retired site-wide.
-    narrative: null,
+    narrative,
+    ownerKeeps,
     moneyGoes,
     plainTerms,
     breakEven,
@@ -294,29 +318,23 @@ export function buildCellView(input: CellViewInput): CellView {
   };
 }
 
-/** The sticky-nav sections that will actually render, in reading order. The
- * page passes this to StickySectionNav, which additionally drops any id whose
- * anchor is missing on mount, so the two never disagree. */
-export function cellViewNav(
-  view: CellView,
-  hasStartupCost: boolean,
-): Array<{ id: string; label: string }> {
+/** The sticky-nav sections, in reading order. Every manifest section is always
+ * present now (filled or placeholder), so the nav lists them all; the brand
+ * beats are woven in before the related tail only when they carry content. The
+ * page passes this to StickySectionNav, which drops any id whose anchor is
+ * missing on mount, so the two never disagree. */
+export function cellViewNav(view: CellView): Array<{ id: string; label: string }> {
   const nav: Array<{ id: string; label: string }> = [{ id: "headline", label: "Overview" }];
-  if (view.honestTake) nav.push({ id: "honest-take", label: "The honest take" });
-  if (view.narrative) nav.push({ id: "narrative", label: "In context" });
-  if (view.plainTerms) nav.push({ id: "plain-terms", label: "In plain terms" });
-  if (view.moneyGoes) nav.push({ id: "money", label: "Where the money goes" });
-  if (view.breakEven) nav.push({ id: "break-even", label: "Break-even" });
-  if (view.wages) nav.push({ id: "wages", label: "Pay by role" });
-  if (hasStartupCost) nav.push({ id: "startup-cost", label: "Cost to open" });
-  if (view.seasonality) nav.push({ id: "seasonality", label: "Through the year" });
-  if (view.firstYear) nav.push({ id: "first-year", label: "Your first year" });
-  if (view.nearby) nav.push({ id: "nearby", label: "Nearby" });
-  if (view.whatLocals) nav.push({ id: "locals", label: "What locals know" });
-  if (view.contrarian) nav.push({ id: "contrarian", label: "Against the grain" });
-  if (view.myths) nav.push({ id: "myths", label: "Myth vs reality" });
-  if (view.rightWrong) nav.push({ id: "fit", label: "Who it suits" });
-  if (view.gutCheck) nav.push({ id: "gut-check", label: "Gut check" });
+  for (const s of CELL_SECTIONS) {
+    if (s.id === "related") {
+      if (view.whatLocals) nav.push({ id: "locals", label: "What locals know" });
+      if (view.contrarian) nav.push({ id: "contrarian", label: "Against the grain" });
+      if (view.myths) nav.push({ id: "myths", label: "Myth vs reality" });
+      if (view.rightWrong) nav.push({ id: "fit", label: "Who it suits" });
+      if (view.gutCheck) nav.push({ id: "gut-check", label: "Gut check" });
+    }
+    nav.push({ id: s.id, label: s.label });
+  }
   return nav;
 }
 

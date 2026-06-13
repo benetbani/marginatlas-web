@@ -29,9 +29,27 @@ import {
   RangeStrip,
   HonestTakeBox,
   SameBusinessNearby,
+  SectionEmpty,
+  StickySectionNav,
+  type NavSection,
 } from "@/components/kit";
+import { LEARN_SECTIONS } from "@/lib/page-sections";
 
 export const revalidate = 86400;
+
+/**
+ * The trade (or topic) an article is about, as a short noun phrase, woven into
+ * the calm SectionEmpty line ("We do not hold this for a restaurant yet"). It
+ * reads the common question shapes; anything that does not match falls back to
+ * a neutral phrase so the placeholder never prints an awkward whole title.
+ */
+function articlePlace(title: string): string {
+  const make = title.match(/^How much does (.+?) make\??$/i);
+  if (make) return make[1].trim();
+  const margin = title.match(/healthy margin for (.+?)\??$/i);
+  if (margin) return margin[1].trim();
+  return "this trade";
+}
 
 function usd(n: number): string {
   if (!Number.isFinite(n)) return "–";
@@ -80,8 +98,32 @@ export default async function LearnArticlePage({
     .filter((a): a is NonNullable<typeof a> => Boolean(a))
     .slice(0, 4);
 
+  // The trade the article is about, for the calm SectionEmpty line.
+  const PLACE = articlePlace(article.title);
+
+  // Manifest lookups, so the filled section and its placeholder share one
+  // eyebrow + heading (the always-present contract).
+  const S = (id: string) => LEARN_SECTIONS.find((s) => s.id === id)!;
+  const sPnl = S("pnl");
+  const sExplanation = S("explanation");
+  const sOther = S("other-businesses");
+  const sBenchmarks = S("benchmarks");
+
+  // The sticky jump nav. Every required section is always present below, so
+  // every required id is listed; the top question + answer reads as "Overview".
+  // StickySectionNav drops any anchor missing on mount, so listing them all is
+  // safe.
+  const nav: NavSection[] = [
+    { id: "overview", label: "Overview" },
+    { id: sPnl.id, label: sPnl.label },
+    { id: sExplanation.id, label: sExplanation.label },
+    { id: sOther.id, label: sOther.label },
+    { id: sBenchmarks.id, label: sBenchmarks.label },
+  ];
+
   return (
-    <article className="max-w-3xl mx-auto px-4 md:px-6 py-12 md:py-16">
+    <div className="mx-auto flex max-w-5xl justify-center gap-6 px-4 md:px-6 py-12 md:py-16">
+      <article className="min-w-0 max-w-3xl flex-1">
       {/* FAQ schema */}
       <script
         type="application/ld+json"
@@ -115,8 +157,8 @@ export default async function LearnArticlePage({
         {article.title}
       </h1>
 
-      {/* 2. Headline answer */}
-      <section className="mb-10 md:mb-12">
+      {/* 2. Headline answer (the top "Overview" beat for the sticky nav). */}
+      <section id="overview" className="mb-10 md:mb-12">
         {article.headlineNumber && (
           <div className="mb-4 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
             <div className="font-display text-4xl md:text-5xl font-medium text-ink-900 tabular-nums leading-none">
@@ -136,9 +178,9 @@ export default async function LearnArticlePage({
           prose. Built only from the cost shares the article itself states, so it
           restates real figures rather than inventing a split. */}
       {view.pnl ? (
-        <section className="mb-10">
+        <section id="pnl" className="mb-10">
           <MoneyGoesBreakdown
-            eyebrow="A worked example"
+            eyebrow={sPnl.label}
             heading="Where every $100 of sales goes"
             lede={
               view.pnl.lede ??
@@ -147,7 +189,16 @@ export default async function LearnArticlePage({
             items={view.pnl.rows}
           />
         </section>
-      ) : null}
+      ) : (
+        <div className="mb-10">
+          <SectionEmpty
+            id="pnl"
+            eyebrow={sPnl.label}
+            heading={sPnl.heading}
+            place={PLACE}
+          />
+        </div>
+      )}
 
       {/* 4. The spread: the typical figure is a half-truth, the range is the
           story. Seven gradations, the signature strip. */}
@@ -180,8 +231,9 @@ export default async function LearnArticlePage({
         </div>
       ) : null}
 
-      {/* 6. Body: the explanation in plain words. */}
-      <section className="prose prose-stone max-w-none mb-12">
+      {/* 6. Body: the explanation in plain words. Always present (the body is
+          the article); never self-omits. */}
+      <section id="explanation" className="prose prose-stone max-w-none mb-12">
         {article.body.map((para, i) => (
           <p key={i} className="text-base md:text-lg text-ink-800 leading-relaxed mb-4">
             {para}
@@ -194,9 +246,9 @@ export default async function LearnArticlePage({
           figure (and what it measures) rides in the sub-line, so the economics
           are visible without leaving the page. */}
       {view.adjacent ? (
-        <section className="mb-10">
+        <section id="other-businesses" className="mb-10">
           <SameBusinessNearby
-            eyebrow="Other businesses worth a look"
+            eyebrow={sOther.label}
             heading="Adjacent trades, with the headline economics"
             rows={view.adjacent.map((a) => ({
               name: a.title,
@@ -208,14 +260,26 @@ export default async function LearnArticlePage({
             note="Each opens its own explainer. Read the typical revenue, then the margin, before the dollars."
           />
         </section>
-      ) : null}
+      ) : (
+        <div className="mb-10">
+          <SectionEmpty
+            id="other-businesses"
+            eyebrow={sOther.label}
+            heading={sOther.heading}
+            place={PLACE}
+          />
+        </div>
+      )}
 
       {/* 8. Atlas deep links: the live benchmarks. Each tag resolves to a REAL
           trade and a representative city, so a link never points at a slug that
           404s (the old hardcoded NY / London / Tokyo trio linked unmapped tags
           that did not resolve). */}
       {view.benchmarks ? (
-        <section className="mb-10 rounded-lg border border-parchment bg-white shadow-subtle px-5 py-5 md:px-7 md:py-6">
+        <section
+          id="benchmarks"
+          className="mb-10 rounded-lg border border-parchment bg-white shadow-subtle px-5 py-5 md:px-7 md:py-6"
+        >
           <div className="text-xs uppercase tracking-wide text-atlas-600 font-semibold mb-3">
             Show me the data
           </div>
@@ -234,7 +298,16 @@ export default async function LearnArticlePage({
             ))}
           </div>
         </section>
-      ) : null}
+      ) : (
+        <div className="mb-10">
+          <SectionEmpty
+            id="benchmarks"
+            eyebrow={sBenchmarks.label}
+            heading={sBenchmarks.heading}
+            place={PLACE}
+          />
+        </div>
+      )}
 
       {/* 9. Related KB */}
       {related.length > 0 && (
@@ -256,6 +329,12 @@ export default async function LearnArticlePage({
           </ul>
         </section>
       )}
-    </article>
+      </article>
+
+      {/* The sticky in-page jump nav (left rail from xl, a chip row below). It
+         lists every required section (all are present now); the component drops
+         any anchor missing on mount, so it never dead-links. */}
+      <StickySectionNav sections={nav} />
+    </div>
   );
 }
