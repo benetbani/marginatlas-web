@@ -334,6 +334,15 @@ export interface ActivityPlaceRow {
   takeHome: number | null;
   /** Net margin, percent (0..100), or null. */
   netMarginPct: number | null;
+  /**
+   * Which like-for-like cohort the place belongs to. US states share one
+   * country, one currency, and broadly one price level, so ranking them by
+   * take-home is honest. Countries do not: a raw-USD figure is not adjusted for
+   * local prices, so the page lists them side by side as facts rather than
+   * crowning a cross-border winner. The page keeps the two cohorts apart and
+   * never prints a single global 1..N rank that mixes them.
+   */
+  cohort: "us-state" | "country";
 }
 
 /**
@@ -353,6 +362,8 @@ export interface ActivityPlaceInput {
   takeHome: number | null;
   /** Net margin, percent (0..100). */
   netMarginPct: number | null;
+  /** Like-for-like cohort (see ActivityPlaceRow.cohort). */
+  cohort: "us-state" | "country";
 }
 
 /** The defensible cross-place summary the activity page renders. */
@@ -468,6 +479,7 @@ export function summarizeActivityPlaces(
       // Net margin (percent) through the shared clamp so a table row can never
       // surface an implausible margin either.
       netMarginPct: isNum(p.netMarginPct) ? clampNetMarginPct(p.netMarginPct) : null,
+      cohort: p.cohort,
     }))
     .sort((a, b) => (b.takeHome ?? -Infinity) - (a.takeHome ?? -Infinity));
 

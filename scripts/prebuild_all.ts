@@ -69,6 +69,7 @@ const GATES: Gate[] = [
   { name: "au-anchor-render", script: "scripts/verify_au_primary_anchor_render.ts" },
   { name: "layering", script: "scripts/verify_layering.ts" },
   { name: "section-order", script: "scripts/verify_section_order.ts" },
+  { name: "cross-geography-guard", script: "scripts/verify_cross_geography_guard.ts" },
 ];
 
 /** CLI arg parsing. */

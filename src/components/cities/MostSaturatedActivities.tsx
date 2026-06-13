@@ -77,11 +77,13 @@ export function MostSaturatedActivities({
         Saturation, per 1,000 people
       </div>
       <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mb-2">
-        Crowded fields in {countryName}
+        Which fields tend to get crowded
       </h2>
       <p className="text-sm md:text-base text-cocoa-700/80 mb-6 max-w-2xl">
-        Firms per 1,000 inhabitants, ranked. The top of this list is
-        what you compete against in volume; the bottom is thinner ground.
+        Firms per 1,000 inhabitants, a representative pattern for a
+        developed economy rather than a live count for {countryName}. The
+        top of this list is what you compete against in volume; the bottom
+        is thinner ground.
       </p>
       <div className="atlas-card px-4 py-3 md:px-5 md:py-4">
         <div className="flex items-baseline justify-between mb-2">

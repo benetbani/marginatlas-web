@@ -130,10 +130,13 @@ export function TopProfitableActivities({
         What earns and what bleeds
       </h2>
       <p className="text-sm md:text-base text-cocoa-700/80 mb-6 max-w-2xl">
-        Net profit margin by activity. Sole-practitioner activities
-        (consulting, freelance work, solo training) are excluded so
-        the ranking reflects businesses with real overhead. Activities
-        without a measured margin are not shown.
+        Net profit margin by activity. These are structural margins that
+        hold across places, so this ranking is about which activities tend
+        to run fat or thin anywhere, the local market changes the dollars an
+        owner keeps, not the order. Sole-practitioner activities (consulting,
+        freelance work, solo training) are excluded so the ranking reflects
+        businesses with real overhead. Activities without a measured margin
+        are not shown.
       </p>
       <div className="grid md:grid-cols-2 gap-6">
         <RankedList

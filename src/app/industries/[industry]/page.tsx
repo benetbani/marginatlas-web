@@ -165,9 +165,16 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
   // defensively (never a sub-3% net reaches the page), exactly as the cell page
   // does. Rows without a usable revenue are dropped; the board ranks and trims
   // whatever remains.
-  const placeInputs: ActivityPlaceInput[] = [...acrossStates, ...acrossCountries]
-    .map((c) => activityPlaceFromCell(c, ind.id))
-    .filter((p): p is ActivityPlaceInput => p !== null);
+  // Tag each place with its like-for-like cohort at the source: the
+  // across-states slate is US states (one country, one currency, comparable
+  // prices), the across-countries slate is foreign countries (raw USD, not
+  // price-adjusted). The "where it works" table below keeps the two apart and
+  // never prints a single global rank that mixes them, which is what let a
+  // poorer country appear to out-earn a richer one.
+  const placeInputs: ActivityPlaceInput[] = [
+    ...acrossStates.map((c) => activityPlaceFromCell(c, ind.id, "us-state")),
+    ...acrossCountries.map((c) => activityPlaceFromCell(c, ind.id, "country")),
+  ].filter((p): p is ActivityPlaceInput => p !== null);
 
   // Defensible cross-place summary: trimmed revenue + take-home bands and the
   // ranked rows for the table. Thin slates yield all-null bands (dashes) and a
@@ -189,8 +196,23 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
     takeHome: placesSummary.takeHome,
     survival: getActivitySurvivalArchetype(activitySlug),
   });
-  // Cap the table so it stays scannable; the board already carries the spread.
-  const placeRows = placesSummary.rows.slice(0, 12);
+  // Split the ranked rows into like-for-like cohorts, capped so each stays
+  // scannable. US states keep the take-home ranking: one country, one currency,
+  // broadly comparable prices. Countries are listed in name order as
+  // price-unadjusted facts, never ranked by raw USD, because a larger dollar
+  // figure across borders does not mean a better business (the founder's
+  // "a poorer country out-earns a richer one" failure). The board already
+  // carries the cross-place spread, so these tables are about which places to
+  // open next, not a single global league table.
+  const stateRows = placesSummary.rows
+    .filter((r) => r.cohort === "us-state")
+    .slice(0, 12);
+  const countryRows = placesSummary.rows
+    .filter((r) => r.cohort === "country")
+    .slice()
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .slice(0, 12);
+  const hasPlaceCohorts = stateRows.length >= 2 || countryRows.length >= 2;
 
   // Split the board for the reframed layout (founder feedback, 2026-06-06). The
   // economics section ("numbers") keeps its full DataSection treatment (the
@@ -358,49 +380,98 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
          tails are dropped upstream, so a corrupt place can never headline. The
          whole block omits cleanly when the slate is thin (fewer than two
          places), never showing an invented ranking. No count-of-things copy. */}
-      {placeRows.length >= 2 && (
+      {hasPlaceCohorts && (
         // SaaS reformation 2026-06-12: seated card sections on the app
-        // ground, matching the board language site-wide.
+        // ground, matching the board language site-wide. Data-sanity 2026-06-13:
+        // split into like-for-like cohorts so we never rank a US state's USD
+        // figure against a foreign country's across price regimes.
         <section className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
           <SectionEyebrow>Where it works</SectionEyebrow>
           <h2 className="mt-1 font-display text-xl md:text-2xl font-medium tracking-tight text-balance text-ink-900">
-            Where {ind.name.toLowerCase()} keep the most
+            Where {ind.name.toLowerCase()} earn more, and where less
           </h2>
           <p className="mt-1.5 mb-5 max-w-2xl text-sm md:text-base leading-relaxed text-cocoa-700/80">
-            The places we cover for {ind.name.toLowerCase()}, ranked by what a
-            typical owner keeps after tax. Best at the top. Open any row for the
-            full revenue, cost stack, and survival read. Modeled from local
-            business demography. Directional.
+            The places we cover for {ind.name.toLowerCase()}. US states sit on
+            one currency and one tax system, so we rank them by what a typical
+            owner keeps. Countries we list side by side, not ranked, because a
+            raw dollar figure is not adjusted for local prices. Open any row for
+            the full revenue, cost stack, and survival read. Modeled and
+            directional.
           </p>
-          <ul className="divide-y divide-parchment border-y border-parchment">
-            {placeRows.map((p, i) => (
-              <li key={`${p.href}-${i}`}>
-                <Link
-                  href={p.href}
-                  className="group flex items-baseline justify-between gap-3 py-2.5 transition-colors"
-                >
-                  <span className="flex min-w-0 items-baseline gap-2.5">
-                    <span className="w-5 shrink-0 text-[11px] tabular-nums text-cocoa-500">
-                      {i + 1}
-                    </span>
-                    <span className="truncate text-sm font-medium text-ink-900 transition-colors group-hover:text-atlas-700">
-                      {p.name}
-                    </span>
-                  </span>
-                  <span className="flex shrink-0 items-baseline gap-3">
-                    {p.netMarginPct != null && (
-                      <span className="hidden text-[11px] tabular-nums text-cocoa-500 sm:inline">
-                        {fmtPct(p.netMarginPct)} net
+
+          {stateRows.length >= 2 && (
+            <div>
+              <SectionEyebrow size="md">Across US states</SectionEyebrow>
+              <p className="mt-1 mb-2 text-[11px] leading-relaxed text-cocoa-500">
+                Ranked by modeled after-tax owner take-home. Best at the top.
+              </p>
+              <ul className="divide-y divide-parchment border-y border-parchment">
+                {stateRows.map((p, i) => (
+                  <li key={`${p.href}-${i}`}>
+                    <Link
+                      href={p.href}
+                      className="group flex items-baseline justify-between gap-3 py-2.5 transition-colors"
+                    >
+                      <span className="flex min-w-0 items-baseline gap-2.5">
+                        <span className="w-5 shrink-0 text-[11px] tabular-nums text-cocoa-500">
+                          {i + 1}
+                        </span>
+                        <span className="truncate text-sm font-medium text-ink-900 transition-colors group-hover:text-atlas-700">
+                          {p.name}
+                        </span>
                       </span>
-                    )}
-                    <span className="font-display text-base font-semibold tabular-nums text-ink-900">
-                      <TakeHomeValue takeHome={p.takeHome} cellHref={p.href} />
-                    </span>
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+                      <span className="flex shrink-0 items-baseline gap-3">
+                        {p.netMarginPct != null && (
+                          <span className="hidden text-[11px] tabular-nums text-cocoa-500 sm:inline">
+                            {fmtPct(p.netMarginPct)} net
+                          </span>
+                        )}
+                        <span className="font-display text-base font-semibold tabular-nums text-ink-900">
+                          <TakeHomeValue takeHome={p.takeHome} cellHref={p.href} />
+                        </span>
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {countryRows.length >= 2 && (
+            <div className={stateRows.length >= 2 ? "mt-7" : ""}>
+              <SectionEyebrow size="md">Across countries we cover</SectionEyebrow>
+              <p className="mt-1 mb-2 text-[11px] leading-relaxed text-cocoa-500">
+                In name order, not ranked. Net margin is comparable across
+                borders, take-home is in US dollars and not adjusted for local
+                prices, so read each on its own.
+              </p>
+              <ul className="divide-y divide-parchment border-y border-parchment">
+                {countryRows.map((p, i) => (
+                  <li key={`${p.href}-${i}`}>
+                    <Link
+                      href={p.href}
+                      className="group flex items-baseline justify-between gap-3 py-2.5 transition-colors"
+                    >
+                      <span className="truncate text-sm font-medium text-ink-900 transition-colors group-hover:text-atlas-700">
+                        {p.name}
+                      </span>
+                      <span className="flex shrink-0 items-baseline gap-3">
+                        {p.netMarginPct != null && (
+                          <span className="text-[11px] tabular-nums text-cocoa-500">
+                            {fmtPct(p.netMarginPct)} net
+                          </span>
+                        )}
+                        <span className="font-display text-base font-medium tabular-nums text-cocoa-700/80">
+                          <TakeHomeValue takeHome={p.takeHome} cellHref={p.href} />
+                        </span>
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           <p className="mt-3 text-[11px] text-cocoa-500">
             Owner take-home is after tax, for a typical single-site operator. The
             same activity reads differently once local rent, wages, and tax land
@@ -573,7 +644,11 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
  * points at that place's cell page for this activity via the shared cellUrl
  * shape, so every row resolves to a real benchmark.
  */
-function activityPlaceFromCell(cell: Cell, industryId: string | null): ActivityPlaceInput | null {
+function activityPlaceFromCell(
+  cell: Cell,
+  industryId: string | null,
+  cohort: "us-state" | "country",
+): ActivityPlaceInput | null {
   const typicalRevenue = cell.revenue_per_firm ?? cell.rev_p50 ?? null;
   if (typicalRevenue == null || !(typicalRevenue > 0)) return null;
 
@@ -600,5 +675,6 @@ function activityPlaceFromCell(cell: Cell, industryId: string | null): ActivityP
     typicalRevenue,
     takeHome: takeHome != null && takeHome > 0 ? takeHome : null,
     netMarginPct,
+    cohort,
   };
 }

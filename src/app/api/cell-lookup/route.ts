@@ -29,6 +29,7 @@ import {
   estimateEmployeesFromFirms,
 } from "@/lib/extrapolations/fill_missing";
 import { getLondonEntry } from "@/lib/scores/cell_board";
+import { isTrustedLocalCell } from "@/lib/cells/trust";
 import { isGatingEnabled } from "@/lib/feature_flags";
 
 // Cache for 1 day on Vercel's edge cache
@@ -136,6 +137,18 @@ export async function GET(req: NextRequest) {
   const londonEntry = getLondonEntry(cell);
   const LE = londonEntry?.economics ?? null;
 
+  // -- Trust gate. A country-level / extrapolated (tier "X") / synthetic read is
+  // not a local measurement we can stand behind: returning its modeled revenue
+  // and take-home under a place title is what let an extrapolated read claim a
+  // poorer country out-earns a richer one. So we resolve trust once here and
+  // dash every absolute-money field (revenue, the spread, take-home, wage) when
+  // the cell is not trusted. Curated London (modeled economics present, or a
+  // tier-P lad measurement) is trusted, so its filled exemplar is unaffected.
+  // Counts and ratios (density, employees, margin, cost shares) keep their
+  // existing per-field guards.
+  const moneyTrusted =
+    LE != null || isTrustedLocalCell(cell, cell.industry_id || undefined);
+
   // -- A. Typical revenue + spread. On a London cell prefer the modeled
   // London revenue and derive its p10/p90 the same way the board does.
   const typicalRevenue = LE
@@ -237,22 +250,22 @@ export async function GET(req: NextRequest) {
     region: cell.geo_name,
     industry: cell.industry_name || industryId,
     year: cell.year,
-    revenue_per_firm: typicalRevenue,
-    rev_p10: revP10,
-    rev_p25: cell.rev_p25 ?? null,
-    rev_p50: cell.rev_p50 ?? null,
-    rev_p75: cell.rev_p75 ?? null,
-    rev_p90: revP90,
+    revenue_per_firm: moneyTrusted ? typicalRevenue : null,
+    rev_p10: moneyTrusted ? revP10 : null,
+    rev_p25: moneyTrusted ? cell.rev_p25 ?? null : null,
+    rev_p50: moneyTrusted ? cell.rev_p50 ?? null : null,
+    rev_p75: moneyTrusted ? cell.rev_p75 ?? null : null,
+    rev_p90: moneyTrusted ? revP90 : null,
     net_margin: netMargin,
     // Paywall gate (Milestone 2, dormant): the Compare grid is fed by this
     // edge-cached PUBLIC response, so per-user gating is impossible here. When
     // the gate is on we redact the figure for everyone; an entitled viewer's
     // browser re-fetches the real number per cell from the authed reveal API.
-    owner_take_home: isGatingEnabled() ? null : ownerTakeHome,
+    owner_take_home: isGatingEnabled() || !moneyTrusted ? null : ownerTakeHome,
     n_enterprises: competitors,
     density_per_10k: density,
     n_employees: employees ?? null,
-    payroll_per_employee: wagePerEmployee ?? null,
+    payroll_per_employee: moneyTrusted ? wagePerEmployee ?? null : null,
     pricing_power: L ? textOrNull(L.pricing_power) : null,
     rent_pressure: L ? textOrNull(L.rent_pressure) : null,
     rent_share_pct: rentSharePct,

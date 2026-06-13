@@ -378,12 +378,26 @@ export function CompareClient() {
   const anyData = activeCols.length > 0;
   const anyLoading = slots.some((_, i) => loading[i]);
 
+  // Whether the active columns span more than one country. Raw USD figures are
+  // not adjusted for local prices or cost of living, so calling one country the
+  // "winner" on a larger number is the exact nonsense the founder flagged (a
+  // poorer country appearing to out-earn a richer one). When columns span
+  // countries we drop every leader mark and the biggest-difference callout, and
+  // show a caveat instead. Within one country (US states, say) the marks stay.
+  const spansCountries = useMemo(() => {
+    const codes = new Set(
+      activeCols.map((i) => slots[i]?.country).filter(Boolean),
+    );
+    return codes.size > 1;
+  }, [activeCols, slots]);
+
   // Per-row strongest value across the active columns, used to mark the leader.
   // Only meaningful when at least two columns carry the figure and the leader
-  // is not tied with the trailer.
+  // is not tied with the trailer. Suppressed entirely across countries.
   function rowLeader(
     row: MetricRow,
   ): { best: number | null; worst: number | null } {
+    if (spansCountries) return { best: null, worst: null };
     if (!row.numeric) return { best: null, worst: null };
     const vals = activeCols
       .map((i) => row.numeric!(cells[i] as CompactCell))
@@ -399,6 +413,9 @@ export function CompareClient() {
   // is effectively flat.
   const differentiator = useMemo(() => {
     if (activeCols.length < 2) return null;
+    // No single "biggest difference" across price regimes: a raw-USD swing
+    // between countries is not a like-for-like read. The caveat box stands in.
+    if (spansCountries) return null;
 
     type Candidate = {
       label: string;
@@ -439,7 +456,7 @@ export function CompareClient() {
       }
     }
     return best;
-  }, [activeCols, cells]);
+  }, [activeCols, cells, spansCountries]);
 
   return (
     <div className="space-y-12 md:space-y-16">
@@ -552,7 +569,8 @@ export function CompareClient() {
           </button>
         </div>
 
-        {/* The biggest difference, computed from the loaded figures. */}
+        {/* The biggest difference, computed from the loaded figures. Within one
+            country only: across countries the caveat below stands in. */}
         {differentiator ? (
           <div className="mt-6 rounded-lg border border-atlas-200 bg-atlas-50/60 p-4">
             <SectionEyebrow size="md" className="mb-1.5">
@@ -568,6 +586,19 @@ export function CompareClient() {
                 {differentiator.loVal}
               </span>{" "}
               in {slotLabel(differentiator.loIdx)}.
+            </p>
+          </div>
+        ) : spansCountries && anyData ? (
+          <div className="mt-6 rounded-lg border border-cocoa-200 bg-cream-100 p-4">
+            <SectionEyebrow size="md" className="mb-1.5">
+              Reading across countries
+            </SectionEyebrow>
+            <p className="text-base leading-relaxed text-ink-900">
+              These columns sit in different countries. Money is shown in US
+              dollars and is not adjusted for local prices or cost of living, so
+              a bigger number does not mean a better business. Read the shape,
+              margins, survival, and the revenue spread, rather than the raw
+              totals, and we do not crown a winner here.
             </p>
           </div>
         ) : null}
@@ -610,6 +641,7 @@ export function CompareClient() {
                       activeCols={activeCols}
                       cells={cells}
                       rowLeader={rowLeader}
+                      spansCountries={spansCountries}
                     />
                     {/* The revenue spread belongs to the numbers group: one
                         SpreadBar per city, so how wide the headline runs is
@@ -639,17 +671,28 @@ function GroupBlock({
   activeCols,
   cells,
   rowLeader,
+  spansCountries,
 }: {
   group: MetricGroup;
   activeCols: number[];
   cells: Record<number, CompactCell | null>;
   rowLeader: (row: MetricRow) => { best: number | null; worst: number | null };
+  spansCountries: boolean;
 }) {
+  // The money group carries an inline reminder when columns span countries, so
+  // the "USD, not price-adjusted" caveat sits right beside the figures it
+  // qualifies, not only in the box above the grid.
+  const moneyCaveat = spansCountries && group.key === "numbers";
   return (
     <>
       <tr>
         <td colSpan={activeCols.length + 1} className="pb-1 pt-5">
           <SectionEyebrow size="md">{group.title}</SectionEyebrow>
+          {moneyCaveat ? (
+            <span className="mt-0.5 block text-[11px] font-normal normal-case tracking-normal text-cocoa-500">
+              USD, not adjusted for local prices.
+            </span>
+          ) : null}
         </td>
       </tr>
       {group.rows.map((row) => {

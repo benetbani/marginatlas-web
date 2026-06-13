@@ -188,7 +188,7 @@ export default async function ComparisonPage({
             { label: "Metro population", aVal: `${a.pop_m.toFixed(1)}M`, bVal: `${b.pop_m.toFixed(1)}M` },
             { label: "Metro GDP", aVal: `$${a.gdp_b.toFixed(0)}B`, bVal: `$${b.gdp_b.toFixed(0)}B` },
             { label: "GDP per resident", aVal: fmt(aGdpPc), bVal: fmt(bGdpPc) },
-            { label: "Median wage", aVal: fmt(aCb.payroll_per_employee_usd), bVal: fmt(bCb.payroll_per_employee_usd) },
+            { label: "Typical pay, modeled", aVal: fmt(aCb.payroll_per_employee_usd), bVal: fmt(bCb.payroll_per_employee_usd) },
             { label: "Cost tier vs global", aVal: `${aCb.revenue_multiplier.toFixed(2)}x`, bVal: `${bCb.revenue_multiplier.toFixed(2)}x` },
             { label: "Wealth z-score", aVal: `${a.wealth_z >= 0 ? "+" : ""}${a.wealth_z.toFixed(1)}`, bVal: `${b.wealth_z >= 0 ? "+" : ""}${b.wealth_z.toFixed(1)}` },
           ].map((row) => (
@@ -209,11 +209,14 @@ export default async function ComparisonPage({
         {/* Industry side-by-side bars */}
         <section className="mb-12">
           <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mb-2">
-            Ten industries, side by side
+            Ten activities, side by side
           </h2>
           <p className="text-sm text-cocoa-700/80 mb-6 max-w-2xl">
-            Median revenue per firm. Bars share a scale so the relative
-            size between cities is readable.
+            A modeled revenue estimate per firm, scaled from each country&apos;s
+            cost level and each city&apos;s wealth, not a direct measurement.
+            Figures are in US dollars and are not adjusted for local prices, so
+            read the pattern across activities rather than the exact totals or a
+            head-to-head winner.
           </p>
           <div className="space-y-2">
             {industryEstimates.map((ind) => {
