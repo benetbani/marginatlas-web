@@ -1,6 +1,26 @@
 # Fable pipeline state
 
-phase: P1
+phase: P1 (+ a 2026-06-13 polish round folding forward P1-05/06/07 assets)
+
+round 2026-06-13 (founder preview review, one big batch, one preview at end). DONE:
+  - Display face = FRAUNCES (founder-delegated; Literata fallback). Live site-wide.
+  - IA: one plain score scale (band_labels.ts: Easy/Doable/Hard/Very hard; Excellent/Good/
+    Fair/Hard); insider peer labels removed; commercial streets MERGED into the neighborhood
+    model (showStreets gate + streets fold onto neighborhood cards).
+  - Assets deployed: industry_pictogram crosswalk -> pictograms on /industries + city/hood
+    trade rows; AtlasIcon on board section headers; AtlasSpot (12 spots ported + retoned)
+    on the audience band + the what-kills-weak-operators beat; NeighborhoodCover (honest
+    gradient + street-grid placeholder image) on city cards + hood hero; survey-grid motif
+    on the /countries header.
+  - Polish: BarList rank-gradient on the across-states bars; city sections onto seated cards;
+    /countries redesigned (header stats + continent cards); DimensionSwitcher gains a working
+    Type (sub-niche) select + warm restyle (the SubIndustryPicker stub retired).
+  - Plan: ~/.claude/plans/linked-seeking-goblet.md. Review: _pipeline/2026-06-13-polish-round-review.md.
+  - Local gates green (em-dash, hex, layering, agencies, typography, section-order) + tsc clean;
+    one Vercel preview at end. Production still held.
+  - STILL OPEN: masthead motifs (deprioritized), full P2 contracts/Sonnet, long-tail pictogram
+    crosswalk widening.
+
 mode: autonomous run 2026-06-12 (founder away; explicit permission to overhaul page-type
   visual outlines completely; direction: more SaaS product surface, less newspaper; warm
   Atlas palette unchanged; everything lands on the branch + previews, production untouched
