@@ -519,15 +519,14 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
             </div>
           ) : null}
 
-          {/* 6. Where it earns most. The like-for-like cohort tables, KEPT
-             EXACTLY from the WS1 data-sanity edit: US states ranked by what a
-             typical owner keeps (one currency, one tax system), countries listed
-             side by side in name order (a raw dollar figure is not adjusted for
-             local prices). Never a single global rank that mixes them. Built from
-             the cross-place slate, garbage tails dropped upstream, so a corrupt
-             place can never headline. Omits cleanly when the slate is thin. The
-             id lives on a div wrapper; the inner block keeps its seated-card
-             grammar. */}
+          {/* 6. Where it earns most. The trusted US-state cohort only (one
+             currency, one tax system), ordered by what a typical owner keeps.
+             The extrapolated country cohort was retired: its per-firm revenue is
+             not reliable enough to order or to headline, and country money is
+             read on each country page. Garbage tails are dropped upstream, so a
+             corrupt place can never headline; the block omits cleanly when the
+             slate is thin. The id lives on a div wrapper; the inner block keeps
+             its seated-card grammar. */}
           {hasPlaceCohorts && (
             <div
               id="where-it-earns"
