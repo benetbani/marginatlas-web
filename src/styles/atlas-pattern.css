@@ -130,3 +130,14 @@
   background-repeat: repeat;
   background-size: 160px 160px;
 }
+
+/* .atlas-masthead-motif — the faint survey-grid thread behind a masthead band.
+   Image ONLY (no background-color) so it overlays a tinted band rather than
+   painting over it. The signature cartographic whisper in the margins; pair
+   with a low opacity and a fade mask at the call site. Replaces components
+   inlining url("/atlas-grid.svg") directly. */
+.atlas-masthead-motif {
+  background-image: url("/atlas-grid.svg");
+  background-repeat: repeat;
+  background-size: 44px 44px;
+}
