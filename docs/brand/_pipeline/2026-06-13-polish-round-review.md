@@ -22,6 +22,12 @@
 | Site feels blank | Icons + pictograms + spots + covers + motifs deployed across the surfaces above |
 | Only "All sizes"; can't pick size or type | The size bands always existed (4 for CA restaurants, it was the collapsed default). Added a working **Type** select (restaurants -> pizzeria, food truck, cafe, ...), each a real cell URL; switcher restyled warm |
 
+## The preview (full round, all 29 gates + tsc green)
+
+    https://marginatlas-web-twtl-jdwesexlf-benets-projects-3110e8e1.vercel.app
+
+(open logged into Vercel, or with the protection-bypass header). All key routes smoke-checked 200.
+
 ## What to try
 - `/cities/london` (neighborhood covers, the streets/hoods merge, plain score words, no peer labels)
 - `/us/california/restaurants` (the Type + size switcher, section icons, gradient across-states bars, the reality-check spot)
