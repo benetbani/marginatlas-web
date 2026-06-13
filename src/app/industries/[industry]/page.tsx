@@ -117,7 +117,13 @@ export async function generateStaticParams(): Promise<Params[]> {
 export async function generateMetadata({ params }: { params: Promise<Params> }) {
   const { industry } = await params;
   const raw = slugToIndustry(industry);
-  const ind = resolveToMeasuredIndustry(raw) || raw;
+  // Same guard as the page body: prefer the requested trade when it has its own
+  // measured margin row, so the title matches the page (hair-salons must not
+  // resolve to cleaning-services).
+  const ind =
+    raw && INDUSTRY_MARGINS.industries[raw.id]
+      ? raw
+      : resolveToMeasuredIndustry(raw) || raw;
   if (!ind) return { title: "Activity not found | Margin Atlas" };
   return {
     title: `${ind.name}: small-business benchmarks | Margin Atlas`,
@@ -129,7 +135,15 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
 export default async function IndustryPage({ params }: { params: Promise<Params> }) {
   const { industry } = await params;
   const raw = slugToIndustry(industry);
-  const ind = resolveToMeasuredIndustry(raw) || raw;
+  // Prefer the requested trade when it carries its OWN measured margin row;
+  // only fall back to a measured parent when the requested trade has no data of
+  // its own. This stops the parent-fallback map mis-resolving a trade that we
+  // actually measure (e.g. hair-salons was resolving to cleaning-services and
+  // rendering an entire cleaning page, even though hair-salon margins exist).
+  const ind =
+    raw && INDUSTRY_MARGINS.industries[raw.id]
+      ? raw
+      : resolveToMeasuredIndustry(raw) || raw;
   if (!ind) notFound();
 
   const sector = ind ? SECTOR_BY_ID[ind.sector_id] : null;
@@ -196,28 +210,17 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
   const bandSummary = summarizeActivityPlaces(
     placeInputs.filter((p) => p.cohort === "us-state"),
   );
-  const countrySummary = summarizeActivityPlaces(
-    placeInputs.filter((p) => p.cohort === "country"),
-  );
 
   // The representative survival archetype for the activity (the same curated
   // directional read the cell and city boards use). All-null when none is held.
   const survival = getActivitySurvivalArchetype(activitySlug);
 
-  // Split the ranked rows into like-for-like cohorts, capped so each stays
-  // scannable. US states keep the take-home ranking: one country, one currency,
-  // broadly comparable prices. Countries are listed in name order as
-  // price-unadjusted facts, never ranked by raw USD, because a larger dollar
-  // figure across borders does not mean a better business (the founder's
-  // "a poorer country out-earns a richer one" failure). The board already
-  // carries the cross-place spread, so these tables are about which places to
-  // open next, not a single global league table.
+  // "Where it earns most" ranks the US-state cohort only: one currency, one tax
+  // system, Census-backed, so a take-home ranking is honest. The extrapolated
+  // country cohort was retired from this table (its per-firm revenue is not
+  // trustworthy enough to rank, and country money belongs on each country page).
   const stateRows = bandSummary.rows.slice(0, 12);
-  const countryRows = countrySummary.rows
-    .slice()
-    .sort((a, b) => a.name.localeCompare(b.name))
-    .slice(0, 12);
-  const hasPlaceCohorts = stateRows.length >= 2 || countryRows.length >= 2;
+  const hasPlaceCohorts = stateRows.length >= 2;
 
   // Reformation decision layer (bible Sections 4, 5, 25). Pure compute, no
   // queries: the opinionated business-model read and the cost-stage anatomy
@@ -535,12 +538,12 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
                 Where {ind.name.toLowerCase()} earn more, and where less
               </h2>
               <p className="mt-1.5 mb-5 max-w-2xl text-sm md:text-base leading-relaxed text-cocoa-700/80">
-                The places we cover for {ind.name.toLowerCase()}. US states sit on
-                one currency and one tax system, so we rank them by what a typical
-                owner keeps. Countries we list side by side, not ranked, because a
-                raw dollar figure is not adjusted for local prices. Open any row
-                for the full revenue, cost stack, and survival read. Modeled and
-                directional.
+                Across US states, which sit on one currency and one tax system, so
+                a like-for-like ranking by what a typical owner keeps is honest.
+                Open any row for the full revenue, cost stack, and survival read.
+                For other countries, open that country&apos;s page, a raw dollar
+                figure is not adjusted for local prices, so we do not rank trades
+                across borders here. Modeled and directional.
               </p>
 
               {stateRows.length >= 2 && (
@@ -581,40 +584,12 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
                 </div>
               )}
 
-              {countryRows.length >= 2 && (
-                <div className={stateRows.length >= 2 ? "mt-7" : ""}>
-                  <SectionEyebrow size="md">Across countries we cover</SectionEyebrow>
-                  <p className="mt-1 mb-2 text-[11px] leading-relaxed text-cocoa-500">
-                    In name order, not ranked. Net margin is comparable across
-                    borders, take-home is in US dollars and not adjusted for local
-                    prices, so read each on its own.
-                  </p>
-                  <ul className="divide-y divide-parchment border-y border-parchment">
-                    {countryRows.map((p, i) => (
-                      <li key={`${p.href}-${i}`}>
-                        <Link
-                          href={p.href}
-                          className="group flex items-baseline justify-between gap-3 py-2.5 transition-colors"
-                        >
-                          <span className="truncate text-sm font-medium text-ink-900 transition-colors group-hover:text-atlas-700">
-                            {p.name}
-                          </span>
-                          <span className="flex shrink-0 items-baseline gap-3">
-                            {p.netMarginPct != null && (
-                              <span className="text-[11px] tabular-nums text-cocoa-500">
-                                {fmtPct(p.netMarginPct)} net
-                              </span>
-                            )}
-                            <span className="font-display text-base font-medium tabular-nums text-cocoa-700/80">
-                              <TakeHomeValue takeHome={p.takeHome} cellHref={p.href} />
-                            </span>
-                          </span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+              {/* The "Across countries we cover" cohort was retired: it was fed
+                 by extrapolated country cells whose per-firm revenue is not
+                 trustworthy (duplicate country rows, statistical aggregates
+                 listed as countries, and take-homes implying ~$5M-revenue
+                 restaurants). Per the data-sanity rule, country money is read
+                 on each country's own page, not ranked here. */}
 
               <p className="mt-3 text-[11px] text-cocoa-500">
                 Owner take-home is after tax, for a typical single-site operator.

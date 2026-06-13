@@ -300,7 +300,7 @@ export function CitySignaturePanel({
         Signature
       </div>
       <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mb-2">
-        What makes {cityName}, {cityName}
+        What makes {cityName} distinct
       </h2>
       <p className="text-sm md:text-base text-cocoa-700/80 mb-8 max-w-2xl">
         {showInstitutions

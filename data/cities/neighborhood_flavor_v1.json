@@ -66,6 +66,36 @@
       }
     },
     "london": {
+      "city-of-london": {
+        "character_paragraph": "The Square Mile is the oldest part of London and the densest weekday economy in Europe: banks, insurers, and law firms stacked into medieval street lines. It empties at the weekend, when the residents (barely 8,000 of them) get the place to themselves.",
+        "signature_businesses": ["sandwich and coffee bars", "tailoring and shoe repair", "wine bars", "law and accounting practices", "corporate caterers"],
+        "food_scene": "A weekday lunch trade built for people in a hurry: high-volume coffee and lunch counters, a handful of expense-account restaurants, and pubs that have poured since the 1700s.",
+        "demographic_skew": "transient weekday workforce, very few residents, expense-account spend",
+        "walkability": "high",
+        "history_note": "The Romans founded Londinium here in 47 AD; the City still runs as its own jurisdiction with its own police force and a Lord Mayor.",
+        "price_tier": "luxury",
+        "dont_miss": "Trade lives and dies by the working week: a cafe here can take more before 10am on a Tuesday than all weekend."
+      },
+      "west-end": {
+        "character_paragraph": "Soho, Covent Garden, Mayfair, and Oxford Street: the theatre, retail, and tourist heart of London, busy from late morning until after the shows let out. Rents are among the highest in the world, and footfall is the thing you are really paying for.",
+        "signature_businesses": ["restaurants and bars", "theatre and entertainment", "luxury and flagship retail", "hotels", "media and creative studios"],
+        "food_scene": "Everything from pre-theatre set menus to late-night Soho institutions; the densest concentration of restaurants in the country, and the fiercest competition for a table.",
+        "demographic_skew": "heavy tourist, evening and weekend crowds, affluent shoppers",
+        "walkability": "high",
+        "history_note": "The West End grew as London's pleasure district from the 1600s; the theatres followed the aristocracy west out of the City.",
+        "price_tier": "luxury",
+        "dont_miss": "A site one street off the main drag can pay half the rent for most of the footfall, the difference between a thin year and a good one."
+      },
+      "south-bank": {
+        "character_paragraph": "The river's south side from the London Eye to Borough Market: a cultural and tourist strip that has filled in over thirty years with galleries, theatres, and food markets. Daytime and weekend footfall is heavy; the office crowd thins after dark.",
+        "signature_businesses": ["food markets and street food", "cafes and casual dining", "cultural venues", "independent retail", "riverside bars"],
+        "food_scene": "Borough Market anchors a serious food culture: artisan producers, street-food stalls, and a wave of independents that use the markets as a shop window.",
+        "demographic_skew": "tourist and culture crowd, weekend-heavy, mixed local professional",
+        "walkability": "high",
+        "history_note": "For centuries the south bank was where the things banned in the City happened, theatres, tanneries, and prisons; the culture mile is the modern echo.",
+        "price_tier": "expensive",
+        "dont_miss": "Footfall is weekend and weather-led here in a way the City is not, so a week's takings can swing hard on a sunny Saturday."
+      },
       "central-london": {
         "character_paragraph": "Central London is the City + Westminster: financial services, government, and the densest tourist circuit in Europe. The streets are medieval, the institutions are ancient, the businesses are global. The square mile of the City employs over 500,000 people most of whom don't live there.",
         "signature_businesses": ["banking", "law firms", "luxury hotels", "private clubs", "high-end restaurants"],

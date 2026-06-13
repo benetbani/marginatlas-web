@@ -113,8 +113,10 @@ mustContain(
 );
 mustContain(
   "src/app/industries/[industry]/page.tsx",
-  ["stateRows", "countryRows"],
-  "US states and foreign countries must rank in separate cohorts",
+  ["stateRows", "bandSummary"],
+  "the revenue band + 'where it earns most' must come from the trusted US-state " +
+    "cohort only; the extrapolated country cohort was retired (its per-firm " +
+    "revenue is not trustworthy enough to rank or to headline)",
 );
 
 // 5. The deleted dead footguns must stay deleted (they sorted raw cross-country

@@ -832,6 +832,14 @@ function GroupBlock({
   // the "USD, not price-adjusted" caveat sits right beside the figures it
   // qualifies, not only in the box above the grid.
   const moneyCaveat = spansCountries && group.key === "numbers";
+  // Self-omit empty rows and empty groups: a row every active column dashes is
+  // noise, and a whole group of them is the dash-wall the design forbids. Only
+  // rows where at least one column carries a value render; a group with none
+  // disappears entirely (header included).
+  const isRowPresent = (row: MetricRow) =>
+    activeCols.some((i) => row.value(cells[i] as CompactCell) !== MISSING);
+  const visibleRows = group.rows.filter(isRowPresent);
+  if (visibleRows.length === 0) return null;
   return (
     <>
       <tr>
@@ -844,7 +852,7 @@ function GroupBlock({
           ) : null}
         </td>
       </tr>
-      {group.rows.map((row) => {
+      {visibleRows.map((row) => {
         const { best, worst } = rowLeader(row);
         return (
           <tr key={row.label} className="border-b border-parchment/50">

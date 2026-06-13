@@ -25,9 +25,18 @@ type Props = {
 
 export function AcrossStatesStrip({ industryName, currentGeoName, cells }: Props) {
   if (cells.length === 0) return null;
-  // Drop rows we cannot rank — no revenue, no bar.
+  // Drop rows we cannot rank (no revenue) AND the national-aggregate row
+  // (geo_id "US-00", which has no friendly geo_name and would otherwise print
+  // the raw "US-00" engineering code in a list framed as state-vs-state) and
+  // any row missing a display name.
   const ranked = cells
-    .filter((c) => typeof c.revenue_per_firm === "number" && c.revenue_per_firm > 0)
+    .filter(
+      (c) =>
+        typeof c.revenue_per_firm === "number" &&
+        c.revenue_per_firm > 0 &&
+        (c.geo_id || "").toUpperCase() !== "US-00" &&
+        !!(c.geo_name && c.geo_name.trim()),
+    )
     .sort((a, b) => (b.revenue_per_firm || 0) - (a.revenue_per_firm || 0));
   if (ranked.length === 0) return null;
 

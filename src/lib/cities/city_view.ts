@@ -218,14 +218,21 @@ export function buildCityView(input: CityViewInput): CityView {
     },
     {
       label: "Annual visitors",
-      value: isNum(touristArrivalsM) ? `${touristArrivalsM.toFixed(0)}M` : null,
+      // Avoid flooring a sub-million city to a false "0M": show one decimal
+      // below a million, and self-omit a near-zero figure rather than claim a
+      // city has no visitors.
+      value: isNum(touristArrivalsM)
+        ? touristArrivalsM >= 1
+          ? `${Math.round(touristArrivalsM)}M`
+          : touristArrivalsM >= 0.05
+            ? `${touristArrivalsM.toFixed(1)}M`
+            : null
+        : null,
     },
   ];
-  // On a thin city the score is softened into the quiet row rather than the
-  // anchor, so it is still present but no longer shouts a confident /100.
-  if (cityScore && !richBoard) {
-    stats.unshift({ label: "Climate score", value: `${cityScore.score}/100` });
-  }
+  // On a thin city the score is softened into the quiet break-in CHIP
+  // (climateChip) only. The earlier duplicate "Climate score" stat row was
+  // removed: the same number was printing twice in one masthead.
 
   const masthead: CityViewMasthead = {
     eyebrow: countryName,

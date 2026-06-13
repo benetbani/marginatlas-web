@@ -270,12 +270,11 @@ export function buildCountryView(
   const answer = buildAnswer(input, isExemplar);
 
   const stats: CountryViewMasthead["stats"] = [
-    {
-      label: "Typical monthly pay",
-      value: isNum(snapshot.avgMonthlySalary)
-        ? usdCompact(snapshot.avgMonthlySalary)
-        : null,
-    },
+    // The "typical monthly pay" stat was removed from the masthead: the
+    // economics-snapshot salary is a GDP-share heuristic that is unreliable at
+    // both ends (it printed ~$16-22/month on thin-coverage countries and a
+    // London-weighted ~$5K/month on the UK that contradicted the hire box). The
+    // hiring read below carries pay where we can defend it.
     {
       label: "Time to register",
       value: isNum(snapshot.daysToStart) ? daysWord(snapshot.daysToStart) : null,
@@ -440,7 +439,7 @@ function buildDecisive(input: CountryViewInput): CountryView["decisive"] {
     salesTaxNote,
     downLink: topActivity
       ? {
-          label: `See what a typical ${topActivity.name.toLowerCase()} keeps after tax`,
+          label: `See what ${topActivity.name.toLowerCase()} typically keep after tax`,
           href: topActivity.href,
         }
       : null,
@@ -517,7 +516,13 @@ function buildHire(
     };
   }
 
-  const hasSalary = isNum(snapshot.avgMonthlySalary);
+  // Plausibility floor: the GDP-share salary heuristic produces visibly-wrong
+  // sub-$250/month "typical pay" on thin-coverage economies (it printed ~$16/mo
+  // for Uganda, ~$22/mo for Nepal). No formal-sector job pays that, so below the
+  // floor we self-omit the pay line rather than print a fabricated-low wage; the
+  // payroll on-cost line still renders where a real rate exists.
+  const hasSalary =
+    isNum(snapshot.avgMonthlySalary) && snapshot.avgMonthlySalary >= 250;
   const hasPayroll = isNum(payrollRate) && payrollRate > 0;
   if (!hasSalary && !hasPayroll) return null;
 

@@ -49,7 +49,6 @@ import {
   AnswerFirstMasthead,
   HonestTakeBox,
   RangeStrip,
-  MoneyGoesBreakdown,
   StickySectionNav,
   RealityCheck,
   ContrarianInsight,
@@ -379,26 +378,65 @@ export default async function CityPage({
                split reuses the per-100 stacked bar, read as "where your trade
                comes from" rather than money out. */}
             <div id="visitors">
-              {view.visitorSplit.items ? (
-                <MoneyGoesBreakdown
-                  items={view.visitorSplit.items}
-                  eyebrow="Tourist vs local"
-                  heading={view.visitorSplit.headline}
-                  lede={view.visitorSplit.body ?? undefined}
-                />
-              ) : (
-                <section className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
-                  <SectionEyebrow className="mb-1">Tourist vs local</SectionEyebrow>
-                  <p className="font-display text-xl font-medium leading-snug text-balance text-ink-900 md:text-2xl">
-                    {view.visitorSplit.headline}
+              <section className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
+                <SectionEyebrow className="mb-1">Tourist vs local</SectionEyebrow>
+                <h2 className="font-display text-xl font-medium tracking-tight text-balance text-ink-900 md:text-2xl">
+                  {view.visitorSplit.headline}
+                </h2>
+                {view.visitorSplit.body ? (
+                  <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-cocoa-700/80 md:text-base">
+                    {view.visitorSplit.body}
                   </p>
-                  {view.visitorSplit.body ? (
-                    <p className="mt-2.5 max-w-2xl text-sm leading-relaxed text-graphite md:text-base">
-                      {view.visitorSplit.body}
-                    </p>
-                  ) : null}
-                </section>
-              )}
+                ) : null}
+                {view.visitorSplit.items ? (
+                  (() => {
+                    // A footfall share (where the trade comes from), NOT money:
+                    // render as "n in 100", never dollar-prefixed.
+                    const items = view.visitorSplit.items.filter(
+                      (it) => typeof it.perHundred === "number" && (it.perHundred as number) >= 0,
+                    ) as Array<{ label: string; perHundred: number; kept?: boolean }>;
+                    const total = items.reduce((s, it) => s + it.perHundred, 0) || 100;
+                    return (
+                      <>
+                        <div
+                          className="mt-5 flex h-5 w-full overflow-hidden rounded-full border border-parchment"
+                          role="img"
+                          aria-label="Share of trade from residents versus visitors, out of 100."
+                        >
+                          {items.map((it, i) => (
+                            <div
+                              key={i}
+                              className={it.kept ? "bg-cocoa-300" : "bg-atlas-500"}
+                              style={{ width: `${(it.perHundred / total) * 100}%` }}
+                              title={`${it.label}: ${Math.round(it.perHundred)} in 100`}
+                            />
+                          ))}
+                        </div>
+                        <dl className="mt-4 divide-y divide-parchment border-y border-parchment">
+                          {items.map((it, i) => (
+                            <div key={i} className="flex items-baseline justify-between gap-4 py-2.5">
+                              <dt className="flex items-center gap-2 text-sm text-cocoa-700/90">
+                                <span
+                                  aria-hidden="true"
+                                  className={`h-2.5 w-2.5 rounded-sm ${it.kept ? "bg-cocoa-300" : "bg-atlas-500"}`}
+                                />
+                                {it.label}
+                              </dt>
+                              <dd className="shrink-0 font-display text-base font-semibold tabular-nums text-ink-900">
+                                {Math.round(it.perHundred)} in 100
+                              </dd>
+                            </div>
+                          ))}
+                        </dl>
+                        <p className="mt-3 text-[11px] text-cocoa-500">
+                          A rough share of where a typical street&apos;s trade comes
+                          from, by footfall, not a revenue figure.
+                        </p>
+                      </>
+                    );
+                  })()
+                ) : null}
+              </section>
             </div>
 
             {/* The break-in spread: one dot per everyday trade on a 0-100

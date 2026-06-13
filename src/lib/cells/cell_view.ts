@@ -130,7 +130,6 @@ export function buildCellView(input: CellViewInput): CellView {
     typicalOrdersDaily,
     employees,
     peers,
-    narrative,
     industrySlug,
   } = input;
 
@@ -189,7 +188,14 @@ export function buildCellView(input: CellViewInput): CellView {
     answer,
     anchor:
       moneyShown && isNum(typicalRevenue)
-        ? { label: "Typical revenue a year", value: typicalRevenue, format: "usd-full" }
+        ? {
+            label: "Typical revenue a year",
+            // Round to the nearest $1,000 so the big anchor never shows false
+            // precision (e.g. $502,948 reads as $503,000, matching its own
+            // "TYPICAL $503K" spread mark).
+            value: Math.round(typicalRevenue / 1000) * 1000,
+            format: "usd-full",
+          }
         : null,
     spread,
     stats,
@@ -207,11 +213,19 @@ export function buildCellView(input: CellViewInput): CellView {
   const moneyGoes = buildMoneyGoes(csForMoney, netMarginPct);
 
   /* -- plain terms ---------------------------------------------------- */
-  const plainTerms = buildPlainTerms(slug, typicalOrdersDaily, typicalRevenue, employees);
+  // Gated on moneyShown: the tangible units are derived from the typical
+  // revenue and the daily order count, both of which are modeled-and-suppressed
+  // on an untrusted cell. Surfacing them there would leak the very revenue the
+  // masthead deliberately dashed (and print absurd "1 cover a day" reads).
+  const plainTerms = moneyShown
+    ? buildPlainTerms(slug, typicalOrdersDaily, typicalRevenue, employees)
+    : null;
 
   /* -- break-even ----------------------------------------------------- */
+  // Same gate, plus a sane floor: a break-even of 1 a day is a modeled near-zero
+  // artefact, never a real operating figure.
   const breakEven =
-    isNum(breakevenOrdersDaily) && breakevenOrdersDaily > 0
+    moneyShown && isNum(breakevenOrdersDaily) && breakevenOrdersDaily >= 2
       ? {
           headline: `You cover your costs at about ${Math.round(
             breakevenOrdersDaily,
@@ -235,7 +249,7 @@ export function buildCellView(input: CellViewInput): CellView {
   const rightWrong = isLondon && L ? londonRightWrong(L) : null;
 
   /* -- gut check (generic, honest anywhere) -------------------------- */
-  const gutCheck = buildGutCheck(input, slug);
+  const gutCheck = buildGutCheck(input, slug, moneyShown);
 
   /* -- same business nearby (like-for-like peers) -------------------- */
   let nearby: CellView["nearby"] = null;
@@ -259,7 +273,11 @@ export function buildCellView(input: CellViewInput): CellView {
   return {
     masthead,
     honestTake,
-    narrative: isLondon ? null : narrative, // London leads with its own honest take
+    // The cached editorial prose is frozen text with baked-in numbers from an
+    // older data snapshot, so it contradicted the live masthead (e.g. $420K in
+    // the prose vs $503K in the anchor). The honest-take box and the sections
+    // are the data-driven read now; the stale prose is retired site-wide.
+    narrative: null,
     moneyGoes,
     plainTerms,
     breakEven,
@@ -435,13 +453,20 @@ function buildFirstYear(L: LondonEntry | null, isLondon: boolean): CellView["fir
   };
 }
 
-function buildGutCheck(input: CellViewInput, slug: string): string[] | null {
+function buildGutCheck(
+  input: CellViewInput,
+  slug: string,
+  moneyShown: boolean,
+): string[] | null {
   const { breakevenOrdersDaily } = input;
   const unit = dailyUnit(slug);
   const qs = [
     "Can you cover six months of rent and wages before the revenue arrives?",
   ];
-  if (isNum(breakevenOrdersDaily) && breakevenOrdersDaily > 0)
+  // The order-count question only when the figure is trusted and sane (a
+  // modeled "1 a day" on an untrusted cell would be absurd and leak the
+  // suppressed revenue).
+  if (moneyShown && isNum(breakevenOrdersDaily) && breakevenOrdersDaily >= 2)
     qs.push(`Are you confident of clearing ${Math.round(breakevenOrdersDaily)} ${unit} a day from the first season?`);
   qs.push("Would the numbers still work if takings came in a fifth under plan?");
   return qs.length >= 2 ? qs : null;
