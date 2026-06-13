@@ -3,27 +3,22 @@
  *
  * Route: /cities/[slug]
  *
- * Rebuilt on the board kit (2026-06-05) to match the cell page and the country
- * page. The heavy full-bleed hero with its overlaid stat table was replaced by
- * the quiet BoardHero plus the four-section city data board (Demand depth,
- * Location and rent, Market structure, Survival baseline), so the figures reach
- * above the fold in the same fixed scaffold the reader learns once and reads on
- * every page. A city has no single Atlas score, so the score strip is empty.
+ * Rebuilt on the Atlas Page Kit (WS5, 2026-06-13) to the content-map reading
+ * order for a city. The former data-board wall is replaced by an answer-first
+ * masthead carrying the city's single Business Climate Score, the honest take,
+ * then the founder's city sections in order: who the local customer is
+ * (spending power), what shop and office space costs, tourist money vs local
+ * money (always rendered), what an owner keeps across the everyday trades, the
+ * best areas to set up, the neighbourhoods, how the city is changing, and the
+ * rival + peer cities. London is the one fully-filled exemplar; every other city
+ * fills from its real figures and self-omits otherwise. A sticky section nav
+ * tracks the bands that actually render.
  *
- * Sections (server-rendered):
- *   1. BoardHero (plain city name, country eyebrow, empty score strip)
- *   2. City data board (buildCityBoard: demand / location / market / survival)
- *   3. Coverage indicator (quiet inline methodology line)
- *   4. CitySignaturePanel (demographics + signature sectors + commercial
- *      streets; culture + government scores are country-only and suppressed
- *      here via showInstitutions=false; null until the city is curated)
- *   5. Neighborhood mini-strip (only if the city has a scheme)
- *   6. Ranked activities table (buildCityActivities: easiest to break in
- *      first; every city resolves through the cell engine, self-omits if thin)
- *   7. Cities-like-this peer comparison (peers by economic similarity, each
- *      with its own headline city score, each linking to that peer's city page)
+ * The view model (src/lib/cities/city_view.ts) is pure and maps the figures the
+ * page already holds into kit props; the heavier wiring (the ranked activities,
+ * the neighbourhood grid, the signature panel, the peers) stays in the page.
  *
- * No client JS beyond the board's ShowMore toggle. revalidate: 12h.
+ * No client JS beyond the sticky nav. revalidate: 12h.
  */
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -33,40 +28,43 @@ import neighborhoodsJson from "../../../../data/cities/neighborhoods_v1.json";
 import { CountryFlag } from "@/components/CountryFlag";
 import { COUNTRIES } from "@/lib/taxonomy";
 import { CityPeers } from "@/components/cities/CityPeers";
-// TopProfitableActivities + MostSaturatedActivities dropped per
-// founder direction 2026-05-26. Replaced by CitySignaturePanel
-// (demographics + 3 signature sectors + culture spectrums +
-// government scores). NYC ships first; other cities show null
-// until their data is curated.
 import { CitySignaturePanel } from "@/components/cities/CitySignaturePanel";
-import { CoverageIndicator } from "@/components/CoverageIndicator";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
-import { BoardHero } from "@/components/board/BoardHero";
-import { CityScoreMasthead } from "@/components/board/BreakInScore";
-import { MastheadImage } from "@/components/board/MastheadImage";
-import { getCityHero, isPatternHero } from "@/lib/images/city_heroes";
-import { DataSection } from "@/components/board/DataSection";
-import { fmtPct } from "@/components/board/format";
-import { TakeHomeValue } from "@/components/monetization/TakeHomeValue";
+import { breakInWord } from "@/lib/scores/band_labels";
 import { BreakInStrip } from "@/components/cities/BreakInStrip";
 import {
-  buildCityBoard,
   buildCityActivities,
   buildCityScore,
 } from "@/lib/scores/city_board";
 import type { BreakInBand } from "@/lib/scores/break_in_rating";
-import { breakInWord } from "@/lib/scores/band_labels";
+import { fmtPct } from "@/components/board/format";
+import { TakeHomeValue } from "@/components/monetization/TakeHomeValue";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import { getNeighborhoodEconomics } from "@/lib/economics/neighborhood_economics";
 import { slugToIndustry } from "@/lib/taxonomy";
 import { AtlasPictogram } from "@/components/brand/pictograms";
 import { industryPictogramId } from "@/lib/brand/industry_pictogram";
 import { NeighborhoodCover } from "@/components/cities/NeighborhoodCover";
+import {
+  AnswerFirstMasthead,
+  HonestTakeBox,
+  RangeStrip,
+  MoneyGoesBreakdown,
+  StickySectionNav,
+  RealityCheck,
+  ContrarianInsight,
+} from "@/components/kit";
+import {
+  buildCityView,
+  cityViewNav,
+  cityFmtUsdFull,
+  type CityView,
+} from "@/lib/cities/city_view";
 
 export const revalidate = 43200; // 12 hours
 
 /** Band to the per-row break-in badge tone, the EXACT moss / atlas / clay scale
- * the break-in masthead and the country "easiest to break in" panel use, so the
+ * the score badges and the country "easiest to break in" panel use, so the
  * badge reads identically here. Higher = easier = warmer. Tokens only, no hex. */
 function breakInBadge(band: BreakInBand): string {
   switch (band) {
@@ -94,7 +92,7 @@ type City = {
   hdi?: number; // city HDI (0-1), with country-bump fallback
   gini?: number; // Gini coefficient, city-level when available else national
   // CitiesFix2 sec 6: the 3 new metrics
-  cost_of_living_index?: number; // Numbeo COL, NYC = 100
+  cost_of_living_index?: number; // cost-of-living index, a leading metro = 100
   unemployment_pct?: number;
   tourist_arrivals_m?: number;
   sources?: Record<string, string>;
@@ -122,6 +120,36 @@ const NEIGHBORHOODS = (neighborhoodsJson as { cities: Record<string, Neighborhoo
 const FEATURED_NEIGHBORHOODS: Record<string, string[]> = {
   "new-york": ["manhattan-midtown", "brooklyn", "queens", "bronx"],
   london: ["city-of-london", "west-end", "south-bank", "east-london"],
+};
+
+/** The curated "best area for which business" read for the London exemplar
+ * (sanctioned invented-but-plausible, founder). Each line names a real London
+ * district and the trade that genuinely suits it, so the section carries a
+ * concrete, found-nowhere-else read rather than a generic template. Every other
+ * city self-omits this block until its own areas are curated. */
+const BEST_AREAS: Record<string, Array<{ area: string; suits: string; why: string }>> = {
+  london: [
+    {
+      area: "West End",
+      suits: "Restaurants, bars, flagship retail",
+      why: "The deepest footfall in the country, residents, office workers, and visitors together. Rents match it.",
+    },
+    {
+      area: "City and Canary Wharf",
+      suits: "Lunch trade, coffee, quick service",
+      why: "A weekday office crowd with money and no time. Dead at the weekend, so build for five days, not seven.",
+    },
+    {
+      area: "East London",
+      suits: "Independent food, design studios, third-wave coffee",
+      why: "The fastest-growing independent trade, a younger crowd, and rents still below the centre, though climbing.",
+    },
+    {
+      area: "Residential high streets",
+      suits: "Salons, clinics, childcare, neighbourhood cafes",
+      why: "Steady local demand that does not depend on visitors, and the footfall a hybrid-working week now favours.",
+    },
+  ],
 };
 
 export async function generateStaticParams() {
@@ -169,24 +197,15 @@ export default async function CityPage({
     shownNeighborhoods = (featured.length > 0 ? featured : scheme.neighborhoods).slice(0, 4);
   }
 
-  // Masthead atmosphere image. Resolve this city's hero photo (the same source
-  // CityHero uses), and pass only its URL to the shared <MastheadImage>
-  // treatment behind the board masthead. Self-omits to plain white when the
-  // city has no curated photo or only a pattern-card fallback.
-  const cityHero = getCityHero(city.slug);
-  const mastheadSrc =
-    cityHero && !isPatternHero(cityHero)
-      ? cityHero.image_url_regular || cityHero.image_url_full || null
-      : null;
-
-  // City data board. Built from values the page already holds (the city record)
-  // plus the country economics snapshot for the country the city sits in; no
-  // new query, no invented number. Every section and every row is always
-  // present, so a datum we do not hold shows as the board's dash and the page
-  // shape never depends on the data. This is the city-altitude sibling of the
-  // cell page's A-J board and the country page's five-section board.
+  // Country economics snapshot for the country the city sits in. Drives the
+  // spending-power figures and feeds the score, no new query.
   const econSnap = getCountryEconomicsSnapshot(city.iso2);
-  const boardInput = {
+
+  // The city's ONE headline score (the founder chose: cities get a headline
+  // score; countries and industries do not). Built from the same board signals,
+  // banded on the same thresholds as the cell break-in rating so the badge reads
+  // identically. Null for a thin city with no demand signal.
+  const cityScore = buildCityScore({
     city: {
       slug: city.slug,
       popM: city.pop_m ?? null,
@@ -199,284 +218,427 @@ export default async function CityPage({
       avgMonthlySalary: econSnap.avgMonthlySalary,
       netWealthPerAdult: econSnap.netWealthPerAdult,
     },
-  };
-  const board = buildCityBoard(boardInput);
+  });
 
-  // The city's ONE headline score (the founder chose: cities get a headline
-  // score; countries and industries do not). Built from the same board signals,
-  // banded on the same thresholds as the cell break-in rating so the badge reads
-  // identically. Null for a thin city with no demand signal, so the masthead
-  // omits the badge cleanly rather than showing a wrong number.
-  const cityScore = buildCityScore(boardInput);
+  // The pure view model: maps the figures above into the kit's section props,
+  // in the content-map reading order, fully filling the London exemplar and
+  // self-omitting elsewhere. The heavier wiring (activities, neighbourhoods,
+  // peers) stays below in the page.
+  const view: CityView = buildCityView({
+    citySlug: city.slug,
+    cityName: city.name,
+    countryName,
+    tier: city.tier,
+    popM: city.pop_m ?? null,
+    avgGrossSalaryUsdYear: city.avg_gross_salary_usd_year ?? null,
+    costOfLivingIndex: city.cost_of_living_index ?? null,
+    touristArrivalsM: city.tourist_arrivals_m ?? null,
+    selfEmploymentPct: econSnap.selfEmploymentPct,
+    avgMonthlySalary: econSnap.avgMonthlySalary,
+    netWealthPerAdult: econSnap.netWealthPerAdult,
+    cityScore: cityScore ? { score: cityScore.score, band: cityScore.band } : null,
+    hasLondonMarket: city.slug === "london",
+  });
 
-  // Ranked activities in this city, easiest to break in first. Every city now
-  // resolves through the cell engine: each candidate activity's destination cell
-  // is scored through the same break-in path its own masthead uses, kept only
-  // when it is a trusted local measurement (so no invented number ranks), and the
-  // list self-omits when fewer than three activities resolve. Each row links to
-  // that activity's cell page under the city, the same /{iso2}/{slug}/{activity}
-  // shape the industry mosaic uses. Async (it reads the engine, budgeted).
+  // Ranked activities in this city, by owner take-home (highest first). Every
+  // city resolves through the cell engine; only trusted local measurements rank,
+  // so a row never carries an invented number, and the list self-omits below
+  // three. Each row links to that activity's cell page under the city. Async.
   const activities = await buildCityActivities({
     slug: city.slug,
     countryIso2: city.iso2,
   });
 
+  // The best-areas read: the curated London exemplar, or a self-omit elsewhere.
+  const bestAreas = BEST_AREAS[city.slug] ?? null;
+
+  // The sticky-nav sections: the view-owned bands plus the page-owned data
+  // bands, both gated on what actually renders. StickySectionNav drops any dead
+  // anchor on mount, so a missing data section never leaves a dangling link.
+  const navSections: Array<{ id: string; label: string }> = [...cityViewNav(view)];
+  if (activities.length > 0) navSections.push({ id: "owners-keep", label: "What owners keep" });
+  if (bestAreas) navSections.push({ id: "best-areas", label: "Best areas" });
+  if (shownNeighborhoods.length > 0) navSections.push({ id: "neighborhoods", label: "Neighbourhoods" });
+  if (view.changing) navSections.push({ id: "changing", label: "How it is changing" });
+  navSections.push({ id: "peers", label: "Similar cities" });
+
   return (
     <article className="pb-16">
-      <div className="max-w-6xl mx-auto px-4 md:px-6">
-        {/* Board masthead (rebuilt 2026-06-05 to match the cell + country
-           pages). The heavy full-bleed photo hero with its overlaid stat
-           table was removed: it duplicated the population / salary / cost /
-           tourism figures the data board now carries, and the board reaches
-           the figures above the fold in the shared scaffold. Plain city name
-           is the H1, and the city's ONE headline score (the founder chose:
-           cities carry a headline score, countries and industries do not)
-           renders as a band-toned badge beneath it, reusing the exact
-           BreakInMasthead markup so the badge reads identically to the cell
-           page's. It omits entirely for a thin city with no demand signal. The
-           country eyebrow keeps the place context the old hero carried.
-
-           The masthead carries the same deliberate exception to the pure-white
-           system the country page does: a low-opacity duotone city photo sits
-           behind the flag, eyebrow, and title as atmosphere, then fades to
-           white so the data board below reads on a clean surface. The image
-           self-omits when the city has no resolvable photo (see MastheadImage),
-           so the masthead degrades to plain white rather than a broken frame.
-           The masthead content sits in a relative layer above the image. */}
-        <div className="relative overflow-hidden rounded-2xl">
-          <MastheadImage src={mastheadSrc} filter={false} />
-          <div className="relative">
-            <div className="flex items-center gap-2 pt-4">
-              <CountryFlag iso2={city.iso2} className="w-5" />
-              <SectionEyebrow size="md">{countryName}</SectionEyebrow>
-            </div>
-            <BoardHero title={city.name} />
-            {cityScore ? (
-              <div className="pb-3">
-                <CityScoreMasthead score={cityScore} />
-              </div>
-            ) : null}
-            {/* Thin-coverage marker. Tier 2 and Tier 3 cities hold fewer real
-               figures, so a quiet, factual chip says so plainly (honest, not
-               broken, and not apologetic per the Sanity pass). Flagship Tier 1
-               cities omit it. */}
-            {city.tier !== 1 ? (
-              <div className="pb-3">
-                <span className="text-[10px] uppercase tracking-wide font-semibold text-cocoa-700/60 bg-cream-100 border border-parchment rounded-full px-2 py-0.5">
-                  Lighter coverage
-                </span>
-              </div>
-            ) : null}
-          </div>
-        </div>
-
-        {/* The city data board. Four fixed sections the reader can learn once
-           and read on every city, rendered immediately under the masthead.
-           Each section always renders all of its rows; a datum we do not hold
-           shows as the board's dash, so the page shape never depends on the
-           data. */}
-        <div className="mt-2">
-          {board.map((s) => (
-            <DataSection section={s} key={s.key} muteEmpty variant="ruled" />
-          ))}
-        </div>
-
-        {/* Sanity-§8: apologetic expanded CoverageIndicator banner
-            replaced with a quiet inline methodology link. */}
-        <section className="mb-10 mt-10">
-          <CoverageIndicator
-            tier={city.tier === 1 ? "regional" : "estimated"}
-            variant="compact"
+      <div className="mx-auto max-w-6xl px-4 md:px-6 xl:flex xl:gap-16">
+        <div className="min-w-0 xl:flex-1">
+          {/* Answer-first masthead, carrying the city's single Business Climate
+             Score. The flag + country sit in the eyebrow; the score anchors the
+             band on a flagship city and softens to a quiet stat on a thinner
+             one. */}
+          <AnswerFirstMasthead
+            id="headline"
+            eyebrow={
+              <span className="inline-flex items-center gap-2">
+                <CountryFlag iso2={city.iso2} className="w-5" />
+                <span>{view.masthead.eyebrow}</span>
+              </span>
+            }
+            tier={view.masthead.tier}
+            title={view.masthead.title}
+            answer={view.masthead.answer}
+            anchor={view.masthead.anchor}
+            stats={view.masthead.stats}
+            breakIn={view.masthead.climateChip}
           />
-        </section>
 
-        {/* The old Gini / HDI source-disclosure footnote was removed with the
-           heavy hero (2026-06-05): the rebuilt board does not surface Gini or
-           HDI, so a disclaimer for absent figures only confused. The board's
-           own per-section modeled footnotes carry the honesty now. */}
+          <div className="mt-8 space-y-6 md:space-y-8">
+            {/* The honest take, right after the headline numbers. */}
+            {view.honestTake ? (
+              <HonestTakeBox
+                id="honest-take"
+                verdict={view.honestTake.verdict}
+                points={view.honestTake.points}
+              >
+                {view.honestTake.body}
+              </HonestTakeBox>
+            ) : null}
 
-        {/* The break-in spread: one dot per everyday trade on a 0-100 difficulty
-           track, the one branded city signature visualization and the visual
-           companion to the Business Climate Score above. Built from the same
-           activity scores the ranked table below uses; self-omits below three. */}
-        <BreakInStrip
-          cityName={city.name}
-          items={activities
-            .filter((a) => a.breakInScore != null && a.breakInBand != null)
-            .map((a) => ({
-              name: a.name,
-              score: a.breakInScore as number,
-              band: a.breakInBand as BreakInBand,
-            }))}
-        />
-
-        {/* Founder direction 2026-05-26: dropped TopProfitableActivities
-            (most / least profitable, was sec 6) and MostSaturatedActivities
-            (most crowded fields). Replaced by the CitySignaturePanel
-            below (demographics + signature sectors + commercial streets).
-            The culture-spectrum and government-score blocks are
-            country-altitude reads, so showInstitutions is false here and
-            those blocks render on the country page only. The business
-            formation costs table likewise moved to the country page.
-            Renders null when the city has no curated entry in
-            city_signature_v1.json. */}
-        <CitySignaturePanel
-          citySlug={city.slug}
-          cityName={city.name}
-          iso2={city.iso2}
-          showInstitutions={false}
-          showStreets={shownNeighborhoods.length === 0}
-        />
-
-        {/* Neighborhoods: up to four featured areas (founder 2026-06-08), with the
-           full list one click away. The redundant full grid, the "N sub-areas"
-           heading, and the "shape of {city}" subtitle were removed. */}
-        {shownNeighborhoods.length > 0 && (
-          <section className="mb-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
-            <div className="text-xs uppercase tracking-wide text-atlas-600 font-semibold mb-2">
-              Neighborhoods
-            </div>
-            <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mb-2">
-              Where {city.name} does business
-            </h2>
-            <p className="text-sm md:text-base text-cocoa-700/80 mb-6 max-w-2xl">
-              The areas that set the tone, each with its own pace and prices. Open
-              one for its street-level numbers.
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {shownNeighborhoods.map((n) => {
-                // Merge 2026-06-13: commercial streets fold UNDER their
-                // neighborhood. The top prime streets for this area surface on
-                // the card, so the city has one places model (neighborhoods)
-                // with streets nested, not two overlapping lists.
-                const streets = (
-                  getNeighborhoodEconomics(city.slug, n.slug)?.prime_streets ?? []
-                )
-                  .map((s) => s.name)
-                  .slice(0, 2);
-                return (
-                  <Link
-                    key={n.slug}
-                    href={`/${city.iso2.toLowerCase()}/${city.slug}/${n.slug}`}
-                    className="group block overflow-hidden rounded-xl border border-parchment bg-white shadow-subtle transition-all hover:-translate-y-px hover:border-atlas-300 hover:shadow-lift"
-                  >
-                    <NeighborhoodCover
-                      name={n.name}
-                      seed={`${city.slug}-${n.slug}`}
-                      className="h-20"
-                    />
-                    <div className="p-4">
-                      <div className="font-medium text-sm text-ink-900 group-hover:text-atlas-700 leading-tight">
-                        {n.name}
-                      </div>
-                      <div className="text-[11px] text-cocoa-700/60 mt-1 capitalize">
-                        {n.character.replace(/-/g, " ")}
-                      </div>
-                      {streets.length > 0 ? (
-                        <div className="text-[11px] text-cocoa-700/80 mt-2 leading-snug">
-                          {streets.join(", ")}
-                        </div>
+            {/* Who the local customer is: spending power, with a real income
+               spread where one exists (the 7-gradation strip). */}
+            {view.customer ? (
+              <section
+                id="customer"
+                className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+              >
+                <SectionEyebrow className="mb-1">The local customer</SectionEyebrow>
+                <h2 className="font-display text-xl font-medium tracking-tight text-ink-900 md:text-2xl">
+                  Who you are selling to, and how freely they spend
+                </h2>
+                {view.customer.note ? (
+                  <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-cocoa-700/80 md:text-base">
+                    {view.customer.note}
+                  </p>
+                ) : null}
+                <dl className="mt-5 grid gap-x-8 gap-y-4 sm:grid-cols-2">
+                  {view.customer.stats.map((s, i) => (
+                    <div key={i}>
+                      <dd className="font-display text-2xl font-semibold tabular-nums tracking-tight text-ink-900">
+                        {s.value}
+                      </dd>
+                      <dt className="mt-0.5 text-sm font-medium text-cocoa-700/80">{s.label}</dt>
+                      {s.hint ? (
+                        <p className="mt-0.5 text-[11px] leading-relaxed text-cocoa-500">{s.hint}</p>
                       ) : null}
                     </div>
-                  </Link>
-                );
-              })}
-            </div>
-            <div className="mt-4">
-              <Link
-                href={`/cities/${city.slug}/neighborhoods`}
-                className="text-sm text-atlas-700 font-medium underline decoration-atlas-300 hover:decoration-atlas-700 underline-offset-2"
-              >
-                Explore all neighborhoods →
-              </Link>
-            </div>
-          </section>
-        )}
+                  ))}
+                </dl>
+                {view.customer.incomeSpread ? (
+                  <div className="mt-6 border-t border-parchment pt-5">
+                    <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
+                      What residents earn a year
+                    </p>
+                    <RangeStrip
+                      p10={view.customer.incomeSpread.p10}
+                      p25={view.customer.incomeSpread.p25}
+                      p50={view.customer.incomeSpread.p50}
+                      p75={view.customer.incomeSpread.p75}
+                      p90={view.customer.incomeSpread.p90}
+                      format={cityFmtUsdFull}
+                    />
+                  </div>
+                ) : null}
+              </section>
+            ) : null}
 
-        {/* Activities in this city, ranked by owner take-home (highest first).
-           The masthead score already answers "easiest to break in", so this table
-           answers "what earns the most here"; each row still carries the break-in
-           badge so ease stays visible. Every city resolves through the cell engine,
-           and only trusted local measurements rank, so a row never carries an
-           invented number; the list self-omits below three rows. Each row links to
-           that activity's full cell benchmark under the city. */}
-        {activities.length > 0 && (
-          <section className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
-            <SectionEyebrow>Everyday trades</SectionEyebrow>
-            <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mt-1">
-              What an owner keeps in {city.name}
-            </h2>
-            <p className="text-sm md:text-base text-cocoa-700/80 mt-1.5 mb-5 max-w-2xl leading-relaxed">
-              The everyday businesses you find in almost any city, and what a
-              typical owner keeps after tax in {city.name}. The badge is the same 0
-              to 100 break-in read each business shows on its own page, higher means
-              easier to get started. Modeled from local business demography.
-              Directional.
-            </p>
-            <div className="grid grid-cols-1 gap-x-10 md:grid-cols-2">
-              {[
-                activities.slice(0, Math.ceil(activities.length / 2)),
-                activities.slice(Math.ceil(activities.length / 2)),
-              ].map((col, ci) => (
-                <ul
-                  key={ci}
-                  className="divide-y divide-parchment border-y border-parchment"
-                >
-                  {col.map((a) => (
-                    <li key={a.slug}>
-                      <Link
-                        href={a.href}
-                        className="group flex items-baseline justify-between gap-3 py-2.5 transition-colors"
-                      >
-                        <span className="flex min-w-0 items-center gap-2.5">
-                          <AtlasPictogram
-                            id={industryPictogramId(slugToIndustry(a.slug)?.id)}
-                            size={18}
-                            className="shrink-0 text-cocoa-700/70 group-hover:text-atlas-700 transition-colors"
-                          />
-                          <span className="truncate text-sm font-medium text-ink-900 group-hover:text-atlas-700 transition-colors">
-                            {a.name}
-                          </span>
-                          {a.breakInScore != null && a.breakInBand != null ? (
-                            <span
-                              className={`inline-flex shrink-0 items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-semibold ${breakInBadge(
-                                a.breakInBand,
-                              )}`}
-                            >
-                              <span className="tabular-nums">{a.breakInScore}</span>
-                              <span>{breakInWord(a.breakInBand)}</span>
-                            </span>
+            {/* What shop and office space costs: the commercial-rent character.
+               A RealityCheck beat so it reads as an honest read, not a data
+               card pretending to a quoted rent. */}
+            {view.space ? (
+              <div id="space">
+                <RealityCheck
+                  eyebrow="What space costs"
+                  truth={view.space.verdict}
+                  body={view.space.body}
+                />
+                {view.space.stats.length > 0 ? (
+                  <dl className="mt-3 grid gap-x-8 gap-y-3 rounded-lg border border-parchment bg-cream-50 px-5 py-4 shadow-subtle sm:grid-cols-2 md:px-7">
+                    {view.space.stats.map((s, i) => (
+                      <div key={i} className="flex items-baseline justify-between gap-4">
+                        <dt className="min-w-0 text-sm text-cocoa-700/90">
+                          {s.label}
+                          {s.hint ? (
+                            <span className="mt-0.5 block text-[11px] text-cocoa-500">{s.hint}</span>
                           ) : null}
-                        </span>
-                        <span className="flex shrink-0 items-baseline gap-3">
-                          {a.netMarginPct != null && (
-                            <span className="hidden text-[11px] tabular-nums text-cocoa-500 sm:inline">
-                              {fmtPct(a.netMarginPct)} net
+                        </dt>
+                        <dd className="shrink-0 font-display text-base font-semibold tabular-nums text-ink-900">
+                          {s.value}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                ) : null}
+              </div>
+            ) : null}
+
+            {/* Tourist money vs local money: ALWAYS rendered (founder). The
+               split reuses the per-100 stacked bar, read as "where your trade
+               comes from" rather than money out. */}
+            <div id="visitors">
+              {view.visitorSplit.items ? (
+                <MoneyGoesBreakdown
+                  items={view.visitorSplit.items}
+                  eyebrow="Tourist vs local"
+                  heading={view.visitorSplit.headline}
+                  lede={view.visitorSplit.body ?? undefined}
+                />
+              ) : (
+                <section className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
+                  <SectionEyebrow className="mb-1">Tourist vs local</SectionEyebrow>
+                  <p className="font-display text-xl font-medium leading-snug text-balance text-ink-900 md:text-2xl">
+                    {view.visitorSplit.headline}
+                  </p>
+                  {view.visitorSplit.body ? (
+                    <p className="mt-2.5 max-w-2xl text-sm leading-relaxed text-graphite md:text-base">
+                      {view.visitorSplit.body}
+                    </p>
+                  ) : null}
+                </section>
+              )}
+            </div>
+
+            {/* The break-in spread: one dot per everyday trade on a 0-100
+               difficulty track, the branded city-signature visualization and the
+               visual companion to the Business Climate Score. Self-omits below
+               three trades. */}
+            <BreakInStrip
+              cityName={city.name}
+              items={activities
+                .filter((a) => a.breakInScore != null && a.breakInBand != null)
+                .map((a) => ({
+                  name: a.name,
+                  score: a.breakInScore as number,
+                  band: a.breakInBand as BreakInBand,
+                }))}
+            />
+
+            {/* What an owner keeps across the everyday trades. Every city resolves
+               through the cell engine; only trusted local measurements rank, so a
+               row never carries an invented number; the list self-omits below
+               three rows. Each row links to that activity's full cell benchmark
+               under the city. */}
+            {activities.length > 0 && (
+              <section
+                id="owners-keep"
+                className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+              >
+                <SectionEyebrow className="mb-1">What owners keep</SectionEyebrow>
+                <h2 className="font-display text-xl font-medium tracking-tight text-ink-900 md:text-2xl">
+                  What an owner keeps in {city.name}
+                </h2>
+                <p className="mt-1.5 mb-5 max-w-2xl text-sm leading-relaxed text-cocoa-700/80 md:text-base">
+                  The everyday businesses you find in almost any city, and what a
+                  typical owner keeps after tax here. The badge is the same 0 to
+                  100 break-in read each business shows on its own page; higher
+                  means easier to get started. Modeled from local business
+                  demography. Directional.
+                </p>
+                <div className="grid grid-cols-1 gap-x-10 md:grid-cols-2">
+                  {[
+                    activities.slice(0, Math.ceil(activities.length / 2)),
+                    activities.slice(Math.ceil(activities.length / 2)),
+                  ].map((col, ci) => (
+                    <ul
+                      key={ci}
+                      className="divide-y divide-parchment border-y border-parchment"
+                    >
+                      {col.map((a) => (
+                        <li key={a.slug}>
+                          <Link
+                            href={a.href}
+                            className="group flex items-baseline justify-between gap-3 py-2.5 transition-colors"
+                          >
+                            <span className="flex min-w-0 items-center gap-2.5">
+                              <AtlasPictogram
+                                id={industryPictogramId(slugToIndustry(a.slug)?.id)}
+                                size={18}
+                                className="shrink-0 text-cocoa-700/70 transition-colors group-hover:text-atlas-700"
+                              />
+                              <span className="truncate text-sm font-medium text-ink-900 transition-colors group-hover:text-atlas-700">
+                                {a.name}
+                              </span>
+                              {a.breakInScore != null && a.breakInBand != null ? (
+                                <span
+                                  className={`inline-flex shrink-0 items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-semibold ${breakInBadge(
+                                    a.breakInBand,
+                                  )}`}
+                                >
+                                  <span className="tabular-nums">{a.breakInScore}</span>
+                                  <span>{breakInWord(a.breakInBand)}</span>
+                                </span>
+                              ) : null}
                             </span>
-                          )}
-                          <span className="font-display text-base font-semibold tabular-nums text-ink-900">
-                            <TakeHomeValue takeHome={a.takeHome} cellHref={a.href} />
-                          </span>
+                            <span className="flex shrink-0 items-baseline gap-3">
+                              {a.netMarginPct != null && (
+                                <span className="hidden text-[11px] tabular-nums text-cocoa-500 sm:inline">
+                                  {fmtPct(a.netMarginPct)} net
+                                </span>
+                              )}
+                              <span className="font-display text-base font-semibold tabular-nums text-ink-900">
+                                <TakeHomeValue takeHome={a.takeHome} cellHref={a.href} />
+                              </span>
+                            </span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  ))}
+                </div>
+                <p className="mt-3 text-[11px] text-cocoa-500">
+                  Owner take-home is after tax, for a typical single-site operator.
+                </p>
+              </section>
+            )}
+
+            {/* The best areas to set up: which neighbourhood suits which
+               business. The curated London exemplar; self-omits elsewhere until
+               a city's own areas are curated. */}
+            {bestAreas ? (
+              <section
+                id="best-areas"
+                className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+              >
+                <SectionEyebrow className="mb-1">Best areas</SectionEyebrow>
+                <h2 className="font-display text-xl font-medium tracking-tight text-ink-900 md:text-2xl">
+                  Where to set up, by what you are opening
+                </h2>
+                <p className="mt-1.5 mb-5 max-w-2xl text-sm leading-relaxed text-cocoa-700/80 md:text-base">
+                  No single area suits every business. These are the parts of {city.name} that fit a given trade, and the reason they do.
+                </p>
+                <ul className="divide-y divide-parchment border-y border-parchment">
+                  {bestAreas.map((a) => (
+                    <li key={a.area} className="py-3.5">
+                      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                        <span className="font-display text-base font-semibold text-ink-900">
+                          {a.area}
                         </span>
-                      </Link>
+                        <span className="text-sm font-medium text-atlas-700">{a.suits}</span>
+                      </div>
+                      <p className="mt-1 max-w-2xl text-sm leading-relaxed text-cocoa-700/85">
+                        {a.why}
+                      </p>
                     </li>
                   ))}
                 </ul>
-              ))}
-            </div>
-            <p className="mt-3 text-[11px] text-cocoa-500">
-              Owner take-home is after tax, for a typical single-site operator.
-            </p>
-          </section>
-        )}
+              </section>
+            ) : null}
 
-        {/* Cities like this: a real peer comparison (replaces the old
-           restaurants-hardcoded sister-cities ribbon). Peers are chosen by
-           economic similarity (size, wealth, cost) with a different-country
-           preference and at most one per country, each carries its OWN headline
-           0 to 100 city score on the same scale as this page's masthead, and
-           each card links to that peer's CITY page. Self-omits below two peers. */}
-        <CityPeers citySlug={city.slug} cityName={city.name} />
+            {/* Signature panel: demographics + signature sectors + commercial
+               streets. Culture + government are country-altitude reads, so
+               showInstitutions is false here; streets fold under neighbourhoods
+               when a scheme exists. Null until a city is curated. */}
+            <CitySignaturePanel
+              citySlug={city.slug}
+              cityName={city.name}
+              iso2={city.iso2}
+              showInstitutions={false}
+              showStreets={shownNeighborhoods.length === 0}
+            />
+
+            {/* Neighbourhoods: up to four featured areas, with the full list one
+               click away. The drilled-down districts, clickable, real flavour. */}
+            {shownNeighborhoods.length > 0 && (
+              <section
+                id="neighborhoods"
+                className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+              >
+                <SectionEyebrow className="mb-1">Neighbourhoods</SectionEyebrow>
+                <h2 className="font-display text-xl font-medium tracking-tight text-ink-900 md:text-2xl">
+                  Where {city.name} does business
+                </h2>
+                <p className="mt-1.5 mb-5 max-w-2xl text-sm leading-relaxed text-cocoa-700/80 md:text-base">
+                  The areas that set the tone, each with its own pace and prices.
+                  Open one for its street-level numbers.
+                </p>
+                <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+                  {shownNeighborhoods.map((n) => {
+                    const streets = (
+                      getNeighborhoodEconomics(city.slug, n.slug)?.prime_streets ?? []
+                    )
+                      .map((s) => s.name)
+                      .slice(0, 2);
+                    return (
+                      <Link
+                        key={n.slug}
+                        href={`/${city.iso2.toLowerCase()}/${city.slug}/${n.slug}`}
+                        className="group block overflow-hidden rounded-xl border border-parchment bg-white shadow-subtle transition-all hover:-translate-y-px hover:border-atlas-300 hover:shadow-lift"
+                      >
+                        <NeighborhoodCover
+                          name={n.name}
+                          seed={`${city.slug}-${n.slug}`}
+                          className="h-20"
+                        />
+                        <div className="p-4">
+                          <div className="text-sm font-medium leading-tight text-ink-900 group-hover:text-atlas-700">
+                            {n.name}
+                          </div>
+                          <div className="mt-1 text-[11px] capitalize text-cocoa-700/60">
+                            {n.character.replace(/-/g, " ")}
+                          </div>
+                          {streets.length > 0 ? (
+                            <div className="mt-2 text-[11px] leading-snug text-cocoa-700/80">
+                              {streets.join(", ")}
+                            </div>
+                          ) : null}
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
+                <div className="mt-4">
+                  <Link
+                    href={`/cities/${city.slug}/neighborhoods`}
+                    className="text-sm font-medium text-atlas-700 underline decoration-atlas-300 underline-offset-2 hover:decoration-atlas-700"
+                  >
+                    Explore all neighbourhoods &rarr;
+                  </Link>
+                </div>
+              </section>
+            )}
+
+            {/* How the city is changing: a real direction, or an honest
+               self-omit. The London exemplar fills it; every other city stays
+               silent rather than printing a speculative trend. */}
+            {view.changing ? (
+              <div id="changing">
+                <ContrarianInsight
+                  eyebrow="How it is changing"
+                  insight={view.changing.verdict}
+                  body={view.changing.body}
+                />
+                {view.changing.points.length > 0 ? (
+                  <ul className="mt-3 space-y-2.5 rounded-lg border border-parchment bg-cream-50 px-5 py-4 shadow-subtle md:px-7">
+                    {view.changing.points.map((p, i) => (
+                      <li
+                        key={i}
+                        className="flex gap-3 text-sm leading-relaxed text-cocoa-700/90 md:text-base"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-cocoa-500"
+                        />
+                        <span>{p}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+              </div>
+            ) : null}
+
+            {/* Rival + peer cities: a real peer comparison, each carrying its OWN
+               headline city score on the same scale as this page, each linking to
+               that peer's city page. Self-omits below two peers. */}
+            <div id="peers">
+              <CityPeers citySlug={city.slug} cityName={city.name} />
+            </div>
+          </div>
+        </div>
+
+        <StickySectionNav sections={navSections} />
       </div>
     </article>
   );

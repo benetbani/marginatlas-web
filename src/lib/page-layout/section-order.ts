@@ -19,11 +19,18 @@ export const CELL_PAGE_SECTIONS = [
   "related-cells",
 ] as const;
 
+// Country page, rebuilt on the Atlas Page Kit (WS4, 2026-06-13). The decisive
+// read (tax + register cost + payroll + time-to-start) is "formation"; the
+// honest take, how-hard-to-hire, and compare-to-neighbours bands ride on
+// <div id> anchors (not registered <section>s, by the same convention the
+// industry page uses), so only the structural <section> ids are listed here.
 export const COUNTRY_PAGE_SECTIONS = [
   "hero",
-  "tax-overview",
-  "regions",
-  "related-countries",
+  "formation",
+  "break-in",
+  "cities",
+  "character",
+  "related",
 ] as const;
 
 // Region / city landing page (`/[country]/[geo]`). Renders a hero, an

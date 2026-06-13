@@ -48,7 +48,6 @@ import industryMarginsJson from "@/lib/finance/industry_margins.json";
 import { INDUSTRY_PAGE_SECTIONS } from "@/lib/page-layout/section-order";
 import { getActivityCharacter } from "@/lib/content/activity_character";
 import { generateIndustryVerdict } from "@/lib/scores/industry_verdict";
-import { IndustryModelLede } from "@/components/industries/IndustryModelLede";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import {
   getSameIndustryAcrossCountries,
@@ -60,14 +59,21 @@ import {
 import { iso2ToName } from "@/lib/countries";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { clampMargin } from "@/lib/finance/margin_floor";
-import { BoardHero } from "@/components/board/BoardHero";
-import { DataSection } from "@/components/board/DataSection";
-import { StatCard } from "@/components/board/StatCard";
 import { ActivityPlacePicker } from "@/components/industries/ActivityPlacePicker";
 import { fmtPct } from "@/components/board/format";
 import { TakeHomeValue } from "@/components/monetization/TakeHomeValue";
+import { AtlasPictogram } from "@/components/brand/pictograms/AtlasPictogram";
+import { industryPictogramId } from "@/lib/brand/industry_pictogram";
 import {
-  buildActivityBoard,
+  AnswerFirstMasthead,
+  HonestTakeBox,
+  MoneyGoesBreakdown,
+  PlainTerms,
+  StickySectionNav,
+  formatWithSpec,
+} from "@/components/kit";
+import { buildIndustryView, industryViewNav } from "@/lib/industries/industry_view";
+import {
   summarizeActivityPlaces,
   getActivitySurvivalArchetype,
   type ActivityPlaceInput,
@@ -181,21 +187,10 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
   // short or empty table, never an invented spread.
   const placesSummary = summarizeActivityPlaces(placeInputs);
 
-  // The activity data board. Structural margins (place-stable) plus the trimmed
-  // cross-place bands plus a representative survival curve for the activity.
-  // Every section and every row is always present; a datum we do not hold shows
-  // as the board's dash. This is the activity-altitude sibling of the cell,
-  // country, and city boards.
-  const board = buildActivityBoard({
-    margins: {
-      grossMargin: margin.gross_margin ?? null,
-      operatingMargin: margin.operating_margin ?? null,
-      netMargin: margin.net_margin ?? null,
-    },
-    revenue: placesSummary.revenue,
-    takeHome: placesSummary.takeHome,
-    survival: getActivitySurvivalArchetype(activitySlug),
-  });
+  // The representative survival archetype for the activity (the same curated
+  // directional read the cell and city boards use). All-null when none is held.
+  const survival = getActivitySurvivalArchetype(activitySlug);
+
   // Split the ranked rows into like-for-like cohorts, capped so each stays
   // scannable. US states keep the take-home ranking: one country, one currency,
   // broadly comparable prices. Countries are listed in name order as
@@ -213,18 +208,6 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
     .sort((a, b) => a.name.localeCompare(b.name))
     .slice(0, 12);
   const hasPlaceCohorts = stateRows.length >= 2 || countryRows.length >= 2;
-
-  // Split the board for the reframed layout (founder feedback, 2026-06-06). The
-  // economics section ("numbers") keeps its full DataSection treatment (the
-  // structural margins, the cross-place revenue RANGE, the SpreadBar) and is
-  // demoted BELOW the place picker as "the shape before you pick a place". The
-  // four qualitative sections (market structure, pricing power, labor, survival)
-  // each render as their own small titled table (the StatCard look) rather than
-  // one flat run of mostly-dashed rows, so each reads as an intentional little
-  // table even where a field is genuinely unheld. The split is by key, so the
-  // board module stays the single source of section content.
-  const economicsSection = board.find((s) => s.key === "numbers") ?? null;
-  const qualitativeSections = board.filter((s) => s.key !== "numbers");
 
   // Reformation decision layer (bible Sections 4, 5, 25). Pure compute, no
   // queries: the opinionated business-model read and the cost-stage anatomy
@@ -248,15 +231,42 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
   });
 
   // The search-sensible money question (bible Section 5 headline formula). It
-  // is now the how-it-works section H2 (the board title is the plain H1); the
-  // page <title> stays the benchmark phrasing, set in generateMetadata above.
+  // is now the how-it-works section H2 (the page hero headline is the verdict
+  // model read); the page <title> stays the benchmark phrasing, set in
+  // generateMetadata above.
   const moneyQuestion = `How ${ind.name.toLowerCase()} businesses make money`;
 
-  // The single most punishing cost stage, read straight from the verdict
-  // anatomy this page already computes. It anchors the failure-mechanics module
-  // below the waterfall: the structural reason weak operators run out of room.
-  // Falls back to null when no stage reads "bad", so the module self-suppresses.
-  const worstSignal = verdict.signals.find((s) => s.tone === "bad") ?? null;
+  // The pure view model (src/lib/industries/industry_view): maps the place-
+  // stable margin shape, the verdict, the activity character, the cross-place
+  // bands, and the survival archetype into Atlas Page Kit props in the content-
+  // map reading order. Heavy data wiring stays here; the lib is pure and self-
+  // omitting, so the kit renders nothing for a datum we do not hold. There is no
+  // single place at this altitude, so there is no London fill: the view fills
+  // from structure and self-omits everywhere else.
+  const view = buildIndustryView({
+    industryName: ind.name,
+    industryNoun: ind.name.toLowerCase(),
+    sectorName: sector?.name ?? null,
+    margins: {
+      grossMargin: margin.gross_margin ?? null,
+      operatingMargin: margin.operating_margin ?? null,
+      netMargin: margin.net_margin ?? null,
+      assetIntensity: margin.asset_intensity ?? null,
+    },
+    verdict,
+    character,
+    revenue: placesSummary.revenue,
+    takeHome: placesSummary.takeHome,
+    survival,
+  });
+
+  // The trade pictogram for the hero (the trade identity, design-system 9.2).
+  const pictogramId = industryPictogramId(ind.id);
+
+  // A compact USD formatter for the masthead spread strip. The masthead is a
+  // server component, so a function prop is fine (only the count-up anchor and
+  // the sticky nav are client islands, and they take serializable props).
+  const usdCompact = (n: number) => formatWithSpec(n, "usd-compact");
 
   // Related activities (bible Section 6 module 28, a FREE module): the other
   // small-business models that sit in the same sector. This is taxonomy data
@@ -267,6 +277,11 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
     .slice(0, 8);
 
   void INDUSTRY_BY_ID;
+
+  // The sticky in-page jump nav, built from what will actually render in reading
+  // order. StickySectionNav additionally drops any id whose anchor is missing on
+  // mount, so a thin page never dead-links.
+  const nav = industryViewNav(view, hasPlaceCohorts, relatedActivities.length > 0);
 
   return (
     <div>
@@ -279,357 +294,418 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
         <span>{ind.name}</span>
       </nav>
 
-      {/* 1. hero. Rebuilt on the board kit (2026-06-05) to match the cell,
-         country, and city pages. The heavy full-bleed photo hero with the
-         money-question H1 overlaid was replaced by the quiet BoardHero (plain
-         activity name), so the title reaches above the fold in the same fixed
-         scaffold the reader learns once and reads on every page. An activity
-         has no single Atlas score, so the score strip is passed empty and
-         renders as a dash. The country eyebrow becomes a small sector eyebrow
-         above the title. The decision-framed money question and the cost-stage
-         anatomy keep their full prose treatment in how-it-works directly below.
-         The id="hero" anchor is kept so the section-order gate sees the
-         canonical first beat. */}
-      <section id="hero" className="pb-2">
-        {sector ? (
-          <SectionEyebrow size="md" className="mt-4">
-            {sector.name}
-          </SectionEyebrow>
-        ) : null}
-        <BoardHero title={ind.name} score={{ overall: null, parts: [] }} />
+      {/* WS6 reconstruction (2026-06-13): the activity page rebuilt on the Atlas
+         Page Kit, thesis-first, in the content-map INDUSTRY reading order: hero
+         (the trade pictogram + the verdict model read) -> headline numbers + the
+         honest take -> how it makes money + the per-$100 split -> a typical
+         operator -> where it earns most (the like-for-like cohort tables, kept
+         exactly from WS1) -> the cost stack -> links. The four all-null
+         qualitative StatCards (market / pricing / labor / survival, mostly
+         dashes) are gone; the survival archetype now reads inside the typical-
+         operator block where it is held. There is no single place at this
+         altitude, so there is no London fill: the view fills from the place-
+         stable structure and self-omits everywhere else.
 
-        {/* The hero action (founder feedback, 2026-06-06). A visitor who clicked
-           their own line of work does not want the place-agnostic worldwide
-           numbers first; they want to pick THEIR place. So the page leads with a
-           prominent country + city picker that routes straight to that
-           activity's cell page for the chosen place
-           (/{country}/{city}/{activity}). The worldwide shape is demoted below
-           it. */}
-        <div className="mt-4">
-          <ActivityPlacePicker activityId={ind.id} activityName={ind.name} />
-        </div>
-
-        {/* Across-cities comparison CTA (founder's chosen comparison default).
-           A reader who has not settled on a place yet wants to see this one
-           business laid out across the major world cities, side by side. The
-           programmatic comparison lives at /industries/{slug}/across; it self-
-           omits cleanly when too few cities resolve, so the link is always safe
-           to show (it lands on a graceful pointer in the rare thin case). */}
-        <Link
-          href={`/industries/${activitySlug}/across`}
-          className="group mt-3 inline-flex items-center gap-2 rounded-full border border-parchment bg-cream-50 px-4 py-2 text-sm font-medium text-ink-900 transition-colors hover:border-atlas-300 hover:bg-cream-100"
-        >
-          <span>
-            Not sure where? See {ind.name.toLowerCase()} across the world&apos;s
-            cities
-          </span>
-          <span aria-hidden="true" className="text-atlas-700 transition-transform group-hover:translate-x-0.5">
-            &rarr;
-          </span>
-        </Link>
-      </section>
-
-      {/* The activity economics, demoted (founder feedback, 2026-06-06). This
-         was the board's lead section; it now sits BELOW the place picker, framed
-         as the worldwide shape a reader sees before choosing a place. It keeps
-         the structural margins and the defensible cross-place revenue RANGE (a
-         p10..p90 band, never a single worldwide average) with its SpreadBar. The
-         DataSection always renders every row; a datum we do not hold shows as
-         the board's dash, so the shape never depends on the data. */}
-      {economicsSection ? (
-        <div className="mt-8">
-          <SectionEyebrow size="md">
-            The shape, before you pick a place
-          </SectionEyebrow>
-          <p className="mt-1.5 mb-1 max-w-2xl text-sm leading-relaxed text-cocoa-700/80">
-            What holds across places: the cost shape, and the low-to-high revenue
-            spread. The dollars themselves land once you pick a place above.
-          </p>
-          <DataSection section={economicsSection} />
-        </div>
-      ) : null}
-
-      {/* The qualitative reads, each as its own small titled table (founder
-         feedback, 2026-06-06). Market structure, pricing power, labor and
-         skills, and the survival baseline used to render as one flat run of
-         mostly-dashed rows. Each is now its own branded StatCard table, clearly
-         delineated, so a section reads as an intentional small table even where
-         a field is genuinely unheld (it shows the board dash). Survival carries
-         a representative archetype where one is held; the others are named-but-
-         unheld at this worldwide altitude today and fill in as archetypes are
-         curated. The cards sit two-up from md so they stay scannable. */}
-      <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
-        {qualitativeSections.map((s) => (
-          <StatCard
-            key={s.key}
-            title={s.title}
-            stats={s.rows}
-            footnote={
-              s.modeled
-                ? "Modeled from national business demography. Directional."
-                : undefined
-            }
-          />
-        ))}
-      </div>
-
-      {/* Where it works. The covered places where this activity keeps the most
-         for its owner, ranked by modeled after-tax take-home, best at the top.
-         Each row links to that place's full benchmark for this activity. Built
-         from the cross-place slate the board already loaded and trimmed; garbage
-         tails are dropped upstream, so a corrupt place can never headline. The
-         whole block omits cleanly when the slate is thin (fewer than two
-         places), never showing an invented ranking. No count-of-things copy. */}
-      {hasPlaceCohorts && (
-        // SaaS reformation 2026-06-12: seated card sections on the app
-        // ground, matching the board language site-wide. Data-sanity 2026-06-13:
-        // split into like-for-like cohorts so we never rank a US state's USD
-        // figure against a foreign country's across price regimes.
-        <section className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
-          <SectionEyebrow>Where it works</SectionEyebrow>
-          <h2 className="mt-1 font-display text-xl md:text-2xl font-medium tracking-tight text-balance text-ink-900">
-            Where {ind.name.toLowerCase()} earn more, and where less
-          </h2>
-          <p className="mt-1.5 mb-5 max-w-2xl text-sm md:text-base leading-relaxed text-cocoa-700/80">
-            The places we cover for {ind.name.toLowerCase()}. US states sit on
-            one currency and one tax system, so we rank them by what a typical
-            owner keeps. Countries we list side by side, not ranked, because a
-            raw dollar figure is not adjusted for local prices. Open any row for
-            the full revenue, cost stack, and survival read. Modeled and
-            directional.
-          </p>
-
-          {stateRows.length >= 2 && (
-            <div>
-              <SectionEyebrow size="md">Across US states</SectionEyebrow>
-              <p className="mt-1 mb-2 text-[11px] leading-relaxed text-cocoa-500">
-                Ranked by modeled after-tax owner take-home. Best at the top.
-              </p>
-              <ul className="divide-y divide-parchment border-y border-parchment">
-                {stateRows.map((p, i) => (
-                  <li key={`${p.href}-${i}`}>
-                    <Link
-                      href={p.href}
-                      className="group flex items-baseline justify-between gap-3 py-2.5 transition-colors"
-                    >
-                      <span className="flex min-w-0 items-baseline gap-2.5">
-                        <span className="w-5 shrink-0 text-[11px] tabular-nums text-cocoa-500">
-                          {i + 1}
-                        </span>
-                        <span className="truncate text-sm font-medium text-ink-900 transition-colors group-hover:text-atlas-700">
-                          {p.name}
-                        </span>
-                      </span>
-                      <span className="flex shrink-0 items-baseline gap-3">
-                        {p.netMarginPct != null && (
-                          <span className="hidden text-[11px] tabular-nums text-cocoa-500 sm:inline">
-                            {fmtPct(p.netMarginPct)} net
-                          </span>
-                        )}
-                        <span className="font-display text-base font-semibold tabular-nums text-ink-900">
-                          <TakeHomeValue takeHome={p.takeHome} cellHref={p.href} />
-                        </span>
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {countryRows.length >= 2 && (
-            <div className={stateRows.length >= 2 ? "mt-7" : ""}>
-              <SectionEyebrow size="md">Across countries we cover</SectionEyebrow>
-              <p className="mt-1 mb-2 text-[11px] leading-relaxed text-cocoa-500">
-                In name order, not ranked. Net margin is comparable across
-                borders, take-home is in US dollars and not adjusted for local
-                prices, so read each on its own.
-              </p>
-              <ul className="divide-y divide-parchment border-y border-parchment">
-                {countryRows.map((p, i) => (
-                  <li key={`${p.href}-${i}`}>
-                    <Link
-                      href={p.href}
-                      className="group flex items-baseline justify-between gap-3 py-2.5 transition-colors"
-                    >
-                      <span className="truncate text-sm font-medium text-ink-900 transition-colors group-hover:text-atlas-700">
-                        {p.name}
-                      </span>
-                      <span className="flex shrink-0 items-baseline gap-3">
-                        {p.netMarginPct != null && (
-                          <span className="text-[11px] tabular-nums text-cocoa-500">
-                            {fmtPct(p.netMarginPct)} net
-                          </span>
-                        )}
-                        <span className="font-display text-base font-medium tabular-nums text-cocoa-700/80">
-                          <TakeHomeValue takeHome={p.takeHome} cellHref={p.href} />
-                        </span>
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          <p className="mt-3 text-[11px] text-cocoa-500">
-            Owner take-home is after tax, for a typical single-site operator. The
-            same activity reads differently once local rent, wages, and tax land
-            on it.
-          </p>
-        </section>
-      )}
-
-      {/* 1b. how-it-works: the opinionated business-model read and the
-         cost-stage anatomy, built from the curated margins by the
-         industry-verdict synthesis module. This is the "found nowhere else"
-         decision layer. The block always renders (margins fall back to a
-         conservative SMB default), but every individual clause and signal
-         self-omits when its input is missing. When an activity character is
-         written, its one-line hook frames the lede and the hand-written
-         mechanics add the depth the margin synthesis alone cannot reach. */}
-      <section
-        id="how-it-works"
-        className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
-      >
-        {/* The decision-framed money question is the page's primary search
-           heading. It moved here from the retired photo hero so the H1 above
-           can stay the plain board title; this reads as the section H2. */}
-        <h2 className="mb-4 font-display text-2xl md:text-3xl font-medium tracking-tight text-balance text-ink-900">
-          {moneyQuestion}
-        </h2>
-        <IndustryModelLede verdict={verdict} edge={character?.edge ?? null} />
-        {character && (
-          <div className="mt-8 max-w-3xl space-y-5">
-            {/* The hand-written mechanics: how the money actually works, in the
-               operator's own terms. This is the editorial depth a margin
-               readout cannot carry. */}
-            <div className="rounded-xl border border-parchment bg-cream-50 p-5">
-              <div className="text-[10px] uppercase tracking-[0.16em] text-atlas-700 font-semibold mb-2">
-                How the money actually works
+         The sticky nav sits beside the body (left rail from xl, a chip row
+         below). Only three literal <section id=> blocks exist, in the canonical
+         order the section-order gate enforces: hero, how-it-works,
+         margin-waterfall. Every other nav anchor is a <div id=> wrapper, so the
+         kit's own <section> elements never inject an unregistered id. */}
+      <div className="flex gap-6">
+        <div className="min-w-0 flex-1 space-y-6 md:space-y-8">
+          {/* 1. Hero + headline numbers, answer-first. The trade pictogram
+             carries the identity (design-system 9.2); the answer-first masthead
+             carries the verdict thesis as the page H1, the one-line answer, the
+             cross-place typical-revenue anchor with its signature 7-gradation
+             spread, and the place-stable structural shares. The masthead self-
+             omits the anchor + spread when the slate is too thin to defend a band
+             (the WS1 / activity_board guard), so a thin trade still opens cleanly
+             with just the thesis, the answer, and the shares. The eyebrow is the
+             sector. No tier chip at this altitude: an activity carries no single
+             confidence read. The place picker and the across-cities link are the
+             hero actions below. id="hero" is the canonical first beat. */}
+          <section id="hero">
+            <div className="flex items-start gap-4">
+              <span className="mt-1 hidden shrink-0 text-ink-900 sm:block" aria-hidden="true">
+                <AtlasPictogram id={pictogramId} size={56} />
+              </span>
+              <div className="min-w-0 flex-1">
+                <AnswerFirstMasthead
+                  eyebrow={view.masthead.eyebrow ?? ind.name}
+                  title={view.masthead.title}
+                  answer={view.masthead.answer}
+                  anchor={view.masthead.anchor}
+                  spread={
+                    view.masthead.spread
+                      ? { ...view.masthead.spread, format: usdCompact }
+                      : null
+                  }
+                  stats={view.masthead.stats}
+                  motif={false}
+                />
               </div>
-              <p className="font-serif text-base leading-snug text-ink-900 mb-2">
-                {character.hook}
-              </p>
-              <p className="text-sm text-graphite leading-relaxed">{character.economics}</p>
             </div>
-            {character.categoryNote && (
-              <p className="text-sm text-cocoa-700/85 italic leading-relaxed border-l-2 border-atlas-300 pl-3">
-                {character.categoryNote}
-              </p>
-            )}
-          </div>
-        )}
-      </section>
 
-      {/* 2. margin-waterfall: where each dollar of a sale actually goes. The
-         curated cost-structure margins are stable across countries within an
-         activity (a restaurant's payroll-as-share-of-revenue is similar in
-         Berlin and Brazil). The cell page scales them against country-specific
-         revenue; here they carry the model anatomy. */}
-      <section
-        id="margin-waterfall"
-        className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
-      >
-        <SectionEyebrow className="mb-3">Where each dollar goes</SectionEyebrow>
-        <p className="max-w-2xl text-base leading-relaxed text-graphite mb-4">
-          Each bar takes a typical sale one cut deeper: what survives the direct
-          cost of goods, what running the business leaves, and what reaches the
-          bottom line. The gap between the top bar and the bottom one is the
-          whole game.
-        </p>
-        <MarginWaterfall
-          grossMargin={margin.gross_margin}
-          operatingMargin={margin.operating_margin}
-          netMargin={margin.net_margin}
-        />
-        {margin.notes && !/Cloned from|Wave \d|To-?Do|Fix-?Me/i.test(margin.notes) && ( // allow-internal-note
-          <p className="mt-2 text-xs text-ink-700/60 italic max-w-2xl">
-            {margin.notes}
-          </p>
-        )}
-      </section>
+            <div className="mt-5">
+              <ActivityPlacePicker activityId={ind.id} activityName={ind.name} />
+            </div>
 
-      {/* 3. what kills weak operators (bible Section 6 module 22, a FREE
-         module). The flow beat between "where each dollar goes" and "where this
-         plays out": once the reader sees how little survives, name what takes
-         the rest of it from the weak operators. Built only from data already
-         loaded: the hand-written watch-out, and the single most punishing cost
-         stage read from the verdict anatomy. No <section id=>, so it sits
-         OUTSIDE the canonical industry-page skeleton (hero / how-it-works /
-         margin-waterfall) without disturbing the gate. The whole block
-         self-suppresses when neither input exists. */}
-      {(character?.watchOut?.trim() || worstSignal) && (
-        <section className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
-          <SectionEyebrow className="mb-2">What kills the weak operators</SectionEyebrow>
-          <h2 className="font-display text-lg md:text-xl font-semibold tracking-tight text-ink-900">
-            Where the margin gets taken back
-          </h2>
-          <div className="mt-5 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-2">
-            {character?.watchOut?.trim() && (
-              <div className="rounded-xl border-l-2 border-clay-700 border-y border-r border-parchment bg-white p-5">
-                <div className="text-xs font-semibold uppercase tracking-wide text-clay-700">
-                  The trap
-                </div>
-                <p className="mt-2 text-sm leading-relaxed text-ink-900">
-                  {character.watchOut}
-                </p>
-              </div>
-            )}
-            {worstSignal && (
-              <div className="rounded-xl border border-parchment bg-white p-5">
-                <div className="text-xs font-semibold uppercase tracking-wide text-cocoa-500">
-                  The structural reason
-                </div>
-                <p className="mt-2 text-sm leading-relaxed text-graphite">
-                  <span className="font-serif capitalize text-clay-700">
-                    {worstSignal.label}: {worstSignal.word}.
-                  </span>{" "}
-                  {worstSignal.note}
-                </p>
-              </div>
-            )}
-          </div>
-        </section>
-      )}
-
-      {/* 4. related activities (bible Section 6 module 28, a FREE module). The
-         closing rail: the other small-business models in this sector, so a
-         reader who has learned to read one model anatomy can jump to a
-         neighbouring one. Pure taxonomy, NOT a cross-place ranking. No
-         <section id=>, so it stays outside the canonical skeleton; the whole
-         block self-suppresses when the sector has no other measured siblings. */}
-      {relatedActivities.length > 0 && (
-        <section className="mt-5 mb-8 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
-          <SectionEyebrow className="mb-1">Related activities</SectionEyebrow>
-          <h2 className="font-display text-lg md:text-xl font-semibold tracking-tight text-ink-900">
-            Other ways to make money{sector ? ` in ${sector.name.toLowerCase()}` : ""}
-          </h2>
-          <p className="mt-2 text-sm leading-relaxed text-cocoa-700/85 max-w-2xl">
-            Each reads its own way once the cost stack and the capital bar land.
-          </p>
-          <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {relatedActivities.map((sib) => (
-              <a
-                key={sib.id}
-                href={`/industries/${industryToSlug(sib.id)}`}
-                className="group rounded-xl border border-parchment bg-white p-4 transition-colors hover:bg-cream-50"
+            {/* Across-cities comparison CTA (founder's chosen comparison
+               default). The programmatic comparison lives at
+               /industries/{slug}/across; it self-omits cleanly when too few
+               cities resolve, so the link is always safe to show. */}
+            <Link
+              href={`/industries/${activitySlug}/across`}
+              className="group mt-3 inline-flex items-center gap-2 rounded-full border border-parchment bg-cream-50 px-4 py-2 text-sm font-medium text-ink-900 transition-colors hover:border-atlas-300 hover:bg-cream-100"
+            >
+              <span>
+                Not sure where? See {ind.name.toLowerCase()} across the
+                world&apos;s cities
+              </span>
+              <span
+                aria-hidden="true"
+                className="text-atlas-700 transition-transform group-hover:translate-x-0.5"
               >
-                <div className="text-sm font-semibold text-ink-900 group-hover:text-atlas-700">
-                  {sib.name}
-                </div>
-                {sib.examples && sib.examples.length > 0 && (
-                  <div className="mt-1 text-xs leading-relaxed text-cocoa-500 line-clamp-2">
-                    {sib.examples.slice(0, 3).join(", ")}
+                &rarr;
+              </span>
+            </Link>
+          </section>
+
+          {/* 2. The honest take, right after the headline numbers (the
+             through-line). The verdict close is the one-line read, the lead
+             traces the money top-to-bottom, and the model anatomy (plus the
+             activity character's watch-out when written) is the supporting
+             points. Self-omits when there is nothing honest to say. The id lives
+             on a div wrapper, not the kit <section>, so the gate sees no stray
+             id. */}
+          {view.honestTake ? (
+            <div id="honest-take">
+              <HonestTakeBox
+                verdict={view.honestTake.verdict}
+                points={view.honestTake.points}
+              >
+                {view.honestTake.body}
+              </HonestTakeBox>
+            </div>
+          ) : null}
+
+          {/* 4. How it makes money. The decision-framed money question is the
+             page's primary search heading (H2). The verdict prose and the
+             cost-stage anatomy read inline here, then the per-$100 split makes
+             the shares tangible, then the hand-written mechanics add the depth
+             the margin synthesis cannot reach. The block always renders (the
+             margins fall back to a conservative default), but every clause and
+             signal self-omits on a missing input. */}
+          <section
+            id="how-it-works"
+            className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+          >
+            <SectionEyebrow className="mb-1">
+              How this business makes money
+            </SectionEyebrow>
+            <h2 className="font-display text-xl font-medium tracking-tight text-balance text-ink-900 md:text-2xl">
+              {moneyQuestion}
+            </h2>
+
+            <div className="mt-3 max-w-2xl space-y-3 text-base leading-relaxed text-graphite">
+              <p>{verdict.lead}</p>
+              <p className="text-ink-900">{verdict.close}</p>
+            </div>
+
+            {/* The business-model anatomy: each cost stage as a qualitative
+               word, read top-of-sale to bottom-line. The distinctive move. */}
+            {verdict.signals.length > 0 ? (
+              <dl className="mt-7 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {verdict.signals.map((s) => (
+                  <div
+                    key={s.label}
+                    className="rounded-lg border border-parchment bg-cream-50 p-4"
+                  >
+                    <dt className="text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
+                      {s.label}
+                    </dt>
+                    <dd
+                      className={`mt-1 font-display text-xl capitalize leading-none ${signalToneClass(
+                        s.tone,
+                      )}`}
+                    >
+                      {s.word}
+                    </dd>
+                    <p className="mt-2 text-sm leading-relaxed text-graphite">
+                      {s.note}
+                    </p>
                   </div>
-                )}
-              </a>
-            ))}
-          </div>
-        </section>
-      )}
+                ))}
+              </dl>
+            ) : null}
+
+            {character?.edge?.trim() ? (
+              <div className="mt-6 border-l-2 border-moss-300 pl-4">
+                <div className="text-[11px] font-semibold uppercase tracking-wider text-moss-700">
+                  What the best operators do
+                </div>
+                <p className="mt-1 text-sm leading-relaxed text-ink-900">
+                  {character.edge}
+                </p>
+              </div>
+            ) : null}
+
+            {/* The per-$100 split (the signature money breakdown). Wrapped in a
+               div anchor so the kit <section> carries no registered-but-out-of-
+               order id. Self-omits when the margin shape cannot form a credible
+               $100 decomposition. */}
+            {view.moneyGoes ? (
+              <div id="money" className="mt-7">
+                <MoneyGoesBreakdown
+                  items={view.moneyGoes}
+                  eyebrow="Where each $100 goes"
+                  heading="Every $100 of a sale"
+                  lede="The cost shape is stable across places: a trade keeps roughly the same share of each dollar in one country as another. The dollars themselves land once you pick a place."
+                />
+              </div>
+            ) : null}
+
+            {/* The hand-written mechanics: how the money actually works, in the
+               operator's own terms. The editorial depth a margin readout cannot
+               carry. Self-suppresses when no character is written. */}
+            {character ? (
+              <div className="mt-7 max-w-3xl space-y-4">
+                <div className="rounded-lg border border-parchment bg-cream-100 p-5">
+                  <div className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-atlas-700">
+                    How the money actually works
+                  </div>
+                  <p className="mb-2 font-display text-base font-medium leading-snug text-ink-900">
+                    {character.hook}
+                  </p>
+                  <p className="text-sm leading-relaxed text-graphite">
+                    {character.economics}
+                  </p>
+                </div>
+                {character.categoryNote ? (
+                  <p className="border-l-2 border-atlas-300 pl-3 text-sm italic leading-relaxed text-cocoa-700/85">
+                    {character.categoryNote}
+                  </p>
+                ) : null}
+              </div>
+            ) : null}
+          </section>
+
+          {/* 5. A typical operator. The content-map's "what a typical one looks
+             like": the place-stable structure read into tangible operator facts
+             (what survives a sale, what reaches the owner, the capital bar, the
+             representative one-year survival), plus the cross-place typical
+             revenue when a band exists. No fabricated headcount. Self-omits when
+             fewer than two facts are held. */}
+          {view.typicalOperator ? (
+            <div id="typical-operator">
+              <PlainTerms
+                eyebrow="A typical operator"
+                heading={`What a typical ${ind.name.toLowerCase()} operator looks like`}
+                items={view.typicalOperator}
+              />
+            </div>
+          ) : null}
+
+          {/* 6. Where it earns most. The like-for-like cohort tables, KEPT
+             EXACTLY from the WS1 data-sanity edit: US states ranked by what a
+             typical owner keeps (one currency, one tax system), countries listed
+             side by side in name order (a raw dollar figure is not adjusted for
+             local prices). Never a single global rank that mixes them. Built from
+             the cross-place slate, garbage tails dropped upstream, so a corrupt
+             place can never headline. Omits cleanly when the slate is thin. The
+             id lives on a div wrapper; the inner block keeps its seated-card
+             grammar. */}
+          {hasPlaceCohorts && (
+            <div
+              id="where-it-earns"
+              className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+            >
+              <SectionEyebrow>Where it earns most</SectionEyebrow>
+              <h2 className="mt-1 font-display text-xl md:text-2xl font-medium tracking-tight text-balance text-ink-900">
+                Where {ind.name.toLowerCase()} earn more, and where less
+              </h2>
+              <p className="mt-1.5 mb-5 max-w-2xl text-sm md:text-base leading-relaxed text-cocoa-700/80">
+                The places we cover for {ind.name.toLowerCase()}. US states sit on
+                one currency and one tax system, so we rank them by what a typical
+                owner keeps. Countries we list side by side, not ranked, because a
+                raw dollar figure is not adjusted for local prices. Open any row
+                for the full revenue, cost stack, and survival read. Modeled and
+                directional.
+              </p>
+
+              {stateRows.length >= 2 && (
+                <div>
+                  <SectionEyebrow size="md">Across US states</SectionEyebrow>
+                  <p className="mt-1 mb-2 text-[11px] leading-relaxed text-cocoa-500">
+                    Ranked by modeled after-tax owner take-home. Best at the top.
+                  </p>
+                  <ul className="divide-y divide-parchment border-y border-parchment">
+                    {stateRows.map((p, i) => (
+                      <li key={`${p.href}-${i}`}>
+                        <Link
+                          href={p.href}
+                          className="group flex items-baseline justify-between gap-3 py-2.5 transition-colors"
+                        >
+                          <span className="flex min-w-0 items-baseline gap-2.5">
+                            <span className="w-5 shrink-0 text-[11px] tabular-nums text-cocoa-500">
+                              {i + 1}
+                            </span>
+                            <span className="truncate text-sm font-medium text-ink-900 transition-colors group-hover:text-atlas-700">
+                              {p.name}
+                            </span>
+                          </span>
+                          <span className="flex shrink-0 items-baseline gap-3">
+                            {p.netMarginPct != null && (
+                              <span className="hidden text-[11px] tabular-nums text-cocoa-500 sm:inline">
+                                {fmtPct(p.netMarginPct)} net
+                              </span>
+                            )}
+                            <span className="font-display text-base font-semibold tabular-nums text-ink-900">
+                              <TakeHomeValue takeHome={p.takeHome} cellHref={p.href} />
+                            </span>
+                          </span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {countryRows.length >= 2 && (
+                <div className={stateRows.length >= 2 ? "mt-7" : ""}>
+                  <SectionEyebrow size="md">Across countries we cover</SectionEyebrow>
+                  <p className="mt-1 mb-2 text-[11px] leading-relaxed text-cocoa-500">
+                    In name order, not ranked. Net margin is comparable across
+                    borders, take-home is in US dollars and not adjusted for local
+                    prices, so read each on its own.
+                  </p>
+                  <ul className="divide-y divide-parchment border-y border-parchment">
+                    {countryRows.map((p, i) => (
+                      <li key={`${p.href}-${i}`}>
+                        <Link
+                          href={p.href}
+                          className="group flex items-baseline justify-between gap-3 py-2.5 transition-colors"
+                        >
+                          <span className="truncate text-sm font-medium text-ink-900 transition-colors group-hover:text-atlas-700">
+                            {p.name}
+                          </span>
+                          <span className="flex shrink-0 items-baseline gap-3">
+                            {p.netMarginPct != null && (
+                              <span className="text-[11px] tabular-nums text-cocoa-500">
+                                {fmtPct(p.netMarginPct)} net
+                              </span>
+                            )}
+                            <span className="font-display text-base font-medium tabular-nums text-cocoa-700/80">
+                              <TakeHomeValue takeHome={p.takeHome} cellHref={p.href} />
+                            </span>
+                          </span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              <p className="mt-3 text-[11px] text-cocoa-500">
+                Owner take-home is after tax, for a typical single-site operator.
+                The same activity reads differently once local rent, wages, and
+                tax land on it.
+              </p>
+            </div>
+          )}
+
+          {/* 7. The cost stack. The curated cost-structure margins are stable
+             across countries within an activity. The cell page scales them
+             against country-specific revenue; here they carry the model anatomy
+             one cut deeper than the per-$100 bar. id="margin-waterfall" is the
+             last canonical beat. */}
+          <section
+            id="margin-waterfall"
+            className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+          >
+            <SectionEyebrow className="mb-3">The cost stack, cut by cut</SectionEyebrow>
+            <p className="max-w-2xl text-base leading-relaxed text-graphite mb-4">
+              Each bar takes a typical sale one cut deeper: what survives the
+              direct cost of goods, what running the business leaves, and what
+              reaches the bottom line. The gap between the top bar and the bottom
+              one is the whole game.
+            </p>
+            <MarginWaterfall
+              grossMargin={margin.gross_margin}
+              operatingMargin={margin.operating_margin}
+              netMargin={margin.net_margin}
+            />
+            {margin.notes && !/Cloned from|Wave \d|To-?Do|Fix-?Me/i.test(margin.notes) && ( // allow-internal-note
+              <p className="mt-2 text-xs text-ink-700/60 italic max-w-2xl">
+                {margin.notes}
+              </p>
+            )}
+          </section>
+
+          {/* 8. Related activities (a FREE module). The closing rail: the other
+             small-business models in this sector, so a reader who has learned to
+             read one model anatomy can jump to a neighbouring one. Pure taxonomy,
+             NOT a cross-place ranking. The id is on a div wrapper. Self-
+             suppresses when the sector has no other measured siblings. */}
+          {relatedActivities.length > 0 && (
+            <div
+              id="related"
+              className="mb-8 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+            >
+              <SectionEyebrow className="mb-1">Related activities</SectionEyebrow>
+              <h2 className="font-display text-lg md:text-xl font-semibold tracking-tight text-ink-900">
+                Other ways to make money{sector ? ` in ${sector.name.toLowerCase()}` : ""}
+              </h2>
+              <p className="mt-2 text-sm leading-relaxed text-cocoa-700/85 max-w-2xl">
+                Each reads its own way once the cost stack and the capital bar
+                land.
+              </p>
+              <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {relatedActivities.map((sib) => (
+                  <a
+                    key={sib.id}
+                    href={`/industries/${industryToSlug(sib.id)}`}
+                    className="group rounded-lg border border-parchment bg-white p-4 transition-colors hover:bg-cream-50"
+                  >
+                    <div className="flex items-start gap-3">
+                      <span
+                        className="mt-0.5 shrink-0 text-cocoa-700"
+                        aria-hidden="true"
+                      >
+                        <AtlasPictogram id={industryPictogramId(sib.id)} size={24} />
+                      </span>
+                      <div className="min-w-0">
+                        <div className="text-sm font-semibold text-ink-900 group-hover:text-atlas-700">
+                          {sib.name}
+                        </div>
+                        {sib.examples && sib.examples.length > 0 && (
+                          <div className="mt-1 text-xs leading-relaxed text-cocoa-500 line-clamp-2">
+                            {sib.examples.slice(0, 3).join(", ")}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <StickySectionNav sections={nav} />
+      </div>
     </div>
   );
+}
+
+/**
+ * Token color class for a model-anatomy signal tone: a low-cost-pressure stage
+ * leans moss, a heavy one clay, the middle the atlas accent. Tokens only.
+ */
+function signalToneClass(tone: "good" | "flat" | "bad"): string {
+  if (tone === "good") return "text-moss-700";
+  if (tone === "bad") return "text-clay-700";
+  return "text-atlas-700";
 }
 
 /**

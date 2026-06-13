@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect, Fragment, type ReactNode } from "react";
+import { useState, useMemo, useEffect, type ReactNode } from "react";
 import { ComboField, type ComboOption } from "@/components/ComboField";
 import { COUNTRIES, INDUSTRIES, INDUSTRY_BY_ID } from "@/lib/taxonomy";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
@@ -12,10 +12,14 @@ import {
   fmtNum,
   MISSING,
 } from "@/components/board/format";
-import { SpreadBar } from "@/components/board/charts/SpreadBar";
 import { isGatingEnabled } from "@/lib/feature_flags";
 import { GatedTakeHome } from "@/components/monetization/GatedTakeHome";
 import { RedactedNumber } from "@/components/monetization/RedactedNumber";
+import { HonestTakeBox, RangeStrip, StickySectionNav } from "@/components/kit";
+import {
+  generateCompareVerdict,
+  type CompareSide,
+} from "@/lib/scores/compare_verdict";
 
 type Slot = { country: string; industry: string; region: string };
 
@@ -458,10 +462,80 @@ export function CompareClient() {
     return best;
   }, [activeCols, cells, spansCountries]);
 
+  // Where each one wins: a balanced, honest read built from the loaded figures
+  // via the shared compare-verdict module. It crowns wins per metric (revenue,
+  // pay, predictability) and names the catch each time, never "this one is bad".
+  //
+  // The spansCountries guard holds here too: across price regimes a raw-USD
+  // revenue or wage "win" is the same nonsense the leader marks suppress, so we
+  // withhold the money-based wins and let the module lead on predictability and
+  // the explicit caveat instead. Within one country every win stands.
+  const verdict = useMemo(() => {
+    if (activeCols.length < 2) return null;
+    const sides: CompareSide[] = activeCols.map((i) => {
+      const c = cells[i] as CompactCell;
+      return {
+        index: i,
+        place: slotLabel(i),
+        industry: activityLabel(i),
+        typical: c.revenue_per_firm,
+        p10: c.rev_p10,
+        p90: c.rev_p90,
+        wagePerEmployee: c.payroll_per_employee,
+        quality: c.quality_score,
+      };
+    });
+    const v = generateCompareVerdict(sides);
+    if (spansCountries) {
+      // Drop the money-led wins (Typical revenue, Pays staff) that are not
+      // like-for-like across currencies; keep the predictability read.
+      const wins = v.wins.filter((w) => w.metric === "Most predictable");
+      return {
+        headline: "No single winner across countries",
+        lead: "These sit in different price regimes, so a bigger revenue or wage number does not make one the better business. The honest read is the shape: how predictable each one is, and the cost base you would bring to it.",
+        close: v.close,
+        wins,
+      };
+    }
+    return v;
+    // slotLabel / activityLabel read slots + cells, captured below.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeCols, cells, spansCountries, slots]);
+
+  // The columns that carry a usable revenue spread, used to decide whether the
+  // standalone RangeStrip section (lifted out of the table) renders at all.
+  const spreadCols = useMemo(
+    () =>
+      activeCols.filter((i) => {
+        const c = cells[i] as CompactCell | null;
+        return (
+          c != null &&
+          isNum(c.rev_p10) &&
+          isNum(c.rev_p90) &&
+          (c.rev_p90 as number) > (c.rev_p10 as number)
+        );
+      }),
+    [activeCols, cells],
+  );
+
+  // The sticky in-page nav. Built from the sections that will actually render,
+  // so an absent block never leaves a dead anchor. Shows once the page is long
+  // enough to be worth jumping around (StickySectionNav itself hides under two).
+  const navSections = useMemo(() => {
+    const nav: Array<{ id: string; label: string }> = [
+      { id: "compare-pickers", label: "Set the matchup" },
+    ];
+    if (verdict && verdict.wins.length > 0) nav.push({ id: "where-each-wins", label: "Where each wins" });
+    if (spreadCols.length > 0) nav.push({ id: "revenue-spread", label: "Revenue spread" });
+    nav.push({ id: "compare-grid", label: "Side by side" });
+    return nav;
+  }, [verdict, spreadCols]);
+
   return (
-    <div className="space-y-12 md:space-y-16">
+    <div className="xl:flex xl:gap-12">
+      <div className="min-w-0 flex-1 space-y-12 md:space-y-16">
       {/* ----- Pick the matchup ----- */}
-      <section aria-labelledby="compare-pickers-heading">
+      <section id="compare-pickers" aria-labelledby="compare-pickers-heading">
         <SectionEyebrow className="mb-3">Set the matchup</SectionEyebrow>
         <h2
           id="compare-pickers-heading"
@@ -543,8 +617,85 @@ export function CompareClient() {
         </div>
       </section>
 
+      {/* ----- Where each one wins (the balanced verdict) ----- */}
+      {verdict && verdict.wins.length > 0 ? (
+        <section id="where-each-wins" aria-label="Where each one wins">
+          <HonestTakeBox eyebrow="Where each one wins" verdict={verdict.headline}>
+            <p>{verdict.lead}</p>
+            <p className="text-cocoa-700/90">{verdict.close}</p>
+          </HonestTakeBox>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {verdict.wins.map((w) => (
+              <div
+                key={w.metric}
+                className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-4 py-4"
+              >
+                <div className="text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
+                  {w.metric}
+                </div>
+                <div className="mt-1 font-display text-base font-semibold tracking-tight text-ink-900">
+                  {w.winnerName}
+                </div>
+                <p className="mt-1.5 text-sm leading-relaxed text-cocoa-700/90">
+                  {w.reading}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {/* ----- The revenue spread (lifted out of the table) ----- */}
+      {spreadCols.length > 0 ? (
+        <section id="revenue-spread" aria-label="Revenue spread">
+          <SectionEyebrow className="mb-3">Revenue spread</SectionEyebrow>
+          <h2 className="font-display text-2xl font-medium tracking-tight text-ink-900 md:text-3xl">
+            How wide the typical number runs
+          </h2>
+          <p className="mt-2 max-w-2xl text-base leading-relaxed text-graphite">
+            The middle firm is only half the story. Each strip runs from the
+            bottom tenth to the top tenth, with the typical operator marked, so
+            you can see how much the headline number hides in each place.
+          </p>
+          <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {spreadCols.map((i) => {
+              const c = cells[i] as CompactCell;
+              return (
+                <div
+                  key={i}
+                  className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5"
+                >
+                  <div className="mb-3">
+                    <span className="block font-display text-base font-semibold text-ink-900">
+                      {slotLabel(i)}
+                    </span>
+                    <span className="block text-[11px] text-cocoa-500">
+                      {activityLabel(i)}
+                    </span>
+                  </div>
+                  <RangeStrip
+                    p10={c.rev_p10}
+                    p25={c.rev_p25}
+                    p50={c.revenue_per_firm ?? c.rev_p50}
+                    p75={c.rev_p75}
+                    p90={c.rev_p90}
+                    format={fmtUSD}
+                  />
+                </div>
+              );
+            })}
+          </div>
+          {spansCountries ? (
+            <p className="mt-4 text-[11px] leading-relaxed text-cocoa-500">
+              Shown in US dollars and not adjusted for local prices, so compare
+              the width of each spread, not one place against another.
+            </p>
+          ) : null}
+        </section>
+      ) : null}
+
       {/* ----- The comparison ----- */}
-      <section aria-labelledby="compare-grid-heading">
+      <section id="compare-grid" aria-labelledby="compare-grid-heading">
         <div className="flex flex-wrap items-baseline justify-between gap-4">
           <div>
             <SectionEyebrow className="mb-3">Side by side</SectionEyebrow>
@@ -634,28 +785,26 @@ export function CompareClient() {
                 </tr>
               </thead>
               <tbody className="text-ink-900">
+                {/* The revenue spread was lifted out of this table into its own
+                    seven-stop RangeStrip section above the grid, so the numbers
+                    group now reads as clean rows. */}
                 {GROUPS.map((group) => (
-                  <Fragment key={group.key}>
-                    <GroupBlock
-                      group={group}
-                      activeCols={activeCols}
-                      cells={cells}
-                      rowLeader={rowLeader}
-                      spansCountries={spansCountries}
-                    />
-                    {/* The revenue spread belongs to the numbers group: one
-                        SpreadBar per city, so how wide the headline runs is
-                        visible right under the headline figures. */}
-                    {group.key === "numbers" ? (
-                      <SpreadRows activeCols={activeCols} cells={cells} />
-                    ) : null}
-                  </Fragment>
+                  <GroupBlock
+                    key={group.key}
+                    group={group}
+                    activeCols={activeCols}
+                    cells={cells}
+                    rowLeader={rowLeader}
+                    spansCountries={spansCountries}
+                  />
                 ))}
               </tbody>
             </table>
           </div>
         )}
       </section>
+      </div>
+      <StickySectionNav sections={navSections} />
     </div>
   );
 }
@@ -737,61 +886,6 @@ function GroupBlock({
           </tr>
         );
       })}
-    </>
-  );
-}
-
-/**
- * The revenue-spread rows of the numbers group: a quiet sub-header, then one
- * SpreadBar per city (bottom tenth to top tenth, typical firm marked). A city
- * whose range is absent shows the board dash. SpreadBar is client-safe (visx).
- */
-function SpreadRows({
-  activeCols,
-  cells,
-}: {
-  activeCols: number[];
-  cells: Record<number, CompactCell | null>;
-}) {
-  return (
-    <>
-      <tr>
-        <td colSpan={activeCols.length + 1} className="pb-1 pt-4">
-          <SectionEyebrow size="md">Revenue spread</SectionEyebrow>
-          <p className="mt-1 text-[11px] leading-relaxed text-cocoa-500">
-            Bottom tenth to top tenth, with the typical firm marked.
-          </p>
-        </td>
-      </tr>
-      <tr className="border-b border-parchment/50">
-        <td className="py-2 pr-4 align-top" />
-        {activeCols.map((i) => {
-          const c = cells[i] as CompactCell;
-          const hasSpread =
-            isNum(c.rev_p10) &&
-            isNum(c.rev_p90) &&
-            (c.rev_p90 as number) > (c.rev_p10 as number);
-          return (
-            <td key={i} className="px-3 py-2 align-top">
-              {hasSpread ? (
-                <>
-                  <SpreadBar
-                    p10={c.rev_p10}
-                    median={c.revenue_per_firm ?? c.rev_p50}
-                    p90={c.rev_p90}
-                  />
-                  <div className="mt-1 flex justify-between text-[11px] tabular-nums text-cocoa-500">
-                    <span>{fmtUSD(c.rev_p10)}</span>
-                    <span>{fmtUSD(c.rev_p90)}</span>
-                  </div>
-                </>
-              ) : (
-                <span className="text-cocoa-400">{MISSING}</span>
-              )}
-            </td>
-          );
-        })}
-      </tr>
     </>
   );
 }

@@ -1,22 +1,29 @@
 /**
  * NeighborhoodOverview component.
  *
- * The per-neighborhood MICRO-MARKET PROFILE. This is a deep, non-repetitive
- * extension of the city page: it does NOT restate the city's numbers, it reads
- * the local economics of THIS neighborhood (what the catchment runs on, the
- * time-of-day rhythm, which trades win or are suppressed here, the rent drag).
+ * The per-neighbourhood MICRO-MARKET PROFILE, the neighbourhood-landing page.
+ * It does NOT restate the city's numbers: it reads the local economics of THIS
+ * district (what the catchment runs on, which trades win or are suppressed
+ * here, who shops here, the rent drag, and how it sits against the districts
+ * next to it).
+ *
+ * Rebuilt onto the Atlas Page Kit (2026-06-13): answer-first headline, the
+ * honest-take through-line right after it, the trade ranking as the "what
+ * thrives here" zone, a "who lives and shops here" beat (renders the
+ * loaded-but-previously-unused flavor.demographic_skew), an honest rent /
+ * price-tier read that self-omits, an ADJACENT-DISTRICT like-for-like table,
+ * then the on-the-ground texture and the sibling rail, with a sticky in-page
+ * nav. The eight-section memo wall is folded into three visual zones. London
+ * neighbourhoods fill the curated exemplar.
  *
  * Rendered by the cell-or-overview dispatcher at
- * src/app/[country]/[geo]/[industry]/page.tsx — when the URL
- * `/[country]/[geo]/[industry]` resolves as a known (city, neighborhood) pair
- * instead of a (geo, industry) cell, this component renders instead of the cell
- * page. The dispatcher imports findNeighborhoodContext + listSiblingNeighborhoods
- * + NeighborhoodOverview from here.
+ * src/app/[country]/[geo]/[industry]/page.tsx. The dispatcher imports
+ * findNeighborhoodContext + listSiblingNeighborhoods + NeighborhoodOverview.
  *
- * Server component (no client JS). Reads neighborhoods_v1.json + city_list_v1.json
- * via the existing cities helpers, the commuter/tourism/anomaly-tag engine in
- * lib/economics/neighborhood_multipliers, and the flavor loader. Every section
- * self-omits cleanly when its data is absent; every multiplier figure is finite.
+ * Server component (no client JS, bar the props-driven StickySectionNav). Reads
+ * neighborhoods_v1.json + city_list_v1.json via the cities helpers, the
+ * commuter/tourism/anomaly-tag engine, and the flavor + economics loaders.
+ * Every section self-omits cleanly when its data is absent.
  */
 import Link from "next/link";
 import cityListJson from "../../data/cities/city_list_v1.json";
@@ -38,6 +45,18 @@ import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { AtlasPictogram } from "@/components/brand/pictograms";
 import { industryPictogramId } from "@/lib/brand/industry_pictogram";
 import { NeighborhoodCover } from "@/components/cities/NeighborhoodCover";
+import {
+  HonestTakeBox,
+  WhatLocalsKnow,
+  BreakEvenLine,
+  LikeForLikeTable,
+  StickySectionNav,
+} from "@/components/kit";
+import {
+  buildNeighborhoodOverviewView,
+  neighborhoodOverviewNav,
+  type SiblingArea,
+} from "@/lib/cities/neighborhood_overview_view";
 
 type City = { slug: string; name: string; iso2: string; pop_m: number };
 export type Neighborhood = {
@@ -83,12 +102,11 @@ export function listSiblingNeighborhoods(
 }
 
 // ---------------------------------------------------------------------------
-// Representative activity set for the "What wins here" ranking.
+// Representative activity set for the "What thrives here" ranking.
 //
 // Multiplier activity id (underscores, as the engine expects) -> display name.
-// The engine in neighborhood_multipliers carries betas + tag effects under
-// these ids. The cell link, however, needs the TAXONOMY slug — most of these
-// ids ARE taxonomy industry ids (so industryToSlug(id) resolves), but two
+// The engine carries betas + tag effects under these ids. The cell link needs
+// the TAXONOMY slug; most of these ids ARE taxonomy industry ids, but two
 // differ and are aliased below.
 // ---------------------------------------------------------------------------
 
@@ -107,17 +125,11 @@ const REP_ACTIVITIES: Array<{ id: string; name: string }> = [
   { id: "auto_repair_shops", name: "Auto repair" },
 ];
 
-// The representative activity used for the headline component breakdown and the
-// demand-driver figures. Restaurants is the most universal SMB benchmark (it
-// mirrors the neighborhoods hub, which also reads restaurants).
+// The representative activity for the headline breakdown and the adjacent-area
+// comparison. Restaurants is the most universal SMB benchmark.
 const REP_ACTIVITY_ID = "restaurants";
+const REP_ACTIVITY_NAME = "Restaurant";
 
-/**
- * Alias map for the two representative activity ids whose multiplier id is not
- * itself a taxonomy industry id. Values are taxonomy slugs.
- *   - pharmacies_drug_stores -> the consumer pharmacy/drug-store cell
- *   - fitness_gyms           -> the consumer sports & fitness (gyms) cell
- */
 const ACTIVITY_CELL_SLUG_ALIAS: Record<string, string> = {
   pharmacies_drug_stores: "pharmacies-health-stores",
   fitness_gyms: "sports-fitness",
@@ -126,10 +138,8 @@ const ACTIVITY_CELL_SLUG_ALIAS: Record<string, string> = {
 /**
  * Resolve a multiplier activity id to a real taxonomy CELL slug, or null if it
  * does not resolve (so the row can render unlinked rather than as a broken
- * link). Tries, in order: the explicit alias, the canonical slug derived from
- * the activity id treated as an industry id, then the dashed id. Each candidate
- * is round-tripped through slugToIndustry so we only ever emit a slug that
- * actually resolves to a cell, and we emit that industry's canonical slug.
+ * link). Tries the explicit alias, the canonical slug from the activity id as
+ * an industry id, then the dashed id, round-tripping each through slugToIndustry.
  */
 function resolveActivityCellSlug(activityId: string): string | null {
   const candidates: string[] = [];
@@ -153,65 +163,13 @@ function pctLabel(final: number): string {
 
 /**
  * Brand-token color for a multiplier figure: moss for a clear premium (>1.1),
- * a neutral warm ink/cocoa near par, clay for a clear suppression (<0.9). Token
+ * a neutral warm cocoa near par, clay for a clear suppression (<0.9). Token
  * references only (no raw hex), mirroring the neighborhoods hub treatment.
  */
 function multColor(final: number): string {
   if (final > 1.1) return colors.moss[700];
   if (final < 0.9) return colors.clay[600];
   return colors.cocoa[700];
-}
-
-/** Driver phrase keyed off the primary tag. Defaults to a mixed catchment. */
-function driverPhrase(primary: NeighborhoodTag | undefined): string {
-  switch (primary) {
-    case "financial_cbd":
-    case "free_economic_zone":
-    case "tech_corridor":
-      return "Driven by weekday commuters and office workers.";
-    case "tourist_zone":
-    case "religious_pilgrimage":
-      return "Driven by visitors.";
-    case "university_district":
-      return "Driven by students.";
-    case "nightlife_zone":
-      return "Driven by evening and night crowds.";
-    case "residential_only":
-      return "Driven by local residents.";
-    case "medical_cluster":
-      return "Driven by hospital and clinic traffic.";
-    case "transit_hub":
-      return "Driven by transient footfall.";
-    case "industrial_park":
-      return "Driven by daytime workforce.";
-    default:
-      return "A mixed local catchment.";
-  }
-}
-
-/** Time-of-day / week rhythm phrase keyed off the primary tag. */
-function rhythmPhrase(primary: NeighborhoodTag | undefined): string {
-  switch (primary) {
-    case "financial_cbd":
-    case "free_economic_zone":
-      return "Weekday business hours; quiet on weekends.";
-    case "nightlife_zone":
-      return "Comes alive in the evenings.";
-    case "tourist_zone":
-      return "Peaks in the visitor season.";
-    case "university_district":
-      return "Term-time driven, thinner in summer.";
-    case "transit_hub":
-      return "Steady commuter rush, morning and evening.";
-    case "residential_only":
-      return "Even, resident-paced through the week.";
-    case "industrial_park":
-      return "Daytime only, dead after the shift.";
-    case "medical_cluster":
-      return "Daytime clinical hours.";
-    default:
-      return "A steady weekly rhythm.";
-  }
 }
 
 export function NeighborhoodOverview({
@@ -229,20 +187,18 @@ export function NeighborhoodOverview({
   const cc = country.toLowerCase();
 
   // Prime commercial streets + per-street spend for THIS neighborhood. Null
-  // until the pipeline fills the pair; the streets section below self-omits.
+  // until the pipeline fills the pair; the streets zone self-omits.
   const economics = getNeighborhoodEconomics(city.slug, nb.slug);
   const primeStreets = economics?.prime_streets ?? [];
 
   // The local-economics row: primary tag, anomaly tags, intensities. Null for a
-  // neighborhood that has not been curated yet (then the engine falls back to
-  // city defaults, the tag-driven sections self-omit, and rent reads ~1.0).
+  // neighborhood not yet curated (then the engine falls back to city defaults).
   const row = getNeighborhoodRow(city.slug, nb.slug);
   const tags = row?.tags ?? [];
   const primaryTag = row?.primary_tag;
 
-  // Build the activity ranking ONCE: it feeds both the headline winner and the
-  // "What wins here" table. Sort by the final multiplier descending so winners
-  // lead and the suppressed trades sink to the bottom. Every final is finite.
+  // The trade ranking, built ONCE: feeds the headline winner, the "what thrives
+  // here" zone, and the view model. Sorted by final multiplier descending.
   const ranked = REP_ACTIVITIES.map((a) => {
     const m = getNeighborhoodMultiplier(city.slug, nb.slug, a.id);
     return {
@@ -253,358 +209,382 @@ export function NeighborhoodOverview({
     };
   }).sort((x, y) => y.final - x.final);
 
-  const topWinner = ranked[0];
-
-  // Representative-activity component breakdown for the demand-driver figures.
+  // Representative-activity component breakdown for the demand drivers + table.
   const rep = getNeighborhoodMultiplier(city.slug, nb.slug, REP_ACTIVITY_ID);
 
-  // Rent drag from the tag set. Exactly 1.0 (no tags / neutral) means the rent
-  // line self-omits rather than printing a "+0%" non-fact.
+  // Composed rent drag from the tag set (1.0 when neutral / unknown).
   const rentMult = rentMultiplier(tags);
-  const rentPct = Math.round((rentMult - 1) * 100);
 
-  // Lead line: prefer the flavor character paragraph, fall back to the
-  // neighborhood description, else omit entirely (no invented prose).
-  const leadLine = flavor?.character_paragraph || nb.description || null;
+  // Sibling districts, each with their own representative-trade lift, for the
+  // adjacent-district comparison (the big gap). Only curated siblings carry a
+  // lift; uncurated ones come through with repFinal null and the view drops them.
+  const siblingAreas: SiblingArea[] = siblings.map((s) => {
+    const srow = getNeighborhoodRow(city.slug, s.slug);
+    return {
+      slug: s.slug,
+      name: s.name,
+      character: s.character,
+      repFinal: srow
+        ? getNeighborhoodMultiplier(city.slug, s.slug, REP_ACTIVITY_ID).final
+        : null,
+      primaryTag: (srow?.primary_tag as NeighborhoodTag | null) ?? null,
+    };
+  });
 
-  // The single strongest activity, phrased for the headline. "Restaurants earn
-  // about +180% versus the city here." Omitted at par (would be a non-signal).
-  const winnerHeadline =
-    topWinner && Math.round((topWinner.final - 1) * 100) !== 0
-      ? `${topWinner.name} earn about ${pctLabel(topWinner.final)} versus the city here.`
-      : null;
+  // The pure view model: answer-first headline, the honest take, who-shops-here,
+  // the rent read, and the adjacent-district table.
+  const view = buildNeighborhoodOverviewView({
+    cityName: city.name,
+    neighborhoodName: nb.name,
+    ranked,
+    rep,
+    repName: REP_ACTIVITY_NAME,
+    flavor,
+    primaryTag,
+    rentMult,
+    siblings: siblingAreas,
+    isCurated: !!row,
+  });
+
+  const hasTexture = !!(flavor?.food_scene || flavor?.dont_miss);
+  const navSections = neighborhoodOverviewNav(
+    view,
+    primeStreets.length > 0,
+    hasTexture,
+    siblings.length > 0,
+  );
 
   return (
-    <article className="pb-16 max-w-5xl mx-auto px-4 md:px-6 pt-2 md:pt-4">
-      {/* Cover banner: an honest designed placeholder (gradient + engraved
-          street grid), not a photo of the place. */}
-      <NeighborhoodCover
-        name={nb.name}
-        seed={`${city.slug}-${nb.slug}`}
-        className="h-28 md:h-40 rounded-2xl mb-5"
-      />
+    <div className="xl:flex xl:gap-16">
+      <article className="xl:flex-1 xl:min-w-0 max-w-5xl mx-auto px-4 md:px-6 pt-2 md:pt-4 pb-16">
+        {/* Cover banner: an honest designed placeholder (gradient + engraved
+            street grid), not a photo of the place. */}
+        <NeighborhoodCover
+          name={nb.name}
+          seed={`${city.slug}-${nb.slug}`}
+          className="h-28 md:h-40 rounded-2xl mb-5"
+        />
 
-      {/* 1) HEADLINE -------------------------------------------------------- */}
-      <div className="flex items-center gap-2 text-xs uppercase tracking-wide text-cocoa-700 font-semibold mb-3 flex-wrap">
-        <Link href={`/cities/${city.slug}`} className="hover:text-atlas-700 transition-colors">
-          {city.name}
-        </Link>
-        <span aria-hidden>·</span>
-        <CountryFlag iso2={city.iso2} className="w-3.5" />
-        <span>{countryName}</span>
-        <span aria-hidden>·</span>
-        <Link href={`/cities/${city.slug}/neighborhoods`} className="hover:text-atlas-700 transition-colors">
-          all neighborhoods
-        </Link>
-      </div>
-
-      <div className="flex items-baseline gap-3 mb-2 flex-wrap">
-        <h1 className="font-display text-3xl md:text-4xl font-medium tracking-tight text-ink-900">
-          {nb.name}
-        </h1>
-        <span className="text-[10px] uppercase tracking-wide font-semibold text-atlas-700 bg-atlas-50 border border-atlas-200 rounded-full px-2 py-0.5">
-          {nb.character.replace(/-/g, " ")}
-        </span>
-        {flavor?.price_tier && (
-          <span className="text-[10px] uppercase tracking-wide font-semibold text-cocoa-700 bg-cream-100 border border-parchment rounded-full px-2 py-0.5">
-            {flavor.price_tier}
-          </span>
-        )}
-        {flavor?.walkability && (
-          <span className="text-[10px] uppercase tracking-wide font-semibold text-cocoa-700 bg-cream-100 border border-parchment rounded-full px-2 py-0.5">
-            walks {flavor.walkability}
-          </span>
-        )}
-        {tags
-          .filter((t) => t !== "residential_only")
-          .slice(0, 4)
-          .map((t) => (
-            <span
-              key={t}
-              className="text-[10px] uppercase tracking-wide font-semibold text-atlas-700 bg-atlas-50 border border-atlas-200 rounded-full px-2 py-0.5"
+        {/* ZONE 1: ANSWER-FIRST HEADER ------------------------------------ */}
+        <div id="headline">
+          <div className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-wide text-cocoa-700 mb-3">
+            <Link href={`/cities/${city.slug}`} className="transition-colors hover:text-atlas-700">
+              {city.name}
+            </Link>
+            <span aria-hidden>·</span>
+            <CountryFlag iso2={city.iso2} className="w-3.5" />
+            <span>{countryName}</span>
+            <span aria-hidden>·</span>
+            <Link
+              href={`/cities/${city.slug}/neighborhoods`}
+              className="transition-colors hover:text-atlas-700"
             >
-              {tagLabel(t)}
+              all neighborhoods
+            </Link>
+          </div>
+
+          <div className="mb-3 flex flex-wrap items-baseline gap-3">
+            <h1 className="font-display text-3xl md:text-4xl font-medium tracking-tight text-ink-900">
+              {nb.name}
+            </h1>
+            <span className="rounded-full border border-parchment bg-cream-100 px-2.5 py-0.5 text-[11px] font-medium capitalize text-cocoa-700">
+              {nb.character.replace(/-/g, " ")}
             </span>
-          ))}
-      </div>
-
-      {/* The headline signal: the single strongest trade, vs the city. */}
-      {winnerHeadline && (
-        <p className="text-lg md:text-xl text-ink-900 font-medium max-w-2xl leading-snug mb-3">
-          {winnerHeadline}
-        </p>
-      )}
-
-      {leadLine && (
-        <p className="text-base md:text-lg text-cocoa-700 max-w-2xl leading-relaxed mb-8">
-          {leadLine}
-        </p>
-      )}
-
-      {/* 2) DEMAND DRIVERS -------------------------------------------------- */}
-      <section className="mb-10">
-        <SectionEyebrow size="sm" className="mb-2">
-          What it runs on
-        </SectionEyebrow>
-        <p className="text-base md:text-lg text-ink-900 max-w-2xl leading-relaxed mb-4">
-          {driverPhrase(primaryTag)}
-        </p>
-        {/* The three components that move the representative number, so the
-            reader sees what the multiplier is made of. */}
-        <div className="grid grid-cols-3 gap-3 max-w-md">
-          <div>
-            <div className="text-[10px] uppercase tracking-wide text-cocoa-700 font-semibold mb-1">
-              Commuter
-            </div>
-            <div className="font-display text-lg font-semibold tabular-nums text-ink-900">
-              {rep.commuter.toFixed(2)}×
-            </div>
-          </div>
-          <div>
-            <div className="text-[10px] uppercase tracking-wide text-cocoa-700 font-semibold mb-1">
-              Tourism
-            </div>
-            <div className="font-display text-lg font-semibold tabular-nums text-ink-900">
-              {rep.tourism.toFixed(2)}×
-            </div>
-          </div>
-          <div>
-            <div className="text-[10px] uppercase tracking-wide text-cocoa-700 font-semibold mb-1">
-              Tags
-            </div>
-            <div className="font-display text-lg font-semibold tabular-nums text-ink-900">
-              {rep.tags.toFixed(2)}×
-            </div>
-          </div>
-        </div>
-        <div className="text-[10px] text-cocoa-700/70 mt-2 tabular-nums">
-          On restaurant revenue, relative to the {city.name} baseline.
-        </div>
-      </section>
-
-      {/* 3) DISTRICT DYNAMICS ---------------------------------------------- */}
-      <section className="mb-10">
-        <SectionEyebrow size="sm" className="mb-2">
-          When it works
-        </SectionEyebrow>
-        <p className="text-base md:text-lg text-ink-900 max-w-2xl leading-relaxed">
-          {rhythmPhrase(primaryTag)}
-        </p>
-      </section>
-
-      {/* 4) WHAT WINS HERE -------------------------------------------------- */}
-      <section className="mb-10">
-        <SectionEyebrow size="sm" className="mb-2">
-          What wins here
-        </SectionEyebrow>
-        <h2 className="font-display text-xl md:text-2xl font-medium tracking-tight text-ink-900 mb-1">
-          Revenue by trade, versus the city
-        </h2>
-        <p className="text-sm text-cocoa-700 mb-4 max-w-2xl">
-          How much a typical operator earns here against the {city.name} baseline
-          for the same trade. Winners on top, suppressed trades below.
-        </p>
-        <div className="rounded-2xl border border-parchment overflow-hidden">
-          {ranked.map((r, i) => {
-            const figure = (
-              <span
-                className="font-display text-base md:text-lg font-semibold tabular-nums shrink-0"
-                style={{ color: multColor(r.final) }}
-              >
-                {pctLabel(r.final)}
+            {flavor?.price_tier && (
+              <span className="rounded-full border border-parchment bg-cream-100 px-2.5 py-0.5 text-[11px] font-medium text-cocoa-700">
+                {flavor.price_tier}
               </span>
-            );
-            const picto = (
-              <AtlasPictogram
-                id={industryPictogramId(r.id)}
-                size={18}
-                className="shrink-0 text-cocoa-700/70"
-              />
-            );
-            const label = (
-              <span className="flex items-center gap-2 min-w-0">
-                {picto}
-                <span className="font-medium text-sm md:text-base text-ink-900">
-                  {r.name}
-                </span>
-              </span>
-            );
-            const rowClasses = `flex items-center justify-between gap-4 px-4 md:px-5 py-3 ${
-              i > 0 ? "border-t border-parchment" : ""
-            }`;
-            // Render WITH a link only when the taxonomy slug resolves; otherwise
-            // render the row plain rather than a broken link.
-            return r.cellSlug ? (
-              <Link
-                key={r.id}
-                href={`/${cc}/${city.slug}/${nb.slug}/${r.cellSlug}`}
-                className={`group ${rowClasses} bg-white hover:bg-cream-100 transition-colors`}
-              >
-                <span className="flex items-center gap-2 min-w-0">
-                  {picto}
-                  <span className="font-medium text-sm md:text-base text-ink-900 group-hover:text-atlas-700 transition-colors">
-                    {r.name}
-                  </span>
-                  <span aria-hidden className="text-cocoa-700/50 text-xs">
-                    →
-                  </span>
-                </span>
-                {figure}
-              </Link>
-            ) : (
-              <div key={r.id} className={`${rowClasses} bg-white`}>
-                {label}
-                {figure}
-              </div>
-            );
-          })}
-        </div>
-        <p className="mt-3 text-[11px] text-cocoa-500">
-          Modeled from the area&apos;s commuter and tourism intensity and its
-          anomaly tags. Directional, a read on the local lift, not a guarantee.
-        </p>
-      </section>
-
-      {/* 5) RENT ------------------------------------------------------------ */}
-      {rentMult !== 1.0 && rentPct !== 0 && (
-        <section className="mb-10">
-          <SectionEyebrow size="sm" className="mb-2">
-            Rent
-          </SectionEyebrow>
-          <p className="text-base md:text-lg text-ink-900 max-w-2xl leading-relaxed">
-            Commercial rent runs about{" "}
-            <span
-              className="font-semibold tabular-nums"
-              style={{ color: multColor(rentMult) }}
-            >
-              {rentPct > 0 ? "+" : ""}
-              {rentPct}%
-            </span>{" "}
-            versus the city here.
-          </p>
-        </section>
-      )}
-
-      {/* 6) PRIME STREETS + SPEND.
-          Mounts only when this (city, neighborhood) has a curated streets
-          record with at least one street. Per-street rent and spend figures
-          self-omit when the pipeline has not filled them. */}
-      {primeStreets.length > 0 && (
-        <section className="mb-10">
-          <SectionEyebrow size="sm" className="mb-2">
-            Prime streets
-          </SectionEyebrow>
-          <p className="text-sm text-cocoa-700 mb-4 max-w-2xl">
-            Where commerce concentrates in {nb.name}.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {primeStreets.map((s) => {
-              const rentPct =
-                typeof s.rent_vs_city === "number" && Number.isFinite(s.rent_vs_city)
-                  ? Math.round((s.rent_vs_city - 1) * 100)
-                  : null;
-              const spend =
-                typeof s.spend_per_visit_usd === "number" &&
-                Number.isFinite(s.spend_per_visit_usd)
-                  ? s.spend_per_visit_usd
-                  : null;
-              return (
-                <div
-                  key={s.name}
-                  className="rounded-2xl border border-parchment bg-white p-4 md:p-5"
+            )}
+            {tags
+              .filter((t) => t !== "residential_only")
+              .slice(0, 3)
+              .map((t) => (
+                <span
+                  key={t}
+                  className="rounded-full border border-parchment bg-cream-100 px-2.5 py-0.5 text-[11px] font-medium text-cocoa-700"
                 >
-                  <div className="font-display text-base md:text-lg font-medium text-ink-900 leading-tight mb-1">
-                    {s.name}
-                  </div>
-                  <div className="text-sm text-cocoa-700 leading-relaxed">
-                    {s.sells}
-                  </div>
-                  {(rentPct !== null && rentPct !== 0) || spend !== null ? (
-                    <div className="flex items-center gap-4 mt-3 flex-wrap">
-                      {rentPct !== null && rentPct !== 0 && (
-                        <span className="text-xs font-semibold tabular-nums">
-                          <span className="text-cocoa-700/70 font-medium">rent </span>
-                          <span style={{ color: multColor(s.rent_vs_city as number) }}>
-                            {rentPct > 0 ? "+" : ""}
-                            {rentPct}%
-                          </span>
-                          <span className="text-cocoa-700/70 font-medium"> vs city</span>
-                        </span>
-                      )}
-                      {spend !== null && (
-                        <span className="text-xs font-semibold tabular-nums text-ink-900">
-                          <span className="text-cocoa-700/70 font-medium">spend </span>
-                          {fmtUSD(spend)}
-                          <span className="text-cocoa-700/70 font-medium"> per visit</span>
-                        </span>
-                      )}
-                    </div>
-                  ) : null}
+                  {tagLabel(t)}
+                </span>
+              ))}
+          </div>
+
+          {/* Answer-first: the single strongest trade, up top. */}
+          {view.winnerHeadline && (
+            <p className="mb-3 max-w-2xl font-display text-xl md:text-2xl font-medium leading-snug tracking-tight text-balance text-ink-900">
+              {view.winnerHeadline}
+            </p>
+          )}
+
+          {view.leadLine && (
+            <p className="mb-6 max-w-2xl text-base md:text-lg leading-relaxed text-cocoa-700">
+              {view.leadLine}
+            </p>
+          )}
+        </div>
+
+        {/* ZONE 1 (cont): THE HONEST TAKE, right after the headline. ------ */}
+        {view.honestTake && (
+          <div className="mb-8">
+            <HonestTakeBox
+              id="honest-take"
+              verdict={view.honestTake.verdict}
+              points={view.honestTake.points}
+            >
+              {view.honestTake.body}
+            </HonestTakeBox>
+          </div>
+        )}
+
+        {/* ZONE 2: WHAT THRIVES HERE -------------------------------------- */}
+        <section id="thrives" className="mb-8">
+          <SectionEyebrow size="md" className="mb-2">
+            What thrives here
+          </SectionEyebrow>
+          <h2 className="mb-1 font-display text-xl md:text-2xl font-medium tracking-tight text-ink-900">
+            Revenue by trade, versus the city
+          </h2>
+          <p className="mb-4 max-w-2xl text-sm text-cocoa-700">
+            How much a typical operator earns here against the {city.name}
+            {" "}baseline for the same trade. Winners on top, suppressed trades
+            below.
+          </p>
+
+          {/* The demand-driver components: what the headline multiplier is
+              made of, so the reader can see what is doing the lifting. */}
+          <div className="mb-5 grid max-w-md grid-cols-3 gap-3">
+            {[
+              { label: "Commuter", v: rep.commuter },
+              { label: "Tourism", v: rep.tourism },
+              { label: "Local tags", v: rep.tags },
+            ].map((c) => (
+              <div key={c.label}>
+                <div className="mb-1 text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
+                  {c.label}
+                </div>
+                <div className="font-display text-lg font-semibold tabular-nums text-ink-900">
+                  {c.v.toFixed(2)}x
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="overflow-hidden rounded-lg border border-parchment">
+            {ranked.map((r, i) => {
+              const figure = (
+                <span
+                  className="shrink-0 font-display text-base md:text-lg font-semibold tabular-nums"
+                  style={{ color: multColor(r.final) }}
+                >
+                  {pctLabel(r.final)}
+                </span>
+              );
+              const picto = (
+                <AtlasPictogram
+                  id={industryPictogramId(r.id)}
+                  size={18}
+                  className="shrink-0 text-cocoa-500"
+                />
+              );
+              const rowClasses = `flex items-center justify-between gap-4 px-4 md:px-5 py-3 ${
+                i > 0 ? "border-t border-parchment" : ""
+              }`;
+              return r.cellSlug ? (
+                <Link
+                  key={r.id}
+                  href={`/${cc}/${city.slug}/${nb.slug}/${r.cellSlug}`}
+                  className={`group ${rowClasses} bg-cream-50 transition-colors hover:bg-cream-100`}
+                >
+                  <span className="flex min-w-0 items-center gap-2">
+                    {picto}
+                    <span className="text-sm md:text-base font-medium text-ink-900 transition-colors group-hover:text-atlas-700">
+                      {r.name}
+                    </span>
+                    <span aria-hidden className="text-xs text-cocoa-500">
+                      &rarr;
+                    </span>
+                  </span>
+                  {figure}
+                </Link>
+              ) : (
+                <div key={r.id} className={`${rowClasses} bg-cream-50`}>
+                  <span className="flex min-w-0 items-center gap-2">
+                    {picto}
+                    <span className="text-sm md:text-base font-medium text-ink-900">
+                      {r.name}
+                    </span>
+                  </span>
+                  {figure}
                 </div>
               );
             })}
           </div>
+          <p className="mt-3 text-[11px] text-cocoa-500">
+            Modeled from the area&apos;s commuter and tourism intensity and its
+            local character. Directional, a read on the local lift, not a
+            guarantee.
+          </p>
         </section>
-      )}
 
-      {/* 7) TEXTURE -------------------------------------------------------- */}
-      {(flavor?.food_scene || flavor?.dont_miss) && (
-        <section className="mb-12">
-          <SectionEyebrow size="sm" className="mb-3">
-            On the ground
-          </SectionEyebrow>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl">
-            {flavor?.food_scene && (
-              <div>
-                <div className="text-[10px] uppercase tracking-wide text-cocoa-700 font-semibold mb-1">
-                  Food
-                </div>
-                <div className="text-sm md:text-base text-cocoa-700 leading-relaxed">
-                  {flavor.food_scene}
-                </div>
-              </div>
-            )}
-            {flavor?.dont_miss && (
-              <div>
-                <div className="text-[10px] uppercase tracking-wide text-cocoa-700 font-semibold mb-1">
-                  Don&apos;t miss
-                </div>
-                <div className="text-sm md:text-base text-cocoa-700 leading-relaxed">
-                  {flavor.dont_miss}
-                </div>
-              </div>
-            )}
+        {/* ZONE 2 (cont): WHO LIVES AND SHOPS HERE ------------------------ */}
+        {view.whoLivesHere && (
+          <div className="mb-8">
+            <WhatLocalsKnow
+              id="who"
+              eyebrow="Who shops here"
+              heading={view.whoLivesHere.heading}
+              notes={view.whoLivesHere.notes}
+            />
           </div>
-        </section>
-      )}
+        )}
 
-      {/* 8) SIBLINGS ------------------------------------------------------- */}
-      {siblings.length > 0 && (
-        <section>
-          <SectionEyebrow size="sm" className="mb-2">
-            Elsewhere in {city.name}
-          </SectionEyebrow>
-          <h2 className="font-display text-xl md:text-2xl font-medium tracking-tight text-ink-900 mb-4">
-            Other neighborhoods
-          </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 md:gap-3">
-            {siblings.map((n) => (
-              <Link
-                key={n.slug}
-                href={`/${cc}/${city.slug}/${n.slug}`}
-                className="group block rounded-xl border border-cream-300 hover:border-atlas-500 bg-cream-50 p-3 transition-colors"
-              >
-                <div className="font-medium text-sm text-ink-900 group-hover:text-atlas-700 transition-colors leading-tight">
-                  {n.name}
-                </div>
-                <div className="text-[10px] text-cocoa-700 mt-0.5 capitalize">
-                  {n.character.replace(/-/g, " ")}
-                </div>
-              </Link>
-            ))}
+        {/* ZONE 2 (cont): COST TO OPERATE (rent / price tier) ------------- */}
+        {view.operatingCost && (
+          <div className="mb-8">
+            <BreakEvenLine
+              id="operating-cost"
+              eyebrow="Cost to operate"
+              headline={view.operatingCost.headline}
+              detail={view.operatingCost.detail}
+            />
           </div>
-        </section>
-      )}
-    </article>
+        )}
+
+        {/* ZONE 3: VS NEARBY AREAS (adjacent-district like-for-like) ------ */}
+        {view.adjacent && (
+          <div className="mb-8">
+            <LikeForLikeTable
+              id="adjacent"
+              eyebrow="Versus the areas next door"
+              heading={`${nb.name} against the districts beside it`}
+              lede={`The same trade, one city, comparable prices, so the stronger area is marked.`}
+              columns={view.adjacent.columns}
+              rows={view.adjacent.rows}
+              footnote={view.adjacent.footnote}
+            />
+          </div>
+        )}
+
+        {/* ZONE 3 (cont): PRIME STREETS.
+            Mounts only when this (city, neighborhood) has a curated streets
+            record. Per-street rent and spend figures self-omit when absent. */}
+        {primeStreets.length > 0 && (
+          <section id="streets" className="mb-8">
+            <SectionEyebrow size="md" className="mb-2">
+              Prime streets
+            </SectionEyebrow>
+            <p className="mb-4 max-w-2xl text-sm text-cocoa-700">
+              Where commerce concentrates in {nb.name}.
+            </p>
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+              {primeStreets.map((s) => {
+                const streetRentPct =
+                  typeof s.rent_vs_city === "number" && Number.isFinite(s.rent_vs_city)
+                    ? Math.round((s.rent_vs_city - 1) * 100)
+                    : null;
+                const spend =
+                  typeof s.spend_per_visit_usd === "number" &&
+                  Number.isFinite(s.spend_per_visit_usd)
+                    ? s.spend_per_visit_usd
+                    : null;
+                return (
+                  <div
+                    key={s.name}
+                    className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5"
+                  >
+                    <div className="mb-1 font-display text-base md:text-lg font-medium leading-tight text-ink-900">
+                      {s.name}
+                    </div>
+                    <div className="text-sm leading-relaxed text-cocoa-700">
+                      {s.sells}
+                    </div>
+                    {(streetRentPct !== null && streetRentPct !== 0) || spend !== null ? (
+                      <div className="mt-3 flex flex-wrap items-center gap-4">
+                        {streetRentPct !== null && streetRentPct !== 0 && (
+                          <span className="text-xs font-semibold tabular-nums">
+                            <span className="font-medium text-cocoa-500">rent </span>
+                            <span style={{ color: multColor(s.rent_vs_city as number) }}>
+                              {streetRentPct > 0 ? "+" : ""}
+                              {streetRentPct}%
+                            </span>
+                            <span className="font-medium text-cocoa-500"> vs city</span>
+                          </span>
+                        )}
+                        {spend !== null && (
+                          <span className="text-xs font-semibold tabular-nums text-ink-900">
+                            <span className="font-medium text-cocoa-500">spend </span>
+                            {fmtUSD(spend)}
+                            <span className="font-medium text-cocoa-500"> per visit</span>
+                          </span>
+                        )}
+                      </div>
+                    ) : null}
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
+        {/* ZONE 3 (cont): ON THE GROUND (texture) ------------------------- */}
+        {hasTexture && (
+          <section id="ground" className="mb-10">
+            <SectionEyebrow size="md" className="mb-3">
+              On the ground
+            </SectionEyebrow>
+            <div className="grid max-w-3xl grid-cols-1 gap-4 md:grid-cols-2">
+              {flavor?.food_scene && (
+                <div>
+                  <div className="mb-1 text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
+                    Food
+                  </div>
+                  <div className="text-sm md:text-base leading-relaxed text-cocoa-700">
+                    {flavor.food_scene}
+                  </div>
+                </div>
+              )}
+              {flavor?.dont_miss && (
+                <div>
+                  <div className="mb-1 text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
+                    Don&apos;t miss
+                  </div>
+                  <div className="text-sm md:text-base leading-relaxed text-cocoa-700">
+                    {flavor.dont_miss}
+                  </div>
+                </div>
+              )}
+            </div>
+          </section>
+        )}
+
+        {/* ZONE 3 (cont): OTHER AREAS (sibling rail) ---------------------- */}
+        {siblings.length > 0 && (
+          <section id="siblings">
+            <SectionEyebrow size="md" className="mb-2">
+              Elsewhere in {city.name}
+            </SectionEyebrow>
+            <h2 className="mb-4 font-display text-xl md:text-2xl font-medium tracking-tight text-ink-900">
+              Other neighborhoods
+            </h2>
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 md:gap-3">
+              {siblings.map((n) => (
+                <Link
+                  key={n.slug}
+                  href={`/${cc}/${city.slug}/${n.slug}`}
+                  className="group block rounded-lg border border-parchment bg-cream-50 p-3 shadow-subtle transition-colors hover:border-atlas-300"
+                >
+                  <div className="text-sm font-medium leading-tight text-ink-900 transition-colors group-hover:text-atlas-700">
+                    {n.name}
+                  </div>
+                  <div className="mt-0.5 text-[11px] capitalize text-cocoa-500">
+                    {n.character.replace(/-/g, " ")}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
+      </article>
+      <StickySectionNav sections={navSections} />
+    </div>
   );
 }

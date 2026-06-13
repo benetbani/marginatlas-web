@@ -14,12 +14,19 @@
  *
  * Resolves the city-level cell via getCellBySlug, then applies the
  * (industry, neighborhood-character) multiplier to synthesize
- * neighborhood-level numbers. Tier 1+2 cities only — unknown city /
- * neighborhood pairs 404.
+ * neighborhood-level numbers.
+ *
+ * Unified onto the Atlas Page Kit (2026-06-13): this page now composes
+ * the SAME answer-first masthead + decision stack the main cell page
+ * uses (AnswerFirstMasthead + buildCellView + CellDecisionStack), so a
+ * neighborhood cell reads in the exact content-map reading order as
+ * every other business page, with a neighborhood-adjustment band sitting
+ * above the masthead. London neighborhoods fill the curated exemplar
+ * (the city cell is GB + the curated London entry resolves), so the
+ * full stack renders; everywhere else the kit self-omits cleanly.
  */
 import { notFound } from "next/navigation";
 import { getCellBySlug } from "@/lib/cells";
-import { colors } from "@/lib/design-tokens";
 import { iso2ToName } from "@/lib/countries";
 import {
   industryToSlug,
@@ -27,7 +34,6 @@ import {
   resolveToMeasuredIndustry,
 } from "@/lib/taxonomy";
 import {
-  getNeighborhoodsForCity,
   getNeighborhood,
   applyNeighborhoodMultiplier,
 } from "@/lib/cities/neighborhoods";
@@ -36,21 +42,53 @@ import {
   hasNeighborhoodIntensity,
   tagLabel,
 } from "@/lib/economics/neighborhood_multipliers";
-import { HeroBenchmark } from "@/components/HeroBenchmark";
-import { DistributionVisual } from "@/components/DistributionVisual";
-import { NetProfitSummary } from "@/components/NetProfitSummary";
-import { SmartWaterfall } from "@/components/SmartWaterfall";
-import { CoverageIndicator } from "@/components/CoverageIndicator";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { CountryFlag } from "@/components/CountryFlag";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
-import { sectorIcon } from "@/lib/taxonomy/sector_icons";
+import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
+import { computeBreakeven } from "@/lib/economics/breakeven";
+import { getCityTier } from "@/lib/cities/city_tier";
+import industryMarginsJson from "@/lib/finance/industry_margins.json";
+import { clampMargin } from "@/lib/finance/margin_floor";
+import { resolveOwnerTakeHome } from "@/lib/finance/owner_take_home";
+import {
+  estimateWagePerEmployee,
+  estimateEmployeesFromFirms,
+} from "@/lib/extrapolations/fill_missing";
+import { getLondonEntry } from "@/lib/scores/cell_board";
+import { isTrustedLocalCell } from "@/lib/cells/trust";
+import { AnswerFirstMasthead, StickySectionNav, FreshnessStamp, FlagIt } from "@/components/kit";
+import { buildCellView, cellViewNav } from "@/lib/cells/cell_view";
+import { CellDecisionStack } from "@/components/cells/CellDecisionStack";
+import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 
 export const revalidate = 21600;
 export const dynamicParams = true;
 // Vercel Hobby defaults serverless function timeout to 10s, but cold
 // cells_master queries can take 13-15s before warm-up. Raise to 60s.
 export const maxDuration = 60;
+
+type IndustryMarginRow = {
+  gross_margin: number;
+  operating_margin: number;
+  asset_intensity?: number;
+};
+const INDUSTRY_MARGINS = industryMarginsJson as unknown as {
+  default_fallback: IndustryMarginRow;
+  industries: Record<string, IndustryMarginRow>;
+};
+function lookupIndustryMargin(industryId: string | null | undefined): IndustryMarginRow {
+  if (!industryId) return INDUSTRY_MARGINS.default_fallback;
+  return INDUSTRY_MARGINS.industries[industryId] || INDUSTRY_MARGINS.default_fallback;
+}
+
+function formatMoney(v: number | null | undefined): string {
+  if (v == null || isNaN(v)) return "-";
+  if (v >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
+  if (v >= 1e6) return `$${(v / 1e6).toFixed(1)}M`;
+  if (v >= 1e3) return `$${(v / 1e3).toFixed(0)}K`;
+  return `$${v.toFixed(0)}`;
+}
 
 /**
  * URL params: `geo` is the city slug, `industry` is the neighborhood
@@ -76,7 +114,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
     .map((s) => s[0].toUpperCase() + s.slice(1))
     .join(" ");
   const title = `How much do ${ind.name.toLowerCase()} earn in ${nbName}, ${cityName}? | Margin Atlas`;
-  const desc = `Typical revenue, employment, and owner take-home for ${ind.name.toLowerCase()} in the ${nbName} neighborhood of ${cityName}. Synthesized from city-level data and neighborhood character.`;
+  const desc = `Typical revenue, what the owner keeps, and the spread for ${ind.name.toLowerCase()} in the ${nbName} area of ${cityName}, set against the city baseline.`;
   return {
     title,
     description: desc,
@@ -93,24 +131,23 @@ export default async function NeighborhoodCellPage({
 }) {
   const { country, geo: city, industry: neighborhood, sub: industry } = await params;
 
-  // Resolve the neighborhood. Unknown city/neighborhood → 404.
+  // Resolve the neighborhood. Unknown city/neighborhood 404s.
   const nb = getNeighborhood(city, neighborhood);
   if (!nb) notFound();
 
-  // Resolve the industry. Unknown industry → 404.
+  // Resolve the industry. Unknown industry 404s.
   const rawInd = slugToIndustry(industry);
   if (!rawInd) notFound();
   const ind = resolveToMeasuredIndustry(rawInd) || rawInd;
 
-  // Get the city-level cell (always returns something via the
-  // synthesis fallback in getCellBySlug).
+  // Get the city-level cell (always returns something via the synthesis
+  // fallback in getCellBySlug), then apply the neighborhood-character
+  // multiplier to scale revenue + percentiles + firm count.
   const cityCell = await getCellBySlug(country, city, industry);
-
-  // Apply the neighborhood character multiplier.
   const cell = applyNeighborhoodMultiplier(cityCell, ind.id, nb.character);
 
   // Always-synthetic: even if the city cell was real, the neighborhood
-  // multiplier introduces estimation, so this page is always flagged.
+  // multiplier introduces estimation, so this page is always modeled.
   cell.is_synthetic = true;
   cell.coverage_tier = "X";
   cell.coverage_source = `Estimated from ${cityCell.geo_name || city} city averages, adjusted for neighborhood character`;
@@ -139,198 +176,262 @@ export default async function NeighborhoodCellPage({
     { label: ind.name },
   ];
 
-  const profit = cell.revenue_per_firm
-    ? estimateNetProfit({
-        iso2: country.toUpperCase(),
-        geoId: cell.geo_id,
-        industryId: ind.id,
-        sectorId: ind.sector_id || null,
-        grossRevenue: cell.revenue_per_firm,
-        payroll:
-          cell.payroll_per_employee != null && cell.n_employees != null
-            ? cell.payroll_per_employee * cell.n_employees
-            : null,
-      })
-    : null;
-
-  const allNeighborhoods = getNeighborhoodsForCity(city) || [];
-  const siblings = allNeighborhoods.filter((n) => n.slug !== nb.slug).slice(0, 4);
-
+  // The neighborhood-vs-city revenue adjustment for this trade, when the
+  // area carries a curated intensity row. Drives the adjustment band above
+  // the masthead. Null for an uncurated neighborhood (then the band omits).
   const fwHasData = hasNeighborhoodIntensity(city, neighborhood);
   const fwMult = fwHasData
     ? getNeighborhoodMultiplier(city, neighborhood, ind.id)
     : null;
+  const fwPct = fwMult ? Math.round((fwMult.final - 1) * 100) : 0;
+
+  // -- The shared cell view-model inputs, computed exactly as the main cell
+  // page computes them so the masthead + decision stack read identically.
+  const marginRow = lookupIndustryMargin(cell.industry_id);
+  const grossRevenueForMargin = cell.revenue_per_firm ?? cell.rev_p50 ?? null;
+  let payrollForMargin: number | null = null;
+  if (cell.payroll_per_employee != null && cell.n_employees != null) {
+    const empPerFirm =
+      cell.n_enterprises && cell.n_enterprises > 0
+        ? cell.n_employees < cell.n_enterprises
+          ? cell.n_employees
+          : cell.n_employees / cell.n_enterprises
+        : cell.n_employees;
+    payrollForMargin = cell.payroll_per_employee * Math.max(1, empPerFirm);
+  }
+  const netProfitResult =
+    grossRevenueForMargin && grossRevenueForMargin > 0
+      ? estimateNetProfit({
+          iso2: country.toUpperCase(),
+          geoId: cell.geo_id || city,
+          industryId: cell.industry_id || ind.id,
+          sectorId: cell.sector_id || ind.sector_id || null,
+          grossRevenue: grossRevenueForMargin,
+          payroll: payrollForMargin,
+        })
+      : null;
+  const rawNetMargin = netProfitResult?.net_margin ?? null;
+  const netTakeHome = netProfitResult?.net_profit ?? null;
+  const computedNetMargin =
+    rawNetMargin != null ? clampMargin(rawNetMargin, "net", cell.industry_id || null) : null;
+
+  const isLargerFirm =
+    !!cell.size_band && ["10-19", "20-49", "50-99", "100+"].includes(cell.size_band);
+  const econSnap = getCountryEconomicsSnapshot(country.toUpperCase());
+  const annualIncome =
+    econSnap.avgMonthlySalary != null ? econSnap.avgMonthlySalary * 12 : null;
+  const adjustedNetTakeHome = resolveOwnerTakeHome({
+    structuralNetProfit: netTakeHome,
+    rawNetMargin,
+    revenue: grossRevenueForMargin,
+    industryId: cell.industry_id || null,
+    isLargerFirm,
+    annualIncome,
+  });
+
+  // Break-even orders/day, place-adjusted by city tier.
+  const cityTier = getCityTier(city);
+  const be = cell.industry_id
+    ? computeBreakeven(
+        cell.industry_id,
+        cell.revenue_per_firm ?? cell.rev_p50 ?? null,
+        cityTier,
+      )
+    : null;
+  const employeesEstimate =
+    cell.n_employees ?? estimateEmployeesFromFirms(cell.industry_id, cell.n_enterprises);
+  const wageEstimate =
+    cell.payroll_per_employee ?? estimateWagePerEmployee(country, cell.industry_id, city);
+
+  // The curated London exemplar resolves for GB cells whose industry has a
+  // London activity entry; everywhere else this is null and the kit
+  // self-omits the invented editorial. Same source the main cell page reads.
+  const londonEntry = getLondonEntry(cell);
+  const Le = londonEntry?.economics ?? null;
+  // Trusted-local gate, mirrored from the main cell page: the modeled
+  // neighborhood scaling means a non-London cell is never trusted-local
+  // here, so the money sections only show when the London exemplar is on.
+  const trustedLocalCell = isTrustedLocalCell(cell, ind.id);
+
+  const placeName = `${nb.name}, ${cityName}`;
+  const tradeName = ind.name;
+  const tradeNoun = tradeName.toLowerCase().replace(/s$/, "");
+  const viewRevenue = Le?.revenue ?? cell.revenue_per_firm ?? cell.rev_p50 ?? null;
+  const viewNetMarginPct = Le
+    ? Le.net_margin_pct
+    : computedNetMargin != null
+      ? computedNetMargin * 100
+      : null;
+  const viewTakeHome = Le?.owner_take_home ?? adjustedNetTakeHome ?? null;
+  const viewFirms = Le?.firms ?? cell.n_enterprises ?? null;
+
+  // Same business nearby: left to the view model. We deliberately do NOT feed
+  // intra-city neighborhood peers here, because this page's cell figures come
+  // from the character-multiplier model while the adjustment band reads the
+  // intensity engine; scaling one by the other would mix two models on the
+  // same row. Passing no peers lets buildCellView fall back to its own honest
+  // behavior: the curated London exemplar shows its comparable-UK-cities slate,
+  // and everywhere else the section self-omits. The cross-district read lives
+  // on the neighborhood OVERVIEW page (the adjacent-district like-for-like),
+  // which stays on a single model end to end.
+  const cellView = buildCellView({
+    cell,
+    londonEntry,
+    placeName,
+    tradeName,
+    tradeNoun,
+    industrySlug: industry,
+    typicalRevenue: viewRevenue,
+    netMarginPct: viewNetMarginPct,
+    ownerTakeHome: viewTakeHome,
+    firms: viewFirms,
+    breakInRating: null,
+    isTrustedLocal: trustedLocalCell,
+    costStructure: cell.cost_structure ?? null,
+    breakevenOrdersDaily: be?.breakevenOrdersDaily ?? null,
+    typicalOrdersDaily: be?.currentOrdersDaily ?? null,
+    employees: employeesEstimate ?? null,
+    wagePerEmployee: wageEstimate ?? null,
+    peers: [],
+    narrative: null,
+  });
+  const navSections = cellViewNav(cellView, false);
 
   return (
     <div className="xl:flex xl:gap-16">
       <div className="xl:flex-1 xl:min-w-0">
         <Breadcrumb items={breadcrumbs} />
 
-        {fwMult && (
-          <section className="atlas-card p-4 md:p-5 mb-6 flex flex-col md:flex-row md:items-center justify-between gap-3">
-            <div className="flex-1 min-w-0">
-              <div className="text-[10px] uppercase tracking-[0.16em] text-atlas-700 font-semibold mb-1.5">
-                Neighborhood adjustment for {ind.name.toLowerCase()}
+        {/* Neighborhood adjustment band: the one thing this page has that the
+            city cell does not, sat above the masthead so the reader sees the
+            local lift first, then the absolute numbers it produced below. The
+            three components (commuter / tourism / tags) show what moved it. */}
+        {fwMult && fwPct !== 0 ? (
+          <section className="mb-6 rounded-lg border border-parchment bg-cream-100 shadow-subtle px-5 py-5 md:px-7 md:py-6">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <div className="min-w-0 flex-1">
+                <SectionEyebrow className="mb-1.5">
+                  Versus the {cityName} baseline
+                </SectionEyebrow>
+                <p className="font-display text-lg font-medium leading-snug text-balance text-ink-900 md:text-xl">
+                  A {tradeNoun} in {nb.name} runs about{" "}
+                  <span
+                    className={
+                      fwPct > 0 ? "text-moss-700" : "text-atlas-700"
+                    }
+                  >
+                    {fwPct > 0 ? "+" : ""}
+                    {fwPct}%
+                  </span>{" "}
+                  on revenue against the rest of the city.
+                </p>
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {fwMult.appliedTags
+                    .filter((t) => t !== "residential_only")
+                    .map((t) => (
+                      <span
+                        key={t}
+                        className="rounded-full border border-parchment bg-cream-50 px-2.5 py-0.5 text-[11px] font-medium text-cocoa-700"
+                      >
+                        {tagLabel(t)}
+                      </span>
+                    ))}
+                </div>
               </div>
-              <div className="flex flex-wrap gap-1.5">
-                {fwMult.appliedTags
-                  .filter((t) => t !== "residential_only")
-                  .map((t) => (
-                    <span
-                      key={t}
-                      className="text-[10px] uppercase tracking-wide font-semibold text-atlas-700 bg-atlas-50 border border-atlas-200 rounded-full px-2 py-0.5"
-                    >
-                      {tagLabel(t)}
-                    </span>
-                  ))}
-              </div>
-            </div>
-            <div className="md:text-right shrink-0">
-              <div
-                className="font-display text-2xl font-semibold tabular-nums leading-none"
-                style={{
-                  color:
-                    fwMult.final > 1.15
-                      ? colors.moss[900]
-                      : fwMult.final > 1.0
-                        ? colors.delta.positive
-                        : fwMult.final > 0.85
-                          ? colors.delta.caution
-                          : colors.delta.negative,
-                }}
-              >
-                {Math.round((fwMult.final - 1) * 100) >= 0 ? "+" : ""}
-                {Math.round((fwMult.final - 1) * 100)}%
-              </div>
-              <div className="text-[10px] text-cocoa-700/55 tabular-nums mt-1">
-                vs {cityName} baseline &middot; commuter{" "}
-                {fwMult.commuter.toFixed(2)}× &middot; tourism{" "}
-                {fwMult.tourism.toFixed(2)}× &middot; tags{" "}
-                {fwMult.tags.toFixed(2)}×
-              </div>
+              <dl className="flex shrink-0 gap-x-7 gap-y-3">
+                <div>
+                  <dt className="text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
+                    Commuter
+                  </dt>
+                  <dd className="mt-0.5 font-display text-lg font-medium tabular-nums text-ink-900">
+                    {fwMult.commuter.toFixed(2)}x
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
+                    Tourism
+                  </dt>
+                  <dd className="mt-0.5 font-display text-lg font-medium tabular-nums text-ink-900">
+                    {fwMult.tourism.toFixed(2)}x
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
+                    Local tags
+                  </dt>
+                  <dd className="mt-0.5 font-display text-lg font-medium tabular-nums text-ink-900">
+                    {fwMult.tags.toFixed(2)}x
+                  </dd>
+                </div>
+              </dl>
             </div>
           </section>
-        )}
-
-        <HeroBenchmark
-          iso2={country.toUpperCase()}
-          countryName={iso2ToName(country) || country.toUpperCase()}
-          geoName={`${nb.name}, ${cityName}`}
-          industryName={ind.name}
-          industryExamples={ind.examples}
-          sectorName={
-            ind.sector_id
-              ? `${sectorIcon(ind.sector_id)} ${ind.sector_id.replace(/_/g, " ")}`
-              : null
-          }
-          revenue={cell.revenue_per_firm ?? null}
-          currencySymbol="$"
-        />
-
-        <section className="bg-white border-l-4 border-l-atlas-700 py-5 md:py-6">
-          <div className="text-xs md:text-sm font-bold uppercase tracking-[0.14em] text-atlas-700 mb-2">
-            Neighborhood character
-          </div>
-          <p className="text-base md:text-lg italic text-ink-900 max-w-3xl leading-relaxed">
-            <strong className="not-italic font-semibold text-atlas-700">
-              {nb.name}
-            </strong>{" "}
-            is classified as{" "}
-            <strong className="not-italic font-semibold text-atlas-700">
-              {nb.character.replace(/-/g, " ")}
-            </strong>
-            .{" "}
-            {nb.description}
-          </p>
-        </section>
-
-        <CoverageIndicator
-          tier="estimated"
-          variant="expanded"
-          industryName={ind.name}
-          geoName={`${nb.name}, ${cityName}`}
-        />
-
-        <NetProfitSummary
-          iso2={country.toUpperCase()}
-          geoId={cell.geo_id}
-          industryId={ind.id}
-          sectorId={ind.sector_id || null}
-          grossRevenue={cell.revenue_per_firm ?? null}
-          payroll={
-            cell.payroll_per_employee != null && cell.n_employees != null
-              ? cell.payroll_per_employee * cell.n_employees
-              : null
-          }
-          takeHome={profit?.net_profit ?? null}
-        />
-
-        {cell.revenue_per_firm && cell.revenue_per_firm > 0 ? (
-          <SmartWaterfall
-            iso2={country.toUpperCase()}
-            industryId={ind.id}
-            sizeBand="small"
-            grossRevenue={cell.revenue_per_firm}
-            cityTier={1}
-          />
         ) : null}
 
-        <DistributionVisual
-          p10={cell.rev_p10 ?? null}
-          p50={cell.rev_p50 ?? null}
-          p90={cell.rev_p90 ?? null}
+        {/* Answer-first masthead, the exact band the main cell page opens with:
+            the assertion headline, the one-line read, the anchor revenue WITH
+            its 7-gradation spread, the quiet stat row. The eyebrow carries the
+            neighborhood coordinate so the reader knows the scope is the area,
+            not the whole city. */}
+        <AnswerFirstMasthead
+          id="headline"
+          eyebrow={`${tradeName} · ${nb.name} · ${cityName}`}
+          tier={cellView.masthead.tier}
+          title={cellView.masthead.title}
+          answer={cellView.masthead.answer}
+          anchor={cellView.masthead.anchor}
+          spread={
+            cellView.masthead.spread
+              ? { ...cellView.masthead.spread, format: formatMoney }
+              : null
+          }
+          stats={cellView.masthead.stats}
+          breakIn={cellView.masthead.breakIn}
         />
 
-        {siblings.length > 0 && (
-          <section className="py-8">
-            <h2 className="text-xl md:text-2xl font-semibold text-ink-900 mb-4">
-              {ind.name} elsewhere in {cityName}
-            </h2>
-            <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-3">
-              {siblings.map((s) => (
-                <a
-                  key={s.slug}
-                  href={`/${country.toLowerCase()}/${city.toLowerCase()}/${s.slug}/${industry.toLowerCase()}`}
-                  className="block px-4 py-3 rounded-xl border border-parchment bg-white hover:border-atlas-500 transition"
-                >
-                  <div className="text-sm font-medium text-ink-900">
-                    {s.name}
-                  </div>
-                  <div className="text-xs text-ink-700/70 mt-1">
-                    {s.character.replace(/-/g, " ")}
-                  </div>
-                </a>
-              ))}
-            </div>
-          </section>
-        )}
+        {/* The decision stack: the honest take, the money picture, the
+            editorial beats, in the content-map reading order. London is fully
+            filled (the curated entry resolves); a modeled neighborhood cell
+            shows a clean short page that leads with its honest take. */}
+        <div className="mt-8">
+          <CellDecisionStack view={cellView} />
+        </div>
 
-        <section className="py-6 border-t border-parchment text-sm text-ink-700/70">
-          <div className="flex items-center gap-3 flex-wrap">
+        {/* The quiet close: a freshness stamp (this is a modeled neighborhood
+            read) and the honest flag-it invitation, then onward links. */}
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b border-parchment/60 pb-5">
+          <FreshnessStamp updated="June 2026" tier="modeled" />
+          <FlagIt />
+        </div>
+
+        {/* Onward navigation. */}
+        <section className="mt-6 text-sm text-cocoa-700/80">
+          <div className="flex flex-wrap items-center gap-3">
             <CountryFlag iso2={country.toUpperCase()} className="w-4" />
             <a
-              href={`/${country.toLowerCase()}/${city.toLowerCase()}`}
-              className="hover:text-atlas-700"
+              href={`/${country.toLowerCase()}/${city.toLowerCase()}/${neighborhood.toLowerCase()}`}
+              className="transition-colors hover:text-atlas-700"
             >
-              Back to {cityName}
+              Back to {nb.name}
             </a>
-            <span>·</span>
+            <span aria-hidden>·</span>
             <a
-              href={`/${country.toLowerCase()}/${city.toLowerCase()}/industries`}
-              className="hover:text-atlas-700"
+              href={`/${country.toLowerCase()}/${city.toLowerCase()}`}
+              className="transition-colors hover:text-atlas-700"
             >
-              All industries in {cityName}
+              All of {cityName}
             </a>
-            <span>·</span>
+            <span aria-hidden>·</span>
             <a
               href={`/industries/${industryToSlug(ind.id)}`}
-              className="hover:text-atlas-700"
+              className="transition-colors hover:text-atlas-700"
             >
               {ind.name} worldwide
             </a>
           </div>
         </section>
       </div>
+      <StickySectionNav sections={navSections} />
     </div>
   );
 }
