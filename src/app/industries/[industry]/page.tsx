@@ -434,9 +434,10 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
               {moneyQuestion}
             </h2>
 
+            {/* The money-trace lead only. The bottom-line verdict (verdict.close)
+                lives in the honest-take box above, so it is not reprinted here. */}
             <div className="mt-3 max-w-2xl space-y-3 text-base leading-relaxed text-graphite">
               <p>{verdict.lead}</p>
-              <p className="text-ink-900">{verdict.close}</p>
             </div>
 
             {/* The business-model anatomy: each cost stage as a qualitative

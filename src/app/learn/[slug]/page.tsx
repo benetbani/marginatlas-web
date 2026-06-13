@@ -101,6 +101,15 @@ export default async function LearnArticlePage({
   // The trade the article is about, for the calm SectionEmpty line.
   const PLACE = articlePlace(article.title);
 
+  // The honest-take box hoists the article's last paragraph (the "what this
+  // means for an operator" close). Drop it from the body render so the same
+  // paragraph does not print twice, two short scrolls apart.
+  const bodyParas =
+    view.honestTake?.body &&
+    article.body[article.body.length - 1] === view.honestTake.body
+      ? article.body.slice(0, -1)
+      : article.body;
+
   // Manifest lookups, so the filled section and its placeholder share one
   // eyebrow + heading (the always-present contract).
   const S = (id: string) => LEARN_SECTIONS.find((s) => s.id === id)!;
@@ -236,7 +245,7 @@ export default async function LearnArticlePage({
       {/* 6. Body: the explanation in plain words. Always present (the body is
           the article); never self-omits. */}
       <section id="explanation" className="prose prose-stone max-w-none mb-12">
-        {article.body.map((para, i) => (
+        {bodyParas.map((para, i) => (
           <p key={i} className="text-base md:text-lg text-ink-800 leading-relaxed mb-4">
             {para}
           </p>

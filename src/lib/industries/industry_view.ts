@@ -223,24 +223,21 @@ function buildHonestTake(
   character: ActivityCharacter | null,
 ): IndustryView["honestTake"] {
   const verdictLine = textOrNull(verdict.close);
-  const body = textOrNull(verdict.lead);
 
-  // The model anatomy as points: the bad-tone stages first (what hurts), so the
-  // box reads honestly rather than as a brochure. Capped at the three sharpest.
-  const ordered = [...verdict.signals].sort((a, b) => toneRank(a.tone) - toneRank(b.tone));
+  // The honest-take box carries the bottom-line verdict plus the activity
+  // watch-out ONLY. The money-trace lead (verdict.lead) and the model-anatomy
+  // signal notes live in the "how it makes money" section directly below, so
+  // feeding them here too printed the same two-to-three sentences twice in one
+  // scroll. Keep this box to the verdict and the one thing to watch.
   const points: string[] = [];
   const watchOut = textOrNull(character?.watchOut);
   if (watchOut) points.push(watchOut);
-  for (const s of ordered) {
-    if (points.length >= 4) break;
-    if (textOrNull(s.note)) points.push(s.note);
-  }
 
-  if (!verdictLine && !body && points.length === 0) return null;
+  if (!verdictLine && points.length === 0) return null;
   return {
     verdict: verdictLine ?? "How this kind of business makes money.",
-    points: points.slice(0, 4),
-    body,
+    points: points.slice(0, 2),
+    body: null,
   };
 }
 
