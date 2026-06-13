@@ -59,19 +59,50 @@
   duplicate sub-headline is gone.
 - Order: the masthead break-in chip now sits BELOW the headline number, so the figure leads.
 
-## Still to come (next waves)
-- **Part 5 rest:** honest-take always-present + first on every page type; a real headline
-  number for thin countries; the compare page landing on a real comparison server-side; the
-  neighbourhood lift breakdown scoped honestly; the visitor-split bar weighting the resident
-  majority.
-- **Part 6 (consolidation):** route every page's section cards through one card primitive
-  (BeatCard), pull the legacy city blocks onto the kit scale, the neighbourhood page onto the
-  shared masthead, one eyebrow everywhere, the a/an grammar fixes, a light elevation step.
-- **Part 8 (mobile):** the signature spread legible on a phone, comparison tables reflowing
-  to bar-lists instead of sideways scroll, a real mobile nav.
-- **Part 9 (interaction):** sub-type + venue switching in the masthead, a "make it yours"
-  calculator, save / compare-from-anywhere, gentle scroll reveal.
-- **Part 10 (deepen):** operator voices, the storytelling furniture site-wide, the comparison
-  kit, the homepage brought onto the system, the constitution amended to the flat SaaS look.
+## Shipped in wave 2 (Parts 5, 6, 8, run as two multi-agent workflows)
 
-The Vercel preview will land after Part 6 + Part 8 so the whole surface reads coherently.
+### Part 6: one card grammar, one type scale
+- Every page's section cards now route through the single BeatCard primitive (city, country,
+  industry, neighbourhood), so the card hand, eyebrow size, and heading treatment stop drifting.
+- The legacy city blocks (break-in strip, signature panel, peers) are pulled onto the kit
+  heading scale + rhythm, so they no longer read as oversized leftovers.
+- The neighbourhood page now opens with the same AnswerFirstMasthead as every other type.
+- A light two-step elevation: the honest-take and money-breakdown read one depth above the
+  resting cards (kept within the flat SaaS look, no seam).
+- Grammar: "How a restaurant makes money" (no double noun, parentheticals stripped); the live
+  "a expensive area" / "a East London read" bugs fixed with an a/an helper; the industry H1
+  ends in a full stop like the others.
+
+### Part 5: answer-first order
+- The honest-take box now leads the body on the country page too (it was buried under the
+  decisive read), and is always-present on every type.
+- Thin countries open with a real headline number (days-to-start / registration cost /
+  self-employed share) instead of a blank anchor.
+- The country cost-to-register figure no longer prints twice (the formation table folded under
+  the decisive read), and the best-city callout is renamed so it stops colliding with the
+  activity break-in panel.
+- The neighbourhood lift breakdown is scoped + captioned so a single-trade decomposition no
+  longer reads as the whole-ranking explanation; the city visitor-split bar accents the
+  dominant resident slice, matching the copy.
+
+### Part 8: the 375px mandate
+- The signature spread renders a legible HTML compact view on a phone instead of ~5px SVG
+  labels; the desktop SVG is unchanged.
+- The comparison tables (both the kit table and the /compare grid) reflow into stacked labeled
+  lists below sm, so the primary content is never behind horizontal scroll.
+- A real mobile nav exists (a token-built hamburger menu); the dead mobile folder that pulled a
+  banned icon dependency is deleted; the sticky in-page nav no longer collides with the header.
+- /compare now lands on a real, server-rendered default matchup (no more three empty dropdowns
+  on first paint or for crawlers).
+
+## The preview
+A Vercel preview of the R5 branch (reform-v2/r5-corrections) is built from this wave. The remote
+build runs the full 31-gate suite + tsc + every page, so it is a true end-to-end green check.
+Production stays on reform-v2/palette-brick, untouched and held for your nod.
+
+## Still to come (Parts 9 and 10, the forward architecture)
+- **Part 9 (interaction):** sub-type + venue switching in the masthead, a make-it-yours
+  calculator feeding the spread, save / compare-from-anywhere, gentle scroll reveal.
+- **Part 10 (deepen):** operator voices + the raw-perspectives pipeline, myth-vs-reality
+  generalized, the storytelling furniture site-wide, the comparison kit, the homepage brought
+  onto the system, and the constitution amended to the flat SaaS look.
