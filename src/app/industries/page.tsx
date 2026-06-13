@@ -20,6 +20,7 @@ import {
   visibleIndustriesInSector,
   industryToSlug,
 } from "@/lib/taxonomy";
+import { industryPictogramId } from "@/lib/brand/industry_pictogram";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import {
   ActivitySearch,
@@ -43,9 +44,12 @@ export default function IndustriesIndex() {
   // visibleSectors itself, so every group here has at least one activity.
   const groups: SectorGroup[] = visibleSectors().map((sector) => ({
     sector: sector.name,
+    // The trade pictogram is resolved on the server (the crosswalk pulls the
+    // taxonomy) and passed through, so the client search component stays lean.
     activities: visibleIndustriesInSector(sector.id).map((ind) => ({
       slug: industryToSlug(ind.id),
       name: ind.name,
+      picto: industryPictogramId(ind.id),
     })),
   }));
 

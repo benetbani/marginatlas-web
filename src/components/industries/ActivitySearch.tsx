@@ -17,9 +17,12 @@
  */
 import { useMemo, useState, useId } from "react";
 import Link from "next/link";
+import { AtlasPictogram } from "@/components/brand/pictograms";
+import type { AtlasPictogramId } from "@/components/brand/pictograms";
 
-/** One activity inside a sector. Plain, serializable. */
-export type ActivityLink = { slug: string; name: string };
+/** One activity inside a sector. Plain, serializable. `picto` is resolved on
+ *  the server by industryPictogramId so this client component stays lean. */
+export type ActivityLink = { slug: string; name: string; picto: AtlasPictogramId };
 
 /** A sector and the activities under it, already ordered by the server. */
 export type SectorGroup = { sector: string; activities: ActivityLink[] };
@@ -110,8 +113,11 @@ export function ActivitySearch({ groups }: { groups: SectorGroup[] }) {
                 <Link
                   key={a.slug}
                   href={`/industries/${a.slug}`}
-                  className="group flex items-baseline rounded-lg border border-parchment bg-white p-3 transition-colors hover:border-atlas-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
+                  className="group flex items-center gap-3 rounded-lg border border-parchment bg-white p-3 shadow-subtle transition-all hover:-translate-y-px hover:border-atlas-300 hover:shadow-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
                 >
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-cream-100 text-cocoa-700 transition-colors group-hover:bg-atlas-50 group-hover:text-atlas-700">
+                    <AtlasPictogram id={a.picto} size={22} />
+                  </span>
                   <span className="truncate text-sm font-medium text-ink-900 group-hover:text-atlas-700">
                     {a.name}
                   </span>

@@ -35,6 +35,8 @@ import {
 import { getNeighborhoodEconomics } from "@/lib/economics/neighborhood_economics";
 import { fmtUSD } from "@/components/board/format";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
+import { AtlasPictogram } from "@/components/brand/pictograms";
+import { industryPictogramId } from "@/lib/brand/industry_pictogram";
 
 type City = { slug: string; name: string; iso2: string; pop_m: number };
 export type Neighborhood = {
@@ -403,9 +405,19 @@ export function NeighborhoodOverview({
                 {pctLabel(r.final)}
               </span>
             );
+            const picto = (
+              <AtlasPictogram
+                id={industryPictogramId(r.id)}
+                size={18}
+                className="shrink-0 text-cocoa-700/70"
+              />
+            );
             const label = (
-              <span className="font-medium text-sm md:text-base text-ink-900">
-                {r.name}
+              <span className="flex items-center gap-2 min-w-0">
+                {picto}
+                <span className="font-medium text-sm md:text-base text-ink-900">
+                  {r.name}
+                </span>
               </span>
             );
             const rowClasses = `flex items-center justify-between gap-4 px-4 md:px-5 py-3 ${
@@ -420,6 +432,7 @@ export function NeighborhoodOverview({
                 className={`group ${rowClasses} bg-white hover:bg-cream-100 transition-colors`}
               >
                 <span className="flex items-center gap-2 min-w-0">
+                  {picto}
                   <span className="font-medium text-sm md:text-base text-ink-900 group-hover:text-atlas-700 transition-colors">
                     {r.name}
                   </span>

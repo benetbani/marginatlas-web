@@ -58,6 +58,9 @@ import type { BreakInBand } from "@/lib/scores/break_in_rating";
 import { breakInWord } from "@/lib/scores/band_labels";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import { getNeighborhoodEconomics } from "@/lib/economics/neighborhood_economics";
+import { slugToIndustry } from "@/lib/taxonomy";
+import { AtlasPictogram } from "@/components/brand/pictograms";
+import { industryPictogramId } from "@/lib/brand/industry_pictogram";
 
 export const revalidate = 43200; // 12 hours
 
@@ -417,7 +420,12 @@ export default async function CityPage({
                         href={a.href}
                         className="group flex items-baseline justify-between gap-3 py-2.5 transition-colors"
                       >
-                        <span className="flex min-w-0 items-baseline gap-2.5">
+                        <span className="flex min-w-0 items-center gap-2.5">
+                          <AtlasPictogram
+                            id={industryPictogramId(slugToIndustry(a.slug)?.id)}
+                            size={18}
+                            className="shrink-0 text-cocoa-700/70 group-hover:text-atlas-700 transition-colors"
+                          />
                           <span className="truncate text-sm font-medium text-ink-900 group-hover:text-atlas-700 transition-colors">
                             {a.name}
                           </span>
