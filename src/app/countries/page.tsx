@@ -121,68 +121,102 @@ export default function CountriesHub() {
   }
 
   const totalCountries = COUNTRIES.length;
+  const totalCities = CITY_LIST.length;
+  const continentCount = CONTINENT_ORDER.filter(
+    (c) => (grouped.get(c)?.length ?? 0) > 0,
+  ).length;
 
   return (
-    <article className="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16">
-      <div className="text-xs uppercase tracking-wide text-atlas-600 font-semibold mb-2">
-        Countries
-      </div>
-      <h1 className="font-display text-4xl md:text-5xl font-medium tracking-tight text-ink-900 mb-3">
-        Every country we cover
-      </h1>
-      <p className="text-base md:text-lg text-cocoa-700/80 mb-8 max-w-2xl">
-        {totalCountries} countries grouped by continent. Open any country
-        to see its small-business hero, top activities, regions, and the
-        cities inside.
-      </p>
+    <article className="max-w-7xl mx-auto px-4 md:px-6 py-10 md:py-14">
+      {/* Header: an editorial masthead on a seated card, a faint survey-grid
+         motif behind it, and the coverage in three figures. */}
+      <header className="relative overflow-hidden rounded-2xl border border-parchment bg-cream-50 shadow-card px-6 py-8 md:px-10 md:py-12 mb-7">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-60"
+          style={{ backgroundImage: "url('/atlas-grid.svg')", backgroundSize: "34px 34px" }}
+        />
+        <div className="relative">
+          <div className="text-xs uppercase tracking-[0.18em] text-atlas-700 font-semibold mb-2">
+            Atlas coverage
+          </div>
+          <h1 className="font-display text-4xl md:text-5xl font-medium tracking-tight text-ink-900 mb-3">
+            Every country we cover
+          </h1>
+          <p className="max-w-2xl text-base md:text-lg text-cocoa-700/85 leading-relaxed">
+            Open any country for its small-business benchmark, the regions
+            inside, and the cities we cover. Grouped by continent.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-x-9 gap-y-2">
+            <Stat value={totalCountries} label="countries" />
+            <Stat value={totalCities} label="cities" />
+            <Stat value={continentCount} label="continents" />
+          </div>
+        </div>
+      </header>
 
-      {/* Same big white card chrome as /cities. Whole index sits on one
-         seated card so the body paper pattern stops fighting dense text. */}
-      <div className="rounded-2xl bg-white border border-[rgba(76,39,18,0.10)] shadow-[0_2px_4px_rgba(76,39,18,0.05),_0_12px_28px_rgba(76,39,18,0.06)] px-4 md:px-8 py-6 md:py-10">
-
-      {CONTINENT_ORDER.map((continent) => {
-        const list = grouped.get(continent);
-        if (!list || list.length === 0) return null;
-        const sorted = [...list].sort((a, b) => a.name.localeCompare(b.name));
-        return (
-          <section key={continent} className="mb-12">
-            <h2 className="font-display text-2xl md:text-3xl font-semibold tracking-tight text-ink-900 mb-5 pb-2 border-b-2 border-parchment">
-              {continent}{" "}
-              <span className="text-sm font-normal text-cocoa-700/60 tabular-nums">
-                &middot; {sorted.length} countries
-              </span>
-            </h2>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-              {sorted.map((country) => {
-                const cityCount = CITY_COUNT_BY_ISO2.get(country.code) || 0;
-                return (
-                  <Link
-                    key={country.code}
-                    href={`/${country.code.toLowerCase()}`}
-                    className="group flex items-baseline gap-2.5 rounded-lg border border-parchment bg-white p-3 transition-colors hover:border-atlas-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
-                  >
-                    <CountryFlag
-                      iso2={country.code}
-                      className="w-7 shrink-0 translate-y-[2px]"
-                    />
-                    <span className="truncate text-sm font-semibold text-ink-900 group-hover:text-atlas-700">
-                      {country.name}
-                    </span>
-                    {cityCount > 0 ? (
-                      <span className="text-xs text-cocoa-700/60 tabular-nums">
-                        {cityCount}
+      {/* Continent sections, each a seated card on the warm app ground. */}
+      <div className="space-y-5">
+        {CONTINENT_ORDER.map((continent) => {
+          const list = grouped.get(continent);
+          if (!list || list.length === 0) return null;
+          const sorted = [...list].sort((a, b) => a.name.localeCompare(b.name));
+          return (
+            <section
+              key={continent}
+              className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+            >
+              <div className="mb-4 flex items-baseline justify-between gap-3">
+                <h2 className="font-display text-xl md:text-2xl font-semibold tracking-tight text-ink-900">
+                  {continent}
+                </h2>
+                <span className="text-xs uppercase tracking-wide text-ink-500 tabular-nums">
+                  {sorted.length} countries
+                </span>
+              </div>
+              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+                {sorted.map((country) => {
+                  const cityCount = CITY_COUNT_BY_ISO2.get(country.code) || 0;
+                  return (
+                    <Link
+                      key={country.code}
+                      href={`/${country.code.toLowerCase()}`}
+                      className="group flex items-center gap-3 rounded-lg border border-parchment bg-white p-3 shadow-subtle transition-all hover:-translate-y-px hover:border-atlas-300 hover:shadow-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
+                    >
+                      <CountryFlag
+                        iso2={country.code}
+                        className="w-8 shrink-0 rounded-sm"
+                      />
+                      <span className="min-w-0">
+                        <span className="block truncate text-sm font-semibold text-ink-900 group-hover:text-atlas-700">
+                          {country.name}
+                        </span>
+                        {cityCount > 0 ? (
+                          <span className="block text-[11px] text-cocoa-700/60 tabular-nums">
+                            {cityCount} {cityCount === 1 ? "city" : "cities"}
+                          </span>
+                        ) : null}
                       </span>
-                    ) : null}
-                  </Link>
-                );
-              })}
-            </div>
-          </section>
-        );
-      })}
-
-      {/* Close the big white card wrapper. */}
+                    </Link>
+                  );
+                })}
+              </div>
+            </section>
+          );
+        })}
       </div>
     </article>
+  );
+}
+
+/** One coverage figure in the header: the number in vermillion serif + label. */
+function Stat({ value, label }: { value: number; label: string }) {
+  return (
+    <div className="flex items-baseline gap-1.5">
+      <span className="font-display text-2xl font-semibold tabular-nums text-atlas-700">
+        {value}
+      </span>
+      <span className="text-sm text-cocoa-700/70">{label}</span>
+    </div>
   );
 }
