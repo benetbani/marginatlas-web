@@ -106,3 +106,38 @@ founder would catch. It found, and this round fixed:
   layering, typography. Every rebuilt route smoke-checked 200 with no runtime errors.
 - One Vercel preview at the end (remote build runs the full gate suite + tsc + all pages).
   Production held on the branch for your nod.
+
+---
+
+# Update, round 4: strict section completeness (2026-06-13)
+
+You flagged three things on the live pages and you were right: sections you interviewed me on
+were MISSING (I had made them self-omit when data was thin, so they vanished on every
+non-exemplar page), the country "character" panel was a botched zombie (the city panel reused
+on a country), and the same city printed twice in the country "Cities" block. Fixed:
+
+- **Every section a page type should have is now ALWAYS present.** A strict ordered manifest
+  (`src/lib/page-sections.ts`) per page type is the contract; each page renders it, and a new
+  build gate (`verify_page_sections`) fails if a required section is ever dropped. A section
+  with no data shows a calm "we don't hold this for {place} yet" placeholder, never removed,
+  never a wall of dashes, never fabricated. Verified on a thin page (Uganda restaurants): all
+  14 business sections present, the empty ones reading as intentional scaffolding.
+- **The country "character" zombie is gone.** A dedicated, country-scale `CountryCharacter`
+  section replaces the reused city panel (same data, clean layout). No more "What makes
+  Netherlands, Netherlands".
+- **No more duplicate cities.** Verified on Netherlands: Amsterdam and Rotterdam each appear
+  exactly once (featured as easiest/hardest, then excluded from the region list).
+- **The rejected section is gone:** the "why these fail" failure cards are removed from
+  business pages (you rejected them in the content map). The cell page also gained its missing
+  dedicated "what the owner keeps" section, a short data-derived narrative that cannot
+  contradict the numbers, and the freshness + flag-it close.
+- Per your note, I did NOT spend effort writing new prose; the work is structural (sections
+  present + clean) plus the named visual fixes.
+
+All 31 gates green (including the new section gate); tsc clean. The "easiest to break in"
+panel is kept for now (you said revisit later).
+
+Round-4 preview (READY): https://marginatlas-web-twtl-knrd3k9ud-benets-projects-3110e8e1.vercel.app
+Worth opening: `/nl` (cities deduped, the clean character section), `/gb`, a thin cell like
+`/ug/uganda/restaurants` (every section present as scaffolding), `/cities/london`, a London
+neighbourhood. Production held on the branch for your nod.
