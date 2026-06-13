@@ -89,7 +89,6 @@ import { CoverageBadge } from "@/components/CoverageBadge";
 // Industry deepening sections. Both self-suppress
 // when their data isn't on the cell, so they're safe to mount before any
 // cell has been deepened (Phase 1 will populate the data).
-import { SubIndustryPicker } from "@/components/sections/SubIndustryPicker";
 import { SetupCostBlock } from "@/components/sections/SetupCostBlock";
 import { AuPrimaryDataBadge } from "@/components/AuPrimaryDataBadge";
 // Reverted: InlineMidArticle temporarily removed.
@@ -327,8 +326,30 @@ export default async function CellPage({
     displayedIndustry &&
     requestedIndustry.id !== displayedIndustry.id
   );
-  // Silence eslint unused — INDUSTRY_BY_ID may not be used directly here
-  void INDUSTRY_BY_ID;
+  // Type switcher group (2026-06-13): the sub-niches of this trade, from the
+  // taxonomy children. If the URL's trade is a parent with children (or itself
+  // a child of one), the bar offers a "Type" select listing the whole group
+  // (the parent reads "All ...") so a reader can pivot e.g. restaurants ->
+  // pizzerias. Each option is a real cell URL, so the switcher's router handles
+  // navigation; no stub data needed.
+  const typeRoot =
+    requestedIndustry?.parent_id != null
+      ? INDUSTRY_BY_ID[requestedIndustry.parent_id] ?? null
+      : requestedIndustry ?? null;
+  const typeChildren = typeRoot
+    ? INDUSTRIES.filter((i) => i.parent_id === typeRoot.id)
+    : [];
+  const subTypes =
+    typeRoot && typeChildren.length > 0
+      ? [typeRoot, ...typeChildren].map((i) => ({
+          id: i.id,
+          name: i.name,
+          slug: industryToSlug(i.id),
+        }))
+      : [];
+  const currentTypeSlug = requestedIndustry
+    ? industryToSlug(requestedIndustry.id)
+    : industry;
 
   // Margin waterfall inputs — gross + operating come from the industry
   // lookup, net comes from estimateNetProfit() so it reflects the
@@ -669,6 +690,8 @@ export default async function CellPage({
         geoName={cell.geo_name || geo}
         regions={regions}
         industries={industryOpts}
+        subTypes={subTypes}
+        currentTypeSlug={currentTypeSlug}
         sizeBands={availableSizes}
         years={availableYears}
         currentSize={currentSize}
@@ -763,10 +786,9 @@ export default async function CellPage({
           into the "What it takes to open" section above. The older standalone
           ScorePanel section was pure duplication and stays removed. */}
 
-      {/* Plan v32 Sprint G — sub-industry picker. Renders only when the
-         parent industry has at least one data_ready variant. Otherwise
-         returns null and the page reads as before. */}
-      <SubIndustryPicker cell={cell} />
+      {/* The sub-niche switcher moved into the DimensionSwitcher "Type" select
+         (2026-06-13): the old SubIndustryPicker stub rendered non-navigating
+         chips. The Type select drives real cell URLs from the taxonomy. */}
 
       {/* Editorial voice, tightened to ONE block (density reform
           2026-06-04). The standalone EditorialNote and the activity-

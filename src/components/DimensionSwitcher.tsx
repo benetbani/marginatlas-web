@@ -25,11 +25,21 @@ export type DimensionSwitcherProps = {
   geoName: string;
   regions: Region[];
   industries: IndustryOpt[];
+  /** The trade's sub-niche group (parent first), for the "Type" select. Empty
+   *  when the trade has no sub-types. Each is a real cell slug. */
+  subTypes?: IndustryOpt[];
+  /** The slug currently selected in the type group (the URL's trade). */
+  currentTypeSlug?: string;
   sizeBands: string[];
   years: number[];
   currentSize: string | null;
   currentYear: number | null;
 };
+
+// Shared select chrome (2026-06-13): warm tokens (parchment border, ink-500
+// chevron), the SaaS surface. One constant so every control matches.
+const SELECT_CLASS =
+  "appearance-none bg-white border border-parchment hover:border-atlas-400 rounded-lg px-3 py-1.5 pr-8 text-sm font-medium text-ink-900 focus:outline-none focus:ring-2 focus:ring-atlas-500/30 transition cursor-pointer bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 12 12%22 fill=%22none%22><path d=%22M3 5l3 3 3-3%22 stroke=%22%237d6c58%22 stroke-width=%221.5%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>')] bg-no-repeat bg-[length:12px] bg-[right_0.625rem_center]";
 
 export function DimensionSwitcher({
   country,
@@ -39,6 +49,8 @@ export function DimensionSwitcher({
   geoName,
   regions,
   industries,
+  subTypes = [],
+  currentTypeSlug,
   sizeBands,
   years,
   currentSize,
@@ -62,7 +74,7 @@ export function DimensionSwitcher({
   }
 
   return (
-    <div className="sticky top-[57px] z-[5] -mx-6 px-6 py-3 bg-cream-50 border-y border-ink-200 mb-6">
+    <div className="sticky top-[57px] z-[5] -mx-6 px-6 py-3 bg-cream-50 border-y border-parchment mb-6">
       <div className="flex flex-wrap items-center gap-3 text-sm">
         <span className="text-xs uppercase tracking-wide text-ink-700/60 font-medium">
           Showing
@@ -76,7 +88,7 @@ export function DimensionSwitcher({
             value={industrySlug}
             disabled={pending}
             onChange={(e) => navigate(geoSlug, e.target.value)}
-            className="appearance-none bg-white border border-ink-200 hover:border-atlas-500 rounded-lg px-3 py-1.5 pr-8 text-sm font-medium text-ink-900 focus:outline-none focus:ring-2 focus:ring-atlas-500/30 transition cursor-pointer bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 12 12%22 fill=%22none%22><path d=%22M3 5l3 3 3-3%22 stroke=%22%23475569%22 stroke-width=%221.5%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>')] bg-no-repeat bg-[length:12px] bg-[right_0.625rem_center]"
+            className={SELECT_CLASS}
           >
             <option value={industrySlug}>{industryName}</option>
             {industries
@@ -89,6 +101,28 @@ export function DimensionSwitcher({
           </select>
         </label>
 
+        {/* Type: the sub-niches of this trade (e.g. restaurants -> pizzeria,
+            food truck). Each option is a real cell slug; only shown when the
+            trade has a sub-type group. */}
+        {subTypes.length > 1 && (
+          <label className="flex items-center gap-2">
+            <span className="text-xs text-ink-700/60">Type</span>
+            <select
+              aria-label="Type"
+              value={currentTypeSlug ?? industrySlug}
+              disabled={pending}
+              onChange={(e) => navigate(geoSlug, e.target.value)}
+              className={SELECT_CLASS}
+            >
+              {subTypes.map((t, i) => (
+                <option key={t.id} value={t.slug}>
+                  {i === 0 ? `${t.name} (all)` : t.name}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
+
         <span className="text-ink-700/40">in</span>
 
         {/* Region */}
@@ -99,7 +133,7 @@ export function DimensionSwitcher({
             value={geoSlug}
             disabled={pending}
             onChange={(e) => navigate(e.target.value, industrySlug)}
-            className="appearance-none bg-white border border-ink-200 hover:border-atlas-500 rounded-lg px-3 py-1.5 pr-8 text-sm font-medium text-ink-900 focus:outline-none focus:ring-2 focus:ring-atlas-500/30 transition cursor-pointer bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 12 12%22 fill=%22none%22><path d=%22M3 5l3 3 3-3%22 stroke=%22%23475569%22 stroke-width=%221.5%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>')] bg-no-repeat bg-[length:12px] bg-[right_0.625rem_center]"
+            className={SELECT_CLASS}
           >
             <option value={geoSlug}>{geoName}</option>
             {regions
@@ -126,7 +160,7 @@ export function DimensionSwitcher({
                   setSize(e.target.value);
                   navigate(geoSlug, industrySlug, e.target.value);
                 }}
-                className="appearance-none bg-white border border-ink-200 hover:border-atlas-500 rounded-lg px-3 py-1.5 pr-8 text-sm font-medium text-ink-900 focus:outline-none focus:ring-2 focus:ring-atlas-500/30 transition cursor-pointer bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 12 12%22 fill=%22none%22><path d=%22M3 5l3 3 3-3%22 stroke=%22%23475569%22 stroke-width=%221.5%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>')] bg-no-repeat bg-[length:12px] bg-[right_0.625rem_center]"
+                className={SELECT_CLASS}
               >
                 <option value="">All sizes</option>
                 {sizeBands.map((b) => (
