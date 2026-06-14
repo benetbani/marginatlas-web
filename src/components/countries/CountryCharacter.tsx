@@ -120,54 +120,55 @@ export function CountryCharacter({
       aria-label={`The character of ${countryName}`}
       className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
     >
-      <SectionEyebrow className="mb-1">Character</SectionEyebrow>
-      <h2 className="font-display text-xl font-medium tracking-tight text-balance text-ink-900 md:text-2xl">
-        What makes {countryName} distinct
-      </h2>
+      {/* Header: the title leads on the left, the two people-percentage stats
+          sit compact at the top-right (founder 2026-06-14), so the section never
+          opens with a half-empty full-width row of dead space. */}
+      <div className="flex flex-wrap items-start justify-between gap-x-8 gap-y-3">
+        <div className="min-w-0">
+          <SectionEyebrow className="mb-1">Character</SectionEyebrow>
+          <h2 className="font-display text-xl font-medium tracking-tight text-balance text-ink-900 md:text-2xl">
+            What makes {countryName} distinct
+          </h2>
+        </div>
+        {hasPeople ? (
+          <div className="flex flex-wrap gap-x-7 gap-y-2 sm:justify-end">
+            {isNum(sig.foreign_born_pct) ? (
+              <div className="text-left sm:text-right">
+                <div className="font-display text-2xl font-semibold tabular-nums leading-none text-ink-900 md:text-3xl">
+                  {sig.foreign_born_pct}%
+                </div>
+                <div className="mt-1 text-xs leading-snug text-cocoa-700">born outside the country</div>
+              </div>
+            ) : null}
+            {isNum(sig.foreign_owned_pct) ? (
+              <div className="text-left sm:text-right">
+                <div className="font-display text-2xl font-semibold tabular-nums leading-none text-ink-900 md:text-3xl">
+                  {sig.foreign_owned_pct}%
+                </div>
+                <div className="mt-1 text-xs leading-snug text-cocoa-700">of local firms foreign-owned</div>
+              </div>
+            ) : null}
+          </div>
+        ) : null}
+      </div>
 
-      {/* People + signature sectors */}
-      {(hasPeople || sectors.length > 0) ? (
-        <div className="mt-5 grid gap-6 md:grid-cols-2">
-          {hasPeople ? (
-            <div className="flex flex-wrap gap-x-10 gap-y-4">
-              {isNum(sig.foreign_born_pct) ? (
-                <div>
-                  <div className="font-display text-3xl font-semibold tabular-nums leading-none text-ink-900">
-                    {sig.foreign_born_pct}%
-                  </div>
-                  <div className="mt-1 text-sm text-cocoa-700/80">born outside the country</div>
-                </div>
-              ) : null}
-              {isNum(sig.foreign_owned_pct) ? (
-                <div>
-                  <div className="font-display text-3xl font-semibold tabular-nums leading-none text-ink-900">
-                    {sig.foreign_owned_pct}%
-                  </div>
-                  <div className="mt-1 text-sm text-cocoa-700/80">
-                    of local firms have a foreign owner
-                  </div>
-                </div>
-              ) : null}
-            </div>
-          ) : null}
-          {sectors.length > 0 ? (
-            <div>
-              <div className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
-                What stands out
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {sectors.map((s) => (
-                  <span
-                    key={s.label}
-                    title={s.blurb}
-                    className="inline-flex items-center rounded-full border border-parchment bg-cream-100 px-3 py-1 text-sm font-medium text-cocoa-700"
-                  >
-                    {s.label}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ) : null}
+      {/* Signature sectors: a tight chip row, not a half-width grid column. */}
+      {sectors.length > 0 ? (
+        <div className="mt-5">
+          <div className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
+            What stands out
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {sectors.map((s) => (
+              <span
+                key={s.label}
+                title={s.blurb}
+                className="inline-flex items-center rounded-full border border-parchment bg-cream-100 px-3 py-1 text-sm font-medium text-cocoa-700"
+              >
+                {s.label}
+              </span>
+            ))}
+          </div>
         </div>
       ) : null}
 
@@ -200,7 +201,7 @@ export function CountryCharacter({
                   ) : null,
                 )}
               </div>
-              <p className="mt-4 text-[11px] leading-relaxed text-cocoa-700/55">
+              <p className="mt-4 text-[11px] leading-relaxed text-cocoa-500">
                 Higher is better in all six. Modeled and directional.
               </p>
             </div>
