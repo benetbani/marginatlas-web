@@ -42,6 +42,8 @@
  */
 import type { NumberFormatSpec } from "@/components/kit/numberFormat";
 import type { BreakInBand } from "@/lib/scores/break_in_rating";
+import type { ScoreBandStop, ScoreTone } from "@/components/kit/charts";
+import { climateWord } from "@/lib/scores/band_labels";
 
 /* ----------------------------- output shape ----------------------------- */
 
@@ -65,8 +67,23 @@ export type CityViewMasthead = {
 /** One spending-power figure, value pre-formatted to a display string. */
 export type CityStat = { label: string; value: string; hint?: string };
 
+/** The masthead score as a calm 0-100 band: the plain band word, the climate
+ * threshold words under the track, and the peer cities' own scores as quiet
+ * ticks so a reader sees where the field sits. Null when the city is unscored. */
+export type CityScoreBand = {
+  score: number;
+  label: string;
+  tone: ScoreTone;
+  bands: ScoreBandStop[];
+  /** Peer-city scores on the same 0-100 scale, for the context ticks. */
+  peers: number[];
+  hint: string;
+};
+
 export type CityView = {
   masthead: CityViewMasthead;
+  /** The Business Climate Score as a ScoreBand, rendered beside the masthead. */
+  scoreBand: CityScoreBand | null;
   honestTake: { verdict: string; points: string[]; body: string | null } | null;
   /** Who the local customer is: the spending-power facts, in plain terms. */
   customer: {
@@ -121,6 +138,8 @@ export type CityViewInput = {
   netWealthPerAdult: number | null;
   /** The city's single 0-100 Business Climate Score, or null when unscorable. */
   cityScore: { score: number; band: BreakInBand } | null;
+  /** Peer cities' own 0-100 climate scores, for the score band's context ticks. */
+  peerScores?: number[];
   /** Whether the curated London market dataset backs this city (London only). */
   hasLondonMarket: boolean;
 };
@@ -247,6 +266,9 @@ export function buildCityView(input: CityViewInput): CityView {
     climateChip,
   };
 
+  /* -- the score band (the masthead score as a calm 0-100 band) -------- */
+  const scoreBand = buildScoreBand(cityScore, input.peerScores ?? []);
+
   /* -- honest take ---------------------------------------------------- */
   const honestTake = buildHonestTake(input, isLondon);
 
@@ -268,12 +290,57 @@ export function buildCityView(input: CityViewInput): CityView {
 
   return {
     masthead,
+    scoreBand,
     honestTake,
     customer,
     space,
     visitorSplit,
     changing,
     isLondon,
+  };
+}
+
+/**
+ * The Business Climate Score as a ScoreBand: the plain climate word the score
+ * lands in, the four threshold words quietly under the track, and the peer
+ * cities' own scores as context ticks. Built on the SAME band cutoffs the
+ * break-in rating uses (brutal < 40, demanding 40-59, manageable 60-77,
+ * forgiving 78+), so the band word here can never drift from the masthead chip
+ * or a peer card. Null when the city carries no score (the band self-omits).
+ */
+function buildScoreBand(
+  cityScore: { score: number; band: BreakInBand } | null,
+  peerScores: number[],
+): CityView["scoreBand"] {
+  if (!cityScore) return null;
+  // The four climate threshold words on their cutoffs, ascending, each toned so
+  // a higher band reads warmer. The score's own band supplies the lead word.
+  const bands: ScoreBandStop[] = [
+    { upTo: 39, word: climateWord("brutal"), tone: "caution" },
+    { upTo: 59, word: climateWord("demanding"), tone: "neutral" },
+    { upTo: 77, word: climateWord("manageable"), tone: "accent" },
+    { upTo: 100, word: climateWord("forgiving"), tone: "positive" },
+  ];
+  const tone: ScoreTone =
+    cityScore.band === "forgiving"
+      ? "positive"
+      : cityScore.band === "brutal"
+        ? "caution"
+        : cityScore.band === "manageable"
+          ? "accent"
+          : "neutral";
+  // Only finite peer scores become ticks; an empty set is fine (no ticks drawn).
+  const peers = peerScores.filter(isNum);
+  return {
+    score: cityScore.score,
+    label: "Business Climate Score",
+    tone,
+    bands,
+    peers,
+    hint:
+      peers.length > 0
+        ? "Higher is a friendlier place to open a small business. The ticks are the peer cities below, on the same scale."
+        : "Higher is a friendlier place to open a small business, on a 0 to 100 scale.",
   };
 }
 

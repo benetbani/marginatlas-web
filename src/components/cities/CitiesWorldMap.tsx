@@ -9,12 +9,21 @@
  *   1.1 marker r = 2.5 at zoom 1 (way smaller than the prior r=4)
  *   1.2 vermillion fill (atlas-700 #952509), stroke atlas-800 #6F1A06
  *   1.3 hover bumps to r=5 with a 14px transparent halo for click target
- *   1.4 zoom in / zoom out buttons in bottom-right; wheel zoom enabled
+ *   1.4 zoom in / zoom out buttons; wheel zoom enabled
  *   1.5 zoom range 1x to 4x; pan clamped within bounds
  *   1.6 tooltip floats DIRECTLY BELOW the hovered dot, not in the corner
  *   1.7 "Click a city" instruction at top-center, light gray, opacity-60,
  *       disappears on first user interaction
  *   1.8 countries are not clickable (pointer-events: none on Geography)
+ *
+ * Hero revision (founder escalation 2026-06-14): the map is now the dominant
+ * hero element at the very top of /cities, so two things move into the first
+ * viewport. The zoom +/- controls sit TOP-RIGHT (they used to be ~660px down
+ * at the bottom of a 600px map, below the fold); and the first-paint height is
+ * trimmed (h-[360px] md:h-[480px]) so the whole hero (compact copy + map +
+ * visible controls) lands on a standard first screen. Markers, the tooltip,
+ * wheel zoom, and pan clamping are unchanged. The height is overridable via the
+ * optional heightClassName prop so the page owns its hero sizing.
  */
 
 "use client";
@@ -38,6 +47,12 @@ export type CitiesWorldMapCity = {
 
 type Props = {
   cities: CitiesWorldMapCity[];
+  /**
+   * Tailwind height utilities for the map frame, letting the host page own its
+   * hero sizing. Defaults to a trimmed first-screen height so the controls and
+   * hero copy share one viewport. Mobile-first: must stay legible at 375px.
+   */
+  heightClassName?: string;
 };
 
 // Atlas palette. Founder direction 2026-05-26: continents render in
@@ -83,7 +98,10 @@ function iso2ToFlag(iso2: string): string {
   return String.fromCodePoint(0x1f1e6 + (a - 65), 0x1f1e6 + (b - 65));
 }
 
-export default function CitiesWorldMap({ cities }: Props) {
+export default function CitiesWorldMap({
+  cities,
+  heightClassName = "h-[360px] md:h-[480px]",
+}: Props) {
   const [hovered, setHovered] = useState<HoverState>(null);
   const [pos, setPos] = useState<ZoomPos>(INITIAL_POS);
   const [interacted, setInteracted] = useState(false);
@@ -131,12 +149,12 @@ export default function CitiesWorldMap({ cities }: Props) {
   // at zoom 4 (browser ceil keeps it visible).
   const markerStroke = 0.8 / pos.zoom;
 
-  // Founder direction 2026-05-26: match the homepage map exactly —
-  // atlas paper pattern behind the continents, same border, same 6px
+  // Founder direction 2026-05-26: match the homepage map exactly.
+  // Atlas paper pattern behind the continents, same border, same 6px
   // radius. No bg-cream-100 (was visually different from the homepage).
   return (
     <div
-      className="relative w-full h-[320px] md:h-[600px] rounded-md overflow-hidden border border-ink-200 atlas-paper"
+      className={`relative w-full ${heightClassName} rounded-md overflow-hidden border border-ink-200 atlas-paper`}
       aria-label="World map showing covered cities"
       role="region"
     >
@@ -292,21 +310,23 @@ export default function CitiesWorldMap({ cities }: Props) {
         </ZoomableGroup>
       </ComposableMap>
 
-      {/* Cities §1.7: faint "Click a city" instruction at top-center.
-          Disappears on first user interaction (hover, pan, or zoom). */}
+      {/* Cities §1.7: faint "Click a city" instruction. Moved to the top-LEFT
+          on the hero revision so it never collides with the zoom controls that
+          now sit top-right. Disappears on first user interaction. */}
       {!interacted && (
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute top-4 left-1/2 -translate-x-1/2 font-display text-xl md:text-2xl tracking-wide text-ink-700"
+          className="pointer-events-none absolute top-3 left-4 font-display text-lg md:text-xl tracking-wide text-ink-700"
           style={{ opacity: 0.45 }}
         >
           Click a city
         </div>
       )}
 
-      {/* Cities §1.4: zoom controls in the bottom-right corner. Atlas
-          palette, 32px square, stacked vertically. */}
-      <div className="absolute bottom-3 right-3 flex flex-col gap-1.5">
+      {/* Cities §1.4 (hero revision): zoom controls moved to the TOP-RIGHT so
+          they always sit inside the first viewport. Atlas palette, 32px square,
+          stacked vertically; tappable target floor met at 375px. */}
+      <div className="absolute top-3 right-3 flex flex-col gap-1.5">
         <button
           type="button"
           onClick={handleZoomIn}

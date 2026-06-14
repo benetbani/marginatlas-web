@@ -31,19 +31,13 @@ import { CityPeers } from "@/components/cities/CityPeers";
 import { buildCityPeers } from "@/lib/scores/city_peers";
 import { CitySignaturePanel } from "@/components/cities/CitySignaturePanel";
 import { breakInWord } from "@/lib/scores/band_labels";
-import { BreakInStrip } from "@/components/cities/BreakInStrip";
 import {
   buildCityActivities,
   buildCityScore,
 } from "@/lib/scores/city_board";
 import type { BreakInBand } from "@/lib/scores/break_in_rating";
-import { fmtPct } from "@/components/board/format";
-import { TakeHomeValue } from "@/components/monetization/TakeHomeValue";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import { getNeighborhoodEconomics } from "@/lib/economics/neighborhood_economics";
-import { slugToIndustry } from "@/lib/taxonomy";
-import { AtlasPictogram } from "@/components/brand/pictograms";
-import { industryPictogramId } from "@/lib/brand/industry_pictogram";
 import { NeighborhoodCover } from "@/components/cities/NeighborhoodCover";
 import {
   AnswerFirstMasthead,
@@ -54,6 +48,13 @@ import {
   RealityCheck,
   ContrarianInsight,
   SectionEmpty,
+  ScoreBand,
+  VisitorSplit,
+  ComparisonBars,
+  OwnerKeepTable,
+  type ComparisonItem,
+  type OwnerKeepTrade,
+  type ChipTone,
 } from "@/components/kit";
 import {
   buildCityView,
@@ -63,18 +64,20 @@ import {
 
 export const revalidate = 43200; // 12 hours
 
-/** Band to the per-row break-in badge tone, the EXACT moss / atlas / clay scale
- * the score badges and the country "easiest to break in" panel use, so the
- * badge reads identically here. Higher = easier = warmer. Tokens only, no hex. */
-function breakInBadge(band: BreakInBand): string {
+/** The city activities' break-in band to the OwnerKeepTable chip tone. The kit's
+ * MeaningChip speaks easy / moderate / hard / neutral (meaning-only colour); the
+ * four break-in bands fold onto it so the table chip reads the same easier-is-
+ * warmer scale the per-row badge used to. Higher band = easier. */
+function breakInChipTone(band: BreakInBand): ChipTone {
   switch (band) {
     case "forgiving":
-      return "border-moss-300 bg-moss-50 text-moss-700";
+      return "easy";
     case "manageable":
+      return "moderate";
     case "demanding":
-      return "border-atlas-300 bg-atlas-100/60 text-atlas-700";
+      return "hard";
     case "brutal":
-      return "border-clay-300 bg-clay-100/60 text-clay-700";
+      return "hard";
   }
 }
 
@@ -220,6 +223,18 @@ export default async function CityPage({
     },
   });
 
+  // Peer cities: the same selection CityPeers renders, resolved here so the
+  // "peers" section is ALWAYS present (CityPeers itself draws when two or more
+  // peers resolve, a calm placeholder otherwise) AND so the peers that carry
+  // their own climate score can drive a like-for-like ComparisonBars beside the
+  // cards, and seed the masthead ScoreBand's context ticks. Mirrors the
+  // component's own two-peer floor without regressing it.
+  const peers = buildCityPeers(city.slug, 3);
+  const peerCount = peers.length;
+  const scoredPeers = peers.filter(
+    (p): p is typeof p & { score: number } => typeof p.score === "number",
+  );
+
   // The pure view model: maps the figures above into the kit's section props,
   // in the content-map reading order, fully filling the London exemplar and
   // self-omitting elsewhere. The heavier wiring (activities, neighbourhoods,
@@ -237,6 +252,7 @@ export default async function CityPage({
     avgMonthlySalary: econSnap.avgMonthlySalary,
     netWealthPerAdult: econSnap.netWealthPerAdult,
     cityScore: cityScore ? { score: cityScore.score, band: cityScore.band } : null,
+    peerScores: scoredPeers.map((p) => p.score),
     hasLondonMarket: city.slug === "london",
   });
 
@@ -251,12 +267,6 @@ export default async function CityPage({
 
   // The best-areas read: the curated London exemplar, or a self-omit elsewhere.
   const bestAreas = BEST_AREAS[city.slug] ?? null;
-
-  // Peer cities: the same selection CityPeers renders, resolved here so the
-  // "peers" section is ALWAYS present (CityPeers itself draws when two or more
-  // peers resolve, a calm placeholder otherwise). Mirrors the component's own
-  // two-peer floor without regressing it.
-  const peerCount = buildCityPeers(city.slug, 3).length;
 
   // The sticky-nav sections. Every required city section now ALWAYS renders
   // (content or a calm placeholder), so the nav lists all eight, after the lead
@@ -300,6 +310,26 @@ export default async function CityPage({
             stats={view.masthead.stats}
             breakIn={view.masthead.climateChip}
           />
+
+          {/* The Business Climate Score as a calm 0-100 band, set just under the
+             masthead: the plain climate word, the four threshold words quietly
+             under the track, and the peer cities below shown as context ticks.
+             This is the score the masthead anchors on a flagship city and chips
+             on a thinner one, drawn here as a band so the reader sees where it
+             sits in the field rather than reading a lone number. Self-omits on an
+             unscored city (the masthead already softens that case). */}
+          {view.scoreBand ? (
+            <div className="mt-6 rounded-lg border border-parchment bg-cream-50 px-5 py-5 shadow-subtle md:px-7">
+              <ScoreBand
+                score={view.scoreBand.score}
+                label={view.scoreBand.label}
+                tone={view.scoreBand.tone}
+                bands={view.scoreBand.bands}
+                peers={view.scoreBand.peers.length > 0 ? view.scoreBand.peers : null}
+                hint={view.scoreBand.hint}
+              />
+            </div>
+          ) : null}
 
           <div className="mt-8 space-y-6 md:space-y-8">
             {/* The honest take, right after the headline numbers. The brand
@@ -412,8 +442,11 @@ export default async function CityPage({
             )}
 
             {/* Tourist money vs local money: ALWAYS rendered (founder). The
-               split reuses the per-100 stacked bar, read as "where your trade
-               comes from" rather than money out. */}
+               hand-rolled stacked bar is now the kit VisitorSplit: one honest
+               proportion bar where the DOMINANT slice (the steady resident-and-
+               worker trade, per the copy) carries the lone accent. It is a
+               footfall share, not money, so the note keeps that clear. When no
+               split is estimable the section keeps its headline + body prose. */}
             <BeatCard
               id="visitors"
               eyebrow="Tourist vs local"
@@ -427,49 +460,23 @@ export default async function CityPage({
                 ) : null}
                 {view.visitorSplit.items ? (
                   (() => {
-                    // A footfall share (where the trade comes from), NOT money:
-                    // render as "n in 100", never dollar-prefixed.
-                    const items = view.visitorSplit.items.filter(
-                      (it) => typeof it.perHundred === "number" && (it.perHundred as number) >= 0,
-                    ) as Array<{ label: string; perHundred: number; kept?: boolean }>;
-                    const total = items.reduce((s, it) => s + it.perHundred, 0) || 100;
+                    // The view carries the two slices as per-100 footfall shares
+                    // (resident slice flagged `kept`); feed them to VisitorSplit
+                    // as the resident/visitor magnitudes so the chart tints
+                    // whichever side is the steady money, and keeps the labels.
+                    const items = view.visitorSplit.items;
+                    const res = items.find((it) => it.kept);
+                    const vis = items.find((it) => !it.kept);
                     return (
-                      <>
-                        <div
-                          className="mt-5 flex h-5 w-full overflow-hidden rounded-full border border-parchment"
-                          role="img"
-                          aria-label="Share of trade from residents versus visitors, out of 100."
-                        >
-                          {items.map((it, i) => (
-                            <div
-                              key={i}
-                              className={it.kept ? "bg-atlas-500" : "bg-cocoa-300"}
-                              style={{ width: `${(it.perHundred / total) * 100}%` }}
-                              title={`${it.label}: ${Math.round(it.perHundred)} in 100`}
-                            />
-                          ))}
-                        </div>
-                        <dl className="mt-4 divide-y divide-parchment border-y border-parchment">
-                          {items.map((it, i) => (
-                            <div key={i} className="flex items-baseline justify-between gap-4 py-2.5">
-                              <dt className="flex items-center gap-2 text-sm text-cocoa-700">
-                                <span
-                                  aria-hidden="true"
-                                  className={`h-2.5 w-2.5 rounded-sm ${it.kept ? "bg-atlas-500" : "bg-cocoa-300"}`}
-                                />
-                                {it.label}
-                              </dt>
-                              <dd className="shrink-0 font-display text-base font-semibold tabular-nums text-ink-900">
-                                {Math.round(it.perHundred)} in 100
-                              </dd>
-                            </div>
-                          ))}
-                        </dl>
-                        <p className="mt-3 text-[11px] text-cocoa-500">
-                          A rough share of where a typical street&apos;s trade comes
-                          from, by footfall, not a revenue figure.
-                        </p>
-                      </>
+                      <VisitorSplit
+                        className="mt-5"
+                        resident={res?.perHundred ?? null}
+                        visitor={vis?.perHundred ?? null}
+                        residentLabel={res?.label ?? "Residents and workers"}
+                        visitorLabel={vis?.label ?? "Visitors"}
+                        eyebrow="Where the trade comes from"
+                        note="A rough share of where a typical street's trade comes from, by footfall, not a revenue figure."
+                      />
                     );
                   })()
                 ) : null}
@@ -480,87 +487,42 @@ export default async function CityPage({
                through the cell engine; only trusted local measurements rank, so a
                row never carries an invented number; the list self-omits below
                three rows. Each row links to that activity's full cell benchmark
-               under the city. The break-in spread (BreakInStrip) is folded in as
-               the visual header of this same section: it reads the same break-in
-               signal the per-row badges do, so it is the companion to the table,
-               not a second top-level section. */}
+               under the city. This is now the kit OwnerKeepTable: trades ranked by
+               take-home, the break-in read on each row as a meaning chip (no longer
+               a separate BreakInStrip header AND a per-row badge, so the break-in
+               signal shows ONCE), and the net margin %. The table self-omits when
+               nothing is held, but the page still gates the whole section on three
+               real reads so a thin city falls to the calm SectionEmpty instead. */}
             {activities.length > 0 ? (
               <BeatCard
                 id="owners-keep"
                 eyebrow="What owners keep"
                 heading={`What an owner keeps in ${city.name}`}
               >
-                <BreakInStrip
-                  cityName={city.name}
-                  items={activities
-                    .filter((a) => a.breakInScore != null && a.breakInBand != null)
-                    .map((a) => ({
-                      name: a.name,
-                      score: a.breakInScore as number,
-                      band: a.breakInBand as BreakInBand,
-                    }))}
-                />
                 <p className="mb-5 max-w-2xl text-sm leading-relaxed text-cocoa-700 md:text-base">
                   The everyday businesses you find in almost any city, and what a
-                  typical owner keeps after tax here. The badge is the same 0 to
-                  100 break-in read each business shows on its own page; higher
-                  means easier to get started. Modeled from local business
-                  demography. Directional.
+                  typical owner keeps after tax here. The break-in chip is the same
+                  0 to 100 read each business shows on its own page; higher means
+                  easier to get started. Modeled from local business demography.
+                  Directional.
                 </p>
-                <div className="grid grid-cols-1 gap-x-10 md:grid-cols-2">
-                  {[
-                    activities.slice(0, Math.ceil(activities.length / 2)),
-                    activities.slice(Math.ceil(activities.length / 2)),
-                  ].map((col, ci) => (
-                    <ul
-                      key={ci}
-                      className="divide-y divide-parchment border-y border-parchment"
-                    >
-                      {col.map((a) => (
-                        <li key={a.slug}>
-                          <Link
-                            href={a.href}
-                            className="group flex items-baseline justify-between gap-3 py-2.5 transition-colors"
-                          >
-                            <span className="flex min-w-0 items-center gap-2.5">
-                              <AtlasPictogram
-                                id={industryPictogramId(slugToIndustry(a.slug)?.id)}
-                                size={18}
-                                className="shrink-0 text-cocoa-700 transition-colors group-hover:text-atlas-700"
-                              />
-                              <span className="truncate text-sm font-medium text-ink-900 transition-colors group-hover:text-atlas-700">
-                                {a.name}
-                              </span>
-                              {a.breakInScore != null && a.breakInBand != null ? (
-                                <span
-                                  className={`inline-flex shrink-0 items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-semibold ${breakInBadge(
-                                    a.breakInBand,
-                                  )}`}
-                                >
-                                  <span className="tabular-nums">{a.breakInScore}</span>
-                                  <span>{breakInWord(a.breakInBand)}</span>
-                                </span>
-                              ) : null}
-                            </span>
-                            <span className="flex shrink-0 items-baseline gap-3">
-                              {a.netMarginPct != null && (
-                                <span className="hidden text-[11px] tabular-nums text-cocoa-500 sm:inline">
-                                  {fmtPct(a.netMarginPct)} net
-                                </span>
-                              )}
-                              <span className="font-display text-base font-semibold tabular-nums text-ink-900">
-                                <TakeHomeValue takeHome={a.takeHome} cellHref={a.href} />
-                              </span>
-                            </span>
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  ))}
-                </div>
-                <p className="mt-3 text-[11px] text-cocoa-500">
-                  Owner take-home is after tax, for a typical single-site operator.
-                </p>
+                <OwnerKeepTable
+                  framed={false}
+                  trades={activities.map(
+                    (a): OwnerKeepTrade => ({
+                      trade: a.name,
+                      href: a.href,
+                      ease: a.breakInBand ? breakInChipTone(a.breakInBand) : undefined,
+                      easeLabel:
+                        a.breakInScore != null && a.breakInBand != null
+                          ? `${a.breakInScore} ${breakInWord(a.breakInBand)}`
+                          : undefined,
+                      margin: a.netMarginPct,
+                      takeHome: a.takeHome,
+                    }),
+                  )}
+                  caption="Owner take-home is after tax, for a typical single-site operator."
+                />
               </BeatCard>
             ) : (
               <SectionEmpty
@@ -723,9 +685,32 @@ export default async function CityPage({
 
             {/* Rival + peer cities: a real peer comparison, each carrying its OWN
                headline city score on the same scale as this page, each linking to
-               that peer's city page. Self-omits below two peers. */}
+               that peer's city page. Self-omits below two peers. Where this city
+               AND its peers each carry a climate score, a ComparisonBars sits
+               above the cards: a like-for-like ranking on the ONE shared 0-100
+               scale (one axis held constant, so a leader mark is honest), the
+               subject city the lone accent. The cards stay below for the flags,
+               continents, and the step-sideways links. */}
             {peerCount >= 2 ? (
-              <div id="peers">
+              <div id="peers" className="space-y-4">
+                {cityScore && scoredPeers.length >= 1
+                  ? (() => {
+                      const items: ComparisonItem[] = [
+                        { label: city.name, value: cityScore.score, highlight: true },
+                        ...scoredPeers.map((p) => ({ label: p.name, value: p.score })),
+                      ];
+                      return (
+                        <div className="rounded-lg border border-parchment bg-cream-50 px-5 py-5 shadow-subtle md:px-7">
+                          <ComparisonBars
+                            items={items}
+                            label="Business Climate Score, this city and its peers"
+                            format={(n) => `${Math.round(n)}`}
+                            caveat="Each city's own 0 to 100 climate score, higher is friendlier to a small business. The same scale as this page."
+                          />
+                        </div>
+                      );
+                    })()
+                  : null}
                 <CityPeers citySlug={city.slug} cityName={city.name} />
               </div>
             ) : (

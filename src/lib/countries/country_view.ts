@@ -76,11 +76,24 @@ export type CountryView = {
     points: string[];
     /** Pay tracks for the kit WageRangeTracks, when real figures exist. */
     payNote: string | null;
+    /**
+     * Like-for-like employer payroll on-cost across the home country and its
+     * neighbours, as percent values, for the kit ComparisonBars. The home
+     * country is flagged `home`. Null when fewer than two real rates are held,
+     * so the chart self-omits and the bullet read stands alone. These are the
+     * same rates the table and the bullets already carry, never new numbers.
+     */
+    payrollCompare: {
+      items: Array<{ label: string; pct: number; home?: boolean }>;
+      caveat: string;
+    } | null;
   } | null;
-  /** The like-for-like neighbour FACTS table (kit LikeForLikeTable rows). */
+  /** The like-for-like neighbour FACTS table (kit ComparisonTable rows). */
   neighbours: {
     heading: string;
     lede: string;
+    /** The home-country column key, so the page marks it as the subject. */
+    subjectKey: string;
     columns: Array<{ key: string; label: string; sub?: string }>;
     rows: Array<{
       label: string;
@@ -542,7 +555,14 @@ function buildHire(
   input: CountryViewInput,
   isExemplar: boolean,
 ): CountryView["hire"] {
-  const { countryName, snapshot, payrollRate } = input;
+  const { countryName, snapshot, payrollRate, selfFacts, neighbours } = input;
+
+  // The like-for-like payroll on-cost chart: the home country beside its
+  // neighbours, on the SAME employer-social-rate axis already shown in the
+  // bullets and the neighbour table. A single held rate is not a comparison, so
+  // it needs two or more. noLeaderMark territory: these are different regimes,
+  // so the chart never crowns one, it just shows the shape side by side.
+  const payrollCompare = buildPayrollCompare(selfFacts, neighbours, countryName);
 
   if (isExemplar) {
     return {
@@ -555,6 +575,7 @@ function buildHire(
         "Skilled staff are hard to keep, so the headline floor is rarely the rate you actually pay.",
       ],
       payNote: null,
+      payrollCompare,
     };
   }
 
@@ -593,6 +614,36 @@ function buildHire(
     lede: "Staff are the largest controllable cost in most small businesses. What you pay, plus what the employer adds on top, sets the real cost of a hire.",
     points,
     payNote: null,
+    payrollCompare,
+  };
+}
+
+/**
+ * The employer payroll on-cost across the home country and its neighbours, as a
+ * like-for-like ComparisonBars dataset. Reuses the same rates the page already
+ * holds (no new figures). Returns null below two held rates, so a lone rate
+ * stays in the bullet read rather than drawing a one-bar "comparison".
+ */
+function buildPayrollCompare(
+  self: NeighbourFacts,
+  neighbours: NeighbourFacts[],
+  countryName: string,
+): NonNullable<CountryView["hire"]>["payrollCompare"] {
+  const rows = [self, ...neighbours.filter((n) => n && n.iso2 && n.name)];
+  const items = rows
+    .filter((n) => isNum(n.payrollRate) && n.payrollRate! > 0)
+    // De-dup by country code: the neighbour group is curated, but guard anyway.
+    .filter((n, i, arr) => arr.findIndex((m) => m.iso2 === n.iso2) === i)
+    .map((n) => ({
+      label: n.iso2 === self.iso2 ? countryName : n.name,
+      pct: Math.round(n.payrollRate! * 100),
+      home: n.iso2 === self.iso2,
+    }));
+  if (items.length < 2) return null;
+  return {
+    items,
+    caveat:
+      "The employer social on-cost on top of every gross wage. Different systems fund different things, so read each country on its own terms, not as a ranking.",
   };
 }
 
@@ -653,6 +704,7 @@ function buildNeighbours(
   return {
     heading: `How ${countryName} compares to its neighbours`,
     lede: "The same set-up facts, side by side. These are different price regimes, so a money figure here is a fact about each country, never a ranking across them.",
+    subjectKey: self.iso2.toLowerCase(),
     columns,
     rows,
     footnote:

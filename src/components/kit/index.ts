@@ -125,6 +125,11 @@ export {
   type WeightedCompareProps,
   type WeightedColumn,
   type WeightedMetric,
+  // Shared table atom + its tone type, so a page can compose a one-off chip /
+  // bar / range in the same grammar (the city page types its break-in chip tone
+  // off ChipTone) without reaching past the barrel into ./tables/helpers.
+  MeaningChip,
+  type ChipTone,
 } from "./tables";
 
 // The Atlas chart family (R6.5, ported from the Claude-design charts): data-ink

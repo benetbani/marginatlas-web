@@ -155,27 +155,52 @@ function CityStatCard({ city }: { city: DirectoryCity }) {
 
 export default function CitiesHub() {
   return (
-    <article className="max-w-6xl mx-auto px-4 md:px-6 py-12 md:py-16">
-      {/* The world map is the first thing a reader meets on /cities, with the
-          by-name search directly under it; the breadcrumb, the header, and the
-          region-grouped cards all follow below. */}
-      <section aria-labelledby="cities-map-heading">
-        <h2 id="cities-map-heading" className="sr-only">
-          Map of covered cities
-        </h2>
+    <article className="max-w-6xl mx-auto px-4 md:px-6 py-6 md:py-8">
+      {/* Hero (founder escalation 2026-06-14): the map dominates the top of the
+          page. A tight hero band carries the H1, one line of intro, and the
+          count compactly ABOVE the full-content-width map; the map's zoom
+          controls now sit top-right, so the whole hero (compact copy + map +
+          visible controls) lands on a standard first screen. The by-name search
+          sits directly under the map; the breadcrumb and the region directory
+          follow below. */}
+      <section aria-labelledby="cities-hero-heading">
+        <header className="max-w-3xl">
+          <SectionEyebrow size="md" className="mb-2">
+            The directory
+          </SectionEyebrow>
+          <h1
+            id="cities-hero-heading"
+            className="font-display text-3xl md:text-4xl lg:text-[2.85rem] font-semibold tracking-tight text-ink-900 leading-[1.06]"
+          >
+            Where small business actually works, city by city
+          </h1>
+          <p className="mt-3 text-base md:text-lg text-graphite leading-relaxed">
+            What a cafe makes in Tokyo, a salon in Lagos, a corner shop in
+            Mumbai. Open a city for its industries, costs, and rankings, or pick
+            one off the map.{" "}
+            <span className="text-cocoa-700/85 tabular-nums">
+              <span className="text-ink-900 font-medium">{TOTAL}</span> cities
+              placed.
+            </span>
+          </p>
+        </header>
+
+        {/* The dominant hero element: the world map, full content-width,
+            immediately under the compact band. */}
         <div
-          className="rounded-2xl bg-white border border-parchment p-2 md:p-3"
+          className="mt-5 md:mt-6 rounded-2xl bg-white border border-parchment p-2 md:p-3"
           style={{ boxShadow: elevation.card }}
         >
           <CitiesWorldMap cities={MAP_CITIES} />
         </div>
+
         {/* The by-name way in. A client island: it filters the covered-city
             list in the browser and links to each /cities/{slug}. With JS off
             the input is inert and the grouped directory below still works. */}
         <CitySearchBox cities={SEARCH_CITIES} />
       </section>
 
-      <nav aria-label="Breadcrumb" className="text-sm text-cocoa-700/70 mt-10 md:mt-12 mb-8">
+      <nav aria-label="Breadcrumb" className="text-sm text-cocoa-700/70 mt-10 md:mt-12">
         <Link href="/" className="hover:text-atlas-700">
           Home
         </Link>
@@ -183,27 +208,11 @@ export default function CitiesHub() {
         <span className="text-ink-900">Cities</span>
       </nav>
 
-      <header className="max-w-3xl">
-        <SectionEyebrow size="md" className="mb-3">
-          The directory
-        </SectionEyebrow>
-        <h1 className="font-display text-4xl md:text-5xl lg:text-[3.3rem] font-semibold tracking-tight text-ink-900 leading-[1.04]">
-          Where small business actually works, city by city
-        </h1>
-        <p className="mt-5 text-lg md:text-xl text-graphite leading-relaxed">
-          What a cafe makes in Tokyo, a salon in Lagos, a corner shop in Mumbai.
-          The numbers bend with the city: rent, wages, and what people will pay
-          all shift from one place to the next.{" "}
-          <span className="text-ink-900">
-            Open a city for its industries, costs, and rankings, or browse the
-            covered cities by region below.
-          </span>
-        </p>
-        <p className="mt-4 text-sm text-cocoa-700/85 tabular-nums">
-          <span className="text-ink-900 font-medium">{TOTAL}</span> cities on
-          the map.
-        </p>
-      </header>
+      <p className="mt-6 max-w-2xl text-base md:text-lg text-graphite leading-relaxed">
+        The numbers bend with the city: rent, wages, and what people will pay
+        all shift from one place to the next. Browse the covered cities by
+        region below, or open any one for the fuller picture.
+      </p>
 
       {/* The showcase, grouped by world region. Each region heading is
           followed by a compact card per city carrying the same three real

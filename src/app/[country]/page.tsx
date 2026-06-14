@@ -38,7 +38,8 @@ import { buildCityScore } from "@/lib/scores/city_board";
 import {
   AnswerFirstMasthead,
   HonestTakeBox,
-  LikeForLikeTable,
+  ComparisonTable,
+  ComparisonBars,
   WhatLocalsKnow,
   ContrarianInsight,
   StickySectionNav,
@@ -408,6 +409,26 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
                   </li>
                 ))}
               </ul>
+              {/* Beside the bullets, where two or more real payroll rates exist:
+                  the employer on-cost across this country and its neighbours, as
+                  a like-for-like bar read. noLeaderMark so no regime is crowned;
+                  the home country is the lone tinted bar. Self-omits otherwise,
+                  so the placeholder and the bullet-only read are untouched. */}
+              {view.hire.payrollCompare ? (
+                <div className="mt-6 border-t border-parchment/60 pt-5">
+                  <ComparisonBars
+                    label="Payroll on-cost, vs neighbours"
+                    items={view.hire.payrollCompare.items.map((it) => ({
+                      label: it.label,
+                      value: it.pct,
+                      highlight: it.home,
+                    }))}
+                    format={(n) => `${Math.round(n)}%`}
+                    noLeaderMark
+                    caveat={view.hire.payrollCompare.caveat}
+                  />
+                </div>
+              ) : null}
             </BeatCard>
           ) : (
             <SectionEmpty
@@ -424,15 +445,34 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
               tier table is folded under the decisive read above, so the cost
               figure shows once.) */}
           {view.neighbours ? (
-            <LikeForLikeTable
+            <ComparisonTable
               id="neighbours"
               eyebrow="Vs neighbours"
               heading={view.neighbours.heading}
               lede={view.neighbours.lede}
+              metricLabel="Set-up fact"
+              // Cross-border, different price regimes: never crown a cell. The
+              // home country wears the subject accent so the reader's own column
+              // is unmistakable without a ranking.
               noLeaderMark
-              columns={view.neighbours.columns}
-              rows={view.neighbours.rows}
+              columns={view.neighbours.columns.map((c) => ({
+                key: c.key,
+                label: c.label,
+                sub: c.sub,
+                subject: c.key === view.neighbours!.subjectKey,
+              }))}
+              rows={view.neighbours.rows.map((r) => ({
+                label: r.label,
+                hint: r.hint,
+                display: r.cells,
+                values: {},
+                noLeader: true,
+              }))}
               footnote={view.neighbours.footnote}
+              // The neighbours section is required-always-present; keep the real
+              // table even if a column is sparse (the view already guarantees
+              // >= 2 columns and >= 2 filled rows) so the anchor never vanishes.
+              keepWhenThin
             />
           ) : (
             <SectionEmpty
