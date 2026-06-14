@@ -47,6 +47,7 @@ import { industryPictogramId } from "@/lib/brand/industry_pictogram";
 import { NeighborhoodCover } from "@/components/cities/NeighborhoodCover";
 import {
   AnswerFirstMasthead,
+  HeroWash,
   BeatCard,
   HonestTakeBox,
   WhatLocalsKnow,
@@ -341,6 +342,7 @@ export function NeighborhoodOverview({
             only relative "+X% vs city" figures, no absolute money anchor, which
             is acceptable). The differentiated role chips (price tier, tags) sit
             just under the band so the reader can tell them apart. */}
+        <HeroWash category="city">
         <AnswerFirstMasthead
           id="headline"
           eyebrow={
@@ -408,6 +410,7 @@ export function NeighborhoodOverview({
             ))}
           </div>
         )}
+        </HeroWash>
 
         {/* ZONE 1 (cont): THE HONEST TAKE, right after the headline. ------ */}
         {view.honestTake && (

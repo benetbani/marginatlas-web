@@ -24,6 +24,7 @@ import { isGatingEnabled } from "@/lib/feature_flags";
 import { GatedTakeHome } from "@/components/monetization/GatedTakeHome";
 import { RedactedNumber } from "@/components/monetization/RedactedNumber";
 import {
+  HeroWash,
   HonestTakeBox,
   RangeStrip,
   SectionEmpty,
@@ -906,6 +907,7 @@ export function CompareClient({
     <div className="xl:flex xl:gap-12">
       <div className="min-w-0 flex-1 space-y-12 md:space-y-16">
       {/* ----- Pick the matchup ----- */}
+      <HeroWash category="business">
       <section id="compare-pickers" aria-label="Set the matchup">
         {/* The masthead H1 owns the headline; the pickers carry only their quiet
             eyebrow + instruction, not a second near-duplicate H2. */}
@@ -983,6 +985,7 @@ export function CompareClient({
           ))}
         </div>
       </section>
+      </HeroWash>
 
       {/* ----- Where each one wins (the balanced verdict) -----
           Always present (the founder's section contract): the balanced verdict

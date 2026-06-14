@@ -25,6 +25,7 @@ import type { Metadata } from "next";
 import { LEARN_ARTICLES, LEARN_BY_SLUG } from "@/lib/learn/articles";
 import { buildLearnView } from "@/lib/learn/learn_view";
 import {
+  HeroWash,
   MoneyGoesBreakdown,
   RangeStrip,
   HonestTakeBox,
@@ -154,6 +155,7 @@ export default async function LearnArticlePage({
         }}
       />
 
+      <HeroWash category="learn">
       <div className="flex items-center gap-3 text-xs uppercase tracking-wide text-cocoa-700/60 font-semibold mb-3">
         <Link href="/learn" className="hover:text-atlas-700">
           Knowledge base
@@ -182,6 +184,7 @@ export default async function LearnArticlePage({
           {article.oneLineAnswer}
         </p>
       </section>
+      </HeroWash>
 
       {/* 3. The worked example: a real sample P&L, between the answer and the
           prose. Built only from the cost shares the article itself states, so it
