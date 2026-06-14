@@ -21,6 +21,17 @@
  * IQR band still reads.
  *
  * Constraint-safe: no em-dashes, no source-agency names, USD-only figures.
+ *
+ * Reconciled with the 2026-06-14 Claude-design RangeStrip (charts family): the
+ * design version is a sibling of this strip, sharing the seven-gradation ramp,
+ * the log axis, the lone-accent typical and the "you" marker. The two reconcile
+ * to ONE component, this one, which keeps its richer public API and behaviour
+ * (interpolated quartiles, the IQR band seated deeper, the tier dot, the compact
+ * row size, the CSS-only mobile-HTML / desktop-SVG split that the design lacked)
+ * and folds in the only two props the design added that this did not have: an
+ * optional `label` eyebrow above the strip and an optional `caption` line below
+ * it (the "most cluster in the middle, the tails are wider than people assume"
+ * voice). Both are additive and optional, so every existing call site is intact.
  */
 import * as React from "react";
 import { scaleLog } from "@visx/scale";
@@ -45,6 +56,10 @@ export type RangeStripProps = {
   tier?: Tier | null;
   /** "default" is the full masthead strip; "compact" trims chrome for rows. */
   size?: "default" | "compact";
+  /** Optional uppercase eyebrow above the strip (design reconciliation). */
+  label?: string | null;
+  /** Optional plain-voice line below the strip (design reconciliation). */
+  caption?: string | null;
   /** Accessible label override; a sensible one is generated otherwise. */
   ariaLabel?: string;
   className?: string;
@@ -53,6 +68,11 @@ export type RangeStripProps = {
 /** A finite, real number. */
 function isNum(v: number | null | undefined): v is number {
   return v != null && Number.isFinite(v);
+}
+
+/** True when a string has visible content. */
+function hasText(s: string | null | undefined): s is string {
+  return typeof s === "string" && s.trim().length > 0;
 }
 
 // The seven gradation tones, low tail to high tail. A quiet symmetric warm ramp
@@ -79,6 +99,8 @@ export function RangeStrip({
   you,
   tier,
   size = "default",
+  label,
+  caption,
   ariaLabel,
   className,
 }: RangeStripProps) {
@@ -109,7 +131,7 @@ export function RangeStrip({
   const x1 = xp(p90);
   const segW = (x1 - x0) / 7;
 
-  const label =
+  const ariaText: string =
     ariaLabel ??
     `Spread from ${format(p10)} at the bottom tenth to ${format(
       p90,
@@ -129,9 +151,16 @@ export function RangeStrip({
 
   return (
     <figure className={className ? `w-full ${className}` : "w-full"}>
-      {tier ? (
-        <figcaption className="mb-1 flex justify-end">
-          <TierDot tier={tier} showLabel />
+      {hasText(label) || tier ? (
+        <figcaption className="mb-1.5 flex items-center justify-between gap-3">
+          {hasText(label) ? (
+            <span className="text-xs font-semibold uppercase tracking-[0.16em] text-cocoa-700">
+              {label}
+            </span>
+          ) : (
+            <span />
+          )}
+          {tier ? <TierDot tier={tier} showLabel /> : null}
         </figcaption>
       ) : null}
       {/* Mobile (below sm): the SVG's baked-in 11..17px text scales to roughly
@@ -141,7 +170,7 @@ export function RangeStrip({
           size is the one that renders SVG-only on phones; the compact size keeps
           its own HTML row, so this mobile view is reserved for the default. */}
       {!compact ? (
-        <div className="block sm:hidden" role="img" aria-label={label}>
+        <div className="block sm:hidden" role="img" aria-label={ariaText}>
           <div className="flex items-end justify-between gap-2">
             <div className="min-w-0 text-left">
               <div className="text-[11px] font-medium uppercase tracking-wide text-cocoa-700">
@@ -195,7 +224,7 @@ export function RangeStrip({
         viewBox={`0 0 ${W} ${H}`}
         className={compact ? "h-auto w-full" : "hidden h-auto w-full sm:block"}
         role="img"
-        aria-label={label}
+        aria-label={ariaText}
       >
         {/* seven-gradation density ramp (the signature) */}
         <g>
@@ -359,6 +388,16 @@ export function RangeStrip({
             <span className="font-semibold text-ink-900">You {format(you)}</span>
           ) : null}
         </div>
+      ) : null}
+      {hasText(caption) ? (
+        <figcaption
+          className={[
+            "text-[13px] leading-relaxed text-cocoa-700",
+            compact ? "mt-1.5" : "mt-2 sm:mt-1",
+          ].join(" ")}
+        >
+          {caption}
+        </figcaption>
       ) : null}
     </figure>
   );

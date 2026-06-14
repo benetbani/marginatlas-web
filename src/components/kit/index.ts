@@ -99,3 +99,53 @@ export { ProfileChip, type ProfileChipProps } from "./ProfileChip";
 
 // Zoom between altitudes (keeps the trade + place sticky, walks the resolution).
 export { ZoomControl, type ZoomControlProps, type ZoomAltitude, type ZoomHrefs } from "./ZoomControl";
+
+// The Atlas table family (R6.5, ported from the Claude-design table system): one
+// grammar, single hairline + whitespace grouping, tabular figures, the 375px
+// stacked reflow. LikeForLikeTable / WageRangeTracks (above) are unchanged.
+export {
+  AtlasTable,
+  type AtlasTableProps,
+  type AtlasColumn,
+  type AtlasRow,
+  ComparisonTable,
+  type ComparisonTableProps,
+  type ComparisonColumn,
+  type ComparisonRow,
+  OwnerKeepTable,
+  type OwnerKeepTableProps,
+  type OwnerKeepTrade,
+  CostSplitTable,
+  type CostSplitTableProps,
+  type CostSplitRow,
+  RangeTable,
+  type RangeTableProps,
+  type RangeTableRow,
+  WeightedCompare,
+  type WeightedCompareProps,
+  type WeightedColumn,
+  type WeightedMetric,
+} from "./tables";
+
+// The Atlas chart family (R6.5, ported from the Claude-design charts): data-ink
+// discipline, one warm ramp + the lone accent, each reduces to a legible 375px
+// form. RangeStrip (the signature spread, above/at kit root) is reconciled in place.
+export {
+  Waterfall,
+  type WaterfallProps,
+  type WaterfallStep,
+  ScoreBand,
+  type ScoreBandProps,
+  type ScoreBandStop,
+  type ScoreTone,
+  ComparisonBars,
+  type ComparisonBarsProps,
+  type ComparisonItem,
+  HeatStrip,
+  type HeatStripProps,
+  type HeatCell,
+  FootfallGrid,
+  type FootfallGridProps,
+  VisitorSplit,
+  type VisitorSplitProps,
+} from "./charts";
