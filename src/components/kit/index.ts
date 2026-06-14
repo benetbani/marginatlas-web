@@ -105,6 +105,37 @@ export { ZoomControl, type ZoomControlProps, type ZoomAltitude, type ZoomHrefs }
 // when off. Warmth lives in the frame; the data column stays cream and opaque.
 export { AtlasGutters, HeroWash, type HeroWashProps, type HeroWashCategory } from "./frame";
 
+// The Atlas signature blocks (R6.5 Phase 1): the brand-layer content-map
+// sections (operator voices, risks, cost drivers, licences, wage floor vs real
+// pay, street character, vs the world, the one-thing close). Nullable, honest
+// empty state, tokens-only. Filled from data where held, scaffolding otherwise.
+export {
+  OperatorVoices,
+  type OperatorVoicesProps,
+  type OperatorQuote,
+  RiskList,
+  type RiskListProps,
+  type RiskItem,
+  type RiskSeverity,
+  CostDrivers,
+  type CostDriversProps,
+  type CostDriver,
+  type CostDriverDirection,
+  LicenceList,
+  type LicenceListProps,
+  type LicenceItem,
+  MinimumWage,
+  type MinimumWageProps,
+  StreetCharacter,
+  type StreetCharacterProps,
+  type StreetItem,
+  type StreetTag,
+  VsWorld,
+  type VsWorldProps,
+  OneThing,
+  type OneThingProps,
+} from "./blocks";
+
 // The Atlas table family (R6.5, ported from the Claude-design table system): one
 // grammar, single hairline + whitespace grouping, tabular figures, the 375px
 // stacked reflow. LikeForLikeTable / WageRangeTracks (above) are unchanged.
