@@ -47,6 +47,7 @@ import {
   FlagIt,
   BeatCard,
   SectionEmpty,
+  HeroWash,
 } from "@/components/kit";
 import { CountryCharacter } from "@/components/countries/CountryCharacter";
 import {
@@ -269,30 +270,32 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
         {/* 1. Hero: the answer-first masthead, on the shared kit. The anchor is
             the typical small-business tax (a like-for-like-safe number), not a
             raw revenue figure that cannot be ranked across borders. */}
-        <section id="hero" className="pt-1">
-          <div className="relative mb-5 overflow-hidden rounded-2xl">
-            <CountryMastheadImage iso2={iso2} countryName={meta.name} />
-            <div className="relative px-4 pt-4 pb-3 md:px-6">
-              <div className="flex items-center gap-3">
-                <CountryFlag iso2={iso2} className="w-8 md:w-10" />
-                <SectionEyebrow size="md">Small-business economics</SectionEyebrow>
+        <HeroWash category="country">
+          <section id="hero" className="pt-1">
+            <div className="relative mb-5 overflow-hidden rounded-2xl">
+              <CountryMastheadImage iso2={iso2} countryName={meta.name} />
+              <div className="relative px-4 pt-4 pb-3 md:px-6">
+                <div className="flex items-center gap-3">
+                  <CountryFlag iso2={iso2} className="w-8 md:w-10" />
+                  <SectionEyebrow size="md">Small-business economics</SectionEyebrow>
+                </div>
               </div>
             </div>
-          </div>
 
-          <AnswerFirstMasthead
-            eyebrow={view.masthead.eyebrow}
-            tier={view.masthead.tier}
-            title={view.masthead.title}
-            answer={view.masthead.answer}
-            anchor={view.masthead.anchor}
-            stats={view.masthead.stats}
-          />
+            <AnswerFirstMasthead
+              eyebrow={view.masthead.eyebrow}
+              tier={view.masthead.tier}
+              title={view.masthead.title}
+              answer={view.masthead.answer}
+              anchor={view.masthead.anchor}
+              stats={view.masthead.stats}
+            />
 
-          <p className="mt-6 max-w-3xl text-base leading-relaxed text-ink-700 md:text-lg">
-            {getCountryAnchor(iso2, meta.name)}
-          </p>
-        </section>
+            <p className="mt-6 max-w-3xl text-base leading-relaxed text-ink-700 md:text-lg">
+              {getCountryAnchor(iso2, meta.name)}
+            </p>
+          </section>
+        </HeroWash>
 
         <div className="mt-6 space-y-6 md:space-y-8">
           {/* 2. The honest take: THE brand through-line, so it leads the body on

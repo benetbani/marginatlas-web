@@ -52,6 +52,7 @@ import {
   VisitorSplit,
   ComparisonBars,
   OwnerKeepTable,
+  HeroWash,
   type ComparisonItem,
   type OwnerKeepTrade,
   type ChipTone,
@@ -295,21 +296,23 @@ export default async function CityPage({
              Score. The flag + country sit in the eyebrow; the score anchors the
              band on a flagship city and softens to a quiet stat on a thinner
              one. */}
-          <AnswerFirstMasthead
-            id="headline"
-            eyebrow={
-              <span className="inline-flex items-center gap-2">
-                <CountryFlag iso2={city.iso2} className="w-5" />
-                <span>{view.masthead.eyebrow}</span>
-              </span>
-            }
-            tier={view.masthead.tier}
-            title={view.masthead.title}
-            answer={view.masthead.answer}
-            anchor={view.masthead.anchor}
-            stats={view.masthead.stats}
-            breakIn={view.masthead.climateChip}
-          />
+          <HeroWash category="city">
+            <AnswerFirstMasthead
+              id="headline"
+              eyebrow={
+                <span className="inline-flex items-center gap-2">
+                  <CountryFlag iso2={city.iso2} className="w-5" />
+                  <span>{view.masthead.eyebrow}</span>
+                </span>
+              }
+              tier={view.masthead.tier}
+              title={view.masthead.title}
+              answer={view.masthead.answer}
+              anchor={view.masthead.anchor}
+              stats={view.masthead.stats}
+              breakIn={view.masthead.climateChip}
+            />
+          </HeroWash>
 
           {/* The Business Climate Score as a calm 0-100 band, set just under the
              masthead: the plain climate word, the four threshold words quietly

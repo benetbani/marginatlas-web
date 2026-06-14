@@ -73,6 +73,7 @@ import {
   StickySectionNav,
   SectionEmpty,
   formatWithSpec,
+  HeroWash,
 } from "@/components/kit";
 import {
   buildIndustryView,
@@ -365,6 +366,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
              sector. No tier chip at this altitude: an activity carries no single
              confidence read. The place picker and the across-cities link are the
              hero actions below. id="hero" is the canonical first beat. */}
+          <HeroWash category="business">
           <section id="hero">
             <AnswerFirstMasthead
               eyebrow={
@@ -410,6 +412,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
               </span>
             </Link>
           </section>
+          </HeroWash>
 
           {/* 2. The honest take, right after the headline numbers (the
              through-line). The verdict close is the one-line read, the lead

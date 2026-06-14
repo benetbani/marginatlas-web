@@ -62,7 +62,7 @@ import {
   estimateEmployeesFromFirms,
 } from "@/lib/extrapolations/fill_missing";
 import { buildCellBoard, getLondonEntry } from "@/lib/scores/cell_board";
-import { AnswerFirstMasthead, StickySectionNav, FreshnessStamp, FlagIt } from "@/components/kit";
+import { AnswerFirstMasthead, StickySectionNav, FreshnessStamp, FlagIt, HeroWash } from "@/components/kit";
 import { buildCellView, cellViewNav } from "@/lib/cells/cell_view";
 import { CellDecisionStack } from "@/components/cells/CellDecisionStack";
 import { CityHero } from "@/components/CityHero";
@@ -794,23 +794,25 @@ export default async function CellPage({
           a quiet stat row, and break-in demoted to a chip. Replaces the former
           BoardHero + A-J board wall; the board's reference rows now live inside
           the decision stack's content-map sections. */}
-      <AnswerFirstMasthead
-        id="headline"
-        eyebrow={`${tradeName} · ${placeName} · ${
-          iso2ToName(country) || country.toUpperCase()
-        }`}
-        tier={cellView.masthead.tier}
-        title={cellView.masthead.title}
-        answer={cellView.masthead.answer}
-        anchor={cellView.masthead.anchor}
-        spread={
-          cellView.masthead.spread
-            ? { ...cellView.masthead.spread, format: formatMoney }
-            : null
-        }
-        stats={cellView.masthead.stats}
-        breakIn={cellView.masthead.breakIn}
-      />
+      <HeroWash category="business">
+        <AnswerFirstMasthead
+          id="headline"
+          eyebrow={`${tradeName} · ${placeName} · ${
+            iso2ToName(country) || country.toUpperCase()
+          }`}
+          tier={cellView.masthead.tier}
+          title={cellView.masthead.title}
+          answer={cellView.masthead.answer}
+          anchor={cellView.masthead.anchor}
+          spread={
+            cellView.masthead.spread
+              ? { ...cellView.masthead.spread, format: formatMoney }
+              : null
+          }
+          stats={cellView.masthead.stats}
+          breakIn={cellView.masthead.breakIn}
+        />
+      </HeroWash>
 
       {/* The decision stack: the honest take, the money picture, the editorial
           beats, in the content-map reading order. The startup-cost block is

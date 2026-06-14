@@ -100,6 +100,11 @@ export { ProfileChip, type ProfileChipProps } from "./ProfileChip";
 // Zoom between altitudes (keeps the trade + place sticky, walks the resolution).
 export { ZoomControl, type ZoomControlProps, type ZoomAltitude, type ZoomHrefs } from "./ZoomControl";
 
+// The warm frame (R6 Phase B): the fixed place-photography gutters for the root
+// layout + the per-category hero wash band behind a masthead. Flag-gated, no-op
+// when off. Warmth lives in the frame; the data column stays cream and opaque.
+export { AtlasGutters, HeroWash, type HeroWashProps, type HeroWashCategory } from "./frame";
+
 // The Atlas table family (R6.5, ported from the Claude-design table system): one
 // grammar, single hairline + whitespace grouping, tabular figures, the 375px
 // stacked reflow. LikeForLikeTable / WageRangeTracks (above) are unchanged.

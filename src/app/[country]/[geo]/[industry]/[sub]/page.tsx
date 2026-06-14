@@ -57,7 +57,7 @@ import {
 } from "@/lib/extrapolations/fill_missing";
 import { getLondonEntry } from "@/lib/scores/cell_board";
 import { isTrustedLocalCell } from "@/lib/cells/trust";
-import { AnswerFirstMasthead, StickySectionNav, FreshnessStamp, FlagIt } from "@/components/kit";
+import { AnswerFirstMasthead, StickySectionNav, FreshnessStamp, FlagIt, HeroWash } from "@/components/kit";
 import { buildCellView, cellViewNav } from "@/lib/cells/cell_view";
 import { CellDecisionStack } from "@/components/cells/CellDecisionStack";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
@@ -374,21 +374,23 @@ export default async function NeighborhoodCellPage({
             its 7-gradation spread, the quiet stat row. The eyebrow carries the
             neighborhood coordinate so the reader knows the scope is the area,
             not the whole city. */}
-        <AnswerFirstMasthead
-          id="headline"
-          eyebrow={`${tradeName} · ${nb.name} · ${cityName}`}
-          tier={cellView.masthead.tier}
-          title={cellView.masthead.title}
-          answer={cellView.masthead.answer}
-          anchor={cellView.masthead.anchor}
-          spread={
-            cellView.masthead.spread
-              ? { ...cellView.masthead.spread, format: formatMoney }
-              : null
-          }
-          stats={cellView.masthead.stats}
-          breakIn={cellView.masthead.breakIn}
-        />
+        <HeroWash category="business">
+          <AnswerFirstMasthead
+            id="headline"
+            eyebrow={`${tradeName} · ${nb.name} · ${cityName}`}
+            tier={cellView.masthead.tier}
+            title={cellView.masthead.title}
+            answer={cellView.masthead.answer}
+            anchor={cellView.masthead.anchor}
+            spread={
+              cellView.masthead.spread
+                ? { ...cellView.masthead.spread, format: formatMoney }
+                : null
+            }
+            stats={cellView.masthead.stats}
+            breakIn={cellView.masthead.breakIn}
+          />
+        </HeroWash>
 
         {/* The decision stack: the honest take, the money picture, the
             editorial beats, in the content-map reading order. London is fully

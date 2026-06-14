@@ -88,6 +88,21 @@ export function isGatingEnabled(): boolean {
 }
 
 /**
+ * The warm frame (R6 Phase B): the photo gutters + per-category hero wash +
+ * glass sticky chrome. Default OFF, so production looks exactly as today until
+ * the founder approves the look. The whole frame is one flag so it appears all
+ * at once (the founder's "all at once, one big preview" choice): flip to "1" in
+ * the preview env to review, then in production at promote. With it OFF,
+ * `HeroWash` is a transparent passthrough and `AtlasGutters` renders nothing, so
+ * wiring the frame into pages is safe regardless of the flag. The data column
+ * stays cream and opaque either way: warmth lives in the frame, never behind a
+ * number.
+ */
+export function isWarmFrameEnabled(): boolean {
+  return parseFlag(process.env.NEXT_PUBLIC_WARM_FRAME, false);
+}
+
+/**
  * Snapshot of every flag's current value. Useful for `/status` and
  * for the audit / debug surfaces.
  */
@@ -97,5 +112,6 @@ export function snapshotFlags(): Record<string, boolean> {
     NEXT_PUBLIC_ACCOUNT_PREVIEW: isAccountPreviewEnabled(),
     NEXT_PUBLIC_AUTH_ENABLED: isAuthEnabled(),
     NEXT_PUBLIC_GATING_ENABLED: isGatingEnabled(),
+    NEXT_PUBLIC_WARM_FRAME: isWarmFrameEnabled(),
   };
 }

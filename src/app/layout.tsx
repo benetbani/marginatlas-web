@@ -21,6 +21,8 @@ import { FooterNewsletterBar } from "@/components/newsletter/NewsletterSignupVar
 import { LogoWordmark } from "@/components/brand/LogoWordmark";
 import { MobileNav } from "@/components/MobileNav";
 import { PaywallModalRoot } from "@/components/monetization";
+import { AtlasGutters } from "@/components/kit";
+import { isWarmFrameEnabled } from "@/lib/feature_flags";
 
 // Typography.
 // Display face decision 2026-06-13 (Fable, founder-delegated): Fraunces, a warm,
@@ -85,6 +87,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // Warm frame (R6 Phase B): the glass chrome class on the sticky header swaps
+  // in only when the frame is on; the gutters render themselves (no-op when
+  // off). With the flag off the header keeps its white + parchment-hairline bar.
+  const warmFrame = isWarmFrameEnabled();
+  const headerClass = warmFrame
+    ? "atlas-glass-chrome sticky top-0 z-raised"
+    : "bg-white border-b border-parchment sticky top-0 z-raised";
   return (
     <html
       lang="en"
@@ -95,6 +104,11 @@ export default function RootLayout({
           class stays on map containers and white panels only; white cards
           sit on this ground, seated by the elevation scale. */}
       <body className="min-h-screen text-ink-900 font-sans">
+        {/* Warm frame (R6 Phase B): the fixed place-photography gutters behind
+            the whole page. Renders nothing unless NEXT_PUBLIC_WARM_FRAME is on;
+            sits at z -1 so all content paints above it and the imagery only
+            shows in the empty margins beside the readable column. */}
+        <AtlasGutters />
         {/* Microsoft Clarity — heatmaps + session recordings, free forever.
             The src URL is Clarity's loader; it injects the actual tracking
             script after load. afterInteractive so it never blocks render. */}
@@ -109,7 +123,7 @@ export default function RootLayout({
            white and, now that the paper texture that used to separate it from
            the page is gone, carries a thin bottom hairline so the sticky bar
            stays defined as content scrolls beneath it. */}
-        <header className="bg-white border-b border-parchment sticky top-0 z-raised">
+        <header className={headerClass}>
           <div className="max-w-7xl mx-auto px-6 py-5 md:py-6 flex items-center justify-between">
             <a href="/" aria-label="Margin Atlas home" className="inline-flex items-center">
               {/* Cities §10: bump 32 to 40 on desktop, 36 on mobile per founder request. */}
