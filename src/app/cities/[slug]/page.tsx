@@ -53,6 +53,7 @@ import {
   ComparisonBars,
   OwnerKeepTable,
   HeroWash,
+  OneThing,
   type ComparisonItem,
   type OwnerKeepTrade,
   type ChipTone,
@@ -724,6 +725,11 @@ export default async function CityPage({
                 place={city.name}
               />
             )}
+
+            {/* The one thing to remember: the city's read reused as the close. */}
+            <OneThing id="one-thing" lastChecked="June 2026">
+              {view.masthead.answer}
+            </OneThing>
           </div>
         </div>
 

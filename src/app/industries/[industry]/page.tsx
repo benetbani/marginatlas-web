@@ -74,6 +74,7 @@ import {
   SectionEmpty,
   formatWithSpec,
   HeroWash,
+  OneThing,
 } from "@/components/kit";
 import {
   buildIndustryView,
@@ -731,6 +732,11 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
               place={ind.name}
             />
           )}
+
+          {/* The one thing to remember: the verdict's bottom line as the close. */}
+          <OneThing id="one-thing" lastChecked="June 2026">
+            {verdict.close}
+          </OneThing>
         </div>
 
         <StickySectionNav sections={nav} />

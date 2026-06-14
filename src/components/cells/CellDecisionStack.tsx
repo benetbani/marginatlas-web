@@ -31,6 +31,8 @@ import {
   GutCheck,
   SectionEmpty,
   groupSectionStack,
+  CostDrivers,
+  OneThing,
 } from "@/components/kit";
 import { CELL_SECTIONS } from "@/lib/page-sections";
 import type { CellView } from "@/lib/cells/cell_view";
@@ -81,6 +83,9 @@ export function CellDecisionStack({
         items={view.moneyGoes}
         lede="Where each $100 a typical firm takes in actually goes."
       />
+    ) : null,
+    "cost-drivers": view.costDrivers ? (
+      <CostDrivers id="cost-drivers" drivers={view.costDrivers} />
     ) : null,
     "owner-take-home": view.ownerKeeps ? (
       <OwnerKeeps id="owner-take-home" takeHome={view.ownerKeeps.takeHome} marginPct={view.ownerKeeps.marginPct} />
@@ -144,6 +149,10 @@ export function CellDecisionStack({
 
       {/* The related tail, always present. */}
       {content["related"] ?? relatedEmpty}
+
+      {/* The one thing to remember: the page's last word, the honest-take
+          verdict reused as a closer. Shows its honest line when no read is held. */}
+      <OneThing id="one-thing">{view.oneThing}</OneThing>
     </div>
   );
 }

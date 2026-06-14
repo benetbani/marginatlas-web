@@ -37,6 +37,9 @@ export const CELL_SECTIONS: PageSection[] = [
   { id: "narrative", label: "In context", heading: "The story in plain words" },
   { id: "plain-terms", label: "In plain terms", heading: "What the numbers feel like" },
   { id: "money", label: "Where the money goes", heading: "Where each $100 goes" },
+  // R6.5 brand block: the few levers that set this trade's margin (fills from
+  // the held cost structure, beside the money picture).
+  { id: "cost-drivers", label: "What moves the cost", heading: "What moves the margin" },
   { id: "owner-take-home", label: "What the owner keeps", heading: "What the owner takes home" },
   { id: "break-even", label: "Break-even", heading: "When it covers its costs" },
   { id: "wages", label: "Pay by role", heading: "What you would pay your team" },
@@ -44,6 +47,12 @@ export const CELL_SECTIONS: PageSection[] = [
   { id: "seasonality", label: "Through the year", heading: "Busy months and slow months" },
   { id: "first-year", label: "Your first year", heading: "A realistic first year" },
   { id: "nearby", label: "The same business nearby", heading: "The same business, comparable places" },
+  // R6.5 brand blocks kept consecutive so that on a thin cell, where none is yet
+  // held, groupSectionStack collapses the run into ONE calm "still filling in"
+  // strip rather than a wall of cards. Each fills as its data lands.
+  { id: "operator-voices", label: "Operator voices", heading: "What operators actually say" },
+  { id: "risks", label: "What to watch", heading: "What could go wrong" },
+  { id: "vs-world", label: "Versus the world", heading: "How this compares worldwide" },
   { id: "related", label: "Related", heading: "Related businesses and places" },
 ];
 

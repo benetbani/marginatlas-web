@@ -48,6 +48,7 @@ import {
   BeatCard,
   SectionEmpty,
   HeroWash,
+  OneThing,
 } from "@/components/kit";
 import { CountryCharacter } from "@/components/countries/CountryCharacter";
 import {
@@ -631,6 +632,12 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
               Open Compare
             </a>
           </BeatCard>
+
+          {/* The one thing to remember: the page's last word, reused from the
+              honest-take verdict. Shows its honest line when no read is held. */}
+          <OneThing id="one-thing" lastChecked="June 2026">
+            {view.honestTake ? view.honestTake.verdict : null}
+          </OneThing>
 
           {/* Closing furniture: the freshness stamp and the honest flag-it line. */}
           <div className="space-y-3 pt-1 pb-8">

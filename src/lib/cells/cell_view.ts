@@ -60,6 +60,17 @@ export type CellView = {
   myths: Array<{ myth: string; reality: string }> | null;
   rightWrong: { rightFor: string[]; wrongFor: string[] } | null;
   gutCheck: string[] | null;
+  /** R6.5 brand block: the levers that move this trade's margin, derived from
+   * the held money breakdown (the biggest cost lines). Null when no breakdown. */
+  costDrivers: Array<{
+    label: string;
+    note?: string;
+    direction: "up" | "down";
+    impact: 1 | 2 | 3;
+  }> | null;
+  /** R6.5 brand block: the one closing sentence (the page's last word), reused
+   * from the honest-take verdict. Null when there is no held read. */
+  oneThing: string | null;
   isLondon: boolean;
 };
 
@@ -313,6 +324,15 @@ export function buildCellView(input: CellViewInput): CellView {
       ? { takeHome: ownerTakeHome, marginPct: isNum(netMarginPct) ? netMarginPct : null }
       : null;
 
+  // Cost drivers (brand block): the biggest held cost lines ARE the levers that
+  // move the margin. Reuse the money breakdown (the non-kept lines), ranked by
+  // size; no new numbers, no fabrication. Null when no breakdown is held.
+  const costDrivers = buildCostDrivers(moneyGoes);
+
+  // The one closing sentence: the honest-take verdict is the page's sharpest
+  // single line, so it doubles as the last word. Null when no read is held.
+  const oneThing = honestTake ? honestTake.verdict : null;
+
   return {
     masthead,
     honestTake,
@@ -330,8 +350,30 @@ export function buildCellView(input: CellViewInput): CellView {
     myths,
     rightWrong,
     gutCheck,
+    costDrivers,
+    oneThing,
     isLondon,
   };
+}
+
+/** Derive the cost-driver levers from the held money breakdown: the largest
+ * non-kept cost lines, ranked, each weighing the margin down. Returns 3 to 4
+ * levers, or null when no breakdown is held. No invented figures. */
+function buildCostDrivers(
+  moneyGoes: Array<{ label: string; perHundred: number; kept?: boolean; hint?: string }> | null,
+): CellView["costDrivers"] {
+  if (!moneyGoes || moneyGoes.length === 0) return null;
+  const costLines = moneyGoes
+    .filter((m) => !m.kept && isNum(m.perHundred) && m.perHundred > 0)
+    .sort((a, b) => b.perHundred - a.perHundred)
+    .slice(0, 4);
+  if (costLines.length === 0) return null;
+  return costLines.map((m, i) => ({
+    label: m.label,
+    note: m.hint,
+    direction: "down" as const,
+    impact: (i === 0 ? 3 : i === 1 ? 2 : 1) as 1 | 2 | 3,
+  }));
 }
 
 /** The sticky-nav sections, in reading order. Every manifest section is always
