@@ -82,3 +82,20 @@ export {
   type SegmentedProps,
   type SegmentedOption,
 } from "./controls/Segmented";
+
+// Masthead switchers (sub-type reframes the page; venue re-expresses it) + the
+// venue-context note slots. The page reads the same searchParams key server-side
+// and re-derives; the switchers only write the key + expose the value.
+export { SubTypeSwitcher, type SubTypeSwitcherProps, type SubTypeOption } from "./SubTypeSwitcher";
+export { VenueSwitcher, type VenueSwitcherProps, type VenueOption } from "./VenueSwitcher";
+export { CaptiveVenueNote, FreeZoneNote, type VenueNoteProps } from "./venue-notes";
+
+// The make-it-yours what-if calculator (drives the RangeStrip "you" marker).
+export { MakeItYours, type MakeItYoursProps, type MakeItYoursCanonical } from "./MakeItYours";
+
+// The watch/compare tray + the add-to-watch affordance + the profile chip.
+export { WatchTray, type WatchTrayProps, AddToWatch, type AddToWatchProps } from "./WatchTray";
+export { ProfileChip, type ProfileChipProps } from "./ProfileChip";
+
+// Zoom between altitudes (keeps the trade + place sticky, walks the resolution).
+export { ZoomControl, type ZoomControlProps, type ZoomAltitude, type ZoomHrefs } from "./ZoomControl";

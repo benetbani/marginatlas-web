@@ -348,10 +348,16 @@ export function RangeStrip({
         ) : null}
       </svg>
       {compact ? (
-        <div className="mt-1 flex justify-between text-[11px] tabular-nums text-cocoa-700">
+        <div className="mt-1 flex items-baseline justify-between gap-2 text-[11px] tabular-nums text-cocoa-700">
           <span>{format(p10)}</span>
           <span className="font-semibold text-ink-900">{format(p50)}</span>
           <span>{format(p90)}</span>
+          {/* The compact SVG suppresses the you label to stay row-height; carry it
+              in the footer instead so the marker reads in the quiet voice on every
+              viewport, not just as a bare tick. */}
+          {isNum(you) ? (
+            <span className="font-semibold text-ink-900">You {format(you)}</span>
+          ) : null}
         </div>
       ) : null}
     </figure>

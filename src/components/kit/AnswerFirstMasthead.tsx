@@ -109,13 +109,24 @@ export function AnswerFirstMasthead({
           {tier ? <TierDot tier={tier} showLabel /> : null}
         </div>
 
-        {/* the switcher mounts at the title */}
-        {switcher ? <div className="mt-4">{switcher}</div> : null}
+        {/* The title block: the switcher mounts AT the title, so a sub-type +
+            venue switch reads as part of the headline (the business name with a
+            switchable type, set on its terms), not as a floating control row. The
+            switcher slot sits directly above the H1 with tight spacing; it wraps
+            to its own line on narrow screens. When absent, the block collapses to
+            just the headline (self-omitting). */}
+        <div className="mt-4">
+          {switcher ? (
+            <div className="mb-2 flex flex-wrap items-center gap-x-4 gap-y-2">
+              {switcher}
+            </div>
+          ) : null}
 
-        {/* serif headline: a question or an assertion */}
-        <h1 className="mt-3 max-w-3xl font-display text-3xl font-medium leading-tight tracking-tight text-balance text-ink-900 sm:text-4xl">
-          {title}
-        </h1>
+          {/* serif headline: a question or an assertion */}
+          <h1 className="max-w-3xl font-display text-3xl font-medium leading-tight tracking-tight text-balance text-ink-900 sm:text-4xl">
+            {title}
+          </h1>
+        </div>
 
         {/* the one-line answer */}
         {answer ? (

@@ -46,6 +46,7 @@ import { INDUSTRY_BASELINES } from "@/lib/qa/industry_baselines";
 import DecideActivitySelector from "@/components/DecideActivitySelector";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { colors } from "@/lib/design-tokens";
+import { ZoomControl } from "@/components/kit/ZoomControl";
 
 export const revalidate = 43200;
 
@@ -216,8 +217,34 @@ export default async function DecideWizard({
   const curatedCount = ranked.filter((r) => r.isCurated).length;
   const top3 = ranked.slice(0, 3);
 
+  // Altitude links for the ZoomControl, all keeping THIS trade + THIS city
+  // sticky. This ranking page is the "whole city" altitude. "This trade here"
+  // is the city-level cell; "by neighbourhood" points at the best-ranked
+  // neighbourhood's cell as the representative deeper read. Both use the same
+  // cell URL grammar the cards below already use, so they never 404 differently.
+  const iso2 = cityRow.iso2.toLowerCase();
+  const industrySlug = industryToSlug(ind.id);
+  const topRanked = ranked[0];
+  const zoomHrefs = {
+    business: `/${iso2}/${city}/${industrySlug}`,
+    neighbourhood: topRanked
+      ? `/${iso2}/${city}/${topRanked.neighborhood.slug}/${industrySlug}`
+      : undefined,
+  };
+
   return (
-    <article className="max-w-5xl mx-auto px-4 md:px-6 py-10 md:py-14">
+    <>
+      {/* Altitude ladder: same trade + same city, at every level of detail.
+          This page is the "whole city" rung; the links step out to the city
+          cell and down to the best-corner neighbourhood without losing the
+          trade or the place. Sticky, reversible, costs nothing to hydrate. */}
+      <ZoomControl
+        trade={ind.name}
+        place={cityRow.name}
+        altitude="city"
+        hrefs={zoomHrefs}
+      />
+      <article className="max-w-5xl mx-auto px-4 md:px-6 py-10 md:py-14">
       {/* Breadcrumb */}
       <nav className="text-sm text-cocoa-700/70 mb-6 flex items-center gap-2">
         <Link href="/" className="hover:text-atlas-700">
@@ -479,6 +506,7 @@ export default async function DecideWizard({
           </section>
         </>
       )}
-    </article>
+      </article>
+    </>
   );
 }

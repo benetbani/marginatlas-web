@@ -46,6 +46,7 @@ import {
 } from "@/lib/scores/founder_decision";
 import { FounderDecisionLede } from "@/components/decide/FounderDecisionLede";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
+import { DecideWizard, type WizardOption } from "./DecideWizard";
 
 export const revalidate = 86400;
 
@@ -113,6 +114,54 @@ const FOUNDER_ACTIVITIES: FounderActivityInput[] = SMB_INDUSTRIES.map((i) => {
 });
 
 const FOUNDER_DECISION = generateFounderDecision({ activities: FOUNDER_ACTIVITIES });
+
+// Wizard feed. The guided flow reuses the lists the picker already built and a
+// small trade -> typical net-margin table resolved here at build time from the
+// SAME curated shape FOUNDER_ACTIVITIES carries, so the headline the wizard
+// shows matches the destination page and is never invented client-side.
+const WIZARD_TRADES: WizardOption[] = ACTIVITY_OPTIONS.map((o) => ({
+  value: o.value,
+  label: o.label,
+}));
+
+const TRADE_NET_MARGIN: Record<string, number | null> = Object.fromEntries(
+  FOUNDER_ACTIVITIES.map((a) => [a.slug, a.netMargin]),
+);
+
+// A short curated set of trades for the quick chips: the founder-decision "best
+// keepers" first (deduped), topped up from the alphabetical list so there is
+// always a handful, capped so the chip row stays calm on mobile.
+const FEATURED_TRADE_SLUGS = Array.from(
+  new Set([
+    ...FOUNDER_DECISION.best.map((b) => b.slug),
+    "restaurants",
+    "cafes-coffee-shops",
+    "hair-salons",
+  ]),
+).slice(0, 5);
+const FEATURED_TRADES: WizardOption[] = FEATURED_TRADE_SLUGS.map((slug) =>
+  WIZARD_TRADES.find((t) => t.value === slug),
+).filter((t): t is WizardOption => t != null);
+
+// A short curated set of places for the quick chips: the deepest-coverage,
+// widely-recognised metros, in the order a founder is most likely to reach for.
+const FEATURED_PLACE_SLUGS = [
+  "london",
+  "new-york",
+  "paris",
+  "dubai",
+  "amsterdam",
+];
+const FEATURED_PLACES: WizardOption[] = FEATURED_PLACE_SLUGS.map((slug) =>
+  CITY_OPTIONS.find((c) => c.value === slug),
+)
+  .filter((c): c is { value: string; label: string } => c != null)
+  .map((c) => ({ value: c.value, label: c.label }));
+
+const WIZARD_PLACES: WizardOption[] = CITY_OPTIONS.map((c) => ({
+  value: c.value,
+  label: c.label,
+}));
 
 // Worked examples that surface the framework's strongest point: the best corner
 // for a trade is rarely the busiest one, because rent moves with revenue. These
@@ -277,11 +326,16 @@ export default function DecideLanding() {
       {/* Founder-decision read: best vs hardest by what reaches an owner. */}
       <FounderDecisionLede decision={FOUNDER_DECISION} />
 
-      {/* Picker. Native HTML form -> GET /decide/go -> /decide/[activity]/[city] */}
+      {/* Guided picker. The three-step wizard keeps state in the URL so each
+          step is shareable and back-safe; it acts in place, discloses step 3
+          only once a trade and a place are chosen, and links onward to the live
+          neighbourhood ranking (which itself links to the cell). Readers with no
+          client JS still reach the same answer through the worked-example links
+          and the activity links in the lede above. */}
       <section className="mt-12 mb-12">
         <SectionEyebrow className="mb-3">Make it concrete</SectionEyebrow>
         <h2 className="mb-2 font-display text-2xl font-medium tracking-tight text-ink-900 md:text-3xl">
-          Pick an activity and a city
+          Pick a trade and a place
         </h2>
         <p className="mb-5 max-w-2xl text-base leading-relaxed text-graphite">
           Atlas ranks every neighborhood by expected net margin, accounting for
@@ -289,54 +343,13 @@ export default function DecideLanding() {
           luxury district, gentrifying edge), and rent drag. Different
           activities peak in different neighborhoods of the same city.
         </p>
-        <div className="atlas-card p-6 md:p-8">
-          <form
-            action="/decide/go"
-            method="get"
-            className="grid grid-cols-1 items-end gap-4 md:grid-cols-[1fr_1fr_auto]"
-          >
-            <label className="flex flex-col gap-1.5">
-              <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-atlas-700">
-                Activity
-              </span>
-              <select
-                name="activity"
-                required
-                defaultValue="restaurants"
-                className="rounded-lg border border-ink-200 bg-cream-50 px-3 py-2.5 text-sm font-medium text-ink-900 focus:border-atlas-700 focus:outline-none focus:ring-2 focus:ring-atlas-700/20"
-              >
-                {ACTIVITY_OPTIONS.map((o) => (
-                  <option key={o.value} value={o.value}>
-                    {o.label}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="flex flex-col gap-1.5">
-              <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-atlas-700">
-                City
-              </span>
-              <select
-                name="city"
-                required
-                defaultValue="new-york"
-                className="rounded-lg border border-ink-200 bg-cream-50 px-3 py-2.5 text-sm font-medium text-ink-900 focus:border-atlas-700 focus:outline-none focus:ring-2 focus:ring-atlas-700/20"
-              >
-                {CITY_OPTIONS.map((o) => (
-                  <option key={o.value} value={o.value}>
-                    {o.label}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <button
-              type="submit"
-              className="inline-flex items-center gap-2 self-stretch rounded-full bg-atlas-700 px-5 py-2.5 text-sm font-semibold text-cream-50 shadow-sm transition hover:bg-atlas-800 md:self-end"
-            >
-              Rank the neighborhoods &rarr;
-            </button>
-          </form>
-        </div>
+        <DecideWizard
+          trades={WIZARD_TRADES}
+          featuredTrades={FEATURED_TRADES}
+          places={WIZARD_PLACES}
+          featuredPlaces={FEATURED_PLACES}
+          tradeNetMargin={TRADE_NET_MARGIN}
+        />
       </section>
 
       {/* Worked examples: the method in action, not a leaderboard. Each card is

@@ -7,6 +7,8 @@ import {
   useRef,
   type ReactNode,
 } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { cn } from "@/lib/utils";
 import { ComboField, type ComboOption } from "@/components/ComboField";
 import { COUNTRIES, INDUSTRIES, INDUSTRY_BY_ID } from "@/lib/taxonomy";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
@@ -26,7 +28,9 @@ import {
   RangeStrip,
   SectionEmpty,
   StickySectionNav,
+  Slider,
 } from "@/components/kit";
+import { useUrlStateMap } from "@/lib/url_state";
 import {
   generateCompareVerdict,
   type CompareSide,
@@ -284,6 +288,238 @@ const GROUPS: MetricGroup[] = [
   },
 ];
 
+// ---------------------------------------------------------------------------
+// Weighting + the personalized verdict
+//
+// The "where each wins" read above is the balanced, house verdict. Below it a
+// reader can say what THEY care about: drag a weight per metric, lock the ones
+// that matter so a reset leaves them, and the page re-ranks live (P1, no Apply)
+// to a one-line "for what you care about, X wins". Every weight lives in the
+// URL (P3), so a weighted comparison is a link you can send.
+//
+// The score is honest by construction. Each metric is read off the SAME compact
+// cells the grid uses (no invented numbers), normalized 0..1 across the active
+// columns by min-max so a weight means the same thing on a percentage as on a
+// dollar figure, then summed by weight. Cost-share metrics invert (lower rent
+// or payroll share is the stronger column). When the columns span countries the
+// money metrics are dropped from the score, not just caveated: a raw-USD "win"
+// across price regimes is the exact cross-country money-rank the page forbids.
+// ---------------------------------------------------------------------------
+
+/** One thing a reader can weight, read straight off the compact cell. */
+type WeightMetric = {
+  /** Stable key: the URL param is `w<key>`, the lock token is `<key>`. */
+  key: WeightMetricKey;
+  /** Quiet label for the slider and the verdict copy. */
+  label: string;
+  /** The comparable number for a column, or null when the cell lacks it. */
+  numeric: (c: CompactCell) => number | null;
+  /** Higher is the stronger column (false for cost-share metrics). */
+  higherIsStronger: boolean;
+  /** Whether this metric is a raw-money figure, dropped across countries. */
+  money: boolean;
+};
+
+// The curated set, drawn from the rows the grid already shows so the weighting
+// speaks the grid's language: what an owner keeps, the margin, how survivable
+// the first year is, how hard rent and labor press, and what it pays staff.
+const WEIGHT_METRICS: WeightMetric[] = [
+  {
+    key: "take",
+    label: "Take-home",
+    numeric: (c) => c.owner_take_home,
+    higherIsStronger: true,
+    money: true,
+  },
+  {
+    key: "margin",
+    label: "Margin",
+    numeric: (c) => c.net_margin,
+    higherIsStronger: true,
+    money: false,
+  },
+  {
+    key: "breakin",
+    label: "Break-in ease",
+    numeric: (c) => c.survival_yr1,
+    higherIsStronger: true,
+    money: false,
+  },
+  {
+    key: "rent",
+    label: "Rent pressure",
+    numeric: (c) => c.rent_share_pct,
+    higherIsStronger: false,
+    money: false,
+  },
+  {
+    key: "pay",
+    label: "Pays staff",
+    numeric: (c) => c.payroll_per_employee,
+    higherIsStronger: true,
+    money: true,
+  },
+];
+
+/** The starting weight every metric carries (a flat, equal voice). */
+const DEFAULT_WEIGHT = 50;
+const WEIGHT_MIN = 0;
+const WEIGHT_MAX = 100;
+
+/** The metric keys, as a literal union, so the weight field keys below stay
+ *  distinct from the `wlock` field (no `w${string}` collision). */
+type WeightMetricKey = "take" | "margin" | "breakin" | "rent" | "pay";
+
+/** The URL-state field key for a metric weight (`wtake`, `wmargin`, ...). */
+type WeightFieldKey = `w${WeightMetricKey}`;
+
+/** The shape of the weighting state held in the URL: one integer per metric
+ *  weight, plus the pinned-metric token list. */
+type WeightState = Record<WeightFieldKey, number> & { wlock: string[] };
+
+/** Parse + clamp one weight off the URL, falling back to the flat default. */
+function parseWeight(raw: string | null): number {
+  if (raw == null) return DEFAULT_WEIGHT;
+  const n = Math.round(Number(raw));
+  if (!Number.isFinite(n)) return DEFAULT_WEIGHT;
+  return Math.min(WEIGHT_MAX, Math.max(WEIGHT_MIN, n));
+}
+
+/**
+ * The useUrlStateMap field config for the weighting state. Module-constant, so
+ * the hook treats it as stable. A weight at its default serializes to null (the
+ * key drops from a shared link, keeping it to only what the reader changed); the
+ * lock set serializes to a stable dot-joined token list, empty dropping the key.
+ */
+type WeightFieldConfig = {
+  [K in keyof WeightState]: import("@/lib/url_state").UrlStateField<WeightState[K]>;
+};
+
+const WEIGHT_FIELDS: WeightFieldConfig = (() => {
+  const fields: Record<string, unknown> = {
+    wlock: {
+      parse: (raw: string | null): string[] =>
+        raw == null || raw === ""
+          ? []
+          : raw
+              .split(".")
+              .filter((k) => WEIGHT_METRICS.some((m) => m.key === k)),
+      serialize: (v: string[]): string | null =>
+        v.length === 0 ? null : [...v].sort().join("."),
+      fallback: [] as string[],
+    },
+  };
+  for (const m of WEIGHT_METRICS) {
+    fields[`w${m.key}`] = {
+      parse: parseWeight,
+      serialize: (v: number): string | null =>
+        v === DEFAULT_WEIGHT ? null : String(v),
+      fallback: DEFAULT_WEIGHT,
+    };
+  }
+  return fields as WeightFieldConfig;
+})();
+
+/** A column's weighted standing, plus which single metric carried it most. */
+type WeightedStanding = {
+  index: number;
+  /** Weighted total in 0..1 (sum of weight-share times metric score). */
+  total: number;
+  /** The metric that contributed the most to this column's lead, or null. */
+  topMetricLabel: string | null;
+};
+
+/**
+ * Score the active columns by the reader's weights. Pure: no state, no fetch.
+ *
+ * For each in-scope metric (money metrics dropped when `dropMoney`), the columns
+ * that carry the figure are min-max normalized to 0..1 (the strongest column is
+ * 1, the weakest 0; cost-share metrics invert first so lower lands at 1). Each
+ * column's contribution is its normalized score times that metric's share of the
+ * total weight. Columns missing a metric simply do not score on it. Returns the
+ * standings sorted strongest first, plus whether the lead is decisive.
+ */
+function scoreByWeights(
+  activeCols: number[],
+  cells: Record<number, CompactCell | null>,
+  weights: Record<string, number>,
+  dropMoney: boolean,
+): {
+  standings: WeightedStanding[];
+  decisive: boolean;
+  anyWeight: boolean;
+  anyWeightAtAll: boolean;
+} {
+  const metrics = WEIGHT_METRICS.filter((m) => !(dropMoney && m.money));
+  const totalWeight = metrics.reduce(
+    (s, m) => s + Math.max(0, weights[m.key] ?? 0),
+    0,
+  );
+  // Whether the reader has weighted anything at all, including the money metrics
+  // dropped across countries. Lets the verdict say "all on figures we leave out"
+  // rather than "every weight is at zero" when only money metrics carry weight.
+  const totalWeightAllMetrics = WEIGHT_METRICS.reduce(
+    (s, m) => s + Math.max(0, weights[m.key] ?? 0),
+    0,
+  );
+
+  // Running totals + per-column best single metric contribution.
+  const totals: Record<number, number> = {};
+  const topContrib: Record<number, { label: string; amount: number }> = {};
+  activeCols.forEach((i) => {
+    totals[i] = 0;
+  });
+
+  if (totalWeight > 0) {
+    for (const m of metrics) {
+      const w = Math.max(0, weights[m.key] ?? 0);
+      if (w === 0) continue;
+      const share = w / totalWeight;
+      const present = activeCols
+        .map((i) => ({ i, v: m.numeric(cells[i] as CompactCell) }))
+        .filter((r): r is { i: number; v: number } => isNum(r.v));
+      if (present.length < 2) continue; // nothing to rank on this metric
+      const vals = present.map((r) => r.v);
+      const lo = Math.min(...vals);
+      const hi = Math.max(...vals);
+      const span = hi - lo;
+      for (const { i, v } of present) {
+        // 0..1 with the stronger column at 1; flat metric scores every column 1.
+        const raw01 = span === 0 ? 1 : (v - lo) / span;
+        const score01 = m.higherIsStronger ? raw01 : 1 - raw01;
+        const contribution = score01 * share;
+        totals[i] += contribution;
+        const cur = topContrib[i];
+        if (!cur || contribution > cur.amount) {
+          topContrib[i] = { label: m.label, amount: contribution };
+        }
+      }
+    }
+  }
+
+  const standings: WeightedStanding[] = activeCols
+    .map((i) => ({
+      index: i,
+      total: totals[i] ?? 0,
+      topMetricLabel: topContrib[i]?.label ?? null,
+    }))
+    .sort((a, b) => b.total - a.total);
+
+  // A lead is decisive only when the leader is meaningfully clear of the next
+  // column, so we never crown a near-tie as a confident personal pick.
+  const decisive =
+    standings.length >= 2 &&
+    standings[0].total - standings[1].total >= 0.04 &&
+    standings[0].total > 0;
+
+  return {
+    standings,
+    decisive,
+    anyWeight: totalWeight > 0,
+    anyWeightAtAll: totalWeightAllMetrics > 0,
+  };
+}
+
 /**
  * @param initialSlots  The matchup to render first (defaults to DEFAULT_SLOTS).
  * @param initialCells  The cells already resolved server-side for those slots.
@@ -302,6 +538,15 @@ export function CompareClient({
   const [cells, setCells] =
     useState<Record<number, CompactCell | null>>(initialCells);
   const [loading, setLoading] = useState<Record<number, boolean>>({});
+
+  // The slot matchup (?q=) and the reader's weights (?w*) both write the URL.
+  // They go through the SAME Next router store so neither clobbers the other:
+  // the weight hook (useUrlStateMap) reads useSearchParams to merge, and the
+  // slot writer below merges over that same searchParams instead of a raw
+  // history.replaceState the router would not see.
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   // The data identity of each slot as it was first rendered. A slot whose
   // current key still matches its seed already carries the server-fetched cell,
@@ -375,11 +620,10 @@ export function CompareClient({
   }
 
   // Load slots from ?q= on mount and write current slots back so the
-  // comparison is shareable.
+  // comparison is shareable. Reads off the router's searchParams so it agrees
+  // with the weight hook, which reads the same store.
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const params = new URLSearchParams(window.location.search);
-    const q = params.get("q");
+    const q = searchParams.get("q");
     if (!q) return;
     try {
       const parsed = JSON.parse(decodeURIComponent(q));
@@ -392,11 +636,16 @@ export function CompareClient({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Persist the slots into ?q= through the router (not raw history), merging
+  // over the current params so the weight keys (?w*) survive, and vice versa.
+  // scroll:false keeps the page anchored as the address bar catches up.
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const url = new URL(window.location.href);
-    url.searchParams.set("q", encodeURIComponent(JSON.stringify(slots)));
-    window.history.replaceState(null, "", url.toString());
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("q", encodeURIComponent(JSON.stringify(slots)));
+    const qs = params.toString();
+    router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+    // The slots are the trigger; the router primitives are stable.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slots]);
 
   function copyShareLink() {
@@ -552,6 +801,75 @@ export function CompareClient({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeCols, cells, spansCountries, slots]);
 
+  // ----- The reader's own weights (P3: every weight lives in the URL) -----
+  // One integer field per metric (`wtake`, `wmargin`, ...) plus a `wlock` token
+  // list of the metrics the reader has pinned. A weight at its default drops out
+  // of the URL so a shared link only carries what the reader actually changed;
+  // an empty lock set drops `wlock`. All of it is one coalesced write per change.
+  // The field config is module-constant (WEIGHT_FIELDS), so the hook re-derives
+  // only when the query string changes.
+  const { values: weightValues, set: setWeights, reset: resetWeights } =
+    useUrlStateMap<WeightState>(WEIGHT_FIELDS);
+
+  // The live weights keyed by metric key, and the locked-key set, read off the
+  // URL state so the address bar is the single source of truth (back-safe).
+  const weights = useMemo(() => {
+    const out: Record<string, number> = {};
+    for (const m of WEIGHT_METRICS) {
+      out[m.key] = (weightValues[`w${m.key}` as WeightFieldKey] as number) ?? DEFAULT_WEIGHT;
+    }
+    return out;
+  }, [weightValues]);
+
+  const lockedKeys = useMemo(
+    () => new Set(weightValues.wlock ?? []),
+    [weightValues.wlock],
+  );
+
+  // Whether the reader has bent any weight off its default. Drives the quiet
+  // "Reset weights" disclosure (P5: shown only once there is something to undo).
+  const weightsAdjusted = useMemo(
+    () =>
+      WEIGHT_METRICS.some((m) => weights[m.key] !== DEFAULT_WEIGHT) ||
+      lockedKeys.size > 0,
+    [weights, lockedKeys],
+  );
+
+  function setWeight(key: string, next: number) {
+    setWeights({ [`w${key}`]: next } as Partial<WeightState>);
+  }
+
+  function toggleLock(key: string) {
+    const nextLocked = new Set(lockedKeys);
+    if (nextLocked.has(key)) nextLocked.delete(key);
+    else nextLocked.add(key);
+    setWeights({ wlock: [...nextLocked] });
+  }
+
+  // Reset weights, but honor the locks: a pinned weight survives the reset (it is
+  // the reader's anchor), and the locks themselves stay set. Unlocked weights
+  // fall back to the flat default by dropping their URL key.
+  function resetUnlockedWeights() {
+    if (lockedKeys.size === 0) {
+      resetWeights();
+      return;
+    }
+    const patch: Partial<WeightState> = {};
+    for (const m of WEIGHT_METRICS) {
+      if (!lockedKeys.has(m.key)) patch[`w${m.key}` as WeightFieldKey] = DEFAULT_WEIGHT;
+    }
+    setWeights(patch);
+  }
+
+  // The personalized standing: the active columns re-ranked by the reader's
+  // weights, live. Money metrics drop out across countries (the same like-for-
+  // like rule the house verdict and leader marks honor). Cheap client math, so
+  // it re-derives on every weight tick with no Apply and no server round-trip.
+  const personalStanding = useMemo(
+    () => scoreByWeights(activeCols, cells, weights, spansCountries),
+    [activeCols, cells, weights, spansCountries],
+  );
+
   // The columns that carry a usable revenue spread, used to decide whether the
   // standalone RangeStrip section (lifted out of the table) renders at all.
   const spreadCols = useMemo(
@@ -670,31 +988,62 @@ export function CompareClient({
           Always present (the founder's section contract): the balanced verdict
           when at least two columns are loaded and the verdict crowns a win, a
           calm placeholder otherwise. It never self-omits. The spansCountries
-          guard above still withholds the money wins inside the verdict. */}
-      {verdict && verdict.wins.length > 0 ? (
+          guard above still withholds the money wins inside the verdict. The
+          reader's own weighting + personalized verdict are disclosed below the
+          house read once there are two columns to weigh. */}
+      {verdict ? (
         <section id="where-each-wins" aria-label="Where each one wins">
-          <HonestTakeBox eyebrow="Where each one wins" verdict={verdict.headline}>
-            <p>{verdict.lead}</p>
-            <p className="text-cocoa-700/90">{verdict.close}</p>
-          </HonestTakeBox>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {verdict.wins.map((w) => (
-              <div
-                key={w.metric}
-                className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-4 py-4"
+          {verdict.wins.length > 0 ? (
+            <>
+              <HonestTakeBox
+                eyebrow="Where each one wins"
+                verdict={verdict.headline}
               >
-                <div className="text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
-                  {w.metric}
-                </div>
-                <div className="mt-1 font-display text-base font-semibold tracking-tight text-ink-900">
-                  {w.winnerName}
-                </div>
-                <p className="mt-1.5 text-sm leading-relaxed text-cocoa-700/90">
-                  {w.reading}
-                </p>
+                <p>{verdict.lead}</p>
+                <p className="text-cocoa-700/90">{verdict.close}</p>
+              </HonestTakeBox>
+              <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {verdict.wins.map((w) => (
+                  <div
+                    key={w.metric}
+                    className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-4 py-4"
+                  >
+                    <div className="text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
+                      {w.metric}
+                    </div>
+                    <div className="mt-1 font-display text-base font-semibold tracking-tight text-ink-900">
+                      {w.winnerName}
+                    </div>
+                    <p className="mt-1.5 text-sm leading-relaxed text-cocoa-700/90">
+                      {w.reading}
+                    </p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </>
+          ) : (
+            <HonestTakeBox eyebrow="Where each one wins" verdict={verdict.headline}>
+              <p>{verdict.lead}</p>
+              <p className="text-cocoa-700/90">{verdict.close}</p>
+            </HonestTakeBox>
+          )}
+
+          {activeCols.length >= 2 ? (
+            <WeightingPanel
+              metrics={WEIGHT_METRICS}
+              weights={weights}
+              lockedKeys={lockedKeys}
+              spansCountries={spansCountries}
+              adjusted={weightsAdjusted}
+              initiallyOpen={weightsAdjusted}
+              standing={personalStanding}
+              onWeight={setWeight}
+              onToggleLock={toggleLock}
+              onReset={resetUnlockedWeights}
+              slotLabel={slotLabel}
+              activityLabel={activityLabel}
+            />
+          ) : null}
         </section>
       ) : (
         <SectionEmpty
@@ -890,6 +1239,331 @@ export function CompareClient({
       </div>
       <StickySectionNav sections={navSections} />
     </div>
+  );
+}
+
+/**
+ * The personalized one-line verdict, derived from the weighted standing. Honest
+ * by construction: it crowns a place only when the lead is decisive, names the
+ * single metric that carried it, and stays quiet ("too close to call") when the
+ * weights leave a near-tie. When the columns span countries it says so plainly,
+ * since the money metrics that often decide it were dropped from the score.
+ */
+function personalVerdictLine(
+  standing: {
+    standings: WeightedStanding[];
+    decisive: boolean;
+    anyWeight: boolean;
+    anyWeightAtAll: boolean;
+  },
+  spansCountries: boolean,
+  slotLabel: (i: number) => string,
+): { headline: string; note: string } {
+  const { standings, decisive, anyWeight, anyWeightAtAll } = standing;
+  if (!anyWeight) {
+    // Across countries the reader may have weighted only money metrics, which we
+    // leave out: say so plainly rather than claim every weight is at zero.
+    if (spansCountries && anyWeightAtAll) {
+      return {
+        headline: "Your weights are all on money figures",
+        note: "Across countries we leave the money measures out, since they are not adjusted for local prices. Add weight to margin, break-in ease, or rent to get a like-for-like pick.",
+      };
+    }
+    return {
+      headline: "Every weight is at zero",
+      note: "Raise at least one weight to get a pick for what you care about.",
+    };
+  }
+  if (standings.length < 2) {
+    return {
+      headline: "Pick two places to weigh",
+      note: "Load a second column to rank them by your weights.",
+    };
+  }
+  const leader = slotLabel(standings[0].index);
+  if (!decisive) {
+    return {
+      headline: "Too close to call on your weights",
+      note: "The top two come out within a hair on what you have said matters. Lean on the catch in each, or weight the thing that really decides your year.",
+    };
+  }
+  const carriedBy = standings[0].topMetricLabel;
+  const because = carriedBy ? `, mostly on ${carriedBy.toLowerCase()}` : "";
+  const headline = `For what you care about, ${leader} wins`;
+  const note = spansCountries
+    ? `It leads on the weights you set${because}. These sit in different countries, so the money weights are left out of this pick and only the like-for-like measures count.`
+    : `It comes out ahead on the balance of what you weighted${because}. Move a weight and the pick updates; the side-by-side below still shows every figure behind it.`;
+  return { headline, note };
+}
+
+/**
+ * The reader's own weighting + personalized verdict (agency principles P1-P5).
+ *
+ * P5 (disclosed not displayed): collapsed behind a quiet "Make it yours" toggle,
+ * so the house read leads and the controls appear only on intent. P1 + P2 (act
+ * in place, no Apply): each Slider re-ranks the columns live, client-side. P3
+ * (reversible, canonical beside adjusted): every weight is in the URL, the
+ * personalized pick sits beside the house verdict above, and "Reset weights"
+ * returns to the flat default (honoring any locks). A per-metric lock pins a
+ * weight so a reset leaves it. Tokens only, AA, 44px targets, reduced-motion
+ * safe via the kit Slider; no em-dashes, no source-agency names.
+ */
+function WeightingPanel({
+  metrics,
+  weights,
+  lockedKeys,
+  spansCountries,
+  adjusted,
+  initiallyOpen = false,
+  standing,
+  onWeight,
+  onToggleLock,
+  onReset,
+  slotLabel,
+  activityLabel,
+}: {
+  metrics: WeightMetric[];
+  weights: Record<string, number>;
+  lockedKeys: Set<string>;
+  spansCountries: boolean;
+  adjusted: boolean;
+  /** Open on mount when the URL already carries weights, so a shared weighted
+   *  link lands on the personalized verdict rather than the collapsed header. */
+  initiallyOpen?: boolean;
+  standing: {
+    standings: WeightedStanding[];
+    decisive: boolean;
+    anyWeight: boolean;
+    anyWeightAtAll: boolean;
+  };
+  onWeight: (key: string, next: number) => void;
+  onToggleLock: (key: string) => void;
+  onReset: () => void;
+  slotLabel: (i: number) => string;
+  activityLabel: (i: number) => string;
+}) {
+  const [open, setOpen] = useState(initiallyOpen);
+
+  // Money metrics are inert across countries (dropped from the score), so we
+  // dim them and say why rather than hide them: the reader still sees what was
+  // set aside and that it was the like-for-like rule, not an arbitrary choice.
+  const verdict = personalVerdictLine(standing, spansCountries, slotLabel);
+
+  const leaderIdx =
+    standing.decisive && standing.standings.length > 0
+      ? standing.standings[0].index
+      : null;
+
+  return (
+    <div className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle">
+      {/* The quiet disclosure: house read leads, the reader's controls open on
+          intent (P5). The button is the full-width header so the touch target
+          is generous on a phone. */}
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        aria-controls="weighting-body"
+        className="flex w-full items-center justify-between gap-3 px-5 py-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
+      >
+        <span className="min-w-0">
+          <span className="block text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
+            Make it yours
+          </span>
+          <span className="mt-0.5 block text-sm leading-snug text-cocoa-700">
+            Weight what matters to you, and we re-rank the pick.
+          </span>
+        </span>
+        <svg
+          viewBox="0 0 16 16"
+          className={cn(
+            "h-4 w-4 shrink-0 text-cocoa-500 transition-transform motion-reduce:transition-none",
+            open ? "rotate-180" : "",
+          )}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={1.75}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M4 6l4 4 4-4" />
+        </svg>
+      </button>
+
+      {open ? (
+        <div id="weighting-body" className="border-t border-parchment px-5 pb-5 pt-4">
+          {/* The personalized verdict: the live one-line pick, sitting beside
+              the house read above so the reader sees both at once (P3). */}
+          <div className="rounded-md border border-atlas-200 bg-atlas-50/60 px-4 py-3">
+            <div className="text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
+              Your pick
+            </div>
+            <p
+              className="mt-1 font-display text-lg font-semibold leading-snug tracking-tight text-ink-900"
+              aria-live="polite"
+            >
+              {verdict.headline}
+            </p>
+            <p className="mt-1 text-sm leading-relaxed text-cocoa-700/90">
+              {verdict.note}
+            </p>
+            {/* The full weighted order, so the pick is never a black box. */}
+            {standing.standings.length >= 2 && standing.anyWeight ? (
+              <ol className="mt-3 space-y-1.5">
+                {standing.standings.map((s, rank) => {
+                  const isLeader = s.index === leaderIdx;
+                  return (
+                    <li
+                      key={s.index}
+                      className="flex items-baseline justify-between gap-3 text-sm"
+                    >
+                      <span className="flex min-w-0 items-baseline gap-2">
+                        <span className="text-[11px] tabular-nums text-cocoa-500">
+                          {rank + 1}
+                        </span>
+                        <span
+                          className={cn(
+                            "truncate",
+                            isLeader
+                              ? "font-semibold text-moss-700"
+                              : "text-ink-900",
+                          )}
+                        >
+                          {slotLabel(s.index)}
+                        </span>
+                        <span className="truncate text-[11px] text-cocoa-500">
+                          {activityLabel(s.index)}
+                        </span>
+                      </span>
+                      <span className="shrink-0 text-[11px] tabular-nums text-cocoa-500">
+                        {Math.round(s.total * 100)}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ol>
+            ) : null}
+          </div>
+
+          {/* The weight sliders, one per metric. Each carries a lock toggle that
+              pins the weight against a reset. Live re-rank, no Apply (P1/P2). */}
+          <div className="mt-4 space-y-4">
+            {metrics.map((m) => {
+              const inert = spansCountries && m.money;
+              const locked = lockedKeys.has(m.key);
+              return (
+                <div
+                  key={m.key}
+                  className={cn(
+                    "rounded-md border border-parchment/70 bg-cream-75 px-4 py-3",
+                    inert ? "opacity-60" : "",
+                  )}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                      <Slider
+                        id={`weight-${m.key}`}
+                        label={m.label}
+                        min={WEIGHT_MIN}
+                        max={WEIGHT_MAX}
+                        step={5}
+                        value={weights[m.key]}
+                        onChange={(n) => onWeight(m.key, n)}
+                        format={(n) => `${n}`}
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => onToggleLock(m.key)}
+                      aria-pressed={locked}
+                      aria-label={
+                        locked
+                          ? `${m.label} weight is pinned, unpin it`
+                          : `Pin the ${m.label} weight so a reset leaves it`
+                      }
+                      title={locked ? "Pinned. A reset leaves it." : "Pin this weight"}
+                      className={cn(
+                        "mt-6 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-md border transition-colors",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2",
+                        locked
+                          ? "border-atlas-300 bg-atlas-50 text-atlas-700"
+                          : "border-parchment bg-cream-50 text-cocoa-500 hover:text-ink-900",
+                      )}
+                    >
+                      <LockGlyph locked={locked} />
+                    </button>
+                  </div>
+                  {inert ? (
+                    <p className="mt-1.5 text-[11px] leading-relaxed text-cocoa-500">
+                      Left out across countries. Money figures are not adjusted
+                      for local prices, so this weight does not decide the pick
+                      here.
+                    </p>
+                  ) : null}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* The way back (P3), disclosed only once a weight has moved (P5). A
+              lock keeps its weight through the reset; the copy says so. */}
+          <div className="mt-4 flex items-center justify-between gap-3">
+            <p className="text-[11px] leading-relaxed text-cocoa-500">
+              {lockedKeys.size > 0
+                ? "Reset returns the rest to an even weight and leaves your pinned ones."
+                : "Weights live in the link, so a weighted comparison is shareable."}
+            </p>
+            {adjusted ? (
+              <button
+                type="button"
+                onClick={onReset}
+                className="inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full px-3 text-sm font-medium text-cocoa-700 transition-colors hover:bg-cream-100 hover:text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
+              >
+                <svg
+                  viewBox="0 0 16 16"
+                  className="h-3.5 w-3.5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M3 8a5 5 0 1 1 1.6 3.7" />
+                  <path d="M3 5v3h3" />
+                </svg>
+                Reset weights
+              </button>
+            ) : null}
+          </div>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+/** The lock glyph: a closed padlock when pinned, an open one otherwise. Weight
+ *  (fill of the shackle) carries the state so it reads without relying on hue. */
+function LockGlyph({ locked }: { locked: boolean }) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      className="h-4 w-4"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="3.5" y="7" width="9" height="6.5" rx="1.5" />
+      {locked ? (
+        <path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" />
+      ) : (
+        <path d="M5.5 7V5a2.5 2.5 0 0 1 4.8-1" />
+      )}
+    </svg>
   );
 }
 
