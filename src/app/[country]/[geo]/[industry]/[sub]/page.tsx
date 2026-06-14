@@ -57,9 +57,10 @@ import {
 } from "@/lib/extrapolations/fill_missing";
 import { getLondonEntry } from "@/lib/scores/cell_board";
 import { isTrustedLocalCell } from "@/lib/cells/trust";
-import { AnswerFirstMasthead, StickySectionNav, FreshnessStamp, FlagIt, HeroWash } from "@/components/kit";
+import { AnswerFirstMasthead, StickySectionNav, FreshnessStamp, FlagIt, HeroWash, ZoomControl, AddToWatch } from "@/components/kit";
 import { buildCellView, cellViewNav } from "@/lib/cells/cell_view";
 import { CellDecisionStack } from "@/components/cells/CellDecisionStack";
+import { MakeItYoursPanel } from "@/components/cells/MakeItYoursPanel";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 
 export const revalidate = 21600;
@@ -298,6 +299,72 @@ export default async function NeighborhoodCellPage({
   });
   const navSections = cellViewNav(cellView);
 
+  // -- Interaction layer (Phase 2). The same three client islands the main cell
+  // page mounts, sharing the MakeItYoursPanel component. Each stays HONEST: the
+  // panel mounts only with a real take-home + revenue (so it appears on a filled
+  // London district and self-omits on a modeled one), the zoom links only the
+  // altitudes that resolve from these params, the watch chip carries the real
+  // neighbourhood-cell coordinates.
+  const makeItYoursRevenue = viewRevenue;
+  const makeItYoursTakeHome = cellView.ownerKeeps?.takeHome ?? null;
+  const makeItYoursMarginPct =
+    cellView.ownerKeeps?.marginPct ??
+    (viewNetMarginPct != null ? viewNetMarginPct : null);
+  // Annual rent + payroll from the held cost split, scaled to the costs portion
+  // of revenue. Only when a real split rides on the cell; the levers self-hide
+  // otherwise (a modeled district carries none, so the what-if shows the draw
+  // lever alone).
+  const cs = cell.cost_structure ?? null;
+  let leverRent: number | undefined;
+  let leverStaff: number | undefined;
+  if (
+    cs &&
+    makeItYoursRevenue != null &&
+    makeItYoursTakeHome != null &&
+    makeItYoursRevenue > 0
+  ) {
+    const shareSum = cs.cogs + cs.labor + cs.rent + cs.other;
+    const costsTotal = Math.max(0, makeItYoursRevenue - makeItYoursTakeHome);
+    if (shareSum > 0 && costsTotal > 0) {
+      leverRent = Math.round((cs.rent / shareSum) * costsTotal);
+      leverStaff = Math.round((cs.labor / shareSum) * costsTotal);
+    }
+  }
+  const leverDraw =
+    makeItYoursTakeHome != null && makeItYoursTakeHome > 0
+      ? Math.round(makeItYoursTakeHome / 12)
+      : undefined;
+  const makeItYoursReady =
+    makeItYoursRevenue != null &&
+    makeItYoursRevenue > 0 &&
+    makeItYoursTakeHome != null &&
+    makeItYoursTakeHome > 0 &&
+    makeItYoursMarginPct != null;
+
+  // Zoom ladder hrefs. Here the current cell is the trade in ONE neighbourhood
+  // (the most specific altitude). The genuinely-different altitudes that resolve
+  // from these params, broad to specific: the whole country (same trade at the
+  // country-root cell), the whole city (the city-level cell for this trade), and
+  // this trade here (the city cell is the "business" read of the place). City is
+  // always a sub-country place, so the country link is always valid.
+  // Note: in this route the actual industry slug is the `sub` param, renamed to
+  // `industry` in the destructure above (the param-name lineage workaround). The
+  // `neighborhood` variable is the `industry` param. Build the cell URLs from the
+  // real slugs accordingly.
+  const cellSlug = industry.toLowerCase();
+  const cityCellHref = `/${country.toLowerCase()}/${city.toLowerCase()}/${cellSlug}`;
+  const neighbourhoodHref = `/${country.toLowerCase()}/${city.toLowerCase()}/${neighborhood.toLowerCase()}/${cellSlug}`;
+  const countryZoomHref = `/${country.toLowerCase()}/${country.toLowerCase()}/${cellSlug}`;
+
+  // The watch item for this neighbourhood cell: stable id, label, canonical href,
+  // a take-home/revenue sub, and the compare coordinates. One per page.
+  const watchSub =
+    makeItYoursTakeHome != null
+      ? `Owner keeps about ${formatMoney(makeItYoursTakeHome)}`
+      : viewRevenue != null
+        ? `Typical ${formatMoney(viewRevenue)} revenue`
+        : undefined;
+
   return (
     <div className="xl:flex xl:gap-16">
       <div className="xl:flex-1 xl:min-w-0">
@@ -369,6 +436,36 @@ export default async function NeighborhoodCellPage({
           </section>
         ) : null}
 
+        {/* Zoom ladder + watch chip near the masthead. This is the most specific
+            altitude (the trade in one neighbourhood); the ladder steps up to the
+            city cell, the whole city, and the whole country, keeping the trade +
+            place sticky. The watch chip keeps this district cell on the reader's
+            shortlist. Both are client islands; the page stays server-rendered. */}
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <ZoomControl
+            trade={tradeName}
+            place={placeName}
+            altitude="neighbourhood"
+            sticky={false}
+            hrefs={{
+              country: countryZoomHref,
+              city: cityCellHref,
+              neighbourhood: neighbourhoodHref,
+            }}
+            className="min-w-0 flex-1"
+          />
+          <AddToWatch
+            item={{
+              kind: "cell",
+              slug: `${country.toLowerCase()}:${city.toLowerCase()}:${neighborhood.toLowerCase()}:${cellSlug}`,
+              label: `${tradeName}, ${placeName}`,
+              href: neighbourhoodHref,
+              sub: watchSub,
+              compare: { country, industry: cellSlug, region: city },
+            }}
+          />
+        </div>
+
         {/* Answer-first masthead, the exact band the main cell page opens with:
             the assertion headline, the one-line read, the anchor revenue WITH
             its 7-gradation spread, the quiet stat row. The eyebrow carries the
@@ -391,6 +488,26 @@ export default async function NeighborhoodCellPage({
             breakIn={cellView.masthead.breakIn}
           />
         </HeroWash>
+
+        {/* Make it yours: the marquee what-if calculator, mounted just below the
+            masthead and ONLY when a real take-home + revenue are held (so a
+            filled London district shows it, a modeled one self-omits). An extra
+            interactive panel, not a content-map section, so no gated section id. */}
+        {makeItYoursReady ? (
+          <div className="mt-6">
+            <MakeItYoursPanel
+              canonical={{
+                revenue: makeItYoursRevenue!,
+                takeHome: makeItYoursTakeHome!,
+                marginPct: makeItYoursMarginPct!,
+                rent: leverRent,
+                staff: leverStaff,
+                draw: leverDraw,
+              }}
+              format={formatMoney}
+            />
+          </div>
+        ) : null}
 
         {/* The decision stack: the honest take, the money picture, the
             editorial beats, in the content-map reading order. London is fully

@@ -30,6 +30,8 @@ import { COUNTRIES } from "@/lib/taxonomy";
 import { CityPeers } from "@/components/cities/CityPeers";
 import { buildCityPeers } from "@/lib/scores/city_peers";
 import { CitySignaturePanel } from "@/components/cities/CitySignaturePanel";
+import { CityWatchAction } from "@/components/cities/CityWatchAction";
+import type { WatchInput } from "@/lib/watch_store";
 import { breakInWord } from "@/lib/scores/band_labels";
 import {
   buildCityActivities,
@@ -55,9 +57,11 @@ import {
   HeroWash,
   OneThing,
   VsWorld,
+  ZoomControl,
   type ComparisonItem,
   type OwnerKeepTrade,
   type ChipTone,
+  type ZoomHrefs,
 } from "@/components/kit";
 import {
   buildCityView,
@@ -304,8 +308,44 @@ export default async function CityPage({
     { id: "peers", label: "Rival and peer cities" },
   ];
 
+  // The altitude ladder for this place. A city has no single trade, so the
+  // place coordinate (this city, in its country) is what stays sticky, and the
+  // ladder offers only the two place altitudes that genuinely resolve: up to
+  // the whole country, and the current "whole city" rung. The business and
+  // neighbourhood altitudes are trade-specific, so they are omitted here (no
+  // single trade to hold), keeping the control honest. The country href is the
+  // canonical country page (iso2 lowercased); the city href is this page.
+  const zoomHrefs: ZoomHrefs = {
+    country: `/${city.iso2.toLowerCase()}`,
+    city: `/cities/${city.slug}`,
+  };
+
+  // The masthead "keep this city" item (kind "city"): the whole place flagged
+  // to come back to. The second line carries the climate band word when the
+  // city is scored, else a plain "City level" so the row always reads honestly.
+  const cityWatchItem: WatchInput = {
+    kind: "city",
+    slug: city.slug,
+    label: `${city.name}, ${countryName}`,
+    href: `/cities/${city.slug}`,
+    sub: cityScore
+      ? `${breakInWord(cityScore.band)} climate`
+      : "City level",
+  };
+
   return (
     <article className="pb-16">
+      {/* Altitude ladder for this place: the same city held sticky, stepping out
+         to the whole country and resting at the whole-city rung. A city has no
+         single trade, so the place coordinate is what the ladder keeps; the
+         trade-specific business and neighbourhood altitudes are omitted. Server-
+         renderable, reversible, costs nothing to hydrate. */}
+      <ZoomControl
+        trade={countryName}
+        place={city.name}
+        altitude="city"
+        hrefs={zoomHrefs}
+      />
       <div className="mx-auto max-w-6xl px-4 md:px-6 xl:flex xl:gap-16">
         <div className="min-w-0 xl:flex-1">
           {/* Answer-first masthead, carrying the city's single Business Climate
@@ -329,6 +369,14 @@ export default async function CityPage({
               breakIn={view.masthead.climateChip}
             />
           </HeroWash>
+
+          {/* Masthead action area: keep this whole city on the watch list, the
+             one durable affordance the masthead carries. A city has no single
+             take-home, so there is no make-it-yours here; the reader flags the
+             place and moves on, the floating tray holds the shortlist. */}
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <CityWatchAction item={cityWatchItem} />
+          </div>
 
           {/* The Business Climate Score as a calm 0-100 band, set just under the
              masthead: the plain climate word, the four threshold words quietly

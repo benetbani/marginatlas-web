@@ -21,7 +21,7 @@ import { FooterNewsletterBar } from "@/components/newsletter/NewsletterSignupVar
 import { LogoWordmark } from "@/components/brand/LogoWordmark";
 import { MobileNav } from "@/components/MobileNav";
 import { PaywallModalRoot } from "@/components/monetization";
-import { AtlasGutters } from "@/components/kit";
+import { AtlasGutters, WatchTray } from "@/components/kit";
 import { isWarmFrameEnabled } from "@/lib/feature_flags";
 
 // Typography.
@@ -239,6 +239,14 @@ export default function RootLayout({
            level. Listens for the atlas:open-paywall custom event from
            any lock primitive on any page. */}
         <PaywallModalRoot />
+        {/* Watch list dock. Mounted once at the layout level so it floats on
+           every route. Client island (reads the watch list from localStorage);
+           self-hides when the list is empty and renders nothing on the server,
+           so the page stays server-rendered. Docks bottom-right with print:hidden
+           and expands its list upward from the resting pill, clear of the black
+           footer and the top-of-page mobile nav. "Compare these" hands the
+           watched cells to /compare. */}
+        <WatchTray />
       </body>
     </html>
   );

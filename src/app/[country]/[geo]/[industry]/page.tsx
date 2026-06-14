@@ -62,9 +62,10 @@ import {
   estimateEmployeesFromFirms,
 } from "@/lib/extrapolations/fill_missing";
 import { buildCellBoard, getLondonEntry } from "@/lib/scores/cell_board";
-import { AnswerFirstMasthead, StickySectionNav, FreshnessStamp, FlagIt, HeroWash } from "@/components/kit";
+import { AnswerFirstMasthead, StickySectionNav, FreshnessStamp, FlagIt, HeroWash, ZoomControl, AddToWatch } from "@/components/kit";
 import { buildCellView, cellViewNav } from "@/lib/cells/cell_view";
 import { CellDecisionStack } from "@/components/cells/CellDecisionStack";
+import { MakeItYoursPanel } from "@/components/cells/MakeItYoursPanel";
 import { CityHero } from "@/components/CityHero";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { ComparableCitiesRibbon } from "@/components/ComparableCitiesRibbon";
@@ -597,6 +598,75 @@ export default async function CellPage({
   });
   const navSections = cellViewNav(cellView);
 
+  // -- Interaction layer (Phase 2). The make-it-yours panel, the zoom ladder, and
+  // the add-to-watch chip are client islands mounted inside this server page. Each
+  // is HONEST: the panel mounts only with a real take-home + revenue, the zoom
+  // only links altitudes that resolve from these params, the watch chip carries
+  // the real cell coordinates.
+  //
+  // Canonical figures for the what-if come straight from the cell view (revenue,
+  // owner take-home, net margin), all already shown on the page. The rent + staff
+  // levers are the annual dollar lines the held cost split implies: the per-$100
+  // cost shares scaled to the same typical revenue. Offered only where the split
+  // is held; omitted otherwise (the lever self-hides). The owner-draw lever is the
+  // monthly slice of the typical take-home, so the reader can sanity-check the pay
+  // they intend against the typical owner figure.
+  const makeItYoursRevenue = viewRevenue;
+  const makeItYoursTakeHome = cellView.ownerKeeps?.takeHome ?? null;
+  const makeItYoursMarginPct =
+    cellView.ownerKeeps?.marginPct ??
+    (viewNetMarginPct != null ? viewNetMarginPct : null);
+  // Annual rent + payroll from the held cost split (shares of total cost scaled
+  // to the costs portion of revenue). Only when a real split rides on the cell.
+  const cs = cell.cost_structure ?? null;
+  let leverRent: number | undefined;
+  let leverStaff: number | undefined;
+  if (
+    cs &&
+    makeItYoursRevenue != null &&
+    makeItYoursTakeHome != null &&
+    makeItYoursRevenue > 0
+  ) {
+    const shareSum = cs.cogs + cs.labor + cs.rent + cs.other;
+    const costsTotal = Math.max(0, makeItYoursRevenue - makeItYoursTakeHome);
+    if (shareSum > 0 && costsTotal > 0) {
+      leverRent = Math.round((cs.rent / shareSum) * costsTotal);
+      leverStaff = Math.round((cs.labor / shareSum) * costsTotal);
+    }
+  }
+  const leverDraw =
+    makeItYoursTakeHome != null && makeItYoursTakeHome > 0
+      ? Math.round(makeItYoursTakeHome / 12)
+      : undefined;
+  const makeItYoursReady =
+    makeItYoursRevenue != null &&
+    makeItYoursRevenue > 0 &&
+    makeItYoursTakeHome != null &&
+    makeItYoursTakeHome > 0 &&
+    makeItYoursMarginPct != null;
+
+  // Zoom ladder hrefs. The current cell is the trade read at THIS place (the
+  // "business" altitude). The only genuinely-different altitude these params
+  // resolve is the whole country: the same trade at the country-root cell, valid
+  // only when this geo is a sub-country place (so we are not already at it). The
+  // city + neighbourhood altitudes do not resolve as distinct routes from a
+  // 3-segment cell page, so they are omitted (honest: no link that 404s).
+  const atCountryRoot = geo.toLowerCase() === country.toLowerCase();
+  const countryZoomHref = atCountryRoot
+    ? undefined
+    : `/${country.toLowerCase()}/${country.toLowerCase()}/${industry.toLowerCase()}`;
+
+  // The watch item for this cell: a stable id, a human label, the canonical href,
+  // a take-home/revenue sub, and the compare coordinates the tray hands to the
+  // grid. One per page.
+  const watchHref = `/${country.toLowerCase()}/${geo.toLowerCase()}/${industry.toLowerCase()}`;
+  const watchSub =
+    makeItYoursTakeHome != null
+      ? `Owner keeps about ${formatMoney(makeItYoursTakeHome)}`
+      : viewRevenue != null
+        ? `Typical ${formatMoney(viewRevenue)} revenue`
+        : undefined;
+
   // The related-pages tail (content-map section 14), passed into the decision
   // stack so it renders at its content-map position (and the section is never an
   // empty placeholder when we DO have links). Other industries in this place +
@@ -794,6 +864,34 @@ export default async function CellPage({
           a quiet stat row, and break-in demoted to a chip. Replaces the former
           BoardHero + A-J board wall; the board's reference rows now live inside
           the decision stack's content-map sections. */}
+      {/* Zoom ladder + watch chip near the masthead. The zoom keeps the trade +
+          place sticky and steps the resolution (only the altitudes that resolve
+          from these params are linked); the watch chip keeps this one cell on the
+          reader's shortlist. Both are client islands; the page stays server-rendered. */}
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <ZoomControl
+          trade={tradeName}
+          place={placeName}
+          altitude="business"
+          sticky={false}
+          hrefs={{
+            country: countryZoomHref,
+            business: watchHref,
+          }}
+          className="min-w-0 flex-1"
+        />
+        <AddToWatch
+          item={{
+            kind: "cell",
+            slug: `${country.toLowerCase()}:${geo.toLowerCase()}:${industry.toLowerCase()}`,
+            label: `${tradeName}, ${placeName}`,
+            href: watchHref,
+            sub: watchSub,
+            compare: { country, industry, region: geo },
+          }}
+        />
+      </div>
+
       <HeroWash category="business">
         <AnswerFirstMasthead
           id="headline"
@@ -813,6 +911,26 @@ export default async function CellPage({
           breakIn={cellView.masthead.breakIn}
         />
       </HeroWash>
+
+      {/* Make it yours: the marquee what-if calculator, mounted just below the
+          masthead and ONLY when a real take-home + revenue are held. It is an
+          extra interactive panel, not a content-map section, so it registers no
+          gated section id. */}
+      {makeItYoursReady ? (
+        <div className="mt-6">
+          <MakeItYoursPanel
+            canonical={{
+              revenue: makeItYoursRevenue!,
+              takeHome: makeItYoursTakeHome!,
+              marginPct: makeItYoursMarginPct!,
+              rent: leverRent,
+              staff: leverStaff,
+              draw: leverDraw,
+            }}
+            format={formatMoney}
+          />
+        </div>
+      ) : null}
 
       {/* The decision stack: the honest take, the money picture, the editorial
           beats, in the content-map reading order. The startup-cost block is

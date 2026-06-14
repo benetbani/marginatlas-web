@@ -51,6 +51,8 @@ import {
   SectionEmpty,
   HeroWash,
   OneThing,
+  ZoomControl,
+  AddToWatch,
 } from "@/components/kit";
 import { CountryCharacter } from "@/components/countries/CountryCharacter";
 import {
@@ -269,6 +271,26 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
   const hasCities =
     (bestCity != null && worstCity != null) || citiesByRegion.length > 0;
 
+  // Zoom ladder, country altitude. The country is the top rung (marked,
+  // non-link). We only offer a down-link when a city OBVIOUSLY resolves: the
+  // best-scored city already computed above is a real, held place page, so its
+  // /cities link never 404s. With no scored city we show just the marked
+  // country coordinate (no fabricated rung). The trade coordinate held sticky
+  // is the page's own subject, small business, not an invented specific trade.
+  const zoomHrefs = bestCity != null ? { city: `/cities/${bestCity.slug}` } : {};
+
+  // The watch item for this country. A country is a place, so it rides the
+  // "city" kind (which the tray labels "Place"); the iso2-keyed slug keeps it
+  // distinct from any real city row, and the sub line names it a country so the
+  // tray reads honestly. Links back to this same page.
+  const watchItem = {
+    kind: "city" as const,
+    slug: `country-${iso2.toLowerCase()}`,
+    label: countryName,
+    href: `/${iso2.toLowerCase()}`,
+    sub: "Country",
+  };
+
   const nav = countryViewNav(
     view,
     true, // formation is folded into the decisive read (no own nav stop)
@@ -279,6 +301,19 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
   return (
     <div className="xl:flex xl:gap-16">
       <div className="xl:min-w-0 xl:flex-1">
+        {/* Altitude ladder: the country is the top rung, marked and non-link.
+            The reader can step down to a city only when one obviously resolves
+            (the best-scored city's held page); otherwise the bar shows just the
+            marked country coordinate. Sticky, reversible, costs nothing to
+            hydrate. The trade held sticky is the page's subject, small business. */}
+        <ZoomControl
+          trade="Small business"
+          place={countryName}
+          altitude="country"
+          hrefs={zoomHrefs}
+          className="mb-4"
+        />
+
         {/* Breadcrumb */}
         <nav className="mb-4 text-sm text-ink-700/70">
           <a href="/" className="hover:text-atlas-600">Home</a>
@@ -312,6 +347,13 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
               anchor={view.masthead.anchor}
               stats={view.masthead.stats}
             />
+
+            {/* Masthead action: keep this country on the watch list. A client
+                island (the page stays server-rendered); it flips in place and
+                ticks the floating tray with no navigation. */}
+            <div className="mt-5 flex items-center gap-3">
+              <AddToWatch item={watchItem} />
+            </div>
 
             <p className="mt-6 max-w-3xl text-base leading-relaxed text-ink-700 md:text-lg">
               {getCountryAnchor(iso2, meta.name)}
