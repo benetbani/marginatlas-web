@@ -27,6 +27,7 @@ import {
   FreshnessStamp,
   FlagIt,
 } from "@/components/kit";
+import { ControlsDemo } from "./ControlsDemo";
 
 export const metadata = { title: "Atlas Page Kit catalog" };
 
@@ -63,6 +64,7 @@ export default function KitCatalogPage() {
     { id: "k-data", label: "Data sections" },
     { id: "k-beats", label: "Editorial beats" },
     { id: "k-compare", label: "Comparison" },
+    { id: "k-controls", label: "Controls" },
   ];
 
   return (
@@ -295,6 +297,12 @@ export default function KitCatalogPage() {
                   ]}
                 />
               </div>
+            </div>
+          </Block>
+
+          <Block title="Interaction controls">
+            <div id="k-controls">
+              <ControlsDemo />
             </div>
           </Block>
 

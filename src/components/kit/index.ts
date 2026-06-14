@@ -63,3 +63,22 @@ export { StickySectionNav, type NavSection } from "./StickySectionNav";
 export { FreshnessStamp, FlagIt } from "./furniture";
 export { SectionEmpty, type SectionEmptyProps } from "./SectionEmpty";
 export { StillFillingIn, groupSectionStack, type StillFillingInSection } from "./StillFillingIn";
+
+// Interaction controls — the reusable agency primitives (P1-P5) the switchers,
+// the make-it-yours calculator, the watch/compare tray, and the zoom control all
+// compose from. Controls act on the visible numbers in place, respond at the
+// action's tempo, stay reversible with the canonical value beside any adjusted
+// one, keep the reader oriented, and stay disclosed-not-displayed.
+export { Slider, type SliderProps } from "./controls/Slider";
+export { ResetAnchor, type ResetAnchorProps } from "./controls/ResetAnchor";
+export { PendingShell, type PendingShellProps } from "./controls/PendingShell";
+export {
+  OrientationHeader,
+  type OrientationHeaderProps,
+  type OrientationItem,
+} from "./controls/OrientationHeader";
+export {
+  Segmented,
+  type SegmentedProps,
+  type SegmentedOption,
+} from "./controls/Segmented";
