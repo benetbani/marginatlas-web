@@ -504,7 +504,6 @@ export default async function NeighborhoodCellPage({
                 staff: leverStaff,
                 draw: leverDraw,
               }}
-              format={formatMoney}
             />
           </div>
         ) : null}

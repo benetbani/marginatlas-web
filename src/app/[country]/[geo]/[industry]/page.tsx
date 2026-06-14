@@ -927,7 +927,6 @@ export default async function CellPage({
               staff: leverStaff,
               draw: leverDraw,
             }}
-            format={formatMoney}
           />
         </div>
       ) : null}

@@ -40,10 +40,9 @@ import {
 export type MakeItYoursPanelProps = {
   /** The canonical (typical) figures the what-if bends away from. revenue,
    *  takeHome and marginPct are required; rent / staff / draw levers render
-   *  only where the page holds that figure. */
+   *  only where the page holds that figure. All serializable numbers, since a
+   *  server page passes this down to this client island. */
   canonical: MakeItYoursCanonical;
-  /** Formats every USD figure (the page's shared money formatter). */
-  format: (n: number) => string;
   className?: string;
 };
 
@@ -52,9 +51,20 @@ function isNum(v: number | null | undefined): v is number {
   return v != null && Number.isFinite(v);
 }
 
+/** Compact USD, defined IN the client island. A function cannot be passed from
+ *  a server component to a client component (RSC forbids non-serializable
+ *  props), so the formatter lives here, not on the page, and only the canonical
+ *  numbers cross the server-client boundary. Mirrors the cell page's `usd`. */
+function fmtUsd(n: number): string {
+  if (!Number.isFinite(n)) return "$0";
+  const v = Math.round(n);
+  if (Math.abs(v) >= 1_000_000) return `$${(v / 1_000_000).toFixed(1)}M`;
+  if (Math.abs(v) >= 1_000) return `$${Math.round(v / 1_000)}K`;
+  return `$${v}`;
+}
+
 export function MakeItYoursPanel({
   canonical,
-  format,
   className,
 }: MakeItYoursPanelProps) {
   // The one shared piece of state: the reader's derived take-home. Seeds on the
@@ -78,7 +88,7 @@ export function MakeItYoursPanel({
     <section className={className} aria-label="Make this business yours">
       <MakeItYours
         canonical={canonical}
-        format={format}
+        format={fmtUsd}
         onYouChange={setYou}
       />
       <div className="mt-4">
@@ -89,7 +99,7 @@ export function MakeItYoursPanel({
           p50={th}
           p75={hi75}
           p90={hi90}
-          format={format}
+          format={fmtUsd}
           you={isNum(you) ? you : null}
           caption="Where your scenario lands on the spread of what owners keep. Drag a lever above and the dark marker moves with you."
         />
