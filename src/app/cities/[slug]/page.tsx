@@ -54,6 +54,7 @@ import {
   OwnerKeepTable,
   HeroWash,
   OneThing,
+  VsWorld,
   type ComparisonItem,
   type OwnerKeepTrade,
   type ChipTone,
@@ -236,6 +237,20 @@ export default async function CityPage({
   const scoredPeers = peers.filter(
     (p): p is typeof p & { score: number } => typeof p.score === "number",
   );
+
+  // The median climate score across the peers that carry their own score, the
+  // like-for-like figure for the VsWorld block below: this city's OWN 0 to 100
+  // climate score against the middle of its already-resolved peers, the same
+  // scored entity on the same scale, never the revenue aggregate. Null when no
+  // peer is scored (the block then shows its honest empty state).
+  const peerMedianScore: number | null = (() => {
+    if (scoredPeers.length === 0) return null;
+    const sorted = scoredPeers.map((p) => p.score).sort((a, b) => a - b);
+    const mid = Math.floor(sorted.length / 2);
+    return sorted.length % 2 === 0
+      ? (sorted[mid - 1] + sorted[mid]) / 2
+      : sorted[mid];
+  })();
 
   // The pure view model: maps the figures above into the kit's section props,
   // in the content-map reading order, fully filling the London exemplar and
@@ -725,6 +740,32 @@ export default async function CityPage({
                 place={city.name}
               />
             )}
+
+            {/* This city's OWN climate score against the median of its already-
+               resolved peer cities: a real like-for-like, the same scored entity
+               on the same 0 to 100 scale as this page, never the revenue
+               aggregate. Always present (the block carries its own honest empty
+               state): here/world fall to null on an unscored city or one with no
+               scored peer, so it reads "not held yet" rather than vanishing. No
+               new section id, the eight city anchors are untouched. */}
+            {(() => {
+              const haveBoth = cityScore != null && peerMedianScore != null;
+              return (
+                <div className="rounded-lg border border-parchment bg-cream-50 px-5 py-5 shadow-subtle md:px-7">
+                  <VsWorld
+                    eyebrow="Versus its peers"
+                    here={haveBoth ? cityScore.score : null}
+                    world={haveBoth ? peerMedianScore : null}
+                    metric="business climate score"
+                    hereLabel={city.name}
+                    worldLabel="Peer median"
+                    hereDisplay={haveBoth ? String(Math.round(cityScore.score)) : null}
+                    worldDisplay={haveBoth ? String(Math.round(peerMedianScore)) : null}
+                    caveat="Each city's own 0 to 100 climate score, the same scale as this page."
+                  />
+                </div>
+              );
+            })()}
 
             {/* The one thing to remember: the city's read reused as the close. */}
             <OneThing id="one-thing" lastChecked="June 2026">

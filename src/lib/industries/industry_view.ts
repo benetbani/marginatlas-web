@@ -63,6 +63,15 @@ export type IndustryView = {
   moneyGoes: Array<{ label: string; perHundred: number; kept?: boolean; hint?: string }> | null;
   /** What a typical operator looks like: the structural facts, in plain terms. */
   typicalOperator: Array<{ label: string; value: string; hint?: string }> | null;
+  /** The levers that move this trade's margin, derived from the held cost
+   * structure (the largest non-kept lines of the per-$100 split). Each weighs
+   * the margin down, ranked by share. Null when no cost structure is held. */
+  costDrivers: Array<{
+    label: string;
+    note?: string;
+    direction: "down";
+    impact: 1 | 2 | 3;
+  }> | null;
 };
 
 /* ------------------------------- inputs --------------------------------- */
@@ -226,6 +235,12 @@ export function buildIndustryView(input: IndustryViewInput): IndustryView {
   /* -- money goes (per $100) ----------------------------------------- */
   const moneyGoes = buildMoneyGoes(margins);
 
+  /* -- cost drivers (the levers) ------------------------------------- */
+  // The biggest held cost lines ARE the levers that move the margin. Reuse the
+  // per-$100 split (the non-kept lines), ranked by size; no new numbers, no
+  // fabrication. Null when no cost structure is held.
+  const costDrivers = buildCostDrivers(moneyGoes);
+
   /* -- typical operator ---------------------------------------------- */
   const typicalOperator = buildTypicalOperator(input, hasBand);
 
@@ -234,6 +249,7 @@ export function buildIndustryView(input: IndustryViewInput): IndustryView {
     honestTake,
     moneyGoes,
     typicalOperator: typicalOperator.length >= 2 ? typicalOperator : null,
+    costDrivers,
   };
 }
 
@@ -361,6 +377,30 @@ function buildMoneyGoes(margins: {
 }
 
 /**
+ * Derive the cost-driver levers from the held per-$100 split: the largest
+ * non-kept cost lines, ranked by share, each weighing the margin down. Returns 3
+ * to 4 levers, or null when no cost structure is held. Mirrors the cell page's
+ * buildCostDrivers: no new figures, no fabrication, the held breakdown carries
+ * everything. The note is the held one-line hint when the line has one.
+ */
+function buildCostDrivers(
+  moneyGoes: Array<{ label: string; perHundred: number; kept?: boolean; hint?: string }> | null,
+): IndustryView["costDrivers"] {
+  if (!moneyGoes || moneyGoes.length === 0) return null;
+  const costLines = moneyGoes
+    .filter((m) => !m.kept && isNum(m.perHundred) && m.perHundred > 0)
+    .sort((a, b) => b.perHundred - a.perHundred)
+    .slice(0, 4);
+  if (costLines.length === 0) return null;
+  return costLines.map((m, i) => ({
+    label: m.label,
+    note: m.hint,
+    direction: "down" as const,
+    impact: (i === 0 ? 3 : i === 1 ? 2 : 1) as 1 | 2 | 3,
+  }));
+}
+
+/**
  * What a typical operator looks like, in plain terms. The activity page holds no
  * per-place headcount or revenue per operator, so this reads the place-stable
  * structure into tangible operator facts: how much of each sale survives, what
@@ -436,6 +476,7 @@ export function industryViewNav(
   if (view.typicalOperator) nav.push({ id: "typical-operator", label: "A typical operator" });
   if (hasPlaceCohorts) nav.push({ id: "where-it-earns", label: "Where it earns most" });
   nav.push({ id: "margin-waterfall", label: "The cost stack" });
+  if (view.costDrivers) nav.push({ id: "cost-drivers", label: "What moves the cost" });
   if (hasRelated) nav.push({ id: "related", label: "Related activities" });
   return nav;
 }

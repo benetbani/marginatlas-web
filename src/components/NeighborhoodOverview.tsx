@@ -54,6 +54,8 @@ import {
   LikeForLikeTable,
   StickySectionNav,
   SectionEmpty,
+  StreetCharacter,
+  OneThing,
 } from "@/components/kit";
 import {
   buildNeighborhoodOverviewView,
@@ -523,6 +525,19 @@ export function NeighborhoodOverview({
           </p>
         </section>
 
+        {/* ZONE 2 (cont): STREET CHARACTER.
+            The block exists to carry a per-street CHARACTER read (the one-word
+            tag: high-footfall, restaurant row, quiet residential, up-and-coming)
+            that only a curated district holds. No district holds that
+            classification yet (the prime_streets record below carries a trade
+            note, not a character tag, and no flavor field carries one), so we
+            pass streets={null} and the block shows its honest "not mapped yet"
+            empty state rather than inventing a tag. Fills automatically once a
+            curated London-style street-character set is held. */}
+        <div className="mb-8">
+          <StreetCharacter streets={null} />
+        </div>
+
         {/* ZONE 2 (cont): WHO LIVES AND SHOPS HERE ------------------------ */}
         <div className="mb-8">
           {view.whoLivesHere ? (
@@ -709,6 +724,15 @@ export function NeighborhoodOverview({
             place={nb.name}
           />
         )}
+
+        {/* THE ONE THING TO REMEMBER: the page's last word. Reuses the honest
+            take's verdict, the held district-specific read line, exactly as the
+            country and city pages reuse their own verdict here. Passes null when
+            no read is held, so the closer prints its honest line rather than a
+            fabricated one. */}
+        <OneThing id="one-thing" lastChecked="June 2026">
+          {view.honestTake ? view.honestTake.verdict : null}
+        </OneThing>
       </article>
       <StickySectionNav sections={navSections} />
     </div>

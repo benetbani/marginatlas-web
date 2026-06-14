@@ -29,6 +29,7 @@ import { COUNTRY_PAGE_SECTIONS } from "@/lib/page-layout/section-order";
 import { getCountryAnchor } from "@/lib/content/country-anchors";
 import { BusinessFormationCosts } from "@/components/cities/BusinessFormationCosts";
 import { getCountryEconomicsSnapshot, getCityEconBySlug } from "@/lib/economics/country_metrics";
+import { getCountryProfile } from "@/lib/economic_profile";
 import { getSmbRegime, getVatRow } from "@/lib/tax/smb_effective_rates";
 import { getCountryRates, getTypicalFormationCostUsd } from "@/lib/tax/country_rates";
 import { CountryMastheadImage } from "@/components/countries/CountryMastheadImage";
@@ -40,6 +41,7 @@ import {
   HonestTakeBox,
   ComparisonTable,
   ComparisonBars,
+  MinimumWage,
   WhatLocalsKnow,
   ContrarianInsight,
   StickySectionNav,
@@ -128,6 +130,23 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
   const countryRates = getCountryRates(iso2);
   const registrationCostUsd = getTypicalFormationCostUsd(iso2);
 
+  // The wage floor + typical pay for the MinimumWage block. Both come from the
+  // same held profile row (annual USD, one currency basis), so they are strictly
+  // like-for-like. getCountryProfile returns a generic fallback for countries it
+  // does not hold, so we only trust a profile whose own iso2 matches this country
+  // and never pass the fallback's figures (that would be a fabricated wage). When
+  // not held, both stay null and the block shows its honest empty line.
+  const profile = getCountryProfile(iso2);
+  const profileHeld = profile.iso2.toUpperCase() === iso2;
+  const minWageAnnualUsd =
+    profileHeld && profile.minimum_wage_annual_usd > 0
+      ? profile.minimum_wage_annual_usd
+      : null;
+  const typicalPayAnnualUsd =
+    profileHeld && profile.median_wage_full_time_usd > 0
+      ? profile.median_wage_full_time_usd
+      : null;
+
   // The geo segment every cell-page link uses: California stands in for the US
   // (deepest state coverage), the country-name slug elsewhere.
   const placeGeo = iso2 === "US" ? "california" : slugify(meta.name);
@@ -166,6 +185,8 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
       vat: vatRow,
       payrollRate: countryRates.employerSocial,
       registrationCostUsd,
+      minWageAnnualUsd,
+      typicalPayAnnualUsd,
       topActivity: taxTopActivity,
       selfFacts,
       neighbours: neighbourFacts,
@@ -442,6 +463,25 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
               place={meta.name}
             />
           )}
+
+          {/* 4b. The wage floor beside typical pay, both on the same held basis
+              (annual USD). MinimumWage owns its own eyebrow and its own internal
+              <section>, so it rides a bare seated wrapper on the exact BeatCard
+              surface (the same convention the break-in panel uses). The wrapper
+              carries no section id: it is a flourish folded under the hire read,
+              not a numbered skeleton band, so it stays out of the section gate and
+              the sticky nav. The block renders its honest empty line when a real
+              wage figure is not held, so it is always present. */}
+          <div className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
+            <MinimumWage
+              eyebrow="Wage floor"
+              floor={view.minWage.floor}
+              real={view.minWage.real}
+              unit={view.minWage.unit}
+              period={view.minWage.period}
+              note={view.minWage.note}
+            />
+          </div>
 
           {/* 5. Compare to neighbours: the like-for-like FACTS table. Never an
               ordinal money rank across borders, so the kit gets noLeaderMark.

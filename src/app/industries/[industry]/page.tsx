@@ -75,6 +75,7 @@ import {
   formatWithSpec,
   HeroWash,
   OneThing,
+  CostDrivers,
 } from "@/components/kit";
 import {
   buildIndustryView,
@@ -323,6 +324,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
     { id: "typical-operator", label: "A typical operator" },
     { id: "where-it-earns", label: "Where it earns most" },
     { id: "margin-waterfall", label: "The cost stack" },
+    { id: "cost-drivers", label: "What moves the cost" },
     { id: "related-links", label: "Go deeper" },
   ];
 
@@ -676,6 +678,16 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
               </p>
             )}
           </BeatCard>
+
+          {/* The cost drivers (brand block): the biggest held cost lines ARE the
+             levers that move this trade's margin, derived straight from the cost
+             stack above (the per-$100 split's non-kept lines), ranked by share,
+             each weighing the margin down. No new numbers: the held breakdown
+             carries everything, so a thin trade with no cost structure shows the
+             block's own honest empty state rather than a fabricated lever. It
+             reads right after the cost stack, turning the same shares into the
+             few things an operator can actually push on. */}
+          <CostDrivers id="cost-drivers" drivers={view.costDrivers} />
 
           {/* 8. Related activities (a FREE module). The closing rail: the other
              small-business models in this sector, so a reader who has learned to

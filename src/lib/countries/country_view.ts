@@ -102,6 +102,18 @@ export type CountryView = {
     }>;
     footnote: string;
   } | null;
+  /**
+   * The wage floor beside typical pay, same currency basis, pre-formatted. The
+   * block formats nothing, so both figures are display strings here. Both null
+   * (the honest empty line) when the country's wage figures are not held.
+   */
+  minWage: {
+    floor: string | null;
+    real: string | null;
+    unit?: string;
+    period?: string;
+    note?: string;
+  };
   /** The character beats, UK-only invented detail. */
   whatLocals: string[] | null;
   contrarian: { insight: string; body: string | null } | null;
@@ -136,6 +148,16 @@ export type CountryViewInput = {
   payrollRate: number | null;
   /** Typical one-time government cost to register (USD), or null. */
   registrationCostUsd: number | null;
+  /**
+   * Legal minimum wage, USD per year, when a real figure is held (not a
+   * fallback). Null self-omits the wage-floor block.
+   */
+  minWageAnnualUsd: number | null;
+  /**
+   * Typical full-time pay, USD per year, on the SAME currency basis as the wage
+   * floor (both held annual USD), when a real figure is held. Null self-omits.
+   */
+  typicalPayAnnualUsd: number | null;
   /** The densest local activity + its cell-page href, for the down-link. */
   topActivity: { name: string; href: string } | null;
   /** This country's own facts, packaged for the neighbour table's lead column. */
@@ -255,6 +277,8 @@ export function buildCountryView(
     vat,
     payrollRate,
     registrationCostUsd,
+    minWageAnnualUsd,
+    typicalPayAnnualUsd,
     selfFacts,
     neighbours,
   } = input;
@@ -356,6 +380,9 @@ export function buildCountryView(
   /* -- how hard to hire ----------------------------------------------- */
   const hire = buildHire(input, isExemplar);
 
+  /* -- the wage floor beside typical pay ------------------------------ */
+  const minWage = buildMinWage(minWageAnnualUsd, typicalPayAnnualUsd);
+
   /* -- compare to neighbours (like-for-like facts) -------------------- */
   const neighboursView = buildNeighbours(selfFacts, neighbours, countryName);
 
@@ -369,6 +396,7 @@ export function buildCountryView(
     honestTake,
     hire,
     neighbours: neighboursView,
+    minWage,
     whatLocals,
     contrarian,
     isExemplar,
@@ -644,6 +672,31 @@ function buildPayrollCompare(
     items,
     caveat:
       "The employer social on-cost on top of every gross wage. Different systems fund different things, so read each country on its own terms, not as a ranking.",
+  };
+}
+
+/**
+ * The legal wage floor beside typical full-time pay, both pre-formatted on the
+ * SAME held basis (annual USD), so the block formats nothing. Both figures must
+ * be held real figures for the country: if either is missing we return the
+ * honest empty pair, never a fabricated or fallback wage. The note is one plain
+ * operator sentence; it self-omits when there is no figure to qualify.
+ */
+function buildMinWage(
+  floorAnnualUsd: number | null,
+  typicalAnnualUsd: number | null,
+): CountryView["minWage"] {
+  const haveFloor = isNum(floorAnnualUsd) && floorAnnualUsd > 0;
+  const haveReal = isNum(typicalAnnualUsd) && typicalAnnualUsd > 0;
+  if (!haveFloor || !haveReal) {
+    return { floor: null, real: null };
+  }
+  return {
+    floor: usdCompact(floorAnnualUsd!),
+    real: usdCompact(typicalAnnualUsd!),
+    unit: "/yr",
+    period: "as of 2026",
+    note: "The floor is set by law; typical full-time pay runs above it, so the real cost of a hire is what it takes to keep someone good.",
   };
 }
 
