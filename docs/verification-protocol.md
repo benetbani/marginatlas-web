@@ -1,0 +1,95 @@
+# The Verification Protocol (definition of done)
+
+Run this before delivering ANY work to the founder. It exists because work has
+repeatedly diverged from what was asked, or shipped without being seen. Nothing
+is "done" until it passes this. A delivery that skips a step is not a delivery.
+
+The order matters: instruction fidelity first (did I do what was actually asked),
+then quality, then data honesty, then SEE it, then report honestly, then ship.
+
+---
+
+## 0. Instruction fidelity (the cardinal rule)
+
+The single most common failure is doing a near-thing instead of the asked-thing,
+or silently substituting my own judgment. Stop that here.
+
+- Re-read the founder's request VERBATIM before claiming done.
+- Enumerate EVERY discrete ask in it, explicit and clearly implied, as a list.
+- For each ask: done? where (file:line or commit)? If any is not done, or I
+  deviated, it is NOT delivered until I either do it or EXPLICITLY flag the
+  deviation and why. Deviations are proposed, never enacted silently.
+- Never substitute my preference for an explicit instruction. If I disagree, I
+  say so and ask; I do not quietly do my own version.
+- Never silently drop, reorder, or rename a required section (the locked rule).
+- If the founder gave the instruction in several messages or "voices", reconcile
+  ALL of them; a later ask does not erase an earlier constraint unless it says so.
+
+## 1. Implementation quality (the gates)
+
+- `npx tsc --noEmit` clean.
+- `npm run prebuild` 31/31.
+- `verify_page_sections` + `verify_section_order` PASS (no section dropped).
+- Hard constraints: no em-dashes, no source-agency names, tokens only (no raw
+  hex / px / ms in components), WCAG AA, legible at 375px with no horizontal scroll.
+- The constitution: the page renders its full section spine (docs/brand/section-constitution.md).
+- The cohesion language (docs/brand/cohesion-master-plan.md): engraved frame +
+  clean data core, one shell, one type scale, one divider family, warm frame on.
+
+## 2. Data honesty
+
+- No fabricated real-looking numbers. Real data, or a clearly-tagged SAMPLE.
+- No visibly-wrong numbers. Common sense on every figure.
+- Like-for-like only. Never rank across business x geography. Never badmouth an
+  industry. Consulting / PE are clients, not subjects.
+- State plainly what is real vs sample vs deferred.
+
+## 3. SEE it (visual verification, never assume)
+
+The fix for "I built it but couldn't see it." With the Playwright MCP:
+
+- Actually render and SCREENSHOT the affected pages, desktop (1280) and mobile
+  (375), a filled exemplar (London / UK) AND a thin instance.
+- Confirm with your eyes: the named change is visibly present; nothing is broken,
+  blank, washed-out, or overlapping; the law holds (no data behind imagery); the
+  hierarchy reads answer-first; the page matches the other page types (cohesion).
+- If I genuinely cannot see it, I SAY so and do not claim it works.
+
+## 4. Honest reporting
+
+- Report failures with the actual output. If a step was skipped, say it. If a
+  gate failed, show it. No overclaiming, no "done" when it is partial.
+- State the judgment calls I made and the risks I see.
+
+## 5. Ship discipline
+
+- Preview before promote: deploy a preview, verify it, get the founder's nod,
+  then promote. Never promote unverified.
+- Never let production fall behind verified branch work.
+- Run `vercel` and gates from `E:\atlas\website` (the shell CWD resets to the
+  parent); confirm the target Vercel project before deploying.
+
+---
+
+## The pre-delivery checklist (tick every box before showing the founder)
+
+```
+[ ] Re-read the request. Every discrete ask enumerated and done, or the
+    deviation explicitly flagged with a reason. No silent substitution.
+[ ] tsc clean. prebuild 31/31. page-sections + section-order PASS.
+[ ] Constraints clean: no em-dash, no source-agency, tokens only, AA, 375px.
+[ ] Data honest: real or tagged sample, no visibly-wrong number, like-for-like.
+[ ] SEEN it: screenshots at 1280 + 375, exemplar + thin, change visibly present,
+    nothing broken, coheres with the other page types.
+[ ] Report is honest: failures, samples, deferrals, and judgment calls stated.
+[ ] If shipping: previewed, founder nod, correct project, then promote.
+```
+
+## Per-work-type loops
+
+- Design / UI change -> gates + SEE it (screenshots) + cohesion-language check.
+- Data or render change -> dry-run and SHOW before changing; like-for-like; no
+  visibly-wrong number.
+- Section change -> the constitution + the section gate; never silently drop.
+- Deploy -> preview -> verify -> founder nod -> promote.
+- Multi-wave build -> verify + commit each wave green before the next.

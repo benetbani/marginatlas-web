@@ -29,9 +29,11 @@ website/
 
 ## Read these first (in order) for any session
 
+0. `docs/verification-protocol.md` — THE DEFINITION OF DONE. Run it before delivering ANY work to the founder: instruction fidelity (do the asked-thing, never silently substitute), gates, data honesty, SEE it (screenshot via the Playwright MCP), honest reporting, ship discipline. This is non-negotiable.
 1. `docs/handoff/<latest>-session-handoff.md` — current state, pending tasks, gotchas, what shipped
 2. `docs/design-system/GUIDELINES.md` — authority for any UI work
 3. `docs/architecture/README.md` — domain/layer boundaries, the file map
+4. `docs/brand/section-constitution.md` (the per-type section spine) + `docs/brand/cohesion-master-plan.md` (the one visual language)
 
 ## Canonical patterns (do not invent variations)
 
