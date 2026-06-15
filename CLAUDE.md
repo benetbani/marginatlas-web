@@ -79,8 +79,8 @@ website/
 
 ## Latest handoff
 
-- **`docs/handoff/2026-06-12-session-handoff.md` is the current handoff — READ IT FIRST.** It is the live "continue here" bridge: the brand + design system + the two-pipeline (Fable / Sonnet) operating model are complete in `docs/brand/`, and the whole program now runs by choosing "Fable or Sonnet" (see `docs/brand/pipelines-control.md`).
-- `docs/handoff/2026-06-02-session-handoff.md` is the older both-repo map + bootstrap prompt (still useful background).
+- **`docs/handoff/2026-06-14-session-handoff.md` is THE current handoff — READ IT FIRST.** R6.5 is live in production (warm frame + brand blocks + interaction); the engraved-almanac cohesion direction (the section constitution, the engraved kit, the engraved country page, the R7 cohesion plan) is committed-but-held on `reform-v2/r6-forward`. The handoff carries the full state, the forward plan (R7 Wave A-F), the gotchas, and a paste-in bootstrap prompt. Continue from R7 Wave A.
+- `docs/handoff/2026-06-12-session-handoff.md` is the prior handoff (brand + two-pipeline model); `2026-06-02` is the older both-repo map.
 
 ## Manual actions outstanding
 
