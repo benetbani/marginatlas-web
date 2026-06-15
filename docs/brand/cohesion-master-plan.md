@@ -133,3 +133,18 @@ spec review, then code-quality review), gate-green and committed before the next
    dividers only) so the data board stays the star?
 4. **The country page**: promote it now as the reference, or hold it and promote
    the whole cohesive site in one go at Wave F?
+
+---
+
+## Locked decisions (founder, 2026-06-14)
+
+1. Unified language: **engraved frame + clean data core**, site-wide. Confirmed.
+2. Warm frame: **ON by default everywhere** (gutters + hero wash + glass chrome
+   become the standard chrome). Confirmed.
+3. Cell / business page: **lightest engraved touch** (frame + hero + dividers
+   only); the data board stays the star, never cluttered. Confirmed.
+4. Country page: **hold the promote**; commit it but ship the whole cohesive site
+   together at Wave F. Confirmed.
+
+Wave A (foundation) is built carefully in the main session (shared files, not
+parallel-safe); Waves B to E (per-page adoption) run via the subagent loop.
