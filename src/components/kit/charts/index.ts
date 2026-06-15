@@ -33,6 +33,28 @@ export { HeatStrip, type HeatStripProps, type HeatCell } from "./HeatStrip";
 export { FootfallGrid, type FootfallGridProps } from "./FootfallGrid";
 export { VisitorSplit, type VisitorSplitProps } from "./VisitorSplit";
 
+// R7 graphical-section-reformation primitives (Phase 0): the reusable shapes the
+// reformation composes to retire text-wall sections. Each a different shape, so
+// reformed sections stay distinct: ranked bars, a threshold line, a journey
+// ribbon, a severity meter, a position whisper.
+export {
+  LikeForLikeBars,
+  type LikeForLikeBarsProps,
+  type LikeForLikeItem,
+} from "./LikeForLikeBars";
+export { ThresholdGauge, type ThresholdGaugeProps } from "./ThresholdGauge";
+export {
+  TimelineRibbon,
+  type TimelineRibbonProps,
+  type TimelineMilestone,
+} from "./TimelineRibbon";
+export {
+  SeverityGlyph,
+  type SeverityGlyphProps,
+  type SeverityLevel,
+} from "./SeverityGlyph";
+export { TierBar, type TierBarProps, type TierBarTone } from "./TierBar";
+
 // Shared chart helpers (exported so a page can reuse the family's compact-USD
 // formatter or the reduced-motion check without redefining them).
 export { fmtUsdCompact, isNum as isChartNum, usePrefersReducedMotion } from "./helpers";

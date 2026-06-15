@@ -189,6 +189,21 @@ export {
   type FootfallGridProps,
   VisitorSplit,
   type VisitorSplitProps,
+  // R7 graphical-reformation primitives (Phase 0)
+  LikeForLikeBars,
+  type LikeForLikeBarsProps,
+  type LikeForLikeItem,
+  ThresholdGauge,
+  type ThresholdGaugeProps,
+  TimelineRibbon,
+  type TimelineRibbonProps,
+  type TimelineMilestone,
+  SeverityGlyph,
+  type SeverityGlyphProps,
+  type SeverityLevel,
+  TierBar,
+  type TierBarProps,
+  type TierBarTone,
 } from "./charts";
 
 // The engraved-almanac foundation (2026-06-14, ported from the country-engraved
