@@ -12,7 +12,7 @@ import type { Metadata } from "next";
 export const preferredRegion = "fra1";
 
 import Script from "next/script";
-import { Fraunces, Inter } from "next/font/google";
+import { Newsreader, Inter } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Organization } from "@/components/StructuredData";
 import { HeaderSearch } from "@/components/HeaderSearch";
@@ -25,17 +25,15 @@ import { AtlasGutters, WatchTray } from "@/components/kit";
 import { isWarmFrameEnabled } from "@/lib/feature_flags";
 
 // Typography.
-// Display face decision 2026-06-13 (Fable, founder-delegated): Fraunces, a warm,
-// distinctive editorial serif with characterful display-size numerals, replaces
-// Newsreader (which read generic) on the open --font-display slot. The brand
-// brief calls for "a signature face worth investing in"; Fraunces carries the
-// almanac soul while staying confident on a 7-figure anchor number. Loaded as
-// the variable font (opsz optical sizing) so headings and the masthead figure
-// get the display cut. Literata is the documented fallback if it reads too
-// characterful live (a one-line swap back to this slot).
+// Display face decision 2026-06-15 (founder, from the serif showcase at R7 A.2.5):
+// Newsreader on the --font-display slot, chosen by feel on real Atlas content over
+// Fraunces, Spectral, and Playfair Display. This reverses the 2026-06-13 move to
+// Fraunces; on the live masthead the founder preferred Newsreader's warm, classic
+// newspaper-editorial read. Loaded as the variable font (opsz optical sizing) so
+// headings and the masthead figure get the display cut.
 // Inter: clean, neutral sans for body text + ALL numbers in tables, stats, and
 // waterfall lines (with tabular-nums enabled).
-const fraunces = Fraunces({
+const newsreader = Newsreader({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-display",
@@ -97,7 +95,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${inter.variable} [--atlas-header-h:80px] md:[--atlas-header-h:88px]`}
+      className={`${newsreader.variable} ${inter.variable} [--atlas-header-h:80px] md:[--atlas-header-h:88px]`}
     >
       {/* SaaS reformation 2026-06-12 — the body is the warm app ground
           (cream-75 via the `body` rule in globals.css). The .atlas-paper

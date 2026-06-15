@@ -69,11 +69,12 @@ commit gate-green. The founder's comprehensive review is at Wave F.
 
 - **A.2 dividers** — DONE (`a0a1a1ba`): retired the dead `SectionDivider`; `AtlasDivider`
   is the one divider family; docs synced.
-- **A.2.5 serif showcase (NEXT, founder-facing)** — a showcase route rendering a real Atlas
-  masthead (eyebrow + serif H1 + serif anchor number + a heading or two) in 3-4 candidate
-  display faces bound to `--font-display`. Candidate set (self-hostable via `next/font`):
-  Fraunces (current baseline) plus 3 alternatives. The founder picks; the chosen face binds
-  in A.4. This wave IS shown to the founder (it is a choose-the-font deliverable).
+- **A.2.5 serif showcase — DONE (2026-06-15).** Built an ephemeral route rendering a real
+  Atlas masthead in four candidate faces (Fraunces, Newsreader, Spectral, Playfair Display)
+  loaded via a Google Fonts link. Founder picked **Newsreader**; applied to the
+  `--font-display` slot in layout.tsx (next/font), reversing the 2026-06-13 Fraunces move.
+  The throwaway route was removed. (next/font crashed the dev font-worker loading the four
+  at once, hence the link-based chooser; the single-face layout swap loads fine.)
 - **A.3 hero frame** — align the warm frame (hero wash strength = clearly-felt tint, gutters,
   glass chrome) and the eyebrow treatment across page types. Cell/city/industry keep the
   answer-first masthead; country keeps the engraved skyline. Lightest touch, no data-board
@@ -110,7 +111,7 @@ Because the founder reviews only at Wave F (Q18) and fears divergence most (Q20)
 
 - **Seam weight on dense pages:** the quiet `AtlasDivider` rule variant is to be built
   (currently only the labeled engraved seam exists). [from Q10]
-- **Display face:** pending the A.2.5 showcase pick.
+- **Display face:** DECIDED = Newsreader (2026-06-15, founder pick from the A.2.5 showcase).
 - **Data-fill (Sonnet) phase:** real content for the honest-sample sections (operator
   voices, risks, vs-world on the cell; the new lens sections on country) is a separate,
   later thread. This document is visual/structural only.
