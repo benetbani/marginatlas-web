@@ -196,7 +196,7 @@ export function MakeItYours({
   return (
     <section
       className={cn(
-        "rounded-2xl border border-parchment bg-cream-50 shadow-subtle",
+        "rounded-2xl border border-parchment bg-cream-50",
         className,
       )}
     >

@@ -56,8 +56,12 @@ export function BeatCard({
       id={id}
       aria-label={heading || eyebrow}
       className={[
-        "rounded-lg border border-parchment bg-cream-50",
-        feature ? "shadow-card" : "shadow-subtle",
+        // Engraved-card reskin (R7 A.5): flat hairline cards, no soft shadow, to
+        // match the engraved scorecard surface. The feature/lead card keeps its
+        // emphasis via a slightly stronger ink hairline (close to --hairline-strong)
+        // instead of elevation, so the working pages read engraved, not SaaS.
+        "rounded-lg border bg-cream-50",
+        feature ? "border-ink-900/15" : "border-parchment",
         "px-5 py-5 md:px-7 md:py-6",
         className,
       ]
