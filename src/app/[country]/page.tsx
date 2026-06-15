@@ -498,7 +498,7 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
     {
       label: "Days to start", glyph: "clock",
       value: isNum(snapshot.daysToStart) ? `${Math.round(snapshot.daysToStart)}` : null,
-      unit: isNum(snapshot.daysToStart) ? "days" : null,
+      unit: isNum(snapshot.daysToStart) ? (Math.round(snapshot.daysToStart) === 1 ? "day" : "days") : null,
       score: daysScore, read: wordFromScore(daysScore),
     },
     {
