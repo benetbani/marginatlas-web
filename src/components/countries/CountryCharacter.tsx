@@ -118,7 +118,7 @@ export function CountryCharacter({
     <section
       id={id}
       aria-label={`The character of ${countryName}`}
-      className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+      className="rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7 md:py-6"
     >
       {/* Header: the title leads on the left, the two people-percentage stats
           sit compact at the top-right (founder 2026-06-14), so the section never

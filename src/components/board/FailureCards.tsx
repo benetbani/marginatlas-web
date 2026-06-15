@@ -22,7 +22,7 @@ export function FailureCards({ cards }: FailureCardsProps) {
   return (
     // SaaS reformation 2026-06-12: seated card section; the warning cards
     // inside go white-on-card with the amber caution accent on the title.
-    <section className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
+    <section className="mt-5 rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7 md:py-6">
       <div className="flex items-start justify-between gap-6">
         <h3 className="font-display text-lg font-semibold tracking-tight text-ink-900 md:text-xl">
           What kills weak operators

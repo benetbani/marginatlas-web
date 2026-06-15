@@ -42,7 +42,7 @@ export function AcrossStatesStrip({ industryName, currentGeoName, cells }: Props
 
   return (
     // SaaS reformation 2026-06-12: seated card section on the app ground.
-    <section className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
+    <section className="mt-5 rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7 md:py-6">
       <h2 className="font-display text-lg md:text-xl font-semibold tracking-tight text-ink-900">
         {industryName} across the country
       </h2>

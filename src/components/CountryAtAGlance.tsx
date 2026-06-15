@@ -182,7 +182,7 @@ export function CountryAtAGlance({ iso2 }: Props) {
     <section
       id="scorecard"
       aria-label="Country at a glance"
-      className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+      className="rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7 md:py-6"
     >
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
         {tiles.map((t) => {
