@@ -50,10 +50,22 @@ export type CellView = {
   ownerKeeps: { takeHome: number | null; marginPct: number | null } | null;
   moneyGoes: Array<{ label: string; perHundred: number; kept?: boolean; hint?: string }> | null;
   plainTerms: Array<{ label: string; value: string; hint?: string }> | null;
-  breakEven: { headline: string; detail: string | null } | null;
+  breakEven: {
+    headline: string;
+    detail: string | null;
+    /** The break-even threshold as a number (e.g. covers a day) + its scale, for the gauge. */
+    value: number | null;
+    typical: number | null;
+    unit: string;
+  } | null;
   wages: Array<{ role: string; low?: number; median?: number; high?: number }> | null;
   seasonality: { monthly: number[] | null; note: string | null } | null;
-  firstYear: { headline: string | null; bullets: string[] } | null;
+  firstYear: {
+    headline: string | null;
+    bullets: string[];
+    /** The first year as a journey of time-tagged milestones, for the ribbon. */
+    milestones: Array<{ at: string; label: string; note?: string | null; emphasis?: boolean }> | null;
+  } | null;
   nearby: Array<{ name: string; href: string; value: number | null; sub?: string | null }> | null;
   whatLocals: string[] | null;
   contrarian: { insight: string; body: string | null } | null;
@@ -264,6 +276,11 @@ export function buildCellView(input: CellViewInput): CellView {
                   typicalOrdersDaily,
                 )} a day, so the gap above break-even is where the owner's pay comes from.`
               : "Below that line the rent and the salaried staff eat the month; above it, the marginal sale is mostly margin.",
+          // The structured shape behind the ThresholdGauge: the break-even count,
+          // a typical day to anchor the "above the line" zone, and the unit.
+          value: Math.round(breakevenOrdersDaily),
+          typical: isNum(typicalOrdersDaily) ? Math.round(typicalOrdersDaily) : null,
+          unit: `${dailyUnit(slug)} a day`,
         }
       : null;
 
@@ -518,14 +535,45 @@ function buildPlainTerms(
 function buildFirstYear(L: LondonEntry | null, isLondon: boolean): CellView["firstYear"] {
   if (!isLondon || !L) return null;
   const yr1 = L.survival?.yr1;
+  const closeRate = isNum(yr1) ? Math.max(0, Math.round(100 - yr1)) : null;
   const bullets: string[] = [];
   bullets.push("Most of the build cost lands before a single customer is served.");
-  if (isNum(yr1))
-    bullets.push(`About ${Math.max(0, Math.round(100 - yr1))} in 100 close inside the first year, so the early months are the dangerous ones.`);
+  if (closeRate != null)
+    bullets.push(`About ${closeRate} in 100 close inside the first year, so the early months are the dangerous ones.`);
   bullets.push("A new room takes a season to fill, longer without a name people already know.");
+  // The same honest first year read as a journey, for the TimelineRibbon. The
+  // break-even node carries the single emphasis (one vermillion dot). Sanctioned
+  // London editorial, consistent with the bullets and the survival figure above.
+  const milestones = [
+    {
+      at: "Mo 1-3",
+      label: "Fit-out and open",
+      note: "The build cost lands before the first cover.",
+    },
+    {
+      at: "Mo 3-6",
+      label: "The fragile months",
+      note:
+        closeRate != null
+          ? `About ${closeRate} in 100 do not make it past here.`
+          : "This is where most that fail, fail.",
+    },
+    {
+      at: "Mo 6-9",
+      label: "Break-even",
+      note: "Covering costs most weeks.",
+      emphasis: true,
+    },
+    {
+      at: "Mo 9+",
+      label: "A steady room",
+      note: "The name and the regulars carry it.",
+    },
+  ];
   return {
     headline: "Plan to run at a loss for the first months, and fund it before you open.",
     bullets,
+    milestones,
   };
 }
 

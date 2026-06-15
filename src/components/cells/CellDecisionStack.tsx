@@ -91,7 +91,14 @@ export function CellDecisionStack({
       <OwnerKeeps id="owner-take-home" takeHome={view.ownerKeeps.takeHome} marginPct={view.ownerKeeps.marginPct} />
     ) : null,
     "break-even": view.breakEven ? (
-      <BreakEvenLine id="break-even" headline={view.breakEven.headline} detail={view.breakEven.detail} />
+      <BreakEvenLine
+        id="break-even"
+        headline={view.breakEven.headline}
+        detail={view.breakEven.detail}
+        value={view.breakEven.value}
+        typical={view.breakEven.typical}
+        unit={view.breakEven.unit}
+      />
     ) : null,
     wages: view.wages ? (
       <WagesByRole
@@ -106,7 +113,12 @@ export function CellDecisionStack({
       <Seasonality id="seasonality" monthly={view.seasonality.monthly} note={view.seasonality.note} />
     ) : null,
     "first-year": view.firstYear ? (
-      <RealisticFirstYear id="first-year" headline={view.firstYear.headline} bullets={view.firstYear.bullets} />
+      <RealisticFirstYear
+        id="first-year"
+        headline={view.firstYear.headline}
+        bullets={view.firstYear.bullets}
+        milestones={view.firstYear.milestones}
+      />
     ) : null,
     nearby: view.nearby ? (
       <SameBusinessNearby id="nearby" rows={view.nearby} format={usd} valueLabel="Typical revenue a year." />

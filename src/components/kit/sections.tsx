@@ -16,7 +16,8 @@
  */
 import * as React from "react";
 import { BeatCard } from "./editorial";
-import { LikeForLikeBars } from "./charts";
+import { LikeForLikeBars, ThresholdGauge, TimelineRibbon } from "./charts";
+import type { TimelineMilestone } from "./charts";
 
 function hasText(s: string | null | undefined): s is string {
   return typeof s === "string" && s.trim().length > 0;
@@ -31,6 +32,63 @@ function isNum(v: number | null | undefined): v is number {
 
 export type PlainTermItem = { label: string; value?: string | null; hint?: string };
 
+/* The plain-terms glyph: a small, label-driven icon so each tangible unit reads
+   as its own object (a day's count, a spend, a team), not a row in a table. The
+   icon is decorative (aria-hidden); the label and value carry the meaning. Tokens
+   only, currentColor, no raw color. */
+function PlainTermIcon({ label }: { label: string }) {
+  const l = (label ?? "").toLowerCase();
+  let path: React.ReactNode;
+  if (/(spend|each|average|price|ticket|bill|revenue|takings)/.test(l)) {
+    // a coin / value
+    path = (
+      <>
+        <circle cx="8" cy="8" r="6" />
+        <path d="M8 5v6M6.2 6.6c0-.9.8-1.4 1.8-1.4s1.8.4 1.8 1.3c0 1.6-3.4 1-3.4 2.6 0 .9.8 1.3 1.8 1.3s1.8-.5 1.8-1.4" />
+      </>
+    );
+  } else if (/(people|payroll|staff|team|employ|hire|head)/.test(l)) {
+    // a small crowd
+    path = (
+      <>
+        <circle cx="6" cy="6" r="2.2" />
+        <path d="M2.5 13c0-2.2 1.6-3.6 3.5-3.6S9.5 10.8 9.5 13" />
+        <path d="M10.5 4.2c1.2 0 2.2 1 2.2 2.2 0 .9-.5 1.6-1.2 2M11 9.6c1.7.1 3 1.5 3 3.4" />
+      </>
+    );
+  } else if (/(day|week|month|covers|orders|sales|customers|visits|seats|tables)/.test(l)) {
+    // a recurring cycle
+    path = (
+      <>
+        <path d="M13 8a5 5 0 1 1-1.6-3.7" />
+        <path d="M13 2.6V5h-2.4" />
+      </>
+    );
+  } else {
+    // a neutral tag
+    path = (
+      <>
+        <path d="M2.6 8.4 8 3h4.4v4.4L7 12.8a1 1 0 0 1-1.4 0L2.6 9.8a1 1 0 0 1 0-1.4Z" />
+        <circle cx="9.7" cy="6.3" r="0.9" />
+      </>
+    );
+  }
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      aria-hidden="true"
+      className="h-4 w-4"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {path}
+    </svg>
+  );
+}
+
 export function PlainTerms({
   items,
   eyebrow = "In plain terms",
@@ -44,12 +102,22 @@ export function PlainTerms({
 }) {
   const rows = (items ?? []).filter((it) => hasText(it.value));
   if (rows.length === 0) return null;
+  // Reform (R7): the tangible units read as icon-led tiles, one object per card,
+  // so the section has its own character and skims in a glance instead of as a
+  // flat definition list. The icon is keyed off the label (a day's count, a
+  // spend, a team) and stays decorative; value + label carry the meaning.
   return (
     <BeatCard eyebrow={eyebrow} heading={heading} spot="calculator" id={id}>
-      <dl className="grid gap-x-8 gap-y-4 sm:grid-cols-2">
+      <dl className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {rows.map((it, i) => (
-          <div key={i}>
-            <dd className="font-display text-2xl font-semibold tabular-nums tracking-tight text-ink-900">
+          <div
+            key={i}
+            className="rounded-lg border border-parchment bg-cream-50/70 px-4 py-3.5"
+          >
+            <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-atlas-50 text-atlas-700">
+              <PlainTermIcon label={it.label} />
+            </span>
+            <dd className="mt-2.5 font-display text-2xl font-semibold tabular-nums tracking-tight text-ink-900">
               {it.value}
             </dd>
             <dt className="mt-0.5 text-sm font-medium text-cocoa-700">{it.label}</dt>
@@ -71,6 +139,9 @@ export function BreakEvenLine({
   headline,
   detail,
   note,
+  value,
+  typical,
+  unit,
   eyebrow = "Break-even",
   id,
 }: {
@@ -79,25 +150,66 @@ export function BreakEvenLine({
   /** A supporting clause. */
   detail?: string | null;
   note?: string | null;
+  /** The break-even count, for the gauge tick (e.g. 95). */
+  value?: number | null;
+  /** A typical day's count, to seat the "covering costs" zone (e.g. 130). */
+  typical?: number | null;
+  /** The unit said in words, e.g. "covers a day". */
+  unit?: string | null;
   eyebrow?: string;
   id?: string;
 }) {
-  if (!hasText(headline) && !hasText(detail)) return null;
+  if (!hasText(headline) && !hasText(detail) && !isNum(value)) return null;
+  // Reform (R7): the break-even reads as a position on a scale, not a sentence.
+  // The gauge marks the threshold; a typical day (when known) sits in the
+  // "covering costs" zone with headroom, so the gap above the line lands at a
+  // glance. The prose drops to a quiet caption beneath it.
+  const showGauge = isNum(value);
+  // Seat the scale so the typical day reads clearly above the line with room to
+  // spare; otherwise the gauge's own default ceiling (value * 1.8) applies.
+  const max =
+    isNum(typical) && typical > value!
+      ? Math.max(typical * 1.2, value! * 1.6)
+      : undefined;
+  const markerLabel = `${Math.round(value!)}${hasText(unit) ? ` ${unit}` : ""}`;
   return (
     <BeatCard eyebrow={eyebrow} id={id}>
-      {hasText(headline) ? (
-        <p className="font-display text-lg font-medium leading-snug text-balance text-ink-900 md:text-xl">
-          {headline}
-        </p>
-      ) : null}
-      {hasText(detail) ? (
-        <p className="mt-2.5 max-w-2xl text-sm leading-relaxed text-graphite md:text-base">
-          {detail}
-        </p>
-      ) : null}
-      {hasText(note) ? (
-        <p className="mt-3 text-[11px] text-cocoa-700">{note}</p>
-      ) : null}
+      {showGauge ? (
+        <>
+          {hasText(headline) ? (
+            <p className="mb-4 font-display text-lg font-medium leading-snug text-balance text-ink-900 md:text-xl">
+              {headline}
+            </p>
+          ) : null}
+          <ThresholdGauge
+            value={value}
+            max={max}
+            markerLabel={markerLabel}
+            belowLabel="Losing money"
+            aboveLabel="Covering costs"
+            caption={hasText(detail) ? detail : null}
+          />
+          {hasText(note) ? (
+            <p className="mt-3 text-[11px] text-cocoa-700">{note}</p>
+          ) : null}
+        </>
+      ) : (
+        <>
+          {hasText(headline) ? (
+            <p className="font-display text-lg font-medium leading-snug text-balance text-ink-900 md:text-xl">
+              {headline}
+            </p>
+          ) : null}
+          {hasText(detail) ? (
+            <p className="mt-2.5 max-w-2xl text-sm leading-relaxed text-graphite md:text-base">
+              {detail}
+            </p>
+          ) : null}
+          {hasText(note) ? (
+            <p className="mt-3 text-[11px] text-cocoa-700">{note}</p>
+          ) : null}
+        </>
+      )}
     </BeatCard>
   );
 }
@@ -264,16 +376,24 @@ export function Seasonality({
 export function RealisticFirstYear({
   headline,
   bullets,
+  milestones,
   eyebrow = "Your first year",
   id,
 }: {
   headline?: string | null;
   bullets: Array<string | null | undefined>;
+  /** The year as a journey, for the ribbon. Falls back to bullets when absent. */
+  milestones?: TimelineMilestone[] | null;
   eyebrow?: string;
   id?: string;
 }) {
   const items = (bullets ?? []).filter(hasText) as string[];
-  if (!hasText(headline) && items.length === 0) return null;
+  const stops = (milestones ?? []).filter((m) => hasText(m?.label));
+  // Reform (R7): the first year reads as a journey (ramp -> break-even -> steady)
+  // on the TimelineRibbon, the break-even node the lone accent. Needs at least
+  // two real stops; below that it falls back to the honest bullet read.
+  const showRibbon = stops.length >= 2;
+  if (!hasText(headline) && items.length === 0 && !showRibbon) return null;
   return (
     <BeatCard eyebrow={eyebrow} spot="first-year" id={id}>
       {hasText(headline) ? (
@@ -281,7 +401,14 @@ export function RealisticFirstYear({
           {headline}
         </p>
       ) : null}
-      {items.length > 0 ? (
+      {showRibbon ? (
+        <div className={hasText(headline) ? "mt-5" : ""}>
+          <TimelineRibbon
+            milestones={stops}
+            caption="A modeled path, not a promise. Most owners reach break-even later than they hope."
+          />
+        </div>
+      ) : items.length > 0 ? (
         <ul className={["space-y-2.5", hasText(headline) ? "mt-3" : ""].join(" ")}>
           {items.map((b, i) => (
             <li key={i} className="flex gap-3 text-sm leading-relaxed text-cocoa-700 md:text-base">
