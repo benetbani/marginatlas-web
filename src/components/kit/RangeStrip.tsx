@@ -148,6 +148,12 @@ export function RangeStrip({
   };
   const p50Pos = trackPct(p50, 6);
   const youPos = isNum(you) ? trackPct(you, 2) : null;
+  // The "you" marker and its labels render only once the reader's scenario has
+  // moved meaningfully off the typical. At rest the calculator seeds you === p50,
+  // so a second marker + label on the same x just smears the TYPICAL label; once
+  // a lever moves it clear, the ink "you" marker separates out cleanly.
+  const youOffTypical =
+    isNum(you) && isNum(p50) && Math.abs(you - p50) >= Math.max(1, p50 * 0.025);
 
   return (
     <figure className={className ? `w-full ${className}` : "w-full"}>
@@ -205,7 +211,7 @@ export function RangeStrip({
               style={{ left: `${p50Pos}%` }}
               aria-hidden="true"
             />
-            {youPos != null ? (
+            {youOffTypical && youPos != null ? (
               <span
                 className="absolute top-1/2 h-4 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-ink-900"
                 style={{ left: `${youPos}%` }}
@@ -213,7 +219,7 @@ export function RangeStrip({
               />
             ) : null}
           </div>
-          {isNum(you) ? (
+          {youOffTypical ? (
             <div className="mt-1.5 text-[11px] font-semibold tabular-nums text-ink-900">
               You: {format(you)}
             </div>
@@ -268,7 +274,7 @@ export function RangeStrip({
           strokeLinecap="round"
         />
         {/* you marker (calculator), the one ink moment */}
-        {isNum(you) ? (
+        {youOffTypical ? (
           <g>
             <line
               x1={xp(you)}
@@ -384,7 +390,7 @@ export function RangeStrip({
           {/* The compact SVG suppresses the you label to stay row-height; carry it
               in the footer instead so the marker reads in the quiet voice on every
               viewport, not just as a bare tick. */}
-          {isNum(you) ? (
+          {youOffTypical ? (
             <span className="font-semibold text-ink-900">You {format(you)}</span>
           ) : null}
         </div>
