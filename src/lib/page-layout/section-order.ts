@@ -19,33 +19,45 @@ export const CELL_PAGE_SECTIONS = [
   "related-cells",
 ] as const;
 
-// Country page, on the Atlas Page Kit (rebuild 2026-06-15, founder spec). Reading
-// order is data first, opinion lower: the hero (just the country name + a fixed
-// subtitle + the photo, no colour wash), the eight-stat scorecard, the decisive
-// read (tax + register + payroll + time, with the per-tier formation table folded
-// beneath it), the hire read with the wage floor, the neighbour facts, the
-// licences skeleton, the activity break-in panel, the UNIFORM city cards, the
-// country character, then the lower editorial layer: what-locals, vs-the-world,
-// the (small, moved-down) honest take, the gut check, the one-thing close, and the
-// compare CTA. Most bands render through kit components (BeatCard, HonestTakeBox,
-// SectionEmpty, VsWorld, CountryAtAGlance) whose <section> lives in the component
-// file, not the page, so the section-order gate (which scans literal <section id=>
-// in the PAGE source) only sees the bespoke "hero", "licences", and "break-in"
-// sections. The full reading order is listed here as the authoritative skeleton;
-// the gate's subsequence test passes because the page's literal sections are a
-// subsequence of this list.
+// Country page, on the engraved Section Constitution spine (rewire 2026-06-15,
+// founder spec). The body is organized by the nine judgment lenses, data first
+// and opinion lower: the kept hero, then the eight-stat scorecard and the
+// nine-lens country shape (opening); the decisive setup read and the cost
+// signature (reward + cost); the hire read and the talent reality (people);
+// who-has-money and how-far-you-reach (demand); the neighbour facts, the
+// opportunity gap, same-business-abroad, special zones and licences (comparison
+// + edge); the ground-under-you risk read (risk); the uniform city cards, the
+// break-in panel, the character panel, what-locals and your-life-here (the
+// place); then vs-the-world, the small low honest take, the gut check, the
+// one-thing close, and the compare CTA (close). Most bands render through the
+// engraved kit whose card lives in the component, so the section-order gate
+// (which scans literal <section id=> in the PAGE source) only sees the id-bearing
+// sections (hero, decisive, hire, neighbours, cities, break-in, character,
+// locals, vs-world, honest-take, gut-check, related). The full reading order is
+// listed here as the authoritative skeleton; the gate's subsequence test passes
+// because the page's literal sections are a subsequence of this list.
 export const COUNTRY_PAGE_SECTIONS = [
   "hero",
   "scorecard",
+  "shape",
   "decisive",
   "formation",
+  "cost-signature",
   "hire",
+  "talent",
+  "who-has-money",
+  "reach",
   "neighbours",
+  "opportunity",
+  "here-vs-abroad",
+  "special-zones",
   "licences",
-  "break-in",
+  "ground",
   "cities",
+  "break-in",
   "character",
   "locals",
+  "your-life",
   "vs-world",
   "honest-take",
   "gut-check",
