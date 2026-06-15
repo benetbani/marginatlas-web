@@ -190,3 +190,37 @@ export {
   VisitorSplit,
   type VisitorSplitProps,
 } from "./charts";
+
+// The engraved-almanac foundation (2026-06-14, ported from the country-engraved
+// design export): the cartographic primitives (compass rosette, contour field,
+// surveyor route line, one-colour glyph set, council stamp seal), the quiet
+// clay -> moss meaning scale, and the two flagship assets (the engraved hero
+// band + the 8-metric scorecard). Tokens via the engraved CSS-var layer in
+// globals.css, nullable inputs, honest sample states. A later wave composes the
+// country page from these; this is the shared foundation only.
+export {
+  meaningStep,
+  ENGRAVED_MEANING,
+  type MeaningStep,
+  Eyebrow,
+  type EyebrowProps,
+  CompassRosette,
+  type CompassRosetteProps,
+  ContourField,
+  type ContourFieldProps,
+  RouteLine,
+  type RouteLineProps,
+  Glyph,
+  type GlyphProps,
+  type GlyphName,
+  StampSeal,
+  type StampSealProps,
+  SampleState,
+  type SampleStateProps,
+  EngravedHero,
+  type EngravedHeroProps,
+  type SkylineProfile,
+  Scorecard,
+  type ScorecardProps,
+  type ScorecardMetric,
+} from "./engraved";
