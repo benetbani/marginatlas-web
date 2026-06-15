@@ -99,3 +99,18 @@ export {
 
 // The interactive gut-check triptych (a small client island for the toggles).
 export { GutCheck, type GutCheckProps } from "./GutCheck";
+
+// The nine new judgment-lens sections (R6.5, built on the foundation): the
+// country-shape radar, the opportunity quadrant, same-business-here-vs-abroad,
+// special zones, the ground-under-you risk read, who-has-money, how-far-you-
+// reach, the talent reality, and what-your-life-looks-like-here. Nullable,
+// honest sample states, composed from the engraved primitives.
+export { CountryShape, type CountryShapeProps, type ShapeLens, type LensKey } from "./CountryShape";
+export { OpportunityGap, type OpportunityGapProps, type OpportunityTrade } from "./OpportunityGap";
+export { SameBusinessAbroad, type SameBusinessAbroadProps, type SameBusinessSide } from "./SameBusinessAbroad";
+export { SpecialZones, type SpecialZonesProps, type SpecialZone } from "./SpecialZones";
+export { GroundUnderYou, type GroundUnderYouProps, type GroundFactor } from "./GroundUnderYou";
+export { WhoHasMoney, type WhoHasMoneyProps, type SpendingPower, type SpendCategory } from "./WhoHasMoney";
+export { HowFarYouReach, type HowFarYouReachProps, type ReachPopulation, type ReachIndicator } from "./HowFarYouReach";
+export { TalentReality, type TalentRealityProps, type TalentSignal } from "./TalentReality";
+export { YourLifeHere, type YourLifeHereProps, type LifeDimension } from "./YourLifeHere";
