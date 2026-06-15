@@ -106,11 +106,64 @@ are updated to match the orders below in the same change.
 
 ---
 
-## Round 2 (next): the visual treatment per section
-For each section above, how its data is drawn (the hardest part). Decided in a
-second interview and appended here, then implemented. The five Phase-0 primitives
-(LikeForLikeBars, ThresholdGauge, TimelineRibbon, SeverityGlyph, TierBar) plus the
-existing chart family (RangeStrip, MoneyGoesBreakdown, the engraved gauges, radar,
-scatter, comparison bars) are the vocabulary. Sections whose data is genuinely not
-held render their honest sample/empty state (no fabrication), but the visual frame
-is built so it fills when the data lands.
+## Round 2: the visual treatment per section (LOCKED 2026-06-16)
+
+Vocabulary: the five Phase-0 primitives (LikeForLikeBars, ThresholdGauge,
+TimelineRibbon, SeverityGlyph, TierBar) + the existing family (RangeStrip,
+MoneyGoesBreakdown, the engraved gauges/dials, the nine-lens radar, the opportunity
+scatter, ComparisonBars, VisitorSplit, OwnerKeepTable, the setup route-line, the
+character spectrum, the seasonality bars, the wage rails). New small builds noted as
+[NEW]. Data-not-held sections render their honest sample/empty state, but the visual
+frame is built so it fills when the data lands [FRAME].
+
+**HOME**
+1. Hero — rotating words + search (keep) · 2. World map (keep) · 3. Example proof —
+revenue ranked bars · 4. State by state — ranked bars · 5. Block by block — cards +
+a price-tier badge/gauge + the known-for line · 6. Audience — icons + spot (keep) ·
+7. Pricing — three tier cards, moss "included" / muted "not" bands [NEW] · 8. Blog —
+a topic pill + thumbnail per post · 9. Newsletter — a sample-report preview image.
+
+**UNITED KINGDOM**
+Keep: hero skyline, at-a-glance scorecard, the nine-lens radar, the setup route-line,
+hiring dials, how-far-reach, vs-neighbours table, opportunity scatter, ground bars,
+cities grid, character spectrum, vs-world bars. · Margin leaks — three bars
+(rent/labour/tax), the biggest flagged as "the leak" [NEW] · Honest take — verdict +
+an ease-of-business gauge · Gut-check — three framed cards with a think glyph [NEW] ·
+Licences — a checklist grid (icon + name + cost/days) [FRAME] · [FRAME] also: talent
+reality, who-has-money spend-mix, same-business-abroad mirror bars, special zones
+cards, your-life-here felt bars.
+
+**LONDON (city)**
+Keep: hero + score band, at-a-glance, tourist-vs-local split bar, owners-keep table,
+neighbourhood cards, peer bars + cards, vs-peers, one-thing. · Customer/spending —
+the income spread strip (on every city holding income) + a "what they spend on" bar ·
+Space costs — a cost-of-living / rent gauge, prose below · Best areas — area cards
+with a "suits" pictogram + one line [NEW] · Changing — a trend card with direction
+markers [NEW] · Operator voices — pictogram circles.
+
+**LONDON RESTAURANTS (cell)**
+Keep: calculator + take-home spread, masthead anchor + spread, what-moves-cost
+(arrows + ticks), pay-by-role rails, seasonality bars, vs-world bars. · Honest take —
+verdict + a break-in difficulty gauge · In plain terms — icon-led unit cards [NEW] ·
+Where money goes — per-$100 bar + a vermillion tick on the kept row · What owner
+keeps — a kept-vs-gone bar [NEW] · Break-even — ThresholdGauge · What to watch —
+SeverityGlyph per row · Cost to open — a stacked cost bar · First year —
+TimelineRibbon · Nearby — LikeForLikeBars · Operator voices — quotes + trade
+pictogram circles · The story in plain words — prose (the one justified low-text
+beat) · one-thing, related — keep.
+
+**LONDON NEIGHBOURHOODS**
+Keep: street-by-street (chips + street-line motif), vs-next-door table, the-businesses
+grid, one-thing. · District hero — answer-first + a top-trade multiplier gauge · What
+thrives — ranked multiplier bars + pictogram (LikeForLikeBars) · Who lives + shops — a
+spend breakdown + income band [FRAME] · Cost to operate — a bar vs the city baseline
+(1.0x) · Operator voices — pictogram circles.
+
+## Implementation (next)
+Build, in order: (a) the small NEW shared pieces this needs that aren't yet primitives
+(the kept-vs-gone bar, the icon-unit cards, the ease/difficulty + multiplier gauges,
+the three-bar "leak", the framed gut-check cards, the trend-direction card, the tier
+cards, the suits-area cards); (b) wire each page to its locked order via the section
+manifests + gates; (c) reform each section to its visual, page by page (restaurant
+first), gate-green + SEEN at 1280 + 375 + committed. The data-not-held sections keep
+their honest states; never fabricate.
