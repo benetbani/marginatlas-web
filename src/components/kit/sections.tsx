@@ -16,6 +16,7 @@
  */
 import * as React from "react";
 import { BeatCard } from "./editorial";
+import { LikeForLikeBars } from "./charts";
 
 function hasText(s: string | null | undefined): s is string {
   return typeof s === "string" && s.trim().length > 0;
@@ -322,50 +323,22 @@ export function SameBusinessNearby({
   note?: string | null;
   id?: string;
 }) {
-  const items = (rows ?? []).filter((r) => hasText(r.name));
-  if (items.length < 1) return null;
+  // Reform (R7): the same trade across comparable places reads as ranked bars,
+  // so the spread and the leader land in one glance instead of as a list of
+  // numbers. Needs a formatter and at least two real values to compare; below
+  // that the page keeps the section present with its honest empty state.
+  const items = (rows ?? [])
+    .filter((r) => hasText(r.name))
+    .map((r) => ({
+      label: r.name,
+      value: isNum(r.value) ? r.value : null,
+      href: r.href ?? null,
+    }));
+  if (!format || items.filter((it) => isNum(it.value)).length < 2) return null;
+  const caption = [valueLabel, note].filter(hasText).join(" ") || undefined;
   return (
     <BeatCard eyebrow={eyebrow} heading={heading} id={id}>
-      <ul className="divide-y divide-parchment border-y border-parchment">
-        {items.map((r, i) => {
-          const inner = (
-            <>
-              <span className="min-w-0">
-                <span className="block truncate text-sm font-medium text-ink-900">
-                  {r.name}
-                </span>
-                {hasText(r.sub) ? (
-                  <span className="block text-[11px] text-cocoa-700">{r.sub}</span>
-                ) : null}
-              </span>
-              {isNum(r.value) && format ? (
-                <span className="shrink-0 font-display text-base font-semibold tabular-nums text-ink-900">
-                  {format(r.value)}
-                </span>
-              ) : null}
-            </>
-          );
-          return (
-            <li key={i}>
-              {hasText(r.href) ? (
-                <a
-                  href={r.href}
-                  className="group flex items-baseline justify-between gap-3 rounded-sm py-2.5 transition-colors hover:text-atlas-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50"
-                >
-                  {inner}
-                </a>
-              ) : (
-                <div className="flex items-baseline justify-between gap-3 py-2.5">{inner}</div>
-              )}
-            </li>
-          );
-        })}
-      </ul>
-      {hasText(valueLabel) || hasText(note) ? (
-        <p className="mt-3 text-[11px] text-cocoa-700">
-          {[valueLabel, note].filter(hasText).join(" ")}
-        </p>
-      ) : null}
+      <LikeForLikeBars items={items} format={format} caption={caption} />
     </BeatCard>
   );
 }
