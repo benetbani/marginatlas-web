@@ -181,6 +181,11 @@ function OwnerKeeps({
   marginPct: number | null;
 }) {
   if (takeHome == null || !Number.isFinite(takeHome)) return null;
+  // The kept-vs-gone bar: of every sales dollar, the moss sliver is what the
+  // owner keeps and the neutral block is what costs take. On a thin-margin trade
+  // the sliver is small on purpose, and that IS the point the section makes.
+  const kept = Number.isFinite(marginPct as number) ? Math.round(marginPct as number) : null;
+  const keptPct = kept != null ? Math.max(2, Math.min(98, kept)) : null;
   return (
     <section
       id={id}
@@ -196,10 +201,31 @@ function OwnerKeeps({
         </span>
         <span className="text-sm font-medium text-cocoa-700/80">
           a year, for a typical single-site owner
-          {Number.isFinite(marginPct as number) ? `, about ${Math.round(marginPct as number)}% of sales` : ""}
         </span>
       </div>
-      <p className="mt-2.5 max-w-2xl text-sm leading-relaxed text-graphite">
+      {keptPct != null ? (
+        <div className="mt-4 max-w-xl">
+          <div
+            className="flex h-5 w-full overflow-hidden rounded-full border border-parchment"
+            role="img"
+            aria-label={`Of every sales dollar the owner keeps about ${kept} cents; the rest covers costs.`}
+          >
+            <div className="bg-moss-500" style={{ width: `${keptPct}%` }} />
+            <div className="flex-1 bg-cocoa-300" />
+          </div>
+          <div className="mt-2 flex items-baseline justify-between gap-3 text-[11.5px] font-medium">
+            <span className="inline-flex items-center gap-1.5 text-moss-700">
+              <span aria-hidden="true" className="h-2 w-2 rounded-sm bg-moss-500" />
+              Owner keeps {kept}%
+            </span>
+            <span className="inline-flex items-center gap-1.5 text-cocoa-700">
+              Costs take {100 - kept!}%
+              <span aria-hidden="true" className="h-2 w-2 rounded-sm bg-cocoa-300" />
+            </span>
+          </div>
+        </div>
+      ) : null}
+      <p className="mt-3.5 max-w-2xl text-sm leading-relaxed text-graphite">
         After the stock, the staff, the rent, and tax. Before the owner&apos;s own
         time, which a typical operator works a great deal of.
       </p>

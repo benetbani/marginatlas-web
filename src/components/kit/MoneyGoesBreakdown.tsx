@@ -75,6 +75,18 @@ export function MoneyGoesBreakdown({
   const widthPct = (v: number) => `${(v / total) * 100}%`;
   const fmt = (v: number) => `$${Math.round(v)}`;
 
+  // The kept slice is the answer the section is really about. Find its centre on
+  // the bar so a single vermillion tick can mark it (the one focal-subject accent
+  // per the chart grammar; the moss fill carries the "profit" meaning, the tick
+  // carries the "look here").
+  let acc = 0;
+  let keptCenter: number | null = null;
+  for (const it of clean) {
+    const w = (it.perHundred / total) * 100;
+    if (it.kept && keptCenter == null) keptCenter = acc + w / 2;
+    acc += w;
+  }
+
   let costIdx = 0;
 
   return (
@@ -99,25 +111,39 @@ export function MoneyGoesBreakdown({
         </p>
       ) : null}
 
-      {/* the stacked bar */}
-      <div
-        className="mt-5 flex h-5 w-full overflow-hidden rounded-full border border-parchment"
-        role="img"
-        aria-label="Stacked share of every hundred dollars of sales."
-      >
-        {clean.map((it, i) => {
-          const fill = it.kept
-            ? "bg-moss-500"
-            : COST_FILL_at(costIdx++);
-          return (
-            <div
-              key={i}
-              className={fill}
-              style={{ width: widthPct(it.perHundred) }}
-              title={`${it.label}: ${fmt(it.perHundred)}`}
-            />
-          );
-        })}
+      {/* the stacked bar, with a vermillion tick marking the kept slice */}
+      <div className={["relative", keptCenter != null ? "mt-9" : "mt-5"].join(" ")}>
+        {keptCenter != null ? (
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-[1.1rem] z-10 flex -translate-x-1/2 flex-col items-center"
+            style={{ left: `${Math.max(4, Math.min(96, keptCenter))}%` }}
+          >
+            <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-atlas-700">
+              Kept
+            </span>
+            <span className="mt-0.5 block h-2.5 w-[3px] rounded-sm bg-atlas-500 ring-2 ring-cream-50" />
+          </div>
+        ) : null}
+        <div
+          className="flex h-5 w-full overflow-hidden rounded-full border border-parchment"
+          role="img"
+          aria-label="Stacked share of every hundred dollars of sales; the owner's kept slice is marked."
+        >
+          {clean.map((it, i) => {
+            const fill = it.kept
+              ? "bg-moss-500"
+              : COST_FILL_at(costIdx++);
+            return (
+              <div
+                key={i}
+                className={fill}
+                style={{ width: widthPct(it.perHundred) }}
+                title={`${it.label}: ${fmt(it.perHundred)}`}
+              />
+            );
+          })}
+        </div>
       </div>
 
       {/* the ruled line-item table */}
