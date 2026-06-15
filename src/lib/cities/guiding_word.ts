@@ -31,7 +31,14 @@ export type Metric =
   | "net_wealth_usd_adult"
   | "self_employment_pct"
   | "days_to_start"
-  | "inflation_pct_yoy";
+  | "inflation_pct_yoy"
+  // Country scorecard expansion (2026-06-15): four more reads for the 8-stat
+  // scorecard under the rebuilt country hero.
+  | "avg_salary_usd_yr"
+  | "min_wage_usd_yr"
+  | "ease_of_doing_business"
+  | "country_population"
+  | "country_cost_of_living_index";
 
 // Gradient stops for interpolation, 0.0 = "very bad" to 1.0 = "very good".
 // Conformed to the warm token palette (2026-06-12 stale-palette sweep):
@@ -188,6 +195,73 @@ const SPECS: Record<Metric, Spec> = {
       { upTo: 21, word: "moderate", goodness: 0.5 },
       { upTo: 60, word: "slow", goodness: 0.25 },
       { upTo: Infinity, word: "very slow", goodness: 0 },
+    ],
+  },
+
+  // Average full-time pay, annual USD. Higher means the local customer can pay
+  // more, but also that a hire costs more. Read as customer purchasing power
+  // (higher = better for an operator entering the market), same scale family as
+  // GDP per capita but pegged to wages.
+  avg_salary_usd_yr: {
+    breaks: [
+      { upTo: 6000, word: "very low", goodness: 0 },
+      { upTo: 18000, word: "low", goodness: 0.25 },
+      { upTo: 35000, word: "middle", goodness: 0.5 },
+      { upTo: 60000, word: "high", goodness: 0.75 },
+      { upTo: Infinity, word: "very high", goodness: 1.0 },
+    ],
+  },
+
+  // Legal minimum wage, annual USD. Neutral size descriptor: a high floor is
+  // protective for workers but a higher hire cost for an owner, so we describe
+  // its level rather than crown it good or bad.
+  min_wage_usd_yr: {
+    neutral: true,
+    breaks: [
+      { upTo: 3000, word: "very low", goodness: 0 },
+      { upTo: 9000, word: "low", goodness: 0 },
+      { upTo: 18000, word: "moderate", goodness: 0 },
+      { upTo: 28000, word: "high", goodness: 0 },
+      { upTo: Infinity, word: "very high", goodness: 0 },
+    ],
+  },
+
+  // Ease of doing business, 0 to 100 (higher = easier). Higher is better for an
+  // operator setting up here.
+  ease_of_doing_business: {
+    breaks: [
+      { upTo: 45, word: "hard", goodness: 0 },
+      { upTo: 60, word: "mixed", goodness: 0.25 },
+      { upTo: 72, word: "fair", goodness: 0.5 },
+      { upTo: 83, word: "easy", goodness: 0.75 },
+      { upTo: Infinity, word: "very easy", goodness: 1.0 },
+    ],
+  },
+
+  // Country population (people). Neutral size descriptor: a bigger market is
+  // neither good nor bad, just larger.
+  country_population: {
+    neutral: true,
+    breaks: [
+      { upTo: 2_000_000, word: "tiny", goodness: 0 },
+      { upTo: 15_000_000, word: "small", goodness: 0 },
+      { upTo: 60_000_000, word: "mid-sized", goodness: 0 },
+      { upTo: 200_000_000, word: "large", goodness: 0 },
+      { upTo: Infinity, word: "huge", goodness: 0 },
+    ],
+  },
+
+  // Country cost of living, index (higher = pricier). Read from an operator's
+  // seat, very expensive is the hard end (INVERTED), the same direction as the
+  // city cost-of-living read so the scale is consistent across pages.
+  country_cost_of_living_index: {
+    inverted: true,
+    breaks: [
+      { upTo: 40, word: "very cheap", goodness: 1.0 },
+      { upTo: 60, word: "cheap", goodness: 0.75 },
+      { upTo: 85, word: "moderate", goodness: 0.5 },
+      { upTo: 120, word: "expensive", goodness: 0.25 },
+      { upTo: Infinity, word: "very expensive", goodness: 0 },
     ],
   },
 

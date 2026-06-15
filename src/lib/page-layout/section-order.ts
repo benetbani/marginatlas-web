@@ -19,28 +19,37 @@ export const CELL_PAGE_SECTIONS = [
   "related-cells",
 ] as const;
 
-// Country page, on the Atlas Page Kit (Round 5, 2026-06-14). Reading order:
-// the masthead, THEN the honest take (the brand through-line leads the body,
-// before the data), THEN the decisive read (tax + time-to-start + payroll, with
-// the per-tier formation cost table folded directly beneath it, so "cost to
-// open" is no longer a standalone band), the hire read, the neighbour facts,
-// the activity break-in panel, the cities, the country character, and the
+// Country page, on the Atlas Page Kit (rebuild 2026-06-15, founder spec). Reading
+// order is data first, opinion lower: the hero (just the country name + a fixed
+// subtitle + the photo, no colour wash), the eight-stat scorecard, the decisive
+// read (tax + register + payroll + time, with the per-tier formation table folded
+// beneath it), the hire read with the wage floor, the neighbour facts, the
+// licences skeleton, the activity break-in panel, the UNIFORM city cards, the
+// country character, then the lower editorial layer: what-locals, vs-the-world,
+// the (small, moved-down) honest take, the gut check, the one-thing close, and the
 // compare CTA. Most bands render through kit components (BeatCard, HonestTakeBox,
-// SectionEmpty) whose <section> lives in the component file, not the page, so the
-// section-order gate (which scans literal <section id=> in the PAGE source) only
-// sees the bespoke "hero" and "break-in" sections. The full reading order is
-// listed here anyway as the authoritative skeleton; the gate's subsequence test
-// passes because the page's literal sections are a subsequence of this list.
+// SectionEmpty, VsWorld, CountryAtAGlance) whose <section> lives in the component
+// file, not the page, so the section-order gate (which scans literal <section id=>
+// in the PAGE source) only sees the bespoke "hero", "licences", and "break-in"
+// sections. The full reading order is listed here as the authoritative skeleton;
+// the gate's subsequence test passes because the page's literal sections are a
+// subsequence of this list.
 export const COUNTRY_PAGE_SECTIONS = [
   "hero",
-  "honest-take",
+  "scorecard",
   "decisive",
   "formation",
   "hire",
   "neighbours",
+  "licences",
   "break-in",
   "cities",
   "character",
+  "locals",
+  "vs-world",
+  "honest-take",
+  "gut-check",
+  "one-thing",
   "related",
 ] as const;
 

@@ -185,6 +185,46 @@ export function getCityEconBySlug(slug: string): {
   return { avgGrossSalaryUsdYear: entry.sal, costOfLivingIndex: entry.col };
 }
 
+/**
+ * Country-level cost-of-living index aggregated from the city list: the
+ * population-weighted mean of the country's cities' cost-of-living indices.
+ * Built once at module load. Countries with no city carrying a finite index
+ * fall through to null (the scorecard then shows the sample treatment), never
+ * a fabricated number.
+ */
+const COL_BY_ISO2: Map<string, number> = (() => {
+  const groups = new Map<string, Array<{ pop: number; col: number }>>();
+  for (const c of CITIES.cities) {
+    const iso = (c.iso2 || "").toUpperCase();
+    if (!iso) continue;
+    const col = c.cost_of_living_index;
+    if (typeof col !== "number" || !Number.isFinite(col) || col <= 0) continue;
+    const pop = typeof c.pop_m === "number" && c.pop_m > 0 ? c.pop_m : 0.5;
+    if (!groups.has(iso)) groups.set(iso, []);
+    groups.get(iso)!.push({ pop, col });
+  }
+  const out = new Map<string, number>();
+  for (const [iso, rows] of groups.entries()) {
+    let totalW = 0;
+    let totalC = 0;
+    for (const r of rows) {
+      totalW += r.pop;
+      totalC += r.pop * r.col;
+    }
+    if (totalW > 0) out.set(iso, Math.round((totalC / totalW) * 10) / 10);
+  }
+  return out;
+})();
+
+/**
+ * Country-level cost-of-living index (population-weighted across the country's
+ * cities), or null when no city carries a usable index. Same index basis as the
+ * per-city cost-of-living read, so the country and city pages read on one scale.
+ */
+export function getCountryCostOfLivingIndex(iso2: string): number | null {
+  return COL_BY_ISO2.get(iso2.toUpperCase()) ?? null;
+}
+
 // ---------------------------------------------------------------------------
 // Region inference (for fallbacks). Uses the brain country master.
 // ---------------------------------------------------------------------------

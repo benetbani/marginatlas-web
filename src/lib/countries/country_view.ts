@@ -418,22 +418,28 @@ export function countryViewNav(
   // that self-omit, so they stay conditional.
   void hasCities; // cities is always present now
   void hasFormation; // formation is folded into the decisive read, no own anchor
-  // The honest take now leads the body (the brand through-line, before the
-  // decisive read), so it sits first in the nav too. Cost to open is no longer
-  // a standalone nav stop: the formation tier table is folded under the decisive
-  // read, so it shares that anchor.
+  // Country-page rebuild (2026-06-15): the nav follows the rebuilt body order,
+  // data first and opinion lower. The hero leads into the scorecard, then the
+  // decisive read, hiring, neighbours, licences, the break-in panel (when held),
+  // cities, character, and the lower editorial beats (what-locals, vs-world, the
+  // honest take, the gut check) closing on the compare CTA. Anchors with no
+  // mounted section are dropped by StickySectionNav, so an absent flourish never
+  // leaves a dead link.
   const nav: Array<{ id: string; label: string }> = [
     { id: "hero", label: "Overview" },
   ];
-  nav.push({ id: "honest-take", label: "The honest take" });
+  nav.push({ id: "scorecard", label: "At a glance" });
   nav.push({ id: "decisive", label: "The decisive read" });
   nav.push({ id: "hire", label: "Hiring here" });
   nav.push({ id: "neighbours", label: "Vs neighbours" });
+  nav.push({ id: "licences", label: "Licences" });
   if (hasBreakIn) nav.push({ id: "break-in", label: "Easiest to start" });
   nav.push({ id: "cities", label: "Cities" });
-  if (view.whatLocals) nav.push({ id: "locals", label: "What locals know" });
-  if (view.contrarian) nav.push({ id: "contrarian", label: "Against the grain" });
   nav.push({ id: "character", label: "Character" });
+  if (view.whatLocals) nav.push({ id: "locals", label: "What locals know" });
+  nav.push({ id: "vs-world", label: "Vs the world" });
+  nav.push({ id: "honest-take", label: "The honest take" });
+  nav.push({ id: "gut-check", label: "Gut check" });
   nav.push({ id: "related", label: "Compare" });
   return nav;
 }

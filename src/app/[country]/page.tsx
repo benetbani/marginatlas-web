@@ -26,32 +26,34 @@ import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { hasRegionalCoverage } from "@/lib/coverage/regional";
 import { getAdmin1Regions } from "@/lib/coverage/admin1";
 import { COUNTRY_PAGE_SECTIONS } from "@/lib/page-layout/section-order";
-import { getCountryAnchor } from "@/lib/content/country-anchors";
 import { BusinessFormationCosts } from "@/components/cities/BusinessFormationCosts";
-import { getCountryEconomicsSnapshot, getCityEconBySlug } from "@/lib/economics/country_metrics";
+import {
+  getCountryEconomicsSnapshot,
+  type CountryEconomicsSnapshot,
+} from "@/lib/economics/country_metrics";
 import { getCountryProfile } from "@/lib/economic_profile";
-import { getSmbRegime, getVatRow } from "@/lib/tax/smb_effective_rates";
+import { getBrainGdpPerCapitaByIso2 } from "@/lib/external/brain_data";
+import { getSmbRegime, getVatRow, type SmbRegime } from "@/lib/tax/smb_effective_rates";
 import { getCountryRates, getTypicalFormationCostUsd } from "@/lib/tax/country_rates";
 import { CountryMastheadImage } from "@/components/countries/CountryMastheadImage";
+import { CountryAtAGlance } from "@/components/CountryAtAGlance";
 import { buildEasiestToBreakIn, type PlaceActivityCell } from "@/lib/scores/country_board";
 import { EasiestToBreakIn } from "@/components/countries/EasiestToBreakIn";
-import { buildCityScore } from "@/lib/scores/city_board";
 import {
-  AnswerFirstMasthead,
   HonestTakeBox,
   ComparisonTable,
   ComparisonBars,
   MinimumWage,
   WhatLocalsKnow,
-  ContrarianInsight,
   StickySectionNav,
   FreshnessStamp,
   FlagIt,
   BeatCard,
+  GutCheck,
   SectionEmpty,
-  HeroWash,
+  LicenceList,
+  VsWorld,
   OneThing,
-  ZoomControl,
   AddToWatch,
 } from "@/components/kit";
 import { CountryCharacter } from "@/components/countries/CountryCharacter";
@@ -108,6 +110,74 @@ function gatherFacts(iso2: string, name: string): NeighbourFacts {
     daysToStart: snap.daysToStart,
     avgMonthlySalary: snap.avgMonthlySalary,
   };
+}
+
+/** A pre-formatted compact USD string for the vs-the-world figures. */
+function usdCompactDisplay(n: number): string {
+  if (n >= 1_000_000) return `$${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1000) return `$${Math.round(n / 1000)}K`;
+  return `$${Math.round(n)}`;
+}
+
+/**
+ * The global median GDP per capita, computed once from the held brain GDP map.
+ * A real reference figure (the median of every country's latest GDP per capita),
+ * so the vs-the-world bar compares the country against a true global midpoint,
+ * never a fabricated number. Memoized at module scope.
+ */
+let _globalMedianGdp: number | null | undefined;
+function getGlobalMedianGdpPerCapita(): number | null {
+  if (_globalMedianGdp !== undefined) return _globalMedianGdp;
+  const values = Array.from(getBrainGdpPerCapitaByIso2().values())
+    .filter((n) => Number.isFinite(n) && n > 0)
+    .sort((a, b) => a - b);
+  if (values.length === 0) {
+    _globalMedianGdp = null;
+    return _globalMedianGdp;
+  }
+  const mid = Math.floor(values.length / 2);
+  _globalMedianGdp =
+    values.length % 2 === 0 ? Math.round((values[mid - 1] + values[mid]) / 2) : values[mid];
+  return _globalMedianGdp;
+}
+
+/**
+ * Three plain questions before committing, derived from the country's own held
+ * facts. Each question is generic-but-true (about the market, the customer, and
+ * the setup speed), never a fabricated specific. Always returns three.
+ */
+function buildCountryGutCheck(
+  countryName: string,
+  snapshot: CountryEconomicsSnapshot,
+  regime: SmbRegime | null,
+): string[] {
+  const qs: string[] = [];
+  qs.push(
+    `Can the local customer in ${countryName} actually pay the price your numbers need, week in and week out?`,
+  );
+  if (regime != null) {
+    qs.push(
+      "After the business tax and the payroll on every wage, is there still a real margin left, or only one at hobby scale?",
+    );
+  } else {
+    qs.push(
+      "Do you know what the business tax and the payroll on-cost will take before you have signed anything?",
+    );
+  }
+  if (
+    snapshot.daysToStart != null &&
+    Number.isFinite(snapshot.daysToStart) &&
+    snapshot.daysToStart > 21
+  ) {
+    qs.push(
+      "Registering here is not instant, so have you planned for the weeks of paperwork before you can legally trade?",
+    );
+  } else {
+    qs.push(
+      "Registering is the easy part; have you tested whether the demand is there before you commit a lease?",
+    );
+  }
+  return qs;
 }
 
 export default async function CountryPage({ params }: { params: Promise<Params> }) {
@@ -237,47 +307,26 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
     }));
   })();
 
-  // Best/worst city highlight: each city scored on real per-city economics.
-  // Self-omits when fewer than 2 cities produce a score. Preserved exactly.
-  const cityScores: { name: string; slug: string; score: number }[] = [];
-  for (const c of allCities) {
-    const eco = getCityEconBySlug(c.slug);
-    const r = buildCityScore({
-      city: {
-        slug: c.slug,
-        popM: c.population / 1_000_000,
-        avgGrossSalaryUsdYear: eco.avgGrossSalaryUsdYear,
-        costOfLivingIndex: eco.costOfLivingIndex,
-        touristArrivalsM: null,
-      },
-      econ: {
-        selfEmploymentPct: snapshot.selfEmploymentPct,
-        avgMonthlySalary: snapshot.avgMonthlySalary,
-        netWealthPerAdult: snapshot.netWealthPerAdult,
-      },
-    });
-    if (r != null) {
-      cityScores.push({ name: c.name, slug: c.slug, score: r.score });
-    }
-  }
-  const bestCity =
-    cityScores.length >= 2
-      ? cityScores.reduce((a, b) => (b.score > a.score ? b : a))
-      : null;
-  const worstCity =
-    cityScores.length >= 2
-      ? cityScores.reduce((a, b) => (b.score < a.score ? b : a))
-      : null;
-  const hasCities =
-    (bestCity != null && worstCity != null) || citiesByRegion.length > 0;
+  // Cities render as UNIFORM, equal-weight cards (no good-vs-bad ranking), so
+  // the page no longer scores cities; it only needs to know whether any city is
+  // held to choose between the cards and the calm placeholder.
+  const hasCities = citiesByRegion.length > 0;
 
-  // Zoom ladder, country altitude. The country is the top rung (marked,
-  // non-link). We only offer a down-link when a city OBVIOUSLY resolves: the
-  // best-scored city already computed above is a real, held place page, so its
-  // /cities link never 404s. With no scored city we show just the marked
-  // country coordinate (no fabricated rung). The trade coordinate held sticky
-  // is the page's own subject, small business, not an invented specific trade.
-  const zoomHrefs = bestCity != null ? { city: `/cities/${bestCity.slug}` } : {};
+  // Vs-the-world read: this country's GDP per capita (held figure preferred,
+  // brain GDP otherwise) against the global median GDP per capita, computed once
+  // from the held country profiles. Both are real figures; VsWorld self-omits to
+  // its honest "not held yet" line if either is missing.
+  const gdpProfile = getCountryProfile(iso2);
+  const gdpProfileHeld = gdpProfile.iso2.toUpperCase() === iso2;
+  const gdpPerCapita =
+    gdpProfileHeld && gdpProfile.gdp_per_capita_usd_nominal > 0
+      ? gdpProfile.gdp_per_capita_usd_nominal
+      : snapshot.gdpPerCapita;
+  const globalMedianGdpPerCapita = getGlobalMedianGdpPerCapita();
+
+  // Gut check: three plain, country-derived questions before committing. Built
+  // from the same held facts the decisive read uses, never fabricated specifics.
+  const gutCheckQuestions = buildCountryGutCheck(countryName, snapshot, smbRegime);
 
   // The watch item for this country. A country is a place, so it rides the
   // "city" kind (which the tray labels "Place"); the iso2-keyed slug keeps it
@@ -301,19 +350,6 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
   return (
     <div className="xl:flex xl:gap-16">
       <div className="xl:min-w-0 xl:flex-1">
-        {/* Altitude ladder: the country is the top rung, marked and non-link.
-            The reader can step down to a city only when one obviously resolves
-            (the best-scored city's held page); otherwise the bar shows just the
-            marked country coordinate. Sticky, reversible, costs nothing to
-            hydrate. The trade held sticky is the page's subject, small business. */}
-        <ZoomControl
-          trade="Small business"
-          place={countryName}
-          altitude="country"
-          hrefs={zoomHrefs}
-          className="mb-4"
-        />
-
         {/* Breadcrumb */}
         <nav className="mb-4 text-sm text-ink-700/70">
           <a href="/" className="hover:text-atlas-600">Home</a>
@@ -324,66 +360,40 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
           </span>
         </nav>
 
-        {/* 1. Hero: the answer-first masthead, on the shared kit. The anchor is
-            the typical small-business tax (a like-for-like-safe number), not a
-            raw revenue figure that cannot be ranked across borders. */}
-        <HeroWash category="country">
-          <section id="hero" className="pt-1">
-            <div className="relative mb-5 overflow-hidden rounded-2xl">
-              <CountryMastheadImage iso2={iso2} countryName={meta.name} />
-              <div className="relative px-4 pt-4 pb-3 md:px-6">
-                <div className="flex items-center gap-3">
-                  <CountryFlag iso2={iso2} className="w-8 md:w-10" />
-                  <SectionEyebrow size="md">Small-business economics</SectionEyebrow>
-                </div>
-              </div>
+        {/* 1. Hero: the country photo as a faded background (no colour wash),
+            the flag, the H1 = JUST the country name (keep id="headline"), and one
+            fixed subtitle identical on every country. No opinion headline, no tax
+            anchor here: the metrics live in the scorecard directly below. */}
+        <section id="hero" className="relative mb-6 overflow-hidden rounded-2xl border border-parchment">
+          <CountryMastheadImage iso2={iso2} countryName={meta.name} />
+          <div className="relative px-5 pt-7 pb-6 md:px-8 md:pt-9 md:pb-7">
+            <div className="mb-4 flex items-center gap-3">
+              <CountryFlag iso2={iso2} className="w-9 md:w-11" />
+              <SectionEyebrow size="md">Small-business economics</SectionEyebrow>
             </div>
-
-            <AnswerFirstMasthead
-              eyebrow={view.masthead.eyebrow}
-              tier={view.masthead.tier}
-              title={view.masthead.title}
-              answer={view.masthead.answer}
-              anchor={view.masthead.anchor}
-              stats={view.masthead.stats}
-            />
-
-            {/* Masthead action: keep this country on the watch list. A client
-                island (the page stays server-rendered); it flips in place and
-                ticks the floating tray with no navigation. */}
+            <h1
+              id="headline"
+              className="font-display text-3xl font-semibold tracking-tight text-balance text-ink-900 sm:text-4xl md:text-5xl"
+            >
+              {meta.name}
+            </h1>
+            <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink-700 md:text-lg">
+              What it costs, what you keep, and how hard it is to run a small
+              business here.
+            </p>
+            {/* Keep this country on the watch list. A client island; the page
+                stays server-rendered, it flips in place with no navigation. */}
             <div className="mt-5 flex items-center gap-3">
               <AddToWatch item={watchItem} />
             </div>
+          </div>
+        </section>
 
-            <p className="mt-6 max-w-3xl text-base leading-relaxed text-ink-700 md:text-lg">
-              {getCountryAnchor(iso2, meta.name)}
-            </p>
-          </section>
-        </HeroWash>
+        {/* 2. Scorecard: the eight headline facts, directly under the hero. Real
+            where held, a clearly-tagged sample tile where a metric is not. */}
+        <CountryAtAGlance iso2={iso2} />
 
         <div className="mt-6 space-y-6 md:space-y-8">
-          {/* 2. The honest take: THE brand through-line, so it leads the body on
-              every page type. Moved ahead of the decisive read here too, right
-              after the masthead. Always present (a thin-coverage country gets an
-              honest line, never the old shared anchor; a country with no read at
-              all gets the calm placeholder). */}
-          {view.honestTake ? (
-            <HonestTakeBox
-              id="honest-take"
-              verdict={view.honestTake.verdict}
-              points={view.honestTake.points}
-            >
-              {view.honestTake.body}
-            </HonestTakeBox>
-          ) : (
-            <SectionEmpty
-              id="honest-take"
-              eyebrow="The honest take"
-              heading={`The honest read on ${meta.name}`}
-              place={meta.name}
-            />
-          )}
-
           {/* 3. The decisive read: tax + time-to-start + payroll, as steps, with
               the per-tier formation cost table folded directly beneath (its spec
               home), so the cost-to-register figure shows once with its tier
@@ -569,6 +579,21 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
             />
           )}
 
+          {/* 6. Licences: what you need to open one here. A country-wide licence
+              list is not held as data yet, so LicenceList renders its own honest
+              empty line (it varies by council) as the skeleton, never a fabricated
+              permit row. Wrapped in the shared seated surface with a plain
+              heading so it always renders and reads as one hand with the rest. */}
+          <section
+            id="licences"
+            className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+          >
+            <LicenceList
+              title={`What you need to open one in ${meta.name}`}
+              emptyNote="The exact permits depend on the trade and the local authority, so they are not held as one country-wide list. Open a specific business to see what it needs."
+            />
+          </section>
+
           {/* 7. The easiest businesses to break into here (ranks ACTIVITIES, not
               cities). EasiestToBreakIn renders its own card-internal header
               ("Where it is easiest to get started in X"), so it rides a bare
@@ -590,114 +615,116 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
             </section>
           ) : null}
 
-          {/* 8. Cities: best + worst highlight, then the regions-and-cities
-              list. On the shared card grammar (BeatCard). The best-city callout
-              is labelled "Best city to start in" (a place ranking), distinct
-              from the activity ranking in the break-in panel. */}
-          {hasCities ? (
-            <BeatCard
-              id="cities"
-              eyebrow="Go local"
-              heading={`Cities of ${countryName}`}
-            >
-              {bestCity != null && worstCity != null ? (
-                <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  <Link
-                    href={`/cities/${bestCity.slug}`}
-                    className="block rounded-xl border border-parchment bg-cream-50 p-4 transition-colors hover:border-atlas-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500 focus-visible:ring-offset-2"
-                  >
-                    <div className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-moss-700">
-                      Best city to start in
+          {/* 7. Cities: UNIFORM, equal-weight city cards grouped by region. The
+              old best-city / toughest-city good-vs-bad ranking is gone (calling
+              one city in a country good and another bad is self-defeating). Every
+              card is the same size, plain heading, no corporate eyebrow. Always
+              present: the calm placeholder shows when no city is held. */}
+          {hasCities && citiesByRegion.length > 0 ? (
+            <BeatCard id="cities" eyebrow="Cities" heading={`Cities of ${countryName}`}>
+              <p className="max-w-2xl text-sm leading-relaxed text-graphite md:text-base">
+                Step into a city for the local read on rent, pay, and what an
+                owner keeps. Every place here is shown the same way, no ranking.
+              </p>
+              <div className="mt-5 space-y-6">
+                {citiesByRegion.map((group) => (
+                  <div key={group.region}>
+                    <h3 className="text-sm font-semibold text-ink-900">
+                      {group.region}
+                    </h3>
+                    <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+                      {group.cities.map((city) => (
+                        <Link
+                          key={city.slug}
+                          href={`/${iso2.toLowerCase()}/${city.slug}/restaurants`}
+                          className="block rounded-lg border border-parchment bg-white px-4 py-3 text-sm font-medium text-ink-900 transition-colors hover:border-atlas-500 hover:text-atlas-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500 focus-visible:ring-offset-2"
+                        >
+                          {city.name}
+                        </Link>
+                      ))}
                     </div>
-                    <div className="text-base font-semibold text-ink-900">
-                      {bestCity.name}
-                    </div>
-                    <div className="mt-0.5 text-sm text-cocoa-700">
-                      Business Climate Score:{" "}
-                      <strong className="text-ink-900">{bestCity.score}</strong>
-                    </div>
-                  </Link>
-                  <Link
-                    href={`/cities/${worstCity.slug}`}
-                    className="block rounded-xl border border-parchment bg-cream-50 p-4 transition-colors hover:border-atlas-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500 focus-visible:ring-offset-2"
-                  >
-                    <div className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-atlas-700">
-                      Toughest city to start in
-                    </div>
-                    <div className="text-base font-semibold text-ink-900">
-                      {worstCity.name}
-                    </div>
-                    <div className="mt-0.5 text-sm text-cocoa-700">
-                      Business Climate Score:{" "}
-                      <strong className="text-ink-900">{worstCity.score}</strong>
-                    </div>
-                  </Link>
-                </div>
-              ) : null}
-
-              {citiesByRegion.length > 0 ? (
-                <div className="space-y-6">
-                  {citiesByRegion.map((group) => {
-                    // Dedup: the best and worst cities are already featured in
-                    // the callout above, so drop them from the region list. No
-                    // city ever appears twice on the page.
-                    const cities = group.cities.filter(
-                      (c) => c.slug !== bestCity?.slug && c.slug !== worstCity?.slug,
-                    );
-                    if (cities.length === 0) return null;
-                    return (
-                      <div key={group.region}>
-                        <h3 className="text-base font-semibold text-ink-900">
-                          {group.region}
-                        </h3>
-                        <div className="mt-2 flex flex-wrap gap-2">
-                          {cities.map((city) => (
-                            <Link
-                              key={city.slug}
-                              href={`/${iso2.toLowerCase()}/${city.slug}/restaurants`}
-                              className="inline-flex items-center rounded-full border border-parchment bg-white px-3 py-1.5 text-sm font-medium text-ink-900 transition-colors hover:border-atlas-500 hover:text-atlas-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500 focus-visible:ring-offset-2"
-                            >
-                              {city.name}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              ) : null}
+                  </div>
+                ))}
+              </div>
             </BeatCard>
           ) : (
             <SectionEmpty
               id="cities"
-              eyebrow="Go local"
+              eyebrow="Cities"
               heading={`The cities of ${countryName}`}
               place={countryName}
             />
           )}
 
-          {/* 9. What locals know (exemplar-only invented detail; self-omits). */}
+          {/* 8. Country character: demographics, culture, government, in a
+              dedicated country-scale layout (KEEP AS IS). Always present
+              (CountryCharacter renders the calm placeholder when no read held). */}
+          <CountryCharacter iso2={iso2} countryName={meta.name} id="character" />
+
+          {/* 9. What locals know: a SHORT visual list (exemplar-only invented
+              detail; self-omits where not held). */}
           {view.whatLocals ? (
             <WhatLocalsKnow id="locals" notes={view.whatLocals} />
           ) : null}
 
-          {/* 10. Against the grain (exemplar-only; self-omits). */}
-          {view.contrarian ? (
-            <ContrarianInsight
-              id="contrarian"
-              insight={view.contrarian.insight}
-              body={view.contrarian.body}
+          {/* 10. Vs the world: a small, honest one-glance read of this country's
+              GDP per capita against the global median. Self-omits to its calm
+              "not held yet" line when either figure is missing, so it always
+              renders without a fabricated bar. */}
+          <div className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
+            <VsWorld
+              id="vs-world"
+              here={gdpPerCapita}
+              world={globalMedianGdpPerCapita}
+              metric="GDP per capita"
+              hereLabel={meta.name}
+              hereDisplay={gdpPerCapita != null ? usdCompactDisplay(gdpPerCapita) : null}
+              worldDisplay={
+                globalMedianGdpPerCapita != null
+                  ? usdCompactDisplay(globalMedianGdpPerCapita)
+                  : null
+              }
+              caveat="Not adjusted for local prices. A bigger number means a richer customer, not an easier market."
             />
-          ) : null}
+          </div>
 
-          {/* 11. Country character: demographics, culture, government, in a
-              dedicated country-scale layout. Replaces the old reused city
-              signature panel (the "zombie"); always present (CountryCharacter
-              renders the calm placeholder when we hold no character read). */}
-          <CountryCharacter iso2={iso2} countryName={meta.name} id="character" />
+          {/* 11. The honest take: the brand through-line, kept SMALL and moved
+              down here (not at the top). Always present: a thin-coverage country
+              gets an honest line, a country with no read gets the placeholder. */}
+          {view.honestTake ? (
+            <HonestTakeBox
+              id="honest-take"
+              verdict={view.honestTake.verdict}
+              points={view.honestTake.points}
+            >
+              {view.honestTake.body}
+            </HonestTakeBox>
+          ) : (
+            <SectionEmpty
+              id="honest-take"
+              eyebrow="The honest take"
+              heading={`The honest read on ${meta.name}`}
+              place={meta.name}
+            />
+          )}
 
-          {/* 12. Related: the Compare CTA, the closing beat. On the shared card
-              grammar (BeatCard). */}
+          {/* 12. Gut check: three plain questions before you commit, a small
+              visual (renamed from the old contrarian beat's slot). Self-omits
+              only if there is nothing to ask. */}
+          <GutCheck
+            id="gut-check"
+            heading={`Three questions before you start in ${meta.name}`}
+            questions={gutCheckQuestions}
+          />
+
+          {/* The one thing to remember: the page's last word, reused from the
+              honest-take verdict. Shows its honest line when no read is held. */}
+          <OneThing id="one-thing" lastChecked="June 2026">
+            {view.honestTake ? view.honestTake.verdict : null}
+          </OneThing>
+
+          {/* 14. Related: the Compare CTA, the closing beat. On the shared card
+              grammar (BeatCard). Carries the canonical "related" anchor. */}
           <BeatCard
             id="related"
             eyebrow="Next move"
@@ -714,12 +741,6 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
               Open Compare
             </a>
           </BeatCard>
-
-          {/* The one thing to remember: the page's last word, reused from the
-              honest-take verdict. Shows its honest line when no read is held. */}
-          <OneThing id="one-thing" lastChecked="June 2026">
-            {view.honestTake ? view.honestTake.verdict : null}
-          </OneThing>
 
           {/* Closing furniture: the freshness stamp and the honest flag-it line. */}
           <div className="space-y-3 pt-1 pb-8">
