@@ -375,7 +375,7 @@ export default async function NeighborhoodCellPage({
             local lift first, then the absolute numbers it produced below. The
             three components (commuter / tourism / tags) show what moved it. */}
         {fwMult && fwPct !== 0 ? (
-          <section className="mb-6 rounded-lg border border-parchment bg-cream-100 shadow-subtle px-5 py-5 md:px-7 md:py-6">
+          <section className="mb-6 rounded-lg border border-parchment bg-cream-100 px-5 py-5 md:px-7 md:py-6">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div className="min-w-0 flex-1">
                 <SectionEyebrow className="mb-1.5">

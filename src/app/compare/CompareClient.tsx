@@ -1009,7 +1009,7 @@ export function CompareClient({
                 {verdict.wins.map((w) => (
                   <div
                     key={w.metric}
-                    className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-4 py-4"
+                    className="rounded-lg border border-parchment bg-cream-50 px-4 py-4"
                   >
                     <div className="text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
                       {w.metric}
@@ -1075,7 +1075,7 @@ export function CompareClient({
               return (
                 <div
                   key={i}
-                  className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5"
+                  className="rounded-lg border border-parchment bg-cream-50 px-5 py-5"
                 >
                   <div className="mb-3">
                     <span className="block font-display text-base font-semibold text-ink-900">
@@ -1358,7 +1358,7 @@ function WeightingPanel({
       : null;
 
   return (
-    <div className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle">
+    <div className="mt-5 rounded-lg border border-parchment bg-cream-50">
       {/* The quiet disclosure: house read leads, the reader's controls open on
           intent (P5). The button is the full-width header so the touch target
           is generous on a phone. */}

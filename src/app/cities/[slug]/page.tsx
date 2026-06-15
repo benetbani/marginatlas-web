@@ -386,7 +386,7 @@ export default async function CityPage({
              sits in the field rather than reading a lone number. Self-omits on an
              unscored city (the masthead already softens that case). */}
           {view.scoreBand ? (
-            <div className="mt-6 rounded-lg border border-parchment bg-cream-50 px-5 py-5 shadow-subtle md:px-7">
+            <div className="mt-6 rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7">
               <ScoreBand
                 score={view.scoreBand.score}
                 label={view.scoreBand.label}
@@ -482,7 +482,7 @@ export default async function CityPage({
                   body={view.space.body}
                 />
                 {view.space.stats.length > 0 ? (
-                  <dl className="mt-3 grid gap-x-8 gap-y-3 rounded-lg border border-parchment bg-cream-50 px-5 py-4 shadow-subtle sm:grid-cols-2 md:px-7">
+                  <dl className="mt-3 grid gap-x-8 gap-y-3 rounded-lg border border-parchment bg-cream-50 px-5 py-4 sm:grid-cols-2 md:px-7">
                     {view.space.stats.map((s, i) => (
                       <div key={i} className="flex items-baseline justify-between gap-4">
                         <dt className="min-w-0 text-sm text-cocoa-700">
@@ -672,7 +672,7 @@ export default async function CityPage({
                       <Link
                         key={n.slug}
                         href={`/${city.iso2.toLowerCase()}/${city.slug}/${n.slug}`}
-                        className="group block overflow-hidden rounded-xl border border-parchment bg-white shadow-subtle transition-all hover:-translate-y-px hover:border-atlas-300 hover:shadow-lift"
+                        className="group block overflow-hidden rounded-xl border border-parchment bg-white transition-all hover:-translate-y-px hover:border-atlas-300 hover:shadow-lift"
                       >
                         <NeighborhoodCover
                           name={n.name}
@@ -725,7 +725,7 @@ export default async function CityPage({
                   body={view.changing.body}
                 />
                 {view.changing.points.length > 0 ? (
-                  <ul className="mt-3 space-y-2.5 rounded-lg border border-parchment bg-cream-50 px-5 py-4 shadow-subtle md:px-7">
+                  <ul className="mt-3 space-y-2.5 rounded-lg border border-parchment bg-cream-50 px-5 py-4 md:px-7">
                     {view.changing.points.map((p, i) => (
                       <li
                         key={i}
@@ -767,7 +767,7 @@ export default async function CityPage({
                         ...scoredPeers.map((p) => ({ label: p.name, value: p.score })),
                       ];
                       return (
-                        <div className="rounded-lg border border-parchment bg-cream-50 px-5 py-5 shadow-subtle md:px-7">
+                        <div className="rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7">
                           <ComparisonBars
                             items={items}
                             label="Business Climate Score, this city and its peers"
@@ -799,7 +799,7 @@ export default async function CityPage({
             {(() => {
               const haveBoth = cityScore != null && peerMedianScore != null;
               return (
-                <div className="rounded-lg border border-parchment bg-cream-50 px-5 py-5 shadow-subtle md:px-7">
+                <div className="rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7">
                   <VsWorld
                     eyebrow="Versus its peers"
                     here={haveBoth ? cityScore.score : null}

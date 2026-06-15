@@ -306,7 +306,7 @@ function EngravedSection({
         ) : null}
       </div>
       {card ? (
-        <div className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
+        <div className="rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7 md:py-6">
           {children}
         </div>
       ) : (
@@ -1071,7 +1071,7 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
           {hasBreakIn ? (
             <section
               id="break-in"
-              className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+              className="rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7 md:py-6"
             >
               <EasiestToBreakIn
                 rows={easiestBreakIn}

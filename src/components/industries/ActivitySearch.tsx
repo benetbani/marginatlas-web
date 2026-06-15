@@ -113,7 +113,7 @@ export function ActivitySearch({ groups }: { groups: SectorGroup[] }) {
                 <Link
                   key={a.slug}
                   href={`/industries/${a.slug}`}
-                  className="group flex items-center gap-3 rounded-lg border border-parchment bg-white p-3 shadow-subtle transition-all hover:-translate-y-px hover:border-atlas-300 hover:shadow-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
+                  className="group flex items-center gap-3 rounded-lg border border-parchment bg-white p-3 transition-all hover:-translate-y-px hover:border-atlas-300 hover:shadow-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
                 >
                   <span className="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-cream-100 text-cocoa-700 transition-colors group-hover:bg-atlas-50 group-hover:text-atlas-700">
                     <AtlasPictogram id={a.picto} size={22} />

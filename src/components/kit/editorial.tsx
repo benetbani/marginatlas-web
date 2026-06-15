@@ -32,9 +32,9 @@ export type BeatCardProps = {
   /** A spot illustration, hosted top-right. Use sparingly. */
   spot?: AtlasSpotId | null;
   /**
-   * Lead/feature surface: lifts the card one elevation step (shadow-card)
-   * above the resting cards (shadow-subtle). Use for the section a page
-   * should read first; leave false for the resting beats.
+   * Lead/feature surface: a slightly stronger ink hairline (R7 engraved-card
+   * reskin) marks the section a page should read first, instead of elevation.
+   * Leave false for the resting beats.
    */
   feature?: boolean;
   id?: string;

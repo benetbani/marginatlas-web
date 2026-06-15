@@ -626,7 +626,7 @@ export function NeighborhoodOverview({
                 return (
                   <div
                     key={s.name}
-                    className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5"
+                    className="rounded-lg border border-parchment bg-cream-50 px-5 py-5"
                   >
                     <div className="mb-1 font-display text-base md:text-lg font-medium leading-tight text-ink-900">
                       {s.name}

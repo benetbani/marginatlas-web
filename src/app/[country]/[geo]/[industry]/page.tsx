@@ -689,7 +689,7 @@ export default async function CellPage({
               <a
                 key={`${c.geo_id}-${c.naics_6}-${c.year}`}
                 href={cellUrl(c)}
-                className="block px-4 py-3 rounded-md border border-parchment bg-white shadow-subtle hover:shadow-lift hover:border-cream-400 hover:-translate-y-px transition"
+                className="block px-4 py-3 rounded-md border border-parchment bg-white hover:shadow-lift hover:border-cream-400 hover:-translate-y-px transition"
               >
                 <div className="text-sm font-medium text-ink-900 line-clamp-1">
                   {c.industry_name || c.industry_description || c.naics_6}
@@ -1100,12 +1100,12 @@ export default async function CellPage({
           industry to a relevant /learn/ article so visitors can dive
           deeper into the category context. */}
       {cell.industry_id ? (
-        <section className="mt-5 mb-8 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
+        <section className="mt-5 mb-8 rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7 md:py-6">
           <SectionEyebrow size="md" className="mb-2">Read more</SectionEyebrow>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <a
               href={`/learn/how-much-does-a-${(cell.industry_name || cell.industry_id).toLowerCase().replace(/s$/, "").replace(/\s+/g, "-").replace(/-+/g, "-")}-make`}
-              className="block rounded-md border border-parchment bg-white shadow-subtle hover:shadow-lift hover:-translate-y-px p-4 transition"
+              className="block rounded-md border border-parchment bg-white hover:shadow-lift hover:-translate-y-px p-4 transition"
             >
               <div className="text-sm font-semibold text-ink-900">
                 How much does a {(cell.industry_name || "business").toLowerCase().replace(/s$/, "")} make?
@@ -1116,7 +1116,7 @@ export default async function CellPage({
             </a>
             <a
               href="/about-data"
-              className="block rounded-md border border-parchment bg-white shadow-subtle hover:shadow-lift hover:-translate-y-px p-4 transition"
+              className="block rounded-md border border-parchment bg-white hover:shadow-lift hover:-translate-y-px p-4 transition"
             >
               <div className="text-sm font-semibold text-ink-900">
                 How to read these numbers

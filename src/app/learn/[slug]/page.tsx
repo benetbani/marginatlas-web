@@ -171,7 +171,7 @@ export default async function LearnArticlePage({
       {/* 2. Headline answer (the top "Overview" beat for the sticky nav). */}
       <section id="overview" className="mb-10 md:mb-12">
         {article.headlineNumber && (
-          <div className="mb-4 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
+          <div className="mb-4 rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7 md:py-6">
             <div className="font-display text-4xl md:text-5xl font-medium text-ink-900 tabular-nums leading-none">
               {article.headlineNumber.value}
             </div>
@@ -217,7 +217,7 @@ export default async function LearnArticlePage({
       {/* 4. The spread: the typical figure is a half-truth, the range is the
           story. Seven gradations, the signature strip. */}
       {view.spread ? (
-        <section className="mb-10 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
+        <section className="mb-10 rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7 md:py-6">
           <div className="text-[11px] font-semibold uppercase tracking-wider text-cocoa-500 mb-3">
             The revenue spread
           </div>
@@ -292,7 +292,7 @@ export default async function LearnArticlePage({
       {view.benchmarks ? (
         <section
           id="benchmarks"
-          className="mb-10 rounded-lg border border-parchment bg-white shadow-subtle px-5 py-5 md:px-7 md:py-6"
+          className="mb-10 rounded-lg border border-parchment bg-white px-5 py-5 md:px-7 md:py-6"
         >
           <div className="text-xs uppercase tracking-wide text-atlas-600 font-semibold mb-3">
             Show me the data

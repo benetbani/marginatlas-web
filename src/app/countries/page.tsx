@@ -130,7 +130,7 @@ export default function CountriesHub() {
     <article className="max-w-7xl mx-auto px-4 md:px-6 py-10 md:py-14">
       {/* Header: an editorial masthead on a seated card, a faint survey-grid
          motif behind it, and the coverage in three figures. */}
-      <header className="relative overflow-hidden rounded-2xl border border-parchment bg-cream-50 shadow-card px-6 py-8 md:px-10 md:py-12 mb-7">
+      <header className="relative overflow-hidden rounded-2xl border border-parchment bg-cream-50 px-6 py-8 md:px-10 md:py-12 mb-7">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-60"
@@ -164,7 +164,7 @@ export default function CountriesHub() {
           return (
             <section
               key={continent}
-              className="rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6"
+              className="rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7 md:py-6"
             >
               <div className="mb-4 flex items-baseline justify-between gap-3">
                 <h2 className="font-display text-xl md:text-2xl font-semibold tracking-tight text-ink-900">
@@ -181,7 +181,7 @@ export default function CountriesHub() {
                     <Link
                       key={country.code}
                       href={`/${country.code.toLowerCase()}`}
-                      className="group flex items-center gap-3 rounded-lg border border-parchment bg-white p-3 shadow-subtle transition-all hover:-translate-y-px hover:border-atlas-300 hover:shadow-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
+                      className="group flex items-center gap-3 rounded-lg border border-parchment bg-white p-3 transition-all hover:-translate-y-px hover:border-atlas-300 hover:shadow-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
                     >
                       <CountryFlag
                         iso2={country.code}
