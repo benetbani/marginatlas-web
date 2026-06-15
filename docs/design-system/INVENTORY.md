@@ -72,7 +72,7 @@ location.
 |---|---|---|
 | `LogoWordmark` | `src/components/brand/LogoWordmark.tsx` | Atlas wordmark, tone variants |
 | `CountryFlag` | `src/components/CountryFlag.tsx` | SVG flag by ISO2 |
-| `SectionDivider` | `src/components/SectionDivider.tsx` | Editorial hairline + diamond |
+| `AtlasDivider` | `src/components/kit/engraved/Editorial.tsx` | The one divider family: engraved rosette / contour / route section seams |
 | `SectorIcon` | `src/components/SectorIcon.tsx` + `src/components/icons/SectorIcon.tsx` | Two paths, needs consolidation |
 | `IndustryIcon` | `src/components/icons/IndustryIcon.tsx` | Industry-specific glyph |
 

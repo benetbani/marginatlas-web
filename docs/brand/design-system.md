@@ -420,8 +420,9 @@ live with the decorative utilities (`src/styles/homepage-visual-tokens.css` and
 | Accent dot field | `atlas-accent.svg` | Sparse micro-dots, the only motif with vermillion | 80px |
 | Paper pattern | `atlas-pattern.svg` / `.css` | Star/compass paper field + the seven masked surfaces | 80px |
 
-Plus the live in-repo devices: the hairline-and-diamond `SectionDivider` (the `.atlas-rule`
-with a centered diamond), coordinate-style eyebrow labels, the engraved neighborhood street
+Plus the live in-repo devices: the hairline-and-diamond rule (`.atlas-rule`, a centered
+diamond) and the engraved section-seam divider `AtlasDivider` (rosette / contour / route,
+`kit/engraved`), coordinate-style eyebrow labels, the engraved neighborhood street
 map (the city/neighborhood signature), and the graticule globe (ornament only, see 8.3).
 
 **Retone is mandatory before use:** motif marks print in `parchment` (#e4e2dd) on cream,
@@ -437,8 +438,10 @@ pattern catalog.
 
 - **Page mastheads:** may carry one faint motif surface (grid or paper pattern) behind the
   band, masked so it fades before any dense content. Coordinate-style eyebrow above the H1.
-- **Section seams:** the diamond rule (`SectionDivider`) between major bands. This is the
-  most frequent motif appearance and is intentionally tiny.
+- **Section seams:** the engraved `AtlasDivider` (rosette / contour / route) between major
+  bands, with the hairline `.atlas-rule` for quieter breaks. This is the most frequent motif
+  appearance. (R7: `AtlasDivider` is the one divider family site-wide; the labeled engraved
+  seam on the country page is its fuller variant, the bare rule its quietest.)
 - **City / neighborhood pages:** the engraved street map is the signature visual: parchment
   stipple blocks, fine road lines, heavier ink water, district names in vermillion
   small-caps as the only color. One per page.
@@ -622,7 +625,7 @@ subparts), `Disclosure`, `EmptyState`, `ErrorState`, `InlineLink`, `Money`, `Num
 `SlideUp`, `Stagger`.
 
 Domain primitives (Atlas-specific, wrap system primitives): `CoverageIndicator`,
-`TurnoverBandChip`, `CategoryChip`, `TypicalFirmCard`, `DenseCellHero`, `SectionDivider`,
+`TurnoverBandChip`, `CategoryChip`, `TypicalFirmCard`, `DenseCellHero`, `AtlasDivider`,
 `LogoWordmark`, `CountryFlag`, `SectorIcon`, and the empty-state bundle
 (`src/components/empty/`).
 
