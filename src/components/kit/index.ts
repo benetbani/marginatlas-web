@@ -223,4 +223,39 @@ export {
   Scorecard,
   type ScorecardProps,
   type ScorecardMetric,
+  // Wave-2 engraved section assets. Only the names that do NOT clash with the
+  // earlier non-engraved kit blocks are re-exported here; the engraved VsWorld,
+  // OneThing, GutCheck and HonestTake stay exclusive to "@/components/kit/
+  // engraved" (the top barrel already exports the non-engraved VsWorld / OneThing
+  // / GutCheck), so the country page imports the full engraved family from the
+  // sub-barrel directly.
+  SetupStepper,
+  type SetupStepperProps,
+  type SetupStep,
+  DialGauge,
+  type DialGaugeProps,
+  HiringRead,
+  type HiringReadProps,
+  Neighbours,
+  type NeighboursProps,
+  type NeighbourCountry,
+  type NeighbourMetric,
+  // LicenceCheck only (NOT its LicenceItem type — the top barrel already exports
+  // a LicenceItem from ./blocks; the engraved LicenceItem stays exclusive to the
+  // "@/components/kit/engraved" sub-barrel to avoid a duplicate-identifier clash).
+  LicenceCheck,
+  type LicenceCheckProps,
+  CitiesGrid,
+  type CitiesGridProps,
+  type CityCard,
+  CharacterPanel,
+  type CharacterPanelProps,
+  type CharacterSpectrum,
+  type CharacterStat,
+  LocalsKnow,
+  type LocalsKnowProps,
+  type LocalInsight,
+  AtlasDivider,
+  type AtlasDividerProps,
+  type AtlasDividerVariant,
 } from "./engraved";

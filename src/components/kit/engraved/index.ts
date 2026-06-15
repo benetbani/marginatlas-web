@@ -48,3 +48,54 @@ export {
   type ScorecardProps,
   type ScorecardMetric,
 } from "./Scorecard";
+
+// Setup + rules sections: the cost-and-rules stepper, the hiring read (with its
+// days-to-hire dial), and the licence checklist.
+export {
+  SetupStepper,
+  type SetupStepperProps,
+  type SetupStep,
+  DialGauge,
+  type DialGaugeProps,
+  HiringRead,
+  type HiringReadProps,
+  LicenceCheck,
+  type LicenceCheckProps,
+  type LicenceItem,
+} from "./Setup";
+
+// Comparison sections: the neighbours strip, the cities grid, the character
+// panel, and vs-the-world.
+export {
+  Neighbours,
+  type NeighboursProps,
+  type NeighbourCountry,
+  type NeighbourMetric,
+  CitiesGrid,
+  type CitiesGridProps,
+  type CityCard,
+  CharacterPanel,
+  type CharacterPanelProps,
+  type CharacterSpectrum,
+  type CharacterStat,
+  VsWorld,
+  type VsWorldProps,
+} from "./Compare";
+
+// Editorial sections: what locals know, the honest take, the page-closing
+// one-thing band, and the section divider family.
+export {
+  LocalsKnow,
+  type LocalsKnowProps,
+  type LocalInsight,
+  HonestTake,
+  type HonestTakeProps,
+  OneThing,
+  type OneThingProps,
+  AtlasDivider,
+  type AtlasDividerProps,
+  type AtlasDividerVariant,
+} from "./Editorial";
+
+// The interactive gut-check triptych (a small client island for the toggles).
+export { GutCheck, type GutCheckProps } from "./GutCheck";
