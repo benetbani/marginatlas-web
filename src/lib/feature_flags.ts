@@ -89,17 +89,14 @@ export function isGatingEnabled(): boolean {
 
 /**
  * The warm frame (R6 Phase B): the photo gutters + per-category hero wash +
- * glass sticky chrome. Default OFF, so production looks exactly as today until
- * the founder approves the look. The whole frame is one flag so it appears all
- * at once (the founder's "all at once, one big preview" choice): flip to "1" in
- * the preview env to review, then in production at promote. With it OFF,
- * `HeroWash` is a transparent passthrough and `AtlasGutters` renders nothing, so
- * wiring the frame into pages is safe regardless of the flag. The data column
- * stays cream and opaque either way: warmth lives in the frame, never behind a
- * number.
+ * glass sticky chrome. Default ON since the R7 cohesion plan (founder, 2026-06-14):
+ * the frame is the site's standard chrome, the unifying framing layer on every
+ * page type. Set NEXT_PUBLIC_WARM_FRAME=0 to kill it (the only off-switch now).
+ * The data column stays cream and opaque either way: warmth lives in the frame,
+ * never behind a number; gutters collapse below 1100px so mobile stays calm.
  */
 export function isWarmFrameEnabled(): boolean {
-  return parseFlag(process.env.NEXT_PUBLIC_WARM_FRAME, false);
+  return parseFlag(process.env.NEXT_PUBLIC_WARM_FRAME, true);
 }
 
 /**
