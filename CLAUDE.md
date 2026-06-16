@@ -79,8 +79,8 @@ website/
 
 ## Latest handoff
 
-- **`docs/handoff/2026-06-14-session-handoff.md` is THE current handoff — READ IT FIRST.** R6.5 is live in production (warm frame + brand blocks + interaction); the engraved-almanac cohesion direction (the section constitution, the engraved kit, the engraved country page, the R7 cohesion plan) is committed-but-held on `reform-v2/r6-forward`. The handoff carries the full state, the forward plan (R7 Wave A-F), the gotchas, and a paste-in bootstrap prompt. Continue from R7 Wave A.
-- `docs/handoff/2026-06-12-session-handoff.md` is the prior handoff (brand + two-pipeline model); `2026-06-02` is the older both-repo map.
+- **`docs/handoff/2026-06-16-session-handoff.md` is THE current handoff — READ IT FIRST, especially section 0.** The governing rule now: the FOUNDER designs each page in their own tool; the AI PORTS it 1:1 and wires the real data, and does NOT invent visuals (a week of AI-invented design was rejected as slop). The Brand Design Constitution + the full reformation plan are in `docs/superpowers/plans/2026-06-16-reformation/`; the Foundation (F1-F5) is built + committed on `reform-v2/r6-forward`; the P1 prototype `/dev/cell-reform` was rejected. The handoff carries the full state, every file's role, the constraints, and a paste-in bootstrap prompt.
+- `docs/handoff/2026-06-14-session-handoff.md` (R6.5 live + the held engraved direction) and `2026-06-12` are prior handoffs, superseded by the 2026-06-16 pivot.
 
 ## Manual actions outstanding
 
