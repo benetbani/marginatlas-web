@@ -33,7 +33,16 @@ import {
   groupSectionStack,
   CostDrivers,
   OneThing,
+  ScoreBand,
 } from "@/components/kit";
+
+// The break-in difficulty bands (higher = easier), matching the masthead phrase
+// thresholds: under 40 Hard, 40-66 Doable, 67+ Easier.
+const BREAK_IN_BANDS = [
+  { upTo: 39, word: "Hard", tone: "caution" as const },
+  { upTo: 66, word: "Doable", tone: "neutral" as const },
+  { upTo: 100, word: "Easier", tone: "positive" as const },
+];
 import { CELL_SECTIONS } from "@/lib/page-sections";
 import type { CellView } from "@/lib/cells/cell_view";
 
@@ -65,7 +74,22 @@ export function CellDecisionStack({
   // data for it (the map below substitutes the placeholder).
   const content: Record<string, React.ReactNode | null> = {
     "honest-take": view.honestTake ? (
-      <HonestTakeBox id="honest-take" verdict={view.honestTake.verdict} points={view.honestTake.points}>
+      <HonestTakeBox
+        id="honest-take"
+        verdict={view.honestTake.verdict}
+        points={view.honestTake.points}
+        gauge={
+          view.honestTake.breakInScore != null ? (
+            <ScoreBand
+              eyebrow="Break-in"
+              label="How easy to get started"
+              score={view.honestTake.breakInScore}
+              bands={BREAK_IN_BANDS}
+              hint="Higher is easier. It weighs the cost to open, the competition, and how long until a name carries the room."
+            />
+          ) : undefined
+        }
+      >
         {view.honestTake.body}
       </HonestTakeBox>
     ) : null,

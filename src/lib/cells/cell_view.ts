@@ -44,7 +44,13 @@ export type CellViewMasthead = {
 
 export type CellView = {
   masthead: CellViewMasthead;
-  honestTake: { verdict: string; points: string[]; body: string | null } | null;
+  honestTake: {
+    verdict: string;
+    points: string[];
+    body: string | null;
+    /** Break-in difficulty 0..100 (higher = easier), for the honest-take gauge. */
+    breakInScore: number | null;
+  } | null;
   narrative: string | null;
   /** The dedicated "what the owner takes home" section (#7). */
   ownerKeeps: { takeHome: number | null; marginPct: number | null } | null;
@@ -453,7 +459,8 @@ function buildHonestTake(
   isLondon: boolean,
   moneyShown: boolean,
 ): CellView["honestTake"] {
-  const { placeName, tradeNoun, netMarginPct, londonEntry: L } = input;
+  const { placeName, tradeNoun, netMarginPct, breakInRating, londonEntry: L } = input;
+  const breakInScore = isNum(breakInRating) ? breakInRating : null;
   if (isLondon && L) {
     const rentHigh = /high/i.test(L.rent_pressure);
     const laborHigh = /high/i.test(L.labor_pressure);
@@ -469,13 +476,14 @@ function buildHonestTake(
       points.push("Pricing power is real, customers will pay up for the right room, which is the lever that makes the model work.");
     if (L.demand_drivers?.length)
       points.push(`Demand leans on ${L.demand_drivers.slice(0, 3).join(", ").toLowerCase()}, so the site and the footfall matter as much as the food.`);
-    return { verdict, points: points.slice(0, 4), body: null };
+    return { verdict, points: points.slice(0, 4), body: null, breakInScore };
   }
   if (!moneyShown) {
     return {
       verdict: `We do not yet hold a local measurement for ${tradeNoun}s in ${placeName}.`,
       points: [],
       body: "What you see here is modeled from the national pattern for this trade. The shape (how the money splits, where it is fragile) holds; the exact local dollars do not, so treat them as directional until a local read lands.",
+      breakInScore,
     };
   }
   // Trusted non-London: a derived, honest line from the margin shape.
@@ -486,6 +494,7 @@ function buildHonestTake(
       : `A ${tradeNoun} in ${placeName} can pay its owner a real wage when it is run tightly.`,
     points: [],
     body: null,
+    breakInScore,
   };
 }
 

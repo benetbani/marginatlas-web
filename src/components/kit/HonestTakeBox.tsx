@@ -27,6 +27,12 @@ export type HonestTakeBoxProps = {
   children?: React.ReactNode;
   /** Optional supporting points, each self-omitting on empty. */
   points?: Array<string | null | undefined> | null;
+  /**
+   * Optional data gauge (e.g. a break-in difficulty / ease-of-business ScoreBand)
+   * rendered below the points, so the honest take carries a graphical read of the
+   * one structural number behind the verdict, not just prose.
+   */
+  gauge?: React.ReactNode;
   /** The eyebrow label. Defaults to the canonical "The honest take". */
   eyebrow?: string;
   /** Which spot to host; defaults to the honest-take spot. */
@@ -44,6 +50,7 @@ export function HonestTakeBox({
   verdict,
   children,
   points,
+  gauge,
   eyebrow = "The honest take",
   spot = "honest-take",
   id,
@@ -51,8 +58,9 @@ export function HonestTakeBox({
 }: HonestTakeBoxProps) {
   const cleanPoints = (points ?? []).filter(hasText) as string[];
   const hasBody = children != null && children !== false;
+  const hasGauge = gauge != null && gauge !== false;
   // Silence out: nothing to say means no frame.
-  if (!hasText(verdict) && !hasBody && cleanPoints.length === 0) return null;
+  if (!hasText(verdict) && !hasBody && cleanPoints.length === 0 && !hasGauge) return null;
 
   return (
     <section
@@ -94,6 +102,9 @@ export function HonestTakeBox({
                 </li>
               ))}
             </ul>
+          ) : null}
+          {hasGauge ? (
+            <div className="mt-5 max-w-md border-t border-parchment pt-4">{gauge}</div>
           ) : null}
         </div>
         {spot ? (
