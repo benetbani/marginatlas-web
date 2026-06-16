@@ -179,6 +179,21 @@ export const colors = {
     caution: "#b06a08", //  = amber-600, watch
     negative: "#8a510a", // = amber-700, below par (warning, not brand-red)
   },
+  /**
+   * Chart color roles (Brand Design Constitution 2026-06-16, section 4.2). The
+   * fixed color jobs the visx chart kit consumes; chart components read these
+   * roles, never the raw palette, so the chart grammar stays one language. Each
+   * value reuses the warm palette (noted) so a chart never invents a hue.
+   */
+  chart: {
+    primary: "#e62200", //  = atlas-500, the typical value / you-are-here / spotlight
+    kept: "#4a6018", //     = moss-700, profit / kept / positive delta
+    cost: "#87745d", //     = cocoa-500, structure and costs, the neutral breakdown mass
+    baseline: "#7d6c58", // = ink-500, neutral data mass / axes / muted labels
+    grid: "#e4e2dd", //     = cream-300, rails / gridlines / hairlines / track backgrounds
+    caution: "#b06a08", //  = amber-600, caution / below par
+    danger: "#5c1813", //   = clay-700, destructive / hard errors only
+  },
   parchment: "#e4e2dd", // warm taupe = cream-300
   graphite: "#463726", // warm brown-gray = ink-700
 } as const;
@@ -390,4 +405,5 @@ export const tailwindColors = {
   teal: colors.teal,
   tier: colors.tier,
   delta: colors.delta,
+  chart: colors.chart,
 } as const;
