@@ -78,6 +78,10 @@ export type CellView = {
   myths: Array<{ myth: string; reality: string }> | null;
   rightWrong: { rightFor: string[]; wrongFor: string[] } | null;
   gutCheck: string[] | null;
+  /** What to watch: the honest "what could go wrong" read, each with a calm
+   * severity cue. Sanctioned London editorial (like contrarian / myths); null
+   * off the exemplar, where the section keeps its honest placeholder. */
+  risks: Array<{ severity: "rare" | "watch" | "serious"; title: string; note: string }> | null;
   /** R6.5 brand block: the levers that move this trade's margin, derived from
    * the held money breakdown (the biggest cost lines). Null when no breakdown. */
   costDrivers: Array<{
@@ -298,6 +302,7 @@ export function buildCellView(input: CellViewInput): CellView {
   const contrarian = isLondon ? londonContrarian(slug, tradeNoun) : null;
   const myths = isLondon ? londonMyths(slug) : null;
   const rightWrong = isLondon && L ? londonRightWrong(L) : null;
+  const risks = isLondon && L ? londonRisks(L) : null;
 
   /* -- gut check (generic, honest anywhere) -------------------------- */
   const gutCheck = buildGutCheck(input, slug, moneyShown);
@@ -373,6 +378,7 @@ export function buildCellView(input: CellViewInput): CellView {
     myths,
     rightWrong,
     gutCheck,
+    risks,
     costDrivers,
     oneThing,
     isLondon,
@@ -717,4 +723,35 @@ function londonRightWrong(L: LondonEntry): CellView["rightWrong"] {
   if (/strong/i.test(L.pricing_power)) rightFor.push("You can hold a premium position rather than chase volume");
   wrongFor.push("You are buying yourself a job, not a business");
   return { rightFor, wrongFor };
+}
+
+// What-to-watch, sanctioned London editorial (like contrarian / myths). The four
+// risks every London storefront business shares, with severities keyed to the
+// entry's real pressure fields so the read stays consistent with the honest take.
+function londonRisks(L: LondonEntry): CellView["risks"] {
+  const rentHigh = /high/i.test(L.rent_pressure);
+  const laborHigh = /high/i.test(L.labor_pressure);
+  const churnHigh = isNum(L.churn_pct) && L.churn_pct >= 12;
+  return [
+    {
+      severity: rentHigh ? "serious" : "watch",
+      title: "Rent resets on renewal",
+      note: "A lease step-up at review can take a year's margin overnight. Lock the longest term you can and budget for the jump before it lands.",
+    },
+    {
+      severity: laborHigh ? "watch" : "rare",
+      title: "Holding good staff",
+      note: "Skilled people are hard to keep and the wage floor keeps climbing, so payroll rarely sits still and a key departure stings.",
+    },
+    {
+      severity: churnHigh ? "watch" : "rare",
+      title: "A quiet stretch in the calendar",
+      note: "Trade leans on the warmer months and December, so a slow January and February can undo a thin-margin autumn.",
+    },
+    {
+      severity: "rare",
+      title: "A supplier or energy shock",
+      note: "Input and energy prices can jump with little warning. It does not happen often, but on this margin it bites hard when it does.",
+    },
+  ];
 }

@@ -20,9 +20,10 @@
  */
 import * as React from "react";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
+import { SeverityGlyph } from "@/components/kit/charts";
 
-/** Calm severity cue, never a red alarm. */
-export type RiskSeverity = "watch" | "serious" | "rare";
+/** Calm severity cue, never a red alarm. Same union as the SeverityGlyph ladder. */
+export type RiskSeverity = "rare" | "watch" | "serious";
 
 export type RiskItem = {
   /** Short bold title, e.g. "Rent reviews". */
@@ -58,35 +59,16 @@ function hasNode(n: React.ReactNode): boolean {
 }
 
 /**
- * The calm severity vocabulary. `steps` is how many of the three dots fill in
- * (a quiet ladder, watch < rare < serious), `fill` is the filled-dot tone, and
- * `text` is the AA-solid label tone. None of these is the loud brand red.
+ * The calm severity vocabulary: the plain word and its AA-solid label tone. The
+ * graphical cue (the rising 3-step ladder) is the shared SeverityGlyph primitive,
+ * so the meter reads the same here as everywhere it appears. Tones match the glyph
+ * (rare cocoa, watch amber, serious clay); none is the loud brand red.
  */
-const SEVERITY: Record<
-  RiskSeverity,
-  { label: string; steps: number; fill: string; text: string }
-> = {
-  watch: { label: "Watch", steps: 1, fill: "bg-amber-500", text: "text-amber-700" },
-  rare: { label: "Rare", steps: 2, fill: "bg-cocoa-500", text: "text-cocoa-700" },
-  serious: { label: "Serious", steps: 3, fill: "bg-clay-500", text: "text-clay-700" },
+const SEVERITY: Record<RiskSeverity, { label: string; text: string }> = {
+  rare: { label: "Rare", text: "text-cocoa-700" },
+  watch: { label: "Watch", text: "text-amber-700" },
+  serious: { label: "Serious", text: "text-clay-700" },
 };
-
-/** The 3-step severity dots: filled steps in tone, the rest a quiet hairline fill. */
-function SeverityDots({ steps, fill }: { steps: number; fill: string }) {
-  return (
-    <span className="inline-flex items-center gap-1" aria-hidden="true">
-      {[0, 1, 2].map((i) => (
-        <span
-          key={i}
-          className={[
-            "h-1.5 w-1.5 rounded-full",
-            i < steps ? fill : "bg-cream-300",
-          ].join(" ")}
-        />
-      ))}
-    </span>
-  );
-}
 
 export function RiskList({
   risks,
@@ -127,7 +109,8 @@ export function RiskList({
       </SectionEyebrow>
       <ul className="m-0 list-none p-0">
         {clean.map((r, i) => {
-          const sev = SEVERITY[r.severity ?? "watch"] ?? SEVERITY.watch;
+          const level = r.severity ?? "watch";
+          const sev = SEVERITY[level] ?? SEVERITY.watch;
           return (
             <li
               key={i}
@@ -150,7 +133,7 @@ export function RiskList({
                 ) : null}
               </div>
               <div className="inline-flex shrink-0 items-center gap-2 whitespace-nowrap sm:pt-0.5">
-                <SeverityDots steps={sev.steps} fill={sev.fill} />
+                <SeverityGlyph level={level} />
                 <span className={["text-xs font-semibold", sev.text].join(" ")}>
                   {sev.label}
                 </span>

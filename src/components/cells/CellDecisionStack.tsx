@@ -34,6 +34,7 @@ import {
   CostDrivers,
   OneThing,
   ScoreBand,
+  RiskList,
 } from "@/components/kit";
 
 // The break-in difficulty bands (higher = easier), matching the masthead phrase
@@ -146,6 +147,14 @@ export function CellDecisionStack({
     ) : null,
     nearby: view.nearby ? (
       <SameBusinessNearby id="nearby" rows={view.nearby} format={usd} valueLabel="Typical revenue a year." />
+    ) : null,
+    risks: view.risks ? (
+      <RiskList
+        id="risks"
+        title="What to watch"
+        risks={view.risks}
+        className="rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7 md:py-6"
+      />
     ) : null,
     related: related ? <div id="related">{related}</div> : null,
   };
