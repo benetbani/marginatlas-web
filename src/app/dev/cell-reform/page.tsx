@@ -79,7 +79,13 @@ export default function CellReformPrototype() {
                   <span className="h-1.5 w-1.5 rounded-full bg-atlas-500" /> Regional benchmark
                 </span>
               </div>
-              <h1 className="mt-3 max-w-[18ch] font-display text-[clamp(2rem,4vw,3.4rem)] font-medium leading-[1.05] tracking-tight text-ink-900">
+              {/* typography-ok: constitutional fluid display tier (displayScale.h1),
+                  Newsreader masthead; folds into a canonical text-display-h1 token
+                  when the display scale is wired into Tailwind during page reform. */}
+              <h1
+                data-typography="custom"
+                className="mt-3 max-w-[18ch] font-display text-[clamp(2rem,4vw,3.4rem)] font-medium leading-[1.05] tracking-tight text-ink-900"
+              >
                 How much does a restaurant make in London?
               </h1>
               <p className="mt-4 max-w-[60ch] text-lg leading-relaxed text-ink-800">
