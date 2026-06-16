@@ -105,6 +105,11 @@ export { ZoomControl, type ZoomControlProps, type ZoomAltitude, type ZoomHrefs }
 // when off. Warmth lives in the frame; the data column stays cream and opaque.
 export { AtlasGutters, HeroWash, type HeroWashProps, type HeroWashCategory } from "./frame";
 
+// The six-band layout shell (Brand Design Constitution section 2): the band
+// wrapper, the three reading lanes (12/6/4 grid), and the quiet sticky index.
+// Pages compose these to read as a guided spread without changing section order.
+export { Band, Lanes, SectionIndex, type IndexItem } from "./layout/bands";
+
 // The Atlas signature blocks (R6.5 Phase 1): the brand-layer content-map
 // sections (operator voices, risks, cost drivers, licences, wage floor vs real
 // pay, street character, vs the world, the one-thing close). Nullable, honest
