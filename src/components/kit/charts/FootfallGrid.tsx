@@ -121,7 +121,7 @@ export function FootfallGrid({
                     key={hi}
                     title={`${day} ${fmtHour(hours[hi])}: ${v}`}
                     className={[
-                      "h-4 min-w-[4px] flex-1 rounded-sm bg-atlas-500",
+                      "h-4 min-w-[4px] flex-1 rounded-sm bg-chart-primary",
                       isPeak ? "outline outline-2 outline-offset-1 outline-ink-900" : "",
                     ].join(" ")}
                     style={{ opacity: op }}

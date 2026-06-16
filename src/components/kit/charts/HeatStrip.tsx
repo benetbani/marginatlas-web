@@ -78,7 +78,7 @@ export function HeatStrip({ cells, label, unit = "", peakLabel = "Busiest", clas
               <div
                 title={`${c.label}: ${c.value}${unit}`}
                 className={[
-                  "h-[34px] w-full rounded-md bg-atlas-500",
+                  "h-[34px] w-full rounded-md bg-chart-primary",
                   isPeak ? "outline outline-2 outline-offset-1 outline-ink-900" : "",
                 ].join(" ")}
                 style={{ opacity: op }}

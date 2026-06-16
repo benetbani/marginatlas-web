@@ -97,7 +97,7 @@ export function ComparisonBars({
           // The accent fill is reserved for the subject. Across price regimes
           // (noLeaderMark) peers all read taupe; within a regime the subject is
           // still the only tinted row, which keeps "leader" honest.
-          const fill = hot ? "bg-atlas-500" : "bg-cream-400";
+          const fill = hot ? "bg-chart-primary" : "bg-cream-400";
           const labelColor = hot ? "text-atlas-700" : "text-ink-700";
           const figColor = hot ? "text-atlas-700" : "text-ink-900";
           return (

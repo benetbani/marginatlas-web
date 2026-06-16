@@ -119,7 +119,7 @@ export function TimelineRibbon({
                     className={[
                       "block rounded-full ring-2 ring-cream-50",
                       hot
-                        ? "h-3.5 w-3.5 bg-atlas-500"
+                        ? "h-3.5 w-3.5 bg-chart-primary"
                         : "h-2.5 w-2.5 bg-cocoa-300",
                     ].join(" ")}
                   />
@@ -170,7 +170,7 @@ export function TimelineRibbon({
                   aria-hidden="true"
                   className={[
                     "block rounded-full ring-2 ring-cream-50",
-                    hot ? "h-3.5 w-3.5 bg-atlas-500" : "h-2.5 w-2.5 bg-cocoa-300",
+                    hot ? "h-3.5 w-3.5 bg-chart-primary" : "h-2.5 w-2.5 bg-cocoa-300",
                   ].join(" ")}
                 />
               </span>

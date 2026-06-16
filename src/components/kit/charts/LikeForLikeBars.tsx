@@ -104,7 +104,7 @@ export function LikeForLikeBars({
   // markup is shared and only the wrapping element changes.
   const rowInner = (it: LikeForLikeItem & { value: number }) => {
     const hot = !!it.subject;
-    const fill = hot ? "bg-atlas-500" : "bg-cocoa-300";
+    const fill = hot ? "bg-chart-primary" : "bg-cocoa-300";
     const labelColor = hot ? "text-atlas-700" : "text-ink-700";
     const figColor = hot ? "text-atlas-700" : "text-ink-900";
     return (

@@ -76,7 +76,7 @@ export function VisitorSplit({
         <div
           className={[
             "flex items-center pl-3.5",
-            resDominant ? "bg-atlas-500 text-cream-50" : "bg-cream-400 text-ink-900",
+            resDominant ? "bg-chart-primary text-cream-50" : "bg-cream-400 text-ink-900",
           ].join(" ")}
           style={{ width: `${rPct}%` }}
         >
@@ -85,7 +85,7 @@ export function VisitorSplit({
         <div
           className={[
             "flex items-center justify-end pr-3.5",
-            !resDominant ? "bg-atlas-500 text-cream-50" : "bg-cream-300 text-ink-900",
+            !resDominant ? "bg-chart-primary text-cream-50" : "bg-cream-300 text-ink-900",
           ].join(" ")}
           style={{ width: `${vPct}%` }}
         >
@@ -97,7 +97,7 @@ export function VisitorSplit({
       <div className="mt-3 flex justify-between gap-4">
         <span className="inline-flex items-center gap-2 text-[13px] text-ink-700">
           <span
-            className={["h-2.5 w-2.5 rounded-sm", resDominant ? "bg-atlas-500" : "bg-cream-400"].join(" ")}
+            className={["h-2.5 w-2.5 rounded-sm", resDominant ? "bg-chart-primary" : "bg-cream-400"].join(" ")}
             aria-hidden="true"
           />
           <span className={resDominant ? "font-bold text-atlas-700" : "font-medium text-ink-700"}>
@@ -111,7 +111,7 @@ export function VisitorSplit({
             {visitorLabel}
           </span>
           <span
-            className={["h-2.5 w-2.5 rounded-sm", !resDominant ? "bg-atlas-500" : "bg-cream-300"].join(" ")}
+            className={["h-2.5 w-2.5 rounded-sm", !resDominant ? "bg-chart-primary" : "bg-cream-300"].join(" ")}
             aria-hidden="true"
           />
         </span>

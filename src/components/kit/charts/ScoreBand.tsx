@@ -61,7 +61,7 @@ const MARK_TONE: Record<ScoreTone, string> = {
   positive: "bg-moss-700",
   caution: "bg-amber-600",
   negative: "bg-amber-700",
-  accent: "bg-atlas-500",
+  accent: "bg-chart-primary",
 };
 const FIG_TONE: Record<ScoreTone, string> = {
   neutral: "text-ink-900",
@@ -121,7 +121,7 @@ export function ScoreBand({
       <div className="relative h-2.5 overflow-hidden rounded-full border border-parchment bg-cream-200">
         {have ? (
           <div
-            className="absolute inset-y-0 left-0 rounded-full bg-atlas-500/85"
+            className="absolute inset-y-0 left-0 rounded-full bg-chart-primary/85"
             style={{ width: `${pct * 100}%` }}
             aria-hidden="true"
           />

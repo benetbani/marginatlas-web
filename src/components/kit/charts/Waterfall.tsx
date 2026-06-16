@@ -100,7 +100,7 @@ export function Waterfall({
   });
 
   const barFill = (key: string | undefined, i: number) =>
-    key != null && key === accentKey ? "bg-atlas-500" : COST_FILL[i % COST_FILL.length];
+    key != null && key === accentKey ? "bg-chart-primary" : COST_FILL[i % COST_FILL.length];
 
   return (
     <figure

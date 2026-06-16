@@ -129,7 +129,7 @@ export function ThresholdGauge({
           over the track in its own zero-height row so it never clips the rule. */}
       <div className="relative h-0" aria-hidden="true">
         <span
-          className="absolute -top-6 h-6 w-[3px] -translate-x-1/2 rounded-sm bg-atlas-500 ring-2 ring-cream-50"
+          className="absolute -top-6 h-6 w-[3px] -translate-x-1/2 rounded-sm bg-chart-primary ring-2 ring-cream-50"
           style={{ left: `${tickPct}%` }}
         />
       </div>
