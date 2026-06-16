@@ -9,6 +9,20 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Brand Design Constitution (2026-06-16) section 3: type law. Tabular, lining
+   figures on all data numerals (tables, stats, the calculator) so columns align
+   and numbers do not jitter as they change. Apply `.tabular-figures` or
+   `data-numeric="true"` to any scanned numeric run. The serif slot
+   (--font-display, Newsreader) is the almanac voice (mastheads, openers,
+   verdicts, the one big number); the sans (--font-sans, Inter) is everything
+   scanned, including every numeral outside the masthead anchor. */
+@layer utilities {
+  .tabular-figures,
+  [data-numeric="true"] {
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+}
+
 @layer base {
   /* Section 1 of master visual-upgrade: shadcn CSS variables retokenized
      to atlas. These power any shadcn primitive that reads bg-background,

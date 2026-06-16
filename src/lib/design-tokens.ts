@@ -263,6 +263,22 @@ export const fontSize = {
   "6xl": ["60px", { lineHeight: "1" }],
 } as const;
 
+/**
+ * Fluid display scale (Brand Design Constitution 2026-06-16, section 3.4). The
+ * editorial tier (Newsreader, --font-display): mastheads and band/section
+ * openers use these clamp sizes so the almanac voice scales with the viewport.
+ * The scanned tier (body and below) keeps the fixed `fontSize` ladder above,
+ * where predictability matters more than fluidity. The serif slot never sets
+ * below 20px; the h3 minimum clamp holds at or above 20px, and anything smaller
+ * is Inter, not Newsreader.
+ */
+export const displayScale = {
+  hero: "clamp(2.75rem, 6vw, 5.25rem)", //   masthead anchor / homepage hero
+  h1: "clamp(2rem, 4vw, 3.5rem)", //         page masthead
+  h2: "clamp(1.5rem, 2.5vw, 2.25rem)", //    band / section opener
+  h3: "clamp(1.125rem, 1.5vw, 1.375rem)", // sub-opener (20px floor holds)
+} as const;
+
 // =============================================================
 // Spacing & radius
 // =============================================================
