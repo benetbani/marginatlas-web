@@ -26,16 +26,6 @@ const defaultProps: Cta10Props = {
   heading: "Call to Action",
   description:
     "Get access to our collection of pre-built blocks and components today.",
-  buttons: {
-    primary: {
-      text: "Get Access",
-      url: "https://shadcnblocks.com",
-    },
-    secondary: {
-      text: "Schedule a Demo",
-      url: "https://shadcnblocks.com",
-    },
-  },
 };
 
 const Cta10 = (props: Props) => {

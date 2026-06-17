@@ -140,7 +140,7 @@ const Feature43 = (props: Props) => {
       <div className="container">
         {heading && (
           <div className="mx-auto mb-16 max-w-3xl text-center">
-            <h2 className="text-4xl font-semibold tracking-tight text-pretty lg:text-5xl">
+            <h2 data-typography="custom" className="text-4xl font-semibold tracking-tight text-pretty lg:text-5xl">
               {heading}
             </h2>
           </div>
