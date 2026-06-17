@@ -73,13 +73,13 @@ const defaultProps: Feature43Props = {
       icon: <Layers className="size-5" />,
       title: "Customizable",
       description:
-        "Override any prop, swap icons, adjust spacing — every block is designed to be extended, not locked down.",
+        "Override any prop, swap icons, adjust spacing. Every block is designed to be extended, not locked down.",
     },
     {
       icon: <Rocket className="size-5" />,
       title: "Production Ready",
       description:
-        "Battle-tested in real projects. No placeholder hacks, no lorem ipsum — clean code you can ship today.",
+        "Battle-tested in real projects. No placeholder hacks, no lorem ipsum, just clean code you can ship today.",
     },
     {
       icon: <Blocks className="size-5" />,
@@ -103,7 +103,7 @@ const defaultProps: Feature43Props = {
       icon: <Sparkles className="size-5" />,
       title: "Theme Tokens",
       description:
-        "All colors come from your shadcn/ui theme — foreground, muted, primary, card — no hardcoded values.",
+        "All colors come from your shadcn/ui theme: foreground, muted, primary, card, with no hardcoded values.",
     },
     {
       icon: <Workflow className="size-5" />,
