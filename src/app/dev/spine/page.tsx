@@ -44,7 +44,7 @@ function Hero({ d }: { d: any }) {
           </a>
           <div className="flex items-center gap-3">
             <CountryFlag iso2="gb" className="w-10" />
-            <h1 className="whitespace-nowrap font-display text-3xl font-medium tracking-tight text-ink-900 md:text-4xl">
+            <h1 className="whitespace-nowrap text-3xl font-semibold tracking-tight text-ink-900 md:text-4xl">
               {d.meta?.name ?? "United Kingdom"}
             </h1>
           </div>
@@ -53,7 +53,7 @@ function Hero({ d }: { d: any }) {
           {tiles.map(([label, value, unit]) => (
             <div key={label} className="bg-cream-50 px-3 py-2.5">
               <div className="text-[9px] font-semibold uppercase tracking-[0.12em] text-cocoa-500">{label}</div>
-              <div className="mt-0.5 font-display text-[17px] tabular-nums text-ink-900">
+              <div className="mt-0.5 fig text-[17px] tabular-nums text-ink-900">
                 {value}
                 {unit ? <span className="text-[11px] font-normal text-cocoa-500">{unit}</span> : null}
               </div>
@@ -78,7 +78,7 @@ function MarginReality() {
   return (
     <Section eyebrow="The money reality" heading="What a business keeps here" sample>
       <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-        <span className="font-display text-3xl tabular-nums text-atlas-700">~$15</span>
+        <span className="fig text-3xl tabular-nums text-atlas-700">~$15</span>
         <span className="text-sm text-ink-700">of every $100 of revenue survives as margin for a typical small business.</span>
       </div>
       <div className="mt-4 flex h-10 overflow-hidden rounded-lg border border-parchment">
@@ -121,7 +121,7 @@ function Profile({ d }: { d: any }) {
                   <span key={i} className={`h-[7px] w-[7px] rounded-full ${i < s ? "bg-atlas-300" : "bg-cream-300"}`} />
                 ))}
               </div>
-              <div className="font-display text-lg tabular-nums text-ink-900">
+              <div className="fig text-lg tabular-nums text-ink-900">
                 {s}
                 <span className="text-[11px] font-normal text-cocoa-500">/10</span>
               </div>
@@ -157,7 +157,7 @@ function Section({
           </span>
         ) : null}
       </div>
-      <h2 className="mb-4 font-display text-xl font-medium tracking-tight text-ink-900 md:text-2xl">{heading}</h2>
+      <h2 className="mb-4 text-xl font-semibold tracking-tight text-ink-900 md:text-2xl">{heading}</h2>
       <div className={`rounded-xl border border-parchment bg-cream-50 p-5 ${narrow ? "md:max-w-[62%]" : ""}`}>
         {children}
       </div>
@@ -173,7 +173,7 @@ function Movement({ eyebrow, heading, sample }: { eyebrow: string; heading: stri
         <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-atlas-700">{eyebrow}</span>
         {sample ? <span className="rounded-full bg-cream-200 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-cocoa-500">illustrative</span> : null}
       </div>
-      <h2 className="font-display text-xl font-medium tracking-tight text-ink-900 md:text-2xl">{heading}</h2>
+      <h2 className="text-xl font-semibold tracking-tight text-ink-900 md:text-2xl">{heading}</h2>
     </div>
   );
 }
@@ -181,7 +181,7 @@ function Box({ children, className = "" }: { children: React.ReactNode; classNam
   return <div className={`rounded-xl border border-parchment bg-cream-50 p-5 ${className}`}>{children}</div>;
 }
 function CardHead({ children }: { children: React.ReactNode }) {
-  return <div className="mb-3 font-display text-[15px] font-medium text-ink-900">{children}</div>;
+  return <div className="mb-3 text-[15px] font-semibold text-ink-900">{children}</div>;
 }
 function Chip({ children }: { children: React.ReactNode }) {
   return <span className="inline-block rounded-full border border-parchment bg-cream-100 px-2.5 py-0.5 text-[11px] text-ink-700">{children}</span>;
@@ -201,7 +201,7 @@ function SetupStepper({ d }: { d: any }) {
           const cost = s.cost_usd === 0 ? "Free" : "$" + s.cost_usd;
           return (
             <div key={i} className="flex flex-1 flex-col items-center gap-1 text-center">
-              <div className="font-display text-lg text-atlas-700">{cost}</div>
+              <div className="fig text-lg text-atlas-700">{cost}</div>
               <div className="min-h-[30px] text-[11px] text-ink-700">{s.name}</div>
               <div className={`flex h-6 w-6 items-center justify-center rounded-full border text-[11px] font-semibold ${bot ? "border-atlas-300 bg-atlas-50 text-atlas-700" : "border-parchment text-ink-700"}`}>{i + 1}</div>
               <div className="mt-1 h-1.5 w-full overflow-hidden rounded bg-cream-200"><div className={`h-full rounded ${bot ? "bg-atlas-300" : "bg-cream-400"}`} style={{ width: `${w}%` }} /></div>
@@ -221,7 +221,7 @@ function Formation({ d }: { d: any }) {
       <CardHead>Which legal structure to form</CardHead>
       <div className="space-y-2">
         {structures.map((s: any, i: number) => (
-          <details key={i} open={i === 0} className="group overflow-hidden rounded-lg border border-parchment open:border-atlas-200">
+          <details key={i} name="formation" open={i === 0} className="group overflow-hidden rounded-lg border border-parchment open:border-atlas-200">
             <summary className="flex cursor-pointer list-none items-center justify-between bg-cream-100 px-3.5 py-2.5 text-[13px] font-semibold text-ink-800 transition hover:bg-cream-200 group-open:bg-atlas-50 group-open:text-atlas-700">
               {s.name}
               <span className="text-base text-cream-500 transition group-open:rotate-45 group-open:text-atlas-700">+</span>
@@ -239,7 +239,7 @@ function Formation({ d }: { d: any }) {
       </div>
       {d.setup?.vat_threshold_usd ? (
         <div className="mt-3 inline-block rounded-full border border-parchment bg-cream-100 px-3 py-1.5 text-[12px] text-ink-700">
-          Register for VAT once sales pass <b className="font-display text-atlas-700">${Math.round(d.setup.vat_threshold_usd / 1000)}K</b>
+          Register for VAT once sales pass <b className="fig text-atlas-700">${Math.round(d.setup.vat_threshold_usd / 1000)}K</b>
         </div>
       ) : null}
     </Box>
@@ -257,7 +257,7 @@ function TaxByLevel({ d }: { d: any }) {
             <div className="space-y-2.5">
               {(g.items ?? []).map((it: any) => (
                 <div key={it.name} className="flex items-baseline gap-3">
-                  <span className="w-14 shrink-0 font-display text-[17px] tabular-nums text-ink-900">{it.value}</span>
+                  <span className="w-14 shrink-0 fig text-[17px] tabular-nums text-ink-900">{it.value}</span>
                   <span className="text-[12px] leading-tight text-ink-700"><b className="font-medium text-ink-900">{it.name}</b><br />{it.note}</span>
                 </div>
               ))}
