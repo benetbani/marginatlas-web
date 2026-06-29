@@ -15,22 +15,23 @@ export default function SpineLayout({ children }: { children: React.ReactNode })
       className={`${geist.variable} ${grotesk.variable}`}
       style={{ fontFamily: "var(--font-geist), ui-sans-serif, system-ui, sans-serif" }}
     >
-      {/* Atmosphere: a faint, brand-tinted page-wide skyline , a near-opaque cream wash OVER the photo. Solid cards float above it. */}
+      {/* White base de-yellows the page (brand: black / white / terracotta only, no cream). */}
+      <div aria-hidden style={{ position: "fixed", inset: 0, zIndex: 0, background: "#ffffff", pointerEvents: "none" }} />
+      {/* Page-wide skyline , OPACITY ONLY, no color treatment, kept clearly visible. */}
       <div
         aria-hidden
         style={{
           position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
-          backgroundImage:
-            "linear-gradient(rgba(251,250,247,0.82), rgba(251,250,247,0.91)), url('https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=1920&q=60')",
-          backgroundSize: "cover", backgroundPosition: "center 16%",
-          filter: "grayscale(0.35) sepia(0.28) saturate(0.95)",
+          backgroundImage: "url('https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=1920&q=60')",
+          backgroundSize: "cover", backgroundPosition: "center 16%", opacity: 0.42,
         }}
       />
-      <style>{`.fig{font-family:var(--font-grotesk),ui-sans-serif,sans-serif;font-variant-numeric:tabular-nums lining-nums;letter-spacing:0;font-weight:600}
-.atlas-card-hover{transition:transform .18s ease-out,border-color .18s ease-out,box-shadow .18s ease-out;position:relative}
-.atlas-card-hover::before{content:"";position:absolute;inset-inline:0;top:0;height:2px;border-radius:12px 12px 0 0;background:#fb8469;opacity:0;transition:opacity .18s ease-out}
-.atlas-card-hover:hover{transform:translateY(-2px);border-color:#ffb3a3;box-shadow:0 6px 20px -12px rgba(38,33,28,.25)}
-.atlas-card-hover:hover::before{opacity:1}`}</style>
+      <style>{`:root{--c-card:#ffffff;--c-soft:#f5f5f5;--c-soft2:#ececec;--c-border:#e3e3e3;--c-ink:#1b1b1a;--c-ink2:#565654;--c-muted:#8c8c8a;--terra:#fb8469;--terra-text:#c2410c;--terra-soft:#fff1ed;--terra-border:#ffc7ba;}
+.fig{font-family:var(--font-grotesk),ui-sans-serif,sans-serif;font-variant-numeric:tabular-nums lining-nums;letter-spacing:0;font-weight:600}
+.hov{transition:background-color .15s ease-out,transform .15s ease-out,border-color .15s ease-out}
+.hov:hover{background:var(--c-soft)}
+.cityhov{transition:transform .15s ease-out,border-color .15s ease-out}
+.cityhov:hover{transform:translateY(-2px);border-color:var(--terra-border)}`}</style>
       <div style={{ position: "relative", zIndex: 1 }}>{children}</div>
     </div>
   );
