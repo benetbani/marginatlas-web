@@ -146,16 +146,16 @@ function Hero({ d }: { d: any }) {
   ];
   return (
     <section className="overflow-hidden">
-      <div className="grid items-end gap-6 p-6 md:grid-cols-[minmax(260px,360px)_1fr] md:p-8">
+      <div className="grid items-end gap-6 py-6 md:grid-cols-[minmax(300px,400px)_1fr] md:py-8">
         <div>
-          <a className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-[var(--c-border)] bg-white/70 px-3 py-1 text-xs font-semibold text-[var(--c-ink2)] transition hover:border-[var(--c-border)] hover:text-[var(--terra-text)]">&#8592; All countries</a>
-          <div className="flex items-center gap-3"><CountryFlag iso2="gb" className="w-10" /><h1 className="whitespace-nowrap text-3xl font-bold tracking-tight text-[var(--c-ink)] md:text-4xl">{d.meta?.name}</h1></div>
+          <a className="mb-4 inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[var(--c-border)] bg-white/70 px-3 py-1 text-xs font-semibold text-[var(--c-ink2)] transition hover:border-[var(--terra-border)] hover:text-[var(--terra-text)]">&#8592; All countries</a>
+          <div className="flex items-center gap-3.5"><CountryFlag iso2="gb" className="w-[60px] rounded-sm shadow-sm" /><h1 className="whitespace-nowrap text-3xl font-bold tracking-tight text-[var(--c-ink)] md:text-4xl">{d.meta?.name}</h1></div>
         </div>
-        <div className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-[var(--terra-border)] sm:grid-cols-4" style={{ background: TERRA }}>
+        <div className="ml-auto grid w-full max-w-[560px] grid-cols-2 gap-px overflow-hidden rounded-xl border border-[var(--terra-border)] sm:grid-cols-4" style={{ background: TERRA }}>
           {tiles.map(([label, value, unit]) => (
-            <div key={label} className="bg-[var(--c-card)] px-3 py-2.5">
+            <div key={label} className="bg-[var(--c-card)] px-3 py-2">
               <div className="text-[9px] font-semibold uppercase leading-tight tracking-[0.1em] text-[var(--c-muted)]">{label}</div>
-              <div className="mt-0.5 text-[17px] text-[var(--c-ink)]"><Fig>{value}</Fig>{unit ? <span className="text-[11px] text-[var(--c-muted)]">{unit}</span> : null}</div>
+              <div className="mt-0.5 text-[16px] text-[var(--c-ink)]"><Fig>{value}</Fig>{unit ? <span className="text-[11px] text-[var(--c-muted)]">{unit}</span> : null}</div>
             </div>
           ))}
         </div>
@@ -194,7 +194,7 @@ function SetupStepper({ d }: { d: any }) {
   const steps = d.setup?.steps ?? []; const maxStep = Math.max(1, ...steps.map((s: any) => s.time_days || 0));
   const total = steps.reduce((a: number, s: any) => a + (s.time_days || 0), 0);
   return (
-    <Box><Head>Register and start trading</Head>
+    <Box><Head>Register and start doing business</Head>
       <div className="relative">
         {/* one continuous timeline line behind the points */}
         <div className="absolute left-[8%] right-[8%] top-[62px] h-0.5" style={{ background: "#e6e6e6" }} />
@@ -204,9 +204,8 @@ function SetupStepper({ d }: { d: any }) {
               <div className="flex h-9 items-end text-[11px] font-medium leading-tight text-[var(--c-ink2)]">{s.name}</div>
               <Fig className="flex h-[26px] items-center text-[15px] text-[var(--c-ink)]">{s.cost_usd === 0 ? "Free" : "$" + s.cost_usd}</Fig>
               <div className="relative z-10 flex h-6 w-6 items-center justify-center rounded-full border-2 bg-[var(--c-card)] text-[11px] font-semibold" style={bot ? { borderColor: TERRA, color: "#c2410c" } : { borderColor: "#cfcfcf", color: "#565654" }}>{i + 1}</div>
-              <div className="mt-2 text-[11px] text-[var(--c-ink2)]">{s.time_days === 1 ? "1 day" : (s.time_days || 0) + " days"}</div>
-              {bot ? <div className="text-[9px] font-semibold uppercase tracking-wide text-[var(--terra-text)]">bottleneck</div> : null}
-              <div className="mt-1.5"><Chip>{s.how}</Chip></div>
+              <div className="mt-2 flex h-[30px] flex-col items-center text-[11px] text-[var(--c-ink2)]"><span>{s.time_days === 1 ? "1 day" : (s.time_days || 0) + " days"}</span>{bot ? <span className="text-[9px] font-semibold uppercase tracking-wide text-[var(--terra-text)]">bottleneck</span> : null}</div>
+              <div><Chip>{s.how}</Chip></div>
             </div>); })}
         </div>
         <div className="mt-3 text-right text-[11px] text-[var(--c-muted)]">About <Fig className="text-[var(--c-ink2)]">{total}</Fig> days end to end.</div>
@@ -214,14 +213,21 @@ function SetupStepper({ d }: { d: any }) {
     </Box>
   );
 }
+function formationExtra(name: string) {
+  const n = (name || "").toLowerCase();
+  if (n.includes("sole")) return { paperwork: "Light", raise: "Hard, no shares to sell", setup: "Free, minutes", summary: "You and the business are one in law: simplest to run, you keep all the profit and carry all the risk personally." };
+  if (n.includes("partner")) return { paperwork: "Medium", raise: "Shared between partners", setup: "Low", summary: "Two or more owners share the work, the profit and the liability under one agreement; trust between partners matters." };
+  return { paperwork: "Medium, annual accounts", raise: "Easy, you can issue shares", setup: "Small one-off fee", summary: "A separate legal person: your liability is limited and it is the default once you hire or raise, but you file accounts every year." };
+}
 function Formation({ d }: { d: any }) {
   const structures = d.setup?.structures ?? [];
   return (
     <Box className="md:flex-[2]"><Head>Which legal structure to form</Head>
-      <div className="space-y-2">{structures.map((s: any, i: number) => (
+      <div className="space-y-2">{structures.map((s: any, i: number) => { const x = formationExtra(s.name); return (
         <Expand key={i} name="formation" title={s.name} open={i === 0}>
-          <KV k="Liability" v={s.liability} /><KV k="Tax" v={s.tax} /><KV k="Best for" v={s.best_for} />
-        </Expand>))}
+          <p className="mb-2 text-[12px] leading-snug text-[var(--c-ink2)]">{x.summary}</p>
+          <KV k="Liability" v={s.liability} /><KV k="Taxed as" v={s.tax} /><KV k="Paperwork" v={x.paperwork} /><KV k="Raising money" v={x.raise} /><KV k="Setup" v={x.setup} /><KV k="Best for" v={s.best_for} />
+        </Expand>); })}
       </div>
       {d.setup?.vat_threshold_usd ? <div className="mt-3 inline-block rounded-full border border-[var(--c-border)] bg-[var(--c-soft)] px-3 py-1.5 text-[12px] text-[var(--c-ink2)]">Register for VAT once sales pass <Fig className="text-[var(--c-ink)]">${Math.round(d.setup.vat_threshold_usd / 1000)}K</Fig></div> : null}
     </Box>
@@ -260,7 +266,7 @@ function PayByLevel({ d }: { d: any }) {
   return (
     <Box className="md:flex-[3]"><Head>What staff cost to employ</Head>
       <div className="space-y-3">{levels.map(([k, label]) => { const v = o[k] || 0; const lo = v * 0.82, hi = v * 1.2; const L = (lo / max) * 100, W = ((hi - lo) / max) * 100, M = (v / max) * 100; return (
-        <div key={k} className="grid grid-cols-[150px_1fr_70px] items-center gap-3"><span className="text-[12.5px] text-[var(--c-ink2)]">{label}</span>
+        <div key={k} className="hov -mx-2 grid grid-cols-[150px_1fr_70px] items-center gap-3 rounded-md px-2 py-0.5"><span className="text-[12.5px] text-[var(--c-ink2)]">{label}</span>
           <div className="relative h-3.5"><div className="absolute top-1/2 h-0.5 w-full -translate-y-1/2 rounded" style={{ background: "#e3e3e3" }} /><div className="absolute top-1/2 h-1.5 -translate-y-1/2 rounded" style={{ left: `${L}%`, width: `${W}%`, background: TERRA }} /><div className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 bg-white" style={{ left: `${M}%`, borderColor: TERRA }} /></div>
           <Fig className="text-right text-[17px] text-[var(--c-ink)]">${Math.round(v / 1000)}K</Fig></div>); })}
       </div>
@@ -284,7 +290,7 @@ function TalentDepth({ d }: { d: any }) {
   return (
     <Box><Head>How deep the talent pool runs, by field</Head>
       <div className="space-y-2.5">{arr.map((t: any) => (
-        <div key={t.field} className="grid grid-cols-[160px_1fr_44px] items-center gap-3"><span className="text-[12.5px] text-[var(--c-ink2)]">{map[t.field] ?? t.field}</span><MiniBar pct={(t.score_1_5 / 5) * 100} /><Fig className="text-right text-[13px] text-[var(--c-ink)]">{t.score_1_5 * 2}/10</Fig></div>))}
+        <div key={t.field} className="hov -mx-2 grid grid-cols-[160px_1fr_44px] items-center gap-3 rounded-md px-2 py-0.5"><span className="text-[12.5px] text-[var(--c-ink2)]">{map[t.field] ?? t.field}</span><MiniBar pct={(t.score_1_5 / 5) * 100} /><Fig className="text-right text-[13px] text-[var(--c-ink)]">{t.score_1_5 * 2}/10</Fig></div>))}
       </div>
       <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-[var(--c-border)] pt-3"><span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Languages</span>{(d.people_pay?.languages ?? []).map((l: any) => <Chip key={l.name}>{l.name} {l.pct_speakers}%</Chip>)}</div>
     </Box>
