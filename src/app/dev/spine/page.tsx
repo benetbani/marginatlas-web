@@ -77,7 +77,35 @@ function Movement({ eyebrow, heading, sample }: { eyebrow: string; heading: stri
   );
 }
 function Box({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <div className={`rounded-xl border border-parchment bg-cream-50 p-5 ${className}`}>{children}</div>;
+  return <div className={`atlas-card-hover rounded-xl border border-parchment bg-cream-50 p-5 ${className}`}>{children}</div>;
+}
+/* one shared left-to-right scale with N labelled markers , the variety-safe replacement for repeated dials */
+function EaseScale({ rows }: { rows: Array<[string, number, string]> }) {
+  return (
+    <div className="space-y-3.5">{rows.map(([label, pos, word]) => (
+      <div key={label} className="grid grid-cols-[150px_1fr] items-center gap-3">
+        <span className="text-[12.5px] text-ink-700">{label}</span>
+        <div className="relative h-1.5 rounded-full" style={{ background: "linear-gradient(90deg,#e7e4df,#fbe4dc)" }}>
+          <div className="absolute top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center" style={{ left: `${pos}%` }}>
+            <span className="h-3 w-3 rounded-full border-2 border-white" style={{ background: TERRA, boxShadow: "0 0 0 1px #e4e2dd" }} />
+          </div>
+          <span className="absolute -top-5 -translate-x-1/2 text-[11px] font-medium text-atlas-700" style={{ left: `${pos}%` }}>{word}</span>
+        </div>
+      </div>))}
+    </div>
+  );
+}
+/* a slim labelled meter for a single 0-100 read (NOT a dial) */
+function Meter({ value, left, right }: { value: number; left: string; right: string }) {
+  return (
+    <div>
+      <div className="relative h-2 rounded-full" style={{ background: "#e7e4df" }}>
+        <div className="h-full rounded-full" style={{ width: `${value}%`, background: TERRA }} />
+        <div className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${value}%`, background: "#211810" }} />
+      </div>
+      <div className="mt-1 flex justify-between text-[10px] uppercase tracking-wide text-cocoa-500"><span>{left}</span><span>{right}</span></div>
+    </div>
+  );
 }
 function Head({ children, sample }: { children: React.ReactNode; sample?: boolean }) {
   return <div className="mb-3 flex items-center gap-2"><span className="text-[15px] font-semibold text-ink-900">{children}</span>{sample ? <span className="rounded-full bg-cream-200 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-cocoa-500">sample</span> : null}</div>;
@@ -234,13 +262,12 @@ function PayByLevel({ d }: { d: any }) {
   );
 }
 function HiringDials({ d }: { d: any }) {
-  const h = d.people_pay?.hiring ?? {}; const eMap: any = { easy: 85, moderate: 55, hard: 20, deep: 85, fair: 55, thin: 20 };
-  const cats: Array<[string, string, [string, string]]> = [["Hiring someone", h.hire_ease, ["Hard", "Easy"]], ["Contracts", h.contract_ease, ["Rigid", "Flexible"]], ["Letting go", h.fire_ease, ["Hard", "Easy"]], ["Talent depth", h.recruiting_depth, ["Thin", "Deep"]]];
+  const h = d.people_pay?.hiring ?? {}; const eMap: any = { easy: 84, moderate: 52, hard: 18, deep: 84, fair: 52, thin: 18 };
+  const rows: Array<[string, number, string]> = [["Hiring someone", eMap[h.hire_ease] ?? 50, cap(h.hire_ease)], ["Contracts you can use", eMap[h.contract_ease] ?? 50, cap(h.contract_ease)], ["Letting someone go", eMap[h.fire_ease] ?? 50, cap(h.fire_ease)], ["Depth of talent", eMap[h.recruiting_depth] ?? 50, cap(h.recruiting_depth)]];
   return (
     <Box className="md:flex-[2]"><Head>How easy it is to hire and let go</Head>
-      <div className="grid grid-cols-2 gap-y-3">{cats.map(([label, val, ends]) => (
-        <div key={label} className="text-center"><Gauge value={eMap[val] ?? 50} endLabels={ends} w={108} /><div className="text-[13px] font-semibold text-atlas-700">{cap(val)}</div><div className="text-[11px] text-ink-700">{label}</div></div>))}
-      </div>
+      <div className="mb-5 mt-1 flex justify-between text-[10px] uppercase tracking-wide text-cocoa-500"><span>Harder / rigid</span><span>Easier / flexible</span></div>
+      <EaseScale rows={rows} />
     </Box>
   );
 }
@@ -270,9 +297,8 @@ function Financing({ d }: { d: any }) {
   const f = d.financing ?? {};
   return (
     <Box><Head sample>Where the money comes from</Head>
-      <div className="flex items-center gap-5"><div className="shrink-0"><Gauge value={f.ease_0_100} endLabels={["Hard", "Easy"]} sub="Ease of raising money" /></div>
-        <div className="flex-1 divide-y divide-parchment">{(f.sources ?? []).map((s: any) => <div key={s.name} className="py-2"><div className="text-[13px] font-medium text-ink-900">{s.name}</div><div className="text-[11.5px] text-ink-600">{s.note}</div></div>)}</div>
-      </div>
+      <div className="mb-4"><div className="flex items-baseline gap-2"><span className="text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">Ease of raising money</span><Fig className="text-atlas-700">{f.ease_0_100}/100</Fig></div><div className="mt-1.5"><Meter value={f.ease_0_100} left="Hard" right="Easy" /></div></div>
+      <div className="divide-y divide-parchment">{(f.sources ?? []).map((s: any) => <div key={s.name} className="py-2"><div className="text-[13px] font-medium text-ink-900">{s.name}</div><div className="text-[11.5px] text-ink-600">{s.note}</div></div>)}</div>
     </Box>
   );
 }
@@ -311,24 +337,28 @@ function Income({ d }: { d: any }) {
 }
 function Neighbours({ d }: { d: any }) {
   const cols = [
-    { key: "tax", label: "Business tax", get: (x: any) => x.tax_burden?.total_pct, fmt: (v: number) => Math.round(v) + "%", lowGood: true },
-    { key: "reg", label: "Cost to register", get: (x: any) => x.costs?.license_setup_usd, fmt: (v: number) => "$" + Math.round(v).toLocaleString("en-US"), lowGood: true },
-    { key: "days", label: "Time to register", get: (x: any) => x.setup?.total_days, fmt: (v: number) => v + " days", lowGood: true },
-    { key: "vat", label: "VAT", get: (x: any) => x.tax_burden?.vat_rate_pct, fmt: (v: number) => v + "%", lowGood: true },
-    { key: "energy", label: "Energy / kWh", get: (x: any) => x.costs?.energy_usd_per_kwh, fmt: (v: number) => "$" + (Math.round(v * 100) / 100), lowGood: true },
+    { key: "tax", label: "Business tax", unit: "%", get: (x: any) => x.tax_burden?.total_pct, cell: (v: number) => "" + Math.round(v), lowGood: true },
+    { key: "reg", label: "Cost to register", unit: "$", get: (x: any) => x.costs?.license_setup_usd, cell: (v: number) => Math.round(v).toLocaleString("en-US"), lowGood: true },
+    { key: "days", label: "Time to register", unit: "days", get: (x: any) => x.setup?.total_days, cell: (v: number) => "" + v, lowGood: true },
+    { key: "vat", label: "VAT", unit: "%", get: (x: any) => x.tax_burden?.vat_rate_pct, cell: (v: number) => "" + v, lowGood: true },
+    { key: "energy", label: "Energy", unit: "$/kWh", get: (x: any) => x.costs?.energy_usd_per_kwh, cell: (v: number) => "" + (Math.round(v * 100) / 100), lowGood: true },
   ];
   const codes = ["GB", ...(d.meta?.peer_set ?? [])];
   const rows = codes.map((code) => { let j: any = null; try { j = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), "../page-data/countries/" + code + ".json"), "utf8")); } catch (e) { } return j ? { code, home: code === "GB", name: j.meta?.name ?? code, vals: cols.map((c) => c.get(j)) } : null; }).filter(Boolean) as any[];
   const best = cols.map((c, i) => { const xs = rows.map((r) => r.vals[i]).filter((v) => v != null); return c.lowGood ? Math.min(...xs) : Math.max(...xs); });
+  const home = rows.find((r) => r.home);
+  const wins = cols.filter((c, i) => home && home.vals[i] === best[i]).map((c) => c.label.toLowerCase());
+  const loses = cols.filter((c, i) => { const xs = rows.map((r) => r.vals[i]).filter((v) => v != null); const worst = c.lowGood ? Math.max(...xs) : Math.min(...xs); return home && home.vals[i] === worst; }).map((c) => c.label.toLowerCase());
   return (
     <Box><Head>How it compares, country by country</Head>
-      <div className="overflow-x-auto"><table className="w-full text-[13px]"><thead><tr className="border-b border-parchment text-left text-[10.5px] font-semibold uppercase tracking-wide text-cocoa-500"><th className="py-2 pr-3 font-semibold">Country</th>{cols.map((c) => <th key={c.key} className="px-3 py-2 text-right font-semibold">{c.label}</th>)}</tr></thead>
+      {wins.length || loses.length ? <div className="mb-3 text-[12.5px] text-ink-700">{d.meta?.name} leads its peers on <b className="text-atlas-700">{wins.join(", ") || "nothing"}</b>{loses.length ? <>, and trails on <b className="text-ink-900">{loses.join(", ")}</b></> : null}.</div> : null}
+      <div className="overflow-x-auto"><table className="w-full text-[13px]"><thead><tr className="border-b border-parchment text-[10.5px] font-semibold uppercase tracking-wide text-cocoa-500"><th className="py-2 pr-3 text-left font-semibold">Country</th>{cols.map((c) => <th key={c.key} className="px-3 py-2 text-right font-semibold">{c.label} <span className="font-normal text-cocoa-400">({c.unit})</span></th>)}</tr></thead>
         <tbody>{rows.map((r) => (
-          <tr key={r.code} className="border-b border-parchment/60" style={r.home ? { background: "#fff6f3" } : undefined}><td className="py-2.5 pr-3 font-medium text-ink-900">{r.name}</td>{r.vals.map((v: number, i: number) => (
-            <td key={i} className="px-3 py-2.5 text-right"><span className="inline-flex items-center gap-1.5"><Fig className="text-ink-900">{v == null ? "—" : cols[i].fmt(v)}</Fig>{v != null && v === best[i] ? <span className="text-[9px]" style={{ color: TERRA }} title="best of the group">&#9650;</span> : null}</span></td>))}
+          <tr key={r.code} className="border-b border-parchment/60 transition hover:bg-cream-100" style={r.home ? { background: "#fff6f3" } : undefined}><td className="py-2.5 pr-3 font-medium text-ink-900">{r.name}</td>{r.vals.map((v: number, i: number) => (
+            <td key={i} className="px-3 py-2.5 text-right"><Fig className={v != null && v === best[i] ? "font-bold text-atlas-700" : "text-ink-900"}>{v == null ? "—" : cols[i].cell(v)}</Fig></td>))}
           </tr>))}
         </tbody></table></div>
-      <div className="mt-2 text-[11px] text-cocoa-500"><span style={{ color: TERRA }}>&#9650;</span> marks the best in each column. The home country is tinted, never ranked.</div>
+      <div className="mt-2 text-[11px] text-cocoa-500">Best in each column is bold. The home country is tinted, never ranked.</div>
     </Box>
   );
 }
@@ -357,8 +387,11 @@ function Cities({ d }: { d: any }) {
   const list = d.cities?.list ?? [];
   return (
     <Box><Head>The main cities</Head>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">{list.slice(0, 8).map((c: any) => (
-        <a key={c.slug} className="group overflow-hidden rounded-lg border border-parchment transition hover:border-atlas-200"><div className="flex aspect-[16/10] items-center justify-center bg-cream-100 text-cream-400"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3"><path d="M3 21h18M5 21V7l5-3v17M19 21V11l-5-3" /></svg></div><div className="p-3"><div className="text-[13px] font-semibold text-ink-900 group-hover:text-atlas-700">{c.name}</div><div className="text-[11px] text-ink-600">{c.character}</div></div></a>))}
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">{list.slice(0, 10).map((c: any) => (
+        <a key={c.slug} className="atlas-card-hover group block cursor-pointer overflow-hidden rounded-lg border border-parchment">
+          <div className="flex aspect-[16/7] items-center justify-center bg-cream-100 text-cream-400"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3"><path d="M3 21h18M5 21V7l5-3v17M19 21V11l-5-3" /></svg></div>
+          <div className="px-2.5 py-2"><div className="text-[12.5px] font-semibold text-ink-900 group-hover:text-atlas-700">{c.name}</div><div className="truncate text-[10.5px] text-ink-600">{c.character}</div></div>
+        </a>))}
       </div>
     </Box>
   );
@@ -387,11 +420,12 @@ function Insurance({ d }: { d: any }) {
 }
 function SellingAbroad({ d }: { d: any }) {
   const e = d.exporting ?? {};
+  const verdict = e.openness_0_100 >= 70 ? "Open" : e.openness_0_100 >= 45 ? "Moderate" : "Closed";
   return (
     <Box><Head sample>Selling abroad</Head>
-      <div className="flex items-center gap-5"><div className="shrink-0"><Gauge value={e.openness_0_100} endLabels={["Closed", "Open"]} sub="Export openness" /></div>
-        <div className="flex-1 space-y-1.5">{(e.partners ?? []).map((p: any) => <div key={p.name} className="grid grid-cols-[110px_1fr_36px] items-center gap-2"><span className="text-[12px] text-ink-700">{p.name}</span><MiniBar pct={Math.min(100, p.pct * 4)} /><Fig className="text-right text-[12px] text-ink-900">{p.pct}%</Fig></div>)}</div>
-      </div>
+      <div className="mb-3 flex items-baseline gap-2"><span className="text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">Export openness</span><Fig className="text-[18px] text-atlas-700">{e.openness_0_100}</Fig><span className="text-[12px] text-ink-600">/ 100 , {verdict}</span></div>
+      <div className="text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">Top markets</div>
+      <div className="mt-1.5 divide-y divide-parchment">{(e.partners ?? []).map((p: any) => <div key={p.name} className="flex items-center justify-between py-1.5"><span className="text-[12.5px] text-ink-800">{p.name}</span><Fig className="text-[12.5px] text-ink-900">{p.pct}%</Fig></div>)}</div>
     </Box>
   );
 }
@@ -439,10 +473,11 @@ function Employment({ d }: { d: any }) {
   );
 }
 function Closing({ d }: { d: any }) {
-  const c = d.closing ?? {};
+  const c = d.closing ?? {}; const verdict = c.ease_0_100 >= 65 ? "Manageable" : c.ease_0_100 >= 40 ? "Some friction" : "Hard";
   return (
     <Box><Head sample>If it doesn&apos;t work, getting out</Head>
-      <div className="flex items-center gap-5"><div className="shrink-0"><Gauge value={c.ease_0_100} endLabels={["Hard", "Easy"]} sub="Ease of closing" /></div><div className="flex-1"><Bullets items={c.bullets ?? []} /></div></div>
+      <div className="mb-3 grid grid-cols-3 gap-2.5 text-center">{[[verdict, "to wind down"], [`${c.time_months}`, "months, typically"], [`${c.cost_pct}%`, "of assets, cost"]].map(([v, l]) => <div key={l} className="rounded-lg border border-parchment p-2.5"><Fig className="text-[15px] text-ink-900">{v}</Fig><div className="text-[10.5px] leading-tight text-ink-600">{l}</div></div>)}</div>
+      <Bullets items={c.bullets ?? []} />
     </Box>
   );
 }
