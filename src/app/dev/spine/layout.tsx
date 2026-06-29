@@ -23,7 +23,7 @@ export default function SpineLayout({ children }: { children: React.ReactNode })
         style={{
           position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
           backgroundImage: "url('https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=1920&q=60')",
-          backgroundSize: "cover", backgroundPosition: "center 16%", opacity: 0.42,
+          backgroundSize: "cover", backgroundPosition: "center 16%", opacity: 0.32,
         }}
       />
       <style>{`:root{--c-card:#ffffff;--c-soft:#f5f5f5;--c-soft2:#ececec;--c-border:#e3e3e3;--c-ink:#1b1b1a;--c-ink2:#565654;--c-muted:#6f6f6d;--terra:#fb8469;--terra-text:#c2410c;--terra-soft:#fff1ed;--terra-border:#ffc7ba;}

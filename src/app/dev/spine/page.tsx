@@ -12,7 +12,12 @@ import { CountryFlag } from "@/components/CountryFlag";
 import { AtlasIcon, type AtlasIconId } from "@/components/brand/icons";
 
 function Ico({ id, tone = "ink" }: { id: AtlasIconId; tone?: "ink" | "terra" }) {
-  return <AtlasIcon id={id} size={18} className="spine-ic shrink-0" style={{ color: tone === "terra" ? "var(--terra-text)" : "var(--c-muted)" }} />;
+  const terra = tone === "terra";
+  return (
+    <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border" style={{ background: terra ? "var(--terra-soft)" : "var(--c-soft)", borderColor: terra ? "var(--terra-border)" : "var(--c-border)" }}>
+      <AtlasIcon id={id} size={16} className="spine-ic" style={{ color: terra ? "var(--terra-text)" : "var(--c-ink2)" }} />
+    </span>
+  );
 }
 
 export const dynamic = "force-static";
@@ -145,7 +150,7 @@ function Row({ children }: { children: React.ReactNode }) {
 function Hero({ d }: { d: any }) {
   const h = d.headline ?? {};
   const tiles: Array<[string, string, string?]> = [
-    ["Small-business tax", `${h.smb_tax_pct}%`], ["Average salary", usdMo(h.average_salary_usd), "/mo"],
+    ["Business tax", `${h.smb_tax_pct}%`], ["Average salary", usdMo(h.average_salary_usd), "/mo"],
     ["Minimum wage", usdMo(h.min_wage_usd_yr), "/mo"], ["GDP / capita", usd(h.gdp_per_capita_usd)],
     ["Net wealth / adult", usd(h.net_wealth_per_adult_usd)], ["Ease of business", `${h.ease_of_business_score}`, "/100"],
     ["Cost of living", `${h.cost_of_living_index}`, "/100"], ["Days to start", `${d.setup?.total_days}`],
@@ -160,7 +165,7 @@ function Hero({ d }: { d: any }) {
         <div className="ml-auto grid w-full max-w-[560px] grid-cols-2 gap-px overflow-hidden rounded-xl border border-[var(--terra-border)] sm:grid-cols-4" style={{ background: TERRA }}>
           {tiles.map(([label, value, unit]) => (
             <div key={label} className="bg-[var(--c-card)] px-3 py-2">
-              <div className="text-[9px] font-semibold uppercase leading-tight tracking-[0.1em] text-[var(--c-muted)]">{label}</div>
+              <div className="truncate text-[8.5px] font-semibold uppercase tracking-[0.06em] text-[var(--c-muted)]">{label}</div>
               <div className="mt-0.5 text-[16px] text-[var(--c-ink)]"><Fig>{value}</Fig>{unit ? <span className="text-[11px] text-[var(--c-muted)]">{unit}</span> : null}</div>
             </div>
           ))}
@@ -405,11 +410,15 @@ function AdminLoad({ d }: { d: any }) {
 function Cities({ d }: { d: any }) {
   const list = d.cities?.list ?? [];
   return (
-    <Box><Head icon="neighborhood">The main cities</Head>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">{list.slice(0, 10).map((c: any) => (
-        <a key={c.slug} className="cityhov group block cursor-pointer overflow-hidden rounded-lg border border-[var(--c-border)] bg-[var(--c-card)]">
-          <div className="flex aspect-[16/7] items-center justify-center bg-[var(--c-soft)] text-[#cfcfcf]"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3"><path d="M3 21h18M5 21V7l5-3v17M19 21V11l-5-3" /></svg></div>
-          <div className="px-2.5 py-2"><div className="text-[12.5px] font-semibold text-[var(--c-ink)] group-hover:text-[var(--terra-text)]">{c.name}</div><div className="truncate text-[10.5px] text-[var(--c-ink2)]">{c.character}</div></div>
+    <Box>
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2"><Ico id="neighborhood" /><span className="text-[15px] font-semibold text-[var(--c-ink)]">The main cities</span></div>
+        <a href="/countries" className="shrink-0 cursor-pointer rounded-full border border-[var(--c-border)] px-3 py-1 text-[12px] font-semibold text-[var(--terra-text)] transition hover:border-[var(--terra-border)] hover:bg-[var(--terra-soft)]">Open the directory &#8594;</a>
+      </div>
+      <div className="-mx-1 flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-2">{list.map((c: any) => (
+        <a key={c.slug} href="#" className="cityhov group block w-[188px] shrink-0 snap-start cursor-pointer overflow-hidden rounded-lg border border-[var(--c-border)] bg-[var(--c-card)]">
+          <div className="flex aspect-[16/8] items-center justify-center bg-[var(--c-soft)] text-[#cfcfcf]"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3"><path d="M3 21h18M5 21V7l5-3v17M19 21V11l-5-3" /></svg></div>
+          <div className="px-3 py-2.5"><div className="text-[13px] font-semibold text-[var(--c-ink)] group-hover:text-[var(--terra-text)]">{c.name}</div><div className="truncate text-[11px] text-[var(--c-ink2)]">{c.character}</div></div>
         </a>))}
       </div>
     </Box>
@@ -431,7 +440,11 @@ function Insurance({ d }: { d: any }) {
     <Box><Head sample icon="watch">Insurance the business carries</Head>
       <div className="space-y-2">{covers.map((c: any, i: number) => (
         <Expand key={i} name="insurance" title={c.name} open={i === 0} right={<span className="flex items-center gap-2">{c.required ? <span className="rounded-full bg-[var(--terra-soft)] px-2 py-0.5 text-[9px] font-semibold uppercase text-[var(--terra-text)]">required</span> : null}<Fig className="text-[13px] text-[var(--c-ink)]">${c.typical_usd}<span className="text-[10px] text-[var(--c-muted)]">/yr</span></Fig></span>}>
-          {c.required ? "Legally required once you employ anyone." : "Optional, but most operators carry it."} Typical premium for a small firm; rises with payroll, turnover and claims history.
+          <div className="grid gap-1.5 sm:grid-cols-2">
+            <div><div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Covers</div><div className="text-[12.5px] text-[var(--c-ink2)]">{c.covers}</div></div>
+            <div><div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Who needs it</div><div className="text-[12.5px] text-[var(--c-ink2)]">{c.who}</div></div>
+          </div>
+          <div className="mt-2 border-t border-[var(--c-border)] pt-2 text-[12px] text-[var(--c-ink2)]">{c.note}</div>
         </Expand>))}
       </div>
     </Box>
@@ -482,12 +495,16 @@ function Exit({ d }: { d: any }) {
     </Box>
   );
 }
+function CatRows({ rows }: { rows: Array<[string, any]> }) {
+  return <div className="divide-y divide-[var(--c-border)]">{rows.map(([k, v]) => v ? <div key={k} className="hov -mx-2 flex gap-3 rounded-md px-2 py-1.5"><span className="w-28 shrink-0 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{k}</span><span className="text-[12.5px] text-[var(--c-ink2)]">{v}</span></div> : null)}</div>;
+}
 function Employment({ d }: { d: any }) {
   const e = d.employment ?? {};
   return (
     <Box><Head sample icon="hiring">Working here, the rules</Head>
-      <div className="mb-3 grid grid-cols-2 gap-2.5">{[[`${e.holiday_days}`, "paid holiday days"], [`${e.union_pct}%`, "in a union"]].map(([v, l]) => <div key={l} className="rounded-lg border border-[var(--c-border)] p-2.5 text-center"><Fig className="text-[20px] text-[var(--c-ink)]">{v}</Fig><div className="text-[10.5px] text-[var(--c-ink2)]">{l}</div></div>)}</div>
-      <Bullets items={e.bullets ?? []} />
+      <div className="mb-3 grid grid-cols-2 gap-2.5">{[[`${e.holiday_days}`, "paid holiday days a year"], [`${e.union_pct}%`, "of workers in a union"]].map(([v, l]) => <div key={l} className="hov rounded-lg border border-[var(--c-border)] p-2.5 text-center"><Fig className="text-[20px] text-[var(--c-ink)]">{v}</Fig><div className="text-[10.5px] text-[var(--c-ink2)]">{l}</div></div>)}</div>
+      <CatRows rows={[["Working hours", e.hours], ["Sick pay", e.sick_pay], ["Maternity leave", e.maternity], ["Notice period", e.notice], ["Dismissal", e.dismissal]]} />
+      <div className="mt-3 border-t border-[var(--c-border)] pt-3"><Bullets items={e.bullets ?? []} /></div>
     </Box>
   );
 }
@@ -495,8 +512,9 @@ function Closing({ d }: { d: any }) {
   const c = d.closing ?? {}; const verdict = c.ease_0_100 >= 65 ? "Manageable" : c.ease_0_100 >= 40 ? "Some friction" : "Hard";
   return (
     <Box><Head sample icon="honest-take">If it doesn&apos;t work, getting out</Head>
-      <div className="mb-3 grid grid-cols-3 gap-2.5 text-center">{[[verdict, "to wind down"], [`${c.time_months}`, "months, typically"], [`${c.cost_pct}%`, "of assets, cost"]].map(([v, l]) => <div key={l} className="rounded-lg border border-[var(--c-border)] p-2.5"><Fig className="text-[15px] text-[var(--c-ink)]">{v}</Fig><div className="text-[10.5px] leading-tight text-[var(--c-ink2)]">{l}</div></div>)}</div>
-      <Bullets items={c.bullets ?? []} />
+      <div className="mb-3 grid grid-cols-3 gap-2.5 text-center">{[[verdict, "to wind down"], [`${c.time_months}`, "months, typically"], [`${c.cost_pct}%`, "of assets, the cost"]].map(([v, l]) => <div key={l} className="hov rounded-lg border border-[var(--c-border)] p-2.5"><Fig className="text-[15px] text-[var(--c-ink)]">{v}</Fig><div className="text-[10.5px] leading-tight text-[var(--c-ink2)]">{l}</div></div>)}</div>
+      <CatRows rows={[["If solvent", c.solvent], ["If insolvent", c.insolvent], ["Your liability", c.liability]]} />
+      <div className="mt-3 border-t border-[var(--c-border)] pt-3"><Bullets items={c.bullets ?? []} /></div>
     </Box>
   );
 }
@@ -530,7 +548,7 @@ export default function SpinePage() {
       <div className="space-y-4"><Row><SpendDonut d={d} /><Income d={d} /></Row><Neighbours d={d} /><Row><Competition d={d} /><AdminLoad d={d} /></Row></div>
 
       <Movement eyebrow="Places, trades and character" heading="Where, what, and what it feels like" icon="best-areas" />
-      <div className="space-y-4"><Cities d={d} /><EasiestTrades d={d} /><Row><Insurance d={d} /><SellingAbroad d={d} /></Row><Character d={d} /><Row><Locals d={d} /><Exit d={d} /></Row><Row><Employment d={d} /><Closing d={d} /></Row></div>
+      <div className="space-y-4"><Cities d={d} /><EasiestTrades d={d} /><div className="flex flex-col gap-4 md:flex-row"><div className="md:w-[68%]"><Insurance d={d} /></div><div className="md:w-[32%]"><SellingAbroad d={d} /></div></div><Character d={d} /><Row><Locals d={d} /><Exit d={d} /></Row><Row><Employment d={d} /><Closing d={d} /></Row></div>
 
       <Movement eyebrow="The close" heading="Your next move" icon="bookmark" />
       <Close d={d} />
