@@ -9,6 +9,11 @@ import * as React from "react";
 import fs from "node:fs";
 import path from "node:path";
 import { CountryFlag } from "@/components/CountryFlag";
+import { AtlasIcon, type AtlasIconId } from "@/components/brand/icons";
+
+function Ico({ id, tone = "ink" }: { id: AtlasIconId; tone?: "ink" | "terra" }) {
+  return <AtlasIcon id={id} size={18} className="spine-ic shrink-0" style={{ color: tone === "terra" ? "var(--terra-text)" : "var(--c-muted)" }} />;
+}
 
 export const dynamic = "force-static";
 const GB: any = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), "../page-data/countries/GB.json"), "utf8"));
@@ -65,14 +70,15 @@ function MiniBar({ pct }: { pct: number }) {
 }
 
 /* ---------- atoms ---------- */
-function Movement({ eyebrow, heading, sample }: { eyebrow: string; heading: string; sample?: boolean }) {
+function Movement({ eyebrow, heading, sample, icon }: { eyebrow: string; heading: string; sample?: boolean; icon: AtlasIconId }) {
   return (
     <div className="mb-3 mt-12">
       <div className="mb-1.5 flex items-center gap-2">
+        <Ico id={icon} tone="terra" />
         <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--terra-text)]">{eyebrow}</span>
         {sample ? <span className="rounded-full bg-[var(--c-soft2)] px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-[var(--c-muted)]">sample data</span> : null}
       </div>
-      <h2 className="text-xl font-semibold tracking-tight text-[var(--c-ink)] md:text-2xl">{heading}</h2>
+      <h2 className="text-2xl font-bold tracking-tight text-[var(--c-ink)] md:text-3xl">{heading}</h2>
     </div>
   );
 }
@@ -83,7 +89,7 @@ function Box({ children, className = "" }: { children: React.ReactNode; classNam
 function EaseScale({ rows }: { rows: Array<[string, number, string]> }) {
   return (
     <div className="space-y-3.5">{rows.map(([label, pos, word]) => (
-      <div key={label} className="grid grid-cols-[150px_1fr] items-center gap-3">
+      <div key={label} className="hov -mx-2 grid grid-cols-[150px_1fr] items-center gap-3 rounded-md px-2 py-1.5">
         <span className="text-[12.5px] text-[var(--c-ink2)]">{label}</span>
         <div className="relative h-1.5 rounded-full" style={{ background: "linear-gradient(90deg,#e6e6e6,#ffe1d8)" }}>
           <div className="absolute top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center" style={{ left: `${pos}%` }}>
@@ -107,8 +113,8 @@ function Meter({ value, left, right }: { value: number; left: string; right: str
     </div>
   );
 }
-function Head({ children, sample }: { children: React.ReactNode; sample?: boolean }) {
-  return <div className="mb-3 flex items-center gap-2"><span className="text-[15px] font-semibold text-[var(--c-ink)]">{children}</span>{sample ? <span className="rounded-full bg-[var(--c-soft2)] px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-[var(--c-muted)]">sample</span> : null}</div>;
+function Head({ children, sample, icon }: { children: React.ReactNode; sample?: boolean; icon?: AtlasIconId }) {
+  return <div className="mb-3 flex items-center gap-2">{icon ? <Ico id={icon} /> : null}<span className="text-[15px] font-semibold text-[var(--c-ink)]">{children}</span>{sample ? <span className="rounded-full bg-[var(--c-soft2)] px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-[var(--c-muted)]">sample</span> : null}</div>;
 }
 function Chip({ children }: { children: React.ReactNode }) {
   return <span className="inline-block rounded-full border border-[var(--c-border)] bg-[var(--c-soft)] px-2.5 py-0.5 text-[11px] text-[var(--c-ink2)]">{children}</span>;
@@ -167,7 +173,7 @@ function MarginReality() {
   const parts: Array<[string, number, string]> = [["Labour", 38, "#737373"], ["Tax", 16, "#a3a3a3"], ["Premises & energy", 13, "#d4d4d4"], ["Other costs", 18, "#e6e6e6"], ["Margin", 15, TERRA]];
   return (
     <Box className="md:flex-[3]">
-      <Head sample>What a business keeps here</Head>
+      <Head sample icon="owner-keeps">What a business keeps here</Head>
       <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1"><Fig className="text-3xl text-[var(--c-ink)]">~$15</Fig><span className="text-sm text-[var(--c-ink2)]">of every $100 of revenue survives as margin for a typical small business.</span></div>
       <div className="mt-4 flex h-10 overflow-hidden rounded-lg border border-[var(--c-border)]">{parts.map(([n, pct, bg]) => <div key={n} className="h-full" style={{ width: `${pct}%`, background: bg }} title={`${n} ${pct}%`} />)}</div>
       <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5">{parts.map(([n, pct, bg]) => <span key={n} className="inline-flex items-center gap-1.5 text-[11px] text-[var(--c-ink2)]"><span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ background: bg }} />{n} <Fig className="text-[var(--c-ink)]">{pct}%</Fig></span>)}</div>
@@ -179,10 +185,10 @@ function Profile({ d }: { d: any }) {
   const lenses: Array<[string, string]> = [["economic_reward", "Demand"], ["ease_of_business", "Ease of entry"], ["talent_pool", "Talent pool"], ["political_stability", "Stability"], ["access_to_financing", "Access to finance"], ["affordability", "Affordability"]];
   return (
     <Box className="md:flex-[2]">
-      <Head>The country, in six lenses</Head>
+      <Head icon="vs-world">The country, in six lenses</Head>
       <div className="grid grid-cols-2 gap-2.5">
         {lenses.map(([k, label]) => { const s = Number(ep[k] ?? 0); return (
-          <div key={k} className="rounded-lg border border-[var(--c-border)] p-3"><div className="text-[11.5px] font-medium text-[var(--c-ink2)]">{label}</div><div className="my-2"><Dots score={s} /></div><Fig className="text-[15px] text-[var(--c-ink)]">{s}<span className="text-[10px] text-[var(--c-muted)]">/10</span></Fig></div>
+          <div key={k} className="hov rounded-lg border border-[var(--c-border)] p-3"><div className="text-[11.5px] font-medium text-[var(--c-ink2)]">{label}</div><div className="my-2"><Dots score={s} /></div><Fig className="text-[15px] text-[var(--c-ink)]">{s}<span className="text-[10px] text-[var(--c-muted)]">/10</span></Fig></div>
         ); })}
       </div>
     </Box>
@@ -194,7 +200,7 @@ function SetupStepper({ d }: { d: any }) {
   const steps = d.setup?.steps ?? []; const maxStep = Math.max(1, ...steps.map((s: any) => s.time_days || 0));
   const total = steps.reduce((a: number, s: any) => a + (s.time_days || 0), 0);
   return (
-    <Box><Head>Register and start doing business</Head>
+    <Box><Head icon="red-tape">Register and start doing business</Head>
       <div className="relative">
         {/* one continuous timeline line behind the points */}
         <div className="absolute left-[8%] right-[8%] top-[62px] h-0.5" style={{ background: "#e6e6e6" }} />
@@ -222,7 +228,7 @@ function formationExtra(name: string) {
 function Formation({ d }: { d: any }) {
   const structures = d.setup?.structures ?? [];
   return (
-    <Box className="md:flex-[2]"><Head>Which legal structure to form</Head>
+    <Box className="md:flex-[2]"><Head icon="methodology">Which legal structure to form</Head>
       <div className="space-y-2">{structures.map((s: any, i: number) => { const x = formationExtra(s.name); return (
         <Expand key={i} name="formation" title={s.name} open={i === 0}>
           <p className="mb-2 text-[12px] leading-snug text-[var(--c-ink2)]">{x.summary}</p>
@@ -236,7 +242,7 @@ function Formation({ d }: { d: any }) {
 function Banking({ d }: { d: any }) {
   const b = d.setup?.banking ?? {};
   return (
-    <Box className="md:flex-[3]"><Head>Opening a business bank account</Head>
+    <Box className="md:flex-[3]"><Head icon="owner-keeps">Opening a business bank account</Head>
       <div className="mb-3 flex flex-wrap items-center gap-2.5"><span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">How hard</span><span className="rounded-full border border-[var(--terra-border)] bg-[var(--terra-soft)] px-3 py-0.5 text-[13px] font-semibold capitalize text-[var(--terra-text)]">{b.friction}</span><span className="text-[11.5px] text-[var(--c-ink2)]">{b.can_foreigner ? "Open to foreign owners" : "Restricted"}</span></div>
       <div className="mb-3"><Bullets items={b.bullets ?? []} /></div>
       {[["High-street", b.banks_traditional], ["Digital", b.banks_digital]].map(([label, arr]) => (
@@ -247,7 +253,7 @@ function Banking({ d }: { d: any }) {
 function TaxByLevel({ d }: { d: any }) {
   const groups = d.tax_detail?.groups ?? [];
   return (
-    <Box><Head>What the business actually pays, by level</Head>
+    <Box><Head icon="taxes">What the business actually pays, by level</Head>
       <div className="grid gap-6 md:grid-cols-3">{groups.map((g: any) => (
         <div key={g.level}><div className="mb-2.5 border-b border-[var(--c-border)] pb-2 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{g.level}</div>
           <div className="space-y-3">{(g.items ?? []).map((it: any) => (
@@ -264,7 +270,7 @@ function PayByLevel({ d }: { d: any }) {
   const o = d.people_pay?.pay_by_level_usd ?? {}; const levels: Array<[string, string]> = [["junior", "Entry / wage floor"], ["experienced", "Skilled"], ["senior", "Senior"], ["specialist", "Management & specialist"]];
   const max = Math.max(...levels.map(([k]) => o[k] || 0)) * 1.08;
   return (
-    <Box className="md:flex-[3]"><Head>What staff cost to employ</Head>
+    <Box className="md:flex-[3]"><Head icon="wages">What staff cost to employ</Head>
       <div className="space-y-3">{levels.map(([k, label]) => { const v = o[k] || 0; const lo = v * 0.82, hi = v * 1.2; const L = (lo / max) * 100, W = ((hi - lo) / max) * 100, M = (v / max) * 100; return (
         <div key={k} className="hov -mx-2 grid grid-cols-[150px_1fr_70px] items-center gap-3 rounded-md px-2 py-0.5"><span className="text-[12.5px] text-[var(--c-ink2)]">{label}</span>
           <div className="relative h-3.5"><div className="absolute top-1/2 h-0.5 w-full -translate-y-1/2 rounded" style={{ background: "#e3e3e3" }} /><div className="absolute top-1/2 h-1.5 -translate-y-1/2 rounded" style={{ left: `${L}%`, width: `${W}%`, background: TERRA }} /><div className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 bg-white" style={{ left: `${M}%`, borderColor: TERRA }} /></div>
@@ -278,7 +284,7 @@ function HiringDials({ d }: { d: any }) {
   const h = d.people_pay?.hiring ?? {}; const eMap: any = { easy: 84, moderate: 52, hard: 18, deep: 84, fair: 52, thin: 18 };
   const rows: Array<[string, number, string]> = [["Hiring someone", eMap[h.hire_ease] ?? 50, cap(h.hire_ease)], ["Contracts you can use", eMap[h.contract_ease] ?? 50, cap(h.contract_ease)], ["Letting someone go", eMap[h.fire_ease] ?? 50, cap(h.fire_ease)], ["Depth of talent", eMap[h.recruiting_depth] ?? 50, cap(h.recruiting_depth)]];
   return (
-    <Box className="md:flex-[2]"><Head>How easy it is to hire and let go</Head>
+    <Box className="md:flex-[2]"><Head icon="hiring">How easy it is to hire and let go</Head>
       <div className="mb-5 mt-1 flex justify-between text-[10px] uppercase tracking-wide text-[var(--c-muted)]"><span>Harder / rigid</span><span>Easier / flexible</span></div>
       <EaseScale rows={rows} />
     </Box>
@@ -288,7 +294,7 @@ function TalentDepth({ d }: { d: any }) {
   const map: any = { finance: "Finance", software_tech: "Software & tech", professional_legal: "Professional & legal", creative_media: "Creative & media", life_sciences: "Life sciences", manufacturing_trades: "Manufacturing & trades" };
   const arr = (d.people_pay?.talent_depth ?? []).slice().sort((a: any, b: any) => b.score_1_5 - a.score_1_5);
   return (
-    <Box><Head>How deep the talent pool runs, by field</Head>
+    <Box><Head icon="who-for">How deep the talent pool runs, by field</Head>
       <div className="space-y-2.5">{arr.map((t: any) => (
         <div key={t.field} className="hov -mx-2 grid grid-cols-[160px_1fr_44px] items-center gap-3 rounded-md px-2 py-0.5"><span className="text-[12.5px] text-[var(--c-ink2)]">{map[t.field] ?? t.field}</span><MiniBar pct={(t.score_1_5 / 5) * 100} /><Fig className="text-right text-[13px] text-[var(--c-ink)]">{t.score_1_5 * 2}/10</Fig></div>))}
       </div>
@@ -299,9 +305,9 @@ function TalentDepth({ d }: { d: any }) {
 function OperatingCosts({ d }: { d: any }) {
   const c = d.costs ?? {}; const cells: Array<[string, string]> = [[`$${(Math.round(c.energy_usd_per_kwh * 100) / 100)}`, "Electricity, per kWh"], [`$${c.commercial_rent_usd_sqm_yr?.toLocaleString("en-US")}`, "Commercial rent, per sqm a year"], [`$${Math.round(c.labour_cost_index_usd / 1000)}K`, "Loaded labour, per worker a year"], [`$${c.license_setup_usd}`, "Licence & setup, one-off"]];
   return (
-    <Box><Head>What it costs to run premises</Head>
+    <Box><Head icon="commercial-rent">What it costs to run premises</Head>
       <div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-[var(--c-border)]" style={{ background: "#efefef" }}>
-        {cells.map(([v, l]) => <div key={l} className="bg-[var(--c-card)] p-3.5"><Fig className="text-[22px] text-[var(--c-ink)]">{v}</Fig><div className="mt-1 text-[11px] leading-tight text-[var(--c-ink2)]">{l}</div></div>)}
+        {cells.map(([v, l]) => <div key={l} className="hov bg-[var(--c-card)] p-3.5"><Fig className="text-[22px] text-[var(--c-ink)]">{v}</Fig><div className="mt-1 text-[11px] leading-tight text-[var(--c-ink2)]">{l}</div></div>)}
       </div>
     </Box>
   );
@@ -309,7 +315,7 @@ function OperatingCosts({ d }: { d: any }) {
 function Financing({ d }: { d: any }) {
   const f = d.financing ?? {};
   return (
-    <Box><Head sample>Where the money comes from</Head>
+    <Box><Head sample icon="calculator">Where the money comes from</Head>
       <div className="mb-4"><div className="flex items-baseline gap-2"><span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Ease of raising money</span><Fig className="text-[var(--terra-text)]">{f.ease_0_100}/100</Fig></div><div className="mt-1.5"><Meter value={f.ease_0_100} left="Hard" right="Easy" /></div></div>
       <div className="divide-y divide-[var(--c-border)]">{(f.sources ?? []).map((s: any) => <div key={s.name} className="py-2"><div className="text-[13px] font-medium text-[var(--c-ink)]">{s.name}</div><div className="text-[11.5px] text-[var(--c-ink2)]">{s.note}</div></div>)}</div>
     </Box>
@@ -317,7 +323,7 @@ function Financing({ d }: { d: any }) {
 }
 function Grants({ d }: { d: any }) {
   return (
-    <Box><Head sample>Grants and incentives</Head>
+    <Box><Head sample icon="free-zone">Grants and incentives</Head>
       <div className="space-y-2">{(d.grants?.list ?? []).map((g: any, i: number) => (
         <Expand key={i} name="grants" title={g.name} right={<Fig className="text-[13px] text-[var(--terra-text)]">{g.value}</Fig>}>{g.who} can apply. Non-dilutive where it is a grant; loans carry a fixed rate.</Expand>))}
       </div>
@@ -331,7 +337,7 @@ function SpendDonut({ d }: { d: any }) {
   const disc = Math.round(get("recreation") + get("dining_out"));
   const segs: Array<[string, number, string]> = [["Housing & utilities", get("housing_utilities"), "#737373"], ["Transport", get("transport"), "#9a9a9a"], ["Food & drink", get("food_drink"), "#d4d4d4"], ["Discretionary", disc, TERRA], ["Other", Math.round(get("household_goods") + get("other")), "#ededed"]];
   return (
-    <Box><Head>Where a household&apos;s money goes</Head>
+    <Box><Head icon="cost-breakdown">Where a household&apos;s money goes</Head>
       <div className="flex items-center gap-5"><Donut segs={segs} centerBig={`${disc}%`} centerSub="to spend out" />
         <div className="flex-1 space-y-1.5">{segs.map(([n, pct, c]) => <div key={n} className="flex items-center gap-2 text-[12px] text-[var(--c-ink2)]"><span className="h-2.5 w-2.5 rounded-sm" style={{ background: c }} />{n} <Fig className="ml-auto text-[var(--c-ink)]">{pct}%</Fig></div>)}</div>
       </div>
@@ -342,8 +348,8 @@ function Income({ d }: { d: any }) {
   const o = d.income ?? {}; const tiles: Array<[string, number]> = [["Median earner", o.median_income_usd], ["Top 10%", o.top10_income_usd], ["Top 1%", o.top1_income_usd]];
   const bands = ["very_equal", "fairly_equal", "moderate", "high", "very_high"]; const gi = bands.indexOf(o.gini_band);
   return (
-    <Box><Head>What customers earn</Head>
-      <div className="grid grid-cols-3 gap-2.5">{tiles.map(([l, v]) => <div key={l} className="rounded-lg border border-[var(--c-border)] p-3"><div className="text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{l}</div><Fig className="text-[21px] text-[var(--c-ink)]">${Math.round(v / 1000)}K</Fig></div>)}</div>
+    <Box><Head icon="spending-power">What customers earn</Head>
+      <div className="grid grid-cols-3 gap-2.5">{tiles.map(([l, v]) => <div key={l} className="hov rounded-lg border border-[var(--c-border)] p-3"><div className="text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{l}</div><Fig className="text-[21px] text-[var(--c-ink)]">${Math.round(v / 1000)}K</Fig></div>)}</div>
       <div className="mt-3 flex items-center gap-2"><div className="flex gap-1">{bands.map((b, i) => <span key={b} className="h-1.5 w-6 rounded-sm" style={{ background: i === gi ? TERRA : "#e3e3e3" }} />)}</div><span className="text-[11.5px] text-[var(--c-ink2)]">{cap((o.gini_band ?? "").replace("_", " "))} spread between earners</span></div>
     </Box>
   );
@@ -363,12 +369,12 @@ function Neighbours({ d }: { d: any }) {
   const wins = cols.filter((c, i) => home && home.vals[i] === best[i]).map((c) => c.label.toLowerCase());
   const loses = cols.filter((c, i) => { const xs = rows.map((r) => r.vals[i]).filter((v) => v != null); const worst = c.lowGood ? Math.max(...xs) : Math.min(...xs); return home && home.vals[i] === worst; }).map((c) => c.label.toLowerCase());
   return (
-    <Box><Head>How it compares, country by country</Head>
-      {wins.length || loses.length ? <div className="mb-3 text-[12.5px] text-[var(--c-ink2)]">{d.meta?.name} leads its peers on <b className="text-[var(--terra-text)]">{wins.join(", ") || "nothing"}</b>{loses.length ? <>, and trails on <b className="text-[var(--c-ink)]">{loses.join(", ")}</b></> : null}.</div> : null}
+    <Box><Head icon="compare">How it compares, country by country</Head>
+      {wins.length || loses.length ? <div className="mb-3 text-[12.5px] text-[var(--c-ink2)]">{d.meta?.name} leads its peers on <b className="text-[var(--terra-text)]">{wins.join(", ") || "none yet"}</b>{loses.length ? <>, and trails on <b className="text-[var(--c-ink)]">{loses.join(", ")}</b></> : null}.</div> : null}
       <div className="overflow-x-auto"><table className="w-full text-[13px]"><thead><tr className="border-b border-[var(--c-border)] text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]"><th className="py-2 pr-3 text-left font-semibold">Country</th>{cols.map((c) => <th key={c.key} className="px-3 py-2 text-right font-semibold">{c.label} <span className="font-normal text-[var(--c-muted)]">({c.unit})</span></th>)}</tr></thead>
         <tbody>{rows.map((r) => (
           <tr key={r.code} className="border-b border-[var(--c-border)] transition hover:bg-[var(--c-soft)]" style={r.home ? { background: "#fff4f1" } : undefined}><td className="py-2.5 pr-3 font-medium text-[var(--c-ink)]">{r.name}</td>{r.vals.map((v: number, i: number) => (
-            <td key={i} className="px-3 py-2.5 text-right"><Fig className={v != null && v === best[i] ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}>{v == null ? "—" : cols[i].cell(v)}</Fig></td>))}
+            <td key={i} className="px-3 py-2.5 text-right"><Fig className={v != null && v === best[i] ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}>{v == null ? "-" : cols[i].cell(v)}</Fig></td>))}
           </tr>))}
         </tbody></table></div>
       <div className="mt-2 text-[11px] text-[var(--c-muted)]">Best in each column is bold. The home country is tinted, never ranked.</div>
@@ -378,7 +384,7 @@ function Neighbours({ d }: { d: any }) {
 function Competition({ d }: { d: any }) {
   const arr = (d.competition?.trades ?? []).slice().sort((a: any, b: any) => b.saturation_0_100 - a.saturation_0_100);
   return (
-    <Box><Head sample>How crowded the market is</Head>
+    <Box><Head sample icon="competition">How crowded the market is</Head>
       <div className="space-y-2.5">{arr.map((t: any) => (
         <div key={t.name} className="hov -mx-2 grid grid-cols-[130px_1fr_66px] items-center gap-3 rounded-md px-2 py-1"><span className="text-[12.5px] text-[var(--c-ink2)]">{t.name}</span><MiniBar pct={t.saturation_0_100} /><span className="text-right text-[11.5px] text-[var(--c-ink2)]">{t.saturation_0_100 > 70 ? "Crowded" : t.saturation_0_100 > 50 ? "Busy" : "Room"}</span></div>))}
       </div>
@@ -388,7 +394,7 @@ function Competition({ d }: { d: any }) {
 function AdminLoad({ d }: { d: any }) {
   const a = d.admin_load ?? {};
   return (
-    <Box><Head sample>The admin load</Head>
+    <Box><Head sample icon="red-tape">The admin load</Head>
       <div className="mb-3 grid grid-cols-3 gap-2.5 text-center">{[[`${a.hours_per_year}h`, "a year on admin"], [`${a.online_pct}%`, "done online"], [`${a.filings_per_year}`, "filings a year"]].map(([v, l]) => <div key={l} className="rounded-lg border border-[var(--c-border)] p-2.5"><Fig className="text-[20px] text-[var(--c-ink)]">{v}</Fig><div className="text-[10.5px] leading-tight text-[var(--c-ink2)]">{l}</div></div>)}</div>
       <Bullets items={a.bullets ?? []} />
     </Box>
@@ -399,7 +405,7 @@ function AdminLoad({ d }: { d: any }) {
 function Cities({ d }: { d: any }) {
   const list = d.cities?.list ?? [];
   return (
-    <Box><Head>The main cities</Head>
+    <Box><Head icon="neighborhood">The main cities</Head>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">{list.slice(0, 10).map((c: any) => (
         <a key={c.slug} className="cityhov group block cursor-pointer overflow-hidden rounded-lg border border-[var(--c-border)] bg-[var(--c-card)]">
           <div className="flex aspect-[16/7] items-center justify-center bg-[var(--c-soft)] text-[#cfcfcf]"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3"><path d="M3 21h18M5 21V7l5-3v17M19 21V11l-5-3" /></svg></div>
@@ -412,7 +418,7 @@ function Cities({ d }: { d: any }) {
 function EasiestTrades({ d }: { d: any }) {
   const list = d.trades_to_start?.list ?? [];
   return (
-    <Box><Head sample>Easiest trades to start, and what they cost</Head>
+    <Box><Head sample icon="best-areas">Easiest trades to start, and what they cost</Head>
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">{list.map((t: any) => (
         <div key={t.name} className="rounded-lg border border-[var(--c-border)] p-3 text-center"><Gauge value={t.hardship_0_100} endLabels={["Easier", "Harder"]} w={118} /><div className="text-[13px] font-semibold text-[var(--c-ink)]">{t.name}</div><Fig className="text-[16px] text-[var(--terra-text)]">${Math.round(t.cost_to_open_usd / 1000)}K<span className="text-[11px] font-normal text-[var(--c-muted)]"> to open</span></Fig></div>))}
       </div>
@@ -422,7 +428,7 @@ function EasiestTrades({ d }: { d: any }) {
 function Insurance({ d }: { d: any }) {
   const covers = d.insurance?.covers ?? [];
   return (
-    <Box><Head sample>Insurance the business carries</Head>
+    <Box><Head sample icon="watch">Insurance the business carries</Head>
       <div className="space-y-2">{covers.map((c: any, i: number) => (
         <Expand key={i} name="insurance" title={c.name} open={i === 0} right={<span className="flex items-center gap-2">{c.required ? <span className="rounded-full bg-[var(--terra-soft)] px-2 py-0.5 text-[9px] font-semibold uppercase text-[var(--terra-text)]">required</span> : null}<Fig className="text-[13px] text-[var(--c-ink)]">${c.typical_usd}<span className="text-[10px] text-[var(--c-muted)]">/yr</span></Fig></span>}>
           {c.required ? "Legally required once you employ anyone." : "Optional, but most operators carry it."} Typical premium for a small firm; rises with payroll, turnover and claims history.
@@ -435,10 +441,10 @@ function SellingAbroad({ d }: { d: any }) {
   const e = d.exporting ?? {};
   const verdict = e.openness_0_100 >= 70 ? "Open" : e.openness_0_100 >= 45 ? "Moderate" : "Closed";
   return (
-    <Box><Head sample>Selling abroad</Head>
-      <div className="mb-3 flex items-baseline gap-2"><span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Export openness</span><Fig className="text-[18px] text-[var(--terra-text)]">{e.openness_0_100}</Fig><span className="text-[12px] text-[var(--c-ink2)]">/ 100 , {verdict}</span></div>
+    <Box><Head sample icon="vs-world">Selling abroad</Head>
+      <div className="mb-3 flex items-baseline gap-2"><span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Export openness</span><Fig className="text-[18px] text-[var(--terra-text)]">{verdict}</Fig><span className="ml-1.5 text-[12px] text-[var(--c-muted)]">{e.openness_0_100} of 100</span></div>
       <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Top markets</div>
-      <div className="mt-1.5 divide-y divide-[var(--c-border)]">{(e.partners ?? []).map((p: any) => <div key={p.name} className="flex items-center justify-between py-1.5"><span className="text-[12.5px] text-[var(--c-ink)]">{p.name}</span><Fig className="text-[12.5px] text-[var(--c-ink)]">{p.pct}%</Fig></div>)}</div>
+      <div className="mt-1.5 divide-y divide-[var(--c-border)]">{(e.partners ?? []).map((p: any) => <div key={p.name} className="hov -mx-2 flex items-center justify-between rounded-md px-2 py-1"><span className="text-[12.5px] text-[var(--c-ink)]">{p.name}</span><Fig className="text-[12.5px] text-[var(--c-ink)]">{p.pct}%</Fig></div>)}</div>
     </Box>
   );
 }
@@ -450,15 +456,15 @@ function Spectrum({ rows }: { rows: any[] }) {
 function Character({ d }: { d: any }) {
   return (
     <Row>
-      <Box><Head>Government, from a business view</Head><Spectrum rows={d.character?.gov_business ?? []} /></Box>
-      <Box><Head>Culture, from an outsider view</Head><Spectrum rows={d.character?.culture_outsider ?? []} /></Box>
+      <Box><Head icon="corruption">Government, from a business view</Head><Spectrum rows={d.character?.gov_business ?? []} /></Box>
+      <Box><Head icon="tourist">Culture, from an outsider view</Head><Spectrum rows={d.character?.culture_outsider ?? []} /></Box>
     </Row>
   );
 }
 function Locals({ d }: { d: any }) {
   const items = d.character?.locals_intel ?? [];
   return (
-    <Box className="md:flex-[3]"><Head>What locals know</Head>
+    <Box className="md:flex-[3]"><Head icon="locals-know">What locals know</Head>
       <div className="grid gap-x-7 gap-y-3 sm:grid-cols-2">{items.map((it: any, i: number) => (
         <div key={i} className="flex gap-2.5"><span className="mt-0.5 text-[var(--terra-text)]">&#9656;</span><span className="text-[12.5px] leading-snug text-[var(--c-ink2)]"><b className="text-[var(--c-ink)]">{it.title}</b> {it.detail}</span></div>))}
       </div>
@@ -468,8 +474,8 @@ function Locals({ d }: { d: any }) {
 function Exit({ d }: { d: any }) {
   const e = d.risk_exit?.exit ?? {};
   return (
-    <Box className="md:flex-[2]"><Head>How sellable a business is</Head>
-      <div className="flex items-center gap-5"><div className="shrink-0"><Gauge value={e.climate_score_0_100} sub="Resale climate" /></div>
+    <Box className="md:flex-[2]"><Head icon="compare">How sellable a business is</Head>
+      <div className="flex items-center gap-5"><div className="shrink-0"><Gauge value={e.climate_score_0_100} sub="How easy to sell" /></div>
         <div className="space-y-2 text-[12.5px]"><div><div className="text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Time to sell</div><Fig className="text-[16px] text-[var(--c-ink)]">{e.time_to_sell_months_low}-{e.time_to_sell_months_high} mo</Fig></div><div><div className="text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Sale price</div><Fig className="text-[16px] text-[var(--c-ink)]">{e.multiple_low}-{e.multiple_high}x</Fig><span className="text-[11px] text-[var(--c-ink2)]"> a year&apos;s profit</span></div></div>
       </div>
       <div className="mt-3 border-t border-[var(--c-border)] pt-3"><Bullets items={e.bullets ?? []} /></div>
@@ -479,7 +485,7 @@ function Exit({ d }: { d: any }) {
 function Employment({ d }: { d: any }) {
   const e = d.employment ?? {};
   return (
-    <Box><Head sample>Working here, the rules</Head>
+    <Box><Head sample icon="hiring">Working here, the rules</Head>
       <div className="mb-3 grid grid-cols-2 gap-2.5">{[[`${e.holiday_days}`, "paid holiday days"], [`${e.union_pct}%`, "in a union"]].map(([v, l]) => <div key={l} className="rounded-lg border border-[var(--c-border)] p-2.5 text-center"><Fig className="text-[20px] text-[var(--c-ink)]">{v}</Fig><div className="text-[10.5px] text-[var(--c-ink2)]">{l}</div></div>)}</div>
       <Bullets items={e.bullets ?? []} />
     </Box>
@@ -488,7 +494,7 @@ function Employment({ d }: { d: any }) {
 function Closing({ d }: { d: any }) {
   const c = d.closing ?? {}; const verdict = c.ease_0_100 >= 65 ? "Manageable" : c.ease_0_100 >= 40 ? "Some friction" : "Hard";
   return (
-    <Box><Head sample>If it doesn&apos;t work, getting out</Head>
+    <Box><Head sample icon="honest-take">If it doesn&apos;t work, getting out</Head>
       <div className="mb-3 grid grid-cols-3 gap-2.5 text-center">{[[verdict, "to wind down"], [`${c.time_months}`, "months, typically"], [`${c.cost_pct}%`, "of assets, cost"]].map(([v, l]) => <div key={l} className="rounded-lg border border-[var(--c-border)] p-2.5"><Fig className="text-[15px] text-[var(--c-ink)]">{v}</Fig><div className="text-[10.5px] leading-tight text-[var(--c-ink2)]">{l}</div></div>)}</div>
       <Bullets items={c.bullets ?? []} />
     </Box>
@@ -498,7 +504,7 @@ function Close({ d }: { d: any }) {
   const city = d.cities?.list?.[0];
   return (
     <Row>
-      <Box className="md:flex-[3]"><Head>Where to go next</Head>
+      <Box className="md:flex-[3]"><Head icon="bookmark">Where to go next</Head>
         <div className="space-y-2">{[`${city?.name}, the deepest ${d.meta?.name} market`, `Restaurants in ${city?.name}, live take-home`, `Compare ${d.meta?.name} with its neighbours`].map((t, i) => <a key={i} className="block text-[13.5px] font-semibold text-[var(--terra-text)] hover:underline">{t} &#8594;</a>)}</div>
       </Box>
       <Box className="flex flex-col items-start justify-center gap-3 md:flex-[2]" ><div className="text-[14px] text-[var(--c-ink)]">Set {d.meta?.name} beside up to three countries, side by side.</div><a className="rounded-full bg-[var(--c-ink)] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[var(--terra-text)]">Open Compare</a></Box>
@@ -511,22 +517,22 @@ export default function SpinePage() {
   return (
     <main className="mx-auto max-w-5xl px-4 py-8 md:px-6">
       <Hero d={d} />
-      <Movement eyebrow="The verdict" heading="Can I make money here" />
+      <Movement eyebrow="The verdict" heading="Can I make money here" icon="gut-check" />
       <Row><MarginReality /><Profile d={d} /></Row>
 
-      <Movement eyebrow="Getting set up" heading="What it costs and takes to start" />
+      <Movement eyebrow="Getting set up" heading="What it costs and takes to start" icon="register-cost" />
       <div className="space-y-4"><SetupStepper d={d} /><Row><Formation d={d} /><Banking d={d} /></Row><TaxByLevel d={d} /></div>
 
-      <Movement eyebrow="The money and the team" heading="What money and people cost" />
+      <Movement eyebrow="The money and the team" heading="What money and people cost" icon="wages" />
       <div className="space-y-4"><Row><PayByLevel d={d} /><HiringDials d={d} /></Row><Row><TalentDepth d={d} /><OperatingCosts d={d} /></Row><Row><Financing d={d} /><Grants d={d} /></Row></div>
 
-      <Movement eyebrow="The market and the rivals" heading="Who your customers are" />
+      <Movement eyebrow="The market and the rivals" heading="Who your customers are" icon="spending-power" />
       <div className="space-y-4"><Row><SpendDonut d={d} /><Income d={d} /></Row><Neighbours d={d} /><Row><Competition d={d} /><AdminLoad d={d} /></Row></div>
 
-      <Movement eyebrow="Places, trades and character" heading="Where, what, and what it feels like" />
+      <Movement eyebrow="Places, trades and character" heading="Where, what, and what it feels like" icon="best-areas" />
       <div className="space-y-4"><Cities d={d} /><EasiestTrades d={d} /><Row><Insurance d={d} /><SellingAbroad d={d} /></Row><Character d={d} /><Row><Locals d={d} /><Exit d={d} /></Row><Row><Employment d={d} /><Closing d={d} /></Row></div>
 
-      <Movement eyebrow="The close" heading="Your next move" />
+      <Movement eyebrow="The close" heading="Your next move" icon="bookmark" />
       <Close d={d} />
     </main>
   );

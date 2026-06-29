@@ -26,12 +26,14 @@ export default function SpineLayout({ children }: { children: React.ReactNode })
           backgroundSize: "cover", backgroundPosition: "center 16%", opacity: 0.42,
         }}
       />
-      <style>{`:root{--c-card:#ffffff;--c-soft:#f5f5f5;--c-soft2:#ececec;--c-border:#e3e3e3;--c-ink:#1b1b1a;--c-ink2:#565654;--c-muted:#8c8c8a;--terra:#fb8469;--terra-text:#c2410c;--terra-soft:#fff1ed;--terra-border:#ffc7ba;}
+      <style>{`:root{--c-card:#ffffff;--c-soft:#f5f5f5;--c-soft2:#ececec;--c-border:#e3e3e3;--c-ink:#1b1b1a;--c-ink2:#565654;--c-muted:#6f6f6d;--terra:#fb8469;--terra-text:#c2410c;--terra-soft:#fff1ed;--terra-border:#ffc7ba;}
 .fig{font-family:var(--font-grotesk),ui-sans-serif,sans-serif;font-variant-numeric:tabular-nums lining-nums;letter-spacing:0;font-weight:600}
 .hov{transition:background-color .15s ease-out,transform .15s ease-out,border-color .15s ease-out}
 .hov:hover{background:var(--c-soft)}
 .cityhov{transition:transform .15s ease-out,border-color .15s ease-out}
-.cityhov:hover{transform:translateY(-2px);border-color:var(--terra-border)}`}</style>
+.cityhov:hover{transform:translateY(-2px);border-color:var(--terra-border)}
+/* AtlasIcon: neutralize the family's banned #e62200 accent , every glyph rides one currentColor */
+.spine-ic .a{stroke:currentColor}.spine-ic .af{fill:currentColor;stroke:none}`}</style>
       <div style={{ position: "relative", zIndex: 1 }}>{children}</div>
     </div>
   );
