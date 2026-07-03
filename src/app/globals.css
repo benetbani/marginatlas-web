@@ -428,6 +428,16 @@
     fill: #e62200;
     stroke: none;
   }
+  /* Spine pages: the lawful terracotta accent for the Atlas Modern family
+     (ink lines ride currentColor from the Ico tile). Overrides the legacy
+     #e62200 above via the extra .spine-scope class. */
+  .spine-scope .ma-glyph .a {
+    stroke: #c2410c;
+  }
+  .spine-scope .ma-glyph .af {
+    fill: #c2410c;
+    stroke: none;
+  }
 
   /* AtlasSpot (Fable P1-07): the thin secondary ink lines in the spot
      illustrations ride a lighter stroke weight than the main line. */

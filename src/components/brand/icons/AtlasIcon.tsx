@@ -26,6 +26,7 @@ export const AtlasIcon = React.forwardRef<SVGSVGElement, AtlasIconProps>(
     const def = ATLAS_ICONS_BY_ID[id];
     if (!def) return null;
     const labelled = rest["aria-label"] != null;
+    const body = size <= 16 && def.body16 ? def.body16 : def.body;
     return (
       <svg
         {...rest}
@@ -35,13 +36,13 @@ export const AtlasIcon = React.forwardRef<SVGSVGElement, AtlasIconProps>(
         height={size}
         fill="none"
         stroke="currentColor"
-        strokeWidth={1.6}
+        strokeWidth={1.9}
         strokeLinecap="round"
         strokeLinejoin="round"
         role={labelled ? "img" : undefined}
         aria-hidden={labelled ? undefined : true}
         className={["ma-glyph", className].filter(Boolean).join(" ")}
-        dangerouslySetInnerHTML={{ __html: def.body }}
+        dangerouslySetInnerHTML={{ __html: body }}
       />
     );
   },

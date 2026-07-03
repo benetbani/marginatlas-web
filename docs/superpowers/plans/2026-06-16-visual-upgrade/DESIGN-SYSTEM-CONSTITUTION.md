@@ -220,6 +220,22 @@ STRATEGIC TENSION (to resolve via the 20Q interview): the page currently reads a
 
 This model now governs the country rebuild and, by analogy, the other page types.
 
+## Other page types , direction (2026-06-19 interview, Round 1)
+
+- **Build order:** City next, then the rest one at a time.
+- **Low-repetition law:** near-zero repeat. A fact is shown ONCE, on the page where it is most true, and linked from elsewhere. Country owns tax/rules/setup/economy-profile/character; City owns the score + local market; Cell owns the real local money; etc. Pages link up/down, they do not restate.
+- **Premium model is the SAME on every page:** generous free overview + blurred premium-gated depth.
+- **CORRECTION , Industry pages are GLOBAL, Cell pages are LOCAL.** An Industry page (e.g. "Restaurants") is the WORLDWIDE structure of a trade (how the business works globally, margins, where it earns ACROSS COUNTRIES). A Cell page (e.g. restaurants in London) is the LOCAL instance with the real place-specific numbers. So industry "where it earns" compares COUNTRIES worldwide, not US states; the cell links up to the global industry page for structure.
+- **Page unique ownership:** City = Business Climate Score (only scored entity) + which trades pay here + where to set up (districts) + local demand + cost-to-open here + peer cities. Cell = real revenue/take-home/money-split/calculator/break-even/wages/seasonality/exit. Industry (GLOBAL) = funnel + margins + where-it-earns-worldwide + good-vs-bad-operator + how-it-works. Neighbourhood = relative-only multipliers/squeeze/streets. Home = front door.
+
+### City page , selected sections (2026-06-19 interview)
+Auto-included: Hero (city skyline photo) + the **Business Climate Score** + a city scorecard of LOCAL stats with good/bad ratings; **What locals know**. Founder-selected NEW sections (13): what-this-city-wins-&-loses-at (diverging bar, FREE), who-walks-past-your-door (100% stacked footfall mix, FREE), local-spending-power (range/dot strip, FREE), red-flags-honestly (table+severity, FREE), saturation/how-crowded (diverging bar, PREMIUM), can-you-hire (stat cluster + wage-vs-peers bar, PREMIUM), the-demand-calendar (12-mo sparkline, FREE), cost-to-open-here (funnel, PREMIUM), where-the-money-clusters (district dot map -> neighbourhoods, FREE), rent-by-area-ranked (ordered bar, PREMIUM), peer-cities-on-a-metric (ordered bar, city-vs-city, FREE), momentum/which-way-it's-moving (sparkline trio, PREMIUM), the-starter-shortlist (trade->district photo cards -> cells + neighbourhoods, PREMIUM). DROPPED by founder (respect low-repetition): "which trades pay best here" (take-home is cell-owned; city routes via shortlist/map), the rent-to-spending squeeze, business survival odds. Full menu: `page-guidance/city-candidate-sections.md`. Chart-variety: no type used more than twice (verified in the menu's ledger). City pilot v1 delivered 2026-06-19 (`city-london-pilot.html`), founder said "go" , accepted, moving on.
+
+### Next: CELL page (a trade in a city, e.g. restaurants in London) , the flagship
+Brainstorm in progress. Cell owns the REAL money (revenue/take-home/the gap, the donut money split [donut LOCKED by founder override], the make-it-yours calculator, break-even, wages by role here, day-to-day units, this trade's seasonality, first-year survival/ramp, cost to open this trade, exit/valuation, same-trade-in-nearby-cities, what-to-watch). Links UP to city (market/score/demand , do not repeat), country (tax/rules), and the GLOBAL industry page (worldwide structure). Same free-overview + premium-gated model; same simple-chart vocabulary.
+
+Cell sections selected (2026-06-20 interview): the 20 owned beats KEPT, plus 5 founder-selected NEW underwriting/trust additions , margin of safety (threshold gauge), payback path/capital-at-risk (cumulative area), coverage check/debt-service (two stat cards), fixed-vs-variable operating leverage (100% stacked bar), covenant watchlist (table). DROPPED: survival odds, thin-vs-strong room, confidence haircut, the defensible-figure dossier. Full menu: `page-guidance/cell-candidate-sections.md`. Cell pilot delivered 2026-06-20: `cell-london-restaurants-pilot.html` (~25 sections, image hero, the locked donut, premium sections shown for review, hover, all charts <=2 per type).
+
 ## Round-5 review of the country pilot v5 (2026-06-19) , founder loved it ("best version, exquisite"); change list
 
 GLOBAL:
@@ -255,3 +271,29 @@ CITIES: right idea; use REAL city skyline PHOTOS in the card backgrounds (he wan
 CHARACTER: beautiful, keep.
 
 BEFORE the next build: founder wants 10 inspiration websites (SaaS + statistics/data-viz + section types) + a research prompt to find more. He will gather references first.
+
+## Chart Vocabulary (FT Visual Vocabulary, simple-only) , 2026-06-19
+
+Founder reference: the FT "Visual Vocabulary" (Schwabish/Ribecca Graphic Continuum), plus datavizcatalogue, datawrapper chart guide, data-to-viz. The taxonomy is adopted, but with one HARD constraint:
+
+**THE SIMPLICITY RULE (binding): every chart must be readable in ~3 seconds AND legible when zoomed out / shown small.** Our graphics are viewed at a zoomed-out page scale, so we only ever use the SIMPLE member of each chart family. No single-chart infographics, no study-heavy charts, no dense legends. If a chart cannot be understood at a glance at small size, simplify it or pick a simpler type.
+
+Pick the chart by the data RELATIONSHIP (the FT spine), then use only the approved simple form:
+
+| Relationship | Our use | USE (simple) | AVOID (too complex at our scale) |
+| --- | --- | --- | --- |
+| Magnitude (compare values) | scorecard stats, scores, single reads | stat card, column, bar, simple gauge | radar (borderline, numbers must carry it), isotype, parallel coords |
+| Ranking | peers, where-it-earns, drivers | ordered bar, ordered column, lollipop | proportional-symbol ranks |
+| Part-to-whole | money split, spending, economy mix | pie, donut, 100% stacked bar, treemap (<=8 clear segments) | sunburst, voronoi, nested treemaps, arc |
+| Deviation | vs peer average, the squeeze, good/bad | diverging bar (centre baseline), spine | surplus/deficit filled line |
+| Distribution | revenue spread, pay range | range/dot strip, lollipop, simple histogram | violin, beeswarm, cumulative curve |
+| Change over time | wage/cost trend | line, area, slope, sparkline | fan chart, seismogram, streamgraph, connected scatter |
+| Spatial | coverage, cities | simple choropleth (rates not totals), dot map, photo cards | cartograms, contour, dot-density |
+| Flow | the sale shrinking, processes | funnel, simple waterfall, step timeline | sankey, chord, network |
+| Correlation | rare here | scatter (only if truly needed) | bubble, XY heatmap, connected scatter |
+
+**Banned site-wide as too complex for a zoomed-out almanac:** violin, beeswarm, sankey, chord, network, parallel coordinates, cartograms, voronoi, sunburst, connected scatter, contour, radial/streamgraph. Combine with the existing rule: no single graphic TYPE more than twice per page.
+
+Country-page audit vs this vocabulary: already mostly simple (stat cards, dumbbell pay, pie, diverging compare, ordered/risk bars, funnel-style steps, gauges, photo cards). The two to watch: the economy TREEMAP (currently ~12 segments , reduce to <=8 clear blocks or it gets busy zoomed out) and the RADAR (borderline; kept only because the 1-10 numbers carry it). TREEMAP simplified to 8 blocks 2026-06-19.
+
+Confirmed comparison forms (2026-06-19, founder references): **country-vs-country = diverging bar** (DataPulse-style net gain/loss), **city-vs-city = ordered horizontal bar** (e.g. average salary, subsidy by city). Reference library: the **PolicyViz Image Catalog** (~1,874 published charts) is a browse-for-ideas source only; borrow only the simple chart types per the Simplicity Rule, never the sunburst/sankey/3D-map examples in it.
