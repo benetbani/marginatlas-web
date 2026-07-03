@@ -12,7 +12,7 @@
  *                       ZERO baseline. Replaces three floored bars (honesty fix + new form).
  *  - SeasonRibbon    , a single smooth area+line across Jan-Dec on a ZERO baseline. Replaces
  *                       twelve floored categorical bars (honesty fix + new form).
- *  - RangeBracket    , a labelled [lo |--mid--| hi] bracket for a single point-in-range
+ *  - RangeBracket    , a labelled [lo | mid | hi] bracket for a single point-in-range
  *                       (payback). A distinct idiom from the dot-on-a-track lollipops.
  *
  * Terracotta discipline: exactly one terracotta mark per form (the kept slice / the
@@ -24,7 +24,7 @@ import { Fig, TERRA } from "@/components/spine/kit";
 /* subtype adapter (SubtypeRow + deriveSubtypes) moved to ./subtypes , a server-safe
  * module so the server page can call it without crossing the client boundary. */
 
-/* ---- shared reduced-motion + in-view + count-up (mirrors spine-cell/format-picker) ---- */
+/* ==== shared reduced-motion + in-view + count-up (mirrors spine-cell/format-picker) ==== */
 function useReduced() {
   const [r, setR] = React.useState(false);
   React.useEffect(() => {
@@ -72,18 +72,25 @@ function useDraw(active: boolean, reduced: boolean, ms = 620) {
   }, [active, reduced, ms]);
   return p;
 }
+/* Count-up CONTRACT (mirrors spine-cell/format-picker): the state INITIALISES at the
+ * target, so SSR / no-JS / reduced-motion / not-yet-seen all REST at the true value.
+ * `active` gates only the ANIMATION (pass the in-view flag); the first reveal runs
+ * 0 -> target, any later target switch runs prev -> target (never re-zeroes). */
 export function useCountUp(target: number, reduced: boolean, ms = 520, active = true) {
   const [v, setV] = React.useState(target);
+  const from = React.useRef(0);
+  const done = React.useRef(false);
   React.useEffect(() => {
-    if (reduced || !active) { setV(target); return; }
+    if (reduced || !active) { setV(target); from.current = target; return; }
     const start = performance.now();
+    const a = done.current ? from.current : 0; // first reveal: 0 -> target; later switches: prev -> target
     let raf = 0;
     const tick = (now: number) => {
       const t = Math.min(1, (now - start) / ms);
       const e = 1 - Math.pow(1 - t, 3);
-      setV(target * e);
+      setV(a + (target - a) * e);
       if (t < 1) raf = requestAnimationFrame(tick);
-      else setV(target);
+      else { setV(target); from.current = target; done.current = true; }
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
@@ -240,7 +247,7 @@ function smooth(pts: ReadonlyArray<readonly [number, number]>): string {
 }
 
 /* ============================================================================
- * RANGE BRACKET , a labelled [ lo |--- mid ---| hi ] window for a single
+ * RANGE BRACKET , a labelled [ lo | mid | hi ] window for a single
  * point-in-range read (payback months). A capped end-tick bracket, NOT a dot on a
  * gradient track, so it stays distinct from the two lollipop lists. Neutral ink by
  * default (per the kit convention); `accent` opts the mid marker into terracotta. The

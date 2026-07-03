@@ -14,7 +14,8 @@
  *   horizontal divergence bar (deviation from 100): KeepStrip x1  , the page hero.
  *   horizontal bar-list (length, entity-scoped): Compare bars x1.
  *   multiplicative waterfall (running product): "Why the number moves" x1  , one use.
- *   real tile map (position): SpineMap x1.
+ *   real tile map (position + keep-encoded pins): SpineMap x1  , dot size = keep
+ *     index, terracotta = above the city-100 baseline, ink = below (legended).
  */
 "use client";
 import * as React from "react";
@@ -113,7 +114,8 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
  * the honest "who slid below the city" story reads in one glance. The 100 line is a
  * bold labeled gridline (the single most important reference on the page). Length
  * encodes deviation from 100 (Cleveland-McGill: position + length). Selection is a
- * neutral INK ring, never terracotta (terracotta means "keeps more than the city").
+ * neutral INK ring + bold name, never terracotta: the accent is fixed to the #1
+ * keeper (the above-city answer) regardless of what the reader picks.
  * ========================================================================== */
 function KeepStrip({ districts, selected, onSelect, reduced }: { districts: District[]; selected: string; onSelect: (s: string) => void; reduced: boolean }) {
   const rows = React.useMemo(
@@ -159,9 +161,10 @@ function KeepStrip({ districts, selected, onSelect, reduced }: { districts: Dist
             const sel = d.slug === selected;
             const above = keep >= 100;
             const dev = keep - 100;
-            // the ONE terracotta bar: the leader (#1) by default, or the selected district
-            // when the reader picks one. Every other bar is neutral grey (one accent per box).
-            const focal = sel || (selected ? false : i === 0);
+            // the ONE terracotta bar: the #1 keeper, ALWAYS (terracotta = the answer).
+            // Selection never moves the accent: a picked row gets the neutral ink ring
+            // + bold name only, so the page's one color keeps one meaning.
+            const focal = i === 0;
             // half-width of the track (each side gets 50% of it). The bar RESTS at its real
             // width (SSR / no-JS / reduced-motion): it only grows-from-center on scroll-in
             // by starting at 0 until `seen`, then transitioning via CSS (no per-row hook).
@@ -216,23 +219,26 @@ function KeepStrip({ districts, selected, onSelect, reduced }: { districts: Dist
   );
 }
 
-/* ChipSelector , the wrapping district picker. Selection is neutral ink (terracotta
- * is reserved for the keep figure), the rev delta stays a quiet support figure. */
+/* ChipSelector , the wrapping district picker. Ordered by keep index (matching the
+ * strip above and the chapter-03 picker , ONE metric, ONE order page-wide) with the
+ * keep index as the quiet support figure and an explicit metric caption. Selection
+ * is neutral ink (terracotta is reserved for the keep hero figure). */
 function ChipSelector({ districts, selected, onSelect }: { districts: District[]; selected: string; onSelect: (s: string) => void }) {
   return (
-    <div className="flex flex-wrap gap-1.5" role="group" aria-label="Pick a district">
+    <div className="flex flex-wrap items-center gap-1.5" role="group" aria-label="Pick a district">
       {districts.map((d) => {
-        const sel = d.slug === selected, up = d.rev_vs_city_pct >= 0;
+        const sel = d.slug === selected;
         return (
           <button
             key={d.slug} type="button" onClick={() => onSelect(d.slug)} aria-pressed={sel}
             className={`cityhov inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[12px] ${sel ? "border-transparent bg-[var(--c-ink)] text-white" : "border-[var(--c-border)] bg-[var(--c-card)] text-[var(--c-ink2)]"}`}
           >
             <span className="font-medium">{d.name}</span>
-            <Fig className={`text-[11px] ${sel ? "text-white/80" : "text-[var(--c-muted)]"}`}>{up ? "+" : ""}{d.rev_vs_city_pct}%</Fig>
+            <Fig className={`text-[11px] ${sel ? "text-white/80" : "text-[var(--c-muted)]"}`}>{keepIndex(d)}</Fig>
           </button>
         );
       })}
+      <span className="ml-1 text-[10.5px] text-[var(--c-muted)]">keep index shown</span>
     </div>
   );
 }
@@ -487,21 +493,33 @@ function DetailPanel({ d, citySlug, reduced }: { d: District; citySlug: string; 
  * ========================================================================== */
 export function NeighborhoodExplorer({ districts, defaultSlug, citySlug, rail, mapNote }: { districts: District[]; defaultSlug?: string; citySlug: string; rail?: Rail2; mapNote?: string }) {
   const reduced = usePrefersReducedMotion();
-  const ranked = React.useMemo(() => [...districts].sort((a, b) => b.rev_vs_city_pct - a.rev_vs_city_pct), [districts]);
+  // ONE order page-wide: keep index descending (the strip's ranking), so the chip
+  // rail never re-ranks the just-ranked list by the debunked revenue metric.
+  const ranked = React.useMemo(() => [...districts].sort((a, b) => keepIndex(b) - keepIndex(a)), [districts]);
   const initial = (defaultSlug && districts.some((d) => d.slug === defaultSlug) ? defaultSlug : ranked[0]?.slug) ?? "";
   const [selected, setSelected] = React.useState<string>(initial);
   const current = districts.find((d) => d.slug === selected) ?? ranked[0];
 
-  // real map points: position = orientation; the popup carries the keep read (not dot area).
-  const points: SpinePoint[] = React.useMemo(
-    () => districts
-      .filter((d) => Number.isFinite(d.lat) && Number.isFinite(d.lng))
-      .map((d) => {
-        const keep = keepIndex(d);
-        return { name: d.name, slug: d.slug, lat: d.lat as number, lng: d.lng as number, signal: 50, signalLabel: `keep ${keep}`, sub: keep >= 100 ? "keeps more than the city" : "keeps less than the city" };
-      }),
-    [districts]
-  );
+  // real map points: position = orientation, and the pins EARN their ink , dot size
+  // scales with the keep index (normalized across the shown districts so the biggest
+  // dot IS the biggest keeper), and tone encodes the side of the city-100 baseline:
+  // terracotta = keeps more than the city (the answer side), ink = keeps less.
+  const points: SpinePoint[] = React.useMemo(() => {
+    const withGeo = districts.filter((d) => Number.isFinite(d.lat) && Number.isFinite(d.lng));
+    const keeps = withGeo.map((d) => keepIndex(d));
+    const lo = Math.min(...keeps);
+    const span = Math.max(1, Math.max(...keeps) - lo);
+    return withGeo.map((d) => {
+      const keep = keepIndex(d);
+      return {
+        name: d.name, slug: d.slug, lat: d.lat as number, lng: d.lng as number,
+        signal: 20 + ((keep - lo) / span) * 80, // keep, normalized to the 0..100 dot-size scale
+        signalLabel: `keep ${keep}`,
+        sub: keep >= 100 ? "keeps more than the city" : "keeps less than the city",
+        tone: keep >= 100 ? ("terra" as const) : ("ink" as const),
+      };
+    });
+  }, [districts]);
 
   return (
     <div>
@@ -522,6 +540,7 @@ export function NeighborhoodExplorer({ districts, defaultSlug, citySlug, rail, m
             points={points}
             ariaLabel="London district map"
             onSelect={(p) => p.slug && setSelected(p.slug)}
+            legendLabel="Dot size = keep index; terracotta = keeps more than the city"
           />
           {mapNote ? <p className="px-1 pt-2 text-[11px] leading-snug text-[var(--c-muted)]">{mapNote}</p> : null}
         </div>

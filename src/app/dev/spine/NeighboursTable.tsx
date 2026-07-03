@@ -34,7 +34,7 @@ export function NeighboursTable({ cols, rows }: { cols: Col[]; rows: Row[] }) {
             <th className="w-[26%] py-2 pr-3 text-left font-semibold">Country</th>
             {cols.map((c, i) => (
               <th key={c.key} onClick={() => click(i)} aria-sort={sort && sort.i === i ? (sort.dir === 1 ? "ascending" : "descending") : "none"} className="min-w-0 cursor-pointer select-none px-2 py-2 text-right font-semibold transition hover:text-[var(--terra-text)]">
-                <span className="block truncate">{c.label} <span className="font-normal text-[var(--c-muted)]">({c.unit})</span><span className="text-[var(--terra-text)]">{arrow(i)}</span></span>
+                <span className="block truncate">{c.label}{c.unit ? <span className="font-normal text-[var(--c-muted)]"> ({c.unit})</span> : null}<span className="text-[var(--terra-text)]">{arrow(i)}</span></span>
               </th>
             ))}
           </tr>

@@ -97,10 +97,16 @@ export function IncomeCurve({ d }: { d: any }) {
 /* ---- owner runway ---- */
 export function OwnerRunway({ d }: { d: any }) {
   const o = d.owner_runway ?? {};
+  // IDENTITY (must close): runway = monthly burn x months to break-even.
+  // burn = rent + groceries + transport = $3,060; months = round(38wk / 52 x 12) = 9;
+  // runway = $3,060 x 9 = $27,540 -> $28K focal, "$3.1K a month for 9 months" subline.
   const burn = (o.rent_1bed_usd_mo || 0) + (o.groceries_usd_mo || 0) + (o.transport_usd_mo || 0);
   const weeks = o.weeks_to_breakeven || 0;
   const months = Math.round((weeks / 52) * 12);
   const runway = burn * months;
+  // subline burn keeps a decimal ($3.1K, not $3K) so the shown mental math
+  // ($3.1K x 9 = ~$28K) reproduces the focal figure.
+  const burnLabel = "$" + (burn / 1000).toFixed(1) + "K";
   const items: Array<[string, string]> = [
     [`$${(o.rent_1bed_usd_mo || 0).toLocaleString("en-US")}`, "one-bed rent, a month"],
     [`$${o.groceries_usd_mo}`, "groceries, a month"],
@@ -113,7 +119,7 @@ export function OwnerRunway({ d }: { d: any }) {
         <div>
           <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Savings to reach break-even</div>
           <CountFig value={runway} fmt={(n) => money(n)} className="text-[32px] leading-none text-[var(--terra-text)] md:text-[36px]" />
-          <div className="mt-1 text-[12px] text-[var(--c-ink2)]"><Fig className="text-[var(--c-ink)]">{money(burn)}</Fig> a month for about <Fig className="text-[var(--c-ink)]">{months} months</Fig>, from signing to the week the till clears costs.</div>
+          <div className="mt-1 text-[12px] text-[var(--c-ink2)]">about <Fig className="text-[var(--c-ink)]">{burnLabel}</Fig> a month for <Fig className="text-[var(--c-ink)]">{months} months</Fig>, from signing to the week the till clears costs.</div>
         </div>
       </div>
       <InlineDisclosure name="runway" summary="See the monthly burn">

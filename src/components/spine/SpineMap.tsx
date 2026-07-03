@@ -30,6 +30,7 @@ export type SpinePoint = {
   signal?: number; // 0..100-ish, scales the dot size
   signalLabel?: string; // short unit phrase for the popup figure, e.g. "+55% vs city" or "market 92"
   sub?: string;
+  tone?: "terra" | "ink"; // pin encoding: terra = above the page's baseline (the answer side), ink = below. Default terra.
 };
 
 const TERRA_ACCENT = "#c2410c"; // the marker fill (atlas terracotta accent)
@@ -155,8 +156,9 @@ function buildMarkerEl(
 
   const dot = document.createElement("span");
   dot.className = "spinemap-dot";
+  const dotFill = p.tone === "ink" ? INK : TERRA_ACCENT;
   dot.style.cssText =
-    `display:block;width:${size}px;height:${size}px;border-radius:9999px;background:${TERRA_ACCENT};` +
+    `display:block;width:${size}px;height:${size}px;border-radius:9999px;background:${dotFill};` +
     "box-shadow:0 0 0 3px rgba(255,255,255,0.92),0 1px 3px rgba(43,28,22,0.35);transition:transform .12s ease;flex:0 0 auto;";
 
   const label = document.createElement("span");
@@ -233,17 +235,19 @@ export function SpineMap({
     );
     if (pts.length === 0) return;
 
-    const reduceMotion =
-      typeof window.matchMedia === "function" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
+    // First paint must be the FITTED view: bounds go into the constructor so the
+    // map never boots zoomed-out and flies in (the fly-in meant screenshots, LCP
+    // and crawlers always saw a collided zoom-5 state). Single point: fixed zoom.
+    const initBounds = new maplibregl.LngLatBounds();
+    pts.forEach((p) => initBounds.extend([p.lng, p.lat]));
     let map: maplibregl.Map;
     try {
       map = new maplibregl.Map({
         container: containerRef.current,
         style: POSITRON_STYLE,
-        center: [pts[0].lng, pts[0].lat],
-        zoom: 5,
+        ...(pts.length === 1
+          ? { center: [pts[0].lng, pts[0].lat] as [number, number], zoom: 11 }
+          : { bounds: initBounds, fitBoundsOptions: { padding: fitPadding, maxZoom: 13 } }),
         attributionControl: { compact: true },
         dragRotate: false,
         pitchWithRotate: false,
@@ -288,15 +292,7 @@ export function SpineMap({
       return crowded;
     };
 
-    const fitToPoints = () => {
-      const b = new maplibregl.LngLatBounds();
-      pts.forEach((p) => b.extend([p.lng, p.lat]));
-      if (pts.length === 1) {
-        map.jumpTo({ center: [pts[0].lng, pts[0].lat], zoom: 11 });
-      } else {
-        map.fitBounds(b, { padding: fitPadding, animate: !reduceMotion, maxZoom: 13 });
-      }
-    };
+    // (fitting happens in the constructor , no post-load fly-in, ever)
 
     // One reusable popup (no close button, offset above the dot). Hover/focus shows
     // it; mouseleave/blur hides it. Reduced-motion: maplibre has no popup transition
@@ -311,7 +307,6 @@ export function SpineMap({
     });
 
     map.on("load", () => {
-      fitToPoints();
       const builds: MarkerBuild[] = [];
       pts.forEach((p) => {
         const showPopup = () => {
@@ -334,14 +329,14 @@ export function SpineMap({
         markersRef.current.push(marker);
         builds.push(bld);
       });
-      // Crowding must be measured at the FITTED zoom, not the initial one (where every
-      // point overlaps and every label would hide). Recompute once the camera settles,
-      // and again after any pan/zoom so labels stay decluttered as the view changes.
+      // The constructor already booted at the fitted bounds, so crowding is
+      // measurable NOW , declutter must hold from the very first paint (screenshots,
+      // LCP, crawlers), then re-run after any pan/zoom.
       const recomputeCrowding = () => {
         const crowded = crowdedFlags();
         builds.forEach((bld, i) => bld.setCrowded(crowded[i]));
       };
-      map.once("idle", recomputeCrowding);
+      recomputeCrowding();
       map.on("moveend", recomputeCrowding);
       setReady(true); // map painted: drop the overlay list, reveal the map
     });

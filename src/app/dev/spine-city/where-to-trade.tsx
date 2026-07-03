@@ -137,7 +137,9 @@ function ProMatrix({ rows, trades }: { rows: Row[]; trades: any[] }) {
   const grid = `minmax(0,1.1fr) repeat(${cols.length},minmax(0,1fr))`;
   const cell = (baseMargin: number, keep: number) => Math.round(baseMargin * (keep / 100));
   return (
-    <div>
+    // min-height guard: the LockVeil's centered overlay card runs ~190px, and the
+    // veil clips anything taller than its children , the matrix must always contain it.
+    <div className="min-h-[220px]">
       <div className="grid items-end gap-2 border-b border-[var(--c-border)] pb-1.5" style={{ gridTemplateColumns: grid }}>
         <span className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">District</span>
         {cols.map((t) => <span key={t.slug} className="truncate text-right text-[11px] font-semibold text-[var(--c-ink)]">{t.name}</span>)}

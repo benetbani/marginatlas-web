@@ -17,6 +17,7 @@
  *  - drawn curve/ribbon on time: SurvivalCurve + SeasonRibbon = 2 (AT CAP).
  *  - fill-bar (single 0-100): break-even Meter + WherePays relative-take = 2 (AT CAP).
  *  - stacked share bar: MoneySplit = 1. Range bracket: CapitalPayback = 1. Timeline = 1.
+ *  - sparkline: the Demand trend (demand.trend_index) = 1.
  * ONE canonical margin visual: the hero MarginLadder (gross->operating->net). The old
  * Operator waterfall restated the same 64/16/7 and is retired; Operator now shows a
  * different cut (capital, survival, exit multiple), MoneySplit shows the $100 cost split.
@@ -140,15 +141,17 @@ function Benchmark({ d }: { d: any }) {
 }
 
 /* ============================================================
- * DEMAND , is anyone hungry, and is the pie per seat growing? (2-up)
- * decision: is demand there and is it shared too thin? Number: covers per venue, falling.
- * focal: the venues-per-10k saturation figure + the falling covers-per-venue Spark.
+ * DEMAND , is anyone hungry, and how thin is it spread? (2-up)
+ * decision: is demand there and is it shared too thin? Numbers: venues per 10k
+ * (the crowd) + the demand trend index (the pie, drawn as the page's one Spark).
+ * focal: the venues-per-10k saturation figure + the demand Spark beside it.
  * width: WideRail (T2). terracotta: the saturation figure + its Spark (one focal per box).
- * Cut the banned trivia (spend-per-head index, meals-out) for two real decision levers. */
+ * Honesty: the Spark draws demand.trend_index exactly as seeded (the post-dip recovery,
+ * still under its pre-dip 100); no phantom adjectives stand in for missing data. */
 function Demand({ d }: { d: any }) {
   const dm = d.demand ?? {};
-  const cov: number[] = dm.covers_per_venue_trend ?? [];
-  const falling = cov.length > 1 && cov[cov.length - 1] < cov[0];
+  const trend: number[] = dm.trend_index ?? [];
+  const trendEnd = trend.length ? trend[trend.length - 1] : null;
   return (
     <WideRail>
       <Box className="flex flex-col justify-center">
@@ -156,19 +159,19 @@ function Demand({ d }: { d: any }) {
         <div className="flex items-end justify-between gap-3">
           <div>
             <div className="flex items-baseline gap-1.5"><CountFig value={dm.venues_per_10k} className="text-[44px] leading-none text-[var(--terra-text)]" /><span className="text-[12px] text-[var(--c-ink2)]">venues / 10k</span></div>
-            <div className="mt-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{dm.venues_per_10k_band}</div>
+            {dm.venues_per_10k_band ? <div className="mt-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{dm.venues_per_10k_band}</div> : null}
           </div>
-          {cov.length > 1 ? (
+          {trend.length > 1 ? (
             <div className="text-right">
-              <Spark values={cov} w={112} h={36} />
-              <div className="mt-1 text-[10px] uppercase tracking-wide text-[var(--c-muted)]">covers / venue {falling ? "↓" : ""}</div>
+              <Spark values={trend} w={112} h={36} />
+              <div className="mt-1 text-[10px] uppercase tracking-wide text-[var(--c-muted)]">demand, indexed</div>
             </div>
           ) : null}
         </div>
         <div className="mt-3 text-[11.5px] leading-snug text-[var(--c-muted)]">{dm.saturation_note ?? dm.demand_note}</div>
       </Box>
       <Box className="flex flex-col justify-center">
-        <Rail icon="spending-power" kicker="The demand" verdict="The appetite is there; the pie per seat is not growing with it." />
+        <Rail icon="spending-power" kicker="The demand" verdict="The appetite has recovered most of the way; the crowd sharing it has not thinned." />
         <div className="grid grid-cols-2 divide-x divide-[var(--c-border)]">
           <div className="pr-3">
             <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Spend per head</div>
@@ -179,11 +182,15 @@ function Demand({ d }: { d: any }) {
             )}
           </div>
           <div className="px-3 last:pr-0">
-            <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Covers per venue</div>
-            <div className="mt-1.5 text-[13px] font-semibold text-[var(--c-ink2)]">{falling ? "Slipping" : "Steady"}</div>
+            <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Demand index</div>
+            {trendEnd != null ? (
+              <div className="mt-1.5 flex items-baseline gap-1"><Fig className="text-[22px] leading-none text-[var(--c-ink)]">{trendEnd}</Fig><span className="text-[10px] text-[var(--c-muted)]">of 100 pre-dip</span></div>
+            ) : (
+              <div className="mt-1.5 text-[13px] text-[var(--c-muted)]">Not modelled</div>
+            )}
           </div>
         </div>
-        <div className="mt-3 border-t border-[var(--c-border)] pt-2.5 text-[11.5px] leading-snug text-[var(--c-ink2)]">{dm.covers_per_venue_note}</div>
+        {dm.trend_note || dm.demand_note ? <div className="mt-3 border-t border-[var(--c-border)] pt-2.5 text-[11.5px] leading-snug text-[var(--c-ink2)]">{dm.trend_note ?? dm.demand_note}</div> : null}
       </Box>
     </WideRail>
   );
@@ -230,13 +237,15 @@ function SubtypeDrill({ d }: { d: any }) {
 
 /* SUBTYPE COMPARE , cost to open, ranked (lollipop).
  * decision: what does each format cost to enter? Number: capital to open, ranked.
- * focal: the dearest-to-open dot. width: Full (T1). terracotta: the dearest dot only.
+ * focal: the LIGHTEST way through the door. width: Full (T1). terracotta: the cheapest
+ * dot only , the accent sits on the answer (page grammar: terra = the answer, never a
+ * warning), so the dear end stays neutral ink.
  * idiom: dot-on-a-track lollipop (2 of 2, with Benchmark). */
 function SubtypeCompare({ d }: { d: any }) {
   const items = deriveSubtypes(d).slice().sort((a, b) => b.capital_usd - a.capital_usd);
   if (!items.length) return null;
   const max = Math.max(...items.map((s) => s.capital_usd)) * 1.05;
-  const dearest = items[0]?.slug;
+  const cheapest = items[items.length - 1]?.slug;
   return (
     <Full>
       <Box>
@@ -244,9 +253,9 @@ function SubtypeCompare({ d }: { d: any }) {
         <div className="space-y-1.5">
           {items.map((s) => {
             const pos = (s.capital_usd / max) * 100;
-            const hot = s.slug === dearest;
+            const hot = s.slug === cheapest;
             return (
-              <div key={s.slug} className="hov -mx-2 grid grid-cols-[120px_1fr_56px] items-center gap-3 rounded-md px-2 py-1.5">
+              <div key={s.slug} className="hov -mx-2 grid grid-cols-[minmax(0,10rem)_minmax(0,1fr)_56px] items-center gap-3 rounded-md px-2 py-1.5">
                 <span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]" title={s.name}>{s.name}</span>
                 <div className="relative h-3 min-w-0" role="img" aria-label={`${s.name} ${money(s.capital_usd)} to open`}>
                   <div className="absolute top-1/2 h-px w-full -translate-y-1/2" style={{ background: "#e7e2df" }} />
@@ -258,7 +267,7 @@ function SubtypeCompare({ d }: { d: any }) {
             );
           })}
         </div>
-        <div className="mt-3 text-[11px] text-[var(--c-muted)]">Fit-out and kitchen to open the doors. Fine dining sits dearest; delivery-only is cheapest but loses the saved rent to platform fees.</div>
+        <div className="mt-3 text-[11px] text-[var(--c-muted)]">Fit-out and kitchen to open the doors. Fine dining sits dearest; a cafe or bistro build is the lightest way in, at under a third of that cost.</div>
       </Box>
     </Full>
   );
@@ -324,35 +333,47 @@ function MoneySplit({ d }: { d: any }) {
   );
 }
 
-/* BREAK-EVEN , how full the room must be to clear costs (fill-bar meter) + the fixed-nut rail.
- * decision: what occupancy pays the fixed nut. Number: the break-even utilisation %.
- * focal: the utilisation figure over a filled Meter; the rail carries the fixed/variable split
- *   (the folded donut's one real read). width: WideRail (T2).
+/* BREAK-EVEN , how full a typical day must run to clear costs (fill-bar meter) + the fixed-nut rail.
+ * decision: what share of a typical day's trade pays the nut. Number: breakeven_utilization_pct.
+ * IDENTITY (matches the seed's _identity line): BE = fixed $27 / contribution ratio 0.34
+ * (1 - variable $66 per $100) = ~79% of a typical day's takings. The seed field is
+ * breakeven_utilization_pct; if it is absent the meter card renders nothing (never a 0).
+ * The fixed/variable pair is DERIVED from money_split.items (never hardcoded prose figures).
+ * focal: the utilisation figure over a filled Meter. width: WideRail (T2).
  * terracotta: the meter fill only. idiom: fill-bar (1 of 2, with WherePays relative-take). */
 function BreakEven({ d }: { d: any }) {
   const cs = d.cost_structure ?? {};
   const ms = d.money_split ?? {};
+  const items: any[] = ms.items ?? [];
+  const be: number | null = typeof cs.breakeven_utilization_pct === "number" ? cs.breakeven_utilization_pct : null;
+  const fixedUsd = items.filter((i) => i.group === "fixed").reduce((a, i) => a + (i.pct ?? 0), 0);
+  const variableUsd = items.filter((i) => i.group === "variable").reduce((a, i) => a + (i.pct ?? 0), 0);
+  if (be == null && !items.length) return null;
   return (
     <WideRail>
-      <Box className="flex flex-col justify-center">
-        <Rail icon="break-even" kicker="Break-even utilisation" verdict="Below this share of seats filled, the day loses money." />
-        <div className="mb-3 flex items-baseline gap-2.5"><CountFig value={cs.break_even_util_pct ?? 0} suffix="%" className="text-[40px] leading-none text-[var(--c-ink)]" /><span className="text-[13px] text-[var(--c-ink2)]">of seats filled, on average, just to cover costs.</span></div>
-        <Meter value={cs.break_even_util_pct ?? 0} left="empty" right="full" />
-        <div className="mt-3 text-[11.5px] leading-snug text-[var(--c-muted)]">{cs.note}</div>
-      </Box>
-      <Box className="flex flex-col justify-center">
-        <Rail icon="methodology" kicker="Of every $100 taken" verdict="A heavy fixed nut means an empty room bleeds money quickly." />
-        <div className="space-y-3">
-          <div>
-            <div className="flex items-baseline justify-between"><span className="text-[12px] font-medium text-[var(--c-ink)]">Fixed costs</span><Fig className="text-[13px] text-[var(--c-ink)]">$27</Fig></div>
-            <div className="mt-0.5 text-[11px] leading-snug text-[var(--c-muted)]">{ms.fixed_note}</div>
+      {be == null ? null : (
+        <Box className="flex flex-col justify-center">
+          <Rail icon="break-even" kicker="Break-even utilisation" verdict="Below this share of a typical day's trade, the day loses money." />
+          <div className="mb-3 flex items-baseline gap-2.5"><CountFig value={be} suffix="%" className="text-[40px] leading-none text-[var(--c-ink)]" /><span className="text-[13px] text-[var(--c-ink2)]">of a typical day's covers, just to cover the costs.</span></div>
+          <Meter value={be} left="empty" right="a typical day" />
+          {cs.note ? <div className="mt-3 text-[11.5px] leading-snug text-[var(--c-muted)]">{cs.note}</div> : null}
+        </Box>
+      )}
+      {items.length ? (
+        <Box className="flex flex-col justify-center">
+          <Rail icon="methodology" kicker="Of every $100 taken" verdict="A heavy fixed nut means an empty room bleeds money quickly." />
+          <div className="space-y-3">
+            <div>
+              <div className="flex items-baseline justify-between"><span className="text-[12px] font-medium text-[var(--c-ink)]">Fixed costs</span><Fig className="text-[13px] text-[var(--c-ink)]">${fixedUsd}</Fig></div>
+              <div className="mt-0.5 text-[11px] leading-snug text-[var(--c-muted)]">{ms.fixed_note}</div>
+            </div>
+            <div className="border-t border-[var(--c-border)] pt-3">
+              <div className="flex items-baseline justify-between"><span className="text-[12px] font-medium text-[var(--c-ink)]">Variable costs</span><Fig className="text-[13px] text-[var(--c-ink)]">${variableUsd}</Fig></div>
+              <div className="mt-0.5 text-[11px] leading-snug text-[var(--c-muted)]">{ms.variable_note}</div>
+            </div>
           </div>
-          <div className="border-t border-[var(--c-border)] pt-3">
-            <div className="flex items-baseline justify-between"><span className="text-[12px] font-medium text-[var(--c-ink)]">Variable costs</span><Fig className="text-[13px] text-[var(--c-ink)]">$66</Fig></div>
-            <div className="mt-0.5 text-[11px] leading-snug text-[var(--c-muted)]">{ms.variable_note}</div>
-          </div>
-        </div>
-      </Box>
+        </Box>
+      ) : null}
     </WideRail>
   );
 }
@@ -368,7 +389,7 @@ function Ramp({ d }: { d: any }) {
   if (!nodes.length) return null;
   return (
     <Full>
-      <Rail icon="first-year" tone="terra" kicker="The first year, month by month" verdict="Open soft, build covers through spring, survive the cash trough, then cross break-even late in the year." />
+      <Rail icon="first-year" tone="terra" kicker="The first year, month by month" verdict="Open soft, build covers, survive the cash gap, and cross break-even around month six." />
       <Timeline span={fy.span ?? 52} unit={fy.unit ?? "week"} phases={phases} nodes={nodes} startLabel="open" read={fy.note} />
     </Full>
   );
@@ -435,15 +456,22 @@ function CapitalPayback({ d }: { d: any }) {
 
 /* SURVIVAL , how many last, as a decay CURVE on a zero baseline (honesty fix + new form).
  * decision: how durable is the trade. Number: the share still open at yr 5.
+ * The curve derives from the REAL seed fields (survival.yr1/yr3/yr5 pcts); the 100% at
+ * open is definitional, nothing is invented. Skips any year the seed does not carry.
  * focal: the falling curve. width: Even (T3), paired with who-it-suits.
  * terracotta: the curve line + its end dot. idiom: drawn curve (1 of 2, with SeasonRibbon). */
 function Survival({ d }: { d: any }) {
   const s = d.survival ?? {};
-  const curve: Array<{ yr: number; pct: number }> = s.curve ?? [];
-  if (!curve.length) return null;
+  const curve: Array<{ yr: number; pct: number }> = [
+    { yr: 0, pct: 100 },
+    ...([[1, s.yr1_pct], [3, s.yr3_pct], [5, s.yr5_pct]] as Array<[number, unknown]>)
+      .filter((e): e is [number, number] => typeof e[1] === "number")
+      .map(([yr, pct]) => ({ yr, pct })),
+  ];
+  if (curve.length < 2) return null;
   return (
     <Box className="flex flex-col">
-      <Rail icon="watch" kicker="How many last" verdict="Most clear year one; fewer than half are open by year five." />
+      <Rail icon="watch" kicker="How many last" verdict="Most clear year one; about half are still open at year five." />
       <SurvivalCurve curve={curve} note={s.note} />
     </Box>
   );

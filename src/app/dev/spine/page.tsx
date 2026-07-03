@@ -68,8 +68,13 @@ function Hero({ d }: { d: any }) {
   const formDays = Math.max(0, formStep?.time_days ?? 0);
   const formValue = formDays === 1 ? "1 day" : `${formDays} days`;
   // Salary shown as annual (the honest unit). No modeled monthly derivation on the masthead.
+  // Tile labels name their metric TRUTHFULLY (B10): smb_tax_pct is the small-profits
+  // CORPORATION TAX rate, so the tile says so; the blended 36% all-in load appears
+  // later under its own name ("All-in tax load", tax section + compare table).
+  // "Company registered" is the registration step alone (day 1); the fuller
+  // days-to-fully-set-up figure (bank-paced, ~21 days) lives in the compare table.
   const tiles: Array<[string, string, string?]> = [
-    ["Business tax", `${h.smb_tax_pct}%`],
+    ["Corporation tax", `${h.smb_tax_pct}%`],
     ["Average salary", usd(h.average_salary_usd), "/yr"],
     ["GDP / capita", usd(h.gdp_per_capita_usd)],
     ["Ease of business", `${h.ease_of_business_score}`, "/100"],
@@ -217,7 +222,10 @@ function Demand({ d }: { d: any }) {
 /*
  * TheCatch , the one honesty band. Fuses the headline myth, the main counterweight and
  * the single top-scored risk into ONE Rail + bullets. Derived from data already present
- * (risk_exit.risks + the affordability lens + locals intel), never a new invented claim.
+ * (risk_exit.risks + the affordability lens + the seed's dedicated catch line), never a
+ * new invented claim. The third bullet is character.the_catch, a sentence written FOR
+ * this band , NEVER a locals_intel item, because those render verbatim in "What locals
+ * know" and a paying reader must never meet the same sentence twice.
  * verdict: a flat "what the easy-setup story leaves out" line; the bullets carry the honesty.
  * width: Full , a load-bearing honesty band; never center-floated.
  * terracotta: the honest-take icon tile only (this IS a verdict section, so the accent belongs).
@@ -228,11 +236,10 @@ function TheCatch({ d }: { d: any }) {
   const riskLabel: any = { energy_input_costs: "energy and input costs", rule_tax_changes: "shifting rules and tax", demand_cycle: "the demand cycle", currency_swings: "currency swings", skills_shortages: "skills shortages" };
   const ep = d.economic_profile ?? {};
   const aff = Number(ep.affordability ?? 0);
-  const locals = d.character?.locals_intel ?? [];
   const items: string[] = [
     `Easy to set up, yes, but affordability scores just ${aff}/10: high costs eat the margin the easy start promises.`,
     topRisk ? `The biggest standing risk is ${riskLabel[topRisk.name] ?? topRisk.name.replace(/_/g, " ")}, at ${topRisk.score_1_10}/10, well ahead of the rest.` : "",
-    locals[0]?.title ? `${locals[0].title} ${locals[0].detail}` : "Local operators price the hidden costs in before they commit.",
+    d.character?.the_catch ?? "Local operators price the hidden costs in before they commit.",
   ].filter(Boolean);
   return (
     <Box>
@@ -247,38 +254,52 @@ function TheCatch({ d }: { d: any }) {
  * SetupTimeline , the ONE setup timeline for CH2 (merges the old mini-Gantt and the
  * separate First-90-Days axis into a single horizontal time axis, no featured segment).
  * verdict: You can trade from day one; the bank account sets the real pace.
- * focal: one continuous 90-day axis with milestones positioned by real time.
+ * focal: one continuous 90-day axis; every node sits at its TRUE day from the seed
+ * (registered day 1, tax day 2, bank cleared about day 21) and the kit Timeline's
+ * lane logic de-collides the labels. The old hardcoded "Payroll ready 28" and
+ * "VAT registered 45" nodes are gone: neither had a day in the data, and on a data
+ * product a time axis must not invent positions. VAT moved to the read line.
+ * label physics: the first phase band carries NO caption (a caption there sat exactly
+ * where the bank node's label renders , the nodes tell that part of the story); the
+ * second band is captioned and starts at the real bank-clear day, so the bands agree
+ * with the "trade from day one" read line instead of contradicting it.
  * width: Full , a time axis must read across the whole column.
- * terracotta: only the "registered and trading" break-even node (never a period fill).
+ * terracotta: only the "Registered" break-even node (never a period fill).
  */
 function SetupTimeline({ d }: { d: any }) {
   const steps = d.setup?.steps ?? [];
-  const stepDay = (re: RegExp) => { const x = steps.find((it: any) => re.test(it.name)); return x ? x.time_days : null; };
-  const reg = Math.max(1, stepDay(/company|regist(?!er for vat)/i) ?? 1);
-  const tax = stepDay(/register for tax/i);
-  const vat = stepDay(/vat/i);
-  const bank = stepDay(/bank/i);
-  // The break-even node is centre-anchored by the kit, so a wide label at the far
-  // left runs off the plot. Keep the label short ("Registered") and float its
-  // position to a small floor (a few days in) so the centred label clears the
-  // day-0 edge; the true day is carried in the sub-label, and the "trading from
-  // day one" meaning lives in the read line below and the phase band.
-  const regNodeAt = Math.max(reg, 5);
-  const nodes: TLNode[] = [{ at: regNodeAt, label: "Registered", sub: reg === 1 ? "day 1, trading" : `day ${reg}`, kind: "breakeven" }];
-  if (bank) nodes.push({ at: bank, label: "Bank account", sub: "the slow step" });
-  if (tax) nodes.push({ at: Math.max(regNodeAt + 4, Math.max(reg, tax) + reg), label: "Tax registered" });
-  nodes.push({ at: 28, label: "Payroll ready", sub: "first hire" });
-  if (vat) nodes.push({ at: 45, label: "VAT registered", sub: "once sales are high" });
-  // Two phase bands only, with short labels that will not collide with the
-  // milestone titles sitting just below/above the axis.
-  const phases: TLPhase[] = [["setup", 0, 30], ["trading", 30, 90]];
+  const step = (re: RegExp) => steps.find((it: any) => re.test(it.name));
+  const reg = step(/company/i);
+  const tax = step(/register for tax/i);
+  const bank = step(/bank/i);
+  const vat = step(/vat/i);
+  // TRUE day positions derived from the seed durations (setup._meta states the
+  // identity): registration completes day 1; tax registration follows it (day 2);
+  // the bank application starts day 1 and clears after its full duration (~day 21).
+  const regDay = Math.max(1, reg?.time_days ?? 1);
+  const taxDay = tax ? regDay + Math.max(1, tax.time_days ?? 1) : null;
+  const bankDay = bank?.time_days ? Math.max((taxDay ?? regDay) + 1, bank.time_days) : null;
+  // Break-even label is centre-anchored by the kit, so at day 1 the sub must stay
+  // short ("day 1") to clear the left edge; "trading from day one" lives in the read.
+  const nodes: TLNode[] = [{ at: regDay, label: "Registered", sub: `day ${regDay}`, kind: "breakeven" }];
+  if (taxDay) nodes.push({ at: taxDay, label: "Tax registered", sub: `day ${taxDay}` });
+  if (bankDay) nodes.push({ at: bankDay, label: "Bank account", sub: "the slow step" });
+  // One band split at the real bank-clear day. The first band is deliberately
+  // uncaptioned (its caption collided with the bank label); the second band's
+  // caption sits far right of every node label, clear at any paint.
+  const phases: TLPhase[] = bankDay ? [["", 0, bankDay], ["fully operational", bankDay, 90]] : [];
+  const fees = steps.filter((s: any) => (s.cost_usd || 0) > 0).map((s: any) => `${s.name.toLowerCase().replace(/\s*\(.*\)$/, "")} $${Math.round(s.cost_usd)}`).join(", ") || "registration only";
   return (
     <Timeline
       span={90}
       unit="day"
       phases={phases}
       nodes={nodes}
-      read={<>You can trade from day one; the bank account is the single slow step. <span className="text-[var(--c-muted)]">Fees are small: {steps.filter((s: any) => (s.cost_usd || 0) > 0).map((s: any) => `${s.name.toLowerCase()} $${Math.round(s.cost_usd)}`).join(", ") || "registration only"}.</span></>}
+      /* the true-day nodes crowd the left edge, and the day-2 tax stalk would cross the
+         kit's default "day 0" tick text; the break-even sub already reads "day 1", so
+         the zero tick is suppressed (a space) rather than letting a line cut a label. */
+      startLabel=" "
+      read={<>You can trade from day one; the bank account is the single slow step{vat?.time_days ? <>. VAT can wait until sales pass the threshold, then clears in about {vat.time_days} days</> : null}. <span className="text-[var(--c-muted)]">Fees are small: {fees}.</span></>}
     />
   );
 }
@@ -341,9 +362,13 @@ function Banking({ d }: { d: any }) {
 /*
  * TaxByLevel , what the business actually pays (retired doughnut -> zero-baseline bars).
  * verdict: Corporation tax carries most of the burden; the all-in load lands middling.
- * focal: the all-in load figure, then a ranked share-of-load bar list, corp tax terra.
+ * focal: the all-in load figure, then a DESCENDING share-of-load bar list, leader terra.
  * width: Full , the bars beside a plain-English "which tax does what" disclosure.
- * terracotta: the all-in figure + the corporation-tax bar only.
+ * terracotta: the all-in figure + the leading (corporation tax) bar only.
+ * honesty: the seed's components are modeled profit-equivalent weights that SUM to the
+ * all-in load (19 + 5 + 8 + 4 = 36, identity in tax_burden._meta), so every bar is a
+ * coherent share of the load , NOT a normalized pile of statutory rates. The statutory
+ * rates live in the line-by-line disclosure below, under their own names.
  * NOTE: was a doughnut, but corp tax was only ~a third of the ring (no dominant
  * slice), so it broke the single-dominant rule. Recast to zero-baseline bars.
  */
@@ -352,20 +377,17 @@ function TaxByLevel({ d }: { d: any }) {
   const allIn = d.tax_burden?.total_pct ?? 0;
   const band = allIn >= 42 ? "Heavy" : allIn >= 30 ? "Middling" : "Light";
   const comp = d.tax_burden?.components ?? {};
-  // The taxes that make up the burden, with their real statutory rates.
-  const raw = ([
-    ["Corporation tax", comp.corporation_tax_pct ?? 0, TERRA],
-    ["Business rates", comp.business_rates_pct_equiv ?? 0, "#8f8a86"],
-    ["Capital gains", comp.capital_gains_pct ?? 0, "#c0b9b3"],
-    ["Dividend tax", comp.dividend_tax_pct ?? 0, "#e0d9d3"],
-  ] as Array<[string, number, string]>).filter(([, p]) => (p as number) > 0);
-  const rateSum = raw.reduce((a, [, p]) => a + (p as number), 0) || 1;
-  // Each tax's SHARE of the all-in burden, ranked, corp tax leading. Shown as
-  // zero-baseline horizontal bars (no doughnut): with corp tax only ~a third of
-  // the ring, no single slice dominated, so the ring broke the single-dominant
-  // rule. Bars make "several taxes stack" read at a glance; corp tax is terra.
-  const shareRows: Array<[string, number]> = raw.map(([n, p]) => [n as string, Math.round(((p as number) / rateSum) * 100)] as [string, number]);
-  const corpShare = shareRows[0]?.[1] ?? 0;
+  // Sorted DESCENDING so rank is monotonic with bar length ("ranked" must mean ranked).
+  const raw: Array<[string, number]> = ([
+    ["Corporation tax", comp.corporation_tax_pct ?? 0],
+    ["Business rates", comp.business_rates_pct_equiv ?? 0],
+    ["Dividend tax", comp.dividend_tax_pct ?? 0],
+    ["Capital gains", comp.capital_gains_pct ?? 0],
+  ] as Array<[string, number]>).filter(([, p]) => p > 0).sort((a, b) => b[1] - a[1]);
+  const wSum = raw.reduce((a, [, p]) => a + p, 0) || 1;
+  const shareRows: Array<[string, number]> = raw.map(([n, p]) => [n, Math.round((p / wSum) * 100)] as [string, number]);
+  const leadName = shareRows[0]?.[0] ?? "Corporation tax";
+  const leadShare = shareRows[0]?.[1] ?? 0;
   const waterfallRows: Array<[string, number, boolean?]> = shareRows.map(([n, pct], i) => [n, pct, i === 0]);
   const items = groups.flatMap((g: any) => (g.items ?? []).map((it: any) => ({ ...it, level: g.level })));
   return (
@@ -376,9 +398,9 @@ function TaxByLevel({ d }: { d: any }) {
           <Fig className="text-[26px] leading-none text-[var(--terra-text)]">{allIn}%</Fig>
           <span className="rounded-full border border-[var(--terra-border)] bg-[var(--terra-soft)] px-2.5 py-0.5 text-[11px] font-semibold text-[var(--terra-text)]">{band} for the peer set</span>
         </div>
-        <div className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Share of the tax load</div>
+        <div className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Share of the tax load, modeled for a typical small company</div>
         <Waterfall rows={waterfallRows} />
-        <div className="mt-2.5 border-t border-[var(--c-border)] pt-2 text-[11.5px] text-[var(--c-muted)]">Corporation tax is {corpShare}% of the load. VAT is customer-borne, so it sits outside.</div>
+        <div className="mt-2.5 border-t border-[var(--c-border)] pt-2 text-[11.5px] text-[var(--c-muted)]">{leadName} carries {leadShare}% of the load. VAT is customer-borne, so it sits outside; the statutory rates sit line by line below.</div>
         <InlineDisclosure name="taxdetail" className="group mt-3 border-t border-[var(--c-border)] pt-2.5" summary="Every tax, line by line">
           <div className="mt-2.5 divide-y divide-[var(--c-border)]">{items.map((it: any) => (
             <div key={it.name} className="flex items-baseline gap-3 py-2"><Fig className="w-14 shrink-0 text-[15px] text-[var(--c-ink)]">{it.value}</Fig><span className="text-[12px] leading-tight text-[var(--c-ink2)]"><b className="font-medium text-[var(--c-ink)]">{it.name}</b> <span className="text-[10px] uppercase tracking-wide text-[var(--c-muted)]">{it.level}</span><br />{it.note}</span></div>))}
@@ -460,7 +482,7 @@ function OperatingCosts({ d }: { d: any }) {
   const markerIndex = ladder.indexOf(c.commercial_rent_usd_sqm_yr);
   const rank = markerIndex >= 0 && ladder.length > 1 ? (markerIndex <= 0 ? "the cheapest" : markerIndex >= ladder.length - 1 ? "the priciest" : "mid-pack") : "mid-pack";
   const support: Array<[string, string]> = [
-    [`$${Math.round(c.energy_usd_per_kwh * 100) / 100}`, "Electricity, per kWh"],
+    [`$${(c.energy_usd_per_kwh ?? 0).toFixed(2)}`, "Electricity, per kWh"],
     [`$${Math.round(c.labour_cost_index_usd / 1000)}K`, "Loaded labour, per worker / yr"],
     [`$${c.license_setup_usd}`, "Licence & setup, one-off"],
   ];
@@ -533,7 +555,9 @@ function Grants({ d }: { d: any }) {
 /*
  * SpendDonut , where a household's money goes (retired doughnut -> zero-baseline bars).
  * verdict: A big chunk is discretionary, the spend a new business can win.
- * focal: the discretionary share, called out big, then a ranked share-of-spend bar list.
+ * focal: the discretionary share, called out big, then the NAMED categories as a
+ * descending bar list; the residual "Other" bucket is pinned LAST in a muted row ,
+ * a residual is not a category and may never win the ranking the story figure sits in.
  * width: Even , paired peer to Income.
  * terracotta: the discretionary bar only (one accent per box).
  * NOTE: was a doughnut whose largest wedge was "Other", which broke the single-
@@ -542,14 +566,15 @@ function Grants({ d }: { d: any }) {
 function SpendDonut({ d }: { d: any }) {
   const hs: any[] = d.income?.household_spend ?? []; const get = (c: string) => hs.find((x) => x.category === c)?.pct ?? 0;
   const disc = Math.round(get("recreation") + get("dining_out"));
-  const rows: Array<[string, number]> = [
-    ["Housing & utilities", get("housing_utilities")],
-    ["Transport", get("transport")],
-    ["Food & drink", get("food_drink")],
+  // Named categories only, all integers, sorted descending; Other rendered apart below.
+  const named: Array<[string, number]> = ([
+    ["Housing & utilities", Math.round(get("housing_utilities"))],
+    ["Transport", Math.round(get("transport"))],
+    ["Food & drink", Math.round(get("food_drink"))],
     ["Discretionary", disc],
-    ["Other", Math.round(get("household_goods") + get("other"))],
-  ].sort((a, b) => (b[1] as number) - (a[1] as number)) as Array<[string, number]>;
-  const waterfallRows: Array<[string, number, boolean?]> = rows.map(([n, pct]) => [n, pct, n === "Discretionary"]);
+  ] as Array<[string, number]>).sort((a, b) => b[1] - a[1]);
+  const other = Math.round(get("household_goods") + get("other"));
+  const waterfallRows: Array<[string, number, boolean?]> = named.map(([n, pct]) => [n, pct, n === "Discretionary"]);
   return (
     <Box><Head icon="cost-breakdown">Where a household&apos;s money goes</Head>
       <div className="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
@@ -558,6 +583,15 @@ function SpendDonut({ d }: { d: any }) {
       </div>
       <div className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Share of monthly spend</div>
       <Waterfall rows={waterfallRows} />
+      {/* "Other" pinned last, muted: same row geometry as the kit Waterfall, but grey
+          label/value and a lighter fill, so the residual reads as context, not as the
+          winner of a ranking it does not belong to. */}
+      <div className="mt-2.5 grid grid-cols-[120px_1fr_44px] items-center gap-3">
+        <span className="text-[12px] text-[var(--c-muted)]">Other, combined</span>
+        <div className="h-5 overflow-hidden rounded" style={{ background: "#f6f5f4" }}><div className="h-full rounded" style={{ width: `${Math.max(0, Math.min(100, other))}%`, background: "#e3dfdb" }} role="img" aria-label={`Other, combined ${other}%`} /></div>
+        <Fig className="text-right text-[13px] text-[var(--c-muted)]">{other}%</Fig>
+      </div>
+      <div className="mt-1.5 text-[11px] leading-snug text-[var(--c-muted)]">Other bundles clothing, health, insurance and the rest: many small categories, not one block.</div>
       <InlineDisclosure name="spend" className="group mt-3 border-t border-[var(--c-border)] pt-2.5" summary="What counts as discretionary">
         <div className="mt-2 space-y-1">{[["Recreation and culture", get("recreation")], ["Eating out", get("dining_out")]].map(([n, p]: any) => <div key={n} className="flex items-center justify-between text-[11.5px] text-[var(--c-ink2)]"><span>{n}</span><Fig className="text-[var(--c-ink)]">{p}%</Fig></div>)}</div>
       </InlineDisclosure>
@@ -694,12 +728,19 @@ function Income({ d }: { d: any }) {
  * terracotta: the best cell per column only. Pro seam: pick your own comparison set.
  */
 function Neighbours({ d }: { d: any }) {
+  // Column names must say what the field actually IS (the B10 trust fix): the tax
+  // column reads the blended tax_burden.total_pct, so it is "All-in tax load", never
+  // "Business tax" (the hero's 19% is the corporation-tax rate, a different metric);
+  // the cost column reads costs.license_setup_usd (registration + typical licence),
+  // not the $16 registration fee on the timeline; the days column reads
+  // setup.total_days (the day the slowest step, the bank, clears), not the day-1
+  // registration the hero tile carries.
   const cols = [
-    { key: "tax", label: "Business tax", unit: "%", get: (x: any) => x.tax_burden?.total_pct, cell: (v: number) => "" + Math.round(v), lowGood: true },
-    { key: "reg", label: "Cost to register", unit: "$", get: (x: any) => x.costs?.license_setup_usd, cell: (v: number) => Math.round(v).toLocaleString("en-US"), lowGood: true },
-    { key: "days", label: "Time to register", unit: "days", get: (x: any) => x.setup?.total_days, cell: (v: number) => "" + v, lowGood: true },
+    { key: "tax", label: "All-in tax load", unit: "%", get: (x: any) => x.tax_burden?.total_pct, cell: (v: number) => "" + Math.round(v), lowGood: true },
+    { key: "reg", label: "Licence & setup cost", unit: "$", get: (x: any) => x.costs?.license_setup_usd, cell: (v: number) => Math.round(v).toLocaleString("en-US"), lowGood: true },
+    { key: "days", label: "Days to fully set up", unit: "", get: (x: any) => x.setup?.total_days, cell: (v: number) => "" + v, lowGood: true },
     { key: "vat", label: "VAT", unit: "%", get: (x: any) => x.tax_burden?.vat_rate_pct, cell: (v: number) => "" + v, lowGood: true },
-    { key: "energy", label: "Energy", unit: "$/kWh", get: (x: any) => x.costs?.energy_usd_per_kwh, cell: (v: number) => "" + (Math.round(v * 100) / 100), lowGood: true },
+    { key: "energy", label: "Energy", unit: "$/kWh", get: (x: any) => x.costs?.energy_usd_per_kwh, cell: (v: number) => v.toFixed(2), lowGood: true },
   ];
   const codes = ["GB", ...(d.meta?.peer_set ?? [])];
   const raw = codes.map((code) => { let j: any = null; try { j = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), "../page-data/countries/" + code + ".json"), "utf8")); } catch (e) { } return j ? { code, home: code === "GB", name: j.meta?.name ?? code, vals: cols.map((c) => c.get(j)) } : null; }).filter(Boolean) as any[];

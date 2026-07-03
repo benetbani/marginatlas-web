@@ -2,9 +2,11 @@
 /**
  * Page-local motion helpers for the city page , count-up-safe figures + a
  * terracotta top-edge card hover, mirroring the cell-page pattern (format-picker
- * useCountUp) but kept out of the shared kit. RESTING value is always the real
- * target: SSR / no-JS / reduced-motion / not-yet-in-view all render the true
- * number, never a 0. `active` gates only the animation.
+ * useCountUp) but kept out of the shared kit. THE COUNT-UP CONTRACT: the resting
+ * value is always the real target , SSR / no-JS / reduced-motion / not-yet-in-view
+ * all render the true number, never a 0 , and `active` gates only the animation.
+ * The first reveal tweens from 85% of the target (never from 0), so no paint,
+ * capture, or crawler frame ever shows a figure that contradicts its own caption.
  */
 import * as React from "react";
 import { TERRA } from "@/components/spine/kit";
@@ -28,7 +30,9 @@ export function useCountUp(target: number, reduced: boolean, ms = 620, active = 
   React.useEffect(() => {
     if (reduced || !active) { setV(target); from.current = target; return; }
     const start = performance.now();
-    const a = done.current ? from.current : 0;
+    // first reveal starts at 85% of the target (NEVER 0): any mid-tween frame is
+    // within rounding distance of the truth; later target switches tween prev -> next.
+    const a = done.current ? from.current : target * 0.85;
     let raf = 0;
     const tick = (now: number) => {
       const t = Math.min(1, (now - start) / ms);

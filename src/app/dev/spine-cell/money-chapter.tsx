@@ -6,8 +6,13 @@
  * figures count up once on scroll-in (reduced-motion safe). Terracotta is rationed
  * to exactly one element per Box (the kept slice / the hero figure).
  *
- * All prose comes from the seed (owner.surface_line, setup.surface_line,
- * break_even.surface_line), so scaled cells read specific, not templated.
+ * PROPAGATION IS TOTAL: every figure a format switch touches either recomputes from
+ * the picked subtype (break-even numerator AND denominator, payback = capex / take)
+ * or is format-neutral prose the seed keeps number-free (break_even.surface_line).
+ * The signature interaction must never render side-by-side contradictions.
+ *
+ * All prose comes from the seed (owner.surface_line, break_even.surface_line),
+ * so scaled cells read specific, not templated.
  */
 import * as React from "react";
 import { Box, Head, Rail, Fig, Waterfall, InlineDisclosure, TERRA, TRACK } from "@/components/spine/kit";
@@ -92,8 +97,12 @@ export function OwnerKeeps({ d }: { d: any }) {
 export function BreakEven({ d }: { d: any }) {
   const ctx = useFormat();
   const b = d.break_even ?? {};
+  // TOTAL propagation: BOTH the break-even numerator and the typical-day denominator
+  // follow the picked format (seed subtypes carry typical_covers_per_day per format).
+  // The verdict line is format-neutral BY DESIGN (the seed bakes no numbers into it),
+  // so the picker can never render a contradicting sentence here.
   const covers = ctx ? ctx.sel.break_even_covers_per_day : (b.covers_per_day ?? 0);
-  const typical = b.typical_covers_per_day ?? Math.max(covers, 1);
+  const typical = (ctx ? ctx.sel.typical_covers_per_day : b.typical_covers_per_day) ?? Math.max(covers, 1);
   const pct = Math.max(4, Math.min(100, (covers / typical) * 100));
   return (
     <Box className="md:flex-[2]">
@@ -129,6 +138,16 @@ export function CostToOpen({ d }: { d: any }) {
   const total = ctx ? ctx.sel.cost_to_open_usd : seedTotal;
   // scale the line items to the selected subtype's total so the stack stays honest to the headline
   const scale = seedTotal > 0 ? total / seedTotal : 1;
+  // payback DERIVES from the picked format (identity in the seed: payback = capex / annual
+  // owner take), so it can never contradict the picker: fast casual ~31 months, full service
+  // ~55 months, fine dining ~102 months. No stored payback field is read.
+  const take = ctx ? ctx.sel.take_home_usd : (d.owner?.take_home_usd ?? 0);
+  const paybackMonths = take > 0 && total > 0 ? Math.round((total / take) * 12) : null;
+  const paybackLabel = (mo: number) => {
+    if (mo <= 36) return `${mo} months`;
+    const y = Math.round((mo / 12) * 2) / 2; // nearest half year past 3 years
+    return `${y} years`;
+  };
   return (
     <Box className="md:flex-[3]">
       <div className="flex items-center justify-between gap-2">
@@ -137,7 +156,7 @@ export function CostToOpen({ d }: { d: any }) {
       </div>
       <div className="mb-3 flex flex-wrap items-baseline gap-x-3">
         <CountFig value={total} fmt={(n) => money(n)} className="text-3xl text-[var(--c-ink)]" />
-        <span className="text-[13px] text-[var(--c-ink2)]">to open the doors, paying back in about <Fig className="text-[var(--terra-text)]">{d.setup?.payback_months} months</Fig>.</span>
+        <span className="text-[13px] text-[var(--c-ink2)]">to open the doors{paybackMonths != null ? <>, paying back in about <Fig className="text-[var(--terra-text)]">{paybackLabel(paybackMonths)}</Fig></> : null}.</span>
       </div>
       <InlineDisclosure name="costopen" summary="See the line-item stack">
         <div className="mt-2 divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]">

@@ -12,7 +12,7 @@
  *     , counted by EYE-IDIOM these are all "horizontal length" but split into sub-idioms:
  *     100%-stacked bars (MoneySplit, channels) = 2; ranked/labeled bar-lists (catchment,
  *     Nearby, risks, wages) = the length family, kept <=2 distinct treatments per chapter.
- *   floored-monthly-bars (time-on-axis, ZERO baseline): Seasonality x1 = 1
+ *   area+line (time-on-axis, ZERO baseline + drawn 50/100 scale): Seasonality x1 = 1
  *   waterfall (share-of-revenue): x1
  *   timeline (position-in-time): FirstYear x1 = 1
  *   segmented-control (selection): FormatPicker x1 = 1
@@ -158,31 +158,41 @@ function Demand({ d }: { d: any }) {
 
 /* ================= CH4 , RUNNING IT ================= */
 /* Seasonality , WI-4 brief:
- * decision: how much the year swings. Number: the peak vs the trough. focal: 12 month bars, ZERO baseline.
- * width: Even half. terracotta target: the peak-month bar only. Honest floor from 0 (no artificial floor). */
+ * decision: how much the year swings. Number: the peak vs the trough. focal: 12-month area+line,
+ * ZERO baseline + drawn scale (gridlines at 50/100), so the modest swing READS modest and the
+ * "gentle" caption and the shape agree. width: Even half. terracotta target: the peak marker only. */
 function Seasonality({ d }: { d: any }) {
   const m: number[] = d.seasonality?.months ?? [];
   if (m.length < 2) return null;
-  const max = Math.max(...m), min = Math.min(...m), span = max - min || 1;
+  // HONEST AXIS: zero-based (never floored at the data min), with the scale drawn on-surface.
+  const top = Math.max(100, ...m);
   const dec = m.length - 1; // December is the marked node (year-end peak)
-  const W = 300, H = 84, padX = 6, padTop = 8, padBot = 18;
-  const X = (i: number) => padX + (i / (m.length - 1)) * (W - padX * 2);
-  const Y = (v: number) => padTop + (1 - (v - min) / span) * (H - padTop - padBot);
+  const W = 300, H = 100, padL = 22, padR = 6, padTop = 8, padBot = 18;
+  const X = (i: number) => padL + (i / (m.length - 1)) * (W - padL - padR);
+  const Y = (v: number) => padTop + (1 - v / top) * (H - padTop - padBot);
   const pts = m.map((v, i) => `${X(i).toFixed(1)},${Y(v).toFixed(1)}`);
   const line = "M " + pts.join(" L ");
-  const area = `M ${X(0).toFixed(1)},${(H - padBot).toFixed(1)} L ` + pts.join(" L ") + ` L ${X(m.length - 1).toFixed(1)},${(H - padBot).toFixed(1)} Z`;
+  const area = `M ${X(0).toFixed(1)},${Y(0).toFixed(1)} L ` + pts.join(" L ") + ` L ${X(m.length - 1).toFixed(1)},${Y(0).toFixed(1)} Z`;
   return (
     <Box className="celltop md:flex-[2]">
       <Rail icon="seasonality" kicker="Busy months and quiet months" verdict={d.seasonality?.surface_line} />
-      {/* a small area+line: the shape of the year reads at a glance, December marked */}
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ height: 84 }} role="img" aria-label="Indexed demand across the year, December the peak" preserveAspectRatio="none">
+      {/* a small area+line from a ZERO baseline: the shape of the year reads at a glance, December marked */}
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ height: 100 }} role="img" aria-label="Indexed demand across the year on a zero-based scale, December the peak" preserveAspectRatio="none">
+        {[50, 100].map((g) => (
+          <g key={g}>
+            <line x1={padL} y1={Y(g)} x2={W - padR} y2={Y(g)} stroke="#e4e4e2" strokeWidth={0.75} strokeDasharray="3 3" />
+            <text x={padL - 4} y={Y(g) + 2.5} textAnchor="end" fill="#8c8c8a" fontSize={7.5}>{g}</text>
+          </g>
+        ))}
         <path d={area} fill={TERRA} opacity={0.1} />
         <path d={line} fill="none" stroke={TERRA} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" />
-        <line x1={X(dec)} y1={padTop} x2={X(dec)} y2={H - padBot} stroke={TERRA} strokeWidth={1} strokeDasharray="2 2" opacity={0.55} />
+        <line x1={X(dec)} y1={Y(m[dec])} x2={X(dec)} y2={Y(0)} stroke={TERRA} strokeWidth={1} strokeDasharray="2 2" opacity={0.55} />
         <circle cx={X(dec)} cy={Y(m[dec])} r={3} fill={TERRA} stroke="#fff" strokeWidth={1.5} />
+        {/* the zero baseline, drawn */}
+        <line x1={padL} y1={Y(0)} x2={W - padR} y2={Y(0)} stroke="#c9c9c7" strokeWidth={1} />
         {m.map((_, i) => <text key={i} x={X(i)} y={H - 5} textAnchor="middle" fill="#8c8c8a" fontSize={8}>{MONTHS[i]}</text>)}
       </svg>
-      <div className="mt-1.5 text-[11px] text-[var(--c-muted)]">Indexed demand across the year. December is the peak; the swing is real but gentle.</div>
+      <div className="mt-1.5 text-[11px] text-[var(--c-muted)]">Indexed demand across the year, on a zero-based scale. December is the peak; the swing is real but gentle.</div>
     </Box>
   );
 }

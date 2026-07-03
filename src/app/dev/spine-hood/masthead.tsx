@@ -57,7 +57,8 @@ export function HoodMasthead({ d }: { d: any }) {
 
   return (
     <section className="py-6 md:py-8">
-      <a className="mb-4 inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[var(--c-border)] bg-white/70 px-3 py-1 text-xs font-semibold text-[var(--c-ink2)] transition hover:border-[var(--terra-border)] hover:text-[var(--terra-text)]">&#8592; Back to {d.meta?.city}</a>
+      {/* upward navigation , wired to the city page (dev route until promotion). */}
+      <a href="/dev/spine-city" className="mb-4 inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[var(--c-border)] bg-white/70 px-3 py-1 text-xs font-semibold text-[var(--c-ink2)] transition hover:border-[var(--terra-border)] hover:text-[var(--terra-text)]">&#8592; Back to {d.meta?.city}</a>
       <div className="flex items-center gap-3.5">
         <CountryFlag iso2="gb" className="w-[36px] rounded-sm shadow-sm" />
         <h1 className="text-3xl font-bold tracking-tight text-[var(--c-ink)] md:text-4xl">{d.meta?.city} neighborhoods</h1>

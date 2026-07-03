@@ -20,6 +20,11 @@ const money = (v: number) => (v >= 1e6 ? "$" + (v / 1e6).toFixed(1) + "M" : "$" 
 export type Subtype = {
   slug: string; name: string; size_band: string; keeps_pct: number;
   take_home_usd: number; break_in_0_100: number; cost_to_open_usd: number;
+  /* per-format covers economy (seed _identity: rev = spend x covers/day x 365;
+   * take = keeps% x rev; BE covers from contribution; payback = capex / take).
+   * typical_covers_per_day is the break-even DENOMINATOR, so both ends of the
+   * headroom bar propagate with the picker. */
+  rev_p50_usd?: number; avg_spend_usd?: number; typical_covers_per_day?: number;
   break_even_covers_per_day: number; note: string;
 };
 

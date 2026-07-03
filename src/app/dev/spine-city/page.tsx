@@ -35,13 +35,14 @@
 import * as React from "react";
 import fs from "node:fs";
 import path from "node:path";
-import { Fig, Ico, Stat, Spark, Meter, Movement, Box, Head, Rail, EaseScale, Full, WideRail, Even, Timeline, TERRA, TRACK } from "@/components/spine/kit";
+import { Fig, Ico, Stat, Spark, Meter, Movement, Box, Head, Rail, EaseScale, Full, WideRail, Even, TERRA, TRACK } from "@/components/spine/kit";
 import { CompareTable, type CompareEntity, type CompareRow, LockVeil } from "@/components/spine/kit-index";
 import { AtlasIcon } from "@/components/brand/icons";
 import { CityHero } from "./masthead";
 import { CityStyles } from "./motion";
 import { IncomeCurve, OwnerRunway, MarginKept } from "./chapters";
 import { WhereToTrade } from "./where-to-trade";
+import { FirstYearTimeline } from "./first-year";
 
 export const dynamic = "force-static";
 const C: any = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), "../page-data/cities/GB-london.json"), "utf8"));
@@ -58,10 +59,10 @@ const k = (v: number) => "$" + Math.round((v || 0) / 1000) + "K";
  * close, so the hero states a city truth, not an industry answer.
  * Number: the London owner-keep baseline % (LARGEST on the page). focal: that figure.
  * width: Full. terracotta: the keep figure + kicker + catch icon only.
- * Prose from seed.verdict + seed.where_to_trade. */
+ * Prose from seed.verdict: the H2 carries the thesis, the body renders verdict.why
+ * (NOT where_to_trade.read, which belongs to ch02 alone , no verbatim repeats). */
 function CityVerdict({ d }: { d: any }) {
   const v = d.verdict ?? {};
-  const w = d.where_to_trade ?? {};
   return (
     <div className="overflow-hidden rounded-[14px] border border-[var(--terra-border)] bg-[var(--c-card)]">
       <div className="p-5 md:p-6">
@@ -69,7 +70,7 @@ function CityVerdict({ d }: { d: any }) {
         <div className="grid gap-5 md:grid-cols-[1.5fr_1fr] md:items-end">
           <div>
             <h2 className="text-2xl font-bold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2rem]">Where you trade decides what you keep</h2>
-            <p className="mt-2 max-w-prose text-[13.5px] leading-snug text-[var(--c-ink2)]">{w.read}</p>
+            <p className="mt-2 max-w-prose text-[13.5px] leading-snug text-[var(--c-ink2)]">{v.why}</p>
             {v.catch ? (
               <p className="mt-2.5 flex items-start gap-1.5 rounded-lg border border-[var(--c-border)] bg-[var(--c-soft)] px-3 py-2 text-[12.5px] leading-snug text-[var(--c-ink2)]">
                 <span className="mt-0.5 shrink-0 text-[var(--terra-text)]"><AtlasIcon id="honest-take" size={14} /></span>
@@ -326,16 +327,19 @@ function EasiestTrades({ d }: { d: any }) {
 /* ================= CH5 , RUNNING IT ================= */
 /* FirstYear , WI-5 brief:
  * decision: when the year stops bleeding. Number: the break-even week. focal: the timeline.
- * width: Full. terracotta: the break-even node only. Prose from seed.first_year.read. */
+ * width: Full. terracotta: the break-even node + the profit lane only.
+ * Uses the page-local FirstYearTimeline (not the kit Timeline): node labels above
+ * the axis, phases in translucent lanes below , concurrent Fit-out + Licensing get
+ * separate lanes, and no node text can touch a phase caption. Prose from seed. */
 function FirstYear({ d }: { d: any }) {
   const f = d.first_year ?? {};
   if (!f.nodes?.length) return null;
   const nodes = f.nodes.map((n: any) => ({ at: n.at, label: n.label, sub: n.sub, kind: n.kind === "breakeven" ? "breakeven" : "normal" }));
-  const phases = (f.phases ?? []).map((p: any) => [p[0], p[1], p[2]]);
+  const phases = (f.phases ?? []).map((p: any) => [p[0], p[1], p[2]] as [string, number, number]);
   return (
     <>
       <Rail icon="first-year" kicker="Your first year" verdict={f.read} />
-      <Timeline span={f.span} unit={f.unit} phases={phases as any} nodes={nodes} startLabel={f.start_label} />
+      <FirstYearTimeline span={f.span} unit={f.unit} phases={phases} nodes={nodes} startLabel={f.start_label} />
     </>
   );
 }
@@ -462,8 +466,12 @@ function Close({ d }: { d: any }) {
             <div className="text-[13.5px] text-[var(--c-ink)]">Set {d.meta?.city} beside up to three cities, side by side.</div>
             <a className="mt-2 inline-flex cursor-pointer rounded-full bg-[var(--c-ink)] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[var(--terra-text)]">Open Compare</a>
           </div>
+          {/* the veil sizes to its blurred children, and its centered overlay card
+              (icon + headline + note + CTA) runs ~190px tall , so the teaser wrapper
+              carries a min-height that fully contains the overlay. Without it the
+              overflow-hidden veil clips the CTA (the page's final monetization moment). */}
           <LockVeil headline="The full London workbook" note="Every district by every trade, the real cost stack, and the owner-runway calculator." cta="Unlock with Pro">
-            <div className="space-y-1.5 py-2">
+            <div className="flex min-h-[220px] flex-col justify-evenly py-2">
               {(d.where_to_trade?.pro_teaser ?? []).map((t: string) => (
                 <div key={t} className="text-[12px] text-[var(--c-ink2)]">{t}</div>
               ))}

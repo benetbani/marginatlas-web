@@ -10,7 +10,8 @@
  * island. All prose lives in the seed.
  *
  * As-built chart dictionary (page-level idiom census, cap 2 each):
- *   real tile map (position): SpineMap x1  , orientation only, magnitude lives elsewhere.
+ *   real tile map (position): SpineMap x1  , keep-encoded pins (size = keep index,
+ *     terracotta = keeps more than the city, ink = keeps less), legended on the map.
  *   divergence bar-list (deviation from 100): KeepStrip x1  , the page hero.
  *   marker-on-a-shared-scale (position): footfall two-marker x1, walkability + price Meter (paired) x1.
  *   multiplicative waterfall (running product): "Why the number moves" x1.
