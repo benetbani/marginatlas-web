@@ -48,8 +48,13 @@ export default function SpineHoodPage() {
         {/* MASTHEAD , answer-first two-figure honest headline (keeps-the-most vs the loud one). */}
         <HoodMasthead d={d} />
 
+        {/* the single, quiet provenance line for the whole page (stated once, under the
+            hero). It describes only the model the page actually shows: derived keep,
+            modeled multiplied factors , no invisible-mechanism claims. */}
+        <p className="-mt-2 mb-2 text-[11px] leading-snug text-[var(--c-muted)]">Keep index is derived from revenue and rent load against a city baseline of 100. District revenue positions come from modeled commuter, visitor and character multipliers. Figures are illustrative until wired to live neighborhood data.</p>
+
         {/* 01 , THE MOVEMENT: where the money actually stays. Keep strip + real map + panel. */}
-        <Movement index="01" icon="best-areas" eyebrow="Where the money stays" heading="Rank by what the owner keeps" />
+        <Movement index="01" icon="best-areas" eyebrow="Where the money stays" heading="What the owner keeps, ranked" />
         <NeighborhoodExplorer
           districts={districts}
           defaultSlug={d.meta?.default_slug}
@@ -57,18 +62,14 @@ export default function SpineHoodPage() {
           mapNote={d.meta?.map_note}
         />
 
-        {/* 02 , THE MYTH: promoted to its own full-width chapter, the honesty moat at real size. */}
-        <Movement index="02" icon="myth-reality" eyebrow="The belief to bust" heading="Revenue is the liar" />
+        {/* 02 , THE MYTH: promoted to its own full-width chapter, the honesty moat at real size.
+            Heading is a calm noun-phrase; the sentence-form thesis lives in the masthead prose. */}
+        <Movement index="02" icon="myth-reality" eyebrow="The belief to bust" heading="The revenue myth" />
         {d.meta?.myth && loudest ? <MythChapter myth={d.meta.myth} loudest={loudest} districts={districts} /> : null}
 
         {/* 03 , COMPARE (Pro): hold two or three side by side, with an auto-derived verdict. */}
         <Movement index="03" icon="compare" eyebrow="Compare districts" heading="Two or three, line for line" />
         <NeighborhoodCompare districts={districts} compare={d.meta?.compare} />
-
-        {/* the single, quiet provenance line for the whole page (stated once). It
-            describes only the model the page actually shows: derived keep, modeled
-            multiplied factors , no invisible-mechanism claims. */}
-        <p className="mt-8 text-[11px] leading-snug text-[var(--c-muted)]">Keep index is derived from revenue and rent load against a city baseline of 100. District revenue positions come from modeled commuter, visitor and character multipliers. Figures are illustrative until wired to live neighborhood data.</p>
       </main>
     </SpineShell>
   );

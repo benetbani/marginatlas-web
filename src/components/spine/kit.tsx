@@ -26,7 +26,9 @@ import { Pill } from "@/components/ui/pill";
 
 export const TERRA = "#fb8469"; // atlas-300 soft terracotta , the only fill color
 export const TRACK = "#e6e6e6";
-export const usd = (v: number) => "$" + (v >= 1000 ? Math.round(v / 1000) + "K" : Math.round(v));
+/* THE canonical money grammar, page-set-wide (Final Ascent P4): $680 / $43K / $1.4M ,
+ * round K, one decimal above a million. Route hand-rolled money formatting here. */
+export const usd = (v: number) => (v >= 1e6 ? "$" + (v / 1e6).toFixed(1) + "M" : "$" + (v >= 1000 ? Math.round(v / 1000) + "K" : Math.round(v)));
 export const usdMo = (vYr: number) => "$" + (vYr / 12 / 1000).toFixed(1) + "K";
 export const cap = (s: string) => (s ? s[0].toUpperCase() + s.slice(1) : "");
 

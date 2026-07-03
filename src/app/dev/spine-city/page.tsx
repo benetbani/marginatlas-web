@@ -71,7 +71,9 @@ function CityVerdict({ d }: { d: any }) {
         <div className="mb-1.5 flex items-center gap-2"><Ico id="verdict" tone="terra" /><span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--terra-text)]">{v.kicker}</span></div>
         <div className="grid gap-5 md:grid-cols-[1.5fr_1fr] md:items-end">
           <div>
-            <h2 className="text-2xl font-bold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2rem]">Where you trade decides what you keep</h2>
+            {/* noun-phrase heading (one mood page-set-wide); the sentence-form thesis
+                lives in verdict.why below, where prose belongs. */}
+            <h2 className="text-2xl font-bold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2rem]">The margin, district by district</h2>
             <p className="mt-2 max-w-prose text-[13.5px] leading-snug text-[var(--c-ink2)]">{v.why}</p>
             {v.catch ? (
               <p className="mt-2.5 flex items-start gap-1.5 rounded-lg border border-[var(--c-border)] bg-[var(--c-soft)] px-3 py-2 text-[12.5px] leading-snug text-[var(--c-ink2)]">
@@ -273,7 +275,7 @@ function TopTrades({ d }: { d: any }) {
       <Rail icon="owner-keeps" kicker="Owner take-home by trade" verdict={d.trades?.read} />
       {/* column headers so every cell is self-labelling */}
       <div className="-mx-2 grid grid-cols-[minmax(0,140px)_1fr_84px_52px] items-center gap-3 px-2 pb-1 text-[9.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)] sm:grid-cols-[150px_1fr_84px_52px_64px]">
-        <span>Trade</span><span /><span className="text-right">Take-home /yr</span><span className="text-right">Keeps</span><span className="hidden text-right sm:block">Crowding</span>
+        <span>Trade</span><span /><span className="text-right">Take-home ($/yr)</span><span className="text-right">Keeps</span><span className="hidden text-right sm:block">Crowding</span>
       </div>
       <div className="space-y-2.5">{arr.map((t: any) => {
         const isPick = t.slug === keepLead.slug;
@@ -472,16 +474,18 @@ function CityPeers({ d }: { d: any }) {
   const rows: any[] = d.peers?.list ?? [];
   const entities: CompareEntity[] = rows.map((r) => ({ id: r.name, name: r.name, home: !!r.home }));
   const income = Object.fromEntries(rows.map((r) => [r.name, Math.round(r.median_income_usd / 1000)]));
+  // Number-format canon: index rows carry NO inline unit (bare figures in cells, the
+  // base named once in the caption); the visitors unit lives in the header alone.
   const compareRows: CompareRow[] = [
-    { key: "rent", label: "Rent index", unit: "idx", higherIsBetter: false, values: Object.fromEntries(rows.map((r) => [r.name, r.rent_index])) },
-    { key: "spend", label: "Consumer spend", unit: "idx", higherIsBetter: true, values: Object.fromEntries(rows.map((r) => [r.name, r.spend_index])) },
+    { key: "rent", label: "Rent index", higherIsBetter: false, values: Object.fromEntries(rows.map((r) => [r.name, r.rent_index])) },
+    { key: "spend", label: "Spend index", higherIsBetter: true, values: Object.fromEntries(rows.map((r) => [r.name, r.spend_index])) },
     { key: "income", label: "Median income", unit: "$K", higherIsBetter: true, values: income, display: Object.fromEntries(rows.map((r) => [r.name, `$${income[r.name]}K`])) },
-    { key: "vis", label: "Visitors", unit: "M/yr", higherIsBetter: true, values: Object.fromEntries(rows.map((r) => [r.name, r.visitors_m])) },
+    { key: "vis", label: "Visitors", unit: "M/yr", higherIsBetter: true, values: Object.fromEntries(rows.map((r) => [r.name, r.visitors_m])), display: Object.fromEntries(rows.map((r) => [r.name, `${r.visitors_m}`])) },
   ];
   return (
     <Box className="citytop">
       <Rail icon="compare" kicker="How it compares, city by city" verdict={d.peers?.read} />
-      <CompareTable entities={entities} rows={compareRows} caption="Best in each metric is bold. Shares and indices, compared like for like. The home city is tinted, never ranked." />
+      <CompareTable entities={entities} rows={compareRows} caption="Best in each metric is bold. Indices run London = 100, compared like for like. The home city is tinted, never ranked." />
     </Box>
   );
 }
@@ -508,7 +512,7 @@ function Close({ d }: { d: any }) {
           <div className="mt-1 text-[16px] font-semibold text-[var(--c-ink)]">{v.winner_trade?.replace(" keeps the most", "")}, in {bestDistrict?.name}</div>
           <p className="mt-1.5 text-[12.5px] leading-snug text-[var(--c-ink2)]">The margin leader in the district that keeps the most of every pound. Start there, then check the trade's live economics.</p>
           <div className="mt-3 flex flex-wrap gap-4 border-t border-[var(--c-border)] pt-3">
-            <div><Fig className="text-[18px] text-[var(--terra-text)]">{k(pick.take_home_usd ?? 0)}</Fig><div className="text-[10px] uppercase tracking-wide text-[var(--c-muted)]">owner take-home /yr</div></div>
+            <div><Fig className="text-[18px] text-[var(--terra-text)]">{k(pick.take_home_usd ?? 0)}</Fig><div className="text-[10px] uppercase tracking-wide text-[var(--c-muted)]">owner take-home a year</div></div>
             <div><Fig className="text-[18px] text-[var(--c-ink)]">{bestDistrict?.keep}</Fig><div className="text-[10px] uppercase tracking-wide text-[var(--c-muted)]">keep index</div></div>
           </div>
           <a href="/dev/spine-cell" className="mt-3 inline-flex text-[13px] font-semibold text-[var(--terra-text)] hover:underline">See the trade's live economics &#8594;</a>
@@ -573,7 +577,7 @@ export default function SpineCityPage() {
       </div>
 
       {/* Running it , the first-year timeline, risks, character and locals. */}
-      <Movement index="06" eyebrow="Running it" heading="Through the first year, and what to watch" icon="first-year" />
+      <Movement index="06" eyebrow="Running it" heading="The first year, and what to watch" icon="first-year" />
       <div className="space-y-4">
         <Full><FirstYear d={d} /></Full>
         <CityRisks d={d} />

@@ -13,9 +13,9 @@
  * Built inline (no kit modification); reuses Box/Rail/Fig/Stat/TERRA.
  */
 import * as React from "react";
-import { Box, Rail, Fig } from "@/components/spine/kit";
+import { Box, Rail, Fig, usd } from "@/components/spine/kit";
 
-const money = (v: number) => (v >= 1e6 ? "$" + (v / 1e6).toFixed(1) + "M" : "$" + Math.round(v / 1000) + "K");
+const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
 
 export type Subtype = {
   slug: string; name: string; size_band: string; keeps_pct: number;

@@ -37,7 +37,9 @@ export type SignalKey = string;
 export type SignalDef = {
   key: SignalKey;
   label: string;
-  /** short unit shown muted in the header, e.g. "%", "/100", "idx". NEVER a raw-USD cross-geo unit. */
+  /** short unit shown muted in the header, e.g. "%", "/100". Indices carry NO inline
+   * unit: bare figures in cells, the base named once in the header/caption. NEVER a
+   * raw-USD cross-geo unit. */
   unit?: string;
   higherIsBetter?: boolean;
   /** optional in-cell bar UNDER the figure, drawn on a DECLARED domain (never a hidden
@@ -266,7 +268,8 @@ export type CompareEntity = {
 export type CompareRow = {
   key: string;
   label: string;
-  /** share/index unit only ("%", "/100", "idx"). NEVER a cross-geo USD unit. */
+  /** share unit only ("%", "/100"). Index rows carry NO unit (bare figures; name the
+   * base once in the caption). NEVER a cross-geo USD unit. */
   unit?: string;
   higherIsBetter?: boolean;
   /** per-entity value keyed by entity id. null = withheld (dash). */

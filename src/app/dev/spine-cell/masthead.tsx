@@ -9,10 +9,10 @@
  * small p50 marker, the same honest read at support scale).
  */
 import * as React from "react";
-import { Fig, SpreadStrip } from "@/components/spine/kit";
+import { Fig, SpreadStrip, usd } from "@/components/spine/kit";
 import { useCountUp } from "./format-picker";
 
-const money = (v: number) => (v >= 1e6 ? "$" + (v / 1e6).toFixed(1) + "M" : "$" + Math.round(v / 1000) + "K");
+const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
 
 export function Masthead({ d }: { d: any }) {
   const h = d.headline ?? {};
@@ -56,10 +56,9 @@ export function Masthead({ d }: { d: any }) {
         </div>
 
         {/* provenance, stated once , a quiet footnote, not a body element (no brown dot,
-            no per-card confidence legend). The seed's trailing "confidence dot" sentence
-            is dropped here since the dots are gone. */}
+            no per-card confidence legend). The seed line carries no dot sentence anymore. */}
         <div className="mt-4 text-[10.5px] leading-snug text-[var(--c-muted)]">
-          {String(d.meta?.provenance_line ?? "").replace(/\s*Each number carries a confidence dot\.?/i, "").trim()}
+          {d.meta?.provenance_line}
         </div>
       </div>
     </section>

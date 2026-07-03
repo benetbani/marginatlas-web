@@ -18,10 +18,10 @@
  * so scaled cells read specific, not templated.
  */
 import * as React from "react";
-import { Box, Head, Rail, Fig, InlineDisclosure, TERRA, TRACK } from "@/components/spine/kit";
+import { Box, Head, Rail, Fig, InlineDisclosure, TERRA, TRACK, usd } from "@/components/spine/kit";
 import { useFormat, useCountUp, useInView } from "./format-picker";
 
-const money = (v: number) => (v >= 1e6 ? "$" + (v / 1e6).toFixed(1) + "M" : "$" + Math.round(v / 1000) + "K");
+const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
 function useReduced() {
   const [r, setR] = React.useState(false);
   React.useEffect(() => { const mq = window.matchMedia("(prefers-reduced-motion: reduce)"); setR(mq.matches); }, []);

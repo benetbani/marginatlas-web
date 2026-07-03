@@ -29,14 +29,14 @@
 import * as React from "react";
 import fs from "node:fs";
 import path from "node:path";
-import { Fig, Meter, Bullets, InlineDisclosure, Movement, Box, Rail, Spark, Timeline, StackBar, Full, Even, WideRail, Narrow, TERRA, TRACK, type TLPhase, type TLNode } from "@/components/spine/kit";
+import { Fig, Meter, Bullets, InlineDisclosure, Movement, Box, Rail, Spark, Timeline, StackBar, Full, Even, WideRail, Narrow, TERRA, TRACK, usd, type TLPhase, type TLNode } from "@/components/spine/kit";
 import { WherePaysExplorer } from "./where-pays";
 import { MarginLadder, SurvivalCurve, SeasonRibbon, RangeBracket, CountFig } from "./forms";
 import { deriveSubtypes } from "./subtypes";
 
 export const dynamic = "force-static";
 const I: any = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), "../page-data/industries/restaurants.json"), "utf8"));
-const money = (v: number) => (v >= 1e6 ? "$" + (v / 1e6).toFixed(1) + "M" : "$" + Math.round(v / 1000) + "K");
+const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
 
 /* ============================================================
  * MASTHEAD , THE MARGIN INDEX (hero, answer-first)
@@ -180,7 +180,7 @@ function Demand({ d }: { d: any }) {
               {typeof dm.spend_per_head_usd === "number" ? (
                 <Fig className="mt-1 block text-[20px] leading-none text-[var(--c-ink)]">${dm.spend_per_head_usd}</Fig>
               ) : (
-                <div className="mt-1 text-[13px] text-[var(--c-muted)]">Not modelled</div>
+                <div className="mt-1 text-[13px] text-[var(--c-muted)]">Not modeled</div>
               )}
             </div>
             {typeof dm.purchases_per_year === "number" ? (
@@ -457,7 +457,7 @@ function WhoItSuits({ d }: { d: any }) {
   const w = d.who_suits ?? {};
   return (
     <Box>
-      <Rail icon="gut-check" kicker="Who it suits" verdict="It rewards hands-on operators, and punishes passive dreamers." />
+      <Rail icon="gut-check" kicker="Who it suits" verdict="It rewards hands-on operators, and punishes absentee ownership." />
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-[var(--terra-text)]">Suits</div>

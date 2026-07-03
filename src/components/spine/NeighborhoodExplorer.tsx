@@ -272,7 +272,7 @@ function MultWaterfall({ d }: { d: District }) {
               <div className="h-full rounded-full" style={{ width: `${barW(r.running)}%`, background: r.isCity ? "#b9b1ab" : "#cdc6c0" }} />
             </div>
             <Fig className="text-right text-[11.5px] text-[var(--c-ink2)]">
-              {r.isCity ? <>&times;1.00</> : <>&times;{r.mult.toFixed(2)}</>}
+              {r.isCity ? <>x1.00</> : <>x{r.mult.toFixed(2)}</>}
             </Fig>
           </div>
         ))}
@@ -282,13 +282,13 @@ function MultWaterfall({ d }: { d: District }) {
           <div className="relative h-[11px] overflow-hidden rounded-full" style={{ background: "#f0eae7" }} role="img" aria-label={`net ${net.toFixed(2)} times the city, clipped`}>
             <div className="h-full rounded-full" style={{ width: `${barW(net)}%`, background: TERRA }} />
           </div>
-          <Fig className="text-right text-[12px] text-[var(--terra-text)]">&times;{net.toFixed(2)}</Fig>
+          <Fig className="text-right text-[12px] text-[var(--terra-text)]">x{net.toFixed(2)}</Fig>
         </div>
       </div>
       <p className="mt-2 text-[11px] leading-snug text-[var(--c-muted)]">
         Each factor multiplies the running total, not adds to it.
         {clipBinds ? (
-          <> The raw product reaches <Fig className="text-[var(--c-ink2)]">&times;{rawProduct.toFixed(2)}</Fig>; the model clips it to <Fig className="text-[var(--c-ink2)]">&times;{net.toFixed(2)}</Fig>, so no single district lifts a trade without limit.</>
+          <> The raw product reaches <Fig className="text-[var(--c-ink2)]">x{rawProduct.toFixed(2)}</Fig>; the model clips it to <Fig className="text-[var(--c-ink2)]">x{net.toFixed(2)}</Fig>, so no single district lifts a trade without limit.</>
         ) : nearFlat ? (
           <> Every factor here sits close to the city norm, so the number barely moves. The edge, if any, lives in the rent line below, not the takings.</>
         ) : null}
@@ -403,13 +403,13 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
       {/* PROOF , the rest behind single-open disclosures. The one open by default is
           the proof of the hero figure, not the Pro veil (audit hierarchy fix). */}
       <div className="space-y-2 px-4 py-4">
-        <Expand name={grp} title="Why the number moves" open right={<Fig className="text-[12px] text-[var(--c-ink)]">&times;{(1 + d.rev_vs_city_pct / 100).toFixed(2)}</Fig>}>
+        <Expand name={grp} title="Why the number moves" open right={<Fig className="text-[12px] text-[var(--c-ink)]">x{(1 + d.rev_vs_city_pct / 100).toFixed(2)}</Fig>}>
           <div className="pt-1"><MultWaterfall d={d} /></div>
         </Expand>
 
-        <Expand name={grp} title="The rent counterweight" right={<Fig className="text-[12px] text-[var(--c-ink)]">&times;{d.rent_mult.toFixed(2)}</Fig>}>
+        <Expand name={grp} title="The rent counterweight" right={<Fig className="text-[12px] text-[var(--c-ink)]">x{d.rent_mult.toFixed(2)}</Fig>}>
           <p className="pt-1 text-[12.5px] leading-snug text-[var(--c-ink2)]">
-            Rent runs <Fig className="text-[var(--c-ink)]">&times;{d.rent_mult.toFixed(2)}</Fig> the city rate. The keep index divides the revenue lift by this load, which is why {above ? "the lighter lease lets more of each pound stay put" : "the headline lift never reaches the till"}.
+            Rent runs <Fig className="text-[var(--c-ink)]">x{d.rent_mult.toFixed(2)}</Fig> the city rate. The keep index divides the revenue lift by this load, which is why {above ? "the lighter lease lets more of each pound stay put" : "the headline lift never reaches the till"}.
           </p>
         </Expand>
 
@@ -458,8 +458,9 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
       {/* CTA , the call onward to the highest-value node (the cell page). Chrome is
           ink, never terracotta; dev route until promotion (then /{city}/{district}). */}
       <div className="flex items-center justify-between gap-3 border-t border-[var(--c-border)] px-5 py-3.5">
+        {/* "covered", not "modeled": the page's one provenance line owns that word */}
         <div className="text-[12px] text-[var(--c-muted)]">
-          <Fig className="text-[14px] text-[var(--c-ink)]">{d.cell_count ?? "?"}</Fig> trades modeled in {d.name}
+          <Fig className="text-[14px] text-[var(--c-ink)]">{d.cell_count ?? "?"}</Fig> trades covered in {d.name}
         </div>
         <a href="/dev/spine-cell" className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90" style={{ background: "var(--c-ink)" }}>
           Open a trade here <span aria-hidden>&#8594;</span>
@@ -671,7 +672,7 @@ export function MythChapter({ myth, loudest, districts = [] }: { myth: Myth; lou
  * Metrics are rows, districts columns. In-cell bars run ONLY on drawn shared scales
  * (CellScaleBar: keep ticked at city 100, revenue ticked at 0%) , no hidden
  * truncated baselines. The row-best dot is legended in the caption and wears
- * terracotta on the keep row only. One multiplier notation page-wide (×2.05).
+ * terracotta on the keep row only. One multiplier notation page-set-wide (x2.05).
  * ========================================================================== */
 type Metric = {
   key: string; label: string; hint: string;
@@ -694,7 +695,7 @@ function weekdayLean(d: District) {
 const FREE_METRICS: Metric[] = [
   { key: "keep", label: "Keep index", hint: "what stays after rent", get: (d) => keepIndex(d), fmt: (d) => `${keepIndex(d)}`, higherIsBetter: true, bar: { domain: [60, 130], refValue: 100 } },
   { key: "rev", label: "Revenue vs city", hint: "headline takings", get: (d) => d.rev_vs_city_pct, fmt: (d) => `${d.rev_vs_city_pct >= 0 ? "+" : ""}${d.rev_vs_city_pct}%`, higherIsBetter: true, bar: { domain: [-10, 60], refValue: 0 } },
-  { key: "rent", label: "Rent load", hint: "lower is lighter", get: (d) => d.rent_mult, fmt: (d) => `×${d.rent_mult.toFixed(2)}`, higherIsBetter: false },
+  { key: "rent", label: "Rent load", hint: "lower is lighter", get: (d) => d.rent_mult, fmt: (d) => `x${d.rent_mult.toFixed(2)}`, higherIsBetter: false },
 ];
 const PRO_METRICS: Metric[] = [
   { key: "lean", label: "Weekday dependence", hint: "how lopsided the week is", get: (d) => weekdayLean(d), fmt: (d) => `${weekdayLean(d)}% weekday`, higherIsBetter: false, bar: { domain: [0, 100] } },

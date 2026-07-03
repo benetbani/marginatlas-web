@@ -14,10 +14,10 @@
  * All prose from the seed. Terracotta rationed to one decision figure per Box.
  */
 import * as React from "react";
-import { Box, Head, Rail, Fig, InlineDisclosure, TERRA, TRACK } from "@/components/spine/kit";
+import { Box, Head, Rail, Fig, InlineDisclosure, TERRA, TRACK, usd } from "@/components/spine/kit";
 import { CountFig, useReducedMotion, useInView } from "./motion";
 
-const money = (v: number) => (v >= 1e6 ? "$" + (v / 1e6).toFixed(1) + "M" : "$" + Math.round(v / 1000) + "K");
+const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
 
 /* ---- income distribution curve ---- */
 export function IncomeCurve({ d }: { d: any }) {

@@ -360,7 +360,7 @@ export default function SpineCellPage() {
 
       {/* The verdict , Even pair (break-in + who-suits at half width) then the canonical
           full-width $100 cost-stack (T1: a single stacked bar earns the full column). */}
-      <Movement index="01" eyebrow="The verdict" heading="Can this pay" icon="gut-check" />
+      <Movement index="01" eyebrow="The verdict" heading="What it takes, and what it pays" icon="gut-check" />
       <div className="space-y-4">
         <Row><HonestTake d={d} /><WhoSuits d={d} /></Row>
         <Full><MoneySplit d={d} /></Full>
@@ -382,7 +382,7 @@ export default function SpineCellPage() {
       </FormatProvider>
 
       {/* Running it , Even (cost calendar reads) then Full timeline. */}
-      <Movement index="04" eyebrow="Running it" heading="Through the first year" icon="first-year" />
+      <Movement index="04" eyebrow="Running it" heading="The first year" icon="first-year" />
       <div className="space-y-4">
         <Row><Seasonality d={d} /><Risks d={d} /></Row>
         <Full><FirstYear d={d} /></Full>

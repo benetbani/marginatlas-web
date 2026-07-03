@@ -19,11 +19,11 @@
  * accent), leaving the screenful at <=3 marks.
  */
 import * as React from "react";
-import { Box, Rail, Fig, TERRA, TRACK } from "@/components/spine/kit";
+import { Box, Rail, Fig, TERRA, TRACK, usd } from "@/components/spine/kit";
 import { LockVeil } from "@/components/spine/kit-index";
 import { deriveSubtypes, type SubtypeRow } from "./subtypes";
 
-const money = (v: number) => (v >= 1e6 ? "$" + (v / 1e6).toFixed(1) + "M" : "$" + Math.round(v / 1000) + "K");
+const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
 
 type Place = { name: string; take_home_usd: number; net_margin_pct: number; rent_load_pct: number };
 

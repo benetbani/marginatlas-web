@@ -170,7 +170,8 @@ function MarginReality({ d }: { d: any }) {
   return (
     <Box>
       <Head icon="owner-keeps">Where the other ${100 - kept} goes</Head>
-      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1"><span className="text-sm text-[var(--c-ink2)]">Labour is the heaviest slice; the <b className="text-[var(--c-ink)]">${kept}</b> margin is what survives it.</span></div>
+      {/* the verdict interprets; the hero + the bar's legend already carry the kept figure */}
+      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1"><span className="text-sm text-[var(--c-ink2)]">Labour is the heaviest slice; the margin is what survives it.</span></div>
       <StackBar h="h-10" className="mt-4" segments={parts} legend ariaLabel={`Of every 100 in revenue, about ${kept} is kept as margin`} />
     </Box>
   );
@@ -440,7 +441,7 @@ function TaxByLevel({ d }: { d: any }) {
           <Fig className="text-[26px] leading-none text-[var(--terra-text)]">{allIn}%</Fig>
           <Chip>{band} for the peer set</Chip>
         </div>
-        <div className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Share of the tax load, modeled for a typical small company</div>
+        <div className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Share of the tax load for a typical small company</div>
         <Waterfall rows={waterfallRows} />
         <div className="mt-2.5 border-t border-[var(--c-border)] pt-2 text-[11.5px] text-[var(--c-muted)]">{leadName} carries {leadShare}% of the load. VAT is customer-borne, so it sits outside; the statutory rates sit line by line below.</div>
         <InlineDisclosure name="taxdetail" className="group mt-3 border-t border-[var(--c-border)] pt-2.5" summary="Every tax, line by line">
