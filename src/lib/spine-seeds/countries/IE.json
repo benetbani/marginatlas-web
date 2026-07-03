@@ -1,0 +1,442 @@
+{
+  "meta": {
+    "iso2": "IE",
+    "iso3": "IRL",
+    "name": "Ireland",
+    "region": "Europe",
+    "currency_local": "EUR",
+    "fx_to_usd": 1.146815,
+    "fx_as_of": "2026-06",
+    "peer_set": [
+      "SE",
+      "BE",
+      "AT",
+      "NO"
+    ],
+    "schema_version": "1.0",
+    "overall_confidence": "modeled",
+    "last_reviewed": "2026-07-03"
+  },
+  "tax_burden": {
+    "total_pct": 61.1,
+    "components": {
+      "corporation_tax_pct": 12.5,
+      "business_rates_pct_equiv": 3.0,
+      "capital_gains_pct": 33.0,
+      "dividend_tax_pct": 52.1
+    },
+    "employer_oncost_pct": 11.25,
+    "vat_rate_pct": 23.0,
+    "notes": "Trading profits are taxed at 12.5%, one of the lowest headline company rates among peers, but the owner then pays a high personal charge on dividends: about 52% at the top once income tax, the universal social charge, and social insurance stack. Share-sale gains are taxed at 33%, with a 10% entrepreneur rate up to a lifetime cap. Employer social insurance is light at about 11% of pay. VAT 23% is customer-borne and excluded.",
+    "_meta": {
+      "confidence": "modeled",
+      "source": "PwC Worldwide Tax Summaries Ireland and Revenue.ie (CIT 12.5% trading, CGT 33%, employer PRSI 11.25%, VAT 23%); KPMG/Revenue on the top combined dividend rate ~52.1% (40% income tax + 8% USC + ~4.1% PRSI). business_rates_pct_equiv modeled.",
+      "as_of": "2025",
+      "method": "total_pct = corp + (1 - corp/100)*dividend + business_rates_equiv = 12.5 + 0.875*52.1 + 3 = 61.09. corporation_tax_pct is the 12.5% trading rate (non-trading income is 25%; trading rate used for an operating SME). dividend_tax_pct is the top marginal personal rate on dividends (income tax 40% + USC 8% + PRSI ~4.1%); a 3% surcharge can push it to ~55% at very high non-PAYE income. business_rates_pct_equiv modeled at 3% of profit for recurring commercial rates (local authority premises charge). capital_gains_pct 33% stored as component, excluded from total_pct."
+    }
+  },
+  "economic_profile": {
+    "ease_of_business": 8,
+    "talent_pool": 7,
+    "access_to_financing": 8,
+    "political_stability": 9,
+    "economic_reward": 9,
+    "affordability": 3,
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Scores modeled from provided macro snapshot (GDP/cap PPP 133437, growth 2.5%, services 60.6%, mfg 29.6%, labour force 2.89M, business density 6.4) plus governance signal: Transparency International CPI 2024 score 76 (clean, top tier); common-law system and global multinational and capital hub; GDP/cap PPP inflated by multinational activity; high operating costs.",
+      "as_of": "2024",
+      "method": "ease_of_business 8: common-law, business-friendly registration and contract enforcement. talent_pool 7: small 2.9M labour force, highly educated, tight for scaling. access_to_financing 8: strong banking plus global capital and VC presence. political_stability 9: high governance and stable pro-business policy (CPI 76). economic_reward 9: very high GDP/cap PPP (multinational-inflated) with steady growth. affordability 3: high labour, office and living costs."
+    }
+  },
+  "setup": {
+    "total_days": 12,
+    "steps": [
+      {
+        "name": "Incorporate the company with the registrar (Form A1 and constitution)",
+        "cost_local": 50,
+        "cost_usd": 57.34,
+        "time_days": 5,
+        "how": "Online"
+      },
+      {
+        "name": "File beneficial-ownership details on the central register",
+        "cost_local": 0,
+        "cost_usd": 0,
+        "time_days": 1,
+        "how": "Online"
+      },
+      {
+        "name": "Register for corporation tax, VAT and payroll taxes with the tax authority",
+        "cost_local": 0,
+        "cost_usd": 0,
+        "time_days": 5,
+        "how": "Online"
+      },
+      {
+        "name": "Open a business bank account",
+        "cost_local": 0,
+        "cost_usd": 0,
+        "time_days": 10,
+        "how": "Either"
+      },
+      {
+        "name": "Non-EEA-director bond (only if no director resident in the EEA)",
+        "cost_local": 2000,
+        "cost_usd": 2293.63,
+        "time_days": 3,
+        "how": "Online"
+      }
+    ],
+    "structures": [
+      {
+        "name": "Sole trader",
+        "liability": "Unlimited, personal",
+        "tax": "Profit taxed as personal income through self-assessment",
+        "best_for": "One-person services starting small with low setup cost"
+      },
+      {
+        "name": "Private company limited by shares (LTD)",
+        "liability": "Limited to shares held",
+        "tax": "Corporation tax 12.5 percent on trading profit",
+        "best_for": "Most small companies; can have a single director if a separate secretary is appointed"
+      },
+      {
+        "name": "Partnership",
+        "liability": "Unlimited and shared among partners",
+        "tax": "Each partner taxed on their share as personal income",
+        "best_for": "Two or more people pooling a practice or trade"
+      },
+      {
+        "name": "Designated activity company (DAC)",
+        "liability": "Limited to shares held",
+        "tax": "Corporation tax 12.5 percent on trading profit",
+        "best_for": "Firms needing a stated objects clause, such as some regulated activities"
+      }
+    ],
+    "vat_threshold_local": 42500,
+    "vat_threshold_usd": 48739.64,
+    "banking": {
+      "can_foreigner": true,
+      "friction": "medium",
+      "notes": "A foreigner can open a business account, but the main banks prefer at least one resident or EU-based director and often need an in-person visit, so non-residents commonly use a fintech first. Goods sellers register for VAT at a higher turnover than services.",
+      "banks_traditional": [
+        "AIB",
+        "Bank of Ireland",
+        "Permanent TSB"
+      ],
+      "banks_digital": [
+        "Revolut",
+        "Wise",
+        "N26",
+        "bunq"
+      ]
+    },
+    "_meta": {
+      "confidence": "held",
+      "source": "Registrar of companies fee schedule (EUR 50 online Form A1) and 5 to 10 working day processing; tax authority VAT thresholds page (EUR 42,500 services, EUR 85,000 goods, from 1 Jan 2025); company-formation and banking guides for the bond and bank process. VAT threshold shown is the services figure; goods threshold is EUR 85,000.",
+      "as_of": "2025",
+      "method": "Held via official registrar fee page plus tax-authority VAT-thresholds page, corroborated by 3+ formation guides; converted EUR at fx_to_usd 1.146815; non-EEA bond cost modeled within the cited EUR 1,600 to 2,000 range."
+    }
+  },
+  "people_pay": {
+    "pay_by_level_usd": {
+      "junior": 49313,
+      "experienced": 72249,
+      "senior": 104360,
+      "specialist": 128443
+    },
+    "hiring": {
+      "hire_ease": "easy",
+      "contract_ease": "moderate",
+      "fire_ease": "moderate",
+      "recruiting_depth": "deep",
+      "notes": {
+        "hire": "Hiring is flexible by EU standards. Employer payroll on-costs are low, around 11% of pay, well below most of the euro area.",
+        "contract": "Written terms must be issued early. Fixed term contracts are allowed, but repeated renewals beyond four years convert to permanent.",
+        "fire": "After 12 months service, dismissal must be fair and follow procedure, with redress for unfair dismissal; probation gives early flexibility.",
+        "recruiting": "Deep English speaking talent base anchored by large tech and pharma multinationals, drawing heavily on EU and international hires."
+      }
+    },
+    "talent_depth": [
+      {
+        "field": "finance",
+        "score_1_5": 4
+      },
+      {
+        "field": "software_tech",
+        "score_1_5": 5
+      },
+      {
+        "field": "professional_legal",
+        "score_1_5": 4
+      },
+      {
+        "field": "creative_media",
+        "score_1_5": 3
+      },
+      {
+        "field": "life_sciences",
+        "score_1_5": 5
+      },
+      {
+        "field": "manufacturing_trades",
+        "score_1_5": 3
+      }
+    ],
+    "languages": [
+      {
+        "name": "English",
+        "pct_speakers": 99.0,
+        "native": true
+      },
+      {
+        "name": "Irish",
+        "pct_speakers": 40.0,
+        "native": true
+      }
+    ],
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Pay modeled from average gross earnings (~EUR 52.6k/year, weekly ~EUR 1,012) scaled to white-collar levels plus ~14% employer PRSI load (employer PRSI ~11.15-11.25%); FX 1.146815. Dismissal rules from unfair dismissal law (protection after 12 months). Languages from Census 2022 (English near-universal; ~39.8% claim some Irish ability, very few daily speakers).",
+      "as_of": "2025",
+      "method": "White-collar base by level x low employer on-cost multiplier, converted to USD; talent_depth scored high for tech and pharma multinational clusters; English flagged native, Irish flagged not native given negligible first-language use."
+    }
+  },
+  "income": {
+    "average_income_usd": 42738,
+    "median_income_usd": 37860,
+    "top10_income_usd": 90864,
+    "top1_income_usd": 212015,
+    "gini": 0.264,
+    "gini_band": "fairly_equal",
+    "household_spend": [
+      {
+        "category": "housing_utilities",
+        "pct": 26.3
+      },
+      {
+        "category": "transport",
+        "pct": 9.6
+      },
+      {
+        "category": "food_drink",
+        "pct": 8.6
+      },
+      {
+        "category": "recreation",
+        "pct": 7.3
+      },
+      {
+        "category": "dining_out",
+        "pct": 16.1
+      },
+      {
+        "category": "household_goods",
+        "pct": 4.3
+      },
+      {
+        "category": "other",
+        "pct": 27.8
+      }
+    ],
+    "_meta": {
+      "confidence": "modeled",
+      "source": "EU income and living conditions survey 2024: mean equivalised net income EUR 37,267, median EUR 33,013; disposable income Gini 26.4 (agrees with OECD income distribution database 28.5, 2022). National accounts household consumption by purpose 2023: housing and utilities 26.3 pct, transport 9.6 pct, food and non-alcoholic 8.6 pct, recreation and culture 7.3 pct, restaurants and hotels 16.1 pct, furnishings and household equipment 4.3 pct. Local EUR converted at fx 1.146815.",
+      "as_of": "2024",
+      "method": "Mean and median held on an equivalised net disposable per-person basis from two agreeing official sources. Top decile modeled at 2.4x median and top 1 percent at 5.6x median from the survey decile structure. Spend shares mapped from the consumption-by-purpose classification: housing_utilities=housing/water/energy, transport=transport, food_drink=food and non-alcoholic beverages, recreation=recreation and culture, dining_out=restaurants and hotels, household_goods=furnishings and household equipment, other holds the residual to sum 100."
+    },
+    "_raw": {
+      "average_income_local": 37267,
+      "median_income_local": 33013,
+      "top10_income_local": 79231,
+      "top1_income_local": 184873,
+      "income_basis": "Annual equivalised household net disposable income on a per-person basis (after taxes and transfers). Mean and median held from official statistics. Top decile and top 1 percent modeled from the published income distribution."
+    }
+  },
+  "costs": {
+    "energy_usd_per_kwh": 0.3,
+    "commercial_rent_usd_sqm_yr": 550.5,
+    "labour_cost_index_usd": 77868.7,
+    "license_setup_usd": 688.1,
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Energy: Eurostat non-household medium-size electricity H2 2024 0.25 EUR/kWh (highest in EU); representative all-in 0.30 USD. Rent: Dublin prime office ~673 EUR/sqm/yr (65 USD/sqft, CBRE/Savills 2024); representative city-centre secondary 480 EUR/sqm/yr. Labour: full-time average earnings ~61,100 EUR/yr 2024 (CSO/Eurostat) x ~1.11 employer PRSI (~11.05-11.15%). Setup: CRO online incorporation 50 EUR mandatory, with formation agent + registered office typically 500-1,000 EUR; representative 600 EUR.",
+      "as_of": "2024",
+      "method": "Local currency EUR. usd = local x 1.146815. Energy stated directly in USD. Rent 480 EUR/sqm/yr -> USD (representative below prime). Labour 61,100 x 1.11 = ~67,900 EUR -> USD. Setup 600 EUR -> USD."
+    },
+    "_raw": {
+      "commercial_rent_local_sqm_yr": 480.0,
+      "labour_cost_index_local": 67900.0,
+      "license_setup_local": 600.0
+    }
+  },
+  "risk_exit": {
+    "risks": [
+      {
+        "name": "energy_input_costs",
+        "score_1_10": 8
+      },
+      {
+        "name": "rule_tax_changes",
+        "score_1_10": 4
+      },
+      {
+        "name": "demand_cycle",
+        "score_1_10": 5
+      },
+      {
+        "name": "currency_swings",
+        "score_1_10": 2
+      },
+      {
+        "name": "skills_shortages",
+        "score_1_10": 8
+      }
+    ],
+    "exit": {
+      "climate": "active",
+      "climate_score_0_100": 63,
+      "time_to_sell_months_low": 6,
+      "time_to_sell_months_high": 13,
+      "buyers": [
+        "local operators",
+        "domestic SME consolidators",
+        "UK and overseas trade buyers",
+        "private equity platforms"
+      ],
+      "multiple_low": 3.0,
+      "multiple_high": 4.5
+    },
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Energy held: highest EU non-household electricity price H2-2025 (~0.255 EUR/kWh) per Eurostat. Skills held: record talent shortages, 83% of employers find the market challenging, 78% report IT shortages, housing named the #1 FDI risk per ManpowerGroup, AmCham, OECD Ireland 2025. Rule/tax moderate: 12.5% base retained with 2.5% Pillar Two top-up (QDTT) for large groups, small business largely unaffected, per PwC, Revenue, EY. Currency low: euro. Demand: 2.5% growth but MNC/trade-war exposed. Exit multiples modeled from UK&I mid-market EBITDA 5.3x (Dealsuite Sep-2025) with very wide small-firm gap (200k-EBITDA ~3.3x), mapped to owner-earnings SDE; active broker market and deal volume support active climate.",
+      "as_of": "2025",
+      "method": "Energy and skills triangulated from 2+ sources; euro drives low currency score; Pillar Two scored low for small business; SDE multiples estimated from published UK&I small-firm EBITDA brackets discounted to owner-operator scale."
+    }
+  },
+  "cities": {
+    "list": [
+      {
+        "name": "Dublin",
+        "slug": "dublin",
+        "character": "Capital and dominant economy, tech and pharma EMEA HQs, financial services, largest office and talent market.",
+        "market_index_vs_capital": 100
+      },
+      {
+        "name": "Cork",
+        "slug": "cork",
+        "character": "Second city and southern hub, pharma and medtech manufacturing, large port and growing tech base.",
+        "market_index_vs_capital": 30
+      },
+      {
+        "name": "Galway",
+        "slug": "galway",
+        "character": "West-coast medtech cluster, university city, life sciences and software, tourism base.",
+        "market_index_vs_capital": 16
+      },
+      {
+        "name": "Limerick",
+        "slug": "limerick",
+        "character": "Mid-west tech and engineering hub, electronics and pharma plants, university-fed talent pool.",
+        "market_index_vs_capital": 14
+      },
+      {
+        "name": "Waterford",
+        "slug": "waterford",
+        "character": "Southeast regional center, pharma and manufacturing, smaller port and services market.",
+        "market_index_vs_capital": 8
+      }
+    ],
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Anchor Dublin = primary business and political city. Dublin Region GDP roughly EUR248bn in 2023, over 40 percent of Irish GDP (Economy of Dublin / CSO County Incomes and Regional GDP). Cork is the clear second city and pharma/tech hub; Galway (medtech), Limerick (tech/pharma) and Waterford follow. Ireland headline GDP is distorted by multinational accounting, so secondary-city indices are kept conservative and based on city scale and FDI footprint rather than raw regional GDP.",
+      "as_of": "2023",
+      "method": "Dublin = 100 anchor (dominant, >40 percent of national GDP). market_index_vs_capital modeled from relative city size, office market and FDI/employment footprint; secondary cities scaled well below Dublin given its extreme concentration."
+    }
+  },
+  "character": {
+    "gov_business": [
+      {
+        "left_label": "Bribery common",
+        "right_label": "Clean dealing",
+        "position_0_1": 0.84,
+        "spectrum": "dealing"
+      },
+      {
+        "left_label": "Rules shift often",
+        "right_label": "Rules are stable",
+        "position_0_1": 0.8,
+        "spectrum": "rules"
+      },
+      {
+        "left_label": "Hard to enforce a deal",
+        "right_label": "Easy to enforce",
+        "position_0_1": 0.74,
+        "spectrum": "enforcement"
+      },
+      {
+        "left_label": "Heavy paperwork",
+        "right_label": "Light paperwork",
+        "position_0_1": 0.72,
+        "spectrum": "paperwork"
+      },
+      {
+        "left_label": "Confusing tax",
+        "right_label": "Clear tax",
+        "position_0_1": 0.68,
+        "spectrum": "tax_clarity"
+      },
+      {
+        "left_label": "Weak courts",
+        "right_label": "Strong courts",
+        "position_0_1": 0.82,
+        "spectrum": "courts"
+      }
+    ],
+    "culture_outsider": [
+      {
+        "left_label": "Expressive",
+        "right_label": "Reserved",
+        "position_0_1": 0.44,
+        "spectrum": "expression"
+      },
+      {
+        "left_label": "Indirect",
+        "right_label": "Direct",
+        "position_0_1": 0.46,
+        "spectrum": "directness"
+      },
+      {
+        "left_label": "Casual",
+        "right_label": "Formal",
+        "position_0_1": 0.35,
+        "spectrum": "formality"
+      },
+      {
+        "left_label": "Relaxed pace",
+        "right_label": "Brisk pace",
+        "position_0_1": 0.55,
+        "spectrum": "pace"
+      },
+      {
+        "left_label": "Relationship-led",
+        "right_label": "Rules-led",
+        "position_0_1": 0.6,
+        "spectrum": "orientation"
+      },
+      {
+        "left_label": "Slow to open up",
+        "right_label": "Quick to transact",
+        "position_0_1": 0.62,
+        "spectrum": "openness"
+      }
+    ],
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Positions modeled from World Bank Worldwide Governance Indicators rule-of-law estimate (~1.59), WJP Rule of Law Index 2024 (top-15), Corruption Perceptions Index 2024 (~76-77), and Hofstede dimensions (PDI 28, IDV 70, UAI 35) plus Erin Meyer Culture Map (Anglo diplomatic-direct, egalitarian).",
+      "as_of": "2024",
+      "method": "Spectrum positions 0-1 anchored to cross-country ordering of governance indicators (gov_business) and cross-cultural research (culture_outsider); 1 = right-hand label."
+    }
+  }
+}

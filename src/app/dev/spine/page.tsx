@@ -17,8 +17,7 @@
  * into the single masthead provenance line.
  */
 import * as React from "react";
-import fs from "node:fs";
-import path from "node:path";
+import { SPINE_COUNTRIES } from "@/lib/spine-seeds";
 import { CountryFlag } from "@/components/CountryFlag";
 import { NeighboursTable } from "./NeighboursTable";
 import { Conveyor } from "@/components/spine/conveyor";
@@ -34,7 +33,7 @@ import {
 import { RankBars, LockPill } from "@/components/spine/kit-index";
 
 export const dynamic = "force-static";
-const GB: any = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), "../page-data/countries/GB.json"), "utf8"));
+const GB: any = SPINE_COUNTRIES.GB;
 
 /* Provenance is stated ONCE in the masthead line. The old per-card ConfidenceDot
  * ceremony is retired (audit copy minor): a page of quiet dots read as noise, and the
@@ -45,11 +44,10 @@ const GB: any = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), "../page-
 function peerRows(codes: string[], pick: (j: any) => number | null | undefined): Array<{ code: string; name: string; v: number }> {
   return codes
     .map((code) => {
-      try {
-        const j = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), "../page-data/countries/" + code + ".json"), "utf8"));
-        const v = pick(j);
-        return typeof v === "number" ? { code, name: j.meta?.name ?? code, v } : null;
-      } catch { return null; }
+      const j = SPINE_COUNTRIES[code];
+      if (!j) return null;
+      const v = pick(j);
+      return typeof v === "number" ? { code, name: j.meta?.name ?? code, v } : null;
     })
     .filter(Boolean) as Array<{ code: string; name: string; v: number }>;
 }
@@ -854,7 +852,7 @@ function Neighbours({ d }: { d: any }) {
     { key: "energy", label: "Energy", unit: "$/kWh", get: (x: any) => x.costs?.energy_usd_per_kwh, cell: (v: number) => v.toFixed(2), lowGood: true },
   ];
   const codes = ["GB", ...(d.meta?.peer_set ?? [])];
-  const raw = codes.map((code) => { let j: any = null; try { j = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), "../page-data/countries/" + code + ".json"), "utf8")); } catch (e) { } return j ? { code, home: code === "GB", name: j.meta?.name ?? code, vals: cols.map((c) => c.get(j)) } : null; }).filter(Boolean) as any[];
+  const raw = codes.map((code) => { const j: any = SPINE_COUNTRIES[code] ?? null; return j ? { code, home: code === "GB", name: j.meta?.name ?? code, vals: cols.map((c) => c.get(j)) } : null; }).filter(Boolean) as any[];
   // HOME-EXCLUSION (the kit-index bestEntityForRow contract, applied server-side where
   // this table computes its flags): the home row is tinted, NEVER ranked , the best
   // crown goes to the best PEER; the intro line then says whether home beats them.

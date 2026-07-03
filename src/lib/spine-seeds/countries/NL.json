@@ -1,0 +1,437 @@
+{
+  "meta": {
+    "iso2": "NL",
+    "iso3": "NLD",
+    "name": "Netherlands",
+    "region": "Europe",
+    "currency_local": "EUR",
+    "fx_to_usd": 1.146815,
+    "fx_as_of": "2026-06",
+    "peer_set": [
+      "BE",
+      "DE",
+      "IE",
+      "GB"
+    ],
+    "schema_version": "1.0",
+    "overall_confidence": "modeled",
+    "last_reviewed": "2026-07-03"
+  },
+  "tax_burden": {
+    "total_pct": 50.3,
+    "components": {
+      "corporation_tax_pct": 25.8,
+      "business_rates_pct_equiv": 1.5,
+      "capital_gains_pct": 31.0,
+      "dividend_tax_pct": 31.0
+    },
+    "employer_oncost_pct": 20.0,
+    "vat_rate_pct": 21.0,
+    "notes": "Corporate income tax is 19 percent on the first 200,000 euro of profit and 25.8 percent above that; the headline 25.8 percent is used. Owners with a substantial interest pay personal tax on dividends in Box 2: 24.5 percent on a lower band and 31 percent at the top; the 15 percent dividend withholding is credited against this. Capital gains on selling a substantial shareholding fall under the same Box 2 top rate of 31 percent. Recurring municipal property tax on business premises (OZB) is modeled at about 1.5 percent of profit. Employer social insurance and income-related health contributions total roughly 20 percent of wages up to a cap. VAT is 21 percent and customer-borne, excluded from total.",
+    "_meta": {
+      "confidence": "modeled",
+      "source": "PwC and KVK 2025 (CIT 19/25.8%, Box 2 24.5/31%, 15% dividend WHT credited); employer social + health contributions ~20% (PwC, employer premium schedules); standard VAT 21%; total is the locked blend.",
+      "as_of": "2025",
+      "method": "corporation_tax_pct = 25.8 top headline. dividend_tax_pct = 31 top Box 2 rate on substantial-interest dividends. capital_gains_pct = 31 (Box 2 covers gains on share disposal). business_rates_pct_equiv = 1.5 modeled (municipal OZB premises tax as profit-equivalent). employer_oncost_pct = 20 modeled (capped social insurance + income-related health). total_pct = 25.8 + (1-0.258)*31 + 1.5 = 50.3."
+    }
+  },
+  "economic_profile": {
+    "ease_of_business": 8,
+    "talent_pool": 8,
+    "access_to_financing": 8,
+    "political_stability": 7,
+    "economic_reward": 8,
+    "affordability": 3,
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Scores modeled from provided macro snapshot plus World Bank WGI 2024 political stability (index 0.43, world rank 71) and World Bank bank-credit-to-private-sector 82% of GDP (2024). GDP per capita PPP 86174, growth 1.2%, labour force 10.4M, business density 3.4.",
+      "as_of": "2024",
+      "method": "ease_of_business 8: highly digital, fast company setup with strong contract enforcement. talent_pool 8: small 10.4M workforce but elite skills, high education and widespread English. access_to_financing 8: deep bank credit at 82% of GDP plus one of Europe's stronger VC and private-capital markets. political_stability 7: WGI index 0.43, strong institutions with multi-party coalition dynamics. economic_reward 8: top GDP per capita PPP 86174, though growth is slow at 1.2% and the home market is small. affordability 3: high wages, rent and taxes make it expensive to operate."
+    }
+  },
+  "setup": {
+    "total_days": 14,
+    "steps": [
+      {
+        "name": "Register the company in the Business Register",
+        "cost_local": 85.15,
+        "cost_usd": 97.65,
+        "time_days": 1,
+        "how": "In person",
+        "note": "A sole proprietor (eenmanszaak) registers directly and in person, same day. A BV must be incorporated by a civil-law notary first, then the notary files the register entry."
+      },
+      {
+        "name": "Tax and VAT registration",
+        "cost_local": 0,
+        "cost_usd": 0,
+        "time_days": 10,
+        "how": "Online",
+        "note": "The register passes details to the tax authority automatically; the turnover-tax and VAT ID numbers arrive by post within about two weeks. No separate filing needed."
+      },
+      {
+        "name": "Notary incorporation deed (BV only)",
+        "cost_local": 1000,
+        "cost_usd": 1146.81,
+        "time_days": 5,
+        "how": "In person",
+        "note": "Only for a private limited company (BV). Covers the notarial deed, articles of association and UBO filing. Typical range 750 to 1500 EUR. Not required for a sole proprietor."
+      },
+      {
+        "name": "Open a business bank account",
+        "cost_local": 0,
+        "cost_usd": 0,
+        "time_days": 14,
+        "how": "Either",
+        "note": "Traditional banks take 2 to 6 weeks; digital banks can approve in 1 to 2 days. Requires the register number and a UBO structure."
+      }
+    ],
+    "structures": [
+      {
+        "name": "Eenmanszaak (sole proprietor)",
+        "liability": "Unlimited personal liability",
+        "tax": "Personal income tax on profit, with starter and entrepreneur deductions",
+        "best_for": "Solo founders starting small with low risk"
+      },
+      {
+        "name": "Vennootschap onder firma (VOF, general partnership)",
+        "liability": "Each partner is personally liable for all business debts",
+        "tax": "Each partner pays personal income tax on their profit share",
+        "best_for": "Two or more partners running a business together"
+      },
+      {
+        "name": "Besloten vennootschap (BV, private limited company)",
+        "liability": "Limited to capital contributed; shareholders not personally liable",
+        "tax": "Corporate income tax of 19 percent up to 200,000 EUR profit, then 25.8 percent; dividends taxed on payout",
+        "best_for": "Higher-profit or higher-risk businesses, and raising outside investment"
+      }
+    ],
+    "vat_threshold_local": 20000,
+    "vat_threshold_usd": 22936.3,
+    "banking": {
+      "can_foreigner": true,
+      "friction": "medium",
+      "notes": "A locally registered company can open an account. EU-resident owners are accepted readily; non-EU owners without a local director often face rejection at traditional banks and lean on digital banks. A register number and clear UBO structure are required.",
+      "banks_traditional": [
+        "ABN AMRO",
+        "ING",
+        "Rabobank"
+      ],
+      "banks_digital": [
+        "bunq",
+        "Revolut",
+        "Wise"
+      ]
+    },
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Business.gov.nl and KVK on registration, fee and legal forms; KVK registration fee page (85.15 EUR, updated 1 Jan 2026); Belastingdienst and Business.gov.nl on BV corporate tax brackets (19/25.8 percent) and the KOR 20,000 EUR exemption; multiple banking guides on foreigner account access.",
+      "as_of": "2026",
+      "method": "Official sources for fee, tax brackets and VAT exemption (held); notary cost and timelines are typical ranges (modeled); USD via fx 1.146815."
+    },
+    "_raw": {
+      "_raw": {
+        "vat_threshold_note": "Standard VAT registration has no turnover floor. The figure is the small-business exemption (KOR) ceiling: below 20,000 EUR domestic turnover you may opt out of charging and filing VAT."
+      }
+    }
+  },
+  "people_pay": {
+    "pay_by_level_usd": {
+      "junior": 55000,
+      "experienced": 80000,
+      "senior": 110000,
+      "specialist": 135000
+    },
+    "hiring": {
+      "hire_ease": "moderate",
+      "contract_ease": "moderate",
+      "fire_ease": "hard",
+      "recruiting_depth": "deep",
+      "notes": {
+        "hire": "Hiring is administratively smooth with strong payroll infrastructure, though a tight labour market keeps competition for skilled staff high.",
+        "contract": "Fixed term contracts are capped at three in three years before converting to permanent. The 30 percent ruling and clear payroll rules ease structured hiring.",
+        "fire": "Dismissal of permanent staff is strict: it generally requires either a court route or approval from the public employment agency, plus a statutory transition payment.",
+        "recruiting": "Deep, highly educated and near universally English speaking talent pool across finance, tech and professional services."
+      }
+    },
+    "talent_depth": [
+      {
+        "field": "finance",
+        "score_1_5": 5
+      },
+      {
+        "field": "software_tech",
+        "score_1_5": 4
+      },
+      {
+        "field": "professional_legal",
+        "score_1_5": 4
+      },
+      {
+        "field": "creative_media",
+        "score_1_5": 4
+      },
+      {
+        "field": "life_sciences",
+        "score_1_5": 4
+      },
+      {
+        "field": "manufacturing_trades",
+        "score_1_5": 3
+      }
+    ],
+    "languages": [
+      {
+        "name": "Dutch",
+        "pct_speakers": 96.0,
+        "native": true
+      },
+      {
+        "name": "Frisian",
+        "pct_speakers": 2.6,
+        "native": true
+      }
+    ],
+    "_meta": {
+      "confidence": "modeled",
+      "source": "OECD average annual wage 2024 (75,370 USD PPP) and average total labour cost near 97,000 USD; national average gross around 44,000 EUR; employer social contributions about 25 to 30 percent; OECD employment protection (strict for regular contracts, dismissal needs court or agency approval); native language shares (Dutch about 96 percent, West Frisian about 2.6 percent). Pay levels modeled.",
+      "as_of": "2024",
+      "method": "Pay = average gross wage and labour-cost anchors scaled by seniority with employer on-costs, converted EUR to USD at 1.146815. Hiring and talent_depth modeled from labour law and sector signals. Languages from native-population share."
+    },
+    "_raw": {
+      "_raw": {
+        "pay_by_level_extra": {
+          "basis": "Fully loaded annual employer cost in EUR converted to USD at 1.146815: gross pay plus employer on-costs of roughly 25 to 30 percent (unemployment, disability, health, pension). Anchored on an average gross around 44,000 to 46,000 EUR and an average total labour cost near 97,000 USD, with white-collar roles spread across the seniority ladder."
+        }
+      }
+    }
+  },
+  "income": {
+    "average_income_usd": 43000,
+    "median_income_usd": 37850,
+    "top10_income_usd": 78000,
+    "top1_income_usd": 165000,
+    "gini": 0.29,
+    "gini_band": "fairly_equal",
+    "household_spend": [
+      {
+        "category": "housing_utilities",
+        "pct": 28.0
+      },
+      {
+        "category": "transport",
+        "pct": 11.0
+      },
+      {
+        "category": "food_drink",
+        "pct": 12.0
+      },
+      {
+        "category": "recreation",
+        "pct": 9.0
+      },
+      {
+        "category": "dining_out",
+        "pct": 5.5
+      },
+      {
+        "category": "household_goods",
+        "pct": 5.0
+      },
+      {
+        "category": "other",
+        "pct": 29.5
+      }
+    ],
+    "_meta": {
+      "confidence": "modeled",
+      "source": "National statistics office: 2023 mean equivalised disposable income per person EUR 43,200; median standardised disposable income per household EUR 31,600 (2022), mean EUR 35,400 (2022). Median per person 2023 modeled ~EUR 33,000 (x fx 1.146815 = USD 37,845). Gini disposable ~0.29 (national methodology; Eurostat equivalised ~0.26). Consumption shares from national-accounts/EU COICOP: housing/utilities incl imputed rent ~28%, food ~12%, transport ~11%, recreation ~9%, restaurants ~5.5%.",
+      "as_of": "2023",
+      "method": "average = held mean equivalised income per person converted at given fx (individual basis). median = modeled from 2022 held median uplifted to 2023. top10/top1 = modeled from Gini 0.29 in a compressed distribution. gini = triangulated post-tax-transfer (national 0.30 / Eurostat 0.26 midpoint 0.29). Spend = modeled from EU/national COICOP consumption shares mapped to fixed buckets, sum ~100."
+    }
+  },
+  "costs": {
+    "energy_usd_per_kwh": 0.179,
+    "commercial_rent_usd_sqm_yr": 458.73,
+    "labour_cost_index_usd": 68808.9,
+    "license_setup_usd": 2064.27,
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Energy: business tariff EUR 0.154/kWh (USD 0.179), Sep 2025, consistent with Eurostat non-household EU avg ~EUR 0.184/kWh H2 2025. Rent: Amsterdam Zuidas prime ~EUR 425/sqm/yr (CBRE/Statista 2025); EUR 400 representative. Labour: CBS hourly labour cost EUR 45.0/hr 2024 (whole economy, fully loaded) implies ~EUR 74k/yr at full hours; EUR 60,000/yr used as representative fully-loaded annual cost. Setup: Dutch BV typical EUR 1,200-2,500 (notary + KVK + UBO); EUR 1,800 representative.",
+      "as_of": "2025",
+      "method": "fx_to_usd 1.146815. Energy held (business retail tariff, cross-checked vs Eurostat). Rent EUR 400/sqm/yr x 1.146815 = USD 458.73. Labour EUR 60,000 x 1.146815 = USD 68,808.90 (modeled representative, anchored to CBS/Eurostat EUR 45/hr). Setup EUR 1,800 x 1.146815 = USD 2,064.27 (modeled mid of typical BV range). Energy held; rent, labour, setup modeled."
+    },
+    "_raw": {
+      "commercial_rent_local_sqm_yr": 400,
+      "labour_cost_index_local": 60000,
+      "license_setup_local": 1800,
+      "rent_basis": "Amsterdam prime office (Zuidas prime ~EUR 425/sqm/yr; EUR 400 used as representative prime level, secondary stock lower)"
+    }
+  },
+  "risk_exit": {
+    "risks": [
+      {
+        "name": "energy_input_costs",
+        "score_1_10": 7
+      },
+      {
+        "name": "rule_tax_changes",
+        "score_1_10": 3
+      },
+      {
+        "name": "demand_cycle",
+        "score_1_10": 4
+      },
+      {
+        "name": "currency_swings",
+        "score_1_10": 2
+      },
+      {
+        "name": "skills_shortages",
+        "score_1_10": 7
+      }
+    ],
+    "exit": {
+      "climate": "active",
+      "climate_score_0_100": 70,
+      "time_to_sell_months_low": 6,
+      "time_to_sell_months_high": 12,
+      "buyers": [
+        "strategic acquirers",
+        "search funds and management buy-in",
+        "private equity add-ons"
+      ],
+      "multiple_low": 3.0,
+      "multiple_high": 4.9
+    },
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Exit multiple_high anchored to a held figure: SME EBITDA multiple ~4.9x (H1-2025) confirmed by two Dealsuite monitor readings (4.88-4.9x), the lowest in Western Europe; small-business SDE deals sit below that, hence 3.0-4.9. Active climate reflects a deep domestic for-sale marketplace and a European sellers' market (multiple interested buyers per listing). Risk scores analytical: euro stability sets currency_swings 2; post-gas-crisis power prices and energy intensity set energy_input_costs 7; a very tight labour market sets skills_shortages 7; stable EU rules set rule_tax_changes 3.",
+      "as_of": "2025",
+      "method": "Exit multiples from cross-verified SME EBITDA benchmarks adjusted to small-business SDE; risk scores fixed-taxonomy 1-10 from macro inputs with cross-country normalization."
+    }
+  },
+  "cities": {
+    "list": [
+      {
+        "name": "Amsterdam",
+        "slug": "amsterdam",
+        "character": "Financial and business capital: banking, tech European headquarters, services, tourism.",
+        "market_index_vs_capital": 100
+      },
+      {
+        "name": "Rotterdam",
+        "slug": "rotterdam",
+        "character": "Europe's largest port: trade, logistics, energy, petrochemicals, maritime services.",
+        "market_index_vs_capital": 55
+      },
+      {
+        "name": "The Hague",
+        "slug": "the-hague",
+        "character": "Seat of government and international law: public administration, NGOs, energy firms, services.",
+        "market_index_vs_capital": 45
+      },
+      {
+        "name": "Utrecht",
+        "slug": "utrecht",
+        "character": "Central business and knowledge hub: services, finance, healthcare, rail crossroads.",
+        "market_index_vs_capital": 38
+      },
+      {
+        "name": "Eindhoven",
+        "slug": "eindhoven",
+        "character": "High-tech and engineering center: semiconductors, electronics, R and D, advanced manufacturing.",
+        "market_index_vs_capital": 30
+      }
+    ],
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Anchor = Amsterdam (primary business and financial city). City populations: Amsterdam ~0.87M, Rotterdam ~0.65M, The Hague ~0.55M, Utrecht ~0.36M, Eindhoven ~0.24M (statistics agency 2023). Randstad metro regions drive ~half of national GDP; North Holland has the highest regional GDP per capita (regional accounts 2022).",
+      "as_of": "2023",
+      "method": "Anchor (=100) is Amsterdam. market_index_vs_capital modeled from metro-region economic weight (city and surrounding COROP region population scaled by regional GDP per capita), Amsterdam=100. Rotterdam and The Hague form one large conurbation; Eindhoven smaller but high value-add."
+    }
+  },
+  "character": {
+    "gov_business": [
+      {
+        "left_label": "Bribery common",
+        "right_label": "Clean dealing",
+        "position_0_1": 0.85,
+        "spectrum": "dealing"
+      },
+      {
+        "left_label": "Rules shift often",
+        "right_label": "Rules are stable",
+        "position_0_1": 0.85,
+        "spectrum": "rules"
+      },
+      {
+        "left_label": "Hard to enforce a deal",
+        "right_label": "Easy to enforce",
+        "position_0_1": 0.82,
+        "spectrum": "enforcement"
+      },
+      {
+        "left_label": "Heavy paperwork",
+        "right_label": "Light paperwork",
+        "position_0_1": 0.72,
+        "spectrum": "paperwork"
+      },
+      {
+        "left_label": "Confusing tax",
+        "right_label": "Clear tax",
+        "position_0_1": 0.72,
+        "spectrum": "tax_clarity"
+      },
+      {
+        "left_label": "Weak courts",
+        "right_label": "Strong courts",
+        "position_0_1": 0.85,
+        "spectrum": "courts"
+      }
+    ],
+    "culture_outsider": [
+      {
+        "left_label": "Expressive",
+        "right_label": "Reserved",
+        "position_0_1": 0.55,
+        "spectrum": "expression"
+      },
+      {
+        "left_label": "Indirect",
+        "right_label": "Direct",
+        "position_0_1": 0.88,
+        "spectrum": "directness"
+      },
+      {
+        "left_label": "Casual",
+        "right_label": "Formal",
+        "position_0_1": 0.25,
+        "spectrum": "formality"
+      },
+      {
+        "left_label": "Relaxed pace",
+        "right_label": "Brisk pace",
+        "position_0_1": 0.65,
+        "spectrum": "pace"
+      },
+      {
+        "left_label": "Relationship-led",
+        "right_label": "Rules-led",
+        "position_0_1": 0.78,
+        "spectrum": "orientation"
+      },
+      {
+        "left_label": "Slow to open up",
+        "right_label": "Quick to transact",
+        "position_0_1": 0.72,
+        "spectrum": "openness"
+      }
+    ],
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Positions modeled from CPI 2024 score 78 (rank 8) and WJP Rule of Law Index 2024 rank 8 of 142 for gov_business; Hofstede dimensions (individualism 80, power distance 38, very direct low-context profile) for culture_outsider. Spectra fixed for cross-country comparison.",
+      "as_of": "2024",
+      "method": "Governance percentile rank mapped to 0-1 (top-tier: clean, stable, strong courts); culture positions from cross-cultural dimension scores (very direct, casual, rules-led, quick to transact)."
+    }
+  }
+}

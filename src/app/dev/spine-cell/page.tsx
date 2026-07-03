@@ -24,8 +24,7 @@
  * Width tiers per WI-4; the money chapter is weighted heaviest (control room + wide reads).
  */
 import * as React from "react";
-import fs from "node:fs";
-import path from "node:path";
+import { spineCellSeed } from "@/lib/spine-seeds";
 import {
   Fig, Box, Rail, Movement, Row, Full, WideRail, EaseScale, StackBar, Timeline, TERRA, TRACK,
 } from "@/components/spine/kit";
@@ -36,7 +35,7 @@ import { OwnerKeeps, BreakEven, CostToOpen } from "./money-chapter";
 import { Nearby, Wages, Risks } from "./interactive";
 
 export const dynamic = "force-static";
-const X: any = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), "../page-data/cells/GB-london-restaurants.json"), "utf8"));
+const X: any = spineCellSeed;
 
 const MONTHS = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
 

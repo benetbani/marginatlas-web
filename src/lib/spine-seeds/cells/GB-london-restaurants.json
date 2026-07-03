@@ -1,0 +1,179 @@
+{
+  "meta": {
+    "iso2": "GB", "geo": "london", "industry": "restaurants",
+    "city": "London", "country_name": "United Kingdom", "trade": "Restaurants",
+    "as_of": "2026-06", "overall_confidence": "placeholder",
+    "provenance_line": "Figures are illustrative while we wire live data.",
+    "_note": "SEED for the cell-page spine dev surface (a trade in a place). Illustrative London restaurant economics; wire to the real cell data layer + finance engines (cells.ts, net_profit, breakeven) on promotion. Numbers must then match across surfaces. ALL user-visible prose lives here (verdicts, notes, myth, reads) so scaled pages read trade-and-place specific.",
+    "_identity": "TRUST ARITHMETIC (every figure below closes these): rev = covers/wk x spend x 52 (315 x $38 x 52 = $622K, stated $620K); owner take = keeps% x rev ($620K x 7% = $43K); break-even covers/day = daily fixed / contribution per cover, with variable 66% / fixed 27% / keep 7% of sales: ($620K x 27% / 365) / ($38 x 34%) = 36 of a 45-cover typical day; payback = cost to open / annual take ($197K / $43K = 55 months). Subtype rows close the same identities at their own spend, covers and capex."
+  },
+  "headline": {
+    "_meta": { "confidence": "placeholder", "source": "illustrative", "as_of": "2026-06" },
+    "answer": "A demanding trade in a deep market: high turnover, thin take-home.",
+    "spread_line": "Turnover runs from $280K to $1.4M a year, typically about $620K.",
+    "rev_p10_usd": 280000, "rev_p50_usd": 620000, "rev_p90_usd": 1400000,
+    "break_in_0_100": 30, "n_firms": 18000
+  },
+  "margins": {
+    "_meta": { "confidence": "placeholder", "source": "illustrative restaurant margin shape", "as_of": "2026-06", "_note": "gross/operating removed (Final Ascent P2): they contradicted the $100 split (food 31 implies ~69 gross, not 64; operating 16 never reconciled). money_split.items is now the ONE margin source; the owner-keeps waterfall derives from it." },
+    "net_pct": 7
+  },
+  "verdict": {
+    "_meta": { "confidence": "placeholder", "source": "illustrative", "as_of": "2026-06" },
+    "break_in_line": "This is one of the harder trades to enter here. Rent, wages and food cost leave a thin slice, so the operators who last run tight rotas and a sharp menu.",
+    "crowded_line": "A new room competes for covers from day one."
+  },
+  "money_split": {
+    "_meta": { "confidence": "placeholder", "source": "illustrative per-$100 split", "as_of": "2026-06" },
+    "surface_line": "Wages and food cost eat two thirds of every $100 before rent is even paid.",
+    "items": [
+      { "name": "Food & drink cost", "pct": 31, "kept": false },
+      { "name": "Wages", "pct": 34, "kept": false },
+      { "name": "Rent & rates", "pct": 13, "kept": false },
+      { "name": "Marketing", "pct": 4, "kept": false },
+      { "name": "Other running costs", "pct": 11, "kept": false },
+      { "name": "Owner keeps", "pct": 7, "kept": true }
+    ]
+  },
+  "subtypes": {
+    "_meta": { "confidence": "placeholder", "source": "illustrative format economics", "as_of": "2026-06" },
+    "_identity": "Per format: rev = spend x covers/day x 365; take = keeps% x rev; break-even covers/day = utilization x typical covers (74% / 80% / 85%, from each format's fixed share over its contribution ratio); payback months = cost to open / take x 12 (31 / 55 / 102). Full service IS the page's blended typical case.",
+    "thesis": "The blended answer hides three different businesses. Pick the one you mean.",
+    "hint": "The leaner the format, the more the owner keeps and the easier it is to break in.",
+    "baseline_keeps_pct": 7,
+    "items": [
+      { "slug": "fast-casual", "name": "Fast casual", "size_band": "small", "keeps_pct": 9, "take_home_usd": 55000, "break_in_0_100": 48, "cost_to_open_usd": 140000, "rev_p50_usd": 610000, "avg_spend_usd": 24, "typical_covers_per_day": 70, "break_even_covers_per_day": 52, "note": "Counter service, tight menu, fast covers; the kindest format to break into." },
+      { "slug": "full-service", "name": "Full service", "size_band": "mid", "keeps_pct": 7, "take_home_usd": 43000, "break_in_0_100": 30, "cost_to_open_usd": 197000, "rev_p50_usd": 620000, "avg_spend_usd": 38, "typical_covers_per_day": 45, "break_even_covers_per_day": 36, "note": "Table service, full kitchen and floor; the blended typical case." },
+      { "slug": "fine-dining", "name": "Fine dining", "size_band": "large", "keeps_pct": 5, "take_home_usd": 40000, "break_in_0_100": 18, "cost_to_open_usd": 340000, "rev_p50_usd": 810000, "avg_spend_usd": 85, "typical_covers_per_day": 26, "break_even_covers_per_day": 22, "note": "High spend per head, but labour and fit-out are heavy; thin keep, hard entry." }
+    ]
+  },
+  "demand": {
+    "_meta": { "confidence": "placeholder", "source": "illustrative demand shape", "as_of": "2026-06" },
+    "_identity": "315 covers/wk x $38 a head x 52 weeks = $622K, matching headline.rev_p50_usd ($620K); about 45 covers a typical day.",
+    "covers_per_week": 315,
+    "avg_spend_usd": 38,
+    "surface_line": "Weekends and evenings carry the week; weekday lunch is the trade you fight for.",
+    "dayparts": [
+      { "name": "Weekday lunch", "pct": 22 },
+      { "name": "Weekday dinner", "pct": 31 },
+      { "name": "Weekend", "pct": 47 }
+    ],
+    "channels": [
+      { "name": "Dine-in", "pct": 62 },
+      { "name": "Delivery", "pct": 24 },
+      { "name": "Takeaway", "pct": 14 }
+    ],
+    "channel_line": "Most spend is still eaten in the room; delivery is a supplement, not the business.",
+    "catchment": [
+      { "name": "Office workers", "pct": 100 },
+      { "name": "Evening trade", "pct": 64 },
+      { "name": "Residents", "pct": 72 },
+      { "name": "Tourists & visitors", "pct": 58 }
+    ],
+    "catchment_note": "Office workers are the anchor here; the others fill the shoulders of the week.",
+    "catchment_unit": "index vs the top group"
+  },
+  "who_suits": {
+    "_meta": { "confidence": "placeholder", "source": "illustrative operator profile", "as_of": "2026-06" },
+    "subtitle": "Suits a hands-on operator with kitchen or floor experience and capital to carry a slow first year, not a passive investor.",
+    "scales": [
+      { "label": "Capital needed", "pos": 78, "word": "High", "sub": "Six figures before you trade" },
+      { "label": "Experience needed", "pos": 70, "word": "Real", "sub": "Kitchen or floor years matter" },
+      { "label": "Hours / lifestyle", "pos": 84, "word": "Heavy", "sub": "Nights, weekends, holidays" },
+      { "label": "Owner presence", "pos": 88, "word": "Hands-on", "sub": "Owner-operated, rarely absentee" }
+    ]
+  },
+  "myth": {
+    "_meta": { "confidence": "placeholder", "source": "derived from survival + margin shape", "as_of": "2026-06" },
+    "claim": "Nine in ten restaurants fail in the first year.",
+    "reality": "The real first-year survival rate is nearer three in four. Most closures come later and quietly, when a rent review or a bad winter meets a take-home that was always thin, not from a dramatic opening-year collapse.",
+    "survival": { "year1_pct": 74, "year3_pct": 52, "year5_pct": 41, "line": "Survivors, not failures: most rooms are still trading at year one." }
+  },
+  "cost_drivers": [
+    { "name": "Wages", "pct_of_sales": 34, "note": "Kitchen and front-of-house are the biggest line; rota tightly." },
+    { "name": "Food cost", "pct_of_sales": 31, "note": "Menu engineering and waste control move the gross line most." },
+    { "name": "Rent & rates", "pct_of_sales": 13, "note": "A prime address eats margin before you serve a cover." }
+  ],
+  "owner": {
+    "_meta": { "confidence": "placeholder", "source": "illustrative", "as_of": "2026-06" },
+    "_identity": "take = keeps% x rev: $620K x 7% = $43K a year.",
+    "take_home_usd": 43000, "margin_pct": 7,
+    "surface_line": "Large turnover, thin keep: most of every sales dollar is spent before it reaches the owner."
+  },
+  "break_even": {
+    "_meta": { "confidence": "placeholder", "source": "illustrative", "as_of": "2026-06" },
+    "_identity": "36 covers = daily fixed / contribution per cover = ($620K x 27% / 365 = $459) / ($38 x 34% = $12.92); 36 of 45 typical covers = 80% of a typical day. The page swaps BOTH numbers per picked format from subtypes.items, so this line must stay format-neutral.",
+    "covers_per_day": 36, "typical_covers_per_day": 45,
+    "surface_line": "A quiet Tuesday is the real test, not a busy Friday: break-even is set by the fixed costs, not the weekend rush."
+  },
+  "wages": {
+    "_meta": { "confidence": "placeholder", "source": "illustrative London hospitality pay", "as_of": "2026-06" },
+    "surface_line": "The head chef sets the pay ceiling; everyone else clusters below.",
+    "roles": [
+      { "role": "Head chef", "low_usd": 52000, "mid_usd": 66000, "high_usd": 86000 },
+      { "role": "Manager", "low_usd": 40000, "mid_usd": 50000, "high_usd": 64000 },
+      { "role": "Line cook", "low_usd": 30000, "mid_usd": 38000, "high_usd": 48000 },
+      { "role": "Waitstaff", "low_usd": 24000, "mid_usd": 28000, "high_usd": 34000 },
+      { "role": "Kitchen porter", "low_usd": 23000, "mid_usd": 26000, "high_usd": 30000 }
+    ]
+  },
+  "setup": {
+    "_meta": { "confidence": "placeholder", "source": "illustrative cost to open", "as_of": "2026-06" },
+    "_identity": "payback = cost to open / annual owner take: full service $197K / $43K = 55 months. The page DERIVES payback from the picked format's capex and take (no stored payback field), so the figure can never contradict the picker.",
+    "surface_line": "About $197K to open the doors, most of it fit-out and kitchen; at a typical take it pays back in about four and a half years.",
+    "items": [
+      { "name": "Fit-out", "usd": 120000 },
+      { "name": "Kitchen equipment", "usd": 60000 },
+      { "name": "Deposit & first rent", "usd": 16000 },
+      { "name": "Registration & licence", "usd": 1200 }
+    ]
+  },
+  "seasonality": {
+    "_meta": { "confidence": "placeholder", "source": "illustrative monthly demand", "as_of": "2026-06" },
+    "surface_line": "December carries the year; the new-year lull is when cash gets thin.",
+    "months": [58, 56, 64, 68, 72, 78, 80, 76, 80, 74, 78, 96]
+  },
+  "first_year": {
+    "_meta": { "confidence": "placeholder", "source": "illustrative launch timeline", "as_of": "2026-06" },
+    "read": "The first half is all spend and no income. Real money does not start landing until the back half, so plan to carry the place into a second year before it feels safe.",
+    "phases": [
+      { "label": "Build", "from": 0, "to": 15 },
+      { "label": "Find footing", "from": 15, "to": 30 },
+      { "label": "Covers costs", "from": 30, "to": 52 }
+    ],
+    "milestones": [
+      { "week": 3, "label": "Lease + licence" },
+      { "week": 10, "label": "Fit-out done" },
+      { "week": 13, "label": "Team hired" },
+      { "week": 15, "label": "Soft opening" },
+      { "week": 30, "label": "Break-even month", "kind": "breakeven" },
+      { "week": 50, "label": "First clean profit" }
+    ]
+  },
+  "nearby": {
+    "_meta": { "confidence": "placeholder", "source": "illustrative same-trade comparison", "as_of": "2026-06" },
+    "surface_line": "London turns over the most but keeps the least per dollar; the smaller cities are easier to break into.",
+    "places": [
+      { "name": "London", "home": true, "rev_p50_usd": 620000, "take_home_usd": 43000, "break_in_0_100": 30 },
+      { "name": "Edinburgh", "home": false, "rev_p50_usd": 360000, "take_home_usd": 40000, "break_in_0_100": 40 },
+      { "name": "Manchester", "home": false, "rev_p50_usd": 380000, "take_home_usd": 41000, "break_in_0_100": 42 },
+      { "name": "Birmingham", "home": false, "rev_p50_usd": 340000, "take_home_usd": 39000, "break_in_0_100": 46 }
+    ]
+  },
+  "risks": {
+    "_meta": { "confidence": "placeholder", "source": "illustrative", "as_of": "2026-06" },
+    "surface_line": "Cost shocks, not quiet nights, are what close most kitchens.",
+    "items": [
+      { "name": "Food and energy inflation", "score_1_10": 8, "note": "The single most cited pressure; a hard winter compounds it." },
+      { "name": "Staff turnover", "score_1_10": 7, "note": "Rehiring and retraining eat both margin and service quality." },
+      { "name": "Rent reviews", "score_1_10": 6, "note": "A five-year review can reset the biggest fixed cost overnight." },
+      { "name": "Demand swings", "score_1_10": 6, "note": "A quiet January or a transport strike lands straight on cash." }
+    ]
+  },
+  "related": [
+    { "name": "Cafe", "slug": "cafe", "keeps_pct": 11, "fact": "easier to enter" },
+    { "name": "Bar / pub", "slug": "bar", "keeps_pct": 9, "fact": "drinks-led margin" },
+    { "name": "Takeaway", "slug": "takeaway", "keeps_pct": 12, "fact": "lightest fit-out" },
+    { "name": "Catering", "slug": "catering", "keeps_pct": 10, "fact": "no dining room" }
+  ]
+}

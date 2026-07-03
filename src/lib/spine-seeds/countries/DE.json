@@ -1,0 +1,448 @@
+{
+  "meta": {
+    "iso2": "DE",
+    "iso3": "DEU",
+    "name": "Germany",
+    "region": "Europe",
+    "currency_local": "EUR",
+    "fx_to_usd": 1.146815,
+    "fx_as_of": "2026-06",
+    "peer_set": [
+      "FR",
+      "GB",
+      "NL",
+      "IT"
+    ],
+    "schema_version": "1.0",
+    "overall_confidence": "modeled",
+    "last_reviewed": "2026-07-03"
+  },
+  "tax_burden": {
+    "total_pct": 49.5,
+    "components": {
+      "corporation_tax_pct": 30.0,
+      "business_rates_pct_equiv": 1.0,
+      "capital_gains_pct": 26.375,
+      "dividend_tax_pct": 26.375
+    },
+    "employer_oncost_pct": 20.6,
+    "vat_rate_pct": 19.0,
+    "notes": "Combined corporate rate of about 30 percent covers the 15 percent federal corporate income tax, the 5.5 percent solidarity surcharge on it (15.825 percent together), and the municipal trade tax that runs roughly 14 to 17 percent depending on the local multiplier (30 percent in Berlin, near 33 percent in Munich). Personal dividends and share gains are taxed at a flat 26.375 percent (25 percent plus solidarity surcharge). VAT of 19 percent is paid by the customer and is excluded from the headline total.",
+    "_meta": {
+      "confidence": "modeled",
+      "source": "PwC Worldwide Tax Summaries Germany corporate (CIT 15% + 5.5% soli = 15.825%, trade tax 3.5% x municipal multiplier, combined ~30-33%); PwC/DLA Piper individual (dividends and private share gains 26.375%); GTAI/TK employer social insurance ~20-21% of gross; Tax Foundation/PwC VAT 19%. total_pct is the locked blend.",
+      "as_of": "2025",
+      "method": "corporation_tax_pct = combined federal CIT + solidarity surcharge + typical municipal trade tax (Berlin-level ~30%, range 30-33% across cities). dividend_tax_pct and capital_gains_pct = top flat investor rate incl. solidarity surcharge (church tax excluded). business_rates_pct_equiv modeled at ~1.0% profit-equivalent (recurring real-property tax Grundsteuer is minor; the larger premises levy, trade tax, is already inside corporation_tax_pct). employer_oncost_pct = employer share of statutory social insurance as % of gross wage. total_pct = corp + (1 - corp/100)*dividend + business_rates_pct_equiv = 30 + 0.70*26.375 + 1.0 = 49.46, rounded."
+    }
+  },
+  "economic_profile": {
+    "ease_of_business": 7,
+    "talent_pool": 8,
+    "access_to_financing": 6,
+    "political_stability": 8,
+    "economic_reward": 7,
+    "affordability": 4,
+    "_meta": {
+      "confidence": "modeled",
+      "source": "World Bank Doing Business 2020 EoDB score 79.7 (rank 24); WGI government effectiveness 1.55, political stability 0.12; domestic credit to private sector ~75% GDP; VC 2024 ~4.1B USD; GDP/cap PPP 73552, growth 0.8%, labour force 43M; price level above OECD avg",
+      "as_of": "2024",
+      "method": "ease_of_business 7: EoDB 79.7 with strong contract enforcement, bureaucracy slows starts. talent_pool 8: 43M labour force, top vocational and engineering depth. access_to_financing 6: bank-led system, modest credit/GDP ~75% and small VC ~4.1B relative to size. political_stability 8: high government effectiveness 1.55 and stable coalition governance. economic_reward 7: high GDP/cap PPP 73552 and large market, dragged by 0.8% growth. affordability 4: above-OECD price level makes operating expensive."
+    }
+  },
+  "setup": {
+    "total_days": 21,
+    "steps": [
+      {
+        "name": "Notarise articles of association and managing-director appointment (limited company)",
+        "cost_local": 800,
+        "cost_usd": 917.45,
+        "time_days": 3,
+        "how": "In person"
+      },
+      {
+        "name": "Deposit share capital and open the company bank account",
+        "cost_local": 0,
+        "cost_usd": 0,
+        "time_days": 7,
+        "how": "Either"
+      },
+      {
+        "name": "Entry in the commercial register (Handelsregister), court fee",
+        "cost_local": 150,
+        "cost_usd": 172.02,
+        "time_days": 7,
+        "how": "Online"
+      },
+      {
+        "name": "Trade office registration (Gewerbeanmeldung) of the activity",
+        "cost_local": 40,
+        "cost_usd": 45.87,
+        "time_days": 1,
+        "how": "Either"
+      },
+      {
+        "name": "Tax office registration and VAT/tax-number questionnaire",
+        "cost_local": 0,
+        "cost_usd": 0,
+        "time_days": 21,
+        "how": "Online"
+      }
+    ],
+    "structures": [
+      {
+        "name": "Sole proprietorship (Einzelunternehmen)",
+        "liability": "Unlimited personal liability",
+        "tax": "Owner pays personal income tax on profit; trade tax may apply",
+        "best_for": "Solo founders and freelancers starting small"
+      },
+      {
+        "name": "Civil-law partnership (GbR)",
+        "liability": "Unlimited, joint and several for partners",
+        "tax": "Pass-through; partners taxed on their profit shares",
+        "best_for": "Two or more partners wanting a cheap, simple start"
+      },
+      {
+        "name": "Entrepreneurial company (UG, mini-GmbH)",
+        "liability": "Limited to company assets",
+        "tax": "Corporate income tax plus solidarity surcharge and trade tax, near 30% combined",
+        "best_for": "Founders wanting limited liability with minimal starting capital"
+      },
+      {
+        "name": "Limited liability company (GmbH)",
+        "liability": "Limited to company assets",
+        "tax": "Corporate income tax plus solidarity surcharge and trade tax, near 30% combined",
+        "best_for": "Established small companies wanting full credibility; 25,000 euro capital"
+      }
+    ],
+    "vat_threshold_local": 25000,
+    "vat_threshold_usd": 28670.37,
+    "banking": {
+      "can_foreigner": true,
+      "friction": "medium",
+      "notes": "A foreigner can open a business account, and a limited company must to deposit its capital. Traditional banks usually require in-person identity checks and may hesitate with non-resident directors. Digital providers open fully online with a German IBAN and English support, though the capital-deposit formation account often needs a full-licence bank.",
+      "banks_traditional": [
+        "Deutsche Bank",
+        "Commerzbank",
+        "Sparkasse"
+      ],
+      "banks_digital": [
+        "N26",
+        "Qonto",
+        "Penta"
+      ]
+    },
+    "_meta": {
+      "confidence": "held",
+      "source": "firma.de, Qonto and S&S Consult on notary, Handelsregister and Gewerbeanmeldung fees and timelines; vatcalc and EU SME-scheme pages plus norman.finance on the 2025 Kleinunternehmer turnover line of 25,000 euro prior-year; Commenda, amnis and Expatica on foreigner banking and bank names.",
+      "as_of": "2025",
+      "method": "Each fee, the VAT line and structures confirmed across 2+ independent sources; money converted at fx_to_usd 1.146815."
+    }
+  },
+  "people_pay": {
+    "pay_by_level_usd": {
+      "junior": 58300,
+      "experienced": 76300,
+      "senior": 111000,
+      "specialist": 138800
+    },
+    "hiring": {
+      "hire_ease": "moderate",
+      "contract_ease": "moderate",
+      "fire_ease": "hard",
+      "recruiting_depth": "deep",
+      "notes": {
+        "hire": "Skilled labour is available but tight in tech and engineering, with notice periods slowing the start date of senior hires.",
+        "contract": "Open-ended contracts are the default and works council and collective agreement rules shape terms.",
+        "fire": "Dismissal protection is strong once past the probation window, often needing a valid reason, long notice and negotiated settlements.",
+        "recruiting": "Deep pools in engineering, manufacturing and professional services, thinner in some software niches."
+      }
+    },
+    "talent_depth": [
+      {
+        "field": "finance",
+        "score_1_5": 4
+      },
+      {
+        "field": "software_tech",
+        "score_1_5": 4
+      },
+      {
+        "field": "professional_legal",
+        "score_1_5": 4
+      },
+      {
+        "field": "creative_media",
+        "score_1_5": 3
+      },
+      {
+        "field": "life_sciences",
+        "score_1_5": 4
+      },
+      {
+        "field": "manufacturing_trades",
+        "score_1_5": 5
+      }
+    ],
+    "languages": [
+      {
+        "name": "German",
+        "pct_speakers": 91.0,
+        "native": true
+      },
+      {
+        "name": "Sorbian",
+        "pct_speakers": 1.0,
+        "native": true
+      }
+    ],
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Pay loaded from Destatis 2024 average full-time gross of roughly 50,000 to 56,000 EUR plus ~21% employer social insurance, converted at fx 1.146815. Languages from German home-language shares (German dominant, small recognized Sorbian minority). Labour law from German dismissal protection and notice rules.",
+      "as_of": "2024",
+      "method": "Representative white-collar base by level times 1.21 fully-loaded employer multiplier times fx to USD; talent_depth scored on engineering and professional output; hire/fire from dismissal protection and notice regime."
+    }
+  },
+  "income": {
+    "average_income_usd": 32700.0,
+    "median_income_usd": 28670.0,
+    "top10_income_usd": 57000.0,
+    "top1_income_usd": 140000.0,
+    "gini": 0.309,
+    "gini_band": "moderate",
+    "household_spend": [
+      {
+        "category": "housing_utilities",
+        "pct": 37.5
+      },
+      {
+        "category": "transport",
+        "pct": 11.9
+      },
+      {
+        "category": "food_drink",
+        "pct": 14.4
+      },
+      {
+        "category": "recreation",
+        "pct": 8.6
+      },
+      {
+        "category": "dining_out",
+        "pct": 6.8
+      },
+      {
+        "category": "household_goods",
+        "pct": 8.2
+      },
+      {
+        "category": "other",
+        "pct": 12.6
+      }
+    ],
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Median equivalised disposable income Germany 25000 euro (Eurostat, 2022) held; average from national-accounts household net disposable income per capita ~28500 euro modeled; OECD Income Distribution Database disposable Gini 0.309 (2022) held; top-decile and top-percentile disposable incomes modeled. Household consumption structure Destatis 2023 (euro/month per household): housing/energy/maintenance 37.5, food/beverages/tobacco 14.4, transport 11.9, recreation/sport/culture 8.6, restaurants and hotels 6.8, clothing 3.7 plus furnishings 4.5, remainder (health, communication, education, insurance, misc) ~12.6.",
+      "as_of": "2023",
+      "method": "Median held (25000 euro *1.146815=28670; median reference year 2022). Average modeled from NA per-capita net disposable income (28514 euro *1.146815=32700). Top10/top1 modeled. Gini held from OECD IDD. Spend mapped from Destatis EVS/national-accounts consumption structure into seven buckets: housing/energy/maintenance to housing_utilities (broader than COICOP-04 as it bundles maintenance), transport, food to food_drink, recreation/culture to recreation, restaurants and hotels to dining_out, clothing plus furnishings to household_goods, remainder to other; sums to 100."
+    },
+    "_raw": {
+      "average_income_local": 28514.0,
+      "median_income_local": 25000.0,
+      "top10_income_local": 49703.0,
+      "top1_income_local": 122077.0,
+      "income_basis": "Annual disposable income per capita, nominal USD, converted from euro at fx 1.146815. Average = national-accounts household net disposable income per person. Median = equivalised household disposable income per person (post-tax-and-transfer). Top10 and top1 = modeled mean disposable income of the top decile and top percentile per capita."
+    }
+  },
+  "costs": {
+    "energy_usd_per_kwh": 0.27,
+    "commercial_rent_usd_sqm_yr": 330,
+    "labour_cost_index_usd": 69150,
+    "license_setup_usd": 1150,
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Energy: business retail EUR 0.238/kWh = USD 0.276 (Sept 2025 GlobalPetrolPrices); non-household medium consumers EUR 0.2264/kWh H2 2025 (Eurostat) = ~USD 0.260. Held range; set USD 0.27. Rent: prime EUR 45-59/sqm/month in top cities (Munich 55-59, Frankfurt 52-54, Berlin 45) but Munich weighted average EUR 26.90 and rest-of-market EUR 20.25/sqm/month (Colliers, Cushman & Wakefield, CBRE Q3 2025). Representative secondary/multi-city EUR 24/sqm/month x12 = EUR 288/sqm/yr x 1.146815 = USD 330. Labour: average gross annual wage EUR 50257 in 2024 (Statista/Destatis), OECD avg wage ~EUR 60k area; x 1.20 employer social contributions (~20%) = ~EUR 60300 x 1.146815 = USD 69150. Setup: GmbH notary EUR 350-850 + commercial register ~EUR 150 + Gewerbeanmeldung EUR 15-65, all-in ~EUR 1000 (excludes EUR 25000 share capital) x 1.146815 = USD 1150.",
+      "as_of": "2025",
+      "method": "Money converted with fx_to_usd 1.146815. Energy triangulated from 2 sources (EUR 0.226-0.238/kWh -> USD 0.26-0.276, set USD 0.27). Rent from monthly EUR/sqm x12 then x fx (modeled secondary/weighted-average basis, below trophy prime). Labour = gross wage x (1 + employer social ~0.20) x fx. Setup = sum of statutory GmbH formation fees x fx, share capital excluded."
+    }
+  },
+  "risk_exit": {
+    "risks": [
+      {
+        "name": "energy_input_costs",
+        "score_1_10": 8
+      },
+      {
+        "name": "rule_tax_changes",
+        "score_1_10": 5
+      },
+      {
+        "name": "demand_cycle",
+        "score_1_10": 7
+      },
+      {
+        "name": "currency_swings",
+        "score_1_10": 3
+      },
+      {
+        "name": "skills_shortages",
+        "score_1_10": 8
+      }
+    ],
+    "exit": {
+      "climate": "steady",
+      "climate_score_0_100": 56,
+      "time_to_sell_months_low": 8,
+      "time_to_sell_months_high": 14,
+      "buyers": [
+        "strategic acquirers",
+        "search funds",
+        "private equity",
+        "family successors"
+      ],
+      "multiple_low": 2.5,
+      "multiple_high": 4.5
+    },
+    "_meta": {
+      "confidence": "held",
+      "source": "Energy: industrial electricity about 23 c/kWh, roughly 25% above the EU average, among the highest in Europe (Eurostat H2-2024; cross-source). Skills: chronic skilled-labour shortage and ageing workforce widely documented. Exit: very large succession pipeline (about 600k SMEs seeking successors by 2028; about 224k handovers planned through 2024), a functioning intermediary market with search funds and PE; supply-heavy and buyer-favourable. Multiples: small-business deals commonly 3x-5x EBITDA with a small-company discount, set here on an owner-earnings/SDE basis. Demand: near-stagnant 0.8% real growth, industrial softness. Currency: EUR reserve currency, low volatility.",
+      "as_of": "2024-2025",
+      "method": "Held on energy and skills (2+ credible sources agree) and on the succession/exit market structure; risk scores normalized across the peer set; multiples narrowed to small-business SDE range."
+    }
+  },
+  "cities": {
+    "list": [
+      {
+        "name": "Berlin",
+        "slug": "berlin",
+        "character": "Capital, largest city economy, software startups, media, public administration.",
+        "market_index_vs_capital": 100
+      },
+      {
+        "name": "Hamburg",
+        "slug": "hamburg",
+        "character": "Largest seaport, logistics and trade, media and aviation employers.",
+        "market_index_vs_capital": 79
+      },
+      {
+        "name": "Munich",
+        "slug": "munich",
+        "character": "Highest corporate headquarters count, automotive, insurance and tech, high incomes.",
+        "market_index_vs_capital": 78
+      },
+      {
+        "name": "Frankfurt",
+        "slug": "frankfurt",
+        "character": "Banking and stock exchange center, airport hub, professional services.",
+        "market_index_vs_capital": 45
+      },
+      {
+        "name": "Cologne",
+        "slug": "cologne",
+        "character": "Media and broadcasting, insurance, trade fairs, western consumer market.",
+        "market_index_vs_capital": 40
+      },
+      {
+        "name": "Stuttgart",
+        "slug": "stuttgart",
+        "character": "Automotive and precision engineering, export manufacturing, supplier networks.",
+        "market_index_vs_capital": 33
+      },
+      {
+        "name": "Dusseldorf",
+        "slug": "dusseldorf",
+        "character": "Advertising, fashion and telecoms, corporate offices, Rhine-Ruhr commerce.",
+        "market_index_vs_capital": 33
+      }
+    ],
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Market index modeled from city nominal GDP (Berlin 165.5bn EUR anchor, 2021) via Wikipedia List of German cities by GDP citing Federal Statistical Office; headquarters and sector notes cross-checked vs DAX-city listings.",
+      "as_of": "2021",
+      "method": "Anchor=100 is Berlin, Germany's largest city economy and primary market (Frankfurt is the finance center but a smaller overall market). index = city GDP / Berlin GDP * 100, rounded. Proxy is nominal city GDP."
+    }
+  },
+  "character": {
+    "gov_business": [
+      {
+        "left_label": "Bribery common",
+        "right_label": "Clean dealing",
+        "position_0_1": 0.82,
+        "spectrum": "dealing"
+      },
+      {
+        "left_label": "Rules shift often",
+        "right_label": "Rules are stable",
+        "position_0_1": 0.85,
+        "spectrum": "rules"
+      },
+      {
+        "left_label": "Hard to enforce a deal",
+        "right_label": "Easy to enforce",
+        "position_0_1": 0.82,
+        "spectrum": "enforcement"
+      },
+      {
+        "left_label": "Heavy paperwork",
+        "right_label": "Light paperwork",
+        "position_0_1": 0.42,
+        "spectrum": "paperwork"
+      },
+      {
+        "left_label": "Confusing tax",
+        "right_label": "Clear tax",
+        "position_0_1": 0.5,
+        "spectrum": "tax_clarity"
+      },
+      {
+        "left_label": "Weak courts",
+        "right_label": "Strong courts",
+        "position_0_1": 0.85,
+        "spectrum": "courts"
+      }
+    ],
+    "culture_outsider": [
+      {
+        "left_label": "Expressive",
+        "right_label": "Reserved",
+        "position_0_1": 0.6,
+        "spectrum": "expression"
+      },
+      {
+        "left_label": "Indirect",
+        "right_label": "Direct",
+        "position_0_1": 0.85,
+        "spectrum": "directness"
+      },
+      {
+        "left_label": "Casual",
+        "right_label": "Formal",
+        "position_0_1": 0.62,
+        "spectrum": "formality"
+      },
+      {
+        "left_label": "Relaxed pace",
+        "right_label": "Brisk pace",
+        "position_0_1": 0.68,
+        "spectrum": "pace"
+      },
+      {
+        "left_label": "Relationship-led",
+        "right_label": "Rules-led",
+        "position_0_1": 0.82,
+        "spectrum": "orientation"
+      },
+      {
+        "left_label": "Slow to open up",
+        "right_label": "Quick to transact",
+        "position_0_1": 0.62,
+        "spectrum": "openness"
+      }
+    ],
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Positions modeled from CPI 2024 score 75 (rank 10) and WJP Rule of Law Index 2024 rank 5 of 142 (score 0.83) for gov_business; Hofstede dimensions (individualism 67, power distance 35, uncertainty avoidance 65, very direct low-context) for culture_outsider. Spectra fixed for cross-country comparison.",
+      "as_of": "2024",
+      "method": "Governance percentile rank mapped to 0-1 (top-tier on clean dealing, stable rules and strong courts; paperwork heavier given bureaucratic load and tax mid); culture positions from cross-cultural dimension scores (very direct, rules-led, formal-leaning, brisk, reserved expression)."
+    }
+  }
+}

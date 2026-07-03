@@ -100,6 +100,20 @@ export function isWarmFrameEnabled(): boolean {
 }
 
 /**
+ * The spine page-type reform (Final Ascent). Default OFF: every live route
+ * (country / region / cell / industry / neighborhoods) renders exactly as today.
+ * When ON, those routes render the rebuilt "spine" surfaces instead. Kept OFF in
+ * production until each page's real-data adapter lands (the bundled spine seeds are
+ * illustrative placeholders, so flipping this on before the adapters would put
+ * sample numbers on live URLs, which the honesty rail forbids). Local dev / preview
+ * can set NEXT_PUBLIC_SPINE_REFORM=1 to see the promoted surfaces. Flip per
+ * page-group in Vercel only once its adapter shows real, reconciled numbers.
+ */
+export function isSpineReformEnabled(): boolean {
+  return parseFlag(process.env.NEXT_PUBLIC_SPINE_REFORM, false);
+}
+
+/**
  * Snapshot of every flag's current value. Useful for `/status` and
  * for the audit / debug surfaces.
  */
@@ -110,5 +124,6 @@ export function snapshotFlags(): Record<string, boolean> {
     NEXT_PUBLIC_AUTH_ENABLED: isAuthEnabled(),
     NEXT_PUBLIC_GATING_ENABLED: isGatingEnabled(),
     NEXT_PUBLIC_WARM_FRAME: isWarmFrameEnabled(),
+    NEXT_PUBLIC_SPINE_REFORM: isSpineReformEnabled(),
   };
 }

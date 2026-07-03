@@ -1,0 +1,1072 @@
+{
+  "headline": {
+    "_meta": {
+      "confidence": "modeled",
+      "source": "carried from the UK design figures; to be researched",
+      "as_of": "2026-06",
+      "method": "illustrative scorecard values from the UK mockup, pending research. smb_tax_pct is the small-profits CORPORATION TAX rate (the hero 'Corporation tax' tile); the blended all-in business tax load is a different metric and lives in tax_burden.total_pct (36)"
+    },
+    "gdp_per_capita_usd": 49000,
+    "average_salary_usd": 44000,
+    "net_wealth_per_adult_usd": 172000,
+    "min_wage_usd_yr": 25000,
+    "population": 68300000,
+    "cost_of_living_index": 78,
+    "ease_of_business_score": 83,
+    "smb_tax_pct": 19
+  },
+  "margin": {
+    "_meta": {
+      "confidence": "placeholder",
+      "source": "illustrative cost-stack for layout; to be researched and replaced",
+      "as_of": "2026-06",
+      "method": "placeholder"
+    },
+    "kept_pct": 15,
+    "cost_stack": [
+      {
+        "name": "Labour",
+        "pct": 38
+      },
+      {
+        "name": "Tax",
+        "pct": 16
+      },
+      {
+        "name": "Premises & energy",
+        "pct": 13
+      },
+      {
+        "name": "Other costs",
+        "pct": 18
+      }
+    ]
+  },
+  "meta": {
+    "iso2": "GB",
+    "iso3": "GBR",
+    "name": "United Kingdom",
+    "region": "Europe",
+    "currency_local": "GBP",
+    "fx_to_usd": 1.322872,
+    "fx_as_of": "2026-06",
+    "peer_set": [
+      "DE",
+      "FR",
+      "NL",
+      "IE"
+    ],
+    "schema_version": "1.0",
+    "overall_confidence": "modeled",
+    "last_reviewed": "2026-07-03",
+    "_note": "SEED FILE. Values carried from the UK design mockups. Most are placeholder/illustrative and MUST be replaced with researched data. Tags below say which."
+  },
+  "tax_burden": {
+    "_meta": {
+      "confidence": "modeled",
+      "source": "statutory rates are held (see tax_detail); total_pct and its components are a blended small-company estimate",
+      "as_of": "2026-06",
+      "method": "IDENTITY: total_pct = sum(components) = 19 (corporation) + 5 (rates-equiv) + 8 (dividend) + 4 (capital-gains-equiv) = 36. Components are modeled profit-equivalent ANNUAL WEIGHTS for a typical small company, not statutory rates (statutory rates live in tax_detail); employer on-cost and customer VAT are excluded from total"
+    },
+    "total_pct": 36,
+    "components": {
+      "corporation_tax_pct": 19,
+      "business_rates_pct_equiv": 5,
+      "dividend_tax_pct": 8,
+      "capital_gains_pct": 4
+    },
+    "employer_oncost_pct": 14,
+    "vat_rate_pct": 20,
+    "notes": "VAT is customer-borne and excluded from total_pct. Components sum to total_pct by construction, so each one reads as a coherent share of the load. capital_gains_pct is an annualized exit-tax equivalent, NOT the 20% statutory CGT rate; business_rates_pct_equiv is a profit-equivalent estimate, refine with real rateable-value data."
+  },
+  "economic_profile": {
+    "ease_of_business": 8,
+    "talent_pool": 8,
+    "access_to_financing": 8,
+    "political_stability": 7,
+    "economic_reward": 7,
+    "affordability": 4,
+    "_meta": {
+      "confidence": "modeled",
+      "source": "World Bank Doing Business 2020 EoDB score 83.5 (rank 8); WGI government effectiveness 1.18, political stability 0.26; domestic credit to private sector ~130% GDP; VC 2024 ~9.4B USD (3rd globally); GDP/cap PPP 62009, growth 0.8%, labour force 35M; price level above OECD avg",
+      "as_of": "2024",
+      "method": "ease_of_business 8: EoDB 83.5, fast company formation and strong common-law contract enforcement. talent_pool 8: 35M labour force, top universities and finance/tech skills depth. access_to_financing 8: deep capital markets, credit ~130% GDP and Europe-leading VC ~9.4B. political_stability 7: effective institutions, post-Brexit policy churn tempers the score. economic_reward 7: high GDP/cap PPP 62009 and large services market, 0.8% growth. affordability 4: above-OECD price level, London costs are high."
+    }
+  },
+  "setup": {
+    "_meta": {
+      "confidence": "modeled",
+      "source": "registration fee + bank names are held; timings estimated",
+      "as_of": "2026-06",
+      "method": "IDENTITY: total_days = the day the slowest setup step clears. Registration completes day 1, tax registration day 2, and the bank account (started day 1, ~21 days of checks) clears about day 21, so days-to-fully-set-up = 21. VAT waits until sales pass the threshold, so it sits outside total_days"
+    },
+    "total_days": 21,
+    "steps": [
+      {
+        "name": "Register the company",
+        "cost_local": 12,
+        "cost_usd": 15.87,
+        "time_days": 1,
+        "how": "Online"
+      },
+      {
+        "name": "Register for tax",
+        "cost_local": 0,
+        "cost_usd": 0,
+        "time_days": 1,
+        "how": "Online"
+      },
+      {
+        "name": "Open a business bank account",
+        "cost_local": 0,
+        "cost_usd": 0,
+        "time_days": 21,
+        "how": "Either"
+      },
+      {
+        "name": "Register for VAT (if sales are high)",
+        "cost_local": 0,
+        "cost_usd": 0,
+        "time_days": 7,
+        "how": "Online"
+      }
+    ],
+    "structures": [
+      {
+        "name": "Sole trader",
+        "liability": "Personal",
+        "tax": "Personal income",
+        "best_for": "Freelancers and the very small"
+      },
+      {
+        "name": "Limited company",
+        "liability": "Limited",
+        "tax": "Corporation tax",
+        "best_for": "Most growing businesses (common choice)"
+      },
+      {
+        "name": "Partnership",
+        "liability": "Shared",
+        "tax": "Each partner on their share",
+        "best_for": "Professional firms"
+      }
+    ],
+    "vat_threshold_local": 90000,
+    "vat_threshold_usd": 119058.48,
+    "banking": {
+      "can_foreigner": true,
+      "friction": "medium",
+      "notes": "Slow step for foreign-owned firms; a UK-resident director or address is often required.",
+      "banks_traditional": [
+        "Barclays",
+        "HSBC",
+        "Lloyds",
+        "NatWest"
+      ],
+      "banks_digital": [
+        "Starling",
+        "Monzo",
+        "Tide",
+        "Wise"
+      ],
+      "bullets": [
+        "A UK-resident director or address is usually needed to open an account.",
+        "Digital banks (Starling, Tide, Monzo) approve in days; high-street banks take 2 to 4 weeks.",
+        "Every director gives proof of ID, address and business activity.",
+        "Most digital banks ask no minimum deposit."
+      ]
+    }
+  },
+  "people_pay": {
+    "pay_by_level_usd": {
+      "junior": 41000,
+      "experienced": 64000,
+      "senior": 95000,
+      "specialist": 130000
+    },
+    "hiring": {
+      "hire_ease": "easy",
+      "contract_ease": "easy",
+      "fire_ease": "moderate",
+      "recruiting_depth": "deep",
+      "notes": {
+        "hire": "Flexible hiring with light onboarding paperwork; written statement of particulars due day one and a right-to-work check required.",
+        "contract": "Permanent, fixed-term and zero-hours contracts all permitted; probation periods are common and freely set.",
+        "fire": "Two years of service unlocks unfair-dismissal protection, so dismissals after that need a fair reason and process; statutory redundancy pay applies. Notice and process are lighter than in continental peers.",
+        "recruiting": "Large, mobile labour market with deep white-collar supply, strong English-language pipeline and active recruitment channels."
+      }
+    },
+    "talent_depth": [
+      {
+        "field": "finance",
+        "score_1_5": 5
+      },
+      {
+        "field": "software_tech",
+        "score_1_5": 5
+      },
+      {
+        "field": "professional_legal",
+        "score_1_5": 5
+      },
+      {
+        "field": "creative_media",
+        "score_1_5": 5
+      },
+      {
+        "field": "life_sciences",
+        "score_1_5": 4
+      },
+      {
+        "field": "manufacturing_trades",
+        "score_1_5": 3
+      }
+    ],
+    "languages": [
+      {
+        "name": "English",
+        "pct_speakers": 91.1,
+        "native": true
+      },
+      {
+        "name": "Welsh",
+        "pct_speakers": 1,
+        "native": true
+      }
+    ],
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Pay modeled from OECD average annual wages (UK ~63.7k USD PPP, 2024) and national mean earnings ~44k GBP, plus employer National Insurance 15 percent (2025/26) and auto-enrolment pension; hire/fire from OECD employment protection indicators (UK among least strict, unfair-dismissal qualifying period two years); languages from ONS Census 2021 (English main language 91.1 percent; Welsh speakers in Wales 17.8 percent, ~1 percent UK-wide).",
+      "as_of": "2025",
+      "method": "Triangulated wage benchmarks and statutory on-costs converted to USD at fx 1.322872; talent_depth scored 1-5 from STEM-graduate output, sector employment and cluster strength; languages native-only from census main-language data."
+    },
+    "_raw": {
+      "_raw": {
+        "_pay_note": "Fully-loaded annual employer cost in USD: representative white-collar gross salary by level plus employer on-costs of roughly 18 to 20 percent (employer National Insurance at 15 percent above a low threshold plus auto-enrolment pension). Base gross anchored on national average earnings around 44k GBP with white-collar premiums by level. Converted from GBP at 1.322872.",
+        "_talent_signal": "finance: global financial centre with one of the world's largest banking and asset-management workforces. software_tech: ~250k STEM graduates a year and Europe's largest tech-investment hub. professional_legal: leading global legal and consulting market. creative_media: world-leading advertising, film and media cluster. life_sciences: top-six pharma employer with strong research base but mid-size manufacturing. manufacturing_trades: smaller industrial base, ~9 percent of GDP and below-peer engineering graduate share."
+      }
+    }
+  },
+  "income": {
+    "average_income_usd": 32275,
+    "median_income_usd": 26884,
+    "top10_income_usd": 80437,
+    "top1_income_usd": 137358,
+    "gini": 0.331,
+    "gini_band": "moderate",
+    "household_spend": [
+      {
+        "category": "housing_utilities",
+        "pct": 18.0
+      },
+      {
+        "category": "transport",
+        "pct": 14.0
+      },
+      {
+        "category": "food_drink",
+        "pct": 11.0
+      },
+      {
+        "category": "recreation",
+        "pct": 11.0
+      },
+      {
+        "category": "dining_out",
+        "pct": 7.0
+      },
+      {
+        "category": "household_goods",
+        "pct": 7.0
+      },
+      {
+        "category": "other",
+        "pct": 32.0
+      }
+    ],
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Median equivalised disposable income 26,884 USD PPP (OECD income distribution database 2021, cross-checked against the published cross-country compilation) = HELD. Gini 0.331 for disposable income post-tax-and-transfer (national household finances survey, financial year ending 2023; 0.329 in FYE2024) = HELD, consistent with the OECD figure of 0.354 (2021, pre-recent decline). Average 32,275 and top10 80,437 and top1 137,358 = MODELED lognormal from median and Gini. Household spend from the national family-spending release April 2023 to March 2024 (total 623.30 per week: housing+fuel 18 pct, transport 14 pct, food+non-alcoholic 11 pct, restaurants/hotels 7 pct).",
+      "as_of": "2021-2024",
+      "method": "Median held from official statistics. Mean derived as median times exp(sigma^2/2); top-decile and top-percentile as conditional means above the P90 and P99 lognormal thresholds. Spend shares mapped to seven fixed buckets normalized to 100."
+    },
+    "_raw": {
+      "income_basis": "Annual equivalised disposable income per person (individual basis), USD at purchasing power parity. Median is the OECD equivalised disposable income; average and the top-decile and top-percentile figures are the conditional means of the same distribution."
+    }
+  },
+  "costs": {
+    "energy_usd_per_kwh": 0.397,
+    "commercial_rent_usd_sqm_yr": 1389,
+    "labour_cost_index_usd": 65416,
+    "license_setup_usd": 148,
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Energy: GlobalPetrolPrices business tariff GBP 0.306/kWh (Sep 2025, all-in incl distribution+taxes) and DESNZ Quarterly Energy Prices non-domestic average ~24-30 p/kWh (2025); representative all-in set at GBP 0.30/kWh. Rent: London City prime office ~GBP 100/sqft/yr (Savills/SHB Real Estate Q3 2025), secondary Grade B GBP 40-65/sqft; representative prime set GBP 1050/sqm/yr (GBP ~97.5/sqft x 10.7639). Labour: ONS ASHE 2025 mean full-time gross ~GBP 43k + employer NI 15% and pension auto-enrolment (loaded x1.15) = GBP 49,450; cross-checked vs Eurostat-style hourly. Setup: IDENTITY: license_setup_usd = company registration GBP 12 ($16, the setup-timeline fee) + a representative trade licence GBP 100 ($132, tax_detail fixed fees) = GBP 112 -> $148 all-in licence & setup.",
+      "as_of": "2025",
+      "method": "Local currency to USD with fx_to_usd 1.322872. Rent from GBP/sqft x 10.7639 to GBP/sqm then to USD. Labour = avg gross wage x employer-burden multiplier 1.15, then to USD. Energy is all-in commercial unit rate. London is the representative commercial city."
+    },
+    "_raw": {
+      "energy_local_per_kwh": 0.3,
+      "commercial_rent_local_sqm_yr": 1050,
+      "labour_cost_index_local": 49450,
+      "license_setup_local": 112
+    }
+  },
+  "risk_exit": {
+    "risks": [
+      {
+        "name": "energy_input_costs",
+        "score_1_10": 9
+      },
+      {
+        "name": "rule_tax_changes",
+        "score_1_10": 6
+      },
+      {
+        "name": "demand_cycle",
+        "score_1_10": 6
+      },
+      {
+        "name": "currency_swings",
+        "score_1_10": 5
+      },
+      {
+        "name": "skills_shortages",
+        "score_1_10": 7
+      }
+    ],
+    "exit": {
+      "climate": "active",
+      "climate_score_0_100": 62,
+      "time_to_sell_months_low": 6,
+      "time_to_sell_months_high": 12,
+      "buyers": [
+        "strategic acquirers",
+        "private equity",
+        "individual owner-operators",
+        "search funds"
+      ],
+      "multiple_low": 2,
+      "multiple_high": 3.5,
+      "bullets": [
+        "Mature broker market; most small firms sell in 6 to 12 months.",
+        "Buyers price a small business at x2 to x3.5 a year's profit.",
+        "Clean books and a transferable customer base lift the price most.",
+        "Asset sales suit micro-firms; share sales suit larger ones."
+      ]
+    },
+    "_meta": {
+      "confidence": "held",
+      "source": "Energy: industrial electricity about 26-27 p/kWh, the highest among 25 reporting economies and well above the IEA median (IEA; cross-source). Exit: deep, mature broker market with a broad buyer pool; typical small-business sale takes about 6-12 months. Skills: persistent recruitment difficulty and post-Brexit labour gaps. Rule/tax: frequent fiscal changes including rising employer national insurance and higher capital-gains treatment on business-asset disposals. Demand: weak 0.8% real growth with above-target inflation (3.2%). Currency: GBP floating, moderate volatility. Multiples set to a small-business SDE range (about 1.5x-3.5x typical).",
+      "as_of": "2024-2025",
+      "method": "Held on energy (IEA highest-of-peers, multi-source) and on the active broker market and 6-12 month sale window; risk scores normalized across the peer set; multiples narrowed to small-business SDE."
+    }
+  },
+  "cities": {
+    "_meta": {
+      "confidence": "modeled",
+      "source": "major UK business cities; market index estimated",
+      "as_of": "2026-06"
+    },
+    "list": [
+      {
+        "name": "London",
+        "slug": "london",
+        "character": "Finance and global trade",
+        "market_index_vs_capital": 100,
+        "lat": 51.5074,
+        "lng": -0.1278
+      },
+      {
+        "name": "Manchester",
+        "slug": "manchester",
+        "character": "Media, tech and sport",
+        "market_index_vs_capital": 45,
+        "lat": 53.4808,
+        "lng": -2.2426
+      },
+      {
+        "name": "Birmingham",
+        "slug": "birmingham",
+        "character": "Advanced manufacturing and engineering",
+        "market_index_vs_capital": 40,
+        "lat": 52.4862,
+        "lng": -1.8904
+      },
+      {
+        "name": "Edinburgh",
+        "slug": "edinburgh",
+        "character": "Finance and tourism",
+        "market_index_vs_capital": 38,
+        "lat": 55.9533,
+        "lng": -3.1883
+      },
+      {
+        "name": "Bristol",
+        "slug": "bristol",
+        "character": "Aerospace and creative",
+        "market_index_vs_capital": 32,
+        "lat": 51.4545,
+        "lng": -2.5879
+      },
+      {
+        "name": "Glasgow",
+        "slug": "glasgow",
+        "character": "Engineering and creative",
+        "market_index_vs_capital": 55,
+        "lat": 55.8642,
+        "lng": -4.2518
+      },
+      {
+        "name": "Leeds",
+        "slug": "leeds",
+        "character": "Finance and law hub",
+        "market_index_vs_capital": 55,
+        "lat": 53.8008,
+        "lng": -1.5491
+      },
+      {
+        "name": "Liverpool",
+        "slug": "liverpool",
+        "character": "Logistics and culture",
+        "market_index_vs_capital": 55,
+        "lat": 53.4084,
+        "lng": -2.9916
+      }
+    ]
+  },
+  "character": {
+    "the_catch": "The 19% headline tax is only part of the story: add business rates, dividend tax and the rest and the all-in load runs nearer 36%, a gap every operator already here has priced in.",
+    "_the_catch_note": "Dedicated honesty-band sentence for The Catch's third bullet. It must stay DISTINCT from every locals_intel item (those render verbatim in 'What locals know') and must only restate figures already on the page (hero 19% corporation tax, tax_burden.total_pct 36).",
+    "gov_business": [
+      {
+        "left_label": "Bribery common",
+        "right_label": "Clean dealing",
+        "position_0_1": 0.78,
+        "spectrum": "dealing"
+      },
+      {
+        "left_label": "Rules shift often",
+        "right_label": "Rules are stable",
+        "position_0_1": 0.78,
+        "spectrum": "rules"
+      },
+      {
+        "left_label": "Hard to enforce a deal",
+        "right_label": "Easy to enforce",
+        "position_0_1": 0.8,
+        "spectrum": "enforcement"
+      },
+      {
+        "left_label": "Heavy paperwork",
+        "right_label": "Light paperwork",
+        "position_0_1": 0.68,
+        "spectrum": "paperwork"
+      },
+      {
+        "left_label": "Confusing tax",
+        "right_label": "Clear tax",
+        "position_0_1": 0.6,
+        "spectrum": "tax_clarity"
+      },
+      {
+        "left_label": "Weak courts",
+        "right_label": "Strong courts",
+        "position_0_1": 0.82,
+        "spectrum": "courts"
+      }
+    ],
+    "locals_intel": [
+      {
+        "title": "Price the hidden costs first.",
+        "detail": "Energy and business rates catch new owners out; local operators budget for them before they sign a lease, not after."
+      },
+      {
+        "title": "The bank account is the bottleneck.",
+        "detail": "Everything else moves fast, so start the account application on day one; a digital bank clears faster than the high street."
+      },
+      {
+        "title": "Two years changes the rules.",
+        "detail": "Employees gain unfair-dismissal rights at two years of service, so most firms use probation and fixed terms deliberately early on."
+      },
+      {
+        "title": "London is not the only market.",
+        "detail": "Rents and wages fall sharply outside the south east while demand holds up, so regional cities often keep more margin."
+      }
+    ],
+    "culture_outsider": [
+      {
+        "left_label": "Expressive",
+        "right_label": "Reserved",
+        "position_0_1": 0.6,
+        "spectrum": "expression"
+      },
+      {
+        "left_label": "Indirect",
+        "right_label": "Direct",
+        "position_0_1": 0.58,
+        "spectrum": "directness"
+      },
+      {
+        "left_label": "Casual",
+        "right_label": "Formal",
+        "position_0_1": 0.42,
+        "spectrum": "formality"
+      },
+      {
+        "left_label": "Relaxed pace",
+        "right_label": "Brisk pace",
+        "position_0_1": 0.65,
+        "spectrum": "pace"
+      },
+      {
+        "left_label": "Relationship-led",
+        "right_label": "Rules-led",
+        "position_0_1": 0.75,
+        "spectrum": "orientation"
+      },
+      {
+        "left_label": "Slow to open up",
+        "right_label": "Quick to transact",
+        "position_0_1": 0.7,
+        "spectrum": "openness"
+      }
+    ],
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Positions modeled from CPI 2024 score 71 (rank 20) and WJP Rule of Law Index 2024 rank 15 of 142 (score 0.78) for gov_business; Hofstede dimensions (individualism 89, power distance 35, uncertainty avoidance 35, direct but understated, casual-leaning) for culture_outsider. Spectra fixed for cross-country comparison.",
+      "as_of": "2024",
+      "method": "Governance percentile rank mapped to 0-1 (top-tier clean dealing, strong common-law courts, lighter paperwork and easier enforcement; tax mid given complexity); culture positions from cross-cultural dimension scores (direct but polite/understated, casual-leaning, rules-led, brisk, quick to transact)."
+    }
+  },
+  "trades_to_start": {
+    "_meta": {
+      "confidence": "placeholder",
+      "source": "Illustrative seed values for layout; per-trade hardship and open cost to be researched and replaced.",
+      "as_of": "2026-06",
+      "method": "placeholder"
+    },
+    "list": [
+      {
+        "name": "Cleaning services",
+        "hardship_0_100": 18,
+        "cost_to_open_usd": 8000
+      },
+      {
+        "name": "Online retail",
+        "hardship_0_100": 26,
+        "cost_to_open_usd": 12000
+      },
+      {
+        "name": "Hair & beauty",
+        "hardship_0_100": 32,
+        "cost_to_open_usd": 28000
+      },
+      {
+        "name": "Cafe",
+        "hardship_0_100": 38,
+        "cost_to_open_usd": 42000
+      },
+      {
+        "name": "Convenience shop",
+        "hardship_0_100": 46,
+        "cost_to_open_usd": 55000
+      },
+      {
+        "name": "Restaurant",
+        "hardship_0_100": 62,
+        "cost_to_open_usd": 120000
+      }
+    ]
+  },
+  "tax_detail": {
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Statutory UK rates; business-rates shown as a profit-equivalent estimate.",
+      "as_of": "2026-06",
+      "method": "national/local/fixed grouping"
+    },
+    "groups": [
+      {
+        "level": "National taxes",
+        "items": [
+          {
+            "name": "Corporation tax",
+            "value": "19%",
+            "note": "on small company profits; rises to 25% above about $330K profit"
+          },
+          {
+            "name": "VAT",
+            "value": "20%",
+            "note": "on sales, the customer pays it"
+          },
+          {
+            "name": "Dividend tax",
+            "value": "8%",
+            "note": "on profit paid out to owners"
+          },
+          {
+            "name": "Capital gains",
+            "value": "20%",
+            "note": "on selling the business or its assets"
+          }
+        ]
+      },
+      {
+        "level": "Local and council",
+        "items": [
+          {
+            "name": "Business rates",
+            "value": "5%",
+            "note": "profit-equivalent estimate; a charge on the value of your premises"
+          }
+        ]
+      },
+      {
+        "level": "Fixed fees",
+        "items": [
+          {
+            "name": "Company registration",
+            "value": "$16",
+            "note": "one-off, filed online"
+          },
+          {
+            "name": "Trade licence",
+            "value": "$132",
+            "note": "typical cost, only if your trade needs one"
+          }
+        ]
+      }
+    ]
+  },
+  "financing": {
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Illustrative seed for layout; to be researched and replaced.",
+      "as_of": "2026-06",
+      "method": "placeholder"
+    },
+    "ease_0_100": 62,
+    "sources": [
+      {
+        "name": "High-street bank loans",
+        "note": "Slow, security usually required"
+      },
+      {
+        "name": "Start Up Loans (government-backed)",
+        "note": "Up to $31K, fixed 6% APR"
+      },
+      {
+        "name": "Angel and venture capital",
+        "note": "Deep in London for tech"
+      },
+      {
+        "name": "Grants and innovation funds",
+        "note": "Non-dilutive, competitive"
+      }
+    ]
+  },
+  "grants": {
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Illustrative seed for layout; to be researched and replaced.",
+      "as_of": "2026-06",
+      "method": "placeholder"
+    },
+    "list": [
+      {
+        "name": "R&D tax credits",
+        "value": "up to 27% of R&D spend",
+        "who": "Companies doing development",
+        "kind": "Tax relief",
+        "note": "Claimed back through the company tax return, so it lands as a rebate rather than up-front cash."
+      },
+      {
+        "name": "Start Up Loans",
+        "value": "$1K to $31K",
+        "who": "New founders",
+        "kind": "Loan",
+        "note": "Government-backed personal loan at a fixed 6% rate, with free mentoring; repaid over one to five years."
+      },
+      {
+        "name": "Innovate UK grants",
+        "value": "$30K to $2M",
+        "who": "Innovative projects",
+        "kind": "Grant",
+        "note": "Non-dilutive and competitive; awarded in funding rounds against a specific technology challenge."
+      },
+      {
+        "name": "Regional growth funds",
+        "value": "varies by area",
+        "who": "Firms outside the South East",
+        "kind": "Grant",
+        "note": "Local growth-hub funding aimed at jobs and investment outside London; terms differ by region."
+      }
+    ]
+  },
+  "licensing": {
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Illustrative seed for layout; to be researched and replaced.",
+      "as_of": "2026-06",
+      "method": "placeholder"
+    },
+    "list": [
+      {
+        "trade": "Cafe / takeaway",
+        "licence": "Food hygiene registration",
+        "lead_time": "About 2 weeks",
+        "context": "Register with the local council at least 28 days before opening; no fee, but a hygiene inspection follows."
+      },
+      {
+        "trade": "Bar / restaurant (alcohol)",
+        "licence": "Premises licence",
+        "lead_time": "6 to 10 weeks",
+        "context": "Licensing authority decides after a public-notice window; a named personal-licence holder is required."
+      },
+      {
+        "trade": "Childcare",
+        "licence": "Ofsted registration",
+        "lead_time": "3 to 4 months",
+        "context": "Inspection plus staff background checks gate the opening; the slowest common permit to clear."
+      },
+      {
+        "trade": "Taxi / private hire",
+        "licence": "Council operator licence",
+        "lead_time": "4 to 8 weeks",
+        "context": "Driver, vehicle and operator each need a separate licence from the council that covers the area."
+      },
+      {
+        "trade": "Most retail and online",
+        "licence": "None",
+        "lead_time": "Start immediately",
+        "context": "No trade permit needed; you can begin trading the day the company is registered."
+      }
+    ]
+  },
+  "immigration": {
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Illustrative seed for layout; to be researched and replaced.",
+      "as_of": "2026-06",
+      "method": "placeholder"
+    },
+    "routes": [
+      {
+        "name": "Innovator Founder visa",
+        "forwho": "Scalable, endorsed startups",
+        "difficulty_0_100": 70
+      },
+      {
+        "name": "Skilled Worker visa",
+        "forwho": "Hiring from abroad",
+        "difficulty_0_100": 45
+      },
+      {
+        "name": "Global Talent visa",
+        "forwho": "Leaders in tech, science, arts",
+        "difficulty_0_100": 60
+      },
+      {
+        "name": "Self-sponsorship",
+        "forwho": "Own-company route",
+        "difficulty_0_100": 55
+      }
+    ]
+  },
+  "payments": {
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Illustrative seed for layout; to be researched and replaced.",
+      "as_of": "2026-06",
+      "method": "placeholder"
+    },
+    "settlement_days": "1 to 3 days",
+    "card_fee_pct": 1.5,
+    "methods": [
+      {
+        "name": "Card",
+        "pct": 60
+      },
+      {
+        "name": "Bank transfer",
+        "pct": 20
+      },
+      {
+        "name": "Cash",
+        "pct": 12
+      },
+      {
+        "name": "Digital wallet",
+        "pct": 8
+      }
+    ]
+  },
+  "insurance": {
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Illustrative seed for layout; to be researched and replaced.",
+      "as_of": "2026-06",
+      "method": "placeholder"
+    },
+    "covers": [
+      {
+        "name": "Employers' liability",
+        "typical_usd": 600,
+        "required": true,
+        "covers": "Staff injured or made ill because of work",
+        "who": "Anyone who employs even one person",
+        "note": "Required by law; fines up to $3,000 a day if uninsured"
+      },
+      {
+        "name": "Public liability",
+        "typical_usd": 350,
+        "required": false,
+        "covers": "A customer or passer-by hurt, or their property damaged",
+        "who": "Anyone the public visits or whose staff work on-site",
+        "note": "Not legally required, but landlords and clients usually demand it"
+      },
+      {
+        "name": "Professional indemnity",
+        "typical_usd": 550,
+        "required": false,
+        "covers": "A client's financial loss from your advice or a mistake",
+        "who": "Consultants, agencies, designers, accountants, brokers",
+        "note": "Often a contractual must-have to win professional work"
+      },
+      {
+        "name": "Property and contents",
+        "typical_usd": 700,
+        "required": false,
+        "covers": "Premises, stock, equipment and fit-out against fire, flood, theft",
+        "who": "Anyone with a shop, office, workshop or expensive kit",
+        "note": "Bundle with business-interruption to also cover lost income"
+      }
+    ]
+  },
+  "premises": {
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Illustrative seed for layout; to be researched and replaced.",
+      "as_of": "2026-06",
+      "method": "placeholder"
+    },
+    "lease_years_typical": "5 to 10",
+    "deposit_months": 3,
+    "break_clause": "Often at year 5",
+    "rent_free_months": "2 to 3"
+  },
+  "sector_mix": {
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Illustrative seed for layout; to be researched and replaced.",
+      "as_of": "2026-06",
+      "method": "placeholder"
+    },
+    "sectors": [
+      {
+        "name": "Services",
+        "pct": 80
+      },
+      {
+        "name": "Production and manufacturing",
+        "pct": 13
+      },
+      {
+        "name": "Construction",
+        "pct": 6
+      },
+      {
+        "name": "Agriculture",
+        "pct": 1
+      }
+    ]
+  },
+  "exporting": {
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Illustrative seed for layout; to be researched and replaced.",
+      "as_of": "2026-06",
+      "method": "placeholder"
+    },
+    "openness_0_100": 72,
+    "partners": [
+      {
+        "name": "United States",
+        "pct": 21
+      },
+      {
+        "name": "Germany",
+        "pct": 10
+      },
+      {
+        "name": "Netherlands",
+        "pct": 9
+      },
+      {
+        "name": "Ireland",
+        "pct": 7
+      },
+      {
+        "name": "France",
+        "pct": 6
+      },
+      {
+        "name": "China",
+        "pct": 6
+      }
+    ]
+  },
+  "infrastructure": {
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Illustrative seed for layout; to be researched and replaced.",
+      "as_of": "2026-06",
+      "method": "placeholder"
+    },
+    "internet_mbps": 90,
+    "power_reliability_0_100": 95,
+    "logistics_0_100": 80,
+    "ecommerce_pct": 36
+  },
+  "demand": {
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Illustrative seed for layout; to be researched and replaced.",
+      "as_of": "2026-06",
+      "method": "placeholder"
+    },
+    "consumer_spend_pool_usd_bn": 1850,
+    "businesses_total": 5600000,
+    "businesses_per_1000_adults": 99,
+    "consumer_segments": [
+      {
+        "name": "Everyday essentials",
+        "pct": 44
+      },
+      {
+        "name": "Going out and leisure",
+        "pct": 26
+      },
+      {
+        "name": "Home and big-ticket",
+        "pct": 18
+      },
+      {
+        "name": "Premium and luxury",
+        "pct": 12
+      }
+    ]
+  },
+  "seasonality": {
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Illustrative seed for layout; to be researched and replaced.",
+      "as_of": "2026-06",
+      "method": "placeholder"
+    },
+    "months": [
+      55,
+      52,
+      58,
+      60,
+      62,
+      68,
+      70,
+      66,
+      72,
+      78,
+      92,
+      100
+    ]
+  },
+  "admin_load": {
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Illustrative seed; to be researched and replaced.",
+      "as_of": "2026-06",
+      "method": "placeholder"
+    },
+    "hours_per_year": 55,
+    "online_pct": 90,
+    "filings_per_year": 9,
+    "bullets": [
+      "Most filings (tax, VAT, accounts) are done online through one government login.",
+      "A small company files roughly 9 returns a year once VAT-registered.",
+      "Real-time PAYE means payroll is reported to the tax office every payday."
+    ]
+  },
+  "competition": {
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Illustrative seed; to be researched and replaced.",
+      "as_of": "2026-06",
+      "method": "placeholder"
+    },
+    "trades": [
+      {
+        "name": "Cafe",
+        "saturation_0_100": 78
+      },
+      {
+        "name": "Hair & beauty",
+        "saturation_0_100": 64
+      },
+      {
+        "name": "Convenience shop",
+        "saturation_0_100": 72
+      },
+      {
+        "name": "Online retail",
+        "saturation_0_100": 58
+      },
+      {
+        "name": "Cleaning services",
+        "saturation_0_100": 40
+      },
+      {
+        "name": "Trades & repair",
+        "saturation_0_100": 46
+      }
+    ]
+  },
+  "employment": {
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Illustrative seed; to be researched and replaced.",
+      "as_of": "2026-06",
+      "method": "placeholder"
+    },
+    "hours": "48 hours a week max, opt-out allowed",
+    "holiday_days": 28,
+    "sick_pay": "About $145/week statutory, up to 28 weeks",
+    "maternity": "Up to 52 weeks leave, 39 weeks paid",
+    "notice": "1 week per year worked, after a month",
+    "dismissal": "Unfair-dismissal rights kick in after 2 years",
+    "union_pct": 22,
+    "bullets": [
+      "Zero-hours and fixed-term contracts are both legal and common.",
+      "Auto-enrolment pension applies from the first payslip.",
+      "Redundancy pay is set by a statutory formula after 2 years."
+    ]
+  },
+  "closing": {
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Illustrative seed; to be researched and replaced.",
+      "as_of": "2026-06",
+      "method": "placeholder"
+    },
+    "ease_0_100": 68,
+    "time_months": "6 to 12",
+    "cost_pct": 6,
+    "solvent": "A debt-free company is struck off for about $40",
+    "insolvent": "Creditors’ voluntary liquidation runs through a licensed insolvency practitioner",
+    "liability": "Limited, unless you traded while insolvent or signed personal guarantees",
+    "bullets": [
+      "Most micro-firms simply stop trading and strike off.",
+      "An insolvency practitioner is mandatory once you owe creditors.",
+      "Personal guarantees on loans or leases survive the company."
+    ]
+  }
+}

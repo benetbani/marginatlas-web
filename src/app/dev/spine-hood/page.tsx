@@ -23,15 +23,14 @@
  * myth's loudest line, the keep-row best dot); selection + CTAs are neutral ink.
  */
 import * as React from "react";
-import fs from "node:fs";
-import path from "node:path";
+import { spineHoodSeed } from "@/lib/spine-seeds";
 import { Movement } from "@/components/spine/kit";
 import { SpineShell } from "@/components/spine/shell";
 import { NeighborhoodExplorer, NeighborhoodCompare, MythChapter } from "@/components/spine/NeighborhoodExplorer";
 import { HoodMasthead } from "./masthead";
 
 export const dynamic = "force-static";
-const N: any = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), "../page-data/cities/GB-london-neighborhoods.json"), "utf8"));
+const N: any = spineHoodSeed;
 
 // A London street motif for the hood atmosphere (opacity-only 0.32, set in SpineShell).
 const HOOD_BG = "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?auto=format&fit=crop&w=1920&q=60";

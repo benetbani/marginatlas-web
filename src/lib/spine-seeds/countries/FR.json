@@ -1,0 +1,451 @@
+{
+  "meta": {
+    "iso2": "FR",
+    "iso3": "FRA",
+    "name": "France",
+    "region": "Europe",
+    "currency_local": "EUR",
+    "fx_to_usd": 1.146815,
+    "fx_as_of": "2026-06",
+    "peer_set": [
+      "DE",
+      "GB",
+      "IT",
+      "ES"
+    ],
+    "schema_version": "1.0",
+    "overall_confidence": "modeled",
+    "last_reviewed": "2026-07-03"
+  },
+  "tax_burden": {
+    "total_pct": 49.5,
+    "components": {
+      "corporation_tax_pct": 25.0,
+      "business_rates_pct_equiv": 2.0,
+      "capital_gains_pct": 30.0,
+      "dividend_tax_pct": 30.0
+    },
+    "employer_oncost_pct": 45.0,
+    "vat_rate_pct": 20.0,
+    "notes": "Standard corporate income tax is 25 percent (a 3.3 percent social surtax lifts the largest companies to about 25.8 percent, and a one-off contribution hits firms above 1 billion euro of revenue). Personal dividends and share gains carry the 30 percent flat tax, the PFU, made of 12.8 percent income tax plus social levies (about 17 to 18 percent). Employer social charges are heavy, near 45 percent of gross salary on average. VAT of 20 percent is customer-borne and excluded from the headline total.",
+    "_meta": {
+      "confidence": "modeled",
+      "source": "PwC Worldwide Tax Summaries France corporate (standard CIT 25%, +3.3% social contribution for CIT > EUR 763k); PwC/Service Public individual (PFU flat tax 30% on dividends and share gains = 12.8% + social levies; 2025 securities social levy noted at 18%); PwC/Service Public employer social charges ~45% of gross salary; Tax Foundation/PwC VAT 20%. total_pct is the locked blend.",
+      "as_of": "2025",
+      "method": "corporation_tax_pct = standard headline CIT 25% (most firms; large firms ~25.8% with the 3.3% social surtax). dividend_tax_pct and capital_gains_pct = PFU flat tax 30% (12.8% income + 17.2-18% social levies). business_rates_pct_equiv modeled at ~2.0% profit-equivalent for the territorial economic contribution (CET: CFE on premises rental value + CVAE on value added, capped near 1.5% of value added), a material recurring business-premises levy. employer_oncost_pct = average employer social-security contributions as % of gross salary. total_pct = 25 + 0.75*30 + 2.0 = 49.5."
+    }
+  },
+  "economic_profile": {
+    "ease_of_business": 6,
+    "talent_pool": 8,
+    "access_to_financing": 7,
+    "political_stability": 6,
+    "economic_reward": 7,
+    "affordability": 4,
+    "_meta": {
+      "confidence": "modeled",
+      "source": "World Bank Doing Business 2020 EoDB score 76.8 (rank 32); WGI government effectiveness 1.20, political stability -0.24; domestic credit to private sector ~115% GDP; VC 2024 ~4.3B USD; GDP/cap PPP 62557, growth 0.9%, labour force 32M; price level above OECD avg",
+      "as_of": "2024",
+      "method": "ease_of_business 6: EoDB 76.8, reliable enforcement but high labour-law and administrative load. talent_pool 8: 32M labour force with strong engineering and quantitative training. access_to_financing 7: deep credit ~115% GDP and a growing VC scene ~4.3B. political_stability 6: capable institutions, WGI stability -0.24 reflects recurring strikes and fragmented parliament. economic_reward 7: high GDP/cap PPP 62557 and large market, 0.9% growth. affordability 4: above-OECD price level, costly to operate."
+    }
+  },
+  "setup": {
+    "total_days": 14,
+    "steps": [
+      {
+        "name": "Register the company on the one-stop business portal",
+        "cost_local": 0,
+        "cost_usd": 0,
+        "time_days": 7,
+        "how": "Online"
+      },
+      {
+        "name": "File company papers with the commercial court clerk (limited company)",
+        "cost_local": 71.48,
+        "cost_usd": 81.97,
+        "time_days": 3,
+        "how": "Online"
+      },
+      {
+        "name": "Get the SIREN tax and business ID, VAT number issued with registration",
+        "cost_local": 0,
+        "cost_usd": 0,
+        "time_days": 2,
+        "how": "Online"
+      },
+      {
+        "name": "Open a business bank account and deposit any share capital",
+        "cost_local": 0,
+        "cost_usd": 0,
+        "time_days": 5,
+        "how": "Either"
+      }
+    ],
+    "structures": [
+      {
+        "name": "Micro-entreprise (sole trader)",
+        "liability": "Unlimited, owner is personally liable for business debts",
+        "tax": "Flat charge on turnover, taxed as personal income",
+        "best_for": "Solo freelancers and very small trades starting out"
+      },
+      {
+        "name": "Entreprise individuelle (sole proprietorship)",
+        "liability": "Unlimited, though business and personal assets are legally separated by default",
+        "tax": "Profits taxed as personal income, option for corporate tax",
+        "best_for": "One-person businesses past the micro turnover caps"
+      },
+      {
+        "name": "SARL (limited liability company)",
+        "liability": "Limited to the capital each partner puts in",
+        "tax": "Corporate income tax, can opt for personal tax for a limited period",
+        "best_for": "Family or small partner-run firms wanting a regulated structure"
+      },
+      {
+        "name": "SAS (simplified joint-stock company)",
+        "liability": "Limited to each shareholder's contribution",
+        "tax": "Corporate income tax, flexible profit handling",
+        "best_for": "Founders wanting flexible governance and outside investment"
+      }
+    ],
+    "vat_threshold_local": 37500,
+    "vat_threshold_usd": 43005.56,
+    "banking": {
+      "can_foreigner": true,
+      "friction": "medium",
+      "notes": "Account needs the company registration proof and ID. Branch banks usually want an in-person meeting, while app-based providers open remotely.",
+      "banks_traditional": [
+        "BNP Paribas",
+        "Societe Generale",
+        "Credit Agricole",
+        "Banque Populaire"
+      ],
+      "banks_digital": [
+        "Qonto",
+        "Shine",
+        "Boursorama"
+      ]
+    },
+    "_meta": {
+      "confidence": "held",
+      "source": "France one-stop portal (guichet unique) confirms free micro/EI registration; service-public.gouv.fr VAT exemption page gives 2025 thresholds (goods 85000, services 37500) after the 25000 reform was suspended; commercial-court clerk filing fee ~71 EUR incl beneficial-owner filing. VAT threshold field uses the lower services figure.",
+      "as_of": "2025",
+      "method": "Triangulated official portal + multiple formation guides; money converted at fx_to_usd 1.146815. VAT threshold stored as the services threshold (37500); goods threshold is 85000."
+    }
+  },
+  "people_pay": {
+    "pay_by_level_usd": {
+      "junior": 45000,
+      "experienced": 67000,
+      "senior": 98000,
+      "specialist": 132000
+    },
+    "hiring": {
+      "hire_ease": "moderate",
+      "contract_ease": "moderate",
+      "fire_ease": "hard",
+      "recruiting_depth": "deep",
+      "notes": {
+        "hire": "Hiring is structured: registration, mandatory health cover and a written contract are required, and collective agreements set many terms.",
+        "contract": "Open-ended contracts are the default; fixed-term use is limited to defined cases and durations, so flexibility is constrained.",
+        "fire": "Dismissal requires real and serious cause, a formal procedure and notice; severance and litigation risk are significant, making exits slow and costly.",
+        "recruiting": "Deep, well-educated white-collar pool with strong engineering and management pipelines, though English fluency varies."
+      }
+    },
+    "talent_depth": [
+      {
+        "field": "finance",
+        "score_1_5": 4
+      },
+      {
+        "field": "software_tech",
+        "score_1_5": 4
+      },
+      {
+        "field": "professional_legal",
+        "score_1_5": 4
+      },
+      {
+        "field": "creative_media",
+        "score_1_5": 4
+      },
+      {
+        "field": "life_sciences",
+        "score_1_5": 4
+      },
+      {
+        "field": "manufacturing_trades",
+        "score_1_5": 4
+      }
+    ],
+    "languages": [
+      {
+        "name": "French",
+        "pct_speakers": 88.0,
+        "native": true
+      }
+    ],
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Pay modeled from OECD average annual wages (France ~60.6k USD PPP, 2024) and average earnings ~40k EUR, plus employer social charges ~42 to 45 percent of gross; hire/fire from OECD employment protection indicators (France strict on regular-contract dismissal, cause and procedure required); languages from French national survey data (French mother tongue ~87 to 88 percent).",
+      "as_of": "2025",
+      "method": "Triangulated wage benchmarks and statutory employer charges converted to USD at fx 1.146815; talent_depth scored 1-5 from STEM output, sector size and cluster strength; languages native-only, regional tongues below 1 percent dropped."
+    },
+    "_raw": {
+      "_raw": {
+        "_pay_note": "Fully-loaded annual employer cost in USD: representative white-collar (cadre) gross salary by level plus employer social charges of roughly 42 to 45 percent of gross. Base gross anchored on average earnings around 40k EUR with cadre premiums by level. Converted from EUR at 1.146815.",
+        "_talent_signal": "finance: major euro-area financial centre (Paris) with large banking sector. software_tech: ~250k STEM graduates a year and a fast-growing startup ecosystem. professional_legal: large established legal and consulting market. creative_media: global luxury, advertising and film cluster. life_sciences: strong pharma research and manufacturing base. manufacturing_trades: broad industrial base (aerospace, autos, energy) with solid engineering pipeline.",
+        "_talent_signal_note": "Regional languages (Occitan, Alsatian, Breton, Corsican, Basque, Catalan) each sit below the 1 percent native-speaker threshold and are dropped."
+      }
+    }
+  },
+  "income": {
+    "average_income_usd": 35413,
+    "median_income_usd": 30622,
+    "top10_income_usd": 81075,
+    "top1_income_usd": 130877,
+    "gini": 0.297,
+    "gini_band": "fairly_equal",
+    "household_spend": [
+      {
+        "category": "housing_utilities",
+        "pct": 26.2
+      },
+      {
+        "category": "transport",
+        "pct": 13.6
+      },
+      {
+        "category": "food_drink",
+        "pct": 13.3
+      },
+      {
+        "category": "recreation",
+        "pct": 8.0
+      },
+      {
+        "category": "dining_out",
+        "pct": 8.1
+      },
+      {
+        "category": "household_goods",
+        "pct": 4.6
+      },
+      {
+        "category": "other",
+        "pct": 26.2
+      }
+    ],
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Median equivalised disposable income 30,622 USD PPP (OECD income distribution database 2021, cross-checked against the published cross-country compilation) = HELD. Gini 0.297 for disposable income post-tax-and-transfer (OECD, 2022; Eurostat equivalised-income Gini ~0.30 in the same period) = HELD. Average 35,413 and top10 81,075 and top1 130,877 = MODELED lognormal from median and Gini. Household spend from harmonized national-accounts consumption-by-purpose shares (2022): housing/utilities 26.2 pct, transport 13.6 pct, food+non-alcoholic 13.3 pct, restaurants/hotels 8.1 pct, recreation 8.0 pct, furnishings 4.6 pct.",
+      "as_of": "2021-2022",
+      "method": "Median held from official statistics. Mean derived as median times exp(sigma^2/2); top-decile and top-percentile as conditional means above the P90 and P99 lognormal thresholds. Spend shares taken directly from published COICOP shares, with the residual assigned to other, normalized to 100."
+    },
+    "_raw": {
+      "income_basis": "Annual equivalised disposable income per person (individual basis), USD at purchasing power parity. Median is the OECD equivalised disposable income; average and the top-decile and top-percentile figures are the conditional means of the same distribution."
+    }
+  },
+  "costs": {
+    "energy_usd_per_kwh": 0.171,
+    "commercial_rent_usd_sqm_yr": 1434,
+    "labour_cost_index_usd": 65827,
+    "license_setup_usd": 321,
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Energy: GlobalPetrolPrices business tariff EUR 0.149/kWh (Sep 2025) agreeing with Eurostat non-household band (nrg_pc_205) ~EUR 0.15/kWh; held. Rent: Paris CBD prime office EUR 1250/sqm/yr (Statista/Immostat H1 2025; CBRE/BNPP tracker). Labour: INSEE 2024 economy gross ~EUR 40k and private-sector gross ~EUR 43k; representative gross EUR 41k x employer-contribution burden ~40% (loaded x1.40) = EUR 57,400; cross-checked vs Eurostat 2024 hourly labour cost EUR 43.7/hr. Setup: greffe registration EUR ~37 + beneficial-ownership EUR ~19 + mandatory legal-journal notice EUR ~150-200; representative total EUR 280 (Service-Public Entreprendre).",
+      "as_of": "2025",
+      "method": "Local EUR to USD with fx_to_usd 1.146815. Rent already EUR/sqm/yr. Labour = avg gross wage x 1.40 employer burden, then to USD. Energy is all-in non-household unit rate. Paris is the representative commercial city."
+    },
+    "_raw": {
+      "energy_local_per_kwh": 0.149,
+      "commercial_rent_local_sqm_yr": 1250,
+      "labour_cost_index_local": 57400,
+      "license_setup_local": 280
+    }
+  },
+  "risk_exit": {
+    "risks": [
+      {
+        "name": "energy_input_costs",
+        "score_1_10": 4
+      },
+      {
+        "name": "rule_tax_changes",
+        "score_1_10": 6
+      },
+      {
+        "name": "demand_cycle",
+        "score_1_10": 5
+      },
+      {
+        "name": "currency_swings",
+        "score_1_10": 3
+      },
+      {
+        "name": "skills_shortages",
+        "score_1_10": 6
+      }
+    ],
+    "exit": {
+      "climate": "steady",
+      "climate_score_0_100": 55,
+      "time_to_sell_months_low": 6,
+      "time_to_sell_months_high": 12,
+      "buyers": [
+        "local buyers",
+        "competitors",
+        "private equity"
+      ],
+      "multiple_low": 3.0,
+      "multiple_high": 4.5
+    },
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Energy: lowest EU wholesale power, ~61 EUR/MWh and regulated TRVE tariff covers a third of small firms (Confindustria 2025 cross-country table; RTE 2025 review). Skills: 6 in 10 employers report hiring difficulty (EURES France LMI). Currency: EUR vs USD, inflation 1.8%, growth 0.9% (provided macro). Exit: many sellers vs few buyers in succession wave, ~130k of 370k firms expected to transfer by 2030 (Dealsuite/CCI transmission data); small-business SDE multiples ~3-4.5x (BizBuySell, Nimbo SME ranges).",
+      "as_of": "2025",
+      "method": "Fixed-taxonomy risk scores set from macro snapshot (inflation, growth, FX) plus per-country energy and labour evidence, ranked for cross-country consistency. Exit multiples expressed as multiple of annual owner earnings (SDE) for a small business; time-to-sell from broker benchmarks adjusted for thin buyer pool."
+    }
+  },
+  "cities": {
+    "list": [
+      {
+        "name": "Paris",
+        "slug": "paris",
+        "character": "Dominant headquarters, finance and luxury, largest metro by far, ~30% of national output.",
+        "market_index_vs_capital": 100
+      },
+      {
+        "name": "Lyon",
+        "slug": "lyon",
+        "character": "Second business hub, pharma and chemicals, banking and trade fairs.",
+        "market_index_vs_capital": 13
+      },
+      {
+        "name": "Marseille",
+        "slug": "marseille",
+        "character": "Mediterranean port and logistics, shipping and tourism, southern regional market.",
+        "market_index_vs_capital": 11
+      },
+      {
+        "name": "Lille",
+        "slug": "lille",
+        "character": "Northern retail and distribution hub, services, cross-border with Belgium.",
+        "market_index_vs_capital": 11
+      },
+      {
+        "name": "Bordeaux",
+        "slug": "bordeaux",
+        "character": "Wine trade and agribusiness, aerospace and tech, fast-growing services.",
+        "market_index_vs_capital": 8
+      },
+      {
+        "name": "Toulouse",
+        "slug": "toulouse",
+        "character": "Aerospace and aviation center, engineering and research employers.",
+        "market_index_vs_capital": 8
+      },
+      {
+        "name": "Nantes",
+        "slug": "nantes",
+        "character": "Atlantic services and food industry, logistics and growing tech sector.",
+        "market_index_vs_capital": 7
+      },
+      {
+        "name": "Nice",
+        "slug": "nice",
+        "character": "Tourism and conferences, real estate and services, technology park nearby.",
+        "market_index_vs_capital": 5
+      }
+    ],
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Market index modeled from metropolitan-region GDP (Paris 757.6bn EUR anchor, 2021) via Wikipedia List of EU metropolitan regions by GDP citing Eurostat; city specializations from Economy of France and Eurostat metro notes.",
+      "as_of": "2021",
+      "method": "Anchor=100 is Paris, the primary business city. index = metro GDP / Paris GDP * 100, rounded. Marseille set near Lille scale rather than its broad regional GDP figure to keep city-business ordering consistent with Lyon ahead. Proxy is metro GDP."
+    }
+  },
+  "character": {
+    "gov_business": [
+      {
+        "left_label": "Bribery common",
+        "right_label": "Clean dealing",
+        "position_0_1": 0.7,
+        "spectrum": "dealing"
+      },
+      {
+        "left_label": "Rules shift often",
+        "right_label": "Rules are stable",
+        "position_0_1": 0.72,
+        "spectrum": "rules"
+      },
+      {
+        "left_label": "Hard to enforce a deal",
+        "right_label": "Easy to enforce",
+        "position_0_1": 0.68,
+        "spectrum": "enforcement"
+      },
+      {
+        "left_label": "Heavy paperwork",
+        "right_label": "Light paperwork",
+        "position_0_1": 0.35,
+        "spectrum": "paperwork"
+      },
+      {
+        "left_label": "Confusing tax",
+        "right_label": "Clear tax",
+        "position_0_1": 0.45,
+        "spectrum": "tax_clarity"
+      },
+      {
+        "left_label": "Weak courts",
+        "right_label": "Strong courts",
+        "position_0_1": 0.72,
+        "spectrum": "courts"
+      }
+    ],
+    "culture_outsider": [
+      {
+        "left_label": "Expressive",
+        "right_label": "Reserved",
+        "position_0_1": 0.35,
+        "spectrum": "expression"
+      },
+      {
+        "left_label": "Indirect",
+        "right_label": "Direct",
+        "position_0_1": 0.55,
+        "spectrum": "directness"
+      },
+      {
+        "left_label": "Casual",
+        "right_label": "Formal",
+        "position_0_1": 0.65,
+        "spectrum": "formality"
+      },
+      {
+        "left_label": "Relaxed pace",
+        "right_label": "Brisk pace",
+        "position_0_1": 0.5,
+        "spectrum": "pace"
+      },
+      {
+        "left_label": "Relationship-led",
+        "right_label": "Rules-led",
+        "position_0_1": 0.55,
+        "spectrum": "orientation"
+      },
+      {
+        "left_label": "Slow to open up",
+        "right_label": "Quick to transact",
+        "position_0_1": 0.5,
+        "spectrum": "openness"
+      }
+    ],
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Positions modeled from CPI 2024 score 67 (rank 25) and WJP Rule of Law Index 2024 rank 22 of 142 (score 0.72) for gov_business; Hofstede dimensions (individualism 71, power distance 68, uncertainty avoidance 86, expressive, formal) for culture_outsider. Spectra fixed for cross-country comparison.",
+      "as_of": "2024",
+      "method": "Governance percentile rank mapped to 0-1 (upper on clean dealing and courts; paperwork heavier and tax less clear given administrative density); culture positions from cross-cultural dimension scores (expressive, moderately direct in debate, formal, mid pace, mixed relationship/rules)."
+    }
+  }
+}

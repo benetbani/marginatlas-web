@@ -1,0 +1,437 @@
+{
+  "meta": {
+    "industry": "restaurants",
+    "name": "Restaurants",
+    "as_of": "2026-07-01",
+    "overall_confidence": "modeled",
+    "_note": "SEED for the industry-page spine dev surface (a trade across places). Place-stable margin shape + a like-for-like 'where it pays best' read, plus the subtype drill (the richness lever). Illustrative; wire to industry_margins + the activity board on promotion. The Margin Index is the hero POV.",
+    "id": "restaurants",
+    "schema_version": "0.1"
+  },
+  "provenance_line": "Illustrative model, not yet wired to measured accounts. Figures are directional and shown so the shape reads true.",
+  "verdict": {
+    "headline": "The owner keeps about $7 of every $100 a customer spends: a thin keep, below the all-trades average, won on volume and cost control.",
+    "lead": "Of every $100 taken, food and labour swallow two-thirds before rent is paid. The model only works at scale, with a tight kitchen and a rota that bends to the day.",
+    "close": "The operators who last are not the best cooks. They are the best at rota, waste and rent."
+  },
+  "margins": {
+    "_meta": {
+      "confidence": "placeholder",
+      "source": "derived from the money_split $100 stack (the one canonical margin model on this page)",
+      "as_of": "2026-06"
+    },
+    "_identity": "gross 67 = 100 - food 33; operating 22 = 67 - wages 33 - rent 12; net 7 = 22 - other 15. ONE model: ladder = stack = captions.",
+    "gross_pct": 67,
+    "operating_pct": 22,
+    "net_pct": 7
+  },
+  "margin_index": {
+    "keeps_per_100": 7,
+    "rank_word": "thin",
+    "vs_typical": "below the all-trades average"
+  },
+  "demand": {
+    "spend_per_head_usd": 22,
+    "purchases_per_year": 60,
+    "venues_per_10k": 20.0,
+    "venues_per_10k_band": "a crowded field",
+    "trend_index": [
+      64,
+      55,
+      78,
+      84,
+      88,
+      92
+    ],
+    "trend_note": "Demand indexed to the pre-dip level (100): the dip was sharp, the climb back steady but not yet complete.",
+    "saturation_note": "Openings roughly match closings in a mature field, so a new room's covers mostly come from somebody else's tables.",
+    "demand_note": "Discretionary spend and convenience drive traffic; sensitive to disposable income and local foot traffic.",
+    "_meta": {
+      "confidence": "held",
+      "source": "Most diners spend 11-30 USD per person per visit (mode ~11-20), with dining-out frequency around 5 times a month; developed-market restaurant density is roughly 20-25 outlets per 10k residents. Trend reflects the post-2020 dip then recovery.",
+      "as_of": "2025",
+      "method": "Per-head spend, frequency and density each held from 2+ dining and density datasets; trend indexed to the pandemic dip and recovery."
+    }
+  },
+  "subtypes": {
+    "base_net_pct": 7,
+    "base_capital_usd": 150000,
+    "list": [
+      {
+        "name": "Fast food / quick service",
+        "slug": "fast-food",
+        "margin_delta_pp": 2.0,
+        "capital_delta_pct": -20,
+        "rent_sensitivity": 0.7,
+        "note": "Simpler menu and faster turns lift net margin above full-service."
+      },
+      {
+        "name": "Fast casual",
+        "slug": "fast-casual",
+        "margin_delta_pp": 1.5,
+        "capital_delta_pct": 0,
+        "rent_sensitivity": 0.9,
+        "note": "Higher checks than QSR with lean labor; margins hold up well."
+      },
+      {
+        "name": "Cafe / bistro",
+        "slug": "cafe-bistro",
+        "margin_delta_pp": 0.0,
+        "capital_delta_pct": -30,
+        "rent_sensitivity": 0.6,
+        "note": "Lower fit-out and beverage-led margins keep it near the baseline."
+      },
+      {
+        "name": "Full-service casual dining",
+        "slug": "full-service",
+        "margin_delta_pp": -2.0,
+        "capital_delta_pct": 30,
+        "rent_sensitivity": 1.15,
+        "note": "Heavier labor and space drag net margin below the blended average."
+      },
+      {
+        "name": "Fine dining",
+        "slug": "fine-dining",
+        "margin_delta_pp": -2.5,
+        "capital_delta_pct": 120,
+        "rent_sensitivity": 1.4,
+        "note": "High ticket but very high labor, ingredient and fit-out cost thin the margin."
+      }
+    ],
+    "note": "A leaner build and faster turns beat a grand room: the cheapest doors into the trade also keep the most.",
+    "_meta": {
+      "confidence": "modeled"
+    }
+  },
+  "money_split": {
+    "_meta": {
+      "confidence": "placeholder",
+      "source": "illustrative place-stable per-$100",
+      "as_of": "2026-06"
+    },
+    "items": [
+      {
+        "name": "Food & drink cost",
+        "pct": 33,
+        "kept": false,
+        "group": "variable"
+      },
+      {
+        "name": "Wages",
+        "pct": 33,
+        "kept": false,
+        "group": "variable"
+      },
+      {
+        "name": "Rent & rates",
+        "pct": 12,
+        "kept": false,
+        "group": "fixed"
+      },
+      {
+        "name": "Other running costs",
+        "pct": 15,
+        "kept": false,
+        "group": "fixed"
+      },
+      {
+        "name": "Owner keeps",
+        "pct": 7,
+        "kept": true,
+        "group": "kept"
+      }
+    ],
+    "annotation": "Wages and rent decide the year; food cost only edits it.",
+    "fixed_note": "Rent, rates and other fixed running costs are about $27 of every $100: the nut that must be filled before the owner sees a cent.",
+    "variable_note": "Food and hourly wages flex with covers, about $66 of every $100: the lines a tight kitchen and a sharp rota actually move."
+  },
+  "cost_structure": {
+    "_identity": "breakeven_utilization = fixed 27 / contribution ratio 0.34 (1 - variable 66 per $100) = ~79% of a typical day's takings; fixed_pct/variable_pct are shares of the $93 cost base (27/93, 66/93).",
+    "fixed_pct": 29.0,
+    "variable_pct": 71.0,
+    "breakeven_utilization_pct": 79.0,
+    "note": "Fixed costs are $27 of a typical $100 day, and each sales dollar contributes 34 cents after food and hourly labour; those two numbers set the bar.",
+    "cost_drivers": [
+      {
+        "name": "Food and beverage cost",
+        "pct_of_revenue": 33.0
+      },
+      {
+        "name": "Labor and payroll",
+        "pct_of_revenue": 33.0
+      },
+      {
+        "name": "Rent and occupancy",
+        "pct_of_revenue": 12.0
+      },
+      {
+        "name": "Utilities, supplies and other operating",
+        "pct_of_revenue": 11.0
+      },
+      {
+        "name": "Marketing and delivery fees",
+        "pct_of_revenue": 4.0
+      }
+    ],
+    "_meta": {
+      "confidence": "held",
+      "source": "Food cost 28-35% and labor 25-35% of revenue, with prime cost (food plus labor) targeted at 55-65%; rent and occupancy add roughly 6-10%.",
+      "as_of": "2025",
+      "method": "Food, labor and prime-cost bands held from 2+ restaurant benchmark studies; lines reconciled to the money_split stack (67% gross / 22% operating / 7% net) so every margin statement on the page agrees."
+    }
+  },
+  "first_year": {
+    "_identity": "Timeline anchors: break-even node at week 26 = ramp_to_breakeven_months 6; payback_years 2.8 = payback.payback_months 34 / 12; the year-end node echoes survival.yr1_pct 80.",
+    "ramp_to_breakeven_months": 6,
+    "payback_years": 2.8,
+    "span": 52,
+    "unit": "week",
+    "phases": [
+      ["Soft open", 0, 8],
+      ["Building covers", 8, 26],
+      ["Proving the model", 26, 52]
+    ],
+    "nodes": [
+      { "at": 8, "label": "Full rota on", "sub": "wages start to bite" },
+      { "at": 13, "label": "Cash gap opens", "sub": "reserves carry months 3 to 9" },
+      { "at": 26, "label": "Break-even", "sub": "month 6: the doors pay the costs", "kind": "breakeven" },
+      { "at": 39, "label": "Cash gap closes", "sub": "reserves begin to rebuild" },
+      { "at": 52, "label": "Year one done", "sub": "4 in 5 rooms make it here" }
+    ],
+    "note": "Month six is the median crossing, not a promise: the undercapitalised fail inside the months-three-to-nine cash gap, before the model can prove itself.",
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Small independents commonly reach cash breakeven within several months to a year, with capital payback often two to three years given high fit-out cost.",
+      "as_of": "2025",
+      "method": "Modeled from restaurant startup and payback benchmarks; wide by concept, so mid-point taken."
+    }
+  },
+  "payback": {
+    "_meta": {
+      "confidence": "placeholder",
+      "source": "illustrative payback window",
+      "as_of": "2026-06",
+      "method": "payback = capital / the owner's annual take: $150K / about $53K a year = ~34 months (2.8 years); gearing at 60% LTV stretches it to 46."
+    },
+    "capital_usd": 150000,
+    "payback_months": 34,
+    "low_months": 24,
+    "high_months": 48,
+    "unlevered_months": 34,
+    "unlevered_keep_pct": 7,
+    "levered_months": 46,
+    "levered_keep_pct": 4,
+    "levered_ltv_pct": 60,
+    "gearing_note": "Borrow six of every ten dollars of the fit-out and debt service skims about three points off the keep until the loan clears, so a 7% keep runs nearer 4% and payback slips from 34 months to 46.",
+    "note": "A typical fit-out pays back in under three years if the room fills; a slow first winter pushes it past four."
+  },
+  "cost_drivers": [
+    {
+      "name": "Wages",
+      "impact": 3,
+      "note": "The largest controllable line; rota to demand or it eats the margin."
+    },
+    {
+      "name": "Rent & rates",
+      "impact": 3,
+      "note": "Fixed and unforgiving; the address sets the floor under your whole model."
+    },
+    {
+      "name": "Food cost",
+      "impact": 2,
+      "note": "Menu engineering and waste move the gross line more than prices do."
+    }
+  ],
+  "operator": {
+    "_meta": {
+      "confidence": "placeholder",
+      "source": "illustrative typical operator",
+      "as_of": "2026-06"
+    },
+    "owner_keeps_pct": 7,
+    "capital_to_open_usd": 150000,
+    "survival_1yr_pct": 80,
+    "sale_multiple_low": 1.5,
+    "sale_multiple_high": 3
+  },
+  "who_suits": {
+    "_meta": {
+      "confidence": "placeholder",
+      "source": "illustrative operator fit",
+      "as_of": "2026-06"
+    },
+    "suits": [
+      "Hands-on operators who will work the floor and the rota, not absentee owners.",
+      "People who already know hospitality margins and read a P&L weekly.",
+      "Anyone who can sign a long lease and survive a slow first winter on reserves."
+    ],
+    "think_twice": [
+      "Passion cooks chasing a dream menu over covers-per-night maths.",
+      "First-timers expecting passive income; this is a job before it is an asset.",
+      "Anyone undercapitalised: the cash gap in months three to nine kills most."
+    ]
+  },
+  "caveats": {
+    "myths": [
+      "The 90% first-year failure claim is a myth; roughly four in five survive year one.",
+      "High gross margin is misleading; labor and rent consume most of it, leaving low single-digit net.",
+      "Full tables do not guarantee profit; prime cost creeping above 65% wipes out the margin."
+    ],
+    "honest_take": "Survival is better than folklore suggests, but the margin is so thin that food and labor cost control, not popularity, decides who makes money.",
+    "_meta": {
+      "confidence": "modeled",
+      "source": "Recurring themes across restaurant benchmark and survival studies: prime-cost control and the debunked failure myth.",
+      "as_of": "2025",
+      "method": "Synthesized from multiple restaurant sources into plain myth-busting lines."
+    }
+  },
+  "survival": {
+    "yr1_pct": 80.0,
+    "yr3_pct": 60.0,
+    "yr5_pct": 50.0,
+    "note": "The attrition is front-loaded: the rooms that clear the first two winters tend to stay.",
+    "_meta": {
+      "confidence": "held",
+      "source": "About 80% of restaurants survive year one and roughly half reach year five; the often-quoted 90% first-year failure figure is a myth with no data behind it.",
+      "as_of": "2025",
+      "method": "Held from 2+ restaurant survival datasets; a 2025 near-zero first-year-failure reading was treated as an anomaly and not used."
+    }
+  },
+  "seasonality": {
+    "_identity": "months[] indexed to an average month = 100, Jan through Dec; low 90 (January) to high 108 (December) = the 20% winter-to-peak swing_pct ((108 - 90) / 90).",
+    "months": [90, 91, 95, 98, 101, 105, 106, 105, 99, 97, 100, 108],
+    "peak_months": [
+      "June",
+      "July",
+      "August",
+      "December"
+    ],
+    "trough_months": [
+      "January",
+      "February"
+    ],
+    "peak_note": "bookings and parties; the quarter that carries the year.",
+    "trough_note": "the post-holiday lull; the cash test of the year.",
+    "swing_pct": 20,
+    "note": "Summer travel and December holidays lift sales; post-holiday January and February are the low point.",
+    "_meta": {
+      "confidence": "held",
+      "source": "Sales spike in summer and around the December holidays and slow in January and February; a commonly cited swing is around 19% between winter low and summer high.",
+      "as_of": "2025",
+      "method": "Peak and trough months held from 2+ seasonality sources; swing_pct held near the ~19% figure and rounded."
+    }
+  },
+  "where_pays": {
+    "_meta": {
+      "confidence": "placeholder",
+      "source": "modeled owner take-home, converted to USD, same tax-aware method; directional",
+      "as_of": "2026-06"
+    },
+    "note": "Owner take-home, like-for-like and converted to one currency. A low-rent format rescues the high-rent cities, a rent-heavy one punishes them; the two clear leaders hold.",
+    "places": [
+      {
+        "name": "Zurich",
+        "take_home_usd": 62000,
+        "net_margin_pct": 9,
+        "rent_load_pct": 11
+      },
+      {
+        "name": "Dubai",
+        "take_home_usd": 58000,
+        "net_margin_pct": 11,
+        "rent_load_pct": 9
+      },
+      {
+        "name": "London",
+        "take_home_usd": 48000,
+        "net_margin_pct": 7,
+        "rent_load_pct": 14
+      },
+      {
+        "name": "New York",
+        "take_home_usd": 46000,
+        "net_margin_pct": 6,
+        "rent_load_pct": 16
+      },
+      {
+        "name": "Sydney",
+        "take_home_usd": 44000,
+        "net_margin_pct": 8,
+        "rent_load_pct": 12
+      },
+      {
+        "name": "Singapore",
+        "take_home_usd": 43000,
+        "net_margin_pct": 8,
+        "rent_load_pct": 13
+      }
+    ]
+  },
+  "benchmark": {
+    "_meta": {
+      "confidence": "placeholder",
+      "source": "illustrative keep-per-$100 across neighbouring trades; modeled, not measured",
+      "as_of": "2026-06"
+    },
+    "all_trades_avg": 12,
+    "avg_note": "The broad all-trades average sits near $12 kept per $100, across every trade in the atlas, not just the food ones below.",
+    "note": "Cafes, bars, takeaways and catering each keep more per $100; against the whole trade universe the gap is wider still.",
+    "trades": [
+      {
+        "name": "Restaurants",
+        "slug": "restaurants",
+        "keeps_per_100": 7,
+        "self": true,
+        "why": "You are here: thinnest keep of the food trades, won back only on volume."
+      },
+      {
+        "name": "Cafe",
+        "slug": "cafe",
+        "keeps_per_100": 9,
+        "why": "Coffee carries a fat gross margin that food service never sees."
+      },
+      {
+        "name": "Bar / pub",
+        "slug": "bar",
+        "keeps_per_100": 11,
+        "why": "Drink markup and lower food waste lift the keep above the kitchen trades."
+      },
+      {
+        "name": "Takeaway",
+        "slug": "takeaway",
+        "keeps_per_100": 10,
+        "why": "No dining room to staff or seat; rent and labour both run lighter."
+      },
+      {
+        "name": "Catering",
+        "slug": "catering",
+        "keeps_per_100": 13,
+        "why": "Covers are booked and paid ahead, so waste and empty-seat risk nearly vanish."
+      }
+    ]
+  },
+  "margin_ladder": {
+    "_identity": "Mirrors margins (the ONE canonical set, derived from money_split): gross 67 / operating 22 / net 7. Never let this drift from margins.",
+    "gross_margin_pct": 67.0,
+    "operating_margin_pct": 22.0,
+    "net_margin_pct": 7.0,
+    "_meta": {
+      "confidence": "held",
+      "source": "Gross (after food and beverage cost) typically 65-70%; net runs 3-5% full-service and 6-9% limited-service, blending near 7. Anchor retained.",
+      "as_of": "2025",
+      "method": "Anchored inside the held ranges for a blended small independent, then reconciled to the money_split stack so ladder, stack and captions state one model."
+    }
+  },
+  "sale_exit": {
+    "multiple_low": 1.5,
+    "multiple_high": 3.0,
+    "basis": "SDE",
+    "buyers_note": "Single-location independents sell on SDE; a transferable manager, strong lease and stable sales lift the price and can shift the deal to an EBITDA basis.",
+    "_meta": {
+      "confidence": "held",
+      "source": "Independent single-location restaurants transact around 1.5-3x SDE (avg ~2.1-2.9x); larger multi-unit operations move to 3-5x EBITDA.",
+      "as_of": "2025",
+      "method": "Held from 2+ restaurant valuation datasets reporting SDE multiples."
+    }
+  }
+}

@@ -27,15 +27,14 @@
  * is its only drawn statement; Operator shows a different cut (capital, survival, exit).
  */
 import * as React from "react";
-import fs from "node:fs";
-import path from "node:path";
+import { spineIndustrySeed } from "@/lib/spine-seeds";
 import { Fig, Meter, Bullets, InlineDisclosure, Movement, Box, Rail, Spark, Timeline, StackBar, Full, Even, WideRail, Narrow, TERRA, TRACK, usd, type TLPhase, type TLNode } from "@/components/spine/kit";
 import { WherePaysExplorer } from "./where-pays";
 import { MarginLadder, SurvivalCurve, SeasonRibbon, RangeBracket, CountFig } from "./forms";
 import { deriveSubtypes } from "./subtypes";
 
 export const dynamic = "force-static";
-const I: any = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), "../page-data/industries/restaurants.json"), "utf8"));
+const I: any = spineIndustrySeed;
 const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
 
 /* ============================================================

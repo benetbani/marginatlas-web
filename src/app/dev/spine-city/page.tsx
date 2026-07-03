@@ -35,8 +35,7 @@
  * Width tiers per WI-4; the money + where-to-trade chapters carry the weight.
  */
 import * as React from "react";
-import fs from "node:fs";
-import path from "node:path";
+import { spineCitySeed } from "@/lib/spine-seeds";
 import { Fig, Ico, Stat, Spark, Movement, Box, Head, Rail, EaseScale, Full, WideRail, Even, TERRA, TRACK } from "@/components/spine/kit";
 import { CompareTable, type CompareEntity, type CompareRow, LockVeil, CellScaleBar } from "@/components/spine/kit-index";
 import { AtlasIcon } from "@/components/brand/icons";
@@ -47,7 +46,7 @@ import { WhereToTrade } from "./where-to-trade";
 import { FirstYearTimeline } from "./first-year";
 
 export const dynamic = "force-static";
-const C: any = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), "../page-data/cities/GB-london.json"), "utf8"));
+const C: any = spineCitySeed;
 
 const MONTHS = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
 const k = (v: number) => "$" + Math.round((v || 0) / 1000) + "K";
