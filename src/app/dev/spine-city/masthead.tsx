@@ -42,10 +42,15 @@ export function CityHero({ d }: { d: any }) {
         ))}
       </div>
 
-      {/* provenance, stated once */}
-      <div className="mt-4 flex items-center gap-1.5 text-[11px] text-[var(--c-muted)]">
-        <span className="inline-block h-2 w-2 rounded-full" style={{ background: DOT.modeled }} />
-        {d.meta?.provenance_line}
+      {/* provenance, stated once , with the dot scale spelled out in visible text
+          (the encoding must never live in a hover title alone; touch has no hover) */}
+      <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-[var(--c-muted)]">
+        <span>{d.meta?.provenance_line}</span>
+        <span className="flex items-center gap-3">
+          {(["measured", "modeled", "placeholder"] as const).map((c) => (
+            <span key={c} className="inline-flex items-center gap-1"><span className="inline-block h-1.5 w-1.5 rounded-full" style={{ background: DOT[c] }} />{c}</span>
+          ))}
+        </span>
       </div>
     </section>
   );

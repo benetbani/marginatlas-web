@@ -49,7 +49,9 @@ export function IncomeCurve({ d }: { d: any }) {
   const line = "M " + linePts.join(" L ");
   const area = `M ${padL},${base} L ` + linePts.join(" L ") + ` L ${(W - padR)},${base} Z`;
 
-  const ticks: Array<[string, number, boolean]> = [["Median", med, false], ["Top 10%", t10, false], ["Top 1%", t1, true]];
+  // the MEDIAN is the terracotta reference , the everyday customer is the page's
+  // stated base; the tail ticks stay grey (the extreme is context, not the answer).
+  const ticks: Array<[string, number, boolean]> = [["Median", med, true], ["Top 10%", t10, false], ["Top 1%", t1, false]];
 
   return (
     <Box className="citytop">
@@ -59,30 +61,32 @@ export function IncomeCurve({ d }: { d: any }) {
           <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label="Income distribution with median, top 10 percent, and top 1 percent marked" preserveAspectRatio="none">
             <path d={area} fill={TERRA} opacity={0.1} />
             <path d={line} fill="none" stroke="#c8c8c6" strokeWidth={1.6} strokeLinejoin="round" />
-            {ticks.map(([label, v, top]) => {
+            {ticks.map(([label, v, accent]) => {
               const x = X(v);
               return (
                 <g key={label}>
-                  <line x1={x} y1={Y(dens(v))} x2={x} y2={base} stroke={top ? TERRA : "#9a9a9a"} strokeWidth={top ? 1.6 : 1} strokeDasharray={top ? undefined : "2 2"} />
-                  <circle cx={x} cy={Y(dens(v))} r={top ? 3.2 : 2.4} fill={top ? TERRA : "#6f6f6d"} stroke="#fff" strokeWidth={1} />
+                  <line x1={x} y1={Y(dens(v))} x2={x} y2={base} stroke={accent ? TERRA : "#9a9a9a"} strokeWidth={accent ? 1.6 : 1} strokeDasharray={accent ? undefined : "2 2"} />
+                  <circle cx={x} cy={Y(dens(v))} r={accent ? 3.2 : 2.4} fill={accent ? TERRA : "#6f6f6d"} stroke="#fff" strokeWidth={1} />
                 </g>
               );
             })}
             <line x1={padL} y1={base} x2={W - padR} y2={base} stroke="#e0dbd6" strokeWidth={1} />
           </svg>
           <div className="mt-1 flex justify-between text-[10px] text-[var(--c-muted)]">
-            {ticks.map(([label, v, top]) => (
-              <span key={label} className="flex flex-col"><span className={top ? "font-semibold text-[var(--terra-text)]" : ""}>{label}</span><Fig className={top ? "text-[var(--terra-text)]" : "text-[var(--c-ink2)]"}>{money(v)}</Fig></span>
+            {ticks.map(([label, v, accent]) => (
+              <span key={label} className="flex flex-col"><span className={accent ? "font-semibold text-[var(--terra-text)]" : ""}>{label}</span><Fig className={accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink2)]"}>{money(v)}</Fig></span>
             ))}
           </div>
         </div>
-        {/* affordability tiers , who can afford what */}
+        {/* affordability tiers , shares explicitly labelled as SHARE OF SPEND (a
+            top tenth of people carrying 30% of spend is the point, not a miscount) */}
         <div className="min-w-0 space-y-2">
-          {tiers.map((t, i) => (
+          <div className="text-[9.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Spending tiers, share of spend</div>
+          {tiers.map((t) => (
             <div key={t.label} className="rounded-lg border border-[var(--c-border)] bg-[var(--c-soft)] px-3 py-2">
               <div className="flex items-baseline justify-between gap-2">
-                <span className={`text-[12px] font-semibold ${i === tiers.length - 1 ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{t.label}</span>
-                <Fig className="text-[11px] text-[var(--c-muted)]">{t.share}%</Fig>
+                <span className="text-[12px] font-semibold text-[var(--c-ink)]">{t.label}</span>
+                <span className="shrink-0 text-[11px] text-[var(--c-muted)]"><Fig>{t.share}%</Fig> of spend</span>
               </div>
               <div className="mt-0.5 text-[10.5px] leading-tight text-[var(--c-muted)]">{t.note}</div>
             </div>
@@ -149,9 +153,10 @@ export function MarginKept({ d }: { d: any }) {
         <CountFig value={kept} fmt={(n) => `${Math.round(n)}%`} className="text-3xl text-[var(--terra-text)]" />
         <span className="text-[13px] text-[var(--c-ink2)]">of sales reaches the owner, before tax.</span>
       </div>
-      {/* HONEST split: only the one true figure (kept vs spent). No fabricated cost blocks. */}
+      {/* HONEST split: only the one true figure (kept vs spent). No fabricated cost
+          blocks. Ink labels on both segments (white on the soft terracotta fails AA). */}
       <div className="flex h-7 overflow-hidden rounded-lg border border-[var(--c-border)]" role="img" aria-label={`Owner keeps ${kept} percent, costs take ${100 - kept} percent`}>
-        <div className="flex h-full items-center pl-2" style={{ width: `${kept}%`, background: TERRA }}><span className="fig text-[11px] font-semibold text-white">{kept}%</span></div>
+        <div className="flex h-full items-center pl-2" style={{ width: `${kept}%`, background: TERRA }}><span className="fig text-[11px] font-semibold text-[#1b1b1a]">{kept}%</span></div>
         <div className="flex h-full items-center justify-end pr-2" style={{ width: `${100 - kept}%`, background: TRACK }}><span className="fig text-[11px] font-medium text-[var(--c-ink2)]">{100 - kept}% costs</span></div>
       </div>
       <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-[var(--c-ink2)]">

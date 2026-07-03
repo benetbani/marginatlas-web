@@ -9,34 +9,36 @@
  * disclosure creating the free/Pro seam, honest baselines, rationed terracotta,
  * count-up + hover motion. Reads a London seed (page-data/cities/GB-london.json).
  *
- * As-built chart dictionary (perceptual idiom census, cap 2 each):
- *   dot-on-a-track, per-row markers on independent tracks: EaseScale (CityLenses
- *     word-anchored verdict) x1, EaseScale (CityRisks severity) x1 = 2 (at the cap).
- *   shared-axis position strip (all markers on ONE axis, a distinct sub-idiom):
- *     CommercialSpace peer rent strip x1.
- *   horizontal length, split by sub-idiom (<=2 per chapter): ranked leaderboard
- *     (TopTrades) x1; single 100%-split bar (MarginKept kept-vs-spent) x1; DIVERGENT-
- *     from-baseline keep bars (WhereToTrade, its own chapter) x1. MarginRail + the
- *     EasiestTrades list are figures-only (no bars), so they do not add a length idiom.
+ * As-built chart dictionary (perceptual idiom census, cap 2 per family, Final
+ * Ascent P2 refit):
+ *   dot-on-a-track, per-row markers on INDEPENDENT tracks: EaseScale (CityLenses
+ *     word-anchored verdict, endpoint-labelled) x1, EaseScale (CityRisks severity,
+ *     endpoint-labelled) x1 = 2 (at the cap).
+ *   shared-axis dot plot (all markers on ONE drawn scale): CommercialSpace peer
+ *     rent strip (indices printed under each dot) x1; WhereToTrade keep-index dot
+ *     plot (drawn 50..110 domain, city=100 reference line) x1 = 2 (at the cap).
+ *   horizontal length: ranked leaderboard (TopTrades take-home) x1; MarginRail
+ *     in-cell CellScaleBars on the SAME drawn 0..100%-of-sales scale as the
+ *     MarginKept split beside it x1 = 2 (at the cap). The EasiestTrades list is
+ *     figures-only (headers, no bars) BY CENSUS LAW, not oversight.
+ *   100%-split bar: DemandSize who-spends x1, MarginKept kept-vs-spent x1 = 2 (cap).
  *   floored-monthly-bars (time-on-axis, ZERO baseline): DemandCalendar x1.
- *   distribution-curve (density + ticks): IncomeCurve x1 (appears nowhere else).
- *   position-strip (categorical peers on one axis): CommercialSpace peer strip x1.
- *   timeline (position-in-time): FirstYear x1.
- *   comparison-table: CityPeers x1.
- *   map (geographic position): WhereToTrade x1.
- * REMOVED forms: the 5-lens grey bar list (-> EaseScale word-anchored scorecard),
- *   the 3-bar income ladder (-> distribution curve), the peer Spark (-> position
- *   strip), the fabricated waterfall cost split (-> honest kept-vs-spent), the
- *   Gauge in EasiestTrades (-> plain figure + list), the VisitorSplit standalone
- *   card (-> folded into DemandSize), the standalone Neighborhoods conveyor +
- *   the intervening Movement + separate map (-> merged WhereToTrade).
+ *   distribution-curve (density + ticks, median = the terracotta reference):
+ *     IncomeCurve x1.
+ *   spark (labelled endpoints): DemandSize trend x1.
+ *   timeline (position-in-time, phase lanes): FirstYear x1.
+ *   comparison-table: CityPeers x1 (+ the Pro-veiled matrix, blurred).
+ *   map (geographic position, ink pins, terra on the keep leader only): x1.
+ * REMOVED forms this pass: the CommercialSpace Meter (double-encoded the peer
+ *   strip), the separate one-line-read box (merged atop the five-reads card),
+ *   max-normalized MarginRail bars (contradicted the split's magnitude).
  * Width tiers per WI-4; the money + where-to-trade chapters carry the weight.
  */
 import * as React from "react";
 import fs from "node:fs";
 import path from "node:path";
-import { Fig, Ico, Stat, Spark, Meter, Movement, Box, Head, Rail, EaseScale, Full, WideRail, Even, TERRA, TRACK } from "@/components/spine/kit";
-import { CompareTable, type CompareEntity, type CompareRow, LockVeil } from "@/components/spine/kit-index";
+import { Fig, Ico, Stat, Spark, Movement, Box, Head, Rail, EaseScale, Full, WideRail, Even, TERRA, TRACK } from "@/components/spine/kit";
+import { CompareTable, type CompareEntity, type CompareRow, LockVeil, CellScaleBar } from "@/components/spine/kit-index";
 import { AtlasIcon } from "@/components/brand/icons";
 import { CityHero } from "./masthead";
 import { CityStyles } from "./motion";
@@ -83,86 +85,98 @@ function CityVerdict({ d }: { d: any }) {
           </div>
         </div>
       </div>
-      {/* grey strip: the districts that keep the most vs least of a pound (the re-rank,
-          in miniature). City-level, not trade-level , the trade pick moves to ch05 + close. */}
+      {/* grey strip: ONE keep spectrum in three consistent name + index pairs
+          (best keeper / city baseline / weakest keeper), city-level , the trade
+          pick moves to ch05 + close. Same value grammar in every cell. */}
       <div className="grid grid-cols-3 gap-px border-t border-[var(--terra-border)]" style={{ background: "var(--terra)" }}>
         {stripReads(d).map((s) => (
-          <div key={s.label} className="bg-[var(--c-card)] px-3 py-2.5"><Fig className="text-[15px] text-[var(--c-ink)]">{s.value}</Fig><div className="text-[9px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{s.label}</div></div>
+          <div key={s.label} className="bg-[var(--c-card)] px-3 py-2.5">
+            <div className="flex items-baseline gap-1.5"><span className="min-w-0 truncate text-[12px] font-medium text-[var(--c-ink)]">{s.name}</span><Fig className="shrink-0 text-[15px] text-[var(--c-ink)]">{s.index}</Fig></div>
+            <div className="text-[9px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{s.label}</div>
+          </div>
         ))}
       </div>
     </div>
   );
 }
 
-/* the hero's grey strip reads: the district keep spread (best keeper, city baseline,
- * loudest-revenue name), so the strip reinforces the re-rank thesis at city level. */
-function stripReads(d: any): Array<{ value: string; label: string }> {
+/* the hero's grey strip: the district keep spectrum (best keeper, the city
+ * baseline, the weakest keeper), every cell the same name + index pair. */
+function stripReads(d: any): Array<{ name: string; index: number; label: string }> {
   const list: any[] = d.where_to_trade?.list ?? [];
-  const withKeep = list.map((x) => ({ ...x, keep: Math.round(((1 + x.rev_vs_city_pct / 100) / x.rent_mult) * 100) }));
-  const best = withKeep.slice().sort((a, b) => b.keep - a.keep)[0];
-  const revLeader = list.reduce((a, b) => (b.rev_vs_city_pct > a.rev_vs_city_pct ? b : a), list[0]);
+  const withKeep = list.map((x) => ({ ...x, keep: Math.round(((1 + x.rev_vs_city_pct / 100) / x.rent_mult) * 100) })).sort((a, b) => b.keep - a.keep);
+  const best = withKeep[0];
+  const worst = withKeep[withKeep.length - 1];
   return [
-    { value: best ? `${best.name} ${best.keep}` : "", label: "keeps the most, index" },
-    { value: "100", label: "city average" },
-    { value: revLeader ? revLeader.name : "", label: "takes the most revenue" },
+    { name: best?.name ?? "", index: best?.keep ?? 0, label: "keeps the most" },
+    { name: "City average", index: 100, label: "the baseline" },
+    { name: worst?.name ?? "", index: worst?.keep ?? 0, label: "keeps the least" },
   ];
 }
 
-/* CityLenses , WI-3 brief:
- * decision: is this city worth it. Number: five word-anchored reads on one scale + a headline verdict.
- * focal: the verdict sentence + the EaseScale markers. width: WideRail. terracotta: the scale markers only.
- * No shared-magnitude bars (the five lenses are not one axis). Prose from seed.lenses. */
+/* CityLenses , WI-3 brief (P2 refit: the one-line read MERGED atop this card ,
+ * a one-liner is a caption, not a section, so it no longer gets a co-equal box):
+ * decision: is this city worth it. Number: five word-anchored reads + the headline verdict.
+ * focal: the headline verdict line. width: Full band, two internal columns.
+ * terracotta: none (the markers are ink; the hero above owns the accent).
+ * The shared track is endpoint-labelled (all five rows read left = against you,
+ * right = in your favor), so no row is an anonymous scale. Prose from seed.lenses. */
 function CityLenses({ d }: { d: any }) {
   const o = d.lenses ?? {};
   const rows: Array<[string, number, string, string?]> = (o.scales ?? []).map((s: any) => [s.label, s.pos, s.word, s.sub]);
   return (
-    <WideRail>
-      <Box className="citytop">
-        <Head icon="gut-check">The city, in five reads</Head>
-        <EaseScale rows={rows} />
-      </Box>
-      <Box className="citytop">
-        <Rail icon="verdict" kicker="The one-line read" verdict={o.headline} />
-        <p className="text-[12.5px] leading-snug text-[var(--c-ink2)]">{o.read}</p>
-      </Box>
-    </WideRail>
+    <Box className="citytop">
+      <div className="grid gap-5 md:grid-cols-[1fr_1.7fr] md:items-start">
+        <div>
+          <Rail icon="gut-check" kicker="The city, in five reads" verdict={o.headline} />
+          <p className="text-[12.5px] leading-snug text-[var(--c-ink2)]">{o.read}</p>
+        </div>
+        <EaseScale rows={rows} endLabels={["Against you", "In your favor"]} />
+      </div>
+    </Box>
   );
 }
 
 /* ================= CH2 , WHAT IT COSTS HERE ================= */
-/* CommercialSpace , WI-3 brief:
- * decision: how heavy the space cost is, against peers. Number: the rent-pressure read + London's rank.
- * focal: the rent-pressure meter. width: WideRail. terracotta: the meter fill + London's strip marker.
- * Peers shown as a POSITION strip (one axis), not a sparkline (they are unordered). Prose from seed.space. */
+/* CommercialSpace , WI-3 brief (P2 refit: the Meter RETIRED , it double-encoded
+ * the peer strip and painted a near-full terracotta fill for a support read):
+ * decision: how heavy the space cost is, against peers. Number: the rent-pressure
+ * figure + London's peer position. focal: the peer dot strip, index printed under
+ * every dot (no hover-only values). width: WideRail. terracotta: London's dot only. */
 function CommercialSpace({ d }: { d: any }) {
   const s = d.space ?? {};
-  const peers = (d.peers?.list ?? []).slice();
+  const peers = (d.peers?.list ?? []).slice().sort((a: any, b: any) => (a.rent_index || 0) - (b.rent_index || 0));
   const idxVals = peers.map((p: any) => p.rent_index || 0);
-  const lo = Math.min(...idxVals), hi = Math.max(...idxVals), span = Math.max(1, hi - lo);
+  const lo = Math.min(...idxVals) - 6, hi = Math.max(...idxVals) + 5, span = Math.max(1, hi - lo);
   const terms: Array<[string, string]> = [[`${s.deposit_months} mo`, "deposit up front"], [`${s.lease_years_typical}`, "typical lease, years"], [`${s.rent_free_months} mo`, "rent-free fit-out"]];
   return (
     <WideRail>
       <Box className="citytop">
         <Rail icon="commercial-rent" kicker="What commercial space costs" verdict={s.read} />
-        <div className="mb-1.5 flex items-baseline gap-2"><span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Rent pressure</span><Fig className="text-[20px] text-[var(--terra-text)]">{s.rent_pressure_0_100}<span className="text-[12px] text-[var(--c-muted)]">/100</span></Fig></div>
-        <Meter value={s.rent_pressure_0_100} left="Cheap" right="Expensive" />
-        {/* peers as a position strip: one axis, London marked */}
-        <div className="mt-4 border-t border-[var(--c-border)] pt-3">
-          <div className="mb-2 text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Rent index vs peer cities</div>
-          <div className="relative h-8" role="img" aria-label="London's rent index against peer cities on one axis">
+        <div className="mb-1.5 flex items-baseline gap-2"><span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Rent pressure</span><Fig className="text-[20px] text-[var(--c-ink)]">{s.rent_pressure_0_100}<span className="text-[12px] text-[var(--c-muted)]">/100</span></Fig></div>
+        {/* peers on ONE axis, every index printed (staggered above/below so no
+            label overlaps), London terracotta , the strip carries both the
+            pressure read and the peer rank on its own. */}
+        <div className="mt-2 border-t border-[var(--c-border)] pt-3">
+          <div className="mb-1 text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Rent index vs peer cities</div>
+          <div className="relative h-[76px]" role="img" aria-label={`Rent index on one axis: ${peers.map((p: any) => `${p.name} ${p.rent_index}`).join(", ")}`}>
             <span className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-[var(--c-line-strong)]" />
-            {peers.map((p: any) => {
+            {peers.map((p: any, i: number) => {
               const x = ((p.rent_index - lo) / span) * 100;
               const home = p.home;
+              const above = i % 2 === 0;
               return (
                 <span key={p.name} className="absolute -translate-x-1/2" style={{ left: `${x}%`, top: "50%" }}>
-                  <span className="block h-2.5 w-2.5 -translate-y-1/2 rounded-full border-2 border-white" style={{ background: home ? TERRA : "#c8c8c6", boxShadow: "0 0 0 1px #e3e3e3" }} title={`${p.name} ${p.rent_index}`} />
-                  <span className={`absolute left-1/2 mt-1 -translate-x-1/2 whitespace-nowrap text-[9.5px] ${home ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{p.name}</span>
+                  <span className="block h-2.5 w-2.5 -translate-y-1/2 rounded-full border-2 border-white" style={{ background: home ? TERRA : "#c8c8c6", boxShadow: "0 0 0 1px #e3e3e3" }} />
+                  <span className={`absolute left-1/2 flex -translate-x-1/2 flex-col items-center whitespace-nowrap leading-tight ${above ? "bottom-[14px]" : "top-[9px]"}`}>
+                    <span className={`text-[9.5px] ${home ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{p.name}</span>
+                    <Fig className={`text-[11px] ${home ? "text-[var(--terra-text)]" : "text-[var(--c-ink2)]"}`}>{p.rent_index}</Fig>
+                  </span>
                 </span>
               );
             })}
           </div>
-          <div className="mt-6 text-[11px] text-[var(--c-muted)]">{s.peer_read}</div>
+          <div className="mt-1 text-[11px] text-[var(--c-muted)]">{s.peer_read}</div>
         </div>
       </Box>
       <Box className="citytop">
@@ -183,7 +197,9 @@ function CommercialSpace({ d }: { d: any }) {
  * Prose from seed.demand. */
 function DemandSize({ d }: { d: any }) {
   const o = d.demand ?? {};
-  const segs: Array<[string, number, string]> = [["Residents", o.resident_pct, "#c8c8c6"], ["Visitors", o.visitor_pct, "#8f8f8f"]];
+  // magnitude-mapped greys (largest segment darkest) + ink labels (AA on both greys)
+  const segs: Array<[string, number, string]> = [["Residents", o.resident_pct, "#aeaeac"], ["Visitors", o.visitor_pct, "#dcdcda"]];
+  const years: number[] = o.trend_years ?? [];
   return (
     <WideRail>
       <Box className="citytop">
@@ -193,10 +209,13 @@ function DemandSize({ d }: { d: any }) {
             <Fig className="text-3xl text-[var(--terra-text)]">${o.consumer_spend_usd_bn}B</Fig>
             <span className="text-[13px] text-[var(--c-ink2)]">a year, about <Fig className="text-[var(--c-ink)]">${Math.round((o.spend_per_capita_usd || 0) / 1000)}K</Fig> per resident, up <Fig className="text-[var(--c-ink)]">{o.growth_pct_yoy}%</Fig> on the year.</span>
           </div>
-          {/* the multi-year trajectory: a genuine second datapoint (trend, not the seasonal swing below) */}
+          {/* the multi-year trajectory: labelled endpoints so the span is never a guess */}
           {(o.trend_index?.length ?? 0) >= 2 ? (
             <div className="flex items-center gap-2">
-              <Spark values={o.trend_index} />
+              <div>
+                <Spark values={o.trend_index} />
+                {years.length === 2 ? <div aria-hidden className="flex justify-between text-[8.5px] leading-none text-[var(--c-muted)]"><Fig>{years[0]}</Fig><Fig>{years[1]}</Fig></div> : null}
+              </div>
               <span className="text-[10.5px] leading-tight text-[var(--c-muted)]">spend<br />trend</span>
             </div>
           ) : null}
@@ -204,7 +223,7 @@ function DemandSize({ d }: { d: any }) {
         {/* resident/visitor split, folded in as an inline share bar (was a standalone card) */}
         <div className="mt-4 border-t border-[var(--c-border)] pt-3">
           <div className="mb-2 text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Who spends it</div>
-          <div className="flex h-6 overflow-hidden rounded-lg border border-[var(--c-border)]" role="img" aria-label={`Residents ${o.resident_pct}%, visitors ${o.visitor_pct}%`}>{segs.map(([n, pct, bg]) => <div key={n} className="flex h-full items-center justify-center" style={{ width: `${pct}%`, background: bg }} title={`${n} ${pct}%`}><span className="fig text-[11px] font-semibold text-white">{n} {pct}%</span></div>)}</div>
+          <div className="flex h-6 overflow-hidden rounded-lg border border-[var(--c-border)]" role="img" aria-label={`Residents ${o.resident_pct}%, visitors ${o.visitor_pct}%`}>{segs.map(([n, pct, bg]) => <div key={n} className="flex h-full items-center justify-center" style={{ width: `${pct}%`, background: bg }}><span className="fig text-[11px] font-semibold text-[var(--c-ink)]">{n} {pct}%</span></div>)}</div>
           <div className="mt-1.5 text-[11px] text-[var(--c-muted)]">Resident money is the steady base; visitor money is seasonal and patchy by area.</div>
         </div>
       </Box>
@@ -226,75 +245,97 @@ function DemandCalendar({ d }: { d: any }) {
       <div className="flex items-end justify-between gap-1.5" style={{ height: 92 }} role="img" aria-label="Monthly demand across the year, baselined from zero">
         {m.map((v, i) => (
           <div key={i} className="flex flex-1 flex-col items-center justify-end gap-1" style={{ height: "100%" }}>
-            <div className="w-full rounded-t" style={{ height: `${(v / max) * 100}%`, background: i === peak ? TERRA : "#dcd6d1" }} title={`${v}`} />
+            <div className="w-full rounded-t" style={{ height: `${(v / max) * 100}%`, background: i === peak ? TERRA : "#dcd6d1" }} />
             <span className={`text-[9px] ${i === peak ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{MONTHS[i]}</span>
           </div>
         ))}
       </div>
-      <div className="mt-1.5 text-[11px] text-[var(--c-muted)]">Indexed demand, baselined from zero: the swing is real but gentle.</div>
+      <div className="mt-1.5 text-[11px] text-[var(--c-muted)]">Indexed demand by month, drawn from zero.</div>
     </>
   );
 }
 
 /* ================= CH4 , TRADES AND RIVALS ================= */
-/* TopTrades , WI-3 brief:
- * decision: what trades keep the most. Number: the ranked take-home leaderboard.
- * focal: the leaderboard, only #1 terracotta. width: Full. terracotta: the top take-home bar only.
- * Prose from seed.trades. */
+/* TopTrades , WI-3 brief (P2 refit: title now names what it PLOTS , take-home ,
+ * and the accent argues the THESIS, not against it: terracotta sits on the keep
+ * leader's kept-% cell, never on the loudest take-home bar):
+ * decision: what each trade takes home, read against what it keeps.
+ * Number: the ranked take-home leaderboard + a kept-% column per row.
+ * focal: the keep leader's kept-%. width: Full. terracotta: that one cell. */
 function TopTrades({ d }: { d: any }) {
   const arr = (d.trades?.list ?? []).slice().sort((a: any, b: any) => b.take_home_usd - a.take_home_usd);
   const max = Math.max(1, ...arr.map((t: any) => t.take_home_usd));
   const word = (s: number) => (s > 70 ? "Crowded" : s > 50 ? "Busy" : "Room");
+  // the page's pick: the LOCAL margin leader (the accent's one carrier here)
+  const keepLead = arr.filter((t: any) => t.local !== false).slice().sort((a: any, b: any) => (b.net_margin_pct ?? 0) - (a.net_margin_pct ?? 0))[0] ?? {};
   return (
     <Box className="citytop">
-      <Rail icon="owner-keeps" kicker="What trades keep the most here" verdict={d.trades?.read} />
-      <div className="space-y-2.5">{arr.map((t: any, i: number) => {
-        const lead = i === 0;
+      <Rail icon="owner-keeps" kicker="Owner take-home by trade" verdict={d.trades?.read} />
+      {/* column headers so every cell is self-labelling */}
+      <div className="-mx-2 grid grid-cols-[minmax(0,140px)_1fr_84px_52px] items-center gap-3 px-2 pb-1 text-[9.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)] sm:grid-cols-[150px_1fr_84px_52px_64px]">
+        <span>Trade</span><span /><span className="text-right">Take-home /yr</span><span className="text-right">Keeps</span><span className="hidden text-right sm:block">Crowding</span>
+      </div>
+      <div className="space-y-2.5">{arr.map((t: any) => {
+        const isPick = t.slug === keepLead.slug;
         return (
-          <a key={t.slug} href="/dev/spine-cell" className="hov -mx-2 grid grid-cols-[150px_1fr_84px_64px] items-center gap-3 rounded-md px-2 py-1.5">
-            <span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink)]">{t.name}{t.local === false ? <span className="ml-1.5 text-[9px] uppercase tracking-wide text-[var(--c-muted)]">online</span> : null}</span>
-            <div className="h-2.5 min-w-0 overflow-hidden rounded-full" style={{ background: TRACK }}><div className="h-full rounded-full" style={{ width: `${(t.take_home_usd / max) * 100}%`, background: lead ? TERRA : "#c8c8c6" }} /></div>
-            <Fig className={`text-right text-[14px] ${lead ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{k(t.take_home_usd)}</Fig>
-            <span className="text-right text-[11px] text-[var(--c-ink2)]">{word(t.saturation_0_100)}</span>
+          <a key={t.slug} href="/dev/spine-cell" className="hov -mx-2 grid grid-cols-[minmax(0,140px)_1fr_84px_52px] items-center gap-3 rounded-md px-2 py-1.5 sm:grid-cols-[150px_1fr_84px_52px_64px]">
+            <span className={`min-w-0 truncate text-[12.5px] ${isPick ? "font-semibold" : ""} text-[var(--c-ink)]`}>{t.name}{t.local === false ? <span className="ml-1.5 text-[9px] uppercase tracking-wide text-[var(--c-muted)]">online</span> : null}</span>
+            <div className="h-2.5 min-w-0 overflow-hidden rounded-full" style={{ background: TRACK }}><div className="h-full rounded-full" style={{ width: `${(t.take_home_usd / max) * 100}%`, background: "#c8c8c6" }} /></div>
+            <Fig className="text-right text-[14px] text-[var(--c-ink)]">{k(t.take_home_usd)}</Fig>
+            <span className="flex items-center justify-end gap-1.5">
+              {isPick ? <span aria-hidden className="h-[7px] w-[7px] shrink-0 rounded-full" style={{ background: TERRA }} /> : null}
+              <Fig className={`text-right text-[13px] ${isPick ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{t.net_margin_pct}%</Fig>
+            </span>
+            <span className="hidden text-right text-[11px] text-[var(--c-ink2)] sm:block">{word(t.saturation_0_100)}</span>
           </a>
         );
       })}</div>
-      <div className="mt-2 text-[11px] text-[var(--c-muted)]">Owner take-home a year, with how crowded the trade is. Tap a trade for the full city economics.</div>
+      <div className="mt-2 text-[11px] text-[var(--c-muted)]">Ranked by owner take-home a year; the kept share of sales is the read that matters. Tap a trade for the full city economics.</div>
     </Box>
   );
 }
 
-/* MarginRail , the per-trade net-margin list that sits beside MarginKept (WideRail right).
- * Support only: no terracotta except the local leader (which IS the MarginKept subject). */
+/* MarginRail , the per-trade net-margin list beside MarginKept (WideRail right).
+ * P2 refit: the old bars were max-normalized (the 14% leader ran full width) right
+ * beside MarginKept, where the SAME 14% renders as a slim slice of a 100% bar ,
+ * two contradictory magnitudes for one number. Now every row is a CellScaleBar on
+ * the SAME drawn 0..100%-of-sales domain as the split (baseline tick at 0, axis
+ * labelled below), so adjacent encodings of one quantity share one scale.
+ * Terracotta only on the local leader (the MarginKept subject, the parent thesis). */
 function MarginRail({ d }: { d: any }) {
   const arr = (d.trades?.list ?? []).slice();
   const local = arr.filter((x: any) => x.local !== false);
   const lead = local.slice().sort((a: any, b: any) => (b.net_margin_pct ?? 0) - (a.net_margin_pct ?? 0))[0] ?? {};
   const byMargin = arr.slice().sort((a: any, b: any) => (b.net_margin_pct ?? 0) - (a.net_margin_pct ?? 0));
-  const maxMargin = Math.max(1, ...byMargin.map((t: any) => t.net_margin_pct ?? 0));
   return (
     <Box className="citytop md:flex-[2]">
       <Rail kicker="Net margin by trade" verdict="A service trade with no stock keeps the most; the food trades keep the least." />
-      {/* inline length column (was a bare number list): neutral bars, terra only on the local leader */}
       <div className="divide-y divide-[var(--c-border)]">{byMargin.map((t: any) => {
         const isLead = t.slug === lead.slug;
         const pct = Math.max(0, Number(t.net_margin_pct ?? 0));
         return (
-          <div key={t.slug} className="hov -mx-2 grid grid-cols-[1fr_64px_38px] items-center gap-3 rounded-md px-2 py-1.5">
-            <span className={`min-w-0 truncate text-[12px] ${isLead ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`}>{t.name}</span>
-            <div className="h-2 overflow-hidden rounded-full" style={{ background: TRACK }}><div className="h-full rounded-full" style={{ width: `${(pct / maxMargin) * 100}%`, background: isLead ? TERRA : "#c8c8c6" }} role="img" aria-label={`${t.name}: ${pct} percent net margin`} /></div>
+          <div key={t.slug} className="hov -mx-2 grid grid-cols-[minmax(0,110px)_1fr_38px] items-center gap-3 rounded-md px-2 py-1.5">
+            <span className={`min-w-0 truncate text-[12px] ${isLead ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`}>{t.name}{t.local === false ? <span className="ml-1 text-[8.5px] uppercase tracking-wide text-[var(--c-muted)]">online</span> : null}</span>
+            <span className="-mt-1 block" role="img" aria-label={`${t.name}: ${pct} percent of sales kept`}><CellScaleBar value={pct} domain={[0, 100]} accent={isLead} /></span>
             <Fig className={`text-right text-[13px] ${isLead ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{pct}%</Fig>
           </div>
         );
       })}</div>
+      {/* the drawn shared axis , same 0..100 "of sales" scale as the split beside it */}
+      <div aria-hidden className="-mx-2 mt-1 grid grid-cols-[minmax(0,110px)_1fr_38px] items-center gap-3 px-2">
+        <span /><div className="flex justify-between text-[9px] uppercase tracking-wide text-[var(--c-muted)]"><span>0%</span><span>100% of sales</span></div><span />
+      </div>
     </Box>
   );
 }
 
-/* EasiestTrades , WI-3 brief:
- * decision: the lowest bar to entry, and its cost. Number: the easiest trade + cost to open.
- * focal: the easiest trade's cost figure. width: WideRail. terracotta: the lead cost figure only.
- * No Gauge (a scalar does not want a dial). Prose from seed.trades.easiest_read. */
+/* EasiestTrades , WI-3 brief (P2 refit: the claim rewritten in the seed , the old
+ * line contradicted the page's own pick , and the anchor now carries its own ease
+ * score, the very column that defines the ranking. Kept figures-only DELIBERATELY:
+ * the length family is at its 2-per-page cap (TopTrades + MarginRail), so the
+ * companion list is an editorial columns-and-headers read, no bars):
+ * decision: the lowest bar to entry, and its cost. focal: the lead cost figure.
+ * width: WideRail. terracotta: the lead cost figure only. */
 function EasiestTrades({ d }: { d: any }) {
   const arr = (d.trades?.list ?? []).slice().filter((x: any) => x.local !== false).sort((a: any, b: any) => b.break_in_0_100 - a.break_in_0_100);
   const lead = arr[0]; const rest = arr.slice(1, 6);
@@ -305,16 +346,19 @@ function EasiestTrades({ d }: { d: any }) {
         <div className="flex flex-wrap items-baseline gap-x-3">
           <span className="text-[15px] font-semibold text-[var(--c-ink)]">{lead?.name}</span>
           <Fig className="text-[26px] text-[var(--terra-text)]">{k(lead?.cost_to_open_usd ?? 0)}</Fig>
-          <span className="text-[12px] text-[var(--c-ink2)]">to open, the gentlest way in.</span>
+          <span className="text-[12px] text-[var(--c-ink2)]">to open, at <Fig className="text-[var(--c-ink)]">{lead?.break_in_0_100}</Fig><span className="text-[10px] text-[var(--c-muted)]">/100</span> ease, the gentlest way in.</span>
         </div>
       </Box>
       <Box className="citytop">
         <Head>Next-easiest, and the cost to open</Head>
-        {/* figures only (no bars) so the money chapter keeps the leaderboard as its one ranked bar-list */}
+        {/* figures only (no bars, census law); headers make every column self-labelling */}
+        <div className="-mx-2 grid grid-cols-[1fr_64px_64px] items-baseline gap-4 px-2 pb-1 text-[9.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
+          <span>Trade</span><span className="text-right">Ease /100</span><span className="text-right">To open</span>
+        </div>
         <div className="divide-y divide-[var(--c-border)]">{rest.map((t: any) => (
-          <div key={t.slug} className="hov -mx-2 grid grid-cols-[1fr_auto_auto] items-baseline gap-4 rounded-md px-2 py-2">
+          <div key={t.slug} className="hov -mx-2 grid grid-cols-[1fr_64px_64px] items-baseline gap-4 rounded-md px-2 py-2">
             <span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink)]">{t.name}</span>
-            <Fig className="text-right text-[12px] text-[var(--c-ink2)]">{t.break_in_0_100}<span className="text-[9px] text-[var(--c-muted)]">/100 ease</span></Fig>
+            <Fig className="text-right text-[12px] text-[var(--c-ink2)]">{t.break_in_0_100}</Fig>
             <Fig className="text-right text-[13px] text-[var(--c-ink)]">{k(t.cost_to_open_usd)}</Fig>
           </div>
         ))}</div>
@@ -344,10 +388,11 @@ function FirstYear({ d }: { d: any }) {
   );
 }
 
-/* CityRisks , WI-3 brief:
+/* CityRisks , WI-3 brief (P2 refit: the shared track is endpoint-labelled ,
+ * Calm/Severe , replacing the caption that carried the poles as an aside; the
+ * counterweights render OPEN by default so the right rail carries its weight):
  * decision: what to plan around. Number: the four risk severities on one scale.
- * focal: the leading risk. width: WideRail. terracotta: the severity markers (EaseScale) only.
- * Counterweights behind a disclosure. Prose from seed.risks. */
+ * focal: the leading risk. width: WideRail. terracotta: the honest-take name only. */
 function CityRisks({ d }: { d: any }) {
   const r = d.risks ?? {};
   const rows: Array<[string, number, string, string?]> = (r.list ?? []).map((x: any) => [x.label, Number(x.severity_0_100 ?? 0), x.word, x.who]);
@@ -356,17 +401,16 @@ function CityRisks({ d }: { d: any }) {
     <WideRail>
       <Box className="citytop">
         <Head icon="watch">What to watch here</Head>
-        <EaseScale rows={rows} />
-        <div className="mt-3 text-[11px] text-[var(--c-muted)]">Each marker is the severity of that risk in this market, left calm, right severe.</div>
+        <EaseScale rows={rows} endLabels={["Calm", "Severe"]} />
       </Box>
       <Box className="citytop">
         <Rail icon="honest-take" tone="terra" kicker="The honest read" verdict={<><span className="text-[var(--terra-text)]">{top.label}</span> is the one to plan around; the rest are manageable with the right lease and reliefs.</>} />
         <p className="mb-2 text-[12px] leading-snug text-[var(--c-ink2)]">{r.read}</p>
-        <details name="risks" className="group">
-          <summary className="flex cursor-pointer list-none items-center gap-1.5 text-[12px] font-medium text-[var(--terra-text)]"><span className="text-base text-[var(--c-muted)] transition group-open:rotate-45 group-open:text-[var(--terra-text)]">+</span> See the counterweight for each</summary>
+        <details name="risks" open className="group">
+          <summary className="flex cursor-pointer list-none items-center gap-1.5 text-[12px] font-medium text-[var(--terra-text)]"><span className="text-base text-[var(--c-muted)] transition group-open:rotate-45 group-open:text-[var(--terra-text)]">+</span> The counterweight for each</summary>
           <div className="mt-2 space-y-2.5 border-t border-[var(--c-border)] pt-2.5">{(r.list ?? []).map((x: any) => (
             <div key={x.label} className="flex gap-2.5">
-              <span className="mt-0.5 text-[var(--terra-text)]">&#9656;</span>
+              <span className="mt-0.5 text-[var(--c-muted)]">&#9656;</span>
               <span className="text-[12px] leading-snug text-[var(--c-ink2)]"><b className="text-[var(--c-ink)]">{x.label}.</b> {x.counterweight}</span>
             </div>
           ))}</div>
@@ -384,19 +428,25 @@ function CityRisks({ d }: { d: any }) {
 function CityCharacter({ d }: { d: any }) {
   const c = d.character ?? {};
   const rows: any[] = c.texture ?? [];
-  const leaning = (p: number, l: string, r: string) => (p >= 0.5 ? r : l);
   return (
     <Box className="citytop">
       <Rail icon="honest-take" kicker="The texture of doing business here" verdict={c.read} />
-      <div className="divide-y divide-[var(--c-border)]">{rows.map((r: any, i: number) => (
-        <div key={i} className="py-2.5">
-          <div className="flex items-baseline gap-2">
-            <span className="text-[9.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{r.left_label} / {r.right_label}</span>
-            <span className="text-[12.5px] font-semibold text-[var(--c-ink)]">{leaning(r.position_0_1 || 0, r.left_label, r.right_label)}</span>
+      {/* the winning pole is emphasized INSIDE the pair (bold ink), never restated
+          after it , each row says its answer once. */}
+      <div className="divide-y divide-[var(--c-border)]">{rows.map((r: any, i: number) => {
+        const rightWins = (r.position_0_1 || 0) >= 0.5;
+        const pole = (label: string, wins: boolean) => (
+          <span className={wins ? "font-bold text-[var(--c-ink)]" : "text-[var(--c-muted)]"}>{label}</span>
+        );
+        return (
+          <div key={i} className="py-2.5">
+            <div className="text-[10.5px] font-semibold uppercase tracking-wide">
+              {pole(r.left_label, !rightWins)}<span className="mx-1 text-[var(--c-muted)]">/</span>{pole(r.right_label, rightWins)}
+            </div>
+            <div className="mt-0.5 text-[11.5px] leading-tight text-[var(--c-ink2)]">{r.takeaway}</div>
           </div>
-          <div className="mt-0.5 text-[11.5px] leading-tight text-[var(--c-ink2)]">{r.takeaway}</div>
-        </div>
-      ))}</div>
+        );
+      })}</div>
     </Box>
   );
 }
@@ -407,7 +457,7 @@ function Locals({ d }: { d: any }) {
     <Box className="citytop">
       <Head icon="locals-know">What locals know</Head>
       <div className="space-y-3">{items.map((it: any, i: number) => (
-        <div key={i} className="flex gap-2.5"><span className="mt-0.5 text-[var(--terra-text)]">&#9656;</span><span className="text-[12.5px] leading-snug text-[var(--c-ink2)]"><b className="text-[var(--c-ink)]">{it.title}</b> {it.detail}</span></div>))}
+        <div key={i} className="flex gap-2.5"><span className="mt-0.5 text-[var(--c-muted)]">&#9656;</span><span className="text-[12.5px] leading-snug text-[var(--c-ink2)]"><b className="text-[var(--c-ink)]">{it.title}</b> {it.detail}</span></div>))}
       </div>
     </Box>
   );
@@ -445,6 +495,9 @@ function Close({ d }: { d: any }) {
   // best district by keep index (mirrors WhereToTrade)
   const list: any[] = d.where_to_trade?.list ?? [];
   const bestDistrict = list.map((x) => ({ ...x, keep: Math.round(((1 + x.rev_vs_city_pct / 100) / x.rent_mult) * 100) })).sort((a, b) => b.keep - a.keep)[0];
+  // the pick's take-home (NOT another 14% , the kept-% already owns the verdict and
+  // the split; the close anchors the same decision with the dollars it implies)
+  const pick = (d.trades?.list ?? []).find((t: any) => t.slug === v.winner_slug) ?? {};
   return (
     <Box className="citytop">
       <Head icon="bookmark">The pick, and where to take it</Head>
@@ -455,7 +508,7 @@ function Close({ d }: { d: any }) {
           <div className="mt-1 text-[16px] font-semibold text-[var(--c-ink)]">{v.winner_trade?.replace(" keeps the most", "")}, in {bestDistrict?.name}</div>
           <p className="mt-1.5 text-[12.5px] leading-snug text-[var(--c-ink2)]">The margin leader in the district that keeps the most of every pound. Start there, then check the trade's live economics.</p>
           <div className="mt-3 flex flex-wrap gap-4 border-t border-[var(--c-border)] pt-3">
-            <div><Fig className="text-[18px] text-[var(--terra-text)]">{v.keep_pct}%</Fig><div className="text-[10px] uppercase tracking-wide text-[var(--c-muted)]">owner keeps</div></div>
+            <div><Fig className="text-[18px] text-[var(--terra-text)]">{k(pick.take_home_usd ?? 0)}</Fig><div className="text-[10px] uppercase tracking-wide text-[var(--c-muted)]">owner take-home /yr</div></div>
             <div><Fig className="text-[18px] text-[var(--c-ink)]">{bestDistrict?.keep}</Fig><div className="text-[10px] uppercase tracking-wide text-[var(--c-muted)]">keep index</div></div>
           </div>
           <a href="/dev/spine-cell" className="mt-3 inline-flex text-[13px] font-semibold text-[var(--terra-text)] hover:underline">See the trade's live economics &#8594;</a>
@@ -464,7 +517,7 @@ function Close({ d }: { d: any }) {
         <div className="flex flex-col justify-between gap-3">
           <div>
             <div className="text-[13.5px] text-[var(--c-ink)]">Set {d.meta?.city} beside up to three cities, side by side.</div>
-            <a className="mt-2 inline-flex cursor-pointer rounded-full bg-[var(--c-ink)] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[var(--terra-text)]">Open Compare</a>
+            <a href="/dev/compare" className="mt-2 inline-flex cursor-pointer rounded-full bg-[var(--c-ink)] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[var(--terra-text)]">Open Compare</a>
           </div>
           {/* the veil sizes to its blurred children, and its centered overlay card
               (icon + headline + note + CTA) runs ~190px tall , so the teaser wrapper

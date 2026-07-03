@@ -7,12 +7,18 @@
  * owner keeps of each pound), not by raw revenue , so the loud names slide and a
  * few quieter districts climb. That re-rank is the whole editorial point.
  *
- * WI-3 brief:
+ * WI-3 brief (P2 refit , the audit's re-visual for the signature section):
  * decision: where to trade, judged by what you keep, not what comes in.
- * number: each district's keep index vs the city baseline of 100 (a divergent bar).
- * focal: the map + the #1-keep district; terracotta on the leading keep bar only.
- * width: Full. Encoding: map = position (orientation); list = length (magnitude).
- * disclosure: the district x trade owner-keep matrix behind a Pro veil.
+ * number: each district's keep index against a DRAWN city = 100 reference line.
+ * form: a dot plot on one shared, drawn 50..110 domain , the old 0-based bars
+ * compressed the 60..87 spread into the last third of the track and fused the
+ * 100 baseline to the rounded track end. Dots spread the honest range; the
+ * reference line at 100 is drawn on every row and labelled once on the axis.
+ * focal: the map + the #1-keep district; terracotta on the leader's dot only.
+ * map: ink pins, terra ONLY on the keep leader (8 fixed terra dots said nothing);
+ * uniform pin size; label declutter priority follows keep rank (points passed in
+ * keep order), so the packed West End trio yields its labels first.
+ * width: Full. disclosure: the district x trade owner-keep matrix behind a Pro veil.
  */
 import * as React from "react";
 import { Box, Rail, Fig, InlineDisclosure, TERRA } from "@/components/spine/kit";
@@ -36,19 +42,24 @@ export function WhereToTrade({ d, trades }: { d: any; trades: any[] }) {
   const revLeader = list.reduce((a, b) => (b.rev_vs_city_pct > a.rev_vs_city_pct ? b : a), list[0]);
   const [hover, setHover] = React.useState<string | null>(null);
 
-  // bar geometry: length encodes the keep index on a 0..100 track, so the leader is
-  // the LONGEST bar (not the shortest). The city baseline (100) sits at the right edge
-  // as a reference tick, and every inner district visibly falls short of it , the
-  // honest read that all these premium districts keep below the city average.
-  const AXIS = 100;
+  // dot-plot geometry: one shared drawn domain. 50 is the drawn floor (labelled on
+  // the axis, so the non-zero start is visible, never hidden), 100 is the city
+  // reference line, 110 gives the line air. The 60..87 spread occupies the honest
+  // middle of the track instead of huddling at the end of a 0-based bar.
+  const DOMAIN: [number, number] = [50, 110];
+  const posOf = (v: number) => ((v - DOMAIN[0]) / (DOMAIN[1] - DOMAIN[0])) * 100;
+  const refPos = posOf(100);
 
-  // map points: FIXED size (orientation, not magnitude , magnitude lives in the list bars),
-  // the keep index shown in the hover popup so the map still carries the decision figure.
-  const points: SpinePoint[] = list
+  // map points in KEEP order (declutter keeps labels by array priority, so the
+  // best keepers keep their names and the packed West End trio yields first).
+  // Uniform pin size (no unlabelled size encoding); ink pins, terra = the leader;
+  // the keep index rides the hover/focus popup.
+  const points: SpinePoint[] = rows
     .filter((x) => Number.isFinite(x.lat) && Number.isFinite(x.lng))
-    .map((x) => ({
+    .map((x, i) => ({
       name: x.name, slug: x.slug, lat: x.lat, lng: x.lng,
-      signal: 50, signalLabel: `keeps ${keepIndex(x)} vs 100`, sub: x.character,
+      signal: 50, signalLabel: `keeps ${x.keep} vs 100`, sub: x.character,
+      tone: i === 0 ? "terra" : "ink",
       href: "/dev/spine-hood",
     }));
 
@@ -60,15 +71,14 @@ export function WhereToTrade({ d, trades }: { d: any; trades: any[] }) {
         <div className="min-w-0">
           <SpineMap points={points} ariaLabel="Map of London districts" fitPadding={56} />
         </div>
-        {/* the ranked list , by keep index, divergent from the 100 baseline */}
+        {/* the ranked list , a keep-index dot plot against the drawn city = 100 line */}
         <div className="min-w-0">
           <div className="mb-2 flex items-baseline justify-between gap-2">
             <span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Ranked by what you keep</span>
-            <span className="text-[10.5px] text-[var(--c-muted)]">index, city = 100</span>
+            <span className="text-[10.5px] text-[var(--c-muted)]">keep index</span>
           </div>
           <div className="space-y-1">
             {rows.map((r, i) => {
-              const mag = (r.keep / AXIS) * 100; // length = keep, leader longest
               const on = hover === r.slug;
               const isLead = i === 0;
               return (
@@ -84,10 +94,12 @@ export function WhereToTrade({ d, trades }: { d: any; trades: any[] }) {
                     <span className={`min-w-0 truncate text-[12.5px] ${isLead ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink)]"}`}>{r.name}</span>
                     <Fig className={`shrink-0 text-[12.5px] ${isLead ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{r.keep}</Fig>
                   </div>
-                  {/* length encodes the keep index; the city baseline (100) is the right-edge tick */}
-                  <div className="relative mt-1 h-2 overflow-hidden rounded-full" role="img" aria-label={`${r.name}: keep index ${r.keep} of a city baseline of 100`} style={{ background: "#efece9" }}>
-                    <span className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${mag}%`, background: isLead ? TERRA : "#c8c8c6" }} />
-                    <span className="absolute inset-y-0 right-0 w-px bg-[var(--c-line-strong)]" title="city average = 100" />
+                  {/* dot at the keep index on the shared 50..110 track; the city
+                      average is the drawn line every district visibly falls short of */}
+                  <div className="relative mt-1.5 h-2" role="img" aria-label={`${r.name}: keep index ${r.keep}, against the city average of 100`}>
+                    <span className="absolute inset-x-0 top-1/2 h-[3px] -translate-y-1/2 rounded-full" style={{ background: "#efece9" }} />
+                    <span className="absolute -bottom-[2px] -top-[2px] w-px bg-[var(--c-line-strong)]" style={{ left: `${refPos}%` }} />
+                    <span className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${posOf(r.keep)}%`, background: isLead ? TERRA : "#1b1b1a", boxShadow: "0 0 0 1px #e3e3e3" }} />
                   </div>
                   <div className="mt-0.5 text-[10.5px] text-[var(--c-muted)]">
                     <span className="truncate">{r.character}</span>
@@ -95,6 +107,11 @@ export function WhereToTrade({ d, trades }: { d: any; trades: any[] }) {
                 </a>
               );
             })}
+          </div>
+          {/* the shared axis, drawn once: the labelled floor + the city line */}
+          <div aria-hidden className="relative mt-1 h-4 text-[9px] uppercase tracking-wide text-[var(--c-muted)]">
+            <Fig className="absolute left-0">{DOMAIN[0]}</Fig>
+            <span className="absolute -translate-x-1/2 whitespace-nowrap" style={{ left: `${refPos}%` }}>city = 100</span>
           </div>
           {/* revenue-vs-city deltas moved off every row into one quiet disclosure:
               the list reads on keep alone, the revenue counterpoint is one tap away. */}
