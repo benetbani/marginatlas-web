@@ -17,6 +17,9 @@ const DOT: Record<string, string> = { measured: "#8c8c8a", modeled: "#bdbdbd", p
 
 export function CityHero({ d }: { d: any }) {
   const cards: any[] = d.headline?.scorecard ?? [];
+  // The scorecard sizes to the number of REAL tiles (some omit on promotion), so it
+  // never leaves an empty band. Full literal class strings keep Tailwind from purging.
+  const colClass = ({ 1: "sm:grid-cols-2", 2: "sm:grid-cols-2", 3: "sm:grid-cols-3", 4: "sm:grid-cols-4", 5: "sm:grid-cols-5" } as Record<number, string>)[Math.min(cards.length, 5)] ?? "sm:grid-cols-5";
   return (
     <section className="overflow-hidden py-6 md:py-8">
       <a className="mb-4 inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[var(--c-border)] bg-white/70 px-3 py-1 text-xs font-semibold text-[var(--c-ink2)] transition hover:border-[var(--terra-border)] hover:text-[var(--terra-text)]">&#8592; All cities</a>
@@ -29,7 +32,7 @@ export function CityHero({ d }: { d: any }) {
       </div>
 
       {/* decision scorecard , five business signals, small support figures */}
-      <div className="mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-[var(--c-border)] sm:grid-cols-5" style={{ background: "var(--c-border)" }}>
+      <div className={`mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-[var(--c-border)] ${colClass}`} style={{ background: "var(--c-border)" }}>
         {cards.map((c) => (
           // 5 tiles in the 2-col mobile grid leave a dead 6th cell: the last odd tile
           // spans both columns below sm (and returns to one column at sm:grid-cols-5).

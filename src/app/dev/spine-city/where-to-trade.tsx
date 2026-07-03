@@ -37,10 +37,12 @@ function keepIndex(d: District): number {
 export function WhereToTrade({ d, trades }: { d: any; trades: any[] }) {
   const w = d.where_to_trade ?? {};
   const list: District[] = w.list ?? [];
+  const [hover, setHover] = React.useState<string | null>(null);
+  // Null-guard (real-data promotion): omit the whole section when no district set.
+  if (list.length === 0) return null;
   const rows: Row[] = list.map((x) => ({ ...x, keep: keepIndex(x) })).sort((a, b) => b.keep - a.keep);
   const lead = rows[0];
   const revLeader = list.reduce((a, b) => (b.rev_vs_city_pct > a.rev_vs_city_pct ? b : a), list[0]);
-  const [hover, setHover] = React.useState<string | null>(null);
 
   // dot-plot geometry: one shared drawn domain. 50 is the drawn floor (labelled on
   // the axis, so the non-zero start is visible, never hidden), 100 is the city
@@ -63,14 +65,20 @@ export function WhereToTrade({ d, trades }: { d: any; trades: any[] }) {
       href: "/dev/spine-hood",
     }));
 
+  // The map self-omits when no district carries real coordinates (real-data promotion
+  // holds no lat/lng); the ranked keep-index list then takes the full width alone.
+  const hasMap = points.length > 0;
+
   return (
     <Box className="citytop">
       <Rail icon="best-areas" tone="terra" kicker="Where to trade" verdict={w.read} />
-      <div className="grid gap-4 lg:grid-cols-[1.35fr_1fr] lg:items-stretch">
-        {/* the map , the highest-craft object, given real height */}
-        <div className="min-w-0">
-          <SpineMap points={points} ariaLabel="Map of London districts" fitPadding={56} />
-        </div>
+      <div className={hasMap ? "grid gap-4 lg:grid-cols-[1.35fr_1fr] lg:items-stretch" : "grid gap-4"}>
+        {/* the map , the highest-craft object, given real height. Omitted with no coords. */}
+        {hasMap ? (
+          <div className="min-w-0">
+            <SpineMap points={points} ariaLabel="Map of London districts" fitPadding={56} />
+          </div>
+        ) : null}
         {/* the ranked list , a keep-index dot plot against the drawn city = 100 line */}
         <div className="min-w-0">
           <div className="mb-2 flex items-baseline justify-between gap-2">
@@ -137,12 +145,15 @@ export function WhereToTrade({ d, trades }: { d: any; trades: any[] }) {
 
       {/* Pro seam , the free tier gets the map + the keep re-rank; Pro unlocks the
           full district x trade owner-keep matrix. Real derived values, value-visible
-          under a calm veil, kept in the DOM for crawlers. */}
-      <div className="mt-4 border-t border-[var(--c-border)] pt-4">
-        <LockVeil headline="Every district, every trade" note="See what the owner keeps for each trade in each district, ranked, with the rent load on every cell." cta="Unlock with Pro">
-          <ProMatrix rows={rows} trades={trades} />
-        </LockVeil>
-      </div>
+          under a calm veil, kept in the DOM for crawlers. Omitted when no trade carries
+          a real margin to fill the matrix. */}
+      {trades.some((t) => t?.net_margin_pct != null) ? (
+        <div className="mt-4 border-t border-[var(--c-border)] pt-4">
+          <LockVeil headline="Every district, every trade" note="See what the owner keeps for each trade in each district, ranked, with the rent load on every cell." cta="Unlock with Pro">
+            <ProMatrix rows={rows} trades={trades.filter((t) => t?.net_margin_pct != null)} />
+          </LockVeil>
+        </div>
+      ) : null}
     </Box>
   );
 }

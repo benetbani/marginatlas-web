@@ -68,6 +68,10 @@ import {
   cityFmtUsdFull,
   type CityView,
 } from "@/lib/cities/city_view";
+import { isSpineReformEnabled } from "@/lib/feature_flags";
+import { SpineShell } from "@/components/spine/shell";
+import { SpineCityBody } from "@/app/dev/spine-city/city-view";
+import { buildSpineCitySeed } from "@/lib/spine/adapt_city";
 
 export const revalidate = 43200; // 12 hours
 
@@ -190,6 +194,21 @@ export default async function CityPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+
+  // Spine reform (flag-gated, default OFF). On promotion the body renders REAL, reconciled
+  // data from buildSpineCitySeed (the same accessors this route runs below, plus the real
+  // neighborhood engine), never the illustrative seed. When the adapter finds no city it
+  // returns undefined; we notFound() to match the non-spine page. Flag OFF path untouched.
+  if (isSpineReformEnabled()) {
+    const spineData = await buildSpineCitySeed(slug);
+    if (!spineData) notFound();
+    return (
+      <SpineShell bg="https://images.unsplash.com/photo-1529655683826-aba9b3e77383?auto=format&fit=crop&w=1920&q=60" bgPosition="center 30%">
+        <SpineCityBody data={spineData} />
+      </SpineShell>
+    );
+  }
+
   const city = CITIES_BY_SLUG.get(slug);
   if (!city) notFound();
 

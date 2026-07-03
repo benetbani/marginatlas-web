@@ -19,9 +19,14 @@ import { CountFig, useReducedMotion, useInView } from "./motion";
 
 const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
 
-/* ---- income distribution curve ---- */
+/* ---- income distribution curve ----
+ * Null-guards (real-data promotion): the whole card omits when no real median is held,
+ * so a city without the sanctioned London income spread renders nothing rather than a
+ * curve drawn from zeros. The spend-share tiers panel is authored, so it omits when
+ * d.income.tiers is absent, leaving the real curve from the London spread alone. */
 export function IncomeCurve({ d }: { d: any }) {
   const o = d.income ?? {};
+  if (o.median_income_usd == null) return null;
   const med = o.median_income_usd ?? 0, t10 = o.top10_income_usd ?? 0, t1 = o.top1_income_usd ?? 0;
   const tiers: any[] = o.tiers ?? [];
   const reduced = useReducedMotion();
@@ -53,10 +58,12 @@ export function IncomeCurve({ d }: { d: any }) {
   // stated base; the tail ticks stay grey (the extreme is context, not the answer).
   const ticks: Array<[string, number, boolean]> = [["Median", med, true], ["Top 10%", t10, false], ["Top 1%", t1, false]];
 
+  const hasTiers = tiers.length > 0;
+
   return (
     <Box className="citytop">
       <Head icon="spending-power">What customers earn here</Head>
-      <div ref={ref} className="grid gap-4 md:grid-cols-[1fr_260px] md:items-center">
+      <div ref={ref} className={hasTiers ? "grid gap-4 md:grid-cols-[1fr_260px] md:items-center" : "grid gap-4"}>
         <div className="min-w-0">
           <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label="Income distribution with median, top 10 percent, and top 1 percent marked" preserveAspectRatio="none">
             <path d={area} fill={TERRA} opacity={0.1} />
@@ -79,7 +86,9 @@ export function IncomeCurve({ d }: { d: any }) {
           </div>
         </div>
         {/* affordability tiers , shares explicitly labelled as SHARE OF SPEND (a
-            top tenth of people carrying 30% of spend is the point, not a miscount) */}
+            top tenth of people carrying 30% of spend is the point, not a miscount).
+            Omitted on real-data promotion (authored spend shares); the curve stands alone. */}
+        {hasTiers ? (
         <div className="min-w-0 space-y-2">
           <div className="text-[9.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Spending tiers, share of spend</div>
           {tiers.map((t) => (
@@ -92,15 +101,20 @@ export function IncomeCurve({ d }: { d: any }) {
             </div>
           ))}
         </div>
+        ) : null}
       </div>
-      <div className="mt-3 text-[12px] leading-snug text-[var(--c-ink2)]">{o.read}</div>
+      {o.read ? <div className="mt-3 text-[12px] leading-snug text-[var(--c-ink2)]">{o.read}</div> : null}
     </Box>
   );
 }
 
-/* ---- owner runway ---- */
+/* ---- owner runway ----
+ * Null-guards (real-data promotion): the whole card omits when no founder cost-of-living
+ * figures are held (the seed's rent/groceries/transport are placeholders), so it renders
+ * nothing rather than a $0 runway. */
 export function OwnerRunway({ d }: { d: any }) {
   const o = d.owner_runway ?? {};
+  if (o.rent_1bed_usd_mo == null && o.groceries_usd_mo == null && o.transport_usd_mo == null) return null;
   // IDENTITY (must close): runway = monthly burn x months to break-even.
   // burn = rent + groceries + transport = $3,060; months = round(38wk / 52 x 12) = 9;
   // runway = $3,060 x 9 = $27,540 -> $28K focal, "$3.1K a month for 9 months" subline.
@@ -143,7 +157,9 @@ export function MarginKept({ d }: { d: any }) {
   const t = d.trades ?? {};
   const arr: any[] = t.list ?? [];
   // the local margin leader (excludes location-agnostic online retail): highest net margin among local trades.
-  const local = arr.filter((x) => x.local !== false);
+  const local = arr.filter((x) => x.local !== false && x.net_margin_pct != null);
+  // Null-guard (real-data promotion): omit when no local trade carries a real margin.
+  if (local.length === 0) return null;
   const lead = local.slice().sort((a, b) => (b.net_margin_pct ?? 0) - (a.net_margin_pct ?? 0))[0] ?? {};
   const kept = Math.max(0, Math.min(100, Number(lead.net_margin_pct ?? 0)));
   return (

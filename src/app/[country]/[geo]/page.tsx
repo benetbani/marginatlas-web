@@ -41,7 +41,7 @@ import { GeoViabilityLede } from "@/components/geo/GeoViabilityLede";
 import industryMarginsJson from "@/lib/finance/industry_margins.json";
 import { isSpineReformEnabled } from "@/lib/feature_flags";
 import { SpineShell } from "@/components/spine/shell";
-import SpineCity from "@/app/dev/spine-city/page";
+import { SpineCityBody } from "@/app/dev/spine-city/city-view";
 
 // Curated, cross-country-stable margin shape per activity (the same table the
 // industry page uses). Read at module scope so the lookup is a plain object
@@ -110,7 +110,7 @@ export default async function RegionLandingPage({
   if (isSpineReformEnabled()) {
     return (
       <SpineShell bg="https://images.unsplash.com/photo-1529655683826-aba9b3e77383?auto=format&fit=crop&w=1920&q=60" bgPosition="center 30%">
-        <SpineCity />
+        <SpineCityBody />
       </SpineShell>
     );
   }
