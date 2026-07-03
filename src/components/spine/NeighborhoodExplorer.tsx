@@ -1,26 +1,32 @@
 /**
  * NeighborhoodExplorer , the neighborhood-hub island (Leg 2 of the spine program),
- * taken to the publish-ready bar. The signature object is now a REAL CARTO tile map
- * (SpineMap, shared) for orientation, paired with a DIVERGENCE keep-strip centered on
- * the city baseline of 100 (the honest re-rank, read as deviation) and a DISCIPLINED
- * detail panel that opens to one decision and hides its proof behind single-open
- * disclosures. Terracotta is rationed to the hero keep figure + one accent per block;
- * selection state is neutral ink. All prose lives in the seed. Count-up-safe motion +
- * a terracotta top-edge hover on the interactive sub-blocks, reduced-motion safe.
+ * refit to the Final Ascent Visual Dictionary. The signature object is a REAL CARTO
+ * tile map (SpineMap, shared) for orientation, paired with a DIVERGENCE keep-strip
+ * centered on the city baseline of 100 (the honest re-rank, read as deviation) and a
+ * DISCIPLINED detail panel that opens to one decision and keeps its proof behind
+ * single-open disclosures (the multiplier waterfall opens first: the proof of the
+ * hero figure, not the paywall). The map column earns its pixels: tighter fit
+ * padding + the selected district's trades / prime streets / who-is-here card fills
+ * the space under the sticky map. Terracotta = the answer only (the #1 keeper, the
+ * above-city pin side, the net keep figure); selection and CTAs are neutral ink.
+ * All prose lives in the seed. Count-up-safe motion, reduced-motion safe.
  *
  * As-built chart dictionary (perceptual idiom census for this island, cap 2 each):
- *   dot-on-a-track (position marker): footfall two-marker scale x1, walkability Meter x1,
- *     price Meter x1  , the "marker on a shared scale" family, kept to one grammar.
- *   horizontal divergence bar (deviation from 100): KeepStrip x1  , the page hero.
- *   horizontal bar-list (length, entity-scoped): Compare bars x1.
- *   multiplicative waterfall (running product): "Why the number moves" x1  , one use.
+ *   divergence bar-list (deviation from 100): KeepStrip x1  , the page hero.
  *   real tile map (position + keep-encoded pins): SpineMap x1  , dot size = keep
  *     index, terracotta = above the city-100 baseline, ink = below (legended).
+ *   multiplicative waterfall (running product): "Why the number moves" x1  , the
+ *     raw->clipped line renders ONLY when the clip actually binds.
+ *   marker-on-a-shared-scale: footfall two-marker x1 + walkability Meter x1 (cap 2);
+ *     price tier is a DISCRETE 4-step band (a category, never a false-precise dot).
+ *   editorial table with drawn in-cell scales (CellScaleBar): Compare x1  , keep row
+ *     ticked at city 100, revenue row ticked at 0%, no hidden truncated baselines.
+ *   rank slope (2-point): MythChapter x1  , revenue rank -> keep rank, 9 lines.
  */
 "use client";
 import * as React from "react";
 import { Ico, Fig, Meter, Chip, Rail, Expand, TERRA } from "@/components/spine/kit";
-import { LockVeil } from "@/components/spine/kit-index";
+import { LockVeil, LockPill, CellScaleBar } from "@/components/spine/kit-index";
 import { SpineMap, type SpinePoint } from "@/components/spine/SpineMap";
 import { keepIndex } from "./keep";
 
@@ -38,7 +44,6 @@ type District = {
 type Myth = { claim?: string; reality?: string; stat_label?: string; tell?: string };
 type Rail2 = { kicker?: string; verdict?: string };
 
-const priceToVal: Record<string, number> = { affordable: 28, mid: 52, expensive: 78, luxury: 96 };
 const walkWord: Record<string, number> = { low: 30, moderate: 58, high: 90 };
 const footVal = (d: District) => d.footfall ?? { weekday: 50, weekend: 50 };
 const walkVal = (d: District) => d.walk_score ?? walkWord[d.walkability] ?? 50;
@@ -219,36 +224,19 @@ function KeepStrip({ districts, selected, onSelect, reduced }: { districts: Dist
   );
 }
 
-/* ChipSelector , the wrapping district picker. Ordered by keep index (matching the
- * strip above and the chapter-03 picker , ONE metric, ONE order page-wide) with the
- * keep index as the quiet support figure and an explicit metric caption. Selection
- * is neutral ink (terracotta is reserved for the keep hero figure). */
-function ChipSelector({ districts, selected, onSelect }: { districts: District[]; selected: string; onSelect: (s: string) => void }) {
-  return (
-    <div className="flex flex-wrap items-center gap-1.5" role="group" aria-label="Pick a district">
-      {districts.map((d) => {
-        const sel = d.slug === selected;
-        return (
-          <button
-            key={d.slug} type="button" onClick={() => onSelect(d.slug)} aria-pressed={sel}
-            className={`cityhov inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[12px] ${sel ? "border-transparent bg-[var(--c-ink)] text-white" : "border-[var(--c-border)] bg-[var(--c-card)] text-[var(--c-ink2)]"}`}
-          >
-            <span className="font-medium">{d.name}</span>
-            <Fig className={`text-[11px] ${sel ? "text-white/80" : "text-[var(--c-muted)]"}`}>{keepIndex(d)}</Fig>
-          </button>
-        );
-      })}
-      <span className="ml-1 text-[10.5px] text-[var(--c-muted)]">keep index shown</span>
-    </div>
-  );
-}
+/* (the explorer chip rail was REMOVED , Final Ascent audit "district-chips" merge
+ * verdict: three redundant selectors for one state. The strip rows and the map pins
+ * both select; the chapter-03 compare picker keeps the one chip rail on the page.) */
 
 /* ============================================================================
  * WHY THE NUMBER MOVES , an explicit MULTIPLICATIVE waterfall. City starts at 1.00;
  * each factor multiplies the RUNNING total (not a parallel additive bar), and the net
- * is the product, clipped. Bars encode the running product on a shared 0..maxProduct
- * axis so the reader sees each step lift or trim the total. Labeled "multiplied, then
- * clipped" so nobody adds the factors. One use of this idiom on the page.
+ * is the product. Bars encode the running product on a shared 0..maxProduct axis so
+ * the reader sees each step lift or trim the total. HONESTY: the raw->clipped line
+ * renders ONLY when the clip actually binds (raw product ABOVE the net at display
+ * precision); narrating a clip the numbers never show was the audit's logical major.
+ * A near-flat district gets its own honest read instead of four identical bars left
+ * unexplained. One use of this idiom on the page.
  * ========================================================================== */
 function MultWaterfall({ d }: { d: District }) {
   const steps = [
@@ -264,8 +252,14 @@ function MultWaterfall({ d }: { d: District }) {
     run *= s.mult;
     return { label: s.label, mult: s.mult, running: run, isCity: false };
   });
-  const net = 1 + d.rev_vs_city_pct / 100; // the clipped result the city page ships
+  const net = 1 + d.rev_vs_city_pct / 100; // the modeled result the city page ships
   const rawProduct = run;
+  // the clip BINDS only when the raw product sits above the net at display precision;
+  // otherwise the raw->clipped sentence is numerically inert (or, worse, "clips" up).
+  const clipBinds = Number(rawProduct.toFixed(2)) > Number(net.toFixed(2));
+  // near-flat district: every factor within 0.05 of the city norm , say so instead
+  // of leaving four near-identical bars to answer "why the number moves" in silence.
+  const nearFlat = [d.commuter_mult, d.tourism_mult, d.tag_mult].every((m) => Math.abs(m - 1) <= 0.05);
   const maxAxis = Math.max(net, rawProduct, 1) * 1.08;
   const barW = (v: number) => Math.max(2, (v / maxAxis) * 100);
   return (
@@ -278,7 +272,7 @@ function MultWaterfall({ d }: { d: District }) {
               <div className="h-full rounded-full" style={{ width: `${barW(r.running)}%`, background: r.isCity ? "#b9b1ab" : "#cdc6c0" }} />
             </div>
             <Fig className="text-right text-[11.5px] text-[var(--c-ink2)]">
-              {r.isCity ? "1.00x" : <>&times;{r.mult.toFixed(2)}</>}
+              {r.isCity ? <>&times;1.00</> : <>&times;{r.mult.toFixed(2)}</>}
             </Fig>
           </div>
         ))}
@@ -292,7 +286,12 @@ function MultWaterfall({ d }: { d: District }) {
         </div>
       </div>
       <p className="mt-2 text-[11px] leading-snug text-[var(--c-muted)]">
-        Each factor multiplies the running total, not adds to it. The raw product reaches <Fig className="text-[var(--c-ink2)]">&times;{rawProduct.toFixed(2)}</Fig>; the model clips it to <Fig className="text-[var(--c-ink2)]">&times;{net.toFixed(2)}</Fig>, so no single district lifts a trade without limit.
+        Each factor multiplies the running total, not adds to it.
+        {clipBinds ? (
+          <> The raw product reaches <Fig className="text-[var(--c-ink2)]">&times;{rawProduct.toFixed(2)}</Fig>; the model clips it to <Fig className="text-[var(--c-ink2)]">&times;{net.toFixed(2)}</Fig>, so no single district lifts a trade without limit.</>
+        ) : nearFlat ? (
+          <> Every factor here sits close to the city norm, so the number barely moves. The edge, if any, lives in the rent line below, not the takings.</>
+        ) : null}
       </p>
     </div>
   );
@@ -329,21 +328,44 @@ function Marker({ pos, label, value, accent, above }: { pos: number; label: stri
   );
 }
 
+/* PRICE TIER , a 4-word category (affordable / mid / expensive / luxury) rendered as
+ * a DISCRETE 4-step band, active step inked. The old continuous Meter manufactured
+ * false precision (a made-up 28/52/78/96 position for a categorical read). */
+const PRICE_TIERS = ["affordable", "mid", "expensive", "luxury"] as const;
+const PRICE_LABELS = ["Affordable", "Mid", "Expensive", "Luxury"] as const;
+function PriceTierBand({ tier }: { tier: string }) {
+  const idx = Math.max(0, PRICE_TIERS.indexOf(tier as (typeof PRICE_TIERS)[number]));
+  return (
+    <div role="img" aria-label={`price tier: ${PRICE_LABELS[idx]}`}>
+      <div className="grid grid-cols-4 gap-1">
+        {PRICE_TIERS.map((t, i) => (
+          <span key={t} className="h-[7px] rounded-full" style={{ background: i === idx ? "var(--c-ink)" : "#e6e6e6" }} />
+        ))}
+      </div>
+      <div className="mt-1 grid grid-cols-4 gap-1 text-center text-[9px] uppercase tracking-wide">
+        {PRICE_LABELS.map((l, i) => (
+          <span key={l} className={i === idx ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-muted)]"}>{l}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /* ============================================================================
  * DETAIL PANEL , disciplined. The SURFACE carries ONE decision: name + character +
  * blurb + the keep/revenue pair (keep is the hero, terracotta; revenue is grey
- * support) + the one-line counterweight + the top trade + the CTA. Everything else ,
- * the multiplier waterfall, footfall, walkability/price, prime streets, who-is-here,
- * and the district-specific locals-know , lives one click down in single-open
- * disclosures (kit Expand, name-grouped so only one opens at a time). Count-up-safe
- * hero figure on district change.
+ * support) + the one-line counterweight + the CTA. The proof lives one click down
+ * in single-open disclosures (kit Expand, name-grouped) , and the disclosure that
+ * opens BY DEFAULT is "Why the number moves" (the proof of the hero figure), never
+ * the Pro paywall. Trades / prime streets / who-is-here moved to the card under the
+ * map (UnderMapCard) so the sticky map column earns its pixels. Count-up-safe hero
+ * figure on district change. CTA chrome is ink (terracotta = answers only).
  * ========================================================================== */
-function DetailPanel({ d, citySlug, reduced }: { d: District; citySlug: string; reduced: boolean }) {
+function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
   const up = d.rev_vs_city_pct >= 0;
   const keep = keepIndex(d);
   const above = keep >= 100;
   const keepShown = Math.round(useCountUp(keep, reduced, 460));
-  const topTrade = d.best_trades?.[0];
   const counter = above ? d.counterweight_above : d.counterweight_below;
   const grp = `ne-panel-${d.slug}`; // single-open group, reset per district
 
@@ -373,25 +395,15 @@ function DetailPanel({ d, citySlug, reduced }: { d: District; citySlug: string; 
         <p className="mt-3 border-t border-[var(--c-border)] pt-3 text-[13px] font-medium leading-snug text-[var(--c-ink)]">{d.verdict}</p>
         <p className="mt-1.5 text-[12px] leading-snug text-[var(--c-ink2)]">{counter}</p>
 
-        {/* the single best trade , the one act to take here */}
-        {topTrade ? (
-          <div className="mt-3 flex items-start gap-2.5 rounded-[10px] border border-[var(--c-border)] bg-[var(--c-card)] px-3 py-2.5">
-            <span className="mt-px shrink-0 text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Top trade</span>
-            <div className="min-w-0">
-              <div className="text-[13px] font-semibold text-[var(--c-ink)]">{topTrade.name}</div>
-              <div className="text-[12px] leading-snug text-[var(--c-ink2)]">{topTrade.why}</div>
-            </div>
-          </div>
-        ) : null}
-
         <div className="mt-3 flex flex-wrap items-center gap-1.5">
           {(d.tags ?? []).map((t) => <Chip key={t}>{t}</Chip>)}
         </div>
       </div>
 
-      {/* PROOF , everything else behind single-open disclosures. The surface stays a decision. */}
+      {/* PROOF , the rest behind single-open disclosures. The one open by default is
+          the proof of the hero figure, not the Pro veil (audit hierarchy fix). */}
       <div className="space-y-2 px-4 py-4">
-        <Expand name={grp} title="Why the number moves" right={<Fig className="text-[12px] text-[var(--terra-text)]">&times;{(1 + d.rev_vs_city_pct / 100).toFixed(2)}</Fig>}>
+        <Expand name={grp} title="Why the number moves" open right={<Fig className="text-[12px] text-[var(--c-ink)]">&times;{(1 + d.rev_vs_city_pct / 100).toFixed(2)}</Fig>}>
           <div className="pt-1"><MultWaterfall d={d} /></div>
         </Expand>
 
@@ -408,38 +420,7 @@ function DetailPanel({ d, citySlug, reduced }: { d: District; citySlug: string; 
         <Expand name={grp} title="Walkability and price tier">
           <div className="grid grid-cols-1 gap-4 pt-2 sm:grid-cols-2">
             <div><SectionLabel>Walkability</SectionLabel><Meter value={walkVal(d)} left="Car-led" right="Walk-led" /></div>
-            <div><SectionLabel>Price tier</SectionLabel><Meter value={priceToVal[d.price_tier] ?? 50} left="Affordable" right="Luxury" /></div>
-          </div>
-        </Expand>
-
-        <Expand name={grp} title="What works here" right={<span className="text-[11px] text-[var(--c-muted)]">{(d.best_trades ?? []).length} trades</span>}>
-          <ol className="space-y-2 pt-1.5">
-            {(d.best_trades ?? []).map((t, i) => (
-              <li key={t.name} className="flex gap-3">
-                <Fig className={`mt-px w-5 shrink-0 text-[14px] ${i === 0 ? "text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{i + 1}</Fig>
-                <div>
-                  <div className="text-[13px] font-semibold text-[var(--c-ink)]">{t.name}</div>
-                  <div className="text-[12px] leading-snug text-[var(--c-ink2)]">{t.why}</div>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </Expand>
-
-        <Expand name={grp} title="Prime streets and who is here">
-          <div className="grid grid-cols-1 gap-4 pt-2 sm:grid-cols-2">
-            <div>
-              <SectionLabel>Prime streets</SectionLabel>
-              <div className="flex flex-wrap gap-1.5">{(d.prime_streets ?? []).map((s) => <Chip key={s}>{s}</Chip>)}</div>
-            </div>
-            <div>
-              <SectionLabel>Who is here</SectionLabel>
-              <ul className="space-y-1">
-                {(d.demographics ?? []).map((s) => (
-                  <li key={s} className="flex items-center gap-2 text-[12.5px] text-[var(--c-ink2)]"><span className="h-1 w-1 rounded-full" style={{ background: "#8f8f8d" }} />{s}</li>
-                ))}
-              </ul>
-            </div>
+            <div><SectionLabel>Price tier</SectionLabel><PriceTierBand tier={d.price_tier} /></div>
           </div>
         </Expand>
 
@@ -447,7 +428,7 @@ function DetailPanel({ d, citySlug, reduced }: { d: District; citySlug: string; 
             Pro unlocks the rest (the named side street, the licensing quirk, the rent
             delta). Real content stays in the DOM under the veil for SEO. */}
         {(d.locals_know ?? []).length ? (
-          <Expand name={grp} title="What locals know" open right={<span className="rounded-full bg-[var(--terra-soft)] px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-[var(--terra-text)]">Pro</span>}>
+          <Expand name={grp} title="What locals know" right={<LockPill label="Pro" />}>
             <div className="pt-1">
               <div className="mb-2 flex items-center gap-1.5">
                 <Ico id="locals-know" tone="terra" />
@@ -474,12 +455,13 @@ function DetailPanel({ d, citySlug, reduced }: { d: District; citySlug: string; 
         ) : null}
       </div>
 
-      {/* CTA , the call onward to the highest-value node (the cell page). */}
+      {/* CTA , the call onward to the highest-value node (the cell page). Chrome is
+          ink, never terracotta; dev route until promotion (then /{city}/{district}). */}
       <div className="flex items-center justify-between gap-3 border-t border-[var(--c-border)] px-5 py-3.5">
         <div className="text-[12px] text-[var(--c-muted)]">
           <Fig className="text-[14px] text-[var(--c-ink)]">{d.cell_count ?? "?"}</Fig> trades modeled in {d.name}
         </div>
-        <a href={`/${citySlug}/${d.slug}`} className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[12.5px] font-semibold text-white" style={{ background: TERRA }}>
+        <a href="/dev/spine-cell" className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90" style={{ background: "var(--c-ink)" }}>
           Open a trade here <span aria-hidden>&#8594;</span>
         </a>
       </div>
@@ -488,13 +470,54 @@ function DetailPanel({ d, citySlug, reduced }: { d: District; citySlug: string; 
 }
 
 /* ============================================================================
- * THE EXPLORER , the "01" movement body. Rail opener, the divergence keep-strip
- * (hero), the real map (orientation), and the disciplined panel.
+ * UNDER-MAP CARD , the selected district's trades + streets + people, filling the
+ * dead space under the sticky map so the biggest element in chapter 01 carries
+ * data below the tiles (audit: "the map column's pixels must earn"). Content moved
+ * OUT of the panel disclosures (no fact appears twice). Terracotta only on the #1
+ * trade numeral , the card's one answer.
  * ========================================================================== */
-export function NeighborhoodExplorer({ districts, defaultSlug, citySlug, rail, mapNote }: { districts: District[]; defaultSlug?: string; citySlug: string; rail?: Rail2; mapNote?: string }) {
+function UnderMapCard({ d }: { d: District }) {
+  return (
+    <div className="mt-4 rounded-[14px] border border-[var(--c-border)] bg-[var(--c-card)] p-4"
+      style={{ boxShadow: "inset 0 1px 0 rgba(255,255,255,0.9), 0 1px 1px rgba(43,28,22,0.04), 0 8px 24px -12px rgba(43,28,22,0.10)" }}>
+      <SectionLabel>What works in {d.name}</SectionLabel>
+      <ol className="space-y-2">
+        {(d.best_trades ?? []).map((t, i) => (
+          <li key={t.name} className="flex gap-3">
+            <Fig className={`mt-px w-4 shrink-0 text-[13px] ${i === 0 ? "text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{i + 1}</Fig>
+            <div className="min-w-0">
+              <div className="text-[12.5px] font-semibold text-[var(--c-ink)]">{t.name}</div>
+              <div className="text-[11.5px] leading-snug text-[var(--c-ink2)]">{t.why}</div>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <div className="mt-3 grid grid-cols-1 gap-3 border-t border-[var(--c-border)] pt-3 sm:grid-cols-2">
+        <div>
+          <SectionLabel>Prime streets</SectionLabel>
+          <div className="flex flex-wrap gap-1.5">{(d.prime_streets ?? []).map((s) => <Chip key={s}>{s}</Chip>)}</div>
+        </div>
+        <div>
+          <SectionLabel>Who is here</SectionLabel>
+          <ul className="space-y-1">
+            {(d.demographics ?? []).map((s) => (
+              <li key={s} className="flex items-center gap-2 text-[12px] text-[var(--c-ink2)]"><span className="h-1 w-1 shrink-0 rounded-full" style={{ background: "#8f8f8d" }} />{s}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================================
+ * THE EXPLORER , the "01" movement body. Rail opener, the divergence keep-strip
+ * (hero), the real map + under-map district card (orientation that earns its
+ * pixels), and the disciplined panel. Two selectors only: strip rows + map pins.
+ * ========================================================================== */
+export function NeighborhoodExplorer({ districts, defaultSlug, rail, mapNote }: { districts: District[]; defaultSlug?: string; rail?: Rail2; mapNote?: string }) {
   const reduced = usePrefersReducedMotion();
-  // ONE order page-wide: keep index descending (the strip's ranking), so the chip
-  // rail never re-ranks the just-ranked list by the debunked revenue metric.
+  // ONE order page-wide: keep index descending (the strip's ranking).
   const ranked = React.useMemo(() => [...districts].sort((a, b) => keepIndex(b) - keepIndex(a)), [districts]);
   const initial = (defaultSlug && districts.some((d) => d.slug === defaultSlug) ? defaultSlug : ranked[0]?.slug) ?? "";
   const [selected, setSelected] = React.useState<string>(initial);
@@ -529,22 +552,24 @@ export function NeighborhoodExplorer({ districts, defaultSlug, citySlug, rail, m
       {/* HERO , the divergence keep strip, full width */}
       <KeepStrip districts={districts} selected={selected} onSelect={setSelected} reduced={reduced} />
 
-      <div className="mt-4">
-        <ChipSelector districts={ranked} selected={selected} onSelect={setSelected} />
-      </div>
-
       <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,440px)_minmax(0,1fr)] lg:items-start">
-        {/* Left: the real orientation map. Selecting a pin drives the strip + panel. */}
-        <div className="netop overflow-hidden rounded-[14px] lg:sticky lg:top-6">
-          <SpineMap
-            points={points}
-            ariaLabel="London district map"
-            onSelect={(p) => p.slug && setSelected(p.slug)}
-            legendLabel="Dot size = keep index; terracotta = keeps more than the city"
-          />
+        {/* Left: the real orientation map (tight fit so the districts fill the frame,
+            not empty Southeast England) + the under-map card that makes the sticky
+            column carry data. Selecting a pin drives the strip + panel. */}
+        <div className="lg:sticky lg:top-6">
+          <div className="netop overflow-hidden rounded-[14px]">
+            <SpineMap
+              points={points}
+              fitPadding={36}
+              ariaLabel="London district map"
+              onSelect={(p) => p.slug && setSelected(p.slug)}
+              legendLabel="Dot size = keep index; terracotta = keeps more than the city"
+            />
+          </div>
           {mapNote ? <p className="px-1 pt-2 text-[11px] leading-snug text-[var(--c-muted)]">{mapNote}</p> : null}
+          <UnderMapCard d={current} />
         </div>
-        <DetailPanel d={current} citySlug={citySlug} reduced={reduced} />
+        <DetailPanel d={current} reduced={reduced} />
       </div>
     </div>
   );
@@ -552,24 +577,73 @@ export function NeighborhoodExplorer({ districts, defaultSlug, citySlug, rail, m
 
 /* ============================================================================
  * MYTH CHAPTER , promoted to its own full-width chapter (not column ballast). The
- * moat line at real size: the struck claim, the reality, and the loud district's
- * keep figure as the counter-evidence. Terracotta on the keep figure only.
+ * moat line at real size: the struck claim, the reality, and a RANK SLOPE as the
+ * counter-evidence , every district's revenue rank on the left, keep rank on the
+ * right, one line each (Visual Dictionary idiom #6). The loudest district's fall
+ * is the ONE terracotta line; the other eight draw the whole re-ordering the prose
+ * describes instead of restating one number a fourth time. Draw-on-scroll gated by
+ * in-view; SSR / no-JS / reduced-motion render the lines at rest (fully drawn).
  * ========================================================================== */
+function RankSlope({ districts, loudSlug, hidden, reduced }: { districts: District[]; loudSlug: string; hidden: boolean; reduced: boolean }) {
+  const byRev = [...districts].sort((a, b) => b.rev_vs_city_pct - a.rev_vs_city_pct);
+  const byKeep = [...districts].sort((a, b) => keepIndex(b) - keepIndex(a));
+  const revRank = new Map(byRev.map((d, i) => [d.slug, i + 1] as const));
+  const keepRank = new Map(byKeep.map((d, i) => [d.slug, i + 1] as const));
+  const n = districts.length;
+  const W = 400, rowH = 24, top = 30, H = top + n * rowH + 4;
+  const xL = 128, xR = 272;
+  const y = (rank: number) => top + (rank - 0.5) * rowH;
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img"
+      aria-label={`Rank slope: revenue rank against keep rank for ${n} districts. ${byRev[0]?.name} falls from revenue rank 1 to keep rank ${keepRank.get(byRev[0]?.slug ?? "") ?? n}.`}>
+      {/* column headers , the two ends of the slope, named */}
+      <text x={xL - 10} y={14} textAnchor="end" fill="#8c8c8a" fontSize={9} style={{ textTransform: "uppercase", letterSpacing: ".06em" }}>Revenue rank</text>
+      <text x={xR + 10} y={14} textAnchor="start" fill="#8c8c8a" fontSize={9} style={{ textTransform: "uppercase", letterSpacing: ".06em" }}>Keep rank</text>
+      {/* the two rank rails */}
+      <line x1={xL} y1={top - 6} x2={xL} y2={H - 4} stroke="#e7e2df" strokeWidth={1} />
+      <line x1={xR} y1={top - 6} x2={xR} y2={H - 4} stroke="#e7e2df" strokeWidth={1} />
+      {districts.map((d) => {
+        const loud = d.slug === loudSlug;
+        const r1 = revRank.get(d.slug) ?? n, r2 = keepRank.get(d.slug) ?? n;
+        const y1 = y(r1), y2 = y(r2);
+        const stroke = loud ? TERRA : "#c9c4bf";
+        const ink = loud ? "var(--terra-text)" : "#1b1b1a";
+        return (
+          <g key={d.slug}>
+            <text x={xL - 10} y={y1 + 3.5} textAnchor="end" fontSize={11}>
+              <tspan fill="#8c8c8a" fontSize={10} style={{ fontFamily: "var(--font-grotesk)" }}>{r1}  </tspan>
+              <tspan fill={ink} fontWeight={loud ? 600 : 500}>{d.name}</tspan>
+            </text>
+            <line
+              x1={xL} y1={y1} x2={xR} y2={y2}
+              stroke={stroke} strokeWidth={loud ? 2.2 : 1.4} strokeLinecap="round"
+              pathLength={1} strokeDasharray={1} strokeDashoffset={hidden ? 1 : 0}
+              style={{ transition: hidden || reduced ? "none" : `stroke-dashoffset .7s cubic-bezier(.2,.7,.2,1) ${(r1 - 1) * 45}ms` }}
+            />
+            <circle cx={xL} cy={y1} r={2.4} fill={loud ? TERRA : "#8f8f8d"} />
+            <circle cx={xR} cy={y2} r={2.4} fill={loud ? TERRA : "#8f8f8d"} />
+            <text x={xR + 10} y={y2 + 3.5} textAnchor="start" fontSize={11}>
+              <tspan fill="#8c8c8a" fontSize={10} style={{ fontFamily: "var(--font-grotesk)" }}>{r2}  </tspan>
+              <tspan fill={ink} fontWeight={loud ? 600 : 500}>{d.name}</tspan>
+            </text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
 export function MythChapter({ myth, loudest, districts = [] }: { myth: Myth; loudest: District; districts?: District[] }) {
   const reduced = usePrefersReducedMotion();
-  // fresh counter-figure: the loud district ranks #1 by revenue but LAST by keep. Show
-  // that rank fall (revenue #1 -> keep #N) instead of re-showing its keep value, which
-  // the masthead already carries. Rank is 1-based, largest keep = #1.
-  const total = districts.length;
-  const byKeep = React.useMemo(() => [...districts].sort((a, b) => keepIndex(b) - keepIndex(a)), [districts]);
-  const idx = byKeep.findIndex((x) => x.slug === loudest.slug);
-  const keepRank = idx >= 0 ? idx + 1 : total; // 1-based; fall back to last if not found
   const { ref, seen } = useInView<HTMLDivElement>();
-  const rankShown = Math.round(useCountUp(keepRank, reduced, 600, seen));
-  const hasRank = total > 0;
+  // SSR / no-JS render the slope fully drawn (rest state); only after hydration and
+  // before scroll-in do the lines collapse, then draw on view (count-up contract).
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => { setMounted(true); }, []);
+  const hidden = mounted && !reduced && !seen;
   return (
     <div ref={ref} className="overflow-hidden rounded-[14px] border border-[var(--terra-border)] bg-[var(--c-card)]">
-      <div className="grid gap-6 p-6 md:grid-cols-[1.4fr_1fr] md:items-center md:p-8">
+      <div className="grid gap-6 p-6 md:grid-cols-[1.1fr_1fr] md:items-center md:p-8">
         <div>
           <div className="mb-3 flex items-center gap-2">
             <Ico id="myth-reality" tone="terra" />
@@ -579,18 +653,10 @@ export function MythChapter({ myth, loudest, districts = [] }: { myth: Myth; lou
           <p className="mt-3 max-w-prose text-[13.5px] leading-relaxed text-[var(--c-ink2)]">{myth.reality}</p>
           {myth.tell ? <p className="mt-3 text-[13px] font-semibold text-[var(--c-ink)]">{myth.tell}</p> : null}
         </div>
-        {/* the counter-evidence figure , the rank fall: revenue #1, keep last. A fresh
-            figure, not the keep value the masthead already shows. */}
-        <div className="rounded-[12px] border border-[var(--c-border)] bg-[var(--c-soft)] p-5 text-center">
-          <div className="mb-1 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">Revenue #1, but on keep</div>
-          <div className="flex items-baseline justify-center gap-1.5">
-            <span className="fig text-[30px] leading-none text-[var(--c-muted)]">#</span>
-            <Fig className="text-[64px] leading-none text-[var(--terra-text)]">{hasRank ? rankShown : keepRank}</Fig>
-            {hasRank ? <span className="fig text-[20px] leading-none text-[var(--c-muted)]">of {total}</span> : null}
-          </div>
-          <div className="mx-auto mt-2 max-w-[16rem] text-[11.5px] leading-snug text-[var(--c-ink2)]">
-            {loudest.name} takes the most in the city, yet {myth.stat_label}.
-          </div>
+        {/* the counter-evidence: the whole re-ordering, drawn , not one number again */}
+        <div className="rounded-[12px] border border-[var(--c-border)] bg-[var(--c-card)] p-4">
+          <RankSlope districts={districts.length ? districts : [loudest]} loudSlug={loudest.slug} hidden={hidden} reduced={reduced} />
+          <p className="mt-2 border-t border-[var(--c-border)] pt-2 text-[11px] leading-snug text-[var(--c-muted)]">The order flips almost exactly: the loudest takings slide to the bottom on keep, and the lightest rents climb to the top.</p>
         </div>
       </div>
     </div>
@@ -598,17 +664,23 @@ export function MythChapter({ myth, loudest, districts = [] }: { myth: Myth; lou
 }
 
 /* ============================================================================
- * DISTRICT-TO-DISTRICT COMPARE (Pro) , hold 2-3 side by side. Now leads with an
+ * DISTRICT-TO-DISTRICT COMPARE (Pro) , hold 2-3 side by side. Leads with an
  * AUTO-DERIVED verdict ("X keeps the most, Y takes the most but keeps the least"),
  * adds a metric NOT on the surface (weekday dependence: how lopsided the week is),
  * and gates the full differential behind a Pro veil so the free/Pro seam is concrete.
- * Metrics are rows, districts columns; best per row = bold terracotta, no glyph.
+ * Metrics are rows, districts columns. In-cell bars run ONLY on drawn shared scales
+ * (CellScaleBar: keep ticked at city 100, revenue ticked at 0%) , no hidden
+ * truncated baselines. The row-best dot is legended in the caption and wears
+ * terracotta on the keep row only. One multiplier notation page-wide (×2.05).
  * ========================================================================== */
 type Metric = {
   key: string; label: string; hint: string;
   get: (d: District) => number; fmt: (d: District) => string;
-  higherIsBetter: boolean; barMax: number; barMin?: number;
-  noBar?: boolean; // drop the in-cell bar for this row (figure-only, keeps variety)
+  higherIsBetter: boolean;
+  /** in-cell bar on a DRAWN shared scale (CellScaleBar: baseline tick at the domain
+   * start, optional dark reference tick, e.g. city 100 / 0%). Hidden truncated
+   * baselines were the audit's visual-choice major. Omit = figure-only row. */
+  bar?: { domain: [number, number]; refValue?: number };
 };
 
 // weekday dependence: how lopsided the week is (100 = all weekday, 0 = all weekend).
@@ -620,20 +692,20 @@ function weekdayLean(d: District) {
 }
 
 const FREE_METRICS: Metric[] = [
-  { key: "keep", label: "Keep index", hint: "what stays after rent", get: (d) => keepIndex(d), fmt: (d) => `${keepIndex(d)}`, higherIsBetter: true, barMin: 60, barMax: 130 },
-  { key: "rev", label: "Revenue vs city", hint: "headline takings", get: (d) => d.rev_vs_city_pct, fmt: (d) => `${d.rev_vs_city_pct >= 0 ? "+" : ""}${d.rev_vs_city_pct}%`, higherIsBetter: true, barMin: -10, barMax: 60 },
-  { key: "rent", label: "Rent load", hint: "lower is lighter", get: (d) => d.rent_mult, fmt: (d) => `${d.rent_mult.toFixed(2)}x`, higherIsBetter: false, barMax: 2.2, noBar: true },
+  { key: "keep", label: "Keep index", hint: "what stays after rent", get: (d) => keepIndex(d), fmt: (d) => `${keepIndex(d)}`, higherIsBetter: true, bar: { domain: [60, 130], refValue: 100 } },
+  { key: "rev", label: "Revenue vs city", hint: "headline takings", get: (d) => d.rev_vs_city_pct, fmt: (d) => `${d.rev_vs_city_pct >= 0 ? "+" : ""}${d.rev_vs_city_pct}%`, higherIsBetter: true, bar: { domain: [-10, 60], refValue: 0 } },
+  { key: "rent", label: "Rent load", hint: "lower is lighter", get: (d) => d.rent_mult, fmt: (d) => `×${d.rent_mult.toFixed(2)}`, higherIsBetter: false },
 ];
 const PRO_METRICS: Metric[] = [
-  { key: "lean", label: "Weekday dependence", hint: "how lopsided the week is", get: (d) => weekdayLean(d), fmt: (d) => `${weekdayLean(d)}% weekday`, higherIsBetter: false, barMax: 100 },
-  { key: "walk", label: "Walkability", hint: "foot vs car-led", get: (d) => walkVal(d), fmt: (d) => `${walkVal(d)}`, higherIsBetter: true, barMax: 100 },
-  { key: "weekend", label: "Weekend footfall", hint: "trade intensity", get: (d) => footVal(d).weekend, fmt: (d) => `${footVal(d).weekend}`, higherIsBetter: true, barMax: 100 },
+  { key: "lean", label: "Weekday dependence", hint: "how lopsided the week is", get: (d) => weekdayLean(d), fmt: (d) => `${weekdayLean(d)}% weekday`, higherIsBetter: false, bar: { domain: [0, 100] } },
+  { key: "walk", label: "Walkability", hint: "foot vs car-led", get: (d) => walkVal(d), fmt: (d) => `${walkVal(d)}`, higherIsBetter: true, bar: { domain: [0, 100] } },
+  { key: "weekend", label: "Weekend footfall", hint: "trade intensity", get: (d) => footVal(d).weekend, fmt: (d) => `${footVal(d).weekend}`, higherIsBetter: true, bar: { domain: [0, 100] } },
 ];
 
-function barPct(m: Metric, d: District) {
-  const lo = m.barMin ?? 0, hi = m.barMax;
-  return Math.max(4, Math.min(100, ((m.get(d) - lo) / (hi - lo)) * 100));
-}
+/* the row-best dot: terracotta ONLY on the keep row (the page's deciding metric);
+ * every other row's best wears neutral ink, so the accent never crowns the metric
+ * the page just called the liar. Legend lives in the caption under the table. */
+const dotColor = (m: Metric) => (m.key === "keep" ? TERRA : "#1b1b1a");
 function bestFor(m: Metric, cols: District[]): string | null {
   if (cols.length < 2) return null;
   let bd = cols[0];
@@ -656,17 +728,13 @@ function MetricRows({ metrics, cols }: { metrics: Metric[]; cols: District[] }) 
               const win = best === d.slug && cols.length > 1;
               return (
                 <div key={d.slug} className="min-w-0">
-                  <div className={`flex items-center gap-1.5 ${m.noBar ? "" : "mb-1"}`}>
-                    {/* the single terracotta mark on the winning cell , a small tick, no text pill */}
-                    {win ? <span className="inline-block h-[7px] w-[7px] shrink-0 rounded-full" style={{ background: TERRA }} aria-label="best" /> : null}
+                  <div className="flex items-center gap-1.5">
+                    {/* row-best dot: terracotta on keep only, ink elsewhere (legend in the caption) */}
+                    {win ? <span className="inline-block h-[7px] w-[7px] shrink-0 rounded-full" style={{ background: dotColor(m) }} aria-label="best" /> : null}
                     <Fig className="text-[14px] text-[var(--c-ink)]">{m.fmt(d)}</Fig>
                   </div>
-                  {/* bars are neutral grey; one row drops the bar entirely for variety */}
-                  {m.noBar ? null : (
-                    <span className="block h-2 overflow-hidden rounded-full" style={{ background: "#e6e6e6" }}>
-                      <span className="block h-full rounded-full" style={{ width: `${barPct(m, d)}%`, background: "#c8c8c6" }} />
-                    </span>
-                  )}
+                  {/* in-cell bar ONLY on a drawn scale: baseline tick + reference tick visible */}
+                  {m.bar ? <CellScaleBar value={m.get(d)} domain={m.bar.domain} refValue={m.bar.refValue} /> : null}
                 </div>
               );
             })}
@@ -772,11 +840,9 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
                   return (
                     <div key={m.key} className="grid grid-cols-[130px_1fr_auto] items-center gap-2.5">
                       <span className="min-w-0 truncate text-[11.5px] text-[var(--c-ink2)]">{m.label}</span>
-                      {m.noBar
-                        ? <span />
-                        : <span className="block h-2 overflow-hidden rounded-full" style={{ background: "#e6e6e6" }}><span className="block h-full rounded-full" style={{ width: `${barPct(m, d)}%`, background: "#c8c8c6" }} /></span>}
+                      {m.bar ? <span className="-mt-1 block"><CellScaleBar value={m.get(d)} domain={m.bar.domain} refValue={m.bar.refValue} /></span> : <span />}
                       <span className="flex w-16 items-center justify-end gap-1">
-                        {win ? <span className="inline-block h-[6px] w-[6px] shrink-0 rounded-full" style={{ background: TERRA }} aria-label="best" /> : null}
+                        {win ? <span className="inline-block h-[6px] w-[6px] shrink-0 rounded-full" style={{ background: dotColor(m) }} aria-label="best" /> : null}
                         <Fig className="text-right text-[12px] text-[var(--c-ink)]">{m.fmt(d)}</Fig>
                       </span>
                     </div>
@@ -789,7 +855,7 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
                     {PRO_METRICS.map((m) => (
                       <div key={m.key} className="grid grid-cols-[130px_1fr_auto] items-center gap-2.5">
                         <span className="min-w-0 truncate text-[11.5px] text-[var(--c-ink2)]">{m.label}</span>
-                        <span className="block h-2 overflow-hidden rounded-full" style={{ background: "#e6e6e6" }}><span className="block h-full rounded-full" style={{ width: `${barPct(m, d)}%`, background: "#c8c8c6" }} /></span>
+                        {m.bar ? <span className="-mt-1 block"><CellScaleBar value={m.get(d)} domain={m.bar.domain} refValue={m.bar.refValue} /></span> : <span />}
                         <Fig className="w-16 text-right text-[12px] text-[var(--c-ink)]">{m.fmt(d)}</Fig>
                       </div>
                     ))}
@@ -800,6 +866,9 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
           ))}
         </div>
       </div>
+
+      {/* the table's legend + scale honesty note (covers desktop and mobile) */}
+      <p className="mt-2 text-[11px] leading-snug text-[var(--c-muted)]">The dot marks each row&rsquo;s best, terracotta on keep, the metric that decides. In-cell bars run on drawn scales: the dark tick marks city 100 on the keep row and 0% on revenue.</p>
     </div>
   );
 }

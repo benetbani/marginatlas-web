@@ -96,7 +96,7 @@ export function HoodMasthead({ d }: { d: any }) {
               <span className="text-[12.5px] font-semibold text-[var(--c-ink)]">{loud.name}</span>
             </div>
             <p className="mt-1.5 text-[11px] leading-snug text-[var(--c-muted)]">
-              Highest revenue in the city, yet a keep index of <Fig className="text-[var(--c-ink2)]">{loudKeep}</Fig> leaves it below the line.
+              Highest revenue in the city, yet a keep index of <Fig className="text-[var(--c-ink2)]">{loudKeep}</Fig> sits below the city baseline of 100.
             </p>
           </div>
         </div>
