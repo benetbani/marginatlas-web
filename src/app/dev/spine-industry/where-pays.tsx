@@ -10,10 +10,17 @@
  * owner take-home ($/yr) column sits under a LockVeil (the single highest-value
  * paid reveal). The real column stays in the DOM, value-visible under a calm veil.
  * Built inline (no kit modification); reuses Box/Rail/Fig/RankBars grammar + LockVeil.
+ *
+ * ACCENT BUDGET (Final Ascent P2): terracotta = the ANSWER only , the leader's bar.
+ * Everything that used to compete for it is ink now: the active filter chip (selection
+ * is chrome), the Pro column header (the LockPill is gone; the veil carries the Pro
+ * affordance), and the best-row figures (bold ink; the bar already lights the row).
+ * The LockVeil's own lock tile + CTA are kit-owned chrome (the deliberate monetization
+ * accent), leaving the screenful at <=3 marks.
  */
 import * as React from "react";
 import { Box, Rail, Fig, TERRA, TRACK } from "@/components/spine/kit";
-import { LockVeil, LockPill } from "@/components/spine/kit-index";
+import { LockVeil } from "@/components/spine/kit-index";
 import { deriveSubtypes, type SubtypeRow } from "./subtypes";
 
 const money = (v: number) => (v >= 1e6 ? "$" + (v / 1e6).toFixed(1) + "M" : "$" + Math.round(v / 1000) + "K");
@@ -66,7 +73,7 @@ export function WherePaysExplorer({ d }: { d: any }) {
         {/* faint wash so this hero read carries more weight than an ordinary card */}
         <span aria-hidden className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(255,241,237,0.45), rgba(255,255,255,0) 34%)" }} />
         <div className="relative">
-          <Rail icon="best-areas" tone="terra" kicker="Where it pays best" verdict="Same trade, same method, one currency: the place sets the keep, and the format reshuffles the high-rent cities." />
+          <Rail icon="best-areas" tone="terra" kicker="Where it pays best" verdict="The place sets the keep: the same room, run the same way, banks different money in different cities." />
           <p className="-mt-1 mb-3 max-w-2xl text-[12.5px] text-[var(--c-ink2)]">{note}</p>
 
           {/* subtype filter (the client re-rank interaction) */}
@@ -97,7 +104,7 @@ export function WherePaysExplorer({ d }: { d: any }) {
                           <span className="block h-full rounded-full" role="img" aria-label={`${r.name} keeps ${r.net}% net`} style={{ width: `${Math.max(3, (r.net / maxNet) * 100)}%`, background: isBest ? TERRA : "#c8c8c6" }} />
                         </span>
                       </span>
-                      <Fig className={`text-right text-[13px] ${isBest ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{r.net}%</Fig>
+                      <Fig className={`text-right text-[13px] ${isBest ? "font-semibold" : ""} text-[var(--c-ink)]`}>{r.net}%</Fig>
                     </div>
                   );
                 })}
@@ -108,17 +115,18 @@ export function WherePaysExplorer({ d }: { d: any }) {
               </div>
             </div>
 
-            {/* Pro seam: the absolute $/yr owner take-home per city, veiled. Value stays in the DOM. */}
+            {/* Pro seam: the absolute $/yr owner take-home per city, veiled. Value stays in the DOM.
+                Header + figures are ink; the veil's own tile + CTA carry the Pro accent. */}
             <div className="md:w-[13rem]">
-              <div className="mb-2 flex items-center gap-1.5 px-2 text-[10.5px] font-semibold uppercase tracking-wide text-[var(--terra-text)]">Owner keeps ($/yr) <LockPill /></div>
-              <LockVeil unlocked={unlocked} onUnlock={() => setUnlocked(true)} headline="See the take-home in dollars" note="Unlock the owner's yearly take-home for every city, for each format, converted like for like." cta="Unlock with Pro">
+              <div className="mb-2 px-2 text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Owner keeps ($/yr)</div>
+              <LockVeil unlocked={unlocked} onUnlock={() => setUnlocked(true)} headline="See the take-home in dollars" note="Unlock the owner's yearly take-home for every city, for each format, converted like for like." cta="Unlock">
                 <div className="space-y-1">
                   {rows.map((r) => {
                     const isTop = r.name === bestTake;
                     return (
                       <div key={r.name} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2 rounded-md px-2 py-2">
                         <span className="min-w-0 truncate text-[12px] text-[var(--c-ink2)]">{r.name}</span>
-                        <Fig className={`text-right text-[13px] ${isTop ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{money(r.take)}</Fig>
+                        <Fig className={`text-right text-[13px] ${isTop ? "font-bold" : ""} text-[var(--c-ink)]`}>{money(r.take)}</Fig>
                       </div>
                     );
                   })}
@@ -132,6 +140,7 @@ export function WherePaysExplorer({ d }: { d: any }) {
   );
 }
 
+/* selection is CHROME, so the active state is ink, never terracotta */
 function FilterChip({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
   return (
     <button
@@ -141,7 +150,7 @@ function FilterChip({ label, active, onClick }: { label: string; active: boolean
       className="rounded-full border px-2.5 py-1 text-[11px] font-medium transition"
       style={
         active
-          ? { background: TERRA, borderColor: "var(--terra-border)", color: "#3a1409" }
+          ? { background: "var(--c-ink)", borderColor: "var(--c-ink)", color: "#fff" }
           : { background: "var(--c-soft)", borderColor: "var(--c-border)", color: "var(--c-ink2)" }
       }
     >

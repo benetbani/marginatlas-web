@@ -8,24 +8,28 @@
  * On promotion this wires to industry_margins + the activity board.
  *
  * PAGE-LEVEL HIERARCHY (3 hero reads outweigh the rest): Margin Index masthead,
- * WherePays leaderboard, and the Subtype drill carry the most weight; CostDrivers,
- * Related and the donut are folded away; Survival/Seasonality run lighter.
+ * WherePays leaderboard, and the Subtype drill carry the most weight. The old subtype
+ * triptych (drill + cost lollipop + who-accordion) is COLLAPSED into the one drill card
+ * (Final Ascent P2): cost-to-open rides as the drill's second column, the format notes
+ * live in its disclosure. The fixed-nut card is CUT (its notes fold into MoneySplit's
+ * disclosure); CostDrivers, Related and the donut stay folded away.
  *
- * PERCEPTUAL-IDIOM CENSUS (cap 2 per idiom, by what the eye reads):
- *  - dot-on-a-track lollipop: SubtypeCompare (capital) + Benchmark (keep) = 2 (AT CAP).
- *  - descending/stepped bars: MarginLadder + SubtypeDrill keep-bars = 2 (AT CAP).
- *  - drawn curve/ribbon on time: SurvivalCurve + SeasonRibbon = 2 (AT CAP).
- *  - fill-bar (single 0-100): break-even Meter + WherePays relative-take = 2 (AT CAP).
- *  - stacked share bar: MoneySplit = 1. Range bracket: CapitalPayback = 1. Timeline = 1.
- *  - sparkline: the Demand trend (demand.trend_index) = 1.
- * ONE canonical margin visual: the hero MarginLadder (gross->operating->net). The old
- * Operator waterfall restated the same 64/16/7 and is retired; Operator now shows a
- * different cut (capital, survival, exit multiple), MoneySplit shows the $100 cost split.
+ * PERCEPTUAL-IDIOM CENSUS (as-built, cap 2 per family, by what the eye reads):
+ *  - ranked track+fill bar list: SubtypeDrill + WherePays leaderboard = 2 (AT CAP).
+ *  - dot-on-a-track lollipop: Benchmark = 1 (the capital lollipop merged into the drill).
+ *  - stepped descending bars: MarginLadder = 1.
+ *  - drawn curve/area on time: SurvivalCurve + SeasonRibbon = 2 (AT CAP).
+ *  - fill-bar (single 0-100): break-even Meter = 1. Stacked share bar: MoneySplit = 1.
+ *  - range bracket: CapitalPayback = 1. Timeline: Ramp = 1.
+ *  - inline sparkline: the Demand trend (demand.trend_index) = 1.
+ *  - big figure at HERO scale: the masthead $7 = 1 (section focals stay at 40-44px).
+ * ONE canonical margin model (67/22/7, derived from money_split): the hero MarginLadder
+ * is its only drawn statement; Operator shows a different cut (capital, survival, exit).
  */
 import * as React from "react";
 import fs from "node:fs";
 import path from "node:path";
-import { Fig, Meter, Bullets, Expand, InlineDisclosure, Movement, Box, Rail, Spark, Timeline, StackBar, Full, Even, WideRail, Narrow, TERRA, TRACK, type TLPhase, type TLNode } from "@/components/spine/kit";
+import { Fig, Meter, Bullets, InlineDisclosure, Movement, Box, Rail, Spark, Timeline, StackBar, Full, Even, WideRail, Narrow, TERRA, TRACK, type TLPhase, type TLNode } from "@/components/spine/kit";
 import { WherePaysExplorer } from "./where-pays";
 import { MarginLadder, SurvivalCurve, SeasonRibbon, RangeBracket, CountFig } from "./forms";
 import { deriveSubtypes } from "./subtypes";
@@ -141,13 +145,15 @@ function Benchmark({ d }: { d: any }) {
 }
 
 /* ============================================================
- * DEMAND , is anyone hungry, and how thin is it spread? (2-up)
- * decision: is demand there and is it shared too thin? Numbers: venues per 10k
- * (the crowd) + the demand trend index (the pie, drawn as the page's one Spark).
- * focal: the venues-per-10k saturation figure + the demand Spark beside it.
- * width: WideRail (T2). terracotta: the saturation figure + its Spark (one focal per box).
- * Honesty: the Spark draws demand.trend_index exactly as seeded (the post-dip recovery,
- * still under its pre-dip 100); no phantom adjectives stand in for missing data. */
+ * DEMAND , the appetite drawn + the crowd sharing it (the audit's merge: one story,
+ * one coherent WideRail pair, no half-empty boxes, no adjective standing in for a number).
+ * decision: is demand there and is it shared too thin? Numbers: the demand trend index
+ * (drawn as the page's one Spark, END VALUE beside it) + per-diner economics (spend/head,
+ * visits/yr) in the appetite half; venues per 10k (the crowd) in the saturation rail.
+ * focal: the Spark + its end value (chart half); the venues-per-10k figure (rail).
+ * width: WideRail (T2). terracotta: the Spark (chart half) / the saturation figure (rail),
+ * one mark per box. Honesty: the Spark draws demand.trend_index exactly as seeded (the
+ * post-dip recovery, still under its pre-dip 100); the end value is printed, not implied. */
 function Demand({ d }: { d: any }) {
   const dm = d.demand ?? {};
   const trend: number[] = dm.trend_index ?? [];
@@ -155,169 +161,145 @@ function Demand({ d }: { d: any }) {
   return (
     <WideRail>
       <Box className="flex flex-col justify-center">
-        <Rail icon="competition" tone="terra" kicker="Saturation" verdict="A crowded field: a new seat mostly steals covers, it rarely grows the pie." />
-        <div className="flex items-end justify-between gap-3">
-          <div>
-            <div className="flex items-baseline gap-1.5"><CountFig value={dm.venues_per_10k} className="text-[44px] leading-none text-[var(--terra-text)]" /><span className="text-[12px] text-[var(--c-ink2)]">venues / 10k</span></div>
-            {dm.venues_per_10k_band ? <div className="mt-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{dm.venues_per_10k_band}</div> : null}
-          </div>
+        <Rail icon="spending-power" tone="terra" kicker="The appetite" verdict="The appetite is most of the way back, and still climbing." />
+        <div className="flex flex-wrap items-end gap-x-6 gap-y-3">
           {trend.length > 1 ? (
-            <div className="text-right">
-              <Spark values={trend} w={112} h={36} />
-              <div className="mt-1 text-[10px] uppercase tracking-wide text-[var(--c-muted)]">demand, indexed</div>
+            <div className="min-w-0">
+              <div className="flex items-end gap-2.5">
+                <Spark values={trend} w={172} h={46} />
+                {trendEnd != null ? (
+                  <span className="flex items-baseline gap-1"><Fig className="text-[26px] leading-none text-[var(--c-ink)]">{trendEnd}</Fig><span className="text-[10.5px] text-[var(--c-muted)]">of 100</span></span>
+                ) : null}
+              </div>
+              <div className="mt-1 text-[10px] uppercase tracking-wide text-[var(--c-muted)]">Demand, indexed to the pre-dip 100</div>
             </div>
           ) : null}
+          <div className="flex gap-6 sm:border-l sm:border-[var(--c-border)] sm:pl-6">
+            <div>
+              <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Spend per head</div>
+              {typeof dm.spend_per_head_usd === "number" ? (
+                <Fig className="mt-1 block text-[20px] leading-none text-[var(--c-ink)]">${dm.spend_per_head_usd}</Fig>
+              ) : (
+                <div className="mt-1 text-[13px] text-[var(--c-muted)]">Not modelled</div>
+              )}
+            </div>
+            {typeof dm.purchases_per_year === "number" ? (
+              <div>
+                <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Visits a year</div>
+                <Fig className="mt-1 block text-[20px] leading-none text-[var(--c-ink)]">{dm.purchases_per_year}</Fig>
+              </div>
+            ) : null}
+          </div>
         </div>
-        <div className="mt-3 text-[11.5px] leading-snug text-[var(--c-muted)]">{dm.saturation_note ?? dm.demand_note}</div>
+        {dm.trend_note ? <div className="mt-3 border-t border-[var(--c-border)] pt-2.5 text-[11.5px] leading-snug text-[var(--c-ink2)]">{dm.trend_note}</div> : null}
       </Box>
       <Box className="flex flex-col justify-center">
-        <Rail icon="spending-power" kicker="The demand" verdict="The appetite has recovered most of the way; the crowd sharing it has not thinned." />
-        <div className="grid grid-cols-2 divide-x divide-[var(--c-border)]">
-          <div className="pr-3">
-            <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Spend per head</div>
-            {typeof dm.spend_per_head_usd === "number" ? (
-              <div className="mt-1.5 flex items-baseline gap-1"><Fig className="text-[22px] leading-none text-[var(--c-ink)]">${dm.spend_per_head_usd}</Fig></div>
-            ) : (
-              <div className="mt-1.5 text-[13px] text-[var(--c-muted)]">Not modelled</div>
-            )}
-          </div>
-          <div className="px-3 last:pr-0">
-            <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Demand index</div>
-            {trendEnd != null ? (
-              <div className="mt-1.5 flex items-baseline gap-1"><Fig className="text-[22px] leading-none text-[var(--c-ink)]">{trendEnd}</Fig><span className="text-[10px] text-[var(--c-muted)]">of 100 pre-dip</span></div>
-            ) : (
-              <div className="mt-1.5 text-[13px] text-[var(--c-muted)]">Not modelled</div>
-            )}
-          </div>
-        </div>
-        {dm.trend_note || dm.demand_note ? <div className="mt-3 border-t border-[var(--c-border)] pt-2.5 text-[11.5px] leading-snug text-[var(--c-ink2)]">{dm.trend_note ?? dm.demand_note}</div> : null}
+        <Rail icon="competition" kicker="Saturation" verdict="New rooms do not create new appetite here; they divide it." />
+        <div className="flex items-baseline gap-1.5"><CountFig value={dm.venues_per_10k} className="text-[40px] leading-none text-[var(--terra-text)]" /><span className="text-[12px] text-[var(--c-ink2)]">venues per 10k residents</span></div>
+        {dm.venues_per_10k_band ? <div className="mt-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{dm.venues_per_10k_band}</div> : null}
+        {dm.saturation_note ? <div className="mt-3 text-[11.5px] leading-snug text-[var(--c-muted)]">{dm.saturation_note}</div> : null}
       </Box>
     </WideRail>
   );
 }
 
 /* ============================================================
- * SUBTYPE DRILL , the richness lever (hero). Five formats, keep ranked (descending bars).
- * decision: which FORMAT to run. Number: each subtype's keep %.
- * focal: the keep-% ranked as descending bars; format, not cuisine, moves the keep.
- * width: Full (T1), parallel reads on one shared scale.
- * terracotta: the leading (best-keep) bar only. idiom: descending bars (2 of 2, with ladder).
+ * SUBTYPE DRILL , the richness lever (hero) and, after the Final Ascent P2 collapse,
+ * the chapter's ONE card: the old cost lollipop rides here as a second (To open) column
+ * and the old who-accordion's format notes live in the disclosure (its "who" promise had
+ * no seed copy behind it, so the card is cut until real operator-fit copy exists).
+ * decision: which FORMAT to run, and what each door costs. Numbers: keep % (the ranked
+ * bars, one decimal everywhere) + capital-to-open (right-aligned column).
+ * focal: the keep-% ranked bars; format, not cuisine, moves the keep.
+ * width: Full (T1), parallel reads on one shared scale; sort monotonic with the bars.
+ * terracotta: the leading (best-keep) bar + its figure only; the cost column stays ink.
+ * idiom: ranked track+fill bars (1 of 2, with the WherePays leaderboard).
  * Reads the derived subtype shape (keeps_pct + capital_usd) via deriveSubtypes. */
 function SubtypeDrill({ d }: { d: any }) {
   const items = deriveSubtypes(d).slice().sort((a, b) => b.keeps_pct - a.keeps_pct);
   if (!items.length) return null;
   const max = Math.max(...items.map((s) => s.keeps_pct));
   const lead = items[0]?.slug;
+  const cols = "grid-cols-[minmax(0,6.5rem)_minmax(0,1fr)_3.4rem_3.9rem] sm:grid-cols-[minmax(0,10rem)_minmax(0,1fr)_3.4rem_4.2rem]";
   return (
     <Full>
       <Box>
         <Rail icon="cost-breakdown" tone="terra" kicker="The subtypes" verdict="The format you choose moves the keep more than the menu ever does." />
-        <div className="space-y-1">
+        <div className={`grid ${cols} items-end gap-3 border-b border-[var(--c-border)] px-2 pb-1.5 text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]`}>
+          <span>Format</span>
+          <span aria-hidden />
+          <span className="text-right">Keep</span>
+          <span className="text-right">To open</span>
+        </div>
+        <div className="space-y-1 pt-1">
           {items.map((s) => {
             const isLead = s.slug === lead;
             return (
-              <div key={s.slug} className="hov -mx-2 grid grid-cols-[minmax(0,10rem)_minmax(0,1fr)_2.6rem] items-center gap-3 rounded-md px-2 py-2">
-                <span className="min-w-0">
-                  <span className="block truncate text-[12.5px] font-medium text-[var(--c-ink)]" title={s.name}>{s.name}</span>
-                  <span className="block truncate text-[10.5px] text-[var(--c-muted)]">{money(s.capital_usd)} to open</span>
-                </span>
+              <div key={s.slug} className={`hov -mx-2 grid ${cols} items-center gap-3 rounded-md px-2 py-2`}>
+                <span className="min-w-0 truncate text-[12.5px] font-medium text-[var(--c-ink)]" title={s.name}>{s.name}</span>
                 <span className="h-2.5 overflow-hidden rounded-full" style={{ background: TRACK }}>
-                  <span className="block h-full rounded-full" role="img" aria-label={`${s.name} keeps ${s.keeps_pct}%`} style={{ width: `${Math.max(4, (s.keeps_pct / max) * 100)}%`, background: isLead ? TERRA : "#c8c8c6" }} />
+                  <span className="block h-full rounded-full" role="img" aria-label={`${s.name} keeps ${s.keeps_pct.toFixed(1)}% of sales; ${money(s.capital_usd)} to open`} style={{ width: `${Math.max(4, (s.keeps_pct / max) * 100)}%`, background: isLead ? TERRA : "#c8c8c6" }} />
                 </span>
-                <span className="flex items-baseline justify-end gap-0.5"><Fig className={`text-[14px] ${isLead ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{s.keeps_pct}</Fig><span className="text-[10px] text-[var(--c-muted)]">%</span></span>
+                <Fig className={`text-right text-[13.5px] ${isLead ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{s.keeps_pct.toFixed(1)}%</Fig>
+                <Fig className="text-right text-[12.5px] text-[var(--c-ink2)]">{money(s.capital_usd)}</Fig>
               </div>
             );
           })}
         </div>
-        <div className="mt-3 text-[11.5px] leading-snug text-[var(--c-muted)]">{d.subtypes?.note}</div>
-      </Box>
-    </Full>
-  );
-}
-
-/* SUBTYPE COMPARE , cost to open, ranked (lollipop).
- * decision: what does each format cost to enter? Number: capital to open, ranked.
- * focal: the LIGHTEST way through the door. width: Full (T1). terracotta: the cheapest
- * dot only , the accent sits on the answer (page grammar: terra = the answer, never a
- * warning), so the dear end stays neutral ink.
- * idiom: dot-on-a-track lollipop (2 of 2, with Benchmark). */
-function SubtypeCompare({ d }: { d: any }) {
-  const items = deriveSubtypes(d).slice().sort((a, b) => b.capital_usd - a.capital_usd);
-  if (!items.length) return null;
-  const max = Math.max(...items.map((s) => s.capital_usd)) * 1.05;
-  const cheapest = items[items.length - 1]?.slug;
-  return (
-    <Full>
-      <Box>
-        <Rail icon="startup-cost" kicker="Cost to open, ranked" verdict="The cheapest format to open is rarely the one that keeps the most." />
-        <div className="space-y-1.5">
-          {items.map((s) => {
-            const pos = (s.capital_usd / max) * 100;
-            const hot = s.slug === cheapest;
-            return (
-              <div key={s.slug} className="hov -mx-2 grid grid-cols-[minmax(0,10rem)_minmax(0,1fr)_56px] items-center gap-3 rounded-md px-2 py-1.5">
-                <span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]" title={s.name}>{s.name}</span>
-                <div className="relative h-3 min-w-0" role="img" aria-label={`${s.name} ${money(s.capital_usd)} to open`}>
-                  <div className="absolute top-1/2 h-px w-full -translate-y-1/2" style={{ background: "#e7e2df" }} />
-                  <div className="absolute top-1/2 h-[3px] -translate-y-1/2 rounded-full" style={{ left: 0, width: `${pos}%`, background: hot ? TERRA : "#d4cdc8" }} />
-                  <span className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${pos}%`, background: hot ? TERRA : "#9a938e", boxShadow: "0 0 0 1px #e7e2df" }} />
-                </div>
-                <Fig className={`text-right text-[13px] ${hot ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{money(s.capital_usd)}</Fig>
+        <InlineDisclosure name="subtype-why" summary="Why each format keeps what it keeps">
+          <div className="mt-2 divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]">
+            {items.map((s) => (
+              <div key={s.slug} className="grid grid-cols-[minmax(0,10rem)_1fr] items-baseline gap-3 py-2">
+                <span className="text-[12px] font-medium text-[var(--c-ink)]">{s.name}</span>
+                <span className="text-[11.5px] leading-snug text-[var(--c-ink2)]">{s.note}</span>
               </div>
-            );
-          })}
-        </div>
-        <div className="mt-3 text-[11px] text-[var(--c-muted)]">Fit-out and kitchen to open the doors. Fine dining sits dearest; a cafe or bistro build is the lightest way in, at under a third of that cost.</div>
-      </Box>
-    </Full>
-  );
-}
-
-/* SUBTYPE WHO , progressive disclosure, one format's fit per row.
- * decision: which format suits which operator. focal: the open row body.
- * width: Full (T1), single-open stack. terracotta: the open-row title + keep chip.
- * Reads the derived subtype shape (keep% + cost-to-open) via deriveSubtypes. */
-function SubtypeWho({ d }: { d: any }) {
-  const items = deriveSubtypes(d);
-  if (!items.length) return null;
-  return (
-    <Full>
-      <Box>
-        <Rail icon="who-for" kicker="Which format suits whom" verdict="Open one to see who each format rewards, and what it costs to enter." />
-        <div className="space-y-2">
-          {items.map((s, i) => (
-            <Expand key={s.slug} name="subtype-who" title={s.name} open={i === 0}
-              right={<span className="rounded-full bg-[var(--c-soft)] px-2 py-0.5 text-[11px] font-semibold text-[var(--c-ink2)]"><Fig>{s.keeps_pct}%</Fig> keep</span>}>
-              <p>{s.note}</p>
-              <p className="mt-2 text-[var(--c-muted)]">Keeps about <Fig className="text-[var(--c-ink)]">{s.keeps_pct}%</Fig> of sales, roughly <Fig className="text-[var(--c-ink)]">{money(s.capital_usd)}</Fig> to open the doors.</p>
-            </Expand>
-          ))}
-        </div>
+            ))}
+          </div>
+        </InlineDisclosure>
+        <div className="mt-2.5 text-[11.5px] leading-snug text-[var(--c-muted)]">{d.subtypes?.note}</div>
       </Box>
     </Full>
   );
 }
 
 /* ============================================================
- * MONEY SPLIT , where each $100 goes, with the fixed/variable bracket folded in.
+ * MONEY SPLIT , where each $100 goes, the ONE carrier of the fixed/variable split
+ * (the old fixed-nut card restated these three numbers one card below and is CUT;
+ * its fixed_note/variable_note live in this card's disclosure now).
  * decision: what eats the sale. Number: the kept $7 slice of the stacked $100.
- * focal: the 100%-stacked bar; brackets over it carry the fixed/variable makeup
- *   (folds the old donut) and the "wages+rent decide the year" note (folds CostDrivers).
- * width: Full (T1) so the bar + its brackets have room. terracotta: the kept slice only. */
+ * focal: the 100%-stacked bar, ON-BAR % labels on every segment >=12% (the audit's
+ *   legend-round-trip fix); the legend stays as the name-to-colour mapping.
+ * width: Full (T1) so the bar + its brackets have room. terracotta: the kept slice only.
+ * Order + greys are OWNED HERE (sort={false}): the on-bar overlay and the fixed/variable
+ * bracket row must align 1:1 under the drawn segments, so the caller sorts group-contiguous
+ * (variable desc, fixed desc, kept last , the kit's own descending+kept-last order, which
+ * this data satisfies) and maps grey darkness to magnitude with the kit ramp values. */
 function MoneySplit({ d }: { d: any }) {
   const ms = d.money_split ?? {};
   const items: any[] = ms.items ?? [];
-  const greys = ["#8a8a88", "#a3a3a1", "#bcbcba", "#d2d2d0"]; let gi = 0;
-  const parts = items.map((it) => ({ ...it, color: it.kept ? TERRA : greys[(gi++) % greys.length] }));
+  if (!items.length) return null;
+  const GREYS = ["#a3a3a1", "#b4b4b2", "#c4c4c2", "#d3d3d1", "#e0e0de"];
+  const groupRank: Record<string, number> = { variable: 0, fixed: 1, kept: 2 };
+  const ordered = items.slice().sort((a, b) => (groupRank[a.group] ?? 1) - (groupRank[b.group] ?? 1) || b.pct - a.pct);
+  const sizeRank = new Map<string, number>(ordered.filter((i) => !i.kept).slice().sort((a, b) => b.pct - a.pct).map((s, i) => [s.name as string, i] as [string, number]));
+  const parts = ordered.map((it) => ({ ...it, color: it.kept ? TERRA : GREYS[Math.min(GREYS.length - 1, sizeRank.get(it.name) ?? 0)] }));
   const variablePct = items.filter((i) => i.group === "variable").reduce((a, i) => a + i.pct, 0);
   const fixedPct = items.filter((i) => i.group === "fixed").reduce((a, i) => a + i.pct, 0);
   const keptPct = items.filter((i) => i.group === "kept").reduce((a, i) => a + i.pct, 0);
   return (
     <Full>
       <Box>
-        <Rail icon="cost-breakdown" kicker="Where each $100 goes" verdict="Food and labour swallow two-thirds of every sale before rent." />
-        {/* the stacked bar */}
-        <StackBar segments={parts.map((p) => ({ label: p.name, pct: p.pct, color: p.color }))} h="h-11" ariaLabel={parts.map((p) => `${p.name} ${p.pct}%`).join(", ")} legend />
+        <Rail icon="cost-breakdown" kicker="Where each $100 goes" verdict="The owner's slice is what four bigger lines leave behind." />
+        {/* the stacked bar + the on-bar % overlay (ink on the light greys, AA-safe;
+            the kept 7% slice is carried by the legend + the bracket row instead) */}
+        <div className="relative">
+          <StackBar segments={parts.map((p) => ({ label: p.name, pct: p.pct, color: p.color, kept: !!p.kept }))} sort={false} h="h-11" ariaLabel={parts.map((p) => `${p.name} ${p.pct}%`).join(", ")} legend />
+          <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 flex h-11 items-center">
+            {parts.map((p) => (
+              <span key={p.name} className="fig overflow-hidden whitespace-nowrap text-center text-[11px] font-semibold" style={{ width: `${p.pct}%`, color: "#1b1b1a", opacity: 0.8 }}>{p.pct >= 12 ? `${p.pct}%` : ""}</span>
+            ))}
+          </div>
+        </div>
         {/* fixed / variable bracket row , folds the old donut into an annotation over the same $100 */}
         <div className="mt-4 grid grid-cols-[var(--vc)_var(--fc)_var(--kc)] gap-1 text-[10px]" style={{ ["--vc" as any]: `${variablePct}fr`, ["--fc" as any]: `${fixedPct}fr`, ["--kc" as any]: `${keptPct}fr` }}>
           {[["Variable", variablePct, "food + hourly wages, flex with covers"], ["Fixed", fixedPct, "rent, rates, salaried"], ["Kept", keptPct, "the owner's slice"]].map(([label, pct, sub]) => (
@@ -327,54 +309,45 @@ function MoneySplit({ d }: { d: any }) {
             </div>
           ))}
         </div>
+        <InlineDisclosure name="split-notes" summary="What is fixed, and what flexes with covers">
+          <div className="mt-2 space-y-2.5 border-t border-[var(--c-border)] pt-2.5">
+            <div className="grid grid-cols-[4.5rem_1fr] gap-3">
+              <span className="pt-0.5 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Fixed</span>
+              <span className="text-[11.5px] leading-snug text-[var(--c-ink2)]">{ms.fixed_note}</span>
+            </div>
+            <div className="grid grid-cols-[4.5rem_1fr] gap-3">
+              <span className="pt-0.5 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Variable</span>
+              <span className="text-[11.5px] leading-snug text-[var(--c-ink2)]">{ms.variable_note}</span>
+            </div>
+          </div>
+        </InlineDisclosure>
         <div className="mt-3 text-[11.5px] leading-snug text-[var(--c-ink2)]">{ms.annotation}</div>
       </Box>
     </Full>
   );
 }
 
-/* BREAK-EVEN , how full a typical day must run to clear costs (fill-bar meter) + the fixed-nut rail.
+/* BREAK-EVEN , how full a typical day must run to clear costs (fill-bar meter).
  * decision: what share of a typical day's trade pays the nut. Number: breakeven_utilization_pct.
  * IDENTITY (matches the seed's _identity line): BE = fixed $27 / contribution ratio 0.34
  * (1 - variable $66 per $100) = ~79% of a typical day's takings. The seed field is
- * breakeven_utilization_pct; if it is absent the meter card renders nothing (never a 0).
- * The fixed/variable pair is DERIVED from money_split.items (never hardcoded prose figures).
- * focal: the utilisation figure over a filled Meter. width: WideRail (T2).
- * terracotta: the meter fill only. idiom: fill-bar (1 of 2, with WherePays relative-take). */
+ * breakeven_utilization_pct; if it is absent the card renders nothing (never a 0).
+ * The old fixed-nut rail beside this card restated the money-split bracket and is CUT.
+ * focal: the utilisation figure over a filled Meter. width: Narrow (T5), one figure, air.
+ * terracotta: the meter fill only. idiom: fill-bar (1 use on the page). */
 function BreakEven({ d }: { d: any }) {
   const cs = d.cost_structure ?? {};
-  const ms = d.money_split ?? {};
-  const items: any[] = ms.items ?? [];
   const be: number | null = typeof cs.breakeven_utilization_pct === "number" ? cs.breakeven_utilization_pct : null;
-  const fixedUsd = items.filter((i) => i.group === "fixed").reduce((a, i) => a + (i.pct ?? 0), 0);
-  const variableUsd = items.filter((i) => i.group === "variable").reduce((a, i) => a + (i.pct ?? 0), 0);
-  if (be == null && !items.length) return null;
+  if (be == null) return null;
   return (
-    <WideRail>
-      {be == null ? null : (
-        <Box className="flex flex-col justify-center">
-          <Rail icon="break-even" kicker="Break-even utilisation" verdict="Below this share of a typical day's trade, the day loses money." />
-          <div className="mb-3 flex items-baseline gap-2.5"><CountFig value={be} suffix="%" className="text-[40px] leading-none text-[var(--c-ink)]" /><span className="text-[13px] text-[var(--c-ink2)]">of a typical day's covers, just to cover the costs.</span></div>
-          <Meter value={be} left="empty" right="a typical day" />
-          {cs.note ? <div className="mt-3 text-[11.5px] leading-snug text-[var(--c-muted)]">{cs.note}</div> : null}
-        </Box>
-      )}
-      {items.length ? (
-        <Box className="flex flex-col justify-center">
-          <Rail icon="methodology" kicker="Of every $100 taken" verdict="A heavy fixed nut means an empty room bleeds money quickly." />
-          <div className="space-y-3">
-            <div>
-              <div className="flex items-baseline justify-between"><span className="text-[12px] font-medium text-[var(--c-ink)]">Fixed costs</span><Fig className="text-[13px] text-[var(--c-ink)]">${fixedUsd}</Fig></div>
-              <div className="mt-0.5 text-[11px] leading-snug text-[var(--c-muted)]">{ms.fixed_note}</div>
-            </div>
-            <div className="border-t border-[var(--c-border)] pt-3">
-              <div className="flex items-baseline justify-between"><span className="text-[12px] font-medium text-[var(--c-ink)]">Variable costs</span><Fig className="text-[13px] text-[var(--c-ink)]">${variableUsd}</Fig></div>
-              <div className="mt-0.5 text-[11px] leading-snug text-[var(--c-muted)]">{ms.variable_note}</div>
-            </div>
-          </div>
-        </Box>
-      ) : null}
-    </WideRail>
+    <Narrow>
+      <Box>
+        <Rail icon="break-even" kicker="Break-even utilisation" verdict="Below this share of a typical day's trade, the day loses money." />
+        <div className="mb-3 flex items-baseline gap-2.5"><CountFig value={be} suffix="%" className="text-[40px] leading-none text-[var(--c-ink)]" /><span className="text-[13px] text-[var(--c-ink2)]">of a typical day's takings, just to cover the costs.</span></div>
+        <Meter value={be} left="empty" right="a typical day" />
+        {cs.note ? <div className="mt-3 text-[11.5px] leading-snug text-[var(--c-muted)]">{cs.note}</div> : null}
+      </Box>
+    </Narrow>
   );
 }
 
@@ -389,7 +362,7 @@ function Ramp({ d }: { d: any }) {
   if (!nodes.length) return null;
   return (
     <Full>
-      <Rail icon="first-year" tone="terra" kicker="The first year, month by month" verdict="Open soft, build covers, survive the cash gap, and cross break-even around month six." />
+      <Rail icon="first-year" tone="terra" kicker="The first year, month by month" verdict="Open soft, build covers, and survive the cash gap between full rota and full room." />
       <Timeline span={fy.span ?? 52} unit={fy.unit ?? "week"} phases={phases} nodes={nodes} startLabel="open" read={fy.note} />
     </Full>
   );
@@ -406,7 +379,7 @@ function Operator({ d }: { d: any }) {
   const facts: Array<[string, string]> = [
     [money(o.capital_to_open_usd), "to open"],
     [`${o.survival_1yr_pct}%`, "survive yr 1"],
-    [`${o.sale_multiple_low}-${o.sale_multiple_high}x`, "profit at sale"],
+    [`x${o.sale_multiple_low}-${o.sale_multiple_high}`, "profit at sale"],
   ];
   return (
     <Box>
@@ -471,7 +444,7 @@ function Survival({ d }: { d: any }) {
   if (curve.length < 2) return null;
   return (
     <Box className="flex flex-col">
-      <Rail icon="watch" kicker="How many last" verdict="Most clear year one; about half are still open at year five." />
+      <Rail icon="watch" kicker="Five-year survival" verdict="Most rooms outlive the folklore; the early winters decide who stays." />
       <SurvivalCurve curve={curve} note={s.note} />
     </Box>
   );
@@ -502,39 +475,38 @@ function WhoItSuits({ d }: { d: any }) {
 /* ============================================================
  * SEASONALITY , the year's shape as a single area RIBBON (honesty fix + new form).
  * decision: when the cash comes and when it is tight. focal: the ribbon over 12 months.
- * width: Full (T1). terracotta: the peak node only; the trough is derived + inked.
- * idiom: drawn ribbon (2 of 2, with SurvivalCurve). */
+ * width: the chart half of a WideRail (T2), paired with Caveats , the page's tail
+ * alternates tiers instead of running four Full bands in a row.
+ * terracotta: the peak node only; the trough is derived + inked.
+ * idiom: drawn ribbon (2 of 2, with SurvivalCurve). Returns a bare Box for WideRail. */
 function Seasonality({ d }: { d: any }) {
   const se = d.seasonality ?? {};
   const months: number[] = se.months ?? [];
   if (!months.length) return null;
   return (
-    <Full>
-      <Box>
-        <Rail icon="seasonality" kicker="Across the year" verdict="The festive quarter carries the year; the new-year lull is the cash test." />
-        <SeasonRibbon months={months} peakNote={se.peak_note} troughNote={se.trough_note} />
-        <div className="mt-2 text-[11.5px] leading-snug text-[var(--c-muted)]">{se.note}</div>
-      </Box>
-    </Full>
+    <Box>
+      <Rail icon="seasonality" kicker="Across the year" verdict="The year breathes: the high season pays for the quiet months." />
+      <SeasonRibbon months={months} peakNote={se.peak_note} troughNote={se.trough_note} />
+      <div className="mt-2 text-[11.5px] leading-snug text-[var(--c-muted)]">{se.note}</div>
+    </Box>
   );
 }
 
 /* CAVEATS , folk-myths debunked (the honesty moat, fully free). Reads the seed shape
  * { myths: string[], honest_take } and renders the debunk lines plus one interpretive lead.
  * decision-support: the comfortable stories are wrong. focal: the honest-take lead.
- * width: Full (T1). terracotta: none on the surface (the section eyebrow icon carries it). */
+ * width: the rail half of a WideRail (T2), beside the season ribbon.
+ * terracotta: none on the surface (the section eyebrow icon carries it). */
 function Caveats({ d }: { d: any }) {
   const c = d.caveats ?? {};
   const myths: string[] = c.myths ?? [];
   if (!myths.length && !c.honest_take) return null;
   return (
-    <Full>
-      <Box>
-        <Rail icon="myth-reality" tone="terra" kicker="What people get wrong" verdict="The comfortable stories about this trade do not survive the maths." />
-        {myths.length ? <Bullets items={myths} /> : null}
-        {c.honest_take ? <p className="mt-3 border-t border-[var(--c-border)] pt-3 text-[12.5px] leading-snug text-[var(--c-ink2)]">{c.honest_take}</p> : null}
-      </Box>
-    </Full>
+    <Box>
+      <Rail icon="myth-reality" tone="terra" kicker="What people get wrong" verdict="The comfortable stories about this trade do not survive the maths." />
+      {myths.length ? <Bullets items={myths} /> : null}
+      {c.honest_take ? <p className="mt-3 border-t border-[var(--c-border)] pt-3 text-[12.5px] leading-snug text-[var(--c-ink2)]">{c.honest_take}</p> : null}
+    </Box>
   );
 }
 
@@ -584,15 +556,11 @@ export default function SpineIndustryPage() {
       <Movement index="01" eyebrow="Against the neighbours" heading="The keep, against the trades next door" icon="benchmark" />
       <Benchmark d={d} />
 
-      <Movement index="02" eyebrow="The demand" heading="The appetite, and how thin it spreads" icon="spending-power" />
+      <Movement index="02" eyebrow="The demand" heading="The appetite, and the crowd sharing it" icon="spending-power" />
       <Demand d={d} />
 
       <Movement index="03" eyebrow="The subtypes" heading="One trade, five different bets" icon="cost-breakdown" />
-      <div className="space-y-6">
-        <SubtypeDrill d={d} />
-        <SubtypeCompare d={d} />
-        <SubtypeWho d={d} />
-      </div>
+      <SubtypeDrill d={d} />
 
       <Movement index="04" eyebrow="How the money works" heading="The shape of the trade" icon="taxes" />
       <div className="space-y-6">
@@ -600,7 +568,7 @@ export default function SpineIndustryPage() {
         <BreakEven d={d} />
       </div>
 
-      <Movement index="05" eyebrow="The typical operator" heading="What a normal owner sees" icon="who-for" />
+      <Movement index="05" eyebrow="The typical operator" heading="The owner's take, and the odds" icon="who-for" />
       <div className="space-y-6">
         <Ramp d={d} />
         <WideRail><Operator d={d} /><CapitalPayback d={d} /></WideRail>
@@ -610,8 +578,7 @@ export default function SpineIndustryPage() {
       <Movement index="06" eyebrow="Where it pays best" heading="The same trade, place by place" icon="best-areas" />
       <div className="space-y-6">
         <WherePaysExplorer d={d} />
-        <Seasonality d={d} />
-        <Caveats d={d} />
+        <WideRail><Seasonality d={d} /><Caveats d={d} /></WideRail>
       </div>
 
       <Movement index="07" eyebrow="The close" heading="The next move" icon="bookmark" />

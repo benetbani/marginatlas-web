@@ -221,8 +221,10 @@ export function SeasonRibbon({ months, peakNote, troughNote }: { months: number[
         <circle cx={X(peak)} cy={Y(months[peak])} r={4} fill={TERRA} stroke="#fff" strokeWidth={1.6} />
         {/* trough node (ink, derived) */}
         <circle cx={X(trough)} cy={Y(months[trough])} r={3} fill="#fff" stroke="#1b1b1a" strokeWidth={1.6} />
+        {/* month letters: peak + trough emphasised in INK only , terracotta stays on the
+            peak node (the answer); the trough is a warning and never wears the accent */}
         {MONTH_LABELS.map((m, i) => (
-          <text key={i} x={X(i)} y={H - 6} textAnchor="middle" fill={i === trough ? "#c2410c" : i === peak ? "#565654" : "#9a938e"} fontSize={9} fontWeight={i === trough || i === peak ? 600 : 400}>{m}</text>
+          <text key={i} x={X(i)} y={H - 6} textAnchor="middle" fill={i === trough || i === peak ? "#565654" : "#9a938e"} fontSize={9} fontWeight={i === trough || i === peak ? 600 : 400}>{m}</text>
         ))}
         <text x={X(peak)} y={Y(months[peak]) - 9} textAnchor="middle" fill="#c2410c" fontSize={9.5} fontWeight={600}>peak</text>
         <text x={X(trough)} y={Y(months[trough]) - 9} textAnchor="middle" fill="#6f6f6d" fontSize={9.5} fontWeight={600}>low</text>
