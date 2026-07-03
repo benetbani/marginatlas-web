@@ -34,6 +34,17 @@ export function WherePaysExplorer({ d }: { d: any }) {
   const [sel, setSel] = React.useState<string>("all");
   const [unlocked, setUnlocked] = React.useState(false);
 
+  // The subtype-filter chips only earn their place when a format genuinely
+  // RE-RANKS the cities, which needs a real rent_sensitivity on the raw subtype
+  // list. On real-data promotion that field is omitted (no honest source), so
+  // every format defaults to sensitivity 1, nothing re-ranks, and the chips
+  // would be inert chrome. Guard on the RAW list (deriveSubtypes defaults the
+  // field to 1, so the derived rows cannot tell "absent" from "1"): show the
+  // filter row only when at least one raw subtype carries a rent_sensitivity.
+  const rawSubtypes: any[] = d.subtypes?.list ?? [];
+  const hasRentSensitivity = rawSubtypes.some((s) => typeof s?.rent_sensitivity === "number");
+  const canFilter = hasRentSensitivity && subs.length > 0;
+
   const active = sel === "all" ? null : subs.find((s) => s.slug === sel) ?? null;
 
   // Genuine re-rank: a format flexes each place by its keep ratio AND by how hard
@@ -76,13 +87,17 @@ export function WherePaysExplorer({ d }: { d: any }) {
           <Rail icon="best-areas" tone="terra" kicker="Where it pays best" verdict="The place sets the keep: the same room, run the same way, banks different money in different cities." />
           <p className="-mt-1 mb-3 max-w-2xl text-[12.5px] text-[var(--c-ink2)]">{note}</p>
 
-          {/* subtype filter (the client re-rank interaction) */}
-          <div className="mb-4 flex flex-wrap items-center gap-1.5">
-            <FilterChip label="All restaurants" active={sel === "all"} onClick={() => setSel("all")} />
-            {subs.map((s) => (
-              <FilterChip key={s.slug} label={s.name} active={sel === s.slug} onClick={() => setSel(s.slug)} />
-            ))}
-          </div>
+          {/* subtype filter (the client re-rank interaction). Hidden when no format
+              carries a real rent_sensitivity, since then nothing re-ranks and the
+              chips would be inert. */}
+          {canFilter ? (
+            <div className="mb-4 flex flex-wrap items-center gap-1.5">
+              <FilterChip label="All restaurants" active={sel === "all"} onClick={() => setSel("all")} />
+              {subs.map((s) => (
+                <FilterChip key={s.slug} label={s.name} active={sel === s.slug} onClick={() => setSel(s.slug)} />
+              ))}
+            </div>
+          ) : null}
 
           {/* free columns: rank + net-% shape + net %. The bar length encodes the visible metric
               (net %), and the order is ranked by it, so the read is self-consistent. Pro column
@@ -110,7 +125,7 @@ export function WherePaysExplorer({ d }: { d: any }) {
                 })}
               </div>
               <div className="mt-2 text-[11px] text-[var(--c-muted)]">
-                {active ? <>Ranked for <b className="text-[var(--c-ink2)]">{active.name}</b>: {(active.rent_sensitivity ?? 1) < 1 ? "a light-rent format, so the high-rent cities climb." : (active.rent_sensitivity ?? 1) > 1 ? "a rent-heavy format, so the high-rent cities fall." : "the field holds its all-restaurants order."} </> : <>Ranked for all restaurants. Pick a format above to reshuffle the high-rent cities. </>}
+                {active ? <>Ranked for <b className="text-[var(--c-ink2)]">{active.name}</b>: {(active.rent_sensitivity ?? 1) < 1 ? "a light-rent format, so the high-rent cities climb." : (active.rent_sensitivity ?? 1) > 1 ? "a rent-heavy format, so the high-rent cities fall." : "the field holds its all-restaurants order."} </> : canFilter ? <>Ranked for all restaurants. Pick a format above to reshuffle the high-rent cities. </> : <>Ranked by what a typical owner keeps, best first. </>}
                 Best net margin is bold.
               </div>
             </div>

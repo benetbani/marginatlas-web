@@ -89,7 +89,8 @@ import {
 } from "@/lib/scores/activity_board";
 import { isSpineReformEnabled } from "@/lib/feature_flags";
 import { SpineShell } from "@/components/spine/shell";
-import SpineIndustry from "@/app/dev/spine-industry/page";
+import { SpineIndustryBody } from "@/app/dev/spine-industry/industry-view";
+import { buildSpineIndustrySeed } from "@/lib/spine/adapt_industry";
 
 void INDUSTRY_PAGE_SECTIONS;
 
@@ -145,18 +146,23 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
 }
 
 export default async function IndustryPage({ params }: { params: Promise<Params> }) {
-  // Spine reform (flag-gated, default OFF). The spine body renders the bundled
-  // restaurants seed regardless of `params`; that is intentional for this scaffold
-  // and never ships live because the flag stays OFF until real-data adapters land.
+  const { industry } = await params;
+
+  // Spine reform (flag-gated, default OFF). Promoted to real data: the spine body
+  // now renders the reconciled per-industry seed from buildSpineIndustrySeed
+  // (driven from the margin table + the real where_pays across cities + synthesis),
+  // never the bundled illustrative seed. A slug that resolves to no industry falls
+  // through to notFound(), matching the non-spine page. Flag OFF path untouched.
   if (isSpineReformEnabled()) {
+    const spineData = await buildSpineIndustrySeed(industry);
+    if (!spineData) notFound();
     return (
       <SpineShell bg="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1920&q=60" bgPosition="center 50%">
-        <SpineIndustry />
+        <SpineIndustryBody data={spineData} />
       </SpineShell>
     );
   }
 
-  const { industry } = await params;
   const raw = slugToIndustry(industry);
   // Prefer the requested trade when it carries its OWN measured margin row;
   // only fall back to a measured parent when the requested trade has no data of
