@@ -6,6 +6,15 @@
  * detail behind a click); clean numerals; no per-country prose. The local Box/Head/Ico/
  * Movement/Row duplicates were deleted , every primitive now comes from @/components/spine/kit
  * so the shared foundation (two-zone band, premium Box, fixed Movement/Expand) reaches here.
+ *
+ * FINAL ASCENT P2 refit (2026-07-03, audit key "ctry"): the dot-on-rail monoculture is
+ * rebalanced onto the Visual Dictionary (RailDots = the ONE page-local shared-axis dot
+ * plot; Character's gradient rails are now neutral spectra tables; Immigration is a
+ * single rail; HiringDials' depth row folded into TalentDepth), Banking's meter runs the
+ * page-standard Hard->Easy polarity, the opening cost bar carries a visible legend, the
+ * seasonality bars became an honest line on a drawn zero axis, NeighboursTable's
+ * best-in-column crowns exclude the home row, and per-card confidence dots collapsed
+ * into the single masthead provenance line.
  */
 import * as React from "react";
 import fs from "node:fs";
@@ -19,34 +28,57 @@ import {
   TERRA, TRACK, usd, cap,
   Ico, Fig, MiniBar, Dots, StackBar, Waterfall, type StackSeg,
   Movement, Box, EaseScale, Meter, Head, Chip, KV, Expand, InlineDisclosure, Bullets,
-  Even, WideRail, Spectrum, CatRows,
-  Rail, Stat, Spark, Timeline, type TLNode, type TLPhase,
+  Even, WideRail, CatRows,
+  Rail, Stat, Timeline, type TLNode, type TLPhase,
 } from "@/components/spine/kit";
 import { RankBars, LockPill } from "@/components/spine/kit-index";
 
 export const dynamic = "force-static";
 const GB: any = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), "../page-data/countries/GB.json"), "utf8"));
 
-/* Provenance is stated ONCE near the masthead (below). Per-section confidence is
- * carried by a single quiet dot, never a loud 'sample' pill: solid ink = modeled/held,
- * hollow = still illustrative. Reads as a footnote, not a demo stamp. */
-function ConfidenceDot({ level }: { level?: string }) {
-  const solid = level === "held" || level === "modeled";
-  return (
-    <span
-      title={solid ? "Modeled from published figures" : "Illustrative, pending research"}
-      className="inline-block h-[7px] w-[7px] shrink-0 rounded-full align-middle"
-      style={solid ? { background: "#c9c2bc" } : { border: "1px solid #cfc8c3", background: "transparent" }}
-      aria-hidden
-    />
-  );
+/* Provenance is stated ONCE in the masthead line. The old per-card ConfidenceDot
+ * ceremony is retired (audit copy minor): a page of quiet dots read as noise, and the
+ * datum they carried lived only in a native title= (mobile-invisible). */
+
+/* read peer country files (server-only); used for the named "where it sits among peers"
+ * dot plot , names come with the values so the peers are never anonymous */
+function peerRows(codes: string[], pick: (j: any) => number | null | undefined): Array<{ code: string; name: string; v: number }> {
+  return codes
+    .map((code) => {
+      try {
+        const j = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), "../page-data/countries/" + code + ".json"), "utf8"));
+        const v = pick(j);
+        return typeof v === "number" ? { code, name: j.meta?.name ?? code, v } : null;
+      } catch { return null; }
+    })
+    .filter(Boolean) as Array<{ code: string; name: string; v: number }>;
 }
 
-/* read a peer country file (server-only); used for derived "where it sits among peers" sparks */
-function peerVals(codes: string[], pick: (j: any) => number | null | undefined): number[] {
-  return codes
-    .map((code) => { try { return pick(JSON.parse(fs.readFileSync(path.resolve(process.cwd(), "../page-data/countries/" + code + ".json"), "utf8"))); } catch { return null; } })
-    .filter((v): v is number => typeof v === "number");
+/* RailDots , the page-local shared-axis dot plot (Visual Dictionary idiom #4): ONE
+ * drawn rail, N positioned dots, labels alternating above/below the track so close
+ * positions never collide; endpoints named via `endLabels`; optional `refPos` draws an
+ * ink reference tick. Dots are ink; `accent` marks the single answer dot terracotta.
+ * The caller wraps it with role="img" + aria-label (this shape is aria-hidden). */
+function RailDots({ dots, endLabels, refPos }: { dots: Array<{ pos: number; label: string; accent?: boolean }>; endLabels?: [string, string]; refPos?: number }) {
+  const sorted = [...dots].sort((a, b) => a.pos - b.pos);
+  return (
+    <div aria-hidden>
+      <div className="relative my-6 h-[6px] rounded-full" style={{ background: "#ecebe9" }}>
+        {refPos != null ? <span className="absolute -bottom-1.5 -top-1.5 w-px" style={{ left: `${refPos}%`, background: "var(--c-line-strong)" }} /> : null}
+        {sorted.map((x, i) => {
+          const above = i % 2 === 0;
+          const shift = x.pos < 8 ? "0" : x.pos > 92 ? "-100%" : "-50%";
+          return (
+            <React.Fragment key={`${x.label}-${i}`}>
+              <span className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${x.pos}%`, background: x.accent ? TERRA : "var(--c-ink)", boxShadow: "0 0 0 1px #e3e3e3" }} />
+              <span className={`absolute whitespace-nowrap text-[10.5px] leading-none ${above ? "-top-4" : "top-4"} ${x.accent ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-ink2)]"}`} style={{ left: `${x.pos}%`, transform: `translateX(${shift})` }}>{x.label}</span>
+            </React.Fragment>
+          );
+        })}
+      </div>
+      {endLabels ? <div className="flex justify-between text-[10px] uppercase tracking-wide text-[var(--c-muted)]"><span>{endLabels[0]}</span><span>{endLabels[1]}</span></div> : null}
+    </div>
+  );
 }
 
 /* ================= CHAPTER 1 ================= */
@@ -88,10 +120,15 @@ function Hero({ d }: { d: any }) {
         <div className="mt-2 grid items-center gap-x-8 gap-y-6 md:grid-cols-[1fr_auto]">
           <div>
             <div className="flex items-center gap-3.5"><CountryFlag iso2="gb" className="w-[52px] rounded-sm shadow-sm" /><h1 className="text-balance text-3xl font-bold tracking-tight text-[var(--c-ink)] md:text-4xl">{d.meta?.name}</h1></div>
-            {/* THE answer, in the top 20%: the margin a typical small business keeps. */}
+            {/* THE answer, in the top 20%. The unit is FUSED into the figure lockup
+                ("$15 / $100") so the hero can never read as a price; the side line
+                carries the who, not the unit. */}
             <div className="mt-4 flex items-end gap-3">
-              <CountFig target={kept} prefix="$" className="text-[64px] font-semibold leading-[0.9] text-[var(--terra-text)] md:text-[76px]" />
-              <span className="mb-2 max-w-[22ch] text-[13px] leading-snug text-[var(--c-ink2)]">kept of every $100 a typical small business takes in.</span>
+              <span className="flex items-baseline gap-1.5">
+                <CountFig target={kept} prefix="$" className="text-[64px] font-semibold leading-[0.9] text-[var(--terra-text)] md:text-[76px]" />
+                <span className="fig text-[26px] font-medium leading-none text-[var(--terra-text)] opacity-75 md:text-[30px]">/ $100</span>
+              </span>
+              <span className="mb-2 max-w-[20ch] text-[13px] leading-snug text-[var(--c-ink2)]">kept by a typical small business, after every cost.</span>
             </div>
           </div>
           <div className="grid w-full max-w-[420px] grid-cols-2 gap-px overflow-hidden rounded-xl border border-[var(--c-border)] sm:grid-cols-3 md:w-[420px]" style={{ background: "var(--c-border)" }}>
@@ -103,10 +140,9 @@ function Hero({ d }: { d: any }) {
             ))}
           </div>
         </div>
-        {/* provenance, stated ONCE, one quiet line. No two-symbol dot legend: a hollow
-            section dot simply flags a figure still being researched. */}
+        {/* provenance, stated ONCE, one quiet line , the page's only provenance chrome. */}
         <p className="mt-5 border-t border-[var(--c-border)] pt-3 text-[11.5px] leading-snug text-[var(--c-muted)]">
-          Figures are modeled from published economic data as of 2026, converted to US dollars for like-for-like reading. A hollow dot beside a section marks a figure still being researched.
+          Figures are modeled from published economic data as of 2026, converted to US dollars for like-for-like reading; a few sections still carry early seed figures under research.
         </p>
       </div>
     </section>
@@ -116,9 +152,12 @@ function Hero({ d }: { d: any }) {
 /*
  * MarginReality , the cost base behind the hero's kept figure.
  * verdict: Labour is the heaviest slice; tax and premises follow; margin is what survives.
- * focal: a full-width stacked cost bar, the kept slice terracotta at the end.
+ * focal: a full-width stacked cost bar, the kept slice terracotta at the end. The page's
+ * FIRST chart may not be mute: the legend renders always-visible (the Payments band's
+ * treatment), and the kit StackBar's honesty sort orders segments descending with the
+ * kept slice pinned last and the greys tracking magnitude.
  * width: WideRail [1] , the chart beside the six-lens Profile scorecard.
- * terracotta: the kept (margin) slice only.
+ * terracotta: the kept (margin) slice only (the inline $ echo is ink bold).
  */
 function MarginReality({ d }: { d: any }) {
   const m = d.margin ?? {};
@@ -126,16 +165,13 @@ function MarginReality({ d }: { d: any }) {
   const greys = ["#737373", "#a3a3a3", "#d4d4d4", "#e6e6e6", "#ededed"];
   const parts: StackSeg[] = [
     ...(m.cost_stack ?? []).map((p: any, i: number) => ({ label: p.name, pct: p.pct, color: greys[i % greys.length] })),
-    { label: "Margin", pct: kept, color: TERRA },
+    { label: "Margin", pct: kept, color: TERRA, kept: true },
   ];
   return (
     <Box>
-      <div className="mb-3 flex items-center gap-2"><Ico id="owner-keeps" /><span className="text-[15px] font-semibold text-[var(--c-ink)]">Where the other ${100 - kept} goes</span><ConfidenceDot /></div>
-      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1"><span className="text-sm text-[var(--c-ink2)]">Labour is the heaviest slice; the <b className="text-[var(--terra-text)]">${kept}</b> margin is what survives it.</span></div>
-      <StackBar h="h-10" className="mt-4" segments={parts} ariaLabel={`Of every 100 in revenue, about ${kept} is kept as margin`} />
-      <InlineDisclosure name="margin" summary="See the cost base">
-        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1.5">{parts.map((s) => <span key={s.label} className="inline-flex items-center gap-1.5 text-[11px] text-[var(--c-ink2)]"><span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ background: s.color }} />{s.label} <Fig className="text-[var(--c-ink)]">{s.pct}%</Fig></span>)}</div>
-      </InlineDisclosure>
+      <Head icon="owner-keeps">Where the other ${100 - kept} goes</Head>
+      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1"><span className="text-sm text-[var(--c-ink2)]">Labour is the heaviest slice; the <b className="text-[var(--c-ink)]">${kept}</b> margin is what survives it.</span></div>
+      <StackBar h="h-10" className="mt-4" segments={parts} legend ariaLabel={`Of every 100 in revenue, about ${kept} is kept as margin`} />
     </Box>
   );
 }
@@ -186,8 +222,9 @@ function Demand({ d }: { d: any }) {
   const m = d.demand ?? {};
   const segs: any[] = (m.consumer_segments ?? []).slice().sort((a: any, b: any) => b.pct - a.pct);
   const topName = segs[0]?.name?.toLowerCase();
+  const maxPct = segs[0]?.pct || 1;
   return (
-    <Box className="relative"><div className="absolute right-5 top-5"><ConfidenceDot /></div>
+    <Box>
       <Rail icon="spending-power" kicker="The size of the market" verdict={<>A deep consumer pool, but most is <b className="text-[var(--c-ink)]">{topName || "everyday spend"}</b>, not premium.</>} />
       <div className="grid items-stretch gap-4 md:grid-cols-2">
         <div className="focal flex flex-col justify-center p-4">
@@ -206,10 +243,12 @@ function Demand({ d }: { d: any }) {
         </div>
         <div className="flex flex-col justify-center">
           <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Where that money goes</div>
-          <div className="space-y-2">{segs.map((s: any, i: number) => (
+          {/* bars scale to the LEADER (not to 100), so the 44/26/18/12 split stays
+              discriminable; the % figures carry the true values. */}
+          <div className="space-y-2">{segs.map((s: any) => (
             <div key={s.name} className="grid grid-cols-[128px_1fr_34px] items-center gap-2.5">
               <span className="min-w-0 truncate text-[12px] text-[var(--c-ink2)]">{s.name}</span>
-              <MiniBar pct={s.pct} />
+              <MiniBar pct={(s.pct / maxPct) * 100} />
               <Fig className="text-right text-[12px] text-[var(--c-ink)]">{s.pct}%</Fig>
             </div>))}
           </div>
@@ -341,14 +380,17 @@ function Formation({ d }: { d: any }) {
  */
 function Banking({ d }: { d: any }) {
   const b = d.setup?.banking ?? {};
-  const fmap: any = { low: 22, medium: 55, high: 82 };
+  // friction word -> a position on the PAGE-STANDARD Hard(left) -> Easy(right) axis
+  // (every other rail on the page runs this polarity; a flipped axis on a repeated
+  // idiom silently misleads scanners). medium friction = slightly hard of centre.
+  const fmap: any = { low: 78, medium: 45, high: 18 };
   const fv = fmap[(b.friction || "").toLowerCase()] ?? 50;
   return (
     <Box>
       <Rail icon="owner-keeps" kicker="Opening a bank account" verdict={b.can_foreigner ? "Open to foreign owners; a UK address and a few weeks of checks are the catch." : "Restricted for foreign owners; expect added hurdles."} />
       <div className="focal mb-3 p-3.5">
-        <div className="mb-1 flex items-baseline justify-between"><span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">How hard</span><Fig className="text-[18px] capitalize text-[var(--terra-text)]">{b.friction}</Fig></div>
-        <Meter value={fv} left="Easy" right="Hard" />
+        <div className="mb-1 flex items-baseline justify-between"><span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">How hard</span><Fig className="text-[18px] capitalize text-[var(--c-ink)]">{b.friction}</Fig></div>
+        <Meter value={fv} left="Hard" right="Easy" />
       </div>
       <Bullets items={b.bullets ?? []} />
       <div className="mt-3 divide-y divide-[var(--c-border)]">
@@ -396,7 +438,7 @@ function TaxByLevel({ d }: { d: any }) {
         <div className="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
           <span className="text-[13px] text-[var(--c-ink2)]">All-in tax load</span>
           <Fig className="text-[26px] leading-none text-[var(--terra-text)]">{allIn}%</Fig>
-          <span className="rounded-full border border-[var(--terra-border)] bg-[var(--terra-soft)] px-2.5 py-0.5 text-[11px] font-semibold text-[var(--terra-text)]">{band} for the peer set</span>
+          <Chip>{band} for the peer set</Chip>
         </div>
         <div className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Share of the tax load, modeled for a typical small company</div>
         <Waterfall rows={waterfallRows} />
@@ -413,55 +455,99 @@ function TaxByLevel({ d }: { d: any }) {
 /* ================= CHAPTER 3 ================= */
 /*
  * PayByLevel , what staff cost to employ, by seniority.
- * verdict: A senior hire costs roughly triple an entry-level one, before on-costs.
- * focal: a clean single-value ranked bar per level (no invented range around the point).
- * width: Full , a wage ladder reads best across the column.
- * terracotta: the top (most expensive) level only, via RankBars.
+ * verdict: A senior hire costs roughly triple an entry-level one, and every wage
+ * carries an on-cost tip.
+ * focal: a wage ladder in seniority order; each bar is gross salary (solid) plus a
+ * ghosted +on-cost extension, so the TRUE cost-to-employ reads at a glance instead of
+ * hiding in a footnote. Figures show the loaded cost, gross beneath.
+ * width: Even , paired with TalentDepth.
+ * terracotta: the +% on-cost figure in the legend line only (bars stay neutral , the
+ * decision anchor is the ladder itself, not any single tier).
  */
 function PayByLevel({ d }: { d: any }) {
   const o = d.people_pay?.pay_by_level_usd ?? {};
+  const on = d.tax_burden?.employer_oncost_pct ?? 0;
   const levels: Array<[string, string]> = [["junior", "Entry / wage floor"], ["experienced", "Skilled"], ["senior", "Senior"], ["specialist", "Management & specialist"]];
-  const rows = levels.map(([k, label]) => ({ id: k, label, value: o[k] || 0, display: `$${Math.round((o[k] || 0) / 1000)}K` }));
-  const top = rows.reduce((a, b) => (b.value > a.value ? b : a), rows[0]);
+  const rows = levels.map(([k, label]) => { const gross = o[k] || 0; const loaded = Math.round(gross * (1 + on / 100)); return { k, label, gross, loaded }; });
+  const max = Math.max(...rows.map((r) => r.loaded)) || 1;
   return (
     <Box><Head icon="wages">What staff cost to employ</Head>
-      <RankBars rows={rows} valueUnit="" leaderId={top?.id} />
-      <div className="mt-3 rounded-lg bg-[var(--c-soft)] px-3 py-2 text-[12px] text-[var(--c-ink2)]">Gross salary only. On top of every wage add <Fig className="text-[var(--terra-text)]">+{d.tax_burden?.employer_oncost_pct}%</Fig> for pension and social contributions.</div>
+      <div className="space-y-1">
+        {rows.map((r) => (
+          <div key={r.k} className="hov -mx-2 grid grid-cols-[minmax(0,8.5rem)_1fr_4.6rem] items-center gap-3 rounded-md px-2 py-1.5">
+            <span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]">{r.label}</span>
+            <span className="relative block h-2 overflow-hidden rounded-full" style={{ background: TRACK }} role="img" aria-label={`${r.label}: $${Math.round(r.gross / 1000)}K gross, $${Math.round(r.loaded / 1000)}K with on-costs`}>
+              <span className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${(r.loaded / max) * 100}%`, background: "#e2ddd9" }} />
+              <span className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${(r.gross / max) * 100}%`, background: "#c8c8c6" }} />
+            </span>
+            <span className="text-right leading-tight">
+              <Fig className="block text-[13px] text-[var(--c-ink)]">${Math.round(r.loaded / 1000)}K</Fig>
+              <span className="fig block text-[10px] text-[var(--c-muted)]">${Math.round(r.gross / 1000)}K gross</span>
+            </span>
+          </div>
+        ))}
+      </div>
+      <div className="mt-3 rounded-lg bg-[var(--c-soft)] px-3 py-2 text-[12px] text-[var(--c-ink2)]">Solid bar = gross salary; the pale tip adds the <Fig className="text-[var(--terra-text)]">+{on}%</Fig> employer on-cost for pension and social contributions. Figures show the full cost to employ.</div>
     </Box>
   );
 }
 /*
  * HiringDials , how easy it is to hire, contract and let go.
  * verdict: A flexible labour market; contracts are light and dismissals are lighter than peers.
- * focal: four markers on one shared Harder-to-Easier scale (EaseScale).
- * width: Even , paired peer to TalentDepth.
- * terracotta: the marker dots only.
+ * focal: THREE labour-flexibility dials on one shared Harder-to-Easier scale (the old
+ * fourth row, "Depth of talent: Deep", was a mislabeled duplicate of the adjacent
+ * TalentDepth card and folded into it). Endpoints named via the kit's endLabels.
+ * width: Even , paired peer to OperatingCosts.
+ * terracotta: none (neutral markers; the words carry the read).
  */
 function HiringDials({ d }: { d: any }) {
-  const h = d.people_pay?.hiring ?? {}; const eMap: any = { easy: 84, moderate: 52, hard: 18, deep: 84, fair: 52, thin: 18 };
-  const rows: Array<[string, number, string]> = [["Hiring someone", eMap[h.hire_ease] ?? 50, cap(h.hire_ease)], ["Contracts you can use", eMap[h.contract_ease] ?? 50, cap(h.contract_ease)], ["Letting someone go", eMap[h.fire_ease] ?? 50, cap(h.fire_ease)], ["Depth of talent", eMap[h.recruiting_depth] ?? 50, cap(h.recruiting_depth)]];
+  const h = d.people_pay?.hiring ?? {}; const eMap: any = { easy: 84, moderate: 52, hard: 18 };
+  const rows: Array<[string, number, string]> = [["Hiring someone", eMap[h.hire_ease] ?? 50, cap(h.hire_ease)], ["Contracts you can use", eMap[h.contract_ease] ?? 50, cap(h.contract_ease)], ["Letting someone go", eMap[h.fire_ease] ?? 50, cap(h.fire_ease)]];
+  const notes = h.notes ?? {};
   return (
     <Box><Head icon="hiring">How easy it is to hire and let go</Head>
-      <div className="mb-5 mt-1 flex justify-between text-[10px] uppercase tracking-wide text-[var(--c-muted)]"><span>Harder / rigid</span><span>Easier / flexible</span></div>
-      <EaseScale rows={rows} />
+      <div className="mt-6"><EaseScale rows={rows} endLabels={["Harder / rigid", "Easier / flexible"]} /></div>
+      {notes.hire ? (
+        <InlineDisclosure name="hiring" className="group mt-4 border-t border-[var(--c-border)] pt-2.5" summary="What sits behind each dial">
+          <div className="mt-2 space-y-1.5 text-[12px] leading-snug text-[var(--c-ink2)]">
+            <p><b className="font-medium text-[var(--c-ink)]">Hiring.</b> {notes.hire}</p>
+            <p><b className="font-medium text-[var(--c-ink)]">Contracts.</b> {notes.contract}</p>
+            <p><b className="font-medium text-[var(--c-ink)]">Letting go.</b> {notes.fire}</p>
+          </div>
+        </InlineDisclosure>
+      ) : null}
     </Box>
   );
 }
 /*
  * TalentDepth , how deep the talent pool runs by field.
  * verdict: Finance, tech and professional services run deepest; making things runs thinnest.
- * focal: a ranked score bar per field, deepest first.
- * width: Even , paired peer to HiringDials.
- * terracotta: the deepest field bar only.
+ * focal: a deep/thinner SPLIT LIST on the seed's NATIVE 1-5 scale. The old dots row
+ * doubled 1-5 to /10 (fake precision) and four fields tied at the ceiling, so the dots
+ * discriminated nothing; a categorical split is the honest read. Also absorbs the
+ * "Depth of talent" row folded out of HiringDials (the recruiting note below).
+ * width: Even , paired peer to PayByLevel.
+ * terracotta: none (a reference read; no single answer field).
  */
 function TalentDepth({ d }: { d: any }) {
   const map: any = { finance: "Finance", software_tech: "Software & tech", professional_legal: "Professional & legal", creative_media: "Creative & media", life_sciences: "Life sciences", manufacturing_trades: "Manufacturing & trades" };
   const arr = (d.people_pay?.talent_depth ?? []).slice().sort((a: any, b: any) => b.score_1_5 - a.score_1_5);
+  const deep = arr.filter((t: any) => t.score_1_5 >= 5);
+  const thinner = arr.filter((t: any) => t.score_1_5 < 5);
+  const rowEl = (t: any) => (
+    <div key={t.field} className="flex items-baseline justify-between gap-3 border-b border-[var(--c-border)] py-1.5 last:border-0">
+      <span className="text-[12.5px] text-[var(--c-ink2)]">{map[t.field] ?? t.field}</span>
+      <Fig className="text-[12.5px] text-[var(--c-ink)]">{t.score_1_5}<span className="text-[10px] text-[var(--c-muted)]">/5</span></Fig>
+    </div>
+  );
+  const recruiting = d.people_pay?.hiring?.notes?.recruiting;
   return (
     <Box><Head icon="who-for">How deep the talent pool runs, by field</Head>
-      <div className="space-y-2.5">{arr.map((t: any, i: number) => (
-        <div key={t.field} className="hov -mx-2 grid grid-cols-[160px_1fr_44px] items-center gap-3 rounded-md px-2 py-1"><span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]">{map[t.field] ?? t.field}</span><Dots score={t.score_1_5 * 2} max={10} accent={i === 0} /><Fig className="text-right text-[13px] text-[var(--c-ink)]">{t.score_1_5 * 2}/10</Fig></div>))}
+      <div className="grid gap-x-7 gap-y-3 sm:grid-cols-2">
+        <div><div className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Runs deep</div>{deep.map(rowEl)}</div>
+        <div><div className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Runs thinner</div>{thinner.map(rowEl)}</div>
       </div>
+      {recruiting ? <p className="mt-3 text-[11.5px] leading-snug text-[var(--c-muted)]">{recruiting}</p> : null}
       <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-[var(--c-border)] pt-3"><span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Languages</span>{(d.people_pay?.languages ?? []).map((l: any) => <Chip key={l.name}>{l.name} {l.pct_speakers}%</Chip>)}</div>
     </Box>
   );
@@ -469,18 +555,27 @@ function TalentDepth({ d }: { d: any }) {
 
 /*
  * OperatingCosts , what it costs to run premises.
- * verdict: Rent is the cost that moves the needle; it sits mid-pack among peers.
- * focal: commercial rent + a peer Spark giving the number a "where it sits" shape.
- * width: WideRail [1fr_188px] feel , focal rent beside a thin support list.
- * terracotta: the rent Spark line + marker only.
+ * verdict: Rent is the cost that moves the needle; the named peer rail shows where it sits.
+ * focal: commercial rent + a NAMED peer dot plot (every peer a labelled dot on one
+ * drawn rail, endpoints valued), replacing the old scale-less "vs peers" spark that
+ * asserted a rank a reader could not check.
+ * width: WideRail [1fr_200px] feel , focal rent beside a thin support list.
+ * terracotta: the home (UK) dot + its label only (the focal Stat stays ink so the box
+ * keeps one accent).
  */
 function OperatingCosts({ d }: { d: any }) {
   const c = d.costs ?? {};
   const p = d.premises ?? {};
-  const peers = peerVals(d.meta?.peer_set ?? [], (j) => j?.costs?.commercial_rent_usd_sqm_yr);
-  const ladder = [...peers, c.commercial_rent_usd_sqm_yr].filter((v) => typeof v === "number").sort((a, b) => a - b);
-  const markerIndex = ladder.indexOf(c.commercial_rent_usd_sqm_yr);
-  const rank = markerIndex >= 0 && ladder.length > 1 ? (markerIndex <= 0 ? "the cheapest" : markerIndex >= ladder.length - 1 ? "the priciest" : "mid-pack") : "mid-pack";
+  const peers = peerRows(d.meta?.peer_set ?? [], (j) => j?.costs?.commercial_rent_usd_sqm_yr);
+  const all = [...peers, { code: "GB", name: "UK", v: c.commercial_rent_usd_sqm_yr }]
+    .filter((x) => typeof x.v === "number")
+    .sort((a, b) => a.v - b.v);
+  const idx = all.findIndex((x) => x.code === "GB");
+  const n = all.length;
+  const rank = n > 1 && idx >= 0 ? (idx === 0 ? "the cheapest" : idx === n - 1 ? "the priciest" : idx >= (n - 1) * 0.66 ? "near the top" : idx <= (n - 1) * 0.34 ? "near the bottom" : "mid-pack") : "unranked";
+  const lo = all[0]?.v ?? 0, hi = all[n - 1]?.v ?? 1, span = hi - lo || 1;
+  const dots = all.map((x) => ({ pos: ((x.v - lo) / span) * 100, label: x.name, accent: x.code === "GB" }));
+  const fmt$ = (v: number) => `$${Math.round(v).toLocaleString("en-US")}`;
   const support: Array<[string, string]> = [
     [`$${(c.energy_usd_per_kwh ?? 0).toFixed(2)}`, "Electricity, per kWh"],
     [`$${Math.round(c.labour_cost_index_usd / 1000)}K`, "Loaded labour, per worker / yr"],
@@ -491,18 +586,18 @@ function OperatingCosts({ d }: { d: any }) {
       <Rail icon="commercial-rent" kicker="What it costs to run premises" verdict={<>Rent moves the needle, and it sits <b className="text-[var(--c-ink)]">{rank}</b> among neighbours.</>} />
       <div className="grid items-stretch gap-4 md:grid-cols-[1fr_200px]">
         <div className="focal flex flex-col justify-center p-4">
-          <Stat value={<>${c.commercial_rent_usd_sqm_yr?.toLocaleString("en-US")}</>} label="Commercial rent / sqm a year" size="focal" accent />
-          {ladder.length > 1 ? (
-            <div className="mt-3 flex items-center gap-2.5">
-              <Spark values={ladder} markerIndex={markerIndex} w={110} />
-              <span className="text-[11px] leading-tight text-[var(--c-muted)]">vs peers</span>
-            </div>
-          ) : null}
+          <Stat value={<>${c.commercial_rent_usd_sqm_yr?.toLocaleString("en-US")}</>} label="Commercial rent / sqm a year" size="focal" />
         </div>
         <div className="divide-y divide-[var(--c-border)]">
           {support.map(([v, l]) => <div key={l} className="py-2.5"><Fig className="text-[18px] text-[var(--c-ink)]">{v}</Fig><div className="mt-0.5 text-[11px] leading-tight text-[var(--c-ink2)]">{l}</div></div>)}
         </div>
       </div>
+      {n > 1 ? (
+        <div className="mt-3" role="img" aria-label={`Commercial rent among peers: ${all.map((x) => `${x.name} ${fmt$(x.v)}`).join(", ")}`}>
+          <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Rent among the peer set, $ / sqm a year</div>
+          <RailDots dots={dots} endLabels={[fmt$(lo), fmt$(hi)]} />
+        </div>
+      ) : null}
       {p.lease_years_typical ? (
         <InlineDisclosure name="lease" summary={`The lease behind the rent: ${p.lease_years_typical} years typical`}>
           <div className="mt-2 divide-y divide-[var(--c-border)]">
@@ -536,13 +631,15 @@ function Financing({ d }: { d: any }) {
  * verdict: A mix of a rebate, a backed loan and two competitive grants; none are automatic.
  * focal: the amount per scheme; each expands to what it is and how it actually pays out.
  * width: Even , peer to Financing.
- * terracotta: the amount figure per row only.
+ * terracotta: the OPEN row's amount only (closed amounts are ink , four terra amounts
+ * at once blew the one-accent budget); non-numeric values ("varies by area") render as
+ * plain text, never in the figure slot.
  */
 function Grants({ d }: { d: any }) {
   return (
-    <Box><div className="mb-3 flex items-center gap-2"><Ico id="free-zone" /><span className="text-[15px] font-semibold text-[var(--c-ink)]">Grants and incentives</span><ConfidenceDot /></div>
+    <Box><Head icon="free-zone">Grants and incentives</Head>
       <div className="space-y-2">{(d.grants?.list ?? []).map((g: any, i: number) => (
-        <Expand key={i} name="grants" title={g.name} open={i === 0} right={<Fig className="text-[13px] text-[var(--terra-text)]">{g.value}</Fig>}>
+        <Expand key={i} name="grants" title={g.name} open={i === 0} right={/\d/.test(g.value || "") ? <Fig className="text-[13px] text-[var(--c-ink)] group-open:text-[var(--terra-text)]">{g.value}</Fig> : <span className="text-[12px] text-[var(--c-muted)] group-open:text-[var(--terra-text)]">{g.value}</span>}>
           <div className="mb-1.5 flex flex-wrap items-center gap-x-3 gap-y-1"><span className="rounded-full bg-[var(--c-soft)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{g.kind}</span><span className="text-[11.5px] text-[var(--c-ink2)]">For {(g.who || "").toLowerCase()}</span></div>
           {g.note}
         </Expand>))}
@@ -602,36 +699,45 @@ function SpendDonut({ d }: { d: any }) {
 /*
  * Seasonality , how demand moves across the year.
  * verdict: A clear run-up into the peak month; the quiet stretch is the cash-flow test.
- * focal: a baselined 12-column year (floor below the quietest month, peak picked out terra).
+ * focal: a 12-month LINE on a drawn zero axis (re-visual: the old bars sat on a floored
+ * baseline, so bar length no longer encoded value , shape-over-time with a truncated
+ * range is exactly the line's case). Peak and trough are labelled with their values,
+ * so the chart proves the swing instead of asserting it on hover.
  * width: Even , peer to SectorMix, equal class.
- * terracotta: the single peak column only.
+ * terracotta: the peak point + its label only.
  */
 function Seasonality({ d }: { d: any }) {
   const months: number[] = d.seasonality?.months ?? [];
   const labels = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
+  const names = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   if (months.length !== 12) return null;
   const min = Math.min(...months), max = Math.max(...months);
-  const floor = Math.max(0, min - (max - min) * 0.35); // baseline sits below the quietest month
-  const span = max - floor || 1;
   const peakIdx = months.indexOf(max);
   const troughIdx = months.indexOf(min);
+  const W = 560, H = 150, padL = 10, padR = 10, top = 24, axisY = 124;
+  const X = (i: number) => padL + (i / 11) * (W - padL - padR);
+  const Y = (v: number) => axisY - (v / 100) * (axisY - top); // zero baseline AT the drawn axis
+  const pts = months.map((v, i) => `${X(i).toFixed(1)},${Y(v).toFixed(1)}`);
+  const line = "M " + pts.join(" L ");
+  const area = `M ${X(0).toFixed(1)},${axisY} L ` + pts.join(" L ") + ` L ${X(11).toFixed(1)},${axisY} Z`;
   return (
-    <Box className="relative"><div className="absolute right-5 top-5"><ConfidenceDot /></div>
+    <Box>
       <Rail icon="spending-power" kicker="Demand across the year" verdict={<>Trade builds into a <b className="text-[var(--c-ink)]">{["January","February","March","April","May","June","July","August","September","October","November","December"][peakIdx]}</b> peak; the quiet start is the cash-flow test.</>} />
-      <div className="flex h-[120px] items-end gap-1.5" role="img" aria-label={`Monthly demand index, peak in month ${peakIdx + 1}, lowest in month ${troughIdx + 1}`}>
-        {months.map((v, i) => {
-          const hPct = ((v - floor) / span) * 100;
-          const peak = i === peakIdx;
-          return (
-            <div key={i} className="flex flex-1 flex-col items-center justify-end gap-1.5" style={{ height: "100%" }}>
-              <div className="flex w-full flex-1 items-end">
-                <div className="w-full rounded-t-[3px]" style={{ height: `${Math.max(4, hPct)}%`, background: peak ? TERRA : "#cfc8c3" }} title={`${labels[i]} ${v}`} />
-              </div>
-              <span className={`text-[9.5px] ${peak ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{labels[i]}</span>
-            </div>
-          );
-        })}
-      </div>
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label={`Monthly demand index: peak ${names[peakIdx]} at ${max}, lowest ${names[troughIdx]} at ${min}`} preserveAspectRatio="xMidYMid meet">
+        <line x1={padL} y1={axisY} x2={W - padR} y2={axisY} stroke="#d8d0cb" strokeWidth={1.5} />
+        <path d={area} fill="#efedeb" />
+        <path d={line} fill="none" stroke="#a8a29e" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" />
+        {/* trough, named + valued */}
+        <circle cx={X(troughIdx)} cy={Y(min)} r={3} fill="#8c8c8a" stroke="#fff" strokeWidth={1.5} />
+        <text x={X(troughIdx)} y={Y(min) - 8} textAnchor="middle" fill="#8c8c8a" fontSize={10}>{names[troughIdx]} {min}</text>
+        {/* peak, named + valued , the one terracotta mark */}
+        <circle cx={X(peakIdx)} cy={Y(max)} r={4} fill={TERRA} stroke="#fff" strokeWidth={1.5} />
+        <text x={Math.min(X(peakIdx), W - padR)} y={Y(max) - 8} textAnchor={peakIdx >= 10 ? "end" : "middle"} fill="#c2410c" fontSize={10.5} fontWeight={600}>{names[peakIdx]} {max}</text>
+        {months.map((_, i) => (
+          <text key={i} x={X(i)} y={axisY + 14} textAnchor="middle" fill={i === peakIdx ? "#c2410c" : "#8c8c8a"} fontSize={9} fontWeight={i === peakIdx ? 600 : 400}>{labels[i]}</text>
+        ))}
+      </svg>
+      <div className="mt-1.5 text-[11px] text-[var(--c-muted)]">Demand index across the year; the peak month = 100, the axis starts at zero.</div>
     </Box>
   );
 }
@@ -646,9 +752,11 @@ function Seasonality({ d }: { d: any }) {
 function SectorMix({ d }: { d: any }) {
   const sectors: any[] = (d.sector_mix?.sectors ?? []).slice().sort((a: any, b: any) => b.pct - a.pct);
   const lead = sectors[0];
-  const rows = sectors.map((s: any) => ({ id: s.name, label: s.name, value: s.pct, display: `${s.pct}%` }));
+  // "Production and manufacturing" clipped in the half-width label column , shorten.
+  const short = (name: string) => (/production and manufacturing/i.test(name) ? "Manufacturing" : name);
+  const rows = sectors.map((s: any) => ({ id: s.name, label: short(s.name), value: s.pct, display: `${s.pct}%` }));
   return (
-    <Box className="relative"><div className="absolute right-5 top-5"><ConfidenceDot /></div>
+    <Box>
       <Rail icon="cost-breakdown" kicker="The shape of the economy" verdict={<>A <b className="text-[var(--c-ink)]">{lead?.name?.toLowerCase()}</b>-led economy; making things is a small slice of the whole.</>} />
       <RankBars rows={rows} max={100} valueUnit="%" leaderId={lead?.name} />
     </Box>
@@ -669,9 +777,11 @@ function RiskRegister({ d }: { d: any }) {
   return (
     <Box>
       <Rail icon="watch" kicker="What could go wrong" verdict={top ? <>One risk towers over the rest: <b className="text-[var(--c-ink)]">{(label[top.name] ?? top.name).toLowerCase()}</b>. The rest are ordinary.</> : "Risks are spread evenly."} />
+      {/* the "highest" call lives in the verdict line above , the old inline tag
+          truncated to "HIG…" inside the label column. */}
       <div className="space-y-2.5">{risks.map((r: any, i: number) => (
         <div key={r.name} className="hov -mx-2 grid grid-cols-[150px_1fr_auto] items-center gap-3 rounded-md px-2 py-1">
-          <span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]">{label[r.name] ?? r.name}{i === 0 ? <span className="ml-2 text-[10px] font-semibold uppercase tracking-wide text-[var(--terra-text)]">highest</span> : null}</span>
+          <span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]">{label[r.name] ?? r.name}</span>
           <div className={i === 0 ? "" : "opacity-60"}><Dots score={r.score_1_10} max={10} accent={i === 0} /></div>
           <Fig className="w-9 text-right text-[12.5px] text-[var(--c-ink)]">{r.score_1_10}/10</Fig>
         </div>))}
@@ -683,38 +793,35 @@ function RiskRegister({ d }: { d: any }) {
 /*
  * Income , what customers earn.
  * verdict: A comfortable median customer, but the top of the market pulls far ahead.
- * focal: the median earner figure (the customer who actually walks in).
+ * focal: the median earner figure (the customer who actually walks in), then the three
+ * rungs as labelled dots on ONE zero-based shared axis with a reference tick at the
+ * median (the old three-rail lollipop carried no independent scale).
  * width: Even , peer to SpendDonut, equal class.
- * terracotta: the median focal Stat only (the rungs are neutral lollipop points).
+ * terracotta: the median focal Stat only (the axis dots are ink).
  */
 function Income({ d }: { d: any }) {
   const o = d.income ?? {};
-  const rungs: Array<[string, number, boolean]> = [["Median earner", o.median_income_usd, true], ["Top 10%", o.top10_income_usd, false], ["Top 1%", o.top1_income_usd, false]];
-  const max = Math.max(...rungs.map(([, v]) => v || 0)) || 1;
+  const max = o.top1_income_usd || 1;
+  const k$ = (v: number) => `$${Math.round((v || 0) / 1000)}K`;
+  const medianPos = Math.max(2, Math.min(100, ((o.median_income_usd || 0) / max) * 100));
+  const dots = [
+    { pos: medianPos, label: `Median ${k$(o.median_income_usd)}` },
+    { pos: Math.max(2, Math.min(100, ((o.top10_income_usd || 0) / max) * 100)), label: `Top 10% ${k$(o.top10_income_usd)}` },
+    { pos: 100, label: `Top 1% ${k$(o.top1_income_usd)}` },
+  ];
   const bands = ["very_equal", "fairly_equal", "moderate", "high", "very_high"]; const gi = bands.indexOf(o.gini_band);
   return (
     <Box>
       <Rail icon="spending-power" kicker="What customers earn" verdict="A comfortable median customer, but the top pulls far ahead of the middle." />
       <div className="focal mb-3 flex items-end justify-between p-4">
-        <Stat value={<>${Math.round((o.median_income_usd || 0) / 1000)}K</>} label="Median earner" size="focal" accent />
+        <Stat value={k$(o.median_income_usd)} label="Median earner" size="focal" accent />
         <div className="text-right text-[11px] leading-tight text-[var(--c-muted)]">the customer<br />who walks in</div>
       </div>
-      {/* Lollipop rows: neutral track with a dot at each earner's position, so the
-          three rungs read as points on one income axis (not a fourth bar idiom).
-          The terra accent stays on the focal median Stat above. */}
-      <div className="space-y-2.5">{rungs.map(([l, v]) => {
-        const pos = Math.max(2, Math.min(100, ((v || 0) / max) * 100));
-        return (
-          <div key={l} className="grid grid-cols-[88px_1fr_44px] items-center gap-2.5">
-            <span className="min-w-0 truncate text-[12px] text-[var(--c-ink2)]">{l}</span>
-            <div className="relative h-2 rounded-full" style={{ background: "#f0f0f0" }}>
-              <div className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${pos}%`, background: "#e0dcd8" }} />
-              <span className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${pos}%`, background: "#8f8a86", boxShadow: "0 0 0 1px #e3e3e3" }} />
-            </div>
-            <Fig className="text-right text-[12px] text-[var(--c-ink)]">${Math.round((v || 0) / 1000)}K</Fig>
-          </div>
-        );
-      })}
+      {/* ONE shared income axis (idiom #4): the three rungs as labelled dots on a single
+          zero-based rail, a reference tick at the median. The old three-rail lollipop
+          carried no independent scale (Top 1% was pinned to 100% by construction). */}
+      <div role="img" aria-label={`Income spread on one axis: median ${k$(o.median_income_usd)}, top 10% ${k$(o.top10_income_usd)}, top 1% ${k$(o.top1_income_usd)}`}>
+        <RailDots dots={dots} refPos={medianPos} endLabels={["$0", ""]} />
       </div>
       <div className="mt-3 flex items-center gap-2 border-t border-[var(--c-border)] pt-3"><div className="flex gap-1">{bands.map((b, i) => <span key={b} className="h-1.5 w-6 rounded-sm" style={{ background: i === gi ? "#8f8a86" : "#e3e3e3" }} />)}</div><span className="text-[11.5px] text-[var(--c-ink2)]">{cap((o.gini_band ?? "").replace("_", " "))} spread between earners</span></div>
     </Box>
@@ -744,19 +851,26 @@ function Neighbours({ d }: { d: any }) {
   ];
   const codes = ["GB", ...(d.meta?.peer_set ?? [])];
   const raw = codes.map((code) => { let j: any = null; try { j = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), "../page-data/countries/" + code + ".json"), "utf8")); } catch (e) { } return j ? { code, home: code === "GB", name: j.meta?.name ?? code, vals: cols.map((c) => c.get(j)) } : null; }).filter(Boolean) as any[];
-  const best = cols.map((c, i) => { const xs = raw.map((r) => r.vals[i]).filter((v: any) => v != null); return c.lowGood ? Math.min(...xs) : Math.max(...xs); });
+  // HOME-EXCLUSION (the kit-index bestEntityForRow contract, applied server-side where
+  // this table computes its flags): the home row is tinted, NEVER ranked , the best
+  // crown goes to the best PEER; the intro line then says whether home beats them.
+  const peersOnly = raw.filter((r) => !r.home);
+  const bestPeer = cols.map((c, i) => { const xs = peersOnly.map((r) => r.vals[i]).filter((v: any) => v != null); return xs.length ? (c.lowGood ? Math.min(...xs) : Math.max(...xs)) : null; });
+  const worstPeer = cols.map((c, i) => { const xs = peersOnly.map((r) => r.vals[i]).filter((v: any) => v != null); return xs.length ? (c.lowGood ? Math.max(...xs) : Math.min(...xs)) : null; });
   const home = raw.find((r) => r.home);
-  const wins = cols.filter((c, i) => home && home.vals[i] === best[i]).map((c) => c.label.toLowerCase());
-  const loses = cols.filter((c, i) => { const xs = raw.map((r) => r.vals[i]).filter((v: any) => v != null); const worst = c.lowGood ? Math.max(...xs) : Math.min(...xs); return home && home.vals[i] === worst; }).map((c) => c.label.toLowerCase());
+  const wins = cols.filter((c, i) => home && home.vals[i] != null && bestPeer[i] != null && (c.lowGood ? home.vals[i] < bestPeer[i]! : home.vals[i] > bestPeer[i]!)).map((c) => c.label.toLowerCase());
+  const loses = cols.filter((c, i) => home && home.vals[i] != null && worstPeer[i] != null && (c.lowGood ? home.vals[i] > worstPeer[i]! : home.vals[i] < worstPeer[i]!)).map((c) => c.label.toLowerCase());
   const colDefs = cols.map((c) => ({ key: c.key, label: c.label, unit: c.unit }));
-  const tableRows = raw.map((r) => ({ name: r.name, home: r.home, cells: r.vals.map((v: number, i: number) => ({ raw: v ?? null, display: v == null ? "-" : cols[i].cell(v), best: v != null && v === best[i] })) }));
+  const tableRows = raw.map((r) => ({ name: r.name, home: r.home, cells: r.vals.map((v: number, i: number) => ({ raw: v ?? null, display: v == null ? "-" : cols[i].cell(v), best: !r.home && v != null && v === bestPeer[i] })) }));
   return (
     <Box><Head icon="compare">How it compares, country by country</Head>
-      {wins.length || loses.length ? <div className="mb-3 text-[12.5px] text-[var(--c-ink2)]">{d.meta?.name} leads its peers on <b className="text-[var(--terra-text)]">{wins.join(", ") || "none yet"}</b>{loses.length ? <>, and trails on <b className="text-[var(--c-ink)] underline decoration-[var(--c-line-strong)] underline-offset-2">{loses.join(", ")}</b></> : null}.</div> : null}
+      {wins.length || loses.length ? <div className="mb-3 text-[12.5px] text-[var(--c-ink2)]">{d.meta?.name} beats every peer on <b className="text-[var(--c-ink)]">{wins.join(", ") || "none of these"}</b>{loses.length ? <>, and trails them all on <b className="text-[var(--c-ink)] underline decoration-[var(--c-line-strong)] underline-offset-2">{loses.join(", ")}</b></> : null}.</div> : null}
       <NeighboursTable cols={colDefs} rows={tableRows} />
-      <div className="mt-2 text-[11px] text-[var(--c-muted)]">Best in each column is bold. Click a header to sort.</div>
-      {/* Pro seam: the fixed peer set is free; choosing your own comparison set is the paid move. */}
-      <div className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-dashed border-[var(--terra-border)] bg-[var(--terra-soft)] px-3 py-2.5">
+      <div className="mt-2 text-[11px] text-[var(--c-muted)]">Best among the peers in each column is bold; the home row is tinted, never ranked. Click a header to sort.</div>
+      {/* Pro seam: the fixed peer set is free; choosing your own comparison set is the
+          paid move. Quiet chrome (neutral dashed hairline + soft wash): the LockPill is
+          the seam's one terracotta mark. */}
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-dashed border-[var(--c-border)] bg-[var(--c-soft)] px-3 py-2.5">
         <span className="text-[12px] text-[var(--c-ink2)]">Set {d.meta?.name} against up to three countries you pick. <LockPill /></span>
         <a className="shrink-0 cursor-pointer rounded-full bg-[var(--c-ink)] px-3 py-1.5 text-[12px] font-semibold text-white transition hover:bg-[var(--terra-text)]">Open Compare &#8594;</a>
       </div>
@@ -777,15 +891,18 @@ function Competition({ d }: { d: any }) {
   const rest = arr.slice(1);
   const word = (s: number) => (s > 70 ? "Crowded" : s > 50 ? "Busy" : "Room");
   return (
-    <Box className="relative"><div className="absolute right-5 top-5"><ConfidenceDot /></div><Rail icon="competition" kicker="How crowded the market is" verdict={top ? <>The <b className="text-[var(--c-ink)]">{top.name.toLowerCase()}</b> trade is most crowded; quieter trades still have room.</> : "Crowding varies by trade."} />
+    <Box><Rail icon="competition" kicker="How crowded the market is" verdict={top ? <>The <b className="text-[var(--c-ink)]">{top.name.toLowerCase()}</b> trade is most crowded; quieter trades still have room.</> : "Crowding varies by trade."} />
       {top ? (
         <div className="focal mb-3 flex items-end justify-between p-4">
           <Stat value={<>{top.saturation_0_100}<span className="text-[16px] text-[var(--c-muted)]">/100</span></>} label={`${top.name} , most crowded`} size="focal" accent />
-          <span className="rounded-full border border-[var(--terra-border)] bg-[var(--terra-soft)] px-2.5 py-0.5 text-[11px] font-semibold text-[var(--terra-text)]">{word(top.saturation_0_100)}</span>
+          <Chip>{word(top.saturation_0_100)}</Chip>
         </div>
       ) : null}
+      {/* every row carries its /100 value (one encoding for the whole list); the
+          qualitative word stays on the focal chip only. */}
+      <div className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Saturation, 0 to 100</div>
       <div className="space-y-2">{rest.map((t: any) => (
-        <div key={t.name} className="hov -mx-2 grid grid-cols-[130px_1fr_56px] items-center gap-3 rounded-md px-2 py-1"><span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]">{t.name}</span><div className="h-[7px] w-full min-w-0 overflow-hidden rounded-full" style={{ background: TRACK }}><div className="h-full rounded-full" style={{ width: `${t.saturation_0_100}%`, background: "#bdbdbd" }} /></div><span className="text-right text-[11.5px] text-[var(--c-ink2)]">{word(t.saturation_0_100)}</span></div>))}
+        <div key={t.name} className="hov -mx-2 grid grid-cols-[130px_1fr_34px] items-center gap-3 rounded-md px-2 py-1"><span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]">{t.name}</span><div className="h-[7px] w-full min-w-0 overflow-hidden rounded-full" style={{ background: TRACK }} role="img" aria-label={`${t.name}: ${t.saturation_0_100} of 100`}><div className="h-full rounded-full" style={{ width: `${t.saturation_0_100}%`, background: "#bdbdbd" }} /></div><Fig className="text-right text-[12px] text-[var(--c-ink)]">{t.saturation_0_100}</Fig></div>))}
       </div>
     </Box>
   );
@@ -801,7 +918,7 @@ function Competition({ d }: { d: any }) {
 function AdminLoad({ d }: { d: any }) {
   const a = d.admin_load ?? {};
   return (
-    <Box className="relative"><div className="absolute right-5 top-5"><ConfidenceDot /></div><Rail icon="red-tape" kicker="The admin load" verdict="A light, almost-all-online admin load once the company is set up." />
+    <Box><Rail icon="red-tape" kicker="The admin load" verdict="A light, almost-all-online admin load once the company is set up." />
       <div className="focal mb-3 flex items-end justify-between p-4">
         <Stat value={<>{a.hours_per_year}<span className="text-[16px] text-[var(--c-muted)]">h</span></>} label="A year on admin" sub={`${a.filings_per_year} filings a year`} size="focal" accent />
         <div className="text-right">
@@ -819,38 +936,44 @@ function AdminLoad({ d }: { d: any }) {
  * Cities , the main business cities, ranked by market size, with the real map folded in
  * (the old separate CitiesMap band merged here so the places story is ONE band, not two).
  * verdict: The capital dwarfs the rest; the strongest regional markets are the next move.
- * focal: the ranked conveyor, then every city placed on the map below it.
- * width: Full , conveyor over map. terracotta: the per-card index bar + map dots only.
+ * focal: the ranked conveyor (name + character + index figure), then every city placed
+ * on the map below it; the map's dot size is the single shape-encoding of the index.
+ * width: Full , conveyor over map. terracotta: the London map pin only (the answer);
+ * every other pin is ink.
  */
 function Cities({ d }: { d: any }) {
   const list = (d.cities?.list ?? []).slice().sort((a: any, b: any) => (b.market_index_vs_capital ?? 0) - (a.market_index_vs_capital ?? 0));
+  // Cards carry name + character + the index FIGURE only. The empty 16:8 image
+  // placeholder is gone (dead pixels dominated every card), and the per-card minibar
+  // is gone too: the map's dot size is the single shape-encoding of the same index
+  // (the audit flagged the double encoding).
   const cards = list.map((c: any) => (
     <a key={c.slug} href="#" className="cityhov group block w-full cursor-pointer overflow-hidden rounded-lg border border-[var(--c-border)] bg-[var(--c-card)]">
-      <div className="flex aspect-[16/8] items-center justify-center bg-[var(--c-soft)] text-[#cfcfcf]"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3"><path d="M3 21h18M5 21V7l5-3v17M19 21V11l-5-3" /></svg></div>
       <div className="px-3 py-2.5">
-        <div className="text-[13px] font-semibold text-[var(--c-ink)] group-hover:text-[var(--terra-text)]">{c.name}</div>
+        <div className="flex items-baseline justify-between gap-2">
+          <div className="min-w-0 truncate text-[13px] font-semibold text-[var(--c-ink)] group-hover:text-[var(--terra-text)]">{c.name}</div>
+          {typeof c.market_index_vs_capital === "number" ? <Fig className="shrink-0 text-[12px] text-[var(--c-ink)]">{c.market_index_vs_capital}</Fig> : null}
+        </div>
         <div className="truncate text-[11px] text-[var(--c-ink2)]">{c.character}</div>
-        {typeof c.market_index_vs_capital === "number" ? (
-          <div className="mt-2 flex items-center gap-2">
-            <MiniBar pct={c.market_index_vs_capital} />
-            <Fig className="shrink-0 text-[10.5px] text-[var(--c-muted)]">{c.market_index_vs_capital}</Fig>
-          </div>
-        ) : null}
       </div>
     </a>
   ));
+  // Pin encoding: terracotta = the leading market (London), ink = the rest , the map
+  // stays one-accent. SpineMap declutters colliding labels at first paint (label-box
+  // aware, highest signal wins), so Glasgow/Edinburgh and Liverpool/Manchester never
+  // overprint; hidden labels reappear on hover/focus.
   const points: SpinePoint[] = list
     .filter((c: any) => typeof c.lat === "number" && typeof c.lng === "number")
-    .map((c: any) => ({ name: c.name, slug: c.slug, lat: c.lat, lng: c.lng, signal: c.market_index_vs_capital, sub: c.character, href: c.slug === "london" ? "/dev/spine-city" : undefined }));
+    .map((c: any) => ({ name: c.name, slug: c.slug, lat: c.lat, lng: c.lng, signal: c.market_index_vs_capital, signalLabel: `market ${c.market_index_vs_capital} vs London 100`, sub: c.character, tone: c.slug === "london" ? "terra" : "ink", href: c.slug === "london" ? "/dev/spine-city" : undefined }));
   return (
     <Box>
       <div className="mb-3 flex items-center justify-between gap-3">
         <div className="flex items-center gap-2"><Ico id="neighborhood" /><span className="text-[15px] font-semibold text-[var(--c-ink)]">The main cities, placed</span></div>
-        <a href="/countries" className="shrink-0 cursor-pointer rounded-full border border-[var(--c-border)] px-3 py-1 text-[12px] font-semibold text-[var(--terra-text)] transition hover:border-[var(--terra-border)] hover:bg-[var(--terra-soft)]">Open the directory &#8594;</a>
+        <a href="/countries" className="shrink-0 cursor-pointer rounded-full border border-[var(--c-border)] px-3 py-1 text-[12px] font-semibold text-[var(--c-ink2)] transition hover:border-[var(--terra-border)] hover:text-[var(--terra-text)]">Open the directory &#8594;</a>
       </div>
       <Conveyor ariaLabel="The main cities" itemMinPx={150} gapPx={12}>{cards}</Conveyor>
-      <div className="mt-3"><SpineMap points={points} ariaLabel="Map of the main UK business cities" fitPadding={70} /></div>
-      <div className="mt-2.5 text-[11px] text-[var(--c-muted)]">Bar and dot size = market reach against the capital (100). London opens its own page.</div>
+      <div className="mt-3"><SpineMap points={points} ariaLabel="Map of the main UK business cities" fitPadding={70} legendLabel="Dot size = market reach, London = 100" /></div>
+      <div className="mt-2.5 text-[11px] text-[var(--c-muted)]">The figure on each card and the dot size on the map are the same read: market reach against London (100). London opens its own page.</div>
     </Box>
   );
 }
@@ -868,7 +991,7 @@ function EasiestTrades({ d }: { d: any }) {
   // Terra marks only the single easiest trade (one accent per box).
   const rows = list.map((t: any) => ({ name: t.name, ease: 100 - (t.hardship_0_100 ?? 0), cost: `$${Math.round((t.cost_to_open_usd ?? 0) / 1000)}K` }));
   return (
-    <Box><div className="mb-3 flex items-center gap-2"><Ico id="best-areas" /><span className="text-[15px] font-semibold text-[var(--c-ink)]">Easiest trades to start</span><ConfidenceDot /></div>
+    <Box><Head icon="best-areas">Easiest trades to start</Head>
       <div className="mb-2 flex justify-between text-[10px] uppercase tracking-wide text-[var(--c-muted)]"><span>Further right is easier</span><span>Cost to open</span></div>
       <div className="space-y-2.5">{rows.map((r: any, i: number) => {
         const first = i === 0;
@@ -899,7 +1022,7 @@ function EasiestTrades({ d }: { d: any }) {
 function Insurance({ d }: { d: any }) {
   const covers = d.insurance?.covers ?? [];
   return (
-    <Box><div className="mb-3 flex items-center gap-2"><Ico id="watch" /><span className="text-[15px] font-semibold text-[var(--c-ink)]">Insurance the business carries</span><ConfidenceDot /></div>
+    <Box><Head icon="watch">Insurance the business carries</Head>
       <div className="space-y-2">{covers.map((c: any, i: number) => (
         <Expand key={i} name="insurance" title={c.name} open={i === 0} right={<span className="flex items-center gap-2">{c.required ? <span className="rounded-full bg-[var(--terra-soft)] px-2 py-0.5 text-[9px] font-semibold uppercase text-[var(--terra-text)]">required</span> : null}<Fig className="text-[13px] text-[var(--c-ink)]">${c.typical_usd}<span className="text-[10px] text-[var(--c-muted)]">/yr</span></Fig></span>}>
           <div className="grid gap-1.5 sm:grid-cols-2">
@@ -915,43 +1038,81 @@ function Insurance({ d }: { d: any }) {
 /*
  * SellingAbroad , how open the country is to exporters and where it sells.
  * verdict: An open trading economy; its biggest export markets are a short list of neighbours.
- * focal: the openness verdict word, then the top export markets by share.
+ * focal: the openness verdict word, then the top export markets as an ORDERED FIGURE
+ * LIST (rank number + share). The audit offered ranked bars IF the census allowed;
+ * the ranked-bar family is already at its page budget, so the ordered list is the
+ * dictionary-clean fallback , the ranks carry the order, the figures carry the spread.
  * width: Even , paired peer to EasiestTrades in CH5.
  * terracotta: the openness verdict word only.
  */
 function SellingAbroad({ d }: { d: any }) {
   const e = d.exporting ?? {};
   const verdict = e.openness_0_100 >= 70 ? "Open" : e.openness_0_100 >= 45 ? "Moderate" : "Closed";
+  const partners = (e.partners ?? []).slice().sort((a: any, b: any) => b.pct - a.pct);
   return (
-    <Box><div className="mb-3 flex items-center gap-2"><Ico id="vs-world" /><span className="text-[15px] font-semibold text-[var(--c-ink)]">Selling abroad</span><ConfidenceDot /></div>
+    <Box><Head icon="vs-world">Selling abroad</Head>
       <div className="mb-3 flex items-baseline gap-2"><span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Export openness</span><Fig className="text-[18px] text-[var(--terra-text)]">{verdict}</Fig><span className="ml-1.5 text-[12px] text-[var(--c-muted)]">{e.openness_0_100} of 100</span></div>
-      <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Top markets</div>
-      <div className="mt-1.5 divide-y divide-[var(--c-border)]">{(e.partners ?? []).map((p: any) => <div key={p.name} className="hov -mx-2 flex items-center justify-between rounded-md px-2 py-1"><span className="text-[12.5px] text-[var(--c-ink)]">{p.name}</span><Fig className="text-[12.5px] text-[var(--c-ink)]">{p.pct}%</Fig></div>)}</div>
+      <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Top markets, share of exports</div>
+      <div className="mt-1.5 divide-y divide-[var(--c-border)]">{partners.map((p: any, i: number) => (
+        <div key={p.name} className="hov -mx-2 flex items-baseline gap-2.5 rounded-md px-2 py-1.5">
+          <span className="fig w-4 shrink-0 text-[11px] text-[var(--c-muted)]">{i + 1}.</span>
+          <span className={`min-w-0 flex-1 truncate text-[12.5px] ${i === 0 ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink)]"}`}>{p.name}</span>
+          <Fig className="text-[12.5px] text-[var(--c-ink)]">{p.pct}%</Fig>
+        </div>))}</div>
     </Box>
   );
 }
 /*
- * Character , the two colored spectra (gov-business + culture-outsider). KEPT as the two
- * agreed 6-spectra tables per the founder's density note.
+ * Character , the two agreed 6-spectra tables (gov-business + culture-outsider), KEPT
+ * per the founder's density note , but the RAIL TREATMENT is refit: the old 12
+ * full-width terracotta gradient rails put ~15 accent marks on one screenful (the
+ * page's hard budget violation) and the terra-to-grey ramp implied a good-to-bad value
+ * scale the qualitative pole labels never claimed. Now: neutral tracks, a centre tick,
+ * ink markers, the leaned-toward pole in bold ink, and ONE terracotta marker per table
+ * (its strongest lean). ~15 marks -> 2.
  * verdict: A clean, rules-led place to deal with; reserved and direct to work in.
- * focal: the marker position on each spectrum; the eye reads the lean at a glance.
  * width: Full , two spectra columns side by side.
- * terracotta: none (the spectra gradients carry the scale; markers are ink).
+ * terracotta: one marker per table, the strongest lean.
  */
+function SpectraTable({ rows }: { rows: any[] }) {
+  if (!rows?.length) return null;
+  let accentIdx = 0, best = -1;
+  rows.forEach((r: any, i: number) => { const lean = Math.abs((r.position_0_1 ?? 0.5) - 0.5); if (lean > best) { best = lean; accentIdx = i; } });
+  return (
+    <div className="divide-y divide-[var(--c-border)]">
+      {rows.map((r: any, i: number) => {
+        const pos = Math.round((r.position_0_1 ?? 0.5) * 100);
+        const right = pos >= 50;
+        const accent = i === accentIdx;
+        return (
+          <div key={i} className="hov -mx-2 grid grid-cols-[96px_1fr_96px] items-center gap-2.5 rounded-md px-2 py-2" role="img" aria-label={`${r.left_label} to ${r.right_label}: leans ${right ? r.right_label : r.left_label}`}>
+            <span className={`text-[11px] leading-tight ${!right ? "font-medium text-[var(--c-ink)]" : "text-[var(--c-muted)]"}`}>{r.left_label}</span>
+            <span className="relative block h-[5px] rounded-full" style={{ background: "#ecebe9" }}>
+              <span className="absolute -bottom-[3px] -top-[3px] left-1/2 w-px" style={{ background: "var(--c-border)" }} />
+              <span className="absolute top-1/2 h-[11px] w-[11px] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${pos}%`, background: accent ? TERRA : "var(--c-ink)", boxShadow: "0 0 0 1px #e3e3e3" }} />
+            </span>
+            <span className={`text-right text-[11px] leading-tight ${right ? "font-medium text-[var(--c-ink)]" : "text-[var(--c-muted)]"}`}>{r.right_label}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 function Character({ d }: { d: any }) {
   return (
     <Box>
-      <Head icon="corruption">The character of the place</Head>
+      <Rail icon="corruption" kicker="The character of the place" verdict="Clean, rules-led dealing; reserved to work with, but brisk and quick to transact." />
       <div className="grid gap-x-8 gap-y-6 md:grid-cols-2">
         <div>
-          <div className="mb-2.5 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Government, from a business view</div>
-          <Spectrum rows={d.character?.gov_business ?? []} />
+          <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Government, from a business view</div>
+          <SpectraTable rows={d.character?.gov_business ?? []} />
         </div>
         <div>
-          <div className="mb-2.5 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Culture, from an outsider view</div>
-          <Spectrum rows={d.character?.culture_outsider ?? []} />
+          <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Culture, from an outsider view</div>
+          <SpectraTable rows={d.character?.culture_outsider ?? []} />
         </div>
       </div>
+      <div className="mt-2.5 text-[11px] text-[var(--c-muted)]">The marker leans toward the pole in bold; the terracotta marker is each table&apos;s strongest lean. Neither end is better, they are just different places to run a business.</div>
     </Box>
   );
 }
@@ -960,7 +1121,7 @@ function Character({ d }: { d: any }) {
  * verdict: A handful of things new owners get wrong; locals price them in from the start.
  * focal: each intel item as a titled line; no chart, this is plain operator knowledge.
  * width: Full , a two-column note grid.
- * terracotta: the leading marker glyph only.
+ * terracotta: none , list markers are never the accent (the kit Bullets law).
  */
 function Locals({ d }: { d: any }) {
   const items = d.character?.locals_intel ?? [];
@@ -968,7 +1129,7 @@ function Locals({ d }: { d: any }) {
   return (
     <Box><Head icon="locals-know">What locals know</Head>
       <div className="grid gap-x-7 gap-y-3 sm:grid-cols-2">{items.map((it: any, i: number) => (
-        <div key={i} className="flex gap-2.5"><span className="mt-0.5 text-[var(--terra-text)]">&#9656;</span><span className="text-[12.5px] leading-snug text-[var(--c-ink2)]"><b className="text-[var(--c-ink)]">{it.title}</b> {it.detail}</span></div>))}
+        <div key={i} className="flex gap-2.5"><span className="mt-0.5 text-[var(--c-muted)]">&#9656;</span><span className="text-[12.5px] leading-snug text-[var(--c-ink2)]"><b className="text-[var(--c-ink)]">{it.title}</b> {it.detail}</span></div>))}
       </div>
     </Box>
   );
@@ -990,7 +1151,7 @@ function Exit({ d }: { d: any }) {
       </div>
       <div className="grid grid-cols-2 gap-3 border-b border-[var(--c-border)] pb-3">
         <div><div className="text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Time to sell</div><Fig className="text-[16px] text-[var(--c-ink)]">{e.time_to_sell_months_low}-{e.time_to_sell_months_high} mo</Fig></div>
-        <div><div className="text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Sale price</div><Fig className="text-[16px] text-[var(--c-ink)]">{e.multiple_low}-{e.multiple_high}x</Fig><span className="text-[11px] text-[var(--c-ink2)]"> profit</span></div>
+        <div><div className="text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Sale price</div><Fig className="text-[16px] text-[var(--c-ink)]">x{e.multiple_low}-{e.multiple_high}</Fig><span className="text-[11px] text-[var(--c-ink2)]"> profit</span></div>
       </div>
       <div className="mt-3"><Bullets items={e.bullets ?? []} /></div>
     </Box>
@@ -1007,7 +1168,7 @@ function Exit({ d }: { d: any }) {
 function Employment({ d }: { d: any }) {
   const e = d.employment ?? {};
   return (
-    <Box className="relative"><div className="absolute right-5 top-5"><ConfidenceDot /></div><Rail icon="hiring" kicker="Working here, the rules" verdict="Generous statutory holiday, but flexible contracts and a low-union workforce favour employers." />
+    <Box><Rail icon="hiring" kicker="Working here, the rules" verdict="Generous statutory holiday, but flexible contracts and a low-union workforce favour employers." />
       <div className="focal mb-3 flex items-end justify-between p-4">
         <Stat value={<>{e.holiday_days}</>} label="Paid holiday days a year" size="focal" accent />
         <div className="text-right"><Fig className="text-[20px] text-[var(--c-ink)]">{e.union_pct}%</Fig><div className="text-[10.5px] uppercase tracking-wide text-[var(--c-muted)]">in a union</div></div>
@@ -1027,12 +1188,14 @@ function Employment({ d }: { d: any }) {
  */
 function Closing({ d }: { d: any }) {
   const c = d.closing ?? {}; const verdict = c.ease_0_100 >= 65 ? "Manageable" : c.ease_0_100 >= 40 ? "Some friction" : "Hard";
+  // Range format unified with the Exit card ("6-12 mo") , one range grammar per page.
+  const months = String(c.time_months ?? "").replace(/\s+to\s+/g, "-");
   return (
-    <Box className="relative"><div className="absolute right-5 top-5"><ConfidenceDot /></div><Rail icon="honest-take" kicker="If it doesn't work, getting out" verdict="Winding down is manageable: a solvent micro-firm just strikes off cheaply." />
+    <Box><Rail icon="honest-take" kicker="If it doesn't work, getting out" verdict="Winding down is manageable: a solvent micro-firm just strikes off cheaply." />
       <div className="focal mb-3 flex items-end justify-between p-4">
         <Stat value={verdict} label="To wind down" size="focal" accent />
         <div className="flex gap-5 text-right">
-          <div><Fig className="text-[18px] text-[var(--c-ink)]">{c.time_months}</Fig><div className="text-[10.5px] uppercase tracking-wide text-[var(--c-muted)]">months</div></div>
+          <div><Fig className="text-[18px] text-[var(--c-ink)]">{months}</Fig><div className="text-[10.5px] uppercase tracking-wide text-[var(--c-muted)]">mo</div></div>
           <div><Fig className="text-[18px] text-[var(--c-ink)]">{c.cost_pct}%</Fig><div className="text-[10.5px] uppercase tracking-wide text-[var(--c-muted)]">of assets</div></div>
         </div>
       </div>
@@ -1061,7 +1224,8 @@ function Close({ d }: { d: any }) {
           return (
             <Tag key={i} href={l.href} className="cityhov group flex items-center justify-between gap-3 rounded-xl border border-[var(--c-border)] bg-[var(--c-card)] px-4 py-3.5">
               <span className="text-[13.5px] font-semibold text-[var(--c-ink)] group-hover:text-[var(--terra-text)]">{l.t}</span>
-              <span className="shrink-0 text-[var(--terra-text)]">&#8594;</span>
+              {/* chrome is ink; the terracotta reveal is hover-only (the house link language) */}
+              <span className="shrink-0 text-[var(--c-muted)] transition group-hover:text-[var(--terra-text)]">&#8594;</span>
             </Tag>
           );
         })}
@@ -1080,7 +1244,11 @@ function Close({ d }: { d: any }) {
  */
 function DigitalPayments({ d }: { d: any }) {
   const p = d.payments ?? {}; const inf = d.infrastructure ?? {};
-  const methods: any[] = p.methods ?? [];
+  // Pre-sorted descending + sort={false}: this is a payment-method MIX whose leader
+  // (Card) IS the terracotta answer, not a cost stack with a kept remainder , the kit
+  // StackBar's kept-last pin would shuffle the leader to the end and break the
+  // monotonic left-to-right read. Greys already track magnitude.
+  const methods: any[] = (p.methods ?? []).slice().sort((a: any, b: any) => b.pct - a.pct);
   const mcolor: any = { "Card": TERRA, "Bank transfer": "#737373", "Cash": "#a3a3a3", "Digital wallet": "#d4d4d4" };
   const cardShare = methods.find((m: any) => m.name === "Card")?.pct;
   // Only the three tiles that touch margin and cash flow: how long card money takes
@@ -1094,12 +1262,12 @@ function DigitalPayments({ d }: { d: any }) {
     [`${inf.ecommerce_pct}%`, "of retail is online", true],
   ];
   return (
-    <Box><div className="mb-3 flex items-center gap-2"><Ico id="payments" /><span className="text-[15px] font-semibold text-[var(--c-ink)]">Getting paid, and the cash it costs</span><ConfidenceDot /></div>
+    <Box><Head icon="payments">Getting paid, and the cash it costs</Head>
       <p className="mb-4 max-w-[62ch] text-[13px] leading-snug text-[var(--c-ink2)]">A card-first market: {typeof cardShare === "number" ? <>about <b className="text-[var(--c-ink)]">{cardShare}%</b> of takings come by card, </> : null}so the <b className="text-[var(--c-ink)]">{p.card_fee_pct}%</b> fee and the wait for money to land are what actually touch your cash flow.</p>
       <div className="flex flex-col gap-5 md:flex-row md:items-center">
         <div className="md:w-[52%]">
           <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">How customers pay</div>
-          <StackBar h="h-9" segments={methods.map((m: any) => ({ label: m.name, pct: m.pct, color: mcolor[m.name] ?? "#ededed" }))} legend legendClassName="mt-2 flex flex-wrap gap-x-3 gap-y-1" ariaLabel={methods.map((m: any) => `${m.name} ${m.pct}%`).join(", ")} />
+          <StackBar h="h-9" sort={false} segments={methods.map((m: any) => ({ label: m.name, pct: m.pct, color: mcolor[m.name] ?? "#ededed" }))} legend legendClassName="mt-2 flex flex-wrap gap-x-3 gap-y-1" ariaLabel={methods.map((m: any) => `${m.name} ${m.pct}%`).join(", ")} />
         </div>
         <div className="flex-1">
           <div className="grid grid-cols-3 gap-2.5">
@@ -1122,7 +1290,7 @@ function Licensing({ d }: { d: any }) {
   const list = d.licensing?.list ?? [];
   const none = (s: string) => /^none$/i.test((s || "").trim());
   return (
-    <Box><div className="mb-3 flex items-center gap-2"><Ico id="register-cost" /><span className="text-[15px] font-semibold text-[var(--c-ink)]">Licences and permits by trade</span><ConfidenceDot /></div>
+    <Box><Head icon="register-cost">Licences and permits by trade</Head>
       <div className="divide-y divide-[var(--c-border)]">{list.map((it: any, i: number) => (
         <div key={i} className="hov -mx-2 rounded-md px-2 py-2.5">
           <div className="flex items-baseline justify-between gap-3">
@@ -1139,23 +1307,42 @@ function Licensing({ d }: { d: any }) {
 /*
  * Immigration , the visa routes a foreign founder can use.
  * verdict: The Skilled Worker route is the most attainable; the Innovator route is hardest.
- * focal: each route's marker on one Harder-to-Easier axis; the word matches the marker.
- * width: Even , paired peer to Licensing.
- * terracotta: the marker dots only (via EaseScale).
+ * focal: ONE shared Harder-to-Easier rail with four NUMBERED markers (was four separate
+ * EaseScale rails whose dots bunched mid-track and left the axis empty , the audit's
+ * consolidation call), then an ordered route list: rank, name, who it is for, and the
+ * ease word read off the same position so it can never contradict the marker.
+ * width: Even , paired peer to Licensing; the list absorbs the old trailing whitespace.
+ * terracotta: the #1 (most attainable) marker only.
  */
 function Immigration({ d }: { d: any }) {
-  const routes = d.immigration?.routes ?? [];
-  // position = ease (100 - difficulty): further RIGHT = easier. The WORD is read off the
-  // SAME position so it can never contradict the marker (the old bug read the word off raw
-  // difficulty). Rows are ordered easiest-first so the most attainable route leads.
   const word = (pos: number) => (pos >= 55 ? "Easier" : pos >= 35 ? "Moderate" : "Harder");
-  const rows: Array<[string, number, string, string?]> = routes
-    .map((r: any) => { const pos = Math.max(4, Math.min(96, 100 - (r.difficulty_0_100 ?? 50))); return [r.name, pos, word(pos), r.forwho] as [string, number, string, string?]; })
-    .sort((a: [string, number, string, string?], b: [string, number, string, string?]) => b[1] - a[1]);
+  const routes = (d.immigration?.routes ?? [])
+    .map((r: any) => ({ ...r, pos: Math.max(4, Math.min(96, 100 - (r.difficulty_0_100 ?? 50))) }))
+    .sort((a: any, b: any) => b.pos - a.pos);
+  if (!routes.length) return null;
   return (
-    <Box><div className="mb-3 flex items-center gap-2"><Ico id="airport" /><span className="text-[15px] font-semibold text-[var(--c-ink)]">Visa routes for a foreign founder</span><ConfidenceDot /></div>
-      <div className="mb-5 mt-1 flex justify-between text-[10px] uppercase tracking-wide text-[var(--c-muted)]"><span>Harder to get</span><span>Easier to get</span></div>
-      <EaseScale rows={rows} />
+    <Box><Head icon="airport">Visa routes for a foreign founder</Head>
+      <div className="relative mb-2 mt-3 h-[6px] rounded-full" style={{ background: "#ecebe9" }} role="img" aria-label={`Visa routes from harder to easier: ${routes.map((r: any, i: number) => `${i + 1} ${r.name}, ${word(r.pos)}`).join("; ")}`}>
+        {/* 16px numbered markers: the closest pair sits 5% apart, which stays clear of
+            digit-on-digit overlap even at a 390px viewport (circle edges may kiss, the
+            numerals never do). */}
+        {routes.map((r: any, i: number) => (
+          <span key={r.name} className={`fig absolute top-1/2 grid h-4 w-4 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border text-[9px] font-semibold leading-none ${i === 0 ? "border-[var(--terra-border)] text-white" : "border-[var(--c-line-strong)] bg-white text-[var(--c-ink)]"}`} style={{ left: `${r.pos}%`, ...(i === 0 ? { background: TERRA } : {}) }}>{i + 1}</span>
+        ))}
+      </div>
+      <div className="mb-3 flex justify-between text-[10px] uppercase tracking-wide text-[var(--c-muted)]"><span>Harder to get</span><span>Easier to get</span></div>
+      <div className="divide-y divide-[var(--c-border)]">
+        {routes.map((r: any, i: number) => (
+          <div key={r.name} className="hov -mx-2 flex items-baseline gap-2.5 rounded-md px-2 py-1.5">
+            <span className="fig w-4 shrink-0 text-[11px] text-[var(--c-muted)]">{i + 1}.</span>
+            <span className="min-w-0 flex-1 text-[12.5px]">
+              <span className={i === 0 ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink)]"}>{r.name}</span>
+              <span className="block text-[11px] text-[var(--c-muted)]">{r.forwho}</span>
+            </span>
+            <span className="shrink-0 text-[11.5px] font-medium text-[var(--c-ink2)]">{word(r.pos)}</span>
+          </div>
+        ))}
+      </div>
     </Box>
   );
 }
