@@ -24,7 +24,7 @@ import {
   hasNeighborhoodIntensity,
   tagLabel,
 } from "@/lib/economics/neighborhood_multipliers";
-import { isSpineReformEnabled } from "@/lib/feature_flags";
+import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 import SpineHood from "@/app/dev/spine-hood/page";
 
 export const revalidate = 43200;
@@ -88,7 +88,7 @@ export default async function NeighborhoodHub({
   // SpineShell, so it is returned bare (no extra wrap). It renders the bundled London
   // seed regardless of `params`; that is intentional for this scaffold and never
   // ships live because the flag stays OFF until real-data adapters land.
-  if (isSpineReformEnabled()) {
+  if (isSpineReformEnabledFor("hood")) {
     return <SpineHood />;
   }
 

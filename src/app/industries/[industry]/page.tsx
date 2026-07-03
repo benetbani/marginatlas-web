@@ -87,7 +87,7 @@ import {
   getActivitySurvivalArchetype,
   type ActivityPlaceInput,
 } from "@/lib/scores/activity_board";
-import { isSpineReformEnabled } from "@/lib/feature_flags";
+import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 import { SpineShell } from "@/components/spine/shell";
 import { SpineIndustryBody } from "@/app/dev/spine-industry/industry-view";
 import { buildSpineIndustrySeed } from "@/lib/spine/adapt_industry";
@@ -153,7 +153,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
   // (driven from the margin table + the real where_pays across cities + synthesis),
   // never the bundled illustrative seed. A slug that resolves to no industry falls
   // through to notFound(), matching the non-spine page. Flag OFF path untouched.
-  if (isSpineReformEnabled()) {
+  if (isSpineReformEnabledFor("industry")) {
     const spineData = await buildSpineIndustrySeed(industry);
     if (!spineData) notFound();
     return (

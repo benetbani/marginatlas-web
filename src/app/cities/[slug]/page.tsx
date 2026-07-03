@@ -68,7 +68,7 @@ import {
   cityFmtUsdFull,
   type CityView,
 } from "@/lib/cities/city_view";
-import { isSpineReformEnabled } from "@/lib/feature_flags";
+import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 import { SpineShell } from "@/components/spine/shell";
 import { SpineCityBody } from "@/app/dev/spine-city/city-view";
 import { buildSpineCitySeed } from "@/lib/spine/adapt_city";
@@ -199,7 +199,7 @@ export default async function CityPage({
   // data from buildSpineCitySeed (the same accessors this route runs below, plus the real
   // neighborhood engine), never the illustrative seed. When the adapter finds no city it
   // returns undefined; we notFound() to match the non-spine page. Flag OFF path untouched.
-  if (isSpineReformEnabled()) {
+  if (isSpineReformEnabledFor("city")) {
     const spineData = await buildSpineCitySeed(slug);
     if (!spineData) notFound();
     return (

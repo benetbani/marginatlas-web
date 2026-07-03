@@ -100,17 +100,73 @@ export function isWarmFrameEnabled(): boolean {
 }
 
 /**
- * The spine page-type reform (Final Ascent). Default OFF: every live route
- * (country / region / cell / industry / neighborhoods) renders exactly as today.
- * When ON, those routes render the rebuilt "spine" surfaces instead. Kept OFF in
- * production until each page's real-data adapter lands (the bundled spine seeds are
- * illustrative placeholders, so flipping this on before the adapters would put
- * sample numbers on live URLs, which the honesty rail forbids). Local dev / preview
- * can set NEXT_PUBLIC_SPINE_REFORM=1 to see the promoted surfaces. Flip per
- * page-group in Vercel only once its adapter shows real, reconciled numbers.
+ * The five spine page types. Each live route branches on its own gate
+ * (isSpineReformEnabledFor) so a page flips to the rebuilt surface independently, and
+ * only once its real-data adapter has shipped.
+ */
+export type SpinePage = "cell" | "industry" | "city" | "hood" | "region" | "country";
+
+/**
+ * The spine page-type reform (Final Ascent), GLOBAL master. Default OFF. This is a
+ * convenience switch that enables every page whose real-data adapter has shipped (see
+ * isSpineReformEnabledFor). It deliberately does NOT enable a page that still renders
+ * an illustrative seed, so setting this on in production can never put sample numbers
+ * on a live URL (the honesty rail forbids exactly that). To preview an illustrative
+ * page locally, set that page's own per-page var instead.
  */
 export function isSpineReformEnabled(): boolean {
   return parseFlag(process.env.NEXT_PUBLIC_SPINE_REFORM, false);
+}
+
+/**
+ * Per-page spine gate: what every live route actually branches on, so each page type
+ * flips independently and only a page with real, reconciled data ever ships.
+ *
+ * Resolution order:
+ *   1. The page's own NEXT_PUBLIC_SPINE_REFORM_<PAGE> var, when set, always wins
+ *      (either polarity). This is the production go-live control: set a finished
+ *      page to "1" in Vercel to serve its real spine, or "0" to force it off.
+ *   2. Otherwise a page whose adapter has SHIPPED follows the global master
+ *      (isSpineReformEnabled). A page that still renders an illustrative seed does
+ *      NOT: the master cannot enable it, so a stray global flag in production stays
+ *      honest, and only that page's explicit per-page var (local preview) turns it on.
+ *
+ * The real vs illustrative split is the boolean at each case below. Keep it in lockstep
+ * with the shipped adapters: when a new adapter lands, flip its case to true in the
+ * same commit (cell / industry / city are real; hood / region / country are not yet).
+ */
+export function isSpineReformEnabledFor(page: SpinePage): boolean {
+  switch (page) {
+    case "cell":
+      return resolveSpinePage(process.env.NEXT_PUBLIC_SPINE_REFORM_CELL, true);
+    case "industry":
+      return resolveSpinePage(process.env.NEXT_PUBLIC_SPINE_REFORM_INDUSTRY, true);
+    case "city":
+      return resolveSpinePage(process.env.NEXT_PUBLIC_SPINE_REFORM_CITY, true);
+    case "hood":
+      // Illustrative until the neighborhood adapter ships. Master must NOT enable it;
+      // only an explicit NEXT_PUBLIC_SPINE_REFORM_HOOD preview turns it on.
+      return resolveSpinePage(process.env.NEXT_PUBLIC_SPINE_REFORM_HOOD, false);
+    case "region":
+      // No real adapter planned (the region route mounts the illustrative city body
+      // for preview only). Master never enables it.
+      return resolveSpinePage(process.env.NEXT_PUBLIC_SPINE_REFORM_REGION, false);
+    case "country":
+      // Illustrative hero has no honest country-level source. Master never enables it.
+      return resolveSpinePage(process.env.NEXT_PUBLIC_SPINE_REFORM_COUNTRY, false);
+  }
+}
+
+/**
+ * Resolve one page's gate: an explicit per-page var (either polarity) wins; otherwise
+ * the global master applies only when this page's adapter has shipped (masterEnables),
+ * so the master can never turn on an illustrative page.
+ */
+function resolveSpinePage(perPageValue: string | undefined, masterEnables: boolean): boolean {
+  if (perPageValue != null && perPageValue.trim() !== "") {
+    return parseFlag(perPageValue, false);
+  }
+  return masterEnables ? isSpineReformEnabled() : false;
 }
 
 /**
@@ -125,5 +181,12 @@ export function snapshotFlags(): Record<string, boolean> {
     NEXT_PUBLIC_GATING_ENABLED: isGatingEnabled(),
     NEXT_PUBLIC_WARM_FRAME: isWarmFrameEnabled(),
     NEXT_PUBLIC_SPINE_REFORM: isSpineReformEnabled(),
+    // The resolved per-page spine gates (master + per-page var), what each route sees.
+    "spine.cell": isSpineReformEnabledFor("cell"),
+    "spine.industry": isSpineReformEnabledFor("industry"),
+    "spine.city": isSpineReformEnabledFor("city"),
+    "spine.hood": isSpineReformEnabledFor("hood"),
+    "spine.region": isSpineReformEnabledFor("region"),
+    "spine.country": isSpineReformEnabledFor("country"),
   };
 }

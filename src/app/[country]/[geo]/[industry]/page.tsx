@@ -93,7 +93,7 @@ import {
   NeighborhoodOverview,
   findNeighborhoodContext,
 } from "@/components/NeighborhoodOverview";
-import { isSpineReformEnabled } from "@/lib/feature_flags";
+import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 import { SpineShell } from "@/components/spine/shell";
 import { SpineCellBody as SpineCell } from "@/app/dev/spine-cell/cell-view";
 import { buildSpineCellSeed } from "@/lib/spine/adapt_cell";
@@ -231,7 +231,7 @@ export default async function CellPage({
   // reconciled data from buildSpineCellSeed (the same accessor + finance engines
   // the non-spine page uses), never the illustrative seed. When the adapter finds
   // no cell it returns undefined; we notFound() to match the non-spine page.
-  if (isSpineReformEnabled()) {
+  if (isSpineReformEnabledFor("cell")) {
     const { country, geo, industry } = await params;
     const spineData = await buildSpineCellSeed(country, geo, industry);
     if (!spineData) notFound();

@@ -39,7 +39,7 @@ import { CityCharacter } from "@/components/sections/CityCharacter";
 import { generateGeoVerdict } from "@/lib/scores/geo_verdict";
 import { GeoViabilityLede } from "@/components/geo/GeoViabilityLede";
 import industryMarginsJson from "@/lib/finance/industry_margins.json";
-import { isSpineReformEnabled } from "@/lib/feature_flags";
+import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 import { SpineShell } from "@/components/spine/shell";
 import { SpineCityBody } from "@/app/dev/spine-city/city-view";
 
@@ -107,7 +107,7 @@ export default async function RegionLandingPage({
   // Spine reform (flag-gated, default OFF). The spine body renders the bundled
   // London seed regardless of `params`; that is intentional for this scaffold and
   // never ships live because the flag stays OFF until real-data adapters land.
-  if (isSpineReformEnabled()) {
+  if (isSpineReformEnabledFor("region")) {
     return (
       <SpineShell bg="https://images.unsplash.com/photo-1529655683826-aba9b3e77383?auto=format&fit=crop&w=1920&q=60" bgPosition="center 30%">
         <SpineCityBody />

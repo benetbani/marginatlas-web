@@ -92,7 +92,7 @@ import {
   NEIGHBOUR_GROUPS,
   type NeighbourFacts,
 } from "@/lib/countries/country_view";
-import { isSpineReformEnabled } from "@/lib/feature_flags";
+import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 import { SpineShell } from "@/components/spine/shell";
 import SpineCountry from "@/app/dev/spine/page";
 
@@ -323,7 +323,7 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
   // Spine reform (flag-gated, default OFF). The spine body renders the bundled
   // GB seed regardless of `params`; that is intentional for this scaffold and
   // never ships live because the flag stays OFF until real-data adapters land.
-  if (isSpineReformEnabled()) {
+  if (isSpineReformEnabledFor("country")) {
     return (
       <SpineShell bg="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=1920&q=60">
         <SpineCountry />
