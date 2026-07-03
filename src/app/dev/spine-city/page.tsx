@@ -73,7 +73,7 @@ function CityVerdict({ d }: { d: any }) {
           <div>
             {/* noun-phrase heading (one mood page-set-wide); the sentence-form thesis
                 lives in verdict.why below, where prose belongs. */}
-            <h2 className="text-2xl font-bold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2rem]">The margin, district by district</h2>
+            <h2 data-typography="custom" className="text-2xl font-bold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2rem]">The margin, district by district</h2>
             <p className="mt-2 max-w-prose text-[13.5px] leading-snug text-[var(--c-ink2)]">{v.why}</p>
             {v.catch ? (
               <p className="mt-2.5 flex items-start gap-1.5 rounded-lg border border-[var(--c-border)] bg-[var(--c-soft)] px-3 py-2 text-[12.5px] leading-snug text-[var(--c-ink2)]">

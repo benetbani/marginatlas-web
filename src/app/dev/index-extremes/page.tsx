@@ -230,7 +230,7 @@ export default function IndexExtremesPage() {
               The extremes
             </span>
           </div>
-          <h1 className="max-w-[34ch] text-2xl font-bold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2rem]">
+          <h1 data-typography="custom" className="max-w-[34ch] text-2xl font-bold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2rem]">
             The extremes
           </h1>
           <p className="mt-1.5 max-w-prose text-[13px] leading-snug text-[var(--c-ink2)]">

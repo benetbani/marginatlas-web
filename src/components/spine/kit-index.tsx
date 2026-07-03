@@ -532,7 +532,7 @@ export function WinnerCard({ kicker, winner, keptPct, keptLabel = "owner keeps",
         <div className="mb-1.5 flex items-center gap-2"><Ico id={icon} tone="terra" /><span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--terra-text)]">{kicker}</span></div>
         <div className="grid gap-5 md:grid-cols-[1.5fr_1fr] md:items-end">
           <div>
-            <h2 className="text-2xl font-bold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2rem]">{winner}</h2>
+            <h2 data-typography="custom" className="text-2xl font-bold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2rem]">{winner}</h2>
             <p className="mt-2 max-w-prose text-[13.5px] leading-snug text-[var(--c-ink2)]">{why}</p>
             {theCatch ? (
               <p className="mt-2.5 flex items-start gap-1.5 rounded-lg border border-[var(--c-border)] bg-[var(--c-soft)] px-3 py-2 text-[12.5px] leading-snug text-[var(--c-ink2)]">

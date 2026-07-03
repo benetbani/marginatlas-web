@@ -20,7 +20,7 @@ export default function SpineKitPage() {
             <span>Spine kit-index &middot; Wave 0</span>
             <span className="rounded-full bg-[var(--c-soft2)] px-2 py-0.5 text-[9px] tracking-wider text-[var(--c-muted)]">sample data</span>
           </div>
-          <h1 className="max-w-3xl text-3xl font-bold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2.4rem]">Shared decision primitives</h1>
+          <h1 data-typography="custom" className="max-w-3xl text-3xl font-bold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2.4rem]">Shared decision primitives</h1>
           <p className="mt-2 max-w-2xl text-[13.5px] leading-snug text-[var(--c-ink2)]">One row, table, sort, and lock grammar for the homepage, AtlasIndex, decision engine, compare and geo-hub archetypes. Entity-scoped and share-based by construction, no cross-geography dollar ranking, no horizontal scroll.</p>
         </header>
         <KitShowcase />

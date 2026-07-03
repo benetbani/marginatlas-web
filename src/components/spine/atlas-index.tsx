@@ -412,7 +412,7 @@ export function AtlasIndex({
           <Ico id="ranking" tone="terra" />
           <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--terra-text)]">The list</span>
         </div>
-        <h1 className="max-w-[34ch] text-2xl font-bold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2rem]">
+        <h1 data-typography="custom" className="max-w-[34ch] text-2xl font-bold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2rem]">
           {title}
         </h1>
         <p className="mt-1.5 max-w-prose text-[13px] leading-snug text-[var(--c-ink2)]">

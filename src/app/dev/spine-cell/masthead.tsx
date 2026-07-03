@@ -28,7 +28,7 @@ export function Masthead({ d }: { d: any }) {
         <div className="mb-1.5 flex flex-wrap items-center gap-x-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--c-ink2)]">
           {d.meta?.trade} &middot; {d.meta?.city} &middot; {d.meta?.country_name}
         </div>
-        <h1 className="max-w-3xl text-3xl font-bold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2.6rem]">{h.answer}</h1>
+        <h1 data-typography="custom" className="max-w-3xl text-3xl font-bold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2.6rem]">{h.answer}</h1>
         {h.rev_p10_usd && h.rev_p50_usd && h.rev_p90_usd ? (
           <div className="mt-3 max-w-md">
             <div className="mb-1 text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Yearly turnover, comparable rooms</div>

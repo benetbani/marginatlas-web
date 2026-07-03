@@ -53,7 +53,7 @@ function Masthead({ d }: { d: any }) {
         <span className="fig text-[13px] font-semibold text-[var(--c-muted)]">00</span>
         <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--c-ink2)]">The trade, worldwide</span>
       </div>
-      <h1 className="text-[2.1rem] font-bold leading-[1.05] tracking-tight text-[var(--c-ink)] md:text-[2.75rem]">{d.meta?.name}</h1>
+      <h1 data-typography="custom" className="text-[2.1rem] font-bold leading-[1.05] tracking-tight text-[var(--c-ink)] md:text-[2.75rem]">{d.meta?.name}</h1>
       <div className="mt-5 grid gap-5 md:grid-cols-[1.35fr_1fr] md:items-center">
         <div>
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">

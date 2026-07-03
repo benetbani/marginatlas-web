@@ -177,7 +177,7 @@ export function Movement({ eyebrow, heading, sample, icon, index }: { eyebrow: s
         <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--c-ink2)]">{eyebrow}</span>
         {sample ? <span className="rounded-full bg-[var(--c-soft2)] px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-[var(--c-muted)]">sample data</span> : null}
       </div>
-      <h2 className="text-2xl font-bold tracking-tight text-[var(--c-ink)] md:text-3xl">{heading}</h2>
+      <h2 data-typography="custom" className="text-2xl font-bold tracking-tight text-[var(--c-ink)] md:text-3xl">{heading}</h2>
     </div>
   );
 }
