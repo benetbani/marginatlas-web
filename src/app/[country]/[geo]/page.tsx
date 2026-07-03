@@ -39,6 +39,9 @@ import { CityCharacter } from "@/components/sections/CityCharacter";
 import { generateGeoVerdict } from "@/lib/scores/geo_verdict";
 import { GeoViabilityLede } from "@/components/geo/GeoViabilityLede";
 import industryMarginsJson from "@/lib/finance/industry_margins.json";
+import { isSpineReformEnabled } from "@/lib/feature_flags";
+import { SpineShell } from "@/components/spine/shell";
+import SpineCity from "@/app/dev/spine-city/page";
 
 // Curated, cross-country-stable margin shape per activity (the same table the
 // industry page uses). Read at module scope so the lookup is a plain object
@@ -101,6 +104,17 @@ export default async function RegionLandingPage({
 }: {
   params: Promise<Params>;
 }) {
+  // Spine reform (flag-gated, default OFF). The spine body renders the bundled
+  // London seed regardless of `params`; that is intentional for this scaffold and
+  // never ships live because the flag stays OFF until real-data adapters land.
+  if (isSpineReformEnabled()) {
+    return (
+      <SpineShell bg="https://images.unsplash.com/photo-1529655683826-aba9b3e77383?auto=format&fit=crop&w=1920&q=60" bgPosition="center 30%">
+        <SpineCity />
+      </SpineShell>
+    );
+  }
+
   const { country, geo } = await params;
   const iso2 = country.toUpperCase();
   const countryMeta = COUNTRIES.find((c) => c.code === iso2);

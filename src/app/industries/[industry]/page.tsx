@@ -87,6 +87,9 @@ import {
   getActivitySurvivalArchetype,
   type ActivityPlaceInput,
 } from "@/lib/scores/activity_board";
+import { isSpineReformEnabled } from "@/lib/feature_flags";
+import { SpineShell } from "@/components/spine/shell";
+import SpineIndustry from "@/app/dev/spine-industry/page";
 
 void INDUSTRY_PAGE_SECTIONS;
 
@@ -142,6 +145,17 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
 }
 
 export default async function IndustryPage({ params }: { params: Promise<Params> }) {
+  // Spine reform (flag-gated, default OFF). The spine body renders the bundled
+  // restaurants seed regardless of `params`; that is intentional for this scaffold
+  // and never ships live because the flag stays OFF until real-data adapters land.
+  if (isSpineReformEnabled()) {
+    return (
+      <SpineShell bg="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1920&q=60" bgPosition="center 50%">
+        <SpineIndustry />
+      </SpineShell>
+    );
+  }
+
   const { industry } = await params;
   const raw = slugToIndustry(industry);
   // Prefer the requested trade when it carries its OWN measured margin row;
