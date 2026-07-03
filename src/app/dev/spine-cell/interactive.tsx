@@ -23,20 +23,33 @@ type Col = { key: string; label: string; unit: string; get: (x: any) => number; 
  * terracotta target: ONE , the keeps-per-$1 winner's figure + bar. Best in the other
  * columns is bold ink; the sort header, HERE tag and row tint are ink/neutral chrome. */
 export function Nearby({ d }: { d: any }) {
+  const rows: any[] = d.nearby?.places ?? [];
+  // Column presence: keep only the columns for which EVERY row carries a real
+  // value. On promotion the peers hold name + turnover only (no honest per-peer
+  // take-home / break-in), so those columns , and the derived keeps-per-$1 ,
+  // drop out; the full seed keeps all four. Turnover is always present.
+  const hasTake = rows.length > 0 && rows.every((r) => typeof r.take_home_usd === "number");
+  const hasBrk = rows.length > 0 && rows.every((r) => typeof r.break_in_0_100 === "number");
   const cols: Col[] = [
     { key: "rev", label: "Turnover", unit: "$/yr", get: (x) => x.rev_p50_usd, cell: (v) => money(v) },
-    { key: "take", label: "Owner keeps", unit: "$/yr", get: (x) => x.take_home_usd, cell: (v) => money(v) },
-    { key: "rate", label: "Keeps per $1", unit: "c", get: (x) => (x.rev_p50_usd ? (x.take_home_usd / x.rev_p50_usd) * 100 : 0), cell: (v) => v.toFixed(1) + "c" },
-    { key: "brk", label: "Ease of entry", unit: "/100", get: (x) => x.break_in_0_100, cell: (v) => "" + v },
+    ...(hasTake ? [{ key: "take", label: "Owner keeps", unit: "$/yr", get: (x: any) => x.take_home_usd, cell: (v: number) => money(v) } as Col] : []),
+    ...(hasTake ? [{ key: "rate", label: "Keeps per $1", unit: "c", get: (x: any) => (x.rev_p50_usd ? (x.take_home_usd / x.rev_p50_usd) * 100 : 0), cell: (v: number) => v.toFixed(1) + "c" } as Col] : []),
+    ...(hasBrk ? [{ key: "brk", label: "Ease of entry", unit: "/100", get: (x: any) => x.break_in_0_100, cell: (v: number) => "" + v } as Col] : []),
   ];
-  const rows: any[] = d.nearby?.places ?? [];
-  const [sortKey, setSortKey] = React.useState<string>("rate");
-  const col = cols.find((c) => c.key === sortKey) ?? cols[2];
+  // Default sort: keeps-per-$1 when present (proves the section's verdict),
+  // else turnover. Never a key that no longer exists.
+  const defaultSort = hasTake ? "rate" : "rev";
+  const [sortKey, setSortKey] = React.useState<string>(defaultSort);
+  const col = cols.find((c) => c.key === sortKey) ?? cols[0];
   const best: Record<string, number> = {};
   cols.forEach((c) => (best[c.key] = Math.max(...rows.map((r) => c.get(r)))));
   const maxByCol: Record<string, number> = {};
   cols.forEach((c) => (maxByCol[c.key] = Math.max(...rows.map((r) => c.get(r))) || 1));
   const sorted = [...rows].sort((a, b) => col.get(b) - col.get(a));
+  // Grid template adapts to the live column count (place + N metric columns), so
+  // a promoted table with turnover only reads as a clean two-column list rather
+  // than a five-slot grid with three empty tracks.
+  const gridCols = `1.3fr ${cols.map(() => "1fr").join(" ")}`;
 
   return (
     <Box>
@@ -44,7 +57,7 @@ export function Nearby({ d }: { d: any }) {
       <Rail icon="compare" kicker="The same trade, comparable places" />
       <div className="mb-3 text-[12.5px] text-[var(--c-ink2)]">{d.nearby?.surface_line}</div>
       {/* sm+ header with click-to-sort (active = ink; selection is chrome, never the accent) */}
-      <div className="hidden grid-cols-[1.3fr_1fr_1fr_1fr_1fr] gap-3 border-b border-[var(--c-border)] pb-2 sm:grid">
+      <div className="hidden gap-3 border-b border-[var(--c-border)] pb-2 sm:grid" style={{ gridTemplateColumns: gridCols }}>
         <span className="text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Place</span>
         {cols.map((c) => {
           const on = c.key === sortKey;
@@ -59,8 +72,8 @@ export function Nearby({ d }: { d: any }) {
       </div>
       <div className="space-y-2 sm:space-y-0">
         {sorted.map((r) => (
-          <div key={r.name} className="celltop group relative rounded-md border border-[var(--c-border)] p-3 sm:grid sm:grid-cols-[1.3fr_1fr_1fr_1fr_1fr] sm:items-center sm:gap-3 sm:rounded-none sm:border-0 sm:border-b sm:p-0 sm:py-2.5"
-            style={r.home ? { background: "#fff4f1" } : undefined}>
+          <div key={r.name} className="celltop group relative rounded-md border border-[var(--c-border)] p-3 sm:grid sm:items-center sm:gap-3 sm:rounded-none sm:border-0 sm:border-b sm:p-0 sm:py-2.5"
+            style={{ ...(r.home ? { background: "#fff4f1" } : {}), gridTemplateColumns: gridCols }}>
             <span className="block min-w-0 truncate font-medium text-[var(--c-ink)]">{r.name}{r.home ? <span className="ml-1.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">here</span> : null}</span>
             <div className="mt-2 grid grid-cols-2 gap-x-3 gap-y-2 sm:contents sm:mt-0">
               {cols.map((c) => {
@@ -80,7 +93,11 @@ export function Nearby({ d }: { d: any }) {
           </div>
         ))}
       </div>
-      <div className="mt-2 text-[11px] text-[var(--c-muted)]">Keeps per $1: the owner&rsquo;s yearly take for every dollar of turnover. Same trade, same country, read like for like.</div>
+      <div className="mt-2 text-[11px] text-[var(--c-muted)]">
+        {hasTake
+          ? "Keeps per $1: the owner’s yearly take for every dollar of turnover. Same trade, same country, read like for like."
+          : "Same trade, same country, read like for like."}
+      </div>
     </Box>
   );
 }

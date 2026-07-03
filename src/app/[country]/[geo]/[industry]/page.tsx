@@ -95,7 +95,8 @@ import {
 } from "@/components/NeighborhoodOverview";
 import { isSpineReformEnabled } from "@/lib/feature_flags";
 import { SpineShell } from "@/components/spine/shell";
-import SpineCell from "@/app/dev/spine-cell/page";
+import { SpineCellBody as SpineCell } from "@/app/dev/spine-cell/cell-view";
+import { buildSpineCellSeed } from "@/lib/spine/adapt_cell";
 
 type IndustryMarginRow = { gross_margin: number; operating_margin: number; asset_intensity?: number };
 const INDUSTRY_MARGINS = industryMarginsJson as unknown as {
@@ -226,13 +227,17 @@ export default async function CellPage({
 }: {
   params: Promise<Params>;
 }) {
-  // Spine reform (flag-gated, default OFF). The spine body renders the bundled
-  // restaurants seed regardless of `params`; that is intentional for this scaffold
-  // and never ships live because the flag stays OFF until real-data adapters land.
+  // Spine reform (flag-gated, default OFF). On promotion the body renders REAL,
+  // reconciled data from buildSpineCellSeed (the same accessor + finance engines
+  // the non-spine page uses), never the illustrative seed. When the adapter finds
+  // no cell it returns undefined; we notFound() to match the non-spine page.
   if (isSpineReformEnabled()) {
+    const { country, geo, industry } = await params;
+    const spineData = await buildSpineCellSeed(country, geo, industry);
+    if (!spineData) notFound();
     return (
       <SpineShell bg="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1920&q=60" bgPosition="center 45%">
-        <SpineCell />
+        <SpineCell data={spineData} />
       </SpineShell>
     );
   }

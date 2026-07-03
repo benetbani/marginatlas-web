@@ -109,6 +109,10 @@ function SteppedWaterfall({ costs, keep }: { costs: Array<{ name: string; pct: n
 export function OwnerKeeps({ d }: { d: any }) {
   const ctx = useFormat();
   const items: any[] = d.money_split?.items ?? [];
+  // The card's unique content is the gross-to-net waterfall drawn from the $100
+  // split. With no honest split there is nothing to draw, so omit the whole card
+  // rather than render an empty shell.
+  if (items.length === 0) return null;
   const baseKeep = items.find((it) => it.kept)?.pct ?? d.margins?.net_pct ?? 0;
   const keepPct = ctx ? ctx.sel.keeps_pct : baseKeep;
   // re-scale the non-kept slices so steps + keep always sum to exactly 100
@@ -193,6 +197,7 @@ export function BreakEven({ d }: { d: any }) {
 export function CostToOpen({ d }: { d: any }) {
   const ctx = useFormat();
   const items: any[] = d.setup?.items ?? [];
+  if (items.length === 0) return null; // omitted when the cell holds no real setup costs
   const seedTotal = items.reduce((a, b) => a + (b.usd || 0), 0);
   const total = ctx ? ctx.sel.cost_to_open_usd : seedTotal;
   // scale the line items to the selected subtype's total so the stack stays honest to the headline
