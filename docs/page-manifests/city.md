@@ -1,5 +1,23 @@
 # CITY page manifest (e.g. /cities/london)
 
+> **FINAL ASCENT P2 ADDENDUM (2026-07-03).** The ACTIVE contract for the spine dev
+> route `/dev/spine-city` is the per-section WI-3/WI-4/WI-5 brief comments in
+> `src/app/dev/spine-city/*` (this file predates the 2026-06-29 spine rebuild).
+> P2 refit deltas to those briefs, per the final-ascent audit (`city` key):
+> hero verdict strip = three consistent name+index keep pairs (best / city 100 /
+> weakest); the one-line read MERGED atop the five-reads card (no separate box);
+> both EaseScales endpoint-labelled; CommercialSpace Meter retired (peer dot strip
+> with printed indices carries the read); WhereToTrade list = keep-index DOT PLOT
+> on a drawn 50..110 domain with the city=100 reference line, map pins ink with
+> terra on the keep leader only; income tiers labelled share-of-spend with the
+> median as the terracotta reference; TopTrades retitled "Owner take-home by
+> trade" with a kept-% column (accent = the keep leader, arguing the thesis);
+> MarginRail on the same drawn 0..100%-of-sales scale as the MarginKept split;
+> EasiestTrades claim rewritten (seed) + anchor ease score added, figures-only by
+> the <=2-per-idiom census law; risks counterweights open by default; character
+> rows emphasize the winning pole inside the pair; the close anchors take-home $
+> (not a third 14%) and the Compare CTA links `/dev/compare`.
+
 **Hero:** full-bleed masthead = place photo + white-from-bottom gradient + country eyebrow/flag + Newsreader city name + the verdict sentence + the page's ONE hero number, the 0-100 **Business Climate Score** (Space Grotesk) on a `ScoreBand` with faint peer-city ticks (Paris 74 / Amsterdam 73 / Berlin 71 / Dublin 69), caption naming the one tension ("Deep demand, expensive ground"), plus the at-a-glance 8-metric **table-card scorecard** (score tile focal/atlas-tinted, seven supporting tiles each with a one-word calibrated read). City is the ONLY scored entity, so this number is load-bearing and gets the page's single biggest type; raw population is NOT a hero tile (one context line only).
 **Section-id order (locked by the 20-question interview, 2026-06-27):** `top` → `take` → `customer` → `rent` → `map` → `where` → `field` → `keep` → `open` → `hiring` → `locals` → `changing` → `peers` → `close`. Six chapters: **Answer** (top, take) · **Customer** (customer: spending / footfall / POPs / the year) · **Place** (rent, map, where, field) · **Money** (keep, open, hiring, locals) · **Context** (changing, peers) · **Close** (close). ADDED vs the first pass: `rent`, `map` (a clear interactive-map placeholder until MapLibre ships, no fake stand-in), `hiring`, `locals` (gold-mine intel). DROPPED: the break-even ramp (belongs on the cell). Operator voices DEFERRED (held for real quotes). Density = almanac (every band 2+ cards). (This IS the CITY entry in `PAGE_SECTION_ORDER`.)
 **Global rules per `00-README.md`** (palette = cool greys + terracotta only, no moss/amber/brown; fonts = Geist + Geist Mono + Newsreader + Space Grotesk; USD, abbreviated; bento half-width default; good/bad = calibrated word + position, never colour; viz from `00-global-standards.md` §6; no chart type >2x per page; redundancy law: one job per section).
