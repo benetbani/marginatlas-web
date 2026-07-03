@@ -4,9 +4,25 @@
  * improvised. Geist text + Space Grotesk figures (.fig); soft terracotta fills only.
  * Raw hex + local CSS vars here for dev speed; tokenize to design-tokens.ts on
  * promotion. Pairs with SpineShell (shell.tsx): fonts + atmosphere + the CSS vars.
+ *
+ * LOYALTY DECISIONS (Final Ascent P2 central kit pass, 2026-07-03):
+ *  - Disclosures (InlineDisclosure / Expand) DELIBERATELY stay native
+ *    <details>/<summary>: they must work server-rendered and stay honest with
+ *    JS off. This is the ratified exception to shadcn adoption, not a gap.
+ *  - Chips: src/components/ui/pill.tsx is the one chip source. Chip here (and
+ *    LockPill in kit-index.tsx) are thin spine-palette wrappers over Pill;
+ *    exported names + signatures unchanged so call sites never fork.
+ *  - Elevation: Box's DROP shadows come from the tokenized elevation scale in
+ *    design-tokens.ts (Tailwind shadow-card / shadow-lift). Only the paper
+ *    insets (top highlight + 0.5px inner ring) remain local to Box.
+ *  - Tooltips: kit atoms are consumed by SERVER components, so no Radix
+ *    ui/tooltip here. Law: no kit atom may hide sole-source data behind a
+ *    native title= attribute; StackBar keeps its per-segment title= only when
+ *    it renders WITHOUT its legend (the legend is the visible carrier).
  */
 import * as React from "react";
 import { AtlasIcon, type AtlasIconId } from "@/components/brand/icons";
+import { Pill } from "@/components/ui/pill";
 
 export const TERRA = "#fb8469"; // atlas-300 soft terracotta , the only fill color
 export const TRACK = "#e6e6e6";
@@ -61,9 +77,11 @@ export function Donut({ segs, centerBig, centerSub }: { segs: Array<[string, num
 }
 /* score dots 0..max. Neutral ink fill by default; terracotta only when `accent`
  * marks THE one focal read (one accent per box). A row of maxed dots must not be
- * a wall of orange. */
-export function Dots({ score, max = 10, accent = false }: { score: number; max?: number; accent?: boolean }) {
-  return <div className="flex gap-[3px]" role="img" aria-label={`${score} out of ${max}`}>{Array.from({ length: max }).map((_, i) => <span key={i} className="h-[7px] w-[7px] rounded-full" style={{ background: i < score ? (accent ? TERRA : "#1a1a1a") : TRACK }} />)}</div>;
+ * a wall of orange. The empty dots ARE the visible 0..max track (the honest scale);
+ * `showTrack` (default true) keeps them , pass false only where an adjacent row
+ * already draws the same scale and the repetition reads as noise. */
+export function Dots({ score, max = 10, accent = false, showTrack = true }: { score: number; max?: number; accent?: boolean; showTrack?: boolean }) {
+  return <div className="flex gap-[3px]" role="img" aria-label={`${score} out of ${max}`}>{Array.from({ length: max }).map((_, i) => <span key={i} className="h-[7px] w-[7px] rounded-full" style={{ background: i < score ? (accent ? TERRA : "#1a1a1a") : showTrack ? TRACK : "transparent" }} />)}</div>;
 }
 /* single 0-100 bar. Neutral grey by default; terracotta only when `accent` marks
  * the one focal figure in the box. */
@@ -76,18 +94,46 @@ export function MiniBar({ pct, accent = false }: { pct: number; accent?: boolean
  * the per-instance variations exactly: height/rounding via `h`+`rounded`, the inter-
  * segment white hairline via `segBorder`, raw-pct vs sum-normalised widths via `normalize`,
  * and the legend on/off + its gap via `legend`+`legendClassName`. With no legend it renders
- * the track alone (so a caller can place its own legend, e.g. inside a disclosure). */
-export type StackSeg = { label: string; pct: number; color: string };
-export function StackBar({ segments, h = "h-8", rounded = "rounded-lg", segBorder = false, normalize = false, ariaLabel, className = "", legend = false, legendClassName = "mt-2 flex flex-wrap gap-x-4 gap-y-1" }: { segments: StackSeg[]; h?: string; rounded?: string; segBorder?: boolean; normalize?: boolean; ariaLabel: string; className?: string; legend?: boolean; legendClassName?: string }) {
-  const sum = normalize ? (segments.reduce((a, s) => a + s.pct, 0) || 1) : 1;
+ * the track alone (so a caller can place its own legend, e.g. inside a disclosure).
+ *
+ * HONESTY CONTRACT (Final Ascent, Visual Dictionary idiom #2): by default the
+ * segments render size-ordered descending, with the kept/owner slice pinned LAST.
+ * The kept slice is detected via seg.kept, a label match on `keptLabel`, or the
+ * TERRA fill. When every non-kept segment is a plain grey, their greys are remapped
+ * onto GREY_RAMP so darkness tracks magnitude (largest = darkest); semantic colors
+ * pass through untouched. Callers needing the literal seed order pass sort={false}.
+ * The per-segment native title= renders only when the legend does NOT (the legend
+ * is the visible carrier of the same data). */
+export type StackSeg = { label: string; pct: number; color: string; kept?: boolean };
+/* magnitude grey ramp for sorted StackBars , index 0 (darkest) goes to the largest segment */
+const GREY_RAMP = ["#a3a3a1", "#b4b4b2", "#c4c4c2", "#d3d3d1", "#e0e0de", "#ebebe9"];
+const isGreyHex = (c: string) => {
+  const m = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec((c || "").trim());
+  if (!m) return false;
+  const hex = m[1].length === 3 ? m[1].split("").map((ch) => ch + ch).join("") : m[1];
+  const r = parseInt(hex.slice(0, 2), 16), g = parseInt(hex.slice(2, 4), 16), b = parseInt(hex.slice(4, 6), 16);
+  return Math.max(r, g, b) - Math.min(r, g, b) <= 10;
+};
+export function StackBar({ segments, sort = true, keptLabel, h = "h-8", rounded = "rounded-lg", segBorder = false, normalize = false, ariaLabel, className = "", legend = false, legendClassName = "mt-2 flex flex-wrap gap-x-4 gap-y-1" }: { segments: StackSeg[]; sort?: boolean; keptLabel?: string; h?: string; rounded?: string; segBorder?: boolean; normalize?: boolean; ariaLabel: string; className?: string; legend?: boolean; legendClassName?: string }) {
+  const isKept = (s: StackSeg) => s.kept === true || (keptLabel != null && s.label === keptLabel) || (s.color || "").toLowerCase() === TERRA;
+  let ordered = segments;
+  if (sort) {
+    let rest = segments.filter((s) => !isKept(s)).sort((a, b) => b.pct - a.pct);
+    const kept = segments.filter(isKept);
+    if (rest.length >= 2 && rest.every((s) => isGreyHex(s.color))) {
+      rest = rest.map((s, i) => ({ ...s, color: GREY_RAMP[Math.round((i * (GREY_RAMP.length - 1)) / Math.max(1, rest.length - 1))] }));
+    }
+    ordered = [...rest, ...kept];
+  }
+  const sum = normalize ? (ordered.reduce((a, s) => a + s.pct, 0) || 1) : 1;
   const segCls = segBorder ? "h-full border-r border-white/70 last:border-0" : "h-full";
   return (
     <>
       <div className={`flex ${h} overflow-hidden ${rounded} border border-[var(--c-border)]${className ? " " + className : ""}`} role="img" aria-label={ariaLabel}>
-        {segments.map((s) => <div key={s.label} className={segCls} style={{ width: `${normalize ? (s.pct / sum) * 100 : s.pct}%`, background: s.color }} title={`${s.label} ${s.pct}%`} />)}
+        {ordered.map((s) => <div key={s.label} className={segCls} style={{ width: `${normalize ? (s.pct / sum) * 100 : s.pct}%`, background: s.color }} title={legend ? undefined : `${s.label} ${s.pct}%`} />)}
       </div>
       {legend ? (
-        <div className={legendClassName}>{segments.map((s) => <span key={s.label} className="inline-flex items-center gap-1.5 text-[11px] text-[var(--c-ink2)]"><span className="h-2.5 w-2.5 rounded-sm" style={{ background: s.color }} />{s.label} <Fig className="text-[var(--c-ink)]">{s.pct}%</Fig></span>)}</div>
+        <div className={legendClassName}>{ordered.map((s) => <span key={s.label} className="inline-flex items-center gap-1.5 text-[11px] text-[var(--c-ink2)]"><span className="h-2.5 w-2.5 rounded-sm" style={{ background: s.color }} />{s.label} <Fig className="text-[var(--c-ink)]">{s.pct}%</Fig></span>)}</div>
       ) : null}
     </>
   );
@@ -133,28 +179,30 @@ export function Movement({ eyebrow, heading, sample, icon, index }: { eyebrow: s
     </div>
   );
 }
-/* Box , the premium card: warm hairline + soft warm shadow + inner top-highlight +
- * paper gradient. Radius 14px. Warm shadows only (never pure black). No edge stripe. */
-export function Box({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+/* Box , the premium card: warm hairline + tokenized warm shadow + inner top-highlight +
+ * paper gradient. Radius 14px. Warm shadows only (never pure black). No edge stripe.
+ * DROP shadows come from the design-tokens elevation scale (Tailwind shadow-card /
+ * shadow-lift set --tw-shadow); the two INSET layers stay local and compose with the
+ * token via var(--tw-shadow) in the inline box-shadow. `elevation` picks the resting
+ * plane: "card" (default, the workhorse) or "lift" (cards floating over the photo margin). */
+export function Box({ children, className = "", elevation = "card" }: { children: React.ReactNode; className?: string; elevation?: "card" | "lift" }) {
   return (
     <div
-      className={`rounded-[14px] border border-[var(--c-border)] p-5 ${className}`}
+      className={`rounded-[14px] border border-[var(--c-border)] p-5 ${elevation === "lift" ? "shadow-lift" : "shadow-card"} ${className}`}
       style={{
         backgroundImage: "linear-gradient(180deg, #ffffff 0%, #fcfbfa 100%)",
-        boxShadow: [
-          "inset 0 1px 0 rgba(255,255,255,0.9)",
-          "inset 0 0 0 0.5px rgba(27,24,22,0.015)",
-          "0 1px 1px rgba(43,28,22,0.04)",
-          "0 8px 24px -12px rgba(43,28,22,0.10)",
-        ].join(", "),
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.9), inset 0 0 0 0.5px rgba(27,24,22,0.015), var(--tw-shadow, 0 0 #0000)",
       }}
     >
       {children}
     </div>
   );
 }
-/* one shared left-to-right scale with N labelled markers. Optional 4th tuple = a who-for subtitle under the label. */
-export function EaseScale({ rows }: { rows: Array<[string, number, string, string?]> }) {
+/* one shared left-to-right scale with N labelled markers. Optional 4th tuple = a who-for
+ * subtitle under the label. Optional `endLabels` names the two ends of the shared track
+ * (small muted uppercase, Meter's pattern) so the scale is never anonymous; rendered once
+ * under the row set, aligned to the track column. Default undefined = the historical render. */
+export function EaseScale({ rows, endLabels }: { rows: Array<[string, number, string, string?]>; endLabels?: [string, string] }) {
   return (
     <div className="space-y-3.5">{rows.map(([label, pos, word, sub]) => (
       <div key={label} className="hov -mx-2 grid grid-cols-[150px_1fr] items-center gap-3 rounded-md px-2 py-1.5">
@@ -166,6 +214,12 @@ export function EaseScale({ rows }: { rows: Array<[string, number, string, strin
           <span className="absolute -top-5 -translate-x-1/2 text-[11px] font-medium text-[var(--c-ink2)]" style={{ left: `${pos}%` }}>{word}</span>
         </div>
       </div>))}
+      {endLabels ? (
+        <div aria-hidden className="grid grid-cols-[150px_1fr] items-center gap-3">
+          <span />
+          <div className="flex justify-between text-[10px] uppercase tracking-wide text-[var(--c-muted)]"><span>{endLabels[0]}</span><span>{endLabels[1]}</span></div>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -184,8 +238,15 @@ export function Meter({ value, left, right }: { value: number; left: string; rig
 export function Head({ children, sample, icon }: { children: React.ReactNode; sample?: boolean; icon?: AtlasIconId }) {
   return <div className="mb-3 flex items-center gap-2">{icon ? <Ico id={icon} /> : null}<span className="text-[15px] font-semibold text-[var(--c-ink)]">{children}</span>{sample ? <span className="rounded-full bg-[var(--c-soft2)] px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-[var(--c-muted)]">sample</span> : null}</div>;
 }
+/* Chip , thin spine-palette wrapper over the canonical ui/pill.tsx (loyalty decision,
+ * see header). Signature unchanged; the hinted arbitrary classes override Pill's
+ * neutral variant onto the spine CSS vars via tailwind-merge. */
 export function Chip({ children }: { children: React.ReactNode }) {
-  return <span className="inline-block rounded-full border border-[var(--c-border)] bg-[var(--c-soft)] px-2.5 py-0.5 text-[11px] text-[var(--c-ink2)]">{children}</span>;
+  return (
+    <Pill variant="neutral" className="border-[color:var(--c-border)] bg-[color:var(--c-soft)] px-2.5 py-0.5 text-[11px] font-normal text-[color:var(--c-ink2)]">
+      {children}
+    </Pill>
+  );
 }
 export function KV({ k, v }: { k: string; v: React.ReactNode }) {
   return <div className="flex gap-3 border-b border-[var(--c-border)] py-2 last:border-0"><span className="w-24 shrink-0 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{k}</span><span className="text-[13px] text-[var(--c-ink)]">{v}</span></div>;

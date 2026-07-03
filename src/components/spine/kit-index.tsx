@@ -14,12 +14,17 @@
  *    grammar is ENTITY-SCOPED and margin-%/share-based by construction (the value
  *    formatter is supplied per-row; callers pass shares, not cross-regime dollars).
  *  - Best-per-row/column = bold + terracotta text, no glyph. Home/neutral row tinted,
- *    never ranked. Withheld cells render a dash, never a fabricated number.
+ *    never ranked , ENFORCED: bestEntityForRow never crowns an entity flagged
+ *    home (or excludeFromBest); the best marker goes to the best NON-home entity.
+ *  - In-cell bars only on a DRAWN scale: CellScaleBar declares its domain and draws
+ *    a baseline tick (plus an optional reference tick), so truncation is visible.
  *
  * Raw hex OK on this dev surface (tokenize on promotion).
+ * Chips: LockPill wraps the canonical ui/pill.tsx (see kit.tsx header loyalty notes).
  */
 import * as React from "react";
 import { AtlasIcon, type AtlasIconId } from "@/components/brand/icons";
+import { Pill } from "@/components/ui/pill";
 import { Box, Fig, Ico, MiniBar, Stat, StackBar, TERRA, TRACK } from "./kit";
 
 /* ============================================================================
@@ -35,6 +40,10 @@ export type SignalDef = {
   /** short unit shown muted in the header, e.g. "%", "/100", "idx". NEVER a raw-USD cross-geo unit. */
   unit?: string;
   higherIsBetter?: boolean;
+  /** optional in-cell bar UNDER the figure, drawn on a DECLARED domain (never a hidden
+   * truncated one): a baseline tick marks the domain start, `refValue` (e.g. city = 100)
+   * draws a reference tick. Without it the cell renders the figure alone, as before. */
+  bar?: { domain: [number, number]; refValue?: number };
 };
 /** A support figure for one entity on one signal. value null = withheld (renders a dash). */
 export type SignalValue = { key: SignalKey; value: number | null; display?: string };
@@ -42,6 +51,29 @@ export type SignalValue = { key: SignalKey; value: number | null; display?: stri
 const dash = "–";
 const fmtSignal = (sv: SignalValue | undefined, unit?: string) =>
   !sv || sv.value == null ? dash : sv.display ?? `${sv.value}${unit ?? ""}`;
+
+/* ============================================================================
+ * CellScaleBar , the ONLY legal in-cell bar. An in-cell bar on a hidden truncated
+ * domain lies about proportion; this one DECLARES its domain and draws it: a faint
+ * baseline tick at the domain start (so a non-zero start is visible, not hidden)
+ * and an optional ink reference tick at `refValue` (e.g. city = 100 for an index).
+ * The adjacent Fig carries the number; the bar is aria-hidden shape only.
+ * Exported so page-level tables can adopt the same drawn-scale grammar.
+ * ========================================================================== */
+export function CellScaleBar({ value, domain, refValue, accent = false }: { value: number | null | undefined; domain: [number, number]; refValue?: number; accent?: boolean }) {
+  if (value == null) return null;
+  const [lo, hi] = domain;
+  const span = hi - lo || 1;
+  const pos = (v: number) => Math.max(0, Math.min(100, ((v - lo) / span) * 100));
+  return (
+    <span aria-hidden className="relative mt-1 block h-[5px] w-full rounded-full" style={{ background: TRACK }}>
+      <span className="absolute inset-y-0 left-0 block rounded-full" style={{ width: `${pos(value)}%`, background: accent ? TERRA : "#bdbdbd" }} />
+      {/* baseline tick , the drawn domain start */}
+      <span className="absolute -bottom-[2px] -top-[2px] left-0 w-px" style={{ background: "var(--c-line-strong)" }} />
+      {refValue != null ? <span className="absolute -bottom-[2px] -top-[2px] w-px -translate-x-1/2" style={{ left: `${pos(refValue)}%`, background: "var(--c-ink2)" }} /> : null}
+    </span>
+  );
+}
 
 /* small shared lock glyph (no padlock in the AtlasIcon set) , inline so LockVeil + LockPill share it */
 function LockGlyph({ size = 16, color = "var(--terra-text)" }: { size?: number; color?: string }) {
@@ -105,7 +137,9 @@ export function DecisionRow({ d, signals }: { d: DecisionDatum; signals: SignalD
           </>
         )}
       </div>
-      <StackBar h="h-2" rounded="rounded-full" ariaLabel={d.keptKnown === false ? "figure pending" : `${d.keptPct}% ${d.keptLabel ?? "kept"}`} segments={[{ label: "kept", pct: d.keptKnown === false ? 0 : d.keptPct, color: TERRA }, { label: "spent", pct: 100 - (d.keptKnown === false ? 0 : d.keptPct), color: TRACK }]} />
+      {/* sort={false}: this is a kept-share METER (fill reads left-to-right), not a
+       * cost stack, so the StackBar honesty sort must not pin the kept slice last. */}
+      <StackBar h="h-2" rounded="rounded-full" sort={false} ariaLabel={d.keptKnown === false ? "figure pending" : `${d.keptPct}% ${d.keptLabel ?? "kept"}`} segments={[{ label: "kept", pct: d.keptKnown === false ? 0 : d.keptPct, color: TERRA }, { label: "spent", pct: 100 - (d.keptKnown === false ? 0 : d.keptPct), color: TRACK }]} />
     </div>
   );
   return (
@@ -131,6 +165,7 @@ export function DecisionRow({ d, signals }: { d: DecisionDatum; signals: SignalD
             <div key={s.key} className="min-w-0 sm:text-right">
               <span className="block text-[9.5px] uppercase tracking-wide text-[var(--c-muted)] sm:hidden">{s.label}</span>
               <Fig className="text-[13px] text-[var(--c-ink)]">{fmtSignal(sv, s.unit)}</Fig>
+              {s.bar ? <CellScaleBar value={sv?.value} domain={s.bar.domain} refValue={s.bar.refValue} /> : null}
             </div>
           );
         })}
@@ -218,7 +253,16 @@ export function RankBars({ rows, max, valueUnit = "", leaderId }: { rows: RankDa
  * MANDATORY reflow: at <=375px it reflows to stacked per-entity mini-cards (the
  * cell-page Nearby pattern). NO horizontal scroll. CSS-only swap, SSR-safe.
  * ========================================================================== */
-export type CompareEntity = { id: string; name: string; flag?: string; home?: boolean };
+export type CompareEntity = {
+  id: string;
+  name: string;
+  flag?: string;
+  home?: boolean;
+  /** exclude this entity from the best-per-row crown. DEFAULTS to the `home` flag,
+   * so the caption's promise ("the home row is tinted, never ranked") is enforced
+   * without call-site edits. Pass excludeFromBest={false} to opt a home entity back in. */
+  excludeFromBest?: boolean;
+};
 export type CompareRow = {
   key: string;
   label: string;
@@ -228,9 +272,15 @@ export type CompareRow = {
   /** per-entity value keyed by entity id. null = withheld (dash). */
   values: Record<string, number | null>;
   display?: Record<string, string>;
+  /** optional in-cell bar under each figure, on a DECLARED drawn domain (CellScaleBar:
+   * baseline tick at the domain start, optional reference tick at `refValue`).
+   * Desktop columns only; the mobile mini-cards stay figure-only. Omit = figures alone. */
+  bar?: { domain: [number, number]; refValue?: number };
 };
+/* the best crown never lands on a home/excluded entity , the home row is tinted, never ranked */
 function bestEntityForRow(row: CompareRow, entities: CompareEntity[]): string | null {
-  const vals = entities.map((e) => ({ id: e.id, v: row.values[e.id] })).filter((x) => x.v != null) as Array<{ id: string; v: number }>;
+  const eligible = entities.filter((e) => !(e.excludeFromBest ?? e.home));
+  const vals = eligible.map((e) => ({ id: e.id, v: row.values[e.id] })).filter((x) => x.v != null) as Array<{ id: string; v: number }>;
   if (vals.length < 2) return null;
   const hib = row.higherIsBetter !== false;
   return vals.reduce((a, b) => ((hib ? b.v > a.v : b.v < a.v) ? b : a), vals[0]).id;
@@ -259,6 +309,7 @@ export function CompareTable({ entities, rows, caption }: { entities: CompareEnt
                 {entities.map((e) => (
                   <span key={e.id} className="text-right" style={e.home ? { background: "#fff4f1", borderRadius: 6, paddingInline: 6 } : undefined}>
                     <Fig className={`text-[13px] ${e.id === best ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{cellText(row, e.id)}</Fig>
+                    {row.bar ? <CellScaleBar value={row.values[e.id]} domain={row.bar.domain} refValue={row.bar.refValue} /> : null}
                   </span>
                 ))}
               </div>
@@ -325,10 +376,15 @@ export function LockVeil({ unlocked = false, headline = "Pro depth", note, cta =
     </div>
   );
 }
-/** a compact inline lock chip for single masked cells (e.g. a dollar take-home figure in a free row). */
+/** a compact inline lock chip for single masked cells (e.g. a dollar take-home figure in a
+ * free row). Thin wrapper over the canonical ui/pill.tsx (loyalty decision, kit.tsx header):
+ * Pill carries the chip anatomy; the hinted classes remap its subtle variant onto the spine
+ * terra vars and undo the sm-size uppercase/tracking so the render is byte-identical. */
 export function LockPill({ label = "Pro" }: { label?: string }) {
   return (
-    <span className="inline-flex items-center gap-1 rounded-full border border-[var(--terra-border)] bg-[var(--terra-soft)] px-2 py-0.5 text-[10px] font-semibold text-[var(--terra-text)]"><LockGlyph size={11} /> {label}</span>
+    <Pill variant="subtle" size="sm" className="normal-case tracking-normal border-[color:var(--terra-border)] bg-[color:var(--terra-soft)] px-2 py-0.5 text-[10px] text-[color:var(--terra-text)]">
+      <LockGlyph size={11} /> {label}
+    </Pill>
   );
 }
 
