@@ -61,7 +61,9 @@ function usePrefersReducedMotion() {
   return reduced;
 }
 /* count toward target; RESTS at the real value (SSR / no-JS / reduced-motion / pre-view
- * all show the true number). `active` gates only the animation. */
+ * all show the true number). `active` gates only the animation. First reveal tweens
+ * from 85% of the target (the sanctioned spine-city/motion pattern, P5): a mid-tween
+ * capture must sit within rounding distance of the truth, never a near-zero transient. */
 function useCountUp(target: number, reduced: boolean, ms = 520, active = true) {
   const [v, setV] = React.useState(target);
   const from = React.useRef(0);
@@ -69,7 +71,7 @@ function useCountUp(target: number, reduced: boolean, ms = 520, active = true) {
   React.useEffect(() => {
     if (reduced || !active) { setV(target); from.current = target; return; }
     const start = performance.now();
-    const a = done.current ? from.current : 0;
+    const a = done.current ? from.current : target * 0.85;
     let raf = 0;
     const tick = (now: number) => {
       const t = Math.min(1, (now - start) / ms);
@@ -147,14 +149,16 @@ function KeepStrip({ districts, selected, onSelect, reduced }: { districts: Dist
         </span>
       </div>
 
-      {/* axis header , labels the shared scale so the center line reads as the city baseline */}
+      {/* axis header , labels the shared scale so the center line reads as the city
+          baseline. On mobile the bar column is too narrow for three captions (they
+          overprint as one smear), so only the center CITY 100 caption survives below sm. */}
       <div className="mb-1.5 grid grid-cols-[18px_130px_1fr_44px] items-center gap-3 px-0">
         <span />
         <span />
-        <div className="flex items-center justify-between text-[9px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
-          <span>Keeps less</span>
+        <div className="flex items-center justify-center text-[9px] font-semibold uppercase tracking-wide text-[var(--c-muted)] sm:justify-between">
+          <span className="hidden sm:inline">Keeps less</span>
           <span className="text-[var(--c-ink2)]">City 100</span>
-          <span>Keeps more</span>
+          <span className="hidden sm:inline">Keeps more</span>
         </div>
         <span />
       </div>
@@ -611,7 +615,9 @@ function RankSlope({ districts, loudSlug, hidden, reduced }: { districts: Distri
         const ink = loud ? "var(--terra-text)" : "#1b1b1a";
         return (
           <g key={d.slug}>
-            <text x={xL - 10} y={y1 + 3.5} textAnchor="end" fontSize={11}>
+            {/* per-rank labels hide below sm: scaled to a phone width they render ~4px
+                (unreadable); the dots + lines still draw the flip and the prose carries it */}
+            <text className="hidden sm:block" x={xL - 10} y={y1 + 3.5} textAnchor="end" fontSize={11}>
               <tspan fill="#8c8c8a" fontSize={10} style={{ fontFamily: "var(--font-grotesk)" }}>{r1}  </tspan>
               <tspan fill={ink} fontWeight={loud ? 600 : 500}>{d.name}</tspan>
             </text>
@@ -623,7 +629,7 @@ function RankSlope({ districts, loudSlug, hidden, reduced }: { districts: Distri
             />
             <circle cx={xL} cy={y1} r={2.4} fill={loud ? TERRA : "#8f8f8d"} />
             <circle cx={xR} cy={y2} r={2.4} fill={loud ? TERRA : "#8f8f8d"} />
-            <text x={xR + 10} y={y2 + 3.5} textAnchor="start" fontSize={11}>
+            <text className="hidden sm:block" x={xR + 10} y={y2 + 3.5} textAnchor="start" fontSize={11}>
               <tspan fill="#8c8c8a" fontSize={10} style={{ fontFamily: "var(--font-grotesk)" }}>{r2}  </tspan>
               <tspan fill={ink} fontWeight={loud ? 600 : 500}>{d.name}</tspan>
             </text>
@@ -657,7 +663,7 @@ export function MythChapter({ myth, loudest, districts = [] }: { myth: Myth; lou
         {/* the counter-evidence: the whole re-ordering, drawn , not one number again */}
         <div className="rounded-[12px] border border-[var(--c-border)] bg-[var(--c-card)] p-4">
           <RankSlope districts={districts.length ? districts : [loudest]} loudSlug={loudest.slug} hidden={hidden} reduced={reduced} />
-          <p className="mt-2 border-t border-[var(--c-border)] pt-2 text-[11px] leading-snug text-[var(--c-muted)]">The order flips almost exactly: the loudest takings slide to the bottom on keep, and the lightest rents climb to the top.</p>
+          <p className="mt-2 border-t border-[var(--c-border)] pt-2 text-[11px] leading-snug text-[var(--c-muted)]">The order flips end to end: the loudest name keeps the least, and the lightest rents climb to the top.</p>
         </div>
       </div>
     </div>

@@ -50,7 +50,10 @@ function usePrefersReducedMotion() {
 /* Count/draw the focal number toward its target. The RESTING value is always the real
  * target (SSR / no-JS / reduced-motion / not-yet-in-view all show the true number , never
  * a 0). `active` gates only the ANIMATION: pass a scroll-in flag for below-fold figures so
- * they show the real number until seen, then count up; above-fold callers leave it true. */
+ * they show the real number until seen, then count up; above-fold callers leave it true.
+ * First reveal tweens from 85% of the target (mirrors spine-city/motion, the sanctioned
+ * pattern): a mid-tween capture must sit within rounding distance of the truth, never a
+ * transient 0% beside settled context. Later target switches run prev -> target. */
 export function useCountUp(target: number, reduced: boolean, ms = 520, active = true) {
   const [v, setV] = React.useState(target);
   const from = React.useRef(0);
@@ -58,7 +61,7 @@ export function useCountUp(target: number, reduced: boolean, ms = 520, active = 
   React.useEffect(() => {
     if (reduced || !active) { setV(target); from.current = target; return; }
     const start = performance.now();
-    const a = done.current ? from.current : 0; // first reveal: 0 -> target; later switches: prev -> target
+    const a = done.current ? from.current : target * 0.85; // first reveal: 85% -> target; later switches: prev -> target
     let raf = 0;
     const tick = (now: number) => {
       const t = Math.min(1, (now - start) / ms);

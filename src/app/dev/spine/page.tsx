@@ -575,8 +575,11 @@ function OperatingCosts({ d }: { d: any }) {
   const n = all.length;
   const rank = n > 1 && idx >= 0 ? (idx === 0 ? "the cheapest" : idx === n - 1 ? "the priciest" : idx >= (n - 1) * 0.66 ? "near the top" : idx <= (n - 1) * 0.34 ? "near the bottom" : "mid-pack") : "unranked";
   const lo = all[0]?.v ?? 0, hi = all[n - 1]?.v ?? 1, span = hi - lo || 1;
-  const dots = all.map((x) => ({ pos: ((x.v - lo) / span) * 100, label: x.name, accent: x.code === "GB" }));
   const fmt$ = (v: number) => `$${Math.round(v).toLocaleString("en-US")}`;
+  // The home dot carries ITS OWN figure: it sits so close to the priciest peer that the
+  // rail's max endpoint value ($1,434, France) was being read as the UK's , contradicting
+  // the $1,389 headline above. One metric, one value, stated on the dot itself.
+  const dots = all.map((x) => ({ pos: ((x.v - lo) / span) * 100, label: x.code === "GB" ? `${x.name} ${fmt$(x.v)}` : x.name, accent: x.code === "GB" }));
   const support: Array<[string, string]> = [
     [`$${(c.energy_usd_per_kwh ?? 0).toFixed(2)}`, "Electricity, per kWh"],
     [`$${Math.round(c.labour_cost_index_usd / 1000)}K`, "Loaded labour, per worker / yr"],

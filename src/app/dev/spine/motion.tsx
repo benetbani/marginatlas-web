@@ -44,7 +44,9 @@ export function Reveal({ children, className = "" }: { children: React.ReactNode
 }
 
 /* Count a figure toward its target on first in-view. Rests at the real target
- * on SSR / no-JS / reduced-motion (never 0). `format` renders the current value. */
+ * on SSR / no-JS / reduced-motion (never 0). The reveal tweens from 85% of the
+ * target (the sanctioned spine-city/motion pattern, P5): a mid-tween capture must
+ * sit within rounding distance of the truth, never a near-zero transient. */
 export function CountFig({ target, prefix = "", suffix = "", decimals = 0, ms = 620, className = "" }: { target: number; prefix?: string; suffix?: string; decimals?: number; ms?: number; className?: string }) {
   const reduced = usePrefersReducedMotion();
   const ref = React.useRef<HTMLSpanElement | null>(null);
@@ -61,7 +63,7 @@ export function CountFig({ target, prefix = "", suffix = "", decimals = 0, ms = 
         const tick = (now: number) => {
           const t = Math.min(1, (now - start) / ms);
           const e2 = 1 - Math.pow(1 - t, 3);
-          setV(target * e2);
+          setV(target * (0.85 + 0.15 * e2)); // 85% -> target, never a near-zero frame
           if (t < 1) requestAnimationFrame(tick);
           else setV(target);
         };

@@ -290,13 +290,15 @@ function MoneySplit({ d }: { d: any }) {
     <Full>
       <Box>
         <Rail icon="cost-breakdown" kicker="Where each $100 goes" verdict="The owner's slice is what four bigger lines leave behind." />
-        {/* the stacked bar + the on-bar % overlay (ink on the light greys, AA-safe;
-            the kept 7% slice is carried by the legend + the bracket row instead) */}
+        {/* the stacked bar + the on-bar % overlay (ink on the light greys AND on the
+            soft-terracotta kept slice, both AA-safe , the MarginKept combo). The kept
+            slice is the card's ANSWER, so it is never the one segment without a value:
+            it labels on-bar regardless of the >=12% width threshold ("7%" fits 7%). */}
         <div className="relative">
           <StackBar segments={parts.map((p) => ({ label: p.name, pct: p.pct, color: p.color, kept: !!p.kept }))} sort={false} h="h-11" ariaLabel={parts.map((p) => `${p.name} ${p.pct}%`).join(", ")} legend />
           <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 flex h-11 items-center">
             {parts.map((p) => (
-              <span key={p.name} className="fig overflow-hidden whitespace-nowrap text-center text-[11px] font-semibold" style={{ width: `${p.pct}%`, color: "#1b1b1a", opacity: 0.8 }}>{p.pct >= 12 ? `${p.pct}%` : ""}</span>
+              <span key={p.name} className="fig overflow-hidden whitespace-nowrap text-center text-[11px] font-semibold" style={{ width: `${p.pct}%`, color: "#1b1b1a", opacity: 0.8 }}>{p.pct >= 12 || p.kept ? `${p.pct}%` : ""}</span>
             ))}
           </div>
         </div>
@@ -358,7 +360,14 @@ function BreakEven({ d }: { d: any }) {
 function Ramp({ d }: { d: any }) {
   const fy = d.first_year ?? {};
   const phases: TLPhase[] = (fy.phases ?? []) as TLPhase[];
-  const nodes: TLNode[] = (fy.nodes ?? []) as TLNode[];
+  // P5 overlap fix: the two ABOVE-axis node subs ("Cash gap opens" -> "reserves carry
+  // months 3 to 9"; "Year one done" -> "4 in 5 rooms make it here") print directly over
+  // the phase-band captions ("Building covers" / "Proving the model") , text on text at
+  // any width. Both claims already live on this band (the read line carries the
+  // months-3-to-9 cash gap; the survival chapter carries the 4-in-5), so the subs are
+  // dropped here rather than the captions. The below-axis subs stay , they are clear.
+  const NO_SUB = new Set(["Cash gap opens", "Year one done"]);
+  const nodes: TLNode[] = ((fy.nodes ?? []) as TLNode[]).map((n) => (NO_SUB.has(n.label) ? { ...n, sub: undefined } : n));
   if (!nodes.length) return null;
   return (
     <Full>

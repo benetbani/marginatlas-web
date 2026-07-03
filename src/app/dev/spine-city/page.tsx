@@ -303,7 +303,8 @@ function TopTrades({ d }: { d: any }) {
  * two contradictory magnitudes for one number. Now every row is a CellScaleBar on
  * the SAME drawn 0..100%-of-sales domain as the split (baseline tick at 0, axis
  * labelled below), so adjacent encodings of one quantity share one scale.
- * Terracotta only on the local leader (the MarginKept subject, the parent thesis). */
+ * Terracotta budget (P5): the bars are ALL neutral grey; the accent sits on the
+ * local leader's FIGURE alone (bar+figure together pushed ch05 past the ration). */
 function MarginRail({ d }: { d: any }) {
   const arr = (d.trades?.list ?? []).slice();
   const local = arr.filter((x: any) => x.local !== false);
@@ -318,7 +319,7 @@ function MarginRail({ d }: { d: any }) {
         return (
           <div key={t.slug} className="hov -mx-2 grid grid-cols-[minmax(0,110px)_1fr_38px] items-center gap-3 rounded-md px-2 py-1.5">
             <span className={`min-w-0 truncate text-[12px] ${isLead ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`}>{t.name}{t.local === false ? <span className="ml-1 text-[8.5px] uppercase tracking-wide text-[var(--c-muted)]">online</span> : null}</span>
-            <span className="-mt-1 block" role="img" aria-label={`${t.name}: ${pct} percent of sales kept`}><CellScaleBar value={pct} domain={[0, 100]} accent={isLead} /></span>
+            <span className="-mt-1 block" role="img" aria-label={`${t.name}: ${pct} percent of sales kept`}><CellScaleBar value={pct} domain={[0, 100]} /></span>
             <Fig className={`text-right text-[13px] ${isLead ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{pct}%</Fig>
           </div>
         );

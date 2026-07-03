@@ -31,7 +31,9 @@ export function CityHero({ d }: { d: any }) {
       {/* decision scorecard , five business signals, small support figures */}
       <div className="mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-[var(--c-border)] sm:grid-cols-5" style={{ background: "var(--c-border)" }}>
         {cards.map((c) => (
-          <div key={c.label} className="min-w-0 bg-[var(--c-card)] px-3 py-2.5">
+          // 5 tiles in the 2-col mobile grid leave a dead 6th cell: the last odd tile
+          // spans both columns below sm (and returns to one column at sm:grid-cols-5).
+          <div key={c.label} className="min-w-0 bg-[var(--c-card)] px-3 py-2.5 last:odd:col-span-2 sm:last:odd:col-span-1">
             <div className="flex items-center gap-1 text-[10px] font-semibold uppercase tracking-[0.06em] text-[var(--c-muted)]">
               <span>{c.label}</span>
               <span className="inline-block h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: DOT[c.confidence] ?? DOT.modeled }} title={`Confidence: ${c.confidence}`} />

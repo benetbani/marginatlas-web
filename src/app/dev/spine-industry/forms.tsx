@@ -51,31 +51,20 @@ function useInView<T extends HTMLElement>() {
   }, [seen]);
   return { ref, seen };
 }
-/* draw progress 0..1 that eases in once the element is seen; rests at 1 (fully drawn) otherwise. */
-function useDraw(active: boolean, reduced: boolean, ms = 620) {
-  const [p, setP] = React.useState(1);
-  const started = React.useRef(false);
-  React.useEffect(() => {
-    if (reduced) { setP(1); return; }
-    if (!active) { if (!started.current) setP(0); return; }
-    if (started.current) return;
-    started.current = true;
-    const start = performance.now();
-    let raf = 0;
-    const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / ms);
-      setP(1 - Math.pow(1 - t, 3));
-      if (t < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [active, reduced, ms]);
-  return p;
+/* draw progress , P5 LAW: shapes REST fully drawn, ALWAYS. The old draw-on-scroll
+ * collapsed the shape to 0 after hydration until the card scrolled in, so captures,
+ * crawlers and fast scrolls saw gridlines with NO curve (and a clipped end-label).
+ * p is now 1 unconditionally for every consumer (SurvivalCurve, SeasonRibbon,
+ * MarginLadder); the signature stays so the call sites keep their (in-view,
+ * reduced-motion) seam if a compliant above-fold-only reveal ever returns. */
+function useDraw(_active: boolean, _reduced: boolean, _ms = 620) {
+  return 1;
 }
-/* Count-up CONTRACT (mirrors spine-cell/format-picker): the state INITIALISES at the
- * target, so SSR / no-JS / reduced-motion / not-yet-seen all REST at the true value.
- * `active` gates only the ANIMATION (pass the in-view flag); the first reveal runs
- * 0 -> target, any later target switch runs prev -> target (never re-zeroes). */
+/* Count-up CONTRACT (mirrors spine-city/motion, the sanctioned pattern): the state
+ * INITIALISES at the target, so SSR / no-JS / reduced-motion / not-yet-seen all REST
+ * at the true value. `active` gates only the ANIMATION (pass the in-view flag); the
+ * first reveal tweens from 85% of the target (NEVER 0 , a mid-tween capture must sit
+ * within rounding distance of the truth), later switches run prev -> target. */
 export function useCountUp(target: number, reduced: boolean, ms = 520, active = true) {
   const [v, setV] = React.useState(target);
   const from = React.useRef(0);
@@ -83,7 +72,7 @@ export function useCountUp(target: number, reduced: boolean, ms = 520, active = 
   React.useEffect(() => {
     if (reduced || !active) { setV(target); from.current = target; return; }
     const start = performance.now();
-    const a = done.current ? from.current : 0; // first reveal: 0 -> target; later switches: prev -> target
+    const a = done.current ? from.current : target * 0.85; // first reveal: 85% -> target; later switches: prev -> target
     let raf = 0;
     const tick = (now: number) => {
       const t = Math.min(1, (now - start) / ms);
@@ -142,7 +131,9 @@ export function SurvivalCurve({ curve, note }: { curve: Array<{ yr: number; pct:
   const { ref, seen } = useInView<HTMLDivElement>();
   const p = useDraw(seen, reduced, 680);
   if (!curve.length) return null;
-  const W = 320, H = 150, padL = 30, padR = 14, padT = 12, padB = 24;
+  // padT 22 (was 12): the end-label paints 9px above the 100% start point, so the
+  // top padding must clear a full text line or the label clips at the card edge.
+  const W = 320, H = 150, padL = 30, padR = 14, padT = 22, padB = 24;
   const maxYr = Math.max(...curve.map((c) => c.yr)) || 1;
   const X = (yr: number) => padL + (yr / maxYr) * (W - padL - padR);
   const Y = (pct: number) => padT + (1 - pct / 100) * (H - padT - padB); // zero baseline

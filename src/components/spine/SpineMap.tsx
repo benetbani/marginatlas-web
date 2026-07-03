@@ -13,8 +13,8 @@
  * marker navigates (href) or calls onSelect. Bounds fit all points; fly/zoom
  * animation is suppressed under prefers-reduced-motion. NavigationControl + the
  * attribution control stay visible, restyled to the warm palette. An optional
- * dot-size legend (bottom-left) explains the encoding. Composed into the
- * country/city spine pages.
+ * dot-size legend (top-left, so the bottom strip belongs to the attribution alone)
+ * explains the encoding. Composed into the country/city spine pages.
  */
 import * as React from "react";
 import { useRouter } from "next/navigation";
@@ -207,7 +207,7 @@ export function SpineMap({
   onSelect?: (p: SpinePoint) => void;
   ariaLabel?: string;
   className?: string;
-  legendLabel?: string; // when set, renders the bottom-left dot-size legend, e.g. "Dot size = revenue vs city"
+  legendLabel?: string; // when set, renders the top-left dot-size legend, e.g. "Dot size = revenue vs city"
 }) {
   const router = useRouter();
   const containerRef = React.useRef<HTMLDivElement | null>(null);
@@ -268,24 +268,36 @@ export function SpineMap({
     // RIGHT of its dot, so a wide name ("Covent Garden") can overlap a neighbour
     // whose dot is well clear. We build each marker's dot+label bounding box, then
     // greedily keep labels in priority order (highest signal first) and hide any
-    // whose box overlaps an already-kept label. This keeps the important labels and
-    // silences only the ones that would actually collide.
+    // whose box (a) would clip at the card edge (labels render rightward, so a
+    // right-edge marker prints "Canary Wha"), (b) overlaps an already-kept label,
+    // or (c) crosses another marker's ALWAYS-VISIBLE dot (dots never hide, so a
+    // label running under a neighbour dot prints "Glasgo●"). This keeps the
+    // important labels and silences only the ones that would actually collide.
     const labelW = (p: SpinePoint) => Math.min(124, (p.name ? p.name.length : 0) * 6.6 + 12);
     const crowdedFlags = (): boolean[] => {
+      const cw = map.getContainer().clientWidth || 0;
       const boxes = pts.map((p) => {
         const pt = map.project([p.lng, p.lat]);
         const sig = typeof p.signal === "number" ? Math.max(0, Math.min(100, p.signal)) : 50;
         const size = Math.round(12 + (sig / 100) * 12);
         const x0 = pt.x; // dot left
+        const xd = pt.x + size; // dot right (the label text starts after this + the 6px gap)
         const x1 = pt.x + size + 6 + labelW(p); // through end of label
-        return { x0, x1, y: pt.y, sig };
+        return { x0, xd, x1, y: pt.y, sig, half: size / 2 };
       });
       const order = pts.map((_, i) => i).sort((a, b) => boxes[b].sig - boxes[a].sig);
       const kept: Array<{ x0: number; x1: number; y: number }> = [];
       const crowded = new Array(pts.length).fill(false);
       for (const i of order) {
         const b = boxes[i];
-        const hit = kept.some((q) => Math.abs(q.y - b.y) < 13 && b.x0 < q.x1 && q.x0 < b.x1);
+        // card-edge clip: the label box would cross the container's right edge, or
+        // start hard against the left margin , hide it (hover/focus still shows it).
+        if (cw > 0 && (b.x1 > cw - 8 || b.x0 < 8)) { crowded[i] = true; continue; }
+        const hit =
+          // an already-kept label's box
+          kept.some((q) => Math.abs(q.y - b.y) < 13 && b.x0 < q.x1 && q.x0 < b.x1) ||
+          // any OTHER marker's dot under this label's TEXT span (dots always render)
+          boxes.some((q, j) => j !== i && Math.abs(q.y - b.y) < q.half + 7 && b.xd + 6 < q.xd && q.x0 < b.x1);
         if (hit) crowded[i] = true;
         else kept.push(b);
       }
@@ -370,8 +382,9 @@ export function SpineMap({
         style={{ filter: "sepia(.10) saturate(.92) brightness(1.02)" }}
       />
       {ready && legendLabel ? (
-        // Dot-size legend , a small white kit card, bottom-left, explaining the encoding.
-        <div className="pointer-events-none absolute bottom-3 left-3 flex items-center gap-2.5 rounded-[10px] border border-[var(--c-border)] bg-[var(--c-card)]/95 px-2.5 py-1.5 shadow-[0_1px_2px_rgba(43,28,22,0.10)]">
+        // Dot-size legend , a small white kit card, TOP-left: the bottom strip stays
+        // clear for the CARTO attribution (they collided on narrow cards).
+        <div className="pointer-events-none absolute left-3 top-3 flex items-center gap-2.5 rounded-[10px] border border-[var(--c-border)] bg-[var(--c-card)]/95 px-2.5 py-1.5 shadow-[0_1px_2px_rgba(43,28,22,0.10)]">
           <span className="flex items-end gap-1.5" aria-hidden="true">
             <span className="block h-[8px] w-[8px] rounded-full" style={{ background: TERRA_ACCENT }} />
             <span className="block h-[16px] w-[16px] rounded-full" style={{ background: TERRA_ACCENT }} />

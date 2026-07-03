@@ -213,7 +213,7 @@ export function EaseScale({ rows, endLabels }: { rows: Array<[string, number, st
           <div className="absolute top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center" style={{ left: `${pos}%` }}>
             <span className="h-3 w-3 rounded-full border-2 border-white" style={{ background: "var(--c-ink)", boxShadow: "0 0 0 1px #e3e3e3" }} />
           </div>
-          <span className="absolute -top-5 -translate-x-1/2 text-[11px] font-medium text-[var(--c-ink2)]" style={{ left: `${pos}%` }}>{word}</span>
+          <span className="absolute -top-5 -translate-x-1/2 whitespace-nowrap text-[11px] font-medium text-[var(--c-ink2)]" style={{ left: `${pos}%` }}>{word}</span>
         </div>
       </div>))}
       {endLabels ? (
@@ -253,7 +253,9 @@ export function Chip({ children }: { children: React.ReactNode }) {
 export function KV({ k, v }: { k: string; v: React.ReactNode }) {
   return <div className="flex gap-3 border-b border-[var(--c-border)] py-2 last:border-0"><span className="w-24 shrink-0 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{k}</span><span className="text-[13px] text-[var(--c-ink)]">{v}</span></div>;
 }
-/* inline "+" disclosure , a flat terracotta summary line that rotates the + on open.
+/* inline "+" disclosure , a flat ink summary line that rotates the + on open.
+ * Links are chrome, not the answer: the summary reads ink2 and warms to terracotta
+ * only on hover/open (terracotta stays reserved for answers, not affordances).
  * Canonicalises the hand-rolled "see the detail" rows (cost base / line-by-line tax /
  * discretionary split). The caller supplies its own body wrapper as children so each
  * instance keeps its exact body layout; `className` carries the per-instance details
@@ -261,7 +263,7 @@ export function KV({ k, v }: { k: string; v: React.ReactNode }) {
 export function InlineDisclosure({ name, summary, className = "group mt-3", children }: { name: string; summary: React.ReactNode; className?: string; children: React.ReactNode }) {
   return (
     <details name={name} className={className}>
-      <summary className="flex cursor-pointer list-none items-center gap-1.5 text-[12px] font-medium text-[var(--terra-text)]"><span className="text-base text-[var(--c-muted)] transition group-open:rotate-45 group-open:text-[var(--terra-text)]">+</span> {summary}</summary>
+      <summary className="flex cursor-pointer list-none items-center gap-1.5 text-[12px] font-medium text-[var(--c-ink2)] transition hover:text-[var(--terra-text)]"><span className="text-base text-[var(--c-muted)] transition group-open:rotate-45 group-open:text-[var(--terra-text)]">+</span> {summary}</summary>
       {children}
     </details>
   );
@@ -320,14 +322,14 @@ export function CatRows({ rows }: { rows: Array<[string, any]> }) {
 
 /* Rail , the section opener: icon + kicker + one-glance verdict line. Replaces the
  * Head-then-grid pattern. The verdict is plain present-tense English, no number-restating. */
-export function Rail({ icon, kicker, verdict, tone = "ink" }: { icon?: AtlasIconId; kicker: string; verdict: React.ReactNode; tone?: "ink" | "terra" }) {
+export function Rail({ icon, kicker, verdict, tone = "ink" }: { icon?: AtlasIconId; kicker: string; verdict?: React.ReactNode; tone?: "ink" | "terra" }) {
   return (
     <div className="mb-3">
       <div className="mb-1.5 flex items-center gap-2">
         {icon ? <Ico id={icon} tone={tone} /> : null}
         <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{kicker}</span>
       </div>
-      <p className="text-[15px] font-medium leading-snug text-[var(--c-ink)]">{verdict}</p>
+      {verdict != null ? <p className="text-[15px] font-medium leading-snug text-[var(--c-ink)]">{verdict}</p> : null}
     </div>
   );
 }
@@ -507,7 +509,9 @@ export function Timeline({ span, unit, phases = [], nodes, read, startLabel }: {
                 <span className={`text-[12.5px] ${be ? "font-semibold text-[var(--terra-text)]" : "font-medium text-[var(--c-ink)]"}`}>{n.label}</span>
                 <span className="fig shrink-0 text-[10.5px] text-[var(--c-muted)]">{uLabel(n.at)}</span>
               </div>
-              {n.sub ? <div className="text-[11px] text-[var(--c-muted)]">{n.sub}</div> : null}
+              {/* the right-aligned fig already states the time , a sub that merely repeats
+                  it ("day 1" twice on one row) is suppressed on this mobile rail */}
+              {n.sub && n.sub.trim().toLowerCase() !== uLabel(n.at).toLowerCase() ? <div className="text-[11px] text-[var(--c-muted)]">{n.sub}</div> : null}
             </li>
           );
         })}

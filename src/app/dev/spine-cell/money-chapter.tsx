@@ -18,7 +18,7 @@
  * so scaled cells read specific, not templated.
  */
 import * as React from "react";
-import { Box, Head, Rail, Fig, InlineDisclosure, TERRA, TRACK, usd } from "@/components/spine/kit";
+import { Box, Rail, Fig, InlineDisclosure, TERRA, TRACK, usd } from "@/components/spine/kit";
 import { useFormat, useCountUp, useInView } from "./format-picker";
 
 const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
@@ -212,8 +212,9 @@ export function CostToOpen({ d }: { d: any }) {
   const maxItem = Math.max(1, ...topItems.map((it) => it.usd * scale));
   return (
     <Box className="md:flex-[3]">
-      <div className="flex items-center justify-between gap-2">
-        <Head icon="startup-cost">What it costs to open one</Head>
+      <div className="flex items-start justify-between gap-2">
+        {/* same section-opener treatment as the sibling money cards (Rail kicker, not a bold Head) */}
+        <Rail icon="startup-cost" kicker="What it costs to open one" />
         <FormatTag />
       </div>
       <div className="mb-3 flex flex-wrap items-baseline gap-x-3">

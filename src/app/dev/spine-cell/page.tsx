@@ -27,7 +27,7 @@ import * as React from "react";
 import fs from "node:fs";
 import path from "node:path";
 import {
-  Fig, Box, Head, Rail, Movement, Row, Full, WideRail, EaseScale, StackBar, Timeline, TERRA, TRACK,
+  Fig, Box, Rail, Movement, Row, Full, WideRail, EaseScale, StackBar, Timeline, TERRA, TRACK,
 } from "@/components/spine/kit";
 import type { TLPhase, TLNode } from "@/components/spine/kit";
 import { Masthead } from "./masthead";
@@ -288,7 +288,8 @@ function Related({ d }: { d: any }) {
   const allKeepMore = arr.length > 0 && arr.every((r) => (r.keeps_pct ?? 0) > ref);
   return (
     <Box className="celltop md:flex-[3]">
-      <Head icon="compare">Related trades in this place</Head>
+      {/* same section-opener treatment as sibling cards (Rail kicker, not a bold Head) */}
+      <Rail icon="compare" kicker="Related trades in this place" />
       <p className="mb-3 text-[12px] leading-snug text-[var(--c-ink2)]">The same street, a different trade: what each one keeps of every $100 of sales.</p>
       <div className="space-y-1">
         {arr.map((r, i) => {

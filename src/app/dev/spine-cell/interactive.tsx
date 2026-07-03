@@ -8,7 +8,7 @@
  * because they do not read the FormatContext. All prose from the seed.
  */
 import * as React from "react";
-import { Box, Head, Rail, Fig, TERRA, TRACK, EaseScale, InlineDisclosure, usd } from "@/components/spine/kit";
+import { Box, Rail, Fig, TERRA, TRACK, EaseScale, InlineDisclosure, usd } from "@/components/spine/kit";
 import { CellScaleBar } from "@/components/spine/kit-index";
 
 const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
@@ -40,7 +40,8 @@ export function Nearby({ d }: { d: any }) {
 
   return (
     <Box>
-      <Head icon="compare">The same trade, comparable places</Head>
+      {/* same section-opener treatment as sibling cards (Rail kicker, not a bold Head) */}
+      <Rail icon="compare" kicker="The same trade, comparable places" />
       <div className="mb-3 text-[12.5px] text-[var(--c-ink2)]">{d.nearby?.surface_line}</div>
       {/* sm+ header with click-to-sort (active = ink; selection is chrome, never the accent) */}
       <div className="hidden grid-cols-[1.3fr_1fr_1fr_1fr_1fr] gap-3 border-b border-[var(--c-border)] pb-2 sm:grid">
