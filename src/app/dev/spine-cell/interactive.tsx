@@ -1,32 +1,37 @@
 "use client";
 /**
  * Client interactives for the cell page that are NOT part of the money-chapter
- * subtype propagation: the sortable Nearby comparison table (click-to-sort +
- * inline magnitude bars), the Wages table behind a disclosure, and the Risks
- * behind a disclosure. Kept out of money-chapter.tsx because they do not read the
- * FormatContext. All prose from the seed.
+ * subtype propagation: the sortable Nearby comparison table (click-to-sort, a
+ * keeps-per-$1 rate column proving the section's own verdict, CellScaleBar in-cell
+ * bars on a drawn domain), the Wages ranked bars + range-plot disclosure, and the
+ * Risks dot plot on a shared labeled 0-10 scale. Kept out of money-chapter.tsx
+ * because they do not read the FormatContext. All prose from the seed.
  */
 import * as React from "react";
-import { Box, Head, Rail, Fig, TERRA, TRACK, InlineDisclosure } from "@/components/spine/kit";
+import { Box, Head, Rail, Fig, TERRA, TRACK, EaseScale, InlineDisclosure } from "@/components/spine/kit";
+import { CellScaleBar } from "@/components/spine/kit-index";
 
 const money = (v: number) => (v >= 1e6 ? "$" + (v / 1e6).toFixed(1) + "M" : "$" + Math.round(v / 1000) + "K");
 
 type Col = { key: string; label: string; unit: string; get: (x: any) => number; cell: (v: number) => string };
 
-/* Nearby , WI-4 brief:
- * decision: how this place compares to peer cities on the same trade. Number: owner-keeps per place.
- * focal: the comparison table with inline micro-bars so magnitude reads at a glance; click-to-sort.
- * width: Full. terracotta target: the best figure per column (bold text) + its micro-bar.
- * The home place is tinted, never ranked. No fabricated cells. */
+/* Nearby , WI-4 brief (enriched, Final Ascent):
+ * decision: how this place compares to peer cities on the same trade. The verdict claims
+ * "keeps the least per dollar", so the table now CARRIES that metric: a sortable
+ * keeps-per-$1 column (take over turnover, in cents), default sort. In-cell bars are
+ * CellScaleBar (drawn 0-max domain with a visible baseline tick).
+ * terracotta target: ONE , the keeps-per-$1 winner's figure + bar. Best in the other
+ * columns is bold ink; the sort header, HERE tag and row tint are ink/neutral chrome. */
 export function Nearby({ d }: { d: any }) {
   const cols: Col[] = [
     { key: "rev", label: "Turnover", unit: "$/yr", get: (x) => x.rev_p50_usd, cell: (v) => money(v) },
     { key: "take", label: "Owner keeps", unit: "$/yr", get: (x) => x.take_home_usd, cell: (v) => money(v) },
+    { key: "rate", label: "Keeps per $1", unit: "c", get: (x) => (x.rev_p50_usd ? (x.take_home_usd / x.rev_p50_usd) * 100 : 0), cell: (v) => v.toFixed(1) + "c" },
     { key: "brk", label: "Ease of entry", unit: "/100", get: (x) => x.break_in_0_100, cell: (v) => "" + v },
   ];
   const rows: any[] = d.nearby?.places ?? [];
-  const [sortKey, setSortKey] = React.useState<string>("take");
-  const col = cols.find((c) => c.key === sortKey) ?? cols[1];
+  const [sortKey, setSortKey] = React.useState<string>("rate");
+  const col = cols.find((c) => c.key === sortKey) ?? cols[2];
   const best: Record<string, number> = {};
   cols.forEach((c) => (best[c.key] = Math.max(...rows.map((r) => c.get(r)))));
   const maxByCol: Record<string, number> = {};
@@ -37,14 +42,14 @@ export function Nearby({ d }: { d: any }) {
     <Box>
       <Head icon="compare">The same trade, comparable places</Head>
       <div className="mb-3 text-[12.5px] text-[var(--c-ink2)]">{d.nearby?.surface_line}</div>
-      {/* sm+ header with click-to-sort */}
-      <div className="hidden grid-cols-[1.3fr_1fr_1fr_1fr] gap-3 border-b border-[var(--c-border)] pb-2 sm:grid">
+      {/* sm+ header with click-to-sort (active = ink; selection is chrome, never the accent) */}
+      <div className="hidden grid-cols-[1.3fr_1fr_1fr_1fr_1fr] gap-3 border-b border-[var(--c-border)] pb-2 sm:grid">
         <span className="text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Place</span>
         {cols.map((c) => {
           const on = c.key === sortKey;
           return (
             <button key={c.key} type="button" onClick={() => setSortKey(c.key)} aria-sort={on ? "descending" : "none"}
-              className={`flex items-center justify-end gap-1 text-[10.5px] font-semibold uppercase tracking-wide transition-colors ${on ? "text-[var(--terra-text)]" : "text-[var(--c-muted)] hover:text-[var(--c-ink2)]"}`}>
+              className={`flex items-center justify-end gap-1 text-[10.5px] font-semibold uppercase tracking-wide transition-colors ${on ? "text-[var(--c-ink)]" : "text-[var(--c-muted)] hover:text-[var(--c-ink2)]"}`}>
               <span>{c.label} <span className="font-normal lowercase tracking-normal">({c.unit})</span></span>
               <span aria-hidden className={`fig text-[10px] ${on ? "opacity-100" : "opacity-30"}`}>{on ? "↓" : "↕"}</span>
             </button>
@@ -53,21 +58,20 @@ export function Nearby({ d }: { d: any }) {
       </div>
       <div className="space-y-2 sm:space-y-0">
         {sorted.map((r) => (
-          <div key={r.name} className="celltop group relative rounded-md border border-[var(--c-border)] p-3 sm:grid sm:grid-cols-[1.3fr_1fr_1fr_1fr] sm:items-center sm:gap-3 sm:rounded-none sm:border-0 sm:border-b sm:p-0 sm:py-2.5"
+          <div key={r.name} className="celltop group relative rounded-md border border-[var(--c-border)] p-3 sm:grid sm:grid-cols-[1.3fr_1fr_1fr_1fr_1fr] sm:items-center sm:gap-3 sm:rounded-none sm:border-0 sm:border-b sm:p-0 sm:py-2.5"
             style={r.home ? { background: "#fff4f1" } : undefined}>
-            <span className="block min-w-0 truncate font-medium text-[var(--c-ink)]">{r.name}{r.home ? <span className="ml-1.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--terra-text)]">here</span> : null}</span>
-            <div className="mt-2 grid grid-cols-3 gap-3 sm:contents sm:mt-0">
+            <span className="block min-w-0 truncate font-medium text-[var(--c-ink)]">{r.name}{r.home ? <span className="ml-1.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">here</span> : null}</span>
+            <div className="mt-2 grid grid-cols-2 gap-x-3 gap-y-2 sm:contents sm:mt-0">
               {cols.map((c) => {
                 const v = c.get(r);
                 const isBest = v === best[c.key];
+                const crowned = c.key === "rate" && isBest; // the ONE terracotta accent in this card
                 return (
                   <div key={c.key} className="min-w-0 sm:text-right">
                     <span className="block text-[9.5px] uppercase tracking-wide text-[var(--c-muted)] sm:hidden">{c.label}</span>
-                    <Fig className={`text-[13px] ${isBest ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{c.cell(v)}</Fig>
-                    {/* inline magnitude bar , length encodes the number so "big turnover, thin keep" reads at a glance */}
-                    <span className="mt-1 block h-1.5 overflow-hidden rounded-full sm:ml-auto sm:w-full" style={{ background: TRACK }}>
-                      <span className="block h-full rounded-full" style={{ width: `${Math.max(4, (v / maxByCol[c.key]) * 100)}%`, background: isBest ? TERRA : "#c8c8c6" }} />
-                    </span>
+                    <Fig className={`text-[13px] ${crowned ? "font-bold text-[var(--terra-text)]" : isBest ? "font-bold text-[var(--c-ink)]" : "text-[var(--c-ink)]"}`}>{c.cell(v)}</Fig>
+                    {/* in-cell bar on a DRAWN 0-max domain (baseline tick visible) */}
+                    <CellScaleBar value={v} domain={[0, maxByCol[c.key]]} accent={crowned} />
                   </div>
                 );
               })}
@@ -75,6 +79,7 @@ export function Nearby({ d }: { d: any }) {
           </div>
         ))}
       </div>
+      <div className="mt-2 text-[11px] text-[var(--c-muted)]">Keeps per $1: the owner&rsquo;s yearly take for every dollar of turnover. Same trade, same country, read like for like.</div>
     </Box>
   );
 }
@@ -110,7 +115,7 @@ export function Wages({ d }: { d: any }) {
           })}
         </div>
       ) : null}
-      {top ? <div className="mt-2 text-[11px] text-[var(--c-muted)]">Typical mid pay a year. The {top.role.toLowerCase()} is the ceiling everyone else sits below.</div> : null}
+      {top ? <div className="mt-2 text-[11px] text-[var(--c-muted)]">Typical mid pay a year; the full spread by role sits below.</div> : null}
       <InlineDisclosure name="wages" summary="See the full pay table">
         <div className="mt-3 space-y-3">
           {roles.map((r, i) => {
@@ -134,39 +139,26 @@ export function Wages({ d }: { d: any }) {
   );
 }
 
-/* Risks , WI-3 brief:
- * decision: what actually closes these kitchens. Number: the top risk score.
- * focal: the leading risk on a shared scale; the rest + detail behind a disclosure.
- * width: rail half. terracotta target: the leading risk's fill only. */
+/* Risks , WI-3 brief (enriched, Final Ascent):
+ * decision: what actually closes these kitchens. ALL FOUR scores visible on ONE shared
+ * labeled 0-10 scale (a dot plot: hiding three of four scores bought no focus, just an
+ * empty card bottom); the notes sit behind the disclosure. Descending seed order keeps
+ * the sort monotonic. Score notation is the tight n/10 (one slash convention page-wide).
+ * width: rail half. terracotta target: none (ink markers; the whole set is the read). */
 export function Risks({ d }: { d: any }) {
   const arr: any[] = d.risks?.items ?? [];
-  const top = arr[0];
+  if (arr.length === 0) return null;
+  const rows = arr.map((r) => [r.name, (r.score_1_10 / 10) * 100, `${r.score_1_10}/10`]) as Array<[string, number, string, string?]>;
   return (
     <Box className="md:flex-[2]">
       <Rail icon="watch" kicker="What to watch" verdict={d.risks?.surface_line} />
-      {top ? (
-        <div className="mb-1">
-          <div className="flex items-baseline justify-between gap-2">
-            <span className="text-[13px] font-medium text-[var(--c-ink)]">{top.name}</span>
-            <Fig className="text-[13px] text-[var(--terra-text)]">{top.score_1_10}/10</Fig>
-          </div>
-          <span className="mt-1 block h-2 overflow-hidden rounded-full" style={{ background: TRACK }}>
-            <span className="block h-full rounded-full" style={{ width: `${(top.score_1_10 / 10) * 100}%`, background: TERRA }} />
-          </span>
-          <div className="mt-1.5 text-[11.5px] leading-snug text-[var(--c-ink2)]">{top.note}</div>
-        </div>
-      ) : null}
-      <InlineDisclosure name="risks" summary="See the other risks">
-        <div className="mt-2 space-y-2.5 border-t border-[var(--c-border)] pt-2.5">
-          {arr.slice(1).map((r) => (
-            <div key={r.name}>
-              <div className="flex items-baseline justify-between gap-2">
-                <span className="text-[12.5px] text-[var(--c-ink2)]">{r.name}</span>
-                <Fig className="text-[12px] text-[var(--c-ink)]">{r.score_1_10}/10</Fig>
-              </div>
-              <span className="mt-1 block h-1.5 overflow-hidden rounded-full" style={{ background: TRACK }}>
-                <span className="block h-full rounded-full" style={{ width: `${(r.score_1_10 / 10) * 100}%`, background: "#c8c8c6" }} />
-              </span>
+      <div className="mt-1"><EaseScale rows={rows} endLabels={["Mild", "Severe"]} /></div>
+      <InlineDisclosure name="risks" summary="What each risk does">
+        <div className="mt-2 space-y-2 border-t border-[var(--c-border)] pt-2.5">
+          {arr.map((r) => (
+            <div key={r.name} className="grid grid-cols-[120px_1fr] items-baseline gap-3">
+              <span className="text-[12px] font-medium text-[var(--c-ink)]">{r.name}</span>
+              <span className="text-[11.5px] leading-snug text-[var(--c-ink2)]">{r.note}</span>
             </div>
           ))}
         </div>

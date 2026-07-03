@@ -5,19 +5,22 @@
  * answer-first hero, one dominant decision figure, progressive disclosure creating
  * the free/Pro seam, honest baselines, rationed terracotta, count-up + hover motion.
  *
- * As-built chart dictionary (perceptual idiom census, cap 2 each):
- *   dot-on-a-track (position marker): SpreadStrip x0 (removed), EaseScale x1 (WhoSuits) = 1
- *   horizontal-bar-list (length): MoneySplit stack x1, channel StackBar x1, catchment x1,
- *     Waterfall x1, wage range x1, Nearby micro-bars x1, break-even headroom x1, risk x1
- *     , counted by EYE-IDIOM these are all "horizontal length" but split into sub-idioms:
- *     100%-stacked bars (MoneySplit, channels) = 2; ranked/labeled bar-lists (catchment,
- *     Nearby, risks, wages) = the length family, kept <=2 distinct treatments per chapter.
- *   area+line (time-on-axis, ZERO baseline + drawn 50/100 scale): Seasonality x1 = 1
- *   waterfall (share-of-revenue): x1
- *   timeline (position-in-time): FirstYear x1 = 1
- *   segmented-control (selection): FormatPicker x1 = 1
- * REMOVED forms: Gauge (folded to EaseScale), Donut (-> StackBar), 3-pip meters (-> disclosure
- *   annotations), Dots (-> single length bar), invented-ceiling break-even bar (-> real headroom).
+ * As-built chart dictionary (Final Ascent Visual Dictionary census, cap 2 per family):
+ *   #1 big figure at hero scale: masthead $43K (the ONE hero; the control-room trio
+ *      restates it at sub-hero support scale by design, the seam's summary) = 1
+ *   #2 100% stacked bar (legended): MoneySplit x1, channels x1 = 2 AT CAP
+ *   #3 ranked labeled bars (values right-aligned): catchment x1, wages x1 = 2 AT CAP
+ *      (dayparts = labeled share bars on a FIXED full-week axis, chronological not ranked)
+ *   #4 dot plot on a shared labeled scale (EaseScale + endLabels): WhoSuits x1, Risks x1 = 2 AT CAP
+ *   #5 lollipop on a drawn track: CostToOpen line items x1, Related trades (ref tick at 7%) x1 = 2 AT CAP
+ *   #7 line/area (zero baseline): SurvivalSlope x1 = 1; zero-baseline monthly COLUMNS: Seasonality x1 = 1
+ *   #8 timeline: FirstYear x1 = 1
+ *   #9 editorial table (in-cell bars on a DRAWN CellScaleBar domain): Nearby x1 = 1
+ *   #12 waterfall (gross -> labeled decrements -> net, from the $100 split): OwnerKeeps x1 = 1 (max 1)
+ *   #13 spread strip: masthead turnover p10/p50/p90 x1 = 1
+ *   segmented-control (selection chrome, ink): FormatPicker x1 = 1
+ * REMOVED forms: Gauge, Donut, 3-pip meters, Dots, invented-ceiling break-even bar,
+ *   the 3-level "waterfall" bars (-> true stepped waterfall), min-floored seasonality area.
  * Width tiers per WI-4; the money chapter is weighted heaviest (control room + wide reads).
  */
 import * as React from "react";
@@ -51,7 +54,8 @@ function CellStyles() {
 /* HonestTake , WI-3 brief:
  * decision: how hard this trade is to enter. Number: the break-in read (as a word) + the crowded proof (n_firms).
  * focal: the break-in verdict; the market density (18,000 firms) is the evidence, shown, not asserted.
- * width: Even half. terracotta target: the n_firms hero figure only. No gauge (folded to WhoSuits EaseScale). */
+ * width: Even half. terracotta target: none (ink evidence; the masthead owns screen one's accent budget).
+ * The figure caption + consequence line state DIFFERENT things (dedupe, Final Ascent). */
 function HonestTake({ d }: { d: any }) {
   const v = d.verdict ?? {};
   const n = d.headline?.n_firms ?? 0;
@@ -59,7 +63,7 @@ function HonestTake({ d }: { d: any }) {
     <Box className="celltop">
       <Rail icon="honest-take" kicker="How hard to break in" verdict={v.break_in_line} />
       <div className="mt-1 flex items-baseline gap-2.5 border-t border-[var(--c-border)] pt-3">
-        <Fig className="text-3xl text-[var(--terra-text)]">{n.toLocaleString()}</Fig>
+        <Fig className="text-3xl text-[var(--c-ink)]">{n.toLocaleString()}</Fig>
         <span className="text-[12.5px] text-[var(--c-ink2)]">restaurants already trade here.</span>
       </div>
       <div className="mt-1 text-[11.5px] leading-snug text-[var(--c-muted)]">{v.crowded_line}</div>
@@ -69,11 +73,12 @@ function HonestTake({ d }: { d: any }) {
 
 /* MoneySplit , WI-3 brief:
  * decision: where the money goes. Number: the kept slice (7%). focal: the 100%-stacked $100 bar.
- * width: Even half. terracotta target: the kept slice only. */
+ * width: Full (T1, the canonical cost-stack). terracotta target: the kept slice only.
+ * StackBar's default HONESTY SORT does the work: size-descending, kept slice pinned last
+ * + terracotta, grey darkness remapped to magnitude, legend the visible carrier. */
 function MoneySplit({ d }: { d: any }) {
   const items: any[] = d.money_split?.items ?? [];
-  const greys = ["#8f8f8f", "#a3a3a3", "#b7b7b7", "#cbcbcb", "#dedede"]; let gi = 0;
-  const segments = items.map((it) => ({ label: it.name, pct: it.pct, color: it.kept ? TERRA : greys[(gi++) % greys.length] }));
+  const segments = items.map((it) => ({ label: it.name, pct: it.pct, color: it.kept ? TERRA : "#c8c8c6", kept: !!it.kept }));
   return (
     <Box className="celltop">
       <Rail icon="cost-breakdown" kicker="Where each $100 of sales goes" verdict={d.money_split?.surface_line} />
@@ -83,15 +88,17 @@ function MoneySplit({ d }: { d: any }) {
 }
 
 /* WhoSuits , WI-3 brief:
- * decision: who this trade suits. Number: four operator demands on one shared scale (break-in folded here).
- * focal: the EaseScale markers. width: Even half (promoted OUT of Narrow). terracotta target: the markers. */
+ * decision: who this trade suits. Number: four operator demands on ONE shared LABELED scale
+ * (Low -> High endpoints so the scale is never anonymous). focal: the dot rows.
+ * width: Even half (audit: half the band, not a full-width strip of clustered dots).
+ * terracotta target: none (ink markers; positions are the read, not an answer). */
 function WhoSuits({ d }: { d: any }) {
   const w = d.who_suits ?? {};
   const rows: Array<[string, number, string, string?]> = (w.scales ?? []).map((s: any) => [s.label, s.pos, s.word, s.sub]);
   return (
     <Box className="celltop">
       <Rail icon="who-for" kicker="Who this suits" verdict={w.subtitle} />
-      <div className="mt-1"><EaseScale rows={rows} /></div>
+      <div className="mt-1"><EaseScale rows={rows} endLabels={["Low", "High"]} /></div>
     </Box>
   );
 }
@@ -99,18 +106,20 @@ function WhoSuits({ d }: { d: any }) {
 /* ================= CH2 , THE DEMAND ================= */
 /* Demand , WI-4 brief:
  * decision: when the revenue actually lands. Number: covers/week + the dayparts split (weekend carries it).
- * focal: dayparts as ZERO-baseline bars (the true demand story), channel split as a 100%-stacked share bar.
- * width: WideRail. terracotta target: the weekend daypart bar (chart) + dine-in channel slice (rail). */
+ * focal: dayparts as labeled bars on a FIXED full-week axis (a 47% share must read as ~half,
+ * never as a full track), channel split as a 100%-stacked share bar.
+ * width: WideRail. terracotta target: the weekend daypart bar (chart) + dine-in channel slice (rail).
+ * catchment: RANKED descending with right-aligned index values (a mute unsorted list is decoration). */
 function Demand({ d }: { d: any }) {
   const dm = d.demand ?? {};
   const dayparts: any[] = dm.dayparts ?? [];
-  const dpMax = Math.max(1, ...dayparts.map((p) => p.pct));
   const dpPeak = dayparts.reduce((a, b) => (b.pct > a.pct ? b : a), dayparts[0])?.name;
   const channels: any[] = dm.channels ?? [];
   const chGreys = ["#a3a3a3", "#cbcbcb"]; let ci = 0;
+  // seed order is already size-descending with the leading channel first , a semantic
+  // mix order, so sort={false} (the kept-last cost-stack sort would misread here).
   const chSegs = channels.map((c, i) => ({ label: c.name, pct: c.pct, color: i === 0 ? TERRA : chGreys[(ci++) % chGreys.length] }));
-  const cat: any[] = dm.catchment ?? [];
-  const maxCat = Math.max(1, ...cat.map((c) => c.pct));
+  const cat: any[] = [...(dm.catchment ?? [])].sort((a, b) => b.pct - a.pct);
   return (
     <WideRail>
       <Box className="celltop">
@@ -119,33 +128,34 @@ function Demand({ d }: { d: any }) {
           <Fig className="text-3xl text-[var(--c-ink)]">{(dm.covers_per_week ?? 0).toLocaleString()}</Fig>
           <span className="text-[13px] text-[var(--c-ink2)]">covers a week at about <Fig className="text-[var(--c-ink)]">${dm.avg_spend_usd}</Fig> a head.</span>
         </div>
-        {/* dayparts , zero-baseline bars on a share axis (the truer demand story) */}
+        {/* dayparts , fixed 0-100% axis (the full week), zero baseline, value labels */}
         <div className="space-y-2">
           {dayparts.map((p) => (
             <div key={p.name} className="grid grid-cols-[120px_1fr_36px] items-center gap-3">
               <span className="text-[12px] text-[var(--c-ink2)]">{p.name}</span>
               <span className="h-2.5 overflow-hidden rounded-full" style={{ background: TRACK }}>
-                <span className="block h-full rounded-full" role="img" aria-label={`${p.name} ${p.pct}%`} style={{ width: `${(p.pct / dpMax) * 100}%`, background: p.name === dpPeak ? TERRA : "#c8c8c6" }} />
+                <span className="block h-full rounded-full" role="img" aria-label={`${p.name} ${p.pct}%`} style={{ width: `${p.pct}%`, background: p.name === dpPeak ? TERRA : "#c8c8c6" }} />
               </span>
               <Fig className="text-right text-[12.5px] text-[var(--c-ink)]">{p.pct}%</Fig>
             </div>
           ))}
         </div>
-        <div className="mt-2 text-[11px] text-[var(--c-muted)]">Share of the week's covers by daypart.</div>
+        <div className="mt-2 text-[11px] text-[var(--c-muted)]">Share of the week's covers by daypart; the track is the full week.</div>
       </Box>
       <Box className="celltop">
         <Rail icon="catchment" kicker="Who comes in, and how" verdict={dm.channel_line} />
-        <StackBar segments={chSegs} h="h-7" ariaLabel={chSegs.map((s) => `${s.label} ${s.pct}%`).join(", ")} legend />
-        {/* catchment , explicitly labeled an index, not an absolute share */}
+        <StackBar segments={chSegs} sort={false} h="h-7" ariaLabel={chSegs.map((s) => `${s.label} ${s.pct}%`).join(", ")} legend />
+        {/* catchment , explicitly labeled an index, ranked descending, values shown */}
         <div className="mt-4 border-t border-[var(--c-border)] pt-3">
           <div className="mb-2 text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Where the covers come from <span className="font-normal normal-case">({dm.catchment_unit})</span></div>
           <div className="space-y-2">
             {cat.map((c) => (
-              <div key={c.name} className="grid grid-cols-[130px_1fr] items-center gap-3">
+              <div key={c.name} className="grid grid-cols-[130px_1fr_32px] items-center gap-3">
                 <span className="min-w-0 truncate text-[12px] text-[var(--c-ink2)]">{c.name}</span>
                 <span className="h-2 overflow-hidden rounded-full" style={{ background: TRACK }}>
-                  <span className="block h-full rounded-full" role="img" aria-label={`${c.name} index ${c.pct}`} style={{ width: `${(c.pct / maxCat) * 100}%`, background: "#c8c8c6" }} />
+                  <span className="block h-full rounded-full" role="img" aria-label={`${c.name} index ${c.pct}`} style={{ width: `${c.pct}%`, background: "#c8c8c6" }} />
                 </span>
+                <Fig className="text-right text-[12px] text-[var(--c-ink)]">{c.pct}</Fig>
               </div>
             ))}
           </div>
@@ -157,42 +167,37 @@ function Demand({ d }: { d: any }) {
 }
 
 /* ================= CH4 , RUNNING IT ================= */
-/* Seasonality , WI-4 brief:
- * decision: how much the year swings. Number: the peak vs the trough. focal: 12-month area+line,
- * ZERO baseline + drawn scale (gridlines at 50/100), so the modest swing READS modest and the
- * "gentle" caption and the shape agree. width: Even half. terracotta target: the peak marker only. */
+/* Seasonality , WI-4 brief (re-visualed, Final Ascent):
+ * decision: how much the year swings. Number: the peak vs the trough. focal: 12 ZERO-baseline
+ * monthly COLUMNS + a faint index-100 reference rule, so the modest swing READS modest and the
+ * "gentle" caption and the shape agree. width: Even half. terracotta target: the December column only. */
 function Seasonality({ d }: { d: any }) {
   const m: number[] = d.seasonality?.months ?? [];
   if (m.length < 2) return null;
-  // HONEST AXIS: zero-based (never floored at the data min), with the scale drawn on-surface.
+  // HONEST AXIS: zero-based columns (never floored at the data min), scale drawn on-surface.
   const top = Math.max(100, ...m);
-  const dec = m.length - 1; // December is the marked node (year-end peak)
-  const W = 300, H = 100, padL = 22, padR = 6, padTop = 8, padBot = 18;
-  const X = (i: number) => padL + (i / (m.length - 1)) * (W - padL - padR);
+  const peak = m.indexOf(Math.max(...m)); // December in the seed (year-end peak)
+  const W = 300, H = 110, padL = 22, padR = 6, padTop = 10, padBot = 18;
+  const innerW = W - padL - padR;
+  const slot = innerW / m.length;
   const Y = (v: number) => padTop + (1 - v / top) * (H - padTop - padBot);
-  const pts = m.map((v, i) => `${X(i).toFixed(1)},${Y(v).toFixed(1)}`);
-  const line = "M " + pts.join(" L ");
-  const area = `M ${X(0).toFixed(1)},${Y(0).toFixed(1)} L ` + pts.join(" L ") + ` L ${X(m.length - 1).toFixed(1)},${Y(0).toFixed(1)} Z`;
   return (
     <Box className="celltop md:flex-[2]">
       <Rail icon="seasonality" kicker="Busy months and quiet months" verdict={d.seasonality?.surface_line} />
-      {/* a small area+line from a ZERO baseline: the shape of the year reads at a glance, December marked */}
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ height: 100 }} role="img" aria-label="Indexed demand across the year on a zero-based scale, December the peak" preserveAspectRatio="none">
-        {[50, 100].map((g) => (
-          <g key={g}>
-            <line x1={padL} y1={Y(g)} x2={W - padR} y2={Y(g)} stroke="#e4e4e2" strokeWidth={0.75} strokeDasharray="3 3" />
-            <text x={padL - 4} y={Y(g) + 2.5} textAnchor="end" fill="#8c8c8a" fontSize={7.5}>{g}</text>
-          </g>
-        ))}
-        <path d={area} fill={TERRA} opacity={0.1} />
-        <path d={line} fill="none" stroke={TERRA} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" />
-        <line x1={X(dec)} y1={Y(m[dec])} x2={X(dec)} y2={Y(0)} stroke={TERRA} strokeWidth={1} strokeDasharray="2 2" opacity={0.55} />
-        <circle cx={X(dec)} cy={Y(m[dec])} r={3} fill={TERRA} stroke="#fff" strokeWidth={1.5} />
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ height: 110 }} role="img" aria-label={`Monthly demand index, zero-based columns; ${MONTHS[peak] === "D" ? "December" : "the peak month"} is the highest at ${m[peak]}`} preserveAspectRatio="none">
+        {/* index-100 reference rule, labeled */}
+        <line x1={padL} y1={Y(100)} x2={W - padR} y2={Y(100)} stroke="#e0dedc" strokeWidth={0.75} strokeDasharray="3 3" />
+        <text x={padL - 4} y={Y(100) + 2.5} textAnchor="end" fill="#8c8c8a" fontSize={7.5}>100</text>
+        {/* zero-baseline columns, December accented */}
+        {m.map((v, i) => {
+          const x = padL + i * slot + slot * 0.18, bw = slot * 0.64;
+          return <rect key={i} x={x.toFixed(1)} y={Y(v).toFixed(1)} width={bw.toFixed(1)} height={(Y(0) - Y(v)).toFixed(1)} rx={1.5} fill={i === peak ? TERRA : "#c9c9c7"} />;
+        })}
         {/* the zero baseline, drawn */}
         <line x1={padL} y1={Y(0)} x2={W - padR} y2={Y(0)} stroke="#c9c9c7" strokeWidth={1} />
-        {m.map((_, i) => <text key={i} x={X(i)} y={H - 5} textAnchor="middle" fill="#8c8c8a" fontSize={8}>{MONTHS[i]}</text>)}
+        {m.map((_, i) => <text key={i} x={padL + i * slot + slot / 2} y={H - 5} textAnchor="middle" fill="#8c8c8a" fontSize={8}>{MONTHS[i]}</text>)}
       </svg>
-      <div className="mt-1.5 text-[11px] text-[var(--c-muted)]">Indexed demand across the year, on a zero-based scale. December is the peak; the swing is real but gentle.</div>
+      <div className="mt-1.5 text-[11px] text-[var(--c-muted)]">Monthly demand, indexed; the dashed rule marks 100. December peaks, January sags, and the swing stays gentle.</div>
     </Box>
   );
 }
@@ -222,7 +227,8 @@ function Myth({ d }: { d: any }) {
     .filter(([, v]) => typeof v === "number") as Array<[string, number]>;
   return (
     <Box className="celltop md:flex-[3]">
-      <Rail icon="myth-reality" tone="terra" kicker="Myth, busted" verdict="A dramatic first-year collapse is not what actually closes most rooms." />
+      {/* ink rail: the ONE accent in this box is the year-one survival node + figure */}
+      <Rail icon="myth-reality" kicker="Myth, busted" verdict="A dramatic first-year collapse is not what actually closes most rooms." />
       <div className="rounded-[10px] border border-[var(--c-border)] bg-[var(--c-soft)] px-3.5 py-2.5">
         <span className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">The claim</span>
         <p className="mt-0.5 text-[13px] italic text-[var(--c-ink2)]">&ldquo;{my.claim}&rdquo;</p>
@@ -249,7 +255,9 @@ function SurvivalSlope({ points, note }: { points: Array<[string, number]>; note
   return (
     <div className="mt-3 border-t border-[var(--c-border)] pt-3">
       <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ height: 110 }} role="img" aria-label={`Still trading: ${points.map(([l, v]) => `${l} ${v}%`).join(", ")}`}>
-        <path d={area} fill={TERRA} opacity={0.09} />
+        {/* neutral fill: the line's carrier is grey, so the fill is too , the ONE accent
+            in this box is the year-one node + figure (the myth being busted) */}
+        <path d={area} fill="#9a9a98" opacity={0.08} />
         <path d={line} fill="none" stroke="#c8c8c6" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" />
         {points.map(([label, v], i) => {
           const lead = i === 0;
@@ -267,44 +275,53 @@ function SurvivalSlope({ points, note }: { points: Array<[string, number]>; note
   );
 }
 
-/* Related , WI-3 brief:
- * decision: where to look next. Number: each trade's owner-keeps headline fact (a comparison + Pro drilldown hook).
- * focal: the cross-sell cards. width: Full. terracotta target: each card's keep figure. */
+/* Related , WI-3 brief (enriched, Final Ascent):
+ * decision: where to look next. Number: each trade's keep-% AGAINST a reference tick at what
+ * restaurants keep here, so four links become one argument (everything nearby keeps more).
+ * focal: a ranked lollipop list (idiom #5), sorted descending, shared drawn 0-max scale.
+ * width: Even half. terracotta target: the leading trade's dot + figure only. */
 function Related({ d }: { d: any }) {
-  const arr: any[] = d.related ?? [];
-  // the ONE accent in this box: the trade that keeps the most of each pound.
-  const leadKeep = Math.max(1, ...arr.map((r) => r.keeps_pct ?? 0));
+  const arr: any[] = [...(d.related ?? [])].sort((a, b) => (b.keeps_pct ?? 0) - (a.keeps_pct ?? 0));
+  const ref = d.subtypes?.baseline_keeps_pct ?? d.money_split?.items?.find((it: any) => it.kept)?.pct ?? 0;
+  const max = Math.max(1, ref, ...arr.map((r) => r.keeps_pct ?? 0));
+  const pos = (v: number) => (v / max) * 100;
+  const allKeepMore = arr.length > 0 && arr.every((r) => (r.keeps_pct ?? 0) > ref);
   return (
     <Box className="celltop md:flex-[3]">
       <Head icon="compare">Related trades in this place</Head>
-      <p className="mb-3 text-[12px] leading-snug text-[var(--c-ink2)]">The same street, a different trade. What each one keeps of every $100 of sales.</p>
-      <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-        {arr.map((r) => {
-          const isLead = r.keeps_pct === leadKeep;
+      <p className="mb-3 text-[12px] leading-snug text-[var(--c-ink2)]">The same street, a different trade: what each one keeps of every $100 of sales.</p>
+      <div className="space-y-1">
+        {arr.map((r, i) => {
+          const lead = i === 0;
           return (
-            <a key={r.slug} href="#" className="cityhov block rounded-lg border border-[var(--c-border)] bg-[var(--c-card)] px-3 py-2.5">
-              <div className="flex items-baseline justify-between gap-2">
-                <span className="text-[13px] font-semibold text-[var(--c-ink)]">{r.name}</span>
-                <Fig className={`text-[13px] ${isLead ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{r.keeps_pct}%</Fig>
-              </div>
-              {/* neutral keep bar (accent only on the leader) so magnitude reads and the card fills */}
-              <span className="mt-1.5 block h-1.5 overflow-hidden rounded-full" style={{ background: TRACK }}>
-                <span className="block h-full rounded-full" role="img" aria-label={`${r.name} keeps ${r.keeps_pct}%`} style={{ width: `${Math.max(6, (r.keeps_pct / leadKeep) * 100)}%`, background: isLead ? TERRA : "#c8c8c6" }} />
+            <a key={r.slug} href="#" className="hov -mx-2 grid grid-cols-[110px_1fr_40px] items-center gap-3 rounded-md px-2 py-2">
+              <span className="min-w-0">
+                <span className="block truncate text-[12.5px] font-medium text-[var(--c-ink)]">{r.name}</span>
+                <span className="block truncate text-[10.5px] text-[var(--c-muted)]">{r.fact}</span>
               </span>
-              <div className="mt-1.5 text-[11px] leading-snug text-[var(--c-ink2)]">{r.fact} &#8594;</div>
+              <span className="relative block h-4" role="img" aria-label={`${r.name} keeps ${r.keeps_pct}% of sales; restaurants here keep ${ref}%`}>
+                <span aria-hidden className="absolute top-1/2 h-[3px] w-full -translate-y-1/2 rounded-full" style={{ background: TRACK }} />
+                <span aria-hidden className="absolute top-1/2 h-[3px] -translate-y-1/2 rounded-full" style={{ width: `${pos(r.keeps_pct)}%`, background: lead ? TERRA : "#9a9a98" }} />
+                <span aria-hidden className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${pos(r.keeps_pct)}%`, background: lead ? TERRA : "#1b1b1a", boxShadow: "0 0 0 1px #e3e3e3" }} />
+                {/* the reference: what restaurants keep here, drawn on the same scale */}
+                <span aria-hidden className="absolute inset-y-0 w-px" style={{ left: `${pos(ref)}%`, background: "var(--c-ink2)" }} />
+              </span>
+              <Fig className={`text-right text-[13px] ${lead ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{r.keeps_pct}%</Fig>
             </a>
           );
         })}
+      </div>
+      <div className="mt-2 border-t border-[var(--c-border)] pt-2 text-[11px] text-[var(--c-muted)]">
+        The ink tick marks what restaurants keep here ({ref}%).{allKeepMore ? " Every neighbouring trade keeps more." : ""}
       </div>
     </Box>
   );
 }
 
-/* Close , the deliberate full-width end of the page. A one-line recap of the verdict,
- * a small set of next-step links, and one primary CTA. Gives the page a proper terminus
- * so it does not trail off into dead background-photo margin. */
+/* Close , the deliberate full-width end of the page. The recap PARAPHRASES the verdict
+ * (an echo, never a verbatim copy of the hero or the break-in line), one ink CTA, and
+ * ink next-step links (navigation is chrome; the accent never sits on chrome). */
 function Close({ d }: { d: any }) {
-  const h = d.headline ?? {};
   const rel: any[] = d.related ?? [];
   const city = d.meta?.city ?? "this market";
   const trade = (d.meta?.trade ?? "this trade").toLowerCase();
@@ -318,8 +335,8 @@ function Close({ d }: { d: any }) {
       <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
         <div className="max-w-2xl">
           <div className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--c-muted)]">The bottom line</div>
-          <p className="text-[15px] font-medium leading-snug text-[var(--c-ink)]">{h.answer}</p>
-          <p className="mt-1.5 text-[12.5px] leading-snug text-[var(--c-ink2)]">{d.verdict?.break_in_line}</p>
+          <p className="text-[15px] font-medium leading-snug text-[var(--c-ink)]">Deep demand and real turnover, with a thin slice left at the end: this trade rewards operators who control costs daily.</p>
+          <p className="mt-1.5 text-[12.5px] leading-snug text-[var(--c-ink2)]">If the format fits your capital and your hours, the next question is where the same work keeps more.</p>
         </div>
         <a href="#" className="shrink-0 self-start rounded-full bg-[var(--c-ink)] px-5 py-2.5 text-[13px] font-semibold text-white transition-colors hover:bg-[var(--terra-text)] md:self-auto">
           Compare this trade with Pro &#8594;
@@ -327,7 +344,7 @@ function Close({ d }: { d: any }) {
       </div>
       <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-1.5 border-t border-[var(--c-border)] pt-4 sm:grid-cols-3">
         {links.map((t, i) => (
-          <a key={i} href="#" className="text-[13px] font-medium text-[var(--terra-text)] hover:underline">{t} &#8594;</a>
+          <a key={i} href="#" className="text-[13px] font-medium text-[var(--c-ink2)] transition-colors hover:text-[var(--terra-text)]">{t} &#8594;</a>
         ))}
       </div>
     </Box>
@@ -341,11 +358,12 @@ export default function SpineCellPage() {
       <CellStyles />
       <Masthead d={d} />
 
-      {/* The verdict , Even rhythm: honest-take + money-split, then who-suits + a demand teaser. No Narrow. */}
+      {/* The verdict , Even pair (break-in + who-suits at half width) then the canonical
+          full-width $100 cost-stack (T1: a single stacked bar earns the full column). */}
       <Movement index="01" eyebrow="The verdict" heading="Can this pay" icon="gut-check" />
       <div className="space-y-4">
-        <Row><HonestTake d={d} /><MoneySplit d={d} /></Row>
-        <Full><WhoSuits d={d} /></Full>
+        <Row><HonestTake d={d} /><WhoSuits d={d} /></Row>
+        <Full><MoneySplit d={d} /></Full>
       </div>
 
       {/* Demand , a single WideRail band: dayparts + channels + catchment. */}

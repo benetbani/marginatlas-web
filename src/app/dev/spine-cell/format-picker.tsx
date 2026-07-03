@@ -120,10 +120,12 @@ export function FormatPicker({ d }: { d: any }) {
       {/* faint control-room wash so the centerpiece reads warmer/heavier than ordinary cards */}
       <span aria-hidden className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(255,241,237,0.5), rgba(255,255,255,0) 40%)" }} />
       <div className="relative">
-        <Rail icon="subtype" tone="terra" kicker="The control room" verdict={st.thesis} />
+        {/* chrome is ink: the rail icon, the hint pill and the tabs carry no terracotta ,
+            the ONE accent in this box is the owner-keeps figure in the trio below. */}
+        <Rail icon="subtype" kicker="The control room" verdict={st.thesis} />
         <p className="-mt-1 mb-4 flex flex-wrap items-center gap-2 text-[12.5px] text-[var(--c-ink2)]">
           <span>{st.hint}</span>
-          <span className="inline-flex items-center gap-1 rounded-full bg-[var(--terra-soft)] px-2 py-0.5 text-[10.5px] font-semibold text-[var(--terra-text)]">
+          <span className="inline-flex items-center gap-1 rounded-full border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[10.5px] font-semibold text-[var(--c-ink2)]">
             <span className="fig">&#8595;</span> pick a format, the money below updates
           </span>
         </p>
@@ -136,7 +138,7 @@ export function FormatPicker({ d }: { d: any }) {
         >
           <span
             aria-hidden
-            className="absolute inset-y-1 rounded-full border border-[var(--terra-border)] bg-[var(--c-card)] shadow-[0_1px_2px_rgba(43,28,22,0.10)]"
+            className="absolute inset-y-1 rounded-full border border-[var(--c-line-strong)] bg-[var(--c-card)] shadow-[0_1px_2px_rgba(43,28,22,0.10)]"
             style={{
               width: `calc((100% - 0.5rem) / ${subs.length})`,
               left: `calc(0.25rem + ${idx} * (100% - 0.5rem) / ${subs.length})`,
@@ -152,7 +154,7 @@ export function FormatPicker({ d }: { d: any }) {
                 role="tab"
                 aria-selected={active}
                 onClick={() => setIdx(i)}
-                className={`relative z-10 rounded-full px-2 py-2 text-center text-[13px] font-semibold transition-colors ${active ? "text-[var(--terra-text)]" : "text-[var(--c-ink2)] hover:text-[var(--c-ink)]"}`}
+                className={`relative z-10 rounded-full px-2 py-2 text-center text-[13px] font-semibold transition-colors ${active ? "text-[var(--c-ink)]" : "text-[var(--c-ink2)] hover:text-[var(--c-ink)]"}`}
               >
                 {s.name}
                 <span className="mt-0.5 block text-[9.5px] font-medium uppercase tracking-wide text-[var(--c-muted)]">{s.size_band}</span>
@@ -171,7 +173,7 @@ export function FormatPicker({ d }: { d: any }) {
           <div className="bg-[var(--c-card)] px-3.5 py-3">
             <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">To break in</div>
             <div className="fig text-[24px] leading-none text-[var(--c-ink)] md:text-[26px]">{breakWord(sel.break_in_0_100)}</div>
-            <div className="mt-1 text-[11px] text-[var(--c-muted)]"><Fig className="text-[var(--c-ink2)]">{sel.break_in_0_100}</Fig> / 100 ease</div>
+            <div className="mt-1 text-[11px] text-[var(--c-muted)]"><Fig className="text-[var(--c-ink2)]">{sel.break_in_0_100}/100</Fig> ease</div>
           </div>
           <div className="bg-[var(--c-card)] px-3.5 py-3">
             <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Cost to open</div>
@@ -207,13 +209,15 @@ function LockGlyph({ size = 16, color = "var(--terra-text)" }: { size?: number; 
 
 /* ComparePro , the free/Pro seam as ONE deliberate full-width panel. A composed
  * header states the value, the real matrix sits below it blurred + value-visible
- * (crawlable, kept in the DOM), and the CTA is a full-width bar fully inside the
- * panel. No small card center-floated over ghost skeleton rows. */
+ * (crawlable, kept in the DOM), and the CTA is a quiet INK pill (Final Ascent:
+ * the seam never outguns the data , the old full-width dark-terracotta bar was
+ * the largest colored element on the page). The header's small terra lock tile
+ * is the panel's one quiet Pro cue. */
 function ComparePro({ subs }: { subs: Subtype[] }) {
   return (
-    <div className="overflow-hidden rounded-[12px] border border-[var(--terra-border)]" style={{ background: "linear-gradient(180deg,#fffaf8,#fff)" }}>
+    <div className="overflow-hidden rounded-[12px] border border-[var(--c-border)]" style={{ background: "linear-gradient(180deg,#fffaf8,#fff)" }}>
       {/* header: states what Pro adds, fully inside the panel */}
-      <div className="flex items-center gap-2.5 border-b border-[var(--terra-border)] px-4 py-3">
+      <div className="flex items-center gap-2.5 border-b border-[var(--c-border)] px-4 py-3">
         <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg border border-[var(--terra-border)]" style={{ background: "var(--terra-soft)" }}><LockGlyph size={16} /></span>
         <div className="min-w-0">
           <div className="text-[13px] font-semibold text-[var(--c-ink)]">Compare all three formats side by side</div>
@@ -228,9 +232,9 @@ function ComparePro({ subs }: { subs: Subtype[] }) {
         </div>
         <div aria-hidden className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,250,248,0.55))" }} />
       </div>
-      {/* CTA bar , full width, fully inside the panel */}
-      <div className="border-t border-[var(--terra-border)] px-4 py-3">
-        <button type="button" className="inline-flex w-full items-center justify-center gap-1.5 rounded-full px-4 py-2 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90" style={{ background: "var(--terra-text)" }}>
+      {/* CTA row , a quiet ink pill, right-aligned; chrome stays ink */}
+      <div className="flex items-center justify-end border-t border-[var(--c-border)] px-4 py-3">
+        <button type="button" className="inline-flex items-center gap-1.5 rounded-full bg-[var(--c-ink)] px-5 py-2 text-[12.5px] font-semibold text-white transition-colors hover:bg-[var(--terra-text)]">
           <LockGlyph size={13} color="#fff" /> Compare with Pro
         </button>
       </div>

@@ -96,3 +96,32 @@ Per row: (1) `page-architecture/00-APPROVED-REFORM-2026-06-18.md` § CELL beat #
 
 ### Notes for the rebuild
 Parts-bin base = `cell-london-reform.html` / `cell-london-restaurants-pilot.html` (hero shell, card frame, chart primitives, the calculator) , take structure/order/width/viz ONLY from this manifest. The calculator (beat 3) is the prototype of the paid what-if modeller. `section-order.ts` still holds the pre-reform `CELL_PAGE_SECTIONS` (7 ids); this manifest is upstream , P1 sync at reform ship.
+
+---
+
+## FINAL ASCENT P2 ADDENDUM (2026-07-03) , the as-built spine contract
+
+The live contract for the SPINE dev route (`src/app/dev/spine-cell/`) is the per-section WI briefs in the code + this addendum; the table above is the pre-spine generation. As-built section order and forms after the Visual Dictionary refit:
+
+| Section | Form (dictionary #) | Accent |
+|---|---|---|
+| Masthead | big figure ($43K hero, #1) + p10/p50/p90 SpreadStrip (#13) | hero figure (+ strip p50 dot) |
+| Break-in | big figure (ink) + one consequence line | none |
+| Who suits | dot plot, shared LABELED scale Low/High (#4), half width | none |
+| $100 split | 100% StackBar, size-sorted, kept last (#2), full width | kept slice |
+| Demand | labeled share bars, fixed full-week axis + covers/wk figure | weekend bar |
+| Channels + catchment | 100% StackBar (#2) + RANKED index bars w/ values (#3) | dine-in slice |
+| Control room | segmented control (ink chrome) + trio; Pro seam = ink CTA pill | trio owner-keeps figure (+small lock tile) |
+| Owner keeps | TRUE stepped waterfall from the $100 split (#12), headline figure removed | kept step |
+| Break-even | bullet bar vs typical-day track, headroom interpretation | bar fill |
+| Cost to open | figure (2xl) + top-3 lollipops (#5) + derived payback w/ named basis | payback figure |
+| Team pay | ranked bars (#3) + range plot in disclosure | chef bar+figure |
+| Seasonality | 12 ZERO-BASELINE monthly columns + index-100 rule (#7) | December column |
+| Risks | dot plot on shared labeled 0-10 scale, all four visible (#4) | none |
+| First year | 52-wk timeline (#8), "Covers costs" band, shortened labels | break-even node |
+| Nearby | sortable editorial table + keeps-per-$1 column, CellScaleBar drawn domains (#9) | rate winner only |
+| Myth | struck claim + survival slope, neutral fill (#7) | Yr-1 node+figure |
+| Related | ranked lollipops w/ reference tick at restaurants' keep (#5) | leader dot+figure |
+| Close | paraphrased recap + ink CTA + ink links | none at rest |
+
+Idiom families all <=2 (census in the page.tsx header). Seed contract: `page-data/cells/GB-london-restaurants.json` , `money_split.items` is the ONE margin source (margins.gross/operating removed); payback derives from capex/take; the covers economy closes rev = covers x spend x 52.

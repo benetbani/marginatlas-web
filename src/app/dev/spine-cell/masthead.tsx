@@ -3,12 +3,13 @@
  * Masthead , the answer-first hero. The single most valuable number on the page,
  * what a typical owner KEEPS, is the dominant figure (focal .fig, counts up on
  * mount, top 20%). Net margin + break-in read as support beside it. The revenue
- * spread is demoted to a one-line support note under the headline (was the wide
- * left column). Provenance is stated ONCE here as a calm line, not per-card pills.
- * terracotta target: the take-home hero figure only.
+ * spread renders as a labeled p10/p50/p90 SpreadStrip (Final Ascent: distribution
+ * data earns a strip, not a sentence). Provenance is stated ONCE here as a calm
+ * line, not per-card pills. terracotta: the take-home hero figure (+ the strip's
+ * small p50 marker, the same honest read at support scale).
  */
 import * as React from "react";
-import { Fig } from "@/components/spine/kit";
+import { Fig, SpreadStrip } from "@/components/spine/kit";
 import { useCountUp } from "./format-picker";
 
 const money = (v: number) => (v >= 1e6 ? "$" + (v / 1e6).toFixed(1) + "M" : "$" + Math.round(v / 1000) + "K");
@@ -28,7 +29,12 @@ export function Masthead({ d }: { d: any }) {
           {d.meta?.trade} &middot; {d.meta?.city} &middot; {d.meta?.country_name}
         </div>
         <h1 className="max-w-3xl text-3xl font-bold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2.6rem]">{h.answer}</h1>
-        <p className="mt-2 max-w-2xl text-[13px] text-[var(--c-ink2)]">{h.spread_line}</p>
+        {h.rev_p10_usd && h.rev_p50_usd && h.rev_p90_usd ? (
+          <div className="mt-3 max-w-md">
+            <div className="mb-1 text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Yearly turnover, comparable rooms</div>
+            <SpreadStrip p10={h.rev_p10_usd} p50={h.rev_p50_usd} p90={h.rev_p90_usd} fmt={money} />
+          </div>
+        ) : null}
 
         {/* the hero scorecard: owner-keeps dominant, the other two as support */}
         <div className="mt-6 grid gap-5 md:grid-cols-[1.5fr_1fr] md:items-end">
