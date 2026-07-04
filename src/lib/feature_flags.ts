@@ -133,7 +133,7 @@ export function isSpineReformEnabled(): boolean {
  *
  * The real vs illustrative split is the boolean at each case below. Keep it in lockstep
  * with the shipped adapters: when a new adapter lands, flip its case to true in the
- * same commit (cell / industry / city are real; hood / region / country are not yet).
+ * same commit (cell / industry / city / hood are real; region / country are not yet).
  */
 export function isSpineReformEnabledFor(page: SpinePage): boolean {
   switch (page) {
@@ -144,9 +144,9 @@ export function isSpineReformEnabledFor(page: SpinePage): boolean {
     case "city":
       return resolveSpinePage(process.env.NEXT_PUBLIC_SPINE_REFORM_CITY, true);
     case "hood":
-      // Illustrative until the neighborhood adapter ships. Master must NOT enable it;
-      // only an explicit NEXT_PUBLIC_SPINE_REFORM_HOOD preview turns it on.
-      return resolveSpinePage(process.env.NEXT_PUBLIC_SPINE_REFORM_HOOD, false);
+      // Real: buildSpineHoodSeed renders the seven real London macro-districts and
+      // falls through to the non-spine page for cities without curated districts.
+      return resolveSpinePage(process.env.NEXT_PUBLIC_SPINE_REFORM_HOOD, true);
     case "region":
       // No real adapter planned (the region route mounts the illustrative city body
       // for preview only). Master never enables it.

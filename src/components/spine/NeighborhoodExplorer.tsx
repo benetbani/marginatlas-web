@@ -34,14 +34,14 @@ type District = {
   name: string; slug: string; character: string; tags?: string[];
   commuter_mult: number; tourism_mult: number; tag_mult: number; rent_mult: number;
   rev_vs_city_pct: number; walkability: string; price_tier: string; headline_trade: string;
-  xy?: { x: number; y: number }; lat?: number; lng?: number; walk_score?: number; cell_count?: number; blurb?: string;
+  xy?: { x: number; y: number }; lat?: number; lng?: number; walk_score?: number; cell_count?: number; blurb?: string; cell_href?: string;
   verdict?: string; counterweight_above?: string; counterweight_below?: string;
   best_trades?: Array<{ name: string; why: string }>;
   prime_streets?: string[]; demographics?: string[];
   footfall?: { weekday: number; weekend: number };
   locals_know?: string[];
 };
-type Myth = { claim?: string; reality?: string; stat_label?: string; tell?: string };
+type Myth = { claim?: string; reality?: string; stat_label?: string; tell?: string; slope_note?: string };
 type Rail2 = { kicker?: string; verdict?: string };
 
 const walkWord: Record<string, number> = { low: 30, moderate: 58, high: 90 };
@@ -417,16 +417,28 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
           </p>
         </Expand>
 
-        <Expand name={grp} title="When the trade happens">
-          <div className="pt-2"><FootfallScale d={d} /></div>
-        </Expand>
+        {/* footfall timing omits on the real page (no honest source); it renders on the
+            illustrative seed, which carries footfall. */}
+        {d.footfall ? (
+          <Expand name={grp} title="When the trade happens">
+            <div className="pt-2"><FootfallScale d={d} /></div>
+          </Expand>
+        ) : null}
 
-        <Expand name={grp} title="Walkability and price tier">
-          <div className="grid grid-cols-1 gap-4 pt-2 sm:grid-cols-2">
-            <div><SectionLabel>Walkability</SectionLabel><Meter value={walkVal(d)} left="Car-led" right="Walk-led" /></div>
-            <div><SectionLabel>Price tier</SectionLabel><PriceTierBand tier={d.price_tier} /></div>
-          </div>
-        </Expand>
+        {/* walkability (categorical, real from flavor) + price tier (real from flavor);
+            each sub-block self-omits, and the whole disclosure omits, when absent. */}
+        {d.walkability || d.walk_score != null || d.price_tier ? (
+          <Expand name={grp} title="Walkability and price tier">
+            <div className="grid grid-cols-1 gap-4 pt-2 sm:grid-cols-2">
+              {d.walkability || d.walk_score != null ? (
+                <div><SectionLabel>Walkability</SectionLabel><Meter value={walkVal(d)} left="Car-led" right="Walk-led" /></div>
+              ) : null}
+              {d.price_tier ? (
+                <div><SectionLabel>Price tier</SectionLabel><PriceTierBand tier={d.price_tier} /></div>
+              ) : null}
+            </div>
+          </Expand>
+        ) : null}
 
         {/* WHAT LOCALS KNOW , the moat voice + the Pro seam. Free shows the first line;
             Pro unlocks the rest (the named side street, the licensing quirk, the rent
@@ -462,11 +474,14 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
       {/* CTA , the call onward to the highest-value node (the cell page). Chrome is
           ink, never terracotta; dev route until promotion (then /{city}/{district}). */}
       <div className="flex items-center justify-between gap-3 border-t border-[var(--c-border)] px-5 py-3.5">
-        {/* "covered", not "modeled": the page's one provenance line owns that word */}
+        {/* trades-covered count omits on the real page (no per-district source); the
+            empty cell keeps the CTA to the right. */}
         <div className="text-[12px] text-[var(--c-muted)]">
-          <Fig className="text-[14px] text-[var(--c-ink)]">{d.cell_count ?? "?"}</Fig> trades covered in {d.name}
+          {d.cell_count != null ? (
+            <><Fig className="text-[14px] text-[var(--c-ink)]">{d.cell_count}</Fig> trades covered in {d.name}</>
+          ) : null}
         </div>
-        <a href="/dev/spine-cell" className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90" style={{ background: "var(--c-ink)" }}>
+        <a href={d.cell_href ?? "/dev/spine-cell"} className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90" style={{ background: "var(--c-ink)" }}>
           Open a trade here <span aria-hidden>&#8594;</span>
         </a>
       </div>
@@ -482,35 +497,51 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
  * trade numeral , the card's one answer.
  * ========================================================================== */
 function UnderMapCard({ d }: { d: District }) {
+  const trades = d.best_trades ?? [];
+  const streets = d.prime_streets ?? [];
+  const demos = d.demographics ?? [];
+  const hasBottom = streets.length > 0 || demos.length > 0;
+  // all three sources omitted: render nothing rather than an empty shell.
+  if (trades.length === 0 && !hasBottom) return null;
   return (
     <div className="mt-4 rounded-[14px] border border-[var(--c-border)] bg-[var(--c-card)] p-4"
       style={{ boxShadow: "inset 0 1px 0 rgba(255,255,255,0.9), 0 1px 1px rgba(43,28,22,0.04), 0 8px 24px -12px rgba(43,28,22,0.10)" }}>
-      <SectionLabel>What works in {d.name}</SectionLabel>
-      <ol className="space-y-2">
-        {(d.best_trades ?? []).map((t, i) => (
-          <li key={t.name} className="flex gap-3">
-            <Fig className={`mt-px w-4 shrink-0 text-[13px] ${i === 0 ? "text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{i + 1}</Fig>
-            <div className="min-w-0">
-              <div className="text-[12.5px] font-semibold text-[var(--c-ink)]">{t.name}</div>
-              <div className="text-[11.5px] leading-snug text-[var(--c-ink2)]">{t.why}</div>
-            </div>
-          </li>
-        ))}
-      </ol>
-      <div className="mt-3 grid grid-cols-1 gap-3 border-t border-[var(--c-border)] pt-3 sm:grid-cols-2">
-        <div>
-          <SectionLabel>Prime streets</SectionLabel>
-          <div className="flex flex-wrap gap-1.5">{(d.prime_streets ?? []).map((s) => <Chip key={s}>{s}</Chip>)}</div>
-        </div>
-        <div>
-          <SectionLabel>Who is here</SectionLabel>
-          <ul className="space-y-1">
-            {(d.demographics ?? []).map((s) => (
-              <li key={s} className="flex items-center gap-2 text-[12px] text-[var(--c-ink2)]"><span className="h-1 w-1 shrink-0 rounded-full" style={{ background: "#8f8f8d" }} />{s}</li>
+      {trades.length > 0 ? (
+        <>
+          <SectionLabel>What works in {d.name}</SectionLabel>
+          <ol className="space-y-2">
+            {trades.map((t, i) => (
+              <li key={t.name} className="flex gap-3">
+                <Fig className={`mt-px w-4 shrink-0 text-[13px] ${i === 0 ? "text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{i + 1}</Fig>
+                <div className="min-w-0">
+                  <div className="text-[12.5px] font-semibold text-[var(--c-ink)]">{t.name}</div>
+                  <div className="text-[11.5px] leading-snug text-[var(--c-ink2)]">{t.why}</div>
+                </div>
+              </li>
             ))}
-          </ul>
+          </ol>
+        </>
+      ) : null}
+      {hasBottom ? (
+        <div className={`grid grid-cols-1 gap-3 sm:grid-cols-2 ${trades.length > 0 ? "mt-3 border-t border-[var(--c-border)] pt-3" : ""}`}>
+          {streets.length > 0 ? (
+            <div>
+              <SectionLabel>Prime streets</SectionLabel>
+              <div className="flex flex-wrap gap-1.5">{streets.map((s) => <Chip key={s}>{s}</Chip>)}</div>
+            </div>
+          ) : null}
+          {demos.length > 0 ? (
+            <div>
+              <SectionLabel>Who is here</SectionLabel>
+              <ul className="space-y-1">
+                {demos.map((s) => (
+                  <li key={s} className="flex items-center gap-2 text-[12px] text-[var(--c-ink2)]"><span className="h-1 w-1 shrink-0 rounded-full" style={{ background: "#8f8f8d" }} />{s}</li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
         </div>
-      </div>
+      ) : null}
     </div>
   );
 }
@@ -663,7 +694,7 @@ export function MythChapter({ myth, loudest, districts = [] }: { myth: Myth; lou
         {/* the counter-evidence: the whole re-ordering, drawn , not one number again */}
         <div className="rounded-[12px] border border-[var(--c-border)] bg-[var(--c-card)] p-4">
           <RankSlope districts={districts.length ? districts : [loudest]} loudSlug={loudest.slug} hidden={hidden} reduced={reduced} />
-          <p className="mt-2 border-t border-[var(--c-border)] pt-2 text-[11px] leading-snug text-[var(--c-muted)]">The order flips end to end: the loudest name keeps the least, and the lightest rents climb to the top.</p>
+          <p className="mt-2 border-t border-[var(--c-border)] pt-2 text-[11px] leading-snug text-[var(--c-muted)]">{myth?.slope_note ?? "The order flips end to end: the loudest name keeps the least, and the lightest rents climb to the top."}</p>
         </div>
       </div>
     </div>
@@ -759,6 +790,15 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
   const [picks, setPicks] = React.useState<string[]>(init);
   const cols = picks.map((s) => districts.find((d) => d.slug === s)).filter(Boolean) as District[];
 
+  // footfall has no source on the real page, so its Pro rows (weekday dependence,
+  // weekend footfall) drop; walkability, which is real, stays. The dev seed carries
+  // footfall, so all three still show there.
+  const hasFootfall = districts.some((d) => d.footfall != null);
+  const proMetrics = hasFootfall ? PRO_METRICS : PRO_METRICS.filter((m) => m.key === "walk");
+  const proNote = hasFootfall
+    ? "Weekday dependence, walkability and weekend intensity, side by side, so you can see which one survives a quiet week."
+    : "Walkability, side by side, so you can see how foot-led each district is.";
+
   function toggle(slug: string) {
     setPicks((prev) => {
       if (prev.includes(slug)) return prev.length > 2 ? prev.filter((s) => s !== slug) : prev;
@@ -827,8 +867,8 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
           {/* Pro rows behind the veil , the differential you cannot get from the panel.
               min-height + pb keep the centered lock tile + CTA fully inside the card edge. */}
           <div className="border-t border-[var(--c-border)] p-3 pb-4">
-            <LockVeil headline="The full differential" note="Weekday dependence, walkability and weekend intensity, side by side, so you can see which one survives a quiet week." cta="Compare with Pro">
-              <div className="min-h-[172px] divide-y divide-[var(--c-border)]"><MetricRows metrics={PRO_METRICS} cols={cols} /></div>
+            <LockVeil headline="The full differential" note={proNote} cta="Compare with Pro">
+              <div className="min-h-[172px] divide-y divide-[var(--c-border)]"><MetricRows metrics={proMetrics} cols={cols} /></div>
             </LockVeil>
           </div>
         </div>
@@ -857,9 +897,9 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
                 })}
               </div>
               <div className="mt-2.5 pb-1">
-                <LockVeil headline="The full differential" note="Weekday dependence, walkability and weekend intensity." cta="Compare with Pro">
+                <LockVeil headline="The full differential" note={proNote} cta="Compare with Pro">
                   <div className="min-h-[172px] space-y-2">
-                    {PRO_METRICS.map((m) => (
+                    {proMetrics.map((m) => (
                       <div key={m.key} className="grid grid-cols-[130px_1fr_auto] items-center gap-2.5">
                         <span className="min-w-0 truncate text-[11.5px] text-[var(--c-ink2)]">{m.label}</span>
                         {m.bar ? <span className="-mt-1 block"><CellScaleBar value={m.get(d)} domain={m.bar.domain} refValue={m.bar.refValue} /></span> : <span />}

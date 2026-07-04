@@ -58,7 +58,7 @@ export function HoodMasthead({ d }: { d: any }) {
   return (
     <section className="py-6 md:py-8">
       {/* upward navigation , wired to the city page (dev route until promotion). */}
-      <a href="/dev/spine-city" className="mb-4 inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[var(--c-border)] bg-white/70 px-3 py-1 text-xs font-semibold text-[var(--c-ink2)] transition hover:border-[var(--terra-border)] hover:text-[var(--terra-text)]">&#8592; Back to {d.meta?.city}</a>
+      <a href={d.meta?.city_href ?? "/dev/spine-city"} className="mb-4 inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[var(--c-border)] bg-white/70 px-3 py-1 text-xs font-semibold text-[var(--c-ink2)] transition hover:border-[var(--terra-border)] hover:text-[var(--terra-text)]">&#8592; Back to {d.meta?.city}</a>
       <div className="flex items-center gap-3.5">
         <CountryFlag iso2="gb" className="w-[36px] rounded-sm shadow-sm" />
         <h1 data-typography="custom" className="text-3xl font-bold tracking-tight text-[var(--c-ink)] md:text-4xl">{d.meta?.city} neighborhoods</h1>
@@ -84,20 +84,24 @@ export function HoodMasthead({ d }: { d: any }) {
               </div>
             </div>
             <p className="mt-2.5 max-w-md text-[12.5px] leading-snug text-[var(--c-ink2)]">
-              The lightest rent on the map, so the most of each pound stays. It is not the loudest name in the city.
+              {d.meta?.hero_note ?? "The lightest rent on the map, so the most of each pound stays. It is not the loudest name in the city."}
             </p>
           </div>
 
           {/* SUPPORT , the highest-revenue district, a small neutral stat, not a co-hero */}
           <div className="shrink-0 rounded-[12px] border border-[var(--c-border)] bg-[var(--c-soft)] px-4 py-3 sm:w-[200px]">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">Top takings, heaviest lease</div>
+            <div className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{d.meta?.support_label ?? "Top takings, heaviest lease"}</div>
             <div className="mt-1.5 flex items-baseline gap-2">
               <Fig className="text-[22px] leading-none text-[var(--c-ink)]">+{loud.rev_vs_city_pct}%</Fig>
               <span className="text-[12.5px] font-semibold text-[var(--c-ink)]">{loud.name}</span>
             </div>
-            <p className="mt-1.5 text-[11px] leading-snug text-[var(--c-muted)]">
-              Highest revenue in the city, yet a keep index of <Fig className="text-[var(--c-ink2)]">{loudKeep}</Fig> sits below the city baseline of 100.
-            </p>
+            {d.meta?.support_note ? (
+              <p className="mt-1.5 text-[11px] leading-snug text-[var(--c-muted)]">{d.meta.support_note}</p>
+            ) : (
+              <p className="mt-1.5 text-[11px] leading-snug text-[var(--c-muted)]">
+                Highest revenue in the city, yet a keep index of <Fig className="text-[var(--c-ink2)]">{loudKeep}</Fig> sits below the city baseline of 100.
+              </p>
+            )}
           </div>
         </div>
       </div>
