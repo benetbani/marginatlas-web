@@ -26,6 +26,7 @@ import * as React from "react";
 import { AtlasIcon, type AtlasIconId } from "@/components/brand/icons";
 import { Pill } from "@/components/ui/pill";
 import { Box, Fig, Ico, MiniBar, Stat, StackBar, TERRA, TRACK } from "./kit";
+import { AtlasMark } from "./marks";
 
 /* ============================================================================
  * SHARED TYPES , one vocabulary for "a decision signal" across every primitive.
@@ -368,7 +369,7 @@ export function LockVeil({ unlocked = false, headline = "Pro depth", note, cta =
       {/* centered lock tile + CTA */}
       <div className="absolute inset-0 grid place-items-center px-4">
         <div className="w-full max-w-[300px] rounded-xl border border-[var(--terra-border)] bg-[var(--c-card)] p-4 text-center shadow-[0_8px_24px_-12px_rgba(43,28,22,0.18)]">
-          <span className="mx-auto mb-2.5 grid h-9 w-9 place-items-center rounded-lg border border-[var(--terra-border)]" style={{ background: "var(--terra-soft)" }}><LockGlyph size={18} /></span>
+          <span className="mx-auto mb-2.5 grid h-9 w-9 place-items-center rounded-lg border border-[var(--terra-border)]" style={{ background: "var(--terra-soft)" }}><AtlasMark id="pro-lock" size={22} /></span>
           <div className="text-[13px] font-semibold text-[var(--c-ink)]">{headline}</div>
           {note ? <p className="mx-auto mt-1 max-w-[34ch] text-[11.5px] leading-snug text-[var(--c-ink2)]">{note}</p> : null}
           <button type="button" onClick={onUnlock} className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-full px-4 py-2 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90" style={{ background: "var(--terra-text)" }}>

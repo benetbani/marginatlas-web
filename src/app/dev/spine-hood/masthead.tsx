@@ -12,6 +12,7 @@ import * as React from "react";
 import { CountryFlag } from "@/components/CountryFlag";
 import { Fig } from "@/components/spine/kit";
 import { keepIndex } from "@/components/spine/keep";
+import { AtlasMark } from "@/components/spine/marks";
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = React.useState(false);
@@ -75,7 +76,7 @@ export function HoodMasthead({ d }: { d: any }) {
         <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           {/* HERO , best keep, the one terracotta figure */}
           <div className="min-w-0">
-            <div className="text-[10.5px] font-semibold uppercase tracking-[0.12em] text-[var(--terra-text)]">Keeps the most</div>
+            <div className="flex items-center gap-1.5 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-[var(--terra-text)]"><AtlasMark id="best" size={15} />Keeps the most</div>
             <div className="mt-1 flex items-end gap-3.5">
               <Fig className="text-[60px] leading-none text-[var(--terra-text)] md:text-[76px]">{keepShown}</Fig>
               <div className="pb-1.5">

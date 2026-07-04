@@ -29,6 +29,7 @@ import { Ico, Fig, Meter, Chip, Rail, Expand, TERRA } from "@/components/spine/k
 import { LockVeil, LockPill, CellScaleBar } from "@/components/spine/kit-index";
 import { SpineMap, type SpinePoint } from "@/components/spine/SpineMap";
 import { keepIndex } from "./keep";
+import { AtlasMark } from "./marks";
 
 type District = {
   name: string; slug: string; character: string; tags?: string[];
@@ -369,6 +370,9 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
   const up = d.rev_vs_city_pct >= 0;
   const keep = keepIndex(d);
   const above = keep >= 100;
+  // the 3-way verdict mark + word: above / at / below the city baseline of 100.
+  const dir = keep > 100 ? "keeps-more" : keep < 100 ? "keeps-less" : "at-baseline";
+  const dirWord = keep > 100 ? "above city" : keep < 100 ? "below city" : "at city";
   const keepShown = Math.round(useCountUp(keep, reduced, 460));
   const counter = above ? d.counterweight_above : d.counterweight_below;
   const grp = `ne-panel-${d.slug}`; // single-open group, reset per district
@@ -390,7 +394,7 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
           {/* the ONE hero figure: keep index, count-up safe */}
           <div className="shrink-0 text-right">
             <Fig className="block text-[48px] leading-none text-[var(--terra-text)]">{keepShown}</Fig>
-            <div className="mt-1 text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">keep index{above ? ", above city" : ", below city"}</div>
+            <div className="mt-1 text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">keep index, {dirWord} <AtlasMark id={dir} size={12} /></div>
             <div className="mt-1.5 text-[11px] text-[var(--c-muted)]">revenue <Fig className="text-[var(--c-ink2)]">{up ? "+" : ""}{d.rev_vs_city_pct}%</Fig> vs city</div>
           </div>
         </div>

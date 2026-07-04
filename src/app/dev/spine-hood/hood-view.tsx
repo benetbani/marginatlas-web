@@ -32,6 +32,7 @@ import { Movement } from "@/components/spine/kit";
 import { SpineShell } from "@/components/spine/shell";
 import { NeighborhoodExplorer, NeighborhoodCompare, MythChapter } from "@/components/spine/NeighborhoodExplorer";
 import { HoodMasthead } from "./masthead";
+import { AtlasMark } from "@/components/spine/marks";
 
 // A London street motif for the hood atmosphere (opacity-only 0.32, set in SpineShell).
 const HOOD_BG = "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?auto=format&fit=crop&w=1920&q=60";
@@ -56,7 +57,10 @@ export function SpineHoodBody({ data = spineHoodSeed }: { data?: any }) {
         {/* the single, quiet provenance line for the whole page (stated once, under the
             hero). The real adapter supplies an honest modeled-coverage line; the dev
             seed falls back to the illustrative note. */}
-        <p className="-mt-2 mb-2 text-[11px] leading-snug text-[var(--c-muted)]">{d.meta?.provenance_line ?? DEV_PROVENANCE}</p>
+        <p className="-mt-2 mb-2 flex items-start gap-1.5 text-[11px] leading-snug text-[var(--c-muted)]">
+          <AtlasMark id="modeled" size={13} className="mt-px shrink-0" />
+          <span>{d.meta?.provenance_line ?? DEV_PROVENANCE}</span>
+        </p>
 
         {/* 01 , THE MOVEMENT: where the money actually stays. Keep strip + real map + panel. */}
         <Movement index="01" icon="best-areas" eyebrow="Where the money stays" heading="What the owner keeps, ranked" />
