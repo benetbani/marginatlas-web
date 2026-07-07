@@ -6,7 +6,7 @@
  * component so the page itself stays a server component under SpineShell.
  */
 import * as React from "react";
-import { Movement, Box, Rail } from "@/components/spine/kit";
+import { Movement, Box, Rail, SampleTag, InfoTip, SpectraTable } from "@/components/spine/kit";
 import {
   DecisionRow, DecisionRowHeader, type DecisionDatum, type SignalDef,
   CompareTable, type CompareEntity, type CompareRow,
@@ -19,7 +19,9 @@ import {
   WinnerCard,
   Podium, type PodiumDatum,
   KitIndexStyles,
+  MarginIndexBadge,
 } from "@/components/spine/kit-index";
+import { AtlasIcon } from "@/components/brand/icons";
 
 /* ----- SAMPLE DATA (entity-scoped, like-for-like, margin/share only) ----- */
 const SIGNALS: SignalDef[] = [
@@ -249,6 +251,53 @@ export function KitShowcase() {
           <p className="mt-2 text-[11px] text-[var(--c-muted)]">Pick up to 3. The tray is pinned to the bottom of the page.</p>
         </Box>
         <CompareTray items={tray} onRemove={(id) => setTray((t) => t.filter((x) => x.id !== id))} onClear={() => setTray([])} onCompare={() => undefined} />
+      </Section>
+
+      {/* ===== 10. THE PUBLISH SET (2026-07-08): the sample tag, the Margin Index badge,
+          the tap-safe gloss, the shared spectra table, the trade icon family ===== */}
+      <Section index="10" eyebrow="Publish pieces" heading="SampleTag, MarginIndexBadge, InfoTip, SpectraTable, trade icons" icon="verdict">
+        <Box>
+          <Rail icon="methodology" kicker="SampleTag" verdict="The per-section marker for fill-with-sample: honest, unmissable, calm." />
+          <div className="flex flex-wrap items-center gap-3">
+            <SampleTag />
+            <SampleTag note="researching this country" />
+          </div>
+        </Box>
+        <Box>
+          <Rail icon="scorecard" kicker="MarginIndexBadge" verdict="The signature per-page score mark: the terracotta arc IS the composite, the compass tick points north." />
+          <div className="flex flex-wrap items-center gap-8">
+            <MarginIndexBadge score={82} />
+            <MarginIndexBadge score={54} />
+            <MarginIndexBadge score={23} showLabel={false} />
+            <MarginIndexBadge score={null} />
+          </div>
+          <p className="mt-2 text-[11px] text-[var(--c-muted)]">No honest score renders nothing (the null case above), never a fabricated zero.</p>
+        </Box>
+        <Box>
+          <Rail icon="who-for" kicker="InfoTip + SpectraTable" verdict="The tap-safe gloss and the shared two-pole spectra, gradient only where left genuinely means worse." />
+          <p className="mb-3 text-[12.5px] text-[var(--c-ink2)]">Business rates<InfoTip gloss="A yearly charge based on the rental value of the premises." /> and the keep index<InfoTip gloss="100 keeps the city-average share of each sale; revenue lift divided by rent load." /> each carry a tap-safe gloss.</p>
+          <div className="grid gap-x-8 gap-y-5 md:grid-cols-2">
+            <div>
+              <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Gradient (left = worse for business)</div>
+              <SpectraTable gradient rows={[{ left_label: "Rules shift often", right_label: "Rules are stable", position_0_1: 0.78, spectrum: "rules" }, { left_label: "Weak courts", right_label: "Strong courts", position_0_1: 0.82, spectrum: "courts" }]} glossFor={(s) => (s === "rules" ? "How often the rules of doing business change." : "How strong and independent the courts are in a dispute.")} />
+            </div>
+            <div>
+              <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Neutral (no better end)</div>
+              <SpectraTable rows={[{ left_label: "Reserved", right_label: "Expressive", position_0_1: 0.4, spectrum: "expression" }, { left_label: "Relationship-led", right_label: "Rules-led", position_0_1: 0.75, spectrum: "orientation" }]} />
+            </div>
+          </div>
+        </Box>
+        <Box>
+          <Rail icon="high-street" kicker="The trade icon family" verdict="One glyph per everyday trade, the same grammar as the rest of the set: one stroke weight, one accent." />
+          <div className="flex flex-wrap gap-x-6 gap-y-4">
+            {(["trade-restaurant", "trade-grocery", "trade-dental", "trade-cafe", "trade-gym", "trade-auto", "trade-salon", "trade-bar", "trade-childcare", "trade-taxi", "trade-retail", "bank", "sale-tag", "raise-money"] as const).map((id) => (
+              <span key={id} className="flex w-[74px] flex-col items-center gap-1.5 text-center">
+                <AtlasIcon id={id} size={26} className="spine-ic" style={{ color: "var(--c-ink)" }} />
+                <span className="fig text-[9px] leading-tight text-[var(--c-muted)]">{id.replace("trade-", "")}</span>
+              </span>
+            ))}
+          </div>
+        </Box>
       </Section>
     </div>
   );

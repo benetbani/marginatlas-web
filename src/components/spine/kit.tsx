@@ -153,14 +153,16 @@ export function Waterfall({ rows }: { rows: Array<[string, number, boolean?]> })
     </div>
   );
 }
-/* percentile spread strip , p10..p90 with the typical (p50) marked. Cap 2 uses/page. */
-export function SpreadStrip({ p10, p50, p90, fmt }: { p10: number; p50: number; p90: number; fmt: (n: number) => string }) {
+/* percentile spread strip , p10..p90 with the typical (p50) marked. Cap 2 uses/page.
+ * `neutral` renders the marker + track in ink/grey , for when the strip is SUPPORT beside
+ * a box's one terracotta answer (the accent budget stays with the answer). */
+export function SpreadStrip({ p10, p50, p90, fmt, neutral = false }: { p10: number; p50: number; p90: number; fmt: (n: number) => string; neutral?: boolean }) {
   const span = Math.max(1, p90 - p10);
   const mid = Math.max(2, Math.min(98, ((p50 - p10) / span) * 100));
   return (
     <div>
-      <div className="relative h-2 rounded-full" role="img" aria-label={`${fmt(p10)} to ${fmt(p90)}, typical ${fmt(p50)}`} style={{ background: "linear-gradient(90deg,#ededed,#ffe1d8)" }}>
-        <div className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${mid}%`, background: TERRA, boxShadow: "0 0 0 1px #e3e3e3" }} />
+      <div className="relative h-2 rounded-full" role="img" aria-label={`${fmt(p10)} to ${fmt(p90)}, typical ${fmt(p50)}`} style={{ background: neutral ? "#ededed" : "linear-gradient(90deg,#ededed,#ffe1d8)" }}>
+        <div className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${mid}%`, background: neutral ? "var(--c-ink)" : TERRA, boxShadow: "0 0 0 1px #e3e3e3" }} />
       </div>
       <div className="mt-1 flex justify-between text-[10.5px] text-[var(--c-muted)]"><span>{fmt(p10)}</span><span className="font-semibold text-[var(--c-ink)]">{fmt(p50)} typical</span><span>{fmt(p90)}</span></div>
     </div>
