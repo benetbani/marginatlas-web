@@ -23,11 +23,13 @@ import { NeighboursTable } from "./NeighboursTable";
 import { Conveyor } from "@/components/spine/conveyor";
 import { SpineMap, type SpinePoint } from "@/components/spine/SpineMap";
 import { CountFig } from "./motion";
+import { buildCityActivities } from "@/lib/scores/city_board";
+import { industryToSlug } from "@/lib/taxonomy";
 import {
   TERRA, TRACK, usd, cap,
-  Ico, Fig, MiniBar, Dots, StackBar, Waterfall, type StackSeg,
+  Ico, Fig, MiniBar, Dots, StackBar, Waterfall,
   Movement, Box, EaseScale, Meter, Head, Chip, KV, Expand, InlineDisclosure, Bullets,
-  Even, WideRail, CatRows,
+  Even, CatRows,
   Rail, Stat, Timeline, type TLNode, type TLPhase,
 } from "@/components/spine/kit";
 import { RankBars, LockPill } from "@/components/spine/kit-index";
@@ -50,6 +52,32 @@ function peerRows(codes: string[], pick: (j: any) => number | null | undefined):
       return typeof v === "number" ? { code, name: j.meta?.name ?? code, v } : null;
     })
     .filter(Boolean) as Array<{ code: string; name: string; v: number }>;
+}
+
+/* The country's take-home funnel reuses the site-wide fixed slate of everyday
+ * trades. The founder's canonical six (restaurant, grocery, pharmacy, salon, gym,
+ * auto-repair) map onto the real trade board only where a trade is actually
+ * modeled: pharmacies are not modeled yet and the salon slug has no curated London
+ * row, so the honest set fills to six from the next real everyday trades (dental,
+ * cafe, bar) rather than invent a take-home for an unmodeled trade. London stands
+ * as the country's representative market (its per-trade take-home is the sanctioned
+ * exemplar source), so every figure is real and each row links into its cell page. */
+const TAKE_HOME_TRADES = [
+  "restaurants", "grocery_stores", "hairdressers_beauty", "sports_fitness",
+  "auto_repair_shops", "dental_practices", "cafes_coffee", "bars_nightclubs",
+];
+async function londonTakeHomeTrades(): Promise<Array<{ name: string; slug: string; takeHome: number; href: string }>> {
+  const rows = await buildCityActivities({ slug: "london", countryIso2: "GB" });
+  const real = new Map(rows.filter((r) => typeof r.takeHome === "number").map((r) => [r.slug, r]));
+  const picked: Array<{ name: string; slug: string; takeHome: number; href: string }> = [];
+  for (const industryId of TAKE_HOME_TRADES) {
+    const r = real.get(industryToSlug(industryId));
+    if (r && typeof r.takeHome === "number") { picked.push({ name: r.name, slug: r.slug, takeHome: r.takeHome, href: r.href }); }
+    if (picked.length >= 6) break;
+  }
+  // Sorted by take-home so the section reads as a ranking (the busiest trades are
+  // rarely the richest); the canonical order above governs INCLUSION, not display.
+  return picked.sort((a, b) => b.takeHome - a.takeHome);
 }
 
 /* RailDots , the page-local shared-axis dot plot (Visual Dictionary idiom #4): ONE
@@ -82,34 +110,38 @@ function RailDots({ dots, endLabels, refPos }: { dots: Array<{ pos: number; labe
 /* ================= CHAPTER 1 ================= */
 /*
  * Hero , the masthead + the ONE dominant decision figure.
- * verdict: a typical small business keeps about a sixth of its revenue; the rest is context.
- * focal: the margin-kept figure, set at hero scale so the answer lands in the first screen.
+ * verdict: at country altitude the answer is the ENVIRONMENT, not a business margin
+ * (margin varies by trade, not by country), so the hero leads with what the STATE
+ * TAKES: the all-in tax on a standard company's profit, a public-rules figure that
+ * differs country to country and survives a skeptic. Principle: altitude.
+ * focal: the government-take figure ($X of every $100 in profit), at hero scale.
  * width: full masthead row; the answer sits left, a compact support grid sits right.
- * terracotta: the kept figure only (support tiles stay ink).
+ * terracotta: the take figure only (support tiles stay ink).
  */
 function Hero({ d }: { d: any }) {
   const h = d.headline ?? {};
-  const kept = d.margin?.kept_pct ?? 0;
-  // Formation time = the company-registration step only (registration, not "operational").
-  // The stepper and timeline carry the fuller "bank sets the pace" story, so these read as
-  // one narrative: registered in a day, fully operational once the bank clears.
+  // THE country-altitude answer: the all-in tax load on a standard company's profit
+  // (tax_burden.total_pct = corporation tax + business rates + dividend + gains, an
+  // identity that sums to the total). Public rules, defensible, and it varies country
+  // to country, unlike the net margin the old hero borrowed from the cell altitude.
+  const take = d.tax_burden?.total_pct ?? 0;
+  // The registration tile is the LIMITED-COMPANY registration time, the comparable
+  // standard across jurisdictions (not the fuller days-to-fully-set-up figure, which
+  // the bank paces to ~21 days and which the compare table carries under its own name).
   const steps = d.setup?.steps ?? [];
   const formStep = steps.find((s: any) => /company|regist/i.test(s.name)) ?? steps[0];
   const formDays = Math.max(0, formStep?.time_days ?? 0);
   const formValue = formDays === 1 ? "1 day" : `${formDays} days`;
-  // Salary shown as annual (the honest unit). No modeled monthly derivation on the masthead.
-  // Tile labels name their metric TRUTHFULLY (B10): smb_tax_pct is the small-profits
-  // CORPORATION TAX rate, so the tile says so; the blended 36% all-in load appears
-  // later under its own name ("All-in tax load", tax section + compare table).
-  // "Company registered" is the registration step alone (day 1); the fuller
-  // days-to-fully-set-up figure (bank-paced, ~21 days) lives in the compare table.
+  // Tile labels name their metric TRUTHFULLY: smb_tax_pct is the small-profits
+  // CORPORATION TAX rate (19%), the headline rate the hero's all-in take (36%) sits
+  // above, so the two read as one story ("you keep less than the headline suggests").
   const tiles: Array<[string, string, string?]> = [
     ["Corporation tax", `${h.smb_tax_pct}%`],
     ["Average salary", usd(h.average_salary_usd), "/yr"],
     ["GDP / capita", usd(h.gdp_per_capita_usd)],
     ["Ease of business", `${h.ease_of_business_score}`, "/100"],
     ["Net wealth / adult", usd(h.net_wealth_per_adult_usd)],
-    ["Company registered", formValue],
+    ["Company registration", formValue],
   ];
   return (
     <section className="overflow-hidden">
@@ -119,14 +151,15 @@ function Hero({ d }: { d: any }) {
           <div>
             <div className="flex items-center gap-3.5"><CountryFlag iso2="gb" className="w-[52px] rounded-sm shadow-sm" /><h1 data-typography="custom" className="text-balance text-3xl font-bold tracking-tight text-[var(--c-ink)] md:text-4xl">{d.meta?.name}</h1></div>
             {/* THE answer, in the top 20%. The unit is FUSED into the figure lockup
-                ("$15 / $100") so the hero can never read as a price; the side line
-                carries the who, not the unit. */}
+                ("$36 / $100") so the hero can never read as a price; the side line
+                carries the meaning and NAMES the base (profit), so the figure can
+                never misread as a share of revenue. */}
             <div className="mt-4 flex items-end gap-3">
               <span className="flex items-baseline gap-1.5">
-                <CountFig target={kept} prefix="$" className="text-[64px] font-semibold leading-[0.9] text-[var(--terra-text)] md:text-[76px]" />
+                <CountFig target={take} prefix="$" className="text-[64px] font-semibold leading-[0.9] text-[var(--terra-text)] md:text-[76px]" />
                 <span className="fig text-[26px] font-medium leading-none text-[var(--terra-text)] opacity-75 md:text-[30px]">/ $100</span>
               </span>
-              <span className="mb-2 max-w-[20ch] text-[13px] leading-snug text-[var(--c-ink2)]">kept by a typical small business, after every cost.</span>
+              <span className="mb-2 max-w-[22ch] text-[13px] leading-snug text-[var(--c-ink2)]">goes to the state in tax, of every $100 a standard business makes in profit.</span>
             </div>
           </div>
           <div className="grid w-full max-w-[420px] grid-cols-2 gap-px overflow-hidden rounded-xl border border-[var(--c-border)] sm:grid-cols-3 md:w-[420px]" style={{ background: "var(--c-border)" }}>
@@ -147,65 +180,67 @@ function Hero({ d }: { d: any }) {
   );
 }
 
-/*
- * MarginReality , the cost base behind the hero's kept figure.
- * verdict: Labour is the heaviest slice; tax and premises follow; margin is what survives.
- * focal: a full-width stacked cost bar, the kept slice terracotta at the end. The page's
- * FIRST chart may not be mute: the legend renders always-visible (the Payments band's
- * treatment), and the kit StackBar's honesty sort orders segments descending with the
- * kept slice pinned last and the greys tracking magnitude.
- * width: WideRail [1] , the chart beside the six-lens Profile scorecard.
- * terracotta: the kept (margin) slice only (the inline $ echo is ink bold).
- */
-function MarginReality({ d }: { d: any }) {
-  const m = d.margin ?? {};
-  const kept = m.kept_pct ?? 0;
-  const greys = ["#737373", "#a3a3a3", "#d4d4d4", "#e6e6e6", "#ededed"];
-  const parts: StackSeg[] = [
-    ...(m.cost_stack ?? []).map((p: any, i: number) => ({ label: p.name, pct: p.pct, color: greys[i % greys.length] })),
-    { label: "Margin", pct: kept, color: TERRA, kept: true },
-  ];
-  return (
-    <Box>
-      <Head icon="owner-keeps">Where the other ${100 - kept} goes</Head>
-      {/* the verdict interprets; the hero + the bar's legend already carry the kept figure */}
-      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1"><span className="text-sm text-[var(--c-ink2)]">Labour is the heaviest slice; the margin is what survives it.</span></div>
-      <StackBar h="h-10" className="mt-4" segments={parts} legend ariaLabel={`Of every 100 in revenue, about ${kept} is kept as margin`} />
-    </Box>
-  );
-}
+/* MarginReality , DELETED (founder, 2026-07-05 country redesign). A whole-country net
+ * margin / cost-structure split fails credibility: you cannot honestly know the labour /
+ * tax / energy shares for a whole country, and margin is a business-altitude metric that
+ * barely varies country to country. Its job is now split between the government-take hero
+ * (what the state takes, up top) and the real per-trade take-home funnel below (what an
+ * owner actually keeps, trade by trade). */
 
 /*
- * Profile , the country scorecard.
- * verdict: A strong, easy place to do business; the one weak lens is affordability.
- * focal: a single 44px overall-average figure (the one-glance score).
- * width: lives in the MarginReality WideRail as the [2] rail (chart-beside-prose).
- * terracotta: the focal average + the #1-ranked lens bar only.
+ * Profile , the country in six lenses (a STANDARD scorecard on every country page).
+ * verdict: named in the Rail (overall, strongest, weakest); there is no competing focal
+ * figure, so the section stays small enough to pair with the honesty band beside it.
+ * scale: ONE direction, high = good, and every marker sits at its TRUE fraction of the
+ * track (7/10 fills to 70 percent, never pushed further right). The six categories are
+ * fixed site-wide: five read straight off the economic profile; the sixth, Tax burden,
+ * is the RANKED version of the hero (this country's all-in tax load against its peer
+ * set), so it reinforces the hero rather than repeating it. Light load = high score.
+ * width: Even , the smaller half, paired with The catch.
+ * terracotta: the single top-scoring lens bar only.
  */
 function Profile({ d }: { d: any }) {
   const ep = d.economic_profile ?? {};
-  const lenses: Array<[string, string]> = [["economic_reward", "Demand"], ["ease_of_business", "Ease of entry"], ["talent_pool", "Talent pool"], ["political_stability", "Stability"], ["access_to_financing", "Access to finance"], ["affordability", "Affordability"]];
-  const scored = lenses.map(([k, label]) => ({ label, s: Number(ep[k] ?? 0) })).sort((a, b) => b.s - a.s);
+  // Tax burden as the RANKED hero: place this country's all-in tax load inside its peer
+  // set and invert it onto the page's high = good scale (the lightest load scores 10).
+  const peerCodes: string[] = d.meta?.peer_set ?? [];
+  const taxVals = [d, ...peerCodes.map((c) => SPINE_COUNTRIES[c]).filter(Boolean)]
+    .map((j: any) => j?.tax_burden?.total_pct)
+    .filter((v: any): v is number => typeof v === "number");
+  const gbTax = d.tax_burden?.total_pct;
+  const lo = taxVals.length ? Math.min(...taxVals) : 0;
+  const hi = taxVals.length ? Math.max(...taxVals) : 1;
+  const taxScore =
+    typeof gbTax === "number" && hi > lo
+      ? Math.max(1, Math.min(10, Math.round((1 - (gbTax - lo) / (hi - lo)) * 9 + 1)))
+      : 5;
+  const lenses: Array<{ label: string; s: number }> = [
+    { label: "Ease of entry", s: Number(ep.ease_of_business ?? 0) },
+    { label: "Talent pool", s: Number(ep.talent_pool ?? 0) },
+    { label: "Access to finance", s: Number(ep.access_to_financing ?? 0) },
+    { label: "Purchasing power", s: Number(ep.economic_reward ?? 0) },
+    { label: "Stability", s: Number(ep.political_stability ?? 0) },
+    { label: "Tax burden", s: taxScore },
+  ];
+  const scored = lenses.slice().sort((a, b) => b.s - a.s);
   const avg = scored.length ? Math.round((scored.reduce((a, x) => a + x.s, 0) / scored.length) * 10) / 10 : 0;
   const top = scored[0]?.label;
+  const bottom = scored[scored.length - 1]?.label;
   return (
     <Box>
-      <Rail icon="vs-world" kicker="The country, in six lenses" verdict={<>It scores best on <b className="text-[var(--c-ink)]">{top?.toLowerCase()}</b>; the one drag is the bottom lens.</>} />
-      <div className="grid items-center gap-5 sm:grid-cols-[34%_1fr]">
-        <div className="focal flex flex-col items-center justify-center p-4 text-center">
-          <Stat value={<>{avg}<span className="text-[15px] text-[var(--c-muted)]">/10</span></>} size="focal" accent />
-          <div className="mt-1 text-[11px] uppercase tracking-wide text-[var(--c-muted)]">across six lenses</div>
-        </div>
-        <div className="space-y-2">
-          {scored.map((r, i) => (
-            <div key={r.label} className="grid grid-cols-[112px_1fr_30px] items-center gap-2.5">
-              <span className="min-w-0 truncate text-[12px] text-[var(--c-ink2)]">{r.label}</span>
-              <Dots score={r.s} max={10} accent={i === 0} />
-              <Fig className="text-right text-[12px] text-[var(--c-ink)]">{r.s}</Fig>
-            </div>
-          ))}
-        </div>
+      <Rail icon="vs-world" kicker="The country, in six lenses" verdict={<>Overall <b className="text-[var(--c-ink)]">{avg}/10</b>, strongest on <b className="text-[var(--c-ink)]">{top?.toLowerCase()}</b>, weakest on <b className="text-[var(--c-ink)]">{bottom?.toLowerCase()}</b>.</>} />
+      {/* Each marker fills to its true fraction of the track (score x 10 percent), so a
+          7 reads at 70 percent, never pushed further out. One accent: the top lens. */}
+      <div className="space-y-2.5">
+        {scored.map((r, i) => (
+          <div key={r.label} className="grid grid-cols-[120px_1fr_30px] items-center gap-2.5">
+            <span className="min-w-0 truncate text-[12px] text-[var(--c-ink2)]">{r.label}</span>
+            <MiniBar pct={r.s * 10} accent={i === 0} />
+            <Fig className="text-right text-[12px] text-[var(--c-ink)]">{r.s}</Fig>
+          </div>
+        ))}
       </div>
+      <div className="mt-3 border-t border-[var(--c-border)] pt-2 text-[11px] leading-snug text-[var(--c-muted)]">Higher is better on every lens, tax burden included: a lighter load scores higher. That lens ranks this country&apos;s all-in tax against its neighbours.</div>
     </Box>
   );
 }
@@ -272,10 +307,8 @@ function TheCatch({ d }: { d: any }) {
   const risks = (d.risk_exit?.risks ?? []).slice().sort((a: any, b: any) => (b.score_1_10 ?? 0) - (a.score_1_10 ?? 0));
   const topRisk = risks[0];
   const riskLabel: any = { energy_input_costs: "energy and input costs", rule_tax_changes: "shifting rules and tax", demand_cycle: "the demand cycle", currency_swings: "currency swings", skills_shortages: "skills shortages" };
-  const ep = d.economic_profile ?? {};
-  const aff = Number(ep.affordability ?? 0);
   const items: string[] = [
-    `Easy to set up, yes, but affordability scores just ${aff}/10: high costs eat the margin the easy start promises.`,
+    `Easy to set up, but not cheap to run: energy, rent and the tax load run high here, and they eat into the margin the quick start seems to promise.`,
     topRisk ? `The biggest standing risk is ${riskLabel[topRisk.name] ?? topRisk.name.replace(/_/g, " ")}, at ${topRisk.score_1_10}/10, well ahead of the rest.` : "",
     d.character?.the_catch ?? "Local operators price the hidden costs in before they commit.",
   ].filter(Boolean);
@@ -935,47 +968,71 @@ function AdminLoad({ d }: { d: any }) {
 
 /* ================= CHAPTER 5 ================= */
 /*
- * Cities , the main business cities, ranked by market size, with the real map folded in
- * (the old separate CitiesMap band merged here so the places story is ONE band, not two).
- * verdict: The capital dwarfs the rest; the strongest regional markets are the next move.
- * focal: the ranked conveyor (name + character + index figure), then every city placed
- * on the map below it; the map's dot size is the single shape-encoding of the index.
- * width: Full , conveyor over map. terracotta: the London map pin only (the answer);
- * every other pin is ink.
+ * Cities , the FIRST section after the hero (the founder's locked choice, 2026-07-05):
+ * the places story is the missing link between the country and a real trade. The map
+ * LEADS, shorter than the full-page map, with the cities standing in a row BELOW it. No
+ * featured city: every pin is ink and every card reads the same (peers shown equally),
+ * the only differentiation is the honest one, dot size = market reach. The capital carries
+ * the one live link into its own page (the funnel), because it is the one city that HAS a
+ * page, not because it is elevated.
+ * width: Full , map over cities. terracotta: none (a calm places band; the accent budget
+ * belongs to the hero above and the take-home funnel below).
  */
 function Cities({ d }: { d: any }) {
   const list = (d.cities?.list ?? []).slice().sort((a: any, b: any) => (b.market_index_vs_capital ?? 0) - (a.market_index_vs_capital ?? 0));
-  // Cards carry name + character + the index FIGURE only. The empty 16:8 image
-  // placeholder is gone (dead pixels dominated every card), and the per-card minibar
-  // is gone too: the map's dot size is the single shape-encoding of the same index
-  // (the audit flagged the double encoding).
+  // Cards are the ranked city list below the map: name + character + the index figure.
+  // Static (the map carries the interaction) and identical in styling, so no city is
+  // visually featured; the map's dot size is the single shape-encoding of the same index.
   const cards = list.map((c: any) => (
-    <a key={c.slug} href="#" className="cityhov group block w-full cursor-pointer overflow-hidden rounded-lg border border-[var(--c-border)] bg-[var(--c-card)]">
+    <div key={c.slug} className="w-full overflow-hidden rounded-lg border border-[var(--c-border)] bg-[var(--c-card)]">
       <div className="px-3 py-2.5">
         <div className="flex items-baseline justify-between gap-2">
-          <div className="min-w-0 truncate text-[13px] font-semibold text-[var(--c-ink)] group-hover:text-[var(--terra-text)]">{c.name}</div>
+          <div className="min-w-0 truncate text-[13px] font-semibold text-[var(--c-ink)]">{c.name}</div>
           {typeof c.market_index_vs_capital === "number" ? <Fig className="shrink-0 text-[12px] text-[var(--c-ink)]">{c.market_index_vs_capital}</Fig> : null}
         </div>
         <div className="truncate text-[11px] text-[var(--c-ink2)]">{c.character}</div>
       </div>
-    </a>
+    </div>
   ));
-  // Pin encoding: terracotta = the leading market (London), ink = the rest , the map
-  // stays one-accent. SpineMap declutters colliding labels at first paint (label-box
-  // aware, highest signal wins), so Glasgow/Edinburgh and Liverpool/Manchester never
-  // overprint; hidden labels reappear on hover/focus.
+  // Every pin ink (no featured city); dot size = market reach. The capital keeps the one
+  // live link because it is the one city with its own page, the down-funnel step. SpineMap
+  // declutters colliding labels at first paint, so the central cluster never overprints.
   const points: SpinePoint[] = list
     .filter((c: any) => typeof c.lat === "number" && typeof c.lng === "number")
-    .map((c: any) => ({ name: c.name, slug: c.slug, lat: c.lat, lng: c.lng, signal: c.market_index_vs_capital, signalLabel: `market ${c.market_index_vs_capital} vs London 100`, sub: c.character, tone: c.slug === "london" ? "terra" : "ink", href: c.slug === "london" ? "/dev/spine-city" : undefined }));
+    .map((c: any) => ({ name: c.name, slug: c.slug, lat: c.lat, lng: c.lng, signal: c.market_index_vs_capital, signalLabel: `market ${c.market_index_vs_capital} vs London 100`, sub: c.character, tone: "ink", href: c.slug === "london" ? "/dev/spine-city" : undefined }));
   return (
     <Box>
       <div className="mb-3 flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2"><Ico id="neighborhood" /><span className="text-[15px] font-semibold text-[var(--c-ink)]">The main cities, placed</span></div>
+        <div className="flex items-center gap-2"><Ico id="neighborhood" /><span className="text-[15px] font-semibold text-[var(--c-ink)]">Where the business is, city by city</span></div>
         <a href="/countries" className="shrink-0 cursor-pointer rounded-full border border-[var(--c-border)] px-3 py-1 text-[12px] font-semibold text-[var(--c-ink2)] transition hover:border-[var(--terra-border)] hover:text-[var(--terra-text)]">Open the directory &#8594;</a>
       </div>
-      <Conveyor ariaLabel="The main cities" itemMinPx={150} gapPx={12}>{cards}</Conveyor>
-      <div className="mt-3"><SpineMap points={points} ariaLabel="Map of the main UK business cities" fitPadding={70} legendLabel="Dot size = market reach, London = 100" /></div>
-      <div className="mt-2.5 text-[11px] text-[var(--c-muted)]">The figure on each card and the dot size on the map are the same read: market reach against London (100). London opens its own page.</div>
+      {/* map leads, shorter than the full-page map; the cities stand in a row below it. */}
+      <SpineMap points={points} ariaLabel="Map of the main UK business cities" fitPadding={60} heightClass="h-[300px] w-full md:h-[360px]" legendLabel="Dot size = market reach, London = 100" />
+      <div className="mt-3"><Conveyor ariaLabel="The main cities" itemMinPx={150} gapPx={12}>{cards}</Conveyor></div>
+      <div className="mt-2.5 text-[11px] text-[var(--c-muted)]">Dot size on the map and the figure on each card are the same read: market reach against London (100). The capital opens its own page.</div>
+    </Box>
+  );
+}
+
+/*
+ * SixTradesTakeHome , the funnel + the hero's counterweight. The hero says what the STATE
+ * takes; this says what the OWNER keeps, in the site-wide fixed slate of everyday trades,
+ * as a real after-tax take-home (the sanctioned London per-trade figures, reconciled with
+ * each cell page). Take-home varies by country (tax + labour + rent), so unlike net margin
+ * it is a legitimate country-level differentiator, and every row is a live link DOWN into
+ * its cell page, where the decision and the paid depth live.
+ * verdict: the busiest trades are rarely the richest; what you keep is the real read.
+ * width: Full , a ranked take-home list. terracotta: the top keeper's bar only.
+ */
+function SixTradesTakeHome({ trades, countryName }: { trades: Array<{ name: string; slug: string; takeHome: number; href: string }>; countryName: string }) {
+  if (!trades.length) return null;
+  const rows = trades.map((t) => ({ id: t.slug, label: t.name, value: t.takeHome, display: usd(t.takeHome), href: t.href }));
+  const leader = trades[0];
+  return (
+    <Box>
+      <Rail icon="owner-keeps" kicker="What an owner keeps, by trade" verdict={<>The state takes its share; here is what the everyday trades leave the owner. <b className="text-[var(--c-ink)]">{leader.name}</b> keeps the most, and the busiest trades are rarely the richest.</>} />
+      <RankBars rows={rows} valueUnit="" leaderId={leader.slug} />
+      <div className="mt-3 border-t border-[var(--c-border)] pt-2 text-[11px] leading-snug text-[var(--c-muted)]">After-tax take-home for a typical operator, shown for {countryName === "United Kingdom" ? "London" : "the main city"} as the country&apos;s representative market. Open a trade for the full build-up.</div>
     </Box>
   );
 }
@@ -1349,19 +1406,26 @@ function Immigration({ d }: { d: any }) {
   );
 }
 
-export default function SpinePage() {
+export default async function SpinePage() {
   const d = GB;
+  // Real per-trade take-home for the funnel, from the same engine the city page runs, so
+  // every figure reconciles with its cell page; a trade with no honest source is absent,
+  // never invented. London stands as the country's representative market.
+  const sixTrades = await londonTakeHomeTrades();
   return (
     <main className="mx-auto max-w-[1120px] px-4 py-8 md:px-6">
       <Hero d={d} />
 
-      {/* CH1 , the verdict. Chapter headings are all noun-phrases (one mood, authored not
-          assembled). WideRail: the margin cost-base beside the six-lens scorecard; then the
-          demand sizing paired with the ONE honesty band, both Full-class peers on an Even. */}
-      <Movement eyebrow="The verdict" heading="The margin here" icon="gut-check" index="01" />
+      {/* CH1 , the lay of the land. The hero has already given the country-altitude answer
+          (what the state takes), so this chapter orients: WHERE the business is (the map +
+          cities, the founder's locked first section), the six-lens profile beside the one
+          honesty band, then WHAT an owner keeps in the everyday trades (the real take-home
+          funnel down into the cell pages). The old whole-country margin split is deleted. */}
+      <Movement eyebrow="The lay of the land" heading="Where to trade, and what you keep" icon="gut-check" index="01" />
       <div className="space-y-5">
-        <WideRail><MarginReality d={d} /><Profile d={d} /></WideRail>
-        <Even><Demand d={d} /><TheCatch d={d} /></Even>
+        <Cities d={d} />
+        <Even><Profile d={d} /><TheCatch d={d} /></Even>
+        <SixTradesTakeHome trades={sixTrades} countryName={d.meta?.name} />
       </div>
 
       {/* CH2 , getting set up. ONE setup timeline (SetupStepper + First-90-Days merged into
@@ -1384,9 +1448,12 @@ export default function SpinePage() {
         <Even><Financing d={d} /><Grants d={d} /></Even>
       </div>
 
-      {/* CH4 , the market. Even -> Even -> Even -> Full table -> Full payments band. */}
+      {/* CH4 , the market. Demand (the market size) now OPENS this chapter, moved down from
+          the old CH1 where it competed with the verdict; then Even -> Even -> Even -> Full
+          table -> Full payments band. */}
       <Movement eyebrow="The market and the rivals" heading="The customers and the rivals" icon="spending-power" index="04" />
       <div className="space-y-5">
+        <Demand d={d} />
         <Even><SpendDonut d={d} /><Income d={d} /></Even>
         <Even><Seasonality d={d} /><SectorMix d={d} /></Even>
         <Even><Competition d={d} /><AdminLoad d={d} /></Even>
@@ -1394,12 +1461,11 @@ export default function SpinePage() {
         <DigitalPayments d={d} />
       </div>
 
-      {/* CH5 , places, trades, character. Cities + map are one hover-linked band (no second
-          heading); then alternated forms: Even -> Full spectra -> Even -> Even -> Locals folded
-          into the character band. Insurance folded to the SellingAbroad pair to cut a Full run. */}
-      <Movement eyebrow="Places, trades and character" heading="The places and the character" icon="best-areas" index="05" />
+      {/* CH5 , trades and character. Cities + map moved UP to CH1 (the founder's locked first
+          section), so this chapter now opens on the trades and runs alternated forms:
+          Even -> Full spectra -> Even -> Even -> Locals folded in after the character band. */}
+      <Movement eyebrow="Trades and character" heading="The trades and the character" icon="best-areas" index="05" />
       <div className="space-y-5">
-        <Cities d={d} />
         <Even><EasiestTrades d={d} /><SellingAbroad d={d} /></Even>
         <Insurance d={d} />
         <Even><RiskRegister d={d} /><Exit d={d} /></Even>

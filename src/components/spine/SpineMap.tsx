@@ -201,6 +201,7 @@ export function SpineMap({
   ariaLabel = "Interactive map",
   className = "",
   legendLabel,
+  heightClass = "h-[440px] w-full md:h-[560px]",
 }: {
   points: SpinePoint[];
   fitPadding?: number;
@@ -208,6 +209,10 @@ export function SpineMap({
   ariaLabel?: string;
   className?: string;
   legendLabel?: string; // when set, renders the top-left dot-size legend, e.g. "Dot size = revenue vs city"
+  /** Container height utility classes. A caller can pass a shorter band (e.g. the
+   * country page places the map above the city list, so it runs shorter) without
+   * forking the component. Defaults to the standard tall map. */
+  heightClass?: string;
 }) {
   const router = useRouter();
   const containerRef = React.useRef<HTMLDivElement | null>(null);
@@ -378,7 +383,7 @@ export function SpineMap({
         ref={containerRef}
         role="application"
         aria-label={ariaLabel}
-        className="h-[440px] w-full md:h-[560px]"
+        className={heightClass}
         style={{ filter: "sepia(.10) saturate(.92) brightness(1.02)" }}
       />
       {ready && legendLabel ? (
