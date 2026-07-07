@@ -514,27 +514,31 @@ function TaxByLevel({ d }: { d: any }) {
 function PayByLevel({ d }: { d: any }) {
   const o = d.people_pay?.pay_by_level_usd ?? {};
   const on = d.tax_burden?.employer_oncost_pct ?? 0;
-  const levels: Array<[string, string]> = [["junior", "Entry / wage floor"], ["experienced", "Skilled"], ["senior", "Senior"], ["specialist", "Management & specialist"]];
-  const rows = levels.map(([k, label]) => { const gross = o[k] || 0; const loaded = Math.round(gross * (1 + on / 100)); return { k, label, gross, loaded }; });
+  // Founder: refocus on the employer ON-COST (investors are sensitive to it) and use
+  // "Management" only. The on-cost is the terracotta theme of the box: stated once at top
+  // and drawn as the terra tip on every bar (a consistent series, not four rival accents).
+  const levels: Array<[string, string]> = [["junior", "Entry"], ["experienced", "Skilled"], ["senior", "Senior"], ["specialist", "Management"]];
+  const rows = levels.map(([k, label]) => { const gross = o[k] || 0; const oncost = Math.round((gross * on) / 100); return { k, label, gross, oncost, loaded: gross + oncost }; });
   const max = Math.max(...rows.map((r) => r.loaded)) || 1;
   return (
     <Box><Head icon="wages">What staff cost to employ</Head>
-      <div className="space-y-1">
+      <p className="mb-3 text-[12.5px] leading-snug text-[var(--c-ink2)]">Every wage carries a <Fig className="text-[var(--terra-text)]">+{on}%</Fig> employer on-cost, pension and social contributions on top of the gross salary.</p>
+      <div className="space-y-1.5">
         {rows.map((r) => (
-          <div key={r.k} className="hov -mx-2 grid grid-cols-[minmax(0,8.5rem)_1fr_4.6rem] items-center gap-3 rounded-md px-2 py-1.5">
+          <div key={r.k} className="hov -mx-2 grid grid-cols-[minmax(0,6rem)_1fr_5.2rem] items-center gap-3 rounded-md px-2 py-1.5">
             <span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]">{r.label}</span>
-            <span className="relative block h-2 overflow-hidden rounded-full" style={{ background: TRACK }} role="img" aria-label={`${r.label}: $${Math.round(r.gross / 1000)}K gross, $${Math.round(r.loaded / 1000)}K with on-costs`}>
-              <span className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${(r.loaded / max) * 100}%`, background: "#e2ddd9" }} />
+            <span className="relative block h-2.5 overflow-hidden rounded-full" style={{ background: TRACK }} role="img" aria-label={`${r.label}: $${Math.round(r.gross / 1000)}K gross plus $${Math.round(r.oncost / 1000)}K on-cost, $${Math.round(r.loaded / 1000)}K to employ`}>
+              <span className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${(r.loaded / max) * 100}%`, background: TERRA }} />
               <span className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${(r.gross / max) * 100}%`, background: "#c8c8c6" }} />
             </span>
             <span className="text-right leading-tight">
               <Fig className="block text-[13px] text-[var(--c-ink)]">${Math.round(r.loaded / 1000)}K</Fig>
-              <span className="fig block text-[10px] text-[var(--c-muted)]">${Math.round(r.gross / 1000)}K gross</span>
+              <span className="fig block text-[10px] text-[var(--c-muted)]">${Math.round(r.gross / 1000)}K + ${Math.round(r.oncost / 1000)}K</span>
             </span>
           </div>
         ))}
       </div>
-      <div className="mt-3 rounded-lg bg-[var(--c-soft)] px-3 py-2 text-[12px] text-[var(--c-ink2)]">Solid bar = gross salary; the pale tip adds the <Fig className="text-[var(--terra-text)]">+{on}%</Fig> employer on-cost for pension and social contributions. Figures show the full cost to employ.</div>
+      <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[10.5px] text-[var(--c-muted)]"><span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full" style={{ background: "#c8c8c6" }} />Gross salary</span><span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full" style={{ background: TERRA }} />Employer on-cost</span><span className="ml-auto">Full cost to employ, a year</span></div>
     </Box>
   );
 }
@@ -549,19 +553,20 @@ function PayByLevel({ d }: { d: any }) {
  */
 function HiringDials({ d }: { d: any }) {
   const h = d.people_pay?.hiring ?? {}; const eMap: any = { easy: 84, moderate: 52, hard: 18 };
-  const rows: Array<[string, number, string]> = [["Hiring someone", eMap[h.hire_ease] ?? 50, cap(h.hire_ease)], ["Contracts you can use", eMap[h.contract_ease] ?? 50, cap(h.contract_ease)], ["Letting someone go", eMap[h.fire_ease] ?? 50, cap(h.fire_ease)]];
+  // Founder: "let go" -> "firing" (the word people understand). The old single combined
+  // reveal read poorly; split into three clearly-clickable rows (hiring / contracts / firing).
+  const rows: Array<[string, number, string]> = [["Hiring someone", eMap[h.hire_ease] ?? 50, cap(h.hire_ease)], ["Contracts you can use", eMap[h.contract_ease] ?? 50, cap(h.contract_ease)], ["Firing someone", eMap[h.fire_ease] ?? 50, cap(h.fire_ease)]];
   const notes = h.notes ?? {};
+  const detail = ([["Hiring", notes.hire], ["Contracts", notes.contract], ["Firing", notes.fire]] as Array<[string, string]>).filter(([, v]) => v);
   return (
-    <Box><Head icon="hiring">How easy it is to hire and let go</Head>
+    <Box><Head icon="hiring">How easy it is to hire and fire</Head>
       <div className="mt-6"><EaseScale rows={rows} endLabels={["Harder / rigid", "Easier / flexible"]} /></div>
-      {notes.hire ? (
-        <InlineDisclosure name="hiring" className="group mt-4 border-t border-[var(--c-border)] pt-2.5" summary="What sits behind each dial">
-          <div className="mt-2 space-y-1.5 text-[12px] leading-snug text-[var(--c-ink2)]">
-            <p><b className="font-medium text-[var(--c-ink)]">Hiring.</b> {notes.hire}</p>
-            <p><b className="font-medium text-[var(--c-ink)]">Contracts.</b> {notes.contract}</p>
-            <p><b className="font-medium text-[var(--c-ink)]">Letting go.</b> {notes.fire}</p>
-          </div>
-        </InlineDisclosure>
+      {detail.length ? (
+        <div className="mt-4 space-y-2">{detail.map(([title, note]) => (
+          <Expand key={title} name="hiring" title={title}>
+            <p className="text-[12px] leading-snug text-[var(--c-ink2)]">{note}</p>
+          </Expand>
+        ))}</div>
       ) : null}
     </Box>
   );
@@ -578,24 +583,33 @@ function HiringDials({ d }: { d: any }) {
  */
 function TalentDepth({ d }: { d: any }) {
   const map: any = { finance: "Finance", software_tech: "Software & tech", professional_legal: "Professional & legal", creative_media: "Creative & media", life_sciences: "Life sciences", manufacturing_trades: "Manufacturing & trades" };
-  const arr = (d.people_pay?.talent_depth ?? []).slice().sort((a: any, b: any) => b.score_1_5 - a.score_1_5);
-  const deep = arr.filter((t: any) => t.score_1_5 >= 5);
-  const thinner = arr.filter((t: any) => t.score_1_5 < 5);
-  const rowEl = (t: any) => (
-    <div key={t.field} className="flex items-baseline justify-between gap-3 border-b border-[var(--c-border)] py-1.5 last:border-0">
-      <span className="text-[12.5px] text-[var(--c-ink2)]">{map[t.field] ?? t.field}</span>
-      <Fig className="text-[12.5px] text-[var(--c-ink)]">{t.score_1_5}<span className="text-[10px] text-[var(--c-muted)]">/5</span></Fig>
-    </div>
-  );
+  // Founder (repeated ask, fixed definitively): the talent scale is OUT OF 10, not 5. The
+  // seed holds a 1-5 score, so double it onto the page-standard /10.
+  const arr = (d.people_pay?.talent_depth ?? []).slice()
+    .map((t: any) => ({ ...t, s10: Math.round((t.score_1_5 ?? 0) * 2) }))
+    .sort((a: any, b: any) => b.s10 - a.s10);
   const recruiting = d.people_pay?.hiring?.notes?.recruiting;
+  // Native languages OF THE LAND only (never immigrant languages), shown as the share who
+  // can speak each, which a bilingual population can push over 100%.
+  const langs = (d.people_pay?.languages ?? []).filter((l: any) => l.native !== false);
   return (
-    <Box><Head icon="who-for">How deep the talent pool runs, by field</Head>
-      <div className="grid gap-x-7 gap-y-3 sm:grid-cols-2">
-        <div><div className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Runs deep</div>{deep.map(rowEl)}</div>
-        <div><div className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Runs thinner</div>{thinner.map(rowEl)}</div>
+    <Box><Head icon="who-for">How deep the talent pool runs</Head>
+      {/* ONE column (columns were inefficient), each field on the /10 scale, deepest first. */}
+      <div className="space-y-2">
+        {arr.map((t: any, i: number) => (
+          <div key={t.field} className="grid grid-cols-[130px_1fr_36px] items-center gap-2.5">
+            <span className="min-w-0 truncate text-[12px] text-[var(--c-ink2)]">{map[t.field] ?? t.field}</span>
+            <MiniBar pct={t.s10 * 10} accent={i === 0} />
+            <Fig className="text-right text-[12px] text-[var(--c-ink)]">{t.s10}<span className="text-[9px] text-[var(--c-muted)]">/10</span></Fig>
+          </div>
+        ))}
       </div>
       {recruiting ? <p className="mt-3 text-[11.5px] leading-snug text-[var(--c-muted)]">{recruiting}</p> : null}
-      <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-[var(--c-border)] pt-3"><span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Languages</span>{(d.people_pay?.languages ?? []).map((l: any) => <Chip key={l.name}>{l.name} {l.pct_speakers}%</Chip>)}</div>
+      <div className="mt-3.5 border-t border-[var(--c-border)] pt-3">
+        <div className="mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Languages spoken</div>
+        <div className="flex flex-wrap items-center gap-2">{langs.map((l: any) => <Chip key={l.name}>{l.name} {l.pct_speakers}%</Chip>)}</div>
+        <p className="mt-1.5 text-[10.5px] leading-snug text-[var(--c-muted)]">Share of people who can speak each language of the country; a bilingual population can total over 100%.</p>
+      </div>
     </Box>
   );
 }
@@ -613,39 +627,37 @@ function TalentDepth({ d }: { d: any }) {
 function OperatingCosts({ d }: { d: any }) {
   const c = d.costs ?? {};
   const p = d.premises ?? {};
-  const peers = peerRows(d.meta?.peer_set ?? [], (j) => j?.costs?.commercial_rent_usd_sqm_yr);
-  const all = [...peers, { code: "GB", name: "UK", v: c.commercial_rent_usd_sqm_yr }]
+  // Founder: the peer COMPARISON is on ELECTRICITY, not rent, rent is too variable to line
+  // up like for like, electricity is a standard unit. Named peer dots on one drawn rail.
+  const peers = peerRows(d.meta?.peer_set ?? [], (j) => j?.costs?.energy_usd_per_kwh);
+  const all = [...peers, { code: "GB", name: "UK", v: c.energy_usd_per_kwh }]
     .filter((x) => typeof x.v === "number")
     .sort((a, b) => a.v - b.v);
   const idx = all.findIndex((x) => x.code === "GB");
   const n = all.length;
   const rank = n > 1 && idx >= 0 ? (idx === 0 ? "the cheapest" : idx === n - 1 ? "the priciest" : idx >= (n - 1) * 0.66 ? "near the top" : idx <= (n - 1) * 0.34 ? "near the bottom" : "mid-pack") : "unranked";
   const lo = all[0]?.v ?? 0, hi = all[n - 1]?.v ?? 1, span = hi - lo || 1;
-  const fmt$ = (v: number) => `$${Math.round(v).toLocaleString("en-US")}`;
-  // The home dot carries ITS OWN figure: it sits so close to the priciest peer that the
-  // rail's max endpoint value ($1,434, France) was being read as the UK's , contradicting
-  // the $1,389 headline above. One metric, one value, stated on the dot itself.
-  const dots = all.map((x) => ({ pos: ((x.v - lo) / span) * 100, label: x.code === "GB" ? `${x.name} ${fmt$(x.v)}` : x.name, accent: x.code === "GB" }));
-  const support: Array<[string, string]> = [
-    [`$${(c.energy_usd_per_kwh ?? 0).toFixed(2)}`, "Electricity, per kWh"],
-    [`$${Math.round(c.labour_cost_index_usd / 1000)}K`, "Loaded labour, per worker / yr"],
-    [`$${c.license_setup_usd}`, "Licence & setup, one-off"],
-  ];
+  const fmtc = (v: number) => `$${v.toFixed(2)}`;
+  const dots = all.map((x) => ({ pos: ((x.v - lo) / span) * 100, label: x.code === "GB" ? `${x.name} ${fmtc(x.v)}` : x.name, accent: x.code === "GB" }));
   return (
     <Box>
-      <Rail icon="commercial-rent" kicker="What it costs to run premises" verdict={<>Rent moves the needle, and it sits <b className="text-[var(--c-ink)]">{rank}</b> among neighbours.</>} />
-      <div className="grid items-stretch gap-4 md:grid-cols-[1fr_200px]">
+      <Rail icon="commercial-rent" kicker="What it costs to run a place" verdict={<>Rent is the big variable cost; power runs <b className="text-[var(--c-ink)]">{rank}</b> among neighbours.</>} />
+      {/* Rent + electricity are the two running-cost anchors (loaded-labour + one-off licence
+          tiles dropped per the founder). Oil / fuel and rent-as-average-of-covered-cities are
+          flagged data needs: the seed holds a national rent + no fuel price, so neither is
+          claimed here (never a fabricated figure). */}
+      <div className="grid items-stretch gap-3 sm:grid-cols-2">
         <div className="focal flex flex-col justify-center p-4">
           <Stat value={<>${c.commercial_rent_usd_sqm_yr?.toLocaleString("en-US")}</>} label="Commercial rent / sqm a year" size="focal" />
         </div>
-        <div className="divide-y divide-[var(--c-border)]">
-          {support.map(([v, l]) => <div key={l} className="py-2.5"><Fig className="text-[18px] text-[var(--c-ink)]">{v}</Fig><div className="mt-0.5 text-[11px] leading-tight text-[var(--c-ink2)]">{l}</div></div>)}
+        <div className="focal flex flex-col justify-center p-4">
+          <Stat value={fmtc(c.energy_usd_per_kwh ?? 0)} label="Electricity, per kWh" size="focal" />
         </div>
       </div>
       {n > 1 ? (
-        <div className="mt-3" role="img" aria-label={`Commercial rent among peers: ${all.map((x) => `${x.name} ${fmt$(x.v)}`).join(", ")}`}>
-          <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Rent among the peer set, $ / sqm a year</div>
-          <RailDots dots={dots} endLabels={[fmt$(lo), fmt$(hi)]} />
+        <div className="mt-3.5" role="img" aria-label={`Electricity cost among peers: ${all.map((x) => `${x.name} ${fmtc(x.v)}`).join(", ")}`}>
+          <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Electricity among the peer set, $ / kWh</div>
+          <RailDots dots={dots} endLabels={[fmtc(lo), fmtc(hi)]} />
         </div>
       ) : null}
       {p.lease_years_typical ? (
@@ -669,10 +681,31 @@ function OperatingCosts({ d }: { d: any }) {
  */
 function Financing({ d }: { d: any }) {
   const f = d.financing ?? {};
+  // Founder: rename to "Raising money"; keep the ease figure but drop its gray subtitle.
+  // Three fixed cards on one row, loans + equity ONLY (grants move to the grants section);
+  // the first, bank loans, is the pre-selected card. Non-expandable, fixed height. Each card
+  // holds its one real source note today; richer per-source bullets are a flagged data need.
+  const wanted = [
+    { match: /bank/i, title: "Bank loans" },
+    { match: /start ?up|government|gov/i, title: "Startup and government loans" },
+    { match: /angel|venture|vc|equity/i, title: "Angel and venture capital" },
+  ];
+  const sources = f.sources ?? [];
+  const cards = wanted.map((w) => { const s = sources.find((x: any) => w.match.test(x.name)); return { title: w.title, note: s?.note as string | undefined }; }).filter((c) => c.note);
   return (
-    <Box><Head icon="calculator">Where the money comes from</Head>
-      <div className="mb-4"><div className="flex items-baseline gap-2"><span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Ease of raising money</span><Fig className="text-[var(--terra-text)]">{f.ease_0_100}/100</Fig></div><div className="mt-1.5"><Meter value={f.ease_0_100} left="Hard" right="Easy" /></div></div>
-      <div className="divide-y divide-[var(--c-border)]">{(f.sources ?? []).map((s: any) => <div key={s.name} className="py-2"><div className="text-[13px] font-medium text-[var(--c-ink)]">{s.name}</div><div className="text-[11.5px] text-[var(--c-ink2)]">{s.note}</div></div>)}</div>
+    <Box><Head icon="calculator">Raising money</Head>
+      <div className="mb-4 max-w-[280px]">
+        <div className="mb-1.5 flex items-baseline gap-1.5"><Fig className="text-[18px] text-[var(--c-ink)]">{f.ease_0_100}</Fig><span className="text-[11px] text-[var(--c-muted)]">/100 to raise here</span></div>
+        <Meter value={f.ease_0_100} left="Hard" right="Easy" />
+      </div>
+      <div className="grid gap-2.5 sm:grid-cols-3">
+        {cards.map((c, i) => (
+          <div key={c.title} className={`rounded-lg border p-3.5 ${i === 0 ? "border-[var(--terra-border)] bg-[var(--terra-soft)]" : "border-[var(--c-border)] bg-[var(--c-card)]"}`}>
+            <div className={`text-[13px] font-semibold ${i === 0 ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{c.title}</div>
+            <p className="mt-1.5 text-[11.5px] leading-snug text-[var(--c-ink2)]">{c.note}</p>
+          </div>
+        ))}
+      </div>
     </Box>
   );
 }
@@ -686,13 +719,20 @@ function Financing({ d }: { d: any }) {
  * plain text, never in the figure slot.
  */
 function Grants({ d }: { d: any }) {
+  // Founder: do NOT mix with raising money, remove anything that is a LOAN (keep the
+  // non-repayable only), MAX 3 cards, number-focused. Three fixed cards, matching the
+  // raising-money row so the two read as one vocabulary.
+  const list = (d.grants?.list ?? []).filter((g: any) => !/loan/i.test(g.kind || "") && !/loan/i.test(g.name || "")).slice(0, 3);
   return (
     <Box><Head icon="free-zone">Grants and incentives</Head>
-      <div className="space-y-2">{(d.grants?.list ?? []).map((g: any, i: number) => (
-        <Expand key={i} name="grants" title={g.name} open={i === 0} right={/\d/.test(g.value || "") ? <Fig className="text-[13px] text-[var(--c-ink)] group-open:text-[var(--terra-text)]">{g.value}</Fig> : <span className="text-[12px] text-[var(--c-muted)] group-open:text-[var(--terra-text)]">{g.value}</span>}>
-          <div className="mb-1.5 flex flex-wrap items-center gap-x-3 gap-y-1"><span className="rounded-full bg-[var(--c-soft)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{g.kind}</span><span className="text-[11.5px] text-[var(--c-ink2)]">For {(g.who || "").toLowerCase()}</span></div>
-          {g.note}
-        </Expand>))}
+      <div className="grid gap-2.5 sm:grid-cols-3">{list.map((g: any) => (
+        <div key={g.name} className="flex flex-col rounded-lg border border-[var(--c-border)] bg-[var(--c-card)] p-3.5">
+          <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{g.kind}</div>
+          <div className="mt-0.5 text-[13px] font-semibold text-[var(--c-ink)]">{g.name}</div>
+          {g.value ? <Fig className="mt-0.5 text-[13px] text-[var(--c-ink)]">{g.value}</Fig> : null}
+          <p className="mt-1.5 text-[11.5px] leading-snug text-[var(--c-ink2)]">{g.note}</p>
+          {g.who ? <p className="mt-auto pt-2 text-[10.5px] text-[var(--c-muted)]">For {String(g.who).toLowerCase()}</p> : null}
+        </div>))}
       </div>
     </Box>
   );
@@ -1472,7 +1512,8 @@ export default async function SpinePage() {
       <div className="space-y-5">
         <Even><PayByLevel d={d} /><TalentDepth d={d} /></Even>
         <Even><OperatingCosts d={d} /><HiringDials d={d} /></Even>
-        <Even><Financing d={d} /><Grants d={d} /></Even>
+        <Financing d={d} />
+        <Grants d={d} />
       </div>
 
       {/* CH4 , the market. Demand (the market size) now OPENS this chapter, moved down from
