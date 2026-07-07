@@ -27,7 +27,7 @@ import { buildCityActivities } from "@/lib/scores/city_board";
 import { industryToSlug } from "@/lib/taxonomy";
 import {
   TERRA, TRACK, usd, cap,
-  Ico, Fig, MiniBar, Dots, StackBar, Waterfall,
+  Ico, Fig, MiniBar, Dots, StackBar, Waterfall, Donut,
   Movement, Box, EaseScale, Meter, Head, Chip, KV, Expand, InlineDisclosure, Bullets,
   Even, WideRail, CatRows,
   Rail, Stat,
@@ -254,38 +254,30 @@ function Profile({ d }: { d: any }) {
  */
 function Demand({ d }: { d: any }) {
   const m = d.demand ?? {};
+  const pop = d.headline?.population ?? 0;
   const segs: any[] = (m.consumer_segments ?? []).slice().sort((a: any, b: any) => b.pct - a.pct);
   const topName = segs[0]?.name?.toLowerCase();
-  const maxPct = segs[0]?.pct || 1;
+  // Founder: the trillion-dollar pool is too vague, show spend PER CITIZEN (the pool over
+  // the population), a figure that actually compares country to country. The business count
+  // is deleted (country-dependent, says nothing). The split becomes a donut (a whole read as
+  // a whole), not bars that mis-scaled the 44% to look like 100.
+  const perCitizen = pop > 0 ? ((m.consumer_spend_pool_usd_bn ?? 0) * 1e9) / pop : 0;
+  const greys = ["#a3a3a1", "#c4c4c2", "#dcdcda"];
+  const color = (i: number) => (i === 0 ? TERRA : greys[Math.min(greys.length - 1, i - 1)]);
+  const donutSegs: Array<[string, number, string]> = segs.map((s: any, i: number) => [s.name, s.pct, color(i)]);
   return (
     <Box>
       <Rail icon="spending-power" kicker="The size of the market" verdict={<>A deep consumer pool, but most is <b className="text-[var(--c-ink)]">{topName || "everyday spend"}</b>, not premium.</>} />
-      <div className="grid items-stretch gap-4 md:grid-cols-2">
+      <div className="grid items-center gap-5 md:grid-cols-[minmax(0,1fr)_auto]">
         <div className="focal flex flex-col justify-center p-4">
-          {/* Standardized figure: billions >= 1,000 read as trillions (one decimal),
-              so the masthead never shows an unpunctuated "$1850B". */}
-          {(() => {
-            const bn = m.consumer_spend_pool_usd_bn;
-            const big = typeof bn === "number" ? (bn >= 1000 ? (bn / 1000).toFixed(2).replace(/\.?0+$/, "") : `${bn}`) : "-";
-            const unit = typeof bn === "number" && bn >= 1000 ? "T" : "B";
-            return <Stat value={<>${big}<span className="text-[16px] text-[var(--c-muted)]">{unit}</span></>} label="Consumer spend a year" size="focal" accent />;
-          })()}
-          <div className="mt-2 flex items-baseline gap-2 border-t border-[var(--c-border)] pt-2.5">
-            <Fig className="text-[18px] text-[var(--c-ink)]">{(m.businesses_total / 1e6).toFixed(1)}M</Fig>
-            <span className="text-[11px] leading-tight text-[var(--c-ink2)]">businesses already trading, about {m.businesses_per_1000_adults} per 1,000 adults</span>
-          </div>
+          <Stat value={usd(perCitizen)} label="Consumer spend per citizen, a year" size="focal" accent />
+          <div className="mt-1.5 text-[11px] leading-snug text-[var(--c-muted)]">What the average resident spends in a year, the pot every business here competes for.</div>
         </div>
-        <div className="flex flex-col justify-center">
-          <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Where that money goes</div>
-          {/* bars scale to the LEADER (not to 100), so the 44/26/18/12 split stays
-              discriminable; the % figures carry the true values. */}
-          <div className="space-y-2">{segs.map((s: any) => (
-            <div key={s.name} className="grid grid-cols-[128px_1fr_34px] items-center gap-2.5">
-              <span className="min-w-0 truncate text-[12px] text-[var(--c-ink2)]">{s.name}</span>
-              <MiniBar pct={(s.pct / maxPct) * 100} />
-              <Fig className="text-right text-[12px] text-[var(--c-ink)]">{s.pct}%</Fig>
-            </div>))}
-          </div>
+        <div className="flex flex-col items-center">
+          <div className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Where that money goes</div>
+          <Donut segs={donutSegs} centerBig={`${segs[0]?.pct ?? 0}%`} centerSub="top slice" />
+          <div className="mt-2 flex max-w-[240px] flex-wrap justify-center gap-x-3 gap-y-1">{segs.map((s: any, i: number) => (
+            <span key={s.name} className="inline-flex items-center gap-1.5 text-[10.5px] text-[var(--c-ink2)]"><span className="h-2 w-2 rounded-sm" style={{ background: color(i) }} />{s.name} <Fig className="text-[var(--c-ink)]">{s.pct}%</Fig></span>))}</div>
         </div>
       </div>
     </Box>
@@ -753,105 +745,42 @@ function Grants({ d }: { d: any }) {
 function SpendDonut({ d }: { d: any }) {
   const hs: any[] = d.income?.household_spend ?? []; const get = (c: string) => hs.find((x) => x.category === c)?.pct ?? 0;
   const disc = Math.round(get("recreation") + get("dining_out"));
-  // Named categories only, all integers, sorted descending; Other rendered apart below.
-  const named: Array<[string, number]> = ([
+  // Founder: switch to a DONUT (donut left, list right); the terracotta slice is the
+  // discretionary spend a new business can win. FLAG: the discretionary share is similar
+  // across most countries (bar the very poor / very rich), so this section is a candidate to
+  // REPLACE with a more differentiating household metric.
+  const rows: Array<[string, number]> = [
     ["Housing & utilities", Math.round(get("housing_utilities"))],
     ["Transport", Math.round(get("transport"))],
     ["Food & drink", Math.round(get("food_drink"))],
     ["Discretionary", disc],
-  ] as Array<[string, number]>).sort((a, b) => b[1] - a[1]);
-  const other = Math.round(get("household_goods") + get("other"));
-  const waterfallRows: Array<[string, number, boolean?]> = named.map(([n, pct]) => [n, pct, n === "Discretionary"]);
+    ["Other", Math.round(get("household_goods") + get("other"))],
+  ];
+  const greys = ["#8f8a86", "#a8a4a0", "#c4c1bd", "#dcdad7"]; let gi = 0;
+  const segs: Array<[string, number, string]> = rows.map(([n, p]) => [n, p, n === "Discretionary" ? TERRA : greys[Math.min(greys.length - 1, gi++)]]);
   return (
     <Box><Head icon="cost-breakdown">Where a household&apos;s money goes</Head>
-      <div className="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-        <Fig className="text-[26px] leading-none text-[var(--terra-text)]">{disc}%</Fig>
-        <span className="text-[13px] text-[var(--c-ink2)]">is discretionary, the spend a new business can win.</span>
+      <div className="flex flex-col items-center gap-5 sm:flex-row">
+        <Donut segs={segs} centerBig={`${disc}%`} centerSub="discretionary" />
+        <div className="flex-1 space-y-1.5 self-stretch">
+          {segs.map(([n, p, c]) => (
+            <div key={n} className="flex items-center justify-between gap-3">
+              <span className="inline-flex min-w-0 items-center gap-2 text-[12px] text-[var(--c-ink2)]"><span className="h-2.5 w-2.5 shrink-0 rounded-sm" style={{ background: c }} /><span className="truncate">{n}</span></span>
+              <Fig className={`shrink-0 text-[12.5px] ${n === "Discretionary" ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{p}%</Fig>
+            </div>
+          ))}
+          <p className="border-t border-[var(--c-border)] pt-2 text-[11px] leading-snug text-[var(--c-muted)]">Discretionary, recreation and eating out, is the spend a new business can win.</p>
+        </div>
       </div>
-      <div className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Share of monthly spend</div>
-      <Waterfall rows={waterfallRows} />
-      {/* "Other" pinned last, muted: same row geometry as the kit Waterfall, but grey
-          label/value and a lighter fill, so the residual reads as context, not as the
-          winner of a ranking it does not belong to. */}
-      <div className="mt-2.5 grid grid-cols-[120px_1fr_44px] items-center gap-3">
-        <span className="text-[12px] text-[var(--c-muted)]">Other, combined</span>
-        <div className="h-5 overflow-hidden rounded" style={{ background: "#f6f5f4" }}><div className="h-full rounded" style={{ width: `${Math.max(0, Math.min(100, other))}%`, background: "#e3dfdb" }} role="img" aria-label={`Other, combined ${other}%`} /></div>
-        <Fig className="text-right text-[13px] text-[var(--c-muted)]">{other}%</Fig>
-      </div>
-      <div className="mt-1.5 text-[11px] leading-snug text-[var(--c-muted)]">Other bundles clothing, health, insurance and the rest: many small categories, not one block.</div>
-      <InlineDisclosure name="spend" className="group mt-3 border-t border-[var(--c-border)] pt-2.5" summary="What counts as discretionary">
-        <div className="mt-2 space-y-1">{[["Recreation and culture", get("recreation")], ["Eating out", get("dining_out")]].map(([n, p]: any) => <div key={n} className="flex items-center justify-between text-[11.5px] text-[var(--c-ink2)]"><span>{n}</span><Fig className="text-[var(--c-ink)]">{p}%</Fig></div>)}</div>
-      </InlineDisclosure>
     </Box>
   );
 }
 
-/*
- * Seasonality , how demand moves across the year.
- * verdict: A clear run-up into the peak month; the quiet stretch is the cash-flow test.
- * focal: a 12-month LINE on a drawn zero axis (re-visual: the old bars sat on a floored
- * baseline, so bar length no longer encoded value , shape-over-time with a truncated
- * range is exactly the line's case). Peak and trough are labelled with their values,
- * so the chart proves the swing instead of asserting it on hover.
- * width: Even , peer to SectorMix, equal class.
- * terracotta: the peak point + its label only.
- */
-function Seasonality({ d }: { d: any }) {
-  const months: number[] = d.seasonality?.months ?? [];
-  const labels = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
-  const names = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  if (months.length !== 12) return null;
-  const min = Math.min(...months), max = Math.max(...months);
-  const peakIdx = months.indexOf(max);
-  const troughIdx = months.indexOf(min);
-  const W = 560, H = 150, padL = 10, padR = 10, top = 24, axisY = 124;
-  const X = (i: number) => padL + (i / 11) * (W - padL - padR);
-  const Y = (v: number) => axisY - (v / 100) * (axisY - top); // zero baseline AT the drawn axis
-  const pts = months.map((v, i) => `${X(i).toFixed(1)},${Y(v).toFixed(1)}`);
-  const line = "M " + pts.join(" L ");
-  const area = `M ${X(0).toFixed(1)},${axisY} L ` + pts.join(" L ") + ` L ${X(11).toFixed(1)},${axisY} Z`;
-  return (
-    <Box>
-      <Rail icon="spending-power" kicker="Demand across the year" verdict={<>Trade builds into a <b className="text-[var(--c-ink)]">{["January","February","March","April","May","June","July","August","September","October","November","December"][peakIdx]}</b> peak; the quiet start is the cash-flow test.</>} />
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label={`Monthly demand index: peak ${names[peakIdx]} at ${max}, lowest ${names[troughIdx]} at ${min}`} preserveAspectRatio="xMidYMid meet">
-        <line x1={padL} y1={axisY} x2={W - padR} y2={axisY} stroke="#d8d0cb" strokeWidth={1.5} />
-        <path d={area} fill="#efedeb" />
-        <path d={line} fill="none" stroke="#a8a29e" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" />
-        {/* trough, named + valued */}
-        <circle cx={X(troughIdx)} cy={Y(min)} r={3} fill="#8c8c8a" stroke="#fff" strokeWidth={1.5} />
-        <text x={X(troughIdx)} y={Y(min) - 8} textAnchor="middle" fill="#8c8c8a" fontSize={10}>{names[troughIdx]} {min}</text>
-        {/* peak, named + valued , the one terracotta mark */}
-        <circle cx={X(peakIdx)} cy={Y(max)} r={4} fill={TERRA} stroke="#fff" strokeWidth={1.5} />
-        <text x={Math.min(X(peakIdx), W - padR)} y={Y(max) - 8} textAnchor={peakIdx >= 10 ? "end" : "middle"} fill="#c2410c" fontSize={10.5} fontWeight={600}>{names[peakIdx]} {max}</text>
-        {months.map((_, i) => (
-          <text key={i} x={X(i)} y={axisY + 14} textAnchor="middle" fill={i === peakIdx ? "#c2410c" : "#8c8c8a"} fontSize={9} fontWeight={i === peakIdx ? 600 : 400}>{labels[i]}</text>
-        ))}
-      </svg>
-      <div className="mt-1.5 text-[11px] text-[var(--c-muted)]">Demand index across the year; the peak month = 100, the axis starts at zero.</div>
-    </Box>
-  );
-}
-
-/*
- * SectorMix , the shape of the economy you are entering.
- * verdict: A services-led economy; making things is a small slice.
- * focal: ranked bars (position/length) so the services dominance reads at a glance.
- * width: Even , peer to Seasonality, equal class. Bars here hold the 2-donut budget.
- * terracotta: the leading (services) bar only, via RankBars.
- */
-function SectorMix({ d }: { d: any }) {
-  const sectors: any[] = (d.sector_mix?.sectors ?? []).slice().sort((a: any, b: any) => b.pct - a.pct);
-  const lead = sectors[0];
-  // "Production and manufacturing" clipped in the half-width label column , shorten.
-  const short = (name: string) => (/production and manufacturing/i.test(name) ? "Manufacturing" : name);
-  const rows = sectors.map((s: any) => ({ id: s.name, label: short(s.name), value: s.pct, display: `${s.pct}%` }));
-  return (
-    <Box>
-      <Rail icon="cost-breakdown" kicker="The shape of the economy" verdict={<>A <b className="text-[var(--c-ink)]">{lead?.name?.toLowerCase()}</b>-led economy; making things is a small slice of the whole.</>} />
-      <RankBars rows={rows} max={100} valueUnit="%" leaderId={lead?.name} />
-    </Box>
-  );
-}
+/* Seasonality , DELETED (founder "DELETE NOW", 2026-07-05). Demand-across-the-year is
+ * unacceptable at country altitude (seasonality is a city/trade read, not a country one).
+ * SectorMix , DELETED (founder "DELETE NOW"). "The shape of the economy" is not a
+ * country-page-appropriate section; it says little a founder can act on and reads similar
+ * across developed economies (fails differentiation). Both cut, not reframed. */
 
 /*
  * RiskRegister , what could go wrong, scored and ranked.
@@ -891,27 +820,32 @@ function RiskRegister({ d }: { d: any }) {
  */
 function Income({ d }: { d: any }) {
   const o = d.income ?? {};
-  const max = o.top1_income_usd || 1;
+  const med = o.median_income_usd || 0;
   const k$ = (v: number) => `$${Math.round((v || 0) / 1000)}K`;
-  const medianPos = Math.max(2, Math.min(100, ((o.median_income_usd || 0) / max) * 100));
-  const dots = [
-    { pos: medianPos, label: `Median ${k$(o.median_income_usd)}` },
-    { pos: Math.max(2, Math.min(100, ((o.top10_income_usd || 0) / max) * 100)), label: `Top 10% ${k$(o.top10_income_usd)}` },
-    { pos: 100, label: `Top 1% ${k$(o.top1_income_usd)}` },
+  // Founder: a bar (H or V) gives the wrong perspective here. The real read is HOW FAR the
+  // top pulls ahead of the median, so the top tiers are shown as MULTIPLES of the median
+  // (the customer who walks in), not lengths on a shared axis.
+  const mult = (v: number) => (med > 0 ? (v || 0) / med : 0);
+  const tiers = [
+    { label: "Top 10%", v: o.top10_income_usd, m: mult(o.top10_income_usd) },
+    { label: "Top 1%", v: o.top1_income_usd, m: mult(o.top1_income_usd) },
   ];
   const bands = ["very_equal", "fairly_equal", "moderate", "high", "very_high"]; const gi = bands.indexOf(o.gini_band);
   return (
     <Box>
       <Rail icon="spending-power" kicker="What customers earn" verdict="A comfortable median customer, but the top pulls far ahead of the middle." />
       <div className="focal mb-3 flex items-end justify-between p-4">
-        <Stat value={k$(o.median_income_usd)} label="Median earner" size="focal" accent />
+        <Stat value={k$(med)} label="Median earner" size="focal" accent />
         <div className="text-right text-[11px] leading-tight text-[var(--c-muted)]">the customer<br />who walks in</div>
       </div>
-      {/* ONE shared income axis (idiom #4): the three rungs as labelled dots on a single
-          zero-based rail, a reference tick at the median. The old three-rail lollipop
-          carried no independent scale (Top 1% was pinned to 100% by construction). */}
-      <div role="img" aria-label={`Income spread on one axis: median ${k$(o.median_income_usd)}, top 10% ${k$(o.top10_income_usd)}, top 1% ${k$(o.top1_income_usd)}`}>
-        <RailDots dots={dots} refPos={medianPos} endLabels={["$0", ""]} />
+      <div className="grid grid-cols-2 gap-3">
+        {tiers.map((t) => (
+          <div key={t.label} className="rounded-lg border border-[var(--c-border)] bg-[var(--c-card)] px-4 py-3 text-center">
+            <div className="text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{t.label}</div>
+            <Fig className="mt-0.5 text-[24px] leading-none text-[var(--c-ink)]">{t.m.toFixed(1)}x</Fig>
+            <div className="mt-1 text-[11px] text-[var(--c-ink2)]">the median, at {k$(t.v)}</div>
+          </div>
+        ))}
       </div>
       <div className="mt-3 flex items-center gap-2 border-t border-[var(--c-border)] pt-3"><div className="flex gap-1">{bands.map((b, i) => <span key={b} className="h-1.5 w-6 rounded-sm" style={{ background: i === gi ? "#8f8a86" : "#e3e3e3" }} />)}</div><span className="text-[11.5px] text-[var(--c-ink2)]">{cap((o.gini_band ?? "").replace("_", " "))} spread between earners</span></div>
     </Box>
@@ -1523,7 +1457,6 @@ export default async function SpinePage() {
       <div className="space-y-5">
         <Demand d={d} />
         <Even><SpendDonut d={d} /><Income d={d} /></Even>
-        <Even><Seasonality d={d} /><SectorMix d={d} /></Even>
         <Even><Competition d={d} /><AdminLoad d={d} /></Even>
         <Neighbours d={d} />
         <DigitalPayments d={d} />
