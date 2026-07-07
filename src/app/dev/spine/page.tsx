@@ -783,26 +783,26 @@ function SpendDonut({ d }: { d: any }) {
  * across developed economies (fails differentiation). Both cut, not reframed. */
 
 /*
- * RiskRegister , what could go wrong, scored and ranked.
- * verdict: One risk towers over the rest; the rest are ordinary trading risk.
- * focal: the top-scored risk named, leading a Dots leaderboard sorted by score.
- * width: Even , peer to Exit, equal class.
- * terracotta: the top risk's dots only (the rest are neutral via the Dots track).
+ * RiskRegister , what could go wrong. Founder 2026-07-05: flip onto the page's ONE scale,
+ * high = good. The seed holds risk MAGNITUDE (energy 9 = high risk), so it is scored as
+ * SAFETY (11 - magnitude, energy -> 2) and the LOWEST score is the biggest exposure. The
+ * subtitle now EXPLAINS the scale rather than giving the verdict. A sixth risk category is a
+ * flagged data need (the seed holds five). Width smaller, the narrow card beside Exit.
+ * terracotta: the biggest-exposure label only (never the dots, which read high = good).
  */
 function RiskRegister({ d }: { d: any }) {
-  const risks = (d.risk_exit?.risks ?? []).slice().sort((a: any, b: any) => (b.score_1_10 ?? 0) - (a.score_1_10 ?? 0));
-  const label: any = { energy_input_costs: "Energy & input costs", rule_tax_changes: "Rule & tax changes", demand_cycle: "Demand cycle", currency_swings: "Currency swings", skills_shortages: "Skills shortages" };
-  const top = risks[0];
+  const label: any = { energy_input_costs: "Energy and input costs", rule_tax_changes: "Rule and tax changes", demand_cycle: "Demand cycle", currency_swings: "Currency swings", skills_shortages: "Skills shortages" };
+  const risks = (d.risk_exit?.risks ?? [])
+    .map((r: any) => ({ ...r, safe: Math.max(1, Math.min(10, 11 - (r.score_1_10 ?? 5))) }))
+    .sort((a: any, b: any) => a.safe - b.safe);
   return (
     <Box>
-      <Rail icon="watch" kicker="What could go wrong" verdict={top ? <>One risk towers over the rest: <b className="text-[var(--c-ink)]">{(label[top.name] ?? top.name).toLowerCase()}</b>. The rest are ordinary.</> : "Risks are spread evenly."} />
-      {/* the "highest" call lives in the verdict line above , the old inline tag
-          truncated to "HIG…" inside the label column. */}
+      <Rail icon="watch" kicker="What could go wrong" verdict="Each factor scored for how safe it is, higher is better; the lowest is the one to watch." />
       <div className="space-y-2.5">{risks.map((r: any, i: number) => (
-        <div key={r.name} className="hov -mx-2 grid grid-cols-[150px_1fr_auto] items-center gap-3 rounded-md px-2 py-1">
-          <span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]">{label[r.name] ?? r.name}</span>
-          <div className={i === 0 ? "" : "opacity-60"}><Dots score={r.score_1_10} max={10} accent={i === 0} /></div>
-          <Fig className="w-9 text-right text-[12.5px] text-[var(--c-ink)]">{r.score_1_10}/10</Fig>
+        <div key={r.name} className="hov -mx-2 grid grid-cols-[130px_1fr_auto] items-center gap-2.5 rounded-md px-2 py-1">
+          <span className={`min-w-0 truncate text-[12.5px] ${i === 0 ? "font-medium text-[var(--terra-text)]" : "text-[var(--c-ink2)]"}`}>{label[r.name] ?? r.name}</span>
+          <Dots score={r.safe} max={10} />
+          <Fig className="w-9 text-right text-[12.5px] text-[var(--c-ink)]">{r.safe}/10</Fig>
         </div>))}
       </div>
     </Box>
@@ -1026,37 +1026,29 @@ function SixTradesTakeHome({ trades, countryName }: { trades: Array<{ name: stri
   );
 }
 /*
- * EasiestTrades , which trades are easiest to start and what they cost.
- * verdict: The lightest trades open cheap; the hardest need real capital before day one.
- * focal: ONE ranked ease list (position/length), easiest first, cost as the right figure.
- * width: Even , peer to Insurance/SellingAbroad in CH5.
- * terracotta: the single easiest trade only.
+ * EasiestTrades , reframed (founder 2026-07-05) from "easiest to start" (ease-sorted) to
+ * TYPICAL BUSINESSES and what they COST TO START. "Online retail" removed; NOT sorted by
+ * cheapness (sorted by capital, heaviest first, so it never reads as a cheap-first ranking).
+ * NOTE: these are the seed's illustrative openings; aligning them to the site-wide canonical
+ * six + a real cost-to-open is a flagged data need (the take-home funnel already holds the
+ * real six). width: Even. terracotta: none (a plain reference; the funnel above carries it).
  */
 function EasiestTrades({ d }: { d: any }) {
-  const list = (d.trades_to_start?.list ?? []).slice().sort((a: any, b: any) => a.hardship_0_100 - b.hardship_0_100);
-  // Ordered ease list (a numbered lollipop, not a fourth terracotta bar-tip idiom):
-  // the ease value marks a dot on one shared axis, cost sits as the right figure.
-  // Terra marks only the single easiest trade (one accent per box).
-  const rows = list.map((t: any) => ({ name: t.name, ease: 100 - (t.hardship_0_100 ?? 0), cost: `$${Math.round((t.cost_to_open_usd ?? 0) / 1000)}K` }));
+  const list = (d.trades_to_start?.list ?? [])
+    .filter((t: any) => !/online retail/i.test(t.name || ""))
+    .slice()
+    .sort((a: any, b: any) => (b.cost_to_open_usd ?? 0) - (a.cost_to_open_usd ?? 0));
+  const max = Math.max(...list.map((t: any) => t.cost_to_open_usd ?? 0)) || 1;
   return (
-    <Box><Head icon="best-areas">Easiest trades to start</Head>
-      <div className="mb-2 flex justify-between text-[10px] uppercase tracking-wide text-[var(--c-muted)]"><span>Further right is easier</span><span>Cost to open</span></div>
-      <div className="space-y-2.5">{rows.map((r: any, i: number) => {
-        const first = i === 0;
-        const pos = Math.max(3, Math.min(97, r.ease));
-        return (
-          <div key={r.name} className="hov -mx-2 grid grid-cols-[24px_140px_1fr_44px] items-center gap-2.5 rounded-md px-2 py-1">
-            <span className="fig text-[11px] text-[var(--c-muted)]">{i + 1}.</span>
-            <span className={`min-w-0 truncate text-[12.5px] ${first ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-ink2)]"}`}>{r.name}</span>
-            <div className="relative h-2 rounded-full" role="img" aria-label={`${r.name}: ease ${Math.round(r.ease)} of 100`} style={{ background: "#f0f0f0" }}>
-              <div className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${pos}%`, background: first ? "var(--terra-soft)" : "#e0dcd8" }} />
-              <span className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${pos}%`, background: first ? TERRA : "#8f8a86", boxShadow: "0 0 0 1px #e3e3e3" }} />
-            </div>
-            <Fig className="text-right text-[12px] text-[var(--c-ink)]">{r.cost}</Fig>
-          </div>
-        );
-      })}
+    <Box><Head icon="startup-cost">Typical businesses, and what they cost to start</Head>
+      <div className="space-y-2.5">{list.map((t: any) => (
+        <div key={t.name} className="hov -mx-2 grid grid-cols-[140px_1fr_48px] items-center gap-2.5 rounded-md px-2 py-1">
+          <span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]">{t.name}</span>
+          <MiniBar pct={((t.cost_to_open_usd ?? 0) / max) * 100} />
+          <Fig className="text-right text-[12px] text-[var(--c-ink)]">${Math.round((t.cost_to_open_usd ?? 0) / 1000)}K</Fig>
+        </div>))}
       </div>
+      <p className="mt-3 text-[11px] leading-snug text-[var(--c-muted)]">A rough cost to open the doors. What each keeps once open is the take-home funnel up in the first chapter.</p>
     </Box>
   );
 }
@@ -1095,18 +1087,28 @@ function Insurance({ d }: { d: any }) {
  */
 function SellingAbroad({ d }: { d: any }) {
   const e = d.exporting ?? {};
-  const verdict = e.openness_0_100 >= 70 ? "Open" : e.openness_0_100 >= 45 ? "Moderate" : "Closed";
+  // Founder: rename "openness" -> "how easy it is to export". Left = export procedures (a
+  // flagged data need, the seed holds no procedure detail), right = the top export markets.
+  const ease = e.openness_0_100 >= 70 ? "Easy" : e.openness_0_100 >= 45 ? "Moderate" : "Hard";
   const partners = (e.partners ?? []).slice().sort((a: any, b: any) => b.pct - a.pct);
   return (
-    <Box><Head icon="vs-world">Selling abroad</Head>
-      <div className="mb-3 flex items-baseline gap-2"><span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Export openness</span><Fig className="text-[18px] text-[var(--terra-text)]">{verdict}</Fig><span className="ml-1.5 text-[12px] text-[var(--c-muted)]">{e.openness_0_100} of 100</span></div>
-      <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Top markets, share of exports</div>
-      <div className="mt-1.5 divide-y divide-[var(--c-border)]">{partners.map((p: any, i: number) => (
-        <div key={p.name} className="hov -mx-2 flex items-baseline gap-2.5 rounded-md px-2 py-1.5">
-          <span className="fig w-4 shrink-0 text-[11px] text-[var(--c-muted)]">{i + 1}.</span>
-          <span className={`min-w-0 flex-1 truncate text-[12.5px] ${i === 0 ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink)]"}`}>{p.name}</span>
-          <Fig className="text-[12.5px] text-[var(--c-ink)]">{p.pct}%</Fig>
-        </div>))}</div>
+    <Box><Head icon="vs-world">How easy it is to export</Head>
+      <div className="grid gap-5 sm:grid-cols-2">
+        <div>
+          <div className="mb-1.5 flex items-baseline gap-2"><Fig className="text-[18px] text-[var(--c-ink)]">{ease}</Fig><span className="text-[11px] text-[var(--c-muted)]">{e.openness_0_100} of 100 to export</span></div>
+          <Meter value={e.openness_0_100} left="Hard" right="Easy" />
+          <p className="mt-2.5 text-[11px] leading-snug text-[var(--c-muted)]">The procedures behind it, how long they take, the paperwork, and which trade deals apply, are a flagged data need.</p>
+        </div>
+        <div>
+          <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Top markets, share of exports</div>
+          <div className="mt-1.5 divide-y divide-[var(--c-border)]">{partners.map((p: any, i: number) => (
+            <div key={p.name} className="hov -mx-2 flex items-baseline gap-2.5 rounded-md px-2 py-1.5">
+              <span className="fig w-4 shrink-0 text-[11px] text-[var(--c-muted)]">{i + 1}.</span>
+              <span className="min-w-0 flex-1 truncate text-[12.5px] text-[var(--c-ink)]">{p.name}</span>
+              <Fig className="text-[12.5px] text-[var(--c-ink)]">{p.pct}%</Fig>
+            </div>))}</div>
+        </div>
+      </div>
     </Box>
   );
 }
@@ -1122,24 +1124,27 @@ function SellingAbroad({ d }: { d: any }) {
  * width: Full , two spectra columns side by side.
  * terracotta: one marker per table, the strongest lean.
  */
-function SpectraTable({ rows }: { rows: any[] }) {
+/* Founder Character fixes (2026-07-05): shorter bars so words fit on one line; fixed label
+ * colours (LEFT gray, RIGHT black); and, where a spectrum HAS a worse-for-business end (the
+ * government table), a gradient track from dark gray (LEFT = worse) to terracotta (RIGHT =
+ * better). The culture table has no worse/better end, so it keeps a neutral track with a
+ * centre tick (a worse->better gradient there would mislead, principle: form = meaning). The
+ * per-category "?" gloss is a flagged follow-up (needs a plain-language line per spectrum). */
+function SpectraTable({ rows, gradient = false }: { rows: any[]; gradient?: boolean }) {
   if (!rows?.length) return null;
-  let accentIdx = 0, best = -1;
-  rows.forEach((r: any, i: number) => { const lean = Math.abs((r.position_0_1 ?? 0.5) - 0.5); if (lean > best) { best = lean; accentIdx = i; } });
   return (
     <div className="divide-y divide-[var(--c-border)]">
       {rows.map((r: any, i: number) => {
-        const pos = Math.round((r.position_0_1 ?? 0.5) * 100);
+        const pos = Math.max(5, Math.min(95, Math.round((r.position_0_1 ?? 0.5) * 100)));
         const right = pos >= 50;
-        const accent = i === accentIdx;
         return (
-          <div key={i} className="hov -mx-2 grid grid-cols-[96px_1fr_96px] items-center gap-2.5 rounded-md px-2 py-2" role="img" aria-label={`${r.left_label} to ${r.right_label}: leans ${right ? r.right_label : r.left_label}`}>
-            <span className={`text-[11px] leading-tight ${!right ? "font-medium text-[var(--c-ink)]" : "text-[var(--c-muted)]"}`}>{r.left_label}</span>
-            <span className="relative block h-[5px] rounded-full" style={{ background: "#ecebe9" }}>
-              <span className="absolute -bottom-[3px] -top-[3px] left-1/2 w-px" style={{ background: "var(--c-border)" }} />
-              <span className="absolute top-1/2 h-[11px] w-[11px] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${pos}%`, background: accent ? TERRA : "var(--c-ink)", boxShadow: "0 0 0 1px #e3e3e3" }} />
+          <div key={i} className="hov -mx-2 grid grid-cols-[118px_1fr_118px] items-center gap-2 rounded-md px-2 py-2" role="img" aria-label={`${r.left_label} to ${r.right_label}: leans ${right ? r.right_label : r.left_label}`}>
+            <span className="text-[10.5px] leading-tight text-[var(--c-muted)]">{r.left_label}</span>
+            <span className="relative block h-[6px] rounded-full" style={{ background: gradient ? "linear-gradient(90deg, #6f6f6d, var(--terra))" : "#ecebe9" }}>
+              {!gradient ? <span className="absolute -bottom-[3px] -top-[3px] left-1/2 w-px" style={{ background: "var(--c-border)" }} /> : null}
+              <span className="absolute top-1/2 h-[11px] w-[11px] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${pos}%`, background: "var(--c-ink)", boxShadow: "0 0 0 1px #e3e3e3" }} />
             </span>
-            <span className={`text-right text-[11px] leading-tight ${right ? "font-medium text-[var(--c-ink)]" : "text-[var(--c-muted)]"}`}>{r.right_label}</span>
+            <span className="text-right text-[10.5px] font-medium leading-tight text-[var(--c-ink)]">{r.right_label}</span>
           </div>
         );
       })}
@@ -1147,20 +1152,28 @@ function SpectraTable({ rows }: { rows: any[] }) {
   );
 }
 function Character({ d }: { d: any }) {
+  const gov = d.character?.gov_business ?? [];
+  // Typo fix (founder): casual / formal were the wrong way round. Swap the formality poles
+  // (keeping the marker position) so the reserved UK reads as leaning formal.
+  const culture = (d.character?.culture_outsider ?? []).map((r: any) =>
+    r.spectrum === "formality" || /casual/i.test(r.left_label ?? "")
+      ? { ...r, left_label: r.right_label, right_label: r.left_label }
+      : r,
+  );
   return (
     <Box>
       <Rail icon="corruption" kicker="The character of the place" verdict="Clean, rules-led dealing; reserved to work with, but brisk and quick to transact." />
       <div className="grid gap-x-8 gap-y-6 md:grid-cols-2">
         <div>
           <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Government, from a business view</div>
-          <SpectraTable rows={d.character?.gov_business ?? []} />
+          <SpectraTable rows={gov} gradient />
         </div>
         <div>
           <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Culture, from an outsider view</div>
-          <SpectraTable rows={d.character?.culture_outsider ?? []} />
+          <SpectraTable rows={culture} />
         </div>
       </div>
-      <div className="mt-2.5 text-[11px] text-[var(--c-muted)]">The marker leans toward the pole in bold; the terracotta marker is each table&apos;s strongest lean. Neither end is better, they are just different places to run a business.</div>
+      <div className="mt-2.5 text-[11px] leading-snug text-[var(--c-muted)]">In government, the left end is the worse-for-business one (dark) and the right is better (terracotta). The culture spectra have no better end: they are just different places to run a business.</div>
     </Box>
   );
 }
@@ -1183,25 +1196,28 @@ function Locals({ d }: { d: any }) {
   );
 }
 /*
- * Exit , how sellable the business is when you want out.
- * verdict: An active resale market; a clean small firm sells inside a year at a modest multiple.
- * focal: a slim Easy-to-Hard meter (retires the gauge form), with time + multiple beside it.
- * width: Even , peer to RiskRegister.
- * terracotta: the meter fill only.
+ * Exit , how sellable the business is when you want out. Founder 2026-07-05: the single
+ * sale-price and the time-to-sell figures are REMOVED (both too business-dependent to state
+ * per country); the section becomes a fully-visible table on the selling INFRASTRUCTURE, how
+ * present INSTITUTIONAL buyers are (vs the owner-operator norm), and valuation as a profit
+ * MULTIPLE, an idea of how businesses are valued without one fake headline figure.
+ * width: WideRail [1] , the wider card, beside the narrower risk register.
+ * terracotta: none (a reference table; the accent belongs to the risk card beside it).
  */
 function Exit({ d }: { d: any }) {
   const e = d.risk_exit?.exit ?? {};
+  const buyers: string[] = e.buyers ?? [];
+  const institutional = buyers.filter((b) => /equity|strategic|acquir|search fund|institution/i.test(b));
+  const rows: Array<[string, any]> = [
+    ["Selling market", e.climate ? `${cap(e.climate)}: a mature broker market where most clean small firms change hands rather than close.` : null],
+    ["Who buys", institutional.length ? <>Institutional buyers are present, {institutional.join(", ").toLowerCase()}, alongside the individual owner-operators who buy most small firms.</> : "Mostly individual owner-operators; institutional buyers are thin on the ground."],
+    ["What lifts the price", "Clean books and a customer base that transfers without the founder; asset sales suit micro-firms, share sales the larger ones."],
+    ["Typical valuation", e.multiple_low ? <>About <Fig className="text-[var(--c-ink)]">{e.multiple_low}x to {e.multiple_high}x</Fig> a year&apos;s profit for a small firm.</> : null],
+  ];
   return (
     <Box><Head icon="compare">How sellable a business is</Head>
-      <div className="focal mb-3 p-3.5">
-        <div className="mb-1 flex items-baseline justify-between"><span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">How easy to sell</span><Fig className="text-[18px] capitalize text-[var(--terra-text)]">{e.climate}</Fig></div>
-        <Meter value={e.climate_score_0_100} left="Hard" right="Easy" />
-      </div>
-      <div className="grid grid-cols-2 gap-3 border-b border-[var(--c-border)] pb-3">
-        <div><div className="text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Time to sell</div><Fig className="text-[16px] text-[var(--c-ink)]">{e.time_to_sell_months_low}-{e.time_to_sell_months_high} mo</Fig></div>
-        <div><div className="text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Sale price</div><Fig className="text-[16px] text-[var(--c-ink)]">x{e.multiple_low}-{e.multiple_high}</Fig><span className="text-[11px] text-[var(--c-ink2)]"> profit</span></div>
-      </div>
-      <div className="mt-3"><Bullets items={e.bullets ?? []} /></div>
+      <CatRows rows={rows} />
+      <p className="mt-3 text-[11px] leading-snug text-[var(--c-muted)]">Valuation is a profit multiple, not a headline sale price: the real figure turns on the trade and the books. Per-trade multiples are a flagged data need.</p>
     </Box>
   );
 }
@@ -1217,9 +1233,11 @@ function Employment({ d }: { d: any }) {
   const e = d.employment ?? {};
   return (
     <Box><Rail icon="hiring" kicker="Working here, the rules" verdict="Generous statutory holiday, but flexible contracts and a low-union workforce favour employers." />
-      <div className="focal mb-3 flex items-end justify-between p-4">
+      {/* Founder: give the union figure the SAME weight as paid holiday (equal size), a
+          symmetrical pair; holiday keeps the one terracotta accent, the union label sits below. */}
+      <div className="focal mb-3 grid grid-cols-2 gap-4 p-4">
         <Stat value={<>{e.holiday_days}</>} label="Paid holiday days a year" size="focal" accent />
-        <div className="text-right"><Fig className="text-[20px] text-[var(--c-ink)]">{e.union_pct}%</Fig><div className="text-[10.5px] uppercase tracking-wide text-[var(--c-muted)]">in a union</div></div>
+        <Stat value={<>{e.union_pct}%</>} label="In a union" size="focal" />
       </div>
       <CatRows rows={[["Working hours", e.hours], ["Sick pay", e.sick_pay], ["Maternity leave", e.maternity], ["Notice period", e.notice], ["Dismissal", e.dismissal]]} />
       <div className="mt-3 border-t border-[var(--c-border)] pt-3"><Bullets items={e.bullets ?? []} /></div>
@@ -1235,19 +1253,18 @@ function Employment({ d }: { d: any }) {
  * terracotta: the focal ease band only.
  */
 function Closing({ d }: { d: any }) {
-  const c = d.closing ?? {}; const verdict = c.ease_0_100 >= 65 ? "Manageable" : c.ease_0_100 >= 40 ? "Some friction" : "Hard";
-  // Range format unified with the Exit card ("6-12 mo") , one range grammar per page.
+  const c = d.closing ?? {};
+  // Founder: do NOT grade it. "Manageable" is true for ~90% of countries, so the grade is
+  // non-differentiating; lead with the PROCEDURES and how different kinds of firm wind down.
+  // The time + cost stay as small supporting facts, not a headline verdict.
   const months = String(c.time_months ?? "").replace(/\s+to\s+/g, "-");
   return (
-    <Box><Rail icon="honest-take" kicker="If it doesn't work, getting out" verdict="Winding down is manageable: a solvent micro-firm just strikes off cheaply." />
-      <div className="focal mb-3 flex items-end justify-between p-4">
-        <Stat value={verdict} label="To wind down" size="focal" accent />
-        <div className="flex gap-5 text-right">
-          <div><Fig className="text-[18px] text-[var(--c-ink)]">{months}</Fig><div className="text-[10.5px] uppercase tracking-wide text-[var(--c-muted)]">mo</div></div>
-          <div><Fig className="text-[18px] text-[var(--c-ink)]">{c.cost_pct}%</Fig><div className="text-[10.5px] uppercase tracking-wide text-[var(--c-muted)]">of assets</div></div>
-        </div>
-      </div>
+    <Box><Rail icon="honest-take" kicker="If it doesn't work, getting out" verdict="How you wind down turns on whether the company is solvent; a debt-free micro-firm simply strikes off." />
       <CatRows rows={[["If solvent", c.solvent], ["If insolvent", c.insolvent], ["Your liability", c.liability]]} />
+      <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 border-t border-[var(--c-border)] pt-3">
+        <div><Fig className="text-[15px] text-[var(--c-ink)]">{months}</Fig><span className="ml-1.5 text-[11px] text-[var(--c-muted)]">months, typical</span></div>
+        <div><Fig className="text-[15px] text-[var(--c-ink)]">{c.cost_pct}%</Fig><span className="ml-1.5 text-[11px] text-[var(--c-muted)]">of assets in cost</span></div>
+      </div>
       <div className="mt-3 border-t border-[var(--c-border)] pt-3"><Bullets items={c.bullets ?? []} /></div>
     </Box>
   );
@@ -1469,7 +1486,7 @@ export default async function SpinePage() {
       <div className="space-y-5">
         <Even><EasiestTrades d={d} /><SellingAbroad d={d} /></Even>
         <Insurance d={d} />
-        <Even><RiskRegister d={d} /><Exit d={d} /></Even>
+        <WideRail><Exit d={d} /><RiskRegister d={d} /></WideRail>
         <Character d={d} />
         <Even><Employment d={d} /><Closing d={d} /></Even>
         <Locals d={d} />
