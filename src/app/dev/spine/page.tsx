@@ -29,8 +29,8 @@ import {
   TERRA, TRACK, usd, cap,
   Ico, Fig, MiniBar, Dots, StackBar, Waterfall,
   Movement, Box, EaseScale, Meter, Head, Chip, KV, Expand, InlineDisclosure, Bullets,
-  Even, CatRows,
-  Rail, Stat, Timeline, type TLNode, type TLPhase,
+  Even, WideRail, CatRows,
+  Rail, Stat,
 } from "@/components/spine/kit";
 import { RankBars, LockPill } from "@/components/spine/kit-index";
 
@@ -322,56 +322,41 @@ function TheCatch({ d }: { d: any }) {
 
 /* ================= CHAPTER 2 ================= */
 /*
- * SetupTimeline , the ONE setup timeline for CH2 (merges the old mini-Gantt and the
- * separate First-90-Days axis into a single horizontal time axis, no featured segment).
- * verdict: You can trade from day one; the bank account sets the real pace.
- * focal: one continuous 90-day axis; every node sits at its TRUE day from the seed
- * (registered day 1, tax day 2, bank cleared about day 21) and the kit Timeline's
- * lane logic de-collides the labels. The old hardcoded "Payroll ready 28" and
- * "VAT registered 45" nodes are gone: neither had a day in the data, and on a data
- * product a time axis must not invent positions. VAT moved to the read line.
- * label physics: the first phase band carries NO caption (a caption there sat exactly
- * where the bank node's label renders , the nodes tell that part of the story); the
- * second band is captioned and starts at the real bank-clear day, so the bands agree
- * with the "trade from day one" read line instead of contradicting it.
- * width: Full , a time axis must read across the whole column.
- * terracotta: only the "Registered" break-even node (never a period fill).
+ * SetupTimeline , the ordered SETUP STEPPER (founder, 2026-07-05: the old horizontal time
+ * axis invented day-positions the data did not hold, so it is rebuilt on a more reliable
+ * form). A crafted numbered rail of the real universal steps, assuming a limited company,
+ * IN ORDER: register the company, register for tax, open the bank account, then the first
+ * filings. Each step carries only what the seed actually holds, its time, cost and channel,
+ * never a fabricated position on an axis. Signature section: the numbered rail is the craft.
+ * verdict: you can trade from day one; the bank account is the single slow step.
+ * width: Full. terracotta: the first step's badge only (the "live from day one" moment).
  */
 function SetupTimeline({ d }: { d: any }) {
   const steps = d.setup?.steps ?? [];
-  const step = (re: RegExp) => steps.find((it: any) => re.test(it.name));
-  const reg = step(/company/i);
-  const tax = step(/register for tax/i);
-  const bank = step(/bank/i);
-  const vat = step(/vat/i);
-  // TRUE day positions derived from the seed durations (setup._meta states the
-  // identity): registration completes day 1; tax registration follows it (day 2);
-  // the bank application starts day 1 and clears after its full duration (~day 21).
-  const regDay = Math.max(1, reg?.time_days ?? 1);
-  const taxDay = tax ? regDay + Math.max(1, tax.time_days ?? 1) : null;
-  const bankDay = bank?.time_days ? Math.max((taxDay ?? regDay) + 1, bank.time_days) : null;
-  // Break-even label is centre-anchored by the kit, so at day 1 the sub must stay
-  // short ("day 1") to clear the left edge; "trading from day one" lives in the read.
-  const nodes: TLNode[] = [{ at: regDay, label: "Registered", sub: `day ${regDay}`, kind: "breakeven" }];
-  if (taxDay) nodes.push({ at: taxDay, label: "Tax registered", sub: `day ${taxDay}` });
-  if (bankDay) nodes.push({ at: bankDay, label: "Bank account", sub: "the slow step" });
-  // One band split at the real bank-clear day. The first band is deliberately
-  // uncaptioned (its caption collided with the bank label); the second band's
-  // caption sits far right of every node label, clear at any paint.
-  const phases: TLPhase[] = bankDay ? [["", 0, bankDay], ["fully operational", bankDay, 90]] : [];
-  const fees = steps.filter((s: any) => (s.cost_usd || 0) > 0).map((s: any) => `${s.name.toLowerCase().replace(/\s*\(.*\)$/, "")} $${Math.round(s.cost_usd)}`).join(", ") || "registration only";
+  if (!steps.length) return null;
+  const vat = steps.find((s: any) => /vat/i.test(s.name));
+  const timeWord = (days: number) => (days <= 0 ? "same day" : days === 1 ? "1 day" : `${days} days`);
   return (
-    <Timeline
-      span={90}
-      unit="day"
-      phases={phases}
-      nodes={nodes}
-      /* the true-day nodes crowd the left edge, and the day-2 tax stalk would cross the
-         kit's default "day 0" tick text; the break-even sub already reads "day 1", so
-         the zero tick is suppressed (a space) rather than letting a line cut a label. */
-      startLabel=" "
-      read={<>You can trade from day one; the bank account is the single slow step{vat?.time_days ? <>. VAT can wait until sales pass the threshold, then clears in about {vat.time_days} days</> : null}. <span className="text-[var(--c-muted)]">Fees are small: {fees}.</span></>}
-    />
+    <Box>
+      <Rail icon="register-cost" kicker="The steps to open" verdict="You can trade from day one; the bank account is the single slow step." />
+      <ol className="relative ml-3 space-y-4 border-l-2 border-[var(--c-border)] pl-6 pt-1">
+        {steps.map((s: any, i: number) => {
+          const days = Math.max(0, s.time_days ?? 0);
+          const cost = (s.cost_usd || 0) > 0 ? `$${Math.round(s.cost_usd)}` : "No fee";
+          const first = i === 0;
+          return (
+            <li key={i} className="relative">
+              <span className={`fig absolute -left-[37px] grid h-7 w-7 place-items-center rounded-full border-2 border-white text-[12px] font-semibold ${first ? "text-white" : "text-[var(--c-ink)]"}`} style={{ background: first ? TERRA : "var(--c-soft2)", boxShadow: "0 0 0 1px #e3e3e3" }}>{i + 1}</span>
+              <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1.5">
+                <span className="text-[13.5px] font-semibold text-[var(--c-ink)]">{s.name.replace(/\s*\(.*\)$/, "")}</span>
+                <span className="flex flex-wrap items-center gap-1.5"><Chip>{timeWord(days)}</Chip><Chip>{cost}</Chip>{s.how ? <Chip>{s.how}</Chip> : null}</span>
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+      <div className="mt-3.5 border-t border-[var(--c-border)] pt-2.5 text-[12px] leading-snug text-[var(--c-ink2)]">The company is live on day one and tax registration follows; the business bank account is the one step that runs to weeks, not days.{vat ? " VAT itself waits until sales pass the threshold." : ""}</div>
+    </Box>
   );
 }
 
@@ -382,14 +367,19 @@ function formationExtra(name: string) {
   return { paperwork: "Medium, annual accounts", raise: "Easy, you can issue shares", setup: "Small one-off fee", summary: "A separate legal person: your liability is limited and it is the default once you hire or raise, but you file accounts every year." };
 }
 /*
- * Formation , which legal structure to form (KEPT AS IS per founder note #4).
+ * Formation , which legal structure to form. Execution good (the founder kept it); the
+ * worked example now opens on the LIMITED COMPANY, the default once you hire or raise, not
+ * the sole trader. Limited is sorted to the front and open by default.
  * verdict: Most growing firms pick a limited company; sole trader suits the very small.
- * focal: the first structure open by default; each expands to liability/tax/paperwork.
- * width: Even , paired peer to Banking.
+ * width: WideRail [1] , the wider card (~60%) beside the narrower bank-account card.
  * terracotta: none (reference section, ink tile + the VAT chip).
  */
 function Formation({ d }: { d: any }) {
-  const structures = d.setup?.structures ?? [];
+  // Limited company first + open by default (founder: switch the worked example off the
+  // sole trader). A stable sort that lifts the limited-company structure to the front.
+  const structures = [...(d.setup?.structures ?? [])].sort(
+    (a: any, b: any) => Number(/(limited|ltd|llc)/i.test(b.name)) - Number(/(limited|ltd|llc)/i.test(a.name)),
+  );
   return (
     <Box><Head icon="methodology">Which legal structure to form</Head>
       <div className="space-y-2">{structures.map((s: any, i: number) => { const x = formationExtra(s.name); return (
@@ -446,6 +436,31 @@ function Banking({ d }: { d: any }) {
  * NOTE: was a doughnut, but corp tax was only ~a third of the ring (no dominant
  * slice), so it broke the single-dominant rule. Recast to zero-baseline bars.
  */
+// Plain-language glosses (founder: a "?" per tax that explains jargon like "business
+// rates"). Educational copy, not a datum, so it may ride a hover tooltip; the rate note
+// stays VISIBLE below each line so a touch reader is never starved. Keyed by display name.
+const TAX_GLOSS: Record<string, string> = {
+  "Tax on profits": "What a company pays on the profit it keeps after costs.",
+  VAT: "A sales tax the customer pays; the business collects it and passes it on.",
+  "Dividend tax": "Tax on profit an owner takes out of the company for themselves.",
+  "Capital gains": "Tax on the gain when the business or its assets are sold.",
+  "Business rates": "A yearly charge based on the rental value of the premises.",
+  "Company registration": "The one-off fee to register the company.",
+  "Trade licence": "A one-off fee, only for trades that need a permit.",
+};
+// Founder: rename the most relevant tax to "Tax on profits" (for a limited company the
+// corporation tax IS the tax on profits) and highlight it.
+const taxDisplayName = (n: string) => (/corporation tax/i.test(n) ? "Tax on profits" : n);
+function TaxTip({ term }: { term: string }) {
+  const g = TAX_GLOSS[term];
+  if (!g) return null;
+  return (
+    <span className="group/tip relative ml-1 inline-flex align-middle">
+      <span className="grid h-3.5 w-3.5 cursor-help place-items-center rounded-full border border-[var(--c-line-strong)] text-[9px] font-semibold leading-none text-[var(--c-muted)]">?</span>
+      <span className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-1.5 w-44 -translate-x-1/2 rounded-lg border border-[var(--c-border)] bg-[var(--c-card)] px-2.5 py-1.5 text-[10.5px] font-normal normal-case leading-snug tracking-normal text-[var(--c-ink2)] opacity-0 shadow-[0_6px_18px_-8px_rgba(43,28,22,0.22)] transition-opacity group-hover/tip:opacity-100">{g}</span>
+    </span>
+  );
+}
 function TaxByLevel({ d }: { d: any }) {
   const groups = d.tax_detail?.groups ?? [];
   const allIn = d.tax_burden?.total_pct ?? 0;
@@ -453,20 +468,20 @@ function TaxByLevel({ d }: { d: any }) {
   const comp = d.tax_burden?.components ?? {};
   // Sorted DESCENDING so rank is monotonic with bar length ("ranked" must mean ranked).
   const raw: Array<[string, number]> = ([
-    ["Corporation tax", comp.corporation_tax_pct ?? 0],
+    ["Tax on profits", comp.corporation_tax_pct ?? 0],
     ["Business rates", comp.business_rates_pct_equiv ?? 0],
     ["Dividend tax", comp.dividend_tax_pct ?? 0],
     ["Capital gains", comp.capital_gains_pct ?? 0],
   ] as Array<[string, number]>).filter(([, p]) => p > 0).sort((a, b) => b[1] - a[1]);
   const wSum = raw.reduce((a, [, p]) => a + p, 0) || 1;
   const shareRows: Array<[string, number]> = raw.map(([n, p]) => [n, Math.round((p / wSum) * 100)] as [string, number]);
-  const leadName = shareRows[0]?.[0] ?? "Corporation tax";
+  const leadName = shareRows[0]?.[0] ?? "Tax on profits";
   const leadShare = shareRows[0]?.[1] ?? 0;
   const waterfallRows: Array<[string, number, boolean?]> = shareRows.map(([n, pct], i) => [n, pct, i === 0]);
   const items = groups.flatMap((g: any) => (g.items ?? []).map((it: any) => ({ ...it, level: g.level })));
   return (
     <Box>
-        <Rail icon="taxes" kicker="What the business actually pays" verdict="You keep less than the headline rate suggests: several taxes stack, corporation tax carries most." />
+        <Rail icon="taxes" kicker="What the business actually pays" verdict="You keep less than the headline rate suggests: several taxes stack, and the tax on profits carries most." />
         <div className="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
           <span className="text-[13px] text-[var(--c-ink2)]">All-in tax load</span>
           <Fig className="text-[26px] leading-none text-[var(--terra-text)]">{allIn}%</Fig>
@@ -474,10 +489,10 @@ function TaxByLevel({ d }: { d: any }) {
         </div>
         <div className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Share of the tax load for a typical small company</div>
         <Waterfall rows={waterfallRows} />
-        <div className="mt-2.5 border-t border-[var(--c-border)] pt-2 text-[11.5px] text-[var(--c-muted)]">{leadName} carries {leadShare}% of the load. VAT is customer-borne, so it sits outside; the statutory rates sit line by line below.</div>
+        <div className="mt-2.5 border-t border-[var(--c-border)] pt-2 text-[11.5px] text-[var(--c-muted)]"><b className="font-medium text-[var(--terra-text)]">{leadName}</b> carries {leadShare}% of the load. VAT is customer-borne, so it sits outside; the rate on each tax sits line by line below.</div>
         <InlineDisclosure name="taxdetail" className="group mt-3 border-t border-[var(--c-border)] pt-2.5" summary="Every tax, line by line">
-          <div className="mt-2.5 divide-y divide-[var(--c-border)]">{items.map((it: any) => (
-            <div key={it.name} className="flex items-baseline gap-3 py-2"><Fig className="w-14 shrink-0 text-[15px] text-[var(--c-ink)]">{it.value}</Fig><span className="text-[12px] leading-tight text-[var(--c-ink2)]"><b className="font-medium text-[var(--c-ink)]">{it.name}</b> <span className="text-[10px] uppercase tracking-wide text-[var(--c-muted)]">{it.level}</span><br />{it.note}</span></div>))}
+          <div className="mt-2.5 divide-y divide-[var(--c-border)]">{items.map((it: any) => { const nm = taxDisplayName(it.name); const lead = nm === "Tax on profits"; return (
+            <div key={it.name} className="flex items-baseline gap-3 py-2"><Fig className={`w-14 shrink-0 text-[15px] ${lead ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{it.value}</Fig><span className="text-[12px] leading-tight text-[var(--c-ink2)]"><b className={`font-medium ${lead ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{nm}</b><TaxTip term={nm} /> <span className="text-[10px] uppercase tracking-wide text-[var(--c-muted)]">{it.level}</span><br />{it.note}</span></div>); })}
           </div>
         </InlineDisclosure>
     </Box>
@@ -1339,69 +1354,81 @@ function DigitalPayments({ d }: { d: any }) {
 }
 
 /*
- * Licensing , the permits a trade needs before it opens.
- * verdict: Most trades start immediately; food, alcohol and childcare gate the opening.
- * focal: the lead-time chip per trade; a third context line says who inspects and what it gates.
- * width: Full , a denser permit list with three lines per row.
+ * Licensing , the permits a trade needs before it opens. Upgraded to POP-UPS (Expand, the
+ * legal-structure pattern, founder 2026-07-05): each trade opens to a why / when / how
+ * schematic. Honesty flag: rich WHERE SOURCED, a cost bullet is shown only where a real
+ * fee exists (the seed holds none per trade), never invented. NOTE: the founder also asked
+ * for per-trade business-type ICONS, which the AtlasIcon set does not yet carry (no cafe /
+ * taxi / childcare glyphs); flagged as an icon-asset need, section icon used meanwhile.
+ * width: WideRail [1] , the BIG card (~60%), beside the narrower visa routes.
  * terracotta: none (ordinary reference section, ink tile).
  */
 function Licensing({ d }: { d: any }) {
   const list = d.licensing?.list ?? [];
   const none = (s: string) => /^none$/i.test((s || "").trim());
   return (
-    <Box><Head icon="register-cost">Licences and permits by trade</Head>
-      <div className="divide-y divide-[var(--c-border)]">{list.map((it: any, i: number) => (
-        <div key={i} className="hov -mx-2 rounded-md px-2 py-2.5">
-          <div className="flex items-baseline justify-between gap-3">
-            <span className="text-[13px] font-semibold text-[var(--c-ink)]">{it.trade}</span>
-            <span className={`shrink-0 rounded-full px-2 py-0.5 text-[10.5px] font-medium ${none(it.licence) ? "bg-[var(--c-soft)] text-[var(--c-muted)]" : "border border-[var(--c-border)] text-[var(--c-ink2)]"}`}>{it.lead_time}</span>
-          </div>
-          <div className="mt-0.5 text-[12px] text-[var(--c-ink2)]">{none(it.licence) ? "No permit needed" : it.licence}</div>
-          {it.context ? <div className="mt-1 text-[11.5px] leading-snug text-[var(--c-muted)]">{it.context}</div> : null}
-        </div>))}
+    <Box><Head icon="licence-specific">Licences and permits by trade</Head>
+      <p className="mb-3 text-[12px] leading-snug text-[var(--c-ink2)]">Most trades open the day the company is registered; a few are gated by a permit. Open a trade for what it needs and how long it takes.</p>
+      <div className="space-y-2">{list.map((it: any, i: number) => {
+        const needsPermit = !none(it.licence);
+        return (
+          <Expand key={i} name="licensing" title={it.trade} open={i === 0} right={<span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium ${needsPermit ? "border border-[var(--c-border)] text-[var(--c-ink2)]" : "bg-[var(--c-soft)] text-[var(--c-muted)]"}`}>{it.lead_time}</span>}>
+            {needsPermit ? (
+              <div className="space-y-1.5">
+                <div className="flex gap-2.5"><span className="w-11 shrink-0 text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">What</span><span className="text-[12px] text-[var(--c-ink2)]">{it.licence}</span></div>
+                <div className="flex gap-2.5"><span className="w-11 shrink-0 text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">When</span><span className="text-[12px] text-[var(--c-ink2)]">Allow {String(it.lead_time).toLowerCase()} before opening.</span></div>
+                {it.context ? <div className="flex gap-2.5"><span className="w-11 shrink-0 text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">How</span><span className="text-[12px] text-[var(--c-ink2)]">{it.context}</span></div> : null}
+              </div>
+            ) : (
+              <p className="text-[12px] leading-snug text-[var(--c-ink2)]">No trade permit needed. You can begin trading the day the company is registered.{it.context ? ` ${it.context}` : ""}</p>
+            )}
+          </Expand>
+        );
+      })}
       </div>
+      <p className="mt-3 text-[11px] leading-snug text-[var(--c-muted)]">Shown where the permit route is sourced; trades not listed carry no special permit.</p>
     </Box>
   );
 }
 /*
- * Immigration , the visa routes a foreign founder can use.
- * verdict: The Skilled Worker route is the most attainable; the Innovator route is hardest.
- * focal: ONE shared Harder-to-Easier rail with four NUMBERED markers (was four separate
- * EaseScale rails whose dots bunched mid-track and left the axis empty , the audit's
- * consolidation call), then an ordered route list: rank, name, who it is for, and the
- * ease word read off the same position so it can never contradict the marker.
- * width: Even , paired peer to Licensing; the list absorbs the old trailing whitespace.
- * terracotta: the #1 (most attainable) marker only.
+ * Immigration , the visa routes a foreign FOUNDER can use (founder 2026-07-05 redesign).
+ * The Skilled Worker (hire-from-abroad) route is REMOVED for every country: the page
+ * speaks to a foreigner opening a business, not an employee. No featured route (peers
+ * shown equally), all data visible (no pop-up): each route carries its own difficulty bar
+ * plus two lines, who it is for and how to get it.
+ * HONESTY: the per-route "how" is authored from public UK visa facts for the GB exemplar
+ * and belongs in the seed per country (immigration.routes[].how) at promotion. The founder
+ * also wants a rich second part, incentives for foreigners, which the seed does not hold;
+ * that is flagged as an open per-country data need (pointer to grants below meanwhile).
+ * width: WideRail [2] , the narrow card (~40%), beside the big licences card.
+ * terracotta: none (no featured route; grey difficulty bars, ink names).
  */
 function Immigration({ d }: { d: any }) {
-  const word = (pos: number) => (pos >= 55 ? "Easier" : pos >= 35 ? "Moderate" : "Harder");
   const routes = (d.immigration?.routes ?? [])
-    .map((r: any) => ({ ...r, pos: Math.max(4, Math.min(96, 100 - (r.difficulty_0_100 ?? 50))) }))
-    .sort((a: any, b: any) => b.pos - a.pos);
+    .filter((r: any) => !/skilled worker/i.test(r.name || ""))
+    .map((r: any) => ({ ...r, ease: Math.max(6, Math.min(96, 100 - (r.difficulty_0_100 ?? 50))) }))
+    .sort((a: any, b: any) => b.ease - a.ease);
   if (!routes.length) return null;
+  const howMap: Record<string, string> = {
+    "Innovator Founder visa": "An endorsing body backs a new, scalable idea; a three-year visa that leads to settlement.",
+    "Global Talent visa": "Endorsement as a leader or promising talent, no job offer needed, with fast settlement.",
+    "Self-sponsorship": "Set up a UK company that sponsors your own visa; needs a sponsor licence and a genuine role.",
+  };
   return (
-    <Box><Head icon="airport">Visa routes for a foreign founder</Head>
-      <div className="relative mb-2 mt-3 h-[6px] rounded-full" style={{ background: "#ecebe9" }} role="img" aria-label={`Visa routes from harder to easier: ${routes.map((r: any, i: number) => `${i + 1} ${r.name}, ${word(r.pos)}`).join("; ")}`}>
-        {/* 16px numbered markers: the closest pair sits 5% apart, which stays clear of
-            digit-on-digit overlap even at a 390px viewport (circle edges may kiss, the
-            numerals never do). */}
-        {routes.map((r: any, i: number) => (
-          <span key={r.name} className={`fig absolute top-1/2 grid h-4 w-4 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border text-[9px] font-semibold leading-none ${i === 0 ? "border-[var(--terra-border)] text-white" : "border-[var(--c-line-strong)] bg-white text-[var(--c-ink)]"}`} style={{ left: `${r.pos}%`, ...(i === 0 ? { background: TERRA } : {}) }}>{i + 1}</span>
-        ))}
-      </div>
-      <div className="mb-3 flex justify-between text-[10px] uppercase tracking-wide text-[var(--c-muted)]"><span>Harder to get</span><span>Easier to get</span></div>
-      <div className="divide-y divide-[var(--c-border)]">
-        {routes.map((r: any, i: number) => (
-          <div key={r.name} className="hov -mx-2 flex items-baseline gap-2.5 rounded-md px-2 py-1.5">
-            <span className="fig w-4 shrink-0 text-[11px] text-[var(--c-muted)]">{i + 1}.</span>
-            <span className="min-w-0 flex-1 text-[12.5px]">
-              <span className={i === 0 ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink)]"}>{r.name}</span>
-              <span className="block text-[11px] text-[var(--c-muted)]">{r.forwho}</span>
-            </span>
-            <span className="shrink-0 text-[11.5px] font-medium text-[var(--c-ink2)]">{word(r.pos)}</span>
+    <Box><Head icon="visa-permit">Visa routes for a foreign founder</Head>
+      <div className="space-y-3.5">{routes.map((r: any) => (
+        <div key={r.name} className="border-b border-[var(--c-border)] pb-3 last:border-0 last:pb-0">
+          <div className="mb-1 flex items-center justify-between gap-2">
+            <span className="text-[13px] font-semibold text-[var(--c-ink)]">{r.name}</span>
+            <span className="fig text-[10.5px] uppercase tracking-wide text-[var(--c-muted)]">{r.ease >= 55 ? "Easier" : r.ease >= 35 ? "Moderate" : "Harder"}</span>
           </div>
-        ))}
+          <MiniBar pct={r.ease} />
+          <p className="mt-1.5 text-[11.5px] leading-snug text-[var(--c-ink2)]"><b className="font-medium text-[var(--c-ink)]">For</b> {String(r.forwho).toLowerCase()}.</p>
+          <p className="text-[11.5px] leading-snug text-[var(--c-ink2)]"><b className="font-medium text-[var(--c-ink)]">How</b> {howMap[r.name] ?? "Endorsement or sponsorship, then a route to settlement."}</p>
+        </div>
+      ))}
       </div>
+      <p className="mt-3 text-[11px] leading-snug text-[var(--c-muted)]">Founder routes only; hire-from-abroad visas are for employees, not owners. Fiscal incentives for locating here are covered under grants and incentives below.</p>
     </Box>
   );
 }
@@ -1434,9 +1461,9 @@ export default async function SpinePage() {
       <Movement eyebrow="Getting set up" heading="The cost and time to start" icon="register-cost" index="02" />
       <div className="space-y-5">
         <SetupTimeline d={d} />
-        <Even><Formation d={d} /><Banking d={d} /></Even>
+        <WideRail><Formation d={d} /><Banking d={d} /></WideRail>
         <TaxByLevel d={d} />
-        <Even><Licensing d={d} /><Immigration d={d} /></Even>
+        <WideRail><Licensing d={d} /><Immigration d={d} /></WideRail>
       </div>
 
       {/* CH3 , money and team. Wage ladder paired with hiring-ease so the chapter opens on a
