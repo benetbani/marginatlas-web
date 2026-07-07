@@ -30,9 +30,11 @@ import {
   Ico, Fig, MiniBar, Dots, StackBar, Waterfall, Donut,
   Movement, Box, EaseScale, Meter, Head, Chip, KV, Expand, InlineDisclosure, Bullets,
   Even, WideRail, CatRows,
-  Rail, Stat,
+  Rail, Stat, InfoTip, SpectraTable,
 } from "@/components/spine/kit";
 import { RankBars, LockPill } from "@/components/spine/kit-index";
+import { AtlasMark } from "@/components/spine/marks";
+import { AtlasIcon } from "@/components/brand/icons";
 
 export const dynamic = "force-static";
 const GB: any = SPINE_COUNTRIES.GB;
@@ -62,9 +64,11 @@ function peerRows(codes: string[], pick: (j: any) => number | null | undefined):
  * cafe, bar) rather than invent a take-home for an unmodeled trade. London stands
  * as the country's representative market (its per-trade take-home is the sanctioned
  * exemplar source), so every figure is real and each row links into its cell page. */
+/* Canonical six FIRST (the locked site-wide set: restaurant, grocery, dental, cafe, gym,
+ * auto-repair), then real fallbacks, so the rendered funnel matches the one vocabulary. */
 const TAKE_HOME_TRADES = [
-  "restaurants", "grocery_stores", "hairdressers_beauty", "sports_fitness",
-  "auto_repair_shops", "dental_practices", "cafes_coffee", "bars_nightclubs",
+  "restaurants", "grocery_stores", "dental_practices", "cafes_coffee",
+  "sports_fitness", "auto_repair_shops", "hairdressers_beauty", "bars_nightclubs",
 ];
 async function londonTakeHomeTrades(): Promise<Array<{ name: string; slug: string; takeHome: number; href: string }>> {
   const rows = await buildCityActivities({ slug: "london", countryIso2: "GB" });
@@ -171,9 +175,12 @@ function Hero({ d }: { d: any }) {
             ))}
           </div>
         </div>
-        {/* provenance, stated ONCE, one quiet line , the page's only provenance chrome. */}
-        <p className="mt-5 border-t border-[var(--c-border)] pt-3 text-[11.5px] leading-snug text-[var(--c-muted)]">
-          Figures are modeled from published economic data as of 2026, converted to US dollars for like-for-like reading; a few sections still carry early seed figures under research.
+        {/* provenance, stated ONCE, one quiet line , the page's only provenance chrome.
+            The "modeled" AtlasMark encodes the exact status the sentence states (wave-2,
+            mirroring the hood page's wave-1 provenance seal , never decoration). */}
+        <p className="mt-5 flex items-start gap-1.5 border-t border-[var(--c-border)] pt-3 text-[11.5px] leading-snug text-[var(--c-muted)]">
+          <AtlasMark id="modeled" size={14} className="mt-px shrink-0" />
+          <span>Figures are modeled from published economic data as of 2026, converted to US dollars for like-for-like reading; a few sections still carry early seed figures under research.</span>
         </p>
       </div>
     </section>
@@ -265,9 +272,14 @@ function Demand({ d }: { d: any }) {
   const greys = ["#a3a3a1", "#c4c4c2", "#dcdcda"];
   const color = (i: number) => (i === 0 ? TERRA : greys[Math.min(greys.length - 1, i - 1)]);
   const donutSegs: Array<[string, number, string]> = segs.map((s: any, i: number) => [s.name, s.pct, color(i)]);
+  // the slice a NEW business can actually win (the going-out / leisure spend), named in
+  // the legend caption , the insight the cut household-spend section used to carry.
+  const winnable = segs.find((s: any) => /going out|leisure|dining/i.test(s.name || ""));
   return (
     <Box>
-      <Rail icon="spending-power" kicker="The size of the market" verdict={<>A deep consumer pool, but most is <b className="text-[var(--c-ink)]">{topName || "everyday spend"}</b>, not premium.</>} />
+      {/* verdict written for the per-citizen focal (the old "deep pool" line described the
+          deleted trillion-dollar figure) and it states the true share, never "most". */}
+      <Rail icon="spending-power" kicker="The size of the market" verdict={<>The average resident spends <b className="text-[var(--c-ink)]">{usd(perCitizen)}</b> a year; the biggest slice, {segs[0]?.pct ?? 0}%, is {topName || "everyday spend"}, not premium.</>} />
       <div className="grid items-center gap-5 md:grid-cols-[minmax(0,1fr)_auto]">
         <div className="focal flex flex-col justify-center p-4">
           <Stat value={usd(perCitizen)} label="Consumer spend per citizen, a year" size="focal" accent />
@@ -278,6 +290,7 @@ function Demand({ d }: { d: any }) {
           <Donut segs={donutSegs} centerBig={`${segs[0]?.pct ?? 0}%`} centerSub="top slice" />
           <div className="mt-2 flex max-w-[240px] flex-wrap justify-center gap-x-3 gap-y-1">{segs.map((s: any, i: number) => (
             <span key={s.name} className="inline-flex items-center gap-1.5 text-[10.5px] text-[var(--c-ink2)]"><span className="h-2 w-2 rounded-sm" style={{ background: color(i) }} />{s.name} <Fig className="text-[var(--c-ink)]">{s.pct}%</Fig></span>))}</div>
+          {winnable ? <p className="mt-1.5 max-w-[240px] text-center text-[10.5px] leading-snug text-[var(--c-muted)]">{winnable.name}, {winnable.pct}%, is the slice a new business can win.</p> : null}
         </div>
       </div>
     </Box>
@@ -373,7 +386,7 @@ function Formation({ d }: { d: any }) {
     (a: any, b: any) => Number(/(limited|ltd|llc)/i.test(b.name)) - Number(/(limited|ltd|llc)/i.test(a.name)),
   );
   return (
-    <Box><Head icon="methodology">Which legal structure to form</Head>
+    <Box><Head icon="subtype">Which legal structure to form</Head>
       <div className="space-y-2">{structures.map((s: any, i: number) => { const x = formationExtra(s.name); return (
         <Expand key={i} name="formation" title={s.name} open={i === 0}>
           <p className="mb-2 text-[12px] leading-snug text-[var(--c-ink2)]">{x.summary}</p>
@@ -401,7 +414,7 @@ function Banking({ d }: { d: any }) {
   const fv = fmap[(b.friction || "").toLowerCase()] ?? 50;
   return (
     <Box>
-      <Rail icon="owner-keeps" kicker="Opening a bank account" verdict={b.can_foreigner ? "Open to foreign owners; a UK address and a few weeks of checks are the catch." : "Restricted for foreign owners; expect added hurdles."} />
+      <Rail icon="bank" kicker="Opening a bank account" verdict={b.can_foreigner ? "Open to foreign owners; a UK address and a few weeks of checks are the catch." : "Restricted for foreign owners; expect added hurdles."} />
       <div className="focal mb-3 p-3.5">
         <div className="mb-1 flex items-baseline justify-between"><span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">How hard</span><Fig className="text-[18px] capitalize text-[var(--c-ink)]">{b.friction}</Fig></div>
         <Meter value={fv} left="Hard" right="Easy" />
@@ -443,15 +456,10 @@ const TAX_GLOSS: Record<string, string> = {
 // Founder: rename the most relevant tax to "Tax on profits" (for a limited company the
 // corporation tax IS the tax on profits) and highlight it.
 const taxDisplayName = (n: string) => (/corporation tax/i.test(n) ? "Tax on profits" : n);
+/* TaxTip , the tax-line gloss lookup over the kit InfoTip (which is tap-safe at 390px). */
 function TaxTip({ term }: { term: string }) {
   const g = TAX_GLOSS[term];
-  if (!g) return null;
-  return (
-    <span className="group/tip relative ml-1 inline-flex align-middle">
-      <span className="grid h-3.5 w-3.5 cursor-help place-items-center rounded-full border border-[var(--c-line-strong)] text-[9px] font-semibold leading-none text-[var(--c-muted)]">?</span>
-      <span className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-1.5 w-44 -translate-x-1/2 rounded-lg border border-[var(--c-border)] bg-[var(--c-card)] px-2.5 py-1.5 text-[10.5px] font-normal normal-case leading-snug tracking-normal text-[var(--c-ink2)] opacity-0 shadow-[0_6px_18px_-8px_rgba(43,28,22,0.22)] transition-opacity group-hover/tip:opacity-100">{g}</span>
-    </span>
-  );
+  return g ? <InfoTip gloss={g} /> : null;
 }
 function TaxByLevel({ d }: { d: any }) {
   const groups = d.tax_detail?.groups ?? [];
@@ -634,16 +642,15 @@ function OperatingCosts({ d }: { d: any }) {
   return (
     <Box>
       <Rail icon="commercial-rent" kicker="What it costs to run a place" verdict={<>Rent is the big variable cost; power runs <b className="text-[var(--c-ink)]">{rank}</b> among neighbours.</>} />
-      {/* Rent + electricity are the two running-cost anchors (loaded-labour + one-off licence
-          tiles dropped per the founder). Oil / fuel and rent-as-average-of-covered-cities are
-          flagged data needs: the seed holds a national rent + no fuel price, so neither is
-          claimed here (never a fabricated figure). */}
-      <div className="grid items-stretch gap-3 sm:grid-cols-2">
-        <div className="focal flex flex-col justify-center p-4">
-          <Stat value={<>${c.commercial_rent_usd_sqm_yr?.toLocaleString("en-US")}</>} label="Commercial rent / sqm a year" size="focal" />
-        </div>
-        <div className="focal flex flex-col justify-center p-4">
-          <Stat value={fmtc(c.energy_usd_per_kwh ?? 0)} label="Electricity, per kWh" size="focal" />
+      {/* Rent is THE focal (the verdict names it); electricity demoted to a support figure
+          beside it , two equal focal Stats competed for the same eye (rule 23). Oil / fuel
+          and rent-as-average-of-covered-cities remain open data needs: the seed holds a
+          national rent + no fuel price, so neither is claimed here (never fabricated). */}
+      <div className="focal flex flex-wrap items-end justify-between gap-x-6 gap-y-2 p-4">
+        <Stat value={<>${c.commercial_rent_usd_sqm_yr?.toLocaleString("en-US")}</>} label="Commercial rent / sqm a year" size="focal" />
+        <div className="text-right">
+          <Fig className="text-[20px] text-[var(--c-ink)]">{fmtc(c.energy_usd_per_kwh ?? 0)}</Fig>
+          <div className="text-[10.5px] uppercase tracking-wide text-[var(--c-muted)]">electricity / kWh</div>
         </div>
       </div>
       {n > 1 ? (
@@ -685,7 +692,7 @@ function Financing({ d }: { d: any }) {
   const sources = f.sources ?? [];
   const cards = wanted.map((w) => { const s = sources.find((x: any) => w.match.test(x.name)); return { title: w.title, note: s?.note as string | undefined }; }).filter((c) => c.note);
   return (
-    <Box><Head icon="calculator">Raising money</Head>
+    <Box><Head icon="raise-money">Raising money</Head>
       <div className="mb-4 max-w-[280px]">
         <div className="mb-1.5 flex items-baseline gap-1.5"><Fig className="text-[18px] text-[var(--c-ink)]">{f.ease_0_100}</Fig><span className="text-[11px] text-[var(--c-muted)]">/100 to raise here</span></div>
         <Meter value={f.ease_0_100} left="Hard" right="Easy" />
@@ -742,39 +749,12 @@ function Grants({ d }: { d: any }) {
  * NOTE: was a doughnut whose largest wedge was "Other", which broke the single-
  * dominant-slice rule. Recast to ranked horizontal bars from a zero baseline.
  */
-function SpendDonut({ d }: { d: any }) {
-  const hs: any[] = d.income?.household_spend ?? []; const get = (c: string) => hs.find((x) => x.category === c)?.pct ?? 0;
-  const disc = Math.round(get("recreation") + get("dining_out"));
-  // Founder: switch to a DONUT (donut left, list right); the terracotta slice is the
-  // discretionary spend a new business can win. FLAG: the discretionary share is similar
-  // across most countries (bar the very poor / very rich), so this section is a candidate to
-  // REPLACE with a more differentiating household metric.
-  const rows: Array<[string, number]> = [
-    ["Housing & utilities", Math.round(get("housing_utilities"))],
-    ["Transport", Math.round(get("transport"))],
-    ["Food & drink", Math.round(get("food_drink"))],
-    ["Discretionary", disc],
-    ["Other", Math.round(get("household_goods") + get("other"))],
-  ];
-  const greys = ["#8f8a86", "#a8a4a0", "#c4c1bd", "#dcdad7"]; let gi = 0;
-  const segs: Array<[string, number, string]> = rows.map(([n, p]) => [n, p, n === "Discretionary" ? TERRA : greys[Math.min(greys.length - 1, gi++)]]);
-  return (
-    <Box><Head icon="cost-breakdown">Where a household&apos;s money goes</Head>
-      <div className="flex flex-col items-center gap-5 sm:flex-row">
-        <Donut segs={segs} centerBig={`${disc}%`} centerSub="discretionary" />
-        <div className="flex-1 space-y-1.5 self-stretch">
-          {segs.map(([n, p, c]) => (
-            <div key={n} className="flex items-center justify-between gap-3">
-              <span className="inline-flex min-w-0 items-center gap-2 text-[12px] text-[var(--c-ink2)]"><span className="h-2.5 w-2.5 shrink-0 rounded-sm" style={{ background: c }} /><span className="truncate">{n}</span></span>
-              <Fig className={`shrink-0 text-[12.5px] ${n === "Discretionary" ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{p}%</Fig>
-            </div>
-          ))}
-          <p className="border-t border-[var(--c-border)] pt-2 text-[11px] leading-snug text-[var(--c-muted)]">Discretionary, recreation and eating out, is the spend a new business can win.</p>
-        </div>
-      </div>
-    </Box>
-  );
-}
+/* SpendDonut , CUT (2026-07-08 skeptic pass). Two donuts in one chapter answered the same
+ * "where the money goes" question from two different datasets with different numbers, a
+ * same-page self-contradiction; and the founder had already flagged the household split as
+ * non-differentiating across countries ("may REPLACE with a more relevant household
+ * metric"). Demand's donut carries the one where-the-money-goes read; the winnable-slice
+ * insight moved under its legend. A better household metric is an open founder decision. */
 
 /* Seasonality , DELETED (founder "DELETE NOW", 2026-07-05). Demand-across-the-year is
  * unacceptable at country altitude (seasonality is a city/trade read, not a country one).
@@ -847,7 +827,14 @@ function Income({ d }: { d: any }) {
           </div>
         ))}
       </div>
-      <div className="mt-3 flex items-center gap-2 border-t border-[var(--c-border)] pt-3"><div className="flex gap-1">{bands.map((b, i) => <span key={b} className="h-1.5 w-6 rounded-sm" style={{ background: i === gi ? "#8f8a86" : "#e3e3e3" }} />)}</div><span className="text-[11.5px] text-[var(--c-ink2)]">{cap((o.gini_band ?? "").replace("_", " "))} spread between earners</span></div>
+      {/* the notch strip carries named ends (Equal / Unequal) so it is never an anonymous
+          scale , the one unlabeled axis the skeptic pass caught. */}
+      <div className="mt-3 flex items-center gap-2 border-t border-[var(--c-border)] pt-3">
+        <span className="text-[9px] uppercase tracking-wide text-[var(--c-muted)]">Equal</span>
+        <div className="flex gap-1">{bands.map((b, i) => <span key={b} className="h-1.5 w-6 rounded-sm" style={{ background: i === gi ? "#8f8a86" : "#e3e3e3" }} />)}</div>
+        <span className="text-[9px] uppercase tracking-wide text-[var(--c-muted)]">Unequal</span>
+        <span className="ml-1 text-[11.5px] text-[var(--c-ink2)]">{cap((o.gini_band ?? "").replace("_", " "))} spread between earners</span>
+      </div>
     </Box>
   );
 }
@@ -870,7 +857,10 @@ function Neighbours({ d }: { d: any }) {
     { key: "tax", label: "All-in tax load", unit: "%", get: (x: any) => x.tax_burden?.total_pct, cell: (v: number) => "" + Math.round(v), lowGood: true },
     { key: "reg", label: "Licence & setup cost", unit: "$", get: (x: any) => x.costs?.license_setup_usd, cell: (v: number) => Math.round(v).toLocaleString("en-US"), lowGood: true },
     { key: "days", label: "Days to fully set up", unit: "", get: (x: any) => x.setup?.total_days, cell: (v: number) => "" + v, lowGood: true },
-    { key: "vat", label: "VAT", unit: "%", get: (x: any) => x.tax_burden?.vat_rate_pct, cell: (v: number) => "" + v, lowGood: true },
+    /* VAT column REPLACED with employer on-cost (2026-07-08): the page's own tax section
+       states VAT is customer-borne and sits outside the load, so crowning the lowest VAT
+       contradicted it; the employer on-cost genuinely hits the owner. */
+    { key: "oncost", label: "Employer on-cost", unit: "%", get: (x: any) => x.tax_burden?.employer_oncost_pct, cell: (v: number) => "" + v, lowGood: true },
     { key: "energy", label: "Energy", unit: "$/kWh", get: (x: any) => x.costs?.energy_usd_per_kwh, cell: (v: number) => v.toFixed(2), lowGood: true },
   ];
   const codes = ["GB", ...(d.meta?.peer_set ?? [])];
@@ -902,55 +892,39 @@ function Neighbours({ d }: { d: any }) {
   );
 }
 
-/*
- * Competition , how crowded the market is.
- * verdict: The cafe trade is the single most crowded; cleaning still has room.
- * focal: the most-crowded trade named, with its saturation as the one big figure.
- * width: Even , peer to AdminLoad, equal class.
- * terracotta: the focal trade's saturation bar only.
- */
-function Competition({ d }: { d: any }) {
-  const arr = (d.competition?.trades ?? []).slice().sort((a: any, b: any) => b.saturation_0_100 - a.saturation_0_100);
-  const top = arr[0];
-  const rest = arr.slice(1);
-  const word = (s: number) => (s > 70 ? "Crowded" : s > 50 ? "Busy" : "Room");
-  return (
-    <Box><Rail icon="competition" kicker="How crowded the market is" verdict={top ? <>The <b className="text-[var(--c-ink)]">{top.name.toLowerCase()}</b> trade is most crowded; quieter trades still have room.</> : "Crowding varies by trade."} />
-      {top ? (
-        <div className="focal mb-3 flex items-end justify-between p-4">
-          <Stat value={<>{top.saturation_0_100}<span className="text-[16px] text-[var(--c-muted)]">/100</span></>} label={`${top.name} , most crowded`} size="focal" accent />
-          <Chip>{word(top.saturation_0_100)}</Chip>
-        </div>
-      ) : null}
-      {/* every row carries its /100 value (one encoding for the whole list); the
-          qualitative word stays on the focal chip only. */}
-      <div className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Saturation, 0 to 100</div>
-      <div className="space-y-2">{rest.map((t: any) => (
-        <div key={t.name} className="hov -mx-2 grid grid-cols-[130px_1fr_34px] items-center gap-3 rounded-md px-2 py-1"><span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]">{t.name}</span><div className="h-[7px] w-full min-w-0 overflow-hidden rounded-full" style={{ background: TRACK }} role="img" aria-label={`${t.name}: ${t.saturation_0_100} of 100`}><div className="h-full rounded-full" style={{ width: `${t.saturation_0_100}%`, background: "#bdbdbd" }} /></div><Fig className="text-right text-[12px] text-[var(--c-ink)]">{t.saturation_0_100}</Fig></div>))}
-      </div>
-    </Box>
-  );
-}
+/* Competition , CUT (founder, ratified in the 2026-07-07 strategy interview after the
+ * 2026-07-05 "reform or cut" flag). "How crowded the market is" reads near-identical for
+ * every country (the same everyday trades are the crowded ones everywhere), so it fails
+ * differentiate-or-die (rule 2), and its country-level saturation figures had no honest
+ * source (rule 1). Crowding is a city/cell-altitude read; those pages carry it. */
 
 /*
- * AdminLoad , the admin burden.
- * verdict: A light, mostly-online admin load once you are set up.
- * focal: hours-per-year, with the online share and filings count beside it.
- * width: Even , peer to Competition, equal class.
- * terracotta: the focal hours figure only.
+ * AdminLoad , the admin burden, restructured to the founder's ratified form (2026-07-05):
+ * NON-expandable, no buttons, all visible, the content divided into THREE labelled
+ * categories. The old "55 hours / 9 filings a year" focal is DROPPED , the founder called
+ * it evasive and hard to source for every country (a universally-calculable metric is an
+ * open point of debate); the online share stays as the one defensible figure. The verdict
+ * EXPLAINS what the load consists of rather than grading it.
+ * width: WideRail [2] , the narrow card beside DigitalPayments.
+ * terracotta: the online-share figure only.
  */
 function AdminLoad({ d }: { d: any }) {
   const a = d.admin_load ?? {};
+  const bullets: string[] = a.bullets ?? [];
+  // The seed's three bullets map onto the three fixed categories; a country with fewer
+  // simply shows fewer rows (CatRows drops empty values).
+  const rows: Array<[string, any]> = [
+    ["Tax & VAT", bullets[0]],
+    ["Returns", bullets[1]],
+    ["Payroll", bullets[2]],
+  ];
   return (
-    <Box><Rail icon="red-tape" kicker="The admin load" verdict="A light, almost-all-online admin load once the company is set up." />
-      <div className="focal mb-3 flex items-end justify-between p-4">
-        <Stat value={<>{a.hours_per_year}<span className="text-[16px] text-[var(--c-muted)]">h</span></>} label="A year on admin" sub={`${a.filings_per_year} filings a year`} size="focal" accent />
-        <div className="text-right">
-          <Fig className="text-[20px] text-[var(--c-ink)]">{a.online_pct}%</Fig>
-          <div className="text-[10.5px] uppercase tracking-wide text-[var(--c-muted)]">done online</div>
-        </div>
+    <Box><Rail icon="red-tape" kicker="The admin load" verdict="Once the company is set up, the running paperwork is tax, yearly returns and payroll." />
+      <div className="mb-3 flex items-baseline gap-2">
+        <Fig className="text-[26px] leading-none text-[var(--terra-text)]">{a.online_pct}%</Fig>
+        <span className="text-[12px] text-[var(--c-ink2)]">of it is done online</span>
       </div>
-      <Bullets items={a.bullets ?? []} />
+      <CatRows rows={rows} />
     </Box>
   );
 }
@@ -1013,15 +987,32 @@ function Cities({ d }: { d: any }) {
  * verdict: the busiest trades are rarely the richest; what you keep is the real read.
  * width: Full , a ranked take-home list. terracotta: the top keeper's bar only.
  */
+/* slug -> the business-type icon (the trade family added 2026-07-08). Unknown slugs
+ * carry no icon rather than a wrong one. */
+const TRADE_ICON: Record<string, import("@/components/brand/icons").AtlasIconId> = {
+  "restaurants": "trade-restaurant",
+  "grocery-stores": "trade-grocery",
+  "dental-practices": "trade-dental",
+  "cafes-coffee": "trade-cafe",
+  "sports-fitness": "trade-gym",
+  "auto-repair-shops": "trade-auto",
+  "hairdressers-beauty": "trade-salon",
+  "bars-nightclubs": "trade-bar",
+};
 function SixTradesTakeHome({ trades, countryName }: { trades: Array<{ name: string; slug: string; takeHome: number; href: string }>; countryName: string }) {
   if (!trades.length) return null;
-  const rows = trades.map((t) => ({ id: t.slug, label: t.name, value: t.takeHome, display: usd(t.takeHome), href: t.href }));
+  const rows = trades.map((t) => ({ id: t.slug, label: t.name, value: t.takeHome, display: usd(t.takeHome), href: t.href, icon: TRADE_ICON[t.slug] }));
   const leader = trades[0];
   return (
     <Box>
       <Rail icon="owner-keeps" kicker="What an owner keeps, by trade" verdict={<>The state takes its share; here is what the everyday trades leave the owner. <b className="text-[var(--c-ink)]">{leader.name}</b> keeps the most, and the busiest trades are rarely the richest.</>} />
       <RankBars rows={rows} valueUnit="" leaderId={leader.slug} />
-      <div className="mt-3 border-t border-[var(--c-border)] pt-2 text-[11px] leading-snug text-[var(--c-muted)]">After-tax take-home for a typical operator, shown for {countryName === "United Kingdom" ? "London" : "the main city"} as the country&apos;s representative market. Open a trade for the full build-up.</div>
+      {/* wave-2 "reconciled" mark: these ARE the sanctioned per-trade figures, cross-checked
+          with each cell page by construction (same engine) , a real status, not decoration. */}
+      <div className="mt-3 flex items-start gap-1.5 border-t border-[var(--c-border)] pt-2 text-[11px] leading-snug text-[var(--c-muted)]">
+        <AtlasMark id="reconciled" size={13} className="mt-px shrink-0" />
+        <span>After-tax take-home for a typical operator, shown for {countryName === "United Kingdom" ? "London" : "the main city"} as the country&apos;s representative market and cross-checked with each trade&apos;s own page. Open a trade for the full build-up.</span>
+      </div>
     </Box>
   );
 }
@@ -1034,16 +1025,31 @@ function SixTradesTakeHome({ trades, countryName }: { trades: Array<{ name: stri
  * real six). width: Even. terracotta: none (a plain reference; the funnel above carries it).
  */
 function EasiestTrades({ d }: { d: any }) {
+  // ONE vocabulary (rule 22): the seed's openings map onto the locked canonical six
+  // (Convenience shop reads as Grocery); off-slate rows (cleaning, hair and beauty) are
+  // dropped rather than spoken in a second vocabulary. Costs for the remaining canonical
+  // trades (dental, gym, auto repair) are an open data need, added when sourced.
+  const canon = (n: string): { name: string; icon: import("@/components/brand/icons").AtlasIconId } | null => {
+    if (/restaurant/i.test(n)) return { name: "Restaurant", icon: "trade-restaurant" };
+    if (/convenience|grocery/i.test(n)) return { name: "Grocery", icon: "trade-grocery" };
+    if (/cafe/i.test(n)) return { name: "Cafe", icon: "trade-cafe" };
+    if (/dental/i.test(n)) return { name: "Dental practice", icon: "trade-dental" };
+    if (/gym|fitness/i.test(n)) return { name: "Gym", icon: "trade-gym" };
+    if (/auto|repair/i.test(n)) return { name: "Auto repair", icon: "trade-auto" };
+    return null;
+  };
   const list = (d.trades_to_start?.list ?? [])
-    .filter((t: any) => !/online retail/i.test(t.name || ""))
-    .slice()
+    .map((t: any) => ({ ...t, c: canon(t.name || "") }))
+    .filter((t: any) => t.c)
     .sort((a: any, b: any) => (b.cost_to_open_usd ?? 0) - (a.cost_to_open_usd ?? 0));
+  if (!list.length) return null;
   const max = Math.max(...list.map((t: any) => t.cost_to_open_usd ?? 0)) || 1;
   return (
     <Box><Head icon="startup-cost">Typical businesses, and what they cost to start</Head>
       <div className="space-y-2.5">{list.map((t: any) => (
-        <div key={t.name} className="hov -mx-2 grid grid-cols-[140px_1fr_48px] items-center gap-2.5 rounded-md px-2 py-1">
-          <span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]">{t.name}</span>
+        <div key={t.c.name} className="hov -mx-2 grid grid-cols-[18px_130px_1fr_48px] items-center gap-2.5 rounded-md px-2 py-1">
+          <AtlasIcon id={t.c.icon} size={16} className="spine-ic shrink-0" style={{ color: "var(--c-ink2)" }} />
+          <span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]">{t.c.name}</span>
           <MiniBar pct={((t.cost_to_open_usd ?? 0) / max) * 100} />
           <Fig className="text-right text-[12px] text-[var(--c-ink)]">${Math.round((t.cost_to_open_usd ?? 0) / 1000)}K</Fig>
         </div>))}
@@ -1053,24 +1059,35 @@ function EasiestTrades({ d }: { d: any }) {
   );
 }
 /*
- * Insurance , the covers a business carries and what they run.
- * verdict: Only employers' liability is compulsory; the rest are client or landlord demands.
- * focal: the typical annual cost per cover; each expands to what it covers and who needs it.
- * width: Full , a denser cover list.
- * terracotta: the "required" chip only.
+ * Insurance , the covers a business carries. Founder 2026-07-05: too sparse , rows WAY
+ * bigger, more info per category, clear visual hierarchy, everything visible (the pop-up
+ * hid the substance). Each cover is an open row: name + required/optional + cost on the
+ * top line, covers / who in two labelled columns beneath, the practical note under them.
+ * Even more per-cover detail (excess levels, typical claims) is a flagged data need.
+ * width: Full. terracotta: the one "required by law" chip only (the single legal must).
  */
 function Insurance({ d }: { d: any }) {
   const covers = d.insurance?.covers ?? [];
+  if (!covers.length) return null;
   return (
-    <Box><Head icon="watch">Insurance the business carries</Head>
-      <div className="space-y-2">{covers.map((c: any, i: number) => (
-        <Expand key={i} name="insurance" title={c.name} open={i === 0} right={<span className="flex items-center gap-2">{c.required ? <span className="rounded-full bg-[var(--terra-soft)] px-2 py-0.5 text-[9px] font-semibold uppercase text-[var(--terra-text)]">required</span> : null}<Fig className="text-[13px] text-[var(--c-ink)]">${c.typical_usd}<span className="text-[10px] text-[var(--c-muted)]">/yr</span></Fig></span>}>
-          <div className="grid gap-1.5 sm:grid-cols-2">
-            <div><div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Covers</div><div className="text-[12.5px] text-[var(--c-ink2)]">{c.covers}</div></div>
-            <div><div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Who needs it</div><div className="text-[12.5px] text-[var(--c-ink2)]">{c.who}</div></div>
+    <Box><Head icon="safety">Insurance the business carries</Head>
+      <div className="divide-y divide-[var(--c-border)]">
+        {covers.map((c: any, i: number) => (
+          <div key={i} className="py-4 first:pt-1 last:pb-1">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+              <span className="text-[14px] font-semibold text-[var(--c-ink)]">{c.name}</span>
+              <span className="flex items-center gap-2.5">
+                {c.required ? <span className="rounded-full bg-[var(--terra-soft)] px-2 py-0.5 text-[9.5px] font-semibold uppercase tracking-wide text-[var(--terra-text)]">required by law</span> : <span className="rounded-full bg-[var(--c-soft)] px-2 py-0.5 text-[9.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">optional</span>}
+                <Fig className="text-[15px] text-[var(--c-ink)]">${c.typical_usd}<span className="text-[10.5px] text-[var(--c-muted)]">/yr</span></Fig>
+              </span>
+            </div>
+            <div className="mt-2 grid gap-x-7 gap-y-1.5 sm:grid-cols-2">
+              <div className="flex gap-2.5"><span className="w-16 shrink-0 text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Covers</span><span className="text-[12.5px] leading-snug text-[var(--c-ink2)]">{c.covers}</span></div>
+              <div className="flex gap-2.5"><span className="w-16 shrink-0 text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Who</span><span className="text-[12.5px] leading-snug text-[var(--c-ink2)]">{c.who}</span></div>
+            </div>
+            <p className="mt-1.5 text-[12px] leading-snug text-[var(--c-ink2)]">{c.note}</p>
           </div>
-          <div className="mt-2 border-t border-[var(--c-border)] pt-2 text-[12px] text-[var(--c-ink2)]">{c.note}</div>
-        </Expand>))}
+        ))}
       </div>
     </Box>
   );
@@ -1092,12 +1109,13 @@ function SellingAbroad({ d }: { d: any }) {
   const ease = e.openness_0_100 >= 70 ? "Easy" : e.openness_0_100 >= 45 ? "Moderate" : "Hard";
   const partners = (e.partners ?? []).slice().sort((a: any, b: any) => b.pct - a.pct);
   return (
-    <Box><Head icon="vs-world">How easy it is to export</Head>
+    <Box><Head icon="global-spread">How easy it is to export</Head>
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <div className="mb-1.5 flex items-baseline gap-2"><Fig className="text-[18px] text-[var(--c-ink)]">{ease}</Fig><span className="text-[11px] text-[var(--c-muted)]">{e.openness_0_100} of 100 to export</span></div>
           <Meter value={e.openness_0_100} left="Hard" right="Easy" />
-          <p className="mt-2.5 text-[11px] leading-snug text-[var(--c-muted)]">The procedures behind it, how long they take, the paperwork, and which trade deals apply, are a flagged data need.</p>
+          {/* quiet where not sourced: the procedures detail (timings, paperwork, trade
+              deals) fills in when researched per country , never a builder note here. */}
         </div>
         <div>
           <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Top markets, share of exports</div>
@@ -1130,27 +1148,26 @@ function SellingAbroad({ d }: { d: any }) {
  * better). The culture table has no worse/better end, so it keeps a neutral track with a
  * centre tick (a worse->better gradient there would mislead, principle: form = meaning). The
  * per-category "?" gloss is a flagged follow-up (needs a plain-language line per spectrum). */
-function SpectraTable({ rows, gradient = false }: { rows: any[]; gradient?: boolean }) {
-  if (!rows?.length) return null;
-  return (
-    <div className="divide-y divide-[var(--c-border)]">
-      {rows.map((r: any, i: number) => {
-        const pos = Math.max(5, Math.min(95, Math.round((r.position_0_1 ?? 0.5) * 100)));
-        const right = pos >= 50;
-        return (
-          <div key={i} className="hov -mx-2 grid grid-cols-[118px_1fr_118px] items-center gap-2 rounded-md px-2 py-2" role="img" aria-label={`${r.left_label} to ${r.right_label}: leans ${right ? r.right_label : r.left_label}`}>
-            <span className="text-[10.5px] leading-tight text-[var(--c-muted)]">{r.left_label}</span>
-            <span className="relative block h-[6px] rounded-full" style={{ background: gradient ? "linear-gradient(90deg, #6f6f6d, var(--terra))" : "#ecebe9" }}>
-              {!gradient ? <span className="absolute -bottom-[3px] -top-[3px] left-1/2 w-px" style={{ background: "var(--c-border)" }} /> : null}
-              <span className="absolute top-1/2 h-[11px] w-[11px] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${pos}%`, background: "var(--c-ink)", boxShadow: "0 0 0 1px #e3e3e3" }} />
-            </span>
-            <span className="text-right text-[10.5px] font-medium leading-tight text-[var(--c-ink)]">{r.right_label}</span>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
+/* The plain-language gloss per spectrum (founder: a "?" LEFT of each category, wording an
+ * average person understands). Keyed by the seed's spectrum ids; a row without a gloss
+ * simply renders no tip, so new spectra degrade gracefully. */
+const SPECTRUM_GLOSS: Record<string, string> = {
+  dealing: "How often bribes or favours are needed to get things done here.",
+  rules: "How often the rules of doing business change.",
+  enforcement: "How reliably a signed contract can be enforced.",
+  paperwork: "How much form-filling the state demands of a business.",
+  tax_clarity: "How easy the tax system is to understand and get right.",
+  courts: "How strong and independent the courts are in a dispute.",
+  expression: "How openly people show what they think.",
+  directness: "How directly people say yes and no.",
+  formality: "How formal dress and manners are in business.",
+  pace: "How fast daily business moves.",
+  orientation: "Whether deals run on personal relationships or on rules.",
+  openness: "How quickly strangers get down to real business.",
+};
+/* SpectraTable now lives in the kit (shared with the city page's character section, rule
+ * 22); the culture table renders equal-weight poles there (no implied better end), the
+ * government table keeps the worse-gray -> better-terracotta gradient. */
 function Character({ d }: { d: any }) {
   const gov = d.character?.gov_business ?? [];
   // Typo fix (founder): casual / formal were the wrong way round. Swap the formality poles
@@ -1160,17 +1177,20 @@ function Character({ d }: { d: any }) {
       ? { ...r, left_label: r.right_label, right_label: r.left_label }
       : r,
   );
+  const glossFor = (s: string) => SPECTRUM_GLOSS[s];
   return (
     <Box>
-      <Rail icon="corruption" kicker="The character of the place" verdict="Clean, rules-led dealing; reserved to work with, but brisk and quick to transact." />
+      {/* icon: ease-of-business, not the bribe-envelope corruption glyph, which asserted
+          the opposite of the "clean, rules-led" verdict beneath it (form=meaning). */}
+      <Rail icon="ease-of-business" kicker="The character of the place" verdict="Clean, rules-led dealing; reserved to work with, but brisk and quick to transact." />
       <div className="grid gap-x-8 gap-y-6 md:grid-cols-2">
         <div>
           <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Government, from a business view</div>
-          <SpectraTable rows={gov} gradient />
+          <SpectraTable rows={gov} gradient glossFor={glossFor} />
         </div>
         <div>
           <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Culture, from an outsider view</div>
-          <SpectraTable rows={culture} />
+          <SpectraTable rows={culture} glossFor={glossFor} />
         </div>
       </div>
       <div className="mt-2.5 text-[11px] leading-snug text-[var(--c-muted)]">In government, the left end is the worse-for-business one (dark) and the right is better (terracotta). The culture spectra have no better end: they are just different places to run a business.</div>
@@ -1215,9 +1235,9 @@ function Exit({ d }: { d: any }) {
     ["Typical valuation", e.multiple_low ? <>About <Fig className="text-[var(--c-ink)]">{e.multiple_low}x to {e.multiple_high}x</Fig> a year&apos;s profit for a small firm.</> : null],
   ];
   return (
-    <Box><Head icon="compare">How sellable a business is</Head>
+    <Box><Head icon="sale-tag">How sellable a business is</Head>
       <CatRows rows={rows} />
-      <p className="mt-3 text-[11px] leading-snug text-[var(--c-muted)]">Valuation is a profit multiple, not a headline sale price: the real figure turns on the trade and the books. Per-trade multiples are a flagged data need.</p>
+      <p className="mt-3 text-[11px] leading-snug text-[var(--c-muted)]">Valuation is a profit multiple, not a headline sale price: the real figure turns on the trade and the books.</p>
     </Box>
   );
 }
@@ -1232,7 +1252,7 @@ function Exit({ d }: { d: any }) {
 function Employment({ d }: { d: any }) {
   const e = d.employment ?? {};
   return (
-    <Box><Rail icon="hiring" kicker="Working here, the rules" verdict="Generous statutory holiday, but flexible contracts and a low-union workforce favour employers." />
+    <Box><Rail icon="min-wage" kicker="Working here, the rules" verdict="Generous statutory holiday, but flexible contracts and a low-union workforce favour employers." />
       {/* Founder: give the union figure the SAME weight as paid holiday (equal size), a
           symmetrical pair; holiday keeps the one terracotta accent, the union label sits below. */}
       <div className="focal mb-3 grid grid-cols-2 gap-4 p-4">
@@ -1259,7 +1279,7 @@ function Closing({ d }: { d: any }) {
   // The time + cost stay as small supporting facts, not a headline verdict.
   const months = String(c.time_months ?? "").replace(/\s+to\s+/g, "-");
   return (
-    <Box><Rail icon="honest-take" kicker="If it doesn't work, getting out" verdict="How you wind down turns on whether the company is solvent; a debt-free micro-firm simply strikes off." />
+    <Box><Rail icon="vacancy" kicker="If it doesn't work, getting out" verdict="How you wind down turns on whether the company is solvent; a debt-free micro-firm simply strikes off." />
       <CatRows rows={[["If solvent", c.solvent], ["If insolvent", c.insolvent], ["Your liability", c.liability]]} />
       <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 border-t border-[var(--c-border)] pt-3">
         <div><Fig className="text-[15px] text-[var(--c-ink)]">{months}</Fig><span className="ml-1.5 text-[11px] text-[var(--c-muted)]">months, typical</span></div>
@@ -1275,22 +1295,31 @@ function Closing({ d }: { d: any }) {
  * repeating it would be a second identical call to action. */
 function Close({ d }: { d: any }) {
   const city = d.cities?.list?.[0];
-  const links = [
-    { t: `${city?.name}, the deepest ${d.meta?.name} market`, href: city?.slug === "london" ? "/dev/spine-city" : undefined },
-    { t: `What a restaurant in ${city?.name} actually keeps`, href: "/dev/spine-cell" },
+  // Wave-2 altitude marks: each down-funnel link carries the mark of the LEVEL it opens
+  // (city / business), real wayfinding status, never decoration.
+  const links: Array<{ t: string; href?: string; mark: "alt-city" | "alt-business" }> = [
+    { t: `${city?.name}, the deepest ${d.meta?.name} market`, href: city?.slug === "london" ? "/dev/spine-city" : undefined, mark: "alt-city" },
+    { t: `What a restaurant in ${city?.name} actually keeps`, href: "/dev/spine-cell", mark: "alt-business" },
   ];
   return (
     <Box className="flex flex-col items-start gap-4">
-      <Head icon="bookmark">Where to go from here</Head>
-      <p className="max-w-[62ch] text-[13.5px] leading-snug text-[var(--c-ink2)]">You have the country picture: the margin, the setup, the costs and the market. The decision gets sharper one level down, in a single city and then a single trade.</p>
+      <Head icon="verdict">Where to go from here</Head>
+      <p className="max-w-[62ch] text-[13.5px] leading-snug text-[var(--c-ink2)]">You have the country picture: the tax take, the setup, the costs and the market. The decision gets sharper one level down, in a single city and then a single trade.</p>
       <div className="grid w-full gap-2.5 sm:grid-cols-2">
         {links.map((l, i) => {
           const Tag: any = l.href ? "a" : "div";
           return (
-            <Tag key={i} href={l.href} className="cityhov group flex items-center justify-between gap-3 rounded-xl border border-[var(--c-border)] bg-[var(--c-card)] px-4 py-3.5">
-              <span className="text-[13.5px] font-semibold text-[var(--c-ink)] group-hover:text-[var(--terra-text)]">{l.t}</span>
-              {/* chrome is ink; the terracotta reveal is hover-only (the house link language) */}
-              <span className="shrink-0 text-[var(--c-muted)] transition group-hover:text-[var(--terra-text)]">&#8594;</span>
+            <Tag key={i} href={l.href} className={`group flex items-center justify-between gap-3 rounded-xl border border-[var(--c-border)] bg-[var(--c-card)] px-4 py-3.5 ${l.href ? "cityhov" : "opacity-75"}`}>
+              <span className="flex min-w-0 items-center gap-2.5">
+                <AtlasMark id={l.mark} size={20} className="shrink-0 opacity-80" />
+                <span className={`text-[13.5px] font-semibold text-[var(--c-ink)] ${l.href ? "group-hover:text-[var(--terra-text)]" : ""}`}>{l.t}</span>
+              </span>
+              {/* chrome is ink; terracotta is hover-only on real links. An unlinked row (the
+                  city's page is not held yet) carries the wave-2 "not-held" mark instead of a
+                  dead arrow , a real gate in the code, never a fake affordance. */}
+              {l.href
+                ? <span className="shrink-0 text-[var(--c-muted)] transition group-hover:text-[var(--terra-text)]">&#8594;</span>
+                : <AtlasMark id="not-held" size={16} className="shrink-0" />}
             </Tag>
           );
         })}
@@ -1354,6 +1383,16 @@ function DigitalPayments({ d }: { d: any }) {
  * width: WideRail [1] , the BIG card (~60%), beside the narrower visa routes.
  * terracotta: none (ordinary reference section, ink tile).
  */
+/* licence trade name -> its business-type icon (founder: icons guide the visitor). */
+function licenceIcon(trade: string): import("@/components/brand/icons").AtlasIconId | null {
+  const t = (trade || "").toLowerCase();
+  if (/cafe|takeaway|coffee/.test(t)) return "trade-cafe";
+  if (/bar|alcohol|restaurant/.test(t)) return "trade-bar";
+  if (/childcare|nursery/.test(t)) return "trade-childcare";
+  if (/taxi|private hire/.test(t)) return "trade-taxi";
+  if (/retail|online|shop/.test(t)) return "trade-retail";
+  return null;
+}
 function Licensing({ d }: { d: any }) {
   const list = d.licensing?.list ?? [];
   const none = (s: string) => /^none$/i.test((s || "").trim());
@@ -1362,8 +1401,9 @@ function Licensing({ d }: { d: any }) {
       <p className="mb-3 text-[12px] leading-snug text-[var(--c-ink2)]">Most trades open the day the company is registered; a few are gated by a permit. Open a trade for what it needs and how long it takes.</p>
       <div className="space-y-2">{list.map((it: any, i: number) => {
         const needsPermit = !none(it.licence);
+        const ic = licenceIcon(it.trade);
         return (
-          <Expand key={i} name="licensing" title={it.trade} open={i === 0} right={<span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium ${needsPermit ? "border border-[var(--c-border)] text-[var(--c-ink2)]" : "bg-[var(--c-soft)] text-[var(--c-muted)]"}`}>{it.lead_time}</span>}>
+          <Expand key={i} name="licensing" title={<span className="flex items-center gap-2">{ic ? <AtlasIcon id={ic} size={15} className="spine-ic shrink-0" style={{ color: "var(--c-ink2)" }} /> : null}{it.trade}</span>} open={i === 0} right={<span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium ${needsPermit ? "border border-[var(--c-border)] text-[var(--c-ink2)]" : "bg-[var(--c-soft)] text-[var(--c-muted)]"}`}>{it.lead_time}</span>}>
             {needsPermit ? (
               <div className="space-y-1.5">
                 <div className="flex gap-2.5"><span className="w-11 shrink-0 text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">What</span><span className="text-[12px] text-[var(--c-ink2)]">{it.licence}</span></div>
@@ -1377,7 +1417,9 @@ function Licensing({ d }: { d: any }) {
         );
       })}
       </div>
-      <p className="mt-3 text-[11px] leading-snug text-[var(--c-muted)]">Shown where the permit route is sourced; trades not listed carry no special permit.</p>
+      {/* wave-2 "proof" mark: the sourced-only rule is real in this section's code (a cost
+          bullet renders only where a real fee exists). */}
+      <p className="mt-3 flex items-start gap-1.5 text-[11px] leading-snug text-[var(--c-muted)]"><AtlasMark id="proof" size={13} className="mt-px shrink-0" /><span>Shown where the permit route is sourced; trades not listed carry no special permit.</span></p>
     </Box>
   );
 }
@@ -1467,22 +1509,21 @@ export default async function SpinePage() {
         <Grants d={d} />
       </div>
 
-      {/* CH4 , the market. Demand (the market size) now OPENS this chapter, moved down from
-          the old CH1 where it competed with the verdict; then Even -> Even -> Even -> Full
-          table -> Full payments band. */}
-      <Movement eyebrow="The market and the rivals" heading="The customers and the rivals" icon="spending-power" index="04" />
+      {/* CH4 , the market. Renamed after Competition's cut (the old "rivals" title promised
+          content that no longer exists). Demand pairs with Income (the household-spend donut
+          was cut, its dataset contradicted Demand's in the same chapter); then the compare
+          table; then payments + admin in one WideRail (no half-row blanks). */}
+      <Movement eyebrow="The market" heading="The customers and their money" icon="spending-power" index="04" />
       <div className="space-y-5">
-        <Demand d={d} />
-        <Even><SpendDonut d={d} /><Income d={d} /></Even>
-        <Even><Competition d={d} /><AdminLoad d={d} /></Even>
+        <Even><Demand d={d} /><Income d={d} /></Even>
         <Neighbours d={d} />
-        <DigitalPayments d={d} />
+        <WideRail><DigitalPayments d={d} /><AdminLoad d={d} /></WideRail>
       </div>
 
       {/* CH5 , trades and character. Cities + map moved UP to CH1 (the founder's locked first
           section), so this chapter now opens on the trades and runs alternated forms:
           Even -> Full spectra -> Even -> Even -> Locals folded in after the character band. */}
-      <Movement eyebrow="Trades and character" heading="The trades and the character" icon="best-areas" index="05" />
+      <Movement eyebrow="Trades and character" heading="The trades and the character" icon="high-street" index="05" />
       <div className="space-y-5">
         <Even><EasiestTrades d={d} /><SellingAbroad d={d} /></Even>
         <Insurance d={d} />

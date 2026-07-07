@@ -88,7 +88,21 @@ export type AtlasIconId =
   | "search"
   | "compare"
   | "operator-voices"
-  | "locals-know";
+  | "locals-know"
+  | "bank"
+  | "sale-tag"
+  | "raise-money"
+  | "trade-restaurant"
+  | "trade-grocery"
+  | "trade-dental"
+  | "trade-cafe"
+  | "trade-gym"
+  | "trade-auto"
+  | "trade-salon"
+  | "trade-bar"
+  | "trade-childcare"
+  | "trade-taxi"
+  | "trade-retail";
 
 export interface AtlasIconDef {
   id: AtlasIconId;
@@ -614,6 +628,109 @@ export const atlasIcons: AtlasIconDef[] = [
     label: "What locals know",
     blurb: "The insider read you can't Google.",
     body: `<circle class="a" cx="10" cy="10" r="4.5"/><path d="M13.2 13.2 25 25"/><path d="M21 21l2.5-2.5M24 24l2.5-2.5"/>`,
+  },
+  {
+    id: "bank",
+    group: "cost-economics",
+    label: "Bank",
+    blurb: "Opening and running the business bank account.",
+    body: `<path d="M5.5 13L16 7l10.5 6"/><path d="M8 13v8.5M13.3 13v8.5M18.7 13v8.5M24 13v8.5"/><path d="M5.5 24.5h21"/><circle class="af" cx="16" cy="10.6" r="1.6"/>`,
+  },
+  {
+    id: "sale-tag",
+    group: "market",
+    label: "Selling the business",
+    blurb: "What a business fetches when the owner sells.",
+    body: `<path d="M6.5 14.5V8a1.5 1.5 0 0 1 1.5-1.5h6.5L26 18l-8 8L6.5 14.5z"/><circle class="af" cx="11.5" cy="11.5" r="1.8"/>`,
+  },
+  {
+    id: "raise-money",
+    group: "cost-economics",
+    label: "Raising money",
+    blurb: "The loans and equity that fund the start.",
+    body: `<ellipse cx="16" cy="22.5" rx="8" ry="2.8"/><path d="M8 22.5V19M24 22.5V19"/><ellipse cx="16" cy="19" rx="8" ry="2.8"/><path class="a" d="M16 13V6.5M12.8 9.7L16 6.5l3.2 3.2"/>`,
+  },
+  /* Trades , the business-type family (2026-07-08). One icon per everyday trade, used
+   * wherever a specific business is named (licences by trade, the take-home funnel, the
+   * recommender). Same grammar as the rest of the set: 1.9 stroke, one af accent on the
+   * meaningful point, no letters, no scenes. The canonical six first, then the licensing
+   * extras (bar, childcare, taxi); retail reuses "high-street". */
+  {
+    id: "trade-restaurant",
+    group: "industry",
+    label: "Restaurant",
+    blurb: "A sit-down food business.",
+    body: `<path d="M11 6v5.5a2.5 2.5 0 0 0 5 0V6"/><path d="M13.5 6v20"/><path d="M21 26V6c2.6 1.6 3.8 4.6 3.8 7.6 0 2.2-1.2 3.6-3.8 4.2"/><circle class="af" cx="13.5" cy="21.5" r="1.8"/>`,
+  },
+  {
+    id: "trade-grocery",
+    group: "industry",
+    label: "Grocery",
+    blurb: "An everyday food and goods shop.",
+    body: `<path d="M7 13h18l-1.8 10.4a2 2 0 0 1-2 1.6H10.8a2 2 0 0 1-2-1.6z"/><path d="M12 13l4-7 4 7"/><circle class="af" cx="16" cy="19.5" r="1.9"/>`,
+  },
+  {
+    id: "trade-dental",
+    group: "industry",
+    label: "Dental practice",
+    blurb: "A dentist's clinic.",
+    body: `<path d="M16 8.2c-1.9-1.6-4.9-1.7-6.4.3-1.4 1.9-1 4.7.2 6.6.9 1.4 1.5 4.4 2 7.4.3 1.7 2.2 1.7 2.6 0l.9-3.8c.2-.9.9-.9 1.1 0l.9 3.8c.4 1.7 2.3 1.7 2.6 0 .5-3 1.1-6 2-7.4 1.2-1.9 1.6-4.7.2-6.6-1.5-2-4.5-1.9-6.1-.3z"/><circle class="af" cx="16" cy="12.5" r="1.8"/>`,
+  },
+  {
+    id: "trade-cafe",
+    group: "industry",
+    label: "Cafe",
+    blurb: "A coffee shop.",
+    body: `<path d="M8 12.5h12.5V20a5 5 0 0 1-5 5h-2.5a5 5 0 0 1-5-5z"/><path d="M20.5 14.5H23a2.5 2.5 0 0 1 0 5h-2.5"/><path d="M12.2 9.5c0-1.2 1-1.2 1-2.5M16.2 9.5c0-1.2 1-1.2 1-2.5"/><circle class="af" cx="14.2" cy="18.5" r="1.8"/>`,
+  },
+  {
+    id: "trade-gym",
+    group: "industry",
+    label: "Gym",
+    blurb: "A fitness studio or gym.",
+    body: `<path d="M6.5 12.5v7M10.5 10v12M21.5 10v12M25.5 12.5v7"/><path d="M10.5 16h11"/><circle class="af" cx="16" cy="16" r="1.8"/>`,
+  },
+  {
+    id: "trade-auto",
+    group: "industry",
+    label: "Auto repair",
+    blurb: "A vehicle repair workshop.",
+    body: `<path d="M20 6.8a5.6 5.6 0 0 0-6 7.7l-7.2 7.2a2.4 2.4 0 1 0 3.4 3.4l7.2-7.2a5.6 5.6 0 0 0 7.7-6l-3.7 3.7-3.2-1-1-3.2z"/><circle class="af" cx="8.4" cy="23.4" r="1.6"/>`,
+  },
+  {
+    id: "trade-salon",
+    group: "industry",
+    label: "Salon",
+    blurb: "A hair or beauty salon.",
+    body: `<circle cx="9.5" cy="11" r="3"/><circle cx="9.5" cy="21" r="3"/><path d="M12 12.8L25.5 21.5M12 19.2L25.5 10.5"/><circle class="af" cx="17.8" cy="16" r="1.7"/>`,
+  },
+  {
+    id: "trade-bar",
+    group: "industry",
+    label: "Bar",
+    blurb: "A bar or pub serving alcohol.",
+    body: `<path d="M8.5 7h15l-7.5 9.5z"/><path d="M16 16.5V25M11.5 25h9"/><circle class="af" cx="16" cy="10.5" r="1.7"/>`,
+  },
+  {
+    id: "trade-childcare",
+    group: "industry",
+    label: "Childcare",
+    blurb: "A nursery or childcare service.",
+    body: `<rect x="7.5" y="16.5" width="8.5" height="8.5" rx="1.5"/><rect x="16" y="16.5" width="8.5" height="8.5" rx="1.5"/><rect x="11.8" y="8" width="8.5" height="8.5" rx="1.5"/><circle class="af" cx="16" cy="12.2" r="1.7"/>`,
+  },
+  {
+    id: "trade-taxi",
+    group: "industry",
+    label: "Taxi",
+    blurb: "A taxi or private-hire service.",
+    body: `<path d="M7.5 18.5l1.7-4.6a2 2 0 0 1 1.9-1.4h9.8a2 2 0 0 1 1.9 1.4l1.7 4.6"/><rect x="5.5" y="18.5" width="21" height="5" rx="1.5"/><circle cx="10.5" cy="23.5" r="2"/><circle cx="21.5" cy="23.5" r="2"/><circle class="af" cx="16" cy="9.5" r="1.7"/>`,
+  },
+  {
+    id: "trade-retail",
+    group: "industry",
+    label: "Retail shop",
+    blurb: "A shop selling goods over the counter.",
+    body: `<path d="M6 12l1.8-4.5a1.5 1.5 0 0 1 1.4-1h13.6a1.5 1.5 0 0 1 1.4 1L26 12"/><path d="M6 12c0 1.5 1.1 2.7 2.5 2.7S11 13.5 11 12c0 1.5 1.1 2.7 2.5 2.7S16 13.5 16 12c0 1.5 1.1 2.7 2.5 2.7S21 13.5 21 12c0 1.5 1.1 2.7 2.5 2.7S26 13.5 26 12"/><path d="M7.5 15.5v10h17v-10"/><path d="M13 25.5v-6.5h6v6.5"/><circle class="af" cx="16" cy="9.2" r="1.6"/>`,
   },
 ];
 

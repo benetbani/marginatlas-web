@@ -23,6 +23,7 @@
 import * as React from "react";
 import { AtlasIcon, type AtlasIconId } from "@/components/brand/icons";
 import { Pill } from "@/components/ui/pill";
+import { AtlasMark } from "./marks";
 
 export const TERRA = "#fb8469"; // atlas-300 soft terracotta , the only fill color
 export const TRACK = "#e6e6e6";
@@ -175,7 +176,7 @@ export function Movement({ eyebrow, heading, sample, icon, index }: { eyebrow: s
         {index ? <span className="fig text-[13px] font-semibold text-[var(--c-muted)]">{index}</span> : null}
         <Ico id={icon} tone="terra" />
         <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--c-ink2)]">{eyebrow}</span>
-        {sample ? <span className="rounded-full bg-[var(--c-soft2)] px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-[var(--c-muted)]">sample data</span> : null}
+        {sample ? <SampleTag /> : null}
       </div>
       <h2 data-typography="custom" className="text-2xl font-bold tracking-tight text-[var(--c-ink)] md:text-3xl">{heading}</h2>
     </div>
@@ -203,13 +204,15 @@ export function Box({ children, className = "", elevation = "card" }: { children
 /* one shared left-to-right scale with N labelled markers. Optional 4th tuple = a who-for
  * subtitle under the label. Optional `endLabels` names the two ends of the shared track
  * (small muted uppercase, Meter's pattern) so the scale is never anonymous; rendered once
- * under the row set, aligned to the track column. Default undefined = the historical render. */
-export function EaseScale({ rows, endLabels }: { rows: Array<[string, number, string, string?]>; endLabels?: [string, string] }) {
+ * under the row set, aligned to the track column. Default undefined = the historical render.
+ * `plain` = a NEUTRAL flat track: use it when the right end is NOT better (a demands /
+ * characteristics read), so the warm end never asserts a direction the data lacks (rule 10). */
+export function EaseScale({ rows, endLabels, plain = false }: { rows: Array<[string, number, string, string?]>; endLabels?: [string, string]; plain?: boolean }) {
   return (
     <div className="space-y-3.5">{rows.map(([label, pos, word, sub]) => (
       <div key={label} className="hov -mx-2 grid grid-cols-[150px_1fr] items-center gap-3 rounded-md px-2 py-1.5">
         <span className="text-[12.5px] leading-tight text-[var(--c-ink2)]">{label}{sub ? <span className="mt-0.5 block text-[10.5px] text-[var(--c-muted)]">{sub}</span> : null}</span>
-        <div className="relative h-1.5 rounded-full" role="img" aria-label={`${label}: ${word}`} style={{ background: "linear-gradient(90deg,#e6e6e6,#ffe1d8)" }}>
+        <div className="relative h-1.5 rounded-full" role="img" aria-label={`${label}: ${word}`} style={{ background: plain ? "#e6e6e6" : "linear-gradient(90deg,#e6e6e6,#ffe1d8)" }}>
           <div className="absolute top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center" style={{ left: `${pos}%` }}>
             <span className="h-3 w-3 rounded-full border-2 border-white" style={{ background: "var(--c-ink)", boxShadow: "0 0 0 1px #e3e3e3" }} />
           </div>
@@ -237,8 +240,65 @@ export function Meter({ value, left, right }: { value: number; left: string; rig
     </div>
   );
 }
+/* SampleTag , THE per-section sample marker (publish-critical, strategy 2026-07-07:
+ * unsourced sections ship FILLED with sample data, clearly labeled, never shown as real).
+ * Honest, unmissable, calm: the dashed "sample" AtlasMark + the word, in a dashed pill on
+ * the soft wash , visibly different from every real chip, but quiet enough not to shout.
+ * `note` renders as VISIBLE text when set (never title-only; mobile must see it too). */
+export function SampleTag({ note }: { note?: string }) {
+  return (
+    <span className="inline-flex items-center gap-1.5 rounded-full border border-dashed border-[var(--c-line-strong)] bg-[var(--c-soft)] px-2.5 py-0.5">
+      <AtlasMark id="sample" size={12} />
+      <span className="text-[9.5px] font-semibold uppercase tracking-wider text-[var(--c-muted)]">sample</span>
+      {note ? <span className="text-[10px] normal-case tracking-normal text-[var(--c-muted)]">{note}</span> : null}
+    </span>
+  );
+}
 export function Head({ children, sample, icon }: { children: React.ReactNode; sample?: boolean; icon?: AtlasIconId }) {
-  return <div className="mb-3 flex items-center gap-2">{icon ? <Ico id={icon} /> : null}<span className="text-[15px] font-semibold text-[var(--c-ink)]">{children}</span>{sample ? <span className="rounded-full bg-[var(--c-soft2)] px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-[var(--c-muted)]">sample</span> : null}</div>;
+  return <div className="mb-3 flex items-center gap-2">{icon ? <Ico id={icon} /> : null}<span className="text-[15px] font-semibold text-[var(--c-ink)]">{children}</span>{sample ? <SampleTag /> : null}</div>;
+}
+/* InfoTip , THE educational "?" gloss (rule 24: teach as you inform; rule 7: jargon gets
+ * a gloss). A focusable button trigger, so it works on TAP at 390px (focus shows the tip),
+ * not just hover; the gloss also rides the aria-label for screen readers. Educational copy
+ * only , never sole-source data (that stays visible text). Promoted from the country page. */
+export function InfoTip({ gloss, className = "ml-1" }: { gloss: string; className?: string }) {
+  return (
+    <span className={`group/tip relative inline-flex align-middle ${className}`}>
+      <button type="button" aria-label={gloss} className="grid h-3.5 w-3.5 cursor-help place-items-center rounded-full border border-[var(--c-line-strong)] text-[9px] font-semibold leading-none text-[var(--c-muted)]">?</button>
+      <span className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-1.5 w-44 -translate-x-1/2 rounded-lg border border-[var(--c-border)] bg-[var(--c-card)] px-2.5 py-1.5 text-[10.5px] font-normal normal-case leading-snug tracking-normal text-[var(--c-ink2)] opacity-0 shadow-[0_6px_18px_-8px_rgba(43,28,22,0.22)] transition-opacity group-focus-within/tip:opacity-100 group-hover/tip:opacity-100">{gloss}</span>
+    </span>
+  );
+}
+/* SpectraTable , the character two-pole spectra (promoted from the country page so city +
+ * country share ONE idiom, rule 22). `gradient` = the track runs dark-gray (LEFT = worse
+ * for business) to terracotta (RIGHT = better) and the right pole reads bold ink; without
+ * it the track is neutral with a centre tick and BOTH poles carry equal weight (no implied
+ * better end , form must not assert a direction the copy disclaims). `glossFor` supplies
+ * the per-spectrum "?" gloss, rendered LEFT of the row per the founder's spec. */
+export function SpectraTable({ rows, gradient = false, glossFor }: { rows: any[]; gradient?: boolean; glossFor?: (spectrum: string) => string | undefined }) {
+  if (!rows?.length) return null;
+  return (
+    <div className="divide-y divide-[var(--c-border)]">
+      {rows.map((r: any, i: number) => {
+        const pos = Math.max(5, Math.min(95, Math.round((r.position_0_1 ?? 0.5) * 100)));
+        const right = pos >= 50;
+        const gloss = glossFor?.(r.spectrum);
+        return (
+          <div key={i} className="hov -mx-2 grid grid-cols-[130px_1fr_118px] items-center gap-2 rounded-md px-2 py-2">
+            <span className={`flex items-center text-[10.5px] leading-tight ${gradient ? "text-[var(--c-muted)]" : "text-[var(--c-ink2)]"}`}>
+              {gloss ? <InfoTip gloss={gloss} className="mr-1.5" /> : null}
+              {r.left_label}
+            </span>
+            <span className="relative block h-[6px] rounded-full" role="img" aria-label={`${r.left_label} to ${r.right_label}: leans ${right ? r.right_label : r.left_label}`} style={{ background: gradient ? "linear-gradient(90deg, #6f6f6d, var(--terra))" : "#ecebe9" }}>
+              {!gradient ? <span className="absolute -bottom-[3px] -top-[3px] left-1/2 w-px" style={{ background: "var(--c-border)" }} /> : null}
+              <span className="absolute top-1/2 h-[11px] w-[11px] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${pos}%`, background: "var(--c-ink)", boxShadow: "0 0 0 1px #e3e3e3" }} />
+            </span>
+            <span className={`text-right text-[10.5px] leading-tight ${gradient ? "font-medium text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`}>{r.right_label}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 /* Chip , thin spine-palette wrapper over the canonical ui/pill.tsx (loyalty decision,
  * see header). Signature unchanged; the hinted arbitrary classes override Pill's
@@ -268,8 +328,9 @@ export function InlineDisclosure({ name, summary, className = "group mt-3", chil
     </details>
   );
 }
-/* single-open expandable row , progressive disclosure */
-export function Expand({ name, title, right, children, open }: { name: string; title: string; right?: React.ReactNode; children: React.ReactNode; open?: boolean }) {
+/* single-open expandable row , progressive disclosure. `title` accepts a node so a row
+ * can lead with a small trade icon (the licensing pattern); strings render as before. */
+export function Expand({ name, title, right, children, open }: { name: string; title: React.ReactNode; right?: React.ReactNode; children: React.ReactNode; open?: boolean }) {
   return (
     <details name={name} open={open} className="group overflow-hidden rounded-lg border border-[var(--c-border)] open:border-[var(--c-line-strong)] open:shadow-[0_1px_2px_rgba(27,24,22,0.04)]">
       <summary className="flex cursor-pointer list-none items-center justify-between gap-3 bg-[var(--c-soft)] px-3.5 py-2.5 transition hover:bg-[var(--c-soft2)] group-open:bg-[var(--terra-soft)]">

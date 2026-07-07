@@ -68,9 +68,15 @@ export function CellScaleBar({ value, domain, refValue, accent = false }: { valu
   const [lo, hi] = domain;
   const span = hi - lo || 1;
   const pos = (v: number) => Math.max(0, Math.min(100, ((v - lo) / span) * 100));
+  /* With a refValue the bar renders as a DIVERGENCE from the reference tick (fill runs
+   * from the tick to the value), because a length filled from a truncated domain's left
+   * edge lies about proportion (a 120-vs-76 pair on a [60,130] domain drew ~3.7:1 for a
+   * true 1.6:1). Without a refValue it stays the zero-based fill for true 0..N domains. */
+  const from = refValue != null ? Math.min(pos(value), pos(refValue)) : 0;
+  const width = refValue != null ? Math.abs(pos(value) - pos(refValue)) : pos(value);
   return (
     <span aria-hidden className="relative mt-1 block h-[5px] w-full rounded-full" style={{ background: TRACK }}>
-      <span className="absolute inset-y-0 left-0 block rounded-full" style={{ width: `${pos(value)}%`, background: accent ? TERRA : "#bdbdbd" }} />
+      <span className="absolute inset-y-0 block rounded-full" style={{ left: `${from}%`, width: `${Math.max(width, 1)}%`, background: accent ? TERRA : "#bdbdbd" }} />
       {/* baseline tick , the drawn domain start */}
       <span className="absolute -bottom-[2px] -top-[2px] left-0 w-px" style={{ background: "var(--c-line-strong)" }} />
       {refValue != null ? <span className="absolute -bottom-[2px] -top-[2px] w-px -translate-x-1/2" style={{ left: `${pos(refValue)}%`, background: "var(--c-ink2)" }} /> : null}
@@ -218,11 +224,12 @@ export function SortHeader({ label, unit, active = false, dir = "desc", onClick,
  * optional per-row href. ENTITY-SCOPED (one trade across places, or one place's
  * trades) , NEVER cross-geography ranking. Bars scale to the leader.
  * ========================================================================== */
-export type RankDatum = { id: string; label: string; value: number; href?: string; display?: string };
+export type RankDatum = { id: string; label: string; value: number; href?: string; display?: string; icon?: AtlasIconId };
 export function RankBars({ rows, max, valueUnit = "", leaderId }: { rows: RankDatum[]; max?: number; valueUnit?: string; leaderId?: string }) {
   if (!rows.length) return null;
   const top = max ?? Math.max(...rows.map((r) => r.value));
   const lead = leaderId ?? rows.reduce((a, b) => (b.value > a.value ? b : a), rows[0]).id;
+  const anyIcon = rows.some((r) => r.icon);
   return (
     <div className="space-y-1">
       {rows.map((r) => {
@@ -230,7 +237,8 @@ export function RankBars({ rows, max, valueUnit = "", leaderId }: { rows: RankDa
         const isLead = r.id === lead;
         return (
           <Tag key={r.id} href={r.href} className="hov -mx-2 grid grid-cols-[minmax(0,1fr)_3.4rem] items-center gap-3 rounded-md px-2 py-1.5">
-            <span className="grid grid-cols-[minmax(0,9rem)_minmax(0,1fr)] items-center gap-2.5">
+            <span className={`grid items-center gap-2.5 ${anyIcon ? "grid-cols-[18px_minmax(0,9rem)_minmax(0,1fr)]" : "grid-cols-[minmax(0,9rem)_minmax(0,1fr)]"}`}>
+              {anyIcon ? (r.icon ? <AtlasIcon id={r.icon} size={16} className="spine-ic shrink-0" style={{ color: isLead ? "var(--terra-text)" : "var(--c-ink2)" }} /> : <span aria-hidden />) : null}
               <span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]">{r.label}</span>
               <span className="h-2 overflow-hidden rounded-full" style={{ background: TRACK }}>
                 <span className="block h-full rounded-full" role="img" aria-label={`${r.label}: ${r.display ?? r.value}${valueUnit}`} style={{ width: `${Math.max(2, (r.value / (top || 1)) * 100)}%`, background: isLead ? TERRA : "#c8c8c6" }} />
@@ -582,6 +590,40 @@ export function Podium({ items, keptLabel = "kept" }: { items: [PodiumDatum, Pod
           </Tag>
         );
       })}
+    </div>
+  );
+}
+
+/* ============================================================================
+ * 11. MarginIndexBadge , the signature per-page score mark (strategy 2026-07-07:
+ * ONE unified 0-100 composite score of keep/ease/risk/demand, shown as a prominent,
+ * recognizable badge on every page and driving the leaderboard + recommender).
+ * Anatomy: a ring whose terracotta arc IS the score (the box's one accent), the
+ * .fig score centered, an ink compass tick at 12 o'clock (the brand's compass nod),
+ * and an optional side label. CSS vars only; no raw hex. `score` null-safe: no
+ * honest score -> render nothing (never a fabricated 0).
+ * ========================================================================== */
+export function MarginIndexBadge({ score, size = 62, label = "Margin Index", sub = "composite, 0 to 100", showLabel = true }: { score: number | null | undefined; size?: number; label?: string; sub?: string; showLabel?: boolean }) {
+  if (score == null || !Number.isFinite(score)) return null;
+  const s = Math.max(0, Math.min(100, Math.round(score)));
+  const r = 26;
+  const C = 2 * Math.PI * r;
+  const arc = (s / 100) * C;
+  return (
+    <div className="inline-flex items-center gap-2.5">
+      <svg viewBox="0 0 64 64" width={size} height={size} role="img" aria-label={`${label}: ${s} of 100`} style={{ flexShrink: 0 }}>
+        <circle cx="32" cy="32" r={r} fill="var(--c-card)" stroke="var(--c-border)" strokeWidth="3.5" />
+        <circle cx="32" cy="32" r={r} fill="none" stroke="var(--terra)" strokeWidth="3.5" strokeLinecap="round" strokeDasharray={`${arc.toFixed(1)} ${(C - arc).toFixed(1)}`} transform="rotate(-90 32 32)" />
+        {/* the compass tick, the brand nod: a small ink needle at due north */}
+        <path d="M32 2.6l2.3 4.6h-4.6z" fill="var(--c-ink)" />
+        <text x="32" y="37.5" textAnchor="middle" fontSize="17.5" fontWeight="600" fill="var(--c-ink)" style={{ fontFamily: "var(--font-grotesk)", fontVariantNumeric: "tabular-nums" }}>{s}</text>
+      </svg>
+      {showLabel ? (
+        <span className="leading-tight">
+          <span className="block text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--c-ink)]">{label}</span>
+          <span className="block text-[10px] text-[var(--c-muted)]">{sub}</span>
+        </span>
+      ) : null}
     </div>
   );
 }
