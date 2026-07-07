@@ -156,7 +156,7 @@ export function OwnerRunway({ d }: { d: any }) {
 export function MarginKept({ d }: { d: any }) {
   const t = d.trades ?? {};
   const arr: any[] = t.list ?? [];
-  // the local margin leader (excludes location-agnostic online retail): highest net margin among local trades.
+  // the margin leader: highest net margin on the slate (all six canonical trades are local).
   const local = arr.filter((x) => x.local !== false && x.net_margin_pct != null);
   // Null-guard (real-data promotion): omit when no local trade carries a real margin.
   if (local.length === 0) return null;

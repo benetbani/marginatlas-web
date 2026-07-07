@@ -4,30 +4,27 @@
     "currency_local": "GBP", "fx_to_usd": 1.32, "as_of": "2026-06",
     "peer_cities": ["paris", "amsterdam", "dublin", "berlin"],
     "schema_version": "0.2", "overall_confidence": "modeled",
-    "provenance_line": "Modeled London figures, illustrative for this build. The dot beside each figure marks how firm it is.",
+    "provenance_line": "Modeled London figures, illustrative for this build.",
     "_note": "SEED FILE for the city-page spine dev surface. Values are modeled/illustrative London figures, tagged per block. Replace with researched + lib-wired data on promotion."
   },
   "verdict": {
-    "_meta": { "confidence": "modeled", "source": "derived from the per-trade city economics", "as_of": "2026-06" },
+    "_meta": { "confidence": "modeled", "source": "derived from the per-trade city economics; take-home and margin from the curated London market file", "as_of": "2026-06" },
     "kicker": "The London verdict",
-    "winner_trade": "Hair & beauty keeps the most",
-    "winner_slug": "hair-beauty",
-    "keep_pct": 14,
-    "why": "Deep demand and a high-earning customer base reward a service trade that carries no stock and turns a chair over all day. Of every pound through the till, more reaches the owner here than in any other storefront trade on this page.",
+    "winner_trade": "Dental practice keeps the most",
+    "winner_slug": "dental-practices",
+    "keep_pct": 18,
+    "why": "Deep demand and a high-earning customer base reward a service trade that carries no stock and turns a chair over all day. Of every sale through the till, more reaches the owner here than in any other storefront trade on this page.",
     "catch": "Space is the constraint, not custom. Prime rent runs near the top of Europe, so the trade only clears where the ticket is large enough to swallow the lease.",
     "strip": [
-      { "value": "$44K", "label": "owner take-home" },
-      { "value": "Manageable", "label": "to break in" },
-      { "value": "$30K", "label": "cost to open" }
+      { "value": "$160K", "label": "owner take-home" }
     ]
   },
   "headline": {
     "_meta": { "confidence": "modeled", "source": "London market figures, illustrative", "as_of": "2026-06" },
     "self_employment_pct": 17,
     "scorecard": [
-      { "label": "Cost to open", "value": "$30K", "sub": "best trade, to start", "confidence": "modeled" },
+      { "label": "Cost to open", "value": "$45K", "sub": "cheapest trade, to start", "confidence": "modeled" },
       { "label": "Consumer spend", "value": "$196B", "sub": "a year, metro", "confidence": "placeholder" },
-      { "label": "Rent pressure", "value": "90", "unit": "/100", "sub": "near Europe's top", "confidence": "modeled" },
       { "label": "Survival", "value": "6", "unit": "/10", "sub": "odds of lasting", "confidence": "modeled" },
       { "label": "Customer income", "value": "$47K", "sub": "median earner", "confidence": "modeled" }
     ]
@@ -56,10 +53,10 @@
   },
   "space": {
     "_meta": { "confidence": "modeled", "source": "London commercial market, illustrative; no street-level per-sqm held", "as_of": "2026-06" },
-    "rent_pressure_0_100": 90,
     "prime_rent_note": "Prime space runs near the top of Europe",
     "read": "Commercial space is the headline cost, and the terms tilt to the landlord. Budget the deposit and a long commitment; the short rent-free window is the only give.",
     "peer_read": "Against comparable European cities, London's rent sits at the top of the pack.",
+    "terms_read": "Landlords want a long commitment and money down; a short rent-free window softens the fit-out.",
     "deposit_months": 3,
     "lease_years_typical": "5 to 10",
     "rent_free_months": "2 to 3",
@@ -115,35 +112,37 @@
   "risks": {
     "_meta": { "confidence": "placeholder", "source": "illustrative risk severities for this market; to be researched", "as_of": "2026-06" },
     "read": "Real risks, but each has a known offset. None is a reason on its own to walk away.",
+    "honest_read": "is the one to plan around; the rest are manageable with the right lease and reliefs.",
+    "_honest_read_note": "A tail fragment: the component leads with the top exposure's name (the page's one terracotta carrier in this box), then this sentence.",
     "list": [
-      { "label": "Rent shock", "who": "at lease renewal", "severity_0_100": 82, "word": "High", "counterweight": "Long leases with capped uplifts blunt the worst of it." },
-      { "label": "Business rates", "who": "on top of rent", "severity_0_100": 74, "word": "High", "counterweight": "Small-business relief cuts the bill for the smallest units." },
-      { "label": "Footfall volatility", "who": "postcode by postcode", "severity_0_100": 58, "word": "Medium", "counterweight": "A resident-heavy base steadies the weekly trade." },
-      { "label": "Regulation", "who": "licensing and compliance", "severity_0_100": 46, "word": "Medium", "counterweight": "Rules are predictable once you know the steps, not arbitrary." }
+      { "label": "Rent shock", "who": "at lease renewal", "severity_0_100": 82, "word": "Exposed", "counterweight": "Long leases with capped uplifts blunt the worst of it." },
+      { "label": "Business rates", "who": "on top of rent", "severity_0_100": 74, "word": "Exposed", "counterweight": "Small-business relief cuts the bill for the smallest units." },
+      { "label": "Footfall volatility", "who": "postcode by postcode", "severity_0_100": 58, "word": "Uneasy", "counterweight": "A resident-heavy base steadies the weekly trade." },
+      { "label": "Regulation", "who": "licensing and compliance", "severity_0_100": 46, "word": "Uneasy", "counterweight": "Rules are predictable once you know the steps, not arbitrary." }
     ]
   },
   "trades": {
-    "_meta": { "confidence": "placeholder", "source": "illustrative per-trade city economics; wire to cells on promotion", "as_of": "2026-06" },
+    "_meta": { "confidence": "mixed", "source": "owner take-home + net margin from the curated London market file (data/london/london_market_v1.json); break-in, crowding and cost-to-open carried from the prior illustrative rows where the trade maps, absent otherwise", "as_of": "2026-06" },
     "read": "Take-home varies wide by trade, and the busiest trades are not the richest. What you keep matters more than what comes in.",
-    "margin_read": "Of every pound through the till, only a slim slice reaches the owner; rent and staff take the rest.",
-    "easiest_read": "The gentlest way in here is also a cheap one, and it happens to lead to the margin leader. Below it, an easier door does not always mean a cheaper build.",
+    "margin_read": "Of every sale through the till, only a slim slice reaches the owner; rent and staff take the rest.",
+    "margin_rail_read": "A service trade with no stock keeps the most; the food trades keep the least.",
     "list": [
-      { "name": "Online retail", "slug": "online-retail", "take_home_usd": 58000, "net_margin_pct": 11, "break_in_0_100": 58, "saturation_0_100": 55, "cost_to_open_usd": 14000, "local": false },
-      { "name": "Hair & beauty", "slug": "hair-beauty", "take_home_usd": 44000, "net_margin_pct": 14, "break_in_0_100": 52, "saturation_0_100": 64, "cost_to_open_usd": 30000, "local": true },
-      { "name": "Fitness studio", "slug": "fitness", "take_home_usd": 48000, "net_margin_pct": 12, "break_in_0_100": 50, "saturation_0_100": 60, "cost_to_open_usd": 60000, "local": true },
-      { "name": "Restaurant", "slug": "restaurants", "take_home_usd": 52000, "net_margin_pct": 7, "break_in_0_100": 30, "saturation_0_100": 76, "cost_to_open_usd": 140000, "local": true },
-      { "name": "Cafe", "slug": "cafe", "take_home_usd": 36000, "net_margin_pct": 8, "break_in_0_100": 40, "saturation_0_100": 80, "cost_to_open_usd": 45000, "local": true },
-      { "name": "Convenience shop", "slug": "convenience", "take_home_usd": 40000, "net_margin_pct": 6, "break_in_0_100": 46, "saturation_0_100": 72, "cost_to_open_usd": 55000, "local": true }
+      { "name": "Dental practice", "slug": "dental-practices", "href": "/gb/london/dental-practices", "take_home_usd": 160000, "net_margin_pct": 18 },
+      { "name": "Gym", "slug": "sports-fitness", "href": "/gb/london/sports-fitness", "take_home_usd": 58000, "net_margin_pct": 9, "break_in_0_100": 50, "saturation_0_100": 60, "cost_to_open_usd": 60000 },
+      { "name": "Restaurant", "slug": "restaurants", "href": "/gb/london/restaurants", "take_home_usd": 48000, "net_margin_pct": 5, "break_in_0_100": 30, "saturation_0_100": 76, "cost_to_open_usd": 140000 },
+      { "name": "Auto repair", "slug": "auto-repair-shops", "href": "/gb/london/auto-repair-shops", "take_home_usd": 48000, "net_margin_pct": 11 },
+      { "name": "Cafe", "slug": "cafes-coffee", "href": "/gb/london/cafes-coffee", "take_home_usd": 40000, "net_margin_pct": 8, "break_in_0_100": 40, "saturation_0_100": 80, "cost_to_open_usd": 45000 },
+      { "name": "Grocery", "slug": "grocery-stores", "href": "/gb/london/grocery-stores", "take_home_usd": 36000, "net_margin_pct": 3, "break_in_0_100": 46, "saturation_0_100": 72, "cost_to_open_usd": 55000 }
     ]
   },
   "where_to_trade": {
     "_meta": { "confidence": "placeholder", "source": "derived: keep index = (1 + rev_vs_city_pct/100) / rent_mult x 100, city baseline 100; wire to neighborhood multipliers on promotion", "as_of": "2026-06" },
-    "read": "The loudest names take the most revenue and give most of it back in rent; a few quieter districts keep more of every pound.",
-    "keep_note": "Keep index, city average = 100. Every inner district here carries above-average rent, so all keep below the city baseline; the best keeper holds the most of each pound.",
+    "read": "The loudest names take the most revenue and give most of it back in rent; a few quieter districts keep more of every sale.",
+    "keep_note": "Keep index, city average = 100. Every inner district here carries above-average rent, so all keep below the city baseline; the best keeper holds the most of each sale.",
     "pro_teaser": [
-      "Hair & beauty keeps 14% citywide, about 12% in Brixton, 8% in Mayfair",
-      "Restaurants keep 7% citywide, about 5% in Camden, 4% in Mayfair",
-      "Fitness keeps 12% citywide, about 10% in Hackney, 8% in Soho"
+      "Dental keeps 18% citywide, about 16% in Brixton, 11% in Mayfair",
+      "Restaurants keep 5% citywide, about 4% in Camden, 3% in Mayfair",
+      "Gyms keep 9% citywide, about 8% in Hackney, 6% in Soho"
     ],
     "list": [
       { "name": "Mayfair", "slug": "mayfair", "character": "Luxury and finance", "rev_vs_city_pct": 55, "rent_mult": 2.6, "lat": 51.5096, "lng": -0.1494 },

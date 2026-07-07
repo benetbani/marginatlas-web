@@ -10,7 +10,7 @@
  */
 import * as React from "react";
 import { CountryFlag } from "@/components/CountryFlag";
-import { Fig } from "@/components/spine/kit";
+import { Fig, InfoTip } from "@/components/spine/kit";
 import { keepIndex } from "@/components/spine/keep";
 import { AtlasMark } from "@/components/spine/marks";
 
@@ -43,7 +43,7 @@ function useCountUp(target: number, reduced: boolean, ms = 560) {
   return v;
 }
 
-type District = { name: string; rev_vs_city_pct: number; rent_mult: number };
+type District = { name: string; slug?: string; rev_vs_city_pct: number; rent_mult: number };
 
 export function HoodMasthead({ d }: { d: any }) {
   const reduced = usePrefersReducedMotion();
@@ -55,6 +55,12 @@ export function HoodMasthead({ d }: { d: any }) {
   const bestKeep = keepIndex(best);
   const loudKeep = keepIndex(loud);
   const keepShown = Math.round(useCountUp(bestKeep, reduced));
+  const heroNote =
+    d.meta?.hero_note ??
+    (best?.rent_mult != null
+      ? `Rent here runs x${best.rent_mult.toFixed(2)} the city rate, light enough that more of each pound stays.` +
+        (best.slug !== loud?.slug ? " It is not the loudest name in the city." : "")
+      : null);
 
   return (
     <section className="py-6 md:py-8">
@@ -63,9 +69,11 @@ export function HoodMasthead({ d }: { d: any }) {
       <div className="flex items-center gap-3.5">
         <CountryFlag iso2="gb" className="w-[36px] rounded-sm shadow-sm" />
         <h1 data-typography="custom" className="text-3xl font-bold tracking-tight text-[var(--c-ink)] md:text-4xl">{d.meta?.city} neighborhoods</h1>
+        {/* wayfinding: this page reads at district level (calm, muted) */}
+        <AtlasMark id="alt-district" size={16} className="opacity-60" />
       </div>
       <p className="mt-2 max-w-2xl text-[13.5px] leading-snug text-[var(--c-ink2)]">
-        Same trade, same city, very different outcomes. Revenue is the liar; what the owner keeps after rent is the truth. Ranked across <Fig className="text-[var(--c-ink)]">{districts.length}</Fig> districts.
+        Money moves street to street: each district ranked by what an owner keeps after rent, not by takings, against a city baseline of 100; across <Fig className="text-[var(--c-ink)]">{districts.length}</Fig> districts the two orders are nearly opposite.
       </p>
 
       {/* ONE dominant hero: the district that keeps the most (terracotta, the single
@@ -81,12 +89,15 @@ export function HoodMasthead({ d }: { d: any }) {
               <Fig className="text-[60px] leading-none text-[var(--terra-text)] md:text-[76px]">{keepShown}</Fig>
               <div className="pb-1.5">
                 <div className="text-[19px] font-bold leading-tight text-[var(--c-ink)] md:text-[22px]">{best.name}</div>
-                <div className="text-[11px] text-[var(--c-muted)]">keep index, city baseline 100</div>
+                <div className="text-[11px] text-[var(--c-muted)]">keep index, city baseline 100<InfoTip gloss="100 keeps the same share of each pound as the city average; revenue lift divided by rent load." /></div>
               </div>
             </div>
-            <p className="mt-2.5 max-w-md text-[12.5px] leading-snug text-[var(--c-ink2)]">
-              {d.meta?.hero_note ?? "The lightest rent on the map, so the most of each pound stays. It is not the loudest name in the city."}
-            </p>
+            {/* seed note first; the fallback derives from the data itself (the best
+                keeper's real rent multiple), and the loudest-name contrast only appends
+                when the keeper is not itself the loudest. Nothing renders without either. */}
+            {heroNote ? (
+              <p className="mt-2.5 max-w-md text-[12.5px] leading-snug text-[var(--c-ink2)]">{heroNote}</p>
+            ) : null}
           </div>
 
           {/* SUPPORT , the highest-revenue district, a small neutral stat, not a co-hero */}

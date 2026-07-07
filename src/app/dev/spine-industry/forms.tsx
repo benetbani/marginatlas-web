@@ -110,7 +110,9 @@ export function MarginLadder({ gross, operating, net }: { gross: number; operati
       <div className="flex items-end justify-between gap-3" style={{ height: 118 }} role="img" aria-label={`Gross ${gross}%, operating ${operating}%, net ${net}%`}>
         {steps.map(([label, val, kept]) => (
           <div key={label} className="flex flex-1 flex-col items-center justify-end gap-1.5" style={{ height: "100%" }}>
-            <Fig className={`text-[15px] leading-none ${kept ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{Math.round(val * p)}%</Fig>
+            {/* the kept BAR stays terracotta; its numeral reads ink so the $7 masthead
+                focal is the band's only terra figure */}
+            <Fig className="text-[15px] leading-none text-[var(--c-ink)]">{Math.round(val * p)}%</Fig>
             <div className="w-full max-w-[64px] rounded-t" style={{ height: `${val * p}%`, background: kept ? TERRA : "#cfcac6", transition: reduced ? "none" : undefined }} />
             <span className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{label}</span>
           </div>

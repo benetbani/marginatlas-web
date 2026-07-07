@@ -26,7 +26,7 @@
 import * as React from "react";
 import { spineCellSeed } from "@/lib/spine-seeds";
 import {
-  Fig, Box, Rail, Movement, Row, Full, WideRail, EaseScale, StackBar, Timeline, TERRA, TRACK,
+  Fig, Box, Rail, Movement, Row, Full, WideRail, EaseScale, StackBar, Timeline, InfoTip, TERRA, TRACK,
 } from "@/components/spine/kit";
 import type { TLPhase, TLNode } from "@/components/spine/kit";
 import { Masthead } from "./masthead";
@@ -86,6 +86,9 @@ function MoneySplit({ d }: { d: any }) {
     <Box className="celltop">
       <Rail icon="cost-breakdown" kicker="Where each $100 of sales goes" verdict={d.money_split?.surface_line} />
       <StackBar segments={segments} ariaLabel={segments.map((p) => `${p.label} ${p.pct}%`).join(", ")} legend />
+      {d.money_split?.read ? (
+        <p className="mt-2 text-[12px] leading-snug text-[var(--c-ink2)]">{d.money_split.read}</p>
+      ) : null}
     </Box>
   );
 }
@@ -102,7 +105,7 @@ function WhoSuits({ d }: { d: any }) {
   return (
     <Box className="celltop">
       <Rail icon="who-for" kicker="Who this suits" verdict={w.subtitle} />
-      <div className="mt-1"><EaseScale rows={rows} endLabels={["Low", "High"]} /></div>
+      <div className="mt-1"><EaseScale rows={rows} plain endLabels={["Lighter demand", "Heavier demand"]} /></div>
     </Box>
   );
 }
@@ -127,10 +130,10 @@ function Demand({ d }: { d: any }) {
   return (
     <WideRail>
       <Box className="celltop">
-        <Rail icon="footfall" kicker="When the revenue lands" verdict={dm.surface_line} />
+        <Rail icon="daily-takings" kicker="When the revenue lands" verdict={dm.surface_line} />
         <div className="mb-3 flex flex-wrap items-baseline gap-x-3">
           <Fig className="text-3xl text-[var(--c-ink)]">{(dm.covers_per_week ?? 0).toLocaleString()}</Fig>
-          <span className="text-[13px] text-[var(--c-ink2)]">covers a week at about <Fig className="text-[var(--c-ink)]">${dm.avg_spend_usd}</Fig> a head.</span>
+          <span className="text-[13px] text-[var(--c-ink2)]">covers<InfoTip gloss="One cover is one customer served; a table of four is four covers." /> a week at about <Fig className="text-[var(--c-ink)]">${dm.avg_spend_usd}</Fig> a head.</span>
         </div>
         {/* dayparts , fixed 0-100% axis (the full week), zero baseline, value labels */}
         <div className="space-y-2">
@@ -231,8 +234,9 @@ function Myth({ d }: { d: any }) {
     .filter(([, v]) => typeof v === "number") as Array<[string, number]>;
   return (
     <Box className="celltop md:flex-[3]">
-      {/* ink rail: the ONE accent in this box is the year-one survival node + figure */}
-      <Rail icon="myth-reality" kicker="Myth, busted" verdict="A dramatic first-year collapse is not what actually closes most rooms." />
+      {/* ink rail: the ONE accent in this box is the year-one survival node + figure.
+          The verdict is seed-carried (myth.subtitle); absent = no verdict line. */}
+      <Rail icon="myth-reality" kicker="Myth, busted" verdict={my.subtitle} />
       <div className="rounded-[10px] border border-[var(--c-border)] bg-[var(--c-soft)] px-3.5 py-2.5">
         <span className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">The claim</span>
         <p className="mt-0.5 text-[13px] italic text-[var(--c-ink2)]">&ldquo;{my.claim}&rdquo;</p>
@@ -294,16 +298,16 @@ function Related({ d }: { d: any }) {
   return (
     <Box className="celltop md:flex-[3]">
       {/* same section-opener treatment as sibling cards (Rail kicker, not a bold Head) */}
-      <Rail icon="compare" kicker="Related trades in this place" />
+      <Rail icon="subtype" kicker="Related trades in this place" />
       <p className="mb-3 text-[12px] leading-snug text-[var(--c-ink2)]">The same street, a different trade: what each one keeps of every $100 of sales.</p>
       <div className="space-y-1">
         {arr.map((r, i) => {
           const lead = i === 0;
           return (
-            <a key={r.slug} href="#" className="hov -mx-2 grid grid-cols-[110px_1fr_40px] items-center gap-3 rounded-md px-2 py-2">
+            <a key={r.slug} href={`/gb/london/${r.slug}`} className="hov -mx-2 grid grid-cols-[110px_1fr_40px] items-center gap-3 rounded-md px-2 py-2">
               <span className="min-w-0">
                 <span className="block truncate text-[12.5px] font-medium text-[var(--c-ink)]">{r.name}</span>
-                <span className="block truncate text-[10.5px] text-[var(--c-muted)]">{r.fact}</span>
+                {r.fact ? <span className="block truncate text-[10.5px] text-[var(--c-muted)]">{r.fact}</span> : null}
               </span>
               <span className="relative block h-4" role="img" aria-label={`${r.name} keeps ${r.keeps_pct}% of sales; restaurants here keep ${ref}%`}>
                 <span aria-hidden className="absolute top-1/2 h-[3px] w-full -translate-y-1/2 rounded-full" style={{ background: TRACK }} />
@@ -331,27 +335,39 @@ function Close({ d }: { d: any }) {
   const rel: any[] = d.related ?? [];
   const city = d.meta?.city ?? "this market";
   const trade = (d.meta?.trade ?? "this trade").toLowerCase();
-  const links = [
-    `Compare ${trade} across nearby markets`,
-    rel[0] ? `Look at ${rel[0].name.toLowerCase()} in ${city} instead` : null,
-    `See what an owner keeps, format by format`,
-  ].filter(Boolean) as string[];
+  // Every link carries a REAL destination or renders as a plain span with no arrow
+  // (no fake affordance): the trade-across-markets read lives on the industry page,
+  // the sibling-trade cell rides its seed slug, and the format-by-format read has no
+  // page of its own yet (it lives in this page's money chapter).
+  const links: Array<{ t: string; href?: string }> = [
+    { t: `Compare ${trade} across nearby markets`, href: "/dev/spine-industry" },
+    ...(rel[0]
+      ? [{ t: `Look at ${rel[0].name.toLowerCase()} in ${city} instead`, href: rel[0].slug ? `/gb/london/${rel[0].slug}` : undefined }]
+      : []),
+    { t: "See what an owner keeps, format by format" },
+  ];
   return (
     <Box className="celltop">
       <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
         <div className="max-w-2xl">
           <div className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--c-muted)]">The bottom line</div>
-          <p className="text-[15px] font-medium leading-snug text-[var(--c-ink)]">Deep demand and real turnover, with a thin slice left at the end: this trade rewards operators who control costs daily.</p>
+          {d.close?.bottom_line ? (
+            <p className="text-[15px] font-medium leading-snug text-[var(--c-ink)]">{d.close.bottom_line}</p>
+          ) : null}
           <p className="mt-1.5 text-[12.5px] leading-snug text-[var(--c-ink2)]">If the format fits your capital and your hours, the next question is where the same work keeps more.</p>
         </div>
-        <a href="#" className="shrink-0 self-start rounded-full bg-[var(--c-ink)] px-5 py-2.5 text-[13px] font-semibold text-white transition-colors hover:bg-[var(--terra-text)] md:self-auto">
+        <a href="/pricing" className="shrink-0 self-start rounded-full bg-[var(--c-ink)] px-5 py-2.5 text-[13px] font-semibold text-white transition-colors hover:bg-[var(--terra-text)] md:self-auto">
           Compare this trade with Pro &#8594;
         </a>
       </div>
       <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-1.5 border-t border-[var(--c-border)] pt-4 sm:grid-cols-3">
-        {links.map((t, i) => (
-          <a key={i} href="#" className="text-[13px] font-medium text-[var(--c-ink2)] transition-colors hover:text-[var(--terra-text)]">{t} &#8594;</a>
-        ))}
+        {links.map((l, i) =>
+          l.href ? (
+            <a key={i} href={l.href} className="text-[13px] font-medium text-[var(--c-ink2)] transition-colors hover:text-[var(--terra-text)]">{l.t} &#8594;</a>
+          ) : (
+            <span key={i} className="text-[13px] font-medium text-[var(--c-ink2)]">{l.t}</span>
+          )
+        )}
       </div>
     </Box>
   );

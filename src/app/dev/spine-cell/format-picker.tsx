@@ -125,11 +125,11 @@ export function FormatPicker({ d }: { d: any }) {
       <div className="relative">
         {/* chrome is ink: the rail icon, the hint pill and the tabs carry no terracotta ,
             the ONE accent in this box is the owner-keeps figure in the trio below. */}
-        <Rail icon="subtype" kicker="The control room" verdict={st.thesis} />
+        <Rail icon="subtype" kicker="Pick the format you mean" verdict={st.thesis} />
         <p className="-mt-1 mb-4 flex flex-wrap items-center gap-2 text-[12.5px] text-[var(--c-ink2)]">
           <span>{st.hint}</span>
           <span className="inline-flex items-center gap-1 rounded-full border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[10.5px] font-semibold text-[var(--c-ink2)]">
-            <span className="fig">&#8595;</span> pick a format, the money below updates
+            <span className="fig">&#8595;</span> the money below updates
           </span>
         </p>
 
@@ -168,19 +168,19 @@ export function FormatPicker({ d }: { d: any }) {
 
         {/* the focal trio , swaps + counts on the selected format. Owner-keeps is the one terracotta figure. */}
         <div className="mt-4 grid grid-cols-3 gap-px overflow-hidden rounded-[12px] border border-[var(--c-border)]" style={{ background: "var(--c-border)" }}>
-          <div className="bg-[var(--c-card)] px-3.5 py-3">
+          <div className="min-w-0 break-words bg-[var(--c-card)] px-3.5 py-3">
             <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Owner keeps</div>
-            <div className="fig text-[30px] leading-none text-[var(--terra-text)] md:text-[34px]">{money(take)}</div>
+            <div className="fig text-[19px] leading-none text-[var(--terra-text)] md:text-[34px]">{money(take)}</div>
             <div className="mt-1 text-[11px] text-[var(--c-muted)]"><Fig className="text-[var(--c-ink2)]">{Math.round(keep)}%</Fig> of sales</div>
           </div>
-          <div className="bg-[var(--c-card)] px-3.5 py-3">
+          <div className="min-w-0 break-words bg-[var(--c-card)] px-3.5 py-3">
             <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">To break in</div>
-            <div className="fig text-[24px] leading-none text-[var(--c-ink)] md:text-[26px]">{breakWord(sel.break_in_0_100)}</div>
-            <div className="mt-1 text-[11px] text-[var(--c-muted)]"><Fig className="text-[var(--c-ink2)]">{sel.break_in_0_100}/100</Fig> ease</div>
+            <div className="fig text-[19px] leading-none text-[var(--c-ink)] md:text-[26px]">{breakWord(sel.break_in_0_100)}</div>
+            <div className="mt-1 text-[11px] text-[var(--c-muted)]"><Fig className="text-[var(--c-ink2)]">{Math.round(sel.break_in_0_100 / 10)}/10</Fig> ease</div>
           </div>
-          <div className="bg-[var(--c-card)] px-3.5 py-3">
+          <div className="min-w-0 break-words bg-[var(--c-card)] px-3.5 py-3">
             <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Cost to open</div>
-            <div className="fig text-[24px] leading-none text-[var(--c-ink)] md:text-[26px]">{money(cost)}</div>
+            <div className="fig text-[19px] leading-none text-[var(--c-ink)] md:text-[26px]">{money(cost)}</div>
             <div className="mt-1 text-[11px] text-[var(--c-muted)]">doors-open spend</div>
           </div>
         </div>
@@ -199,8 +199,9 @@ export function FormatPicker({ d }: { d: any }) {
   );
 }
 
-/* inline lock glyph (no padlock in the AtlasIcon set) , sized for the panel header + CTA */
-function LockGlyph({ size = 16, color = "var(--terra-text)" }: { size?: number; color?: string }) {
+/* inline lock glyph (no padlock in the AtlasIcon set) , sized for the panel header + CTA.
+ * Ink by default: the seam is chrome, and the box's one terracotta stays on the trio figure. */
+function LockGlyph({ size = 16, color = "var(--c-ink2)" }: { size?: number; color?: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" role="img" aria-label="locked" style={{ color }}>
       <rect x={5} y={10.5} width={14} height={9.5} rx={2} stroke="currentColor" strokeWidth={1.8} />
@@ -218,10 +219,11 @@ function LockGlyph({ size = 16, color = "var(--terra-text)" }: { size?: number; 
  * is the panel's one quiet Pro cue. */
 function ComparePro({ subs }: { subs: Subtype[] }) {
   return (
-    <div className="overflow-hidden rounded-[12px] border border-[var(--c-border)]" style={{ background: "linear-gradient(180deg,#fffaf8,#fff)" }}>
-      {/* header: states what Pro adds, fully inside the panel */}
+    <div className="overflow-hidden rounded-[12px] border border-[var(--c-border)]" style={{ background: "var(--c-card)" }}>
+      {/* header: states what Pro adds, fully inside the panel , ink chrome (the seam
+          never carries the accent; the owner-keeps trio figure is the box's terracotta) */}
       <div className="flex items-center gap-2.5 border-b border-[var(--c-border)] px-4 py-3">
-        <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg border border-[var(--terra-border)]" style={{ background: "var(--terra-soft)" }}><LockGlyph size={16} /></span>
+        <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg border border-[var(--c-border)] bg-[var(--c-soft)]"><LockGlyph size={16} /></span>
         <div className="min-w-0">
           <div className="text-[13px] font-semibold text-[var(--c-ink)]">Compare all three formats side by side</div>
           <div className="text-[11.5px] leading-snug text-[var(--c-ink2)]">Fast casual, full service and fine dining, with the full cost stack for each.</div>
@@ -233,7 +235,7 @@ function ComparePro({ subs }: { subs: Subtype[] }) {
         <div aria-hidden className="pointer-events-none select-none" style={{ filter: "blur(4px)", opacity: 0.55 }}>
           <ProCompare subs={subs} />
         </div>
-        <div aria-hidden className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,250,248,0.55))" }} />
+        <div aria-hidden className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,255,255,0.55))" }} />
       </div>
       {/* CTA row , a quiet ink pill, right-aligned; chrome stays ink */}
       <div className="flex items-center justify-end border-t border-[var(--c-border)] px-4 py-3">

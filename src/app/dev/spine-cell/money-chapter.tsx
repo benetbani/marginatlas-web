@@ -18,7 +18,7 @@
  * so scaled cells read specific, not templated.
  */
 import * as React from "react";
-import { Box, Rail, Fig, InlineDisclosure, TERRA, TRACK, usd } from "@/components/spine/kit";
+import { Box, Rail, Fig, InfoTip, InlineDisclosure, TERRA, TRACK, usd } from "@/components/spine/kit";
 import { useFormat, useCountUp, useInView } from "./format-picker";
 
 const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
@@ -172,14 +172,17 @@ export function BreakEven({ d }: { d: any }) {
       </div>
       <div className="flex items-baseline gap-2">
         <CountFig value={covers} fmt={(n) => Math.round(n)} className="text-3xl leading-none text-[var(--c-ink)]" />
-        <span className="text-[13px] text-[var(--c-ink2)]">covers a day to break even</span>
+        <span className="text-[13px] text-[var(--c-ink2)]">covers<InfoTip gloss="One cover is one customer served; a table of four is four covers." /> a day to break even</span>
       </div>
-      {/* real headroom: break-even covers as a share of the typical day's covers */}
+      {/* real headroom: break-even covers as a share of the typical day's covers.
+          Labels sit OUTSIDE the track in a caption row (in-track text broke at 390px). */}
       <div className="mt-3">
         <div className="relative h-8 overflow-hidden rounded-lg border border-[var(--c-border)]" style={{ background: TRACK }} role="img" aria-label={`Break-even at ${Math.round(covers)} of about ${typical} typical daily covers`}>
           <div className="h-full rounded-l-lg" style={{ width: `${pct}%`, background: TERRA }} />
-          <span className="absolute inset-y-0 left-2 flex items-center text-[11px] font-semibold text-white">{Math.round(covers)} covers</span>
-          <span className="absolute inset-y-0 right-2 flex items-center text-[11px] font-medium text-[var(--c-ink2)]">{typical} typical</span>
+        </div>
+        <div className="mt-1 flex items-baseline justify-between gap-3 text-[11px] text-[var(--c-ink2)]">
+          <span><Fig className="text-[var(--c-ink)]">{Math.round(covers)}</Fig> covers to break even</span>
+          <span className="text-right"><Fig className="text-[var(--c-ink)]">{typical}</Fig> on a typical day</span>
         </div>
         {/* the interpretation ADDS the headroom (the gap), never a third restatement of the fraction */}
         <div className="mt-1.5 text-[11px] text-[var(--c-muted)]">That leaves about <Fig className="text-[var(--c-ink2)]">{Math.max(0, Math.round(typical - covers))}</Fig> covers of headroom on a typical day.</div>

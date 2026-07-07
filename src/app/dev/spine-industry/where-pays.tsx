@@ -25,11 +25,12 @@ import { deriveSubtypes, type SubtypeRow } from "./subtypes";
 
 const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
 
-type Place = { name: string; take_home_usd: number; net_margin_pct: number; rent_load_pct: number };
+type Place = { name: string; take_home_usd: number; net_margin_pct: number; rent_load_pct: number; href?: string };
 
 export function WherePaysExplorer({ d }: { d: any }) {
   const basePlaces: Place[] = d.where_pays?.places ?? [];
   const subs: SubtypeRow[] = deriveSubtypes(d);
+  const tradeWord: string = (d.meta?.name ?? "formats").toLowerCase();
   const baseKeep: number = d.subtypes?.base_net_pct ?? d.margins?.net_pct ?? d.margin_index?.keeps_per_100 ?? 7;
   const [sel, setSel] = React.useState<string>("all");
   const [unlocked, setUnlocked] = React.useState(false);
@@ -65,7 +66,7 @@ export function WherePaysExplorer({ d }: { d: any }) {
       const flex = keepRatio * (1 - rentDrag);
       const take = Math.max(0, Math.round((p.take_home_usd * flex) / 1000) * 1000);
       const net = active ? +Math.max(0, p.net_margin_pct * flex).toFixed(1) : p.net_margin_pct;
-      return { name: p.name, take, net };
+      return { name: p.name, take, net, href: p.href };
     })
     // Rank by the VISIBLE metric (net %), so the free ordering is self-consistent with the
     // column the reader sees. The $/yr take-home is the Pro reveal only and never sets the order.
@@ -78,13 +79,15 @@ export function WherePaysExplorer({ d }: { d: any }) {
   const bestTake = rows.reduce((a, r) => (r.take > a.take ? r : a), rows[0] ?? { name: "", take: 0, net: 0 }).name;
   const note: string = d.where_pays?.note ?? "";
 
+  // No places resolve: the chapter has nothing honest to rank, so the whole island
+  // self-omits (the body also drops the Movement header when the chapter is empty).
+  if (basePlaces.length === 0) return null;
+
   return (
     <div className="w-full">
       <Box className="relative overflow-hidden">
-        {/* faint wash so this hero read carries more weight than an ordinary card */}
-        <span aria-hidden className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(255,241,237,0.45), rgba(255,255,255,0) 34%)" }} />
         <div className="relative">
-          <Rail icon="best-areas" tone="terra" kicker="Where it pays best" verdict="The place sets the keep: the same room, run the same way, banks different money in different cities." />
+          <Rail icon="where-it-pays" kicker="Where it pays best" verdict={d.where_pays?.verdict} />
           <p className="-mt-1 mb-3 max-w-2xl text-[12.5px] text-[var(--c-ink2)]">{note}</p>
 
           {/* subtype filter (the client re-rank interaction). Hidden when no format
@@ -92,7 +95,7 @@ export function WherePaysExplorer({ d }: { d: any }) {
               chips would be inert. */}
           {canFilter ? (
             <div className="mb-4 flex flex-wrap items-center gap-1.5">
-              <FilterChip label="All restaurants" active={sel === "all"} onClick={() => setSel("all")} />
+              <FilterChip label={`All ${tradeWord}`} active={sel === "all"} onClick={() => setSel("all")} />
               {subs.map((s) => (
                 <FilterChip key={s.slug} label={s.name} active={sel === s.slug} onClick={() => setSel(s.slug)} />
               ))}
@@ -111,21 +114,25 @@ export function WherePaysExplorer({ d }: { d: any }) {
               <div className="space-y-1">
                 {rows.map((r) => {
                   const isBest = r.name === best;
+                  // Real links only: a row is an <a> solely when its seed place carries a
+                  // real href (London -> the cell page). Every other city renders as a
+                  // plain unlinked row: no arrow, no hover affordance.
+                  const Tag: any = r.href ? "a" : "div";
                   return (
-                    <div key={r.name} className="hov -mx-2 grid grid-cols-[minmax(0,1fr)_3rem] items-center gap-3 rounded-md px-2 py-2">
+                    <Tag key={r.name} href={r.href} className={`${r.href ? "hov " : ""}-mx-2 grid grid-cols-[minmax(0,1fr)_3rem] items-center gap-3 rounded-md px-2 py-2`}>
                       <span className="grid grid-cols-[minmax(0,7rem)_minmax(0,1fr)] items-center gap-2.5">
-                        <span className={`min-w-0 truncate text-[12.5px] ${isBest ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`}>{r.name}</span>
+                        <span className={`min-w-0 truncate text-[12.5px] ${isBest ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)]"} ${r.href ? "hover:text-[var(--terra-text)]" : ""}`}>{r.name}{r.href ? <span className="text-[var(--c-muted)]"> &#8594;</span> : null}</span>
                         <span className="h-2 overflow-hidden rounded-full" style={{ background: TRACK }}>
                           <span className="block h-full rounded-full" role="img" aria-label={`${r.name} keeps ${r.net}% net`} style={{ width: `${Math.max(3, (r.net / maxNet) * 100)}%`, background: isBest ? TERRA : "#c8c8c6" }} />
                         </span>
                       </span>
-                      <Fig className={`text-right text-[13px] ${isBest ? "font-semibold" : ""} text-[var(--c-ink)]`}>{r.net}%</Fig>
-                    </div>
+                      <Fig className={`text-right text-[13px] ${isBest ? "font-semibold" : ""} ${active ? "text-[var(--c-ink2)]" : "text-[var(--c-ink)]"}`}>{r.net}%</Fig>
+                    </Tag>
                   );
                 })}
               </div>
               <div className="mt-2 text-[11px] text-[var(--c-muted)]">
-                {active ? <>Ranked for <b className="text-[var(--c-ink2)]">{active.name}</b>: {(active.rent_sensitivity ?? 1) < 1 ? "a light-rent format, so the high-rent cities climb." : (active.rent_sensitivity ?? 1) > 1 ? "a rent-heavy format, so the high-rent cities fall." : "the field holds its all-restaurants order."} </> : canFilter ? <>Ranked for all restaurants. Pick a format above to reshuffle the high-rent cities. </> : <>Ranked by what a typical owner keeps, best first. </>}
+                {active ? <>Ranked for <b className="text-[var(--c-ink2)]">{active.name}</b>: {(active.rent_sensitivity ?? 1) < 1 ? "a light-rent format, so the high-rent cities climb." : (active.rent_sensitivity ?? 1) > 1 ? "a rent-heavy format, so the high-rent cities fall." : `the field holds its all-${tradeWord} order.`} Figures are modeled from each city&apos;s rent load for this format. </> : canFilter ? <>Ranked for all {tradeWord}. Pick a format above to reshuffle the high-rent cities. </> : <>Ranked by what a typical owner keeps, best first. </>}
                 Best net margin is bold.
               </div>
             </div>
@@ -141,7 +148,7 @@ export function WherePaysExplorer({ d }: { d: any }) {
                     return (
                       <div key={r.name} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2 rounded-md px-2 py-2">
                         <span className="min-w-0 truncate text-[12px] text-[var(--c-ink2)]">{r.name}</span>
-                        <Fig className={`text-right text-[13px] ${isTop ? "font-bold" : ""} text-[var(--c-ink)]`}>{money(r.take)}</Fig>
+                        <Fig className={`text-right text-[13px] ${isTop ? "font-bold" : ""} ${active ? "text-[var(--c-ink2)]" : "text-[var(--c-ink)]"}`}>{money(r.take)}</Fig>
                       </div>
                     );
                   })}

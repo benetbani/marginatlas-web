@@ -11,8 +11,11 @@
   "provenance_line": "Illustrative model, not yet wired to measured accounts. Figures are directional and shown so the shape reads true.",
   "verdict": {
     "headline": "The owner keeps about $7 of every $100 a customer spends: a thin keep, below the all-trades average, won on volume and cost control.",
-    "lead": "Of every $100 taken, food and labour swallow two-thirds before rent is paid. The model only works at scale, with a tight kitchen and a rota that bends to the day.",
-    "close": "The operators who last are not the best cooks. They are the best at rota, waste and rent."
+    "lead": "Of every $100 taken, food and labour swallow two-thirds before rent is paid. The model only works at scale, with a tight kitchen and staff shifts that bend to the day.",
+    "close": "The operators who last are not the best cooks. They are the best at staffing, waste and rent."
+  },
+  "close": {
+    "verdict": "A thin-margin trade that lives or dies on format, rent and a full room. Here is where it lands."
   },
   "margins": {
     "_meta": {
@@ -31,6 +34,9 @@
     "vs_typical": "below the all-trades average"
   },
   "demand": {
+    "verdict": "New rooms do not create new appetite in a mature market; they divide it.",
+    "trend_verdict": "The appetite is most of the way back, and still climbing.",
+    "spend_verdict": "What a single diner is worth on a visit, before the crowd is counted.",
     "spend_per_head_usd": 22,
     "purchases_per_year": 60,
     "venues_per_10k": 20.0,
@@ -54,6 +60,7 @@
     }
   },
   "subtypes": {
+    "verdict": "The format you choose moves the keep more than the menu ever does.",
     "base_net_pct": 7,
     "base_capital_usd": 150000,
     "list": [
@@ -142,6 +149,9 @@
       }
     ],
     "annotation": "Wages and rent decide the year; food cost only edits it.",
+    "variable_sub": "food + hourly wages, flex with covers",
+    "fixed_sub": "rent, rates, salaried",
+    "kept_sub": "the owner's slice",
     "fixed_note": "Rent, rates and other fixed running costs are about $27 of every $100: the nut that must be filled before the owner sees a cent.",
     "variable_note": "Food and hourly wages flex with covers, about $66 of every $100: the lines a tight kitchen and a sharp rota actually move."
   },
@@ -181,6 +191,7 @@
     }
   },
   "first_year": {
+    "verdict": "Open soft, build covers, and survive the cash gap between full rota and full room.",
     "_identity": "Timeline anchors: break-even node at week 26 = ramp_to_breakeven_months 6; payback_years 2.8 = payback.payback_months 34 / 12; the year-end node echoes survival.yr1_pct 80.",
     "ramp_to_breakeven_months": 6,
     "payback_years": 2.8,
@@ -213,6 +224,7 @@
       "as_of": "2026-06",
       "method": "payback = capital / the owner's annual take: $150K / about $53K a year = ~34 months (2.8 years); gearing at 60% LTV stretches it to 46."
     },
+    "verdict": "The fit-out returns in years, not months, and only if the room fills.",
     "capital_usd": 150000,
     "payback_months": 34,
     "low_months": 24,
@@ -248,6 +260,8 @@
       "source": "illustrative typical operator",
       "as_of": "2026-06"
     },
+    "verdict": "A normal owner works a full year to keep a thin slice.",
+    "note": "The margin is thin, but the trade is durable and sells on a real multiple once the lease and covers are stable.",
     "owner_keeps_pct": 7,
     "capital_to_open_usd": 150000,
     "survival_1yr_pct": 80,
@@ -260,8 +274,9 @@
       "source": "illustrative operator fit",
       "as_of": "2026-06"
     },
+    "verdict": "It rewards hands-on operators, and punishes absentee ownership.",
     "suits": [
-      "Hands-on operators who will work the floor and the rota, not absentee owners.",
+      "Hands-on operators who will work the floor and the shift plan, not absentee owners.",
       "People who already know hospitality margins and read a P&L weekly.",
       "Anyone who can sign a long lease and survive a slow first winter on reserves."
     ],
@@ -286,6 +301,7 @@
     }
   },
   "survival": {
+    "verdict": "Most rooms outlive the folklore; the early winters decide who stays.",
     "yr1_pct": 80.0,
     "yr3_pct": 60.0,
     "yr5_pct": 50.0,
@@ -313,7 +329,7 @@
     "peak_note": "bookings and parties; the quarter that carries the year.",
     "trough_note": "the post-holiday lull; the cash test of the year.",
     "swing_pct": 20,
-    "note": "Summer travel and December holidays lift sales; post-holiday January and February are the low point.",
+    "note": "Summer travel and December holidays lift sales; post-holiday January and February are the low point. Northern-hemisphere pattern; southern-hemisphere markets invert it.",
     "_meta": {
       "confidence": "held",
       "source": "Sales spike in summer and around the December holidays and slow in January and February; a commonly cited swing is around 19% between winter low and summer high.",
@@ -327,6 +343,7 @@
       "source": "modeled owner take-home, converted to USD, same tax-aware method; directional",
       "as_of": "2026-06"
     },
+    "verdict": "The place sets the keep: the same room, run the same way, banks different money in different cities.",
     "note": "Owner take-home, like-for-like and converted to one currency. A low-rent format rescues the high-rent cities, a rent-heavy one punishes them; the two clear leaders hold.",
     "places": [
       {
@@ -345,7 +362,8 @@
         "name": "London",
         "take_home_usd": 48000,
         "net_margin_pct": 7,
-        "rent_load_pct": 14
+        "rent_load_pct": 14,
+        "href": "/dev/spine-cell"
       },
       {
         "name": "New York",
@@ -369,44 +387,39 @@
   },
   "benchmark": {
     "_meta": {
-      "confidence": "placeholder",
-      "source": "illustrative keep-per-$100 across neighbouring trades; modeled, not measured",
+      "confidence": "modeled",
+      "source": "keep-per-$100 read from the atlas margin table for each neighbouring trade (cafes, bars, grocery), rounded to whole dollars on the shared axis",
       "as_of": "2026-06"
     },
+    "verdict": "Only the cafe next door clearly keeps more of each $100; bars land about level, and grocery keeps less on far bigger volume.",
     "all_trades_avg": 12,
     "avg_note": "The broad all-trades average sits near $12 kept per $100, across every trade in the atlas, not just the food ones below.",
-    "note": "Cafes, bars, takeaways and catering each keep more per $100; against the whole trade universe the gap is wider still.",
+    "note": "The everyday-food neighbours sit close together; against the whole trade universe the gap is wider still.",
     "trades": [
       {
         "name": "Restaurants",
         "slug": "restaurants",
         "keeps_per_100": 7,
         "self": true,
-        "why": "You are here: thinnest keep of the food trades, won back only on volume."
+        "why": "You are here: a thin keep, level with the bars and a notch under the cafes, won back on volume."
       },
       {
         "name": "Cafe",
-        "slug": "cafe",
+        "slug": "cafes-coffee",
         "keeps_per_100": 9,
         "why": "Coffee carries a fat gross margin that food service never sees."
       },
       {
         "name": "Bar / pub",
-        "slug": "bar",
-        "keeps_per_100": 11,
-        "why": "Drink markup and lower food waste lift the keep above the kitchen trades."
+        "slug": "bars-nightclubs",
+        "keeps_per_100": 7,
+        "why": "Drink cost runs low, but licences and insurance claw most of the difference back."
       },
       {
-        "name": "Takeaway",
-        "slug": "takeaway",
-        "keeps_per_100": 10,
-        "why": "No dining room to staff or seat; rent and labour both run lighter."
-      },
-      {
-        "name": "Catering",
-        "slug": "catering",
-        "keeps_per_100": 13,
-        "why": "Covers are booked and paid ahead, so waste and empty-seat risk nearly vanish."
+        "name": "Grocery",
+        "slug": "grocery-stores",
+        "keeps_per_100": 3,
+        "why": "Pennies per basket: a far thinner keep that only works at supermarket volume."
       }
     ]
   },

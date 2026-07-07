@@ -28,7 +28,8 @@
  */
 import * as React from "react";
 import { spineHoodSeed } from "@/lib/spine-seeds";
-import { Movement } from "@/components/spine/kit";
+import { Movement, Box, Ico } from "@/components/spine/kit";
+import type { AtlasIconId } from "@/components/brand/icons";
 import { SpineShell } from "@/components/spine/shell";
 import { NeighborhoodExplorer, NeighborhoodCompare, MythChapter } from "@/components/spine/NeighborhoodExplorer";
 import { HoodMasthead } from "./masthead";
@@ -41,6 +42,14 @@ const HOOD_BG = "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?au
 // its own honest meta.provenance_line, which then replaces this on the promoted page.
 const DEV_PROVENANCE =
   "Keep index is derived from revenue and rent load against a city baseline of 100. District revenue positions come from modeled commuter, visitor and character multipliers. Figures are illustrative until wired to live neighborhood data.";
+
+// The closing band's canonical-trade links , each maps onto a modeled cell route.
+const TRADE_LINKS: Array<{ icon: AtlasIconId; name: string; href: string }> = [
+  { icon: "trade-cafe", name: "Cafes and coffee", href: "/gb/london/cafes-coffee" },
+  { icon: "trade-restaurant", name: "Restaurants", href: "/gb/london/restaurants" },
+  { icon: "trade-bar", name: "Bars and nightclubs", href: "/gb/london/bars-nightclubs" },
+  { icon: "trade-grocery", name: "Grocery stores", href: "/gb/london/grocery-stores" },
+];
 
 export function SpineHoodBody({ data = spineHoodSeed }: { data?: any }) {
   const d = data;
@@ -78,6 +87,25 @@ export function SpineHoodBody({ data = spineHoodSeed }: { data?: any }) {
         {/* 03 , COMPARE (Pro): hold two or three side by side, with an auto-derived verdict. */}
         <Movement index="03" icon="compare" eyebrow="Compare districts" heading="Two or three, line for line" />
         <NeighborhoodCompare districts={districts} compare={d.meta?.compare} />
+
+        {/* CLOSING , the funnel onward: canonical trades this atlas models in London,
+            links only, no figures. One small band, then the page ends. */}
+        <Box className="mt-8">
+          <div className="mb-3 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">Open a trade in London</div>
+          <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            {TRADE_LINKS.map((t) => (
+              <li key={t.href}>
+                <a href={t.href} className="flex items-center justify-between gap-3 rounded-lg border border-[var(--c-border)] bg-[var(--c-soft)] px-3 py-2 transition hover:border-[var(--c-line-strong)] hover:bg-[var(--c-soft2)]">
+                  <span className="flex min-w-0 items-center gap-2.5">
+                    <Ico id={t.icon} />
+                    <span className="truncate text-[13px] font-semibold text-[var(--c-ink)]">{t.name}</span>
+                  </span>
+                  <span aria-hidden className="shrink-0 text-[var(--c-muted)]">&#8594;</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </Box>
       </main>
     </SpineShell>
   );

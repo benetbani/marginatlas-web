@@ -10,10 +10,7 @@
 import * as React from "react";
 import { CountryFlag } from "@/components/CountryFlag";
 import { Fig } from "@/components/spine/kit";
-
-/* confidence dots, neutral grey only (no green/tan/purple accents): darker = firmer.
- * The palette is terracotta + neutral grays; confidence is a texture read, never an accent. */
-const DOT: Record<string, string> = { measured: "#8c8c8a", modeled: "#bdbdbd", placeholder: "#dcdcda" };
+import { AtlasMark } from "@/components/spine/marks";
 
 export function CityHero({ d }: { d: any }) {
   const cards: any[] = d.headline?.scorecard ?? [];
@@ -37,25 +34,18 @@ export function CityHero({ d }: { d: any }) {
           // 5 tiles in the 2-col mobile grid leave a dead 6th cell: the last odd tile
           // spans both columns below sm (and returns to one column at sm:grid-cols-5).
           <div key={c.label} className="min-w-0 bg-[var(--c-card)] px-3 py-2.5 last:odd:col-span-2 sm:last:odd:col-span-1">
-            <div className="flex items-center gap-1 text-[10px] font-semibold uppercase tracking-[0.06em] text-[var(--c-muted)]">
-              <span>{c.label}</span>
-              <span className="inline-block h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: DOT[c.confidence] ?? DOT.modeled }} title={`Confidence: ${c.confidence}`} />
-            </div>
+            <div className="text-[10px] font-semibold uppercase tracking-[0.06em] text-[var(--c-muted)]">{c.label}</div>
             <div className="mt-1 text-[18px] leading-none text-[var(--c-ink)]"><Fig>{c.value}</Fig>{c.unit ? <span className="text-[11px] text-[var(--c-muted)]">{c.unit}</span> : null}</div>
             <div className="mt-1 text-[10.5px] leading-tight text-[var(--c-muted)]">{c.sub}</div>
           </div>
         ))}
       </div>
 
-      {/* provenance, stated once , with the dot scale spelled out in visible text
-          (the encoding must never live in a hover title alone; touch has no hover) */}
-      <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-[var(--c-muted)]">
+      {/* provenance, stated once , the exemplar's one-line treatment: the "modeled"
+          mark beside the sentence, no per-tile dots, no legend. */}
+      <div className="mt-4 flex items-start gap-1.5 text-[11px] leading-snug text-[var(--c-muted)]">
+        <AtlasMark id="modeled" size={14} className="mt-px shrink-0" />
         <span>{d.meta?.provenance_line}</span>
-        <span className="flex items-center gap-3">
-          {(["measured", "modeled", "placeholder"] as const).map((c) => (
-            <span key={c} className="inline-flex items-center gap-1"><span className="inline-block h-1.5 w-1.5 rounded-full" style={{ background: DOT[c] }} />{c}</span>
-          ))}
-        </span>
       </div>
     </section>
   );

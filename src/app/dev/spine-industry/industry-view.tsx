@@ -27,12 +27,31 @@
  */
 import * as React from "react";
 import { spineIndustrySeed } from "@/lib/spine-seeds";
-import { Fig, Meter, Bullets, InlineDisclosure, Movement, Box, Rail, Spark, Timeline, StackBar, Full, Even, WideRail, Narrow, TERRA, TRACK, usd, type TLPhase, type TLNode } from "@/components/spine/kit";
+import { Fig, Meter, Bullets, InfoTip, InlineDisclosure, Movement, Box, Rail, Spark, Timeline, StackBar, Full, Even, WideRail, Narrow, TERRA, TRACK, usd, type TLPhase, type TLNode } from "@/components/spine/kit";
+import { AtlasMark } from "@/components/spine/marks";
 import { WherePaysExplorer } from "./where-pays";
 import { MarginLadder, SurvivalCurve, SeasonRibbon, RangeBracket, CountFig } from "./forms";
 import { deriveSubtypes } from "./subtypes";
 
 const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
+
+/* count words shared by the count-derived sentences (kept in the component, never the seed) */
+const COUNT_WORD: Record<number, string> = { 1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "seven" };
+
+/* glossTerm , attach the kit InfoTip after the FIRST occurrence of a jargon term inside
+ * seed prose (rule 24: teach as you inform). Returns the text untouched when the term is
+ * absent, so real-data prose that never says the word never grows a stray "?". */
+function glossTerm(text: string | undefined, term: string, gloss: string): React.ReactNode {
+  if (!text) return text;
+  const i = text.toLowerCase().indexOf(term.toLowerCase());
+  if (i < 0) return text;
+  const end = i + term.length;
+  return <>{text.slice(0, end)}<InfoTip gloss={gloss} />{text.slice(end)}</>;
+}
+const GLOSS_COVERS = "Seated customers served; a table of four is four covers.";
+const GLOSS_ROTA = "The staff shift plan.";
+const GLOSS_PRIME_COST = "Food and labour together, the two big controllable costs.";
+const GLOSS_UTILISATION = "Share of a typical day's trade.";
 
 /* ============================================================
  * MASTHEAD , THE MARGIN INDEX (hero, answer-first)
@@ -91,10 +110,11 @@ function VerdictLede({ d }: { d: any }) {
 /* ============================================================
  * BENCHMARK , the "vs the neighbours" USP, proving $7 is low (moved up, top 20%)
  * decision: is $7 actually low? Number: restaurants vs the food trades next door.
- * focal: the lollipop dots on one shared $ scale, restaurants (self) lit.
- * width: Full (T1), a ranked distribution; the rows ARE the links to those trades.
- * terracotta: the restaurants (self) dot only.
- * idiom: dot-on-a-track lollipop (1 of 2). Folds the old Related chips in (rows link). */
+ * focal: the lollipop dots on one shared $ scale, the self trade lit.
+ * width: Full (T1), a ranked distribution; rows render UNLINKED (plain spans) until
+ *   those trade pages exist , no dead hrefs (real links only).
+ * terracotta: the self dot only.
+ * idiom: dot-on-a-track lollipop (1 of 2). Slate = modeled atlas trades only. */
 function Benchmark({ d }: { d: any }) {
   const b = d.benchmark ?? {};
   const trades: any[] = (b.trades ?? []).slice().sort((a: any, c: any) => c.keeps_per_100 - a.keeps_per_100);
@@ -106,27 +126,26 @@ function Benchmark({ d }: { d: any }) {
   return (
     <Full>
       <Box>
-        <Rail icon="benchmark" tone="terra" kicker="Against the trades next door" verdict="Even among its nearest food neighbours, restaurants keep the least per $100." />
+        <Rail icon="benchmark" kicker="Against the trades next door" verdict={b.verdict} />
         <div className="space-y-1.5">
           {trades.map((t) => {
             const pos = (t.keeps_per_100 / max) * 100;
             const self = !!t.self;
-            const Tag: any = self ? "div" : "a";
             return (
-              <Tag key={t.slug} href={self ? undefined : "#"} className="hov -mx-2 grid grid-cols-[110px_1fr_40px] items-center gap-3 rounded-md px-2 py-1.5">
-                <span className={`min-w-0 truncate text-[12.5px] ${self ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)] hover:text-[var(--terra-text)]"}`} title={t.name}>{t.name}{self ? null : <span className="text-[var(--c-muted)]"> &#8594;</span>}</span>
+              <div key={t.slug} className="-mx-2 grid grid-cols-[110px_1fr_40px] items-center gap-3 rounded-md px-2 py-1.5">
+                <span className={`min-w-0 truncate text-[12.5px] ${self ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`} title={t.name}>{t.name}</span>
                 <div className="relative h-3 min-w-0" role="img" aria-label={`${t.name} keeps $${t.keeps_per_100} per $100`}>
                   <div className="absolute top-1/2 h-px w-full -translate-y-1/2" style={{ background: "#e7e2df" }} />
                   <div className="absolute top-1/2 h-[3px] -translate-y-1/2 rounded-full" style={{ left: 0, width: `${pos}%`, background: self ? TERRA : "#d4cdc8" }} />
                   <span className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${pos}%`, background: self ? TERRA : "#9a938e", boxShadow: "0 0 0 1px #e7e2df" }} />
                 </div>
                 <Fig className={`text-right text-[13px] ${self ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>${t.keeps_per_100}</Fig>
-              </Tag>
+              </div>
             );
           })}
         </div>
         {trades.some((t) => t.why) ? (
-          <InlineDisclosure name="bench" summary="Why each neighbour keeps more">
+          <InlineDisclosure name="bench" summary="Why each neighbour keeps what it keeps">
             <div className="mt-2 divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]">
               {trades.map((t) => (
                 <div key={t.slug} className="grid grid-cols-[110px_1fr] items-baseline gap-3 py-2">
@@ -164,18 +183,33 @@ function Demand({ d }: { d: any }) {
   // The appetite half needs at least one appetite figure (trend / spend / visits) to
   // earn its box; the saturation half needs the venues figure.
   const hasAppetite = hasTrend || hasSpend || hasVisits;
+  // Trend direction from the REAL sign of the series (last minus first), carried by the
+  // matching functional mark beside the end figure.
+  const trendDelta = hasTrend ? trend[trend.length - 1] - trend[0] : 0;
+  const trendMark = trendDelta > 0 ? "trend-rising" : trendDelta < 0 ? "trend-falling" : "trend-flat";
+  // Start / end year labels under the Spark, derived from the seed's as_of (the series
+  // ends at the as_of year and runs one point per year). Guarded: no honest year, no labels.
+  const asOf: unknown = dm._meta?.as_of ?? d.meta?.as_of;
+  const endYear = typeof asOf === "string" ? parseInt(asOf.slice(0, 4), 10) : NaN;
+  const startYear = Number.isFinite(endYear) ? endYear - (trend.length - 1) : NaN;
   const appetiteBox = hasAppetite ? (
     <Box className="flex flex-col justify-center">
-      <Rail icon="spending-power" tone="terra" kicker="The appetite" verdict={hasTrend ? "The appetite is most of the way back, and still climbing." : "What a single diner is worth on a visit, before the crowd is counted."} />
+      <Rail icon="spending-power" kicker="The appetite, across the markets the atlas covers" verdict={hasTrend ? dm.trend_verdict : dm.spend_verdict} />
       <div className="flex flex-wrap items-end gap-x-6 gap-y-3">
         {hasTrend ? (
           <div className="min-w-0">
             <div className="flex items-end gap-2.5">
               <Spark values={trend} w={172} h={46} />
               {trendEnd != null ? (
-                <span className="flex items-baseline gap-1"><Fig className="text-[26px] leading-none text-[var(--c-ink)]">{trendEnd}</Fig><span className="text-[10.5px] text-[var(--c-muted)]">of 100</span></span>
+                <span className="flex items-baseline gap-1"><Fig className="text-[26px] leading-none text-[var(--c-ink)]">{trendEnd}</Fig><span className="text-[10.5px] text-[var(--c-muted)]">of 100</span><AtlasMark id={trendMark} size={14} className="self-center" /></span>
               ) : null}
             </div>
+            {Number.isFinite(startYear) && Number.isFinite(endYear) ? (
+              <div className="mt-0.5 flex justify-between text-[9px] text-[var(--c-muted)]" style={{ width: 172 }}>
+                <span className="fig">{startYear}</span>
+                <span className="fig">{endYear}</span>
+              </div>
+            ) : null}
             <div className="mt-1 text-[10px] uppercase tracking-wide text-[var(--c-muted)]">Demand, indexed to the pre-dip 100</div>
           </div>
         ) : null}
@@ -201,10 +235,10 @@ function Demand({ d }: { d: any }) {
   ) : null;
   const saturationBox = hasSaturation ? (
     <Box className="flex flex-col justify-center">
-      <Rail icon="competition" kicker="Saturation" verdict="New rooms do not create new appetite here; they divide it." />
+      <Rail icon="competition" kicker="Saturation" verdict={dm.verdict} />
       <div className="flex items-baseline gap-1.5"><CountFig value={dm.venues_per_10k} className="text-[40px] leading-none text-[var(--terra-text)]" /><span className="text-[12px] text-[var(--c-ink2)]">venues per 10k residents</span></div>
       {dm.venues_per_10k_band ? <div className="mt-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{dm.venues_per_10k_band}</div> : null}
-      {dm.saturation_note ? <div className="mt-3 text-[11.5px] leading-snug text-[var(--c-muted)]">{dm.saturation_note}</div> : null}
+      {dm.saturation_note ? <div className="mt-3 text-[11.5px] leading-snug text-[var(--c-muted)]">{glossTerm(dm.saturation_note, "covers", GLOSS_COVERS)}</div> : null}
     </Box>
   ) : null;
   // Both halves present: the coherent WideRail pair (the full-seed shape). One half
@@ -236,7 +270,7 @@ function SubtypeDrill({ d }: { d: any }) {
   return (
     <Full>
       <Box>
-        <Rail icon="cost-breakdown" tone="terra" kicker="The subtypes" verdict="The format you choose moves the keep more than the menu ever does." />
+        <Rail icon="subtype" kicker="The subtypes" verdict={d.subtypes?.verdict} />
         <div className={`grid ${cols} items-end gap-3 border-b border-[var(--c-border)] px-2 pb-1.5 text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]`}>
           <span>Format</span>
           <span aria-hidden />
@@ -300,7 +334,6 @@ function MoneySplit({ d }: { d: any }) {
   // from the real stack (four on the full seed, three on the reconciled real stack),
   // so the sentence is honest on both and byte-identical on the dev route.
   const nonKeptCount = items.filter((i) => !i.kept).length;
-  const COUNT_WORD: Record<number, string> = { 1: "one", 2: "two", 3: "three", 4: "four", 5: "five" };
   const nonKeptWord = COUNT_WORD[nonKeptCount] ?? `${nonKeptCount}`;
   return (
     <Full>
@@ -318,17 +351,33 @@ function MoneySplit({ d }: { d: any }) {
             ))}
           </div>
         </div>
-        {/* fixed / variable bracket row , folds the old donut into an annotation over the same $100 */}
-        {hasGroups ? (
-          <div className="mt-4 grid grid-cols-[var(--vc)_var(--fc)_var(--kc)] gap-1 text-[10px]" style={{ ["--vc" as any]: `${variablePct}fr`, ["--fc" as any]: `${fixedPct}fr`, ["--kc" as any]: `${keptPct}fr` }}>
-            {[["Variable", variablePct, "food + hourly wages, flex with covers"], ["Fixed", fixedPct, "rent, rates, salaried"], ["Kept", keptPct, "the owner's slice"]].map(([label, pct, sub]) => (
-              <div key={label as string} className="border-t border-[var(--c-line-strong)] pt-1">
-                <span className="font-semibold uppercase tracking-wide text-[var(--c-ink2)]">{label as string} <Fig className="text-[var(--c-ink)]">{pct as number}%</Fig></span>
-                <span className="mt-0.5 block leading-tight text-[var(--c-muted)]">{sub as string}</span>
+        {/* fixed / variable bracket row , folds the old donut into an annotation over the same
+            $100. Subs arrive from the seed (trade-specific copy never hardcodes here) and each
+            omits when absent. Below sm the value-proportional grid becomes a wrapped flex legend
+            (three label+figure+sub stacks, border-top kept); the proportional bracket holds sm+. */}
+        {hasGroups ? (() => {
+          const bracket: Array<{ label: string; pct: number; sub?: string }> = [
+            { label: "Variable", pct: variablePct, sub: ms.variable_sub },
+            { label: "Fixed", pct: fixedPct, sub: ms.fixed_sub },
+            { label: "Kept", pct: keptPct, sub: ms.kept_sub },
+          ];
+          const cell = (b: { label: string; pct: number; sub?: string }) => (
+            <>
+              <span className="font-semibold uppercase tracking-wide text-[var(--c-ink2)]">{b.label} <Fig className="text-[var(--c-ink)]">{b.pct}%</Fig></span>
+              {b.sub ? <span className="mt-0.5 block leading-tight text-[var(--c-muted)]">{b.sub}</span> : null}
+            </>
+          );
+          return (
+            <>
+              <div className="mt-4 hidden gap-1 text-[10px] sm:grid sm:grid-cols-[var(--vc)_var(--fc)_var(--kc)]" style={{ ["--vc" as any]: `${variablePct}fr`, ["--fc" as any]: `${fixedPct}fr`, ["--kc" as any]: `${keptPct}fr` }}>
+                {bracket.map((b) => <div key={b.label} className="border-t border-[var(--c-line-strong)] pt-1">{cell(b)}</div>)}
               </div>
-            ))}
-          </div>
-        ) : null}
+              <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-[10px] sm:hidden">
+                {bracket.map((b) => <div key={b.label} className="min-w-[6rem] flex-1 border-t border-[var(--c-line-strong)] pt-1">{cell(b)}</div>)}
+              </div>
+            </>
+          );
+        })() : null}
         {hasSplitNotes ? (
           <InlineDisclosure name="split-notes" summary="What is fixed, and what flexes with covers">
             <div className="mt-2 space-y-2.5 border-t border-[var(--c-border)] pt-2.5">
@@ -368,7 +417,7 @@ function BreakEven({ d }: { d: any }) {
     <Narrow>
       <Box>
         <Rail icon="break-even" kicker="Break-even utilisation" verdict="Below this share of a typical day's trade, the day loses money." />
-        <div className="mb-3 flex items-baseline gap-2.5"><CountFig value={be} suffix="%" className="text-[40px] leading-none text-[var(--c-ink)]" /><span className="text-[13px] text-[var(--c-ink2)]">of a typical day's takings, just to cover the costs.</span></div>
+        <div className="mb-3 flex items-baseline gap-2.5"><CountFig value={be} suffix="%" className="text-[40px] leading-none text-[var(--c-ink)]" /><span className="text-[13px] text-[var(--c-ink2)]">of a typical day's takings, just to cover the costs.<InfoTip gloss={GLOSS_UTILISATION} /></span></div>
         <Meter value={be} left="empty" right="a typical day" />
         {cs.note ? <div className="mt-3 text-[11.5px] leading-snug text-[var(--c-muted)]">{cs.note}</div> : null}
       </Box>
@@ -392,7 +441,7 @@ function Ramp({ d }: { d: any }) {
   if (!nodes.length) return null;
   return (
     <Full>
-      <Rail icon="first-year" tone="terra" kicker="The first year, month by month" verdict="Open soft, build covers, and survive the cash gap between full rota and full room." />
+      <Rail icon="first-year" kicker="The first year, month by month" verdict={glossTerm(fy.verdict, "rota", GLOSS_ROTA)} />
       <Timeline span={fy.span ?? 52} unit={fy.unit ?? "week"} phases={phases} nodes={nodes} startLabel="open" read={fy.note} />
     </Full>
   );
@@ -400,38 +449,30 @@ function Ramp({ d }: { d: any }) {
 
 /* OPERATOR , what a typical owner walks away with (a DIFFERENT cut from the hero
  * margin ladder: durability + exit, not the gross->net collapse restated).
- * decision: what a typical owner actually sees. Number: the kept slice after a full year.
- * focal: ONE hero figure (owner keeps %); the support facts (capital, survival, exit)
- *   are the body. On real-data promotion the sale-multiple fact OMITS (no honest source);
- *   each held fact is guarded so the strip never prints "x undefined" or a bare "%".
- * width: WideRail (T2) chart half. terracotta: the owner-keeps hero figure only. */
+ * decision: what a typical owner actually sees. Numbers: the three facts (capital,
+ *   survival, sale multiple) promoted to the card's figures; the owner-keeps lockup is
+ *   GONE (it was the hero number's 5th appearance). Verdict line above, seed note below.
+ * On real-data promotion the sale-multiple fact OMITS (no honest source); each held
+ * fact is guarded so the strip never prints "x undefined" or a bare "%".
+ * width: WideRail (T2) chart half. terracotta: none; the facts read in ink. */
 function Operator({ d }: { d: any }) {
   const o = d.operator ?? {};
-  const hasKeeps = typeof o.owner_keeps_pct === "number";
   const facts: Array<[string, string]> = [];
   if (typeof o.capital_to_open_usd === "number") facts.push([money(o.capital_to_open_usd), "to open"]);
   if (typeof o.survival_1yr_pct === "number") facts.push([`${o.survival_1yr_pct}%`, "survive yr 1"]);
   if (typeof o.sale_multiple_low === "number" && typeof o.sale_multiple_high === "number") {
     facts.push([`x${o.sale_multiple_low}-${o.sale_multiple_high}`, "profit at sale"]);
   }
-  // Nothing honest to show: neither the hero keep nor a single support fact.
-  if (!hasKeeps && facts.length === 0) return null;
+  // Nothing honest to show: no support fact survives.
+  if (facts.length === 0) return null;
   const factCols = facts.length >= 3 ? "grid-cols-3" : facts.length === 2 ? "grid-cols-2" : "grid-cols-1";
   return (
     <Box>
-      <Rail icon="who-for" kicker="The typical operator" verdict="A normal owner works a full year to keep a thin slice." />
-      {hasKeeps ? (
-        <div className="mb-4 flex flex-wrap items-baseline gap-x-3">
-          <CountFig value={o.owner_keeps_pct} suffix="%" className="text-[40px] leading-none text-[var(--terra-text)]" />
-          <span className="text-[13px] text-[var(--c-ink2)]">of sales reaches the owner, after a full year on the floor.</span>
-        </div>
-      ) : null}
-      {facts.length > 0 ? (
-        <div className={`grid ${factCols} divide-x divide-[var(--c-border)] border-t border-[var(--c-border)] pt-3`}>
-          {facts.map(([val, l]) => <div key={l} className="px-3 first:pl-0 last:pr-0"><Fig className="text-[18px] text-[var(--c-ink)]">{val}</Fig><div className="mt-0.5 text-[10.5px] leading-tight text-[var(--c-muted)]">{l}</div></div>)}
-        </div>
-      ) : null}
-      <p className="mt-4 text-[11.5px] leading-snug text-[var(--c-muted)]">The margin is thin, but the trade is durable and sells on a real multiple once the lease and covers are stable.</p>
+      <Rail icon="who-for" kicker="The typical operator" verdict={o.verdict} />
+      <div className={`grid ${factCols} divide-x divide-[var(--c-border)] border-t border-[var(--c-border)] pt-3`}>
+        {facts.map(([val, l]) => <div key={l} className="px-3 first:pl-0 last:pr-0"><Fig className="text-[24px] text-[var(--c-ink)]">{val}</Fig><div className="mt-0.5 text-[10.5px] leading-tight text-[var(--c-muted)]">{l}</div></div>)}
+      </div>
+      {o.note ? <p className="mt-4 text-[11.5px] leading-snug text-[var(--c-muted)]">{o.note}</p> : null}
     </Box>
   );
 }
@@ -448,7 +489,7 @@ function CapitalPayback({ d }: { d: any }) {
   const hasGearing = typeof p.unlevered_keep_pct === "number" && typeof p.levered_keep_pct === "number";
   return (
     <Box className="flex flex-col justify-center">
-      <Rail icon="first-year" kicker="Payback window" verdict="The fit-out returns in years, not months, and only if the room fills." />
+      <Rail icon="startup-cost" kicker="Payback window" verdict={p.verdict} />
       <div className="mb-1 flex items-baseline gap-2.5"><CountFig value={mid} className="text-[40px] leading-none text-[var(--terra-text)]" /><span className="text-[13px] text-[var(--c-ink2)]">months to return the <Fig className="text-[var(--c-ink)]">{money(p.capital_usd ?? 0)}</Fig> opening cost.</span></div>
       <RangeBracket lo={lo} hi={hi} mid={mid} unit="mo" midLabel={`${mid} mo`} accent={false} />
       {p.note ? <div className="mt-2 text-[11.5px] leading-snug text-[var(--c-muted)]">{p.note}</div> : null}
@@ -488,7 +529,7 @@ function Survival({ d }: { d: any }) {
   if (curve.length < 2) return null;
   return (
     <Box className="flex flex-col">
-      <Rail icon="watch" kicker="Five-year survival" verdict="Most rooms outlive the folklore; the early winters decide who stays." />
+      <Rail icon="myth-reality" kicker="Five-year survival" verdict={s.verdict} />
       <SurvivalCurve curve={curve} note={s.note} />
     </Box>
   );
@@ -504,7 +545,7 @@ function WhoItSuits({ d }: { d: any }) {
   if (!suits.length && !thinkTwice.length) return null;
   return (
     <Box>
-      <Rail icon="gut-check" kicker="Who it suits" verdict="It rewards hands-on operators, and punishes absentee ownership." />
+      <Rail icon="who-for" kicker="Who it suits" verdict={w.verdict} />
       <div className="grid gap-5 sm:grid-cols-2">
         {suits.length ? (
           <div>
@@ -555,7 +596,18 @@ function Caveats({ d }: { d: any }) {
   return (
     <Box>
       <Rail icon="myth-reality" tone="terra" kicker="What people get wrong" verdict="The comfortable stories about this trade do not survive the maths." />
-      {myths.length ? <Bullets items={myths} /> : null}
+      {/* kit-Bullets markup, rendered locally so the "prime cost" jargon can carry its
+          InfoTip gloss at first use (glossTerm no-ops on myths that never say it) */}
+      {myths.length ? (
+        <ul className="space-y-2">
+          {myths.map((t, i) => (
+            <li key={i} className="relative pl-4 text-[12.5px] leading-snug text-[var(--c-ink2)]">
+              <span className="absolute left-0 top-[7px] h-1.5 w-1.5 rounded-full" style={{ background: "#c9c9c9" }} />
+              {glossTerm(t, "prime cost", GLOSS_PRIME_COST)}
+            </li>
+          ))}
+        </ul>
+      ) : null}
       {c.honest_take ? <p className="mt-3 border-t border-[var(--c-border)] pt-3 text-[12.5px] leading-snug text-[var(--c-ink2)]">{c.honest_take}</p> : null}
     </Box>
   );
@@ -563,29 +615,35 @@ function Caveats({ d }: { d: any }) {
 
 /* CLOSE , a deliberate full-width capstone: a three-point recap of the page's verdict
  * (the keep, the format that keeps most, the place that keeps most) then the one next action.
- * focal: the CTA. terracotta: the recap figures + the button (the close is the one band
- * where the accent may sit on more than one mark, as the page-wide summary). */
+ * focal: the CTA. terracotta: the $-kept recap figure only (the page's answer restated);
+ * the other recap figures read bold ink so the band carries ONE accent plus the button. */
 function Close({ d }: { d: any }) {
   const mi = d.margin_index ?? {};
   const subs = deriveSubtypes(d).slice().sort((a, b) => b.keeps_pct - a.keeps_pct);
   const topFormat = subs[0];
   const places: any[] = (d.where_pays?.places ?? []).slice().sort((a: any, b: any) => (b.net_margin_pct ?? 0) - (a.net_margin_pct ?? 0));
   const topPlace = places[0];
-  const recap: Array<[React.ReactNode, string]> = [
-    ...(typeof mi.keeps_per_100 === "number" ? [[<>${mi.keeps_per_100}</>, "kept per $100, a thin keep won on volume"] as [React.ReactNode, string]] : []),
-    ...(topFormat ? [[<>{topFormat.name}</>, `the format that keeps most, about ${topFormat.keeps_pct}%`] as [React.ReactNode, string]] : []),
-    ...(topPlace ? [[<>{topPlace.name}</>, `keeps most of the modelled cities, ${topPlace.net_margin_pct}% net`] as [React.ReactNode, string]] : []),
+  // The keep recap label earns its words: read against the real all-trades average when
+  // the benchmark carries one, else the plain fallback.
+  const avg = d.benchmark?.all_trades_avg;
+  const keepLabel = typeof avg === "number" && avg > 0
+    ? `kept per $100, versus $${avg} for the typical trade`
+    : "kept per $100, a thin keep won on volume";
+  const recap: Array<[React.ReactNode, string, boolean]> = [
+    ...(typeof mi.keeps_per_100 === "number" ? [[<>${mi.keeps_per_100}</>, keepLabel, true] as [React.ReactNode, string, boolean]] : []),
+    ...(topFormat ? [[<>{topFormat.name}</>, `the format that keeps most, about ${topFormat.keeps_pct.toFixed(1)}%`, false] as [React.ReactNode, string, boolean]] : []),
+    ...(topPlace ? [[<>{topPlace.name}</>, `keeps most of the modelled cities, ${topPlace.net_margin_pct}% net`, false] as [React.ReactNode, string, boolean]] : []),
   ];
   const recapCols = recap.length >= 3 ? "sm:grid-cols-3" : recap.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-1";
   return (
     <Full>
       <Box>
-        <Rail icon="bookmark" tone="terra" kicker="The close" verdict="A thin-margin trade that lives or dies on format, rent and a full room. Here is where it lands." />
+        <Rail icon="bookmark" kicker="The close" verdict={d.close?.verdict} />
         {recap.length ? (
           <div className={`grid gap-4 ${recapCols}`}>
-            {recap.map(([fig, label], i) => (
+            {recap.map(([fig, label, accent], i) => (
               <div key={i} className="border-t border-[var(--c-line-strong)] pt-2.5">
-                <div className="fig text-[22px] leading-none text-[var(--terra-text)]">{fig}</div>
+                <div className={`fig text-[22px] leading-none ${accent ? "text-[var(--terra-text)]" : "font-bold text-[var(--c-ink)]"}`}>{fig}</div>
                 <div className="mt-1 text-[11.5px] leading-snug text-[var(--c-muted)]">{label}</div>
               </div>
             ))}
@@ -593,7 +651,12 @@ function Close({ d }: { d: any }) {
         ) : null}
         <div className="mt-5 flex flex-col items-center gap-3 border-t border-[var(--c-border)] pt-5 text-center sm:flex-row sm:justify-between sm:text-left">
           <div className="text-[14px] leading-snug text-[var(--c-ink)]">See {d.meta?.name?.toLowerCase()} in a specific city, with the local rent, wages and take-home.</div>
-          <a className="shrink-0 cursor-pointer rounded-full bg-[var(--c-ink)] px-5 py-2.5 text-[13px] font-semibold text-white transition hover:bg-[var(--terra-text)]">Pick a place</a>
+          {/* the alt-city mark says what the button opens (city-level pages); its strokes
+              are var(--c-ink), so remap that var to currentColor inside the dark pill */}
+          <a href="/dev/spine-city" className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[var(--c-ink)] px-5 py-2.5 text-[13px] font-semibold text-white transition hover:bg-[var(--terra-text)]">
+            <span style={{ ["--c-ink" as any]: "currentColor" }} className="inline-flex"><AtlasMark id="alt-city" size={14} /></span>
+            Pick a place
+          </a>
         </div>
       </Box>
     </Full>
@@ -608,38 +671,78 @@ function Close({ d }: { d: any }) {
  */
 export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } = {}) {
   const d = data ?? spineIndustrySeed;
+
+  // Chapter-presence reads (mirror each card's own null-guard) so a Movement header
+  // never floats over an empty chapter, and a half-omitted WideRail pair degrades to
+  // the survivor at Full width (never a blank half-row), the way Demand already does.
+  const dm = d.demand ?? {};
+  const hasDemand = (dm.trend_index ?? []).length > 1 || ["spend_per_head_usd", "purchases_per_year", "venues_per_10k"].some((k) => typeof dm[k] === "number");
+  const hasBenchmark = (d.benchmark?.trades ?? []).length > 0;
+  const subCount = deriveSubtypes(d).length;
+  const hasMoneySplit = (d.money_split?.items ?? []).length > 0;
+  const hasBreakEven = typeof d.cost_structure?.breakeven_utilization_pct === "number";
+  const hasRamp = (d.first_year?.nodes ?? []).length > 0;
+  const o = d.operator ?? {};
+  const hasOperator = typeof o.capital_to_open_usd === "number" || typeof o.survival_1yr_pct === "number" || (typeof o.sale_multiple_low === "number" && typeof o.sale_multiple_high === "number");
+  const hasPayback = typeof d.payback?.payback_months === "number";
+  const hasSurvival = [d.survival?.yr1_pct, d.survival?.yr3_pct, d.survival?.yr5_pct].some((v) => typeof v === "number");
+  const hasWhoSuits = (d.who_suits?.suits ?? []).length > 0 || (d.who_suits?.think_twice ?? []).length > 0;
+  const hasWherePays = (d.where_pays?.places ?? []).length > 0;
+  const hasSeasonality = (d.seasonality?.months ?? []).length >= 2;
+  const hasCaveats = (d.caveats?.myths ?? []).length > 0 || !!d.caveats?.honest_take;
+
   return (
     <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
       <Masthead d={d} />
       <div className="mt-8"><VerdictLede d={d} /></div>
 
-      <Movement index="01" eyebrow="Against the neighbours" heading="The keep, against the trades next door" icon="benchmark" />
-      <Benchmark d={d} />
+      {hasBenchmark ? <>
+        <Movement index="01" eyebrow="Against the neighbours" heading="The keep, against the trades next door" icon="benchmark" />
+        <Benchmark d={d} />
+      </> : null}
 
-      <Movement index="02" eyebrow="The demand" heading="The appetite, and the crowd sharing it" icon="spending-power" />
-      <Demand d={d} />
+      {hasDemand ? <>
+        <Movement index="02" eyebrow="The demand" heading="The appetite, and the crowd sharing it" icon="spending-power" />
+        <Demand d={d} />
+      </> : null}
 
-      <Movement index="03" eyebrow="The subtypes" heading="One trade, five different bets" icon="cost-breakdown" />
-      <SubtypeDrill d={d} />
+      {subCount > 0 ? <>
+        <Movement index="03" eyebrow="The subtypes" heading={`One trade, ${COUNT_WORD[subCount] ?? subCount} different bets`} icon="subtype" />
+        <SubtypeDrill d={d} />
+      </> : null}
 
-      <Movement index="04" eyebrow="How the money works" heading="The shape of the trade" icon="taxes" />
-      <div className="space-y-6">
-        <MoneySplit d={d} />
-        <BreakEven d={d} />
-      </div>
+      {hasMoneySplit || hasBreakEven ? <>
+        <Movement index="04" eyebrow="How the money works" heading="The shape of the trade" icon="unit-economics" />
+        <div className="space-y-6">
+          <MoneySplit d={d} />
+          <BreakEven d={d} />
+        </div>
+      </> : null}
 
-      <Movement index="05" eyebrow="The typical operator" heading="The owner's take, and the odds" icon="who-for" />
-      <div className="space-y-6">
-        <Ramp d={d} />
-        <WideRail><Operator d={d} /><CapitalPayback d={d} /></WideRail>
-        <Even><Survival d={d} /><WhoItSuits d={d} /></Even>
-      </div>
+      {hasRamp || hasOperator || hasPayback || hasSurvival || hasWhoSuits ? <>
+        <Movement index="05" eyebrow="The typical operator" heading="The owner's take, and the odds" icon="who-for" />
+        <div className="space-y-6">
+          <Ramp d={d} />
+          {hasOperator && hasPayback
+            ? <WideRail><Operator d={d} /><CapitalPayback d={d} /></WideRail>
+            : hasOperator || hasPayback
+              ? <Full>{hasOperator ? <Operator d={d} /> : <CapitalPayback d={d} />}</Full>
+              : null}
+          <Even><Survival d={d} /><WhoItSuits d={d} /></Even>
+        </div>
+      </> : null}
 
-      <Movement index="06" eyebrow="Where it pays best" heading="The same trade, place by place" icon="best-areas" />
-      <div className="space-y-6">
-        <WherePaysExplorer d={d} />
-        <WideRail><Seasonality d={d} /><Caveats d={d} /></WideRail>
-      </div>
+      {hasWherePays || hasSeasonality || hasCaveats ? <>
+        <Movement index="06" eyebrow="Where it pays best" heading="The same trade, place by place" icon="where-it-pays" />
+        <div className="space-y-6">
+          <WherePaysExplorer d={d} />
+          {hasSeasonality && hasCaveats
+            ? <WideRail><Seasonality d={d} /><Caveats d={d} /></WideRail>
+            : hasSeasonality || hasCaveats
+              ? <Full>{hasSeasonality ? <Seasonality d={d} /> : <Caveats d={d} />}</Full>
+              : null}
+        </div>
+      </> : null}
 
       <Movement index="07" eyebrow="The close" heading="The next move" icon="bookmark" />
       <Close d={d} />

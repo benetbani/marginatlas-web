@@ -34,7 +34,7 @@ export function Nearby({ d }: { d: any }) {
     { key: "rev", label: "Turnover", unit: "$/yr", get: (x) => x.rev_p50_usd, cell: (v) => money(v) },
     ...(hasTake ? [{ key: "take", label: "Owner keeps", unit: "$/yr", get: (x: any) => x.take_home_usd, cell: (v: number) => money(v) } as Col] : []),
     ...(hasTake ? [{ key: "rate", label: "Keeps per $1", unit: "c", get: (x: any) => (x.rev_p50_usd ? (x.take_home_usd / x.rev_p50_usd) * 100 : 0), cell: (v: number) => v.toFixed(1) + "c" } as Col] : []),
-    ...(hasBrk ? [{ key: "brk", label: "Ease of entry", unit: "/100", get: (x: any) => x.break_in_0_100, cell: (v: number) => "" + v } as Col] : []),
+    ...(hasBrk ? [{ key: "brk", label: "Ease of entry", unit: "/10", get: (x: any) => x.break_in_0_100, cell: (v: number) => "" + Math.round(v / 10) } as Col] : []),
   ];
   // Default sort: keeps-per-$1 when present (proves the section's verdict),
   // else turnover. Never a key that no longer exists.
@@ -73,7 +73,7 @@ export function Nearby({ d }: { d: any }) {
       <div className="space-y-2 sm:space-y-0">
         {sorted.map((r) => (
           <div key={r.name} className="celltop group relative rounded-md border border-[var(--c-border)] p-3 sm:grid sm:items-center sm:gap-3 sm:rounded-none sm:border-0 sm:border-b sm:p-0 sm:py-2.5"
-            style={{ ...(r.home ? { background: "#fff4f1" } : {}), gridTemplateColumns: gridCols }}>
+            style={{ ...(r.home ? { background: "var(--c-soft)" } : {}), gridTemplateColumns: gridCols }}>
             <span className="block min-w-0 truncate font-medium text-[var(--c-ink)]">{r.name}{r.home ? <span className="ml-1.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">here</span> : null}</span>
             <div className="mt-2 grid grid-cols-2 gap-x-3 gap-y-2 sm:contents sm:mt-0">
               {cols.map((c) => {
@@ -159,18 +159,21 @@ export function Wages({ d }: { d: any }) {
 
 /* Risks , WI-3 brief (enriched, Final Ascent):
  * decision: what actually closes these kitchens. ALL FOUR scores visible on ONE shared
- * labeled 0-10 scale (a dot plot: hiding three of four scores bought no focus, just an
- * empty card bottom); the notes sit behind the disclosure. Descending seed order keeps
- * the sort monotonic. Score notation is the tight n/10 (one slash convention page-wide).
- * width: rail half. terracotta target: none (ink markers; the whole set is the read). */
+ * labeled scale, flipped to the PAGE scale (high = good): each danger score becomes a
+ * safety read (safe = 11 - score, clamped 1..10), most-dangerous first, so the /10
+ * convention means the same thing everywhere on the page. Notes sit behind the
+ * disclosure. width: rail half. terracotta target: none (ink markers; the set is the read). */
 export function Risks({ d }: { d: any }) {
   const arr: any[] = d.risks?.items ?? [];
   if (arr.length === 0) return null;
-  const rows = arr.map((r) => [r.name, (r.score_1_10 / 10) * 100, `${r.score_1_10}/10`]) as Array<[string, number, string, string?]>;
+  const rows = arr
+    .map((r) => ({ r, safe: Math.max(1, Math.min(10, 11 - r.score_1_10)) }))
+    .sort((a, b) => a.safe - b.safe)
+    .map(({ r, safe }) => [r.name, (safe / 10) * 100, `${safe}/10`]) as Array<[string, number, string, string?]>;
   return (
     <Box className="md:flex-[2]">
       <Rail icon="watch" kicker="What to watch" verdict={d.risks?.surface_line} />
-      <div className="mt-1"><EaseScale rows={rows} endLabels={["Mild", "Severe"]} /></div>
+      <div className="mt-1"><EaseScale rows={rows} endLabels={["Riskier", "Safer"]} /></div>
       <InlineDisclosure name="risks" summary="What each risk does">
         <div className="mt-2 space-y-2 border-t border-[var(--c-border)] pt-2.5">
           {arr.map((r) => (

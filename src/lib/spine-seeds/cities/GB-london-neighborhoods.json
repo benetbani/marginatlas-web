@@ -2,7 +2,6 @@
   "meta": {
     "iso2": "GB", "city": "London", "slug": "london", "country_name": "United Kingdom",
     "as_of": "2026-06", "overall_confidence": "placeholder",
-    "default_slug": "mayfair",
     "provenance_line": "Modeled from district footfall, tourism and rent load. Figures are illustrative until wired to live neighborhood data.",
     "map": {
       "viewBox": "0 0 100 100",

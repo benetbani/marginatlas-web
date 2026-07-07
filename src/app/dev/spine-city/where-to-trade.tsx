@@ -21,7 +21,7 @@
  * width: Full. disclosure: the district x trade owner-keep matrix behind a Pro veil.
  */
 import * as React from "react";
-import { Box, Rail, Fig, InlineDisclosure, TERRA } from "@/components/spine/kit";
+import { Box, Rail, Fig, InfoTip, InlineDisclosure, TERRA } from "@/components/spine/kit";
 import { LockVeil } from "@/components/spine/kit-index";
 import { SpineMap, type SpinePoint } from "@/components/spine/SpineMap";
 
@@ -83,7 +83,7 @@ export function WhereToTrade({ d, trades }: { d: any; trades: any[] }) {
         <div className="min-w-0">
           <div className="mb-2 flex items-baseline justify-between gap-2">
             <span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Ranked by what you keep</span>
-            <span className="text-[10.5px] text-[var(--c-muted)]">keep index</span>
+            <span className="text-[10.5px] text-[var(--c-muted)]">keep index<InfoTip gloss="Revenue vs the city, divided by the rent load; 100 keeps the city-average share of each sale." /></span>
           </div>
           <div className="space-y-1">
             {rows.map((r, i) => {

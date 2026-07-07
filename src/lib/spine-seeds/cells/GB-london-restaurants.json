@@ -26,6 +26,7 @@
   "money_split": {
     "_meta": { "confidence": "placeholder", "source": "illustrative per-$100 split", "as_of": "2026-06" },
     "surface_line": "Wages and food cost eat two thirds of every $100 before rent is even paid.",
+    "read": "Wages and food are two thirds of every dollar; the operators who last claw two or three points back from each, because the 7% at the end is all that is left to pay the owner.",
     "items": [
       { "name": "Food & drink cost", "pct": 31, "kept": false },
       { "name": "Wages", "pct": 34, "kept": false },
@@ -76,15 +77,17 @@
   "who_suits": {
     "_meta": { "confidence": "placeholder", "source": "illustrative operator profile", "as_of": "2026-06" },
     "subtitle": "Suits a hands-on operator with kitchen or floor experience and capital to carry a slow first year, not a passive investor.",
+    "_pos_note": "Coarse honesty steps only: 20 = Low, 50 = Mid, 80 = High. Words carry the read; positions never fake precision.",
     "scales": [
-      { "label": "Capital needed", "pos": 78, "word": "High", "sub": "Six figures before you trade" },
-      { "label": "Experience needed", "pos": 70, "word": "Real", "sub": "Kitchen or floor years matter" },
-      { "label": "Hours / lifestyle", "pos": 84, "word": "Heavy", "sub": "Nights, weekends, holidays" },
-      { "label": "Owner presence", "pos": 88, "word": "Hands-on", "sub": "Owner-operated, rarely absentee" }
+      { "label": "Capital needed", "pos": 80, "word": "High", "sub": "Six figures before you trade" },
+      { "label": "Experience needed", "pos": 50, "word": "Real", "sub": "Kitchen or floor years matter" },
+      { "label": "Hours / lifestyle", "pos": 80, "word": "Heavy", "sub": "Nights, weekends, holidays" },
+      { "label": "Owner presence", "pos": 80, "word": "Hands-on", "sub": "Owner-operated, rarely absentee" }
     ]
   },
   "myth": {
     "_meta": { "confidence": "placeholder", "source": "derived from survival + margin shape", "as_of": "2026-06" },
+    "subtitle": "A dramatic first-year collapse is not what actually closes most rooms.",
     "claim": "Nine in ten restaurants fail in the first year.",
     "reality": "The real first-year survival rate is nearer three in four. Most closures come later and quietly, when a rent review or a bad winter meets a take-home that was always thin, not from a dramatic opening-year collapse.",
     "survival": { "year1_pct": 74, "year3_pct": 52, "year5_pct": 41, "line": "Survivors, not failures: most rooms are still trading at year one." }
@@ -171,9 +174,14 @@
     ]
   },
   "related": [
-    { "name": "Cafe", "slug": "cafe", "keeps_pct": 11, "fact": "easier to enter" },
-    { "name": "Bar / pub", "slug": "bar", "keeps_pct": 9, "fact": "drinks-led margin" },
-    { "name": "Takeaway", "slug": "takeaway", "keeps_pct": 12, "fact": "lightest fit-out" },
-    { "name": "Catering", "slug": "catering", "keeps_pct": 10, "fact": "no dining room" }
-  ]
+    { "name": "Dental practice", "slug": "dental-practices", "keeps_pct": 18 },
+    { "name": "Auto repair", "slug": "auto-repair-shops", "keeps_pct": 11 },
+    { "name": "Gym", "slug": "sports-fitness", "keeps_pct": 9 },
+    { "name": "Cafe", "slug": "cafes-coffee", "keeps_pct": 8 },
+    { "name": "Grocery store", "slug": "grocery-stores", "keeps_pct": 3 }
+  ],
+  "close": {
+    "_meta": { "confidence": "placeholder", "source": "illustrative", "as_of": "2026-06" },
+    "bottom_line": "Deep demand and real turnover, with a thin slice left at the end: this trade rewards operators who control costs daily."
+  }
 }
