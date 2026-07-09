@@ -994,6 +994,8 @@ const TRADE_ICON: Record<string, import("@/components/brand/icons").AtlasIconId>
   "grocery-stores": "trade-grocery",
   "dental-practices": "trade-dental",
   "cafes-coffee": "trade-cafe",
+  // industryToSlug derives from the display name, so cafes arrive as the longer slug
+  "cafes-coffee-shops": "trade-cafe",
   "sports-fitness": "trade-gym",
   "auto-repair-shops": "trade-auto",
   "hairdressers-beauty": "trade-salon",
