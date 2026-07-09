@@ -50,6 +50,7 @@ import type { BoardSection } from "@/components/board/DataSection";
 import type { StatRow } from "@/components/board/StatGrid";
 import { fmtUSD, fmtInt, fmtNum } from "@/components/board/format";
 import { boundSurvivalCurve, clampNetMarginPct } from "@/lib/finance/margin_floor";
+import { getActivitySurvivalArchetype } from "@/lib/scores/activity_board";
 import {
   cityAttractivenessScore,
   type CityAttractivenessScore,
@@ -412,6 +413,12 @@ export interface CityActivityRow {
   takeHome: number | null;
   /** Net margin, percent (0..100), or null. */
   netMarginPct: number | null;
+  /** Modeled startup capital, USD, or null when no cell resolved (never invented). */
+  startupCostUsd: number | null;
+  /** 5-year survival, percent (0..100), from the activity's survival archetype, or null. */
+  survivalYr5: number | null;
+  /** Firms-per-10k-residents density, or null when no cell resolved. */
+  densityPer10k: number | null;
 }
 
 /** The minimum number of scored activities before the city table is worth
@@ -562,6 +569,7 @@ export async function buildCityActivities(input: {
     };
 
     const cell = r.cell;
+    const surv = boundSurvivalCurve(getActivitySurvivalArchetype(r.activitySlug) ?? {});
 
     // London is the sanctioned fully-filled exemplar. Its per-activity economics
     // live in the curated dataset (the same source the cell page prefers), not in
@@ -582,6 +590,9 @@ export async function buildCityActivities(input: {
           netMarginPct: isNum(ec.net_margin_pct)
             ? clampNetMarginPct(ec.net_margin_pct, r.industryId)
             : null,
+          startupCostUsd: rating?.startupCostUsd ?? null,
+          densityPer10k: rating?.densityPer10k ?? null,
+          survivalYr5: surv.yr5,
         });
         continue;
       }
@@ -602,6 +613,9 @@ export async function buildCityActivities(input: {
           breakInBand: rating.band,
           takeHome,
           netMarginPct,
+          startupCostUsd: rating.startupCostUsd,
+          densityPer10k: rating.densityPer10k,
+          survivalYr5: surv.yr5,
         });
         continue;
       }
@@ -612,6 +626,9 @@ export async function buildCityActivities(input: {
       breakInBand: null,
       takeHome: null,
       netMarginPct: null,
+      startupCostUsd: null,
+      densityPer10k: null,
+      survivalYr5: surv.yr5,
     });
   }
 

@@ -355,7 +355,13 @@ export function breakInForCell(
   cell: Cell,
   geo: string,
   annualIncome: number | null,
-): { score: number; band: BreakInBand } | null {
+): {
+  score: number;
+  band: BreakInBand;
+  startupCostUsd: number;
+  permitsUsd: number;
+  densityPer10k: number;
+} | null {
   const industryId = cell.industry_id ?? null;
   const costOfLivingIndex = getCityCostOfLivingIndex(geo);
   const avgYearlySalary = isNum(annualIncome) ? annualIncome : null;
@@ -413,7 +419,13 @@ export function breakInForCell(
     restsOnModeled: true,
   });
   if (rating == null) return null;
-  return { score: rating.score, band: rating.band };
+  return {
+    score: rating.score,
+    band: rating.band,
+    startupCostUsd: startupCapitalUsd,
+    permitsUsd,
+    densityPer10k,
+  };
 }
 
 /** The minimum number of scored activities before the panel is worth showing. */
