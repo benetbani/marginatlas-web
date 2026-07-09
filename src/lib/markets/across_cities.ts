@@ -179,6 +179,16 @@ function densityPer10kOf(cell: Cell, population: number): number | null {
 export interface CityColumn {
   /** Display name, the resolved cell's geo_name where present, else the ref. */
   name: string;
+  /**
+   * The curated CityRef slug (e.g. "new-york"), the SAME slug key used by
+   * data/cities/city_list_v1.json and MAJOR_CITIES above. Deliberately NOT
+   * derived from href: href's geo segment comes from slugify(cell.geo_name),
+   * which can drift from the curated slug (a resolved cell's geo_name is not
+   * guaranteed to slugify back to the exact CityRef key). This field is the
+   * robust join key for any caller that needs to look a column back up in the
+   * curated city dataset (e.g. the recommender's demand resolution).
+   */
+  slug: string;
   /** ISO2 country slug (lowercased), for a small flag. */
   country: string;
   /** Link to this city's full cell page for the activity. */
@@ -409,6 +419,7 @@ async function resolveCity(
 
   const column: CityColumn = {
     name: cell.geo_name || city.name,
+    slug: city.slug,
     country: city.country,
     href: cellUrl(cell),
     revenue,
