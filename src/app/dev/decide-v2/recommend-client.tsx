@@ -55,7 +55,7 @@ function slugField(fallback: string): UrlStateField<string> {
  *  all, keeping a plain link clean. */
 const budgetField: UrlStateField<number | null> = {
   parse: (raw) => {
-    if (raw == null) return null;
+    if (raw == null || raw.trim() === "") return null;
     const n = Number(raw);
     return Number.isFinite(n) && n >= 0 ? Math.round(n) : null;
   },
@@ -63,12 +63,23 @@ const budgetField: UrlStateField<number | null> = {
   fallback: null,
 };
 
+/** The trade-or-place search text: a free-text box (ControlRail input), so it
+ *  must preserve whatever the reader types (capitals and spaces, e.g. "New York"
+ *  or "fine dining"). A slug field would reject those and snap the input back to
+ *  empty on flush, making the box unusable. The live route normalizes this to a
+ *  slug at resolve time. Empty serializes to no key so a plain link stays clean. */
+const textField: UrlStateField<string> = {
+  parse: (raw) => raw ?? "",
+  serialize: (v) => (v.trim() === "" ? null : v),
+  fallback: "",
+};
+
 type Query = { dir: string; q: string; budget: number | null };
 
 export function RecommendControls() {
   const { values, set } = useUrlStateMap<Query>({
     dir: slugField("places-for-trade"),
-    q: slugField(""),
+    q: textField,
     budget: budgetField,
   });
   const { dir, q, budget } = values;
