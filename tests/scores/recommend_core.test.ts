@@ -62,6 +62,7 @@ function mkRow(p: Partial<CityActivityRow>): CityActivityRow {
 {
   const withMargin = compositeForColumn(mkColumn({}), 60);
   assert(withMargin !== null, "a column with a margin scores");
+  assert(withMargin !== null && withMargin.axes.keep === 48, "column keep maps netMarginFraction*100 (0.12 -> 12% -> 48), not the raw fraction");
   const noMargin = compositeForColumn(mkColumn({ netMarginFraction: null }), 60);
   assert(noMargin === null, "a column with no net margin -> null composite (keep anchor)");
 }
@@ -70,6 +71,7 @@ function mkRow(p: Partial<CityActivityRow>): CityActivityRow {
 {
   const r = compositeForActivityRow(mkRow({}), 55);
   assert(r !== null && r.axes.keep !== null, "an activity row with a margin scores");
+  assert(r !== null && r.axes.keep === 74, "row keep uses netMarginPct as-is (20% -> 74), no extra *100");
   const noMargin = compositeForActivityRow(mkRow({ netMarginPct: null }), 55);
   assert(noMargin === null, "an activity row with no net margin -> null composite");
 }
@@ -99,6 +101,13 @@ function mkRow(p: Partial<CityActivityRow>): CityActivityRow {
   assert(omitted === 1, "counts the one over-budget row as omitted");
   const none = filterByBudget(rows, null);
   assert(none.kept.length === 3 && none.omitted === 0, "no budget -> keep all");
+}
+
+// a zero or negative budget keeps everything (the guard is !(budgetUsd > 0)).
+{
+  const rows = [{ id: "a", startupCostUsd: 50_000 }];
+  assert(filterByBudget(rows, 0).kept.length === 1 && filterByBudget(rows, 0).omitted === 0, "budget 0 keeps all, omits none");
+  assert(filterByBudget(rows, -5).kept.length === 1, "negative budget keeps all");
 }
 
 if (failures > 0) {
