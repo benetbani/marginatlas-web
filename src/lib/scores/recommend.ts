@@ -110,7 +110,7 @@ export async function rankPlacesForTrade(
     const demand = resolveCityDemand(col.slug, col.country);
     const composite = compositeForColumn(col, demand, weights);
     return {
-      id: col.name,
+      id: col.slug,
       name: col.name,
       href: col.href,
       keepPct: col.netMarginFraction != null ? Math.round(col.netMarginFraction * 100) : null,
