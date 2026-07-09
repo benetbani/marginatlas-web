@@ -85,6 +85,23 @@ function mk(partial: Partial<CompositeInput>): CompositeInput {
   assert(Math.abs(w.keep + w.ease + w.risk + w.demand - 1) < 1e-9, "default weights sum to 1.0");
 }
 
+// degenerate custom weights that zero the only present axis -> null, never NaN.
+{
+  const r = compositeScore(
+    mk({ breakInScore: null, survivalYr5Pct: null, demandScore: null }),
+    { keep: 0, ease: 0.25, risk: 0.15, demand: 0.2 },
+  );
+  assert(r === null, "custom weights zeroing the only present axis -> null (no NaN score)");
+}
+
+// the extreme bands are reachable: all-max axes -> forgiving, all-min -> brutal.
+{
+  const hi = compositeScore(mk({ keepPct: 40, breakInScore: 100, survivalYr5Pct: 85, demandScore: 100 }));
+  const lo = compositeScore(mk({ keepPct: 3, breakInScore: 2, survivalYr5Pct: 30, demandScore: 2 }));
+  assert(hi !== null && hi.band === "forgiving", "an all-strong row bands forgiving (>=78)");
+  assert(lo !== null && lo.band === "brutal", "an all-weak row bands brutal (<40)");
+}
+
 if (failures > 0) {
   console.error(`\ncomposite.test: FAIL (${failures} assertion(s))`);
   process.exit(1);

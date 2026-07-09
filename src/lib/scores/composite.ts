@@ -140,10 +140,11 @@ const RISK_ANCHORS: readonly Anchor[] = [
 /**
  * Contrast stretch. The four axes anti-correlate somewhat (a cheap easy market
  * often has thin demand), so a plain blend mean-reverts. This is a documented,
- * strictly monotonic stretch around the neutral midpoint 52 that preserves
- * ORDERING exactly (it only rescales) while pulling a strong blend up and a weak
- * one down so the badge differentiates. SPREAD is a single tunable constant;
- * calibrate against the real distribution once coverage widens.
+ * strictly monotonic stretch around the neutral midpoint 52 that never REORDERS
+ * two blends (it is monotonic; the clamped tails may tie, but ranks never
+ * reverse) while pulling a strong blend up and a weak one down so the badge
+ * differentiates. SPREAD is a single tunable constant; calibrate against the
+ * real distribution once coverage widens.
  */
 const MID = 52;
 const SPREAD = 1.3;
@@ -187,6 +188,9 @@ export function compositeScore(
   if (demand !== null) legs.push({ w: weights.demand, v: demand });
 
   const wSum = legs.reduce((s, l) => s + l.w, 0);
+  // A degenerate weight set (e.g. custom weights zeroing the only present axis)
+  // would divide by zero. Refuse rather than emit a fabricated NaN score.
+  if (!(wSum > 0)) return null;
   const raw = legs.reduce((s, l) => s + l.w * l.v, 0) / wSum;
   const score = clamp(Math.round(stretch(raw)), 0, 100);
 
