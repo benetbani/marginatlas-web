@@ -100,6 +100,16 @@ export function isWarmFrameEnabled(): boolean {
 }
 
 /**
+ * The new recommender for the /decide route. Default OFF so live /decide stays
+ * the old page until the founder flips NEXT_PUBLIC_RECOMMENDER after eyeballing
+ * the dev route. This mirrors the per-page spine gate: each page type has its own
+ * adapter before flipping live.
+ */
+export function isRecommenderEnabled(): boolean {
+  return parseFlag(process.env.NEXT_PUBLIC_RECOMMENDER, false);
+}
+
+/**
  * The five spine page types. Each live route branches on its own gate
  * (isSpineReformEnabledFor) so a page flips to the rebuilt surface independently, and
  * only once its real-data adapter has shipped.
@@ -180,6 +190,7 @@ export function snapshotFlags(): Record<string, boolean> {
     NEXT_PUBLIC_AUTH_ENABLED: isAuthEnabled(),
     NEXT_PUBLIC_GATING_ENABLED: isGatingEnabled(),
     NEXT_PUBLIC_WARM_FRAME: isWarmFrameEnabled(),
+    NEXT_PUBLIC_RECOMMENDER: isRecommenderEnabled(),
     NEXT_PUBLIC_SPINE_REFORM: isSpineReformEnabled(),
     // The resolved per-page spine gates (master + per-page var), what each route sees.
     "spine.cell": isSpineReformEnabledFor("cell"),
