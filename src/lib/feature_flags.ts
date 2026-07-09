@@ -110,6 +110,23 @@ export function isRecommenderEnabled(): boolean {
 }
 
 /**
+ * The margin-index page (/margin-index). Default OFF so live site stays the
+ * old surfaces until the founder flips NEXT_PUBLIC_MARGIN_INDEX after eyeballing
+ * the dev route.
+ */
+export function isMarginIndexEnabled(): boolean {
+  return parseFlag(process.env.NEXT_PUBLIC_MARGIN_INDEX, false);
+}
+
+/**
+ * The home page reform (/). Default OFF so live homepage stays the old surface
+ * until the founder flips NEXT_PUBLIC_HOME_REFORM after eyeballing the dev route.
+ */
+export function isHomeReformEnabled(): boolean {
+  return parseFlag(process.env.NEXT_PUBLIC_HOME_REFORM, false);
+}
+
+/**
  * The five spine page types. Each live route branches on its own gate
  * (isSpineReformEnabledFor) so a page flips to the rebuilt surface independently, and
  * only once its real-data adapter has shipped.
@@ -191,6 +208,8 @@ export function snapshotFlags(): Record<string, boolean> {
     NEXT_PUBLIC_GATING_ENABLED: isGatingEnabled(),
     NEXT_PUBLIC_WARM_FRAME: isWarmFrameEnabled(),
     NEXT_PUBLIC_RECOMMENDER: isRecommenderEnabled(),
+    NEXT_PUBLIC_MARGIN_INDEX: isMarginIndexEnabled(),
+    NEXT_PUBLIC_HOME_REFORM: isHomeReformEnabled(),
     NEXT_PUBLIC_SPINE_REFORM: isSpineReformEnabled(),
     // The resolved per-page spine gates (master + per-page var), what each route sees.
     "spine.cell": isSpineReformEnabledFor("cell"),
