@@ -11,9 +11,15 @@
  * island (./recommend-client) only edits the URL's query string for a later,
  * live (non-static) route to read; it never re-fetches client-side here.
  */
+import type { Metadata } from "next";
 import { rankPlacesForTrade, slugToIndustry } from "@/lib/scores/recommend";
 import { RecommendView } from "./recommend-view";
 import { RecommendControls } from "./recommend-client";
+
+// Internal preview route: never indexable, independent of feature flags.
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 export const dynamic = "force-static";
 

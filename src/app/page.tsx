@@ -18,9 +18,9 @@ import { loadNeighborhoodCards } from "@/lib/home/neighborhood_cards";
 // Mirrors the dev route's (src/app/dev/home2/page.tsx) data-loading exactly.
 import { isHomeReformEnabled } from "@/lib/feature_flags";
 import { SpineShell } from "@/components/spine/shell";
-import { Home2View } from "@/app/dev/home2/home2-view";
+import { Home2View } from "@/components/home/home2-view";
 import { rankPlacesForTrade, slugToIndustry } from "@/lib/scores/recommend";
-import { toMarginIndexBoard } from "@/lib/scores/margin_index";
+import { toMarginIndexBoard, deriveHomeInsight } from "@/lib/scores/margin_index";
 
 /**
  * Full-bleed tone wrapper for homepage sections. The inner
@@ -143,13 +143,9 @@ export default async function HomePage() {
     const result = ind ? await rankPlacesForTrade(ind.id, { budgetUsd: null }) : null;
     const marginIndexBoard = result ? toMarginIndexBoard(result) : null;
 
-    // The one honest headline stat: the board's top row, ONLY when its keep share is
-    // real (never a fabricated percentage on a dashed/unknown row).
-    const top = marginIndexBoard?.rows[0];
-    const insight =
-      top && top.keepKnown && top.keepPct != null
-        ? `${top.name} keeps ${top.keepPct}% of a restaurant's revenue`
-        : null;
+    // The one honest headline stat: derived centrally (never fabricated) in
+    // src/lib/scores/margin_index.ts, tested in tests/scores/margin_index.test.ts.
+    const insight = deriveHomeInsight(marginIndexBoard);
 
     // Real posts only. getAllPosts() already self-guards a missing content dir; the
     // try/catch is extra defense so a malformed post's frontmatter can never break

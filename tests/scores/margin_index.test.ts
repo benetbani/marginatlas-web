@@ -4,7 +4,7 @@
  * keeps each row's composite for the badge, dashes a null keep, stamps stable
  * per-row anchors, and omits rows with neither keep nor composite.
  */
-import { toMarginIndexBoard } from "@/lib/scores/margin_index";
+import { toMarginIndexBoard, deriveHomeInsight } from "@/lib/scores/margin_index";
 import type { RecommendResult, RecommendRow } from "@/lib/scores/recommend";
 import type { CompositeScore } from "@/lib/scores/composite";
 
@@ -55,6 +55,18 @@ function result(rows: RecommendRow[]): RecommendResult {
   ]));
   assert(b.rows.length === 1, "a row with neither keep nor composite is omitted");
   assert(b.rows[0].anchor === "mi-porto", "anchor is a stable id-derived slug");
+}
+
+// deriveHomeInsight: only from a real top keep; never fabricated.
+{
+  const b = toMarginIndexBoard(result([
+    row({ id: "lisbon", name: "Lisbon", keepPct: 22, composite: comp(77) }),
+    row({ id: "porto", name: "Porto", keepPct: 19, composite: comp(67) }),
+  ]));
+  assert(deriveHomeInsight(b) === "Lisbon keeps 22% of revenue", "insight names the top keeper with its real keep");
+  assert(deriveHomeInsight(null) === null, "no board -> null insight");
+  const noKeep = toMarginIndexBoard(result([row({ id: "x", keepPct: null, composite: comp(80) })]));
+  assert(deriveHomeInsight(noKeep) === null, "top row with unknown keep -> null insight (never fabricated)");
 }
 
 if (failures > 0) {

@@ -10,10 +10,16 @@
  * The page owns the outer <main> container; Home2View contributes Full/Narrow fragments
  * (the established convention, see src/app/dev/decide-v2/page.tsx).
  */
+import type { Metadata } from "next";
 import { rankPlacesForTrade, slugToIndustry } from "@/lib/scores/recommend";
-import { toMarginIndexBoard } from "@/lib/scores/margin_index";
+import { toMarginIndexBoard, deriveHomeInsight } from "@/lib/scores/margin_index";
 import { getAllPosts } from "@/lib/blog";
-import { Home2View } from "./home2-view";
+import { Home2View } from "@/components/home/home2-view";
+
+// Internal preview route: never indexable, independent of feature flags.
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 // Matches /margin-index and the live homepage: a daily-refreshed resolver run, not a
 // per-request fetch. This dev route has no request-time params to react to.
@@ -24,13 +30,9 @@ export default async function Home2Page() {
   const result = ind ? await rankPlacesForTrade(ind.id, { budgetUsd: null }) : null;
   const marginIndexBoard = result ? toMarginIndexBoard(result) : null;
 
-  // The one honest headline stat: the board's top row, ONLY when its keep share is real
-  // (never a fabricated percentage on a dashed/unknown row).
-  const top = marginIndexBoard?.rows[0];
-  const insight =
-    top && top.keepKnown && top.keepPct != null
-      ? `${top.name} keeps ${top.keepPct}% of a restaurant's revenue`
-      : null;
+  // The one honest headline stat: derived centrally (never fabricated) in
+  // src/lib/scores/margin_index.ts, tested in tests/scores/margin_index.test.ts.
+  const insight = deriveHomeInsight(marginIndexBoard);
 
   // Real posts only. getAllPosts() already self-guards a missing content dir; the
   // try/catch is extra defense so a malformed post's frontmatter can never break the route.

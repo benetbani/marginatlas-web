@@ -53,13 +53,17 @@ function toDatum(r: MarginIndexRow): DecisionDatum {
 
 export function MarginIndexView({ board }: { board: MarginIndexBoard }) {
   const noun = board.direction === "places-for-trade" ? "places" : "trades";
+  const heading =
+    board.direction === "places-for-trade"
+      ? `Where ${board.subject} keep the most`
+      : `What keeps the most in ${board.subject}`;
   return (
     <>
       <KitIndexStyles />
       <Movement
         index="01"
         eyebrow="The Margin Index"
-        heading={`Where a ${board.subject} keeps the most`}
+        heading={heading}
         icon="ranking"
       />
       <Full>

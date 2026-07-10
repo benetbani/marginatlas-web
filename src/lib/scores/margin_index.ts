@@ -54,3 +54,15 @@ export function toMarginIndexBoard(result: RecommendResult): MarginIndexBoard {
 
   return { direction: result.direction, subject: result.subject, rows };
 }
+
+/**
+ * The homepage's one honest insight line, or null. Derived from the board's top
+ * (highest-keep) row, and ONLY when that row's keep is real. Never fabricates:
+ * a board with no rows, or a top row whose keep is unknown, yields null. The
+ * trade noun is deliberately omitted so the line reads correctly for any subject.
+ */
+export function deriveHomeInsight(board: MarginIndexBoard | null | undefined): string | null {
+  const top = board?.rows[0];
+  if (!top || !top.keepKnown || top.keepPct == null) return null;
+  return `${top.name} keeps ${top.keepPct}% of revenue`;
+}

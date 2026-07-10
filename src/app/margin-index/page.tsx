@@ -27,9 +27,10 @@ export const metadata: Metadata = {
 };
 
 export default async function MarginIndexPage() {
-  // New route: default to rendering (free + crawlable). The flag exists so the
-  // founder can keep it dark until launch by setting NEXT_PUBLIC_MARGIN_INDEX=0.
-  if (process.env.NEXT_PUBLIC_MARGIN_INDEX === "0" && !isMarginIndexEnabled()) notFound();
+  // New public route: renders by default. The flag is a pre-launch kill switch:
+  // set NEXT_PUBLIC_MARGIN_INDEX to any off value (0/false/off/no) to dark it.
+  const marginIndexFlag = process.env.NEXT_PUBLIC_MARGIN_INDEX;
+  if (marginIndexFlag != null && marginIndexFlag !== "" && !isMarginIndexEnabled()) notFound();
 
   const ind = slugToIndustry("restaurants");
   const result = ind ? await rankPlacesForTrade(ind.id, { budgetUsd: null }) : null;

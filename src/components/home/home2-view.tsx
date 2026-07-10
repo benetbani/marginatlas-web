@@ -282,7 +282,7 @@ export function Home2View({
   marginIndexBoard,
   blogPosts = [],
 }: {
-  insight?: string | null;
+  insight: string | null;
   marginIndexBoard?: MarginIndexBoard | null;
   blogPosts?: BlogPost[];
 }) {
@@ -362,7 +362,7 @@ export function Home2View({
           <Movement
             index={cn()}
             eyebrow="The Margin Index"
-            heading={marginIndexBoard?.subject ? `Where a ${marginIndexBoard.subject} keeps the most` : "Where the margin actually is"}
+            heading={marginIndexBoard?.subject ? `Where ${marginIndexBoard.subject} keep the most` : "Where the margin actually is"}
             icon="ranking"
           />
           <MarginTaste rows={tasteRows} subject={marginIndexBoard?.subject} />
