@@ -6,7 +6,7 @@
  * component so the page itself stays a server component under SpineShell.
  */
 import * as React from "react";
-import { Movement, Box, Rail, SampleTag, InfoTip, SpectraTable } from "@/components/spine/kit";
+import { Movement, Box, Rail, SampleTag, InfoTip, SpectraTable, ShareStack, StruckLine, IndexBar, TERRA, type ShareSeg } from "@/components/spine/kit";
 import {
   DecisionRow, DecisionRowHeader, type DecisionDatum, type SignalDef,
   CompareTable, type CompareEntity, type CompareRow,
@@ -74,6 +74,12 @@ const PODIUM: [PodiumDatum, PodiumDatum, PodiumDatum] = [
   { id: "brix", name: "Brixton", keptPct: 19, sub: "owner keeps" },
 ];
 
+/* ----- final-form upgrade primitives: ShareStack, StruckLine, IndexBar ----- */
+const SHARE_SEGMENTS: ShareSeg[] = [{ label: "Online", pct: 34 }, { label: "In-store", pct: 66 }];
+const SHARE_DEGENERATE: ShareSeg[] = [{ label: "Online", pct: 34 }]; // 1 segment: self-omits
+const INDEX_ROWS: Array<[string, number]> = [["City centre", 100], ["Inner ring", 64], ["Suburb", 72], ["Outer ring", 58]];
+const PCT_ROWS: Array<[string, number]> = [["Bakery", 38], ["Cafe", 31], ["Wine bar", 22]];
+
 function Section({ index, eyebrow, heading, icon, children }: { index: string; eyebrow: string; heading: string; icon: any; children: React.ReactNode }) {
   return (
     <>
@@ -93,6 +99,32 @@ function PhoneFrame({ label, children }: { label: string; children: React.ReactN
         <div className="overflow-x-hidden" style={{ width: "100%" }}>{children}</div>
       </div>
     </div>
+  );
+}
+
+/* a tiny host chart proving StruckLine draws INSIDE another component's own
+ * <svg>, on the exact same axis as its real curve (the shared-scale contract
+ * StruckLine depends on: the phantom's points are projected through the SAME
+ * X()/Y() the real curve uses, never a second invented scale). Mirrors the shape
+ * of the page-local SurvivalSlope / SurvivalCurve charts (yr1/yr3/yr5, zero
+ * baseline) without duplicating either one. */
+function StruckLineDemo() {
+  const W = 320, H = 120, padL = 10, padR = 10, padTop = 22, padBot = 26;
+  const real = [100, 71, 52]; // the true still-trading curve
+  const phantom = [100, 25, 10]; // the "9 in 10 fail" folklore claim
+  const X = (i: number) => padL + (i / (real.length - 1)) * (W - padL - padR);
+  const Y = (v: number) => padTop + (1 - v / 100) * (H - padTop - padBot);
+  const realPts = real.map((v, i) => [X(i), Y(v)] as [number, number]);
+  const phantomPts = phantom.map((v, i) => [X(i), Y(v)] as [number, number]);
+  const line = "M " + realPts.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" L ");
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full max-w-sm" style={{ height: H }} role="img" aria-label="Still trading: year one 100 percent, year three 71 percent, year five 52 percent. Folklore claims 9 in 10 fail by year five, struck out on the same chart.">
+      <path d={line} fill="none" stroke={TERRA} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+      {realPts.map(([x, y], i) => (
+        <circle key={i} cx={x} cy={y} r={i === realPts.length - 1 ? 4 : 3} fill={i === realPts.length - 1 ? TERRA : "var(--c-ink)"} stroke="var(--c-card)" strokeWidth={1.5} />
+      ))}
+      <StruckLine points={phantomPts} label="folklore: 9 in 10 fail" />
+    </svg>
   );
 }
 
@@ -297,6 +329,57 @@ export function KitShowcase() {
               </span>
             ))}
           </div>
+        </Box>
+      </Section>
+
+      {/* ===== 11. FINAL-FORM UPGRADE PRIMITIVES (2026-07-10): a lone percentage that
+          should be a chart, a myth busted ON the survival chart instead of in a text
+          box, and an index bar that cannot be mistaken for a percentage bar. Additive
+          only, no page consumes these yet , this story is the proof they render and
+          self-omit before any page wires them in. ===== */}
+      <Section index="11" eyebrow="Upgrade primitives" heading="ShareStack, StruckLine, IndexBar" icon="benchmark">
+        <Box>
+          <Rail icon="district-mix" kicker="ShareStack" verdict="A lone percentage next to prose becomes a compact 2 to 3 segment share bar, the largest slice in terracotta." />
+          <div className="max-w-sm">
+            <ShareStack segments={SHARE_SEGMENTS} />
+          </div>
+          <div className="mt-4 max-w-sm border-t border-[var(--c-border)] pt-3">
+            <ShareStack segments={SHARE_DEGENERATE} />
+            <p className="text-[11px] text-[var(--c-muted)]">A single segment renders nothing above (self-omit): a share bar needs at least two segments to show a split.</p>
+          </div>
+        </Box>
+        <Box>
+          <Rail icon="myth-reality" kicker="StruckLine" verdict="The myth-busting device moves onto the real chart: a struck, dashed phantom line for the folklore claim, crossed out on the same axis as the truth." />
+          <StruckLineDemo />
+          <p className="mt-2 text-[11px] text-[var(--c-muted)]">Fewer than two phantom points (not shown here) self-omits: no line, no strike, nothing drawn , only the real curve remains.</p>
+        </Box>
+        <Box>
+          <Rail icon="catchment" kicker="IndexBar" verdict="An index against a top-group baseline reads differently in form from a true percentage, not just by its suffix." />
+          <div className="grid gap-x-8 gap-y-4 md:grid-cols-2">
+            <div>
+              <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Index (baseline tick at 100, no percent sign)</div>
+              <div className="space-y-2.5">
+                {INDEX_ROWS.map(([label, v]) => (
+                  <div key={label} className="grid grid-cols-[90px_1fr] items-center gap-3">
+                    <span className="truncate text-[12.5px] text-[var(--c-ink2)]">{label}</span>
+                    <IndexBar value={v} kind="index" accent={v === 100} />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Percent (true share, rounded track)</div>
+              <div className="space-y-2.5">
+                {PCT_ROWS.map(([label, v]) => (
+                  <div key={label} className="grid grid-cols-[90px_1fr] items-center gap-3">
+                    <span className="truncate text-[12.5px] text-[var(--c-ink2)]">{label}</span>
+                    <IndexBar value={v} kind="pct" accent={v === 38} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <p className="mt-3 border-t border-[var(--c-border)] pt-2 text-[11px] text-[var(--c-muted)]">A withheld value (not shown here) self-omits: no bar, no figure.</p>
         </Box>
       </Section>
     </div>

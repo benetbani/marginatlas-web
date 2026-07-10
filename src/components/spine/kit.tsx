@@ -106,6 +106,34 @@ export function Dots({ score, max = 10, accent = false, showTrack = true }: { sc
 export function MiniBar({ pct, accent = false }: { pct: number; accent?: boolean }) {
   return <div className="h-[7px] w-full overflow-hidden rounded-full" role="img" aria-label={`${Math.round(pct)} percent`} style={{ background: TRACK }}><div className="h-full rounded-full" style={{ width: `${pct}%`, background: accent ? TERRA : "#bdbdbd" }} /></div>;
 }
+/* IndexBar , the shared bar for a value that is either a TRUE PERCENTAGE (0-100,
+ * "%" suffix, a plain rounded-full track, no tick) or an INDEX against a top-group
+ * baseline (a bare number, no "%", a reference TICK drawn at 100, a squared-off
+ * track). The two `kind`s deliberately do NOT share one visual language: a
+ * 100/64/72/58 catchment index must never read like a 47/31/22 true-percentage
+ * split , they are different number kinds. Replaces a bespoke hand-rolled inline
+ * bar (the cell page's "where the covers come from" row) with one shared,
+ * self-omitting primitive that renders the bar AND its trailing figure together;
+ * the row label stays the caller's own text. Honest scaling: an index value ABOVE
+ * 100 EXTENDS the domain to meet it (PhaseBar's pattern) rather than clipping the
+ * bar at the edge and understating an above-baseline value. Self-omits on a
+ * null/non-finite value. */
+export function IndexBar({ value, kind = "pct", accent = false }: { value: number | null | undefined; kind?: "pct" | "index"; accent?: boolean }) {
+  if (value == null || !Number.isFinite(value)) return null;
+  const isIndex = kind === "index";
+  const domainMax = isIndex ? Math.max(100, value) : 100;
+  const pos = (v: number) => Math.max(0, Math.min(100, (v / domainMax) * 100));
+  const shape = isIndex ? "rounded-sm" : "rounded-full";
+  return (
+    <span className="flex items-center gap-2.5">
+      <span className={`relative block h-2 flex-1 overflow-hidden ${shape}`} role="img" aria-label={isIndex ? `index ${Math.round(value)}, top group is 100` : `${Math.round(value)} percent`} style={{ background: TRACK }}>
+        <span className={`absolute inset-y-0 left-0 block ${shape}`} style={{ width: `${pos(value)}%`, background: accent ? TERRA : "var(--c-line-strong)" }} />
+        {isIndex ? <span className="absolute -top-[2px] -bottom-[2px] w-px" style={{ left: `${pos(100)}%`, background: "var(--c-ink2)" }} /> : null}
+      </span>
+      <Fig className="shrink-0 text-right text-[length:var(--t-body)] text-[var(--c-ink)]">{isIndex ? Math.round(value) : `${value}%`}</Fig>
+    </span>
+  );
+}
 /* 100%-stacked share bar , one horizontal track split into labelled colour segments
  * (terracotta on the kept/owner/leading slice), with an optional swatch legend row.
  * Canonicalises the hand-rolled cost-stack / tax-share / payment-mix bars. Knobs cover
@@ -154,6 +182,55 @@ export function StackBar({ segments, sort = true, keptLabel, h = "h-8", rounded 
         <div className={legendClassName}>{ordered.map((s) => <span key={s.label} className="inline-flex items-center gap-1.5 text-[length:var(--t-micro)] text-[var(--c-ink2)]"><span className="h-2.5 w-2.5 rounded-sm" style={{ background: s.color }} />{s.label} <Fig className="text-[var(--c-ink)]">{s.pct}%</Fig></span>)}</div>
       ) : null}
     </>
+  );
+}
+/* ShareStack , a LONE percentage rendered as a compact 2-3 segment stacked bar
+ * (replaces a bare "online 34%" figure sitting next to prose , rulebook v2 S7: a
+ * chart must explain itself by its form, so a single percentage that deserves a
+ * shape gets one). The LARGEST segment carries the terracotta fill (the leading
+ * share); the rest render in two fixed neutral greys, darker to lighter as the
+ * share shrinks. Labels + percentages are DIRECT-labelled inside each segment when
+ * every segment is wide enough to hold them (>=24% each, a conservative width
+ * floor so text never truncates on a narrow card); when any segment is narrower
+ * than that the bar renders as color blocks alone and a one-line legend
+ * underneath carries every label + percent instead (never a hover-only title as
+ * the sole carrier of the data). Segment widths are proportionally normalised to
+ * the true 100% so a pair that sums to 98 or 101 (real-world rounding) still fills
+ * the bar edge to edge; the PRINTED percentages stay the caller's real numbers.
+ * Self-omits: fewer than 2 segments, or the segments do not sum to within ~2 of
+ * 100 , a stacked bar that does not sum to the whole misrepresents the split, so
+ * it renders nothing rather than a dishonest shape. */
+export type ShareSeg = { label: string; pct: number };
+export function ShareStack({ segments }: { segments: ShareSeg[] }) {
+  const clean = (segments ?? []).filter((s) => s && typeof s.pct === "number" && Number.isFinite(s.pct));
+  if (clean.length < 2) return null;
+  const sum = clean.reduce((a, s) => a + s.pct, 0);
+  if (!Number.isFinite(sum) || Math.abs(sum - 100) > 2) return null;
+  const ordered = [...clean].sort((a, b) => b.pct - a.pct);
+  const greys = ["var(--c-line-strong)", "var(--c-soft2)"];
+  const colored = ordered.map((s, i) => ({ ...s, color: i === 0 ? TERRA : greys[(i - 1) % greys.length] }));
+  const inline = colored.every((s) => s.pct >= 24);
+  const ariaLabel = colored.map((s) => `${s.label} ${s.pct}%`).join(", ");
+  return (
+    <div>
+      <div className="flex h-8 overflow-hidden rounded-lg border border-[var(--c-border)]" role="img" aria-label={ariaLabel}>
+        {colored.map((s) => (
+          <div key={s.label} className="flex h-full items-center justify-center overflow-hidden border-r border-white/70 px-1.5 last:border-0" style={{ width: `${(s.pct / sum) * 100}%`, background: s.color }}>
+            {inline ? <span className="truncate text-[length:var(--t-micro)] font-semibold text-[var(--c-ink)]">{s.label} <Fig>{s.pct}%</Fig></span> : null}
+          </div>
+        ))}
+      </div>
+      {!inline ? (
+        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
+          {colored.map((s) => (
+            <span key={s.label} className="inline-flex items-center gap-1.5 text-[length:var(--t-micro)] text-[var(--c-ink2)]">
+              <span className="h-2.5 w-2.5 rounded-sm" style={{ background: s.color }} />
+              {s.label} <Fig className="text-[var(--c-ink)]">{s.pct}%</Fig>
+            </span>
+          ))}
+        </div>
+      ) : null}
+    </div>
   );
 }
 /* margin waterfall , each row a share of revenue, the kept slice terracotta. Cap 2 uses/page. */
@@ -359,7 +436,7 @@ export function KV({ k, v }: { k: string; v: React.ReactNode }) {
  * inside a caller's own wrapper, so the JSDoc rule on InlineDisclosure/Expand below remains
  * the real contract; this just catches the easy, common mistake. */
 const GRAPHIC_TYPES: ReadonlySet<unknown> = new Set([
-  Gauge, Donut, StackBar, Waterfall, SpreadStrip, EaseScale, Meter, SpectraTable, Spectrum, Timeline, Spark, Dots, MiniBar, PhaseBar,
+  Gauge, Donut, StackBar, ShareStack, Waterfall, SpreadStrip, EaseScale, Meter, SpectraTable, Spectrum, Timeline, Spark, StruckLine, Dots, MiniBar, IndexBar, PhaseBar,
 ]);
 function assertNoGraphics(children: React.ReactNode, where: string) {
   if (process.env.NODE_ENV === "production") return;
@@ -498,6 +575,42 @@ export function Spark({ values, w = 96, h = 30, markerIndex }: { values: number[
       <path d={line} fill="none" stroke={TERRA} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" />
       <circle cx={X(mi)} cy={Y(values[mi])} r={2.4} fill={TERRA} stroke="#fff" strokeWidth={1} />
     </svg>
+  );
+}
+
+/* StruckLine , the shared "myth, busted , ON the chart" overlay (rulebook v2 S12:
+ * the myth-busting device was "a schematic cliche", rework or cut it , this
+ * replaces every standalone "Myth, busted" text box with a mark drawn directly on
+ * the real chart the myth is about). A THIN, DASHED, low-contrast phantom line for
+ * a folklore claim, crossed out by one confident stroke across its own bounding
+ * box (the diagonal OPPOSITE the phantom's own slope, so the strike reads as an
+ * intentional cross-out rather than a second data line), plus a small struck
+ * caption. Renders INSIDE a host chart's own <svg viewBox=...>: the caller
+ * (SurvivalSlope, SurvivalCurve, or any future line/area chart) projects the
+ * phantom's own values through the SAME X()/Y() scale it uses for its real curve
+ * and hands the resulting points here, so the phantom always shares the real
+ * chart's exact axis, never a second invented one. No fill, never terracotta: the
+ * phantom must read as strictly secondary to the real curve beside it (the accent
+ * stays reserved for the truth). Self-omits on fewer than 2 points (nothing to
+ * draw a line through). Decorative: the group is aria-hidden, so a caller that
+ * passes a phantom folds its claim into the HOST svg's own aria-label. Pure /
+ * stateless, no window/document reference , SSR-safe by construction. */
+export function StruckLine({ points, label = "folklore" }: { points: Array<[number, number]>; label?: string }) {
+  if (!points || points.length < 2) return null;
+  const path = "M " + points.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" L ");
+  const xs = points.map((p) => p[0]), ys = points.map((p) => p[1]);
+  const x0 = Math.min(...xs) - 4, x1 = Math.max(...xs) + 4;
+  const y0 = Math.min(...ys) - 4, y1 = Math.max(...ys) + 4;
+  const [lx, ly] = points[points.length - 1];
+  return (
+    <g aria-hidden="true">
+      <path d={path} fill="none" stroke="var(--c-line-strong)" strokeWidth={1.3} strokeDasharray="3 3" strokeLinecap="round" strokeLinejoin="round" />
+      {/* the strike , one confident stroke on the diagonal OPPOSITE the curve's own
+          bounding box slope, so it always crosses the phantom shape and reads as a
+          deliberate cross-out rather than a second trend line */}
+      <line x1={x0} y1={y1} x2={x1} y2={y0} stroke="var(--c-muted)" strokeWidth={1.5} strokeLinecap="round" />
+      <text x={lx} y={ly - 8} textAnchor="end" fontSize={9} fill="var(--c-muted)" style={{ textDecoration: "line-through" }}>{label}</text>
+    </g>
   );
 }
 
