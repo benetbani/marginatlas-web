@@ -50,7 +50,7 @@ import { AtlasMark, type AtlasMarkId } from "@/components/spine/marks";
 import { WorldMapClient } from "@/components/home/WorldMapClient";
 import { NavigatorForm } from "@/components/NavigatorForm";
 import type { MarginIndexBoard, MarginIndexRow } from "@/lib/scores/margin_index";
-import type { BlogPost } from "@/lib/blog";
+import type { BlogPost, BlogImage } from "@/lib/blog";
 
 /* ---- dynamic chapter numbering , ported verbatim from city-view.tsx ------ */
 function makeChapterCounter() {
@@ -140,20 +140,39 @@ function MarginTaste({ rows, subject }: { rows: (MarginIndexRow & { keepPct: num
 }
 
 /* ================= CH3 , THE MYTH / POV BAND ================= */
-/* Static editorial copy only. No numbers, no named places, no invented detail: quiet
- * almanac voice, the same honesty bar as every real chapter. */
+/* Rulebook v2 S4 fix (was a direct breach: two prose paragraphs, nothing schematic).
+ * Still static editorial copy, still no numbers and no named real place (S13 , the
+ * pairs below are categories every place on the atlas has, never a city or country
+ * name, so the section renders true for Kinshasa or Dhaka same as anywhere else), but
+ * now a compact assumed-vs-actual table instead of two sentences: the SAME two points
+ * the old paragraphs made (a loud tourist street pays rent for footfall a steady trade
+ * never needed; a capital taxes and licenses harder than its own quieter regions),
+ * reshaped from prose into rows. No lead conclusion sentence sits above the table
+ * (corrections decision f): the contrast IS the finding, read off the two columns,
+ * never asserted in a sentence first. */
+type AssumeRow = { assume: string; actual: string };
+const HONEST_READ_ROWS: AssumeRow[] = [
+  { assume: "The busy tourist street", actual: "The quiet street beside it" },
+  { assume: "The capital", actual: "A quieter region" },
+];
 function MythBand() {
   return (
     <Narrow>
       <Box>
-        <p className="text-[15px] font-medium leading-snug text-[var(--c-ink)]">
-          The obvious trade in the obvious spot is rarely the one that keeps the most.
-        </p>
-        <p className="mt-3 text-[13px] leading-relaxed text-[var(--c-ink2)]">
-          A packed tourist street pays premium rent for footfall a steady trade never needed. A
-          famous capital taxes and licenses harder than its own quieter regions. The honest
-          margin tends to sit one rung down from the place everyone already assumes, not on it.
-        </p>
+        <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-x-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
+          <span>Founders assume</span>
+          <span aria-hidden="true" />
+          <span>It actually sits</span>
+        </div>
+        <div className="mt-1.5 divide-y divide-[var(--c-border)]">
+          {HONEST_READ_ROWS.map((r) => (
+            <div key={r.assume} className="grid grid-cols-[1fr_auto_1fr] items-center gap-x-2 py-2.5">
+              <span className="min-w-0 text-[13px] leading-snug text-[var(--c-ink2)]">{r.assume}</span>
+              <span aria-hidden="true" className="px-1 text-[13px] text-[var(--c-muted)]">&rarr;</span>
+              <span className="min-w-0 text-[13px] font-semibold leading-snug text-[var(--c-ink)]">{r.actual}</span>
+            </div>
+          ))}
+        </div>
       </Box>
     </Narrow>
   );
@@ -164,12 +183,15 @@ function MythBand() {
  * plain browse affordance. Deliberately NOT SpineMap: SpineMap needs real lat/lng
  * SpinePoints, and the city lists here carry no coordinates , inventing them would
  * fabricate data. Narrow + a plain card keeps it visibly smaller and lower-emphasis
- * than the masthead. */
+ * than the masthead. Rulebook v2 fix: the kicker dropped its leading "Or" (it used to
+ * continue the now-dead eyebrow's own "Or just browse" , orphaned once Task 1 stopped
+ * that eyebrow rendering) and the dead `verdict` (a restated caption the map itself
+ * already shows) was deleted rather than carried as dead weight. */
 function MapBrowse() {
   return (
     <Narrow>
       <Box>
-        <Rail kicker="Or start from a place" verdict="Every country on the atlas. Pick one to see what small business actually looks like there." />
+        <Rail kicker="Start from a place" />
         <div className="mx-auto max-w-xl overflow-hidden rounded-[10px] border border-[var(--c-border)]">
           <WorldMapClient />
         </div>
@@ -226,16 +248,37 @@ function formatPostDate(iso: string): string {
     return "";
   }
 }
+/* The post cover , same idiom as /blog (src/app/blog/page.tsx's own BlogCover): a real
+ * image when the post carries one, otherwise the library's own deterministic gradient +
+ * initial derived from the slug. `BlogPost.image` is never optional (see lib/blog.ts),
+ * so this never renders blank , the rulebook v2 fix for a card that used to render as
+ * bare text and throw away a guaranteed cover. */
+function BlogCover({ image }: { image: BlogImage }) {
+  if (image.kind === "url") {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img src={image.src} alt={image.alt} className="aspect-[16/9] w-full object-cover" loading="lazy" />
+    );
+  }
+  return (
+    <div className="flex aspect-[16/9] w-full items-center justify-center" style={{ background: image.gradient }} aria-hidden="true">
+      <span className="text-3xl font-semibold text-white/85">{image.initial}</span>
+    </div>
+  );
+}
 function BlogStrip({ posts }: { posts: BlogPost[] }) {
   return (
     <>
       <Full>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {posts.map((p) => (
-            <a key={p.slug} href={`/blog/${p.slug}`} className="cityhov flex flex-col rounded-[14px] border border-[var(--c-border)] bg-[var(--c-card)] p-4">
-              <span className="fig text-[10.5px] uppercase tracking-wide text-[var(--c-muted)]">{formatPostDate(p.date)}</span>
-              <span className="mt-1.5 text-[14px] font-semibold leading-snug text-[var(--c-ink)]">{p.title}</span>
-              {p.excerpt ? <span className="mt-1.5 line-clamp-2 text-[12px] leading-snug text-[var(--c-ink2)]">{p.excerpt}</span> : null}
+            <a key={p.slug} href={`/blog/${p.slug}`} className="cityhov flex flex-col overflow-hidden rounded-[14px] border border-[var(--c-border)] bg-[var(--c-card)]">
+              <BlogCover image={p.image} />
+              <div className="flex flex-col p-4">
+                <span className="fig text-[10.5px] uppercase tracking-wide text-[var(--c-muted)]">{formatPostDate(p.date)}</span>
+                <span className="mt-1.5 text-[14px] font-semibold leading-snug text-[var(--c-ink)]">{p.title}</span>
+                {p.excerpt ? <span className="mt-1.5 line-clamp-2 text-[12px] leading-snug text-[var(--c-ink2)]">{p.excerpt}</span> : null}
+              </div>
             </a>
           ))}
         </div>
@@ -354,45 +397,52 @@ export function Home2View({
       </Full>
       </section>
 
-      {/* 1. Five ways in , always renders; every href is a verified real route. */}
-      <Movement index={cn()} eyebrow="Five ways in" heading="Pick your altitude" icon="search" />
+      {/* 1. Five ways in , always renders; every href is a verified real route. Heading
+          IS the section's plain name (was the cute "Pick your altitude"); the dead
+          eyebrow prop is dropped, not just hidden. */}
+      <Movement index={cn()} heading="Five ways in" icon="search" />
       <FiveWaysRouter />
 
-      {/* 2. The Margin Index, a taste , self-omits below three known-keep rows. */}
+      {/* 2. The Margin Index, a taste , self-omits below three known-keep rows. Rulebook
+          v2 S16: the heading no longer narrates a conclusion ("Where restaurants keep
+          the most" , the rulebook's own named bad example, one word swapped from the
+          dead eyebrow). It names the section; the finding lives on the ranked bars
+          below. Also removes the last "subject is always plural" grammar risk since the
+          heading no longer interpolates it at all. */}
       {hasTasteCh ? (
         <>
-          <Movement
-            index={cn()}
-            eyebrow="The Margin Index"
-            heading={marginIndexBoard?.subject ? `Where ${marginIndexBoard.subject} keep the most` : "Where the margin actually is"}
-            icon="ranking"
-          />
+          <Movement index={cn()} heading="The Margin Index" icon="ranking" />
           <MarginTaste rows={tasteRows} subject={marginIndexBoard?.subject} />
         </>
       ) : null}
 
       {/* 3. The honest read , static editorial copy, always renders. */}
-      <Movement index={cn()} eyebrow="The honest read" heading="Where the money actually is" icon="myth-reality" />
+      <Movement index={cn()} heading="The honest read" icon="myth-reality" />
       <MythBand />
 
-      {/* 4. The map, demoted , a browse affordance, always renders. */}
-      <Movement index={cn()} eyebrow="Or just browse" heading="Pick a country instead" icon="vs-world" />
+      {/* 4. The map, demoted , a browse affordance, always renders. Heading rewritten off
+          the imperative "Pick a country instead" to a plain, descriptive name for what
+          the section is (S16), not an instruction. */}
+      <Movement index={cn()} heading="Browse by country" icon="vs-world" />
       <MapBrowse />
 
       {/* 5. Free vs paid , qualitative only, always renders. */}
-      <Movement index={cn()} eyebrow="Free vs paid" heading="What's free, and what isn't" icon="scorecard" />
+      <Movement index={cn()} heading="Free vs paid" icon="scorecard" />
       <FreeVsPaid />
 
       {/* 6. The blog strip , self-omits below three real posts. */}
       {hasBlogCh ? (
         <>
-          <Movement index={cn()} eyebrow="From the notebook" heading="Writing on the numbers" icon="operator-voices" />
+          <Movement index={cn()} heading="From the notebook" icon="operator-voices" />
           <BlogStrip posts={posts} />
         </>
       ) : null}
 
-      {/* 7. Close , a CTA back to the recommender, always renders. */}
-      <Movement index={cn()} eyebrow="Still deciding" heading="Let the Atlas pick" icon="verdict" />
+      {/* 7. Close , a CTA back to the recommender, always renders. Heading rewritten off
+          "Let the Atlas pick" , which read the CTA button ("Let the Atlas pick for you")
+          almost verbatim two lines below it on one screen , to "Still deciding", distinct
+          wording that does not echo the button. */}
+      <Movement index={cn()} heading="Still deciding" icon="verdict" />
       <CloseCTA />
     </>
   );
