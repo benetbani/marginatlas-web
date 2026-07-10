@@ -1,0 +1,37 @@
+{
+  "_readme": "Design budgets for the spine pages, checked against the RENDERED DOM by scripts/measure_rendered_design.mjs. These encode the founder's rules as numbers so they can be verified instead of asserted. They are TARGETS: as of 2026-07-09 every page breaches at least one, and that is the point. Rulebook: docs/superpowers/specs/2026-07-09-publish-rulebook-v2.md (parent repo).",
+
+  "default": {
+    "maxSoloRowRate": 0.25,
+    "_maxSoloRowRate": "S8 + the founder's 2026-06-18 bento rule: never one section per row. Measured on the render, because a paired tier whose child self-omits leaves the survivor sitting alone. Baseline 2026-07-09: country 55%, city 57%, cell 50%, industry 55%, hood 86%.",
+
+    "maxCharsInACard": 350,
+    "_maxCharsInACard": "S5: cut first-view text hard. Longer prose belongs in a disclosure, which may hold bullets but never a graphic (S6). Baseline: city 1488, country 1295, hood 1195.",
+
+    "maxPageHeight": 5000,
+    "_maxPageHeight": "The pages read as too tall. Baseline: country 9440px, city 6867, cell 5303, industry 5011, hood 3932.",
+
+    "maxDistinctFontSizes": 8,
+    "_maxDistinctFontSizes": "S1 + typographic hierarchy. Eighteen sizes are in use; six of them span 2.5px and carry ~85% of the text, so the eye resolves none of them. Target scale: 11 / 13 / 16 / 21 / 28 / 44, each step >=1.18. The 21px sub-focal does not currently exist, which is why every figure is either a shout or mouse-type.",
+
+    "maxDropShadowCards": 0,
+    "_maxDropShadowCards": "S14: cards are hairline, no shadow. The inset paper top-highlight is not a drop shadow and is allowed."
+  },
+
+  "perPage": {
+    "country": {
+      "maxSoloRowRate": 0.25,
+      "maxCharsInACard": 350,
+      "maxPageHeight": 6000,
+      "maxDistinctFontSizes": 8,
+      "maxDropShadowCards": 0
+    },
+    "hood": {
+      "maxSoloRowRate": 0.25,
+      "maxCharsInACard": 350,
+      "maxPageHeight": 4000,
+      "maxDistinctFontSizes": 8,
+      "maxDropShadowCards": 0
+    }
+  }
+}
