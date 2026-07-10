@@ -407,21 +407,20 @@ function MoneySplit({ d }: { d: any }) {
  * The seed field is cost_structure.breakeven_utilization_pct; if it is absent the card
  * renders nothing (never a 0). No honest per-figure source at industry altitude, so it
  * OMITS on real-data promotion.
- * focal: the utilisation figure over a filled Meter. width: Narrow (T5), one figure, air.
+ * focal: the utilisation figure over a filled Meter. width: WideRail rail (paired with
+ * MoneySplit, the chart), no width tier of its own (S8/S9: it no longer floats alone).
  * terracotta: the meter fill only. idiom: fill-bar (1 use on the page). */
 function BreakEven({ d }: { d: any }) {
   const cs = d.cost_structure ?? {};
   const be: number | null = typeof cs.breakeven_utilization_pct === "number" ? cs.breakeven_utilization_pct : null;
   if (be == null) return null;
   return (
-    <Narrow>
-      <Box>
-        <Rail icon="break-even" kicker="Break-even utilisation" verdict="Below this share of a typical day's trade, the day loses money." />
-        <div className="mb-3 flex items-baseline gap-2.5"><CountFig value={be} suffix="%" className="text-[40px] leading-none text-[var(--c-ink)]" /><span className="text-[13px] text-[var(--c-ink2)]">of a typical day's takings, just to cover the costs.<InfoTip gloss={GLOSS_UTILISATION} /></span></div>
-        <Meter value={be} left="empty" right="a typical day" />
-        {cs.note ? <div className="mt-3 text-[11.5px] leading-snug text-[var(--c-muted)]">{cs.note}</div> : null}
-      </Box>
-    </Narrow>
+    <Box>
+      <Rail icon="break-even" kicker="Break-even utilisation" verdict="Below this share of a typical day's trade, the day loses money." />
+      <div className="mb-3 flex items-baseline gap-2.5"><CountFig value={be} suffix="%" className="text-[40px] leading-none text-[var(--c-ink)]" /><InfoTip gloss={GLOSS_UTILISATION} /></div>
+      <Meter value={be} left="empty" right="a typical day" />
+      {cs.note ? <div className="mt-3 text-[11.5px] leading-snug text-[var(--c-muted)]">{cs.note}</div> : null}
+    </Box>
   );
 }
 
@@ -713,10 +712,10 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
 
       {hasMoneySplit || hasBreakEven ? <>
         <Movement index="04" eyebrow="How the money works" heading="The shape of the trade" icon="unit-economics" />
-        <div className="space-y-6">
+        <WideRail>
           <MoneySplit d={d} />
           <BreakEven d={d} />
-        </div>
+        </WideRail>
       </> : null}
 
       {hasRamp || hasOperator || hasPayback || hasSurvival || hasWhoSuits ? <>

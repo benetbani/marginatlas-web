@@ -2,9 +2,10 @@
 /**
  * Client chapters for the city page , the sections that carry count-up-safe motion
  * or a bespoke chart form built page-locally (not in the shared kit):
- *   IncomeCurve   , a small income-distribution curve with median/top10/top1 ticks
- *                   and mass/comfortable/premium affordability tiers (replaces the
- *                   3-bar ladder that erased the median under the top-1% tail).
+ *   IncomeCurve   , a labelled median/top10/top1 tick scale (log-x, no invented
+ *                   curve between the three known points) plus mass/comfortable/
+ *                   premium affordability tiers (replaces the 3-bar ladder that
+ *                   erased the median under the top-1% tail).
  *   OwnerRunway   , the founder-runway read (monthly personal burn x weeks to
  *                   break-even = savings needed), tied to the first-year timeline.
  *                   Replaces the distorted 72%-of-salary alarm stat.
@@ -32,27 +33,15 @@ export function IncomeCurve({ d }: { d: any }) {
   const reduced = useReducedMotion();
   const { ref, seen } = useInView<HTMLDivElement>();
 
-  // a right-skewed log-normal-ish density sampled across the earnings range, plotted
-  // on a log-x so the median is not crushed by the top-1% tail. Ticks at med/t10/t1.
+  // only the three real figures are known (median/top10/top1); a log-x scale plots
+  // them without the top-1% tail crushing the median, but NO curve is drawn between
+  // them , the shape of the distribution in between is not data we hold (S11/D1).
   const W = 320, H = 118, padL = 6, padR = 6, base = H - 20;
   const xmin = Math.log(med * 0.28), xmax = Math.log(t1 * 1.12), span = xmax - xmin || 1;
   const X = (v: number) => padL + ((Math.log(v) - xmin) / span) * (W - padL - padR);
-  const mu = Math.log(med), sigma = 0.62;
-  const dens = (v: number) => Math.exp(-Math.pow(Math.log(v) - mu, 2) / (2 * sigma * sigma));
-  const N = 60;
-  const samples = Array.from({ length: N + 1 }, (_, i) => {
-    const lv = xmin + (i / N) * span;
-    const v = Math.exp(lv);
-    return { x: X(v), y: dens(v) };
-  });
-  const ymax = Math.max(...samples.map((s) => s.y)) || 1;
-  const Y = (y: number) => base - (y / ymax) * (base - 8);
-  // curve is static; `seen`/`reduced` are reserved for a future tick-reveal but the
-  // resting render is always the true distribution (SSR-safe, never blank).
+  // ticks are static; `seen`/`reduced` are reserved for a future reveal but the
+  // resting render is always the true figures (SSR-safe, never blank).
   void seen; void reduced;
-  const linePts = samples.map((s) => `${s.x.toFixed(1)},${Y(s.y).toFixed(1)}`);
-  const line = "M " + linePts.join(" L ");
-  const area = `M ${padL},${base} L ` + linePts.join(" L ") + ` L ${(W - padR)},${base} Z`;
 
   // the MEDIAN is the terracotta reference , the everyday customer is the page's
   // stated base; the tail ticks stay grey (the extreme is context, not the answer).
@@ -65,19 +54,17 @@ export function IncomeCurve({ d }: { d: any }) {
       <Head icon="spending-power">What customers earn here</Head>
       <div ref={ref} className={hasTiers ? "grid gap-4 md:grid-cols-[1fr_260px] md:items-center" : "grid gap-4"}>
         <div className="min-w-0">
-          <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label="Income distribution with median, top 10 percent, and top 1 percent marked" preserveAspectRatio="none">
-            <path d={area} fill={TERRA} opacity={0.1} />
-            <path d={line} fill="none" stroke="#c8c8c6" strokeWidth={1.6} strokeLinejoin="round" />
+          <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label="Median, top 10 percent, and top 1 percent income marked on a scale" preserveAspectRatio="none">
+            <line x1={padL} y1={base} x2={W - padR} y2={base} stroke="#e0dbd6" strokeWidth={1} />
             {ticks.map(([label, v, accent]) => {
               const x = X(v);
               return (
                 <g key={label}>
-                  <line x1={x} y1={Y(dens(v))} x2={x} y2={base} stroke={accent ? TERRA : "#9a9a9a"} strokeWidth={accent ? 1.6 : 1} strokeDasharray={accent ? undefined : "2 2"} />
-                  <circle cx={x} cy={Y(dens(v))} r={accent ? 3.2 : 2.4} fill={accent ? TERRA : "#6f6f6d"} stroke="#fff" strokeWidth={1} />
+                  <line x1={x} y1={base - 34} x2={x} y2={base} stroke={accent ? TERRA : "#9a9a9a"} strokeWidth={accent ? 1.6 : 1} strokeDasharray={accent ? undefined : "2 2"} />
+                  <circle cx={x} cy={base - 34} r={accent ? 3.2 : 2.4} fill={accent ? TERRA : "#6f6f6d"} stroke="#fff" strokeWidth={1} />
                 </g>
               );
             })}
-            <line x1={padL} y1={base} x2={W - padR} y2={base} stroke="#e0dbd6" strokeWidth={1} />
           </svg>
           <div className="mt-1 flex justify-between text-[10px] text-[var(--c-muted)]">
             {ticks.map(([label, v, accent]) => (
