@@ -19,8 +19,10 @@
  * On real-data promotion the surviving spine is a tight decision line: verdict(real) ->
  * where to trade(real) -> what space costs(prose) + who buys(real income curve + split) ->
  * trades + margins(real) -> peers + close(real). The illustrative tail (CityLenses,
- * OwnerRunway, DemandSize magnitude + Spark, DemandCalendar, CityRisks,
+ * OwnerRunway, RentAffordability, DemandSize magnitude + Spark, DemandCalendar, CityRisks,
  * CityCharacter, income tiers, locals_intel, the district map) omits for lack of a source.
+ * RentAffordability needs the same owner_runway rent figure OwnerRunway does (omitted on
+ * promotion), so it never renders on the real page either , a same-tier honest pairing.
  *
  * NO first-year timeline (rulebook v2 S10/D4): a first-year ramp is a TRADE-level concept
  * (how long THIS business takes to break even), and a city page is trade-agnostic, so any
@@ -32,13 +34,13 @@
  */
 import * as React from "react";
 import { spineCitySeed } from "@/lib/spine-seeds";
-import { Fig, Ico, Stat, Spark, Movement, Box, Head, Rail, EaseScale, Full, WideRail, Even, TERRA, TRACK, InfoTip, InlineDisclosure, SpectraTable, MiniBar } from "@/components/spine/kit";
+import { Fig, Stat, Spark, Movement, Box, Head, Rail, EaseScale, Full, WideRail, Even, TERRA, TRACK, InfoTip, InlineDisclosure, SpectraTable, MiniBar } from "@/components/spine/kit";
 import { CompareTable, type CompareEntity, type CompareRow, LockVeil, CellScaleBar } from "@/components/spine/kit-index";
 import { AtlasIcon, type AtlasIconId } from "@/components/brand/icons";
 import { AtlasMark } from "@/components/spine/marks";
 import { CityHero } from "./masthead";
 import { CityStyles } from "./motion";
-import { IncomeCurve, OwnerRunway, MarginKept } from "./chapters";
+import { IncomeCurve, OwnerRunway, MarginKept, RentAffordability } from "./chapters";
 import { WhereToTrade } from "./where-to-trade";
 
 const MONTHS = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
@@ -60,19 +62,14 @@ function CityVerdict({ d }: { d: any }) {
   return (
     <div className="overflow-hidden rounded-[14px] border border-[var(--terra-border)] bg-[var(--c-card)]">
       <div className="p-5 md:p-6">
-        <div className="mb-1.5 flex items-center gap-2"><Ico id="verdict" tone="terra" /><span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--terra-text)]">{v.kicker}</span></div>
         <div className="grid gap-5 md:grid-cols-[1.5fr_1fr] md:items-end">
           <div>
-            {/* noun-phrase heading (one mood page-set-wide); the sentence-form thesis
-                lives in verdict.why below, where prose belongs. */}
+            {/* plain title (rulebook v2 S16); the focal "X vs 100" Stat beside it
+                carries the finding, so no thesis paragraph is needed above it. */}
             <h2 data-typography="custom" className="text-[length:var(--t-sub)] font-bold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2rem]">The margin, district by district</h2>
-            {v.why ? <p className="mt-2 max-w-prose text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{v.why}</p> : null}
-            {v.catch ? (
-              <p className="mt-2.5 flex items-start gap-1.5 rounded-lg border border-[var(--c-border)] bg-[var(--c-soft)] px-3 py-2 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">
-                <span className="mt-0.5 shrink-0 text-[var(--terra-text)]"><AtlasIcon id="honest-take" size={14} /></span>
-                <span><span className="font-semibold text-[var(--c-ink)]">The catch. </span>{v.catch}</span>
-              </p>
-            ) : null}
+            {/* at most one short line (rulebook v2 residue pass): the honest caveat,
+                no boxed treatment, no icon , the Stat carries the answer. */}
+            {v.catch ? <p className="mt-2 max-w-prose text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{v.catch}</p> : null}
           </div>
           <div>
             {/* the district keep spread is the verdict's dominant figure; the best-trade
@@ -97,19 +94,25 @@ function CityVerdict({ d }: { d: any }) {
   );
 }
 
-/* CityLenses. Null-guards on d.lenses.scales (omitted on real-data promotion). */
+/* CityLenses. Null-guards on d.lenses.scales (omitted on real-data promotion , the
+ * live adapter never supplies lenses at all; see adapt_city.ts's omitted-fields list).
+ * The five axes are hand-authored reads with no per-axis source, so the block carries
+ * a SampleTag (rulebook v2 D4: a modeled figure shown as real is the worst defect),
+ * and the shared scale's end labels stay a qualitative lean ("harder"/"easier"), never
+ * a precise for-or-against-you verdict the data cannot support. */
 function CityLenses({ d }: { d: any }) {
   const o = d.lenses;
   if (!o || !(o.scales?.length)) return null;
   const rows: Array<[string, number, string, string?]> = (o.scales ?? []).map((s: any) => [s.label, s.pos, s.word, s.sub]);
+  const sample = o._meta?.confidence === "placeholder" || o._meta?.confidence === "modeled";
   return (
     <Box className="citytop">
       <div className="grid gap-5 md:grid-cols-[1fr_1.7fr] md:items-start">
         <div>
-          <Rail icon="gut-check" kicker="The city, in five reads" verdict={o.headline} />
+          <Head sample={sample}>Five quick reads</Head>
           <p className="text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{o.read}</p>
         </div>
-        <EaseScale rows={rows} endLabels={["Against you", "In your favor"]} />
+        <EaseScale rows={rows} endLabels={["Harder", "Easier"]} />
       </div>
     </Box>
   );
@@ -135,7 +138,7 @@ function CommercialSpace({ d }: { d: any }) {
   return (
     <WideRail>
       <Box className="citytop">
-        <Rail icon="commercial-rent" kicker="What commercial space costs" verdict={s.read} />
+        <Rail icon="commercial-rent" kicker="What commercial space costs" />
         {/* the peer dot strip below (London = 100) IS the pressure read; no second scale. */}
         {/* peers on ONE axis. Only rendered when at least two peers carry a real rent index. */}
         {hasPeerStrip ? (
@@ -164,7 +167,7 @@ function CommercialSpace({ d }: { d: any }) {
       </Box>
       {hasTerms ? (
         <Box className="citytop">
-          <Rail kicker="The lease terms" verdict={s.terms_read} />
+          <Rail kicker="The lease terms" />
           <div className="divide-y divide-[var(--c-border)]">{terms.map(([v, l]) => (
             <div key={l} className="flex items-baseline justify-between gap-3 py-2"><span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{l}</span><Fig className="text-[length:var(--t-lead)] text-[var(--c-ink)]">{v}</Fig></div>
           ))}</div>
@@ -195,7 +198,7 @@ function DemandSize({ d }: { d: any }) {
   const hasCalendar = (d.demand_calendar?.months?.length ?? 0) > 0;
   const sizeBox = (
     <Box className="citytop">
-      <Rail icon="market-size" kicker={hasMagnitude ? "How big the spending pool is" : "Where the trade comes from"} verdict={o.read} />
+      <Rail icon="market-size" kicker={hasMagnitude ? "How big the spending pool is" : "Where the trade comes from"} />
       {hasMagnitude ? (
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
           {/* the per-resident figure is the decision read (what a customer here spends);
@@ -231,7 +234,7 @@ function DemandSize({ d }: { d: any }) {
   );
   const calBox = hasCalendar ? (
     <Box className="citytop">
-      <Rail icon="seasonality" kicker="Busy months and quiet months" verdict={d.demand_calendar?.read} />
+      <Rail icon="seasonality" kicker="Busy months and quiet months" />
       <DemandCalendar d={d} />
     </Box>
   ) : null;
@@ -272,7 +275,7 @@ function TopTrades({ d }: { d: any }) {
   const cols = hasCrowding ? "grid-cols-[minmax(0,140px)_1fr_52px] sm:grid-cols-[150px_1fr_84px_52px_64px]" : "grid-cols-[minmax(0,140px)_1fr_52px] sm:grid-cols-[150px_1fr_84px_52px]";
   return (
     <Box className="citytop">
-      <Rail icon="owner-keeps" kicker="Owner take-home by trade" verdict={d.trades?.read} />
+      <Rail icon="owner-keeps" kicker="Owner take-home by trade" />
       {/* column headers so every cell is self-labelling */}
       <div className={`-mx-2 grid ${cols} items-center gap-3 px-2 pb-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]`}>
         <span>Trade</span><span className="hidden sm:block" /><span className="text-right">Take-home ($/yr)</span><span className="text-right">Keeps</span>{hasCrowding ? <span className="hidden items-baseline justify-end sm:flex">Crowding<InfoTip gloss="How many rivals compete for the same customers." /></span> : null}
@@ -306,7 +309,7 @@ function MarginRail({ d }: { d: any }) {
   const byMargin = arr.slice().sort((a: any, b: any) => (b.net_margin_pct ?? 0) - (a.net_margin_pct ?? 0));
   return (
     <Box className="citytop md:flex-[2]">
-      <Rail kicker="Net margin by trade" verdict={d.trades?.margin_rail_read} />
+      <Rail kicker="Net margin by trade" />
       <div className="divide-y divide-[var(--c-border)]">{byMargin.map((t: any) => {
         const isLead = t.slug === lead.slug;
         const pct = Math.max(0, Number(t.net_margin_pct ?? 0));
@@ -384,12 +387,11 @@ function CityRisks({ d }: { d: any }) {
     const label = (
       <>
         {i === 0 ? <span className="font-medium text-[var(--terra-text)]">{x.label}</span> : x.label}
-        {x.label === "Business rates" ? <InfoTip gloss="A yearly charge based on the rental value of the premises." /> : null}
+        {x.gloss ? <InfoTip gloss={x.gloss} /> : null}
       </>
     );
     return [label, s * 10, wordOf(s), x.who];
   }) as unknown as Array<[string, number, string, string?]>;
-  const top = sorted[0] ?? {};
   return (
     <WideRail>
       <Box className="citytop">
@@ -397,7 +399,7 @@ function CityRisks({ d }: { d: any }) {
         <EaseScale rows={rows} endLabels={["Riskier", "Safer"]} plain />
       </Box>
       <Box className="citytop">
-        <Rail icon="honest-take" kicker="The honest read" verdict={r.honest_read ? <><span className="text-[var(--terra-text)]">{top.label}</span> {r.honest_read}</> : undefined} />
+        <Rail icon="honest-take" kicker="The honest read" />
         {r.read ? <p className="mb-2 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{r.read}</p> : null}
         <InlineDisclosure name="risks" summary="The counterweight for each" className="group mt-2">
           <div className="mt-2 space-y-2.5 border-t border-[var(--c-border)] pt-2.5">{sorted.map((x: any) => (
@@ -421,7 +423,7 @@ function CityCharacter({ d }: { d: any }) {
   const rows: any[] = c.texture ?? [];
   return (
     <Box className="citytop">
-      <Rail icon="ease-of-business" kicker="The texture of doing business here" verdict={c.read} />
+      <Rail icon="ease-of-business" kicker="The texture of doing business here" />
       <div className="divide-y divide-[var(--c-border)]">{rows.map((r: any, i: number) => (
         <div key={i} className="py-1">
           <SpectraTable rows={[r]} />
@@ -473,7 +475,7 @@ function CityPeers({ d }: { d: any }) {
   if (compareRows.length === 0) return null;
   return (
     <Box className="citytop">
-      <Rail icon="compare" kicker="How it compares, city by city" verdict={d.peers?.read} />
+      <Rail icon="compare" kicker="How it compares, city by city" />
       <CompareTable entities={entities} rows={compareRows} caption="Best in each metric is bold. Compared like for like. The home city is tinted, never ranked." />
     </Box>
   );
@@ -559,8 +561,11 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
   // Per-chapter content presence (drives whether the Movement wrapper renders).
   const hasVerdictCh = !!(d.verdict && d.verdict.keep_pct != null) || !!(d.lenses?.scales?.length);
   const hasWhereCh = !!(d.where_to_trade?.list?.length);
-  const hasCostCh = !!(d.space?.read) || !!(d.owner_runway?.read) || !!(d.income?.median_income_usd != null);
-  const hasCustomersCh = !!(d.demand && (d.demand.resident_pct != null || d.demand.consumer_spend_usd_bn != null));
+  // IncomeCurve lives in the Customers chapter now (earnings data belongs under "who
+  // buys"), so a real median income no longer counts toward the Costs chapter alone;
+  // RentAffordability's own two-figure requirement does instead.
+  const hasCostCh = !!(d.space?.read) || !!(d.owner_runway?.read) || !!(d.owner_runway?.rent_1bed_usd_mo != null && d.income?.median_income_usd != null);
+  const hasCustomersCh = !!(d.demand && (d.demand.resident_pct != null || d.demand.consumer_spend_usd_bn != null)) || !!(d.income?.median_income_usd != null);
   const tradeRows = (d.trades?.list ?? []).filter((t: any) => t.take_home_usd != null);
   const hasTradesCh = tradeRows.length >= 3 || tradeRows.some((t: any) => t.net_margin_pct != null);
   const hasRunningCh = !!(d.risks?.list?.length) || !!(d.character?.texture?.length) || !!(d.locals_intel?.length);
@@ -578,28 +583,30 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           page's signature answer, so it opens as Movement 01. */}
       {hasWhereCh ? (
         <>
-          <Movement index={cn()} eyebrow="Where to trade" heading="Where you keep the most" icon="best-areas" />
+          <Movement index={cn()} eyebrow="Where to trade" heading="Districts by keep index" icon="best-areas" />
           <WhereToTrade d={d} trades={trades} />
         </>
       ) : null}
 
       {/* The five-read lenses follow as their OWN numbered chapter, rendered ONLY when
           the lens scales exist (omitted on real-data promotion , no per-axis source), so
-          the "The read on ..." heading is never an orphan above an empty section. */}
+          the "The city's conditions" heading is never an orphan above an empty section. */}
       {d.lenses?.scales?.length ? (
         <>
-          <Movement index={cn()} eyebrow="The verdict" heading={`The read on ${d.meta?.city ?? "the city"}`} icon="gut-check" />
+          <Movement index={cn()} eyebrow="The verdict" heading="The city's conditions" icon="gut-check" />
           <CityLenses d={d} />
         </>
       ) : null}
 
-      {/* What it costs , commercial space + the founder runway + the income curve. */}
+      {/* What it costs , commercial space + the founder runway + rent-against-income
+          (IncomeCurve moved to the Customers chapter; earnings data belongs under
+          "who buys", not "what it costs"). */}
       {hasCostCh ? (
         <>
-          <Movement index={cn()} eyebrow="What it costs here" heading="What space and life cost" icon="commercial-rent" />
+          <Movement index={cn()} eyebrow="What it costs here" heading="What space and living cost" icon="commercial-rent" />
           <div className="space-y-4">
             <CommercialSpace d={d} />
-            <Even><OwnerRunway d={d} /><IncomeCurve d={d} /></Even>
+            <Even><OwnerRunway d={d} /><RentAffordability d={d} /></Even>
           </div>
         </>
       ) : null}
@@ -608,7 +615,10 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
       {hasCustomersCh ? (
         <>
           <Movement index={cn()} eyebrow="Your customers" heading="Who buys, and when" icon="spending-power" />
-          <DemandSize d={d} />
+          <div className="space-y-4">
+            <DemandSize d={d} />
+            <IncomeCurve d={d} />
+          </div>
         </>
       ) : null}
 

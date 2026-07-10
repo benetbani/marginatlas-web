@@ -2,16 +2,22 @@
 /**
  * Client chapters for the city page , the sections that carry count-up-safe motion
  * or a bespoke chart form built page-locally (not in the shared kit):
- *   IncomeCurve   , a labelled median/top10/top1 tick scale (log-x, no invented
- *                   curve between the three known points) plus mass/comfortable/
- *                   premium affordability tiers (replaces the 3-bar ladder that
- *                   erased the median under the top-1% tail).
- *   OwnerRunway   , the founder-runway read (monthly personal burn x weeks to
- *                   break-even = savings needed), tied to the first-year timeline.
- *                   Replaces the distorted 72%-of-salary alarm stat.
- *   MarginKept    , the HONEST kept-vs-spent split for the local margin leader
- *                   (hair & beauty). No fabricated rent/staff/stock sub-blocks; the
- *                   one true figure is the net margin. Per-trade margins beside it.
+ *   IncomeCurve       , a labelled median/top10/top1 tick scale (log-x, no invented
+ *                       curve between the three known points) plus median/top10%/
+ *                       top1% spend-share tiers (replaces the 3-bar ladder that
+ *                       erased the median under the top-1% tail; the tiers share the
+ *                       same three labels as the ticks , one set of landmarks, two
+ *                       lenses). Lives in the Customers chapter (earnings data).
+ *   OwnerRunway       , the founder-runway read (monthly personal burn x weeks to
+ *                       break-even = savings needed), tied to the first-year timeline.
+ *                       Replaces the distorted 72%-of-salary alarm stat.
+ *   RentAffordability , a small honest cost/income ratio (one year of one-bed rent
+ *                       against the median income), pairs with OwnerRunway in the
+ *                       Costs chapter so it is not left thin once IncomeCurve moves
+ *                       out to Customers. Omits without both figures.
+ *   MarginKept        , the HONEST kept-vs-spent split for the local margin leader
+ *                       (hair & beauty). No fabricated rent/staff/stock sub-blocks; the
+ *                       one true figure is the net margin. Per-trade margins beside it.
  * All prose from the seed. Terracotta rationed to one decision figure per Box.
  */
 import * as React from "react";
@@ -119,7 +125,7 @@ export function OwnerRunway({ d }: { d: any }) {
   ];
   return (
     <Box className="citytop">
-      <Rail icon="cost-breakdown" kicker="What you'll spend to live while you build this" verdict={o.read} />
+      <Rail icon="cost-breakdown" kicker="What you'll spend to live while you build this" />
       <div className="grid grid-cols-[1fr_auto] items-center gap-4">
         <div>
           <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Savings to reach break-even</div>
@@ -135,6 +141,35 @@ export function OwnerRunway({ d }: { d: any }) {
           <div className="py-1.5 text-[11px] text-[var(--c-muted)]">{o.runway_note}</div>
         </div>
       </InlineDisclosure>
+    </Box>
+  );
+}
+
+/* ---- rent affordability ----
+ * A small, honest cost/income ratio: one year of a one-bed rent against the median
+ * income. Fills the Costs chapter's Even slot beside OwnerRunway now that IncomeCurve
+ * has moved to the Customers chapter, so the chapter is not left thin with one lone
+ * box. Null-guards: omits without BOTH a real one-bed rent figure and a real median
+ * income , the ratio needs both sides to be honest, never one side assumed. */
+export function RentAffordability({ d }: { d: any }) {
+  const rentMo = d.owner_runway?.rent_1bed_usd_mo;
+  const income = d.income?.median_income_usd;
+  if (rentMo == null || income == null) return null;
+  const pct = Math.round(((rentMo * 12) / income) * 100);
+  return (
+    <Box className="citytop">
+      <Head icon="commercial-rent">Rent against income</Head>
+      <div className="flex flex-wrap items-baseline gap-x-2">
+        <Fig className="text-3xl text-[var(--terra-text)]">{pct}%</Fig>
+        <span className="text-[13px] text-[var(--c-ink2)]">of the median income, a year of one-bed rent.</span>
+      </div>
+      <div className="mt-3 h-2 overflow-hidden rounded-full" style={{ background: TRACK }}>
+        <div className="h-full rounded-full" style={{ width: `${Math.min(100, pct)}%`, background: TERRA }} />
+      </div>
+      <div className="mt-2 flex justify-between text-[11px] text-[var(--c-muted)]">
+        <span>{money(rentMo)}/mo rent</span>
+        <span>{money(income)}/yr median income</span>
+      </div>
     </Box>
   );
 }

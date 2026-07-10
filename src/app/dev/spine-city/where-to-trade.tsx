@@ -71,7 +71,13 @@ export function WhereToTrade({ d, trades }: { d: any; trades: any[] }) {
 
   return (
     <Box className="citytop">
-      <Rail icon="best-areas" tone="terra" kicker="Where to trade" verdict={w.read} />
+      {/* "By district" , plain, and deliberately NOT "Where to trade": this chapter's
+          Movement call (city-view.tsx) still carries eyebrow="Where to trade" (a dead,
+          unrendered prop per the kit patch) alongside this box's OWN kicker, which used
+          to read the identical string. Same words, two labels, is the exact defect the
+          rulebook's residue pass exists to kill , so the surviving, rendered label here
+          carries different words even though the eyebrow itself no longer renders. */}
+      <Rail icon="best-areas" tone="terra" kicker="By district" />
       <div className={hasMap ? "grid gap-4 lg:grid-cols-[1.35fr_1fr] lg:items-stretch" : "grid gap-4"}>
         {/* the map , the highest-craft object, given real height. Omitted with no coords. */}
         {hasMap ? (

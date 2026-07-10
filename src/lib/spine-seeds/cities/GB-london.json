@@ -44,11 +44,11 @@
   "income": {
     "_meta": { "confidence": "modeled", "source": "London earnings distribution, illustrative", "as_of": "2026-06" },
     "median_income_usd": 47000, "top10_income_usd": 130000, "top1_income_usd": 350000,
-    "read": "Money runs deep and skews high. The everyday customer earns a comfortable wage, and a long tail above them leaves real room for a premium ticket.",
+    "read": "Money runs deep and skews high. The everyday customer earns a solid wage, and a long tail above them leaves real room for a premium ticket.",
     "tiers": [
-      { "label": "Everyday", "note": "The median customer. Values price, but pays for quality and convenience.", "share": 60 },
-      { "label": "Comfortable", "note": "The top tenth. Trades up readily; the natural target for a mid-premium trade.", "share": 30 },
-      { "label": "Premium", "note": "The top hundredth. A thin, high-ceiling market that pays almost any ticket.", "share": 10 }
+      { "label": "Median", "note": "The median customer. Values price, but pays for quality and convenience.", "share": 60 },
+      { "label": "Top 10%", "note": "The top tenth. Trades up readily; the natural target for a mid-premium trade.", "share": 30 },
+      { "label": "Top 1%", "note": "The top hundredth. A thin, high-ceiling market that pays almost any ticket.", "share": 10 }
     ]
   },
   "space": {
@@ -96,7 +96,7 @@
     "_honest_read_note": "A tail fragment: the component leads with the top exposure's name (the page's one terracotta carrier in this box), then this sentence.",
     "list": [
       { "label": "Rent shock", "who": "at lease renewal", "severity_0_100": 82, "word": "Exposed", "counterweight": "Long leases with capped uplifts blunt the worst of it." },
-      { "label": "Business rates", "who": "on top of rent", "severity_0_100": 74, "word": "Exposed", "counterweight": "Small-business relief cuts the bill for the smallest units." },
+      { "label": "Business rates", "who": "on top of rent", "severity_0_100": 74, "word": "Exposed", "counterweight": "Small-business relief cuts the bill for the smallest units.", "gloss": "A yearly charge based on the rental value of the premises." },
       { "label": "Footfall volatility", "who": "postcode by postcode", "severity_0_100": 58, "word": "Uneasy", "counterweight": "A resident-heavy base steadies the weekly trade." },
       { "label": "Regulation", "who": "licensing and compliance", "severity_0_100": 46, "word": "Uneasy", "counterweight": "Rules are predictable once you know the steps, not arbitrary." }
     ]
