@@ -14,6 +14,13 @@ import { getAllPosts, type BlogPost } from "@/lib/blog";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { NeighborhoodCards } from "@/components/home/NeighborhoodCards";
 import { loadNeighborhoodCards } from "@/lib/home/neighborhood_cards";
+// Wave 2 Task 7 , the rebuilt-homepage gate (NEXT_PUBLIC_HOME_REFORM, default OFF).
+// Mirrors the dev route's (src/app/dev/home2/page.tsx) data-loading exactly.
+import { isHomeReformEnabled } from "@/lib/feature_flags";
+import { SpineShell } from "@/components/spine/shell";
+import { Home2View } from "@/app/dev/home2/home2-view";
+import { rankPlacesForTrade, slugToIndustry } from "@/lib/scores/recommend";
+import { toMarginIndexBoard } from "@/lib/scores/margin_index";
 
 /**
  * Full-bleed tone wrapper for homepage sections. The inner
@@ -122,6 +129,50 @@ function formatPostDate(iso: string): string {
 }
 
 export default async function HomePage() {
+  // Wave 2 Task 7: gate the rebuilt homepage behind NEXT_PUBLIC_HOME_REFORM (default
+  // OFF, see src/lib/feature_flags.ts). Mirrors src/app/dev/home2/page.tsx's
+  // data-loading exactly (the same Margin Index resolver run , slugToIndustry ->
+  // rankPlacesForTrade -> toMarginIndexBoard , and the same keep-guarded insight
+  // derivation), so the live route never re-derives it differently. The live route
+  // wraps in SpineShell itself (the dev route gets it from its own layout.tsx), the
+  // same pattern src/app/cities/[slug]/page.tsx uses for its spine branch. With the
+  // flag OFF (the default) this whole block is skipped and the untouched body below
+  // renders exactly as it does today.
+  if (isHomeReformEnabled()) {
+    const ind = slugToIndustry("restaurants");
+    const result = ind ? await rankPlacesForTrade(ind.id, { budgetUsd: null }) : null;
+    const marginIndexBoard = result ? toMarginIndexBoard(result) : null;
+
+    // The one honest headline stat: the board's top row, ONLY when its keep share is
+    // real (never a fabricated percentage on a dashed/unknown row).
+    const top = marginIndexBoard?.rows[0];
+    const insight =
+      top && top.keepKnown && top.keepPct != null
+        ? `${top.name} keeps ${top.keepPct}% of a restaurant's revenue`
+        : null;
+
+    // Real posts only. getAllPosts() already self-guards a missing content dir; the
+    // try/catch is extra defense so a malformed post's frontmatter can never break
+    // the route. Named distinctly from the flag-OFF path's own `blogPosts` below
+    // (different block scope either way; the name just keeps the two paths visibly
+    // separate on the page).
+    let reformBlogPosts: ReturnType<typeof getAllPosts> = [];
+    try {
+      reformBlogPosts = getAllPosts();
+    } catch {
+      reformBlogPosts = [];
+    }
+
+    return (
+      <SpineShell>
+        <main className="mx-auto max-w-[1120px] px-4 py-8 md:px-6">
+          <Home2View insight={insight} marginIndexBoard={marginIndexBoard} blogPosts={reformBlogPosts} />
+        </main>
+      </SpineShell>
+    );
+  }
+  // flag OFF: everything below is the current homepage, untouched.
+
   const { posts: blogPosts } = loadBlogRail();
   // Neighborhood cards resolved from the real flavor data. A candidate with no
   // flavor entry is dropped, and the section self-omits below four cards, so the
