@@ -27,7 +27,7 @@ import { buildCityActivities } from "@/lib/scores/city_board";
 import { industryToSlug } from "@/lib/taxonomy";
 import {
   TERRA, TRACK, usd, cap,
-  Ico, Fig, MiniBar, Dots, StackBar, Waterfall, Donut,
+  Ico, Fig, MiniBar, Dots, StackBar, ShareStack, Waterfall, Donut,
   Movement, Box, EaseScale, Meter, Head, Chip, KV, Expand, InlineDisclosure, Bullets,
   Even, WideRail, CatRows,
   Rail, Stat, InfoTip, SpectraTable,
@@ -235,7 +235,7 @@ function Profile({ d }: { d: any }) {
   const bottom = scored[scored.length - 1]?.label;
   return (
     <Box>
-      <Rail icon="vs-world" kicker="The country, in six lenses" verdict={<>Overall <b className="text-[var(--c-ink)]">{avg}/10</b>, strongest on <b className="text-[var(--c-ink)]">{top?.toLowerCase()}</b>, weakest on <b className="text-[var(--c-ink)]">{bottom?.toLowerCase()}</b>.</>} />
+      <Rail icon="vs-world" kicker="The country, in six lenses" />
       {/* Each marker fills to its true fraction of the track (score x 10 percent), so a
           7 reads at 70 percent, never pushed further out. One accent: the top lens. */}
       <div className="space-y-2.5">
@@ -279,7 +279,7 @@ function Demand({ d }: { d: any }) {
     <Box>
       {/* verdict written for the per-citizen focal (the old "deep pool" line described the
           deleted trillion-dollar figure) and it states the true share, never "most". */}
-      <Rail icon="spending-power" kicker="The size of the market" verdict={<>The average resident spends <b className="text-[var(--c-ink)]">{usd(perCitizen)}</b> a year; the biggest slice, {segs[0]?.pct ?? 0}%, is {topName || "everyday spend"}, not premium.</>} />
+      <Rail icon="spending-power" kicker="The size of the market" />
       <div className="grid items-center gap-5 md:grid-cols-[minmax(0,1fr)_auto]">
         <div className="focal flex flex-col justify-center p-4">
           <Stat value={usd(perCitizen)} label="Consumer spend per citizen, a year" size="focal" accent />
@@ -298,29 +298,36 @@ function Demand({ d }: { d: any }) {
 }
 
 /*
- * TheCatch , the one honesty band. Fuses the headline myth, the main counterweight and
- * the single top-scored risk into ONE Rail + bullets. Derived from data already present
- * (risk_exit.risks + the affordability lens + the seed's dedicated catch line), never a
- * new invented claim. The third bullet is character.the_catch, a sentence written FOR
- * this band , NEVER a locals_intel item, because those render verbatim in "What locals
- * know" and a paying reader must never meet the same sentence twice.
- * verdict: a flat "what the easy-setup story leaves out" line; the bullets carry the honesty.
+ * TheCatch , the one honesty band. Rulebook v2 corrections (2026-07-10): the mandatory
+ * honesty band must read from a VISUAL, not a paragraph (S4/S7). The single biggest catch
+ * is the top-scored entry in risk_exit.risks, rendered as a labelled figure (a Stat + a
+ * magnitude bar), never a sentence; the seed's dedicated character.the_catch line is the
+ * ONE supporting line beneath it (never a locals_intel item, so a paying reader never
+ * meets the same sentence twice in "What locals know"). The old hardcoded "energy, rent
+ * and the tax load run high here" bullet is deleted , it asserted the same claim for
+ * every country regardless of the data (Rule 0).
+ * focal: the top risk's score, labelled, with a magnitude bar.
  * width: Full , a load-bearing honesty band; never center-floated.
- * terracotta: the honest-take icon tile only (this IS a verdict section, so the accent belongs).
+ * terracotta: the risk figure + its bar only (one accent, echoed twice).
  */
 function TheCatch({ d }: { d: any }) {
   const risks = (d.risk_exit?.risks ?? []).slice().sort((a: any, b: any) => (b.score_1_10 ?? 0) - (a.score_1_10 ?? 0));
   const topRisk = risks[0];
-  const riskLabel: any = { energy_input_costs: "energy and input costs", rule_tax_changes: "shifting rules and tax", demand_cycle: "the demand cycle", currency_swings: "currency swings", skills_shortages: "skills shortages" };
-  const items: string[] = [
-    `Easy to set up, but not cheap to run: energy, rent and the tax load run high here, and they eat into the margin the quick start seems to promise.`,
-    topRisk ? `The biggest standing risk is ${riskLabel[topRisk.name] ?? topRisk.name.replace(/_/g, " ")}, at ${topRisk.score_1_10}/10, well ahead of the rest.` : "",
-    d.character?.the_catch ?? "Local operators price the hidden costs in before they commit.",
-  ].filter(Boolean);
+  const riskLabel: any = { energy_input_costs: "Energy and input costs", rule_tax_changes: "Shifting rules and tax", demand_cycle: "The demand cycle", currency_swings: "Currency swings", skills_shortages: "Skills shortages" };
+  const topLabel: string | null = topRisk ? (riskLabel[topRisk.name] ?? cap(String(topRisk.name).replace(/_/g, " "))) : null;
   return (
     <Box>
-      <Rail icon="honest-take" tone="terra" kicker="The catch" verdict="What the easy-setup story leaves out." />
-      <Bullets items={items} />
+      <Rail kicker="The catch" />
+      {topRisk ? (
+        <div className="focal flex flex-wrap items-center gap-x-6 gap-y-3 p-4">
+          <Stat value={<>{topRisk.score_1_10}<span className="text-[length:var(--t-body)] text-[var(--c-muted)]">/10</span></>} label="The biggest standing risk" sub={topLabel ?? undefined} size="focal" accent />
+          <div className="min-w-[160px] flex-1">
+            <MiniBar pct={topRisk.score_1_10 * 10} accent />
+            <div className="mt-1 flex justify-between text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]"><span>Low</span><span>High</span></div>
+          </div>
+        </div>
+      ) : null}
+      <p className="mt-3 border-t border-[var(--c-border)] pt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{d.character?.the_catch ?? "Local operators price the hidden costs in before they commit."}</p>
     </Box>
   );
 }
@@ -343,7 +350,7 @@ function SetupTimeline({ d }: { d: any }) {
   const timeWord = (days: number) => (days <= 0 ? "same day" : days === 1 ? "1 day" : `${days} days`);
   return (
     <Box>
-      <Rail icon="register-cost" kicker="The steps to open" verdict="You can trade from day one; the bank account is the single slow step." />
+      <Rail icon="register-cost" kicker="The steps to open" />
       <ol className="relative ml-3 space-y-4 border-l-2 border-[var(--c-border)] pl-6 pt-1">
         {steps.map((s: any, i: number) => {
           const days = Math.max(0, s.time_days ?? 0);
@@ -481,7 +488,7 @@ function TaxByLevel({ d }: { d: any }) {
   const items = groups.flatMap((g: any) => (g.items ?? []).map((it: any) => ({ ...it, level: g.level })));
   return (
     <Box>
-        <Rail icon="taxes" kicker="What the business actually pays" verdict="You keep less than the headline rate suggests: several taxes stack, and the tax on profits carries most." />
+        <Rail icon="taxes" kicker="What the business actually pays" />
         <div className="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
           <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">All-in tax load</span>
           <Fig className="text-[26px] leading-none text-[var(--terra-text)]">{allIn}%</Fig>
@@ -641,7 +648,7 @@ function OperatingCosts({ d }: { d: any }) {
   const dots = all.map((x) => ({ pos: ((x.v - lo) / span) * 100, label: x.code === "GB" ? `${x.name} ${fmtc(x.v)}` : x.name, accent: x.code === "GB" }));
   return (
     <Box>
-      <Rail icon="commercial-rent" kicker="What it costs to run a place" verdict={<>Rent is the big variable cost; power runs <b className="text-[var(--c-ink)]">{rank}</b> among neighbours.</>} />
+      <Rail icon="commercial-rent" kicker="What it costs to run a place" />
       {/* Rent is THE focal (the verdict names it); electricity demoted to a support figure
           beside it , two equal focal Stats competed for the same eye (rule 23). Oil / fuel
           and rent-as-average-of-covered-cities remain open data needs: the seed holds a
@@ -777,13 +784,22 @@ function RiskRegister({ d }: { d: any }) {
     .sort((a: any, b: any) => a.safe - b.safe);
   return (
     <Box>
-      <Rail icon="watch" kicker="What could go wrong" verdict="Each factor scored for how safe it is, higher is better; the lowest is the one to watch." />
+      <Rail icon="watch" kicker="What could go wrong" />
       <div className="space-y-2.5">{risks.map((r: any, i: number) => (
         <div key={r.name} className="hov -mx-2 grid grid-cols-[130px_1fr_auto] items-center gap-2.5 rounded-md px-2 py-1">
           <span className={`min-w-0 truncate text-[length:var(--t-body)] ${i === 0 ? "font-medium text-[var(--terra-text)]" : "text-[var(--c-ink2)]"}`}>{label[r.name] ?? r.name}</span>
           <Dots score={r.safe} max={10} />
           <Fig className="w-9 text-right text-[length:var(--t-body)] text-[var(--c-ink)]">{r.safe}/10</Fig>
         </div>))}
+      </div>
+      {/* the axis meaning as an END-LABEL on the shared scale (rulebook v2 corrections:
+          an axis explainer moves onto the scale, never back into a sentence). The list is
+          sorted ascending by safety, so the terracotta row above is already the one to
+          watch; these two words are the whole remaining read. */}
+      <div aria-hidden className="mt-1.5 grid grid-cols-[130px_1fr_auto] items-center gap-2.5">
+        <span />
+        <div className="flex justify-between text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]"><span>Riskier</span><span>Safer</span></div>
+        <span />
       </div>
     </Box>
   );
@@ -813,7 +829,7 @@ function Income({ d }: { d: any }) {
   const bands = ["very_equal", "fairly_equal", "moderate", "high", "very_high"]; const gi = bands.indexOf(o.gini_band);
   return (
     <Box>
-      <Rail icon="spending-power" kicker="What customers earn" verdict="A comfortable median customer, but the top pulls far ahead of the middle." />
+      <Rail icon="spending-power" kicker="What customers earn" />
       <div className="focal mb-3 flex items-end justify-between p-4">
         <Stat value={k$(med)} label="Median earner" size="focal" accent />
         <div className="text-right text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)]">the customer<br />who walks in</div>
@@ -903,10 +919,12 @@ function Neighbours({ d }: { d: any }) {
  * NON-expandable, no buttons, all visible, the content divided into THREE labelled
  * categories. The old "55 hours / 9 filings a year" focal is DROPPED , the founder called
  * it evasive and hard to source for every country (a universally-calculable metric is an
- * open point of debate); the online share stays as the one defensible figure. The verdict
- * EXPLAINS what the load consists of rather than grading it.
+ * open point of debate); the online share stays as the one defensible figure. Rulebook v2
+ * S7 (2026-07-10): a lone percentage beside plain text is "the number that should be a
+ * chart" , the online share now renders as a ShareStack (online vs offline), a 2-segment
+ * bar that explains itself by form.
  * width: WideRail [2] , the narrow card beside DigitalPayments.
- * terracotta: the online-share figure only.
+ * terracotta: the online segment of the ShareStack only.
  */
 function AdminLoad({ d }: { d: any }) {
   const a = d.admin_load ?? {};
@@ -918,12 +936,14 @@ function AdminLoad({ d }: { d: any }) {
     ["Returns", bullets[1]],
     ["Payroll", bullets[2]],
   ];
+  const onlinePct = typeof a.online_pct === "number" ? a.online_pct : null;
   return (
-    <Box><Rail icon="red-tape" kicker="The admin load" verdict="Once the company is set up, the running paperwork is tax, yearly returns and payroll." />
-      <div className="mb-3 flex items-baseline gap-2">
-        <Fig className="text-[26px] leading-none text-[var(--terra-text)]">{a.online_pct}%</Fig>
-        <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">of it is done online</span>
-      </div>
+    <Box><Rail kicker="The admin load" />
+      {onlinePct != null ? (
+        <div className="mb-3.5">
+          <ShareStack segments={[{ label: "Online", pct: onlinePct }, { label: "Offline", pct: Math.max(0, 100 - onlinePct) }]} />
+        </div>
+      ) : null}
       <CatRows rows={rows} />
     </Box>
   );
@@ -1012,7 +1032,7 @@ function SixTradesTakeHome({ trades, countryName }: { trades: Array<{ name: stri
   const leader = trades[0];
   return (
     <Box>
-      <Rail icon="owner-keeps" kicker="What an owner keeps, by trade" verdict={<>The state takes its share; here is what the everyday trades leave the owner. <b className="text-[var(--c-ink)]">{leader.name}</b> keeps the most, and the busiest trades are rarely the richest.</>} />
+      <Rail icon="owner-keeps" kicker="What an owner keeps, by trade" />
       <RankBars rows={rows} valueUnit="" leaderId={leader.slug} />
       {/* wave-2 "reconciled" mark: these ARE the sanctioned per-trade figures, cross-checked
           with each cell page by construction (same engine) , a real status, not decoration. */}
@@ -1241,7 +1261,9 @@ function Exit({ d }: { d: any }) {
   const buyers: string[] = e.buyers ?? [];
   const institutional = buyers.filter((b) => /equity|strategic|acquir|search fund|institution/i.test(b));
   const rows: Array<[string, any]> = [
-    ["Selling market", e.climate ? `${cap(e.climate)}: a mature broker market where most clean small firms change hands rather than close.` : null],
+    // Bound to e.climate: the label and the score are the country's real reading, never
+    // a fixed "mature broker market" clause that would self-contradict on a thin one.
+    ["Selling market", e.climate ? <>{cap(e.climate)}{typeof e.climate_score_0_100 === "number" ? <> <Fig className="text-[var(--c-ink)]">{e.climate_score_0_100}</Fig><span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">/100</span></> : null}</> : null],
     ["Who buys", institutional.length ? <>Institutional buyers are present, {institutional.join(", ").toLowerCase()}, alongside the individual owner-operators who buy most small firms.</> : "Mostly individual owner-operators; institutional buyers are thin on the ground."],
     ["What lifts the price", "Clean books and a customer base that transfers without the founder; asset sales suit micro-firms, share sales the larger ones."],
     ["Typical valuation", e.multiple_low ? <>About <Fig className="text-[var(--c-ink)]">{e.multiple_low}x to {e.multiple_high}x</Fig> a year&apos;s profit for a small firm.</> : null],
@@ -1264,7 +1286,7 @@ function Exit({ d }: { d: any }) {
 function Employment({ d }: { d: any }) {
   const e = d.employment ?? {};
   return (
-    <Box><Rail icon="min-wage" kicker="Working here, the rules" verdict="Generous statutory holiday, but flexible contracts and a low-union workforce favour employers." />
+    <Box><Rail icon="min-wage" kicker="Working here, the rules" />
       {/* Founder: give the union figure the SAME weight as paid holiday (equal size), a
           symmetrical pair; holiday keeps the one terracotta accent, the union label sits below. */}
       <div className="focal mb-3 grid grid-cols-2 gap-4 p-4">
@@ -1291,7 +1313,7 @@ function Closing({ d }: { d: any }) {
   // The time + cost stay as small supporting facts, not a headline verdict.
   const months = String(c.time_months ?? "").replace(/\s+to\s+/g, "-");
   return (
-    <Box><Rail icon="vacancy" kicker="If it doesn't work, getting out" verdict="How you wind down turns on whether the company is solvent; a debt-free micro-firm simply strikes off." />
+    <Box><Rail icon="vacancy" kicker="If it doesn't work, getting out" />
       <CatRows rows={[["If solvent", c.solvent], ["If insolvent", c.insolvent], ["Your liability", c.liability]]} />
       <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 border-t border-[var(--c-border)] pt-3">
         <div><Fig className="text-[length:var(--t-lead)] text-[var(--c-ink)]">{months}</Fig><span className="ml-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">months, typical</span></div>
@@ -1542,7 +1564,7 @@ export default async function SpinePage() {
       {/* CH5 , trades and character. Cities + map moved UP to CH1 (the founder's locked first
           section), so this chapter now opens on the trades and runs alternated forms:
           Even -> Full spectra -> Even -> Even -> Locals folded in after the character band. */}
-      <Movement eyebrow="Trades and character" heading="The trades and the character" icon="high-street" index="05" />
+      <Movement eyebrow="Trades and character" heading="The trades, the culture and the exit" icon="high-street" index="05" />
       <div className="space-y-5">
         <Even><EasiestTrades d={d} /><SellingAbroad d={d} /></Even>
         <Insurance d={d} />
