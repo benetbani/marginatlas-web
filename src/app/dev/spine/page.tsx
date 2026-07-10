@@ -1030,7 +1030,12 @@ function SixTradesTakeHome({ trades, countryName }: { trades: Array<{ name: stri
  * NOTE: these are the seed's illustrative openings; aligning them to the site-wide canonical
  * six + a real cost-to-open is a flagged data need (the take-home funnel already holds the
  * real six). width: Even. terracotta: none (a plain reference; the funnel above carries it).
+ * D4 fix (2026-07-10): a trade with no real cost_to_open_usd used to fall through the old
+ * `?? 0` fallback and render as a real-looking "$0K" bar. The filter below now drops any
+ * row without a real, positive cost instead of fabricating a zero.
  */
+const isNum = (v: number | null | undefined): v is number =>
+  v != null && Number.isFinite(v);
 function EasiestTrades({ d }: { d: any }) {
   // ONE vocabulary (rule 22): the seed's openings map onto the locked canonical six
   // (Convenience shop reads as Grocery); off-slate rows (cleaning, hair and beauty) are
@@ -1047,7 +1052,7 @@ function EasiestTrades({ d }: { d: any }) {
   };
   const list = (d.trades_to_start?.list ?? [])
     .map((t: any) => ({ ...t, c: canon(t.name || "") }))
-    .filter((t: any) => t.c)
+    .filter((t: any) => t.c && isNum(t.cost_to_open_usd) && t.cost_to_open_usd > 0)
     .sort((a: any, b: any) => (b.cost_to_open_usd ?? 0) - (a.cost_to_open_usd ?? 0));
   if (!list.length) return null;
   const max = Math.max(...list.map((t: any) => t.cost_to_open_usd ?? 0)) || 1;
@@ -1189,7 +1194,7 @@ function Character({ d }: { d: any }) {
     <Box>
       {/* icon: ease-of-business, not the bribe-envelope corruption glyph, which asserted
           the opposite of the "clean, rules-led" verdict beneath it (form=meaning). */}
-      <Rail icon="ease-of-business" kicker="The character of the place" verdict="Clean, rules-led dealing; reserved to work with, but brisk and quick to transact." />
+      <Rail icon="ease-of-business" kicker="The character of the place" />
       <div className="grid gap-x-8 gap-y-6 md:grid-cols-2">
         <div>
           <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Government, from a business view</div>

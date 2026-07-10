@@ -372,6 +372,10 @@ function EasiestTrades({ d }: { d: any }) {
 function CityRisks({ d }: { d: any }) {
   const r = d.risks;
   if (!r || !(r.list?.length)) return null;
+  // D4 (rulebook v2): this seed's severities are illustrative, not measured
+  // (risks._meta.confidence is "placeholder" here). Mark the block so the reader
+  // never mistakes 82/74/58/46 for researched figures.
+  const sample = r._meta?.confidence === "placeholder" || r._meta?.confidence === "modeled";
   const safetyOf = (sev: number) => Math.max(1, Math.min(10, Math.round((100 - sev) / 10)));
   const wordOf = (s: number) => (s <= 3 ? "Exposed" : s <= 5 ? "Uneasy" : s <= 7 ? "Steadier" : "Calm");
   const sorted = (r.list ?? []).slice().sort((a: any, b: any) => (b.severity_0_100 ?? 0) - (a.severity_0_100 ?? 0));
@@ -389,7 +393,7 @@ function CityRisks({ d }: { d: any }) {
   return (
     <WideRail>
       <Box className="citytop">
-        <Head icon="watch">What to watch here</Head>
+        <Head icon="watch" sample={sample}>What to watch here</Head>
         <EaseScale rows={rows} endLabels={["Riskier", "Safer"]} plain />
       </Box>
       <Box className="citytop">
