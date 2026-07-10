@@ -1769,3 +1769,18 @@
     text-align: center;
   }
 }
+
+/* The spine type scale. Four steps, each ratio >= 1.20, so hierarchy is
+   resolvable by eye. Defined at :root so BOTH the live SpineShell and the dev
+   routes' inline shell copies inherit it. A var that resolves nowhere makes
+   font-size an invalid declaration, which the browser drops, silently falling
+   back to the inherited size. Denser than a generic legibility scale on
+   purpose (founder, 2026-06-18: "cut text 50%+, smaller type"); the disease
+   was never small text, it was six sizes spanning 2.5px with no hierarchy. */
+:root {
+  --t-micro: 10px; /* labels, axis units, chips, uppercase tracked text */
+  --t-body: 12px;  /* body prose */
+  --t-lead: 15px;  /* lead / verdict line */
+  --t-sub: 20px;   /* the sub-focal tier */
+}
+

@@ -60,15 +60,15 @@ function CityVerdict({ d }: { d: any }) {
   return (
     <div className="overflow-hidden rounded-[14px] border border-[var(--terra-border)] bg-[var(--c-card)]">
       <div className="p-5 md:p-6">
-        <div className="mb-1.5 flex items-center gap-2"><Ico id="verdict" tone="terra" /><span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--terra-text)]">{v.kicker}</span></div>
+        <div className="mb-1.5 flex items-center gap-2"><Ico id="verdict" tone="terra" /><span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--terra-text)]">{v.kicker}</span></div>
         <div className="grid gap-5 md:grid-cols-[1.5fr_1fr] md:items-end">
           <div>
             {/* noun-phrase heading (one mood page-set-wide); the sentence-form thesis
                 lives in verdict.why below, where prose belongs. */}
-            <h2 data-typography="custom" className="text-2xl font-bold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2rem]">The margin, district by district</h2>
-            {v.why ? <p className="mt-2 max-w-prose text-[13.5px] leading-snug text-[var(--c-ink2)]">{v.why}</p> : null}
+            <h2 data-typography="custom" className="text-[length:var(--t-sub)] font-bold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2rem]">The margin, district by district</h2>
+            {v.why ? <p className="mt-2 max-w-prose text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{v.why}</p> : null}
             {v.catch ? (
-              <p className="mt-2.5 flex items-start gap-1.5 rounded-lg border border-[var(--c-border)] bg-[var(--c-soft)] px-3 py-2 text-[12.5px] leading-snug text-[var(--c-ink2)]">
+              <p className="mt-2.5 flex items-start gap-1.5 rounded-lg border border-[var(--c-border)] bg-[var(--c-soft)] px-3 py-2 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">
                 <span className="mt-0.5 shrink-0 text-[var(--terra-text)]"><AtlasIcon id="honest-take" size={14} /></span>
                 <span><span className="font-semibold text-[var(--c-ink)]">The catch. </span>{v.catch}</span>
               </p>
@@ -89,8 +89,8 @@ function CityVerdict({ d }: { d: any }) {
           Omitted when the trade keep already carries the focal slot above. */}
       {best ? (
         <div className="border-t border-[var(--terra-border)] bg-[var(--c-card)] px-5 py-2.5 md:px-6">
-          <div className="flex items-baseline gap-1.5"><span className="min-w-0 truncate text-[12px] font-medium text-[var(--c-ink)]">{tradeName} keeps</span><Fig className="shrink-0 text-[15px] text-[var(--c-ink)]">{v.keep_pct}%</Fig></div>
-          <div className="text-[9px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">of sales, the best keeper here</div>
+          <div className="flex items-baseline gap-1.5"><span className="min-w-0 truncate text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">{tradeName} keeps</span><Fig className="shrink-0 text-[length:var(--t-lead)] text-[var(--c-ink)]">{v.keep_pct}%</Fig></div>
+          <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">of sales, the best keeper here</div>
         </div>
       ) : null}
     </div>
@@ -107,7 +107,7 @@ function CityLenses({ d }: { d: any }) {
       <div className="grid gap-5 md:grid-cols-[1fr_1.7fr] md:items-start">
         <div>
           <Rail icon="gut-check" kicker="The city, in five reads" verdict={o.headline} />
-          <p className="text-[12.5px] leading-snug text-[var(--c-ink2)]">{o.read}</p>
+          <p className="text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{o.read}</p>
         </div>
         <EaseScale rows={rows} endLabels={["Against you", "In your favor"]} />
       </div>
@@ -140,7 +140,7 @@ function CommercialSpace({ d }: { d: any }) {
         {/* peers on ONE axis. Only rendered when at least two peers carry a real rent index. */}
         {hasPeerStrip ? (
           <div className="mt-2 border-t border-[var(--c-border)] pt-3">
-            <div className="mb-1 text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Rent index vs peer cities</div>
+            <div className="mb-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Rent index vs peer cities</div>
             <div className="relative h-[76px]" role="img" aria-label={`Rent index on one axis: ${peers.map((p: any) => `${p.name} ${p.rent_index}`).join(", ")}`}>
               <span className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-[var(--c-line-strong)]" />
               {peers.map((p: any, i: number) => {
@@ -151,14 +151,14 @@ function CommercialSpace({ d }: { d: any }) {
                   <span key={p.name} className="absolute -translate-x-1/2" style={{ left: `${x}%`, top: "50%" }}>
                     <span className="block h-2.5 w-2.5 -translate-y-1/2 rounded-full border-2 border-white" style={{ background: home ? TERRA : "#c8c8c6", boxShadow: "0 0 0 1px #e3e3e3" }} />
                     <span className={`absolute left-1/2 flex -translate-x-1/2 flex-col items-center whitespace-nowrap leading-tight ${above ? "bottom-[14px]" : "top-[9px]"}`}>
-                      <span className={`text-[9.5px] ${home ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{p.name}</span>
-                      <Fig className={`text-[11px] ${home ? "text-[var(--terra-text)]" : "text-[var(--c-ink2)]"}`}>{p.rent_index}</Fig>
+                      <span className={`text-[length:var(--t-micro)] ${home ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{p.name}</span>
+                      <Fig className={`text-[length:var(--t-micro)] ${home ? "text-[var(--terra-text)]" : "text-[var(--c-ink2)]"}`}>{p.rent_index}</Fig>
                     </span>
                   </span>
                 );
               })}
             </div>
-            {s.peer_read ? <div className="mt-1 text-[11px] text-[var(--c-muted)]">{s.peer_read}</div> : null}
+            {s.peer_read ? <div className="mt-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">{s.peer_read}</div> : null}
           </div>
         ) : null}
       </Box>
@@ -166,9 +166,9 @@ function CommercialSpace({ d }: { d: any }) {
         <Box className="citytop">
           <Rail kicker="The lease terms" verdict={s.terms_read} />
           <div className="divide-y divide-[var(--c-border)]">{terms.map(([v, l]) => (
-            <div key={l} className="flex items-baseline justify-between gap-3 py-2"><span className="text-[12px] text-[var(--c-ink2)]">{l}</span><Fig className="text-[15px] text-[var(--c-ink)]">{v}</Fig></div>
+            <div key={l} className="flex items-baseline justify-between gap-3 py-2"><span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{l}</span><Fig className="text-[length:var(--t-lead)] text-[var(--c-ink)]">{v}</Fig></div>
           ))}</div>
-          {s.terms_note ? <div className="mt-2 text-[11px] text-[var(--c-muted)]">{s.terms_note}</div> : null}
+          {s.terms_note ? <div className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">{s.terms_note}</div> : null}
         </Box>
       ) : null}
     </WideRail>
@@ -202,7 +202,7 @@ function DemandSize({ d }: { d: any }) {
               the pool magnitude and its growth drop to the ink subline. */}
           <div className="flex flex-wrap items-baseline gap-x-3">
             <Fig className="text-3xl text-[var(--terra-text)]">${Math.round((o.spend_per_capita_usd || 0) / 1000)}K</Fig>
-            <span className="text-[13px] text-[var(--c-ink2)]">
+            <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">
               spent per resident a year, a <Fig className="text-[var(--c-ink)]">${o.consumer_spend_usd_bn}B</Fig> metro pool
               {growth != null ? <>, {growth >= 0 ? "up" : "down"} <Fig className="text-[var(--c-ink)]">{Math.abs(growth)}%</Fig> on the year{trendId ? <> <AtlasMark id={trendId} size={14} className="inline-block align-[-2px]" /></> : null}</> : null}.
             </span>
@@ -212,9 +212,9 @@ function DemandSize({ d }: { d: any }) {
             <div className="flex items-center gap-2">
               <div>
                 <Spark values={o.trend_index} />
-                {years.length === 2 ? <div aria-hidden className="flex justify-between text-[8.5px] leading-none text-[var(--c-muted)]"><Fig>{years[0]}</Fig><Fig>{years[1]}</Fig></div> : null}
+                {years.length === 2 ? <div aria-hidden className="flex justify-between text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]"><Fig>{years[0]}</Fig><Fig>{years[1]}</Fig></div> : null}
               </div>
-              <span className="text-[10.5px] leading-tight text-[var(--c-muted)]">spend<br />trend</span>
+              <span className="text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)]">spend<br />trend</span>
             </div>
           ) : null}
         </div>
@@ -222,9 +222,9 @@ function DemandSize({ d }: { d: any }) {
       {/* resident/visitor split, folded in as an inline share bar */}
       {hasSplit ? (
         <div className={hasMagnitude ? "mt-4 border-t border-[var(--c-border)] pt-3" : ""}>
-          <div className="mb-2 text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Who spends it</div>
-          <div className="flex h-6 overflow-hidden rounded-lg border border-[var(--c-border)]" role="img" aria-label={`Residents ${o.resident_pct}%, visitors ${o.visitor_pct}%`}>{segs.map(([n, pct, bg]) => <div key={n} className="flex h-full items-center justify-center" style={{ width: `${pct}%`, background: bg }}><span className="fig text-[11px] font-semibold text-[var(--c-ink)]">{n} {pct}%</span></div>)}</div>
-          <div className="mt-1.5 text-[11px] text-[var(--c-muted)]">Resident money is the steady base; visitor money is seasonal and patchy by area.</div>
+          <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Who spends it</div>
+          <div className="flex h-6 overflow-hidden rounded-lg border border-[var(--c-border)]" role="img" aria-label={`Residents ${o.resident_pct}%, visitors ${o.visitor_pct}%`}>{segs.map(([n, pct, bg]) => <div key={n} className="flex h-full items-center justify-center" style={{ width: `${pct}%`, background: bg }}><span className="fig text-[length:var(--t-micro)] font-semibold text-[var(--c-ink)]">{n} {pct}%</span></div>)}</div>
+          <div className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">Resident money is the steady base; visitor money is seasonal and patchy by area.</div>
         </div>
       ) : null}
     </Box>
@@ -248,11 +248,11 @@ function DemandCalendar({ d }: { d: any }) {
         {m.map((v, i) => (
           <div key={i} className="flex flex-1 flex-col items-center justify-end gap-1" style={{ height: "100%" }}>
             <div className="w-full rounded-t" style={{ height: `${(v / max) * 100}%`, background: i === peak ? TERRA : "#dcd6d1" }} />
-            <span className={`text-[9px] ${i === peak ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{MONTHS[i]}</span>
+            <span className={`text-[length:var(--t-micro)] ${i === peak ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{MONTHS[i]}</span>
           </div>
         ))}
       </div>
-      <div className="mt-1.5 text-[11px] text-[var(--c-muted)]">Indexed demand by month, drawn from zero.</div>
+      <div className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">Indexed demand by month, drawn from zero.</div>
     </>
   );
 }
@@ -274,25 +274,25 @@ function TopTrades({ d }: { d: any }) {
     <Box className="citytop">
       <Rail icon="owner-keeps" kicker="Owner take-home by trade" verdict={d.trades?.read} />
       {/* column headers so every cell is self-labelling */}
-      <div className={`-mx-2 grid ${cols} items-center gap-3 px-2 pb-1 text-[9.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]`}>
+      <div className={`-mx-2 grid ${cols} items-center gap-3 px-2 pb-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]`}>
         <span>Trade</span><span className="hidden sm:block" /><span className="text-right">Take-home ($/yr)</span><span className="text-right">Keeps</span>{hasCrowding ? <span className="hidden items-baseline justify-end sm:flex">Crowding<InfoTip gloss="How many rivals compete for the same customers." /></span> : null}
       </div>
       <div className="space-y-2.5">{arr.map((t: any) => {
         const isPick = t.slug === keepLead.slug;
         return (
           <a key={t.slug} href={t.href ?? "/dev/spine-cell"} className={`hov -mx-2 grid ${cols} items-center gap-3 rounded-md px-2 py-1.5`}>
-            <span className={`min-w-0 truncate text-[12.5px] ${isPick ? "font-semibold" : ""} text-[var(--c-ink)]`}>{t.name}</span>
+            <span className={`min-w-0 truncate text-[length:var(--t-body)] ${isPick ? "font-semibold" : ""} text-[var(--c-ink)]`}>{t.name}</span>
             <div className="hidden h-2.5 min-w-0 overflow-hidden rounded-full sm:block" style={{ background: TRACK }}><div className="h-full rounded-full" style={{ width: `${(t.take_home_usd / max) * 100}%`, background: "#c8c8c6" }} /></div>
-            <Fig className="text-right text-[14px] text-[var(--c-ink)]">{k(t.take_home_usd)}</Fig>
+            <Fig className="text-right text-[length:var(--t-body)] text-[var(--c-ink)]">{k(t.take_home_usd)}</Fig>
             <span className="flex items-center justify-end gap-1.5">
               {isPick ? <span aria-hidden className="h-[7px] w-[7px] shrink-0 rounded-full" style={{ background: TERRA }} /> : null}
-              {t.net_margin_pct != null ? <Fig className={`text-right text-[13px] ${isPick ? "font-semibold" : ""} text-[var(--c-ink)]`}>{t.net_margin_pct}%</Fig> : <span className="text-right text-[13px] text-[var(--c-muted)]">-</span>}
+              {t.net_margin_pct != null ? <Fig className={`text-right text-[length:var(--t-body)] ${isPick ? "font-semibold" : ""} text-[var(--c-ink)]`}>{t.net_margin_pct}%</Fig> : <span className="text-right text-[length:var(--t-body)] text-[var(--c-muted)]">-</span>}
             </span>
-            {hasCrowding ? <span className="hidden text-right text-[11px] text-[var(--c-ink2)] sm:block">{t.saturation_0_100 != null ? word(t.saturation_0_100) : ""}</span> : null}
+            {hasCrowding ? <span className="hidden text-right text-[length:var(--t-micro)] text-[var(--c-ink2)] sm:block">{t.saturation_0_100 != null ? word(t.saturation_0_100) : ""}</span> : null}
           </a>
         );
       })}</div>
-      <div className="mt-2 text-[11px] text-[var(--c-muted)]">Ranked by owner take-home a year; the kept share of sales is the read that matters. Tap a trade for the full city economics.</div>
+      <div className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">Ranked by owner take-home a year; the kept share of sales is the read that matters. Tap a trade for the full city economics.</div>
     </Box>
   );
 }
@@ -312,15 +312,15 @@ function MarginRail({ d }: { d: any }) {
         const pct = Math.max(0, Number(t.net_margin_pct ?? 0));
         return (
           <div key={t.slug} className="hov -mx-2 grid grid-cols-[minmax(0,110px)_1fr_38px] items-center gap-3 rounded-md px-2 py-1.5">
-            <span className={`min-w-0 truncate text-[12px] ${isLead ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`}>{t.name}</span>
+            <span className={`min-w-0 truncate text-[length:var(--t-body)] ${isLead ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`}>{t.name}</span>
             <span className="-mt-1 block" role="img" aria-label={`${t.name}: ${pct} percent of sales kept`}><CellScaleBar value={pct} domain={[0, 100]} /></span>
-            <Fig className={`text-right text-[13px] ${isLead ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{pct}%</Fig>
+            <Fig className={`text-right text-[length:var(--t-body)] ${isLead ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{pct}%</Fig>
           </div>
         );
       })}</div>
       {/* the drawn shared axis , same 0..100 "of sales" scale as the split beside it */}
       <div aria-hidden className="-mx-2 mt-1 grid grid-cols-[minmax(0,110px)_1fr_38px] items-center gap-3 px-2">
-        <span /><div className="flex justify-between text-[9px] uppercase tracking-wide text-[var(--c-muted)]"><span>0%</span><span>100% of sales</span></div><span />
+        <span /><div className="flex justify-between text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]"><span>0%</span><span>100% of sales</span></div><span />
       </div>
     </Box>
   );
@@ -343,19 +343,19 @@ function EasiestTrades({ d }: { d: any }) {
   return (
     <Box className="citytop">
       <Head icon="startup-cost">Typical businesses, and what they cost to start</Head>
-      <div className="-mx-2 grid grid-cols-[18px_minmax(0,130px)_1fr_52px_56px] items-baseline gap-2.5 px-2 pb-1 text-[9.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
+      <div className="-mx-2 grid grid-cols-[18px_minmax(0,130px)_1fr_52px_56px] items-baseline gap-2.5 px-2 pb-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
         <span /><span>Trade</span><span /><span className="text-right">Ease /10</span><span className="text-right">To open</span>
       </div>
       <div className="space-y-2.5">{arr.map((t: any) => (
         <div key={t.slug} className="hov -mx-2 grid grid-cols-[18px_minmax(0,130px)_1fr_52px_56px] items-center gap-2.5 rounded-md px-2 py-1">
           {TRADE_ICON[t.slug] ? <AtlasIcon id={TRADE_ICON[t.slug]} size={16} className="spine-ic shrink-0" style={{ color: "var(--c-ink2)" }} /> : <span />}
-          <span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]">{t.name}</span>
+          <span className="min-w-0 truncate text-[length:var(--t-body)] text-[var(--c-ink2)]">{t.name}</span>
           {t.cost_to_open_usd != null ? <MiniBar pct={(t.cost_to_open_usd / max) * 100} /> : <span />}
-          <Fig className="text-right text-[12px] text-[var(--c-ink2)]">{t.break_in_0_100 != null ? Math.round(t.break_in_0_100 / 10) : "-"}</Fig>
-          <Fig className="text-right text-[13px] text-[var(--c-ink)]">{t.cost_to_open_usd != null ? k(t.cost_to_open_usd) : "-"}</Fig>
+          <Fig className="text-right text-[length:var(--t-body)] text-[var(--c-ink2)]">{t.break_in_0_100 != null ? Math.round(t.break_in_0_100 / 10) : "-"}</Fig>
+          <Fig className="text-right text-[length:var(--t-body)] text-[var(--c-ink)]">{t.cost_to_open_usd != null ? k(t.cost_to_open_usd) : "-"}</Fig>
         </div>
       ))}</div>
-      <p className="mt-3 text-[11px] leading-snug text-[var(--c-muted)]">A rough cost to open the doors, ease of entry out of 10. What each keeps once open is the take-home table above.</p>
+      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">A rough cost to open the doors, ease of entry out of 10. What each keeps once open is the take-home table above.</p>
     </Box>
   );
 }
@@ -394,12 +394,12 @@ function CityRisks({ d }: { d: any }) {
       </Box>
       <Box className="citytop">
         <Rail icon="honest-take" kicker="The honest read" verdict={r.honest_read ? <><span className="text-[var(--terra-text)]">{top.label}</span> {r.honest_read}</> : undefined} />
-        {r.read ? <p className="mb-2 text-[12px] leading-snug text-[var(--c-ink2)]">{r.read}</p> : null}
+        {r.read ? <p className="mb-2 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{r.read}</p> : null}
         <InlineDisclosure name="risks" summary="The counterweight for each" className="group mt-2">
           <div className="mt-2 space-y-2.5 border-t border-[var(--c-border)] pt-2.5">{sorted.map((x: any) => (
             <div key={x.label} className="flex gap-2.5">
               <span className="mt-0.5 text-[var(--c-muted)]">&#9656;</span>
-              <span className="text-[12px] leading-snug text-[var(--c-ink2)]"><b className="text-[var(--c-ink)]">{x.label}.</b> {x.counterweight}</span>
+              <span className="text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]"><b className="text-[var(--c-ink)]">{x.label}.</b> {x.counterweight}</span>
             </div>
           ))}</div>
         </InlineDisclosure>
@@ -421,7 +421,7 @@ function CityCharacter({ d }: { d: any }) {
       <div className="divide-y divide-[var(--c-border)]">{rows.map((r: any, i: number) => (
         <div key={i} className="py-1">
           <SpectraTable rows={[r]} />
-          <div className="pb-1.5 text-[11.5px] leading-tight text-[var(--c-ink2)]">{r.takeaway}</div>
+          <div className="pb-1.5 text-[length:var(--t-micro)] leading-tight text-[var(--c-ink2)]">{r.takeaway}</div>
         </div>
       ))}</div>
     </Box>
@@ -436,7 +436,7 @@ function Locals({ d }: { d: any }) {
     <Box className="citytop">
       <Head icon="locals-know">What locals know</Head>
       <div className="space-y-3">{items.map((it: any, i: number) => (
-        <div key={i} className="flex gap-2.5"><span className="mt-0.5 text-[var(--c-muted)]">&#9656;</span><span className="text-[12.5px] leading-snug text-[var(--c-ink2)]"><b className="text-[var(--c-ink)]">{it.title}</b> {it.detail}</span></div>))}
+        <div key={i} className="flex gap-2.5"><span className="mt-0.5 text-[var(--c-muted)]">&#9656;</span><span className="text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]"><b className="text-[var(--c-ink)]">{it.title}</b> {it.detail}</span></div>))}
       </div>
     </Box>
   );
@@ -495,28 +495,28 @@ function Close({ d }: { d: any }) {
       <div className="grid gap-4 md:grid-cols-[1.3fr_1fr] md:items-stretch">
         {/* the decision the whole page built toward */}
         <div className="rounded-[12px] border border-[var(--terra-border)] p-4" style={{ background: "linear-gradient(180deg,#ffffff,#fffaf8)" }}>
-          <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--terra-text)]">The {d.meta?.city} pick</div>
-          <div className="mt-1 text-[16px] font-semibold text-[var(--c-ink)]">{v?.winner_trade?.replace(" keeps the most", "")}{bestDistrict ? <>, in {bestDistrict.name}</> : null}</div>
-          <p className="mt-1.5 text-[12.5px] leading-snug text-[var(--c-ink2)]">The margin leader{bestDistrict ? " in the district that keeps the most of every sale" : ""}. Start there, then check the trade's live economics.</p>
+          <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--terra-text)]">The {d.meta?.city} pick</div>
+          <div className="mt-1 text-[length:var(--t-sub)] font-semibold text-[var(--c-ink)]">{v?.winner_trade?.replace(" keeps the most", "")}{bestDistrict ? <>, in {bestDistrict.name}</> : null}</div>
+          <p className="mt-1.5 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">The margin leader{bestDistrict ? " in the district that keeps the most of every sale" : ""}. Start there, then check the trade's live economics.</p>
           {(pickTake != null || bestDistrict) ? (
             <div className="mt-3 flex flex-wrap gap-4 border-t border-[var(--c-border)] pt-3">
-              {pickTake != null ? <div><Fig className="text-[18px] text-[var(--terra-text)]">{k(pickTake)}</Fig><div className="text-[10px] uppercase tracking-wide text-[var(--c-muted)]">owner take-home a year</div></div> : null}
-              {bestDistrict ? <div><Fig className="text-[18px] text-[var(--c-ink)]">{bestDistrict.keep}</Fig><div className="text-[10px] uppercase tracking-wide text-[var(--c-muted)]">keep index</div></div> : null}
+              {pickTake != null ? <div><Fig className="text-[length:var(--t-sub)] text-[var(--terra-text)]">{k(pickTake)}</Fig><div className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">owner take-home a year</div></div> : null}
+              {bestDistrict ? <div><Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">{bestDistrict.keep}</Fig><div className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">keep index</div></div> : null}
             </div>
           ) : null}
-          <a href={pick.href ?? "/dev/spine-cell"} className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-semibold text-[var(--terra-text)] hover:underline"><AtlasMark id="alt-business" size={14} className="shrink-0" />See the trade's live economics &#8594;</a>
+          <a href={pick.href ?? "/dev/spine-cell"} className="mt-3 inline-flex items-center gap-1.5 text-[length:var(--t-body)] font-semibold text-[var(--terra-text)] hover:underline"><AtlasMark id="alt-business" size={14} className="shrink-0" />See the trade's live economics &#8594;</a>
         </div>
         {/* the Pro / compare hand-off */}
         <div className="flex flex-col justify-between gap-3">
           <div>
-            <div className="text-[13.5px] text-[var(--c-ink)]">Set {d.meta?.city} beside up to three cities, side by side.</div>
-            <a href="/dev/compare" className="mt-2 inline-flex cursor-pointer rounded-full bg-[var(--c-ink)] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[var(--terra-text)]">Open Compare</a>
+            <div className="text-[length:var(--t-body)] text-[var(--c-ink)]">Set {d.meta?.city} beside up to three cities, side by side.</div>
+            <a href="/dev/compare" className="mt-2 inline-flex cursor-pointer rounded-full bg-[var(--c-ink)] px-4 py-2 text-[length:var(--t-body)] font-semibold text-white transition hover:bg-[var(--terra-text)]">Open Compare</a>
           </div>
           {teaser.length > 0 ? (
             <LockVeil headline={`The full ${d.meta?.city} workbook`} note="Every district by every trade, the real cost stack, and the owner-runway calculator." cta="Unlock with Pro">
               <div className="flex min-h-[220px] flex-col justify-evenly py-2">
                 {teaser.map((t: string) => (
-                  <div key={t} className="text-[12px] text-[var(--c-ink2)]">{t}</div>
+                  <div key={t} className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{t}</div>
                 ))}
               </div>
             </LockVeil>

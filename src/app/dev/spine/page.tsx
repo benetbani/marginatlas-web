@@ -101,12 +101,12 @@ function RailDots({ dots, endLabels, refPos }: { dots: Array<{ pos: number; labe
           return (
             <React.Fragment key={`${x.label}-${i}`}>
               <span className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${x.pos}%`, background: x.accent ? TERRA : "var(--c-ink)", boxShadow: "0 0 0 1px #e3e3e3" }} />
-              <span className={`absolute whitespace-nowrap text-[10.5px] leading-none ${above ? "-top-4" : "top-4"} ${x.accent ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-ink2)]"}`} style={{ left: `${x.pos}%`, transform: `translateX(${shift})` }}>{x.label}</span>
+              <span className={`absolute whitespace-nowrap text-[length:var(--t-micro)] leading-none ${above ? "-top-4" : "top-4"} ${x.accent ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-ink2)]"}`} style={{ left: `${x.pos}%`, transform: `translateX(${shift})` }}>{x.label}</span>
             </React.Fragment>
           );
         })}
       </div>
-      {endLabels ? <div className="flex justify-between text-[10px] uppercase tracking-wide text-[var(--c-muted)]"><span>{endLabels[0]}</span><span>{endLabels[1]}</span></div> : null}
+      {endLabels ? <div className="flex justify-between text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]"><span>{endLabels[0]}</span><span>{endLabels[1]}</span></div> : null}
     </div>
   );
 }
@@ -163,14 +163,14 @@ function Hero({ d }: { d: any }) {
                 <CountFig target={take} prefix="$" className="text-[64px] font-semibold leading-[0.9] text-[var(--terra-text)] md:text-[76px]" />
                 <span className="fig text-[26px] font-medium leading-none text-[var(--terra-text)] opacity-75 md:text-[30px]">/ $100</span>
               </span>
-              <span className="mb-2 max-w-[22ch] text-[13px] leading-snug text-[var(--c-ink2)]">goes to the state in tax, of every $100 a standard business makes in profit.</span>
+              <span className="mb-2 max-w-[22ch] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">goes to the state in tax, of every $100 a standard business makes in profit.</span>
             </div>
           </div>
           <div className="grid w-full max-w-[420px] grid-cols-2 gap-px overflow-hidden rounded-xl border border-[var(--c-border)] sm:grid-cols-3 md:w-[420px]" style={{ background: "var(--c-border)" }}>
             {tiles.map(([label, value, unit]) => (
               <div key={label} className="bg-[var(--c-card)] px-3 py-2.5">
-                <div className="text-[9.5px] font-semibold uppercase leading-tight tracking-[0.06em] text-[var(--c-muted)]">{label}</div>
-                <div className="mt-0.5 text-[15px] text-[var(--c-ink)]"><Fig>{value}</Fig>{unit ? <span className="text-[10px] text-[var(--c-muted)]">{unit}</span> : null}</div>
+                <div className="text-[length:var(--t-micro)] font-semibold uppercase leading-tight tracking-[0.06em] text-[var(--c-muted)]">{label}</div>
+                <div className="mt-0.5 text-[length:var(--t-lead)] text-[var(--c-ink)]"><Fig>{value}</Fig>{unit ? <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{unit}</span> : null}</div>
               </div>
             ))}
           </div>
@@ -178,7 +178,7 @@ function Hero({ d }: { d: any }) {
         {/* provenance, stated ONCE, one quiet line , the page's only provenance chrome.
             The "modeled" AtlasMark encodes the exact status the sentence states (wave-2,
             mirroring the hood page's wave-1 provenance seal , never decoration). */}
-        <p className="mt-5 flex items-start gap-1.5 border-t border-[var(--c-border)] pt-3 text-[11.5px] leading-snug text-[var(--c-muted)]">
+        <p className="mt-5 flex items-start gap-1.5 border-t border-[var(--c-border)] pt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
           <AtlasMark id="modeled" size={14} className="mt-px shrink-0" />
           <span>Figures are modeled from published economic data as of 2026, converted to US dollars for like-for-like reading; a few sections still carry early seed figures under research.</span>
         </p>
@@ -241,13 +241,13 @@ function Profile({ d }: { d: any }) {
       <div className="space-y-2.5">
         {scored.map((r, i) => (
           <div key={r.label} className="grid grid-cols-[120px_1fr_30px] items-center gap-2.5">
-            <span className="min-w-0 truncate text-[12px] text-[var(--c-ink2)]">{r.label}</span>
+            <span className="min-w-0 truncate text-[length:var(--t-body)] text-[var(--c-ink2)]">{r.label}</span>
             <MiniBar pct={r.s * 10} accent={i === 0} />
-            <Fig className="text-right text-[12px] text-[var(--c-ink)]">{r.s}</Fig>
+            <Fig className="text-right text-[length:var(--t-body)] text-[var(--c-ink)]">{r.s}</Fig>
           </div>
         ))}
       </div>
-      <div className="mt-3 border-t border-[var(--c-border)] pt-2 text-[11px] leading-snug text-[var(--c-muted)]">Higher is better on every lens, tax burden included: a lighter load scores higher. That lens ranks this country&apos;s all-in tax against its neighbours.</div>
+      <div className="mt-3 border-t border-[var(--c-border)] pt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">Higher is better on every lens, tax burden included: a lighter load scores higher. That lens ranks this country&apos;s all-in tax against its neighbours.</div>
     </Box>
   );
 }
@@ -283,14 +283,14 @@ function Demand({ d }: { d: any }) {
       <div className="grid items-center gap-5 md:grid-cols-[minmax(0,1fr)_auto]">
         <div className="focal flex flex-col justify-center p-4">
           <Stat value={usd(perCitizen)} label="Consumer spend per citizen, a year" size="focal" accent />
-          <div className="mt-1.5 text-[11px] leading-snug text-[var(--c-muted)]">What the average resident spends in a year, the pot every business here competes for.</div>
+          <div className="mt-1.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">What the average resident spends in a year, the pot every business here competes for.</div>
         </div>
         <div className="flex flex-col items-center">
-          <div className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Where that money goes</div>
+          <div className="mb-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Where that money goes</div>
           <Donut segs={donutSegs} centerBig={`${segs[0]?.pct ?? 0}%`} centerSub="top slice" />
           <div className="mt-2 flex max-w-[240px] flex-wrap justify-center gap-x-3 gap-y-1">{segs.map((s: any, i: number) => (
-            <span key={s.name} className="inline-flex items-center gap-1.5 text-[10.5px] text-[var(--c-ink2)]"><span className="h-2 w-2 rounded-sm" style={{ background: color(i) }} />{s.name} <Fig className="text-[var(--c-ink)]">{s.pct}%</Fig></span>))}</div>
-          {winnable ? <p className="mt-1.5 max-w-[240px] text-center text-[10.5px] leading-snug text-[var(--c-muted)]">{winnable.name}, {winnable.pct}%, is the slice a new business can win.</p> : null}
+            <span key={s.name} className="inline-flex items-center gap-1.5 text-[length:var(--t-micro)] text-[var(--c-ink2)]"><span className="h-2 w-2 rounded-sm" style={{ background: color(i) }} />{s.name} <Fig className="text-[var(--c-ink)]">{s.pct}%</Fig></span>))}</div>
+          {winnable ? <p className="mt-1.5 max-w-[240px] text-center text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{winnable.name}, {winnable.pct}%, is the slice a new business can win.</p> : null}
         </div>
       </div>
     </Box>
@@ -351,16 +351,16 @@ function SetupTimeline({ d }: { d: any }) {
           const first = i === 0;
           return (
             <li key={i} className="relative">
-              <span className={`fig absolute -left-[37px] grid h-7 w-7 place-items-center rounded-full border-2 border-white text-[12px] font-semibold ${first ? "text-white" : "text-[var(--c-ink)]"}`} style={{ background: first ? TERRA : "var(--c-soft2)", boxShadow: "0 0 0 1px #e3e3e3" }}>{i + 1}</span>
+              <span className={`fig absolute -left-[37px] grid h-7 w-7 place-items-center rounded-full border-2 border-white text-[length:var(--t-body)] font-semibold ${first ? "text-white" : "text-[var(--c-ink)]"}`} style={{ background: first ? TERRA : "var(--c-soft2)", boxShadow: "0 0 0 1px #e3e3e3" }}>{i + 1}</span>
               <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1.5">
-                <span className="text-[13.5px] font-semibold text-[var(--c-ink)]">{s.name.replace(/\s*\(.*\)$/, "")}</span>
+                <span className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{s.name.replace(/\s*\(.*\)$/, "")}</span>
                 <span className="flex flex-wrap items-center gap-1.5"><Chip>{timeWord(days)}</Chip><Chip>{cost}</Chip>{s.how ? <Chip>{s.how}</Chip> : null}</span>
               </div>
             </li>
           );
         })}
       </ol>
-      <div className="mt-3.5 border-t border-[var(--c-border)] pt-2.5 text-[12px] leading-snug text-[var(--c-ink2)]">The company is live on day one and tax registration follows; the business bank account is the one step that runs to weeks, not days.{vat ? " VAT itself waits until sales pass the threshold." : ""}</div>
+      <div className="mt-3.5 border-t border-[var(--c-border)] pt-2.5 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">The company is live on day one and tax registration follows; the business bank account is the one step that runs to weeks, not days.{vat ? " VAT itself waits until sales pass the threshold." : ""}</div>
     </Box>
   );
 }
@@ -389,11 +389,11 @@ function Formation({ d }: { d: any }) {
     <Box><Head icon="subtype">Which legal structure to form</Head>
       <div className="space-y-2">{structures.map((s: any, i: number) => { const x = formationExtra(s.name); return (
         <Expand key={i} name="formation" title={s.name} open={i === 0}>
-          <p className="mb-2 text-[12px] leading-snug text-[var(--c-ink2)]">{x.summary}</p>
+          <p className="mb-2 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{x.summary}</p>
           <KV k="Liability" v={s.liability} /><KV k="Taxed as" v={s.tax} /><KV k="Paperwork" v={x.paperwork} /><KV k="Raising money" v={x.raise} /><KV k="Setup" v={x.setup} /><KV k="Best for" v={s.best_for} />
         </Expand>); })}
       </div>
-      {d.setup?.vat_threshold_usd ? <div className="mt-3 inline-block rounded-full border border-[var(--c-border)] bg-[var(--c-soft)] px-3 py-1.5 text-[12px] text-[var(--c-ink2)]">Register for VAT once sales pass <Fig className="text-[var(--c-ink)]">${Math.round(d.setup.vat_threshold_usd / 1000)}K</Fig></div> : null}
+      {d.setup?.vat_threshold_usd ? <div className="mt-3 inline-block rounded-full border border-[var(--c-border)] bg-[var(--c-soft)] px-3 py-1.5 text-[length:var(--t-body)] text-[var(--c-ink2)]">Register for VAT once sales pass <Fig className="text-[var(--c-ink)]">${Math.round(d.setup.vat_threshold_usd / 1000)}K</Fig></div> : null}
     </Box>
   );
 }
@@ -416,13 +416,13 @@ function Banking({ d }: { d: any }) {
     <Box>
       <Rail icon="bank" kicker="Opening a bank account" verdict={b.can_foreigner ? "Open to foreign owners; a UK address and a few weeks of checks are the catch." : "Restricted for foreign owners; expect added hurdles."} />
       <div className="focal mb-3 p-3.5">
-        <div className="mb-1 flex items-baseline justify-between"><span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">How hard</span><Fig className="text-[18px] capitalize text-[var(--c-ink)]">{b.friction}</Fig></div>
+        <div className="mb-1 flex items-baseline justify-between"><span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">How hard</span><Fig className="text-[length:var(--t-sub)] capitalize text-[var(--c-ink)]">{b.friction}</Fig></div>
         <Meter value={fv} left="Hard" right="Easy" />
       </div>
       <Bullets items={b.bullets ?? []} />
       <div className="mt-3 divide-y divide-[var(--c-border)]">
         {[["High-street", b.banks_traditional], ["Digital", b.banks_digital]].map(([label, arr]) => (
-          <div key={label as string} className="flex gap-3 py-2"><span className="w-20 shrink-0 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{label}</span><span className="text-[12.5px] text-[var(--c-ink)]">{((arr as string[]) ?? []).join("  ·  ")}</span></div>))}
+          <div key={label as string} className="flex gap-3 py-2"><span className="w-20 shrink-0 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{label}</span><span className="text-[length:var(--t-body)] text-[var(--c-ink)]">{((arr as string[]) ?? []).join("  ·  ")}</span></div>))}
       </div>
     </Box>
   );
@@ -483,16 +483,16 @@ function TaxByLevel({ d }: { d: any }) {
     <Box>
         <Rail icon="taxes" kicker="What the business actually pays" verdict="You keep less than the headline rate suggests: several taxes stack, and the tax on profits carries most." />
         <div className="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          <span className="text-[13px] text-[var(--c-ink2)]">All-in tax load</span>
+          <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">All-in tax load</span>
           <Fig className="text-[26px] leading-none text-[var(--terra-text)]">{allIn}%</Fig>
           <Chip>{band} for the peer set</Chip>
         </div>
-        <div className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Share of the tax load for a typical small company</div>
+        <div className="mb-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Share of the tax load for a typical small company</div>
         <Waterfall rows={waterfallRows} />
-        <div className="mt-2.5 border-t border-[var(--c-border)] pt-2 text-[11.5px] text-[var(--c-muted)]"><b className="font-medium text-[var(--terra-text)]">{leadName}</b> carries {leadShare}% of the load. VAT is customer-borne, so it sits outside; the rate on each tax sits line by line below.</div>
+        <div className="mt-2.5 border-t border-[var(--c-border)] pt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]"><b className="font-medium text-[var(--terra-text)]">{leadName}</b> carries {leadShare}% of the load. VAT is customer-borne, so it sits outside; the rate on each tax sits line by line below.</div>
         <InlineDisclosure name="taxdetail" className="group mt-3 border-t border-[var(--c-border)] pt-2.5" summary="Every tax, line by line">
           <div className="mt-2.5 divide-y divide-[var(--c-border)]">{items.map((it: any) => { const nm = taxDisplayName(it.name); const lead = nm === "Tax on profits"; return (
-            <div key={it.name} className="flex items-baseline gap-3 py-2"><Fig className={`w-14 shrink-0 text-[15px] ${lead ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{it.value}</Fig><span className="text-[12px] leading-tight text-[var(--c-ink2)]"><b className={`font-medium ${lead ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{nm}</b><TaxTip term={nm} /> <span className="text-[10px] uppercase tracking-wide text-[var(--c-muted)]">{it.level}</span><br />{it.note}</span></div>); })}
+            <div key={it.name} className="flex items-baseline gap-3 py-2"><Fig className={`w-14 shrink-0 text-[length:var(--t-lead)] ${lead ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{it.value}</Fig><span className="text-[length:var(--t-body)] leading-tight text-[var(--c-ink2)]"><b className={`font-medium ${lead ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{nm}</b><TaxTip term={nm} /> <span className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">{it.level}</span><br />{it.note}</span></div>); })}
           </div>
         </InlineDisclosure>
     </Box>
@@ -522,23 +522,23 @@ function PayByLevel({ d }: { d: any }) {
   const max = Math.max(...rows.map((r) => r.loaded)) || 1;
   return (
     <Box><Head icon="wages">What staff cost to employ</Head>
-      <p className="mb-3 text-[12.5px] leading-snug text-[var(--c-ink2)]">Every wage carries a <Fig className="text-[var(--terra-text)]">+{on}%</Fig> employer on-cost, pension and social contributions on top of the gross salary.</p>
+      <p className="mb-3 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">Every wage carries a <Fig className="text-[var(--terra-text)]">+{on}%</Fig> employer on-cost, pension and social contributions on top of the gross salary.</p>
       <div className="space-y-1.5">
         {rows.map((r) => (
           <div key={r.k} className="hov -mx-2 grid grid-cols-[minmax(0,6rem)_1fr_5.2rem] items-center gap-3 rounded-md px-2 py-1.5">
-            <span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]">{r.label}</span>
+            <span className="min-w-0 truncate text-[length:var(--t-body)] text-[var(--c-ink2)]">{r.label}</span>
             <span className="relative block h-2.5 overflow-hidden rounded-full" style={{ background: TRACK }} role="img" aria-label={`${r.label}: $${Math.round(r.gross / 1000)}K gross plus $${Math.round(r.oncost / 1000)}K on-cost, $${Math.round(r.loaded / 1000)}K to employ`}>
               <span className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${(r.loaded / max) * 100}%`, background: TERRA }} />
               <span className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${(r.gross / max) * 100}%`, background: "#c8c8c6" }} />
             </span>
             <span className="text-right leading-tight">
-              <Fig className="block text-[13px] text-[var(--c-ink)]">${Math.round(r.loaded / 1000)}K</Fig>
-              <span className="fig block text-[10px] text-[var(--c-muted)]">${Math.round(r.gross / 1000)}K + ${Math.round(r.oncost / 1000)}K</span>
+              <Fig className="block text-[length:var(--t-body)] text-[var(--c-ink)]">${Math.round(r.loaded / 1000)}K</Fig>
+              <span className="fig block text-[length:var(--t-micro)] text-[var(--c-muted)]">${Math.round(r.gross / 1000)}K + ${Math.round(r.oncost / 1000)}K</span>
             </span>
           </div>
         ))}
       </div>
-      <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[10.5px] text-[var(--c-muted)]"><span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full" style={{ background: "#c8c8c6" }} />Gross salary</span><span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full" style={{ background: TERRA }} />Employer on-cost</span><span className="ml-auto">Full cost to employ, a year</span></div>
+      <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[length:var(--t-micro)] text-[var(--c-muted)]"><span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full" style={{ background: "#c8c8c6" }} />Gross salary</span><span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full" style={{ background: TERRA }} />Employer on-cost</span><span className="ml-auto">Full cost to employ, a year</span></div>
     </Box>
   );
 }
@@ -564,7 +564,7 @@ function HiringDials({ d }: { d: any }) {
       {detail.length ? (
         <div className="mt-4 space-y-2">{detail.map(([title, note]) => (
           <Expand key={title} name="hiring" title={title}>
-            <p className="text-[12px] leading-snug text-[var(--c-ink2)]">{note}</p>
+            <p className="text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{note}</p>
           </Expand>
         ))}</div>
       ) : null}
@@ -598,17 +598,17 @@ function TalentDepth({ d }: { d: any }) {
       <div className="space-y-2">
         {arr.map((t: any, i: number) => (
           <div key={t.field} className="grid grid-cols-[130px_1fr_36px] items-center gap-2.5">
-            <span className="min-w-0 truncate text-[12px] text-[var(--c-ink2)]">{map[t.field] ?? t.field}</span>
+            <span className="min-w-0 truncate text-[length:var(--t-body)] text-[var(--c-ink2)]">{map[t.field] ?? t.field}</span>
             <MiniBar pct={t.s10 * 10} accent={i === 0} />
-            <Fig className="text-right text-[12px] text-[var(--c-ink)]">{t.s10}<span className="text-[9px] text-[var(--c-muted)]">/10</span></Fig>
+            <Fig className="text-right text-[length:var(--t-body)] text-[var(--c-ink)]">{t.s10}<span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">/10</span></Fig>
           </div>
         ))}
       </div>
-      {recruiting ? <p className="mt-3 text-[11.5px] leading-snug text-[var(--c-muted)]">{recruiting}</p> : null}
+      {recruiting ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{recruiting}</p> : null}
       <div className="mt-3.5 border-t border-[var(--c-border)] pt-3">
-        <div className="mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Languages spoken</div>
+        <div className="mb-1.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Languages spoken</div>
         <div className="flex flex-wrap items-center gap-2">{langs.map((l: any) => <Chip key={l.name}>{l.name} {l.pct_speakers}%</Chip>)}</div>
-        <p className="mt-1.5 text-[10.5px] leading-snug text-[var(--c-muted)]">Share of people who can speak each language of the country; a bilingual population can total over 100%.</p>
+        <p className="mt-1.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">Share of people who can speak each language of the country; a bilingual population can total over 100%.</p>
       </div>
     </Box>
   );
@@ -649,13 +649,13 @@ function OperatingCosts({ d }: { d: any }) {
       <div className="focal flex flex-wrap items-end justify-between gap-x-6 gap-y-2 p-4">
         <Stat value={<>${c.commercial_rent_usd_sqm_yr?.toLocaleString("en-US")}</>} label="Commercial rent / sqm a year" size="focal" />
         <div className="text-right">
-          <Fig className="text-[20px] text-[var(--c-ink)]">{fmtc(c.energy_usd_per_kwh ?? 0)}</Fig>
-          <div className="text-[10.5px] uppercase tracking-wide text-[var(--c-muted)]">electricity / kWh</div>
+          <Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">{fmtc(c.energy_usd_per_kwh ?? 0)}</Fig>
+          <div className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">electricity / kWh</div>
         </div>
       </div>
       {n > 1 ? (
         <div className="mt-3.5" role="img" aria-label={`Electricity cost among peers: ${all.map((x) => `${x.name} ${fmtc(x.v)}`).join(", ")}`}>
-          <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Electricity among the peer set, $ / kWh</div>
+          <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Electricity among the peer set, $ / kWh</div>
           <RailDots dots={dots} endLabels={[fmtc(lo), fmtc(hi)]} />
         </div>
       ) : null}
@@ -694,14 +694,14 @@ function Financing({ d }: { d: any }) {
   return (
     <Box><Head icon="raise-money">Raising money</Head>
       <div className="mb-4 max-w-[280px]">
-        <div className="mb-1.5 flex items-baseline gap-1.5"><Fig className="text-[18px] text-[var(--c-ink)]">{f.ease_0_100}</Fig><span className="text-[11px] text-[var(--c-muted)]">/100 to raise here</span></div>
+        <div className="mb-1.5 flex items-baseline gap-1.5"><Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">{f.ease_0_100}</Fig><span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">/100 to raise here</span></div>
         <Meter value={f.ease_0_100} left="Hard" right="Easy" />
       </div>
       <div className="grid gap-2.5 sm:grid-cols-3">
         {cards.map((c, i) => (
           <div key={c.title} className={`rounded-lg border p-3.5 ${i === 0 ? "border-[var(--terra-border)] bg-[var(--terra-soft)]" : "border-[var(--c-border)] bg-[var(--c-card)]"}`}>
-            <div className={`text-[13px] font-semibold ${i === 0 ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{c.title}</div>
-            <p className="mt-1.5 text-[11.5px] leading-snug text-[var(--c-ink2)]">{c.note}</p>
+            <div className={`text-[length:var(--t-body)] font-semibold ${i === 0 ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{c.title}</div>
+            <p className="mt-1.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]">{c.note}</p>
           </div>
         ))}
       </div>
@@ -726,11 +726,11 @@ function Grants({ d }: { d: any }) {
     <Box><Head icon="free-zone">Grants and incentives</Head>
       <div className="grid gap-2.5 sm:grid-cols-3">{list.map((g: any) => (
         <div key={g.name} className="flex flex-col rounded-lg border border-[var(--c-border)] bg-[var(--c-card)] p-3.5">
-          <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{g.kind}</div>
-          <div className="mt-0.5 text-[13px] font-semibold text-[var(--c-ink)]">{g.name}</div>
-          {g.value ? <Fig className="mt-0.5 text-[13px] text-[var(--c-ink)]">{g.value}</Fig> : null}
-          <p className="mt-1.5 text-[11.5px] leading-snug text-[var(--c-ink2)]">{g.note}</p>
-          {g.who ? <p className="mt-auto pt-2 text-[10.5px] text-[var(--c-muted)]">For {String(g.who).toLowerCase()}</p> : null}
+          <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{g.kind}</div>
+          <div className="mt-0.5 text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{g.name}</div>
+          {g.value ? <Fig className="mt-0.5 text-[length:var(--t-body)] text-[var(--c-ink)]">{g.value}</Fig> : null}
+          <p className="mt-1.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]">{g.note}</p>
+          {g.who ? <p className="mt-auto pt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">For {String(g.who).toLowerCase()}</p> : null}
         </div>))}
       </div>
     </Box>
@@ -780,9 +780,9 @@ function RiskRegister({ d }: { d: any }) {
       <Rail icon="watch" kicker="What could go wrong" verdict="Each factor scored for how safe it is, higher is better; the lowest is the one to watch." />
       <div className="space-y-2.5">{risks.map((r: any, i: number) => (
         <div key={r.name} className="hov -mx-2 grid grid-cols-[130px_1fr_auto] items-center gap-2.5 rounded-md px-2 py-1">
-          <span className={`min-w-0 truncate text-[12.5px] ${i === 0 ? "font-medium text-[var(--terra-text)]" : "text-[var(--c-ink2)]"}`}>{label[r.name] ?? r.name}</span>
+          <span className={`min-w-0 truncate text-[length:var(--t-body)] ${i === 0 ? "font-medium text-[var(--terra-text)]" : "text-[var(--c-ink2)]"}`}>{label[r.name] ?? r.name}</span>
           <Dots score={r.safe} max={10} />
-          <Fig className="w-9 text-right text-[12.5px] text-[var(--c-ink)]">{r.safe}/10</Fig>
+          <Fig className="w-9 text-right text-[length:var(--t-body)] text-[var(--c-ink)]">{r.safe}/10</Fig>
         </div>))}
       </div>
     </Box>
@@ -816,24 +816,24 @@ function Income({ d }: { d: any }) {
       <Rail icon="spending-power" kicker="What customers earn" verdict="A comfortable median customer, but the top pulls far ahead of the middle." />
       <div className="focal mb-3 flex items-end justify-between p-4">
         <Stat value={k$(med)} label="Median earner" size="focal" accent />
-        <div className="text-right text-[11px] leading-tight text-[var(--c-muted)]">the customer<br />who walks in</div>
+        <div className="text-right text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)]">the customer<br />who walks in</div>
       </div>
       <div className="grid grid-cols-2 gap-3">
         {tiers.map((t) => (
           <div key={t.label} className="rounded-lg border border-[var(--c-border)] bg-[var(--c-card)] px-4 py-3 text-center">
-            <div className="text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{t.label}</div>
-            <Fig className="mt-0.5 text-[24px] leading-none text-[var(--c-ink)]">{t.m.toFixed(1)}x</Fig>
-            <div className="mt-1 text-[11px] text-[var(--c-ink2)]">the median, at {k$(t.v)}</div>
+            <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{t.label}</div>
+            <Fig className="mt-0.5 text-[length:var(--t-sub)] leading-none text-[var(--c-ink)]">{t.m.toFixed(1)}x</Fig>
+            <div className="mt-1 text-[length:var(--t-micro)] text-[var(--c-ink2)]">the median, at {k$(t.v)}</div>
           </div>
         ))}
       </div>
       {/* the notch strip carries named ends (Equal / Unequal) so it is never an anonymous
           scale , the one unlabeled axis the skeptic pass caught. */}
       <div className="mt-3 flex items-center gap-2 border-t border-[var(--c-border)] pt-3">
-        <span className="text-[9px] uppercase tracking-wide text-[var(--c-muted)]">Equal</span>
+        <span className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">Equal</span>
         <div className="flex gap-1">{bands.map((b, i) => <span key={b} className="h-1.5 w-6 rounded-sm" style={{ background: i === gi ? "#8f8a86" : "#e3e3e3" }} />)}</div>
-        <span className="text-[9px] uppercase tracking-wide text-[var(--c-muted)]">Unequal</span>
-        <span className="ml-1 text-[11.5px] text-[var(--c-ink2)]">{cap((o.gini_band ?? "").replace("_", " "))} spread between earners</span>
+        <span className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">Unequal</span>
+        <span className="ml-1 text-[length:var(--t-micro)] text-[var(--c-ink2)]">{cap((o.gini_band ?? "").replace("_", " "))} spread between earners</span>
       </div>
     </Box>
   );
@@ -878,15 +878,15 @@ function Neighbours({ d }: { d: any }) {
   const tableRows = raw.map((r) => ({ name: r.name, home: r.home, cells: r.vals.map((v: number, i: number) => ({ raw: v ?? null, display: v == null ? "-" : cols[i].cell(v), best: !r.home && v != null && v === bestPeer[i] })) }));
   return (
     <Box><Head icon="compare">How it compares, country by country</Head>
-      {wins.length || loses.length ? <div className="mb-3 text-[12.5px] text-[var(--c-ink2)]">{d.meta?.name} beats every peer on <b className="text-[var(--c-ink)]">{wins.join(", ") || "none of these"}</b>{loses.length ? <>, and trails them all on <b className="text-[var(--c-ink)] underline decoration-[var(--c-line-strong)] underline-offset-2">{loses.join(", ")}</b></> : null}.</div> : null}
+      {wins.length || loses.length ? <div className="mb-3 text-[length:var(--t-body)] text-[var(--c-ink2)]">{d.meta?.name} beats every peer on <b className="text-[var(--c-ink)]">{wins.join(", ") || "none of these"}</b>{loses.length ? <>, and trails them all on <b className="text-[var(--c-ink)] underline decoration-[var(--c-line-strong)] underline-offset-2">{loses.join(", ")}</b></> : null}.</div> : null}
       <NeighboursTable cols={colDefs} rows={tableRows} />
-      <div className="mt-2 text-[11px] text-[var(--c-muted)]">Best among the peers in each column is bold; the home row is tinted, never ranked. Click a header to sort.</div>
+      <div className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">Best among the peers in each column is bold; the home row is tinted, never ranked. Click a header to sort.</div>
       {/* Pro seam: the fixed peer set is free; choosing your own comparison set is the
           paid move. Quiet chrome (neutral dashed hairline + soft wash): the LockPill is
           the seam's one terracotta mark. */}
       <div className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-dashed border-[var(--c-border)] bg-[var(--c-soft)] px-3 py-2.5">
-        <span className="text-[12px] text-[var(--c-ink2)]">Set {d.meta?.name} against up to three countries you pick. <LockPill /></span>
-        <a className="shrink-0 cursor-pointer rounded-full bg-[var(--c-ink)] px-3 py-1.5 text-[12px] font-semibold text-white transition hover:bg-[var(--terra-text)]">Open Compare &#8594;</a>
+        <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">Set {d.meta?.name} against up to three countries you pick. <LockPill /></span>
+        <a className="shrink-0 cursor-pointer rounded-full bg-[var(--c-ink)] px-3 py-1.5 text-[length:var(--t-body)] font-semibold text-white transition hover:bg-[var(--terra-text)]">Open Compare &#8594;</a>
       </div>
     </Box>
   );
@@ -922,7 +922,7 @@ function AdminLoad({ d }: { d: any }) {
     <Box><Rail icon="red-tape" kicker="The admin load" verdict="Once the company is set up, the running paperwork is tax, yearly returns and payroll." />
       <div className="mb-3 flex items-baseline gap-2">
         <Fig className="text-[26px] leading-none text-[var(--terra-text)]">{a.online_pct}%</Fig>
-        <span className="text-[12px] text-[var(--c-ink2)]">of it is done online</span>
+        <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">of it is done online</span>
       </div>
       <CatRows rows={rows} />
     </Box>
@@ -950,10 +950,10 @@ function Cities({ d }: { d: any }) {
     <div key={c.slug} className="w-full overflow-hidden rounded-lg border border-[var(--c-border)] bg-[var(--c-card)]">
       <div className="px-3 py-2.5">
         <div className="flex items-baseline justify-between gap-2">
-          <div className="min-w-0 truncate text-[13px] font-semibold text-[var(--c-ink)]">{c.name}</div>
-          {typeof c.market_index_vs_capital === "number" ? <Fig className="shrink-0 text-[12px] text-[var(--c-ink)]">{c.market_index_vs_capital}</Fig> : null}
+          <div className="min-w-0 truncate text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{c.name}</div>
+          {typeof c.market_index_vs_capital === "number" ? <Fig className="shrink-0 text-[length:var(--t-body)] text-[var(--c-ink)]">{c.market_index_vs_capital}</Fig> : null}
         </div>
-        <div className="truncate text-[11px] text-[var(--c-ink2)]">{c.character}</div>
+        <div className="truncate text-[length:var(--t-micro)] text-[var(--c-ink2)]">{c.character}</div>
       </div>
     </div>
   ));
@@ -966,13 +966,13 @@ function Cities({ d }: { d: any }) {
   return (
     <Box>
       <div className="mb-3 flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2"><Ico id="neighborhood" /><span className="text-[15px] font-semibold text-[var(--c-ink)]">Where the business is, city by city</span></div>
-        <a href="/countries" className="shrink-0 cursor-pointer rounded-full border border-[var(--c-border)] px-3 py-1 text-[12px] font-semibold text-[var(--c-ink2)] transition hover:border-[var(--terra-border)] hover:text-[var(--terra-text)]">Open the directory &#8594;</a>
+        <div className="flex items-center gap-2"><Ico id="neighborhood" /><span className="text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">Where the business is, city by city</span></div>
+        <a href="/countries" className="shrink-0 cursor-pointer rounded-full border border-[var(--c-border)] px-3 py-1 text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)] transition hover:border-[var(--terra-border)] hover:text-[var(--terra-text)]">Open the directory &#8594;</a>
       </div>
       {/* map leads, shorter than the full-page map; the cities stand in a row below it. */}
       <SpineMap points={points} ariaLabel="Map of the main UK business cities" fitPadding={60} heightClass="h-[300px] w-full md:h-[360px]" legendLabel="Dot size = market reach, London = 100" />
       <div className="mt-3"><Conveyor ariaLabel="The main cities" itemMinPx={150} gapPx={12}>{cards}</Conveyor></div>
-      <div className="mt-2.5 text-[11px] text-[var(--c-muted)]">Dot size on the map and the figure on each card are the same read: market reach against London (100). The capital opens its own page.</div>
+      <div className="mt-2.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">Dot size on the map and the figure on each card are the same read: market reach against London (100). The capital opens its own page.</div>
     </Box>
   );
 }
@@ -1011,7 +1011,7 @@ function SixTradesTakeHome({ trades, countryName }: { trades: Array<{ name: stri
       <RankBars rows={rows} valueUnit="" leaderId={leader.slug} />
       {/* wave-2 "reconciled" mark: these ARE the sanctioned per-trade figures, cross-checked
           with each cell page by construction (same engine) , a real status, not decoration. */}
-      <div className="mt-3 flex items-start gap-1.5 border-t border-[var(--c-border)] pt-2 text-[11px] leading-snug text-[var(--c-muted)]">
+      <div className="mt-3 flex items-start gap-1.5 border-t border-[var(--c-border)] pt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
         <AtlasMark id="reconciled" size={13} className="mt-px shrink-0" />
         <span>After-tax take-home for a typical operator, shown for {countryName === "United Kingdom" ? "London" : "the main city"} as the country&apos;s representative market and cross-checked with each trade&apos;s own page. Open a trade for the full build-up.</span>
       </div>
@@ -1051,12 +1051,12 @@ function EasiestTrades({ d }: { d: any }) {
       <div className="space-y-2.5">{list.map((t: any) => (
         <div key={t.c.name} className="hov -mx-2 grid grid-cols-[18px_130px_1fr_48px] items-center gap-2.5 rounded-md px-2 py-1">
           <AtlasIcon id={t.c.icon} size={16} className="spine-ic shrink-0" style={{ color: "var(--c-ink2)" }} />
-          <span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]">{t.c.name}</span>
+          <span className="min-w-0 truncate text-[length:var(--t-body)] text-[var(--c-ink2)]">{t.c.name}</span>
           <MiniBar pct={((t.cost_to_open_usd ?? 0) / max) * 100} />
-          <Fig className="text-right text-[12px] text-[var(--c-ink)]">${Math.round((t.cost_to_open_usd ?? 0) / 1000)}K</Fig>
+          <Fig className="text-right text-[length:var(--t-body)] text-[var(--c-ink)]">${Math.round((t.cost_to_open_usd ?? 0) / 1000)}K</Fig>
         </div>))}
       </div>
-      <p className="mt-3 text-[11px] leading-snug text-[var(--c-muted)]">A rough cost to open the doors. What each keeps once open is the take-home funnel up in the first chapter.</p>
+      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">A rough cost to open the doors. What each keeps once open is the take-home funnel up in the first chapter.</p>
     </Box>
   );
 }
@@ -1077,17 +1077,17 @@ function Insurance({ d }: { d: any }) {
         {covers.map((c: any, i: number) => (
           <div key={i} className="py-4 first:pt-1 last:pb-1">
             <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-              <span className="text-[14px] font-semibold text-[var(--c-ink)]">{c.name}</span>
+              <span className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{c.name}</span>
               <span className="flex items-center gap-2.5">
-                {c.required ? <span className="rounded-full bg-[var(--terra-soft)] px-2 py-0.5 text-[9.5px] font-semibold uppercase tracking-wide text-[var(--terra-text)]">required by law</span> : <span className="rounded-full bg-[var(--c-soft)] px-2 py-0.5 text-[9.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">optional</span>}
-                <Fig className="text-[15px] text-[var(--c-ink)]">${c.typical_usd}<span className="text-[10.5px] text-[var(--c-muted)]">/yr</span></Fig>
+                {c.required ? <span className="rounded-full bg-[var(--terra-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--terra-text)]">required by law</span> : <span className="rounded-full bg-[var(--c-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">optional</span>}
+                <Fig className="text-[length:var(--t-lead)] text-[var(--c-ink)]">${c.typical_usd}<span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">/yr</span></Fig>
               </span>
             </div>
             <div className="mt-2 grid gap-x-7 gap-y-1.5 sm:grid-cols-2">
-              <div className="flex gap-2.5"><span className="w-16 shrink-0 text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Covers</span><span className="text-[12.5px] leading-snug text-[var(--c-ink2)]">{c.covers}</span></div>
-              <div className="flex gap-2.5"><span className="w-16 shrink-0 text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Who</span><span className="text-[12.5px] leading-snug text-[var(--c-ink2)]">{c.who}</span></div>
+              <div className="flex gap-2.5"><span className="w-16 shrink-0 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Covers</span><span className="text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{c.covers}</span></div>
+              <div className="flex gap-2.5"><span className="w-16 shrink-0 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Who</span><span className="text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{c.who}</span></div>
             </div>
-            <p className="mt-1.5 text-[12px] leading-snug text-[var(--c-ink2)]">{c.note}</p>
+            <p className="mt-1.5 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{c.note}</p>
           </div>
         ))}
       </div>
@@ -1114,18 +1114,18 @@ function SellingAbroad({ d }: { d: any }) {
     <Box><Head icon="global-spread">How easy it is to export</Head>
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
-          <div className="mb-1.5 flex items-baseline gap-2"><Fig className="text-[18px] text-[var(--c-ink)]">{ease}</Fig><span className="text-[11px] text-[var(--c-muted)]">{e.openness_0_100} of 100 to export</span></div>
+          <div className="mb-1.5 flex items-baseline gap-2"><Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">{ease}</Fig><span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{e.openness_0_100} of 100 to export</span></div>
           <Meter value={e.openness_0_100} left="Hard" right="Easy" />
           {/* quiet where not sourced: the procedures detail (timings, paperwork, trade
               deals) fills in when researched per country , never a builder note here. */}
         </div>
         <div>
-          <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Top markets, share of exports</div>
+          <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Top markets, share of exports</div>
           <div className="mt-1.5 divide-y divide-[var(--c-border)]">{partners.map((p: any, i: number) => (
             <div key={p.name} className="hov -mx-2 flex items-baseline gap-2.5 rounded-md px-2 py-1.5">
-              <span className="fig w-4 shrink-0 text-[11px] text-[var(--c-muted)]">{i + 1}.</span>
-              <span className="min-w-0 flex-1 truncate text-[12.5px] text-[var(--c-ink)]">{p.name}</span>
-              <Fig className="text-[12.5px] text-[var(--c-ink)]">{p.pct}%</Fig>
+              <span className="fig w-4 shrink-0 text-[length:var(--t-micro)] text-[var(--c-muted)]">{i + 1}.</span>
+              <span className="min-w-0 flex-1 truncate text-[length:var(--t-body)] text-[var(--c-ink)]">{p.name}</span>
+              <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{p.pct}%</Fig>
             </div>))}</div>
         </div>
       </div>
@@ -1187,15 +1187,15 @@ function Character({ d }: { d: any }) {
       <Rail icon="ease-of-business" kicker="The character of the place" verdict="Clean, rules-led dealing; reserved to work with, but brisk and quick to transact." />
       <div className="grid gap-x-8 gap-y-6 md:grid-cols-2">
         <div>
-          <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Government, from a business view</div>
+          <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Government, from a business view</div>
           <SpectraTable rows={gov} gradient glossFor={glossFor} />
         </div>
         <div>
-          <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Culture, from an outsider view</div>
+          <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Culture, from an outsider view</div>
           <SpectraTable rows={culture} glossFor={glossFor} />
         </div>
       </div>
-      <div className="mt-2.5 text-[11px] leading-snug text-[var(--c-muted)]">In government, the left end is the worse-for-business one (dark) and the right is better (terracotta). The culture spectra have no better end: they are just different places to run a business.</div>
+      <div className="mt-2.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">In government, the left end is the worse-for-business one (dark) and the right is better (terracotta). The culture spectra have no better end: they are just different places to run a business.</div>
     </Box>
   );
 }
@@ -1212,7 +1212,7 @@ function Locals({ d }: { d: any }) {
   return (
     <Box><Head icon="locals-know">What locals know</Head>
       <div className="grid gap-x-7 gap-y-3 sm:grid-cols-2">{items.map((it: any, i: number) => (
-        <div key={i} className="flex gap-2.5"><span className="mt-0.5 text-[var(--c-muted)]">&#9656;</span><span className="text-[12.5px] leading-snug text-[var(--c-ink2)]"><b className="text-[var(--c-ink)]">{it.title}</b> {it.detail}</span></div>))}
+        <div key={i} className="flex gap-2.5"><span className="mt-0.5 text-[var(--c-muted)]">&#9656;</span><span className="text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]"><b className="text-[var(--c-ink)]">{it.title}</b> {it.detail}</span></div>))}
       </div>
     </Box>
   );
@@ -1239,7 +1239,7 @@ function Exit({ d }: { d: any }) {
   return (
     <Box><Head icon="sale-tag">How sellable a business is</Head>
       <CatRows rows={rows} />
-      <p className="mt-3 text-[11px] leading-snug text-[var(--c-muted)]">Valuation is a profit multiple, not a headline sale price: the real figure turns on the trade and the books.</p>
+      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">Valuation is a profit multiple, not a headline sale price: the real figure turns on the trade and the books.</p>
     </Box>
   );
 }
@@ -1284,8 +1284,8 @@ function Closing({ d }: { d: any }) {
     <Box><Rail icon="vacancy" kicker="If it doesn't work, getting out" verdict="How you wind down turns on whether the company is solvent; a debt-free micro-firm simply strikes off." />
       <CatRows rows={[["If solvent", c.solvent], ["If insolvent", c.insolvent], ["Your liability", c.liability]]} />
       <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 border-t border-[var(--c-border)] pt-3">
-        <div><Fig className="text-[15px] text-[var(--c-ink)]">{months}</Fig><span className="ml-1.5 text-[11px] text-[var(--c-muted)]">months, typical</span></div>
-        <div><Fig className="text-[15px] text-[var(--c-ink)]">{c.cost_pct}%</Fig><span className="ml-1.5 text-[11px] text-[var(--c-muted)]">of assets in cost</span></div>
+        <div><Fig className="text-[length:var(--t-lead)] text-[var(--c-ink)]">{months}</Fig><span className="ml-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">months, typical</span></div>
+        <div><Fig className="text-[length:var(--t-lead)] text-[var(--c-ink)]">{c.cost_pct}%</Fig><span className="ml-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">of assets in cost</span></div>
       </div>
       <div className="mt-3 border-t border-[var(--c-border)] pt-3"><Bullets items={c.bullets ?? []} /></div>
     </Box>
@@ -1306,7 +1306,7 @@ function Close({ d }: { d: any }) {
   return (
     <Box className="flex flex-col items-start gap-4">
       <Head icon="verdict">Where to go from here</Head>
-      <p className="max-w-[62ch] text-[13.5px] leading-snug text-[var(--c-ink2)]">You have the country picture: the tax take, the setup, the costs and the market. The decision gets sharper one level down, in a single city and then a single trade.</p>
+      <p className="max-w-[62ch] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">You have the country picture: the tax take, the setup, the costs and the market. The decision gets sharper one level down, in a single city and then a single trade.</p>
       <div className="grid w-full gap-2.5 sm:grid-cols-2">
         {links.map((l, i) => {
           const Tag: any = l.href ? "a" : "div";
@@ -1314,7 +1314,7 @@ function Close({ d }: { d: any }) {
             <Tag key={i} href={l.href} className={`group flex items-center justify-between gap-3 rounded-xl border border-[var(--c-border)] bg-[var(--c-card)] px-4 py-3.5 ${l.href ? "cityhov" : "opacity-75"}`}>
               <span className="flex min-w-0 items-center gap-2.5">
                 <AtlasMark id={l.mark} size={20} className="shrink-0 opacity-80" />
-                <span className={`text-[13.5px] font-semibold text-[var(--c-ink)] ${l.href ? "group-hover:text-[var(--terra-text)]" : ""}`}>{l.t}</span>
+                <span className={`text-[length:var(--t-body)] font-semibold text-[var(--c-ink)] ${l.href ? "group-hover:text-[var(--terra-text)]" : ""}`}>{l.t}</span>
               </span>
               {/* chrome is ink; terracotta is hover-only on real links. An unlinked row (the
                   city's page is not held yet) carries the wave-2 "not-held" mark instead of a
@@ -1359,15 +1359,15 @@ function DigitalPayments({ d }: { d: any }) {
   ];
   return (
     <Box><Head icon="payments">Getting paid, and the cash it costs</Head>
-      <p className="mb-4 max-w-[62ch] text-[13px] leading-snug text-[var(--c-ink2)]">A card-first market: {typeof cardShare === "number" ? <>about <b className="text-[var(--c-ink)]">{cardShare}%</b> of takings come by card, </> : null}so the <b className="text-[var(--c-ink)]">{p.card_fee_pct}%</b> fee and the wait for money to land are what actually touch your cash flow.</p>
+      <p className="mb-4 max-w-[62ch] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">A card-first market: {typeof cardShare === "number" ? <>about <b className="text-[var(--c-ink)]">{cardShare}%</b> of takings come by card, </> : null}so the <b className="text-[var(--c-ink)]">{p.card_fee_pct}%</b> fee and the wait for money to land are what actually touch your cash flow.</p>
       <div className="flex flex-col gap-5 md:flex-row md:items-center">
         <div className="md:w-[52%]">
-          <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">How customers pay</div>
+          <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">How customers pay</div>
           <StackBar h="h-9" sort={false} segments={methods.map((m: any) => ({ label: m.name, pct: m.pct, color: mcolor[m.name] ?? "#ededed" }))} legend legendClassName="mt-2 flex flex-wrap gap-x-3 gap-y-1" ariaLabel={methods.map((m: any) => `${m.name} ${m.pct}%`).join(", ")} />
         </div>
         <div className="flex-1">
           <div className="grid grid-cols-3 gap-2.5">
-            {tiles.map(([v, l, fig]) => <div key={l} className="hov rounded-lg border border-[var(--c-border)] p-3">{fig ? <Fig className="text-[18px] text-[var(--c-ink)]">{v}</Fig> : <div className="text-[14px] font-medium text-[var(--c-ink)]">{v}</div>}<div className="mt-0.5 text-[10.5px] leading-tight text-[var(--c-ink2)]">{l}</div></div>)}
+            {tiles.map(([v, l, fig]) => <div key={l} className="hov rounded-lg border border-[var(--c-border)] p-3">{fig ? <Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">{v}</Fig> : <div className="text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">{v}</div>}<div className="mt-0.5 text-[length:var(--t-micro)] leading-tight text-[var(--c-ink2)]">{l}</div></div>)}
           </div>
         </div>
       </div>
@@ -1400,20 +1400,20 @@ function Licensing({ d }: { d: any }) {
   const none = (s: string) => /^none$/i.test((s || "").trim());
   return (
     <Box><Head icon="licence-specific">Licences and permits by trade</Head>
-      <p className="mb-3 text-[12px] leading-snug text-[var(--c-ink2)]">Most trades open the day the company is registered; a few are gated by a permit. Open a trade for what it needs and how long it takes.</p>
+      <p className="mb-3 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">Most trades open the day the company is registered; a few are gated by a permit. Open a trade for what it needs and how long it takes.</p>
       <div className="space-y-2">{list.map((it: any, i: number) => {
         const needsPermit = !none(it.licence);
         const ic = licenceIcon(it.trade);
         return (
-          <Expand key={i} name="licensing" title={<span className="flex items-center gap-2">{ic ? <AtlasIcon id={ic} size={15} className="spine-ic shrink-0" style={{ color: "var(--c-ink2)" }} /> : null}{it.trade}</span>} open={i === 0} right={<span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium ${needsPermit ? "border border-[var(--c-border)] text-[var(--c-ink2)]" : "bg-[var(--c-soft)] text-[var(--c-muted)]"}`}>{it.lead_time}</span>}>
+          <Expand key={i} name="licensing" title={<span className="flex items-center gap-2">{ic ? <AtlasIcon id={ic} size={15} className="spine-ic shrink-0" style={{ color: "var(--c-ink2)" }} /> : null}{it.trade}</span>} open={i === 0} right={<span className={`shrink-0 rounded-full px-2 py-0.5 text-[length:var(--t-micro)] font-medium ${needsPermit ? "border border-[var(--c-border)] text-[var(--c-ink2)]" : "bg-[var(--c-soft)] text-[var(--c-muted)]"}`}>{it.lead_time}</span>}>
             {needsPermit ? (
               <div className="space-y-1.5">
-                <div className="flex gap-2.5"><span className="w-11 shrink-0 text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">What</span><span className="text-[12px] text-[var(--c-ink2)]">{it.licence}</span></div>
-                <div className="flex gap-2.5"><span className="w-11 shrink-0 text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">When</span><span className="text-[12px] text-[var(--c-ink2)]">Allow {String(it.lead_time).toLowerCase()} before opening.</span></div>
-                {it.context ? <div className="flex gap-2.5"><span className="w-11 shrink-0 text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">How</span><span className="text-[12px] text-[var(--c-ink2)]">{it.context}</span></div> : null}
+                <div className="flex gap-2.5"><span className="w-11 shrink-0 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">What</span><span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{it.licence}</span></div>
+                <div className="flex gap-2.5"><span className="w-11 shrink-0 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">When</span><span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">Allow {String(it.lead_time).toLowerCase()} before opening.</span></div>
+                {it.context ? <div className="flex gap-2.5"><span className="w-11 shrink-0 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">How</span><span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{it.context}</span></div> : null}
               </div>
             ) : (
-              <p className="text-[12px] leading-snug text-[var(--c-ink2)]">No trade permit needed. You can begin trading the day the company is registered.{it.context ? ` ${it.context}` : ""}</p>
+              <p className="text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">No trade permit needed. You can begin trading the day the company is registered.{it.context ? ` ${it.context}` : ""}</p>
             )}
           </Expand>
         );
@@ -1421,7 +1421,7 @@ function Licensing({ d }: { d: any }) {
       </div>
       {/* wave-2 "proof" mark: the sourced-only rule is real in this section's code (a cost
           bullet renders only where a real fee exists). */}
-      <p className="mt-3 flex items-start gap-1.5 text-[11px] leading-snug text-[var(--c-muted)]"><AtlasMark id="proof" size={13} className="mt-px shrink-0" /><span>Shown where the permit route is sourced; trades not listed carry no special permit.</span></p>
+      <p className="mt-3 flex items-start gap-1.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]"><AtlasMark id="proof" size={13} className="mt-px shrink-0" /><span>Shown where the permit route is sourced; trades not listed carry no special permit.</span></p>
     </Box>
   );
 }
@@ -1454,16 +1454,16 @@ function Immigration({ d }: { d: any }) {
       <div className="space-y-3.5">{routes.map((r: any) => (
         <div key={r.name} className="border-b border-[var(--c-border)] pb-3 last:border-0 last:pb-0">
           <div className="mb-1 flex items-center justify-between gap-2">
-            <span className="text-[13px] font-semibold text-[var(--c-ink)]">{r.name}</span>
-            <span className="fig text-[10.5px] uppercase tracking-wide text-[var(--c-muted)]">{r.ease >= 55 ? "Easier" : r.ease >= 35 ? "Moderate" : "Harder"}</span>
+            <span className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{r.name}</span>
+            <span className="fig text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">{r.ease >= 55 ? "Easier" : r.ease >= 35 ? "Moderate" : "Harder"}</span>
           </div>
           <MiniBar pct={r.ease} />
-          <p className="mt-1.5 text-[11.5px] leading-snug text-[var(--c-ink2)]"><b className="font-medium text-[var(--c-ink)]">For</b> {String(r.forwho).toLowerCase()}.</p>
-          <p className="text-[11.5px] leading-snug text-[var(--c-ink2)]"><b className="font-medium text-[var(--c-ink)]">How</b> {howMap[r.name] ?? "Endorsement or sponsorship, then a route to settlement."}</p>
+          <p className="mt-1.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]"><b className="font-medium text-[var(--c-ink)]">For</b> {String(r.forwho).toLowerCase()}.</p>
+          <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]"><b className="font-medium text-[var(--c-ink)]">How</b> {howMap[r.name] ?? "Endorsement or sponsorship, then a route to settlement."}</p>
         </div>
       ))}
       </div>
-      <p className="mt-3 text-[11px] leading-snug text-[var(--c-muted)]">Founder routes only; hire-from-abroad visas are for employees, not owners. Fiscal incentives for locating here are covered under grants and incentives below.</p>
+      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">Founder routes only; hire-from-abroad visas are for employees, not owners. Fiscal incentives for locating here are covered under grants and incentives below.</p>
     </Box>
   );
 }

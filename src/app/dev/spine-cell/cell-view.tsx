@@ -66,10 +66,10 @@ function HonestTake({ d }: { d: any }) {
       {hasN ? (
         <div className="mt-1 flex items-baseline gap-2.5 border-t border-[var(--c-border)] pt-3">
           <Fig className="text-3xl text-[var(--c-ink)]">{n.toLocaleString()}</Fig>
-          <span className="text-[12.5px] text-[var(--c-ink2)]">{tradeLower} already trade here.</span>
+          <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{tradeLower} already trade here.</span>
         </div>
       ) : null}
-      {v.crowded_line ? <div className="mt-1 text-[11.5px] leading-snug text-[var(--c-muted)]">{v.crowded_line}</div> : null}
+      {v.crowded_line ? <div className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{v.crowded_line}</div> : null}
     </Box>
   );
 }
@@ -88,7 +88,7 @@ function MoneySplit({ d }: { d: any }) {
       <Rail icon="cost-breakdown" kicker="Where each $100 of sales goes" verdict={d.money_split?.surface_line} />
       <StackBar segments={segments} ariaLabel={segments.map((p) => `${p.label} ${p.pct}%`).join(", ")} legend />
       {d.money_split?.read ? (
-        <p className="mt-2 text-[12px] leading-snug text-[var(--c-ink2)]">{d.money_split.read}</p>
+        <p className="mt-2 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{d.money_split.read}</p>
       ) : null}
     </Box>
   );
@@ -134,40 +134,40 @@ function Demand({ d }: { d: any }) {
         <Rail icon="daily-takings" kicker="When the revenue lands" verdict={dm.surface_line} />
         <div className="mb-3 flex flex-wrap items-baseline gap-x-3">
           <Fig className="text-3xl text-[var(--c-ink)]">{(dm.covers_per_week ?? 0).toLocaleString()}</Fig>
-          <span className="text-[13px] text-[var(--c-ink2)]">covers<InfoTip gloss="One cover is one customer served; a table of four is four covers." /> a week at about <Fig className="text-[var(--c-ink)]">${dm.avg_spend_usd}</Fig> a head.</span>
+          <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">covers<InfoTip gloss="One cover is one customer served; a table of four is four covers." /> a week at about <Fig className="text-[var(--c-ink)]">${dm.avg_spend_usd}</Fig> a head.</span>
         </div>
         {/* dayparts , fixed 0-100% axis (the full week), zero baseline, value labels */}
         <div className="space-y-2">
           {dayparts.map((p) => (
             <div key={p.name} className="grid grid-cols-[120px_1fr_36px] items-center gap-3">
-              <span className="text-[12px] text-[var(--c-ink2)]">{p.name}</span>
+              <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{p.name}</span>
               <span className="h-2.5 overflow-hidden rounded-full" style={{ background: TRACK }}>
                 <span className="block h-full rounded-full" role="img" aria-label={`${p.name} ${p.pct}%`} style={{ width: `${p.pct}%`, background: p.name === dpPeak ? TERRA : "#c8c8c6" }} />
               </span>
-              <Fig className="text-right text-[12.5px] text-[var(--c-ink)]">{p.pct}%</Fig>
+              <Fig className="text-right text-[length:var(--t-body)] text-[var(--c-ink)]">{p.pct}%</Fig>
             </div>
           ))}
         </div>
-        <div className="mt-2 text-[11px] text-[var(--c-muted)]">Share of the week's covers by daypart; the track is the full week.</div>
+        <div className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">Share of the week's covers by daypart; the track is the full week.</div>
       </Box>
       <Box className="celltop">
         <Rail icon="catchment" kicker="Who comes in, and how" verdict={dm.channel_line} />
         <StackBar segments={chSegs} sort={false} h="h-7" ariaLabel={chSegs.map((s) => `${s.label} ${s.pct}%`).join(", ")} legend />
         {/* catchment , explicitly labeled an index, ranked descending, values shown */}
         <div className="mt-4 border-t border-[var(--c-border)] pt-3">
-          <div className="mb-2 text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Where the covers come from <span className="font-normal normal-case">({dm.catchment_unit})</span></div>
+          <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Where the covers come from <span className="font-normal normal-case">({dm.catchment_unit})</span></div>
           <div className="space-y-2">
             {cat.map((c) => (
               <div key={c.name} className="grid grid-cols-[130px_1fr_32px] items-center gap-3">
-                <span className="min-w-0 truncate text-[12px] text-[var(--c-ink2)]">{c.name}</span>
+                <span className="min-w-0 truncate text-[length:var(--t-body)] text-[var(--c-ink2)]">{c.name}</span>
                 <span className="h-2 overflow-hidden rounded-full" style={{ background: TRACK }}>
                   <span className="block h-full rounded-full" role="img" aria-label={`${c.name} index ${c.pct}`} style={{ width: `${c.pct}%`, background: "#c8c8c6" }} />
                 </span>
-                <Fig className="text-right text-[12px] text-[var(--c-ink)]">{c.pct}</Fig>
+                <Fig className="text-right text-[length:var(--t-body)] text-[var(--c-ink)]">{c.pct}</Fig>
               </div>
             ))}
           </div>
-          <div className="mt-1.5 text-[11px] text-[var(--c-muted)]">{dm.catchment_note}</div>
+          <div className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{dm.catchment_note}</div>
         </div>
       </Box>
     </WideRail>
@@ -205,7 +205,7 @@ function Seasonality({ d }: { d: any }) {
         <line x1={padL} y1={Y(0)} x2={W - padR} y2={Y(0)} stroke="#c9c9c7" strokeWidth={1} />
         {m.map((_, i) => <text key={i} x={padL + i * slot + slot / 2} y={H - 5} textAnchor="middle" fill="#8c8c8a" fontSize={8}>{MONTHS[i]}</text>)}
       </svg>
-      <div className="mt-1.5 text-[11px] text-[var(--c-muted)]">Monthly demand, indexed; the dashed rule marks 100. December peaks, January sags, and the swing stays gentle.</div>
+      <div className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">Monthly demand, indexed; the dashed rule marks 100. December peaks, January sags, and the swing stays gentle.</div>
     </Box>
   );
 }
@@ -267,10 +267,10 @@ function Myth({ d }: { d: any }) {
           The verdict is seed-carried (myth.subtitle); absent = no verdict line. */}
       <Rail icon="myth-reality" kicker="Myth, busted" verdict={my.subtitle} />
       <div className="rounded-[10px] border border-[var(--c-border)] bg-[var(--c-soft)] px-3.5 py-2.5">
-        <span className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">The claim</span>
-        <p className="mt-0.5 text-[13px] italic text-[var(--c-ink2)]">&ldquo;{my.claim}&rdquo;</p>
+        <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">The claim</span>
+        <p className="mt-0.5 text-[length:var(--t-body)] italic text-[var(--c-ink2)]">&ldquo;{my.claim}&rdquo;</p>
       </div>
-      <p className="mt-3 text-[12.5px] leading-snug text-[var(--c-ink2)]">{my.reality}</p>
+      <p className="mt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{my.reality}</p>
       {/* the NEW evidence: a survival curve, not a restatement of the margin split.
           A downward slope reads "attrition over time"; terracotta marks the year-one
           figure only (the myth-buster), the later years stay ink. */}
@@ -307,7 +307,7 @@ function SurvivalSlope({ points, note }: { points: Array<[string, number]>; note
           );
         })}
       </svg>
-      {note ? <div className="text-[11px] text-[var(--c-muted)]">{note}</div> : null}
+      {note ? <div className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{note}</div> : null}
     </div>
   );
 }
@@ -328,15 +328,15 @@ function Related({ d }: { d: any }) {
     <Box className="celltop md:flex-[3]">
       {/* same section-opener treatment as sibling cards (Rail kicker, not a bold Head) */}
       <Rail icon="subtype" kicker="Related trades in this place" />
-      <p className="mb-3 text-[12px] leading-snug text-[var(--c-ink2)]">The same street, a different trade: what each one keeps of every $100 of sales.</p>
+      <p className="mb-3 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">The same street, a different trade: what each one keeps of every $100 of sales.</p>
       <div className="space-y-1">
         {arr.map((r, i) => {
           const lead = i === 0;
           return (
             <a key={r.slug} href={`/gb/london/${r.slug}`} className="hov -mx-2 grid grid-cols-[110px_1fr_40px] items-center gap-3 rounded-md px-2 py-2">
               <span className="min-w-0">
-                <span className="block truncate text-[12.5px] font-medium text-[var(--c-ink)]">{r.name}</span>
-                {r.fact ? <span className="block truncate text-[10.5px] text-[var(--c-muted)]">{r.fact}</span> : null}
+                <span className="block truncate text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">{r.name}</span>
+                {r.fact ? <span className="block truncate text-[length:var(--t-micro)] text-[var(--c-muted)]">{r.fact}</span> : null}
               </span>
               <span className="relative block h-4" role="img" aria-label={`${r.name} keeps ${r.keeps_pct}% of sales; restaurants here keep ${ref}%`}>
                 <span aria-hidden className="absolute top-1/2 h-[3px] w-full -translate-y-1/2 rounded-full" style={{ background: TRACK }} />
@@ -345,12 +345,12 @@ function Related({ d }: { d: any }) {
                 {/* the reference: what restaurants keep here, drawn on the same scale */}
                 <span aria-hidden className="absolute inset-y-0 w-px" style={{ left: `${pos(ref)}%`, background: "var(--c-ink2)" }} />
               </span>
-              <Fig className={`text-right text-[13px] ${lead ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{r.keeps_pct}%</Fig>
+              <Fig className={`text-right text-[length:var(--t-body)] ${lead ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{r.keeps_pct}%</Fig>
             </a>
           );
         })}
       </div>
-      <div className="mt-2 border-t border-[var(--c-border)] pt-2 text-[11px] text-[var(--c-muted)]">
+      <div className="mt-2 border-t border-[var(--c-border)] pt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">
         The ink tick marks what restaurants keep here ({ref}%).{allKeepMore ? " Every neighbouring trade keeps more." : ""}
       </div>
     </Box>
@@ -379,22 +379,22 @@ function Close({ d }: { d: any }) {
     <Box className="celltop">
       <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
         <div className="max-w-2xl">
-          <div className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--c-muted)]">The bottom line</div>
+          <div className="mb-1.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--c-muted)]">The bottom line</div>
           {d.close?.bottom_line ? (
-            <p className="text-[15px] font-medium leading-snug text-[var(--c-ink)]">{d.close.bottom_line}</p>
+            <p className="text-[length:var(--t-lead)] font-medium leading-snug text-[var(--c-ink)]">{d.close.bottom_line}</p>
           ) : null}
-          <p className="mt-1.5 text-[12.5px] leading-snug text-[var(--c-ink2)]">If the format fits your capital and your hours, the next question is where the same work keeps more.</p>
+          <p className="mt-1.5 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">If the format fits your capital and your hours, the next question is where the same work keeps more.</p>
         </div>
-        <a href="/pricing" className="shrink-0 self-start rounded-full bg-[var(--c-ink)] px-5 py-2.5 text-[13px] font-semibold text-white transition-colors hover:bg-[var(--terra-text)] md:self-auto">
+        <a href="/pricing" className="shrink-0 self-start rounded-full bg-[var(--c-ink)] px-5 py-2.5 text-[length:var(--t-body)] font-semibold text-white transition-colors hover:bg-[var(--terra-text)] md:self-auto">
           Compare this trade with Pro &#8594;
         </a>
       </div>
       <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-1.5 border-t border-[var(--c-border)] pt-4 sm:grid-cols-3">
         {links.map((l, i) =>
           l.href ? (
-            <a key={i} href={l.href} className="text-[13px] font-medium text-[var(--c-ink2)] transition-colors hover:text-[var(--terra-text)]">{l.t} &#8594;</a>
+            <a key={i} href={l.href} className="text-[length:var(--t-body)] font-medium text-[var(--c-ink2)] transition-colors hover:text-[var(--terra-text)]">{l.t} &#8594;</a>
           ) : (
-            <span key={i} className="text-[13px] font-medium text-[var(--c-ink2)]">{l.t}</span>
+            <span key={i} className="text-[length:var(--t-body)] font-medium text-[var(--c-ink2)]">{l.t}</span>
           )
         )}
       </div>

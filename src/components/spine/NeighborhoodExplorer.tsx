@@ -116,7 +116,7 @@ function NeStyles() {
 }
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <div className="mb-2 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{children}</div>;
+  return <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{children}</div>;
 }
 
 /* the ONE card chrome for this island's four framed blocks (keep strip, detail panel,
@@ -165,7 +165,7 @@ function KeepStrip({ districts, selected, onSelect, reduced }: { districts: Dist
     <HoodCard ref={ref} className="px-4 py-3.5">
       <div className="mb-1 flex items-end justify-between gap-3">
         <SectionLabel>Ranked by what the owner keeps</SectionLabel>
-        <span className="text-[10.5px] text-[var(--c-muted)]">
+        <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">
           <Fig className="text-[var(--c-ink)]">{aboveCount}</Fig> keep more than the city, <Fig className="text-[var(--c-ink)]">{belowCount}</Fig> keep less
         </span>
       </div>
@@ -176,7 +176,7 @@ function KeepStrip({ districts, selected, onSelect, reduced }: { districts: Dist
       <div className="mb-1.5 grid grid-cols-[16px_88px_1fr_36px] items-center gap-2 px-0 sm:grid-cols-[18px_130px_1fr_44px] sm:gap-3">
         <span />
         <span />
-        <div className="flex items-center justify-center text-[9px] font-semibold uppercase tracking-wide text-[var(--c-muted)] sm:justify-between">
+        <div className="flex items-center justify-center text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)] sm:justify-between">
           <span className="hidden sm:inline">Keeps less</span>
           <span className="text-[var(--c-ink2)]">City 100</span>
           <span className="hidden sm:inline">Keeps more</span>
@@ -209,8 +209,8 @@ function KeepStrip({ districts, selected, onSelect, reduced }: { districts: Dist
                   type="button" onClick={() => onSelect(d.slug)} aria-pressed={sel}
                   className="nerow -mx-2 grid w-[calc(100%+1rem)] grid-cols-[16px_88px_1fr_36px] items-center gap-2 rounded-md px-2 py-1.5 text-left sm:grid-cols-[18px_130px_1fr_44px] sm:gap-3"
                 >
-                  <Fig className={`text-[12px] ${focal ? "text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{i + 1}</Fig>
-                  <span className={`min-w-0 truncate text-[12.5px] ${sel ? "font-semibold text-[var(--c-ink)]" : "font-medium text-[var(--c-ink2)]"}`}>
+                  <Fig className={`text-[length:var(--t-body)] ${focal ? "text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{i + 1}</Fig>
+                  <span className={`min-w-0 truncate text-[length:var(--t-body)] ${sel ? "font-semibold text-[var(--c-ink)]" : "font-medium text-[var(--c-ink2)]"}`}>
                     {d.name}
                   </span>
                   <div className="relative h-[14px]" role="img" aria-label={`${d.name}: keep index ${keep}, ${above ? "above" : "below"} the city baseline of 100`}>
@@ -237,14 +237,14 @@ function KeepStrip({ districts, selected, onSelect, reduced }: { districts: Dist
                       />
                     ) : null}
                   </div>
-                  <Fig className={`text-right text-[13px] ${focal ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{keep}</Fig>
+                  <Fig className={`text-right text-[length:var(--t-body)] ${focal ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{keep}</Fig>
                 </button>
               </li>
             );
           })}
         </ol>
       </div>
-      <p className="mt-2 text-[11px] leading-snug text-[var(--c-muted)]">Right of the line keeps more than the city; left of it, less.</p>
+      <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">Right of the line keeps more than the city; left of it, less.</p>
     </HoodCard>
   );
 }
@@ -292,14 +292,14 @@ function MultWaterfall({ d }: { d: District }) {
       <div className="space-y-1.5">
         {rows.map((r) => (
           <div key={r.label} className="grid grid-cols-[104px_1fr_52px] items-center gap-2.5">
-            <span className={`text-[11px] ${r.isCity ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`}>
+            <span className={`text-[length:var(--t-micro)] ${r.isCity ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`}>
               {r.label}
               {r.label === "Area character" ? <InfoTip gloss="A modeled premium or discount from what the district is known for: nightlife, luxury, markets." /> : null}
             </span>
             <div className="relative h-[9px] overflow-hidden rounded-full" style={{ background: "#efeae6" }} role="img" aria-label={`${r.label}: running ${r.running.toFixed(2)} times the city`}>
               <div className="h-full rounded-full" style={{ width: `${barW(r.running)}%`, background: r.isCity ? "#b9b1ab" : "#cdc6c0" }} />
             </div>
-            <Fig className="text-right text-[11.5px] text-[var(--c-ink2)]">
+            <Fig className="text-right text-[length:var(--t-micro)] text-[var(--c-ink2)]">
               {r.isCity ? <>x1.00</> : <>x{r.mult.toFixed(2)}</>}
             </Fig>
           </div>
@@ -307,14 +307,14 @@ function MultWaterfall({ d }: { d: District }) {
         {/* net row , the clipped product, in ink: the panel header keep figure carries
             the accent, so the waterfall stays neutral proof */}
         <div className="mt-1 grid grid-cols-[104px_1fr_52px] items-center gap-2.5 border-t border-[var(--c-border)] pt-2">
-          <span className="text-[11px] font-semibold text-[var(--c-ink)]">Net vs city</span>
+          <span className="text-[length:var(--t-micro)] font-semibold text-[var(--c-ink)]">Net vs city</span>
           <div className="relative h-[11px] overflow-hidden rounded-full" style={{ background: "#f0eae7" }} role="img" aria-label={`net ${net.toFixed(2)} times the city, clipped`}>
             <div className="h-full rounded-full" style={{ width: `${barW(net)}%`, background: "var(--c-ink)" }} />
           </div>
-          <Fig className="text-right text-[12px] text-[var(--c-ink)]">x{net.toFixed(2)}</Fig>
+          <Fig className="text-right text-[length:var(--t-body)] text-[var(--c-ink)]">x{net.toFixed(2)}</Fig>
         </div>
       </div>
-      <p className="mt-2 text-[11px] leading-snug text-[var(--c-muted)]">
+      <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
         Each factor is a modeled multiplier on the running total, not an addition.
         {clipBinds ? (
           <> The raw product reaches <Fig className="text-[var(--c-ink2)]">x{rawProduct.toFixed(2)}</Fig>; the model clips it to <Fig className="text-[var(--c-ink2)]">x{net.toFixed(2)}</Fig>, so no single district lifts a trade without limit.</>
@@ -344,7 +344,7 @@ function FootfallScale({ d }: { d: District }) {
         {/* weekend marker */}
         <Marker pos={we} label="Weekend" value={we} busier={!wdBusier} />
       </div>
-      <div className="mt-1 flex justify-between text-[9.5px] uppercase tracking-wide text-[var(--c-muted)]"><span>Quiet</span><span>Packed</span></div>
+      <div className="mt-1 flex justify-between text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]"><span>Quiet</span><span>Packed</span></div>
     </div>
   );
 }
@@ -354,7 +354,7 @@ function Marker({ pos, label, value, busier, above }: { pos: number; label: stri
   const shift = pos < 12 ? "0" : pos > 88 ? "-100%" : "-50%";
   const lbl = (
     <span
-      className={`${above ? "mb-0.5" : "mt-0.5"} block w-max whitespace-nowrap text-[10px] ${busier ? "font-semibold" : "font-medium"}`}
+      className={`${above ? "mb-0.5" : "mt-0.5"} block w-max whitespace-nowrap text-[length:var(--t-micro)] ${busier ? "font-semibold" : "font-medium"}`}
       style={{ transform: `translateX(${shift})`, color: "var(--c-ink2)" }}
     >
       {label} <span className="fig">{value}</span>
@@ -383,7 +383,7 @@ function PriceTierBand({ tier }: { tier: string }) {
           <span key={t} className="h-[7px] rounded-full" style={{ background: i === idx ? "var(--c-ink)" : "#e6e6e6" }} />
         ))}
       </div>
-      <div className="mt-1 grid grid-cols-4 gap-1 text-center text-[9px] uppercase tracking-wide">
+      <div className="mt-1 grid grid-cols-4 gap-1 text-center text-[length:var(--t-micro)] uppercase tracking-wide">
         {PRICE_LABELS.map((l, i) => (
           <span key={l} className={i === idx ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-muted)]"}>{l}</span>
         ))}
@@ -423,22 +423,22 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
-              <h3 data-typography="custom" className="text-[22px] font-bold tracking-tight text-[var(--c-ink)]">{d.name}</h3>
-              <span className="text-[12px] text-[var(--c-muted)]">{d.character}</span>
+              <h3 data-typography="custom" className="text-[length:var(--t-sub)] font-bold tracking-tight text-[var(--c-ink)]">{d.name}</h3>
+              <span className="text-[length:var(--t-body)] text-[var(--c-muted)]">{d.character}</span>
             </div>
-            <p className="mt-1.5 max-w-md text-[13px] leading-snug text-[var(--c-ink2)]">{d.blurb}</p>
+            <p className="mt-1.5 max-w-md text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{d.blurb}</p>
           </div>
           {/* the ONE hero figure: keep index, count-up safe; terra only above city 100 */}
           <div className="shrink-0 text-right">
             <Fig className={`block text-[48px] leading-none ${above ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{keepShown}</Fig>
-            <div className="mt-1 text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">keep index, {dirWord} <AtlasMark id={dir} size={12} /></div>
-            <div className="mt-1.5 text-[11px] text-[var(--c-muted)]">revenue <Fig className="text-[var(--c-ink2)]">{up ? "+" : ""}{d.rev_vs_city_pct}%</Fig> vs city</div>
+            <div className="mt-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">keep index, {dirWord} <AtlasMark id={dir} size={12} /></div>
+            <div className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">revenue <Fig className="text-[var(--c-ink2)]">{up ? "+" : ""}{d.rev_vs_city_pct}%</Fig> vs city</div>
           </div>
         </div>
 
         {/* the decision line: verdict + counterweight, plain-spoken, from the seed */}
-        <p className="mt-3 border-t border-[var(--c-border)] pt-3 text-[13px] font-medium leading-snug text-[var(--c-ink)]">{d.verdict}</p>
-        <p className="mt-1.5 text-[12px] leading-snug text-[var(--c-ink2)]">{counter}</p>
+        <p className="mt-3 border-t border-[var(--c-border)] pt-3 text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink)]">{d.verdict}</p>
+        <p className="mt-1.5 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{counter}</p>
 
         <div className="mt-3 flex flex-wrap items-center gap-1.5">
           {(d.tags ?? []).map((t) => <Chip key={t}>{t}</Chip>)}
@@ -455,7 +455,7 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
         <div>
           <div className="mb-1 flex items-end justify-between gap-3">
             <SectionLabel>Why the number moves</SectionLabel>
-            <Fig className="text-[12px] text-[var(--c-ink)]">x{(1 + d.rev_vs_city_pct / 100).toFixed(2)}</Fig>
+            <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">x{(1 + d.rev_vs_city_pct / 100).toFixed(2)}</Fig>
           </div>
           <MultWaterfall d={d} />
         </div>
@@ -485,8 +485,8 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
           </div>
         ) : null}
 
-        <Expand name={grp} title="The rent counterweight" right={<Fig className="text-[12px] text-[var(--c-ink)]">x{d.rent_mult.toFixed(2)}</Fig>}>
-          <p className="pt-1 text-[12.5px] leading-snug text-[var(--c-ink2)]">
+        <Expand name={grp} title="The rent counterweight" right={<Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">x{d.rent_mult.toFixed(2)}</Fig>}>
+          <p className="pt-1 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">
             Rent runs <Fig className="text-[var(--c-ink)]">x{d.rent_mult.toFixed(2)}</Fig> the city rate. The keep index divides the revenue lift by this load, which is why {above ? "the lighter lease lets more of each pound stay put" : "the headline lift never reaches the till"}.
           </p>
         </Expand>
@@ -500,10 +500,10 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
               {/* ink kicker: the LockPill on the summary already carries the Pro cue */}
               <div className="mb-2 flex items-center gap-1.5">
                 <Ico id="locals-know" />
-                <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--c-ink2)]">Ground truth</span>
+                <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-ink2)]">Ground truth</span>
               </div>
               <ul className="space-y-1.5">
-                <li className="text-[12.5px] leading-snug text-[var(--c-ink2)]">{d.locals_know![0]}</li>
+                <li className="text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{d.locals_know![0]}</li>
               </ul>
               {(d.locals_know ?? []).length > 1 ? (
                 <div className="mt-2.5 pb-1">
@@ -512,7 +512,7 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
                         inside the veil even when the hidden lines are short (no edge clip). */}
                     <ul className="min-h-[168px] space-y-1.5">
                       {d.locals_know!.slice(1).map((s, i) => (
-                        <li key={i} className="text-[12.5px] leading-snug text-[var(--c-ink2)]">{s}</li>
+                        <li key={i} className="text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{s}</li>
                       ))}
                     </ul>
                   </LockVeil>
@@ -528,12 +528,12 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
       <div className="flex items-center justify-between gap-3 border-t border-[var(--c-border)] px-5 py-3.5">
         {/* trades-covered count omits on the real page (no per-district source); the
             empty cell keeps the CTA to the right. */}
-        <div className="text-[12px] text-[var(--c-muted)]">
+        <div className="text-[length:var(--t-body)] text-[var(--c-muted)]">
           {d.cell_count != null ? (
-            <><Fig className="text-[14px] text-[var(--c-ink)]">{d.cell_count}</Fig> trades covered in {d.name}</>
+            <><Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{d.cell_count}</Fig> trades covered in {d.name}</>
           ) : null}
         </div>
-        <a href={d.cell_href ?? "/dev/spine-cell"} className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90" style={{ background: "var(--c-ink)" }}>
+        <a href={d.cell_href ?? "/dev/spine-cell"} className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[length:var(--t-body)] font-semibold text-white transition-opacity hover:opacity-90" style={{ background: "var(--c-ink)" }}>
           Open a trade here <span aria-hidden>&#8594;</span>
         </a>
       </div>
@@ -580,16 +580,16 @@ function UnderMapCard({ d }: { d: District }) {
               const href = tradeHref(t.name);
               const body = (
                 <>
-                  <div className="text-[12.5px] font-semibold text-[var(--c-ink)]">
+                  <div className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">
                     {t.name}
                     {href ? <span aria-hidden className="ml-1 text-[var(--c-muted)]">&#8594;</span> : null}
                   </div>
-                  <div className="text-[11.5px] leading-snug text-[var(--c-ink2)]">{t.why}</div>
+                  <div className="text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]">{t.why}</div>
                 </>
               );
               return (
                 <li key={t.name} className="flex gap-3">
-                  <Fig className={`mt-px w-4 shrink-0 text-[13px] ${i === 0 ? "text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{i + 1}</Fig>
+                  <Fig className={`mt-px w-4 shrink-0 text-[length:var(--t-body)] ${i === 0 ? "text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{i + 1}</Fig>
                   {href ? (
                     <a href={href} className="nerow -mx-1 min-w-0 rounded-md px-1">{body}</a>
                   ) : (
@@ -614,7 +614,7 @@ function UnderMapCard({ d }: { d: District }) {
               <SectionLabel>Who is here</SectionLabel>
               <ul className="space-y-1">
                 {demos.map((s) => (
-                  <li key={s} className="flex items-center gap-2 text-[12px] text-[var(--c-ink2)]"><span className="h-1 w-1 shrink-0 rounded-full" style={{ background: "#8f8f8d" }} />{s}</li>
+                  <li key={s} className="flex items-center gap-2 text-[length:var(--t-body)] text-[var(--c-ink2)]"><span className="h-1 w-1 shrink-0 rounded-full" style={{ background: "#8f8f8d" }} />{s}</li>
                 ))}
               </ul>
             </div>
@@ -681,7 +681,7 @@ export function NeighborhoodExplorer({ districts, defaultSlug, rail, mapNote }: 
               legendLabel="Dot size = keep index; terracotta = keeps more than the city"
             />
           </div>
-          {mapNote ? <p className="px-1 pt-2 text-[11px] leading-snug text-[var(--c-muted)]">{mapNote}</p> : null}
+          {mapNote ? <p className="px-1 pt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{mapNote}</p> : null}
           <UnderMapCard d={current} />
         </div>
         <DetailPanel d={current} reduced={reduced} />
@@ -775,16 +775,16 @@ export function MythChapter({ myth, loudest, districts = [] }: { myth: Myth; lou
         <div>
           <div className="mb-3 flex items-center gap-2">
             <Ico id="myth-reality" tone="terra" />
-            <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--terra-text)]">Myth, busted</span>
+            <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--terra-text)]">Myth, busted</span>
           </div>
-          <p className="text-[20px] font-semibold leading-snug text-[var(--c-ink)] md:text-[24px]">&ldquo;{myth.claim}&rdquo;</p>
-          <p className="mt-3 max-w-prose text-[13.5px] leading-relaxed text-[var(--c-ink2)]">{myth.reality}</p>
-          {myth.tell ? <p className="mt-3 text-[13px] font-semibold text-[var(--c-ink)]">{myth.tell}</p> : null}
+          <p className="text-[length:var(--t-sub)] font-semibold leading-snug text-[var(--c-ink)] md:text-[length:var(--t-sub)]">&ldquo;{myth.claim}&rdquo;</p>
+          <p className="mt-3 max-w-prose text-[length:var(--t-body)] leading-relaxed text-[var(--c-ink2)]">{myth.reality}</p>
+          {myth.tell ? <p className="mt-3 text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{myth.tell}</p> : null}
         </div>
         {/* the counter-evidence: the whole re-ordering, drawn , not one number again */}
         <div className="rounded-[12px] border border-[var(--c-border)] bg-[var(--c-card)] p-4">
           <RankSlope districts={districts.length ? districts : [loudest]} loudSlug={loudest.slug} hidden={hidden} reduced={reduced} />
-          <p className="mt-2 border-t border-[var(--c-border)] pt-2 text-[11px] leading-snug text-[var(--c-muted)]">{myth?.slope_note ?? "The order flips end to end: the loudest name keeps the least, and the lightest rents climb to the top."}</p>
+          <p className="mt-2 border-t border-[var(--c-border)] pt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{myth?.slope_note ?? "The order flips end to end: the loudest name keeps the least, and the lightest rents climb to the top."}</p>
         </div>
       </div>
     </div>
@@ -851,8 +851,8 @@ function MetricRows({ metrics, cols }: { metrics: Metric[]; cols: District[] }) 
         return (
           <div key={m.key} className="grid items-center gap-3 border-b border-[var(--c-border)] px-4 py-2.5 last:border-0" style={{ gridTemplateColumns: `minmax(0,1.3fr) repeat(${cols.length}, minmax(0,1fr))` }}>
             <div className="min-w-0">
-              <div className="text-[12.5px] font-medium text-[var(--c-ink2)]">{m.label}</div>
-              <div className="text-[10.5px] text-[var(--c-muted)]">{m.hint}</div>
+              <div className="text-[length:var(--t-body)] font-medium text-[var(--c-ink2)]">{m.label}</div>
+              <div className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{m.hint}</div>
             </div>
             {cols.map((d) => {
               const win = best === d.slug && cols.length > 1;
@@ -861,7 +861,7 @@ function MetricRows({ metrics, cols }: { metrics: Metric[]; cols: District[] }) 
                   <div className="flex items-center gap-1.5">
                     {/* row-best dot: terracotta on keep only, ink elsewhere (legend in the caption) */}
                     {win ? <span className="inline-block h-[7px] w-[7px] shrink-0 rounded-full" style={{ background: dotColor(m) }} aria-label="best" /> : null}
-                    <Fig className="text-[14px] text-[var(--c-ink)]">{m.fmt(d)}</Fig>
+                    <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{m.fmt(d)}</Fig>
                   </div>
                   {/* in-cell bar ONLY on a drawn scale: baseline tick + reference tick visible */}
                   {m.bar ? <CellScaleBar value={m.get(d)} domain={m.bar.domain} refValue={m.bar.refValue} /> : null}
@@ -924,23 +924,23 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
           return (
             <button
               key={d.slug} type="button" onClick={() => toggle(d.slug)} aria-pressed={on}
-              className={`cityhov inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[12px] ${on ? "border-transparent bg-[var(--c-ink)] text-white" : "border-[var(--c-border)] bg-[var(--c-card)] text-[var(--c-ink2)]"}`}
+              className={`cityhov inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[length:var(--t-body)] ${on ? "border-transparent bg-[var(--c-ink)] text-white" : "border-[var(--c-border)] bg-[var(--c-card)] text-[var(--c-ink2)]"}`}
             >
               {/* the hold state, marked: saved bookmark on a held chip, empty on the rest */}
               <AtlasMark id={on ? "bookmark-saved" : "bookmark"} size={13} />
               <span className="font-medium">{d.name}</span>
-              <Fig className={`text-[11px] ${on ? "text-white/80" : "text-[var(--c-muted)]"}`}>{keepIndex(d)}</Fig>
+              <Fig className={`text-[length:var(--t-micro)] ${on ? "text-white/80" : "text-[var(--c-muted)]"}`}>{keepIndex(d)}</Fig>
             </button>
           );
         })}
-        <span className="ml-1 text-[10.5px] text-[var(--c-muted)]">two to three, keep index shown</span>
+        <span className="ml-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">two to three, keep index shown</span>
       </div>
 
       {/* the auto-derived verdict , the read the comparison reveals, above the table */}
       {derived ? (
         <div className="mb-3 flex items-start gap-2 rounded-[10px] border border-[var(--terra-border)] bg-[var(--terra-soft)] px-3.5 py-2.5">
-          <span className="mt-px shrink-0 text-[10px] font-semibold uppercase tracking-wide text-[var(--terra-text)]">Verdict</span>
-          <p className="text-[12.5px] leading-snug text-[var(--c-ink)]">{derived}</p>
+          <span className="mt-px shrink-0 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--terra-text)]">Verdict</span>
+          <p className="text-[length:var(--t-body)] leading-snug text-[var(--c-ink)]">{derived}</p>
         </div>
       ) : null}
 
@@ -949,11 +949,11 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
         {/* DESKTOP / TABLET */}
         <div className="hidden sm:block">
           <div className="grid items-end gap-3 border-b border-[var(--c-border)] px-4 py-3" style={{ gridTemplateColumns: `minmax(0,1.3fr) repeat(${cols.length}, minmax(0,1fr))` }}>
-            <span className="text-[10.5px] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">Metric</span>
+            <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">Metric</span>
             {cols.map((d) => (
               <div key={d.slug} className="min-w-0">
-                <div className="truncate text-[13px] font-semibold text-[var(--c-ink)]">{d.name}</div>
-                <div className="truncate text-[11px] text-[var(--c-muted)]">{d.character}</div>
+                <div className="truncate text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{d.name}</div>
+                <div className="truncate text-[length:var(--t-micro)] text-[var(--c-muted)]">{d.character}</div>
               </div>
             ))}
           </div>
@@ -975,19 +975,19 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
           {cols.map((d) => (
             <div key={d.slug} className="px-4 py-3">
               <div className="mb-2 flex items-baseline justify-between gap-2">
-                <span className="text-[14px] font-semibold text-[var(--c-ink)]">{d.name}</span>
-                <span className="text-[11px] text-[var(--c-muted)]">{d.character}</span>
+                <span className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{d.name}</span>
+                <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{d.character}</span>
               </div>
               <div className="space-y-2">
                 {freeMetrics.map((m) => {
                   const win = bestFor(m, cols) === d.slug && cols.length > 1;
                   return (
                     <div key={m.key} className="grid grid-cols-[130px_1fr_auto] items-center gap-2.5">
-                      <span className="min-w-0 truncate text-[11.5px] text-[var(--c-ink2)]">{m.label}</span>
+                      <span className="min-w-0 truncate text-[length:var(--t-micro)] text-[var(--c-ink2)]">{m.label}</span>
                       {m.bar ? <span className="-mt-1 block"><CellScaleBar value={m.get(d)} domain={m.bar.domain} refValue={m.bar.refValue} /></span> : <span />}
                       <span className="flex w-16 items-center justify-end gap-1">
                         {win ? <span className="inline-block h-[6px] w-[6px] shrink-0 rounded-full" style={{ background: dotColor(m) }} aria-label="best" /> : null}
-                        <Fig className="text-right text-[12px] text-[var(--c-ink)]">{m.fmt(d)}</Fig>
+                        <Fig className="text-right text-[length:var(--t-body)] text-[var(--c-ink)]">{m.fmt(d)}</Fig>
                       </span>
                     </div>
                   );
@@ -999,9 +999,9 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
                     <div className="min-h-[172px] space-y-2">
                       {proMetrics.map((m) => (
                         <div key={m.key} className="grid grid-cols-[130px_1fr_auto] items-center gap-2.5">
-                          <span className="min-w-0 truncate text-[11.5px] text-[var(--c-ink2)]">{m.label}</span>
+                          <span className="min-w-0 truncate text-[length:var(--t-micro)] text-[var(--c-ink2)]">{m.label}</span>
                           {m.bar ? <span className="-mt-1 block"><CellScaleBar value={m.get(d)} domain={m.bar.domain} refValue={m.bar.refValue} /></span> : <span />}
-                          <Fig className="w-16 text-right text-[12px] text-[var(--c-ink)]">{m.fmt(d)}</Fig>
+                          <Fig className="w-16 text-right text-[length:var(--t-body)] text-[var(--c-ink)]">{m.fmt(d)}</Fig>
                         </div>
                       ))}
                     </div>
@@ -1014,7 +1014,7 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
       </HoodCard>
 
       {/* the table's legend (covers desktop and mobile) */}
-      <p className="mt-2 text-[11px] leading-snug text-[var(--c-muted)]">The dot marks each row&rsquo;s best, terracotta on keep, the metric that decides.</p>
+      <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">The dot marks each row&rsquo;s best, terracotta on keep, the metric that decides.</p>
     </div>
   );
 }

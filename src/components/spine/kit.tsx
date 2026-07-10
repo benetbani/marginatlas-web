@@ -300,7 +300,7 @@ export function InfoTip({ gloss, className = "ml-1" }: { gloss: string; classNam
   return (
     <span className={`group/tip relative inline-flex align-middle ${className}`}>
       <button type="button" aria-label={gloss} className="grid h-3.5 w-3.5 cursor-help place-items-center rounded-full border border-[var(--c-line-strong)] text-[length:var(--t-micro)] font-semibold leading-none text-[var(--c-muted)]">?</button>
-      <span className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-1.5 w-44 -translate-x-1/2 rounded-lg border border-[var(--c-border)] bg-[var(--c-card)] px-2.5 py-1.5 text-[length:var(--t-micro)] font-normal normal-case leading-snug tracking-normal text-[var(--c-ink2)] opacity-0 shadow-[0_6px_18px_-8px_rgba(43,28,22,0.22)] transition-opacity group-focus-within/tip:opacity-100 group-hover/tip:opacity-100">{gloss}</span>
+      <span className="pointer-events-none absolute bottom-full left-1/2 max-sm:left-auto max-sm:right-0 z-10 mb-1.5 w-44 max-sm:w-[min(11rem,calc(100vw-24px))] -translate-x-1/2 max-sm:translate-x-0 rounded-lg border border-[var(--c-border)] bg-[var(--c-card)] px-2.5 py-1.5 text-[length:var(--t-micro)] font-normal normal-case leading-snug tracking-normal text-[var(--c-ink2)] opacity-0 shadow-[0_6px_18px_-8px_rgba(43,28,22,0.22)] transition-opacity group-focus-within/tip:opacity-100 group-hover/tip:opacity-100">{gloss}</span>
     </span>
   );
 }
