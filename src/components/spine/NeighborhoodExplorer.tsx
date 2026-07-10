@@ -3,9 +3,11 @@
  * refit to the Final Ascent Visual Dictionary. The signature object is a REAL CARTO
  * tile map (SpineMap, shared) for orientation, paired with a DIVERGENCE keep-strip
  * centered on the city baseline of 100 (the honest re-rank, read as deviation) and a
- * DISCIPLINED detail panel that opens to one decision and keeps its proof behind
- * single-open disclosures (the multiplier waterfall opens first: the proof of the
- * hero figure, not the paywall). The map column earns its pixels: tighter fit
+ * DISCIPLINED detail panel that opens to one decision; its proof graphics (the
+ * multiplier waterfall, footfall scale, walkability/price tier) stay PERMANENTLY
+ * VISIBLE (rulebook v2 S6: a graphic never hides behind a disclosure), and only
+ * the remaining prose rows (the rent counterweight, the Pro-gated locals-know
+ * list) keep a single-open disclosure. The map column earns its pixels: tighter fit
  * padding + the selected district's trades / prime streets / who-is-here card fills
  * the space under the sticky map. Terracotta = the answer only (the #1 keeper, the
  * above-city pin side, the panel keep figure only when it clears the city 100);
@@ -440,32 +442,36 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
         </div>
       </div>
 
-      {/* PROOF , the rest behind single-open disclosures. The one open by default is
-          the proof of the hero figure, not the Pro veil (audit hierarchy fix). */}
-      <div className="space-y-2 px-4 py-4">
-        <Expand name={grp} title="Why the number moves" open right={<Fig className="text-[12px] text-[var(--c-ink)]">x{(1 + d.rev_vs_city_pct / 100).toFixed(2)}</Fig>}>
-          <div className="pt-1"><MultWaterfall d={d} /></div>
-        </Expand>
-
-        <Expand name={grp} title="The rent counterweight" right={<Fig className="text-[12px] text-[var(--c-ink)]">x{d.rent_mult.toFixed(2)}</Fig>}>
-          <p className="pt-1 text-[12.5px] leading-snug text-[var(--c-ink2)]">
-            Rent runs <Fig className="text-[var(--c-ink)]">x{d.rent_mult.toFixed(2)}</Fig> the city rate. The keep index divides the revenue lift by this load, which is why {above ? "the lighter lease lets more of each pound stay put" : "the headline lift never reaches the till"}.
-          </p>
-        </Expand>
+      {/* PROOF , the graphics stay permanently visible (rulebook v2 S6: never hide a
+          graphic behind a disclosure). Only the remaining TEXT rows (the rent
+          counterweight prose, the Pro-gated locals-know list) keep a disclosure. */}
+      <div className="space-y-4 px-4 py-4">
+        {/* WHY THE NUMBER MOVES , the proof of the hero figure, always visible (was the
+            single-open group's default-open row; promoting it removes the need for a
+            default at all). */}
+        <div>
+          <div className="mb-1 flex items-end justify-between gap-3">
+            <SectionLabel>Why the number moves</SectionLabel>
+            <Fig className="text-[12px] text-[var(--c-ink)]">x{(1 + d.rev_vs_city_pct / 100).toFixed(2)}</Fig>
+          </div>
+          <MultWaterfall d={d} />
+        </div>
 
         {/* footfall timing omits on the real page (no honest source); it renders on the
             illustrative seed, which carries footfall. */}
         {d.footfall ? (
-          <Expand name={grp} title="When the trade happens">
-            <div className="pt-2"><FootfallScale d={d} /></div>
-          </Expand>
+          <div>
+            <SectionLabel>When the trade happens</SectionLabel>
+            <FootfallScale d={d} />
+          </div>
         ) : null}
 
         {/* walkability (categorical, real from flavor) + price tier (real from flavor);
-            each sub-block self-omits, and the whole disclosure omits, when absent. */}
+            each sub-block self-omits, and the whole block omits, when absent. */}
         {d.walkability || d.walk_score != null || d.price_tier ? (
-          <Expand name={grp} title="Walkability and price tier">
-            <div className="grid grid-cols-1 gap-4 pt-2 sm:grid-cols-2">
+          <div>
+            <SectionLabel>Walkability and price tier</SectionLabel>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {d.walkability || d.walk_score != null ? (
                 <div><SectionLabel>Walkability</SectionLabel><Meter value={walkVal(d)} left="Car-led" right="Walk-led" /></div>
               ) : null}
@@ -473,8 +479,14 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
                 <div><SectionLabel>Price tier</SectionLabel><PriceTierBand tier={d.price_tier} /></div>
               ) : null}
             </div>
-          </Expand>
+          </div>
         ) : null}
+
+        <Expand name={grp} title="The rent counterweight" right={<Fig className="text-[12px] text-[var(--c-ink)]">x{d.rent_mult.toFixed(2)}</Fig>}>
+          <p className="pt-1 text-[12.5px] leading-snug text-[var(--c-ink2)]">
+            Rent runs <Fig className="text-[var(--c-ink)]">x{d.rent_mult.toFixed(2)}</Fig> the city rate. The keep index divides the revenue lift by this load, which is why {above ? "the lighter lease lets more of each pound stay put" : "the headline lift never reaches the till"}.
+          </p>
+        </Expand>
 
         {/* WHAT LOCALS KNOW , the moat voice + the Pro seam. Free shows the first line;
             Pro unlocks the rest (the named side street, the licensing quirk, the rent

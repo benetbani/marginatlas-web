@@ -3,12 +3,13 @@
  * Client interactives for the cell page that are NOT part of the money-chapter
  * subtype propagation: the sortable Nearby comparison table (click-to-sort, a
  * keeps-per-$1 rate column proving the section's own verdict, CellScaleBar in-cell
- * bars on a drawn domain), the Wages ranked bars + range-plot disclosure, and the
- * Risks dot plot on a shared labeled 0-10 scale. Kept out of money-chapter.tsx
+ * bars on a drawn domain), the Wages full per-role range-plot (permanently visible,
+ * rulebook v2 S6), and the Risks dot plot on a shared labeled 0-10 scale. Kept out
+ * of money-chapter.tsx
  * because they do not read the FormatContext. All prose from the seed.
  */
 import * as React from "react";
-import { Box, Rail, Fig, TERRA, TRACK, EaseScale, InlineDisclosure, usd } from "@/components/spine/kit";
+import { Box, Rail, Fig, TERRA, EaseScale, InlineDisclosure, usd } from "@/components/spine/kit";
 import { CellScaleBar } from "@/components/spine/kit-index";
 
 const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
@@ -102,57 +103,35 @@ export function Nearby({ d }: { d: any }) {
   );
 }
 
-/* Wages , WI-4 brief:
- * decision: the payroll you budget against. Number: the head-chef ceiling.
- * focal: the head-chef pay, with the full role table behind a disclosure (progressive disclosure).
+/* Wages , WI-4 brief (rulebook v2 S6 fix): decision: the payroll you budget against.
+ * The full per-role range-plot (low/mid/high) is the ONE proof graphic and now renders
+ * PERMANENTLY VISIBLE , a chart never hides behind a disclosure. The former top-3
+ * summary bars duplicated the same mid-pay figures the range-plot already shows, so
+ * they are dropped rather than kept as redundant chrome above the real chart.
  * width: rail half. terracotta target: the head-chef range bar only. */
 export function Wages({ d }: { d: any }) {
   const roles: any[] = d.wages?.roles ?? [];
   const max = Math.max(1, ...roles.map((r) => r.high_usd)) * 1.05;
-  const top = roles[0];
-  // a tiny ranked list of the key roles (chef / manager / line cook ...) so the
-  // payroll reads as a shape, not one lonely number. terracotta on the top role only.
-  const topRoles = roles.slice(0, 3);
-  const kMid = Math.max(1, ...topRoles.map((r) => r.mid_usd));
   return (
     <Box className="md:flex-[3]">
       <Rail icon="wages" kicker="What you would pay your team" verdict={d.wages?.surface_line} />
-      {topRoles.length ? (
-        <div className="mt-1 space-y-2">
-          {topRoles.map((r, i) => {
-            const lead = i === 0;
-            return (
-              <div key={r.role} className="grid grid-cols-[104px_1fr_44px] items-center gap-3">
-                <span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]">{r.role}</span>
-                <span className="h-1.5 overflow-hidden rounded-full" style={{ background: TRACK }}>
-                  <span className="block h-full rounded-full" role="img" aria-label={`${r.role} about $${Math.round(r.mid_usd / 1000)}K`} style={{ width: `${Math.max(8, (r.mid_usd / kMid) * 100)}%`, background: lead ? TERRA : "#c8c8c6" }} />
-                </span>
-                <Fig className={`text-right text-[13px] ${lead ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>${Math.round(r.mid_usd / 1000)}K</Fig>
+      <div className="mt-3 space-y-3">
+        {roles.map((r, i) => {
+          const L = (r.low_usd / max) * 100, W = ((r.high_usd - r.low_usd) / max) * 100, M = (r.mid_usd / max) * 100;
+          const lead = i === 0;
+          return (
+            <div key={r.role} className="grid grid-cols-[120px_1fr_56px] items-center gap-3">
+              <span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]">{r.role}</span>
+              <div className="relative h-3.5">
+                <div className="absolute top-1/2 h-0.5 w-full -translate-y-1/2 rounded" style={{ background: "#e3e3e3" }} />
+                <div className="absolute top-1/2 h-1.5 -translate-y-1/2 rounded" style={{ left: `${L}%`, width: `${W}%`, background: lead ? TERRA : "#c8c8c6" }} />
+                <div className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 bg-white" style={{ left: `${M}%`, borderColor: lead ? TERRA : "#9a9a9a" }} />
               </div>
-            );
-          })}
-        </div>
-      ) : null}
-      {top ? <div className="mt-2 text-[11px] text-[var(--c-muted)]">Typical mid pay a year; the full spread by role sits below.</div> : null}
-      <InlineDisclosure name="wages" summary="See the full pay table">
-        <div className="mt-3 space-y-3">
-          {roles.map((r, i) => {
-            const L = (r.low_usd / max) * 100, W = ((r.high_usd - r.low_usd) / max) * 100, M = (r.mid_usd / max) * 100;
-            const lead = i === 0;
-            return (
-              <div key={r.role} className="grid grid-cols-[120px_1fr_56px] items-center gap-3">
-                <span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]">{r.role}</span>
-                <div className="relative h-3.5">
-                  <div className="absolute top-1/2 h-0.5 w-full -translate-y-1/2 rounded" style={{ background: "#e3e3e3" }} />
-                  <div className="absolute top-1/2 h-1.5 -translate-y-1/2 rounded" style={{ left: `${L}%`, width: `${W}%`, background: lead ? TERRA : "#c8c8c6" }} />
-                  <div className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 bg-white" style={{ left: `${M}%`, borderColor: lead ? TERRA : "#9a9a9a" }} />
-                </div>
-                <Fig className="text-right text-[14px] text-[var(--c-ink)]">${Math.round(r.mid_usd / 1000)}K</Fig>
-              </div>
-            );
-          })}
-        </div>
-      </InlineDisclosure>
+              <Fig className="text-right text-[14px] text-[var(--c-ink)]">${Math.round(r.mid_usd / 1000)}K</Fig>
+            </div>
+          );
+        })}
+      </div>
     </Box>
   );
 }
