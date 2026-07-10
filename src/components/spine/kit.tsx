@@ -12,9 +12,11 @@
  *  - Chips: src/components/ui/pill.tsx is the one chip source. Chip here (and
  *    LockPill in kit-index.tsx) are thin spine-palette wrappers over Pill;
  *    exported names + signatures unchanged so call sites never fork.
- *  - Elevation: Box's DROP shadows come from the tokenized elevation scale in
- *    design-tokens.ts (Tailwind shadow-card / shadow-lift). Only the paper
- *    insets (top highlight + 0.5px inner ring) remain local to Box.
+ *  - Elevation: SUPERSEDED 2026-07-09 (rulebook v2 S14/decision e , see the Box doc
+ *    comment below). Box no longer applies a DROP shadow at all (drop-shadow cards
+ *    "look mediocre"); it keeps only a single local inset paper top-highlight. The
+ *    tokenized elevation scale (Tailwind shadow-card / shadow-lift) still exists in
+ *    design-tokens.ts for other consumers , Box just stops reading from it.
  *  - Tooltips: kit atoms are consumed by SERVER components, so no Radix
  *    ui/tooltip here. Law: no kit atom may hide sole-source data behind a
  *    native title= attribute; StackBar keeps its per-segment title= only when
@@ -45,7 +47,8 @@ export function Fig({ children, className = "" }: { children: React.ReactNode; c
   return <span className={`fig ${className}`}>{children}</span>;
 }
 export function Gauge({ value, sub, endLabels, w = 150 }: { value: number; sub?: string; endLabels?: [string, string]; w?: number }) {
-  const v = Math.max(0, Math.min(100, value || 0));
+  if (value == null || !Number.isFinite(value)) return null;
+  const v = Math.max(0, Math.min(100, value));
   const th = Math.PI * (1 - v / 100), R = 74, cx = 100, cy = 86;
   const ex = (cx + R * Math.cos(th)).toFixed(1), ey = (cy - R * Math.sin(th)).toFixed(1);
   const nx = (cx + (R - 14) * Math.cos(th)).toFixed(1), ny = (cy - (R - 14) * Math.sin(th)).toFixed(1);
@@ -66,11 +69,23 @@ export function Gauge({ value, sub, endLabels, w = 150 }: { value: number; sub?:
     </div>
   );
 }
+/* the shared warm line-grey CSS var (shell.tsx, not a new hex literal) , distinct from
+ * every color a caller passes for a real slice (TERRA, the GREY_RAMP family, arbitrary
+ * segment colors) so the rolled-up "Other" slice never visually merges with a real one. */
+const DONUT_OTHER_COLOR = "var(--c-line-strong)";
 export function Donut({ segs, centerBig, centerSub }: { segs: Array<[string, number, string]>; centerBig: string; centerSub: string }) {
+  if (!segs || segs.length === 0) return null;
+  // Cap at 5 slices: a sparse country with many tiny consumer-segment shares must never
+  // render as a wall of slivers or fall back to reading by color alone. Slices 5+ roll into
+  // one "Other" wedge with a guaranteed-distinct color.
+  const rendered: Array<[string, number, string]> = segs.length <= 5 ? segs : [
+    ...segs.slice(0, 4),
+    ["Other", Math.max(0, segs.slice(4).reduce((sum, s) => sum + (s[1] || 0), 0)), DONUT_OTHER_COLOR],
+  ];
   const r = 54, C = 2 * Math.PI * r; let off = 0;
   return (
     <svg viewBox="0 0 160 160" className="w-[150px]" role="img" aria-label={`${centerBig} ${centerSub}`}>
-      {segs.map(([name, pct, color]) => {
+      {rendered.map(([name, pct, color]) => {
         const len = (pct / 100) * C; const el = <circle key={name} cx={80} cy={80} r={r} fill="none" stroke={color} strokeWidth={24} strokeDasharray={`${len.toFixed(2)} ${(C - len).toFixed(2)}`} strokeDashoffset={(-off).toFixed(2)} transform="rotate(-90 80 80)" />; off += len; return el;
       })}
       <text x={80} y={76} textAnchor="middle" fill="#1a1a1a" fontSize={30} style={{ fontFamily: "var(--font-grotesk)", fontWeight: 600 }}>{centerBig}</text>
@@ -168,35 +183,46 @@ export function SpreadStrip({ p10, p50, p90, fmt, neutral = false }: { p10: numb
     </div>
   );
 }
-/* Movement , chapter opener. The accent NEVER sits on the eyebrow text (the founder
- * reads terra-on-top as "orange on top"). It moves onto two carriers only: a leading
- * .fig section index (muted grey) + the grounded terra icon tile. Eyebrow is neutral. */
-export function Movement({ eyebrow, heading, sample, icon, index }: { eyebrow: string; heading: string; sample?: boolean; icon: AtlasIconId; index?: string }) {
+/* Movement , chapter opener. Rulebook v2 S1/S2 (2026-07-09, founder decision b): the
+ * header is index + eyebrow + heading ONLY , index + icon + eyebrow + heading read as
+ * oversaturated, so the icon tile is gone. `icon` stays in the prop type as a tolerated
+ * no-op (accepted, never rendered) so the ~140 existing call sites keep compiling without
+ * a page-by-page edit; do not delete it. The accent NEVER sits on the eyebrow text (the
+ * founder reads terra-on-top as "orange on top") , the leading .fig section index (muted
+ * grey) is now the only accent carrier. Eyebrow is neutral. The heading is de-bolded
+ * (decision b: semibold 20/24px, not bold 24/30px , S1 flagged the old size/weight as
+ * too loud to read as professional). */
+export function Movement({ eyebrow, heading, sample, icon, index }: { eyebrow: string; heading: string; sample?: boolean; icon?: AtlasIconId; index?: string }) {
   return (
     <div className="mb-3 mt-12">
       <div className="mb-1.5 flex items-center gap-2.5">
         {index ? <span className="fig text-[13px] font-semibold text-[var(--c-muted)]">{index}</span> : null}
-        <Ico id={icon} tone="terra" />
         <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--c-ink2)]">{eyebrow}</span>
         {sample ? <SampleTag /> : null}
       </div>
-      <h2 data-typography="custom" className="text-2xl font-bold tracking-tight text-[var(--c-ink)] md:text-3xl">{heading}</h2>
+      <h2 data-typography="custom" className="text-xl font-semibold tracking-tight text-[var(--c-ink)] md:text-2xl">{heading}</h2>
     </div>
   );
 }
-/* Box , the premium card: warm hairline + tokenized warm shadow + inner top-highlight +
- * paper gradient. Radius 14px. Warm shadows only (never pure black). No edge stripe.
- * DROP shadows come from the design-tokens elevation scale (Tailwind shadow-card /
- * shadow-lift set --tw-shadow); the two INSET layers stay local and compose with the
- * token via var(--tw-shadow) in the inline box-shadow. `elevation` picks the resting
- * plane: "card" (default, the workhorse) or "lift" (cards floating over the photo margin). */
+/* Box , the premium card: warm hairline + inner paper top-highlight + paper gradient.
+ * Radius 14px. No edge stripe. Rulebook v2 S14/decision e (2026-07-09): the DROP shadow
+ * is gone (cards with a drop-shadow "look mediocre"); this REVERSES the 2026-07-08
+ * publish-pass "tokenized warm shadow" decision. The card keeps only the faint inset
+ * paper top-highlight (`inset 0 1px 0 rgba(255,255,255,0.9)`) so it still reads as a
+ * lifted sheet of paper, just without the 30px drop shadow or the 0.5px inner ring.
+ * `shadow-card` / `shadow-lift` (Tailwind, design-tokens.ts) are NOT deleted here: other
+ * pages still consume those tokens directly; Box just stops applying them. `elevation`
+ * is kept in the prop type as a tolerated no-op (both call sites, home2-view.tsx:261/309,
+ * keep compiling) , it no longer has a visual effect now that the drop shadow it
+ * selected between is gone. */
 export function Box({ children, className = "", elevation = "card" }: { children: React.ReactNode; className?: string; elevation?: "card" | "lift" }) {
+  void elevation;
   return (
     <div
-      className={`rounded-[14px] border border-[var(--c-border)] p-5 ${elevation === "lift" ? "shadow-lift" : "shadow-card"} ${className}`}
+      className={`rounded-[14px] border border-[var(--c-border)] p-5 ${className}`}
       style={{
         backgroundImage: "linear-gradient(180deg, #ffffff 0%, #fcfbfa 100%)",
-        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.9), inset 0 0 0 0.5px rgba(27,24,22,0.015), var(--tw-shadow, 0 0 #0000)",
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.9)",
       }}
     >
       {children}
@@ -256,8 +282,14 @@ export function SampleTag({ note }: { note?: string }) {
     </span>
   );
 }
+/* Head , subsection header. Rulebook v2 S2: no icon in any section header, so this is a
+ * THIRD header the Movement fix does not reach (EasiestTrades/IncomeCurve/MarginKept/
+ * CityRisks/Locals/Close etc. all open with Head, not Movement). `icon` stays in the prop
+ * type as a tolerated no-op (accepted, never rendered) so the ~22 existing call sites keep
+ * compiling. */
 export function Head({ children, sample, icon }: { children: React.ReactNode; sample?: boolean; icon?: AtlasIconId }) {
-  return <div className="mb-3 flex items-center gap-2">{icon ? <Ico id={icon} /> : null}<span className="text-[15px] font-semibold text-[var(--c-ink)]">{children}</span>{sample ? <SampleTag /> : null}</div>;
+  void icon;
+  return <div className="mb-3 flex items-center gap-2"><span className="text-[15px] font-semibold text-[var(--c-ink)]">{children}</span>{sample ? <SampleTag /> : null}</div>;
 }
 /* InfoTip , THE educational "?" gloss (rule 24: teach as you inform; rule 7: jargon gets
  * a gloss). A focusable button trigger, so it works on TAP at 390px (focus shows the tip),
@@ -315,14 +347,37 @@ export function Chip({ children }: { children: React.ReactNode }) {
 export function KV({ k, v }: { k: string; v: React.ReactNode }) {
   return <div className="flex gap-3 border-b border-[var(--c-border)] py-2 last:border-0"><span className="w-24 shrink-0 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{k}</span><span className="text-[13px] text-[var(--c-ink)]">{v}</span></div>;
 }
+/* S6 prevention tripwire (rulebook v2 K6): "Never hide a graphic behind a popup, expand,
+ * or disclosure , graphics are always visible. Disclosures exist only to move BULLET TEXT
+ * out of the first view." That sentence is the CONTRACT, enforced by convention at every
+ * call site; this is a dev-only, non-throwing TRIPWIRE, not a gate , it walks only the
+ * DIRECT children passed to a disclosure and console.warns (never in production) when one
+ * of them is a kit graphic component. It cannot catch a graphic nested two levels deep
+ * inside a caller's own wrapper, so the JSDoc rule on InlineDisclosure/Expand below remains
+ * the real contract; this just catches the easy, common mistake. */
+const GRAPHIC_TYPES: ReadonlySet<unknown> = new Set([
+  Gauge, Donut, StackBar, Waterfall, SpreadStrip, EaseScale, Meter, SpectraTable, Spectrum, Timeline, Spark, Dots, MiniBar,
+]);
+function assertNoGraphics(children: React.ReactNode, where: string) {
+  if (process.env.NODE_ENV === "production") return;
+  React.Children.forEach(children, (child) => {
+    if (React.isValidElement(child) && GRAPHIC_TYPES.has(child.type)) {
+      const name = (child.type as { displayName?: string; name?: string })?.displayName ?? (child.type as { name?: string })?.name ?? "a kit graphic";
+      console.warn(`[kit S6] ${where} renders ${name} directly as a child. Graphics must stay visible in the first view , never hide one behind a disclosure. Move only bullet/prose text here.`);
+    }
+  });
+}
 /* inline "+" disclosure , a flat ink summary line that rotates the + on open.
  * Links are chrome, not the answer: the summary reads ink2 and warms to terracotta
  * only on hover/open (terracotta stays reserved for answers, not affordances).
  * Canonicalises the hand-rolled "see the detail" rows (cost base / line-by-line tax /
  * discretionary split). The caller supplies its own body wrapper as children so each
  * instance keeps its exact body layout; `className` carries the per-instance details
- * styling (e.g. the top hairline). Distinct from Expand (the boxed single-open row). */
+ * styling (e.g. the top hairline). Distinct from Expand (the boxed single-open row).
+ * CONTRACT (rulebook v2 S6): body is BULLET/PROSE TEXT ONLY , never place a kit graphic
+ * inside; graphics stay visible in the first view, never hidden behind a disclosure. */
 export function InlineDisclosure({ name, summary, className = "group mt-3", children }: { name: string; summary: React.ReactNode; className?: string; children: React.ReactNode }) {
+  assertNoGraphics(children, "InlineDisclosure");
   return (
     <details name={name} className={className}>
       <summary className="flex cursor-pointer list-none items-center gap-1.5 text-[12px] font-medium text-[var(--c-ink2)] transition hover:text-[var(--terra-text)]"><span className="text-base text-[var(--c-muted)] transition group-open:rotate-45 group-open:text-[var(--terra-text)]">+</span> {summary}</summary>
@@ -331,8 +386,11 @@ export function InlineDisclosure({ name, summary, className = "group mt-3", chil
   );
 }
 /* single-open expandable row , progressive disclosure. `title` accepts a node so a row
- * can lead with a small trade icon (the licensing pattern); strings render as before. */
+ * can lead with a small trade icon (the licensing pattern); strings render as before.
+ * CONTRACT (rulebook v2 S6): body is BULLET/PROSE TEXT ONLY , never place a kit graphic
+ * inside; graphics stay visible in the first view, never hidden behind a disclosure. */
 export function Expand({ name, title, right, children, open }: { name: string; title: React.ReactNode; right?: React.ReactNode; children: React.ReactNode; open?: boolean }) {
+  assertNoGraphics(children, "Expand");
   return (
     <details name={name} open={open} className="group overflow-hidden rounded-lg border border-[var(--c-border)] open:border-[var(--c-line-strong)] open:shadow-[0_1px_2px_rgba(27,24,22,0.04)]">
       <summary className="flex cursor-pointer list-none items-center justify-between gap-3 bg-[var(--c-soft)] px-3.5 py-2.5 transition hover:bg-[var(--c-soft2)] group-open:bg-[var(--terra-soft)]">
@@ -360,7 +418,10 @@ export function Row({ children }: { children: React.ReactNode }) {
   return <div className="flex flex-col gap-4 md:flex-row md:items-stretch [&>*]:flex-1">{children}</div>;
 }
 export const Even = Row;
-/* T2 , 3:2: a chart that needs prose beside it (flex-[3] chart + flex-[2] rail). */
+/* T2 , 3:2: a chart (flex-[3]) paired with a SCHEMATIC rail (flex-[2]) , stats, chips, a
+ * legend, KV rows. Rulebook v2 S7: a chart must explain itself by its form (direct labels,
+ * axis units, a one-line legend); the rail beside it is NEVER an explanatory paragraph. If
+ * the rail content is a paragraph, the chart's own labeling is the thing to fix. */
 export function WideRail({ children }: { children: React.ReactNode }) {
   return <div className="flex flex-col gap-4 md:flex-row md:items-stretch [&>*:first-child]:md:flex-[3] [&>*:last-child]:md:flex-[2] [&>*]:flex-1">{children}</div>;
 }
@@ -383,13 +444,18 @@ export function CatRows({ rows }: { rows: Array<[string, any]> }) {
 
 /* ===== SECTION ANATOMY PRIMITIVES (WI-3) ===== */
 
-/* Rail , the section opener: icon + kicker + one-glance verdict line. Replaces the
- * Head-then-grid pattern. The verdict is plain present-tense English, no number-restating. */
+/* Rail , the section opener: kicker + one-glance verdict line. Replaces the Head-then-grid
+ * pattern. Rulebook v2 S2: the icon is gone here too (this wave only removes Rail's icon ,
+ * the verdict slot is the sanctioned answer-first line, decision f, and stays). `icon` and
+ * `tone` stay in the prop type as tolerated no-ops (accepted, never rendered) so existing
+ * call sites keep compiling. The verdict is plain present-tense English, no number-restating,
+ * hard-capped at one sentence , fix multi-sentence offenders at the call site, not here. */
 export function Rail({ icon, kicker, verdict, tone = "ink" }: { icon?: AtlasIconId; kicker: string; verdict?: React.ReactNode; tone?: "ink" | "terra" }) {
+  void icon;
+  void tone;
   return (
     <div className="mb-3">
       <div className="mb-1.5 flex items-center gap-2">
-        {icon ? <Ico id={icon} tone={tone} /> : null}
         <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{kicker}</span>
       </div>
       {verdict != null ? <p className="text-[15px] font-medium leading-snug text-[var(--c-ink)]">{verdict}</p> : null}
@@ -431,7 +497,11 @@ export function Spark({ values, w = 96, h = 30, markerIndex }: { values: number[
 }
 
 /* ===== TIMELINE (WI-5) , one continuous time axis, milestones positioned by real
- * time. Desktop = SVG; mobile = CSS-only vertical rail (no JS, SSR-safe, no h-scroll). */
+ * time. Desktop = SVG; mobile = CSS-only vertical rail (no JS, SSR-safe, no h-scroll).
+ * `read`, rulebook v2 S7 (K7): a SINGLE one-glance verdict line, never an explanatory
+ * paragraph , the axis, phase bands, and node labels must carry the story on their own.
+ * Rendered with line-clamp-2 below as a soft cap; callers must not pass multi-sentence
+ * prose here. */
 export type TLPhase = [label: string, from: number, to: number];
 export type TLNode = { at: number; label: string; sub?: string; kind?: "breakeven" | "normal" };
 
@@ -580,7 +650,7 @@ export function Timeline({ span, unit, phases = [], nodes, read, startLabel }: {
         })}
       </ol>
 
-      {read ? <div className="mt-3 border-t border-[var(--c-border)] pt-2.5 text-[12.5px] leading-snug text-[var(--c-ink2)]">{read}</div> : null}
+      {read ? <div className="mt-3 line-clamp-2 border-t border-[var(--c-border)] pt-2.5 text-[12.5px] leading-snug text-[var(--c-ink2)]">{read}</div> : null}
     </Box>
   );
 }
