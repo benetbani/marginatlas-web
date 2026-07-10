@@ -19,8 +19,13 @@
  * On real-data promotion the surviving spine is a tight decision line: verdict(real) ->
  * where to trade(real) -> what space costs(prose) + who buys(real income curve + split) ->
  * trades + margins(real) -> peers + close(real). The illustrative tail (CityLenses,
- * OwnerRunway, DemandSize magnitude + Spark, DemandCalendar, FirstYear, CityRisks,
+ * OwnerRunway, DemandSize magnitude + Spark, DemandCalendar, CityRisks,
  * CityCharacter, income tiers, locals_intel, the district map) omits for lack of a source.
+ *
+ * NO first-year timeline (rulebook v2 S10/D4): a first-year ramp is a TRADE-level concept
+ * (how long THIS business takes to break even), and a city page is trade-agnostic, so any
+ * such timeline here would necessarily invent a representative trade. There is no honest
+ * anchor at city altitude, so the block was deleted rather than replaced (2026-07-10).
  *
  * As-built chart dictionary: unchanged from the pre-split page (see git history); the
  * split adds only the named export + the null-guards, no new visual idiom.
@@ -35,7 +40,6 @@ import { CityHero } from "./masthead";
 import { CityStyles } from "./motion";
 import { IncomeCurve, OwnerRunway, MarginKept } from "./chapters";
 import { WhereToTrade } from "./where-to-trade";
-import { FirstYearTimeline } from "./first-year";
 
 const MONTHS = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
 const k = (v: number) => "$" + Math.round((v || 0) / 1000) + "K";
@@ -357,19 +361,9 @@ function EasiestTrades({ d }: { d: any }) {
 }
 
 /* ================= CH5 , RUNNING IT ================= */
-/* FirstYear. Already null-guards on f.nodes (omitted on real-data promotion). */
-function FirstYear({ d }: { d: any }) {
-  const f = d.first_year ?? {};
-  if (!f.nodes?.length) return null;
-  const nodes = f.nodes.map((n: any) => ({ at: n.at, label: n.label, sub: n.sub, kind: n.kind === "breakeven" ? "breakeven" : "normal" }));
-  const phases = (f.phases ?? []).map((p: any) => [p[0], p[1], p[2]] as [string, number, number]);
-  return (
-    <>
-      <Rail icon="first-year" kicker="Your first year" verdict={f.read} />
-      <FirstYearTimeline span={f.span} unit={f.unit} phases={phases} nodes={nodes} startLabel={f.start_label} />
-    </>
-  );
-}
+/* NO first-year timeline here (rulebook v2 S10/D4): see the file header note. A
+ * first-year ramp is a trade-level concept and this page is trade-agnostic, so the
+ * block was deleted rather than replaced with a city-altitude substitute. */
 
 /* CityRisks. Null-guards on r.list (omitted on real-data promotion). The scale is
  * SAFETY out of 10 (high = good, the page-set grammar): safety = (100 - severity) / 10,
@@ -565,7 +559,7 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
   const hasCustomersCh = !!(d.demand && (d.demand.resident_pct != null || d.demand.consumer_spend_usd_bn != null));
   const tradeRows = (d.trades?.list ?? []).filter((t: any) => t.take_home_usd != null);
   const hasTradesCh = tradeRows.length >= 3 || tradeRows.some((t: any) => t.net_margin_pct != null);
-  const hasRunningCh = !!(d.first_year?.nodes?.length) || !!(d.risks?.list?.length) || !!(d.character?.texture?.length) || !!(d.locals_intel?.length);
+  const hasRunningCh = !!(d.risks?.list?.length) || !!(d.character?.texture?.length) || !!(d.locals_intel?.length);
   const hasCloseCh = (d.peers?.list?.length ?? 0) >= 2 || !!(d.verdict?.winner_trade) || !!(d.where_to_trade?.list?.length);
 
   return (
@@ -626,12 +620,13 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
         </>
       ) : null}
 
-      {/* Running it , the first-year timeline, risks, character and locals. */}
+      {/* Running it , risks, character and locals. No first-year timeline: a first-year
+          ramp is a trade-level concept and this page is trade-agnostic (rulebook v2
+          S10/D4); see the file header note. */}
       {hasRunningCh ? (
         <>
-          <Movement index={cn()} eyebrow="Running it" heading="The first year, and what to watch" icon="first-year" />
+          <Movement index={cn()} eyebrow="Running it" heading="What to watch" icon="watch" />
           <div className="space-y-4">
-            <Full><FirstYear d={d} /></Full>
             <CityRisks d={d} />
             <Even><CityCharacter d={d} /><Locals d={d} /></Even>
           </div>

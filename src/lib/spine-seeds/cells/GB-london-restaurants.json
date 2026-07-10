@@ -136,23 +136,6 @@
     "surface_line": "December carries the year; the new-year lull is when cash gets thin.",
     "months": [58, 56, 64, 68, 72, 78, 80, 76, 80, 74, 78, 96]
   },
-  "first_year": {
-    "_meta": { "confidence": "placeholder", "source": "illustrative launch timeline", "as_of": "2026-06" },
-    "read": "The first half is all spend and no income. Real money does not start landing until the back half, so plan to carry the place into a second year before it feels safe.",
-    "phases": [
-      { "label": "Build", "from": 0, "to": 15 },
-      { "label": "Find footing", "from": 15, "to": 30 },
-      { "label": "Covers costs", "from": 30, "to": 52 }
-    ],
-    "milestones": [
-      { "week": 3, "label": "Lease + licence" },
-      { "week": 10, "label": "Fit-out done" },
-      { "week": 13, "label": "Team hired" },
-      { "week": 15, "label": "Soft opening" },
-      { "week": 30, "label": "Break-even month", "kind": "breakeven" },
-      { "week": 50, "label": "First clean profit" }
-    ]
-  },
   "nearby": {
     "_meta": { "confidence": "placeholder", "source": "illustrative same-trade comparison", "as_of": "2026-06" },
     "surface_line": "London turns over the most but keeps the least per dollar; the smaller cities are easier to break into.",

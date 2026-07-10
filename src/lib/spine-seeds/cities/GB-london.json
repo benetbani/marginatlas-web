@@ -89,26 +89,6 @@
     "months": [62, 60, 66, 70, 74, 82, 86, 80, 84, 78, 74, 95],
     "read": "A summer hump, then a December peak. The swing is real but gentle; staff and stock for the festive lift, not a crisis."
   },
-  "first_year": {
-    "_meta": { "confidence": "placeholder", "source": "illustrative opening timeline for a typical storefront trade; to be researched", "as_of": "2026-06" },
-    "span": 52,
-    "unit": "week",
-    "start_label": "wk 0",
-    "phases": [
-      ["Fit-out", 0, 12],
-      ["Licensing", 4, 14],
-      ["Trading", 14, 38],
-      ["Profit", 38, 52]
-    ],
-    "nodes": [
-      { "at": 0, "label": "Sign lease", "sub": "deposit down" },
-      { "at": 6, "label": "Licence filed", "sub": "6 to 10 wk" },
-      { "at": 12, "label": "Fit-out done" },
-      { "at": 14, "label": "Open doors", "sub": "first till" },
-      { "at": 38, "label": "Break-even", "sub": "wk 38", "kind": "breakeven" }
-    ],
-    "read": "A typical storefront trade signs, fits out, and opens inside the first quarter, then takes the better part of a year to clear costs. Start the licence before the fit-out, never after."
-  },
   "risks": {
     "_meta": { "confidence": "placeholder", "source": "illustrative risk severities for this market; to be researched", "as_of": "2026-06" },
     "read": "Real risks, but each has a known offset. None is a reason on its own to walk away.",
