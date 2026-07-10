@@ -14,13 +14,11 @@
       "_note": "Derived client-side from rev_vs_city_pct and rent_mult; no stored values. Index 100 = a district that keeps the same share of each pound as the city average. Above 100, low rent more than offsets revenue; below 100, heavy rent eats the lift."
     },
     "rail": {
-      "kicker": "Where in the city",
-      "verdict": "The same trade keeps very different money street to street. Rank districts by what the owner keeps, not by what comes in, then open one to see how far it moves and what the lease takes back."
+      "kicker": "Where in the city"
     },
     "map_note": "Where each district sits. Tap a pin for its keep read; the ranking and the panel move with it.",
     "compare": {
-      "kicker": "Hold two or three side by side",
-      "verdict": "Line them up and it is rent, not revenue, that sets the order. The district that takes the most rarely keeps the most."
+      "kicker": "Hold two or three side by side"
     },
     "myth": {
       "_meta": { "confidence": "placeholder" },

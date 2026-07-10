@@ -52,8 +52,13 @@ export function HoodMasthead({ d }: { d: any }) {
   const byKeep = [...districts].sort((a, b) => keepIndex(b) - keepIndex(a));
   const loud = byRev[0];
   const best = byKeep[0];
-  const bestKeep = keepIndex(best);
-  const loudKeep = keepIndex(loud);
+  // defensive: keepIndex(undefined) throws (it reads d.rev_vs_city_pct straight off
+  // its argument), and the masthead's whole thesis, "keeps the most" vs "the loud
+  // one", needs two distinct districts to contrast. Guard the crash here with a
+  // safe fallback, then degrade to nothing below, once every hook has run (rules
+  // of hooks: the early return must follow every hook call, never sit between two).
+  const bestKeep = best ? keepIndex(best) : 0;
+  const loudKeep = loud ? keepIndex(loud) : 0;
   const keepShown = Math.round(useCountUp(bestKeep, reduced));
   const heroNote =
     d.meta?.hero_note ??
@@ -61,6 +66,10 @@ export function HoodMasthead({ d }: { d: any }) {
       ? `Rent here runs x${best.rent_mult.toFixed(2)} the city rate, light enough that more of each pound stays.` +
         (best.slug !== loud?.slug ? " It is not the loudest name in the city." : "")
       : null);
+
+  // degrade rather than throw if the caller gate ever loosens and fewer than two
+  // districts reach the masthead (it needs a keeper AND a loud one to contrast).
+  if (districts.length < 2 || !best || !loud) return null;
 
   return (
     <section className="py-6 md:py-8">

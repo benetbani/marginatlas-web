@@ -28,7 +28,7 @@
  */
 "use client";
 import * as React from "react";
-import { Ico, Fig, Meter, Chip, Rail, Expand, TERRA, InfoTip } from "@/components/spine/kit";
+import { Ico, Fig, Meter, Chip, Rail, Expand, TERRA, InfoTip, SampleTag } from "@/components/spine/kit";
 import { LockVeil, LockPill, CellScaleBar } from "@/components/spine/kit-index";
 import { SpineMap, type SpinePoint } from "@/components/spine/SpineMap";
 import { keepIndex } from "./keep";
@@ -115,8 +115,16 @@ function NeStyles() {
   );
 }
 
-function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{children}</div>;
+/* `sample` marks a block whose figures have no honest source (adapt_hood.ts omits
+ * them on promotion: footfall, prime streets, what-locals-know), so whenever the
+ * illustrative seed DOES fill it, it never presents as real (rulebook v2 D4). */
+function SectionLabel({ children, sample }: { children: React.ReactNode; sample?: boolean }) {
+  return (
+    <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">
+      {children}
+      {sample ? <span className="ml-1.5 inline-flex align-middle"><SampleTag /></span> : null}
+    </div>
+  );
 }
 
 /* the ONE card chrome for this island's four framed blocks (keep strip, detail panel,
@@ -395,12 +403,16 @@ function PriceTierBand({ tier }: { tier: string }) {
 /* ============================================================================
  * DETAIL PANEL , disciplined. The SURFACE carries ONE decision: name + character +
  * blurb + the keep/revenue pair (keep is the hero, terracotta; revenue is grey
- * support) + the one-line counterweight + the CTA. The proof lives one click down
- * in single-open disclosures (kit Expand, name-grouped) , and the disclosure that
- * opens BY DEFAULT is "Why the number moves" (the proof of the hero figure), never
- * the Pro paywall. Trades / prime streets / who-is-here moved to the card under the
- * map (UnderMapCard) so the sticky map column earns its pixels. Count-up-safe hero
- * figure on district change. CTA chrome is ink (terracotta = answers only).
+ * support) + one verdict line + the CTA. Final-form: three prose beats (blurb,
+ * verdict, counterweight) are down to two , the counterweight paragraph is cut,
+ * since the 48px keep figure plus its above/below-city word already say the same
+ * number; the verdict line is the one sentence left to explain WHY. The proof
+ * lives one click down in single-open disclosures (kit Expand, name-grouped) ,
+ * and the disclosure that opens BY DEFAULT is "Why the number moves" (the proof
+ * of the hero figure), never the Pro paywall. Trades / prime streets / who-is-here
+ * moved to the card under the map (UnderMapCard) so the sticky map column earns
+ * its pixels. Count-up-safe hero figure on district change. CTA chrome is ink
+ * (terracotta = answers only).
  * ========================================================================== */
 function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
   const up = d.rev_vs_city_pct >= 0;
@@ -410,7 +422,6 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
   const dir = keep > 100 ? "keeps-more" : keep < 100 ? "keeps-less" : "at-baseline";
   const dirWord = keep > 100 ? "above city" : keep < 100 ? "below city" : "at city";
   const keepShown = Math.round(useCountUp(keep, reduced, 460));
-  const counter = above ? d.counterweight_above : d.counterweight_below;
   const grp = `ne-panel-${d.slug}`; // single-open group, reset per district
 
   return (
@@ -436,9 +447,10 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
           </div>
         </div>
 
-        {/* the decision line: verdict + counterweight, plain-spoken, from the seed */}
+        {/* the decision line , verdict only (final-form: three prose beats to two;
+            the counterweight paragraph is cut, since the 48px keep figure above,
+            plus its above/below-city word, already carries that same number). */}
         <p className="mt-3 border-t border-[var(--c-border)] pt-3 text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink)]">{d.verdict}</p>
-        <p className="mt-1.5 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{counter}</p>
 
         <div className="mt-3 flex flex-wrap items-center gap-1.5">
           {(d.tags ?? []).map((t) => <Chip key={t}>{t}</Chip>)}
@@ -464,7 +476,7 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
             illustrative seed, which carries footfall. */}
         {d.footfall ? (
           <div>
-            <SectionLabel>When the trade happens</SectionLabel>
+            <SectionLabel sample>When the trade happens</SectionLabel>
             <FootfallScale d={d} />
           </div>
         ) : null}
@@ -476,7 +488,7 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
             <SectionLabel>Walkability and price tier</SectionLabel>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {d.walkability || d.walk_score != null ? (
-                <div><SectionLabel>Walkability</SectionLabel><Meter value={walkVal(d)} left="Car-led" right="Walk-led" /></div>
+                <div><SectionLabel>Walkability</SectionLabel><Meter value={walkVal(d)} left="Low foot traffic" right="High foot traffic" /></div>
               ) : null}
               {d.price_tier ? (
                 <div><SectionLabel>Price tier</SectionLabel><PriceTierBand tier={d.price_tier} /></div>
@@ -495,7 +507,7 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
             Pro unlocks the rest (the named side street, the licensing quirk, the rent
             delta). Real content stays in the DOM under the veil for SEO. */}
         {(d.locals_know ?? []).length ? (
-          <Expand name={grp} title="What locals know" right={<LockPill label="Pro" />}>
+          <Expand name={grp} title={<>What locals know <SampleTag /></>} right={<LockPill label="Pro" />}>
             <div className="pt-1">
               {/* ink kicker: the LockPill on the summary already carries the Pro cue */}
               <div className="mb-2 flex items-center gap-1.5">
@@ -605,7 +617,7 @@ function UnderMapCard({ d }: { d: District }) {
         <div className={`grid grid-cols-1 gap-3 sm:grid-cols-2 ${trades.length > 0 ? "mt-3 border-t border-[var(--c-border)] pt-3" : ""}`}>
           {streets.length > 0 ? (
             <div>
-              <SectionLabel>Prime streets</SectionLabel>
+              <SectionLabel sample>Prime streets</SectionLabel>
               <div className="flex flex-wrap gap-1.5">{streets.map((s) => <Chip key={s}>{s}</Chip>)}</div>
             </div>
           ) : null}
@@ -698,6 +710,11 @@ export function NeighborhoodExplorer({ districts, defaultSlug, rail, mapNote }: 
  * is the ONE terracotta line; the other eight draw the whole re-ordering the prose
  * describes instead of restating one number a fourth time. Draw-on-scroll gated by
  * in-view; SSR / no-JS / reduced-motion render the lines at rest (fully drawn).
+ * Final-form (rulebook v2 S12 + 2026-07-10 corrections): the internal kicker is
+ * retitled off "Myth, busted" (a game-show cliche) to a plain "Revenue rank vs
+ * keep rank" label in neutral ink, never terracotta (terracotta stays reserved
+ * for the answer); the standalone `tell` one-liner is cut, since the chart's own
+ * caption below now carries that same point alone, once, not a fourth time.
  * ========================================================================== */
 function RankSlope({ districts, loudSlug, hidden, reduced }: { districts: District[]; loudSlug: string; hidden: boolean; reduced: boolean }) {
   const byRev = [...districts].sort((a, b) => b.rev_vs_city_pct - a.rev_vs_city_pct);
@@ -774,12 +791,11 @@ export function MythChapter({ myth, loudest, districts = [] }: { myth: Myth; lou
       <div className="grid gap-6 p-6 md:grid-cols-[1.1fr_1fr] md:items-center md:p-8">
         <div>
           <div className="mb-3 flex items-center gap-2">
-            <Ico id="myth-reality" tone="terra" />
-            <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--terra-text)]">Myth, busted</span>
+            <Ico id="myth-reality" />
+            <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--c-muted)]">Revenue rank vs keep rank</span>
           </div>
           <p className="text-[length:var(--t-sub)] font-semibold leading-snug text-[var(--c-ink)] md:text-[length:var(--t-sub)]">&ldquo;{myth.claim}&rdquo;</p>
           <p className="mt-3 max-w-prose text-[length:var(--t-body)] leading-relaxed text-[var(--c-ink2)]">{myth.reality}</p>
-          {myth.tell ? <p className="mt-3 text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{myth.tell}</p> : null}
         </div>
         {/* the counter-evidence: the whole re-ordering, drawn , not one number again */}
         <div className="rounded-[12px] border border-[var(--c-border)] bg-[var(--c-card)] p-4">
@@ -828,7 +844,7 @@ const FREE_METRICS: Metric[] = [
 const PRO_METRICS: Metric[] = [
   // no higherIsBetter: a weekday-led week is not better or worse, so no best-dot.
   { key: "lean", label: "Weekday dependence", hint: "how lopsided the week is", get: (d) => weekdayLean(d), fmt: (d) => `${weekdayLean(d)}% weekday`, bar: { domain: [0, 100] } },
-  { key: "walk", label: "Walkability", hint: "foot vs car-led", get: (d) => walkVal(d), fmt: (d) => `${walkVal(d)}`, higherIsBetter: true, bar: { domain: [0, 100] } },
+  { key: "walk", label: "Walkability", hint: "low to high foot traffic", get: (d) => walkVal(d), fmt: (d) => `${walkVal(d)}`, higherIsBetter: true, bar: { domain: [0, 100] } },
   { key: "weekend", label: "Weekend footfall", hint: "trade intensity", get: (d) => footVal(d).weekend, fmt: (d) => `${footVal(d).weekend}`, higherIsBetter: true, bar: { domain: [0, 100] } },
 ];
 
@@ -843,7 +859,14 @@ function bestFor(m: Metric, cols: District[]): string | null {
   return bd.slug;
 }
 
-function MetricRows({ metrics, cols }: { metrics: Metric[]; cols: District[] }) {
+/* `show` splits a row into its GRAPHIC half and its TEXT half so a caller can put
+ * each on a different side of a Pro veil (rulebook v2 S6: a graphic is NEVER
+ * hidden behind a veil, only text is gated). "all" (default) is the historical
+ * render, byte-identical, used for the free rows. "bar" renders the label + hint
+ * + CellScaleBar with no figure and no dot , the proof, left ungated for every
+ * Pro row. "figure" renders only the number (dot only applies in "all") with no
+ * label and no bar , the one thing that stays behind the veil. */
+function MetricRows({ metrics, cols, show = "all" }: { metrics: Metric[]; cols: District[]; show?: "all" | "bar" | "figure" }) {
   return (
     <>
       {metrics.map((m) => {
@@ -851,20 +874,26 @@ function MetricRows({ metrics, cols }: { metrics: Metric[]; cols: District[] }) 
         return (
           <div key={m.key} className="grid items-center gap-3 border-b border-[var(--c-border)] px-4 py-2.5 last:border-0" style={{ gridTemplateColumns: `minmax(0,1.3fr) repeat(${cols.length}, minmax(0,1fr))` }}>
             <div className="min-w-0">
-              <div className="text-[length:var(--t-body)] font-medium text-[var(--c-ink2)]">{m.label}</div>
-              <div className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{m.hint}</div>
+              {show !== "figure" ? (
+                <>
+                  <div className="text-[length:var(--t-body)] font-medium text-[var(--c-ink2)]">{m.label}</div>
+                  <div className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{m.hint}</div>
+                </>
+              ) : null}
             </div>
             {cols.map((d) => {
-              const win = best === d.slug && cols.length > 1;
+              const win = show === "all" && best === d.slug && cols.length > 1;
               return (
                 <div key={d.slug} className="min-w-0">
-                  <div className="flex items-center gap-1.5">
-                    {/* row-best dot: terracotta on keep only, ink elsewhere (legend in the caption) */}
-                    {win ? <span className="inline-block h-[7px] w-[7px] shrink-0 rounded-full" style={{ background: dotColor(m) }} aria-label="best" /> : null}
-                    <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{m.fmt(d)}</Fig>
-                  </div>
+                  {show !== "bar" ? (
+                    <div className="flex items-center gap-1.5">
+                      {/* row-best dot: terracotta on keep only, ink elsewhere (legend in the caption) */}
+                      {win ? <span className="inline-block h-[7px] w-[7px] shrink-0 rounded-full" style={{ background: dotColor(m) }} aria-label="best" /> : null}
+                      <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{m.fmt(d)}</Fig>
+                    </div>
+                  ) : null}
                   {/* in-cell bar ONLY on a drawn scale: baseline tick + reference tick visible */}
-                  {m.bar ? <CellScaleBar value={m.get(d)} domain={m.bar.domain} refValue={m.bar.refValue} /> : null}
+                  {m.bar && show !== "figure" ? <CellScaleBar value={m.get(d)} domain={m.bar.domain} refValue={m.bar.refValue} /> : null}
                 </div>
               );
             })}
@@ -959,13 +988,23 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
           </div>
           {/* free rows (plus any Pro leftovers when the veil fails the substance gate) */}
           <MetricRows metrics={freeMetrics} cols={cols} />
-          {/* Pro rows behind the veil , the differential you cannot get from the panel.
-              min-height + pb keep the centered lock tile + CTA fully inside the card edge. */}
+          {/* Pro rows , the differential you cannot get from the panel. Rulebook v2 S6
+              (live blocker, fixed): a graphic is never hidden behind a veil, so every
+              row's CellScaleBar renders ungated here first; only the exact number is
+              gated below. min-height + pb keep the centered lock tile + CTA fully
+              inside the card edge. */}
           {veiled ? (
-            <div className="border-t border-[var(--c-border)] p-3 pb-4">
-              <LockVeil headline="The full differential" note={proNote} cta="Compare with Pro">
-                <div className="min-h-[172px] divide-y divide-[var(--c-border)]"><MetricRows metrics={proMetrics} cols={cols} /></div>
-              </LockVeil>
+            <div className="border-t border-[var(--c-border)]">
+              <div className="flex items-center justify-between gap-2 px-4 pb-1 pt-3">
+                <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">Pro metrics, scale shown free</span>
+                <LockPill label="Pro" />
+              </div>
+              <MetricRows metrics={proMetrics} cols={cols} show="bar" />
+              <div className="p-3 pb-4">
+                <LockVeil headline="The full differential" note={proNote} cta="Compare with Pro">
+                  <div className="min-h-[172px] divide-y divide-[var(--c-border)]"><MetricRows metrics={proMetrics} cols={cols} show="figure" /></div>
+                </LockVeil>
+              </div>
             </div>
           ) : null}
         </div>
@@ -994,18 +1033,39 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
                 })}
               </div>
               {veiled ? (
-                <div className="mt-2.5 pb-1">
-                  <LockVeil headline="The full differential" note={proNote} cta="Compare with Pro">
-                    <div className="min-h-[172px] space-y-2">
-                      {proMetrics.map((m) => (
-                        <div key={m.key} className="grid grid-cols-[130px_1fr_auto] items-center gap-2.5">
-                          <span className="min-w-0 truncate text-[length:var(--t-micro)] text-[var(--c-ink2)]">{m.label}</span>
-                          {m.bar ? <span className="-mt-1 block"><CellScaleBar value={m.get(d)} domain={m.bar.domain} refValue={m.bar.refValue} /></span> : <span />}
-                          <Fig className="w-16 text-right text-[length:var(--t-body)] text-[var(--c-ink)]">{m.fmt(d)}</Fig>
-                        </div>
-                      ))}
-                    </div>
-                  </LockVeil>
+                <div className="mt-2.5">
+                  {/* the proof , every Pro row's bar stays visible (rulebook v2 S6,
+                      live blocker, fixed here): a graphic is never hidden behind a
+                      veil. Only the exact number is gated below. */}
+                  <div className="flex items-center justify-between gap-2 border-t border-[var(--c-border)] pb-1 pt-2.5">
+                    <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">Pro metrics, scale shown free</span>
+                    <LockPill label="Pro" />
+                  </div>
+                  <div className="space-y-2">
+                    {proMetrics.map((m) => (
+                      <div key={m.key} className="grid grid-cols-[130px_1fr_auto] items-center gap-2.5">
+                        <span className="min-w-0 truncate text-[length:var(--t-micro)] text-[var(--c-ink2)]">{m.label}</span>
+                        {m.bar ? <span className="-mt-1 block"><CellScaleBar value={m.get(d)} domain={m.bar.domain} refValue={m.bar.refValue} /></span> : <span />}
+                        {/* trailing spacer matches the free rows' 3-col template above,
+                            so the bar track lines up vertically; the number sits only
+                            in the veiled copy below. */}
+                        <span aria-hidden className="w-16" />
+                      </div>
+                    ))}
+                  </div>
+                  <div className="pb-1 pt-2.5">
+                    <LockVeil headline="The full differential" note={proNote} cta="Compare with Pro">
+                      <div className="min-h-[172px] space-y-2">
+                        {proMetrics.map((m) => (
+                          <div key={m.key} className="grid grid-cols-[130px_1fr_auto] items-center gap-2.5">
+                            <span className="min-w-0 truncate text-[length:var(--t-micro)] text-[var(--c-ink2)]">{m.label}</span>
+                            <span />
+                            <Fig className="w-16 text-right text-[length:var(--t-body)] text-[var(--c-ink)]">{m.fmt(d)}</Fig>
+                          </div>
+                        ))}
+                      </div>
+                    </LockVeil>
+                  </div>
                 </div>
               ) : null}
             </div>

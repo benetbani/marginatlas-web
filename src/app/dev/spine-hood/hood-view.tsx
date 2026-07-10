@@ -85,7 +85,7 @@ export function SpineHoodBody({ data = spineHoodSeed }: { data?: any }) {
         </p>
 
         {/* 01 , THE MOVEMENT: where the money actually stays. Keep strip + real map + panel. */}
-        <Movement index="01" icon="best-areas" eyebrow="Where the money stays" heading="What the owner keeps, ranked" />
+        <Movement index="01" icon="best-areas" heading="Districts by keep index" />
         <NeighborhoodExplorer
           districts={districts}
           defaultSlug={d.meta?.default_slug}
@@ -94,11 +94,11 @@ export function SpineHoodBody({ data = spineHoodSeed }: { data?: any }) {
         />
 
         {/* 02 , THE MYTH: promoted to its own full-width chapter, the honesty moat at real size. */}
-        <Movement index="02" icon="myth-reality" eyebrow="The belief to bust" heading="The revenue myth" />
+        <Movement index="02" icon="myth-reality" heading="The revenue myth" />
         {d.meta?.myth && loudest ? <MythChapter myth={d.meta.myth} loudest={loudest} districts={districts} /> : null}
 
         {/* 03 , COMPARE (Pro): hold two or three side by side, with an auto-derived verdict. */}
-        <Movement index="03" icon="compare" eyebrow="Compare districts" heading="Two or three, line for line" />
+        <Movement index="03" icon="compare" heading="Compare districts" />
         <NeighborhoodCompare districts={districts} compare={d.meta?.compare} />
 
         {/* CLOSING , the funnel onward: canonical trades this atlas models, links only, no
