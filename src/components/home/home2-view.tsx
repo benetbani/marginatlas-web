@@ -48,7 +48,6 @@ import { RankBars, type RankDatum } from "@/components/spine/kit-index";
 import { AtlasIcon, type AtlasIconId } from "@/components/brand/icons";
 import { AtlasMark, type AtlasMarkId } from "@/components/spine/marks";
 import { WorldMapClient } from "@/components/home/WorldMapClient";
-import { HERO_BUSINESSES, HERO_CITIES } from "@/lib/hero-words";
 import { NavigatorForm } from "@/components/NavigatorForm";
 import type { MarginIndexBoard, MarginIndexRow } from "@/lib/scores/margin_index";
 import type { BlogPost } from "@/lib/blog";
@@ -80,8 +79,8 @@ const FIVE_WAYS: WayCard[] = [
   { mark: "alt-business", label: "A business, in one place", sub: "One trade, one city: what the owner actually keeps.", href: "/random", cta: "Open a random one" },
   { icon: "benchmark", label: "A whole trade", sub: "How one industry's economics compare, worldwide.", href: "/industries", cta: "Browse every trade" },
   { mark: "alt-city", label: "A city", sub: "Every trade a metro supports, ranked side by side.", href: "/cities", cta: "Browse cities" },
-  { mark: "alt-district", label: "A neighborhood", sub: "Where inside a city a trade actually works best.", href: "/cities/london/neighborhoods", cta: "See an example" },
-  { mark: "alt-country", label: "A country", sub: "The government's take, and where it eases up.", href: "/gb", cta: "See an example" },
+  { mark: "alt-district", label: "A neighborhood", sub: "Where inside a city a trade actually works best.", href: "/random", cta: "See an example" },
+  { mark: "alt-country", label: "A country", sub: "The government's take, and where it eases up.", href: "/random", cta: "See an example" },
 ];
 function FiveWaysRouter() {
   return (
@@ -311,13 +310,16 @@ export function Home2View({
           <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--c-muted)]">
             The #1 atlas of local profit intelligence
           </div>
-          {/* Server-rendered, concrete , no client-only word rotation, so a crawler
-              sees a real question (matches the current homepage's crawlable-H1 rule). */}
+          {/* Server-rendered, place-neutral , no client-only word rotation, so a crawler
+              sees a real question that holds for every place on the atlas (S13
+              universality), never a single country pinned into the crawlable H1. The
+              launcher directly below (NavigatorForm) carries its own rotating real
+              example, so the concrete flavor still lands, just not in the H1. */}
           <h1
             data-typography="custom"
             className="mx-auto mt-2 max-w-3xl text-balance text-3xl font-bold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2.6rem]"
           >
-            How much does a {HERO_BUSINESSES[0]} keep in {HERO_CITIES[0]}?
+            How much does a small business actually keep?
           </h1>
           <p className="mx-auto mt-2.5 max-w-xl text-[13.5px] leading-relaxed text-[var(--c-ink2)] md:text-[15px]">
             Know if a business works before you risk your money.

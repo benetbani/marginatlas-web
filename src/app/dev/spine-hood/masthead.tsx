@@ -67,7 +67,7 @@ export function HoodMasthead({ d }: { d: any }) {
       {/* upward navigation , wired to the city page (dev route until promotion). */}
       <a href={d.meta?.city_href ?? "/dev/spine-city"} className="mb-4 inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[var(--c-border)] bg-white/70 px-3 py-1 text-xs font-semibold text-[var(--c-ink2)] transition hover:border-[var(--terra-border)] hover:text-[var(--terra-text)]">&#8592; Back to {d.meta?.city}</a>
       <div className="flex items-center gap-3.5">
-        <CountryFlag iso2="gb" className="w-[36px] rounded-sm shadow-sm" />
+        <CountryFlag iso2={d.meta?.iso2?.toLowerCase()} className="w-[36px] rounded-sm shadow-sm" />
         <h1 data-typography="custom" className="text-3xl font-bold tracking-tight text-[var(--c-ink)] md:text-4xl">{d.meta?.city} neighborhoods</h1>
         {/* wayfinding: this page reads at district level (calm, muted) */}
         <AtlasMark id="alt-district" size={16} className="opacity-60" />

@@ -21,7 +21,7 @@ export function CityHero({ d }: { d: any }) {
     <section className="overflow-hidden py-6 md:py-8">
       <a className="mb-4 inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[var(--c-border)] bg-white/70 px-3 py-1 text-xs font-semibold text-[var(--c-ink2)] transition hover:border-[var(--terra-border)] hover:text-[var(--terra-text)]">&#8592; All cities</a>
       <div className="flex items-center gap-3.5">
-        <CountryFlag iso2="gb" className="w-[44px] rounded-sm shadow-sm" />
+        <CountryFlag iso2={d.meta?.iso2?.toLowerCase()} className="w-[44px] rounded-sm shadow-sm" />
         <div>
           <h1 data-typography="custom" className="text-balance text-3xl font-bold tracking-tight text-[var(--c-ink)] md:text-4xl">{d.meta?.city}</h1>
           <div className="text-[12px] text-[var(--c-muted)]">Opening a business in {d.meta?.country_name}</div>

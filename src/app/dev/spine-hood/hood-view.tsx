@@ -43,12 +43,14 @@ const HOOD_BG = "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?au
 const DEV_PROVENANCE =
   "Keep index is derived from revenue and rent load against a city baseline of 100. District revenue positions come from modeled commuter, visitor and character multipliers. Figures are illustrative until wired to live neighborhood data.";
 
-// The closing band's canonical-trade links , each maps onto a modeled cell route.
-const TRADE_LINKS: Array<{ icon: AtlasIconId; name: string; href: string }> = [
-  { icon: "trade-cafe", name: "Cafes and coffee", href: "/gb/london/cafes-coffee" },
-  { icon: "trade-restaurant", name: "Restaurants", href: "/gb/london/restaurants" },
-  { icon: "trade-bar", name: "Bars and nightclubs", href: "/gb/london/bars-nightclubs" },
-  { icon: "trade-grocery", name: "Grocery stores", href: "/gb/london/grocery-stores" },
+// The closing band's canonical-trade slugs , each maps onto a modeled cell route. The
+// slate is site-wide (fixed slugs); the CITY half of the href is never known here, so it
+// is resolved per-page below from d.meta, never baked in as a constant.
+const CANONICAL_TRADES: Array<{ icon: AtlasIconId; name: string; slug: string }> = [
+  { icon: "trade-cafe", name: "Cafes and coffee", slug: "cafes-coffee" },
+  { icon: "trade-restaurant", name: "Restaurants", slug: "restaurants" },
+  { icon: "trade-bar", name: "Bars and nightclubs", slug: "bars-nightclubs" },
+  { icon: "trade-grocery", name: "Grocery stores", slug: "grocery-stores" },
 ];
 
 export function SpineHoodBody({ data = spineHoodSeed }: { data?: any }) {
@@ -56,6 +58,17 @@ export function SpineHoodBody({ data = spineHoodSeed }: { data?: any }) {
   const districts: any[] = d.districts ?? [];
   // the loudest (highest-revenue) district , the myth's counter-subject.
   const loudest = districts.slice().sort((a: any, b: any) => b.rev_vs_city_pct - a.rev_vs_city_pct)[0];
+
+  // The closing trade band's per-city hrefs (S13 universality): both the dev seed and
+  // every real adapter (buildSpineHoodSeed) carry iso2 + slug + city on meta, so this
+  // resolves for any promoted city, never just London. With either missing there is no
+  // honest href to build, so the whole band omits below rather than fall back to London.
+  const cityIso2: string | undefined = d.meta?.iso2 ? String(d.meta.iso2).toLowerCase() : undefined;
+  const citySlug: string | undefined = d.meta?.slug;
+  const cityName: string | undefined = d.meta?.city;
+  const tradeLinks = cityIso2 && citySlug
+    ? CANONICAL_TRADES.map((t) => ({ ...t, href: `/${cityIso2}/${citySlug}/${t.slug}` }))
+    : [];
 
   return (
     <SpineShell bg={HOOD_BG} bgPosition="center 40%">
@@ -88,24 +101,27 @@ export function SpineHoodBody({ data = spineHoodSeed }: { data?: any }) {
         <Movement index="03" icon="compare" eyebrow="Compare districts" heading="Two or three, line for line" />
         <NeighborhoodCompare districts={districts} compare={d.meta?.compare} />
 
-        {/* CLOSING , the funnel onward: canonical trades this atlas models in London,
-            links only, no figures. One small band, then the page ends. */}
-        <Box className="mt-8">
-          <div className="mb-3 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">Open a trade in London</div>
-          <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-            {TRADE_LINKS.map((t) => (
-              <li key={t.href}>
-                <a href={t.href} className="flex items-center justify-between gap-3 rounded-lg border border-[var(--c-border)] bg-[var(--c-soft)] px-3 py-2 transition hover:border-[var(--c-line-strong)] hover:bg-[var(--c-soft2)]">
-                  <span className="flex min-w-0 items-center gap-2.5">
-                    <Ico id={t.icon} />
-                    <span className="truncate text-[13px] font-semibold text-[var(--c-ink)]">{t.name}</span>
-                  </span>
-                  <span aria-hidden className="shrink-0 text-[var(--c-muted)]">&#8594;</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </Box>
+        {/* CLOSING , the funnel onward: canonical trades this atlas models, links only, no
+            figures. Omits entirely (never a London fallback) when the city's iso2 + slug
+            are not both known, so an unpromoted or malformed meta never mislinks. */}
+        {tradeLinks.length > 0 && cityName ? (
+          <Box className="mt-8">
+            <div className="mb-3 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">Open a trade in {cityName}</div>
+            <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+              {tradeLinks.map((t) => (
+                <li key={t.href}>
+                  <a href={t.href} className="flex items-center justify-between gap-3 rounded-lg border border-[var(--c-border)] bg-[var(--c-soft)] px-3 py-2 transition hover:border-[var(--c-line-strong)] hover:bg-[var(--c-soft2)]">
+                    <span className="flex min-w-0 items-center gap-2.5">
+                      <Ico id={t.icon} />
+                      <span className="truncate text-[13px] font-semibold text-[var(--c-ink)]">{t.name}</span>
+                    </span>
+                    <span aria-hidden className="shrink-0 text-[var(--c-muted)]">&#8594;</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </Box>
+        ) : null}
       </main>
     </SpineShell>
   );

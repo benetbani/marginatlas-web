@@ -153,7 +153,7 @@ function Hero({ d }: { d: any }) {
         <a className="mb-4 inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[var(--c-border)] bg-white/70 px-3 py-1 text-xs font-semibold text-[var(--c-ink2)] transition hover:border-[var(--terra-border)] hover:text-[var(--terra-text)]">&#8592; All countries</a>
         <div className="mt-2 grid items-center gap-x-8 gap-y-6 md:grid-cols-[1fr_auto]">
           <div>
-            <div className="flex items-center gap-3.5"><CountryFlag iso2="gb" className="w-[52px] rounded-sm shadow-sm" /><h1 data-typography="custom" className="text-balance text-3xl font-bold tracking-tight text-[var(--c-ink)] md:text-4xl">{d.meta?.name}</h1></div>
+            <div className="flex items-center gap-3.5"><CountryFlag iso2={d.meta?.iso2?.toLowerCase()} className="w-[52px] rounded-sm shadow-sm" /><h1 data-typography="custom" className="text-balance text-3xl font-bold tracking-tight text-[var(--c-ink)] md:text-4xl">{d.meta?.name}</h1></div>
             {/* THE answer, in the top 20%. The unit is FUSED into the figure lockup
                 ("$36 / $100") so the hero can never read as a price; the side line
                 carries the meaning and NAMES the base (profit), so the figure can
@@ -414,7 +414,7 @@ function Banking({ d }: { d: any }) {
   const fv = fmap[(b.friction || "").toLowerCase()] ?? 50;
   return (
     <Box>
-      <Rail icon="bank" kicker="Opening a bank account" verdict={b.can_foreigner ? "Open to foreign owners; a UK address and a few weeks of checks are the catch." : "Restricted for foreign owners; expect added hurdles."} />
+      <Rail icon="bank" kicker="Opening a bank account" />
       <div className="focal mb-3 p-3.5">
         <div className="mb-1 flex items-baseline justify-between"><span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">How hard</span><Fig className="text-[length:var(--t-sub)] capitalize text-[var(--c-ink)]">{b.friction}</Fig></div>
         <Meter value={fv} left="Hard" right="Easy" />
@@ -943,6 +943,11 @@ function AdminLoad({ d }: { d: any }) {
  */
 function Cities({ d }: { d: any }) {
   const list = (d.cities?.list ?? []).slice().sort((a: any, b: any) => (b.market_index_vs_capital ?? 0) - (a.market_index_vs_capital ?? 0));
+  // S13 universality: meta carries no capital field yet, so the top-ranked city (the
+  // market index's own 100 baseline) stands in as the reference point the map, legend
+  // and caption name, never a hardcoded "London".
+  const countryName: string = d.meta?.name ?? "the country";
+  const topCityName: string = d.meta?.capital ?? list[0]?.name ?? countryName;
   // Cards are the ranked city list below the map: name + character + the index figure.
   // Static (the map carries the interaction) and identical in styling, so no city is
   // visually featured; the map's dot size is the single shape-encoding of the same index.
@@ -962,7 +967,7 @@ function Cities({ d }: { d: any }) {
   // declutters colliding labels at first paint, so the central cluster never overprints.
   const points: SpinePoint[] = list
     .filter((c: any) => typeof c.lat === "number" && typeof c.lng === "number")
-    .map((c: any) => ({ name: c.name, slug: c.slug, lat: c.lat, lng: c.lng, signal: c.market_index_vs_capital, signalLabel: `market ${c.market_index_vs_capital} vs London 100`, sub: c.character, tone: "ink", href: c.slug === "london" ? "/dev/spine-city" : undefined }));
+    .map((c: any) => ({ name: c.name, slug: c.slug, lat: c.lat, lng: c.lng, signal: c.market_index_vs_capital, signalLabel: `market ${c.market_index_vs_capital} vs ${topCityName} 100`, sub: c.character, tone: "ink", href: c.slug === "london" ? "/dev/spine-city" : undefined }));
   return (
     <Box>
       <div className="mb-3 flex items-center justify-between gap-3">
@@ -970,9 +975,9 @@ function Cities({ d }: { d: any }) {
         <a href="/countries" className="shrink-0 cursor-pointer rounded-full border border-[var(--c-border)] px-3 py-1 text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)] transition hover:border-[var(--terra-border)] hover:text-[var(--terra-text)]">Open the directory &#8594;</a>
       </div>
       {/* map leads, shorter than the full-page map; the cities stand in a row below it. */}
-      <SpineMap points={points} ariaLabel="Map of the main UK business cities" fitPadding={60} heightClass="h-[300px] w-full md:h-[360px]" legendLabel="Dot size = market reach, London = 100" />
+      <SpineMap points={points} ariaLabel={`Map of the main ${countryName} business cities`} fitPadding={60} heightClass="h-[300px] w-full md:h-[360px]" legendLabel={`Dot size = market reach, ${topCityName} = 100`} />
       <div className="mt-3"><Conveyor ariaLabel="The main cities" itemMinPx={150} gapPx={12}>{cards}</Conveyor></div>
-      <div className="mt-2.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">Dot size on the map and the figure on each card are the same read: market reach against London (100). The capital opens its own page.</div>
+      <div className="mt-2.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">Dot size on the map and the figure on each card are the same read: market reach against {topCityName} (100). The capital opens its own page.</div>
     </Box>
   );
 }
@@ -1359,7 +1364,7 @@ function DigitalPayments({ d }: { d: any }) {
   ];
   return (
     <Box><Head icon="payments">Getting paid, and the cash it costs</Head>
-      <p className="mb-4 max-w-[62ch] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">A card-first market: {typeof cardShare === "number" ? <>about <b className="text-[var(--c-ink)]">{cardShare}%</b> of takings come by card, </> : null}so the <b className="text-[var(--c-ink)]">{p.card_fee_pct}%</b> fee and the wait for money to land are what actually touch your cash flow.</p>
+      <p className="mb-4 max-w-[62ch] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{typeof cardShare === "number" ? <>About <b className="text-[var(--c-ink)]">{cardShare}%</b> of takings come by card. </> : null}The <b className="text-[var(--c-ink)]">{p.card_fee_pct}%</b> fee and the wait for money to land are what actually touch your cash flow.</p>
       <div className="flex flex-col gap-5 md:flex-row md:items-center">
         <div className="md:w-[52%]">
           <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">How customers pay</div>
@@ -1451,7 +1456,13 @@ function Immigration({ d }: { d: any }) {
   };
   return (
     <Box><Head icon="visa-permit">Visa routes for a foreign founder</Head>
-      <div className="space-y-3.5">{routes.map((r: any) => (
+      <div className="space-y-3.5">{routes.map((r: any) => {
+        // Honest fallback (S13): howMap is authored from public UK visa facts, so a
+        // route name it does not recognize (any non-GB country) must NEVER borrow the
+        // UK's generic filler. Prefer the seed's own r.how (wired per country at
+        // promotion, a later data task); with neither, omit the "how" line entirely.
+        const how = howMap[r.name] ?? r.how;
+        return (
         <div key={r.name} className="border-b border-[var(--c-border)] pb-3 last:border-0 last:pb-0">
           <div className="mb-1 flex items-center justify-between gap-2">
             <span className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{r.name}</span>
@@ -1459,9 +1470,10 @@ function Immigration({ d }: { d: any }) {
           </div>
           <MiniBar pct={r.ease} />
           <p className="mt-1.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]"><b className="font-medium text-[var(--c-ink)]">For</b> {String(r.forwho).toLowerCase()}.</p>
-          <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]"><b className="font-medium text-[var(--c-ink)]">How</b> {howMap[r.name] ?? "Endorsement or sponsorship, then a route to settlement."}</p>
+          {how ? <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]"><b className="font-medium text-[var(--c-ink)]">How</b> {how}</p> : null}
         </div>
-      ))}
+        );
+      })}
       </div>
       <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">Founder routes only; hire-from-abroad visas are for employees, not owners. Fiscal incentives for locating here are covered under grants and incentives below.</p>
     </Box>
