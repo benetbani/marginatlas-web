@@ -122,7 +122,10 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 /* the ONE card chrome for this island's four framed blocks (keep strip, detail panel,
  * under-map card, compare table): rounded-[14px] hairline + the inset-highlight shadow,
  * extracted so the chrome is declared once (zero visual change). */
-const HOOD_CARD_SHADOW = "inset 0 1px 0 rgba(255,255,255,0.9), 0 1px 1px rgba(43,28,22,0.04), 0 8px 24px -12px rgba(43,28,22,0.10)";
+/* Rulebook v2 S14 (2026-07-09): cards are hairline, no drop shadow. The two rgba(43,28,22,..)
+ * layers below WERE a real drop shadow (visible even against the white card background); they
+ * are removed. Only the inset paper top-highlight remains, matching Box in kit.tsx. */
+const HOOD_CARD_SHADOW = "inset 0 1px 0 rgba(255,255,255,0.9)";
 const HoodCard = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(function HoodCard({ className = "", style, ...rest }, ref) {
   return (
     <div

@@ -127,22 +127,22 @@ export function DecisionRow({ d, signals }: { d: DecisionDatum; signals: SignalD
   const lead = (
     <div className="flex min-w-0 items-center gap-2.5">
       {d.flag ? (
-        <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg border border-[var(--c-border)] bg-[var(--c-soft)] text-[15px]">{d.flag}</span>
+        <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg border border-[var(--c-border)] bg-[var(--c-soft)] text-[length:var(--t-lead)]">{d.flag}</span>
       ) : d.icon ? (
         <Ico id={d.icon} />
       ) : null}
-      <span className="min-w-0 truncate text-[14px] font-semibold text-[var(--c-ink)]">{d.name}</span>
+      <span className="min-w-0 truncate text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{d.name}</span>
     </div>
   );
   const focal = (
     <div>
       <div className="mb-1 flex items-baseline gap-1.5">
         {d.keptKnown === false ? (
-          <Fig className="text-[15px] text-[var(--c-muted)]">{"–"}</Fig>
+          <Fig className="text-[length:var(--t-lead)] text-[var(--c-muted)]">{"–"}</Fig>
         ) : (
           <>
-            <Fig className="text-[15px] text-[var(--terra-text)]">{d.keptPct}%</Fig>
-            <span className="text-[10px] uppercase tracking-wide text-[var(--c-muted)]">{d.keptLabel ?? "kept"}</span>
+            <Fig className="text-[length:var(--t-lead)] text-[var(--terra-text)]">{d.keptPct}%</Fig>
+            <span className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">{d.keptLabel ?? "kept"}</span>
           </>
         )}
       </div>
@@ -162,7 +162,7 @@ export function DecisionRow({ d, signals }: { d: DecisionDatum; signals: SignalD
       {/* leading */}
       <div className="flex items-center justify-between gap-2 sm:block">
         {lead}
-        {d.home ? <span className="shrink-0 rounded-full bg-[var(--terra-soft)] px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-[var(--terra-text)] sm:hidden">here</span> : null}
+        {d.home ? <span className="shrink-0 rounded-full bg-[var(--terra-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--terra-text)] sm:hidden">here</span> : null}
       </div>
       {/* focal (full width on mobile, its own column on sm+) */}
       <div className="mt-2.5 sm:mt-0">{focal}</div>
@@ -172,8 +172,8 @@ export function DecisionRow({ d, signals }: { d: DecisionDatum; signals: SignalD
           const sv = d.support.find((x) => x.key === s.key);
           return (
             <div key={s.key} className="min-w-0 sm:text-right">
-              <span className="block text-[9.5px] uppercase tracking-wide text-[var(--c-muted)] sm:hidden">{s.label}</span>
-              <Fig className="text-[13px] text-[var(--c-ink)]">{fmtSignal(sv, s.unit)}</Fig>
+              <span className="block text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)] sm:hidden">{s.label}</span>
+              <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{fmtSignal(sv, s.unit)}</Fig>
               {s.bar ? <CellScaleBar value={sv?.value} domain={s.bar.domain} refValue={s.bar.refValue} /> : null}
             </div>
           );
@@ -186,11 +186,11 @@ export function DecisionRow({ d, signals }: { d: DecisionDatum; signals: SignalD
 export function DecisionRowHeader({ signals, sort, onSort }: { signals: SignalDef[]; sort?: SortState; onSort?: (key: string) => void }) {
   return (
     <div className="hidden grid-cols-[1.5fr_1.4fr_repeat(var(--n),minmax(0,1fr))] items-end gap-3 border-b border-[var(--c-border)] px-2 pb-2 sm:grid" style={{ ["--n" as any]: signals.length }}>
-      <span className="text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Place</span>
-      <span className="text-[10.5px] font-semibold uppercase tracking-wide text-[var(--terra-text)]">Margin kept</span>
+      <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Place</span>
+      <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--terra-text)]">Margin kept</span>
       {signals.map((s) =>
         onSort ? <SortHeader key={s.key} label={s.label} unit={s.unit} active={sort?.key === s.key} dir={sort?.dir} onClick={() => onSort(s.key)} /> : (
-          <span key={s.key} className="text-right text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{s.label}{s.unit ? <span className="font-normal"> ({s.unit})</span> : null}</span>
+          <span key={s.key} className="text-right text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{s.label}{s.unit ? <span className="font-normal"> ({s.unit})</span> : null}</span>
         )
       )}
     </div>
@@ -210,10 +210,10 @@ export function SortHeader({ label, unit, active = false, dir = "desc", onClick,
       type="button"
       onClick={onClick}
       aria-sort={active ? (dir === "asc" ? "ascending" : "descending") : "none"}
-      className={`group flex items-center gap-1 text-[10.5px] font-semibold uppercase tracking-wide transition-colors ${align === "right" ? "justify-end text-right" : "text-left"} ${active ? "text-[var(--terra-text)]" : "text-[var(--c-muted)] hover:text-[var(--c-ink2)]"}`}
+      className={`group flex items-center gap-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide transition-colors ${align === "right" ? "justify-end text-right" : "text-left"} ${active ? "text-[var(--terra-text)]" : "text-[var(--c-muted)] hover:text-[var(--c-ink2)]"}`}
     >
       <span>{label}{unit ? <span className="font-normal lowercase tracking-normal"> ({unit})</span> : null}</span>
-      <span aria-hidden className={`fig text-[10px] leading-none transition ${active ? "opacity-100" : "opacity-30 group-hover:opacity-60"}`}>{active ? (dir === "asc" ? "↑" : "↓") : "↕"}</span>
+      <span aria-hidden className={`fig text-[length:var(--t-micro)] leading-none transition ${active ? "opacity-100" : "opacity-30 group-hover:opacity-60"}`}>{active ? (dir === "asc" ? "↑" : "↓") : "↕"}</span>
     </button>
   );
 }
@@ -239,12 +239,12 @@ export function RankBars({ rows, max, valueUnit = "", leaderId }: { rows: RankDa
           <Tag key={r.id} href={r.href} className="hov -mx-2 grid grid-cols-[minmax(0,1fr)_3.4rem] items-center gap-3 rounded-md px-2 py-1.5">
             <span className={`grid items-center gap-2.5 ${anyIcon ? "grid-cols-[18px_minmax(0,9rem)_minmax(0,1fr)]" : "grid-cols-[minmax(0,9rem)_minmax(0,1fr)]"}`}>
               {anyIcon ? (r.icon ? <AtlasIcon id={r.icon} size={16} className="spine-ic shrink-0" style={{ color: isLead ? "var(--terra-text)" : "var(--c-ink2)" }} /> : <span aria-hidden />) : null}
-              <span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]">{r.label}</span>
+              <span className="min-w-0 truncate text-[length:var(--t-body)] text-[var(--c-ink2)]">{r.label}</span>
               <span className="h-2 overflow-hidden rounded-full" style={{ background: TRACK }}>
                 <span className="block h-full rounded-full" role="img" aria-label={`${r.label}: ${r.display ?? r.value}${valueUnit}`} style={{ width: `${Math.max(2, (r.value / (top || 1)) * 100)}%`, background: isLead ? TERRA : "#c8c8c6" }} />
               </span>
             </span>
-            <Fig className={`text-right text-[13px] ${isLead ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{r.display ?? `${r.value}${valueUnit}`}</Fig>
+            <Fig className={`text-right text-[length:var(--t-body)] ${isLead ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{r.display ?? `${r.value}${valueUnit}`}</Fig>
           </Tag>
         );
       })}
@@ -304,7 +304,7 @@ export function CompareTable({ entities, rows, caption }: { entities: CompareEnt
     <div>
       {/* sm+ : entities as columns */}
       <div className="hidden sm:block">
-        <div className="grid items-end gap-3 border-b border-[var(--c-border)] pb-2 text-[10.5px] font-semibold uppercase tracking-wide" style={{ gridTemplateColumns: cols }}>
+        <div className="grid items-end gap-3 border-b border-[var(--c-border)] pb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide" style={{ gridTemplateColumns: cols }}>
           <span className="text-[var(--c-muted)]">Metric</span>
           {entities.map((e) => (
             <span key={e.id} className="text-right text-[var(--c-ink)]" style={e.home ? { color: "var(--terra-text)" } : undefined}>
@@ -317,10 +317,10 @@ export function CompareTable({ entities, rows, caption }: { entities: CompareEnt
             const best = bestEntityForRow(row, entities);
             return (
               <div key={row.key} className="grid items-center gap-3 py-2.5" style={{ gridTemplateColumns: cols }}>
-                <span className="text-[11.5px] font-medium text-[var(--c-ink2)]">{row.label}{row.unit ? <span className="text-[var(--c-muted)]"> ({row.unit})</span> : null}</span>
+                <span className="text-[length:var(--t-micro)] font-medium text-[var(--c-ink2)]">{row.label}{row.unit ? <span className="text-[var(--c-muted)]"> ({row.unit})</span> : null}</span>
                 {entities.map((e) => (
                   <span key={e.id} className="text-right" style={e.home ? { background: "#fff4f1", borderRadius: 6, paddingInline: 6 } : undefined}>
-                    <Fig className={`text-[13px] ${e.id === best ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{cellText(row, e.id)}</Fig>
+                    <Fig className={`text-[length:var(--t-body)] ${e.id === best ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{cellText(row, e.id)}</Fig>
                     {row.bar ? <CellScaleBar value={row.values[e.id]} domain={row.bar.domain} refValue={row.bar.refValue} /> : null}
                   </span>
                 ))}
@@ -334,17 +334,17 @@ export function CompareTable({ entities, rows, caption }: { entities: CompareEnt
         {entities.map((e) => (
           <div key={e.id} className="rounded-lg border border-[var(--c-border)] p-3" style={e.home ? { background: "#fff4f1" } : undefined}>
             <div className="mb-2 flex items-center gap-2 border-b border-[var(--c-border)] pb-1.5">
-              {e.flag ? <span className="text-[15px]">{e.flag}</span> : null}
-              <span className="text-[13px] font-semibold text-[var(--c-ink)]">{e.name}</span>
-              {e.home ? <span className="ml-auto rounded-full bg-[var(--terra-soft)] px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-[var(--terra-text)]">here</span> : null}
+              {e.flag ? <span className="text-[length:var(--t-lead)]">{e.flag}</span> : null}
+              <span className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{e.name}</span>
+              {e.home ? <span className="ml-auto rounded-full bg-[var(--terra-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--terra-text)]">here</span> : null}
             </div>
             <div className="space-y-1">
               {rows.map((row) => {
                 const best = bestEntityForRow(row, entities);
                 return (
                   <div key={row.key} className="flex items-baseline justify-between gap-3">
-                    <span className="text-[11.5px] text-[var(--c-ink2)]">{row.label}{row.unit ? <span className="text-[var(--c-muted)]"> ({row.unit})</span> : null}</span>
-                    <Fig className={`text-[13px] ${e.id === best ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{cellText(row, e.id)}</Fig>
+                    <span className="text-[length:var(--t-micro)] text-[var(--c-ink2)]">{row.label}{row.unit ? <span className="text-[var(--c-muted)]"> ({row.unit})</span> : null}</span>
+                    <Fig className={`text-[length:var(--t-body)] ${e.id === best ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{cellText(row, e.id)}</Fig>
                   </div>
                 );
               })}
@@ -352,7 +352,7 @@ export function CompareTable({ entities, rows, caption }: { entities: CompareEnt
           </div>
         ))}
       </div>
-      {caption ? <div className="mt-2 text-[11px] text-[var(--c-muted)]">{caption}</div> : <div className="mt-2 text-[11px] text-[var(--c-muted)]">Best in each metric is bold. {`Shares and rates only, compared like for like. No cross-country dollar amounts.`}</div>}
+      {caption ? <div className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">{caption}</div> : <div className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">Best in each metric is bold. {`Shares and rates only, compared like for like. No cross-country dollar amounts.`}</div>}
     </div>
   );
 }
@@ -378,9 +378,9 @@ export function LockVeil({ unlocked = false, headline = "Pro depth", note, cta =
       <div className="absolute inset-0 grid place-items-center px-4">
         <div className="w-full max-w-[300px] rounded-xl border border-[var(--terra-border)] bg-[var(--c-card)] p-4 text-center shadow-[0_8px_24px_-12px_rgba(43,28,22,0.18)]">
           <span className="mx-auto mb-2.5 grid h-9 w-9 place-items-center rounded-lg border border-[var(--terra-border)]" style={{ background: "var(--terra-soft)" }}><AtlasMark id="pro-lock" size={22} /></span>
-          <div className="text-[13px] font-semibold text-[var(--c-ink)]">{headline}</div>
-          {note ? <p className="mx-auto mt-1 max-w-[34ch] text-[11.5px] leading-snug text-[var(--c-ink2)]">{note}</p> : null}
-          <button type="button" onClick={onUnlock} className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-full px-4 py-2 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90" style={{ background: "var(--terra-text)" }}>
+          <div className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{headline}</div>
+          {note ? <p className="mx-auto mt-1 max-w-[34ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]">{note}</p> : null}
+          <button type="button" onClick={onUnlock} className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-full px-4 py-2 text-[length:var(--t-body)] font-semibold text-white transition-opacity hover:opacity-90" style={{ background: "var(--terra-text)" }}>
             <LockGlyph size={13} color="#fff" /> {cta}
           </button>
         </div>
@@ -394,7 +394,7 @@ export function LockVeil({ unlocked = false, headline = "Pro depth", note, cta =
  * terra vars and undo the sm-size uppercase/tracking so the render is byte-identical. */
 export function LockPill({ label = "Pro" }: { label?: string }) {
   return (
-    <Pill variant="subtle" size="sm" className="normal-case tracking-normal border-[color:var(--terra-border)] bg-[color:var(--terra-soft)] px-2 py-0.5 text-[10px] text-[color:var(--terra-text)]">
+    <Pill variant="subtle" size="sm" className="normal-case tracking-normal border-[color:var(--terra-border)] bg-[color:var(--terra-soft)] px-2 py-0.5 text-[length:var(--t-micro)] text-[color:var(--terra-text)]">
       <LockGlyph size={11} /> {label}
     </Pill>
   );
@@ -419,16 +419,16 @@ export function ControlRail({ query = "", onQuery, sortKey, sortOptions, onSort,
         {/* search */}
         <label className="flex min-w-0 flex-1 items-center gap-2 rounded-lg border border-[var(--c-border)] bg-[var(--c-soft)] px-2.5 py-1.5 lg:max-w-[18rem]">
           <AtlasIcon id="search" size={14} style={{ color: "var(--c-muted)" }} />
-          <input value={query} onChange={(e) => onQuery?.(e.target.value)} placeholder={placeholder} className="min-w-0 flex-1 bg-transparent text-[13px] text-[var(--c-ink)] outline-none placeholder:text-[var(--c-muted)]" />
+          <input value={query} onChange={(e) => onQuery?.(e.target.value)} placeholder={placeholder} className="min-w-0 flex-1 bg-transparent text-[length:var(--t-body)] text-[var(--c-ink)] outline-none placeholder:text-[var(--c-muted)]" />
         </label>
         {/* segmented signal-sort */}
         <div className="flex items-center gap-2">
-          <span className="hidden text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)] sm:inline">Rank by</span>
+          <span className="hidden text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)] sm:inline">Rank by</span>
           <div className="inline-flex overflow-hidden rounded-lg border border-[var(--c-border)]">
             {sortOptions.map((o) => {
               const on = o.key === sortKey;
               return (
-                <button key={o.key} type="button" onClick={() => onSort?.(o.key)} className={`px-2.5 py-1.5 text-[11.5px] font-medium transition-colors ${on ? "text-white" : "text-[var(--c-ink2)] hover:bg-[var(--c-soft)]"}`} style={on ? { background: "var(--terra-text)" } : undefined} aria-pressed={on}>
+                <button key={o.key} type="button" onClick={() => onSort?.(o.key)} className={`px-2.5 py-1.5 text-[length:var(--t-micro)] font-medium transition-colors ${on ? "text-white" : "text-[var(--c-ink2)] hover:bg-[var(--c-soft)]"}`} style={on ? { background: "var(--terra-text)" } : undefined} aria-pressed={on}>
                   {o.label}
                 </button>
               );
@@ -441,12 +441,12 @@ export function ControlRail({ query = "", onQuery, sortKey, sortOptions, onSort,
           {facets.map((f) => {
             const on = activeFacets.includes(f.key);
             return (
-              <button key={f.key} type="button" onClick={() => onToggleFacet?.(f.key)} aria-pressed={on} className={`rounded-full border px-2.5 py-0.5 text-[11px] transition-colors ${on ? "border-[var(--terra-border)] bg-[var(--terra-soft)] text-[var(--terra-text)]" : "border-[var(--c-border)] bg-[var(--c-soft)] text-[var(--c-ink2)] hover:bg-[var(--c-soft2)]"}`}>
+              <button key={f.key} type="button" onClick={() => onToggleFacet?.(f.key)} aria-pressed={on} className={`rounded-full border px-2.5 py-0.5 text-[length:var(--t-micro)] transition-colors ${on ? "border-[var(--terra-border)] bg-[var(--terra-soft)] text-[var(--terra-text)]" : "border-[var(--c-border)] bg-[var(--c-soft)] text-[var(--c-ink2)] hover:bg-[var(--c-soft2)]"}`}>
                 {f.label}
               </button>
             );
           })}
-          <span className="ml-auto text-[11px] text-[var(--c-muted)]"><Fig className="text-[var(--c-ink)]">{count}</Fig>{total != null ? <> of <Fig className="text-[var(--c-ink)]">{total}</Fig></> : null} shown</span>
+          <span className="ml-auto text-[length:var(--t-micro)] text-[var(--c-muted)]"><Fig className="text-[var(--c-ink)]">{count}</Fig>{total != null ? <> of <Fig className="text-[var(--c-ink)]">{total}</Fig></> : null} shown</span>
         </div>
       ) : null}
     </div>
@@ -473,20 +473,20 @@ export function Pager({ page, pages, onPage, total, perPage, onMore }: { page: n
   const shownTo = perPage ? Math.min((total ?? 0), page * perPage) : undefined;
   return (
     <div className="mt-4 flex flex-col items-center gap-2.5 border-t border-[var(--c-border)] pt-4 sm:flex-row sm:justify-between">
-      <span className="text-[11.5px] text-[var(--c-muted)]">
+      <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">
         {total != null && perPage != null ? <>Showing <Fig className="text-[var(--c-ink)]">{shownTo}</Fig> of <Fig className="text-[var(--c-ink)]">{total}</Fig></> : <>Page <Fig className="text-[var(--c-ink)]">{page}</Fig> of <Fig className="text-[var(--c-ink)]">{pages}</Fig></>}
       </span>
       {onMore ? (
-        <button type="button" onClick={onMore} disabled={page >= pages} className="rounded-full border border-[var(--c-border)] bg-[var(--c-soft)] px-4 py-1.5 text-[12px] font-semibold text-[var(--c-ink2)] transition-colors hover:bg-[var(--c-soft2)] disabled:opacity-40">Show more</button>
+        <button type="button" onClick={onMore} disabled={page >= pages} className="rounded-full border border-[var(--c-border)] bg-[var(--c-soft)] px-4 py-1.5 text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)] transition-colors hover:bg-[var(--c-soft2)] disabled:opacity-40">Show more</button>
       ) : (
         <div className="flex flex-wrap items-center justify-center gap-1">
-          <button type="button" onClick={() => onPage?.(page - 1)} disabled={page <= 1} className="rounded-md px-2 py-1 text-[12px] text-[var(--c-ink2)] hover:bg-[var(--c-soft)] disabled:opacity-30">{"←"}</button>
+          <button type="button" onClick={() => onPage?.(page - 1)} disabled={page <= 1} className="rounded-md px-2 py-1 text-[length:var(--t-body)] text-[var(--c-ink2)] hover:bg-[var(--c-soft)] disabled:opacity-30">{"←"}</button>
           {pageWindow(page, pages).map((p, i) =>
-            p === "gap" ? <span key={`g${i}`} className="px-1 text-[12px] text-[var(--c-muted)]">{"…"}</span> : (
-              <button key={p} type="button" onClick={() => onPage?.(p)} aria-current={p === page} className={`fig min-w-[1.9rem] rounded-md px-2 py-1 text-[12px] transition-colors ${p === page ? "text-white" : "text-[var(--c-ink2)] hover:bg-[var(--c-soft)]"}`} style={p === page ? { background: "var(--terra-text)" } : undefined}>{p}</button>
+            p === "gap" ? <span key={`g${i}`} className="px-1 text-[length:var(--t-body)] text-[var(--c-muted)]">{"…"}</span> : (
+              <button key={p} type="button" onClick={() => onPage?.(p)} aria-current={p === page} className={`fig min-w-[1.9rem] rounded-md px-2 py-1 text-[length:var(--t-body)] transition-colors ${p === page ? "text-white" : "text-[var(--c-ink2)] hover:bg-[var(--c-soft)]"}`} style={p === page ? { background: "var(--terra-text)" } : undefined}>{p}</button>
             )
           )}
-          <button type="button" onClick={() => onPage?.(page + 1)} disabled={page >= pages} className="rounded-md px-2 py-1 text-[12px] text-[var(--c-ink2)] hover:bg-[var(--c-soft)] disabled:opacity-30">{"→"}</button>
+          <button type="button" onClick={() => onPage?.(page + 1)} disabled={page >= pages} className="rounded-md px-2 py-1 text-[length:var(--t-body)] text-[var(--c-ink2)] hover:bg-[var(--c-soft)] disabled:opacity-30">{"→"}</button>
         </div>
       )}
     </div>
@@ -506,19 +506,19 @@ export function CompareTray({ items, onRemove, onClear, onCompare, max = 3 }: { 
   return (
     <div className="fixed inset-x-0 bottom-0 z-20 px-4 pb-3">
       <div className="mx-auto flex max-w-[1120px] flex-wrap items-center gap-2 rounded-[14px] border border-[var(--c-border)] bg-[var(--c-card)] px-3 py-2.5" style={{ boxShadow: "0 -2px 8px -4px rgba(43,28,22,0.10), 0 8px 24px -12px rgba(43,28,22,0.18)" }}>
-        <span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Compare</span>
+        <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Compare</span>
         <div className="flex min-w-0 flex-wrap items-center gap-1.5">
           {shown.map((it) => (
-            <span key={it.id} className="inline-flex items-center gap-1 rounded-full border border-[var(--c-border)] bg-[var(--c-soft)] py-0.5 pl-2.5 pr-1 text-[11.5px] text-[var(--c-ink2)]">
+            <span key={it.id} className="inline-flex items-center gap-1 rounded-full border border-[var(--c-border)] bg-[var(--c-soft)] py-0.5 pl-2.5 pr-1 text-[length:var(--t-micro)] text-[var(--c-ink2)]">
               <span className="max-w-[8rem] truncate">{it.name}</span>
               <button type="button" onClick={() => onRemove?.(it.id)} aria-label={`Remove ${it.name}`} className="grid h-4 w-4 place-items-center rounded-full text-[var(--c-muted)] hover:bg-[var(--c-soft2)] hover:text-[var(--c-ink)]">{"×"}</button>
             </span>
           ))}
-          {overflow > 0 ? <span className="rounded-full bg-[var(--c-soft2)] px-2 py-0.5 text-[11px] text-[var(--c-muted)]">+{overflow} more</span> : null}
+          {overflow > 0 ? <span className="rounded-full bg-[var(--c-soft2)] px-2 py-0.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">+{overflow} more</span> : null}
         </div>
         <div className="ml-auto flex items-center gap-2">
-          <button type="button" onClick={onClear} className="text-[11.5px] text-[var(--c-muted)] hover:text-[var(--c-ink2)]">Clear</button>
-          <button type="button" onClick={onCompare} disabled={items.length < 2 || items.length > max} className="rounded-full px-4 py-1.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-40" style={{ background: "var(--terra-text)" }}>Compare {items.length}</button>
+          <button type="button" onClick={onClear} className="text-[length:var(--t-micro)] text-[var(--c-muted)] hover:text-[var(--c-ink2)]">Clear</button>
+          <button type="button" onClick={onCompare} disabled={items.length < 2 || items.length > max} className="rounded-full px-4 py-1.5 text-[length:var(--t-body)] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-40" style={{ background: "var(--terra-text)" }}>Compare {items.length}</button>
         </div>
       </div>
     </div>
@@ -538,13 +538,13 @@ export function WinnerCard({ kicker, winner, keptPct, keptLabel = "owner keeps",
   return (
     <div className="overflow-hidden rounded-[14px] border border-[var(--terra-border)] bg-[var(--c-card)]">
       <div className="p-5 md:p-6">
-        <div className="mb-1.5 flex items-center gap-2"><Ico id={icon} tone="terra" /><span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--terra-text)]">{kicker}</span></div>
+        <div className="mb-1.5 flex items-center gap-2"><Ico id={icon} tone="terra" /><span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--terra-text)]">{kicker}</span></div>
         <div className="grid gap-5 md:grid-cols-[1.5fr_1fr] md:items-end">
           <div>
             <h2 data-typography="custom" className="text-2xl font-bold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2rem]">{winner}</h2>
-            <p className="mt-2 max-w-prose text-[13.5px] leading-snug text-[var(--c-ink2)]">{why}</p>
+            <p className="mt-2 max-w-prose text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{why}</p>
             {theCatch ? (
-              <p className="mt-2.5 flex items-start gap-1.5 rounded-lg border border-[var(--c-border)] bg-[var(--c-soft)] px-3 py-2 text-[12.5px] leading-snug text-[var(--c-ink2)]">
+              <p className="mt-2.5 flex items-start gap-1.5 rounded-lg border border-[var(--c-border)] bg-[var(--c-soft)] px-3 py-2 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">
                 <span className="mt-0.5 shrink-0 text-[var(--terra-text)]"><AtlasIcon id="honest-take" size={14} /></span>
                 <span><span className="font-semibold text-[var(--c-ink)]">The catch. </span>{theCatch}</span>
               </p>
@@ -557,7 +557,7 @@ export function WinnerCard({ kicker, winner, keptPct, keptLabel = "owner keeps",
       </div>
       <div className="grid grid-cols-3 gap-px border-t border-[var(--terra-border)]" style={{ background: "var(--terra)" }}>
         {strip.map((s) => (
-          <div key={s.label} className="bg-[var(--c-card)] px-3 py-2.5"><Fig className="text-[15px] text-[var(--c-ink)]">{s.value}</Fig><div className="text-[9px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{s.label}</div></div>
+          <div key={s.label} className="bg-[var(--c-card)] px-3 py-2.5"><Fig className="text-[length:var(--t-lead)] text-[var(--c-ink)]">{s.value}</Fig><div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{s.label}</div></div>
         ))}
       </div>
     </div>
@@ -581,10 +581,10 @@ export function Podium({ items, keptLabel = "kept" }: { items: [PodiumDatum, Pod
         return (
           <Tag key={t.id} href={t.href} className={`cityhov block rounded-[12px] border bg-[var(--c-card)] p-4 ${first ? "border-[var(--terra-border)]" : "border-[var(--c-border)]"}`} style={first ? { background: "linear-gradient(180deg,#ffffff,#fffaf8)" } : undefined}>
             <div className="mb-2 flex items-center justify-between">
-              <span className={`fig text-[13px] font-semibold ${first ? "text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>#{i + 1}</span>
-              {first ? <span className="rounded-full bg-[var(--terra-soft)] px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-[var(--terra-text)]">top pick</span> : null}
+              <span className={`fig text-[length:var(--t-body)] font-semibold ${first ? "text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>#{i + 1}</span>
+              {first ? <span className="rounded-full bg-[var(--terra-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--terra-text)]">top pick</span> : null}
             </div>
-            <div className="text-[14px] font-semibold text-[var(--c-ink)]">{t.name}</div>
+            <div className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{t.name}</div>
             <div className="mt-2"><Stat size="focal" accent={first} value={`${t.keptPct}%`} sub={t.sub ?? keptLabel} /></div>
             <div className="mt-2.5" style={first ? undefined : { filter: "grayscale(1)", opacity: 0.85 }}><MiniBar pct={(t.keptPct / (leader || 1)) * 100} /></div>
           </Tag>
@@ -620,8 +620,8 @@ export function MarginIndexBadge({ score, size = 62, label = "Margin Index", sub
       </svg>
       {showLabel ? (
         <span className="leading-tight">
-          <span className="block text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--c-ink)]">{label}</span>
-          <span className="block text-[10px] text-[var(--c-muted)]">{sub}</span>
+          <span className="block text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.08em] text-[var(--c-ink)]">{label}</span>
+          <span className="block text-[length:var(--t-micro)] text-[var(--c-muted)]">{sub}</span>
         </span>
       ) : null}
     </div>
