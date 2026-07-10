@@ -183,21 +183,23 @@ export function SpreadStrip({ p10, p50, p90, fmt, neutral = false }: { p10: numb
     </div>
   );
 }
-/* Movement , chapter opener. Rulebook v2 S1/S2 (2026-07-09, founder decision b): the
- * header is index + eyebrow + heading ONLY , index + icon + eyebrow + heading read as
- * oversaturated, so the icon tile is gone. `icon` stays in the prop type as a tolerated
- * no-op (accepted, never rendered) so the ~140 existing call sites keep compiling without
- * a page-by-page edit; do not delete it. The accent NEVER sits on the eyebrow text (the
- * founder reads terra-on-top as "orange on top") , the leading .fig section index (muted
- * grey) is now the only accent carrier. Eyebrow is neutral. The heading is de-bolded
- * (decision b: semibold 20/24px, not bold 24/30px , S1 flagged the old size/weight as
- * too loud to read as professional). */
-export function Movement({ eyebrow, heading, sample, icon, index }: { eyebrow: string; heading: string; sample?: boolean; icon?: AtlasIconId; index?: string }) {
+/* Movement , chapter opener. Rulebook v2 corrections (2026-07-10, reverses S2 decision b):
+ * the header is the muted .fig chapter INDEX plus ONE plain heading ONLY , no eyebrow. On
+ * the built pages the eyebrow was always a vaguer restatement of its heading ("Trades and
+ * character" sitting over "The trades and the character"), a second label carrying no
+ * information, so it is deleted from render here. `eyebrow` is now OPTIONAL in the prop
+ * type and stays as a tolerated no-op (accepted, never rendered) so the ~140 existing call
+ * sites keep compiling without a page-by-page edit; do not delete it from the type. `icon`
+ * remains a no-op for the same reason (index + icon + heading still reads as oversaturated).
+ * The accent NEVER sits on the heading text (the founder reads terra-on-top as "orange on
+ * top") , the leading .fig index (muted grey) is the only accent carrier. The heading stays
+ * de-bolded (semibold 20/24px, not bold 24/30px , too loud to read as professional). */
+export function Movement({ eyebrow, heading, sample, icon, index }: { eyebrow?: string; heading: string; sample?: boolean; icon?: AtlasIconId; index?: string }) {
+  void eyebrow;
   return (
     <div className="mb-3 mt-12">
       <div className="mb-1.5 flex items-center gap-2.5">
         {index ? <span className="fig text-[length:var(--t-body)] font-semibold text-[var(--c-muted)]">{index}</span> : null}
-        <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--c-ink2)]">{eyebrow}</span>
         {sample ? <SampleTag /> : null}
       </div>
       <h2 data-typography="custom" className="text-[length:var(--t-sub)] font-semibold tracking-tight text-[var(--c-ink)]">{heading}</h2>
@@ -445,21 +447,23 @@ export function CatRows({ rows }: { rows: Array<[string, any]> }) {
 
 /* ===== SECTION ANATOMY PRIMITIVES (WI-3) ===== */
 
-/* Rail , the section opener: kicker + one-glance verdict line. Replaces the Head-then-grid
- * pattern. Rulebook v2 S2: the icon is gone here too (this wave only removes Rail's icon ,
- * the verdict slot is the sanctioned answer-first line, decision f, and stays). `icon` and
- * `tone` stay in the prop type as tolerated no-ops (accepted, never rendered) so existing
- * call sites keep compiling. The verdict is plain present-tense English, no number-restating,
- * hard-capped at one sentence , fix multi-sentence offenders at the call site, not here. */
+/* Rail , the section opener: kicker only, a plain title line. Rulebook v2 corrections
+ * (2026-07-10, reverses decision f): NO section header states a conclusion , the verdict
+ * slot decision f called the sanctioned answer-first line is deleted from render. A header
+ * says WHAT the section is; the finding lives ON the visual (a chart marker, a struck
+ * figure, the focal number), never in a prose sentence under the title. `icon` and `tone`
+ * stay in the prop type as tolerated no-ops (accepted, never rendered) so existing call
+ * sites keep compiling; `verdict` joins them as a no-op for the same reason , do not delete
+ * any of the three from the type. */
 export function Rail({ icon, kicker, verdict, tone = "ink" }: { icon?: AtlasIconId; kicker: string; verdict?: React.ReactNode; tone?: "ink" | "terra" }) {
   void icon;
   void tone;
+  void verdict;
   return (
     <div className="mb-3">
       <div className="mb-1.5 flex items-center gap-2">
         <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{kicker}</span>
       </div>
-      {verdict != null ? <p className="text-[length:var(--t-lead)] font-medium leading-snug text-[var(--c-ink)]">{verdict}</p> : null}
     </div>
   );
 }
