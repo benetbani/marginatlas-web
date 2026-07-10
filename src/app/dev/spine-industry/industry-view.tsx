@@ -27,7 +27,8 @@
  */
 import * as React from "react";
 import { spineIndustrySeed } from "@/lib/spine-seeds";
-import { Fig, Meter, Bullets, InfoTip, InlineDisclosure, Movement, Box, Rail, Spark, Timeline, StackBar, Full, Even, WideRail, Narrow, TERRA, TRACK, usd, type TLPhase, type TLNode } from "@/components/spine/kit";
+import { timeToOpenWeeks } from "@/lib/markets/opening_archetypes";
+import { Fig, Meter, Bullets, InfoTip, InlineDisclosure, Movement, Box, Rail, Spark, PhaseBar, StackBar, Full, Even, WideRail, Narrow, TERRA, TRACK, usd } from "@/components/spine/kit";
 import { AtlasMark } from "@/components/spine/marks";
 import { WherePaysExplorer } from "./where-pays";
 import { MarginLadder, SurvivalCurve, SeasonRibbon, RangeBracket, CountFig } from "./forms";
@@ -49,7 +50,6 @@ function glossTerm(text: string | undefined, term: string, gloss: string): React
   return <>{text.slice(0, end)}<InfoTip gloss={gloss} />{text.slice(end)}</>;
 }
 const GLOSS_COVERS = "Seated customers served; a table of four is four covers.";
-const GLOSS_ROTA = "The staff shift plan.";
 const GLOSS_PRIME_COST = "Food and labour together, the two big controllable costs.";
 const GLOSS_UTILISATION = "Share of a typical day's trade.";
 
@@ -425,23 +425,32 @@ function BreakEven({ d }: { d: any }) {
 }
 
 /* ============================================================
- * RAMP , the realistic first year on one time axis (Timeline, one use).
- * decision: how long to break even, and the cash gap to survive. focal: the Timeline.
- * No honest ramp source at industry altitude, so it OMITS on real-data promotion.
- * width: Full (T1). terracotta: the break-even node (atom-owned). */
+ * RAMP , the phase bar (rulebook v2 S10/D4, founder decision a, 2026-07-09). The
+ * placeholder month-by-month milestone Timeline is scrapped (its invented nodes ,
+ * "Full rota on", "Cash gap opens", "Cash gap closes", "Year one done" , were
+ * modeled narrative, not measured weeks). Replaced by PhaseBar, fed by the only
+ * two honest anchors: the modeled time to open (opening_archetypes, place-
+ * invariant) and the seed's own ramp_to_breakeven_months (counted from week 0,
+ * never from opening).
+ * decision: how long to break even. focal: the phase bar's break-even tick.
+ * Self-omits when the seed carries no break-even anchor.
+ * width: Full (T1). terracotta: the break-even tick (PhaseBar-owned). */
+function breakevenWeekFor(d: any): number | null {
+  const rampMonths = d?.first_year?.ramp_to_breakeven_months;
+  return typeof rampMonths === "number" && Number.isFinite(rampMonths) && rampMonths > 0
+    ? Math.round(rampMonths * (52 / 12))
+    : null;
+}
 function Ramp({ d }: { d: any }) {
-  const fy = d.first_year ?? {};
-  const phases: TLPhase[] = (fy.phases ?? []) as TLPhase[];
-  // P5 overlap fix: the two ABOVE-axis node subs ("Cash gap opens" / "Year one done")
-  // print over the phase-band captions, so drop those two subs (their claims already
-  // live on the read line and the survival chapter). The below-axis subs stay.
-  const NO_SUB = new Set(["Cash gap opens", "Year one done"]);
-  const nodes: TLNode[] = ((fy.nodes ?? []) as TLNode[]).map((n) => (NO_SUB.has(n.label) ? { ...n, sub: undefined } : n));
-  if (!nodes.length) return null;
+  const breakevenWeek = breakevenWeekFor(d);
+  if (breakevenWeek == null) return null;
+  const openWeek = timeToOpenWeeks(d.meta?.id ?? d.meta?.industry ?? null);
   return (
     <Full>
-      <Rail icon="first-year" kicker="The first year, month by month" verdict={glossTerm(fy.verdict, "rota", GLOSS_ROTA)} />
-      <Timeline span={fy.span ?? 52} unit={fy.unit ?? "week"} phases={phases} nodes={nodes} startLabel="open" read={fy.note} />
+      <Rail kicker="Getting to break-even" />
+      <Box>
+        <PhaseBar openWeek={openWeek} breakevenWeek={breakevenWeek} />
+      </Box>
     </Full>
   );
 }
@@ -680,7 +689,7 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
   const subCount = deriveSubtypes(d).length;
   const hasMoneySplit = (d.money_split?.items ?? []).length > 0;
   const hasBreakEven = typeof d.cost_structure?.breakeven_utilization_pct === "number";
-  const hasRamp = (d.first_year?.nodes ?? []).length > 0;
+  const hasRamp = breakevenWeekFor(d) != null;
   const o = d.operator ?? {};
   const hasOperator = typeof o.capital_to_open_usd === "number" || typeof o.survival_1yr_pct === "number" || (typeof o.sale_multiple_low === "number" && typeof o.sale_multiple_high === "number");
   const hasPayback = typeof d.payback?.payback_months === "number";

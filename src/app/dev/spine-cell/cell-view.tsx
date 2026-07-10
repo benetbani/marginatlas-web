@@ -14,7 +14,8 @@
  *   #4 dot plot on a shared labeled scale (EaseScale + endLabels): WhoSuits x1, Risks x1 = 2 AT CAP
  *   #5 lollipop on a drawn track: CostToOpen line items x1, Related trades (ref tick at 7%) x1 = 2 AT CAP
  *   #7 line/area (zero baseline): SurvivalSlope x1 = 1; zero-baseline monthly COLUMNS: Seasonality x1 = 1
- *   #8 timeline: FirstYear x1 = 1
+ *   #8 phase bar (rulebook v2 S10, two-anchor open/break-even, replaces the placeholder
+ *      month-by-month Timeline): Ramp x1 = 1
  *   #9 editorial table (in-cell bars on a DRAWN CellScaleBar domain): Nearby x1 = 1
  *   #12 waterfall (gross -> labeled decrements -> net, from the $100 split): OwnerKeeps x1 = 1 (max 1)
  *   #13 spread strip: masthead turnover p10/p50/p90 x1 = 1
@@ -24,11 +25,11 @@
  * Width tiers per WI-4; the money chapter is weighted heaviest (control room + wide reads).
  */
 import * as React from "react";
-import { spineCellSeed } from "@/lib/spine-seeds";
+import { spineCellSeed, spineIndustrySeed } from "@/lib/spine-seeds";
+import { timeToOpenWeeks } from "@/lib/markets/opening_archetypes";
 import {
-  Fig, Box, Rail, Movement, Row, Full, WideRail, EaseScale, StackBar, Timeline, InfoTip, TERRA, TRACK,
+  Fig, Box, Rail, Movement, Row, Full, WideRail, EaseScale, StackBar, PhaseBar, InfoTip, TERRA, TRACK,
 } from "@/components/spine/kit";
-import type { TLPhase, TLNode } from "@/components/spine/kit";
 import { Masthead } from "./masthead";
 import { FormatPicker, FormatProvider } from "./format-picker";
 import { OwnerKeeps, BreakEven, CostToOpen } from "./money-chapter";
@@ -209,18 +210,46 @@ function Seasonality({ d }: { d: any }) {
   );
 }
 
-/* FirstYear , WI-5 brief:
- * decision: when the year stops bleeding. Number: the break-even week. focal: the 52-week timeline.
- * width: Full. terracotta target: the break-even node (ONLY if the seed measured one, never forced). */
-function FirstYear({ d }: { d: any }) {
-  const fy = d.first_year ?? {};
-  const ms: any[] = fy.milestones ?? [];
-  if (ms.length === 0) return null;
-  // Honest: the break-even node exists ONLY where the seed flags it. Never force one.
-  const nodes: TLNode[] = ms.map((mi) => ({ at: mi.week, label: mi.label, kind: mi.kind === "breakeven" ? "breakeven" : "normal" }));
-  const phases: TLPhase[] = (fy.phases ?? []).map((p: any) => [p.label, p.from, p.to] as TLPhase);
-  const span = Math.max(52, ...nodes.map((n) => n.at));
-  return <Timeline span={span} unit="week" phases={phases} nodes={nodes} read={fy.read} startLabel="wk 0" />;
+/* Honest break-even week for this cell's trade, counted from week 0 (never from
+ * opening): the bundled industry seed's own ramp_to_breakeven_months, converted
+ * to weeks. The cell seed carries no break-even figure of its own (its old
+ * first_year block was a fully invented milestone list, scrapped under
+ * rulebook v2 S10/D4); the industry altitude is the one honest source for this
+ * figure, and ramp_to_breakeven_months is currently bundled for exactly ONE
+ * trade (restaurants). The ramp figure is an industry-altitude fact and must
+ * NEVER be borrowed across trades, so this cross-checks the cell's own
+ * meta.industry against the seed it would borrow from and returns null on any
+ * mismatch or on a cell with no honest ramp source , the same guard a real
+ * dental-practice or auto-repair cell hits today (no ramp seed exists for them
+ * yet), so the caller self-omits rather than show a different trade's number. */
+function breakevenWeekFor(d: any): number | null {
+  const industryId = d?.meta?.industry ?? null;
+  if (!industryId || industryId !== spineIndustrySeed?.meta?.industry) return null;
+  const rampMonths = spineIndustrySeed?.first_year?.ramp_to_breakeven_months;
+  return typeof rampMonths === "number" && Number.isFinite(rampMonths) && rampMonths > 0
+    ? Math.round(rampMonths * (52 / 12))
+    : null;
+}
+
+/* Ramp , rulebook v2 S10/D4, founder decision a (2026-07-09): the placeholder
+ * milestone-by-milestone launch Timeline is scrapped (its six weekly steps ,
+ * a lease/licence step, a fit-out completion, a hiring step, a soft-opening
+ * step, a break-even week, and a first-profit step , were all invented, none
+ * measured). Replaced by the ratified PhaseBar, fed by the only two honest
+ * anchors: the modeled time to open (opening_archetypes, place-invariant,
+ * resolves for every trade) and the modeled break-even week (industry seed's
+ * ramp_to_breakeven_months, from week 0). Self-omits when no break-even anchor
+ * resolves for this cell's trade , never forces a tick. */
+function Ramp({ d }: { d: any }) {
+  const breakevenWeek = breakevenWeekFor(d);
+  if (breakevenWeek == null) return null;
+  const openWeek = timeToOpenWeeks(d.meta?.industry ?? null);
+  return (
+    <Box className="celltop">
+      <Rail kicker="Getting to break-even" />
+      <PhaseBar openWeek={openWeek} breakevenWeek={breakevenWeek} />
+    </Box>
+  );
 }
 
 /* ================= CH5 , PLACE AND RIVALS ================= */
@@ -413,8 +442,8 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
 
   const hasSeasonality = Array.isArray(d.seasonality?.months) && d.seasonality.months.length >= 2;
   const hasRisks = Array.isArray(d.risks?.items) && d.risks.items.length > 0;
-  const hasFirstYear = Array.isArray(d.first_year?.milestones) && d.first_year.milestones.length > 0;
-  const showRunningChapter = hasSeasonality || hasRisks || hasFirstYear;
+  const hasRamp = breakevenWeekFor(d) != null;
+  const showRunningChapter = hasSeasonality || hasRisks || hasRamp;
 
   const hasNearby = Array.isArray(d.nearby?.places) && d.nearby.places.length > 0;
   const hasMyth = !!d.myth?.claim;
@@ -476,7 +505,7 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
         </>
       ) : null}
 
-      {/* Running it , Even (cost calendar reads) then Full timeline. London exemplar
+      {/* Running it , Even (cost calendar reads) then Full phase bar. London exemplar
           only; each section also self-omits on absent data. */}
       {showRunningChapter ? (
         <>
@@ -485,7 +514,7 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
             {hasSeasonality || hasRisks ? (
               <Row>{hasSeasonality ? <Seasonality d={d} /> : null}{hasRisks ? <Risks d={d} /> : null}</Row>
             ) : null}
-            {hasFirstYear ? <Full><FirstYear d={d} /></Full> : null}
+            {hasRamp ? <Full><Ramp d={d} /></Full> : null}
           </div>
         </>
       ) : null}

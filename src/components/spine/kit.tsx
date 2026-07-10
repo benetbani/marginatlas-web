@@ -356,7 +356,7 @@ export function KV({ k, v }: { k: string; v: React.ReactNode }) {
  * inside a caller's own wrapper, so the JSDoc rule on InlineDisclosure/Expand below remains
  * the real contract; this just catches the easy, common mistake. */
 const GRAPHIC_TYPES: ReadonlySet<unknown> = new Set([
-  Gauge, Donut, StackBar, Waterfall, SpreadStrip, EaseScale, Meter, SpectraTable, Spectrum, Timeline, Spark, Dots, MiniBar,
+  Gauge, Donut, StackBar, Waterfall, SpreadStrip, EaseScale, Meter, SpectraTable, Spectrum, Timeline, Spark, Dots, MiniBar, PhaseBar,
 ]);
 function assertNoGraphics(children: React.ReactNode, where: string) {
   if (process.env.NODE_ENV === "production") return;
@@ -652,5 +652,62 @@ export function Timeline({ span, unit, phases = [], nodes, read, startLabel }: {
 
       {read ? <div className="mt-3 line-clamp-2 border-t border-[var(--c-border)] pt-2.5 text-[12.5px] leading-snug text-[var(--c-ink2)]">{read}</div> : null}
     </Box>
+  );
+}
+
+/* ===== PHASE BAR (WI-6) , rulebook v2 S10/D1/D4, founder decision a (2026-07-09):
+ * the placeholder "first year, month by month" milestone Timeline is scrapped
+ * everywhere it appeared. It invented weekly milestones ("Lease + licence",
+ * "Soft opening", "First clean profit"...) that no seed could actually know. The
+ * ONLY two things a first-year read can honestly claim are WHEN the doors open
+ * (opening_archetypes.timeToOpenWeeks, modeled, place-invariant) and WHEN the
+ * trade crosses break-even (a seed's own ramp_to_breakeven_months, counted from
+ * week 0, never from opening). PhaseBar draws ONE bar on a week axis with up to
+ * three segments derived ONLY from those two anchors , no milestone list, no
+ * invented weeks in between:
+ *   Fit-out  , week 0 to openWeek (omitted when openWeek is null/0)
+ *   Ramp     , openWeek to breakevenWeek
+ *   Profit   , breakevenWeek to the axis end
+ * SELF-OMITS (the D-rule: no anchor, no bar) when breakevenWeek is not a finite
+ * positive number , a page with no honest break-even source renders nothing
+ * rather than fabricate a tick. The break-even tick is the ONE terracotta mark in
+ * the box (rationed accent); the three segments stay neutral, darkest to
+ * lightest, on EXISTING kit tokens only (var(--c-line-strong) / var(--c-border) /
+ * TRACK , no new hex), so the read is schematic, not a chart that needs a
+ * caption. When breakevenWeek falls beyond horizonWeeks
+ * the axis EXTENDS to meet it and the axis-end label states the true week , a
+ * tick never draws past the drawn axis, and the bar never clips a late break-even
+ * into a comforting lie. Segment labels + week ranges render as a swatch legend
+ * below the bar (StackBar's legend pattern), so the read never needs prose. */
+export function PhaseBar({ openWeek, breakevenWeek, horizonWeeks = 52 }: { openWeek: number | null; breakevenWeek: number | null; horizonWeeks?: number }) {
+  if (breakevenWeek == null || !Number.isFinite(breakevenWeek) || breakevenWeek <= 0) return null;
+  const hasOpen = typeof openWeek === "number" && Number.isFinite(openWeek) && openWeek > 0;
+  const openAt = hasOpen ? Math.min(openWeek as number, breakevenWeek) : 0;
+  const horizon = Math.max(horizonWeeks, breakevenWeek);
+  const pct = (w: number) => Math.max(0, Math.min(100, (w / horizon) * 100));
+  const wk = (n: number) => `wk ${Math.round(n)}`;
+  const segs: Array<{ label: string; from: number; to: number; color: string }> = [];
+  if (openAt > 0) segs.push({ label: "Fit-out", from: 0, to: openAt, color: "var(--c-line-strong)" });
+  if (breakevenWeek > openAt) segs.push({ label: "Ramp", from: openAt, to: breakevenWeek, color: "var(--c-border)" });
+  if (horizon > breakevenWeek) segs.push({ label: "Profit", from: breakevenWeek, to: horizon, color: TRACK });
+  const tickPct = pct(breakevenWeek);
+  const tickAnchor = tickPct < 14 ? "0%" : tickPct > 86 ? "-100%" : "-50%";
+  const ariaLabel = `${segs.map((s) => `${s.label} ${wk(s.from)} to ${wk(s.to)}`).join(", ")}; break-even ${wk(breakevenWeek)}`;
+  return (
+    <div>
+      <div className="relative pt-6">
+        <span className="absolute top-0 whitespace-nowrap text-[11px] font-semibold text-[var(--terra-text)]" style={{ left: `${tickPct}%`, transform: `translateX(${tickAnchor})` }}>Break-even, week {Math.round(breakevenWeek)}</span>
+        <div className="relative h-3 overflow-hidden rounded-full border border-[var(--c-border)]" role="img" aria-label={ariaLabel}>
+          <div className="flex h-full w-full">
+            {segs.map((s) => <div key={s.label} className="h-full border-r border-white/70 last:border-0" style={{ width: `${pct(s.to - s.from)}%`, background: s.color }} />)}
+          </div>
+          <span className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${tickPct}%`, background: TERRA, boxShadow: "0 0 0 1px var(--c-border)" }} />
+        </div>
+        <div className="mt-1.5 flex justify-between text-[10px] uppercase tracking-wide text-[var(--c-muted)]"><span>0</span><span>week {Math.round(horizon)}</span></div>
+      </div>
+      <div className="mt-2.5 flex flex-wrap gap-x-4 gap-y-1 border-t border-[var(--c-border)] pt-2.5">
+        {segs.map((s) => <span key={s.label} className="inline-flex items-center gap-1.5 text-[11px] text-[var(--c-ink2)]"><span className="h-2.5 w-2.5 rounded-sm" style={{ background: s.color }} />{s.label} <Fig className="text-[var(--c-ink)]">{wk(s.from)}-{wk(s.to)}</Fig></span>)}
+      </div>
+    </div>
   );
 }
