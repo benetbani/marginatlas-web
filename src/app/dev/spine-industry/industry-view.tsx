@@ -28,7 +28,7 @@
 import * as React from "react";
 import { spineIndustrySeed } from "@/lib/spine-seeds";
 import { timeToOpenWeeks } from "@/lib/markets/opening_archetypes";
-import { Fig, Meter, Bullets, InfoTip, InlineDisclosure, Movement, Box, Rail, Spark, PhaseBar, StackBar, Full, Even, WideRail, Narrow, TERRA, TRACK, usd } from "@/components/spine/kit";
+import { Fig, Meter, Bullets, InfoTip, InlineDisclosure, Movement, Box, Rail, Spark, PhaseBar, StackBar, MiniBar, Full, Even, WideRail, Narrow, TERRA, TRACK, usd } from "@/components/spine/kit";
 import { AtlasMark } from "@/components/spine/marks";
 import { WherePaysExplorer } from "./where-pays";
 import { MarginLadder, SurvivalCurve, SeasonRibbon, RangeBracket, CountFig } from "./forms";
@@ -88,22 +88,45 @@ function Masthead({ d }: { d: any }) {
   );
 }
 
-/* VERDICT LEDE , the single editorial beat (subhead folded in).
- * decision-support: why the model is hard, in one voice. focal: the pull-quote.
- * width: Narrow (T5), air around one idea. terracotta: the attribution dot only. */
+/* VERDICT LEDE , the single editorial beat (subhead folded in). Rulebook v2 S8: no
+ * centred island with blank sides , the quote sits Full-width in its own card beside
+ * the shape that shows WHY the model is hard: the same variable-cost group MoneySplit
+ * charts later (Ch.04), read small here as evidence for the quote instead of floating
+ * alone. decision-support: why the model is hard, in one voice + one shape.
+ * width: Full (T1). terracotta: the kept bar only. */
 function VerdictLede({ d }: { d: any }) {
   const v = d.verdict ?? {};
   if (!v.close) return null;
+  const ms = d.money_split ?? {};
+  const items: any[] = ms.items ?? [];
+  const variablePct = items.filter((i) => i.group === "variable").reduce((a, i) => a + i.pct, 0);
+  const keptPct = items.filter((i) => i.group === "kept").reduce((a, i) => a + i.pct, 0);
+  const hasCostShape = variablePct > 0 && keptPct > 0;
   return (
-    <Narrow>
-      <figure>
-        <blockquote className="text-[length:var(--t-sub)] font-medium leading-snug text-[var(--c-ink)] md:text-[length:var(--t-sub)]">{v.close}</blockquote>
-        <figcaption className="mt-3 flex items-start gap-2 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">
-          <span className="mt-[7px] inline-block h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: TERRA }} aria-hidden />
-          <span>What the winners are actually good at.</span>
-        </figcaption>
-      </figure>
-    </Narrow>
+    <Full>
+      <Box className="flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-8">
+        <figure className="min-w-0 flex-1">
+          <blockquote className="text-[length:var(--t-sub)] font-medium leading-snug text-[var(--c-ink)]">{v.close}</blockquote>
+          <figcaption className="mt-3 flex items-start gap-2 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">
+            {/* neutral, not terracotta , the kept bar beside this is the box's one accent (rule: terracotta once per box) */}
+            <span className="mt-[7px] inline-block h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: "var(--c-line-strong)" }} aria-hidden />
+            <span>What the winners are actually good at.</span>
+          </figcaption>
+        </figure>
+        {hasCostShape ? (
+          <div className="w-full shrink-0 space-y-2.5 sm:w-[160px]">
+            <div>
+              <MiniBar pct={variablePct} />
+              <div className="mt-1 flex items-baseline justify-between text-[length:var(--t-micro)] text-[var(--c-muted)]"><span>variable costs</span><Fig className="text-[var(--c-ink)]">{variablePct}%</Fig></div>
+            </div>
+            <div>
+              <MiniBar pct={keptPct} accent />
+              <div className="mt-1 flex items-baseline justify-between text-[length:var(--t-micro)] text-[var(--c-muted)]"><span>kept</span><Fig className="text-[var(--terra-text)]">{keptPct}%</Fig></div>
+            </div>
+          </div>
+        ) : null}
+      </Box>
+    </Full>
   );
 }
 
@@ -270,7 +293,8 @@ function SubtypeDrill({ d }: { d: any }) {
   return (
     <Full>
       <Box>
-        <Rail icon="subtype" kicker="The subtypes" verdict={d.subtypes?.verdict} />
+        <Rail icon="subtype" kicker="The subtypes" />
+        <p className="-mt-1 mb-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">The registered segment only: street and informal operators run on different economics and are not counted here.</p>
         <div className={`grid ${cols} items-end gap-3 border-b border-[var(--c-border)] px-2 pb-1.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]`}>
           <span>Format</span>
           <span aria-hidden />
@@ -592,31 +616,74 @@ function Seasonality({ d }: { d: any }) {
   );
 }
 
-/* CAVEATS , folk-myths debunked (the honesty moat, fully free). Reads the seed shape
- * { myths: string[], honest_take } and renders the debunk lines plus one interpretive lead.
- * decision-support: the comfortable stories are wrong. focal: the honest-take lead.
+/* ClaimRow , one claim-vs-reality pair (rulebook v2 S12 rework of the myth listicle):
+ * the folklore claim struck through as plain text, the real figure beside it, en route
+ * to a schematic device instead of a bullet list or a "myth busted" game-show tag. Both
+ * fields the two call sites below feed it are real, already-measured page fields
+ * (survival.yr1_pct, margins.gross_pct/net_pct), never a fabricated claim number , the
+ * struck side stays a QUOTED PHRASE, not an invented statistic. `accent` opts the real
+ * figure into terracotta; the page's other ClaimRow stays ink (terracotta once per box). */
+function ClaimRow({ claim, real, realLabel, accent = false }: { claim: string; real: string; realLabel: string; accent?: boolean }) {
+  return (
+    <div className="grid grid-cols-[1fr_auto] items-center gap-3 rounded-md border border-[var(--c-border)] px-3 py-2.5">
+      <span className="text-[length:var(--t-body)] leading-snug text-[var(--c-muted)] line-through decoration-2 decoration-[var(--c-line-strong)]">{claim}</span>
+      <div className="text-right">
+        <Fig className={`block text-[20px] leading-none ${accent ? "text-[var(--terra-text)]" : "font-bold text-[var(--c-ink)]"}`}>{real}</Fig>
+        <div className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{realLabel}</div>
+      </div>
+    </div>
+  );
+}
+
+/* CAVEATS , claim vs. reality (rulebook v2 S12: the old "3 myths + honest take" bullet
+ * list was named a schematic cliche). Two universal claim/reality pairs carry the first
+ * view, each backed by a real field measured elsewhere on the page (survival.yr1_pct,
+ * margins.gross_pct/net_pct); the seed's own myth sentences + honest_take move into a
+ * disclosure , supporting prose, never the first-view wall of text (S5/S6).
+ * decision-support: the comfortable stories do not survive the maths.
  * width: the rail half of a WideRail (T2), beside the season ribbon.
- * terracotta: none on the surface (the section eyebrow icon carries it). */
+ * terracotta: the survival reality figure only (one accent; the margin row stays ink). */
 function Caveats({ d }: { d: any }) {
   const c = d.caveats ?? {};
   const myths: string[] = c.myths ?? [];
-  if (!myths.length && !c.honest_take) return null;
+  const s = d.survival ?? {};
+  const m = d.margins ?? {};
+  const hasSurvivalClaim = typeof s.yr1_pct === "number";
+  const hasMarginClaim = typeof m.gross_pct === "number" && typeof m.net_pct === "number";
+  if (!hasSurvivalClaim && !hasMarginClaim && !myths.length && !c.honest_take) return null;
   return (
     <Box>
-      <Rail icon="myth-reality" tone="terra" kicker="What people get wrong" verdict="The comfortable stories about this trade do not survive the maths." />
-      {/* kit-Bullets markup, rendered locally so the "prime cost" jargon can carry its
-          InfoTip gloss at first use (glossTerm no-ops on myths that never say it) */}
-      {myths.length ? (
-        <ul className="space-y-2">
-          {myths.map((t, i) => (
-            <li key={i} className="relative pl-4 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">
-              <span className="absolute left-0 top-[7px] h-1.5 w-1.5 rounded-full" style={{ background: "#c9c9c9" }} />
-              {glossTerm(t, "prime cost", GLOSS_PRIME_COST)}
-            </li>
-          ))}
-        </ul>
+      <Rail icon="myth-reality" tone="terra" kicker="What people get wrong" />
+      {(hasSurvivalClaim || hasMarginClaim) ? (
+        <div className="space-y-2">
+          {hasSurvivalClaim ? (
+            <ClaimRow claim='"most fail within a year"' real={`${s.yr1_pct}%`} realLabel="actually trade past year one" accent />
+          ) : null}
+          {hasMarginClaim ? (
+            <ClaimRow claim='"a fat gross margin means good profit"' real={`${m.net_pct}%`} realLabel="kept, after the bills that quote does not mention" />
+          ) : null}
+        </div>
       ) : null}
-      {c.honest_take ? <p className="mt-3 border-t border-[var(--c-border)] pt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{c.honest_take}</p> : null}
+      {/* kit-InlineDisclosure markup: the seed's own myth sentences + honest_take, moved
+          out of the first view (S5/S6, never a graphic hidden here , see kit.tsx assertNoGraphics).
+          The "prime cost" jargon still carries its InfoTip gloss at first use. */}
+      {(myths.length || c.honest_take) ? (
+        <InlineDisclosure name="myths-full" summary="The claims, in full" className={(hasSurvivalClaim || hasMarginClaim) ? "group mt-4 border-t border-[var(--c-border)] pt-3" : "group mt-3"}>
+          <div className="space-y-2.5">
+            {myths.length ? (
+              <ul className="space-y-2">
+                {myths.map((t, i) => (
+                  <li key={i} className="relative pl-4 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">
+                    <span className="absolute left-0 top-[7px] h-1.5 w-1.5 rounded-full" style={{ background: "#c9c9c9" }} />
+                    {glossTerm(t, "prime cost", GLOSS_PRIME_COST)}
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+            {c.honest_take ? <p className="text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{c.honest_take}</p> : null}
+          </div>
+        </InlineDisclosure>
+      ) : null}
     </Box>
   );
 }
@@ -646,7 +713,7 @@ function Close({ d }: { d: any }) {
   return (
     <Full>
       <Box>
-        <Rail icon="bookmark" kicker="The close" verdict={d.close?.verdict} />
+        <Rail icon="bookmark" kicker="The close" />
         {recap.length ? (
           <div className={`grid gap-4 ${recapCols}`}>
             {recap.map(([fig, label, accent], i) => (
@@ -715,7 +782,7 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
       </> : null}
 
       {subCount > 0 ? <>
-        <Movement index="03" eyebrow="The subtypes" heading={`One trade, ${COUNT_WORD[subCount] ?? subCount} different bets`} icon="subtype" />
+        <Movement index="03" heading="The formats, compared" icon="subtype" />
         <SubtypeDrill d={d} />
       </> : null}
 
@@ -741,7 +808,7 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
       </> : null}
 
       {hasWherePays || hasSeasonality || hasCaveats ? <>
-        <Movement index="06" eyebrow="Where it pays best" heading="The same trade, place by place" icon="where-it-pays" />
+        <Movement index="06" heading="Net margin by city" icon="where-it-pays" />
         <div className="space-y-6">
           <WherePaysExplorer d={d} />
           {hasSeasonality && hasCaveats
@@ -752,7 +819,7 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
         </div>
       </> : null}
 
-      <Movement index="07" eyebrow="The close" heading="The next move" icon="bookmark" />
+      <Movement index="07" heading="The next move" icon="bookmark" />
       <Close d={d} />
     </main>
   );

@@ -87,7 +87,7 @@ export function WherePaysExplorer({ d }: { d: any }) {
     <div className="w-full">
       <Box className="relative overflow-hidden">
         <div className="relative">
-          <Rail icon="where-it-pays" kicker="Where it pays best" verdict={d.where_pays?.verdict} />
+          <Rail icon="where-it-pays" kicker="Best net keep, by city" />
           <p className="-mt-1 mb-3 max-w-2xl text-[12.5px] text-[var(--c-ink2)]">{note}</p>
 
           {/* subtype filter (the client re-rank interaction). Hidden when no format
