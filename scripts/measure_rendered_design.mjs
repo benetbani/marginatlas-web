@@ -180,6 +180,10 @@ for (const [name] of PAGES) {
   const d = out[name]?.[1360];
   if (!d || d.error) {
     console.log(`${name.padEnd(9)} ERROR ${d?.error ?? "no data"}`);
+    // An errored page has NOT passed. It could not be measured, so it cannot be
+    // within budget. Counting it as a failure stops a dead dev server (or a
+    // runtime crash) from printing a false PASS.
+    failures.push(`${name}: could not render/measure (${d?.error ?? "no data"})`);
     continue;
   }
   console.log(
