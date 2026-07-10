@@ -125,7 +125,7 @@ export function FormatPicker({ d }: { d: any }) {
       <div className="relative">
         {/* chrome is ink: the rail icon, the hint pill and the tabs carry no terracotta ,
             the ONE accent in this box is the owner-keeps figure in the trio below. */}
-        <Rail icon="subtype" kicker="Pick the format you mean" verdict={st.thesis} />
+        <Rail icon="subtype" kicker="Pick the format you mean" />
         <p className="-mt-1 mb-4 flex flex-wrap items-center gap-2 text-[12.5px] text-[var(--c-ink2)]">
           <span>{st.hint}</span>
           <span className="inline-flex items-center gap-1 rounded-full border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[10.5px] font-semibold text-[var(--c-ink2)]">

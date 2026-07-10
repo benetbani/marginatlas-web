@@ -130,7 +130,7 @@ export function OwnerKeeps({ d }: { d: any }) {
   return (
     <Box className="md:flex-[3]">
       <div className="flex items-start justify-between gap-2">
-        <Rail icon="owner-keeps" kicker="What the owner keeps" verdict={d.owner?.surface_line} />
+        <Rail icon="owner-keeps" kicker="What the owner keeps" />
         <FormatTag />
       </div>
       {costs.length ? <SteppedWaterfall costs={costs} keep={keepPct} /> : null}
@@ -167,7 +167,7 @@ export function BreakEven({ d }: { d: any }) {
   return (
     <Box className="md:flex-[2]">
       <div className="flex items-center justify-between gap-2">
-        <Rail icon="break-even" kicker="When it clears costs" verdict={b.surface_line} />
+        <Rail icon="break-even" kicker="When it clears costs" />
         <FormatTag />
       </div>
       <div className="flex items-baseline gap-2">

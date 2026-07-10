@@ -28,7 +28,7 @@ import * as React from "react";
 import { spineCellSeed, spineIndustrySeed } from "@/lib/spine-seeds";
 import { timeToOpenWeeks } from "@/lib/markets/opening_archetypes";
 import {
-  Fig, Box, Rail, Movement, Row, Full, WideRail, EaseScale, StackBar, PhaseBar, InfoTip, TERRA, TRACK,
+  Fig, Box, Rail, Movement, Row, Full, WideRail, EaseScale, StackBar, PhaseBar, InfoTip, IndexBar, StruckLine, TERRA, TRACK,
 } from "@/components/spine/kit";
 import { Masthead } from "./masthead";
 import { FormatPicker, FormatProvider } from "./format-picker";
@@ -50,31 +50,35 @@ function CellStyles() {
 }
 
 /* ================= CH1 , THE VERDICT ================= */
-/* HonestTake , WI-3 brief:
- * decision: how hard this trade is to enter. Number: the break-in read (as a word) + the crowded proof (n_firms).
- * focal: the break-in verdict; the market density (18,000 firms) is the evidence, shown, not asserted.
- * width: Even half. terracotta target: none (ink evidence; the masthead owns screen one's accent budget).
- * The figure caption + consequence line state DIFFERENT things (dedupe, Final Ascent). */
+/* HonestTake , WI-3 brief (rulebook v2 corrections, 2026-07-10): the break-in
+ * VERDICT sentence and the crowded_line consequence are both DELETED (a Rail
+ * verdict is now a dead prop; no section header states a conclusion). The market
+ * density figure (n_firms) stands alone as the answer , how hard this trade is
+ * to enter, in one number, no prose defending it.
+ * focal: the n_firms figure. width: Even half. terracotta target: none (ink
+ * evidence; the masthead owns screen one's accent budget). */
 function HonestTake({ d }: { d: any }) {
-  const v = d.verdict ?? {};
   const n = d.headline?.n_firms;
   const tradeLower = (d.meta?.trade ?? "firms").toLowerCase();
   const hasN = typeof n === "number" && Number.isFinite(n);
   return (
     <Box className="celltop">
-      <Rail icon="honest-take" kicker="How hard to break in" verdict={v.break_in_line} />
+      <Rail icon="honest-take" kicker="How hard to break in" />
       {hasN ? (
         <div className="mt-1 flex items-baseline gap-2.5 border-t border-[var(--c-border)] pt-3">
           <Fig className="text-3xl text-[var(--c-ink)]">{n.toLocaleString()}</Fig>
           <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{tradeLower} already trade here.</span>
         </div>
       ) : null}
-      {v.crowded_line ? <div className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{v.crowded_line}</div> : null}
     </Box>
   );
 }
 
-/* MoneySplit , WI-3 brief:
+/* MoneySplit , WI-3 brief (rulebook v2 corrections, 2026-07-10): the Rail verdict
+ * and the two-sentence `read` are both DELETED; the 100%-stacked $100 bar plus its
+ * kept-slice legend already carries "two thirds is gone before rent". The one
+ * surviving line is a COMPUTED fact (the largest non-kept slice), not seed prose ,
+ * schematic, not editorial.
  * decision: where the money goes. Number: the kept slice (7%). focal: the 100%-stacked $100 bar.
  * width: Full (T1, the canonical cost-stack). terracotta target: the kept slice only.
  * StackBar's default HONESTY SORT does the work: size-descending, kept slice pinned last
@@ -83,12 +87,13 @@ function MoneySplit({ d }: { d: any }) {
   const items: any[] = d.money_split?.items ?? [];
   if (items.length === 0) return null;
   const segments = items.map((it) => ({ label: it.name, pct: it.pct, color: it.kept ? TERRA : "#c8c8c6", kept: !!it.kept }));
+  const leading = [...items].filter((it) => !it.kept).sort((a, b) => b.pct - a.pct)[0];
   return (
     <Box className="celltop">
-      <Rail icon="cost-breakdown" kicker="Where each $100 of sales goes" verdict={d.money_split?.surface_line} />
+      <Rail icon="cost-breakdown" kicker="Where each $100 of sales goes" />
       <StackBar segments={segments} ariaLabel={segments.map((p) => `${p.label} ${p.pct}%`).join(", ")} legend />
-      {d.money_split?.read ? (
-        <p className="mt-2 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{d.money_split.read}</p>
+      {leading ? (
+        <p className="mt-2 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{leading.name} is the single biggest slice, at {leading.pct}% of every $100.</p>
       ) : null}
     </Box>
   );
@@ -131,7 +136,7 @@ function Demand({ d }: { d: any }) {
   return (
     <WideRail>
       <Box className="celltop">
-        <Rail icon="daily-takings" kicker="When the revenue lands" verdict={dm.surface_line} />
+        <Rail icon="daily-takings" kicker="When the revenue lands" />
         <div className="mb-3 flex flex-wrap items-baseline gap-x-3">
           <Fig className="text-3xl text-[var(--c-ink)]">{(dm.covers_per_week ?? 0).toLocaleString()}</Fig>
           <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">covers<InfoTip gloss="One cover is one customer served; a table of four is four covers." /> a week at about <Fig className="text-[var(--c-ink)]">${dm.avg_spend_usd}</Fig> a head.</span>
@@ -151,23 +156,21 @@ function Demand({ d }: { d: any }) {
         <div className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">Share of the week's covers by daypart; the track is the full week.</div>
       </Box>
       <Box className="celltop">
-        <Rail icon="catchment" kicker="Who comes in, and how" verdict={dm.channel_line} />
+        <Rail icon="catchment" kicker="Who comes in, and how" />
         <StackBar segments={chSegs} sort={false} h="h-7" ariaLabel={chSegs.map((s) => `${s.label} ${s.pct}%`).join(", ")} legend />
-        {/* catchment , explicitly labeled an index, ranked descending, values shown */}
+        {/* catchment , the shared kit IndexBar (kind index: a 100-baseline tick, no
+            percent sign), so an index against a top-group baseline reads differently
+            in FORM from the true-percentage daypart bars above, not just by a label. */}
         <div className="mt-4 border-t border-[var(--c-border)] pt-3">
           <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Where the covers come from <span className="font-normal normal-case">({dm.catchment_unit})</span></div>
           <div className="space-y-2">
             {cat.map((c) => (
-              <div key={c.name} className="grid grid-cols-[130px_1fr_32px] items-center gap-3">
+              <div key={c.name} className="grid grid-cols-[130px_1fr] items-center gap-3">
                 <span className="min-w-0 truncate text-[length:var(--t-body)] text-[var(--c-ink2)]">{c.name}</span>
-                <span className="h-2 overflow-hidden rounded-full" style={{ background: TRACK }}>
-                  <span className="block h-full rounded-full" role="img" aria-label={`${c.name} index ${c.pct}`} style={{ width: `${c.pct}%`, background: "#c8c8c6" }} />
-                </span>
-                <Fig className="text-right text-[length:var(--t-body)] text-[var(--c-ink)]">{c.pct}</Fig>
+                <IndexBar value={c.pct} kind="index" />
               </div>
             ))}
           </div>
-          <div className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{dm.catchment_note}</div>
         </div>
       </Box>
     </WideRail>
@@ -175,10 +178,12 @@ function Demand({ d }: { d: any }) {
 }
 
 /* ================= CH4 , RUNNING IT ================= */
-/* Seasonality , WI-4 brief (re-visualed, Final Ascent):
+/* Seasonality , WI-4 brief (re-visualed, Final Ascent; rulebook v2 corrections
+ * 2026-07-10 drop the Rail verdict and the editorial "stays gentle" close , the
+ * zero-baseline shape already reads modest, so the caption states only the axis
+ * unit and the two named months, never a claim about the swing itself).
  * decision: how much the year swings. Number: the peak vs the trough. focal: 12 ZERO-baseline
- * monthly COLUMNS + a faint index-100 reference rule, so the modest swing READS modest and the
- * "gentle" caption and the shape agree. width: Even half. terracotta target: the December column only. */
+ * monthly COLUMNS + a faint index-100 reference rule. width: Even half. terracotta target: the December column only. */
 function Seasonality({ d }: { d: any }) {
   const m: number[] = d.seasonality?.months ?? [];
   if (m.length < 2) return null;
@@ -191,7 +196,7 @@ function Seasonality({ d }: { d: any }) {
   const Y = (v: number) => padTop + (1 - v / top) * (H - padTop - padBot);
   return (
     <Box className="celltop md:flex-[2]">
-      <Rail icon="seasonality" kicker="Busy months and quiet months" verdict={d.seasonality?.surface_line} />
+      <Rail icon="seasonality" kicker="Busy months and quiet months" />
       <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ height: 110 }} role="img" aria-label={`Monthly demand index, zero-based columns; ${MONTHS[peak] === "D" ? "December" : "the peak month"} is the highest at ${m[peak]}`} preserveAspectRatio="none">
         {/* index-100 reference rule, labeled */}
         <line x1={padL} y1={Y(100)} x2={W - padR} y2={Y(100)} stroke="#e0dedc" strokeWidth={0.75} strokeDasharray="3 3" />
@@ -205,7 +210,7 @@ function Seasonality({ d }: { d: any }) {
         <line x1={padL} y1={Y(0)} x2={W - padR} y2={Y(0)} stroke="#c9c9c7" strokeWidth={1} />
         {m.map((_, i) => <text key={i} x={padL + i * slot + slot / 2} y={H - 5} textAnchor="middle" fill="#8c8c8a" fontSize={8}>{MONTHS[i]}</text>)}
       </svg>
-      <div className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">Monthly demand, indexed; the dashed rule marks 100. December peaks, January sags, and the swing stays gentle.</div>
+      <div className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">Monthly demand, indexed; the dashed rule marks 100. December peaks, January sags.</div>
     </Box>
   );
 }
@@ -253,9 +258,14 @@ function Ramp({ d }: { d: any }) {
 }
 
 /* ================= CH5 , PLACE AND RIVALS ================= */
-/* Myth , WI-3 brief:
+/* Myth , WI-3 brief (rulebook v2 corrections, 2026-07-10; S12, the myth-busting
+ * device was "a schematic cliche"): the "Myth, busted" kicker (a pre-asserted
+ * conclusion) and the Rail verdict are both DELETED, retitled to a plain "Myth vs.
+ * reality". The quoted claim box is ALSO gone , the folklore is now struck directly
+ * ON the survival chart (StruckLine, a phantom grey dashed line), not asserted in a
+ * text box beside it.
  * decision: bust the belief operators actually hold. Number: the real year-one survival rate (NEW, not restated).
- * focal: the struck claim + the survival counter-figure. width: Even half. terracotta target: the survival figure. */
+ * focal: the survival curve with the folklore struck on it. width: Even half. terracotta target: the survival figure. */
 function Myth({ d }: { d: any }) {
   const my = d.myth ?? {};
   const s = my.survival ?? {};
@@ -263,24 +273,33 @@ function Myth({ d }: { d: any }) {
     .filter(([, v]) => typeof v === "number") as Array<[string, number]>;
   return (
     <Box className="celltop md:flex-[3]">
-      {/* ink rail: the ONE accent in this box is the year-one survival node + figure.
-          The verdict is seed-carried (myth.subtitle); absent = no verdict line. */}
-      <Rail icon="myth-reality" kicker="Myth, busted" verdict={my.subtitle} />
-      <div className="rounded-[10px] border border-[var(--c-border)] bg-[var(--c-soft)] px-3.5 py-2.5">
-        <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">The claim</span>
-        <p className="mt-0.5 text-[length:var(--t-body)] italic text-[var(--c-ink2)]">&ldquo;{my.claim}&rdquo;</p>
-      </div>
-      <p className="mt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{my.reality}</p>
-      {/* the NEW evidence: a survival curve, not a restatement of the margin split.
-          A downward slope reads "attrition over time"; terracotta marks the year-one
-          figure only (the myth-buster), the later years stay ink. */}
+      {/* ink rail: the ONE accent in this box is the year-one survival node + figure. */}
+      <Rail icon="myth-reality" kicker="Myth vs. reality" />
+      {/* the evidence, first: a survival curve with the "9 in 10 fail" folklore struck
+          ON it, not a restatement of the margin split. A downward slope reads
+          "attrition over time"; terracotta marks the year-one figure only (the
+          myth-buster), the later years stay ink. */}
       {survival.length >= 2 ? <SurvivalSlope points={survival} note={s.line} /> : null}
+      {my.reality ? <p className="mt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{my.reality}</p> : null}
     </Box>
   );
 }
 
+/* The struck phantom line represents this page's one myth (myth.claim: "Nine in
+ * ten restaurants fail in the first year"), read as a 10% year-one survival rate ,
+ * the documented illustrative reading of that PROSE claim (rulebook v2 D4: a
+ * modelled/illustrative figure must carry a visible label; StruckLine's own struck
+ * caption is that label). It is the thing being debunked, not a data figure, so it
+ * is fixed to this page's specific folklore rather than parsed out of myth.claim; a
+ * future cell with a differently-worded myth would need this constant revisited. */
+const FOLKLORE_SURVIVAL_PCT = 10; // "nine in ten fail" -> 10% survive
+const FOLKLORE_LABEL = "folklore: 9 in 10 fail";
+
 /* survival curve , the share still trading at year 1 / 3 / 5 as a descending line.
- * One accent: the year-one node + figure (the belief being busted). */
+ * One accent: the year-one node + figure (the belief being busted). StruckLine draws
+ * the folklore phantom INSIDE this same <svg>, projected through this chart's own
+ * X()/Y() scale (a flat line at the folklore's implied survival level, spanning the
+ * same x-span as the real curve, struck out) , the kit.tsx:598 contract. */
 function SurvivalSlope({ points, note }: { points: Array<[string, number]>; note?: string }) {
   const W = 320, H = 110, padL = 8, padR = 8, padTop = 22, padBot = 26;
   const min = 0, max = 100;
@@ -289,9 +308,10 @@ function SurvivalSlope({ points, note }: { points: Array<[string, number]>; note
   const coords = points.map(([, v], i) => `${X(i).toFixed(1)},${Y(v).toFixed(1)}`);
   const line = "M " + coords.join(" L ");
   const area = `M ${X(0).toFixed(1)},${(H - padBot).toFixed(1)} L ` + coords.join(" L ") + ` L ${X(points.length - 1).toFixed(1)},${(H - padBot).toFixed(1)} Z`;
+  const phantomPts: Array<[number, number]> = [[X(0), Y(FOLKLORE_SURVIVAL_PCT)], [X(points.length - 1), Y(FOLKLORE_SURVIVAL_PCT)]];
   return (
     <div className="mt-3 border-t border-[var(--c-border)] pt-3">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ height: 110 }} role="img" aria-label={`Still trading: ${points.map(([l, v]) => `${l} ${v}%`).join(", ")}`}>
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ height: 110 }} role="img" aria-label={`Still trading: ${points.map(([l, v]) => `${l} ${v}%`).join(", ")}. Folklore claims 9 in 10 fail in the first year, struck out on the same chart.`}>
         {/* neutral fill: the line's carrier is grey, so the fill is too , the ONE accent
             in this box is the year-one node + figure (the myth being busted) */}
         <path d={area} fill="#9a9a98" opacity={0.08} />
@@ -306,6 +326,7 @@ function SurvivalSlope({ points, note }: { points: Array<[string, number]>; note
             </g>
           );
         })}
+        <StruckLine points={phantomPts} label={FOLKLORE_LABEL} />
       </svg>
       {note ? <div className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{note}</div> : null}
     </div>
@@ -359,21 +380,26 @@ function Related({ d }: { d: any }) {
 
 /* Close , the deliberate full-width end of the page. The recap PARAPHRASES the verdict
  * (an echo, never a verbatim copy of the hero or the break-in line), one ink CTA, and
- * ink next-step links (navigation is chrome; the accent never sits on chrome). */
+ * ink next-step links (navigation is chrome; the accent never sits on chrome).
+ * Rulebook v2 corrections (2026-07-10): the two "format" strings are gated on
+ * hasSubtypes so a cell with no subtype picker (e.g. a dental or auto-repair cell)
+ * never references a format it never showed. */
 function Close({ d }: { d: any }) {
   const rel: any[] = d.related ?? [];
   const city = d.meta?.city ?? "this market";
   const trade = (d.meta?.trade ?? "this trade").toLowerCase();
+  const hasSubtypes = Array.isArray(d.subtypes?.items) && d.subtypes.items.length > 0;
   // Every link carries a REAL destination or renders as a plain span with no arrow
   // (no fake affordance): the trade-across-markets read lives on the industry page,
   // the sibling-trade cell rides its seed slug, and the format-by-format read has no
-  // page of its own yet (it lives in this page's money chapter).
+  // page of its own yet (it lives in this page's money chapter , and only exists at
+  // all when this cell actually has a format picker to point at).
   const links: Array<{ t: string; href?: string }> = [
     { t: `Compare ${trade} across nearby markets`, href: "/dev/spine-industry" },
     ...(rel[0]
       ? [{ t: `Look at ${rel[0].name.toLowerCase()} in ${city} instead`, href: rel[0].slug ? `/gb/london/${rel[0].slug}` : undefined }]
       : []),
-    { t: "See what an owner keeps, format by format" },
+    ...(hasSubtypes ? [{ t: "See what an owner keeps, format by format" }] : []),
   ];
   return (
     <Box className="celltop">
@@ -383,7 +409,11 @@ function Close({ d }: { d: any }) {
           {d.close?.bottom_line ? (
             <p className="text-[length:var(--t-lead)] font-medium leading-snug text-[var(--c-ink)]">{d.close.bottom_line}</p>
           ) : null}
-          <p className="mt-1.5 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">If the format fits your capital and your hours, the next question is where the same work keeps more.</p>
+          <p className="mt-1.5 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">
+            {hasSubtypes
+              ? "If the format fits your capital and your hours, the next question is where the same work keeps more."
+              : "If this fits your capital and your hours, the next question is where the same work keeps more."}
+          </p>
         </div>
         <a href="/pricing" className="shrink-0 self-start rounded-full bg-[var(--c-ink)] px-5 py-2.5 text-[length:var(--t-body)] font-semibold text-white transition-colors hover:bg-[var(--terra-text)] md:self-auto">
           Compare this trade with Pro &#8594;
@@ -522,7 +552,7 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
       {/* Place and rivals , Full leaderboard then Even (myth + related close). */}
       {showPlaceChapter ? (
         <>
-          <Movement index={cn()} eyebrow="Place and rivals" heading="Where it pays, and what to watch" icon="best-areas" />
+          <Movement index={cn()} eyebrow="Place and rivals" heading="Place and rivals" icon="best-areas" />
           <div className="space-y-4">
             {hasNearby ? <Full><Nearby d={d} /></Full> : null}
             {hasMyth || hasRelated ? (

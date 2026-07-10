@@ -16,11 +16,12 @@ const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
 
 type Col = { key: string; label: string; unit: string; get: (x: any) => number; cell: (v: number) => string };
 
-/* Nearby , WI-4 brief (enriched, Final Ascent):
- * decision: how this place compares to peer cities on the same trade. The verdict claims
- * "keeps the least per dollar", so the table now CARRIES that metric: a sortable
- * keeps-per-$1 column (take over turnover, in cents), default sort. In-cell bars are
- * CellScaleBar (drawn 0-max domain with a visible baseline tick).
+/* Nearby , WI-4 brief (enriched, Final Ascent; rulebook v2 corrections 2026-07-10
+ * drop the hand-rolled surface_line div , a verdict outside Rail that claimed "keeps
+ * the least per dollar"): the table CARRIES that claim itself, needing no sentence
+ * to assert it , a sortable keeps-per-$1 column (take over turnover, in cents),
+ * default sort, proves it directly. In-cell bars are CellScaleBar (drawn 0-max
+ * domain with a visible baseline tick).
  * terracotta target: ONE , the keeps-per-$1 winner's figure + bar. Best in the other
  * columns is bold ink; the sort header, HERE tag and row tint are ink/neutral chrome. */
 export function Nearby({ d }: { d: any }) {
@@ -56,7 +57,6 @@ export function Nearby({ d }: { d: any }) {
     <Box>
       {/* same section-opener treatment as sibling cards (Rail kicker, not a bold Head) */}
       <Rail icon="compare" kicker="The same trade, comparable places" />
-      <div className="mb-3 text-[12.5px] text-[var(--c-ink2)]">{d.nearby?.surface_line}</div>
       {/* sm+ header with click-to-sort (active = ink; selection is chrome, never the accent) */}
       <div className="hidden gap-3 border-b border-[var(--c-border)] pb-2 sm:grid" style={{ gridTemplateColumns: gridCols }}>
         <span className="text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Place</span>
@@ -114,7 +114,7 @@ export function Wages({ d }: { d: any }) {
   const max = Math.max(1, ...roles.map((r) => r.high_usd)) * 1.05;
   return (
     <Box className="md:flex-[3]">
-      <Rail icon="wages" kicker="What you would pay your team" verdict={d.wages?.surface_line} />
+      <Rail icon="wages" kicker="What you would pay your team" />
       <div className="mt-3 space-y-3">
         {roles.map((r, i) => {
           const L = (r.low_usd / max) * 100, W = ((r.high_usd - r.low_usd) / max) * 100, M = (r.mid_usd / max) * 100;
