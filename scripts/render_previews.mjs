@@ -8,7 +8,8 @@
  *
  * Usage:  node scripts/render_previews.mjs <page> [date]
  *         <page> = cell | city | country | industry | hood | home
- * Needs:  the dev server running on :3000 (npm run dev). ONE page per invocation,
+ *         PREVIEW_PORT env overrides the default :3000.
+ * Needs:  the dev server running. ONE page per invocation,
  *         the 8GB box cannot hold a fresh compile + headless Chrome for all six at once.
  * Output: E:\atlas\previews\candidate\<page>-<date>.html
  */
@@ -56,7 +57,8 @@ if (!exe) { console.error("No Chrome found. Set CHROME_EXE."); process.exit(1); 
 const browser = await chromium.launch({ executablePath: exe, headless: true });
 const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
 const tab = await ctx.newPage();
-await tab.goto(`http://localhost:3000${ROUTES[page]}`, { waitUntil: "networkidle", timeout: 120000 });
+const PORT = process.env.PREVIEW_PORT || "3000";
+await tab.goto(`http://localhost:${PORT}${ROUTES[page]}`, { waitUntil: "networkidle", timeout: 120000 });
 await tab.waitForSelector("h2", { timeout: 60000 });
 // let streaming + fonts settle
 await tab.waitForTimeout(1500);
