@@ -23,7 +23,7 @@ export function CityHero({ d }: { d: any }) {
       <div className="flex items-center gap-3.5">
         <CountryFlag iso2={d.meta?.iso2?.toLowerCase()} className="w-[44px] rounded-sm shadow-sm" />
         <div>
-          <h1 data-typography="custom" className="text-balance text-3xl font-bold tracking-tight text-[var(--c-ink)] md:text-4xl">{d.meta?.city}</h1>
+          <h1 data-typography="custom" className="text-balance text-3xl font-semibold tracking-tight text-[var(--c-ink)] md:text-4xl">{d.meta?.city}</h1>
           <div className="text-[12px] text-[var(--c-muted)]">Opening a business in {d.meta?.country_name}</div>
         </div>
       </div>

@@ -1,15 +1,16 @@
 "use client";
 /**
- * Page-local motion helpers for the city page , count-up-safe figures + a
- * terracotta top-edge card hover, mirroring the cell-page pattern (format-picker
- * useCountUp) but kept out of the shared kit. THE COUNT-UP CONTRACT: the resting
- * value is always the real target , SSR / no-JS / reduced-motion / not-yet-in-view
- * all render the true number, never a 0 , and `active` gates only the animation.
- * The first reveal tweens from 85% of the target (never from 0), so no paint,
- * capture, or crawler frame ever shows a figure that contradicts its own caption.
+ * Page-local motion helpers for the city page , count-up-safe figures, mirroring
+ * the cell-page pattern (format-picker useCountUp) but kept out of the shared kit.
+ * The terracotta top-edge card hover (.citytop) is DELETED (rulebook v1 §37: no
+ * orange motif on subsection hover); the quiet .hov/.cityhov rules in shell.tsx
+ * carry all remaining hover. THE COUNT-UP CONTRACT: the resting value is always
+ * the real target , SSR / no-JS / reduced-motion / not-yet-in-view all render the
+ * true number, never a 0 , and `active` gates only the animation. The first
+ * reveal tweens from 85% of the target (never from 0), so no paint, capture, or
+ * crawler frame ever shows a figure that contradicts its own caption.
  */
 import * as React from "react";
-import { TERRA } from "@/components/spine/kit";
 
 export function useReducedMotion() {
   const [reduced, setReduced] = React.useState(false);
@@ -69,14 +70,4 @@ export function CountFig({ value, fmt, className }: { value: number; fmt: (n: nu
   const { ref, seen } = useInView<HTMLSpanElement>();
   const v = useCountUp(value, reduced, 560, seen);
   return <span ref={ref} className={`fig ${className ?? ""}`}>{fmt(v)}</span>;
-}
-
-/* terracotta top-edge hover on every card (reduced-motion safe). Injected once. */
-export function CityStyles() {
-  return (
-    <style>{`.spine-scope .citytop{position:relative;transition:transform .15s ease-out,border-color .15s ease-out}
-.spine-scope .citytop::before{content:"";position:absolute;left:14px;right:14px;top:0;height:2px;border-radius:9999px;background:${TERRA};opacity:0;transition:opacity .15s ease-out}
-.spine-scope .citytop:hover::before{opacity:1}
-@media (prefers-reduced-motion:reduce){.spine-scope .citytop{transition:none}}`}</style>
-  );
 }

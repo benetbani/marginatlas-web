@@ -8,16 +8,8 @@
     "_note": "SEED FILE for the city-page spine dev surface. Values are modeled/illustrative London figures, tagged per block. Replace with researched + lib-wired data on promotion."
   },
   "verdict": {
-    "_meta": { "confidence": "modeled", "source": "derived from the per-trade city economics; take-home and margin from the curated London market file", "as_of": "2026-06" },
-    "kicker": "The London verdict",
-    "winner_trade": "Dental practice keeps the most",
-    "winner_slug": "dental-practices",
-    "keep_pct": 18,
-    "why": "Deep demand and a high-earning customer base reward a service trade that carries no stock and turns a chair over all day. Of every sale through the till, more reaches the owner here than in any other storefront trade on this page.",
-    "catch": "Space is the constraint, not custom. Prime rent runs near the top of Europe, so the trade only clears where the ticket is large enough to swallow the lease.",
-    "strip": [
-      { "value": "$160K", "label": "owner take-home" }
-    ]
+    "_meta": { "confidence": "modeled", "source": "the space read; the winner-trade margin verdict was retired with the city-level margin ranking (rulebook v1, 2026-07-11)", "as_of": "2026-06" },
+    "catch": "Space is the constraint, not custom. Prime rent runs near the top of Europe, so a trade only clears where the ticket is large enough to swallow the lease."
   },
   "headline": {
     "_meta": { "confidence": "modeled", "source": "London market figures, illustrative", "as_of": "2026-06" },
@@ -44,12 +36,7 @@
   "income": {
     "_meta": { "confidence": "modeled", "source": "London earnings distribution, illustrative", "as_of": "2026-06" },
     "median_income_usd": 47000, "top10_income_usd": 130000, "top1_income_usd": 350000,
-    "read": "Money runs deep and skews high. The everyday customer earns a solid wage, and a long tail above them leaves real room for a premium ticket.",
-    "tiers": [
-      { "label": "Median", "note": "The median customer. Values price, but pays for quality and convenience.", "share": 60 },
-      { "label": "Top 10%", "note": "The top tenth. Trades up readily; the natural target for a mid-premium trade.", "share": 30 },
-      { "label": "Top 1%", "note": "The top hundredth. A thin, high-ceiling market that pays almost any ticket.", "share": 10 }
-    ]
+    "read": "Money runs deep and skews high. The everyday customer earns a solid wage, and a long tail above them leaves real room for a premium ticket."
   },
   "space": {
     "_meta": { "confidence": "modeled", "source": "London commercial market, illustrative; no street-level per-sqm held", "as_of": "2026-06" },
@@ -74,19 +61,17 @@
     "runway_note": "Personal burn only, not the business. Cut it by sharing rent or holding a part-time wage through fit-out."
   },
   "demand": {
-    "_meta": { "confidence": "placeholder", "source": "illustrative consumer-spend size; to be researched", "as_of": "2026-06" },
+    "_meta": { "confidence": "placeholder", "source": "illustrative consumer-spend size; millionaire count modeled from published wealth tallies; to be researched", "as_of": "2026-06" },
     "consumer_spend_usd_bn": 196,
     "spend_per_capita_usd": 22000,
     "growth_pct_yoy": 4,
+    "millionaires_count": 227000,
     "resident_pct": 80, "visitor_pct": 20,
-    "trend_index": [88, 90, 91, 94, 96, 100],
-    "trend_years": [2021, 2026],
     "read": "The spending pool is large and still growing. Size is not the constraint here; room and rent are.",
     "note": "Annual consumer spend across the metro, modeled. The base is large and growing, not the constraint here."
   },
   "demand_calendar": {
-    "_meta": { "confidence": "placeholder", "source": "illustrative monthly demand index; to be researched", "as_of": "2026-06" },
-    "months": [62, 60, 66, 70, 74, 82, 86, 80, 84, 78, 74, 95],
+    "_meta": { "confidence": "placeholder", "source": "seasonal read, illustrative; no honest per-month demand index is held (rulebook v1, 2026-07-11)", "as_of": "2026-06" },
     "read": "A summer hump, then a December peak. The swing is real but gentle; staff and stock for the festive lift, not a crisis."
   },
   "risks": {
@@ -102,28 +87,20 @@
     ]
   },
   "trades": {
-    "_meta": { "confidence": "mixed", "source": "owner take-home + net margin from the curated London market file (data/london/london_market_v1.json); break-in, crowding and cost-to-open carried from the prior illustrative rows where the trade maps, absent otherwise", "as_of": "2026-06" },
+    "_meta": { "confidence": "mixed", "source": "owner take-home + net margin from the curated London market file (data/london/london_market_v1.json); break-in and cost-to-open carried from the prior illustrative rows where the trade maps, absent otherwise; the out-of-context dental row and the derived crowding scores were retired (rulebook v1, 2026-07-11)", "as_of": "2026-06" },
     "read": "Take-home varies wide by trade, and the busiest trades are not the richest. What you keep matters more than what comes in.",
     "margin_read": "Of every sale through the till, only a slim slice reaches the owner; rent and staff take the rest.",
-    "margin_rail_read": "A service trade with no stock keeps the most; the food trades keep the least.",
     "list": [
-      { "name": "Dental practice", "slug": "dental-practices", "href": "/gb/london/dental-practices", "take_home_usd": 160000, "net_margin_pct": 18 },
-      { "name": "Gym", "slug": "sports-fitness", "href": "/gb/london/sports-fitness", "take_home_usd": 58000, "net_margin_pct": 9, "break_in_0_100": 50, "saturation_0_100": 60, "cost_to_open_usd": 60000 },
-      { "name": "Restaurant", "slug": "restaurants", "href": "/gb/london/restaurants", "take_home_usd": 48000, "net_margin_pct": 5, "break_in_0_100": 30, "saturation_0_100": 76, "cost_to_open_usd": 140000 },
+      { "name": "Gym", "slug": "sports-fitness", "href": "/gb/london/sports-fitness", "take_home_usd": 58000, "net_margin_pct": 9, "break_in_0_100": 50, "cost_to_open_usd": 60000 },
+      { "name": "Restaurant", "slug": "restaurants", "href": "/gb/london/restaurants", "take_home_usd": 48000, "net_margin_pct": 5, "break_in_0_100": 30, "cost_to_open_usd": 140000 },
       { "name": "Auto repair", "slug": "auto-repair-shops", "href": "/gb/london/auto-repair-shops", "take_home_usd": 48000, "net_margin_pct": 11 },
-      { "name": "Cafe", "slug": "cafes-coffee", "href": "/gb/london/cafes-coffee", "take_home_usd": 40000, "net_margin_pct": 8, "break_in_0_100": 40, "saturation_0_100": 80, "cost_to_open_usd": 45000 },
-      { "name": "Grocery", "slug": "grocery-stores", "href": "/gb/london/grocery-stores", "take_home_usd": 36000, "net_margin_pct": 3, "break_in_0_100": 46, "saturation_0_100": 72, "cost_to_open_usd": 55000 }
+      { "name": "Cafe", "slug": "cafes-coffee", "href": "/gb/london/cafes-coffee", "take_home_usd": 40000, "net_margin_pct": 8, "break_in_0_100": 40, "cost_to_open_usd": 45000 },
+      { "name": "Grocery", "slug": "grocery-stores", "href": "/gb/london/grocery-stores", "take_home_usd": 36000, "net_margin_pct": 3, "break_in_0_100": 46, "cost_to_open_usd": 55000 }
     ]
   },
   "where_to_trade": {
-    "_meta": { "confidence": "placeholder", "source": "derived: keep index = (1 + rev_vs_city_pct/100) / rent_mult x 100, city baseline 100; wire to neighborhood multipliers on promotion", "as_of": "2026-06" },
-    "read": "The loudest names take the most revenue and give most of it back in rent; a few quieter districts keep more of every sale.",
-    "keep_note": "Keep index, city average = 100. Every inner district here carries above-average rent, so all keep below the city baseline; the best keeper holds the most of each sale.",
-    "pro_teaser": [
-      "Dental keeps 18% citywide, about 16% in Brixton, 11% in Mayfair",
-      "Restaurants keep 5% citywide, about 4% in Camden, 3% in Mayfair",
-      "Gyms keep 9% citywide, about 8% in Hackney, 6% in Soho"
-    ],
+    "_meta": { "confidence": "placeholder", "source": "district rent multiples + revenue-vs-city, illustrative; the derived keep index was retired (rulebook v1, 2026-07-11); wire to neighborhood multipliers on promotion", "as_of": "2026-06" },
+    "read": "The loud names pay a multiple of the city rent; a few quieter districts carry a far lighter load.",
     "list": [
       { "name": "Mayfair", "slug": "mayfair", "character": "Luxury and finance", "rev_vs_city_pct": 55, "rent_mult": 2.6, "lat": 51.5096, "lng": -0.1494 },
       { "name": "Covent Garden", "slug": "covent-garden", "character": "Tourism and retail", "rev_vs_city_pct": 48, "rent_mult": 2.3, "lat": 51.5129, "lng": -0.1240 },

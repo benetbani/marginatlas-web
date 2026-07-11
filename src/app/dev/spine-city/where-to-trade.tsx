@@ -3,80 +3,67 @@
  * WhereToTrade , the city page's SIGNATURE moment. The old split (district
  * conveyor, then a chapter-weight Movement, then a separate map) is merged into
  * ONE coordinated pairing: a tall real MapLibre map beside a ranked district
- * list, cross-linked on hover. The list ranks by the honest KEEP INDEX (what the
- * owner keeps of each pound), not by raw revenue , so the loud names slide and a
- * few quieter districts climb. That re-rank is the whole editorial point.
+ * list, cross-linked on hover. The list ranks by RENT LOAD, lightest first (the
+ * founder's D1 call, 2026-07-11): rent is the held, knowable figure. The old
+ * derived per-district "keep index" is DELETED , rulebook v1 §5 names it an
+ * unknowable metric, never rendered , and the district x trade ProMatrix built
+ * on it is deleted with it (it squared the banned figure).
  *
- * WI-3 brief (P2 refit , the audit's re-visual for the signature section):
- * decision: where to trade, judged by what you keep, not what comes in.
- * number: each district's keep index against a DRAWN city = 100 reference line.
- * form: a dot plot on one shared, drawn 50..110 domain , the old 0-based bars
- * compressed the 60..87 spread into the last third of the track and fused the
- * 100 baseline to the rounded track end. Dots spread the honest range; the
- * reference line at 100 is drawn on every row and labelled once on the axis.
- * focal: the map + the #1-keep district; terracotta on the leader's dot only.
- * map: ink pins, terra ONLY on the keep leader (8 fixed terra dots said nothing);
- * uniform pin size; label declutter priority follows keep rank (points passed in
- * keep order), so the packed West End trio yields its labels first.
- * width: Full. disclosure: the district x trade owner-keep matrix behind a Pro veil.
+ * form: a dot plot on one shared, drawn x1..x2.8 domain , the city-average rent
+ * is the drawn x1 line at the floor of the axis, labelled once; every inner
+ * district here sits above it. Dots, not bars (rulebook v1 §25).
+ * focal: the map + the lightest-rent district; terracotta on the leader's dot only.
+ * map: ink pins, terra ONLY on the rent-load leader; uniform pin size; label
+ * declutter priority follows rent rank (points passed in rank order), so the
+ * packed West End trio yields its labels first.
+ * width: Full. The revenue-vs-city counterpoint stays one tap away in a quiet
+ * disclosure; no cross-district revenue-vs-keep verdict footer (rulebook v1 §15).
  */
 import * as React from "react";
 import { Box, Rail, Fig, InfoTip, InlineDisclosure, TERRA } from "@/components/spine/kit";
-import { LockVeil } from "@/components/spine/kit-index";
 import { SpineMap, type SpinePoint } from "@/components/spine/SpineMap";
 
 type District = { name: string; slug: string; character: string; rev_vs_city_pct: number; rent_mult: number; lat: number; lng: number };
-type Row = District & { keep: number };
 
-/* keep index = (1 + rev/100) / rent_mult x 100. Derived, not fabricated: the same
- * formula the neighborhood page uses. 100 = keeps the city-average share of a pound. */
-function keepIndex(d: District): number {
-  return Math.round(((1 + d.rev_vs_city_pct / 100) / d.rent_mult) * 100);
-}
-
-export function WhereToTrade({ d, trades }: { d: any; trades: any[] }) {
+export function WhereToTrade({ d }: { d: any }) {
   const w = d.where_to_trade ?? {};
   const list: District[] = w.list ?? [];
   const [hover, setHover] = React.useState<string | null>(null);
   // Null-guard (real-data promotion): omit the whole section when no district set.
   if (list.length === 0) return null;
-  const rows: Row[] = list.map((x) => ({ ...x, keep: keepIndex(x) })).sort((a, b) => b.keep - a.keep);
-  const lead = rows[0];
-  const revLeader = list.reduce((a, b) => (b.rev_vs_city_pct > a.rev_vs_city_pct ? b : a), list[0]);
+  // D1 (founder, 2026-07-11): rank by rent load, lightest first. The seed rent
+  // multiple is the ranked figure, plainly labelled , nothing derived.
+  const rows: District[] = list.slice().sort((a, b) => a.rent_mult - b.rent_mult);
 
-  // dot-plot geometry: one shared drawn domain. 50 is the drawn floor (labelled on
-  // the axis, so the non-zero start is visible, never hidden), 100 is the city
-  // reference line, 110 gives the line air. The 60..87 spread occupies the honest
-  // middle of the track instead of huddling at the end of a 0-based bar.
-  const DOMAIN: [number, number] = [50, 110];
+  // dot-plot geometry: one shared drawn domain. x1 is the drawn floor AND the
+  // city-average reference (labelled on the axis, so the non-zero start is
+  // visible, never hidden); x2.8 gives the heaviest district air.
+  const DOMAIN: [number, number] = [1, 2.8];
   const posOf = (v: number) => ((v - DOMAIN[0]) / (DOMAIN[1] - DOMAIN[0])) * 100;
-  const refPos = posOf(100);
 
-  // map points in KEEP order (declutter keeps labels by array priority, so the
-  // best keepers keep their names and the packed West End trio yields first).
-  // Uniform pin size (no unlabelled size encoding); ink pins, terra = the leader;
-  // the keep index rides the hover/focus popup.
+  // map points in RENT-RANK order (declutter keeps labels by array priority, so
+  // the lightest-rent districts keep their names and the packed West End trio
+  // yields first). Uniform pin size; ink pins, terra = the rent-load leader;
+  // the rent multiple rides the hover/focus popup.
   const points: SpinePoint[] = rows
     .filter((x) => Number.isFinite(x.lat) && Number.isFinite(x.lng))
     .map((x, i) => ({
       name: x.name, slug: x.slug, lat: x.lat, lng: x.lng,
-      signal: 50, signalLabel: `keeps ${x.keep} vs 100`, sub: x.character,
+      signal: 50, signalLabel: `rent x${x.rent_mult} the city level`, sub: x.character,
       tone: i === 0 ? "terra" : "ink",
       href: "/dev/spine-hood",
     }));
 
   // The map self-omits when no district carries real coordinates (real-data promotion
-  // holds no lat/lng); the ranked keep-index list then takes the full width alone.
+  // holds no lat/lng); the ranked rent-load list then takes the full width alone.
   const hasMap = points.length > 0;
 
   return (
-    <Box className="citytop">
+    <Box>
       {/* "By district" , plain, and deliberately NOT "Where to trade": this chapter's
-          Movement call (city-view.tsx) still carries eyebrow="Where to trade" (a dead,
-          unrendered prop per the kit patch) alongside this box's OWN kicker, which used
-          to read the identical string. Same words, two labels, is the exact defect the
-          rulebook's residue pass exists to kill , so the surviving, rendered label here
-          carries different words even though the eyebrow itself no longer renders. */}
+          Movement heading (city-view.tsx) already carries those words, and the same
+          words on two labels is the exact defect the rulebook's residue pass exists
+          to kill , so the box's own kicker carries different words. */}
       <Rail icon="best-areas" tone="terra" kicker="By district" />
       <div className={hasMap ? "grid gap-4 lg:grid-cols-[1.35fr_1fr] lg:items-stretch" : "grid gap-4"}>
         {/* the map , the highest-craft object, given real height. Omitted with no coords. */}
@@ -85,11 +72,11 @@ export function WhereToTrade({ d, trades }: { d: any; trades: any[] }) {
             <SpineMap points={points} ariaLabel="Map of London districts" fitPadding={56} />
           </div>
         ) : null}
-        {/* the ranked list , a keep-index dot plot against the drawn city = 100 line */}
+        {/* the ranked list , a rent-load dot plot against the drawn city = x1 line */}
         <div className="min-w-0">
           <div className="mb-2 flex items-baseline justify-between gap-2">
-            <span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Ranked by what you keep</span>
-            <span className="text-[10.5px] text-[var(--c-muted)]">keep index<InfoTip gloss="Revenue vs the city, divided by the rent load; 100 keeps the city-average share of each sale." /></span>
+            <span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Ranked by rent load, lightest first</span>
+            <span className="text-[10.5px] text-[var(--c-muted)]">rent, x the city level<InfoTip gloss="The district's commercial rent as a multiple of the city-average level; x1 is the city average." /></span>
           </div>
           <div className="space-y-1">
             {rows.map((r, i) => {
@@ -106,14 +93,14 @@ export function WhereToTrade({ d, trades }: { d: any; trades: any[] }) {
                 >
                   <div className="flex items-baseline justify-between gap-2">
                     <span className={`min-w-0 truncate text-[12.5px] ${isLead ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink)]"}`}>{r.name}</span>
-                    <Fig className={`shrink-0 text-[12.5px] ${isLead ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{r.keep}</Fig>
+                    <Fig className={`shrink-0 text-[12.5px] ${isLead ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>x{r.rent_mult}</Fig>
                   </div>
-                  {/* dot at the keep index on the shared 50..110 track; the city
-                      average is the drawn line every district visibly falls short of */}
-                  <div className="relative mt-1.5 h-2" role="img" aria-label={`${r.name}: keep index ${r.keep}, against the city average of 100`}>
+                  {/* dot at the rent multiple on the shared x1..x2.8 track; the city
+                      average is the drawn floor line every district visibly sits above */}
+                  <div className="relative mt-1.5 h-2" role="img" aria-label={`${r.name}: rent ${r.rent_mult} times the city-average level`}>
                     <span className="absolute inset-x-0 top-1/2 h-[3px] -translate-y-1/2 rounded-full" style={{ background: "#efece9" }} />
-                    <span className="absolute -bottom-[2px] -top-[2px] w-px bg-[var(--c-line-strong)]" style={{ left: `${refPos}%` }} />
-                    <span className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${posOf(r.keep)}%`, background: isLead ? TERRA : "#1b1b1a", boxShadow: "0 0 0 1px #e3e3e3" }} />
+                    <span className="absolute -bottom-[2px] -top-[2px] w-px bg-[var(--c-line-strong)]" style={{ left: `${posOf(1)}%` }} />
+                    <span className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${posOf(r.rent_mult)}%`, background: isLead ? TERRA : "#1b1b1a", boxShadow: "0 0 0 1px #e3e3e3" }} />
                   </div>
                   <div className="mt-0.5 text-[10.5px] text-[var(--c-muted)]">
                     <span className="truncate">{r.character}</span>
@@ -122,13 +109,13 @@ export function WhereToTrade({ d, trades }: { d: any; trades: any[] }) {
               );
             })}
           </div>
-          {/* the shared axis, drawn once: the labelled floor + the city line */}
+          {/* the shared axis, drawn once: the labelled city floor + the far end */}
           <div aria-hidden className="relative mt-1 h-4 text-[9px] uppercase tracking-wide text-[var(--c-muted)]">
-            <Fig className="absolute left-0">{DOMAIN[0]}</Fig>
-            <span className="absolute -translate-x-1/2 whitespace-nowrap" style={{ left: `${refPos}%` }}>city = 100</span>
+            <span className="absolute left-0 whitespace-nowrap">city = x1</span>
+            <Fig className="absolute right-0">x{DOMAIN[1]}</Fig>
           </div>
           {/* revenue-vs-city deltas moved off every row into one quiet disclosure:
-              the list reads on keep alone, the revenue counterpoint is one tap away. */}
+              the list reads on rent alone, the revenue counterpoint is one tap away. */}
           <InlineDisclosure name="wtt-rev" summary="See revenue against the city" className="group mt-2 border-t border-[var(--c-border)] pt-2">
             <div className="mt-2 divide-y divide-[var(--c-border)]">
               {rows.map((r) => (
@@ -142,51 +129,6 @@ export function WhereToTrade({ d, trades }: { d: any; trades: any[] }) {
           </InlineDisclosure>
         </div>
       </div>
-
-      {/* the honest re-rank, stated plainly */}
-      <p className="mt-3 border-t border-[var(--c-border)] pt-3 text-[12px] leading-snug text-[var(--c-ink2)]">
-        <span className="font-semibold text-[var(--c-ink)]">{revLeader?.name}</span> takes the most revenue, but
-        <span className="font-semibold text-[var(--c-ink)]"> {lead?.name}</span> keeps the most of it. {w.keep_note}
-      </p>
-
-      {/* Pro seam , the free tier gets the map + the keep re-rank; Pro unlocks the
-          full district x trade owner-keep matrix. Real derived values, value-visible
-          under a calm veil, kept in the DOM for crawlers. Omitted when no trade carries
-          a real margin to fill the matrix. */}
-      {trades.some((t) => t?.net_margin_pct != null) ? (
-        <div className="mt-4 border-t border-[var(--c-border)] pt-4">
-          <LockVeil headline="Every district, every trade" note="See what the owner keeps for each trade in each district, ranked, with the rent load on every cell." cta="Unlock with Pro">
-            <ProMatrix rows={rows} trades={trades.filter((t) => t?.net_margin_pct != null)} />
-          </LockVeil>
-        </div>
-      ) : null}
     </Box>
-  );
-}
-
-/* district x trade owner-keep matrix behind the Pro veil. Each cell = the trade's
- * base net margin scaled by the district's keep index (derived, entity-scoped, %). */
-function ProMatrix({ rows, trades }: { rows: Row[]; trades: any[] }) {
-  const cols = trades.slice(0, 4);
-  const grid = `minmax(0,1.1fr) repeat(${cols.length},minmax(0,1fr))`;
-  const cell = (baseMargin: number, keep: number) => Math.round(baseMargin * (keep / 100));
-  return (
-    // min-height guard: the LockVeil's centered overlay card runs ~190px, and the
-    // veil clips anything taller than its children , the matrix must always contain it.
-    <div className="min-h-[220px]">
-      <div className="grid items-end gap-2 border-b border-[var(--c-border)] pb-1.5" style={{ gridTemplateColumns: grid }}>
-        <span className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">District</span>
-        {cols.map((t) => <span key={t.slug} className="truncate text-right text-[11px] font-semibold text-[var(--c-ink)]">{t.name}</span>)}
-      </div>
-      <div className="divide-y divide-[var(--c-border)]">
-        {rows.slice(0, 6).map((r) => (
-          <div key={r.slug} className="grid items-center gap-2 py-1.5" style={{ gridTemplateColumns: grid }}>
-            <span className="min-w-0 truncate text-[11px] text-[var(--c-ink2)]">{r.name}</span>
-            {cols.map((t) => <Fig key={t.slug} className="text-right text-[12px] text-[var(--c-ink)]">{cell(t.net_margin_pct, r.keep)}%</Fig>)}
-          </div>
-        ))}
-      </div>
-      <div className="mt-1.5 text-[10.5px] text-[var(--c-muted)]">Owner-keep %, trade margin adjusted for each district's rent load.</div>
-    </div>
   );
 }
