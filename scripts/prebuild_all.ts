@@ -71,6 +71,10 @@ const GATES: Gate[] = [
   { name: "section-order", script: "scripts/verify_section_order.ts" },
   { name: "cross-geography-guard", script: "scripts/verify_cross_geography_guard.ts" },
   { name: "page-sections", script: "scripts/verify_page_sections.ts" },
+  { name: "bar-budget", script: "scripts/verify_bar_budget.ts" },
+  { name: "no-bold-display", script: "scripts/verify_no_bold_display.ts" },
+  { name: "banned-patterns", script: "scripts/verify_banned_patterns.ts" },
+  { name: "registry", script: "scripts/verify_registry.ts" },
 ];
 
 /** CLI arg parsing. */

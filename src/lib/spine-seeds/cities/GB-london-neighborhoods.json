@@ -1,7 +1,11 @@
 {
   "meta": {
-    "iso2": "GB", "city": "London", "slug": "london", "country_name": "United Kingdom",
-    "as_of": "2026-06", "overall_confidence": "placeholder",
+    "iso2": "GB",
+    "city": "London",
+    "slug": "london",
+    "country_name": "United Kingdom",
+    "as_of": "2026-06",
+    "overall_confidence": "placeholder",
     "provenance_line": "Modeled from district footfall, tourism and rent load. Figures are illustrative until wired to live neighborhood data.",
     "map": {
       "viewBox": "0 0 100 100",
@@ -10,7 +14,10 @@
     },
     "_note": "SEED for the neighborhood-hub spine dev surface. District revenue-vs-city is a clipped product of commuter x tourism x tags multipliers; values illustrative, wire to neighborhood_multipliers on promotion. Net values kept consistent with the city page. Per-district lat/lng feed the real SpineMap; xy retained for legacy but unused by the map.",
     "keep_index": {
-      "_meta": { "confidence": "placeholder", "method": "derived: 100 x (1 + rev_vs_city_pct/100) / rent_mult, city baseline = 100" },
+      "_meta": {
+        "confidence": "placeholder",
+        "method": "derived: 100 x (1 + rev_vs_city_pct/100) / rent_mult, city baseline = 100"
+      },
       "_note": "Derived client-side from rev_vs_city_pct and rent_mult; no stored values. Index 100 = a district that keeps the same share of each pound as the city average. Above 100, low rent more than offsets revenue; below 100, heavy rent eats the lift."
     },
     "rail": {
@@ -21,32 +28,75 @@
       "kicker": "Hold two or three side by side"
     },
     "myth": {
-      "_meta": { "confidence": "placeholder" },
+      "_meta": {
+        "confidence": "placeholder"
+      },
       "claim": "The highest-revenue district is the best place to open.",
       "reality": "It is the highest-revenue district. It is also the one the lease punishes hardest. Top takings come with the heaviest rent, so the lift is spent before it reaches the till. On rent, the loudest names sit heaviest and a few quieter districts run far lighter.",
       "stat_label": "rent runs well above the city rate",
       "tell": "The best-known address is the one the lease punishes hardest."
     }
   },
-  "_meta": { "confidence": "placeholder", "source": "illustrative district intensity + multipliers", "as_of": "2026-06" },
+  "_meta": {
+    "confidence": "placeholder",
+    "source": "illustrative district intensity + multipliers",
+    "as_of": "2026-06"
+  },
   "districts": [
     {
-      "name": "Mayfair", "slug": "mayfair", "character": "Luxury and finance",
-      "tags": ["Luxury district", "Financial core"],
-      "commuter_mult": 1.2, "tourism_mult": 1.15, "tag_mult": 1.12, "rev_vs_city_pct": 55, "rent_mult": 2.05,
-      "walkability": "high", "price_tier": "luxury", "headline_trade": "Specialty retail",
-      "xy": { "x": 37, "y": 45 }, "lat": 51.5096, "lng": -0.1494, "walk_score": 94, "cell_count": 18,
+      "name": "Mayfair",
+      "slug": "mayfair",
+      "character": "Luxury and finance",
+      "tags": [
+        "Luxury district",
+        "Financial core"
+      ],
+      "commuter_mult": 1.2,
+      "tourism_mult": 1.15,
+      "tag_mult": 1.12,
+      "rev_vs_city_pct": 55,
+      "rent_mult": 2.05,
+      "walkability": "high",
+      "price_tier": "luxury",
+      "headline_trade": "Specialty retail",
+      "xy": {
+        "x": 37,
+        "y": 45
+      },
+      "lat": 51.5096,
+      "lng": -0.1494,
+      "walk_score": 94,
+      "cell_count": 18,
       "blurb": "The highest takings in the city, paid for with the highest rent. A trade only clears here if its ticket is large enough to swallow the lease.",
       "verdict": "Highest takings, heaviest lease. Worth it only for a large-ticket trade that can carry the rent.",
-      "counterweight_below": "The rent outpaces even these takings, so the keep index drops below the city. The lift is spent before it reaches the till.",
       "best_trades": [
-        { "name": "Specialty retail", "why": "Wealthy locals and visitors pay full price; the address itself sells." },
-        { "name": "Fine dining", "why": "Expense accounts and tourists carry an average ticket no suburb matches." },
-        { "name": "Private members services", "why": "Discretion and proximity to wealth are the whole product." }
+        {
+          "name": "Specialty retail",
+          "why": "Wealthy locals and visitors pay full price; the address itself sells."
+        },
+        {
+          "name": "Fine dining",
+          "why": "Expense accounts and tourists carry an average ticket no suburb matches."
+        },
+        {
+          "name": "Private members services",
+          "why": "Discretion and proximity to wealth are the whole product."
+        }
       ],
-      "prime_streets": ["Bond Street", "Mount Street", "Berkeley Square"],
-      "demographics": ["High net worth", "International residents", "Finance workers"],
-      "footfall": { "weekday": 78, "weekend": 62 },
+      "prime_streets": [
+        "Bond Street",
+        "Mount Street",
+        "Berkeley Square"
+      ],
+      "demographics": [
+        "High net worth",
+        "International residents",
+        "Finance workers"
+      ],
+      "footfall": {
+        "weekday": 78,
+        "weekend": 62
+      },
       "locals_know": [
         "The Bond Street rent is for the postcode; the streets behind it, Bruton and Bourdon, carry the same address at roughly a third of the headline lease.",
         "Trade is weekday and lunch led; expense-account tables thin out after 3pm and the whole quarter empties on Sundays.",
@@ -55,22 +105,58 @@
       ]
     },
     {
-      "name": "Covent Garden", "slug": "covent-garden", "character": "Tourism and retail",
-      "tags": ["Tourist zone"],
-      "commuter_mult": 1.1, "tourism_mult": 1.32, "tag_mult": 1.02, "rev_vs_city_pct": 48, "rent_mult": 1.80,
-      "walkability": "high", "price_tier": "expensive", "headline_trade": "Cafe",
-      "xy": { "x": 48, "y": 44 }, "lat": 51.5129, "lng": -0.1240, "walk_score": 97, "cell_count": 22,
+      "name": "Covent Garden",
+      "slug": "covent-garden",
+      "character": "Tourism and retail",
+      "tags": [
+        "Tourist zone"
+      ],
+      "commuter_mult": 1.1,
+      "tourism_mult": 1.32,
+      "tag_mult": 1.02,
+      "rev_vs_city_pct": 48,
+      "rent_mult": 1.8,
+      "walkability": "high",
+      "price_tier": "expensive",
+      "headline_trade": "Cafe",
+      "xy": {
+        "x": 48,
+        "y": 44
+      },
+      "lat": 51.5129,
+      "lng": -0.124,
+      "walk_score": 97,
+      "cell_count": 22,
       "blurb": "Visitor footfall does the heavy lifting. Volume is enormous but it skews to one-time customers, so loyalty is hard to build.",
       "verdict": "Enormous visitor volume, almost no repeat custom. The margin lives entirely in the first sale.",
-      "counterweight_below": "Rent is priced off that footfall, and the transient crowd does not come back to earn it out, so the keep index sits below the city.",
       "best_trades": [
-        { "name": "Cafe", "why": "Constant tourist churn keeps seats turning over all day." },
-        { "name": "Casual dining", "why": "A captive crowd between attractions with nowhere quieter to go." },
-        { "name": "Gift and souvenir retail", "why": "Impulse spend from visitors who will not return to compare prices." }
+        {
+          "name": "Cafe",
+          "why": "Constant tourist churn keeps seats turning over all day."
+        },
+        {
+          "name": "Casual dining",
+          "why": "A captive crowd between attractions with nowhere quieter to go."
+        },
+        {
+          "name": "Gift and souvenir retail",
+          "why": "Impulse spend from visitors who will not return to compare prices."
+        }
       ],
-      "prime_streets": ["The Piazza", "Neal Street", "Long Acre"],
-      "demographics": ["Tourists", "Theatre-goers", "Office workers"],
-      "footfall": { "weekday": 70, "weekend": 88 },
+      "prime_streets": [
+        "The Piazza",
+        "Neal Street",
+        "Long Acre"
+      ],
+      "demographics": [
+        "Tourists",
+        "Theatre-goers",
+        "Office workers"
+      ],
+      "footfall": {
+        "weekday": 70,
+        "weekend": 88
+      },
       "locals_know": [
         "The Piazza itself is managed frontage with a premium above the streets around it; Neal Street and Monmouth Street carry the same crowd for materially less.",
         "The crowd is transient, so a loyalty scheme earns almost nothing here; price the first visit as if it is the only one.",
@@ -78,22 +164,59 @@
       ]
     },
     {
-      "name": "Soho", "slug": "soho", "character": "Nightlife and media",
-      "tags": ["Nightlife zone", "Tourist zone"],
-      "commuter_mult": 1.12, "tourism_mult": 1.18, "tag_mult": 1.02, "rev_vs_city_pct": 35, "rent_mult": 1.55,
-      "walkability": "high", "price_tier": "expensive", "headline_trade": "Bar / restaurant",
-      "xy": { "x": 44, "y": 40 }, "lat": 51.5138, "lng": -0.1318, "walk_score": 96, "cell_count": 20,
+      "name": "Soho",
+      "slug": "soho",
+      "character": "Nightlife and media",
+      "tags": [
+        "Nightlife zone",
+        "Tourist zone"
+      ],
+      "commuter_mult": 1.12,
+      "tourism_mult": 1.18,
+      "tag_mult": 1.02,
+      "rev_vs_city_pct": 35,
+      "rent_mult": 1.55,
+      "walkability": "high",
+      "price_tier": "expensive",
+      "headline_trade": "Bar / restaurant",
+      "xy": {
+        "x": 44,
+        "y": 40
+      },
+      "lat": 51.5138,
+      "lng": -0.1318,
+      "walk_score": 96,
+      "cell_count": 20,
       "blurb": "An evening economy. Days are quiet, nights are dense, and a trade either lives off the after-dark crowd or struggles.",
       "verdict": "A night economy on a daytime lease. The evening crowd has to pay for the hours the unit sits quiet.",
-      "counterweight_below": "Rent is charged around the clock, but the takings only arrive after dark, so the keep index lands below the city.",
       "best_trades": [
-        { "name": "Bar", "why": "A dense, late-running nightlife crowd that drinks rather than dines." },
-        { "name": "Restaurant", "why": "Pre and post-night dining packs tables into a few hours." },
-        { "name": "Late-night food", "why": "Demand peaks when the rest of the city has closed." }
+        {
+          "name": "Bar",
+          "why": "A dense, late-running nightlife crowd that drinks rather than dines."
+        },
+        {
+          "name": "Restaurant",
+          "why": "Pre and post-night dining packs tables into a few hours."
+        },
+        {
+          "name": "Late-night food",
+          "why": "Demand peaks when the rest of the city has closed."
+        }
       ],
-      "prime_streets": ["Old Compton Street", "Dean Street", "Frith Street"],
-      "demographics": ["Media workers", "Nightlife crowd", "LGBTQ community"],
-      "footfall": { "weekday": 64, "weekend": 84 },
+      "prime_streets": [
+        "Old Compton Street",
+        "Dean Street",
+        "Frith Street"
+      ],
+      "demographics": [
+        "Media workers",
+        "Nightlife crowd",
+        "LGBTQ community"
+      ],
+      "footfall": {
+        "weekday": 64,
+        "weekend": 84
+      },
       "locals_know": [
         "A late licence is the real moat here, harder to win and worth more than the lease; a unit that already holds one to 3am trades at a premium for good reason.",
         "Daytime rent is paid by night-time takings, so a lunch offer that only breaks even is still worth running to hold the frontage.",
@@ -102,22 +225,59 @@
       ]
     },
     {
-      "name": "Canary Wharf", "slug": "canary-wharf", "character": "Finance and corporate",
-      "tags": ["Financial core", "Transit hub"],
-      "commuter_mult": 1.35, "tourism_mult": 0.95, "tag_mult": 1.01, "rev_vs_city_pct": 30, "rent_mult": 1.45,
-      "walkability": "moderate", "price_tier": "expensive", "headline_trade": "Lunch / quick service",
-      "xy": { "x": 75, "y": 56 }, "lat": 51.5054, "lng": -0.0235, "walk_score": 82, "cell_count": 14,
+      "name": "Canary Wharf",
+      "slug": "canary-wharf",
+      "character": "Finance and corporate",
+      "tags": [
+        "Financial core",
+        "Transit hub"
+      ],
+      "commuter_mult": 1.35,
+      "tourism_mult": 0.95,
+      "tag_mult": 1.01,
+      "rev_vs_city_pct": 30,
+      "rent_mult": 1.45,
+      "walkability": "moderate",
+      "price_tier": "expensive",
+      "headline_trade": "Lunch / quick service",
+      "xy": {
+        "x": 75,
+        "y": 56
+      },
+      "lat": 51.5054,
+      "lng": -0.0235,
+      "walk_score": 82,
+      "cell_count": 14,
       "blurb": "A weekday office island. Footfall is huge Monday to Friday at lunch and collapses on weekends, so the model has to win in five days.",
       "verdict": "Five days of dense office lunch, then nothing. The whole year of rent is earned before the weekend.",
-      "counterweight_below": "Rent is charged for seven days, but the takings only land across five, so the keep index sits below the city.",
       "best_trades": [
-        { "name": "Quick-service lunch", "why": "Tens of thousands of office workers need fast food in a 90-minute window." },
-        { "name": "Coffee", "why": "Morning commute and mid-afternoon breaks drive two reliable peaks." },
-        { "name": "After-work bar", "why": "A captive crowd unwinds on-site before the long commute home." }
+        {
+          "name": "Quick-service lunch",
+          "why": "Tens of thousands of office workers need fast food in a 90-minute window."
+        },
+        {
+          "name": "Coffee",
+          "why": "Morning commute and mid-afternoon breaks drive two reliable peaks."
+        },
+        {
+          "name": "After-work bar",
+          "why": "A captive crowd unwinds on-site before the long commute home."
+        }
       ],
-      "prime_streets": ["Cabot Square", "Jubilee Place", "Crossrail Place"],
-      "demographics": ["Finance workers", "Corporate professionals", "Commuters"],
-      "footfall": { "weekday": 92, "weekend": 24 },
+      "prime_streets": [
+        "Cabot Square",
+        "Jubilee Place",
+        "Crossrail Place"
+      ],
+      "demographics": [
+        "Finance workers",
+        "Corporate professionals",
+        "Commuters"
+      ],
+      "footfall": {
+        "weekday": 92,
+        "weekend": 24
+      },
       "locals_know": [
         "The estate is privately managed, so the lease often comes with mall-style service charges and trading hours on top of the headline rent.",
         "Weekends are effectively dead; a seven-day cost base has to be earned in five, which is why throughput beats ambience every time.",
@@ -126,22 +286,59 @@
       ]
     },
     {
-      "name": "Shoreditch", "slug": "shoreditch", "character": "Tech and creative",
-      "tags": ["Tech corridor", "Gentrifying edge"],
-      "commuter_mult": 1.1, "tourism_mult": 1.02, "tag_mult": 1.05, "rev_vs_city_pct": 18, "rent_mult": 1.15,
-      "walkability": "high", "price_tier": "mid", "headline_trade": "Independent retail",
-      "xy": { "x": 58, "y": 35 }, "lat": 51.5265, "lng": -0.0789, "walk_score": 90, "cell_count": 16,
+      "name": "Shoreditch",
+      "slug": "shoreditch",
+      "character": "Tech and creative",
+      "tags": [
+        "Tech corridor",
+        "Gentrifying edge"
+      ],
+      "commuter_mult": 1.1,
+      "tourism_mult": 1.02,
+      "tag_mult": 1.05,
+      "rev_vs_city_pct": 18,
+      "rent_mult": 1.15,
+      "walkability": "high",
+      "price_tier": "mid",
+      "headline_trade": "Independent retail",
+      "xy": {
+        "x": 58,
+        "y": 35
+      },
+      "lat": 51.5265,
+      "lng": -0.0789,
+      "walk_score": 90,
+      "cell_count": 16,
       "blurb": "A creative and tech crowd with money and taste. Rent is climbing but still leaves room for an independent operator to clear a margin.",
       "verdict": "Money and taste, and rent that still leaves room, for now. Sign early or watch the margin close.",
-      "counterweight_above": "Rent stays below what these takings can carry, so more of each pound survives and the keep index holds above the city.",
       "best_trades": [
-        { "name": "Independent retail", "why": "A design-literate crowd pays a premium for something not on the high street." },
-        { "name": "Specialty coffee", "why": "Tech workers and freelancers treat cafes as second offices." },
-        { "name": "Casual dining", "why": "A young, spending crowd eats out often and tries new openings." }
+        {
+          "name": "Independent retail",
+          "why": "A design-literate crowd pays a premium for something not on the high street."
+        },
+        {
+          "name": "Specialty coffee",
+          "why": "Tech workers and freelancers treat cafes as second offices."
+        },
+        {
+          "name": "Casual dining",
+          "why": "A young, spending crowd eats out often and tries new openings."
+        }
       ],
-      "prime_streets": ["Redchurch Street", "Brick Lane", "Curtain Road"],
-      "demographics": ["Tech workers", "Creatives", "Young professionals"],
-      "footfall": { "weekday": 66, "weekend": 74 },
+      "prime_streets": [
+        "Redchurch Street",
+        "Brick Lane",
+        "Curtain Road"
+      ],
+      "demographics": [
+        "Tech workers",
+        "Creatives",
+        "Young professionals"
+      ],
+      "footfall": {
+        "weekday": 66,
+        "weekend": 74
+      },
       "locals_know": [
         "Rent is still rising fast on the prime blocks; a lease signed today at today's rate can look heavy inside two years, so a rent review clause matters more than the opening figure.",
         "Redchurch Street commands a designer-retail premium, but a unit one block onto Cheshire Street or Club Row carries the same crowd for noticeably less.",
@@ -149,22 +346,59 @@
       ]
     },
     {
-      "name": "Camden", "slug": "camden", "character": "Markets and music",
-      "tags": ["Tourist zone", "Nightlife zone"],
-      "commuter_mult": 1.03, "tourism_mult": 1.08, "tag_mult": 0.97, "rev_vs_city_pct": 8, "rent_mult": 0.98,
-      "walkability": "high", "price_tier": "mid", "headline_trade": "Food and drink",
-      "xy": { "x": 43, "y": 22 }, "lat": 51.5390, "lng": -0.1426, "walk_score": 89, "cell_count": 12,
+      "name": "Camden",
+      "slug": "camden",
+      "character": "Markets and music",
+      "tags": [
+        "Tourist zone",
+        "Nightlife zone"
+      ],
+      "commuter_mult": 1.03,
+      "tourism_mult": 1.08,
+      "tag_mult": 0.97,
+      "rev_vs_city_pct": 8,
+      "rent_mult": 0.98,
+      "walkability": "high",
+      "price_tier": "mid",
+      "headline_trade": "Food and drink",
+      "xy": {
+        "x": 43,
+        "y": 22
+      },
+      "lat": 51.539,
+      "lng": -0.1426,
+      "walk_score": 89,
+      "cell_count": 12,
       "blurb": "Market-led footfall, heavy on weekends and light on spend per head. Volume is real but the average ticket is modest.",
       "verdict": "Huge weekend volume at a small ticket. The model is throughput, not spend per head.",
-      "counterweight_above": "Rent sits near the city rate, light enough that even a modest ticket keeps its share, so the keep index rises above the city despite the low spend.",
       "best_trades": [
-        { "name": "Street food", "why": "Market crowds graze; low ticket, very high volume." },
-        { "name": "Live music venue", "why": "A built-in scene draws a crowd no other district matches." },
-        { "name": "Alternative retail", "why": "A distinctive subculture buys what it cannot find elsewhere." }
+        {
+          "name": "Street food",
+          "why": "Market crowds graze; low ticket, very high volume."
+        },
+        {
+          "name": "Live music venue",
+          "why": "A built-in scene draws a crowd no other district matches."
+        },
+        {
+          "name": "Alternative retail",
+          "why": "A distinctive subculture buys what it cannot find elsewhere."
+        }
       ],
-      "prime_streets": ["Camden High Street", "Stables Market", "Chalk Farm Road"],
-      "demographics": ["Tourists", "Students", "Music fans"],
-      "footfall": { "weekday": 52, "weekend": 90 },
+      "prime_streets": [
+        "Camden High Street",
+        "Stables Market",
+        "Chalk Farm Road"
+      ],
+      "demographics": [
+        "Tourists",
+        "Students",
+        "Music fans"
+      ],
+      "footfall": {
+        "weekday": 52,
+        "weekend": 90
+      },
       "locals_know": [
         "A stall inside the market trades on a licence and a turnover cut rather than a full lease, which is how a food trader tests the crowd here before committing to a unit.",
         "Spend per head is genuinely low; the model only works on volume, so a slow till or a small kitchen caps the whole business.",
@@ -172,22 +406,58 @@
       ]
     },
     {
-      "name": "Hackney", "slug": "hackney", "character": "Independent and creative",
-      "tags": ["Gentrifying edge"],
-      "commuter_mult": 1.0, "tourism_mult": 1.0, "tag_mult": 1.05, "rev_vs_city_pct": 5, "rent_mult": 0.90,
-      "walkability": "moderate", "price_tier": "mid", "headline_trade": "Cafe",
-      "xy": { "x": 62, "y": 26 }, "lat": 51.5450, "lng": -0.0553, "walk_score": 78, "cell_count": 11,
+      "name": "Hackney",
+      "slug": "hackney",
+      "character": "Independent and creative",
+      "tags": [
+        "Gentrifying edge"
+      ],
+      "commuter_mult": 1,
+      "tourism_mult": 1,
+      "tag_mult": 1.05,
+      "rev_vs_city_pct": 5,
+      "rent_mult": 0.9,
+      "walkability": "moderate",
+      "price_tier": "mid",
+      "headline_trade": "Cafe",
+      "xy": {
+        "x": 62,
+        "y": 26
+      },
+      "lat": 51.545,
+      "lng": -0.0553,
+      "walk_score": 78,
+      "cell_count": 11,
       "blurb": "A residential creative belt that spends locally. Trade is steady and loyal rather than spiky, and rent stays reasonable for now.",
       "verdict": "Steady, loyal, local spend on a light lease. Slower to fill than the centre, but it holds.",
-      "counterweight_above": "Rent runs below the city rate, so a loyal local base keeps most of each pound and the keep index climbs well above the city.",
       "best_trades": [
-        { "name": "Neighborhood cafe", "why": "A resident creative crowd treats the local cafe as a daily habit." },
-        { "name": "Independent grocer", "why": "Households shop locally and value quality over price." },
-        { "name": "Bakery", "why": "Weekend footfall and steady daily demand from families." }
+        {
+          "name": "Neighborhood cafe",
+          "why": "A resident creative crowd treats the local cafe as a daily habit."
+        },
+        {
+          "name": "Independent grocer",
+          "why": "Households shop locally and value quality over price."
+        },
+        {
+          "name": "Bakery",
+          "why": "Weekend footfall and steady daily demand from families."
+        }
       ],
-      "prime_streets": ["Broadway Market", "Mare Street", "Chatsworth Road"],
-      "demographics": ["Creatives", "Young families", "Long-term residents"],
-      "footfall": { "weekday": 54, "weekend": 70 },
+      "prime_streets": [
+        "Broadway Market",
+        "Mare Street",
+        "Chatsworth Road"
+      ],
+      "demographics": [
+        "Creatives",
+        "Young families",
+        "Long-term residents"
+      ],
+      "footfall": {
+        "weekday": 54,
+        "weekend": 70
+      },
       "locals_know": [
         "Loyalty is the real asset here; a good local builds a base that carries it through a downturn better than any footfall district.",
         "Broadway Market rent is set by the Saturday crowd, but a unit on Chatsworth Road or Lower Clapton serves the same residents at a weekday-rent rate.",
@@ -196,22 +466,58 @@
       ]
     },
     {
-      "name": "Stratford", "slug": "stratford", "character": "Retail and transit",
-      "tags": ["Transit hub"],
-      "commuter_mult": 1.12, "tourism_mult": 0.95, "tag_mult": 1.01, "rev_vs_city_pct": 8, "rent_mult": 0.95,
-      "walkability": "moderate", "price_tier": "affordable", "headline_trade": "Convenience",
-      "xy": { "x": 81, "y": 33 }, "lat": 51.5419, "lng": -0.0030, "walk_score": 80, "cell_count": 10,
+      "name": "Stratford",
+      "slug": "stratford",
+      "character": "Retail and transit",
+      "tags": [
+        "Transit hub"
+      ],
+      "commuter_mult": 1.12,
+      "tourism_mult": 0.95,
+      "tag_mult": 1.01,
+      "rev_vs_city_pct": 8,
+      "rent_mult": 0.95,
+      "walkability": "moderate",
+      "price_tier": "affordable",
+      "headline_trade": "Convenience",
+      "xy": {
+        "x": 81,
+        "y": 33
+      },
+      "lat": 51.5419,
+      "lng": -0.003,
+      "walk_score": 80,
+      "cell_count": 10,
       "blurb": "A transit and shopping-centre crowd passing through. Footfall is high but mall economics and chain competition cap what an independent can take.",
       "verdict": "High footfall on a cheap lease, but the mall sets the terms. Independents win on speed, not range.",
-      "counterweight_above": "Rent runs below the city rate, so even a capped, chain-pressured ticket keeps its share and the keep index sits comfortably above the city.",
       "best_trades": [
-        { "name": "Convenience retail", "why": "Commuters grab essentials in transit; fast, repeatable, low ticket." },
-        { "name": "Grab-and-go food", "why": "A constant flow of people moving between train and mall." },
-        { "name": "Services", "why": "A large residential catchment needs everyday services nearby." }
+        {
+          "name": "Convenience retail",
+          "why": "Commuters grab essentials in transit; fast, repeatable, low ticket."
+        },
+        {
+          "name": "Grab-and-go food",
+          "why": "A constant flow of people moving between train and mall."
+        },
+        {
+          "name": "Services",
+          "why": "A large residential catchment needs everyday services nearby."
+        }
       ],
-      "prime_streets": ["Westfield Avenue", "The Broadway", "Stratford Centre"],
-      "demographics": ["Commuters", "Shoppers", "New-build residents"],
-      "footfall": { "weekday": 72, "weekend": 78 },
+      "prime_streets": [
+        "Westfield Avenue",
+        "The Broadway",
+        "Stratford Centre"
+      ],
+      "demographics": [
+        "Commuters",
+        "Shoppers",
+        "New-build residents"
+      ],
+      "footfall": {
+        "weekday": 72,
+        "weekend": 78
+      },
       "locals_know": [
         "There are two rent worlds here: inside Westfield you pay mall rates with mall rules, and on the older Broadway you pay a fraction for a rougher, slower crowd.",
         "The mall sets the trading hours and the tenant mix, so an independent competes on convenience and speed, never on range against the chains.",
@@ -219,22 +525,59 @@
       ]
     },
     {
-      "name": "Brixton", "slug": "brixton", "character": "Food and culture",
-      "tags": ["Nightlife zone", "Gentrifying edge"],
-      "commuter_mult": 0.96, "tourism_mult": 1.0, "tag_mult": 1.0, "rev_vs_city_pct": -4, "rent_mult": 0.80,
-      "walkability": "moderate", "price_tier": "affordable", "headline_trade": "Food and drink",
-      "xy": { "x": 46, "y": 78 }, "lat": 51.4613, "lng": -0.1156, "walk_score": 84, "cell_count": 9,
+      "name": "Brixton",
+      "slug": "brixton",
+      "character": "Food and culture",
+      "tags": [
+        "Nightlife zone",
+        "Gentrifying edge"
+      ],
+      "commuter_mult": 0.96,
+      "tourism_mult": 1,
+      "tag_mult": 1,
+      "rev_vs_city_pct": -4,
+      "rent_mult": 0.8,
+      "walkability": "moderate",
+      "price_tier": "affordable",
+      "headline_trade": "Food and drink",
+      "xy": {
+        "x": 46,
+        "y": 78
+      },
+      "lat": 51.4613,
+      "lng": -0.1156,
+      "walk_score": 84,
+      "cell_count": 9,
       "blurb": "South of the river and below the city baseline on revenue, but rent is low enough that a tight operator can still keep more of each pound.",
       "verdict": "Below the city on takings, ahead of it on what stays. Low rent is the whole edge.",
-      "counterweight_above": "Revenue sits below the city, but rent is the lightest on the map, so a tight operator keeps more of each pound and the keep index climbs above the city anyway.",
       "best_trades": [
-        { "name": "Food market stall", "why": "A celebrated food scene draws a crowd from across the city." },
-        { "name": "Bar", "why": "A strong evening economy on a lower cost base than the centre." },
-        { "name": "Independent restaurant", "why": "Diverse, food-led demand rewards a distinctive kitchen." }
+        {
+          "name": "Food market stall",
+          "why": "A celebrated food scene draws a crowd from across the city."
+        },
+        {
+          "name": "Bar",
+          "why": "A strong evening economy on a lower cost base than the centre."
+        },
+        {
+          "name": "Independent restaurant",
+          "why": "Diverse, food-led demand rewards a distinctive kitchen."
+        }
       ],
-      "prime_streets": ["Brixton Village", "Atlantic Road", "Coldharbour Lane"],
-      "demographics": ["Diverse community", "Young renters", "Food lovers"],
-      "footfall": { "weekday": 56, "weekend": 76 },
+      "prime_streets": [
+        "Brixton Village",
+        "Atlantic Road",
+        "Coldharbour Lane"
+      ],
+      "demographics": [
+        "Diverse community",
+        "Young renters",
+        "Food lovers"
+      ],
+      "footfall": {
+        "weekday": 56,
+        "weekend": 76
+      },
       "locals_know": [
         "Revenue sits below the city, but the low rent means the margin can still beat far pricier districts; this is the clearest case on the map that takings and keep are not the same thing.",
         "A stall in Brixton Village is cheaper than a street unit and just as visible to the food crowd, so it is where most kitchens here start.",
