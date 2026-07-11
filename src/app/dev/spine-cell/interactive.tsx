@@ -2,15 +2,15 @@
 /**
  * Client interactives for the cell page that are NOT part of the money-chapter
  * subtype propagation: the sortable Nearby comparison table (click-to-sort, a
- * keeps-per-$1 rate column proving the section's own verdict, CellScaleBar in-cell
- * bars on a drawn domain), the Wages full per-role range-plot (permanently visible,
- * rulebook v2 S6), and the Risks dot plot on a shared labeled 0-10 scale. Kept out
+ * keeps-per-$1 rate column proving the section's own verdict; figures + bold-best
+ * only, the in-cell bars are gone per rulebook v1 sections 22/25), the Wages
+ * mid-pay figures + track-free range brackets (permanently visible, rulebook v2
+ * S6), and the Risks dot plot on a shared labeled 0-10 scale. Kept out
  * of money-chapter.tsx
  * because they do not read the FormatContext. All prose from the seed.
  */
 import * as React from "react";
-import { Box, Rail, Fig, TERRA, EaseScale, InlineDisclosure, usd } from "@/components/spine/kit";
-import { CellScaleBar } from "@/components/spine/kit-index";
+import { Box, Rail, Fig, EaseScale, InlineDisclosure, usd } from "@/components/spine/kit";
 
 const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
 
@@ -20,10 +20,11 @@ type Col = { key: string; label: string; unit: string; get: (x: any) => number; 
  * drop the hand-rolled surface_line div , a verdict outside Rail that claimed "keeps
  * the least per dollar"): the table CARRIES that claim itself, needing no sentence
  * to assert it , a sortable keeps-per-$1 column (take over turnover, in cents),
- * default sort, proves it directly. In-cell bars are CellScaleBar (drawn 0-max
- * domain with a visible baseline tick).
- * terracotta target: ONE , the keeps-per-$1 winner's figure + bar. Best in the other
- * columns is bold ink; the sort header, HERE tag and row tint are ink/neutral chrome. */
+ * default sort, proves it directly. The in-cell CellScaleBars are DELETED
+ * (rulebook v1 sections 22/25, founder G2/G11: figures + bold-best carry each
+ * column's winner; a table you read like a sentence, not a chart you study).
+ * terracotta target: ONE , the keeps-per-$1 winner's figure. Best in the other
+ * columns is semibold ink; the sort header, HERE tag and row tint are ink/neutral chrome. */
 export function Nearby({ d }: { d: any }) {
   const rows: any[] = d.nearby?.places ?? [];
   // Column presence: keep only the columns for which EVERY row carries a real
@@ -45,8 +46,6 @@ export function Nearby({ d }: { d: any }) {
   const col = cols.find((c) => c.key === sortKey) ?? cols[0];
   const best: Record<string, number> = {};
   cols.forEach((c) => (best[c.key] = Math.max(...rows.map((r) => c.get(r)))));
-  const maxByCol: Record<string, number> = {};
-  cols.forEach((c) => (maxByCol[c.key] = Math.max(...rows.map((r) => c.get(r))) || 1));
   const sorted = [...rows].sort((a, b) => col.get(b) - col.get(a));
   // Grid template adapts to the live column count (place + N metric columns), so
   // a promoted table with turnover only reads as a clean two-column list rather
@@ -73,7 +72,7 @@ export function Nearby({ d }: { d: any }) {
       </div>
       <div className="space-y-2 sm:space-y-0">
         {sorted.map((r) => (
-          <div key={r.name} className="celltop group relative rounded-md border border-[var(--c-border)] p-3 sm:grid sm:items-center sm:gap-3 sm:rounded-none sm:border-0 sm:border-b sm:p-0 sm:py-2.5"
+          <div key={r.name} className="group relative rounded-md border border-[var(--c-border)] p-3 sm:grid sm:items-center sm:gap-3 sm:rounded-none sm:border-0 sm:border-b sm:p-0 sm:py-2.5"
             style={{ ...(r.home ? { background: "var(--c-soft)" } : {}), gridTemplateColumns: gridCols }}>
             <span className="block min-w-0 truncate font-medium text-[var(--c-ink)]">{r.name}{r.home ? <span className="ml-1.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">here</span> : null}</span>
             <div className="mt-2 grid grid-cols-2 gap-x-3 gap-y-2 sm:contents sm:mt-0">
@@ -84,9 +83,7 @@ export function Nearby({ d }: { d: any }) {
                 return (
                   <div key={c.key} className="min-w-0 sm:text-right">
                     <span className="block text-[9.5px] uppercase tracking-wide text-[var(--c-muted)] sm:hidden">{c.label}</span>
-                    <Fig className={`text-[13px] ${crowned ? "font-bold text-[var(--terra-text)]" : isBest ? "font-bold text-[var(--c-ink)]" : "text-[var(--c-ink)]"}`}>{c.cell(v)}</Fig>
-                    {/* in-cell bar on a DRAWN 0-max domain (baseline tick visible) */}
-                    <CellScaleBar value={v} domain={[0, maxByCol[c.key]]} accent={crowned} />
+                    <Fig className={`text-[13px] ${crowned ? "font-semibold text-[var(--terra-text)]" : isBest ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink)]"}`}>{c.cell(v)}</Fig>
                   </div>
                 );
               })}
@@ -103,31 +100,46 @@ export function Nearby({ d }: { d: any }) {
   );
 }
 
-/* Wages , WI-4 brief (rulebook v2 S6 fix): decision: the payroll you budget against.
- * The full per-role range-plot (low/mid/high) is the ONE proof graphic and now renders
- * PERMANENTLY VISIBLE , a chart never hides behind a disclosure. The former top-3
- * summary bars duplicated the same mid-pay figures the range-plot already shows, so
- * they are dropped rather than kept as redundant chrome above the real chart.
- * width: rail half. terracotta target: the head-chef range bar only. */
+/* Wages , WI-4 brief (rulebook v1 sections 25/37, founder G2/G4, 2026-07-11):
+ * decision: the payroll you budget against. Leads with the three at-a-glance
+ * mid-pay figures (the July-3 lead read, figures only, no summary bars). The full
+ * per-role range plot stays PERMANENTLY VISIBLE below (rulebook v2 S6, a chart
+ * never hides behind a disclosure) but its filled tracks are gone: each row is a
+ * track-free range bracket , low/high end ticks joined by a hairline, mid dot.
+ * width: rail half. terracotta target: none (a head-chef row is a roster
+ * position, not an answer; the figures are the read). */
 export function Wages({ d }: { d: any }) {
   const roles: any[] = d.wages?.roles ?? [];
+  if (roles.length === 0) return null;
   const max = Math.max(1, ...roles.map((r) => r.high_usd)) * 1.05;
+  const kUsd = (v: number) => `$${Math.round(v / 1000)}K`;
   return (
     <Box className="md:flex-[3]">
       <Rail icon="wages" kicker="What you would pay your team" />
-      <div className="mt-3 space-y-3">
-        {roles.map((r, i) => {
+      {/* the three mid-pay figures, first (the at-a-glance read) */}
+      <div className="mt-1 space-y-1.5">
+        {roles.slice(0, 3).map((r) => (
+          <div key={r.role} className="flex items-baseline justify-between gap-3">
+            <span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]">{r.role}</span>
+            <Fig className="text-[14px] text-[var(--c-ink)]">{kUsd(r.mid_usd)}</Fig>
+          </div>
+        ))}
+      </div>
+      <div className="mt-2 text-[11px] text-[var(--c-muted)]">Typical mid pay a year; the full spread by role sits below.</div>
+      {/* the full spread, always visible: track-free range brackets (low tick, high tick, mid dot) */}
+      <div className="mt-3 space-y-3 border-t border-[var(--c-border)] pt-3">
+        {roles.map((r) => {
           const L = (r.low_usd / max) * 100, W = ((r.high_usd - r.low_usd) / max) * 100, M = (r.mid_usd / max) * 100;
-          const lead = i === 0;
           return (
             <div key={r.role} className="grid grid-cols-[120px_1fr_56px] items-center gap-3">
               <span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]">{r.role}</span>
-              <div className="relative h-3.5">
-                <div className="absolute top-1/2 h-0.5 w-full -translate-y-1/2 rounded" style={{ background: "#e3e3e3" }} />
-                <div className="absolute top-1/2 h-1.5 -translate-y-1/2 rounded" style={{ left: `${L}%`, width: `${W}%`, background: lead ? TERRA : "#c8c8c6" }} />
-                <div className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 bg-white" style={{ left: `${M}%`, borderColor: lead ? TERRA : "#9a9a9a" }} />
+              <div className="relative h-3.5" role="img" aria-label={`${r.role} ${kUsd(r.low_usd)} to ${kUsd(r.high_usd)}, typically ${kUsd(r.mid_usd)}`}>
+                <div aria-hidden className="absolute top-1/2 h-px -translate-y-1/2" style={{ left: `${L}%`, width: `${W}%`, background: "#9a9a9a" }} />
+                <div aria-hidden className="absolute top-1/2 h-2 w-px -translate-y-1/2" style={{ left: `${L}%`, background: "#9a9a9a" }} />
+                <div aria-hidden className="absolute top-1/2 h-2 w-px -translate-y-1/2" style={{ left: `calc(${(L + W).toFixed(2)}% - 1px)`, background: "#9a9a9a" }} />
+                <div aria-hidden className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 bg-white" style={{ left: `${M}%`, borderColor: "#9a9a9a" }} />
               </div>
-              <Fig className="text-right text-[14px] text-[var(--c-ink)]">${Math.round(r.mid_usd / 1000)}K</Fig>
+              <Fig className="text-right text-[14px] text-[var(--c-ink)]">{kUsd(r.mid_usd)}</Fig>
             </div>
           );
         })}

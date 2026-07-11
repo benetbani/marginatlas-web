@@ -14,6 +14,7 @@
  */
 import * as React from "react";
 import { Box, Rail, Fig, usd } from "@/components/spine/kit";
+import { isReviewBuild } from "@/lib/feature_flags";
 
 const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
 
@@ -119,7 +120,7 @@ export function FormatPicker({ d }: { d: any }) {
   const keep = useCountUp(sel.keeps_pct, reduced, 420);
 
   return (
-    <Box className="celltop relative overflow-hidden">
+    <Box className="relative overflow-hidden">
       {/* faint control-room wash so the centerpiece reads warmer/heavier than ordinary cards */}
       <span aria-hidden className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(255,241,237,0.5), rgba(255,255,255,0) 40%)" }} />
       <div className="relative">
@@ -188,7 +189,8 @@ export function FormatPicker({ d }: { d: any }) {
         <p className="mt-3 text-[12px] leading-snug text-[var(--c-ink2)]">{sel.note}</p>
 
         {/* Pro seam , free lets you pick ONE format; Pro shows all three side by side.
-            The real matrix stays in the DOM (crawlable), value-visible behind a calm blur.
+            The real matrix stays in the DOM (crawlable); review builds render it plain
+            (rulebook v1 section 45), production veils it behind a calm blur.
             Rendered as ONE deliberate full-width panel (header + preview + inline CTA bar),
             never a small card center-floated over ghost rows. */}
         <div className="mt-4 border-t border-[var(--c-border)] pt-4">
@@ -212,12 +214,15 @@ function LockGlyph({ size = 16, color = "var(--c-ink2)" }: { size?: number; colo
 }
 
 /* ComparePro , the free/Pro seam as ONE deliberate full-width panel. A composed
- * header states the value, the real matrix sits below it blurred + value-visible
- * (crawlable, kept in the DOM), and the CTA is a quiet INK pill (Final Ascent:
- * the seam never outguns the data , the old full-width dark-terracotta bar was
- * the largest colored element on the page). The header's small terra lock tile
- * is the panel's one quiet Pro cue. */
+ * header states the value, the real matrix sits below it, and the CTA is a quiet
+ * INK pill (Final Ascent: the seam never outguns the data , the old full-width
+ * dark-terracotta bar was the largest colored element on the page). The header's
+ * small lock tile is the panel's one quiet Pro cue. Rulebook v1 section 45
+ * (founder G8, 2026-07-11): review builds render the matrix PLAIN , nothing
+ * veiled or fogged in a founder review copy; the blur + white gradient apply
+ * only in production, where the seam is live. */
 function ComparePro({ subs }: { subs: Subtype[] }) {
+  const unveiled = isReviewBuild();
   return (
     <div className="overflow-hidden rounded-[12px] border border-[var(--c-border)]" style={{ background: "var(--c-card)" }}>
       {/* header: states what Pro adds, fully inside the panel , ink chrome (the seam
@@ -229,13 +234,20 @@ function ComparePro({ subs }: { subs: Subtype[] }) {
           <div className="text-[11.5px] leading-snug text-[var(--c-ink2)]">Fast casual, full service and fine dining, with the full cost stack for each.</div>
         </div>
       </div>
-      {/* the real matrix, blurred + value-visible. Sits full width, so it reads as a
-          real preview rather than a broken half-loaded skeleton. */}
+      {/* the real matrix. Review builds get it plain (G8); production keeps the
+          calm blur + veil so the seam reads as a real preview, never a broken
+          half-loaded skeleton. */}
       <div className="relative px-4 py-3.5">
-        <div aria-hidden className="pointer-events-none select-none" style={{ filter: "blur(4px)", opacity: 0.55 }}>
+        {unveiled ? (
           <ProCompare subs={subs} />
-        </div>
-        <div aria-hidden className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,255,255,0.55))" }} />
+        ) : (
+          <>
+            <div aria-hidden className="pointer-events-none select-none" style={{ filter: "blur(4px)", opacity: 0.55 }}>
+              <ProCompare subs={subs} />
+            </div>
+            <div aria-hidden className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,255,255,0.55))" }} />
+          </>
+        )}
       </div>
       {/* CTA row , a quiet ink pill, right-aligned; chrome stays ink */}
       <div className="flex items-center justify-end border-t border-[var(--c-border)] px-4 py-3">
@@ -247,7 +259,7 @@ function ComparePro({ subs }: { subs: Subtype[] }) {
   );
 }
 
-/* the all-formats matrix behind the Pro veil (kept in the DOM, blurred + value-visible) */
+/* the all-formats matrix (kept in the DOM; plain in review builds, veiled in production) */
 function ProCompare({ subs }: { subs: Subtype[] }) {
   const rows: Array<[string, (s: Subtype) => string]> = [
     ["Owner keeps", (s) => money(s.take_home_usd)],

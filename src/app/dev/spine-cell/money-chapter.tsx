@@ -149,10 +149,12 @@ export function OwnerKeeps({ d }: { d: any }) {
   );
 }
 
-/* BreakEven , WI-3/4 brief:
+/* BreakEven , WI-3/4 brief (rulebook v1 sections 25/26, 2026-07-11: the headroom
+ * fill bar is gone; a lone number may stay a number, and the page's bar budget is
+ * spent elsewhere):
  * decision: how full the room must be to clear costs. Number: break-even covers vs the typical day (real headroom).
- * focal: the covers-a-day figure; a single length bar reads break-even as a FRACTION of actual typical covers.
- * width: rail half. terracotta target: the break-even fill on the real-covers track.
+ * focal: the covers-a-day figure; the headroom reads as figures in words below it.
+ * width: rail half. terracotta target: none (the break-even figure is the read).
  * No invented ceiling: both numbers are measured (subtype break-even + typical daily covers). */
 export function BreakEven({ d }: { d: any }) {
   const ctx = useFormat();
@@ -163,7 +165,6 @@ export function BreakEven({ d }: { d: any }) {
   // so the picker can never render a contradicting sentence here.
   const covers = ctx ? ctx.sel.break_even_covers_per_day : (b.covers_per_day ?? 0);
   const typical = (ctx ? ctx.sel.typical_covers_per_day : b.typical_covers_per_day) ?? Math.max(covers, 1);
-  const pct = Math.max(4, Math.min(100, (covers / typical) * 100));
   return (
     <Box className="md:flex-[2]">
       <div className="flex items-center justify-between gap-2">
@@ -174,15 +175,11 @@ export function BreakEven({ d }: { d: any }) {
         <CountFig value={covers} fmt={(n) => Math.round(n)} className="text-3xl leading-none text-[var(--c-ink)]" />
         <span className="text-[13px] text-[var(--c-ink2)]">covers<InfoTip gloss="One cover is one customer served; a table of four is four covers." /> a day to break even</span>
       </div>
-      {/* real headroom: break-even covers as a share of the typical day's covers.
-          Labels sit OUTSIDE the track in a caption row (in-track text broke at 390px). */}
-      <div className="mt-3">
-        <div className="relative h-8 overflow-hidden rounded-lg border border-[var(--c-border)]" style={{ background: TRACK }} role="img" aria-label={`Break-even at ${Math.round(covers)} of about ${typical} typical daily covers`}>
-          <div className="h-full rounded-l-lg" style={{ width: `${pct}%`, background: TERRA }} />
-        </div>
-        <div className="mt-1 flex items-baseline justify-between gap-3 text-[11px] text-[var(--c-ink2)]">
-          <span><Fig className="text-[var(--c-ink)]">{Math.round(covers)}</Fig> covers to break even</span>
-          <span className="text-right"><Fig className="text-[var(--c-ink)]">{typical}</Fig> on a typical day</span>
+      {/* real headroom as figures in words: break-even covers of the typical day's covers,
+          plus the gap. The old fill bar is gone (rulebook v1 section 25). */}
+      <div className="mt-3 border-t border-[var(--c-border)] pt-3">
+        <div className="text-[12px] leading-snug text-[var(--c-ink2)]">
+          That is <Fig className="text-[var(--c-ink)]">{Math.round(covers)}</Fig> of about <Fig className="text-[var(--c-ink)]">{typical}</Fig> covers on a typical day.
         </div>
         {/* the interpretation ADDS the headroom (the gap), never a third restatement of the fraction */}
         <div className="mt-1.5 text-[11px] text-[var(--c-muted)]">That leaves about <Fig className="text-[var(--c-ink2)]">{Math.max(0, Math.round(typical - covers))}</Fig> covers of headroom on a typical day.</div>

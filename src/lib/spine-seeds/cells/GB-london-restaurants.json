@@ -4,7 +4,7 @@
     "city": "London", "country_name": "United Kingdom", "trade": "Restaurants",
     "as_of": "2026-06", "overall_confidence": "placeholder",
     "provenance_line": "Figures are illustrative while we wire live data.",
-    "_note": "SEED for the cell-page spine dev surface (a trade in a place). Illustrative London restaurant economics; wire to the real cell data layer + finance engines (cells.ts, net_profit, breakeven) on promotion. Numbers must then match across surfaces. ALL user-visible prose lives here (verdicts, notes, myth, reads) so scaled pages read trade-and-place specific.",
+    "_note": "SEED for the cell-page spine dev surface (a trade in a place). Illustrative London restaurant economics; wire to the real cell data layer + finance engines (cells.ts, net_profit, breakeven) on promotion. Numbers must then match across surfaces. ALL user-visible prose lives here (verdicts, notes, myth, reads) so scaled pages read trade-and-place specific. related: per-sibling keep-% removed 2026-07-11 (rulebook v1 section 5, net margin by trade in a specific city is unknowable); each sibling now carries cost_to_open_usd, the modeled index-100 startup-capital archetype (src/lib/markets/startup_capital_archetypes.ts), hospitality-adjacent order, cafe first, no dental on a restaurant page (rulebook v1 section 32).",
     "_identity": "TRUST ARITHMETIC (every figure below closes these): rev = covers/wk x spend x 52 (315 x $38 x 52 = $622K, stated $620K); owner take = keeps% x rev ($620K x 7% = $43K); break-even covers/day = daily fixed / contribution per cover, with variable 66% / fixed 27% / keep 7% of sales: ($620K x 27% / 365) / ($38 x 34%) = 36 of a 45-cover typical day; payback = cost to open / annual take ($197K / $43K = 55 months). Subtype rows close the same identities at their own spend, covers and capex."
   },
   "headline": {
@@ -157,11 +157,10 @@
     ]
   },
   "related": [
-    { "name": "Dental practice", "slug": "dental-practices", "keeps_pct": 18 },
-    { "name": "Auto repair", "slug": "auto-repair-shops", "keeps_pct": 11 },
-    { "name": "Gym", "slug": "sports-fitness", "keeps_pct": 9 },
-    { "name": "Cafe", "slug": "cafes-coffee", "keeps_pct": 8 },
-    { "name": "Grocery store", "slug": "grocery-stores", "keeps_pct": 3 }
+    { "name": "Cafe", "slug": "cafes-coffee", "cost_to_open_usd": 180000 },
+    { "name": "Grocery store", "slug": "grocery-stores", "cost_to_open_usd": 250000 },
+    { "name": "Gym", "slug": "sports-fitness", "cost_to_open_usd": 200000 },
+    { "name": "Auto repair", "slug": "auto-repair-shops", "cost_to_open_usd": 180000 }
   ],
   "close": {
     "_meta": { "confidence": "placeholder", "source": "illustrative", "as_of": "2026-06" },
