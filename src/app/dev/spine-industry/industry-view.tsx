@@ -2,9 +2,10 @@
  * Industry page (a trade across places) , SPINE rebuild BODY. Leg 4.
  * The cross-geography "can I make money doing Y" decision engine. The Margin Index
  * ("keeps $X of every $100") is the answer-first hero; the neighbours benchmark
- * proves it high; the SUBTYPE DRILL is the richness lever; the WherePays leaderboard
- * is the commercial heart. Composed from the shared spine kit + page-local forms
- * (forms.tsx) + the where-pays client island.
+ * proves it high; the SUBTYPE DRILL is the richness lever; the WherePays list keeps
+ * the trade grounded place by place (rent-load facts + city links only, founder D3
+ * 2026-07-11: per-city net margin for one trade is unknowable, rulebook v1 §5).
+ * Composed from the shared spine kit + page-local forms (forms.tsx) + where-pays.
  *
  * Body/route split (Phase B): this file holds the whole page body as the named
  * export SpineIndustryBody, so the live industry route can mount it with real data
@@ -17,18 +18,16 @@
  * absent, so an omitted field renders NOTHING (never 0 / undefined / NaN / a broken
  * block). Demand guards the whole card down to the surviving AOV; CapitalPayback,
  * BreakEven, Seasonality, Ramp self-omit; Operator drops the sale-multiple fact when
- * absent; WherePaysExplorer hides its subtype-filter chips when the formats carry no
- * real rent_sensitivity (nothing re-ranks, so the chrome is dropped). The full seed
- * carries every field, so with it these guards never fire and the dev route is
- * unchanged.
+ * absent; WherePaysExplorer self-omits when no place carries a rent_load_pct (its
+ * only remaining figure).
  *
  * PAGE-LEVEL HIERARCHY (3 hero reads outweigh the rest): Margin Index masthead,
- * WherePays leaderboard, and the Subtype drill carry the most weight.
+ * the $100 money split, and the Subtype drill carry the most weight.
  */
 import * as React from "react";
 import { spineIndustrySeed } from "@/lib/spine-seeds";
 import { timeToOpenWeeks } from "@/lib/markets/opening_archetypes";
-import { Fig, Meter, Bullets, InfoTip, InlineDisclosure, Movement, Box, Rail, Spark, PhaseBar, StackBar, MiniBar, Full, Even, WideRail, Narrow, TERRA, TRACK, usd } from "@/components/spine/kit";
+import { Fig, Meter, Bullets, InfoTip, InlineDisclosure, Movement, Box, Rail, Spark, PhaseBar, StackBar, Stat, Full, Even, WideRail, Narrow, TERRA, usd } from "@/components/spine/kit";
 import { AtlasMark } from "@/components/spine/marks";
 import { WherePaysExplorer } from "./where-pays";
 import { MarginLadder, SurvivalCurve, SeasonRibbon, RangeBracket, CountFig } from "./forms";
@@ -49,7 +48,6 @@ function glossTerm(text: string | undefined, term: string, gloss: string): React
   const end = i + term.length;
   return <>{text.slice(0, end)}<InfoTip gloss={gloss} />{text.slice(end)}</>;
 }
-const GLOSS_COVERS = "Seated customers served; a table of four is four covers.";
 const GLOSS_PRIME_COST = "Food and labour together, the two big controllable costs.";
 const GLOSS_UTILISATION = "Share of a typical day's trade.";
 
@@ -68,7 +66,7 @@ function Masthead({ d }: { d: any }) {
         <span className="fig text-[length:var(--t-body)] font-semibold text-[var(--c-muted)]">00</span>
         <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--c-ink2)]">The trade, worldwide</span>
       </div>
-      <h1 data-typography="custom" className="text-[2.1rem] font-bold leading-[1.05] tracking-tight text-[var(--c-ink)] md:text-[2.75rem]">{d.meta?.name}</h1>
+      <h1 data-typography="custom" className="text-[2.1rem] font-semibold leading-[1.05] tracking-tight text-[var(--c-ink)] md:text-[2.75rem]">{d.meta?.name}</h1>
       <div className="mt-5 grid gap-5 md:grid-cols-[1.35fr_1fr] md:items-center">
         <div>
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
@@ -90,10 +88,11 @@ function Masthead({ d }: { d: any }) {
 
 /* VERDICT LEDE , the single editorial beat (subhead folded in). Rulebook v2 S8: no
  * centred island with blank sides , the quote sits Full-width in its own card beside
- * the shape that shows WHY the model is hard: the same variable-cost group MoneySplit
- * charts later (Ch.04), read small here as evidence for the quote instead of floating
- * alone. decision-support: why the model is hard, in one voice + one shape.
- * width: Full (T1). terracotta: the kept bar only. */
+ * the two figures that show WHY the model is hard: the same variable-cost / kept split
+ * MoneySplit charts later (Ch.04), read as a plain Stat pair here (rulebook v1 §26:
+ * a lone number may stay a number; the old MiniBar pair fed the bar monotony).
+ * decision-support: why the model is hard, in one voice + two figures.
+ * width: Full (T1). terracotta: the kept figure only. */
 function VerdictLede({ d }: { d: any }) {
   const v = d.verdict ?? {};
   if (!v.close) return null;
@@ -108,21 +107,15 @@ function VerdictLede({ d }: { d: any }) {
         <figure className="min-w-0 flex-1">
           <blockquote className="text-[length:var(--t-sub)] font-medium leading-snug text-[var(--c-ink)]">{v.close}</blockquote>
           <figcaption className="mt-3 flex items-start gap-2 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">
-            {/* neutral, not terracotta , the kept bar beside this is the box's one accent (rule: terracotta once per box) */}
+            {/* neutral, not terracotta , the kept figure beside this is the box's one accent (rule: terracotta once per box) */}
             <span className="mt-[7px] inline-block h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: "var(--c-line-strong)" }} aria-hidden />
             <span>What the winners are actually good at.</span>
           </figcaption>
         </figure>
         {hasCostShape ? (
-          <div className="w-full shrink-0 space-y-2.5 sm:w-[160px]">
-            <div>
-              <MiniBar pct={variablePct} />
-              <div className="mt-1 flex items-baseline justify-between text-[length:var(--t-micro)] text-[var(--c-muted)]"><span>variable costs</span><Fig className="text-[var(--c-ink)]">{variablePct}%</Fig></div>
-            </div>
-            <div>
-              <MiniBar pct={keptPct} accent />
-              <div className="mt-1 flex items-baseline justify-between text-[length:var(--t-micro)] text-[var(--c-muted)]"><span>kept</span><Fig className="text-[var(--terra-text)]">{keptPct}%</Fig></div>
-            </div>
+          <div className="flex shrink-0 gap-6 sm:border-l sm:border-[var(--c-border)] sm:pl-6">
+            <Stat value={<>{variablePct}%</>} label="Variable costs" />
+            <Stat value={<>{keptPct}%</>} label="Kept" accent />
           </div>
         ) : null}
       </Box>
@@ -137,7 +130,8 @@ function VerdictLede({ d }: { d: any }) {
  * width: Full (T1), a ranked distribution; rows render UNLINKED (plain spans) until
  *   those trade pages exist , no dead hrefs (real links only).
  * terracotta: the self dot only.
- * idiom: dot-on-a-track lollipop (1 of 2). Slate = modeled atlas trades only. */
+ * idiom: dots on one shared $ scale, NO filled track (the July-3 lollipop, de-barred
+ *   per rulebook v1 §25 bar rationing). Slate = modeled atlas trades only. */
 function Benchmark({ d }: { d: any }) {
   const b = d.benchmark ?? {};
   const trades: any[] = (b.trades ?? []).slice().sort((a: any, c: any) => c.keeps_per_100 - a.keeps_per_100);
@@ -159,7 +153,6 @@ function Benchmark({ d }: { d: any }) {
                 <span className={`min-w-0 truncate text-[length:var(--t-body)] ${self ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`} title={t.name}>{t.name}</span>
                 <div className="relative h-3 min-w-0" role="img" aria-label={`${t.name} keeps $${t.keeps_per_100} per $100`}>
                   <div className="absolute top-1/2 h-px w-full -translate-y-1/2" style={{ background: "#e7e2df" }} />
-                  <div className="absolute top-1/2 h-[3px] -translate-y-1/2 rounded-full" style={{ left: 0, width: `${pos}%`, background: self ? TERRA : "#d4cdc8" }} />
                   <span className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${pos}%`, background: self ? TERRA : "#9a938e", boxShadow: "0 0 0 1px #e7e2df" }} />
                 </div>
                 <Fig className={`text-right text-[length:var(--t-body)] ${self ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>${t.keeps_per_100}</Fig>
@@ -186,10 +179,12 @@ function Benchmark({ d }: { d: any }) {
 }
 
 /* ============================================================
- * DEMAND , the appetite drawn + the crowd sharing it. On real-data promotion only the
- * spend-per-head (AOV) survives with an honest source; the demand trend Spark, the
- * visits-a-year, and the saturation venues-per-10k are OMITTED (no honest source), so
- * the whole card guards down to the one figure it can defend, or renders nothing.
+ * DEMAND , the appetite drawn. The saturation venues-per-10k half is DELETED outright
+ * (rulebook v1 §5: a derived "crowding" score has no statistical basis; founder G8,
+ * 2026-07-11), from the render, not just the real-data guard. On real-data promotion
+ * only the spend-per-head (AOV) survives with an honest source; the demand trend Spark
+ * and the visits-a-year are OMITTED (no honest source), so the card guards down to the
+ * one figure it can defend, or renders nothing.
  * decision: what a diner is worth per visit. Number: spend per head.
  * focal: the spend-per-head figure. terracotta: none on the surface when the trend is gone. */
 function Demand({ d }: { d: any }) {
@@ -199,13 +194,9 @@ function Demand({ d }: { d: any }) {
   const hasTrend = trend.length > 1;
   const hasSpend = typeof dm.spend_per_head_usd === "number";
   const hasVisits = typeof dm.purchases_per_year === "number";
-  const hasSaturation = typeof dm.venues_per_10k === "number";
-  // Guard the whole chapter when nothing honest survives (no appetite figure and no
-  // saturation read): render nothing rather than an empty rail.
-  if (!hasTrend && !hasSpend && !hasVisits && !hasSaturation) return null;
-  // The appetite half needs at least one appetite figure (trend / spend / visits) to
-  // earn its box; the saturation half needs the venues figure.
-  const hasAppetite = hasTrend || hasSpend || hasVisits;
+  // Guard the whole chapter when no appetite figure (trend / spend / visits) survives:
+  // render nothing rather than an empty rail.
+  if (!hasTrend && !hasSpend && !hasVisits) return null;
   // Trend direction from the REAL sign of the series (last minus first), carried by the
   // matching functional mark beside the end figure.
   const trendDelta = hasTrend ? trend[trend.length - 1] - trend[0] : 0;
@@ -215,89 +206,74 @@ function Demand({ d }: { d: any }) {
   const asOf: unknown = dm._meta?.as_of ?? d.meta?.as_of;
   const endYear = typeof asOf === "string" ? parseInt(asOf.slice(0, 4), 10) : NaN;
   const startYear = Number.isFinite(endYear) ? endYear - (trend.length - 1) : NaN;
-  const appetiteBox = hasAppetite ? (
-    <Box className="flex flex-col justify-center">
-      <Rail icon="spending-power" kicker="The appetite, across the markets the atlas covers" verdict={hasTrend ? dm.trend_verdict : dm.spend_verdict} />
-      <div className="flex flex-wrap items-end gap-x-6 gap-y-3">
-        {hasTrend ? (
-          <div className="min-w-0">
-            <div className="flex items-end gap-2.5">
-              <Spark values={trend} w={172} h={46} />
-              {trendEnd != null ? (
-                <span className="flex items-baseline gap-1"><Fig className="text-[26px] leading-none text-[var(--c-ink)]">{trendEnd}</Fig><span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">of 100</span><AtlasMark id={trendMark} size={14} className="self-center" /></span>
+  return (
+    <Narrow>
+      <Box className="flex flex-col justify-center">
+        <Rail icon="spending-power" kicker="The appetite, across the markets the atlas covers" verdict={hasTrend ? dm.trend_verdict : dm.spend_verdict} />
+        <div className="flex flex-wrap items-end gap-x-6 gap-y-3">
+          {hasTrend ? (
+            <div className="min-w-0">
+              <div className="flex items-end gap-2.5">
+                <Spark values={trend} w={172} h={46} />
+                {trendEnd != null ? (
+                  <span className="flex items-baseline gap-1"><Fig className="text-[26px] leading-none text-[var(--c-ink)]">{trendEnd}</Fig><span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">of 100</span><AtlasMark id={trendMark} size={14} className="self-center" /></span>
+                ) : null}
+              </div>
+              {Number.isFinite(startYear) && Number.isFinite(endYear) ? (
+                <div className="mt-0.5 flex justify-between text-[length:var(--t-micro)] text-[var(--c-muted)]" style={{ width: 172 }}>
+                  <span className="fig">{startYear}</span>
+                  <span className="fig">{endYear}</span>
+                </div>
+              ) : null}
+              <div className="mt-1 text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">Demand, indexed to the pre-dip 100</div>
+            </div>
+          ) : null}
+          {(hasSpend || hasVisits) ? (
+            <div className={`flex gap-6 ${hasTrend ? "sm:border-l sm:border-[var(--c-border)] sm:pl-6" : ""}`}>
+              {hasSpend ? (
+                <div>
+                  <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Spend per head</div>
+                  <Fig className="mt-1 block text-[length:var(--t-sub)] leading-none text-[var(--c-ink)]">${dm.spend_per_head_usd}</Fig>
+                </div>
+              ) : null}
+              {hasVisits ? (
+                <div>
+                  <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Visits a year</div>
+                  <Fig className="mt-1 block text-[length:var(--t-sub)] leading-none text-[var(--c-ink)]">{dm.purchases_per_year}</Fig>
+                </div>
               ) : null}
             </div>
-            {Number.isFinite(startYear) && Number.isFinite(endYear) ? (
-              <div className="mt-0.5 flex justify-between text-[length:var(--t-micro)] text-[var(--c-muted)]" style={{ width: 172 }}>
-                <span className="fig">{startYear}</span>
-                <span className="fig">{endYear}</span>
-              </div>
-            ) : null}
-            <div className="mt-1 text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">Demand, indexed to the pre-dip 100</div>
-          </div>
-        ) : null}
-        {(hasSpend || hasVisits) ? (
-          <div className={`flex gap-6 ${hasTrend ? "sm:border-l sm:border-[var(--c-border)] sm:pl-6" : ""}`}>
-            {hasSpend ? (
-              <div>
-                <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Spend per head</div>
-                <Fig className="mt-1 block text-[length:var(--t-sub)] leading-none text-[var(--c-ink)]">${dm.spend_per_head_usd}</Fig>
-              </div>
-            ) : null}
-            {hasVisits ? (
-              <div>
-                <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Visits a year</div>
-                <Fig className="mt-1 block text-[length:var(--t-sub)] leading-none text-[var(--c-ink)]">{dm.purchases_per_year}</Fig>
-              </div>
-            ) : null}
-          </div>
-        ) : null}
-      </div>
-      {dm.trend_note ? <div className="mt-3 border-t border-[var(--c-border)] pt-2.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]">{dm.trend_note}</div> : null}
-    </Box>
-  ) : null;
-  const saturationBox = hasSaturation ? (
-    <Box className="flex flex-col justify-center">
-      <Rail icon="competition" kicker="Saturation" verdict={dm.verdict} />
-      <div className="flex items-baseline gap-1.5"><CountFig value={dm.venues_per_10k} className="text-[40px] leading-none text-[var(--terra-text)]" /><span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">venues per 10k residents</span></div>
-      {dm.venues_per_10k_band ? <div className="mt-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{dm.venues_per_10k_band}</div> : null}
-      {dm.saturation_note ? <div className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{glossTerm(dm.saturation_note, "covers", GLOSS_COVERS)}</div> : null}
-    </Box>
-  ) : null;
-  // Both halves present: the coherent WideRail pair (the full-seed shape). One half
-  // only: render it alone at Narrow so a lone appetite figure does not sit in a
-  // half-empty two-up band.
-  if (appetiteBox && saturationBox) {
-    return <WideRail>{appetiteBox}{saturationBox}</WideRail>;
-  }
-  return <Narrow>{appetiteBox ?? saturationBox}</Narrow>;
+          ) : null}
+        </div>
+        {dm.trend_note ? <div className="mt-3 border-t border-[var(--c-border)] pt-2.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]">{dm.trend_note}</div> : null}
+      </Box>
+    </Narrow>
+  );
 }
 
 /* ============================================================
- * SUBTYPE DRILL , the richness lever (hero) and the chapter's ONE card: keep % (the
- * ranked bars) + capital-to-open (right-aligned column).
- * decision: which FORMAT to run, and what each door costs. Numbers: keep % (the ranked
- * bars, one decimal everywhere) + capital-to-open (right-aligned column).
- * focal: the keep-% ranked bars; format, not cuisine, moves the keep.
- * width: Full (T1), parallel reads on one shared scale; sort monotonic with the bars.
- * terracotta: the leading (best-keep) bar + its figure only; the cost column stays ink.
- * idiom: ranked track+fill bars (1 of 2, with the WherePays leaderboard).
+ * SUBTYPE DRILL , the richness lever (hero) and the chapter's ONE card: a plain ranked
+ * TABLE (format | keep % | capital to open), the July-3 figures-and-columns treatment.
+ * The ranked track+fill bars are gone (rulebook v1 §25 bar rationing: a third bar list
+ * in a row read as monotony; the figures rank themselves).
+ * decision: which FORMAT to run, and what each door costs. Numbers: keep % (one decimal
+ * everywhere) + capital-to-open (right-aligned column).
+ * focal: the keep-% column, sorted best-first; format, not cuisine, moves the keep.
+ * width: Full (T1). terracotta: the leading (best-keep) figure only; the cost column stays ink.
  * Reads the derived subtype shape (keeps_pct + capital_usd) via deriveSubtypes. */
 function SubtypeDrill({ d }: { d: any }) {
   const items = deriveSubtypes(d).slice().sort((a, b) => b.keeps_pct - a.keeps_pct);
   if (!items.length) return null;
-  const max = Math.max(...items.map((s) => s.keeps_pct));
   const lead = items[0]?.slug;
   const hasNotes = items.some((s) => s.note);
-  const cols = "grid-cols-[minmax(0,6.5rem)_minmax(0,1fr)_3.4rem_3.9rem] sm:grid-cols-[minmax(0,10rem)_minmax(0,1fr)_3.4rem_4.2rem]";
+  const cols = "grid-cols-[minmax(0,1fr)_3.4rem_3.9rem] sm:grid-cols-[minmax(0,1fr)_3.4rem_4.2rem]";
   return (
     <Full>
       <Box>
         <Rail icon="subtype" kicker="The subtypes" />
         <p className="-mt-1 mb-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">The registered segment only: street and informal operators run on different economics and are not counted here.</p>
         <div className={`grid ${cols} items-end gap-3 border-b border-[var(--c-border)] px-2 pb-1.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]`}>
-          <span>Format</span>
-          <span aria-hidden />
+          <span>Format, best keep first</span>
           <span className="text-right">Keep</span>
           <span className="text-right">To open</span>
         </div>
@@ -307,10 +283,7 @@ function SubtypeDrill({ d }: { d: any }) {
             return (
               <div key={s.slug} className={`hov -mx-2 grid ${cols} items-center gap-3 rounded-md px-2 py-2`}>
                 <span className="min-w-0 truncate text-[length:var(--t-body)] font-medium text-[var(--c-ink)]" title={s.name}>{s.name}</span>
-                <span className="h-2.5 overflow-hidden rounded-full" style={{ background: TRACK }}>
-                  <span className="block h-full rounded-full" role="img" aria-label={`${s.name} keeps ${s.keeps_pct.toFixed(1)}% of sales; ${money(s.capital_usd)} to open`} style={{ width: `${Math.max(4, (s.keeps_pct / max) * 100)}%`, background: isLead ? TERRA : "#c8c8c6" }} />
-                </span>
-                <Fig className={`text-right text-[length:var(--t-body)] ${isLead ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{s.keeps_pct.toFixed(1)}%</Fig>
+                <Fig className={`text-right text-[length:var(--t-body)] ${isLead ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{s.keeps_pct.toFixed(1)}%</Fig>
                 <Fig className="text-right text-[length:var(--t-body)] text-[var(--c-ink2)]">{money(s.capital_usd)}</Fig>
               </div>
             );
@@ -440,7 +413,8 @@ function BreakEven({ d }: { d: any }) {
   if (be == null) return null;
   return (
     <Box>
-      <Rail icon="break-even" kicker="Break-even utilisation" verdict="Below this share of a typical day's trade, the day loses money." />
+      {/* plain-words kicker (rulebook v1 §13: no jargon in titles; "utilisation" lives in the InfoTip) */}
+      <Rail icon="break-even" kicker="When a day starts paying" verdict="Below this share of a typical day's trade, the day loses money." />
       <div className="mb-3 flex items-baseline gap-2.5"><CountFig value={be} suffix="%" className="text-[40px] leading-none text-[var(--c-ink)]" /><InfoTip gloss={GLOSS_UTILISATION} /></div>
       <Meter value={be} left="empty" right="a typical day" />
       {cs.note ? <div className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{cs.note}</div> : null}
@@ -628,7 +602,7 @@ function ClaimRow({ claim, real, realLabel, accent = false }: { claim: string; r
     <div className="grid grid-cols-[1fr_auto] items-center gap-3 rounded-md border border-[var(--c-border)] px-3 py-2.5">
       <span className="text-[length:var(--t-body)] leading-snug text-[var(--c-muted)] line-through decoration-2 decoration-[var(--c-line-strong)]">{claim}</span>
       <div className="text-right">
-        <Fig className={`block text-[20px] leading-none ${accent ? "text-[var(--terra-text)]" : "font-bold text-[var(--c-ink)]"}`}>{real}</Fig>
+        <Fig className={`block text-[20px] leading-none ${accent ? "text-[var(--terra-text)]" : "font-semibold text-[var(--c-ink)]"}`}>{real}</Fig>
         <div className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{realLabel}</div>
       </div>
     </div>
@@ -688,16 +662,13 @@ function Caveats({ d }: { d: any }) {
   );
 }
 
-/* CLOSE , a deliberate full-width capstone: a three-point recap of the page's verdict
- * (the keep, the format that keeps most, the place that keeps most) then the one next action.
- * focal: the CTA. terracotta: the $-kept recap figure only (the page's answer restated);
- * the other recap figures read bold ink so the band carries ONE accent plus the button. */
+/* CLOSE , a deliberate full-width capstone: the page's answer restated (the $ kept per
+ * $100) then the one next action. The two "keeps most" recap lines (top format, top
+ * city) are CUT (rulebook v1 §15: the cross-entity "X keeps the most of it" verdict
+ * footer is banned, and the per-city line restated an unknowable per-city net margin).
+ * focal: the CTA. terracotta: the $-kept recap figure only (the page's answer restated). */
 function Close({ d }: { d: any }) {
   const mi = d.margin_index ?? {};
-  const subs = deriveSubtypes(d).slice().sort((a, b) => b.keeps_pct - a.keeps_pct);
-  const topFormat = subs[0];
-  const places: any[] = (d.where_pays?.places ?? []).slice().sort((a: any, b: any) => (b.net_margin_pct ?? 0) - (a.net_margin_pct ?? 0));
-  const topPlace = places[0];
   // The keep recap label earns its words: read against the real all-trades average when
   // the benchmark carries one, else the plain fallback.
   const avg = d.benchmark?.all_trades_avg;
@@ -706,19 +677,16 @@ function Close({ d }: { d: any }) {
     : "kept per $100, a thin keep won on volume";
   const recap: Array<[React.ReactNode, string, boolean]> = [
     ...(typeof mi.keeps_per_100 === "number" ? [[<>${mi.keeps_per_100}</>, keepLabel, true] as [React.ReactNode, string, boolean]] : []),
-    ...(topFormat ? [[<>{topFormat.name}</>, `the format that keeps most, about ${topFormat.keeps_pct.toFixed(1)}%`, false] as [React.ReactNode, string, boolean]] : []),
-    ...(topPlace ? [[<>{topPlace.name}</>, `keeps most of the modelled cities, ${topPlace.net_margin_pct}% net`, false] as [React.ReactNode, string, boolean]] : []),
   ];
-  const recapCols = recap.length >= 3 ? "sm:grid-cols-3" : recap.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-1";
   return (
     <Full>
       <Box>
         <Rail icon="bookmark" kicker="The close" />
         {recap.length ? (
-          <div className={`grid gap-4 ${recapCols}`}>
+          <div className="grid gap-4">
             {recap.map(([fig, label, accent], i) => (
               <div key={i} className="border-t border-[var(--c-line-strong)] pt-2.5">
-                <div className={`fig text-[length:var(--t-sub)] leading-none ${accent ? "text-[var(--terra-text)]" : "font-bold text-[var(--c-ink)]"}`}>{fig}</div>
+                <div className={`fig text-[length:var(--t-sub)] leading-none ${accent ? "text-[var(--terra-text)]" : "font-semibold text-[var(--c-ink)]"}`}>{fig}</div>
                 <div className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{label}</div>
               </div>
             ))}
@@ -751,7 +719,7 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
   // never floats over an empty chapter, and a half-omitted WideRail pair degrades to
   // the survivor at Full width (never a blank half-row), the way Demand already does.
   const dm = d.demand ?? {};
-  const hasDemand = (dm.trend_index ?? []).length > 1 || ["spend_per_head_usd", "purchases_per_year", "venues_per_10k"].some((k) => typeof dm[k] === "number");
+  const hasDemand = (dm.trend_index ?? []).length > 1 || ["spend_per_head_usd", "purchases_per_year"].some((k) => typeof dm[k] === "number");
   const hasBenchmark = (d.benchmark?.trades ?? []).length > 0;
   const subCount = deriveSubtypes(d).length;
   const hasMoneySplit = (d.money_split?.items ?? []).length > 0;
@@ -762,7 +730,9 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
   const hasPayback = typeof d.payback?.payback_months === "number";
   const hasSurvival = [d.survival?.yr1_pct, d.survival?.yr3_pct, d.survival?.yr5_pct].some((v) => typeof v === "number");
   const hasWhoSuits = (d.who_suits?.suits ?? []).length > 0 || (d.who_suits?.think_twice ?? []).length > 0;
-  const hasWherePays = (d.where_pays?.places ?? []).length > 0;
+  // Mirrors WherePaysExplorer's own guard: the list now carries rent-load facts only
+  // (founder D3, 2026-07-11), so a place without rent_load_pct contributes nothing.
+  const hasWherePays = (d.where_pays?.places ?? []).some((p: any) => typeof p?.rent_load_pct === "number");
   const hasSeasonality = (d.seasonality?.months ?? []).length >= 2;
   const hasCaveats = (d.caveats?.myths ?? []).length > 0 || !!d.caveats?.honest_take;
 
@@ -777,7 +747,7 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
       </> : null}
 
       {hasDemand ? <>
-        <Movement index="02" eyebrow="The demand" heading="The appetite, and the crowd sharing it" icon="spending-power" />
+        <Movement index="02" eyebrow="The demand" heading="The appetite" icon="spending-power" />
         <Demand d={d} />
       </> : null}
 
@@ -808,7 +778,7 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
       </> : null}
 
       {hasWherePays || hasSeasonality || hasCaveats ? <>
-        <Movement index="06" heading="Net margin by city" icon="where-it-pays" />
+        <Movement index="06" heading="Where it pays best" icon="where-it-pays" />
         <div className="space-y-6">
           <WherePaysExplorer d={d} />
           {hasSeasonality && hasCaveats

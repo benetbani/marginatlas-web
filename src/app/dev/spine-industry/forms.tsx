@@ -13,7 +13,7 @@
  *  - SeasonRibbon    , a single smooth area+line across Jan-Dec on a ZERO baseline. Replaces
  *                       twelve floored categorical bars (honesty fix + new form).
  *  - RangeBracket    , a labelled [lo | mid | hi] bracket for a single point-in-range
- *                       (payback). A distinct idiom from the dot-on-a-track lollipops.
+ *                       (payback). A distinct idiom from the benchmark's dot scale.
  *
  * Terracotta discipline: exactly one terracotta mark per form (the kept slice / the
  * marker / the peak node). All prose arrives from the seed via props.
@@ -233,7 +233,7 @@ export function SeasonRibbon({ months, peakNote, troughNote }: { months: number[
 /* ============================================================================
  * RANGE BRACKET , a labelled [ lo | mid | hi ] window for a single
  * point-in-range read (payback months). A capped end-tick bracket, NOT a dot on a
- * gradient track, so it stays distinct from the two lollipop lists. Neutral ink by
+ * gradient track, so it stays distinct from the benchmark's dot scale. Neutral ink by
  * default (per the kit convention); `accent` opts the mid marker into terracotta. The
  * payback card puts its ONE terra accent on the "34" figure, so this stays neutral.
  * ========================================================================== */
