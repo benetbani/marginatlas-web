@@ -16,15 +16,15 @@
     "rail": {
       "kicker": "Where in the city"
     },
-    "map_note": "Where each district sits. Tap a pin for its keep read; the ranking and the panel move with it.",
+    "map_note": "Where each district sits. Tap a pin for its rent read; the ranking and the panel move with it.",
     "compare": {
       "kicker": "Hold two or three side by side"
     },
     "myth": {
       "_meta": { "confidence": "placeholder" },
       "claim": "The highest-revenue district is the best place to open.",
-      "reality": "It is the highest-revenue district. It is rarely the one where the owner keeps the most. Top takings come with the heaviest rent, so the lift is spent before it reaches the till. On the keep index, the loudest names slide down and a few quieter, cheaper districts climb past them.",
-      "stat_label": "keep index sits well below the city baseline of 100",
+      "reality": "It is the highest-revenue district. It is also the one the lease punishes hardest. Top takings come with the heaviest rent, so the lift is spent before it reaches the till. On rent, the loudest names sit heaviest and a few quieter districts run far lighter.",
+      "stat_label": "rent runs well above the city rate",
       "tell": "The best-known address is the one the lease punishes hardest."
     }
   },

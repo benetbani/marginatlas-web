@@ -12,14 +12,15 @@
  * discards the fabricated set wholesale. Every filled figure is driven from the SAME
  * engine the live non-spine neighborhoods page runs (getNeighborhoodMultiplier +
  * rentMultiplier over data/economics/neighborhood_intensity_v1.json) plus the real
- * flavor accessor (neighborhood_flavor_v1.json). The keep index is the same server-safe
- * formula the page renders. Nothing is fabricated.
+ * flavor accessor (neighborhood_flavor_v1.json). Every ranked surface runs on RENT
+ * LOAD, the knowable input (rulebook v1 §5, founder 2026-07-11: the derived
+ * per-district keep index never renders). Nothing is fabricated.
  *
  * The benchmark activity is "restaurants" (the exact activity the live non-spine page
  * hardcodes, page.tsx:131), so the revenue figures reconcile with it; the provenance
  * line states this. Revenue is per-activity, so there is no activity-free number.
  *
- * What is filled REAL: name / slug / character, the revenue/rent/keep triple + the
+ * What is filled REAL: name / slug / character, the revenue/rent pair + the
  * commuter/visitor/character multiplier factors + tags (engine), walkability / price
  * tier / demographic skew / character paragraph (flavor), the per-district best-trade
  * ranking (real per-trade multiplier), and the narrative notes (derived from the real
@@ -34,8 +35,8 @@
  *
  * DATA-QUALITY NOTE (surfaced, not a fabrication): the visitor multiplier clips, so
  * City of London, West End and South Bank all read an identical +200% revenue. The
- * keep index still separates them through rent, so the page thesis holds; the narrative
- * copy is written to the true "same takings, rent decides" story rather than the seed's
+ * rent load still separates them, so the page thesis holds; the narrative copy is
+ * written to the true "same takings, rent decides" story rather than the seed's
  * "loudest keeps least" framing, which the real data does not support.
  *
  * Constraint-safe: no em-dashes, no source-agency names, USD-only figures.
@@ -80,14 +81,6 @@ const CENTROIDS: Record<string, Record<string, { lat: number; lng: number }>> = 
   },
 };
 
-/** keepIndex, inlined to keep the adapter in the domain layer (mirrors
- * components/spine/keep.ts exactly): 100 x revenue / rent, city baseline 100. */
-function keepOf(revVsCityPct: number, rentMult: number): number {
-  const revenue = 1 + revVsCityPct / 100;
-  const rent = rentMult > 0 ? rentMult : 1;
-  return Math.round((revenue / rent) * 100);
-}
-
 /** The panel's price band lacks a "budget" step; fold it onto the nearest real one. */
 function priceTierBand(t: string | undefined): string | undefined {
   if (!t) return undefined;
@@ -98,7 +91,7 @@ function priceTierBand(t: string | undefined): string | undefined {
  * Build the real-data spine neighborhood seed for one city slug. Returns undefined
  * when the city has no authored centroids or fewer than four curated districts (the
  * caller then falls through to the existing non-spine neighborhoods page, never a 404),
- * so the spine hub only ever renders where every number is real and the keep-divergence
+ * so the spine hub only ever renders where every number is real and the rent-divergence
  * thesis actually has districts to separate. London is the one such city today.
  */
 export async function buildSpineHoodSeed(citySlug: string): Promise<any> {
@@ -126,8 +119,7 @@ export async function buildSpineHoodSeed(citySlug: string): Promise<any> {
     const m = getNeighborhoodMultiplier(citySlug, n.slug, BENCHMARK_ACTIVITY);
     const rent = +rentMultiplier(m.appliedTags).toFixed(2);
     const rev = Math.round((m.final - 1) * 100);
-    const keep = keepOf(rev, rent);
-    const above = keep >= 100;
+    const lighter = rent < 1;
     const flavor = getNeighborhoodFlavor(citySlug, n.slug);
     const cen = centroids[n.slug];
 
@@ -149,12 +141,14 @@ export async function buildSpineHoodSeed(citySlug: string): Promise<any> {
         why: `Revenue runs about +${t.pct}% versus the city for this trade here.`,
       }));
 
-    // Deterministic, honest verdict + counterweights, all from the real figures.
-    const verdict = above
-      ? "Rent stays light enough against the takings that more of each pound survives than the city keeps on average."
-      : "Strong takings, but a heavier rent load leaves less of each pound than the city keeps on average.";
-    const counterweight_above = `Takings run ${rev >= 0 ? "+" : ""}${rev}% over the city and rent x${rent.toFixed(2)}, which leaves the keep index at ${keep}, above the city baseline of 100.`;
-    const counterweight_below = `Takings run ${rev >= 0 ? "+" : ""}${rev}% over the city, but rent at x${rent.toFixed(2)} pulls the keep index to ${keep}, below the city baseline of 100.`;
+    // Deterministic, honest verdict, a plain read of the knowable rent figure
+    // (rulebook v1 §5: no derived keep claim; the old counterweight lines cited
+    // the retired keep index and are gone with it).
+    const verdict = lighter
+      ? "Rent runs lighter than the city rate here; the lease leaves more of the takings in place."
+      : rent > 1
+        ? "Rent runs heavier than the city rate here; the lease takes its share before the takings arrive."
+        : "Rent runs at the city rate here, neither an edge nor a load.";
 
     return {
       name: n.name,
@@ -172,8 +166,6 @@ export async function buildSpineHoodSeed(citySlug: string): Promise<any> {
       lng: cen.lng,
       blurb: flavor?.character_paragraph ?? n.description,
       verdict,
-      counterweight_above,
-      counterweight_below,
       best_trades: best_trades.length ? best_trades : undefined,
       demographics: flavor?.demographic_skew ? [flavor.demographic_skew] : undefined,
       // real destination for the CTA + back link (the district overview page).
@@ -183,15 +175,11 @@ export async function buildSpineHoodSeed(citySlug: string): Promise<any> {
     };
   });
 
-  // best (highest keep) + loud (highest revenue), resolved the SAME way the masthead
-  // does (stable sort over the same array), so the derived notes match what it shows.
-  const byKeep = [...districts].sort(
-    (a, b) => keepOf(b.rev_vs_city_pct, b.rent_mult) - keepOf(a.rev_vs_city_pct, a.rent_mult),
-  );
-  const byRev = [...districts].sort((a, b) => b.rev_vs_city_pct - a.rev_vs_city_pct);
-  const best = byKeep[0];
-  const loud = byRev[0];
-  const loudKeep = keepOf(loud.rev_vs_city_pct, loud.rent_mult);
+  // lightest + heaviest lease, resolved the SAME way the masthead does (stable sort
+  // over the same array, rent ascending per D1), so the derived notes match what it shows.
+  const byRent = [...districts].sort((a, b) => a.rent_mult - b.rent_mult);
+  const best = byRent[0];
+  const heavy = byRent[byRent.length - 1];
 
   const meta = {
     iso2: city.iso2,
@@ -201,34 +189,29 @@ export async function buildSpineHoodSeed(citySlug: string): Promise<any> {
     default_slug: best.slug,
     // real hrefs (the promoted page must not link to the dev routes).
     city_href: `/cities/${citySlug}`,
-    // honest, derived masthead prose (the hardcoded seed copy assumed a story the real
-    // data does not tell): the hero keeps most on light rent, the loud one gives its
-    // lift back. Works whether the loud district lands above or below the baseline.
-    hero_note: `Rent here runs x${best.rent_mult.toFixed(2)} the city rate, light enough against its takings that most of each pound stays. The louder, higher-revenue districts give more of theirs back in rent.`,
-    support_label: "Top takings, heavy lease",
-    support_note: `It matches the city's top for takings, yet a keep index of ${loudKeep} shows how much a heavier rent load, x${loud.rent_mult.toFixed(2)}, takes back before it reaches the till.`,
+    // honest, derived masthead prose: plain reads of the knowable rent figures
+    // (rulebook v1 §5: no keep-index claim, no takes-most/keeps-most opposition).
+    hero_note: `Rent here runs x${best.rent_mult.toFixed(2)} the city rate, the lightest lease of the ${districts.length} districts.`,
+    support_label: "Heaviest rent",
+    support_note: `Rent runs x${heavy.rent_mult.toFixed(2)} the city rate here, the heaviest lease on the map.`,
     rail: {
       kicker: "Where in the city",
-      verdict:
-        "The same trade keeps very different money district to district. Rank by what the owner keeps, not by what comes in, then open one to see how the lease changes the answer.",
     },
     map_note:
-      "Where each district sits. Tap a pin for its keep read; the ranking and the panel move with it.",
+      "Where each district sits. Tap a pin for its rent read; the ranking and the panel move with it.",
     compare: {
       kicker: "Hold two or three side by side",
-      verdict:
-        "Line them up and it is rent, not revenue, that sets the order. Two districts can take the same and keep very different money.",
     },
     myth: {
       claim: "The busiest, highest-revenue district is the best place to open.",
       reality:
-        "It takes the most, but takings are not what stays. Top revenue comes with the heaviest rent, and after the lease a loud district can keep no more than an average one while a quieter, lighter-rent district keeps far more. Revenue rank and keep rank are simply not the same list.",
-      tell: "Two addresses with the same takings can keep very different money. The lease is the difference.",
+        "It takes the most, but takings are not what stays. Top revenue comes with the heaviest rent, so the loud districts hand a large share of the lift straight to the lease, while quieter districts trade on far lighter rent. Revenue rank and rent rank are simply not the same list.",
+      tell: "Two addresses with the same takings can carry very different leases. The rent is the difference.",
       slope_note:
-        "Revenue rank and keep rank are different lists. The priciest addresses give most of their lift back and stall near the city line, while lighter-rent districts climb.",
+        "Revenue rank and rent rank are different lists. The priciest addresses carry the heaviest leases; the lightest leases sit far from the top of the takings.",
     },
     provenance_line:
-      "Revenue is shown for a representative restaurant, modeled from each district's commuter, visitor and character multipliers against the city baseline; the keep index divides that lift by the district's rent load. The map uses the seven broad London districts.",
+      "Revenue is shown for a representative restaurant, modeled from each district's commuter, visitor and character multipliers against the city baseline; rent loads are multiples of the city rate. The map uses the seven broad London districts.",
   };
 
   return { meta, districts };

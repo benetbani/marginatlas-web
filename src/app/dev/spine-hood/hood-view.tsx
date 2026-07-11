@@ -7,23 +7,26 @@
  * SpineShell (do not double-wrap it at the route).
  *
  * The page that proves the whole product's thesis: same trade, same city, very
- * different outcomes , revenue is the liar, what the owner keeps is the truth. Built
- * to the masterplan publish bar: answer-first two-figure masthead, one dominant keep
- * figure per chapter, a REAL orientation map, a divergence keep-strip on the city
- * baseline, progressive disclosure in the panel (the free/Pro seam), a full-width myth
- * chapter, and a Pro-gated compare with an auto-derived verdict. All prose lives in the
+ * different outcomes , revenue is the loud number, rent is the knowable one. Every
+ * ranked surface runs on RENT LOAD, the seed input an owner can verify (rulebook v1
+ * §5, founder 2026-07-11: the derived per-district keep index never renders). Built
+ * to the masterplan publish bar: answer-first two-figure masthead, one dominant rent
+ * figure per chapter, a REAL orientation map, a divergence rent-strip on the city
+ * x1.00 line, progressive disclosure in the panel (the free/Pro seam, unveiled on
+ * review builds per §45), and a full-width myth chapter. All prose lives in the
  * seed; every sourceless field is null-guarded so it renders nothing on the real page.
  *
- * As-built chart dictionary (page-level idiom census, cap 2 per family):
- *   big figure: masthead keep hero x1 (the ONE hero-scale figure) + panel keep x1.
- *   divergence bar-list (deviation from 100): KeepStrip x1  , the page hero chart.
- *   real tile map (position): SpineMap x1  , keep-encoded pins (size = keep index,
- *     terracotta = keeps more than the city, ink = keeps less), legended on the map.
+ * As-built chart dictionary (page-level idiom census; bar budget per rulebook v1
+ * §25: the rent strip + the walkability Meter are the ONLY bar-family graphics):
+ *   big figure: masthead rent hero x1 (the ONE hero-scale figure) + panel rent x1.
+ *   divergence bar-list (deviation from x1.00): RentStrip x1  , the page hero chart.
+ *   real tile map (position): SpineMap x1  , rent-encoded pins (size = how light the
+ *     rent runs, terracotta = lighter than the city, ink = heavier), legended.
  *   marker-on-a-shared-scale: footfall two-marker x1 (omitted on real data) +
  *     walkability Meter x1; price tier renders as a DISCRETE 4-step band.
- *   multiplicative waterfall (running product): "Why the number moves" x1.
- *   rank slope (2-point): myth chapter x1  , revenue rank -> keep rank.
- *   editorial table with drawn in-cell scales: Compare x1 (city-100 / 0% ticks).
+ *   multiplier readout (running product, printed figures): "Why the number moves" x1.
+ *   rank slope (2-point): myth chapter x1  , revenue rank -> rent rank.
+ *   editorial table, plain figures, best-in-row bold: Compare x1 (no in-cell bars).
  * Terracotta = the answer only; selection + CTAs are neutral ink.
  */
 import * as React from "react";
@@ -41,7 +44,7 @@ const HOOD_BG = "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?au
 // The illustrative-route provenance line (dev seed fallback). The real adapter supplies
 // its own honest meta.provenance_line, which then replaces this on the promoted page.
 const DEV_PROVENANCE =
-  "Keep index is derived from revenue and rent load against a city baseline of 100. District revenue positions come from modeled commuter, visitor and character multipliers. Figures are illustrative until wired to live neighborhood data.";
+  "District rent loads are multiples of the city rate. District revenue positions come from modeled commuter, visitor and character multipliers. Figures are illustrative until wired to live neighborhood data.";
 
 // The closing band's canonical-trade slugs , each maps onto a modeled cell route. The
 // slate is site-wide (fixed slugs); the CITY half of the href is never known here, so it
@@ -73,7 +76,7 @@ export function SpineHoodBody({ data = spineHoodSeed }: { data?: any }) {
   return (
     <SpineShell bg={HOOD_BG} bgPosition="center 40%">
       <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
-        {/* MASTHEAD , answer-first two-figure honest headline (keeps-the-most vs the loud one). */}
+        {/* MASTHEAD , answer-first two-figure honest headline (lightest rent vs heaviest). */}
         <HoodMasthead d={d} />
 
         {/* the single, quiet provenance line for the whole page (stated once, under the
@@ -84,8 +87,10 @@ export function SpineHoodBody({ data = spineHoodSeed }: { data?: any }) {
           <span>{d.meta?.provenance_line ?? DEV_PROVENANCE}</span>
         </p>
 
-        {/* 01 , THE MOVEMENT: where the money actually stays. Keep strip + real map + panel. */}
-        <Movement index="01" icon="best-areas" heading="Districts by keep index" />
+        {/* 01 , THE MOVEMENT: what rent takes, district by district. Rent strip + real
+            map + panel. Title pending the founder's one-word confirmation (rulebook v1
+            §13: plain, no metric jargon leading a title). */}
+        <Movement index="01" icon="best-areas" heading="What rent takes, district by district" />
         <NeighborhoodExplorer
           districts={districts}
           defaultSlug={d.meta?.default_slug}
