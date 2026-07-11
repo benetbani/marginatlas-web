@@ -360,7 +360,7 @@ export function Home2View({
               example, so the concrete flavor still lands, just not in the H1. */}
           <h1
             data-typography="custom"
-            className="mx-auto mt-2 max-w-3xl text-balance text-3xl font-bold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2.6rem]"
+            className="mx-auto mt-2 max-w-3xl text-balance text-3xl font-semibold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2.6rem]"
           >
             How much does a small business actually keep?
           </h1>
