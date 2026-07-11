@@ -267,7 +267,8 @@ export function SpreadStrip({ p10, p50, p90, fmt, neutral = false }: { p10: numb
  * information, so it is deleted from render here. `eyebrow` is now OPTIONAL in the prop
  * type and stays as a tolerated no-op (accepted, never rendered) so the ~140 existing call
  * sites keep compiling without a page-by-page edit; do not delete it from the type. `icon`
- * remains a no-op for the same reason (index + icon + heading still reads as oversaturated).
+ * remains a no-op HERE: rulebook v1 §R2 (2026-07-11) restores icons at SUBSECTION level
+ * (Head/Rail) only; the chapter header stays index + one plain title.
  * The accent NEVER sits on the heading text (the founder reads terra-on-top as "orange on
  * top") , the leading .fig index (muted grey) is the only accent carrier. The heading stays
  * de-bolded (semibold 20/24px, not bold 24/30px , too loud to read as professional). */
@@ -283,17 +284,13 @@ export function Movement({ eyebrow, heading, sample, icon, index }: { eyebrow?: 
     </div>
   );
 }
-/* Box , the premium card: warm hairline + inner paper top-highlight + paper gradient.
- * Radius 14px. No edge stripe. Rulebook v2 S14/decision e (2026-07-09): the DROP shadow
- * is gone (cards with a drop-shadow "look mediocre"); this REVERSES the 2026-07-08
- * publish-pass "tokenized warm shadow" decision. The card keeps only the faint inset
- * paper top-highlight (`inset 0 1px 0 rgba(255,255,255,0.9)`) so it still reads as a
- * lifted sheet of paper, just without the 30px drop shadow or the 0.5px inner ring.
- * `shadow-card` / `shadow-lift` (Tailwind, design-tokens.ts) are NOT deleted here: other
- * pages still consume those tokens directly; Box just stops applying them. `elevation`
- * is kept in the prop type as a tolerated no-op (both call sites, home2-view.tsx:261/309,
- * keep compiling) , it no longer has a visual effect now that the drop shadow it
- * selected between is gone. */
+/* Box , the premium card: warm hairline + inner paper top-highlight + paper gradient +
+ * a SLIGHT drop shadow. Radius 14px. No edge stripe. Rulebook v1 §R1 (founder, 2026-07-11):
+ * the S14 no-shadow decision is REVERSED , "the shadow effect we should have on each
+ * subsection is still missing". The pinned value is the July-3 pair the founder saw and
+ * ratified as the baseline: `0 1px 1px rgba(43,28,22,0.04), 0 8px 24px -12px rgba(43,28,22,0.10)`,
+ * composed with the inset paper top-highlight. `elevation` is kept in the prop type as a
+ * tolerated no-op (both call sites, home2-view.tsx:261/309, keep compiling). */
 const DENSITY_PAD: Record<"dense" | "default" | "lead", string> = { dense: "p-4", default: "p-5", lead: "p-7" };
 export function Box({ children, className = "", elevation = "card", density = "default" }: { children: React.ReactNode; className?: string; elevation?: "card" | "lift"; density?: "dense" | "default" | "lead" }) {
   void elevation;
@@ -302,7 +299,7 @@ export function Box({ children, className = "", elevation = "card", density = "d
       className={`rounded-[14px] border border-[var(--c-border)] ${DENSITY_PAD[density]} ${className}`}
       style={{
         backgroundImage: "linear-gradient(180deg, #ffffff 0%, #fcfbfa 100%)",
-        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.9)",
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.9), 0 1px 1px rgba(43,28,22,0.04), 0 8px 24px -12px rgba(43,28,22,0.10)",
       }}
     >
       {children}
@@ -362,14 +359,18 @@ export function SampleTag({ note }: { note?: string }) {
     </span>
   );
 }
-/* Head , subsection header. Rulebook v2 S2: no icon in any section header, so this is a
- * THIRD header the Movement fix does not reach (EasiestTrades/IncomeCurve/MarginKept/
- * CityRisks/Locals/Close etc. all open with Head, not Movement). `icon` stays in the prop
- * type as a tolerated no-op (accepted, never rendered) so the ~22 existing call sites keep
- * compiling. */
+/* Head , subsection header. Rulebook v1 §R2 (founder 2026-07-11, reverses the S2 icon
+ * deletion at subsection level): subsection titles carry the Ico tile on the LEFT of the
+ * title again , "the subsections generally, they need icons to function". Every call site
+ * already passes its icon id, so this is a kit-only restore. */
 export function Head({ children, sample, icon }: { children: React.ReactNode; sample?: boolean; icon?: AtlasIconId }) {
-  void icon;
-  return <div className="mb-3 flex items-center gap-2"><span className="text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">{children}</span>{sample ? <SampleTag /> : null}</div>;
+  return (
+    <div className="mb-3 flex items-center gap-2">
+      {icon ? <Ico id={icon} /> : null}
+      <span className="text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">{children}</span>
+      {sample ? <SampleTag /> : null}
+    </div>
+  );
 }
 /* InfoTip , THE educational "?" gloss (rule 24: teach as you inform; rule 7: jargon gets
  * a gloss). A focusable button trigger, so it works on TAP at 390px (focus shows the tip),
@@ -524,21 +525,20 @@ export function CatRows({ rows }: { rows: Array<[string, any]> }) {
 
 /* ===== SECTION ANATOMY PRIMITIVES (WI-3) ===== */
 
-/* Rail , the section opener: kicker only, a plain title line. Rulebook v2 corrections
- * (2026-07-10, reverses decision f): NO section header states a conclusion , the verdict
- * slot decision f called the sanctioned answer-first line is deleted from render. A header
- * says WHAT the section is; the finding lives ON the visual (a chart marker, a struck
- * figure, the focal number), never in a prose sentence under the title. `icon` and `tone`
- * stay in the prop type as tolerated no-ops (accepted, never rendered) so existing call
- * sites keep compiling; `verdict` joins them as a no-op for the same reason , do not delete
- * any of the three from the type. */
+/* Rail , the section opener: an Ico tile + kicker, one plain title line. Rulebook v1 §R2
+ * (founder 2026-07-11): subsection titles carry their icon on the LEFT again , the S2 icon
+ * deletion is reversed at subsection level. The 2026-07-10 corrections still stand for the
+ * REST of the header: NO section header states a conclusion , the verdict slot stays a
+ * no-op (the finding lives ON the visual), and no eyebrow returns. `tone` and `verdict`
+ * stay in the prop type as tolerated no-ops so existing call sites keep compiling , do not
+ * delete either from the type. */
 export function Rail({ icon, kicker, verdict, tone = "ink" }: { icon?: AtlasIconId; kicker: string; verdict?: React.ReactNode; tone?: "ink" | "terra" }) {
-  void icon;
   void tone;
   void verdict;
   return (
     <div className="mb-3">
       <div className="mb-1.5 flex items-center gap-2">
+        {icon ? <Ico id={icon} /> : null}
         <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{kicker}</span>
       </div>
     </div>

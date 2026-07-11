@@ -157,8 +157,8 @@ export function DecisionRow({ d, signals }: { d: DecisionDatum; signals: SignalD
       className="hovrow group relative -mx-2 block rounded-lg px-2 py-2.5 sm:grid sm:grid-cols-[1.5fr_1.4fr_repeat(var(--n),minmax(0,1fr))] sm:items-center sm:gap-3"
       style={{ ["--n" as any]: d.support.length, ...(d.home ? { background: "#fff4f1" } : {}) }}
     >
-      {/* terracotta top-edge on hover (mirrors .cityhov language) */}
-      <span aria-hidden className="topedge pointer-events-none absolute inset-x-2 top-0 h-[2px] rounded-full opacity-0 transition-opacity" style={{ background: TERRA }} />
+      {/* rulebook v1 §G3 (founder 2026-07-11): the terracotta top-edge-on-hover is deleted ,
+          no orange motif may appear only on hover; the quiet .hovrow background wash stays */}
       {/* leading */}
       <div className="flex items-center justify-between gap-2 sm:block">
         {lead}
@@ -244,7 +244,7 @@ export function RankBars({ rows, max, valueUnit = "", leaderId }: { rows: RankDa
                 <span className="block h-full rounded-full" role="img" aria-label={`${r.label}: ${r.display ?? r.value}${valueUnit}`} style={{ width: `${Math.max(2, (r.value / (top || 1)) * 100)}%`, background: isLead ? TERRA : "#c8c8c6" }} />
               </span>
             </span>
-            <Fig className={`text-right text-[length:var(--t-body)] ${isLead ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{r.display ?? `${r.value}${valueUnit}`}</Fig>
+            <Fig className={`text-right text-[length:var(--t-body)] ${isLead ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{r.display ?? `${r.value}${valueUnit}`}</Fig>
           </Tag>
         );
       })}
@@ -320,7 +320,7 @@ export function CompareTable({ entities, rows, caption }: { entities: CompareEnt
                 <span className="text-[length:var(--t-micro)] font-medium text-[var(--c-ink2)]">{row.label}{row.unit ? <span className="text-[var(--c-muted)]"> ({row.unit})</span> : null}</span>
                 {entities.map((e) => (
                   <span key={e.id} className="text-right" style={e.home ? { background: "#fff4f1", borderRadius: 6, paddingInline: 6 } : undefined}>
-                    <Fig className={`text-[length:var(--t-body)] ${e.id === best ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{cellText(row, e.id)}</Fig>
+                    <Fig className={`text-[length:var(--t-body)] ${e.id === best ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{cellText(row, e.id)}</Fig>
                     {row.bar ? <CellScaleBar value={row.values[e.id]} domain={row.bar.domain} refValue={row.bar.refValue} /> : null}
                   </span>
                 ))}
@@ -344,7 +344,7 @@ export function CompareTable({ entities, rows, caption }: { entities: CompareEnt
                 return (
                   <div key={row.key} className="flex items-baseline justify-between gap-3">
                     <span className="text-[length:var(--t-micro)] text-[var(--c-ink2)]">{row.label}{row.unit ? <span className="text-[var(--c-muted)]"> ({row.unit})</span> : null}</span>
-                    <Fig className={`text-[length:var(--t-body)] ${e.id === best ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{cellText(row, e.id)}</Fig>
+                    <Fig className={`text-[length:var(--t-body)] ${e.id === best ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{cellText(row, e.id)}</Fig>
                   </div>
                 );
               })}
@@ -541,7 +541,7 @@ export function WinnerCard({ kicker, winner, keptPct, keptLabel = "owner keeps",
         <div className="mb-1.5 flex items-center gap-2"><Ico id={icon} tone="terra" /><span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--terra-text)]">{kicker}</span></div>
         <div className="grid gap-5 md:grid-cols-[1.5fr_1fr] md:items-end">
           <div>
-            <h2 data-typography="custom" className="text-2xl font-bold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2rem]">{winner}</h2>
+            <h2 data-typography="custom" className="text-2xl font-semibold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2rem]">{winner}</h2>
             <p className="mt-2 max-w-prose text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{why}</p>
             {theCatch ? (
               <p className="mt-2.5 flex items-start gap-1.5 rounded-lg border border-[var(--c-border)] bg-[var(--c-soft)] px-3 py-2 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">
@@ -633,7 +633,6 @@ export function KitIndexStyles() {
   return (
     <style>{`.spine-scope .hovrow{transition:background-color .15s ease-out,transform .15s ease-out}
 .spine-scope .hovrow:hover{background:var(--c-soft);transform:translateY(-1px)}
-.spine-scope .hovrow:hover .topedge{opacity:1}
 @media (prefers-reduced-motion:reduce){.spine-scope .hovrow{transition:none}.spine-scope .hovrow:hover{transform:none}}`}</style>
   );
 }

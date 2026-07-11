@@ -127,6 +127,18 @@ export function isHomeReformEnabled(): boolean {
 }
 
 /**
+ * Founder-review transparency (rulebook v1 §G8, 2026-07-11): "things have to be
+ * transparent for me to see." When true, every LockVeil/blur renders its content
+ * unveiled so review renders and dev routes never hide a graphic or figure from
+ * the founder. True in any non-production build; production can opt in with
+ * NEXT_PUBLIC_REVIEW_UNVEIL=1 (default OFF, so the live Pro seam is unchanged).
+ */
+export function isReviewBuild(): boolean {
+  if (process.env.NODE_ENV !== "production") return true;
+  return parseFlag(process.env.NEXT_PUBLIC_REVIEW_UNVEIL, false);
+}
+
+/**
  * The five spine page types. Each live route branches on its own gate
  * (isSpineReformEnabledFor) so a page flips to the rebuilt surface independently, and
  * only once its real-data adapter has shipped.
@@ -211,6 +223,7 @@ export function snapshotFlags(): Record<string, boolean> {
     NEXT_PUBLIC_MARGIN_INDEX: isMarginIndexEnabled(),
     NEXT_PUBLIC_HOME_REFORM: isHomeReformEnabled(),
     NEXT_PUBLIC_SPINE_REFORM: isSpineReformEnabled(),
+    NEXT_PUBLIC_REVIEW_UNVEIL: isReviewBuild(),
     // The resolved per-page spine gates (master + per-page var), what each route sees.
     "spine.cell": isSpineReformEnabledFor("cell"),
     "spine.industry": isSpineReformEnabledFor("industry"),
