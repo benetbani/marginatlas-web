@@ -33,8 +33,8 @@ export function NeighboursTable({ cols, rows }: { cols: Col[]; rows: Row[] }) {
           <tr className="border-b border-[var(--c-border)] text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
             <th className="w-[26%] py-2 pr-3 text-left font-semibold">Country</th>
             {cols.map((c, i) => (
-              <th key={c.key} onClick={() => click(i)} aria-sort={sort && sort.i === i ? (sort.dir === 1 ? "ascending" : "descending") : "none"} className="min-w-0 cursor-pointer select-none px-2 py-2 text-right font-semibold transition hover:text-[var(--terra-text)]">
-                <span className="block truncate">{c.label}{c.unit ? <span className="font-normal text-[var(--c-muted)]"> ({c.unit})</span> : null}<span className="text-[var(--terra-text)]">{arrow(i)}</span></span>
+              <th key={c.key} onClick={() => click(i)} aria-sort={sort && sort.i === i ? (sort.dir === 1 ? "ascending" : "descending") : "none"} className="min-w-0 cursor-pointer select-none px-2 py-2 align-bottom text-right font-semibold leading-tight transition hover:text-[var(--terra-text)]">
+                <span className="block">{c.label}{c.unit ? <span className="font-normal text-[var(--c-muted)]"> ({c.unit})</span> : null}<span className="text-[var(--terra-text)]">{arrow(i)}</span></span>
               </th>
             ))}
           </tr>
@@ -44,7 +44,7 @@ export function NeighboursTable({ cols, rows }: { cols: Col[]; rows: Row[] }) {
             <tr key={r.name} className="border-b border-[var(--c-border)] transition hover:bg-[var(--c-soft)]" style={r.home ? { background: "#fff4f1" } : undefined}>
               <td className="min-w-0 truncate py-2.5 pr-3 font-medium text-[var(--c-ink)]">{r.name}</td>
               {r.cells.map((cell, i) => (
-                <td key={i} className="px-2 py-2.5 text-right"><span className={`fig ${cell.best ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{cell.display}</span></td>
+                <td key={i} className="px-2 py-2.5 text-right"><span className={`fig ${cell.best ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{cell.display}</span></td>
               ))}
             </tr>
           ))}
@@ -58,8 +58,8 @@ export function NeighboursTable({ cols, rows }: { cols: Col[]; rows: Row[] }) {
             <div className="grid grid-cols-2 gap-x-3 gap-y-1.5">
               {r.cells.map((cell, i) => (
                 <div key={i} className="flex min-w-0 items-baseline justify-between gap-2">
-                  <span className="min-w-0 truncate text-[11px] text-[var(--c-muted)]">{cols[i].label}</span>
-                  <span className={`fig text-[13px] ${cell.best ? "font-bold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{cell.display}</span>
+                  <span className="min-w-0 text-[11px] leading-tight text-[var(--c-muted)]">{cols[i].label}</span>
+                  <span className={`fig text-[13px] ${cell.best ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{cell.display}</span>
                 </div>
               ))}
             </div>

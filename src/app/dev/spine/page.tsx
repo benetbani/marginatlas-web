@@ -33,8 +33,8 @@ import { CountFig } from "./motion";
 import { buildCityActivities } from "@/lib/scores/city_board";
 import { industryToSlug } from "@/lib/taxonomy";
 import {
-  TERRA, TRACK, usd, cap,
-  Ico, Fig, Dots, StackBar, Waterfall, Donut,
+  TERRA, TRACK, usd, usdMo, cap,
+  Ico, Fig, Dots, StackBar, Donut, SampleTag,
   Movement, Box, EaseScale, Head, Chip, KV, Expand, InlineDisclosure, Bullets,
   Even, WideRail, CatRows,
   Rail, Stat, InfoTip, SpectraTable,
@@ -65,15 +65,16 @@ function peerRows(codes: string[], pick: (j: any) => number | null | undefined):
 }
 
 /* The country's trade links reuse the site-wide fixed slate of everyday trades
- * (rulebook v1 §32: restaurant, grocery, pharmacy, salon, gym, auto-repair, plus
- * cafe/bar where modeled). Dental is OUT of the slate (rulebook v1 §32, founder G9
- * 2026-07-11: no out-of-context trade forced in); pharmacies are not modeled yet, so
- * the set fills from cafe/bar. A trade appears only where the London board holds a
- * real modeled figure for it (the gate that its cell page actually exists and holds
- * substance), and each card links DOWN into that page , no figure is shown here. */
+ * (rulebook v2 §32: restaurant, grocery, pharmacy, salon, gym, auto-repair, plus
+ * cafe/bar where modeled). Bars and nightclubs are OUT (founder cut, 2026-07-11: no
+ * out-of-context trade forced in); pharmacy is not modeled for London yet, so it
+ * cannot render here (an open data need). Each trade shows its canonical rule-32 label
+ * (TRADE_NAME below), so sports/fitness reads as "Gym", never the raw taxonomy name.
+ * A trade appears only where the London board holds a real modeled figure for it, and
+ * each card links DOWN into that page , no figure is shown here. */
 const TRADE_LINK_SLATE = [
   "restaurants", "grocery_stores", "hairdressers_beauty", "sports_fitness",
-  "auto_repair_shops", "cafes_coffee", "bars_nightclubs",
+  "auto_repair_shops", "cafes_coffee",
 ];
 async function londonTradeLinks(): Promise<Array<{ name: string; slug: string; href: string }>> {
   const rows = await buildCityActivities({ slug: "london", countryIso2: "GB" });
@@ -238,7 +239,7 @@ function Profile({ d }: { d: any }) {
   const avg = scored.length ? Math.round((scored.reduce((a, x) => a + x.s, 0) / scored.length) * 10) / 10 : 0;
   return (
     <Box>
-      <Rail icon="vs-world" kicker="The country, in six lenses" />
+      <Rail icon="vs-world" kicker="The country, in six lenses" sample />
       {/* The July-3 approved scorecard form (rulebook v1 §25): a focal average beside
           dot-score rows, so the scorecard reads as a scorecard, never one more bar
           list. One accent: the top lens's dots. */}
@@ -248,16 +249,16 @@ function Profile({ d }: { d: any }) {
           <div className="mt-1 text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">across six lenses</div>
         </div>
         <div className="space-y-2">
-          {scored.map((r, i) => (
+          {scored.map((r) => (
             <div key={r.label} className="grid grid-cols-[112px_1fr_30px] items-center gap-2.5">
               <span className="min-w-0 truncate text-[length:var(--t-body)] text-[var(--c-ink2)]">{r.label}</span>
-              <Dots score={r.s} max={10} accent={i === 0} />
+              <Dots score={r.s} max={10} />
               <Fig className="text-right text-[length:var(--t-body)] text-[var(--c-ink)]">{r.s}</Fig>
             </div>
           ))}
         </div>
       </div>
-      <div className="mt-3 border-t border-[var(--c-border)] pt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">Higher is better on every lens, tax burden included: a lighter load scores higher. That lens ranks this country&apos;s all-in tax against its neighbours.</div>
+      <div className="mt-3 border-t border-[var(--c-border)] pt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">Higher is better on every lens; a lighter tax load scores higher.</div>
     </Box>
   );
 }
@@ -273,34 +274,32 @@ function Demand({ d }: { d: any }) {
   const m = d.demand ?? {};
   const pop = d.headline?.population ?? 0;
   const segs: any[] = (m.consumer_segments ?? []).slice().sort((a: any, b: any) => b.pct - a.pct);
-  const topName = segs[0]?.name?.toLowerCase();
-  // Founder: the trillion-dollar pool is too vague, show spend PER CITIZEN (the pool over
-  // the population), a figure that actually compares country to country. The business count
-  // is deleted (country-dependent, says nothing). The split becomes a donut (a whole read as
-  // a whole), not bars that mis-scaled the 44% to look like 100.
-  const perCitizen = pop > 0 ? ((m.consumer_spend_pool_usd_bn ?? 0) * 1e9) / pop : 0;
-  const greys = ["#a3a3a1", "#c4c4c2", "#dcdcda"];
-  const color = (i: number) => (i === 0 ? TERRA : greys[Math.min(greys.length - 1, i - 1)]);
-  const donutSegs: Array<[string, number, string]> = segs.map((s: any, i: number) => [s.name, s.pct, color(i)]);
-  // the slice a NEW business can actually win (the going-out / leisure spend), named in
-  // the legend caption , the insight the cut household-spend section used to carry.
+  // Spend per citizen a MONTH (the annual pool over the population, over twelve). Shown
+  // monthly so the figure never collides with the annual median-income figure in the
+  // paired box (the two are near-identical annually in this market, which reads as a bug).
+  const perCitizenYr = pop > 0 ? ((m.consumer_spend_pool_usd_bn ?? 0) * 1e9) / pop : 0;
+  // The winnable slice (going out / leisure) is the ONE terracotta answer: the
+  // discretionary spend a new business can actually contest. Every other slice ramps grey
+  // by size, so the accent marks the answer, never merely the biggest slice (§37).
   const winnable = segs.find((s: any) => /going out|leisure|dining/i.test(s.name || ""));
+  const greys = ["#8f8f8d", "#adadab", "#c9c9c7", "#dcdcda"];
+  const nonWin = segs.filter((s: any) => !(winnable && s.name === winnable.name));
+  const colorOf = (s: any) => (winnable && s.name === winnable.name ? TERRA : greys[Math.min(greys.length - 1, nonWin.indexOf(s))]);
+  const donutSegs: Array<[string, number, string]> = segs.map((s: any) => [s.name, s.pct, colorOf(s)]);
+  const centerSlice = winnable ?? segs[0];
   return (
     <Box>
-      {/* verdict written for the per-citizen focal (the old "deep pool" line described the
-          deleted trillion-dollar figure) and it states the true share, never "most". */}
-      <Rail icon="spending-power" kicker="The size of the market" />
+      <Rail icon="spending-power" kicker="The size of the market" sample />
       <div className="grid items-center gap-5 md:grid-cols-[minmax(0,1fr)_auto]">
         <div className="focal flex flex-col justify-center p-4">
-          <Stat value={usd(perCitizen)} label="Consumer spend per citizen, a year" size="focal" accent />
-          <div className="mt-1.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">What the average resident spends in a year, the pot every business here competes for.</div>
+          <Stat value={usdMo(perCitizenYr)} label="Consumer spend per citizen, a month" size="focal" accent />
+          <div className="mt-1.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">What the average resident spends in a month; the pot every business here competes for.</div>
         </div>
         <div className="flex flex-col items-center">
           <div className="mb-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Where that money goes</div>
-          <Donut segs={donutSegs} centerBig={`${segs[0]?.pct ?? 0}%`} centerSub="top slice" />
-          <div className="mt-2 flex max-w-[240px] flex-wrap justify-center gap-x-3 gap-y-1">{segs.map((s: any, i: number) => (
-            <span key={s.name} className="inline-flex items-center gap-1.5 text-[length:var(--t-micro)] text-[var(--c-ink2)]"><span className="h-2 w-2 rounded-sm" style={{ background: color(i) }} />{s.name} <Fig className="text-[var(--c-ink)]">{s.pct}%</Fig></span>))}</div>
-          {winnable ? <p className="mt-1.5 max-w-[240px] text-center text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{winnable.name}, {winnable.pct}%, is the slice a new business can win.</p> : null}
+          <Donut segs={donutSegs} centerBig={`${centerSlice?.pct ?? 0}%`} centerSub={winnable ? "going out" : "top slice"} />
+          <div className="mt-2 flex max-w-[240px] flex-wrap justify-center gap-x-3 gap-y-1">{segs.map((s: any) => (
+            <span key={s.name} className="inline-flex items-center gap-1.5 text-[length:var(--t-micro)] text-[var(--c-ink2)]"><span className="h-2 w-2 rounded-sm" style={{ background: colorOf(s) }} />{s.name} <Fig className="text-[var(--c-ink)]">{s.pct}%</Fig></span>))}</div>
         </div>
       </div>
     </Box>
@@ -324,12 +323,16 @@ function TheCatch({ d }: { d: any }) {
   const topRisk = risks[0];
   const riskLabel: any = { energy_input_costs: "Energy and input costs", rule_tax_changes: "Shifting rules and tax", demand_cycle: "The demand cycle", currency_swings: "Currency swings", skills_shortages: "Skills shortages" };
   const topLabel: string | null = topRisk ? (riskLabel[topRisk.name] ?? cap(String(topRisk.name).replace(/_/g, " "))) : null;
+  // The honesty band NAMES the single biggest standing risk and carries NO severity
+  // score, so it never flips direction against the six-lens scorecard beside it (both
+  // read one way, rulebook v2 §29A). The full inverted risk register lives in CH5.
   return (
     <Box>
-      <Rail kicker="The catch" />
-      {topRisk ? (
+      <Rail icon="honest-take" kicker="The catch" sample />
+      {topLabel ? (
         <div className="focal p-4">
-          <Stat value={<>{topRisk.score_1_10}<span className="text-[length:var(--t-body)] text-[var(--c-muted)]">/10</span></>} label="The biggest standing risk" sub={topLabel ?? undefined} size="focal" accent />
+          <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">The biggest standing risk</div>
+          <div className="mt-1 text-[length:var(--t-sub)] font-semibold text-[var(--c-ink)]">{topLabel}</div>
         </div>
       ) : null}
       <p className="mt-3 border-t border-[var(--c-border)] pt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{d.character?.the_catch ?? "Local operators price the hidden costs in before they commit."}</p>
@@ -351,19 +354,20 @@ function TheCatch({ d }: { d: any }) {
 function SetupTimeline({ d }: { d: any }) {
   const steps = d.setup?.steps ?? [];
   if (!steps.length) return null;
-  const vat = steps.find((s: any) => /vat/i.test(s.name));
   const timeWord = (days: number) => (days <= 0 ? "same day" : days === 1 ? "1 day" : `${days} days`);
   return (
     <Box>
       <Rail icon="register-cost" kicker="The steps to open" />
+      {/* Every step badge is neutral: the steps are sequential, so featuring step 1 in
+          terracotta asserted a rank among equals (rulebook v2 §37). The slow step reads
+          from its own time chip, not a glued verdict sentence (§26). */}
       <ol className="relative ml-3 space-y-4 border-l-2 border-[var(--c-border)] pl-6 pt-1">
         {steps.map((s: any, i: number) => {
           const days = Math.max(0, s.time_days ?? 0);
           const cost = (s.cost_usd || 0) > 0 ? `$${Math.round(s.cost_usd)}` : "No fee";
-          const first = i === 0;
           return (
             <li key={i} className="relative">
-              <span className={`fig absolute -left-[37px] grid h-7 w-7 place-items-center rounded-full border-2 border-white text-[length:var(--t-body)] font-semibold ${first ? "text-white" : "text-[var(--c-ink)]"}`} style={{ background: first ? TERRA : "var(--c-soft2)", boxShadow: "0 0 0 1px #e3e3e3" }}>{i + 1}</span>
+              <span className="fig absolute -left-[37px] grid h-7 w-7 place-items-center rounded-full border-2 border-white text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]" style={{ background: "var(--c-soft2)", boxShadow: "0 0 0 1px #e3e3e3" }}>{i + 1}</span>
               <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1.5">
                 <span className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{s.name.replace(/\s*\(.*\)$/, "")}</span>
                 <span className="flex flex-wrap items-center gap-1.5"><Chip>{timeWord(days)}</Chip><Chip>{cost}</Chip>{s.how ? <Chip>{s.how}</Chip> : null}</span>
@@ -372,7 +376,6 @@ function SetupTimeline({ d }: { d: any }) {
           );
         })}
       </ol>
-      <div className="mt-3.5 border-t border-[var(--c-border)] pt-2.5 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">The company is live on day one and tax registration follows; the business bank account is the one step that runs to weeks, not days.{vat ? " VAT itself waits until sales pass the threshold." : ""}</div>
     </Box>
   );
 }
@@ -474,7 +477,7 @@ function TaxByLevel({ d }: { d: any }) {
   const allIn = d.tax_burden?.total_pct ?? 0;
   const band = allIn >= 42 ? "Heavy" : allIn >= 30 ? "Middling" : "Light";
   const comp = d.tax_burden?.components ?? {};
-  // Sorted DESCENDING so rank is monotonic with bar length ("ranked" must mean ranked).
+  // Sorted DESCENDING so the largest share reads first, left to right.
   const raw: Array<[string, number]> = ([
     ["Tax on profits", comp.corporation_tax_pct ?? 0],
     ["Business rates", comp.business_rates_pct_equiv ?? 0],
@@ -483,21 +486,22 @@ function TaxByLevel({ d }: { d: any }) {
   ] as Array<[string, number]>).filter(([, p]) => p > 0).sort((a, b) => b[1] - a[1]);
   const wSum = raw.reduce((a, [, p]) => a + p, 0) || 1;
   const shareRows: Array<[string, number]> = raw.map(([n, p]) => [n, Math.round((p / wSum) * 100)] as [string, number]);
-  const leadName = shareRows[0]?.[0] ?? "Tax on profits";
-  const leadShare = shareRows[0]?.[1] ?? 0;
-  const waterfallRows: Array<[string, number, boolean?]> = shareRows.map(([n, pct], i) => [n, pct, i === 0]);
+  // The four shares sum to the whole tax load, so it is ONE whole split into parts: a
+  // single stacked share bar, never four separate bars (rulebook v2 §28, a whole reads
+  // as one form). The leading tax carries the terracotta; the rest ramp grey by size.
+  const taxGreys = ["#8f8f8d", "#adadab", "#c9c9c7"];
   const items = groups.flatMap((g: any) => (g.items ?? []).map((it: any) => ({ ...it, level: g.level })));
   return (
     <Box>
-        <Rail icon="taxes" kicker="What the business actually pays" />
+        <Rail icon="taxes" kicker="What the business actually pays" sample />
         <div className="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
           <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">All-in tax load</span>
           <Fig className="text-[26px] leading-none text-[var(--terra-text)]">{allIn}%</Fig>
           <Chip>{band} for the peer set</Chip>
         </div>
-        <div className="mb-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Share of the tax load for a typical small company</div>
-        <Waterfall rows={waterfallRows} />
-        <div className="mt-2.5 border-t border-[var(--c-border)] pt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]"><b className="font-medium text-[var(--terra-text)]">{leadName}</b> carries {leadShare}% of the load. VAT is customer-borne, so it sits outside; the rate on each tax sits line by line below.</div>
+        <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Share of the tax load for a typical small company</div>
+        <StackBar h="h-10" sort={false} legend legendClassName="mt-2 flex flex-wrap gap-x-3 gap-y-1" ariaLabel={shareRows.map(([n, pct]) => `${n} ${pct}%`).join(", ")} segments={shareRows.map(([n, pct], i) => ({ label: n, pct, color: i === 0 ? TERRA : taxGreys[Math.min(taxGreys.length - 1, i - 1)] }))} />
+        <div className="mt-2.5 border-t border-[var(--c-border)] pt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">VAT is customer-borne, so it sits outside the load; the rate on each tax is listed below.</div>
         <InlineDisclosure name="taxdetail" className="group mt-3 border-t border-[var(--c-border)] pt-2.5" summary="Every tax, line by line">
           <div className="mt-2.5 divide-y divide-[var(--c-border)]">{items.map((it: any) => { const nm = taxDisplayName(it.name); const lead = nm === "Tax on profits"; return (
             <div key={it.name} className="flex items-baseline gap-3 py-2"><Fig className={`w-14 shrink-0 text-[length:var(--t-lead)] ${lead ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{it.value}</Fig><span className="text-[length:var(--t-body)] leading-tight text-[var(--c-ink2)]"><b className={`font-medium ${lead ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{nm}</b><TaxTip term={nm} /> <span className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">{it.level}</span><br />{it.note}</span></div>); })}
@@ -530,7 +534,6 @@ function PayByLevel({ d }: { d: any }) {
   const max = Math.max(...rows.map((r) => r.loaded)) || 1;
   return (
     <Box><Head icon="wages">What staff cost to employ</Head>
-      <p className="mb-3 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">Every wage carries a <Fig className="text-[var(--terra-text)]">+{on}%</Fig> employer on-cost, pension and social contributions on top of the gross salary.</p>
       <div className="space-y-1.5">
         {rows.map((r) => (
           <div key={r.k} className="hov -mx-2 grid grid-cols-[minmax(0,6rem)_1fr_5.2rem] items-center gap-3 rounded-md px-2 py-1.5">
@@ -546,7 +549,7 @@ function PayByLevel({ d }: { d: any }) {
           </div>
         ))}
       </div>
-      <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[length:var(--t-micro)] text-[var(--c-muted)]"><span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full" style={{ background: "#c8c8c6" }} />Gross salary</span><span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full" style={{ background: TERRA }} />Employer on-cost</span><span className="ml-auto">Full cost to employ, a year</span></div>
+      <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[length:var(--t-micro)] text-[var(--c-muted)]"><span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full" style={{ background: "#c8c8c6" }} />Gross salary</span><span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full" style={{ background: TERRA }} />Employer on-cost <span className="font-medium text-[var(--terra-text)]">+{on}%</span></span><span className="ml-auto">Full cost to employ, a year</span></div>
     </Box>
   );
 }
@@ -604,7 +607,6 @@ function TalentDepth({ d }: { d: any }) {
       <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{t.s10}<span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">/10</span></Fig>
     </div>
   );
-  const recruiting = d.people_pay?.hiring?.notes?.recruiting;
   // Native languages OF THE LAND only (never immigrant languages), shown as the share who
   // can speak each, which a bilingual population can push over 100%.
   const langs = (d.people_pay?.languages ?? []).filter((l: any) => l.native !== false);
@@ -624,7 +626,6 @@ function TalentDepth({ d }: { d: any }) {
           </div>
         ) : null}
       </div>
-      {recruiting ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{recruiting}</p> : null}
       <div className="mt-3.5 border-t border-[var(--c-border)] pt-3">
         <div className="mb-1.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Languages spoken</div>
         <div className="flex flex-wrap items-center gap-2">{langs.map((l: any) => <Chip key={l.name}>{l.name} {l.pct_speakers}%</Chip>)}</div>
@@ -658,10 +659,13 @@ function OperatingCosts({ d }: { d: any }) {
   const rank = n > 1 && idx >= 0 ? (idx === 0 ? "the cheapest" : idx === n - 1 ? "the priciest" : idx >= (n - 1) * 0.66 ? "near the top" : idx <= (n - 1) * 0.34 ? "near the bottom" : "mid-pack") : "unranked";
   const lo = all[0]?.v ?? 0, hi = all[n - 1]?.v ?? 1, span = hi - lo || 1;
   const fmtc = (v: number) => `$${v.toFixed(2)}`;
-  const dots = all.map((x) => ({ pos: ((x.v - lo) / span) * 100, label: x.code === "GB" ? `${x.name} ${fmtc(x.v)}` : x.name, accent: x.code === "GB" }));
+  // Direction: cheaper electricity is BETTER, so the cheapest sits on the RIGHT and the
+  // priciest on the left (rulebook v2 §29A, worse reads left). The UK dot is the answer
+  // mark for this box (the subject's position), carried in terracotta with its value.
+  const dots = all.map((x) => ({ pos: (1 - (x.v - lo) / span) * 100, label: x.code === "GB" ? `${x.name} ${fmtc(x.v)}` : x.name, accent: x.code === "GB" }));
   return (
     <Box>
-      <Rail icon="commercial-rent" kicker="What it costs to run a place" />
+      <Head icon="commercial-rent">What it costs to run a place</Head>
       {/* Rent is THE focal (the verdict names it); electricity demoted to a support figure
           beside it , two equal focal Stats competed for the same eye (rule 23). Oil / fuel
           and rent-as-average-of-covered-cities remain open data needs: the seed holds a
@@ -676,7 +680,7 @@ function OperatingCosts({ d }: { d: any }) {
       {n > 1 ? (
         <div className="mt-3.5" role="img" aria-label={`Electricity cost among peers: ${all.map((x) => `${x.name} ${fmtc(x.v)}`).join(", ")}`}>
           <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Electricity among the peer set, $ / kWh</div>
-          <RailDots dots={dots} endLabels={[fmtc(lo), fmtc(hi)]} />
+          <RailDots dots={dots} endLabels={[fmtc(hi), fmtc(lo)]} />
         </div>
       ) : null}
       {p.lease_years_typical ? (
@@ -707,7 +711,6 @@ function Financing({ d }: { d: any }) {
   // Three fixed cards on one row, loans + equity ONLY (grants move to the grants section).
   // Non-expandable, fixed height. Each card holds its one real source note today; richer
   // per-source bullets are a flagged data need.
-  const ease = f.ease_0_100 >= 70 ? "Easy" : f.ease_0_100 >= 45 ? "Moderate" : "Hard";
   const wanted = [
     { match: /bank/i, title: "Bank loans" },
     { match: /start ?up|government|gov/i, title: "Startup and government loans" },
@@ -716,10 +719,10 @@ function Financing({ d }: { d: any }) {
   const sources = f.sources ?? [];
   const cards = wanted.map((w) => { const s = sources.find((x: any) => w.match.test(x.name)); return { title: w.title, note: s?.note as string | undefined }; }).filter((c) => c.note);
   return (
-    <Box><Head icon="raise-money">Raising money</Head>
+    <Box><Head icon="raise-money" sample>Raising money</Head>
       <div className="mb-4 flex items-baseline gap-2">
-        <Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">{ease}</Fig>
-        <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{f.ease_0_100} of 100 to raise here</span>
+        <Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">{f.ease_0_100}<span className="text-[length:var(--t-body)] text-[var(--c-muted)]"> / 100</span></Fig>
+        <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">ease of raising money here</span>
       </div>
       <div className="grid gap-2.5 sm:grid-cols-3">
         {cards.map((c) => (
@@ -846,7 +849,7 @@ function Income({ d }: { d: any }) {
   const bands = ["very_equal", "fairly_equal", "moderate", "high", "very_high"]; const gi = bands.indexOf(o.gini_band);
   return (
     <Box>
-      <Rail icon="spending-power" kicker="What customers earn" />
+      <Rail icon="spending-power" kicker="What customers earn" sample />
       <div className="focal mb-3 flex items-end justify-between p-4">
         <Stat value={k$(med)} label="Median earner" size="focal" accent />
         <div className="text-right text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)]">the customer<br />who walks in</div>
@@ -866,7 +869,6 @@ function Income({ d }: { d: any }) {
         <span className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">Equal</span>
         <div className="flex gap-1">{bands.map((b, i) => <span key={b} className="h-1.5 w-6 rounded-sm" style={{ background: i === gi ? "#8f8a86" : "#e3e3e3" }} />)}</div>
         <span className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">Unequal</span>
-        <span className="ml-1 text-[length:var(--t-micro)] text-[var(--c-ink2)]">{cap((o.gini_band ?? "").replace("_", " "))} spread between earners</span>
       </div>
     </Box>
   );
@@ -888,8 +890,8 @@ function Neighbours({ d }: { d: any }) {
   // registration the hero tile carries.
   const cols = [
     { key: "tax", label: "All-in tax load", unit: "%", get: (x: any) => x.tax_burden?.total_pct, cell: (v: number) => "" + Math.round(v), lowGood: true },
-    { key: "reg", label: "Licence & setup cost", unit: "$", get: (x: any) => x.costs?.license_setup_usd, cell: (v: number) => Math.round(v).toLocaleString("en-US"), lowGood: true },
-    { key: "days", label: "Days to fully set up", unit: "", get: (x: any) => x.setup?.total_days, cell: (v: number) => "" + v, lowGood: true },
+    { key: "reg", label: "Setup cost", unit: "$", get: (x: any) => x.costs?.license_setup_usd, cell: (v: number) => Math.round(v).toLocaleString("en-US"), lowGood: true },
+    { key: "days", label: "Days to set up", unit: "", get: (x: any) => x.setup?.total_days, cell: (v: number) => "" + v, lowGood: true },
     /* VAT column REPLACED with employer on-cost (2026-07-08): the page's own tax section
        states VAT is customer-borne and sits outside the load, so crowning the lowest VAT
        contradicted it; the employer on-cost genuinely hits the owner. */
@@ -906,13 +908,13 @@ function Neighbours({ d }: { d: any }) {
   const colDefs = cols.map((c) => ({ key: c.key, label: c.label, unit: c.unit }));
   const tableRows = raw.map((r) => ({ name: r.name, home: r.home, cells: r.vals.map((v: number, i: number) => ({ raw: v ?? null, display: v == null ? "-" : cols[i].cell(v), best: !r.home && v != null && v === bestPeer[i] })) }));
   return (
-    <Box><Head icon="compare">How it compares, country by country</Head>
+    <Box><Head icon="compare" sample>How it compares, country by country</Head>
       {/* The old auto-verdict sentence ("beats every peer on X, and trails them all on
           Y") is deleted: the two-sided contrast-brag formula is the banned copy pattern
           (rulebook v1 §15, founder G7 2026-07-11); the table's bold-best already
           carries the read. */}
       <NeighboursTable cols={colDefs} rows={tableRows} />
-      <div className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">Best among the peers in each column is bold; the home row is tinted, never ranked. Click a header to sort.</div>
+      <div className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">Best among the peers in each column is highlighted; the home row is tinted, never ranked. Click a header to sort.</div>
       {/* Pro seam: the fixed peer set is free; choosing your own comparison set is the
           paid move. Hidden in review builds (rulebook v1 §45: nothing veiled or locked
           in the founder's review copies); the seam returns at monetization. The dead
@@ -956,7 +958,7 @@ function AdminLoad({ d }: { d: any }) {
   ];
   const onlinePct = typeof a.online_pct === "number" ? a.online_pct : null;
   return (
-    <Box><Rail kicker="The admin load" />
+    <Box><Rail icon="red-tape" kicker="The admin load" sample />
       {onlinePct != null ? (
         <div className="focal mb-3.5 grid grid-cols-2 gap-4 p-4">
           <Stat value={<>{onlinePct}%</>} label="Done online" size="focal" accent />
@@ -1010,13 +1012,12 @@ function Cities({ d }: { d: any }) {
   return (
     <Box>
       <div className="mb-3 flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2"><Ico id="neighborhood" /><span className="text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">Where the business is, city by city</span></div>
+        <div className="flex items-center gap-2"><Ico id="neighborhood" /><span className="text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">Where the business is, city by city</span><SampleTag /></div>
         <a href="/countries" className="shrink-0 cursor-pointer rounded-full border border-[var(--c-border)] px-3 py-1 text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)] transition hover:border-[var(--terra-border)] hover:text-[var(--terra-text)]">Open the directory &#8594;</a>
       </div>
       {/* map leads, shorter than the full-page map; the cities stand in a row below it. */}
       <SpineMap points={points} ariaLabel={`Map of the main ${countryName} business cities`} fitPadding={60} heightClass="h-[300px] w-full md:h-[360px]" legendLabel={`Dot size = market reach, ${topCityName} = 100`} />
       <div className="mt-3"><Conveyor ariaLabel="The main cities" itemMinPx={150} gapPx={12}>{cards}</Conveyor></div>
-      <div className="mt-2.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">Dot size on the map and the figure on each card are the same read: market reach against {topCityName} (100). The capital opens its own page.</div>
     </Box>
   );
 }
@@ -1043,17 +1044,30 @@ const TRADE_ICON: Record<string, import("@/components/brand/icons").AtlasIconId>
   "hairdressers-beauty": "trade-salon",
   "bars-nightclubs": "trade-bar",
 };
+/* slug -> canonical rule-32 label, so a link reads "Gym" not "Sports & fitness",
+ * "Salon" not "Hairdressers & beauty" (rulebook v2 §32 synonym collapse). */
+const TRADE_NAME: Record<string, string> = {
+  "restaurants": "Restaurant",
+  "grocery-stores": "Grocery",
+  "cafes-coffee": "Cafe",
+  "cafes-coffee-shops": "Cafe",
+  "sports-fitness": "Gym",
+  "auto-repair-shops": "Auto repair",
+  "hairdressers-beauty": "Salon",
+};
 function TradeLinks({ trades }: { trades: Array<{ name: string; slug: string; href: string }> }) {
   if (!trades.length) return null;
   return (
     <Box>
       <Rail icon="high-street" kicker="The everyday trades" />
-      <div className="grid gap-2.5 sm:grid-cols-2 md:grid-cols-3">
+      {/* flex-wrap + grow: rows fill edge to edge for any count, so an odd number of
+          cards never leaves a blank grid cell (rulebook v2 §17). */}
+      <div className="flex flex-wrap gap-2.5">
         {trades.map((t) => (
-          <a key={t.slug} href={t.href} className="group cityhov flex items-center justify-between gap-3 rounded-xl border border-[var(--c-border)] bg-[var(--c-card)] px-4 py-3.5">
+          <a key={t.slug} href={t.href} className="group cityhov flex grow basis-[47%] items-center justify-between gap-3 rounded-xl border border-[var(--c-border)] bg-[var(--c-card)] px-4 py-3.5 md:basis-[31%]">
             <span className="flex min-w-0 items-center gap-2.5">
               {TRADE_ICON[t.slug] ? <AtlasIcon id={TRADE_ICON[t.slug]} size={16} className="spine-ic shrink-0" style={{ color: "var(--c-ink2)" }} /> : null}
-              <span className="min-w-0 truncate text-[length:var(--t-body)] font-semibold text-[var(--c-ink)] group-hover:text-[var(--terra-text)]">{t.name}</span>
+              <span className="min-w-0 truncate text-[length:var(--t-body)] font-semibold text-[var(--c-ink)] group-hover:text-[var(--terra-text)]">{TRADE_NAME[t.slug] ?? t.name}</span>
             </span>
             <span className="shrink-0 text-[var(--c-muted)] transition group-hover:text-[var(--terra-text)]">&#8594;</span>
           </a>
@@ -1171,11 +1185,10 @@ function SellingAbroad({ d }: { d: any }) {
   // Founder: rename "openness" -> "how easy it is to export". The Meter is cut in the
   // bar rationing (rulebook v1 §25/§26); the verdict word + figure carry the read, then
   // the top export markets run full width so no half sits empty (rulebook v1 §17).
-  const ease = e.openness_0_100 >= 70 ? "Easy" : e.openness_0_100 >= 45 ? "Moderate" : "Hard";
   const partners = (e.partners ?? []).slice().sort((a: any, b: any) => b.pct - a.pct);
   return (
-    <Box><Head icon="global-spread">How easy it is to export</Head>
-      <div className="mb-3 flex items-baseline gap-2"><Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">{ease}</Fig><span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{e.openness_0_100} of 100 to export</span></div>
+    <Box><Head icon="global-spread" sample>How easy it is to export</Head>
+      <div className="mb-3 flex items-baseline gap-2"><Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">{e.openness_0_100}<span className="text-[length:var(--t-body)] text-[var(--c-muted)]"> / 100</span></Fig><span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">ease of exporting from here</span></div>
       {/* quiet where not sourced: the procedures detail (timings, paperwork, trade
           deals) fills in when researched per country , never a builder note here. */}
       <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Top markets, share of exports</div>
@@ -1404,7 +1417,6 @@ function DigitalPayments({ d }: { d: any }) {
   // monotonic left-to-right read. Greys already track magnitude.
   const methods: any[] = (p.methods ?? []).slice().sort((a: any, b: any) => b.pct - a.pct);
   const mcolor: any = { "Card": TERRA, "Bank transfer": "#737373", "Cash": "#a3a3a3", "Digital wallet": "#d4d4d4" };
-  const cardShare = methods.find((m: any) => m.name === "Card")?.pct;
   // Only the three tiles that touch margin and cash flow: how long card money takes
   // to settle, the fee it costs, and how much of retail is online. Broadband Mbps and
   // the generic reliability/logistics scores were unrelated trivia and were dropped.
@@ -1417,7 +1429,6 @@ function DigitalPayments({ d }: { d: any }) {
   ];
   return (
     <Box><Head icon="payments">Getting paid, and the cash it costs</Head>
-      <p className="mb-4 max-w-[62ch] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{typeof cardShare === "number" ? <>About <b className="text-[var(--c-ink)]">{cardShare}%</b> of takings come by card. </> : null}The <b className="text-[var(--c-ink)]">{p.card_fee_pct}%</b> fee and the wait for money to land are what actually touch your cash flow.</p>
       <div className="flex flex-col gap-5 md:flex-row md:items-center">
         <div className="md:w-[52%]">
           <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">How customers pay</div>
