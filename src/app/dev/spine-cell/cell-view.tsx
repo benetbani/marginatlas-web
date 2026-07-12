@@ -5,35 +5,38 @@
  * answer-first hero, one dominant decision figure, progressive disclosure creating
  * the free/Pro seam, honest baselines, rationed terracotta, count-up + hover motion.
  *
- * As-built chart dictionary (rulebook v1 section 25 bar budget: max 3 bar-family
- * graphics per page, no two adjacent sections sharing the bar form):
- *   #1 big figure at hero scale: masthead $43K (the ONE hero; the control-room trio
- *      restates it at sub-hero support scale by design, the seam's summary) = 1
- *   #2 100% stacked bar (legended): MoneySplit x1 (BAR 1 of 3; the channels bar is
- *      now a plain figure list so no two StackBars sit in adjacent sections)
- *   #4 dot plot on a shared labeled scale (EaseScale + endLabels): WhoSuits x1, Risks x1
- *   #5 lollipop on a drawn track: CostToOpen line items x1 (BAR 2 of 3)
- *   #7 line/area (zero baseline): SurvivalSlope x1 = 1; zero-baseline monthly COLUMNS: Seasonality x1 = 1
- *   #8 phase bar (rulebook v2 S10, two-anchor open/break-even, replaces the placeholder
- *      month-by-month Timeline): Ramp x1 (BAR 3 of 3)
- *   #9 editorial table (figures + bold-best, no in-cell bars): Nearby x1 = 1
- *   #12 waterfall (gross -> labeled decrements -> net, from the $100 split): OwnerKeeps x1 = 1 (max 1)
- *   #13 spread strip: masthead turnover p10/p50/p90 x1 = 1
- *   ranked figure list (label + right-aligned figure, no track): dayparts, channels, catchment
+ * As-built chart dictionary (rulebook 25 bar budget: max 3 bar-family graphics per
+ * page, no two adjacent sections sharing the bar form). The THREE counted bars:
+ *   BAR 1 , 100% stacked bar (legended): MoneySplit $100 split x1 (ch1)
+ *   BAR 2 , ShareStack (the founder-blessed channel/how-they-pay share bar): Demand channels x1 (ch2)
+ *   BAR 3 , PhaseBar (two-anchor open/break-even time axis): Ramp x1 (ch4)
+ * FREE forms carry the rest of the variety (no budget cost):
+ *   big figure at hero scale: masthead $43K (the ONE hero; the control-room trio
+ *      restates it at sub-hero support scale by design, the seam's summary)
+ *   discrete tier band (categorical Low/Mid/High pips, active inked): WhoSuits x1 (ch1)
+ *   donut (a whole = donut; peak slice terracotta): Demand dayparts x1 (ch2)
+ *   ranked figure list (label + right-aligned figure, no track): Demand catchment
+ *   lollipop on a drawn track (thin, marker family, not a fill bar): CostToOpen line items x1
+ *   line/area zero baseline: SurvivalSlope x1; zero-baseline monthly COLUMNS: Seasonality x1
+ *   two-marker scale (break-even vs a typical day on one domain): BreakEven headroom x1
+ *   editorial table (figures + bold-best, no in-cell bars): Nearby x1
+ *   waterfall (gross -> labeled decrements -> net, from the $100 split): OwnerKeeps x1 (max 1)
+ *   spread strip: masthead turnover p10/p50/p90 x1
  *   track-free range brackets (low/high ticks + mid dot): Wages x1
- *   segmented-control (selection chrome, ink): FormatPicker x1 = 1
- * REMOVED forms: Gauge, Donut, 3-pip meters, Dots, invented-ceiling break-even bar,
- *   the 3-level "waterfall" bars (-> true stepped waterfall), min-floored seasonality area;
- *   2026-07-11 (rulebook v1 sections 5, 15, 25): the Related keep-% lollipops, the
- *   catchment IndexBars, the daypart share bars, the channels StackBar, the Nearby
- *   in-cell CellScaleBars and the break-even headroom fill bar.
+ *   segmented-control (selection chrome, ink): FormatPicker x1
+ * REMOVED forms: Gauge, 3-pip meters, Dots, invented-ceiling break-even fill bar, the
+ *   3-level "waterfall" bars (-> true stepped waterfall), min-floored seasonality area,
+ *   the Related keep-% lollipops, the catchment IndexBars, the Nearby in-cell CellScaleBars;
+ *   the WhoSuits continuous-track Meters (-> discrete categorical tier band, 2026-07-12).
+ * Every modeled/placeholder figure block carries a visible SampleTag (rulebook 4A);
+ * the masthead states provenance once as the page-level tag.
  * Width tiers per WI-4; the money chapter is weighted heaviest (control room + wide reads).
  */
 import * as React from "react";
 import { spineCellSeed, spineIndustrySeed } from "@/lib/spine-seeds";
 import { timeToOpenWeeks } from "@/lib/markets/opening_archetypes";
 import {
-  Fig, Box, Rail, Movement, Row, Full, WideRail, EaseScale, StackBar, PhaseBar, InfoTip, StruckLine, TERRA, usd,
+  Fig, Box, Rail, Movement, Row, Full, WideRail, Donut, StackBar, ShareStack, PhaseBar, InfoTip, StruckLine, TERRA, usd,
 } from "@/components/spine/kit";
 import { Masthead } from "./masthead";
 import { FormatPicker, FormatProvider } from "./format-picker";
@@ -69,79 +72,101 @@ function MoneySplit({ d }: { d: any }) {
   const items: any[] = d.money_split?.items ?? [];
   if (items.length === 0) return null;
   const segments = items.map((it) => ({ label: it.name, pct: it.pct, color: it.kept ? TERRA : "#c8c8c6", kept: !!it.kept }));
-  const leading = [...items].filter((it) => !it.kept).sort((a, b) => b.pct - a.pct)[0];
   return (
     <Box>
-      <Rail icon="cost-breakdown" kicker="Where each $100 of sales goes" />
+      {/* sample: the kept 7% is a modeled cost-structure share, not a measured net
+          margin by city (rulebook 4A/5); the tag marks it so it never reads as real. */}
+      <Rail icon="cost-breakdown" kicker="Where each $100 of sales goes" sample />
       <StackBar segments={segments} ariaLabel={segments.map((p) => `${p.label} ${p.pct}%`).join(", ")} legend />
-      {leading ? (
-        <p className="mt-2 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{leading.name} is the single biggest slice, at {leading.pct}% of every $100.</p>
-      ) : null}
     </Box>
   );
 }
 
-/* WhoSuits , WI-3 brief:
- * decision: who this trade suits. Number: four operator demands on ONE shared LABELED scale
- * (Low -> High endpoints so the scale is never anonymous). focal: the dot rows.
- * width: Even half (audit: half the band, not a full-width strip of clustered dots).
- * terracotta target: none (ink markers; positions are the read, not an answer). */
+/* WhoSuits , WI-3 brief (rulebook 28/29 + FORM-CATALOG Meter do-not, 2026-07-12):
+ * the four operator demands are CATEGORICAL reads (Low / Mid / High), so they render
+ * as a discrete stepped tier band (the ratified PriceTierBand idiom: discrete pips,
+ * the active tier inked, labels aligned below), NOT a marker on a continuous track ,
+ * a drawn position fakes a precision the coarse 20/50/80 honesty steps never had. The
+ * vague words ("Real", "High", "Heavy", "Hands-on") are DROPPED for the honest tier
+ * each hides; the concrete sub-phrase carries the specifics. Neutral: positions are
+ * the read, no answer, no accent. width: Even half. */
+const DEMAND_TIERS = ["Low", "Mid", "High"];
+const tierOf = (pos: number): number => (pos >= 67 ? 2 : pos >= 34 ? 1 : 0);
+
 function WhoSuits({ d }: { d: any }) {
   const w = d.who_suits ?? {};
-  const rows: Array<[string, number, string, string?]> = (w.scales ?? []).map((s: any) => [s.label, s.pos, s.word, s.sub]);
-  if (rows.length === 0) return null; // omitted on promotion: no honest numeric scale
+  const rows: Array<{ label: string; tier: number; sub?: string }> = (w.scales ?? []).map((s: any) => ({ label: s.label, tier: tierOf(s.pos), sub: s.sub }));
+  if (rows.length === 0) return null; // omitted on promotion: no honest tier read
   return (
     <Box>
-      <Rail icon="who-for" kicker="Who this suits" verdict={w.subtitle} />
-      <div className="mt-1"><EaseScale rows={rows} plain endLabels={["Lighter demand", "Heavier demand"]} /></div>
+      <Rail icon="who-for" kicker="Who this suits" sample />
+      <div className="mt-1 space-y-3">
+        {rows.map((r) => (
+          <div key={r.label} className="grid grid-cols-[150px_1fr] items-center gap-3">
+            <span className="text-[length:var(--t-body)] leading-tight text-[var(--c-ink2)]">{r.label}{r.sub ? <span className="mt-0.5 block text-[length:var(--t-micro)] text-[var(--c-muted)]">{r.sub}</span> : null}</span>
+            <div className="grid grid-cols-3 gap-1" role="img" aria-label={`${r.label}: ${DEMAND_TIERS[r.tier]}`}>
+              {DEMAND_TIERS.map((t, i) => (
+                <span key={t} className="h-[7px] rounded-full" style={{ background: i === r.tier ? "var(--c-ink)" : "#e6e6e6" }} />
+              ))}
+            </div>
+          </div>
+        ))}
+        {/* the shared Low / Mid / High axis, aligned to the three pip columns */}
+        <div aria-hidden className="grid grid-cols-[150px_1fr] items-center gap-3">
+          <span />
+          <div className="grid grid-cols-3 gap-1 text-center text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">
+            {DEMAND_TIERS.map((t) => <span key={t}>{t}</span>)}
+          </div>
+        </div>
+      </div>
     </Box>
   );
 }
 
 /* ================= CH2 , THE DEMAND ================= */
-/* Demand , WI-4 brief (rulebook v1 sections 25/26/37, 2026-07-11): the daypart
- * share bars, the channels StackBar and the catchment IndexBars are all replaced
- * by ranked figure lists (label + right-aligned figure, no track) , the page's
- * bar budget is spent on the $100 split, the cost-to-open lollipops and the
- * phase bar, and a "featured" weekend bar was an unearned accent anyway.
- * decision: when the revenue actually lands. Number: covers/week + the daypart shares.
- * width: WideRail. terracotta target: none (the figures are the read).
- * catchment: RANKED descending (a mute unsorted list is decoration). */
+/* Demand , WI-4 brief (rulebook 25/26 + M1 richness restore, 2026-07-12): the July-3
+ * chapter carried three distinct reads and was stripped to three look-alike figure
+ * lists (the sparse-but-wide failure M1 names). Richness is restored WITHOUT the bar
+ * monotony G2 killed: the daypart split is a DONUT (a whole = donut, free), the channel
+ * mix is the ONE share bar the founder blessed ("how customers pay... the horizontal bar
+ * is perfect"), and the catchment index stays a ranked figure list. Three forms, none
+ * alike (resolves INV cell 04, where the index bars read as the daypart % bars).
+ * Title fixed: the box reads COVERS timing, so the kicker names covers, not revenue.
+ * width: WideRail. terracotta target: the peak daypart slice (box 1) and the leading
+ * channel (box 2, ShareStack's built-in leader accent) , one answer per box. */
+const DP_GREYS = ["#c1c1bf", "#dcdbd9"];
+
 function Demand({ d }: { d: any }) {
   const dm = d.demand ?? {};
   const dayparts: any[] = dm.dayparts ?? [];
   const channels: any[] = dm.channels ?? [];
   const cat: any[] = [...(dm.catchment ?? [])].sort((a, b) => b.pct - a.pct);
+  // the peak daypart is the box's one answer (when the week fills up); rest neutral.
+  const peakIdx = dayparts.reduce((best, p, i, a) => (p.pct > a[best].pct ? i : best), 0);
+  const dpSegs: Array<[string, number, string]> = dayparts.map((p, i) => [p.name, p.pct, i === peakIdx ? TERRA : DP_GREYS[i % DP_GREYS.length]]);
   return (
     <WideRail>
       <Box>
-        <Rail icon="daily-takings" kicker="When the revenue lands" />
-        <div className="mb-3 flex flex-wrap items-baseline gap-x-3">
-          <Fig className="text-3xl text-[var(--c-ink)]">{(dm.covers_per_week ?? 0).toLocaleString()}</Fig>
-          <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">covers<InfoTip gloss="One cover is one customer served; a table of four is four covers." /> a week at about <Fig className="text-[var(--c-ink)]">${dm.avg_spend_usd}</Fig> a head.</span>
+        <Rail icon="daily-takings" kicker="When the week fills up" sample />
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+          <Donut segs={dpSegs} centerBig={(dm.covers_per_week ?? 0).toLocaleString()} centerSub="covers a week" />
+          <div className="min-w-0 flex-1 space-y-1.5">
+            {dayparts.map((p, i) => (
+              <div key={p.name} className="flex items-baseline justify-between gap-3">
+                <span className="inline-flex min-w-0 items-center gap-2 truncate text-[length:var(--t-body)] text-[var(--c-ink2)]"><span aria-hidden className="h-2.5 w-2.5 shrink-0 rounded-sm" style={{ background: i === peakIdx ? TERRA : DP_GREYS[i % DP_GREYS.length] }} />{p.name}</span>
+                <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{p.pct}%</Fig>
+              </div>
+            ))}
+            <div className="pt-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">About ${dm.avg_spend_usd} a head<InfoTip gloss="One cover is one customer served; a table of four is four covers." />.</div>
+          </div>
         </div>
-        {/* dayparts , the week's shares as plain figures, chronological order kept */}
-        <div className="space-y-1.5">
-          {dayparts.map((p) => (
-            <div key={p.name} className="flex items-baseline justify-between gap-3">
-              <span className="min-w-0 truncate text-[length:var(--t-body)] text-[var(--c-ink2)]">{p.name}</span>
-              <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{p.pct}%</Fig>
-            </div>
-          ))}
-        </div>
-        <div className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">Share of the week's covers by daypart.</div>
       </Box>
       <Box>
-        <Rail icon="catchment" kicker="Who comes in, and how" />
-        {/* channel split , true shares of spend, seed order (leading channel first) */}
-        <div className="space-y-1.5">
-          {channels.map((c) => (
-            <div key={c.name} className="flex items-baseline justify-between gap-3">
-              <span className="min-w-0 truncate text-[length:var(--t-body)] text-[var(--c-ink2)]">{c.name}</span>
-              <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{c.pct}%</Fig>
-            </div>
-          ))}
-        </div>
+        <Rail icon="catchment" kicker="Who comes in, and how" sample />
+        {/* channel mix , the one share bar the founder blessed; the leading channel
+            carries the accent (ShareStack pins terracotta on the largest slice). */}
+        <div className="mb-1.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">How they order</div>
+        <ShareStack segments={channels.map((c) => ({ label: c.name, pct: c.pct }))} />
         {/* catchment , ranked descending; the heading names the unit so a 100-baseline
             index never reads as a percentage. */}
         <div className="mt-4 border-t border-[var(--c-border)] pt-3">
@@ -181,7 +206,7 @@ function Seasonality({ d }: { d: any }) {
   const Y = (v: number) => padTop + (1 - v / top) * (H - padTop - padBot);
   return (
     <Box className="md:flex-[2]">
-      <Rail icon="seasonality" kicker="Busy months and quiet months" />
+      <Rail icon="seasonality" kicker="Busy months and quiet months" sample />
       <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ height: 110 }} role="img" aria-label={`Monthly demand index, zero-based columns; ${MONTHS[peak] === "D" ? "December" : "the peak month"} is the highest at ${m[peak]}`} preserveAspectRatio="none">
         {/* index-100 reference rule, labeled */}
         <line x1={padL} y1={Y(100)} x2={W - padR} y2={Y(100)} stroke="#e0dedc" strokeWidth={0.75} strokeDasharray="3 3" />
@@ -236,7 +261,7 @@ function Ramp({ d }: { d: any }) {
   const openWeek = timeToOpenWeeks(d.meta?.industry ?? null);
   return (
     <Box>
-      <Rail kicker="Getting to break-even" />
+      <Rail icon="first-year" kicker="Getting to break-even" sample />
       <PhaseBar openWeek={openWeek} breakevenWeek={breakevenWeek} />
     </Box>
   );
@@ -259,7 +284,7 @@ function Myth({ d }: { d: any }) {
   return (
     <Box className="md:flex-[3]">
       {/* ink rail: the ONE accent in this box is the year-one survival node + figure. */}
-      <Rail icon="myth-reality" kicker="Myth vs. reality" />
+      <Rail icon="myth-reality" kicker="Myth vs. reality" sample />
       {/* the evidence, first: a survival curve with the "9 in 10 fail" folklore struck
           ON it, not a restatement of the margin split. A downward slope reads
           "attrition over time"; terracotta marks the year-one figure only (the
@@ -334,7 +359,7 @@ function Related({ d }: { d: any }) {
   return (
     <Box className="md:flex-[3]">
       {/* same section-opener treatment as sibling cards (Rail kicker, not a bold Head) */}
-      <Rail icon="subtype" kicker="Related trades in this place" />
+      <Rail icon="subtype" kicker="Related trades in this place" sample />
       <p className="mb-3 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">The same street, a different trade: what one costs to open.</p>
       <div className="space-y-1">
         {arr.map((r) => (

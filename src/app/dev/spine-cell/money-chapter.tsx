@@ -130,11 +130,10 @@ export function OwnerKeeps({ d }: { d: any }) {
   return (
     <Box className="md:flex-[3]">
       <div className="flex items-start justify-between gap-2">
-        <Rail icon="owner-keeps" kicker="What the owner keeps" />
+        <Rail icon="owner-keeps" kicker="What the owner keeps" sample />
         <FormatTag />
       </div>
       {costs.length ? <SteppedWaterfall costs={costs} keep={keepPct} /> : null}
-      <div className="mt-1 text-[11px] text-[var(--c-muted)]">Each $100 of sales, spent left to right; the last bar is what the owner keeps.</div>
       <InlineDisclosure name="ownerkeeps" summary="What moves the margin">
         <div className="mt-2 divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]">
           {drivers.map((c) => (
@@ -165,24 +164,32 @@ export function BreakEven({ d }: { d: any }) {
   // so the picker can never render a contradicting sentence here.
   const covers = ctx ? ctx.sel.break_even_covers_per_day : (b.covers_per_day ?? 0);
   const typical = (ctx ? ctx.sel.typical_covers_per_day : b.typical_covers_per_day) ?? Math.max(covers, 1);
+  // the track is a full typical day (its right end); break-even falls partway along it.
+  const domain = Math.max(typical, covers, 1);
+  const bePct = Math.max(4, Math.min(96, (covers / domain) * 100));
   return (
     <Box className="md:flex-[2]">
       <div className="flex items-center justify-between gap-2">
-        <Rail icon="break-even" kicker="When it clears costs" />
+        <Rail icon="break-even" kicker="When it clears costs" sample />
         <FormatTag />
       </div>
       <div className="flex items-baseline gap-2">
         <CountFig value={covers} fmt={(n) => Math.round(n)} className="text-3xl leading-none text-[var(--c-ink)]" />
         <span className="text-[13px] text-[var(--c-ink2)]">covers<InfoTip gloss="One cover is one customer served; a table of four is four covers." /> a day to break even</span>
       </div>
-      {/* real headroom as figures in words: break-even covers of the typical day's covers,
-          plus the gap. The old fill bar is gone (rulebook v1 section 25). */}
-      <div className="mt-3 border-t border-[var(--c-border)] pt-3">
-        <div className="text-[12px] leading-snug text-[var(--c-ink2)]">
-          That is <Fig className="text-[var(--c-ink)]">{Math.round(covers)}</Fig> of about <Fig className="text-[var(--c-ink)]">{typical}</Fig> covers on a typical day.
+      {/* the headroom ON a visual, not in prose (rulebook 26/30): break-even
+          (terracotta) sits partway along a full typical day (the ink tick at the
+          track's end). The gap is the room you still have. Markers are positioned,
+          never a fill bar. */}
+      <div className="mt-4 border-t border-[var(--c-border)] pt-4">
+        <div className="mb-2 flex items-baseline justify-between text-[length:var(--t-micro)] text-[var(--c-muted)]">
+          <span className="inline-flex items-center gap-1.5"><span aria-hidden className="h-2 w-2 rounded-full" style={{ background: TERRA }} /><Fig className="text-[var(--terra-text)]">{Math.round(covers)}</Fig> to break even</span>
+          <span className="inline-flex items-center gap-1.5"><Fig className="text-[var(--c-ink)]">{Math.round(typical)}</Fig> a typical day<span aria-hidden className="h-2.5 w-[2px] rounded-full" style={{ background: "var(--c-ink)" }} /></span>
         </div>
-        {/* the interpretation ADDS the headroom (the gap), never a third restatement of the fraction */}
-        <div className="mt-1.5 text-[11px] text-[var(--c-muted)]">That leaves about <Fig className="text-[var(--c-ink2)]">{Math.max(0, Math.round(typical - covers))}</Fig> covers of headroom on a typical day.</div>
+        <div className="relative h-1.5 rounded-full" role="img" aria-label={`Break-even at ${Math.round(covers)} covers, of about ${Math.round(typical)} on a typical day`} style={{ background: "#e6e6e6" }}>
+          <span aria-hidden className="absolute top-1/2 right-0 h-3 w-[2px] -translate-y-1/2 rounded-full" style={{ background: "var(--c-ink)" }} />
+          <span aria-hidden className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${bePct}%`, background: TERRA, boxShadow: "0 0 0 1px #e3e3e3" }} />
+        </div>
       </div>
     </Box>
   );
@@ -219,7 +226,7 @@ export function CostToOpen({ d }: { d: any }) {
     <Box className="md:flex-[3]">
       <div className="flex items-start justify-between gap-2">
         {/* same section-opener treatment as the sibling money cards (Rail kicker, not a bold Head) */}
-        <Rail icon="startup-cost" kicker="What it costs to open one" />
+        <Rail icon="startup-cost" kicker="What it costs to open one" sample />
         <FormatTag />
       </div>
       <div className="mb-3 flex flex-wrap items-baseline gap-x-3">

@@ -55,7 +55,7 @@ export function Nearby({ d }: { d: any }) {
   return (
     <Box>
       {/* same section-opener treatment as sibling cards (Rail kicker, not a bold Head) */}
-      <Rail icon="compare" kicker="The same trade, comparable places" />
+      <Rail icon="compare" kicker="The same trade, comparable places" sample />
       {/* sm+ header with click-to-sort (active = ink; selection is chrome, never the accent) */}
       <div className="hidden gap-3 border-b border-[var(--c-border)] pb-2 sm:grid" style={{ gridTemplateColumns: gridCols }}>
         <span className="text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Place</span>
@@ -115,7 +115,7 @@ export function Wages({ d }: { d: any }) {
   const kUsd = (v: number) => `$${Math.round(v / 1000)}K`;
   return (
     <Box className="md:flex-[3]">
-      <Rail icon="wages" kicker="What you would pay your team" />
+      <Rail icon="wages" kicker="What you would pay your team" sample />
       {/* the three mid-pay figures, first (the at-a-glance read) */}
       <div className="mt-1 space-y-1.5">
         {roles.slice(0, 3).map((r) => (
@@ -163,7 +163,7 @@ export function Risks({ d }: { d: any }) {
     .map(({ r, safe }) => [r.name, (safe / 10) * 100, `${safe}/10`]) as Array<[string, number, string, string?]>;
   return (
     <Box className="md:flex-[2]">
-      <Rail icon="watch" kicker="What to watch" verdict={d.risks?.surface_line} />
+      <Rail icon="watch" kicker="What to watch" sample />
       <div className="mt-1"><EaseScale rows={rows} endLabels={["Riskier", "Safer"]} /></div>
       <InlineDisclosure name="risks" summary="What each risk does">
         <div className="mt-2 space-y-2 border-t border-[var(--c-border)] pt-2.5">

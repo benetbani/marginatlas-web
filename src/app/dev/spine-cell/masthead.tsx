@@ -11,7 +11,7 @@
  * HonestTake card was a lone figure swimming in white space, folded in here).
  */
 import * as React from "react";
-import { Fig, InfoTip, SpreadStrip, usd } from "@/components/spine/kit";
+import { Fig, InfoTip, SampleTag, SpreadStrip, usd } from "@/components/spine/kit";
 import { AtlasMark } from "@/components/spine/marks";
 import { useCountUp } from "./format-picker";
 
@@ -30,8 +30,8 @@ export function Masthead({ d }: { d: any }) {
     <section className="overflow-hidden py-6 md:py-8">
       <div className="rounded-[14px] border border-[var(--c-border)] bg-[var(--c-card)] p-5 md:p-6">
         {/* crumb , real wayfinding: each segment carries its altitude mark, kept quiet (muted ink) */}
-        {/* allow-eyebrow: a trade/city/country wayfinding crumb, not a restated title; panel-approved (cell-00 passed) */}
-        <div className="mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--c-ink2)]">
+        {/* a trade/city/country wayfinding crumb, not a restated title; panel-approved (cell-00 passed) */}
+        <div className="mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--c-ink2)]">{/* allow-eyebrow */}
           <span className="inline-flex items-center gap-1.5"><AtlasMark id="alt-business" size={13} className="opacity-55" />{d.meta?.trade}</span>
           <span aria-hidden>&middot;</span>
           <span className="inline-flex items-center gap-1.5"><AtlasMark id="alt-city" size={13} className="opacity-55" />{d.meta?.city}</span>
@@ -75,11 +75,13 @@ export function Masthead({ d }: { d: any }) {
           </div>
         ) : null}
 
-        {/* provenance, stated once , a quiet footnote, not a body element (no brown dot,
-            no per-card confidence legend). The seed line carries no dot sentence anymore. */}
-        <div className="mt-4 text-[10.5px] leading-snug text-[var(--c-muted)]">
-          {d.meta?.provenance_line}
-        </div>
+        {/* provenance as the page-level sample marker (rulebook 4A): the hero figures
+            are placeholder, so the tag carries the illustrative line, unmissable and calm. */}
+        {d.meta?.provenance_line ? (
+          <div className="mt-4">
+            <SampleTag note={d.meta.provenance_line} />
+          </div>
+        ) : null}
       </div>
     </section>
   );

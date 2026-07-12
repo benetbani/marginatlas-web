@@ -108,7 +108,6 @@ export function FormatProvider({ d, children }: { d: any; children: React.ReactN
 export function FormatPicker({ d }: { d: any }) {
   const ctx = useFormat();
   const reduced = usePrefersReducedMotion();
-  const st = d.subtypes ?? {};
   if (!ctx) return null;
   const { sel, subs, idx, setIdx } = ctx;
 
@@ -126,9 +125,11 @@ export function FormatPicker({ d }: { d: any }) {
       <div className="relative">
         {/* chrome is ink: the rail icon, the hint pill and the tabs carry no terracotta ,
             the ONE accent in this box is the owner-keeps figure in the trio below. */}
-        <Rail icon="subtype" kicker="Pick the format you mean" />
+        <Rail icon="subtype" kicker="Pick the format you mean" sample />
+        {/* the verdict subtitle ("the leaner the format, the more the owner keeps") is
+            DELETED (rulebook 14): the three tiles + the note below show it, never a sentence.
+            The one surviving line is the interaction cue, not a conclusion. */}
         <p className="-mt-1 mb-4 flex flex-wrap items-center gap-2 text-[12.5px] text-[var(--c-ink2)]">
-          <span>{st.hint}</span>
           <span className="inline-flex items-center gap-1 rounded-full border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[10.5px] font-semibold text-[var(--c-ink2)]">
             <span className="fig">&#8595;</span> the money below updates
           </span>
