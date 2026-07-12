@@ -15,24 +15,24 @@
  * All prose lives in the seed. Count-up-safe motion, reduced-motion safe.
  *
  * As-built chart dictionary (perceptual idiom census; bar budget per rulebook v1 §25:
- * the strip + the walkability Meter are this page's ONLY bar-family graphics):
+ * the rent strip is this page's ONLY fill-bar graphic):
  *   divergence bar-list (deviation from x1.00): RentStrip x1  , the page hero.
  *   real tile map (position + rent-encoded pins): SpineMap x1  , dot size = how
  *     light the rent runs, terracotta = lighter than the city, ink = heavier.
- *   multiplier readout (running product, printed figures, no tracks): "Why the
- *     number moves" x1  , the raw->clipped line renders ONLY when the clip binds.
- *   marker-on-a-shared-scale: footfall two-marker x1 + walkability Meter x1 (cap 2);
- *     price tier is a DISCRETE 4-step band (a category, never a false-precise dot).
- *   editorial table, plain figures, best-in-row bold: Compare x1 (no in-cell bars).
- *   rank slope (2-point): MythChapter x1  , revenue rank -> rent rank, 9 lines.
+ *   multiplier readout (running product, printed figures, SampleTagged): "Why the
+ *     number moves" x1  , self-omits when every factor rounds to x1.00.
+ *   marker-on-a-shared-scale (neutral, no fill): footfall two-marker x1 + a single
+ *     walkability marker (WalkTrack) x1; price tier is a DISCRETE 4-step band.
+ *   editorial table, plain figures, color-marked row-best: Compare x1 (no in-cell bars).
+ *   rank slope: MythChapter x1  , revenue rank -> rent rank, one line each, the myth
+ *     struck on the chart as a dashed phantom line.
  */
 "use client";
 import * as React from "react";
-import { Ico, Fig, Meter, Chip, Rail, Expand, TERRA, InfoTip, SampleTag } from "@/components/spine/kit";
+import { Ico, Fig, Chip, Rail, Expand, TERRA, InfoTip, SampleTag } from "@/components/spine/kit";
 import { LockVeil, LockPill } from "@/components/spine/kit-index";
 import { SpineMap, type SpinePoint } from "@/components/spine/SpineMap";
 import { isReviewBuild } from "@/lib/feature_flags";
-import { AtlasMark } from "./marks";
 
 type District = {
   name: string; slug: string; character: string; tags?: string[];
@@ -45,7 +45,7 @@ type District = {
   footfall?: { weekday: number; weekend: number };
   locals_know?: string[];
 };
-type Myth = { claim?: string; reality?: string; stat_label?: string; tell?: string; slope_note?: string };
+type Myth = { claim?: string; reality?: string; stat_label?: string; tell?: string; slope_note?: string; strike_label?: string };
 type Rail2 = { kicker?: string; verdict?: string };
 
 const walkWord: Record<string, number> = { low: 30, moderate: 58, high: 90 };
@@ -250,7 +250,6 @@ function RentStrip({ districts, selected, onSelect, reduced }: { districts: Dist
           })}
         </ol>
       </div>
-      <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">Right of the line, rent runs lighter than the city; left of it, heavier.</p>
     </HoodCard>
   );
 }
@@ -261,13 +260,12 @@ function RentStrip({ districts, selected, onSelect, reduced }: { districts: Dist
 
 /* ============================================================================
  * WHY THE NUMBER MOVES , an explicit MULTIPLICATIVE readout. City starts at 1.00;
- * each factor multiplies the RUNNING total (not an addition), and the net is the
- * product. The printed multipliers carry it: the length-encoded tracks were dropped
- * under the bar ration (rulebook v1 §25 + §26, a lone number may stay a number).
- * HONESTY: the raw->clipped line renders ONLY when the clip actually binds (raw
- * product ABOVE the net at display precision); narrating a clip the numbers never
- * show was the audit's logical major. A near-flat district gets its own honest read
- * instead of four near-identical rows left unexplained.
+ * each factor multiplies the RUNNING total, and the net is the modeled result. The
+ * printed multipliers carry it: the length-encoded tracks were dropped under the bar
+ * ration (rulebook v1 §25 + §26, a lone number may stay a number). Schematic only, no
+ * glued explanatory paragraph (§26); the block is SampleTagged and self-omits when
+ * every factor sits at x1.00 (its caller gates on `factorsMove`), so a column of
+ * x1.00s that says nothing never renders (§7).
  * ========================================================================== */
 function MultWaterfall({ d }: { d: District }) {
   const steps = [
@@ -277,40 +275,23 @@ function MultWaterfall({ d }: { d: District }) {
     { label: "Area character", mult: d.tag_mult, isCity: false },
   ];
   const net = 1 + d.rev_vs_city_pct / 100; // the modeled result the city page ships
-  const rawProduct = d.commuter_mult * d.tourism_mult * d.tag_mult;
-  // the clip BINDS only when the raw product sits above the net at display precision;
-  // otherwise the raw->clipped sentence is numerically inert (or, worse, "clips" up).
-  const clipBinds = Number(rawProduct.toFixed(2)) > Number(net.toFixed(2));
-  // near-flat district: every factor within 0.05 of the city norm , say so instead
-  // of leaving four near-identical rows to answer "why the number moves" in silence.
-  const nearFlat = [d.commuter_mult, d.tourism_mult, d.tag_mult].every((m) => Math.abs(m - 1) <= 0.05);
   return (
-    <div>
-      <div className="space-y-1.5">
-        {steps.map((r) => (
-          <div key={r.label} className="flex items-center justify-between gap-2.5">
-            <span className={`text-[length:var(--t-micro)] ${r.isCity ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`}>
-              {r.label}
-              {r.label === "Area character" ? <InfoTip gloss="A modeled premium or discount from what the district is known for: nightlife, luxury, markets." /> : null}
-            </span>
-            <Fig className="text-right text-[length:var(--t-micro)] text-[var(--c-ink2)]">x{r.mult.toFixed(2)}</Fig>
-          </div>
-        ))}
-        {/* net row , the clipped product, in ink: the panel header rent figure carries
-            the accent, so the readout stays neutral proof */}
-        <div className="mt-1 flex items-center justify-between gap-2.5 border-t border-[var(--c-border)] pt-2">
-          <span className="text-[length:var(--t-micro)] font-semibold text-[var(--c-ink)]">Net vs city</span>
-          <Fig className="text-right text-[length:var(--t-body)] text-[var(--c-ink)]">x{net.toFixed(2)}</Fig>
+    <div className="space-y-1.5">
+      {steps.map((r) => (
+        <div key={r.label} className="flex items-center justify-between gap-2.5">
+          <span className={`text-[length:var(--t-micro)] ${r.isCity ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`}>
+            {r.label}
+            {r.label === "Area character" ? <InfoTip gloss="A modeled premium or discount from what the district is known for: nightlife, luxury, markets." /> : null}
+          </span>
+          <Fig className="text-right text-[length:var(--t-micro)] text-[var(--c-ink2)]">x{r.mult.toFixed(2)}</Fig>
         </div>
+      ))}
+      {/* net row , the modeled result, in ink: the panel header rent figure carries
+          the accent, so the readout stays neutral proof */}
+      <div className="mt-1 flex items-center justify-between gap-2.5 border-t border-[var(--c-border)] pt-2">
+        <span className="text-[length:var(--t-micro)] font-semibold text-[var(--c-ink)]">Net vs city</span>
+        <Fig className="text-right text-[length:var(--t-body)] text-[var(--c-ink)]">x{net.toFixed(2)}</Fig>
       </div>
-      <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
-        Each factor is a modeled multiplier on the running total, not an addition.
-        {clipBinds ? (
-          <> The raw product reaches <Fig className="text-[var(--c-ink2)]">x{rawProduct.toFixed(2)}</Fig>; the model clips it to <Fig className="text-[var(--c-ink2)]">x{net.toFixed(2)}</Fig>, so no single district lifts a trade without limit.</>
-        ) : nearFlat ? (
-          <> Every factor here sits close to the city norm, so the number barely moves. The edge, if any, lives in the rent load, not the takings.</>
-        ) : null}
-      </p>
     </div>
   );
 }
@@ -381,6 +362,23 @@ function PriceTierBand({ tier }: { tier: string }) {
   );
 }
 
+/* WALKABILITY , a single NEUTRAL marker on a two-end labeled track (ink marker, grey
+ * track, no fill). Walkability is support context, not the box's answer, so it never
+ * wears the accent (rulebook v2 §37: terracotta on the rent figure only), and it reads
+ * as a marker-on-a-track, not a filled bar that fakes an answer (FORM-CATALOG Meter
+ * do-not; also keeps the page's ONE fill bar, the rent strip, within the §25 budget). */
+function WalkTrack({ value }: { value: number }) {
+  const pos = Math.max(4, Math.min(96, value));
+  return (
+    <div>
+      <div className="relative h-2 rounded-full" role="img" aria-label={`walkability marker on a low to high foot-traffic scale`} style={{ background: "#e6e6e6" }}>
+        <span className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${pos}%`, background: "var(--c-ink)", boxShadow: "0 0 0 1px #e3e3e3" }} />
+      </div>
+      <div className="mt-1 flex justify-between text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]"><span>Low foot traffic</span><span>High foot traffic</span></div>
+    </div>
+  );
+}
+
 /* ============================================================================
  * DETAIL PANEL , disciplined. The SURFACE carries ONE decision: name + character +
  * blurb + the rent/revenue pair (rent load is the hero, terracotta when it runs
@@ -400,14 +398,18 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
   const dirWord = rent < 1 ? "lighter than city" : rent > 1 ? "heavier than city" : "at city rate";
   const rentShown = useCountUp(rent, reduced, 460);
   const grp = `ne-panel-${d.slug}`; // single-open group, reset per district
+  // self-omit the multiplier readout when every factor rounds to x1.00 (a column of
+  // x1.00s says nothing, rulebook v2 §7); it renders only when a factor actually moves.
+  const factorsMove = [d.commuter_mult, d.tourism_mult, d.tag_mult].some((m) => m.toFixed(2) !== "1.00");
 
   return (
     <HoodCard className="overflow-hidden lg:sticky lg:top-6">
 
       {/* HEADER STRIP , the decision. Rent load is the hero (largest); it wears the
           panel's ONE terracotta only when it runs below the city x1.00 (terra keeps
-          one meaning: the light-lease answer side), else ink. Revenue is grey support. */}
-      <div className="px-5 pt-4 pb-4" style={{ background: "linear-gradient(180deg,#fff7f4 0%,#ffffff 100%)" }}>
+          one meaning: the light-lease answer side), else ink. Revenue is grey support.
+          Plain card surface, no warm wash (tokens only, §38). */}
+      <div className="px-5 pt-4 pb-4">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
@@ -424,11 +426,8 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
           </div>
         </div>
 
-        {/* the decision line , verdict only (final-form: three prose beats to two;
-            the counterweight paragraph is cut, since the 48px rent figure above,
-            plus its lighter/heavier word, already carries that same number). */}
-        <p className="mt-3 border-t border-[var(--c-border)] pt-3 text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink)]">{d.verdict}</p>
-
+        {/* no verdict line: the finding lives on the visual (the 48px rent figure + its
+            lighter/heavier word, rulebook v2 §14). The old derived conclusion is cut. */}
         <div className="mt-3 flex flex-wrap items-center gap-1.5">
           {(d.tags ?? []).map((t) => <Chip key={t}>{t}</Chip>)}
         </div>
@@ -440,16 +439,17 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
           figure above (its number IS the hero now, and its keep-index prose is
           banned by §5). */}
       <div className="space-y-4 px-4 py-4">
-        {/* WHY THE NUMBER MOVES , the proof of the revenue support figure, always
-            visible (was the single-open group's default-open row; promoting it
-            removes the need for a default at all). */}
-        <div>
-          <div className="mb-1 flex items-end justify-between gap-3">
-            <SectionLabel>Why the number moves</SectionLabel>
-            <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">x{(1 + d.rev_vs_city_pct / 100).toFixed(2)}</Fig>
+        {/* WHY THE NUMBER MOVES , the modeled multiplier readout (SampleTagged, §4).
+            Self-omits when every factor rounds to x1.00 (nothing to explain, §7). */}
+        {factorsMove ? (
+          <div>
+            <div className="mb-1 flex items-end justify-between gap-3">
+              <SectionLabel sample>Why the number moves</SectionLabel>
+              <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">x{(1 + d.rev_vs_city_pct / 100).toFixed(2)}</Fig>
+            </div>
+            <MultWaterfall d={d} />
           </div>
-          <MultWaterfall d={d} />
-        </div>
+        ) : null}
 
         {/* footfall timing omits on the real page (no honest source); it renders on the
             illustrative seed, which carries footfall. */}
@@ -467,7 +467,7 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
             <SectionLabel>Walkability and price tier</SectionLabel>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {d.walkability || d.walk_score != null ? (
-                <div><SectionLabel>Walkability</SectionLabel><Meter value={walkVal(d)} left="Low foot traffic" right="High foot traffic" /></div>
+                <div><SectionLabel>Walkability</SectionLabel><WalkTrack value={walkVal(d)} /></div>
               ) : null}
               {d.price_tier ? (
                 <div><SectionLabel>Price tier</SectionLabel><PriceTierBand tier={d.price_tier} /></div>
@@ -480,7 +480,7 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
             Pro unlocks the rest (the named side street, the licensing quirk, the rent
             delta). Real content stays in the DOM under the veil for SEO. */}
         {(d.locals_know ?? []).length ? (
-          <Expand name={grp} title={<>What locals know <SampleTag /></>} right={<LockPill label="Pro" />}>
+          <Expand name={grp} title={<>What locals know <SampleTag /></>} right={isReviewBuild() ? undefined : <LockPill label="Pro" />}>
             <div className="pt-1">
               {/* ink kicker: the LockPill on the summary already carries the Pro cue */}
               <div className="mb-2 flex items-center gap-1.5">
@@ -677,20 +677,17 @@ export function NeighborhoodExplorer({ districts, defaultSlug, rail, mapNote }: 
 }
 
 /* ============================================================================
- * MYTH CHAPTER , promoted to its own full-width chapter (not column ballast). The
- * moat line at real size: the struck claim, the reality, and a RANK SLOPE as the
- * counter-evidence , every district's revenue rank on the left, rent rank on the
- * right (1 = lightest lease; the honest half of the same flip story, rulebook v1
- * §5), one line each (Visual Dictionary idiom #6). The loudest district's fall is
- * the ONE terracotta line; the other lines draw the whole re-ordering the prose
- * describes instead of restating one number a fourth time. Draw-on-scroll gated by
- * in-view; SSR / no-JS / reduced-motion render the lines at rest (fully drawn).
- * The internal kicker stays a plain "Revenue rank vs rent rank" label in neutral
- * ink, never terracotta (terracotta stays reserved for the answer); the standalone
- * `tell` one-liner stays cut, since the chart's own caption below carries that
- * same point alone, once, not a fourth time.
+ * MYTH CHAPTER , its own chapter. The moat POV rendered the ratified way (rulebook
+ * v2 §30): the myth is struck ON the chart, never in a text box beside it. A RANK
+ * SLOPE carries the counter-evidence , every district's revenue rank on the left,
+ * rent rank on the right (1 = lightest lease), one solid line each. The loudest
+ * district's fall is the ONE terracotta line. A dashed, struck PHANTOM line draws
+ * the myth's own assumption (top revenue would also be the lightest lease, flat at
+ * rank 1) and crosses it out; the real terracotta line drops away from it. No prose
+ * claim, no reality paragraph, no verdict footer (§14/§15/§19/§26). Lines render at
+ * REST, fully drawn (no draw-on-scroll: a static capture must always show them).
  * ========================================================================== */
-function RankSlope({ districts, loudSlug, hidden, reduced }: { districts: District[]; loudSlug: string; hidden: boolean; reduced: boolean }) {
+function RankSlope({ districts, loudSlug, strikeLabel }: { districts: District[]; loudSlug: string; strikeLabel?: string }) {
   const byRev = [...districts].sort((a, b) => b.rev_vs_city_pct - a.rev_vs_city_pct);
   const byRent = [...districts].sort((a, b) => a.rent_mult - b.rent_mult);
   const revRank = new Map(byRev.map((d, i) => [d.slug, i + 1] as const));
@@ -698,18 +695,28 @@ function RankSlope({ districts, loudSlug, hidden, reduced }: { districts: Distri
   // the two lines a phone still names: the loudest (the myth's subject) + the lightest lease.
   const lightestSlug = byRent[0]?.slug;
   const n = districts.length;
-  const W = 400, rowH = 24, top = 30, H = top + n * rowH + 4;
+  const W = 400, rowH = 24, top = 34, H = top + n * rowH + 4;
   const xL = 128, xR = 272;
   const y = (rank: number) => top + (rank - 0.5) * rowH;
   return (
     <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img"
-      aria-label={`Rank slope: revenue rank against rent rank for ${n} districts, rent rank 1 being the lightest lease. ${byRev[0]?.name} holds revenue rank 1 and rent rank ${rentRank.get(byRev[0]?.slug ?? "") ?? n}.`}>
+      aria-label={`Rank slope: revenue rank against rent rank for ${n} districts, rent rank 1 being the lightest lease. ${byRev[0]?.name} holds revenue rank 1 but rent rank ${rentRank.get(byRev[0]?.slug ?? "") ?? n}, so the myth that the top-revenue district is also the lightest lease is struck out.`}>
       {/* column headers , the two ends of the slope, named */}
-      <text x={xL - 10} y={14} textAnchor="end" fill="#8c8c8a" fontSize={9} style={{ textTransform: "uppercase", letterSpacing: ".06em" }}>Revenue rank</text>
-      <text x={xR + 10} y={14} textAnchor="start" fill="#8c8c8a" fontSize={9} style={{ textTransform: "uppercase", letterSpacing: ".06em" }}>Rent rank</text>
+      <text x={xL - 10} y={16} textAnchor="end" fill="#8c8c8a" fontSize={9} style={{ textTransform: "uppercase", letterSpacing: ".06em" }}>Revenue rank</text>
+      <text x={xR + 10} y={16} textAnchor="start" fill="#8c8c8a" fontSize={9} style={{ textTransform: "uppercase", letterSpacing: ".06em" }}>Rent rank</text>
       {/* the two rank rails */}
-      <line x1={xL} y1={top - 6} x2={xL} y2={H - 4} stroke="#e7e2df" strokeWidth={1} />
-      <line x1={xR} y1={top - 6} x2={xR} y2={H - 4} stroke="#e7e2df" strokeWidth={1} />
+      <line x1={xL} y1={top - 8} x2={xL} y2={H - 4} stroke="#e7e2df" strokeWidth={1} />
+      <line x1={xR} y1={top - 8} x2={xR} y2={H - 4} stroke="#e7e2df" strokeWidth={1} />
+      {/* THE MYTH, STRUCK ON THE CHART (§30): the flat line the myth assumes , top
+          revenue would sit at rent rank 1 too , dashed, crossed out. The real
+          terracotta line drops away from it. */}
+      {strikeLabel ? (
+        <g aria-hidden="true">
+          <line x1={xL} y1={y(1)} x2={xR} y2={y(1)} stroke="var(--c-line-strong)" strokeWidth={1.4} strokeDasharray="3 3" strokeLinecap="round" />
+          <line x1={xL + 26} y1={y(1) - 6} x2={xR - 26} y2={y(1) + 6} stroke="var(--c-muted)" strokeWidth={1.4} strokeLinecap="round" />
+          <text x={(xL + xR) / 2} y={y(1) - 9} textAnchor="middle" fontSize={8.5} fill="var(--c-muted)" style={{ textDecoration: "line-through" }}>{strikeLabel}</text>
+        </g>
+      ) : null}
       {districts.map((d) => {
         const loud = d.slug === loudSlug;
         const r1 = revRank.get(d.slug) ?? n, r2 = rentRank.get(d.slug) ?? n;
@@ -718,7 +725,7 @@ function RankSlope({ districts, loudSlug, hidden, reduced }: { districts: Distri
         const ink = loud ? "var(--terra-text)" : "#1b1b1a";
         // below sm only the two lines that carry the story get a label (first-word
         // names at a readable 12px); the rest scale to ~4px smears at phone width,
-        // so the dots + lines draw the flip and the prose carries it.
+        // so the dots + lines draw the flip and the labels carry the two anchors.
         const nameMobile = loud || d.slug === lightestSlug;
         const firstWord = d.name.split(" ")[0];
         return (
@@ -730,12 +737,9 @@ function RankSlope({ districts, loudSlug, hidden, reduced }: { districts: Distri
             {nameMobile ? (
               <text className="sm:hidden" x={xL - 10} y={y1 + 4} textAnchor="end" fontSize={12} fill={ink} fontWeight={loud ? 600 : 500}>{firstWord}</text>
             ) : null}
-            <line
-              x1={xL} y1={y1} x2={xR} y2={y2}
-              stroke={stroke} strokeWidth={loud ? 2.2 : 1.4} strokeLinecap="round"
-              pathLength={1} strokeDasharray={1} strokeDashoffset={hidden ? 1 : 0}
-              style={{ transition: hidden || reduced ? "none" : `stroke-dashoffset .7s cubic-bezier(.2,.7,.2,1) ${(r1 - 1) * 45}ms` }}
-            />
+            {/* solid line, rendered at rest (no dash-offset draw-on-scroll: it must
+                always show, or the chart reads as two disconnected rank lists) */}
+            <line x1={xL} y1={y1} x2={xR} y2={y2} stroke={stroke} strokeWidth={loud ? 2.2 : 1.4} strokeLinecap="round" />
             <circle cx={xL} cy={y1} r={2.4} fill={loud ? TERRA : "#8f8f8d"} />
             <circle cx={xR} cy={y2} r={2.4} fill={loud ? TERRA : "#8f8f8d"} />
             <text className="hidden sm:block" x={xR + 10} y={y2 + 3.5} textAnchor="start" fontSize={11}>
@@ -752,29 +756,51 @@ function RankSlope({ districts, loudSlug, hidden, reduced }: { districts: Distri
   );
 }
 
-export function MythChapter({ myth, loudest, districts = [] }: { myth: Myth; loudest: District; districts?: District[] }) {
-  const reduced = usePrefersReducedMotion();
-  const { ref, seen } = useInView<HTMLDivElement>();
-  // SSR / no-JS render the slope fully drawn (rest state); only after hydration and
-  // before scroll-in do the lines collapse, then draw on view (count-up contract).
-  const [mounted, setMounted] = React.useState(false);
-  React.useEffect(() => { setMounted(true); }, []);
-  const hidden = mounted && !reduced && !seen;
+/* one anchor case for the myth chapter's right column: the district name + its two
+ * ranks, schematic (labels + rank figures, §19), neutral (the chart carries the one
+ * terracotta line). Names the two extremes the slope draws so the flip reads concretely. */
+function AnchorCase({ label, name, rows }: { label: string; name: string; rows: Array<[string, string]> }) {
   return (
-    <div ref={ref} className="overflow-hidden rounded-[14px] border border-[var(--terra-border)] bg-[var(--c-card)]">
-      <div className="grid gap-6 p-6 md:grid-cols-[1.1fr_1fr] md:items-center md:p-8">
-        <div>
-          <div className="mb-3 flex items-center gap-2">
-            <Ico id="myth-reality" />
-            <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--c-muted)]">Revenue rank vs rent rank</span>
+    <div className="rounded-[12px] border border-[var(--c-border)] bg-[var(--c-soft)] px-3.5 py-3">
+      <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{label}</div>
+      <div className="mt-0.5 text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{name}</div>
+      <div className="mt-2 flex items-center gap-5">
+        {rows.map(([k, v]) => (
+          <div key={k} className="flex items-baseline gap-1.5">
+            <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{k}</span>
+            <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{v}</Fig>
           </div>
-          <p className="text-[length:var(--t-sub)] font-semibold leading-snug text-[var(--c-ink)] md:text-[length:var(--t-sub)]">&ldquo;{myth.claim}&rdquo;</p>
-          <p className="mt-3 max-w-prose text-[length:var(--t-body)] leading-relaxed text-[var(--c-ink2)]">{myth.reality}</p>
-        </div>
-        {/* the counter-evidence: the whole re-ordering, drawn , not one number again */}
-        <div className="rounded-[12px] border border-[var(--c-border)] bg-[var(--c-card)] p-4">
-          <RankSlope districts={districts.length ? districts : [loudest]} loudSlug={loudest.slug} hidden={hidden} reduced={reduced} />
-          <p className="mt-2 border-t border-[var(--c-border)] pt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{myth?.slope_note ?? "The order flips end to end: the loudest names carry the heaviest leases, and the lightest leases sit far from the top of the takings."}</p>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export function MythChapter({ myth, loudest, districts = [] }: { myth: Myth; loudest: District; districts?: District[] }) {
+  const list = districts.length ? districts : [loudest];
+  // ranks computed once so the schematic anchor cases match the chart exactly.
+  const byRev = [...list].sort((a, b) => b.rev_vs_city_pct - a.rev_vs_city_pct);
+  const byRent = [...list].sort((a, b) => a.rent_mult - b.rent_mult);
+  const n = list.length;
+  const revRankOf = (slug: string) => byRev.findIndex((d) => d.slug === slug) + 1;
+  const rentRankOf = (slug: string) => byRent.findIndex((d) => d.slug === slug) + 1;
+  const lightest = byRent[0];
+  const strikeLabel = myth.strike_label ?? "the loudest is the best place";
+  return (
+    <div className="overflow-hidden rounded-[14px] border border-[var(--c-border)] bg-[var(--c-card)]" style={{ boxShadow: HOOD_CARD_SHADOW }}>
+      <div className="p-5 md:p-6">
+        <Rail icon="myth-reality" kicker="Revenue rank vs rent rank" sample />
+        <div className="grid gap-6 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] md:items-center">
+          {/* the chart carries the takeaway silently: one line per district, the myth
+              struck on it, the loudest district's real drop in terracotta */}
+          <div className="rounded-[12px] border border-[var(--c-border)] bg-[var(--c-card)] p-4">
+            <RankSlope districts={list} loudSlug={loudest.slug} strikeLabel={strikeLabel} />
+          </div>
+          {/* the flip at the two extremes, schematic (the finding on the visual, §14) */}
+          <div className="space-y-3">
+            <AnchorCase label="Loudest takings" name={loudest.name} rows={[["Revenue", `#${revRankOf(loudest.slug)}`], ["Rent", `#${rentRankOf(loudest.slug)} of ${n}`]]} />
+            <AnchorCase label="Lightest lease" name={lightest.name} rows={[["Rent", `#${rentRankOf(lightest.slug)}`], ["Revenue", `#${revRankOf(lightest.slug)} of ${n}`]]} />
+          </div>
         </div>
       </div>
     </div>
@@ -796,6 +822,8 @@ type Metric = {
   get: (d: District) => number; fmt: (d: District) => string;
   /** omit when the metric has no universal better direction , no best is crowned */
   higherIsBetter?: boolean;
+  /** modeled or footfall-derived , renders a SampleTag beside the row label (§4) */
+  sample?: boolean;
 };
 
 // weekday dependence: how lopsided the week is (100 = all weekday, 0 = all weekend).
@@ -810,20 +838,25 @@ function weekdayLean(d: District) {
  * (rulebook v1 §5: the derived keep index never renders). */
 const FREE_METRICS: Metric[] = [
   { key: "rent", label: "Rent load", hint: "lower is lighter", get: (d) => d.rent_mult, fmt: (d) => `x${d.rent_mult.toFixed(2)}`, higherIsBetter: false },
-  { key: "rev", label: "Revenue vs city", hint: "headline takings", get: (d) => d.rev_vs_city_pct, fmt: (d) => `${d.rev_vs_city_pct >= 0 ? "+" : ""}${d.rev_vs_city_pct}%`, higherIsBetter: true },
+  { key: "rev", label: "Revenue vs city", hint: "modeled takings", get: (d) => d.rev_vs_city_pct, fmt: (d) => `${d.rev_vs_city_pct >= 0 ? "+" : ""}${d.rev_vs_city_pct}%`, higherIsBetter: true, sample: true },
 ];
 const PRO_METRICS: Metric[] = [
   // no higherIsBetter: a weekday-led week is not better or worse, so no best crown.
-  { key: "lean", label: "Weekday dependence", hint: "how lopsided the week is", get: (d) => weekdayLean(d), fmt: (d) => `${weekdayLean(d)}% weekday` },
+  { key: "lean", label: "Weekday dependence", hint: "how lopsided the week is", get: (d) => weekdayLean(d), fmt: (d) => `${weekdayLean(d)}% weekday`, sample: true },
   { key: "walk", label: "Walkability", hint: "low to high foot traffic", get: (d) => walkVal(d), fmt: (d) => `${walkVal(d)}`, higherIsBetter: true },
-  { key: "weekend", label: "Weekend footfall", hint: "trade intensity", get: (d) => footVal(d).weekend, fmt: (d) => `${footVal(d).weekend}`, higherIsBetter: true },
+  { key: "weekend", label: "Weekend footfall", hint: "trade intensity", get: (d) => footVal(d).weekend, fmt: (d) => `${footVal(d).weekend}`, higherIsBetter: true, sample: true },
 ];
 
-/* the row-best crown: bold everywhere, terracotta ONLY on the rent-load row (the
- * page's deciding metric). Legend lives in the caption under the table. */
+/* the row-best mark. The .fig class pins every figure to weight 600, so "bold" cannot
+ * differentiate the winner (it is already 600); the winner is marked by COLOR instead,
+ * solid ink (terracotta on the deciding rent-load row), while the losers of a crowned
+ * metric dim to muted. A metric with no better direction (weekday lean) crowns nobody,
+ * so all its cells stay ink. The legend under the table describes exactly this. */
 const DECIDER_KEY = "rent";
-const bestClass = (m: Metric) =>
-  m.key === DECIDER_KEY ? "font-semibold text-[var(--terra-text)]" : "font-semibold text-[var(--c-ink)]";
+function cellClass(m: Metric, win: boolean, crowned: boolean): string {
+  if (win) return m.key === DECIDER_KEY ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]";
+  return crowned ? "text-[var(--c-muted)]" : "text-[var(--c-ink)]";
+}
 function bestFor(m: Metric, cols: District[]): string | null {
   if (m.higherIsBetter == null || cols.length < 2) return null;
   let bd = cols[0];
@@ -831,26 +864,30 @@ function bestFor(m: Metric, cols: District[]): string | null {
   return bd.slug;
 }
 
-/* one pass per metric: label + hint + plain figures, the row-best bold (terracotta
- * on the rent-load row only). The old three-pass render (free rows with in-cell
- * bars, ungated bar-only Pro rows, veiled figure-only Pro rows) collapsed under
- * rulebook v1 §25 (bar ration) + §22 (a table is skimmable at a glance). */
+/* one pass per metric: label (+ SampleTag when modeled) + hint + plain figures, the
+ * row-best marked by color. The old three-pass render (free rows with in-cell bars,
+ * ungated bar-only Pro rows, veiled figure-only Pro rows) collapsed under rulebook v1
+ * §25 (bar ration) + §22 (a table is skimmable at a glance). */
 function MetricRows({ metrics, cols }: { metrics: Metric[]; cols: District[] }) {
   return (
     <>
       {metrics.map((m) => {
         const best = bestFor(m, cols);
+        const crowned = best != null;
         return (
           <div key={m.key} className="grid items-center gap-3 border-b border-[var(--c-border)] px-4 py-2.5 last:border-0" style={{ gridTemplateColumns: `minmax(0,1.3fr) repeat(${cols.length}, minmax(0,1fr))` }}>
             <div className="min-w-0">
-              <div className="text-[length:var(--t-body)] font-medium text-[var(--c-ink2)]">{m.label}</div>
+              <div className="flex flex-wrap items-center gap-1.5">
+                <span className="text-[length:var(--t-body)] font-medium text-[var(--c-ink2)]">{m.label}</span>
+                {m.sample ? <SampleTag /> : null}
+              </div>
               <div className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{m.hint}</div>
             </div>
             {cols.map((d) => {
               const win = best === d.slug && cols.length > 1;
               return (
                 <div key={d.slug} className="min-w-0">
-                  <Fig className={`text-[length:var(--t-body)] ${win ? bestClass(m) : "text-[var(--c-ink)]"}`}>{m.fmt(d)}</Fig>
+                  <Fig className={`text-[length:var(--t-body)] ${cellClass(m, win, crowned)}`}>{m.fmt(d)}</Fig>
                 </div>
               );
             })}
@@ -890,7 +927,7 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
 
   /* the auto-derived verdict callout is DELETED (rulebook v1 §15, founder 2026-07-11:
    * no cross-entity revenue-vs-keep verdict footers); the finding lives on the table's
-   * bold row-best figures, never asserted above it. */
+   * row-best figures (color-marked), never asserted above it. */
 
   return (
     <div>
@@ -905,8 +942,7 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
               key={d.slug} type="button" onClick={() => toggle(d.slug)} aria-pressed={on}
               className={`cityhov inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[length:var(--t-body)] ${on ? "border-transparent bg-[var(--c-ink)] text-white" : "border-[var(--c-border)] bg-[var(--c-card)] text-[var(--c-ink2)]"}`}
             >
-              {/* the hold state, marked: saved bookmark on a held chip, empty on the rest */}
-              <AtlasMark id={on ? "bookmark-saved" : "bookmark"} size={13} />
+              {/* selection is the ink fill + white text only; no accent glyph on chrome (§37) */}
               <span className="font-medium">{d.name}</span>
               <Fig className={`text-[length:var(--t-micro)] ${on ? "text-white/80" : "text-[var(--c-muted)]"}`}>x{d.rent_mult.toFixed(2)}</Fig>
             </button>
@@ -938,7 +974,7 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
             <div className="border-t border-[var(--c-border)]">
               <div className="flex items-center justify-between gap-2 px-4 pb-1 pt-3">
                 <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">Pro metrics</span>
-                <LockPill label="Pro" />
+                {!isReviewBuild() ? <LockPill label="Pro" /> : null}
               </div>
               <div className="p-3 pb-4">
                 <LockVeil unlocked={isReviewBuild()} headline="The full differential" note={proNote} cta="Compare with Pro">
@@ -959,11 +995,12 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
               </div>
               <div className="space-y-2">
                 {freeMetrics.map((m) => {
-                  const win = bestFor(m, cols) === d.slug && cols.length > 1;
+                  const best = bestFor(m, cols);
+                  const win = best === d.slug && cols.length > 1;
                   return (
                     <div key={m.key} className="flex items-center justify-between gap-2.5">
-                      <span className="min-w-0 truncate text-[length:var(--t-micro)] text-[var(--c-ink2)]">{m.label}</span>
-                      <Fig className={`text-right text-[length:var(--t-body)] ${win ? bestClass(m) : "text-[var(--c-ink)]"}`}>{m.fmt(d)}</Fig>
+                      <span className="flex min-w-0 items-center gap-1.5 text-[length:var(--t-micro)] text-[var(--c-ink2)]">{m.label}{m.sample ? <SampleTag /> : null}</span>
+                      <Fig className={`text-right text-[length:var(--t-body)] ${cellClass(m, win, best != null)}`}>{m.fmt(d)}</Fig>
                     </div>
                   );
                 })}
@@ -974,17 +1011,18 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
                       unveiled on review builds (§45). */}
                   <div className="flex items-center justify-between gap-2 border-t border-[var(--c-border)] pb-1 pt-2.5">
                     <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">Pro metrics</span>
-                    <LockPill label="Pro" />
+                    {!isReviewBuild() ? <LockPill label="Pro" /> : null}
                   </div>
                   <div className="pb-1 pt-1">
                     <LockVeil unlocked={isReviewBuild()} headline="The full differential" note={proNote} cta="Compare with Pro">
                       <div className="min-h-[172px] space-y-2">
                         {proMetrics.map((m) => {
-                          const win = bestFor(m, cols) === d.slug && cols.length > 1;
+                          const best = bestFor(m, cols);
+                          const win = best === d.slug && cols.length > 1;
                           return (
                             <div key={m.key} className="flex items-center justify-between gap-2.5">
-                              <span className="min-w-0 truncate text-[length:var(--t-micro)] text-[var(--c-ink2)]">{m.label}</span>
-                              <Fig className={`text-right text-[length:var(--t-body)] ${win ? bestClass(m) : "text-[var(--c-ink)]"}`}>{m.fmt(d)}</Fig>
+                              <span className="flex min-w-0 items-center gap-1.5 text-[length:var(--t-micro)] text-[var(--c-ink2)]">{m.label}{m.sample ? <SampleTag /> : null}</span>
+                              <Fig className={`text-right text-[length:var(--t-body)] ${cellClass(m, win, best != null)}`}>{m.fmt(d)}</Fig>
                             </div>
                           );
                         })}
@@ -998,8 +1036,9 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
         </div>
       </HoodCard>
 
-      {/* the table's legend (covers desktop and mobile) */}
-      <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">Bold marks each row&rsquo;s best, terracotta on rent load, the metric that decides.</p>
+      {/* the table's one-line legend (covers desktop and mobile), describing the real
+          row-best mark: solid ink for the winner, muted for the rest (§26). */}
+      <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">Each row&rsquo;s best reads in solid ink, the rest muted; terracotta marks rent load, the metric that decides.</p>
     </div>
   );
 }

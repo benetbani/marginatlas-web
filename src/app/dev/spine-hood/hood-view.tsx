@@ -17,21 +17,21 @@
  * seed; every sourceless field is null-guarded so it renders nothing on the real page.
  *
  * As-built chart dictionary (page-level idiom census; bar budget per rulebook v1
- * §25: the rent strip + the walkability Meter are the ONLY bar-family graphics):
+ * §25: the rent strip is the ONLY fill-bar graphic):
  *   big figure: masthead rent hero x1 (the ONE hero-scale figure) + panel rent x1.
  *   divergence bar-list (deviation from x1.00): RentStrip x1  , the page hero chart.
  *   real tile map (position): SpineMap x1  , rent-encoded pins (size = how light the
  *     rent runs, terracotta = lighter than the city, ink = heavier), legended.
- *   marker-on-a-shared-scale: footfall two-marker x1 (omitted on real data) +
- *     walkability Meter x1; price tier renders as a DISCRETE 4-step band.
+ *   marker-on-a-shared-scale (neutral, no fill): footfall two-marker x1 (omitted on
+ *     real data) + a single walkability marker; price tier is a DISCRETE 4-step band.
  *   multiplier readout (running product, printed figures): "Why the number moves" x1.
- *   rank slope (2-point): myth chapter x1  , revenue rank -> rent rank.
- *   editorial table, plain figures, best-in-row bold: Compare x1 (no in-cell bars).
+ *   rank slope: myth chapter x1  , revenue rank -> rent rank, the myth struck on it.
+ *   editorial table, plain figures, color-marked row-best: Compare x1 (no in-cell bars).
  * Terracotta = the answer only; selection + CTAs are neutral ink.
  */
 import * as React from "react";
 import { spineHoodSeed } from "@/lib/spine-seeds";
-import { Movement, Box, Ico } from "@/components/spine/kit";
+import { Movement, Box, Ico, Rail } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
 import { SpineShell } from "@/components/spine/shell";
 import { NeighborhoodExplorer, NeighborhoodCompare, MythChapter } from "@/components/spine/NeighborhoodExplorer";
@@ -44,7 +44,7 @@ const HOOD_BG = "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?au
 // The illustrative-route provenance line (dev seed fallback). The real adapter supplies
 // its own honest meta.provenance_line, which then replaces this on the promoted page.
 const DEV_PROVENANCE =
-  "District rent loads are multiples of the city rate. District revenue positions come from modeled commuter, visitor and character multipliers. Figures are illustrative until wired to live neighborhood data.";
+  "District rent loads are multiples of the city rate. District revenue positions are modeled from commuter, visitor and character multipliers against the city baseline.";
 
 // The closing band's canonical-trade slugs , each maps onto a modeled cell route. The
 // slate is site-wide (fixed slugs); the CITY half of the href is never known here, so it
@@ -111,7 +111,7 @@ export function SpineHoodBody({ data = spineHoodSeed }: { data?: any }) {
             are not both known, so an unpromoted or malformed meta never mislinks. */}
         {tradeLinks.length > 0 && cityName ? (
           <Box className="mt-8">
-            <div className="mb-3 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">Open a trade in {cityName}</div>
+            <Rail icon="high-street" kicker={`Open a trade in ${cityName}`} />
             <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
               {tradeLinks.map((t) => (
                 <li key={t.href}>

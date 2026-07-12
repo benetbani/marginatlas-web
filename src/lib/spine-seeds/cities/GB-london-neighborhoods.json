@@ -6,20 +6,13 @@
     "country_name": "United Kingdom",
     "as_of": "2026-06",
     "overall_confidence": "placeholder",
-    "provenance_line": "Modeled from district footfall, tourism and rent load. Figures are illustrative until wired to live neighborhood data.",
+    "provenance_line": "Rent loads are multiples of the city rate. District revenue positions are modeled from commuter, visitor and character multipliers against the city baseline.",
     "map": {
       "viewBox": "0 0 100 100",
       "label_city": "Greater London",
       "river": "4,62 16,58 28,60 40,56 52,58 64,54 76,57 88,52 96,55"
     },
     "_note": "SEED for the neighborhood-hub spine dev surface. District revenue-vs-city is a clipped product of commuter x tourism x tags multipliers; values illustrative, wire to neighborhood_multipliers on promotion. Net values kept consistent with the city page. Per-district lat/lng feed the real SpineMap; xy retained for legacy but unused by the map.",
-    "keep_index": {
-      "_meta": {
-        "confidence": "placeholder",
-        "method": "derived: 100 x (1 + rev_vs_city_pct/100) / rent_mult, city baseline = 100"
-      },
-      "_note": "Derived client-side from rev_vs_city_pct and rent_mult; no stored values. Index 100 = a district that keeps the same share of each pound as the city average. Above 100, low rent more than offsets revenue; below 100, heavy rent eats the lift."
-    },
     "rail": {
       "kicker": "Where in the city"
     },
@@ -32,6 +25,7 @@
         "confidence": "placeholder"
       },
       "claim": "The highest-revenue district is the best place to open.",
+      "strike_label": "the loudest is the best place",
       "reality": "It is the highest-revenue district. It is also the one the lease punishes hardest. Top takings come with the heaviest rent, so the lift is spent before it reaches the till. On rent, the loudest names sit heaviest and a few quieter districts run far lighter.",
       "stat_label": "rent runs well above the city rate",
       "tell": "The best-known address is the one the lease punishes hardest."
@@ -71,16 +65,16 @@
       "verdict": "Highest takings, heaviest lease. Worth it only for a large-ticket trade that can carry the rent.",
       "best_trades": [
         {
-          "name": "Specialty retail",
-          "why": "Wealthy locals and visitors pay full price; the address itself sells."
+          "name": "Restaurant",
+          "why": "Expense-account lunches and dinners carry an average ticket no suburb matches."
         },
         {
-          "name": "Fine dining",
-          "why": "Expense accounts and tourists carry an average ticket no suburb matches."
+          "name": "Cafe",
+          "why": "Office workers and visitors drive steady morning and mid-afternoon peaks."
         },
         {
-          "name": "Private members services",
-          "why": "Discretion and proximity to wealth are the whole product."
+          "name": "Salon",
+          "why": "A wealthy resident and worker base pays full price for regular upkeep."
         }
       ],
       "prime_streets": [
@@ -132,15 +126,15 @@
       "best_trades": [
         {
           "name": "Cafe",
-          "why": "Constant tourist churn keeps seats turning over all day."
+          "why": "Constant visitor churn keeps seats turning over all day."
         },
         {
-          "name": "Casual dining",
-          "why": "A captive crowd between attractions with nowhere quieter to go."
+          "name": "Restaurant",
+          "why": "A captive crowd between attractions eats close to where it stands."
         },
         {
-          "name": "Gift and souvenir retail",
-          "why": "Impulse spend from visitors who will not return to compare prices."
+          "name": "Bar",
+          "why": "Pre and post-theatre trade fills the evening hours."
         }
       ],
       "prime_streets": [
@@ -192,15 +186,15 @@
       "best_trades": [
         {
           "name": "Bar",
-          "why": "A dense, late-running nightlife crowd that drinks rather than dines."
+          "why": "A dense, late-running evening crowd anchors the district."
         },
         {
           "name": "Restaurant",
           "why": "Pre and post-night dining packs tables into a few hours."
         },
         {
-          "name": "Late-night food",
-          "why": "Demand peaks when the rest of the city has closed."
+          "name": "Cafe",
+          "why": "Media offices want fast coffee through the working day."
         }
       ],
       "prime_streets": [
@@ -252,16 +246,16 @@
       "verdict": "Five days of dense office lunch, then nothing. The whole year of rent is earned before the weekend.",
       "best_trades": [
         {
-          "name": "Quick-service lunch",
-          "why": "Tens of thousands of office workers need fast food in a 90-minute window."
+          "name": "Cafe",
+          "why": "The morning commute and mid-afternoon breaks drive two reliable peaks."
         },
         {
-          "name": "Coffee",
-          "why": "Morning commute and mid-afternoon breaks drive two reliable peaks."
+          "name": "Restaurant",
+          "why": "Tens of thousands need a fast lunch in a short midday window."
         },
         {
-          "name": "After-work bar",
-          "why": "A captive crowd unwinds on-site before the long commute home."
+          "name": "Bar",
+          "why": "An after-work crowd unwinds on site before the long commute home."
         }
       ],
       "prime_streets": [
@@ -313,16 +307,16 @@
       "verdict": "Money and taste, and rent that still leaves room, for now. Sign early or watch the margin close.",
       "best_trades": [
         {
-          "name": "Independent retail",
-          "why": "A design-literate crowd pays a premium for something not on the high street."
+          "name": "Cafe",
+          "why": "A tech and freelance crowd treats cafes as a second office."
         },
         {
-          "name": "Specialty coffee",
-          "why": "Tech workers and freelancers treat cafes as second offices."
-        },
-        {
-          "name": "Casual dining",
+          "name": "Restaurant",
           "why": "A young, spending crowd eats out often and tries new openings."
+        },
+        {
+          "name": "Bar",
+          "why": "A strong evening scene runs on a still-moderate lease."
         }
       ],
       "prime_streets": [
@@ -373,16 +367,16 @@
       "verdict": "Huge weekend volume at a small ticket. The model is throughput, not spend per head.",
       "best_trades": [
         {
-          "name": "Street food",
-          "why": "Market crowds graze; low ticket, very high volume."
+          "name": "Cafe",
+          "why": "Weekend market crowds graze across the day."
         },
         {
-          "name": "Live music venue",
-          "why": "A built-in scene draws a crowd no other district matches."
+          "name": "Bar",
+          "why": "A built-in music scene fills the evenings."
         },
         {
-          "name": "Alternative retail",
-          "why": "A distinctive subculture buys what it cannot find elsewhere."
+          "name": "Restaurant",
+          "why": "High weekend volume on a modest average ticket."
         }
       ],
       "prime_streets": [
@@ -432,16 +426,16 @@
       "verdict": "Steady, loyal, local spend on a light lease. Slower to fill than the centre, but it holds.",
       "best_trades": [
         {
-          "name": "Neighborhood cafe",
+          "name": "Cafe",
           "why": "A resident creative crowd treats the local cafe as a daily habit."
         },
         {
-          "name": "Independent grocer",
+          "name": "Grocery",
           "why": "Households shop locally and value quality over price."
         },
         {
-          "name": "Bakery",
-          "why": "Weekend footfall and steady daily demand from families."
+          "name": "Restaurant",
+          "why": "Loyal local diners hold up better than a spiky destination crowd."
         }
       ],
       "prime_streets": [
@@ -492,16 +486,16 @@
       "verdict": "High footfall on a cheap lease, but the mall sets the terms. Independents win on speed, not range.",
       "best_trades": [
         {
-          "name": "Convenience retail",
-          "why": "Commuters grab essentials in transit; fast, repeatable, low ticket."
-        },
-        {
-          "name": "Grab-and-go food",
+          "name": "Cafe",
           "why": "A constant flow of people moving between train and mall."
         },
         {
-          "name": "Services",
-          "why": "A large residential catchment needs everyday services nearby."
+          "name": "Grocery",
+          "why": "Commuters and new-build residents grab everyday essentials nearby."
+        },
+        {
+          "name": "Restaurant",
+          "why": "A large residential catchment eats out close to home."
         }
       ],
       "prime_streets": [
@@ -548,20 +542,20 @@
       "lng": -0.1156,
       "walk_score": 84,
       "cell_count": 9,
-      "blurb": "South of the river and below the city baseline on revenue, but rent is low enough that a tight operator can still keep more of each pound.",
-      "verdict": "Below the city on takings, ahead of it on what stays. Low rent is the whole edge.",
+      "blurb": "South of the river, below the city baseline on revenue, but on one of the lightest leases on the map.",
+      "verdict": "Below the city on takings, on one of the lightest leases of the districts here.",
       "best_trades": [
         {
-          "name": "Food market stall",
-          "why": "A celebrated food scene draws a crowd from across the city."
+          "name": "Restaurant",
+          "why": "A food-led crowd rewards a distinctive independent kitchen."
         },
         {
           "name": "Bar",
-          "why": "A strong evening economy on a lower cost base than the centre."
+          "why": "A strong evening economy runs on a lighter lease than the centre."
         },
         {
-          "name": "Independent restaurant",
-          "why": "Diverse, food-led demand rewards a distinctive kitchen."
+          "name": "Cafe",
+          "why": "Residents by day and visitors at the weekend both anchor trade."
         }
       ],
       "prime_streets": [
@@ -579,7 +573,7 @@
         "weekend": 76
       },
       "locals_know": [
-        "Revenue sits below the city, but the low rent means the margin can still beat far pricier districts; this is the clearest case on the map that takings and keep are not the same thing.",
+        "Revenue sits below the city, but the rent is among the lightest on the map, which is the whole reason operators look here.",
         "A stall in Brixton Village is cheaper than a street unit and just as visible to the food crowd, so it is where most kitchens here start.",
         "The evening economy is strong and cheaper to run than the centre, so a bar clears here on volume the West End would need a much bigger ticket to match.",
         "The market draws from across London at weekends but the weekday trade is local, so a menu that only works on the destination crowd will feel Tuesdays hard."

@@ -11,7 +11,7 @@
  */
 import * as React from "react";
 import { CountryFlag } from "@/components/CountryFlag";
-import { Fig, InfoTip } from "@/components/spine/kit";
+import { Fig } from "@/components/spine/kit";
 import { AtlasMark } from "@/components/spine/marks";
 
 function usePrefersReducedMotion() {
@@ -58,11 +58,6 @@ export function HoodMasthead({ d }: { d: any }) {
   // return must follow every hook call, never sit between two).
   const bestRent = best?.rent_mult ?? 0;
   const rentShown = useCountUp(bestRent, reduced);
-  const heroNote =
-    d.meta?.hero_note ??
-    (best?.rent_mult != null
-      ? `Rent here runs x${best.rent_mult.toFixed(2)} the city rate, the lightest lease of the ${districts.length} districts.`
-      : null);
 
   // degrade rather than throw if the caller gate ever loosens and fewer than two
   // districts reach the masthead (it needs a lightest AND a heaviest to contrast).
@@ -71,7 +66,7 @@ export function HoodMasthead({ d }: { d: any }) {
   return (
     <section className="py-6 md:py-8">
       {/* upward navigation , wired to the city page (dev route until promotion). */}
-      <a href={d.meta?.city_href ?? "/dev/spine-city"} className="mb-4 inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[var(--c-border)] bg-white/70 px-3 py-1 text-xs font-semibold text-[var(--c-ink2)] transition hover:border-[var(--terra-border)] hover:text-[var(--terra-text)]">&#8592; Back to {d.meta?.city}</a>
+      <a href={d.meta?.city_href ?? "/dev/spine-city"} className="mb-4 inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[var(--c-border)] bg-white/70 px-3 py-1 text-xs font-semibold text-[var(--c-ink2)] transition hover:border-[var(--c-line-strong)] hover:text-[var(--c-ink)]">&#8592; Back to {d.meta?.city}</a>
       <div className="flex items-center gap-3.5">
         <CountryFlag iso2={d.meta?.iso2?.toLowerCase()} className="w-[36px] rounded-sm shadow-sm" />
         <h1 data-typography="custom" className="text-3xl font-semibold tracking-tight text-[var(--c-ink)] md:text-4xl">{d.meta?.city} neighborhoods</h1>
@@ -82,43 +77,46 @@ export function HoodMasthead({ d }: { d: any }) {
         Money moves street to street: each district ranked by rent load, the multiple of the city rate its leases run, lightest first, across <Fig className="text-[var(--c-ink)]">{districts.length}</Fig> districts.
       </p>
 
-      {/* ONE dominant hero: the district where rent runs lightest (terracotta, the
-          single largest figure on the page). The heaviest-lease district is demoted to
-          a small neutral supporting stat inside the same card, not a co-equal cell. */}
-      <div className="mt-5 rounded-[14px] border border-[var(--terra-border)] bg-[var(--c-card)] px-5 py-5 md:px-6 md:py-6"
-        style={{ backgroundImage: "linear-gradient(180deg,#fff7f4 0%,#ffffff 55%)" }}>
-        <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-          {/* HERO , the lightest rent, the one terracotta figure */}
-          <div className="min-w-0">
-            <div className="flex items-center gap-1.5 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-[var(--terra-text)]"><AtlasMark id="best" size={15} />Rent runs lightest</div>
-            <div className="mt-1 flex items-end gap-3.5">
-              <Fig className="text-[60px] leading-none text-[var(--terra-text)] md:text-[76px]">x{rentShown.toFixed(2)}</Fig>
+      {/* ONE dominant answer: the district where rent runs lightest (the single
+          terracotta figure on the page). The heaviest lease and the city baseline sit
+          in a smaller neutral support panel that FILLS the right half, so the card
+          reads as two balanced panels, never a lone stat beside a blank middle band
+          (rulebook v2 §17). Tokens/plain white, no warm wash; terracotta on the answer
+          figure only (§37/§38). */}
+      <div className="mt-5 rounded-[14px] border border-[var(--c-border)] bg-[var(--c-card)] px-5 py-5 md:px-6 md:py-6">
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-stretch sm:gap-6">
+          {/* HERO , the lightest lease, the one terracotta figure, one focal size */}
+          <div className="min-w-0 sm:flex-1">
+            <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">Rent runs lightest</div>
+            <div className="mt-1.5 flex items-end gap-3.5">
+              <Fig className="text-[52px] leading-none text-[var(--terra-text)]">x{rentShown.toFixed(2)}</Fig>
               <div className="pb-1.5">
-                <div className="text-[19px] font-semibold leading-tight text-[var(--c-ink)] md:text-[22px]">{best.name}</div>
-                <div className="text-[11px] text-[var(--c-muted)]">rent, x the city level<InfoTip gloss="x1.00 is the city-average rent for a comparable unit; below it a lease runs lighter, above it heavier." /></div>
+                <div className="text-[length:var(--t-sub)] font-semibold leading-tight text-[var(--c-ink)]">{best.name}</div>
+                <div className="text-[length:var(--t-micro)] text-[var(--c-muted)]">rent, x the city level</div>
               </div>
             </div>
-            {/* seed note first; the fallback derives from the data itself (the lightest
-                district's real rent multiple). Nothing renders without either. */}
-            {heroNote ? (
-              <p className="mt-2.5 max-w-md text-[12.5px] leading-snug text-[var(--c-ink2)]">{heroNote}</p>
-            ) : null}
           </div>
 
-          {/* SUPPORT , the heaviest-lease district, a small neutral stat, not a co-hero */}
-          <div className="shrink-0 rounded-[12px] border border-[var(--c-border)] bg-[var(--c-soft)] px-4 py-3 sm:w-[200px]">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{d.meta?.support_label ?? "Heaviest rent"}</div>
-            <div className="mt-1.5 flex items-baseline gap-2">
-              <Fig className="text-[22px] leading-none text-[var(--c-ink)]">x{heavy.rent_mult.toFixed(2)}</Fig>
-              <span className="text-[12.5px] font-semibold text-[var(--c-ink)]">{heavy.name}</span>
+          {/* a hairline divider between the two panels */}
+          <div className="hidden w-px shrink-0 bg-[var(--c-border)] sm:block" />
+
+          {/* SUPPORT , heaviest lease + the city baseline, two neutral rows filling the
+              right half. No accent here (terracotta stays on the hero answer only). */}
+          <div className="sm:flex-1">
+            <div className="flex items-baseline justify-between gap-3 border-b border-[var(--c-border)] pb-2.5">
+              <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{d.meta?.support_label ?? "Heaviest rent"}</span>
+              <span className="flex items-baseline gap-2">
+                <Fig className="text-[length:var(--t-sub)] leading-none text-[var(--c-ink)]">x{heavy.rent_mult.toFixed(2)}</Fig>
+                <span className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)]">{heavy.name}</span>
+              </span>
             </div>
-            {d.meta?.support_note ? (
-              <p className="mt-1.5 text-[11px] leading-snug text-[var(--c-muted)]">{d.meta.support_note}</p>
-            ) : (
-              <p className="mt-1.5 text-[11px] leading-snug text-[var(--c-muted)]">
-                The heaviest lease of the <Fig className="text-[var(--c-ink2)]">{districts.length}</Fig> districts, against a city level of x1.00.
-              </p>
-            )}
+            <div className="flex items-baseline justify-between gap-3 pt-2.5">
+              <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">City baseline</span>
+              <span className="flex items-baseline gap-2">
+                <Fig className="text-[length:var(--t-sub)] leading-none text-[var(--c-ink)]">x1.00</Fig>
+                <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">a comparable unit at the city rate</span>
+              </span>
+            </div>
           </div>
         </div>
       </div>
