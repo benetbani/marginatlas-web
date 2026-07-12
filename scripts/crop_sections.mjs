@@ -104,7 +104,7 @@ for (let i = 0; i < sections.length; i++) {
     fullPage: true,
     clip: { x: 0, y, width: Math.min(1280, doc.w), height },
     type: "jpeg",
-    quality: 70,
+    quality: 82, // enough fidelity for the taste panel to read composition; weight/hex are judged from SOURCE by the gates, not from the crop
   });
   const cropRel = `design/crops/${page}/${id}.jpeg`;
   writeFileSync(`E:/atlas/${cropRel}`, buf);
