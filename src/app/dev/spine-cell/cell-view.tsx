@@ -146,7 +146,7 @@ function Demand({ d }: { d: any }) {
   const dpSegs: Array<[string, number, string]> = dayparts.map((p, i) => [p.name, p.pct, i === peakIdx ? TERRA : DP_GREYS[i % DP_GREYS.length]]);
   return (
     <WideRail>
-      <Box>
+      <Box className="flex flex-col">
         <Rail icon="daily-takings" kicker="When the week fills up" sample />
         <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
           <Donut segs={dpSegs} centerBig={(dm.covers_per_week ?? 0).toLocaleString()} centerSub="covers a week" />
@@ -157,7 +157,19 @@ function Demand({ d }: { d: any }) {
                 <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{p.pct}%</Fig>
               </div>
             ))}
-            <div className="pt-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">About ${dm.avg_spend_usd} a head<InfoTip gloss="One cover is one customer served; a table of four is four covers." />.</div>
+          </div>
+        </div>
+        {/* covers unit-economics, anchored to the box base: fills the donut box to its
+            taller neighbour's height (rulebook 17, no one-sided white space) and glosses
+            "covers" at first textual use (rule 40), replacing the misplaced a-head tooltip. */}
+        <div className="mt-auto grid grid-cols-2 gap-x-4 border-t border-[var(--c-border)] pt-3">
+          <div>
+            <Fig className="text-[length:var(--t-lead)] text-[var(--c-ink)]">${dm.avg_spend_usd}</Fig>
+            <div className="text-[length:var(--t-micro)] text-[var(--c-muted)]">a head</div>
+          </div>
+          <div>
+            <Fig className="text-[length:var(--t-lead)] text-[var(--c-ink)]">~{Math.round((dm.covers_per_week ?? 0) / 7)}</Fig>
+            <div className="text-[length:var(--t-micro)] text-[var(--c-muted)]">covers<InfoTip gloss="One cover is one customer served; a table of four is four covers." /> a typical day</div>
           </div>
         </div>
       </Box>
@@ -199,7 +211,8 @@ function Seasonality({ d }: { d: any }) {
   if (m.length < 2) return null;
   // HONEST AXIS: zero-based columns (never floored at the data min), scale drawn on-surface.
   const top = Math.max(100, ...m);
-  const peak = m.indexOf(Math.max(...m)); // December in the seed (year-end peak)
+  const peak = m.indexOf(Math.max(...m)); // the busy month, data-derived (year-end in the seed)
+  const trough = m.indexOf(Math.min(...m)); // the quiet month, data-derived
   const W = 300, H = 110, padL = 22, padR = 6, padTop = 10, padBot = 18;
   const innerW = W - padL - padR;
   const slot = innerW / m.length;
@@ -219,8 +232,15 @@ function Seasonality({ d }: { d: any }) {
         {/* the zero baseline, drawn */}
         <line x1={padL} y1={Y(0)} x2={W - padR} y2={Y(0)} stroke="#c9c9c7" strokeWidth={1} />
         {m.map((_, i) => <text key={i} x={padL + i * slot + slot / 2} y={H - 5} textAnchor="middle" fill="#8c8c8a" fontSize={8}>{MONTHS[i]}</text>)}
+        {/* the busy + quiet months marked ON the visual (rulebook 26: the finding lives on
+            the chart, not a caption): each carries its index value, neutral ink, never a
+            terracotta-featured month (rule 37); both are data-derived so the read holds for
+            any cell (rule 21), not the seed's Western year-end peak. */}
+        {[peak, trough].map((idx) => (
+          <text key={`mk-${idx}`} x={padL + idx * slot + slot / 2} y={Y(m[idx]) - 4} textAnchor="middle" fontSize={8.5} fill="#1b1b1a" style={{ fontFamily: "var(--font-grotesk)", fontWeight: 600 }}>{m[idx]}</text>
+        ))}
       </svg>
-      <div className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">Monthly demand, indexed; the dashed rule marks 100. December peaks, January sags.</div>
+      <div className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">Monthly demand, indexed; the dashed rule marks 100.</div>
     </Box>
   );
 }
@@ -285,12 +305,11 @@ function Myth({ d }: { d: any }) {
     <Box className="md:flex-[3]">
       {/* ink rail: the ONE accent in this box is the year-one survival node + figure. */}
       <Rail icon="myth-reality" kicker="Myth vs. reality" sample />
-      {/* the evidence, first: a survival curve with the "9 in 10 fail" folklore struck
-          ON it, not a restatement of the margin split. A downward slope reads
-          "attrition over time"; terracotta marks the year-one figure only (the
-          myth-buster), the later years stay ink. */}
-      {survival.length >= 2 ? <SurvivalSlope points={survival} note={s.line} /> : null}
-      {my.reality ? <p className="mt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{my.reality}</p> : null}
+      {/* the evidence, ALONE: a survival curve with the "9 in 10 fail" folklore struck ON
+          it (rulebook 30), terracotta on the year-one node only. The "survivors, not
+          failures" caption read and the reality paragraph are BOTH deleted , the bust lives
+          on the chart, never in prose glued beside it (rulebook 26/19). */}
+      {survival.length >= 2 ? <SurvivalSlope points={survival} /> : null}
     </Box>
   );
 }
@@ -310,7 +329,7 @@ const FOLKLORE_LABEL = "folklore: 9 in 10 fail";
  * the folklore phantom INSIDE this same <svg>, projected through this chart's own
  * X()/Y() scale (a flat line at the folklore's implied survival level, spanning the
  * same x-span as the real curve, struck out) , the kit.tsx:598 contract. */
-function SurvivalSlope({ points, note }: { points: Array<[string, number]>; note?: string }) {
+function SurvivalSlope({ points }: { points: Array<[string, number]> }) {
   const W = 320, H = 110, padL = 8, padR = 8, padTop = 22, padBot = 26;
   const min = 0, max = 100;
   const X = (i: number) => padL + (i / (points.length - 1)) * (W - padL - padR);
@@ -338,7 +357,12 @@ function SurvivalSlope({ points, note }: { points: Array<[string, number]>; note
         })}
         <StruckLine points={phantomPts} label={FOLKLORE_LABEL} />
       </svg>
-      {note ? <div className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{note}</div> : null}
+      {/* one-line legend only (rulebook 26): names the two lines so the real curve reads
+          against the struck folklore phantom. No sentence, no verdict, no "read". */}
+      <div className="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">
+        <span className="inline-flex items-center gap-1.5"><span aria-hidden className="h-[2px] w-4 rounded-full" style={{ background: "#c8c8c6" }} />still trading</span>
+        <span className="inline-flex items-center gap-1.5"><span aria-hidden className="h-0 w-4 border-t border-dashed" style={{ borderColor: "#b0b0ae" }} />folklore</span>
+      </div>
     </div>
   );
 }
@@ -360,10 +384,15 @@ function Related({ d }: { d: any }) {
     <Box className="md:flex-[3]">
       {/* same section-opener treatment as sibling cards (Rail kicker, not a bold Head) */}
       <Rail icon="subtype" kicker="Related trades in this place" sample />
-      <p className="mb-3 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">The same street, a different trade: what one costs to open.</p>
+      {/* the explanatory subtitle is DELETED (rulebook 14: most subtitles should not
+          exist); the cost figure's unit is a direct column label, never a sentence (rule 26). */}
+      <div className="mb-2 flex items-baseline justify-between border-b border-[var(--c-border)] pb-1.5">
+        <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Trade</span>
+        <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">To open</span>
+      </div>
       <div className="space-y-1">
         {arr.map((r) => (
-          <a key={r.slug} href={`/gb/london/${r.slug}`} className="hov -mx-2 flex items-baseline justify-between gap-3 rounded-md px-2 py-2">
+          <a key={r.slug} href={`/gb/london/${r.slug}`} className="hov -mx-2 flex items-baseline justify-between gap-3 rounded-md px-2 py-1.5">
             <span className="min-w-0 truncate text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">{r.name} &#8594;</span>
             {typeof r.cost_to_open_usd === "number" ? (
               <Fig className="shrink-0 text-right text-[length:var(--t-body)] text-[var(--c-ink)]">{money(r.cost_to_open_usd)}</Fig>
@@ -402,15 +431,11 @@ function Close({ d }: { d: any }) {
     <Box>
       <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
         <div className="max-w-2xl">
-          <div className="mb-1.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--c-muted)]">The bottom line</div>
-          {d.close?.bottom_line ? (
-            <p className="text-[length:var(--t-lead)] font-medium leading-snug text-[var(--c-ink)]">{d.close.bottom_line}</p>
-          ) : null}
-          <p className="mt-1.5 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">
-            {hasSubtypes
-              ? "If the format fits your capital and your hours, the next question is where the same work keeps more."
-              : "If this fits your capital and your hours, the next question is where the same work keeps more."}
-          </p>
+          {/* the asserted "bottom line" verdict paragraph and the forward "where the same
+              work keeps more" line are BOTH deleted (rulebook 15/19: a section's data shows
+              the conclusion, the copy never asserts it). This is a navigation terminus: the
+              label points at the next steps below, it states no finding. */}
+          <div className="mb-1.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--c-muted)]">Where to next</div>
         </div>
         <a href="/pricing" className="shrink-0 self-start rounded-full bg-[var(--c-ink)] px-5 py-2.5 text-[length:var(--t-body)] font-semibold text-white transition-colors hover:bg-[var(--terra-text)] md:self-auto">
           Compare this trade with Pro &#8594;
@@ -520,11 +545,15 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
           <FormatProvider d={d}>
             <div className="space-y-4">
               {hasSubtypes ? <Full><FormatPicker d={d} /></Full> : null}
-              {hasOwner || hasBreakEven ? (
-                <WideRail>{hasOwner ? <OwnerKeeps d={d} /> : null}{hasBreakEven ? <BreakEven d={d} /> : null}</WideRail>
+              {/* Re-tier (rulebook 17, no one-sided white space): the tall signature
+                  waterfall pairs with the tall pay plot so both fill the band; break-even
+                  and cost-to-open are the shorter entry-threshold reads, paired together so
+                  break-even is no longer stretched ~half-empty beside the waterfall. */}
+              {hasOwner || hasWages ? (
+                <WideRail>{hasOwner ? <OwnerKeeps d={d} /> : null}{hasWages ? <Wages d={d} /> : null}</WideRail>
               ) : null}
-              {hasSetup || hasWages ? (
-                <Row>{hasSetup ? <CostToOpen d={d} /> : null}{hasWages ? <Wages d={d} /> : null}</Row>
+              {hasBreakEven || hasSetup ? (
+                <Row>{hasBreakEven ? <BreakEven d={d} /> : null}{hasSetup ? <CostToOpen d={d} /> : null}</Row>
               ) : null}
             </div>
           </FormatProvider>

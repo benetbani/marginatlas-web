@@ -23,9 +23,10 @@
  *     country), each a real link. Always renders; every href is a verified real route.
  *  2. The Margin Index taste band , the top real-keep rows of the restaurants board,
  *     as RankBars, plus a link to the full /margin-index. Self-omits below 3 known rows.
- *  3. The map, demoted , the existing real country picker (WorldMapClient), small and
- *     low-emphasis, NOT SpineMap (no city lat/lng exist here; inventing coordinates would
- *     fabricate data).
+ *  3. The map , the existing real country picker (WorldMapClient), a full-width browse
+ *     affordance below the fold (a map is a signature full-width form, never a centered
+ *     widget floating in white space), NOT SpineMap (no city lat/lng exist here; inventing
+ *     coordinates would fabricate data).
  *  4. Free-vs-paid , qualitative only, no price numbers (PRICING.md can drift).
  *  5. The blog strip , only real posts from getAllPosts(), never the old hardcoded
  *     BLOG_FALLBACK slugs. Self-omits below 3 real posts.
@@ -45,7 +46,6 @@ import {
   Full,
   Head,
   Movement,
-  Narrow,
   Rail,
 } from "@/components/spine/kit";
 import { RankBars, type RankDatum } from "@/components/spine/kit-index";
@@ -143,25 +143,30 @@ function MarginTaste({ rows, subject }: { rows: (MarginIndexRow & { keepPct: num
   );
 }
 
-/* ================= CH3 , THE MAP, DEMOTED ================= */
+/* ================= CH3 , THE MAP ================= */
 /* Reuses the existing real country picker (WorldMapClient, "use client", no props) as a
  * plain browse affordance. Deliberately NOT SpineMap: SpineMap needs real lat/lng
  * SpinePoints, and the city lists here carry no coordinates , inventing them would
- * fabricate data. Narrow + a plain card keeps it visibly smaller and lower-emphasis
- * than the masthead. Rulebook v2 fix: the kicker dropped its leading "Or" (it used to
- * continue the now-dead eyebrow's own "Or just browse" , orphaned once Task 1 stopped
- * that eyebrow rendering) and the dead `verdict` (a restated caption the map itself
- * already shows) was deleted rather than carried as dead weight. */
+ * fabricate data. Round-2 panel fix (rule 17 / rule 36 "no centered orphan"): the map was
+ * a Narrow (58%) card with an extra inner max-w-xl cap, so it floated centered with blank
+ * flanks on BOTH sides while its "Browse by country" header hugged the left gutter , the
+ * exact one-sided-white-space defect. A map is a signature T1/Full form (see the WIDTH
+ * TIERS note in kit.tsx: "Full , full column: timelines, leaderboards, maps"), so it now
+ * fills the content column and left-aligns under its own header, commanding real width.
+ * The picker's own SVG scales to 100% of this frame (capped at max-w-5xl internally), so
+ * no width cap is imposed here. Rulebook v2 fix (retained): the kicker dropped its leading
+ * "Or" (it used to continue the now-dead eyebrow's own "Or just browse") and the dead
+ * `verdict` (a restated caption the map itself already shows) was deleted. */
 function MapBrowse() {
   return (
-    <Narrow>
+    <Full>
       <Box>
         <Rail icon="vs-world" kicker="Start from a place" />
-        <div className="mx-auto max-w-xl overflow-hidden rounded-[10px] border border-[var(--c-border)]">
+        <div className="overflow-hidden rounded-[10px] border border-[var(--c-border)]">
           <WorldMapClient />
         </div>
       </Box>
-    </Narrow>
+    </Full>
   );
 }
 
@@ -258,29 +263,37 @@ function BlogStrip({ posts }: { posts: BlogPost[] }) {
 }
 
 /* ================= CH6 , CLOSE ================= */
-/* A Narrow CTA back to the recommender. No newsletter form here and no id="newsletter":
- * the root layout's FooterNewsletterBar already owns that anchor site-wide; a second one
- * here would break its deep links. Mirrors the masthead's own CTA button styling, an
- * intentional bookend. */
+/* A full-width closing band back to the recommender. No newsletter form here and no
+ * id="newsletter": the root layout's FooterNewsletterBar already owns that anchor
+ * site-wide; a second one here would break its deep links. Round-2 panel fix (rule 17 /
+ * rule 36 "no centered orphan"): this was a Narrow (58%) card with two short centered
+ * lines and a pill under heavy air , a centered island with blank flanks on BOTH sides,
+ * orphaned beside its left-aligned "Still deciding" header (the generic-SaaS conversion
+ * block the founder rejects). It now fills the content column as a horizontal band: the
+ * copy left-aligns under its header and the CTA sits at the right, so content earns the
+ * width instead of white space. Accent unchanged: terracotta stays on the single decision
+ * action only (rule 37, panel-defended). On mobile the band stacks (copy, then CTA). */
 function CloseCTA() {
   return (
-    <Narrow>
+    <Full>
       <Box elevation="lift">
-        <div className="text-center">
-          <p className="text-[15px] font-medium leading-snug text-[var(--c-ink)]">Not sure which trade fits, or where.</p>
-          <p className="mt-1.5 text-[13px] leading-relaxed text-[var(--c-ink2)]">
-            Answer two questions and the Atlas ranks the rest for you.
-          </p>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-[15px] font-medium leading-snug text-[var(--c-ink)]">Not sure which trade fits, or where.</p>
+            <p className="mt-1.5 text-[13px] leading-relaxed text-[var(--c-ink2)]">
+              Answer two questions and the Atlas ranks the rest for you.
+            </p>
+          </div>
           <a
             href="/decide"
-            className="mt-4 inline-flex items-center gap-2 rounded-full border border-[var(--terra-border)] bg-[var(--terra-soft)] px-5 py-2.5 text-sm font-semibold text-[var(--terra-text)] transition hover:bg-[var(--terra-border)]"
+            className="inline-flex shrink-0 items-center gap-2 self-start rounded-full border border-[var(--terra-border)] bg-[var(--terra-soft)] px-5 py-2.5 text-sm font-semibold text-[var(--terra-text)] transition hover:bg-[var(--terra-border)] sm:self-auto"
           >
             Let the Atlas pick for you
             <span aria-hidden="true">&rarr;</span>
           </a>
         </div>
       </Box>
-    </Narrow>
+    </Full>
   );
 }
 

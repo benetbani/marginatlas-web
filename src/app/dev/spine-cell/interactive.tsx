@@ -10,7 +10,7 @@
  * because they do not read the FormatContext. All prose from the seed.
  */
 import * as React from "react";
-import { Box, Rail, Fig, EaseScale, InlineDisclosure, usd } from "@/components/spine/kit";
+import { Box, Rail, Fig, EaseScale, InfoTip, InlineDisclosure, usd } from "@/components/spine/kit";
 
 const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
 
@@ -62,11 +62,17 @@ export function Nearby({ d }: { d: any }) {
         {cols.map((c) => {
           const on = c.key === sortKey;
           return (
-            <button key={c.key} type="button" onClick={() => setSortKey(c.key)} aria-sort={on ? "descending" : "none"}
-              className={`flex items-center justify-end gap-1 text-[10.5px] font-semibold uppercase tracking-wide transition-colors ${on ? "text-[var(--c-ink)]" : "text-[var(--c-muted)] hover:text-[var(--c-ink2)]"}`}>
-              <span>{c.label} <span className="font-normal lowercase tracking-normal">({c.unit})</span></span>
-              <span aria-hidden className={`fig text-[10px] ${on ? "opacity-100" : "opacity-30"}`}>{on ? "↓" : "↕"}</span>
-            </button>
+            <div key={c.key} className="flex items-center justify-end gap-1">
+              <button type="button" onClick={() => setSortKey(c.key)} aria-sort={on ? "descending" : "none"}
+                className={`flex items-center gap-1 text-[10.5px] font-semibold uppercase tracking-wide transition-colors ${on ? "text-[var(--c-ink)]" : "text-[var(--c-muted)] hover:text-[var(--c-ink2)]"}`}>
+                <span>{c.label} <span className="font-normal lowercase tracking-normal">({c.unit})</span></span>
+                <span aria-hidden className={`fig text-[10px] ${on ? "opacity-100" : "opacity-30"}`}>{on ? "↓" : "↕"}</span>
+              </button>
+              {/* rulebook 40: the coined "keeps per $1" metric carries its gloss as a "?"
+                  InfoTip on the header (OUTSIDE the sort button, no nested buttons), which
+                  replaces the glued definition caption that used to sit under the table. */}
+              {c.key === "rate" ? <InfoTip gloss="The owner's yearly take for every dollar of turnover." /> : null}
+            </div>
           );
         })}
       </div>
@@ -91,11 +97,9 @@ export function Nearby({ d }: { d: any }) {
           </div>
         ))}
       </div>
-      <div className="mt-2 text-[11px] text-[var(--c-muted)]">
-        {hasTake
-          ? "Keeps per $1: the owner’s yearly take for every dollar of turnover. Same trade, same country, read like for like."
-          : "Same trade, same country, read like for like."}
-      </div>
+      {/* the glued definition + "read like for like" instruction caption is DELETED
+          (rulebook 26/40): the unit lives in the column header "(c)" and its InfoTip, and
+          the section's own kicker already states the "same trade, comparable places" scope. */}
     </Box>
   );
 }
@@ -114,8 +118,8 @@ export function Wages({ d }: { d: any }) {
   const max = Math.max(1, ...roles.map((r) => r.high_usd)) * 1.05;
   const kUsd = (v: number) => `$${Math.round(v / 1000)}K`;
   return (
-    <Box className="md:flex-[3]">
-      <Rail icon="wages" kicker="What you would pay your team" sample />
+    <Box className="md:flex-[2]">
+      <Rail icon="wages" kicker="What the team costs" sample />
       {/* the three mid-pay figures, first (the at-a-glance read) */}
       <div className="mt-1 space-y-1.5">
         {roles.slice(0, 3).map((r) => (
@@ -125,7 +129,7 @@ export function Wages({ d }: { d: any }) {
           </div>
         ))}
       </div>
-      <div className="mt-2 text-[11px] text-[var(--c-muted)]">Typical mid pay a year; the full spread by role sits below.</div>
+      <div className="mt-2 text-[11px] text-[var(--c-muted)]">Typical mid pay a year.</div>
       {/* the full spread, always visible: track-free range brackets (low tick, high tick, mid dot) */}
       <div className="mt-3 space-y-3 border-t border-[var(--c-border)] pt-3">
         {roles.map((r) => {

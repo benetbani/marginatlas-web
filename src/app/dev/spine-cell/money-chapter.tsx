@@ -191,6 +191,20 @@ export function BreakEven({ d }: { d: any }) {
           <span aria-hidden className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${bePct}%`, background: TERRA, boxShadow: "0 0 0 1px #e3e3e3" }} />
         </div>
       </div>
+      {/* the headroom made explicit as figures, not a caption sentence (rulebook 26): the
+          cushion of covers between break-even and a typical day, and how much of a typical
+          day break-even already consumes. Both follow the picked format, and fill the rail
+          to its neighbour's height (rulebook 17). No bar: plain figures (rule 26 corollary). */}
+      <div className="mt-4 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-[var(--c-border)]" style={{ background: "var(--c-border)" }}>
+        <div className="bg-[var(--c-card)] px-3.5 py-2.5">
+          <Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">{Math.max(0, Math.round(typical - covers))}</Fig>
+          <div className="text-[9.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">covers of headroom</div>
+        </div>
+        <div className="bg-[var(--c-card)] px-3.5 py-2.5">
+          <Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">{Math.round((covers / Math.max(typical, 1)) * 100)}%</Fig>
+          <div className="text-[9.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">of a typical day</div>
+        </div>
+      </div>
     </Box>
   );
 }

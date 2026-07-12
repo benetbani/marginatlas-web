@@ -10,7 +10,7 @@
  *                       eye SEES 64 collapse to 7. Replaces three equal inline figures.
  *  - SurvivalCurve   , a stepped decay curve from 100% at open to the yr1/3/5 reads on a
  *                       ZERO baseline. Replaces three floored bars (honesty fix + new form).
- *  - SeasonRibbon    , a single smooth area+line across Jan-Dec on a ZERO baseline. Replaces
+ *  - SeasonRibbon    , a single straight area+line across Jan-Dec on a ZERO baseline. Replaces
  *                       twelve floored categorical bars (honesty fix + new form).
  *  - RangeBracket    , a labelled [lo | mid | hi] bracket for a single point-in-range
  *                       (payback). A distinct idiom from the benchmark's dot scale.
@@ -178,13 +178,13 @@ export function SurvivalCurve({ curve, note }: { curve: Array<{ yr: number; pct:
 }
 
 /* ============================================================================
- * SEASON RIBBON , one smooth terracotta area+line across the twelve months on a
- * ZERO baseline (a shape-over-time read, not twelve magnitudes). Peak node dotted;
- * the trough month annotated from the DATA (never hardcoded). Draws on scroll-in.
+ * SEASON RIBBON , one STRAIGHT terracotta area+line across the twelve months on a
+ * ZERO baseline (a shape-over-time read, not twelve magnitudes). Straight polyline,
+ * never smoothed (rule 27); peak + trough nodes marked from the DATA in INK, so no
+ * month wears the terracotta accent (rule 37). No glued caption (rule 26). Draws on scroll-in.
  * ========================================================================== */
 const MONTH_LABELS = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
-const MONTH_FULL = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-export function SeasonRibbon({ months, peakNote, troughNote }: { months: number[]; peakNote?: string; troughNote?: string }) {
+export function SeasonRibbon({ months }: { months: number[] }) {
   const reduced = useReduced();
   const { ref, seen } = useInView<HTMLDivElement>();
   const p = useDraw(seen, reduced, 700);
@@ -207,24 +207,20 @@ export function SeasonRibbon({ months, peakNote, troughNote }: { months: number[
         <line x1={0} y1={H - padB} x2={W} y2={H - padB} stroke="#d8d0cb" strokeWidth={1.2} />
         <g clipPath="url(#ribbon-clip)">
           <path d={area} fill={TERRA} opacity={0.12} />
-          <path d={path} fill="none" stroke={TERRA} strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" />
+          <path d={path} fill="none" stroke={TERRA} strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="miter" />
         </g>
-        {/* peak node (terracotta, the one accent) */}
-        <circle cx={X(peak)} cy={Y(months[peak])} r={4} fill={TERRA} stroke="#fff" strokeWidth={1.6} />
-        {/* trough node (ink, derived) */}
+        {/* peak node , INK, a data-derived marker only. No month wears the terracotta
+            accent (rule 37: a month can never be featured); the ribbon's SHAPE is the read */}
+        <circle cx={X(peak)} cy={Y(months[peak])} r={4} fill="#1b1b1a" stroke="#fff" strokeWidth={1.6} />
+        {/* trough node (ink, derived, hollow to distinguish it from the filled peak) */}
         <circle cx={X(trough)} cy={Y(months[trough])} r={3} fill="#fff" stroke="#1b1b1a" strokeWidth={1.6} />
-        {/* month letters: peak + trough emphasised in INK only , terracotta stays on the
-            peak node (the answer); the trough is a warning and never wears the accent */}
+        {/* month letters: peak + trough marked in INK only (no accent on any month) */}
         {MONTH_LABELS.map((m, i) => (
           <text key={i} x={X(i)} y={H - 6} textAnchor="middle" fill={i === trough || i === peak ? "#565654" : "#9a938e"} fontSize={9} fontWeight={i === trough || i === peak ? 600 : 400}>{m}</text>
         ))}
-        <text x={X(peak)} y={Y(months[peak]) - 9} textAnchor="middle" fill="#c2410c" fontSize={9.5} fontWeight={600}>peak</text>
+        <text x={X(peak)} y={Y(months[peak]) - 9} textAnchor="middle" fill="#565654" fontSize={9.5} fontWeight={600}>peak</text>
         <text x={X(trough)} y={Y(months[trough]) - 9} textAnchor="middle" fill="#6f6f6d" fontSize={9.5} fontWeight={600}>low</text>
       </svg>
-      <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-1 text-[11px] leading-snug text-[var(--c-muted)]">
-        {peakNote ? <span><b className="text-[var(--c-ink2)]">{MONTH_FULL[peak]}:</b> {peakNote}</span> : null}
-        {troughNote ? <span><b className="text-[var(--c-ink2)]">{MONTH_FULL[trough]}:</b> {troughNote}</span> : null}
-      </div>
     </div>
   );
 }

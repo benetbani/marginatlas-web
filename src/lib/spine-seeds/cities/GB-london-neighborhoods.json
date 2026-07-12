@@ -6,7 +6,7 @@
     "country_name": "United Kingdom",
     "as_of": "2026-06",
     "overall_confidence": "placeholder",
-    "provenance_line": "Rent loads are multiples of the city rate. District revenue positions are modeled from commuter, visitor and character multipliers against the city baseline.",
+    "provenance_line": "District revenue positions are modeled from commuter, visitor and character multipliers against the city baseline.",
     "map": {
       "viewBox": "0 0 100 100",
       "label_city": "Greater London",

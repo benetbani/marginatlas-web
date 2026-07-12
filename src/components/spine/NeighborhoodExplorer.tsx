@@ -565,13 +565,10 @@ function UnderMapCard({ d }: { d: District }) {
             {trades.map((t, i) => {
               const href = tradeHref(t.name);
               const body = (
-                <>
-                  <div className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">
-                    {t.name}
-                    {href ? <span aria-hidden className="ml-1 text-[var(--c-muted)]">&#8594;</span> : null}
-                  </div>
-                  <div className="text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]">{t.why}</div>
-                </>
+                <div className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">
+                  {t.name}
+                  {href ? <span aria-hidden className="ml-1 text-[var(--c-muted)]">&#8594;</span> : null}
+                </div>
               );
               return (
                 <li key={t.name} className="flex gap-3">
@@ -1035,10 +1032,6 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
           ))}
         </div>
       </HoodCard>
-
-      {/* the table's one-line legend (covers desktop and mobile), describing the real
-          row-best mark: solid ink for the winner, muted for the rest (§26). */}
-      <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">Each row&rsquo;s best reads in solid ink, the rest muted; terracotta marks rent load, the metric that decides.</p>
     </div>
   );
 }

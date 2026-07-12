@@ -211,7 +211,7 @@ export async function buildSpineHoodSeed(citySlug: string): Promise<any> {
         "Revenue rank and rent rank are different lists. The priciest addresses carry the heaviest leases; the lightest leases sit far from the top of the takings.",
     },
     provenance_line:
-      "Revenue is shown for a representative restaurant, modeled from each district's commuter, visitor and character multipliers against the city baseline; rent loads are multiples of the city rate. The map uses the seven broad London districts.",
+      "Revenue is shown for a representative restaurant, modeled from each district's commuter, visitor and character multipliers against the city baseline. The map uses the seven broad London districts.",
   };
 
   return { meta, districts };

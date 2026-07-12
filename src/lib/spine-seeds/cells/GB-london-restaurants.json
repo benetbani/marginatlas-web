@@ -9,7 +9,7 @@
   },
   "headline": {
     "_meta": { "confidence": "placeholder", "source": "illustrative", "as_of": "2026-06" },
-    "answer": "A demanding trade in a deep market: high turnover, thin take-home.",
+    "answer": "Running a restaurant in London",
     "spread_line": "Turnover runs from $280K to $1.4M a year, typically about $620K.",
     "rev_p10_usd": 280000, "rev_p50_usd": 620000, "rev_p90_usd": 1400000,
     "break_in_0_100": 30, "n_firms": 18000

@@ -1,5 +1,5 @@
 /**
- * WherePays , the same trade, place by place. Founder D3 (2026-07-11, rulebook v1 §5):
+ * WherePays , one trade's rent load, city by city. Founder D3 (2026-07-11, rulebook v1 §5):
  * per-city net margin for one trade and the modeled $/yr take-home are UNKNOWABLE at
  * this altitude (the same hallucination family as the city page's banned per-trade
  * margins, read from the other axis), so both columns are CUT. What remains is what
@@ -32,7 +32,7 @@ export function WherePaysExplorer({ d }: { d: any }) {
   return (
     <div className="w-full">
       <Box>
-        <Rail icon="where-it-pays" kicker="The same trade, place by place" sample />
+        <Rail icon="where-it-pays" kicker="The rent, city by city" sample />
         <div className="grid grid-cols-[minmax(0,1fr)_4.5rem] items-end gap-3 border-b border-[var(--c-border)] px-2 pb-2 text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
           <span>Place, lightest rent first</span>
           <span className="text-right">Rent load<InfoTip gloss="Rent as a share of sales." /></span>

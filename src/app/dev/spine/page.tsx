@@ -233,7 +233,10 @@ function Profile({ d }: { d: any }) {
     { label: "Access to finance", s: Number(ep.access_to_financing ?? 0) },
     { label: "Purchasing power", s: Number(ep.economic_reward ?? 0) },
     { label: "Stability", s: Number(ep.political_stability ?? 0) },
-    { label: "Tax burden", s: taxScore },
+    // Positive lens so high = good reads without a caption (rulebook v2 §29A): the score
+    // is the INVERTED tax load (lightest peer load = 10), so it is named "Low tax load",
+    // not "Tax burden" (a negative label that contradicted the high = good scale).
+    { label: "Low tax load", s: taxScore },
   ];
   const scored = lenses.slice().sort((a, b) => b.s - a.s);
   const avg = scored.length ? Math.round((scored.reduce((a, x) => a + x.s, 0) / scored.length) * 10) / 10 : 0;
@@ -258,7 +261,6 @@ function Profile({ d }: { d: any }) {
           ))}
         </div>
       </div>
-      <div className="mt-3 border-t border-[var(--c-border)] pt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">Higher is better on every lens; a lighter tax load scores higher.</div>
     </Box>
   );
 }
@@ -268,7 +270,7 @@ function Profile({ d }: { d: any }) {
  * verdict: A deep consumer pool, but most of the money is everyday spend, not premium.
  * focal: the consumer spend pool figure (the pot every business competes for).
  * width: Even , peer to a business-density read, equal class.
- * terracotta: the focal pool figure + the largest spend segment bar only.
+ * terracotta: the focal pool figure only (the donut is a calm grey whole, §37).
  */
 function Demand({ d }: { d: any }) {
   const m = d.demand ?? {};
@@ -278,26 +280,25 @@ function Demand({ d }: { d: any }) {
   // monthly so the figure never collides with the annual median-income figure in the
   // paired box (the two are near-identical annually in this market, which reads as a bug).
   const perCitizenYr = pop > 0 ? ((m.consumer_spend_pool_usd_bn ?? 0) * 1e9) / pop : 0;
-  // The winnable slice (going out / leisure) is the ONE terracotta answer: the
-  // discretionary spend a new business can actually contest. Every other slice ramps grey
-  // by size, so the accent marks the answer, never merely the biggest slice (§37).
-  const winnable = segs.find((s: any) => /going out|leisure|dining/i.test(s.name || ""));
+  // The donut is a calm whole (rulebook v2 §28/§37): every slice ramps grey by size, the
+  // largest darkest, so the box holds ONE accent, the spend-per-citizen focal, never a
+  // second terracotta on a discretionary slice. The centre names the dominant slice, the
+  // section's own read that most of the wallet is everyday spend, not premium.
   const greys = ["#8f8f8d", "#adadab", "#c9c9c7", "#dcdcda"];
-  const nonWin = segs.filter((s: any) => !(winnable && s.name === winnable.name));
-  const colorOf = (s: any) => (winnable && s.name === winnable.name ? TERRA : greys[Math.min(greys.length - 1, nonWin.indexOf(s))]);
+  const colorOf = (s: any) => greys[Math.min(greys.length - 1, segs.indexOf(s))];
   const donutSegs: Array<[string, number, string]> = segs.map((s: any) => [s.name, s.pct, colorOf(s)]);
-  const centerSlice = winnable ?? segs[0];
+  const top = segs[0];
+  const topWord = String(top?.name ?? "").split(" ").pop()?.toLowerCase() ?? "top";
   return (
     <Box>
       <Rail icon="spending-power" kicker="The size of the market" sample />
       <div className="grid items-center gap-5 md:grid-cols-[minmax(0,1fr)_auto]">
         <div className="focal flex flex-col justify-center p-4">
           <Stat value={usdMo(perCitizenYr)} label="Consumer spend per citizen, a month" size="focal" accent />
-          <div className="mt-1.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">What the average resident spends in a month; the pot every business here competes for.</div>
         </div>
         <div className="flex flex-col items-center">
           <div className="mb-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Where that money goes</div>
-          <Donut segs={donutSegs} centerBig={`${centerSlice?.pct ?? 0}%`} centerSub={winnable ? "going out" : "top slice"} />
+          <Donut segs={donutSegs} centerBig={`${top?.pct ?? 0}%`} centerSub={topWord} />
           <div className="mt-2 flex max-w-[240px] flex-wrap justify-center gap-x-3 gap-y-1">{segs.map((s: any) => (
             <span key={s.name} className="inline-flex items-center gap-1.5 text-[length:var(--t-micro)] text-[var(--c-ink2)]"><span className="h-2 w-2 rounded-sm" style={{ background: colorOf(s) }} />{s.name} <Fig className="text-[var(--c-ink)]">{s.pct}%</Fig></span>))}</div>
         </div>
@@ -307,35 +308,57 @@ function Demand({ d }: { d: any }) {
 }
 
 /*
- * TheCatch , the one honesty band. The single biggest catch is the top-scored entry in
- * risk_exit.risks, rendered as a labelled figure; the seed's dedicated
- * character.the_catch line is the ONE supporting line beneath it (never a locals_intel
- * item, so a paying reader never meets the same sentence twice in "What locals know").
- * The old magnitude MiniBar is dropped (rulebook v1 §26: a lone number may stay a
- * number; the S7 bar-manufacturing corollary is repealed), so the honesty band reads
- * distinct from the data sections around it again, the July-3 voice.
- * focal: the top risk's score, labelled.
- * width: Full , a load-bearing honesty band; never center-floated.
- * terracotta: the risk figure only (one accent).
+ * TheCatch , the one honesty band, rendered SCHEMATIC (rulebook v2 §19/§30: no invented
+ * prose paragraph, no verdict-header; the myth is busted ON the figure). The catch is the
+ * tax gap: the 19% headline corporation-tax rate is struck, the true all-in load on profit
+ * (36%) is the terracotta answer, and the three lines the headline leaves out (business
+ * rates, dividend, gains) are named as a schematic +breakdown that sums the gap. Heading
+ * and body now speak to the SAME thing (tax), and nothing flips direction against the
+ * six-lens scorecard beside it. The full inverted risk register lives in CH5.
+ * focal: the all-in load figure (terracotta), struck headline beside it.
+ * width: Even , paired with Profile. terracotta: the all-in load only (one accent).
  */
 function TheCatch({ d }: { d: any }) {
-  const risks = (d.risk_exit?.risks ?? []).slice().sort((a: any, b: any) => (b.score_1_10 ?? 0) - (a.score_1_10 ?? 0));
-  const topRisk = risks[0];
-  const riskLabel: any = { energy_input_costs: "Energy and input costs", rule_tax_changes: "Shifting rules and tax", demand_cycle: "The demand cycle", currency_swings: "Currency swings", skills_shortages: "Skills shortages" };
-  const topLabel: string | null = topRisk ? (riskLabel[topRisk.name] ?? cap(String(topRisk.name).replace(/_/g, " "))) : null;
-  // The honesty band NAMES the single biggest standing risk and carries NO severity
-  // score, so it never flips direction against the six-lens scorecard beside it (both
-  // read one way, rulebook v2 §29A). The full inverted risk register lives in CH5.
+  const comp = d.tax_burden?.components ?? {};
+  const headline = comp.corporation_tax_pct ?? d.headline?.smb_tax_pct ?? 0;
+  const allIn = d.tax_burden?.total_pct ?? 0;
+  // What the 19% headline leaves out, each a coherent share of the load (they sum the gap
+  // from the headline to the all-in figure). Schematic labels + values, never prose.
+  const added: Array<[string, number]> = ([
+    ["Business rates", comp.business_rates_pct_equiv ?? 0],
+    ["Dividend tax", comp.dividend_tax_pct ?? 0],
+    ["Capital gains", comp.capital_gains_pct ?? 0],
+  ] as Array<[string, number]>).filter(([, p]) => p > 0);
   return (
     <Box>
       <Rail icon="honest-take" kicker="The catch" sample />
-      {topLabel ? (
-        <div className="focal p-4">
-          <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">The biggest standing risk</div>
-          <div className="mt-1 text-[length:var(--t-sub)] font-semibold text-[var(--c-ink)]">{topLabel}</div>
+      <div className="focal p-4">
+        <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Tax on company profit</div>
+        <div className="mt-2 flex items-end gap-3.5" role="img" aria-label={`Headline rate ${headline}%, but the all-in load on profit is ${allIn}%`}>
+          <div className="flex flex-col items-start">
+            <span className="fig text-[length:var(--t-sub)] leading-none text-[var(--c-muted)] line-through">{headline}%</span>
+            <span className="mt-1 text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">headline rate</span>
+          </div>
+          <span aria-hidden className="mb-4 text-[length:var(--t-lead)] text-[var(--c-muted)]">&#8594;</span>
+          <div className="flex flex-col items-start">
+            <Fig className="text-[38px] leading-none text-[var(--terra-text)] md:text-[42px]">{allIn}%</Fig>
+            <span className="mt-1 text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--terra-text)]">all-in load</span>
+          </div>
+        </div>
+      </div>
+      {added.length ? (
+        <div className="mt-3 border-t border-[var(--c-border)] pt-3">
+          <div className="mb-1.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">What the headline leaves out</div>
+          <div className="space-y-1.5">
+            {added.map(([label, pct]) => (
+              <div key={label} className="flex items-baseline justify-between gap-3">
+                <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{label}</span>
+                <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">+{pct}</Fig>
+              </div>
+            ))}
+          </div>
         </div>
       ) : null}
-      <p className="mt-3 border-t border-[var(--c-border)] pt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{d.character?.the_catch ?? "Local operators price the hidden costs in before they commit."}</p>
     </Box>
   );
 }
@@ -495,13 +518,12 @@ function TaxByLevel({ d }: { d: any }) {
     <Box>
         <Rail icon="taxes" kicker="What the business actually pays" sample />
         <div className="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">All-in tax load</span>
+          <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">All-in tax load<InfoTip gloss="VAT is a sales tax the customer pays, so it sits outside this profit load; each tax rate is listed line by line below." /></span>
           <Fig className="text-[26px] leading-none text-[var(--terra-text)]">{allIn}%</Fig>
           <Chip>{band} for the peer set</Chip>
         </div>
         <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Share of the tax load for a typical small company</div>
         <StackBar h="h-10" sort={false} legend legendClassName="mt-2 flex flex-wrap gap-x-3 gap-y-1" ariaLabel={shareRows.map(([n, pct]) => `${n} ${pct}%`).join(", ")} segments={shareRows.map(([n, pct], i) => ({ label: n, pct, color: i === 0 ? TERRA : taxGreys[Math.min(taxGreys.length - 1, i - 1)] }))} />
-        <div className="mt-2.5 border-t border-[var(--c-border)] pt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">VAT is customer-borne, so it sits outside the load; the rate on each tax is listed below.</div>
         <InlineDisclosure name="taxdetail" className="group mt-3 border-t border-[var(--c-border)] pt-2.5" summary="Every tax, line by line">
           <div className="mt-2.5 divide-y divide-[var(--c-border)]">{items.map((it: any) => { const nm = taxDisplayName(it.name); const lead = nm === "Tax on profits"; return (
             <div key={it.name} className="flex items-baseline gap-3 py-2"><Fig className={`w-14 shrink-0 text-[length:var(--t-lead)] ${lead ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{it.value}</Fig><span className="text-[length:var(--t-body)] leading-tight text-[var(--c-ink2)]"><b className={`font-medium ${lead ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{nm}</b><TaxTip term={nm} /> <span className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">{it.level}</span><br />{it.note}</span></div>); })}
@@ -684,13 +706,17 @@ function OperatingCosts({ d }: { d: any }) {
         </div>
       ) : null}
       {p.lease_years_typical ? (
-        <InlineDisclosure name="lease" summary={`The lease behind the rent: ${p.lease_years_typical} years typical`}>
-          <div className="mt-2 divide-y divide-[var(--c-border)]">
+        /* Lease terms surfaced (rulebook v2 §17): the card under-filled beside its taller
+           pair, so the real lease detail is shown, not hidden behind a disclosure, to
+           carry the width with substance rather than dead space. */
+        <div className="mt-3.5 border-t border-[var(--c-border)] pt-3">
+          <div className="mb-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">The lease behind the rent</div>
+          <div className="divide-y divide-[var(--c-border)]">
             <KV k="Term" v={`${p.lease_years_typical} years, ${p.deposit_months} months deposit`} />
             <KV k="Break clause" v={p.break_clause} />
             <KV k="Rent-free" v={`${p.rent_free_months} months at the start`} />
           </div>
-        </InlineDisclosure>
+        </div>
       ) : null}
     </Box>
   );
@@ -698,8 +724,8 @@ function OperatingCosts({ d }: { d: any }) {
 /*
  * Financing , where the money to start comes from.
  * verdict: Raising is easier here than in most peers, but banks still want security.
- * focal: the ease verdict word + figure (rulebook v1 §25/§26: the Meter is cut in the
- * bar rationing; the SellingAbroad figure-plus-word grammar carries the read).
+ * focal: the ease figure as a focal block (rulebook v2 §17: the card fills beside its
+ * taller pair with a real figure; the Meter stays cut in the bar rationing, §25/§26).
  * width: Even , peer to Grants.
  * terracotta: none. The old first-card terracotta (the 2026-07-05 pre-selection) is
  * reversed by founder G4 / D8 (2026-07-11, rulebook v1 §37): no data ranks bank loans
@@ -720,9 +746,11 @@ function Financing({ d }: { d: any }) {
   const cards = wanted.map((w) => { const s = sources.find((x: any) => w.match.test(x.name)); return { title: w.title, note: s?.note as string | undefined }; }).filter((c) => c.note);
   return (
     <Box><Head icon="raise-money" sample>Raising money</Head>
-      <div className="mb-4 flex items-baseline gap-2">
-        <Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">{f.ease_0_100}<span className="text-[length:var(--t-body)] text-[var(--c-muted)]"> / 100</span></Fig>
-        <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">ease of raising money here</span>
+      {/* focal block (rulebook v2 §17): the ease read anchors the card so it fills beside
+          its taller pair with a real figure, not a thin line over dead space. Ink, not
+          terracotta (§37): no source ranks above the others, so the box carries no accent. */}
+      <div className="focal mb-4 p-4">
+        <Stat value={<>{f.ease_0_100}<span className="text-[length:var(--t-lead)] text-[var(--c-muted)]">/100</span></>} label="Ease of raising money here" size="focal" />
       </div>
       <div className="grid gap-2.5 sm:grid-cols-3">
         {cards.map((c) => (
@@ -795,7 +823,8 @@ function Grants({ d }: { d: any }) {
  * SAFETY (11 - magnitude, energy -> 2) and the LOWEST score is the biggest exposure. The
  * subtitle now EXPLAINS the scale rather than giving the verdict. A sixth risk category is a
  * flagged data need (the seed holds five). Width smaller, the narrow card beside Exit.
- * terracotta: the biggest-exposure label only (never the dots, which read high = good).
+ * no terracotta (rulebook v2 §29A): the biggest exposure reads from its top position and
+ * its low dots, never an accent on the worse end (terracotta marks the good end only).
  */
 function RiskRegister({ d }: { d: any }) {
   const label: any = { energy_input_costs: "Energy and input costs", rule_tax_changes: "Rule and tax changes", demand_cycle: "Demand cycle", currency_swings: "Currency swings", skills_shortages: "Skills shortages" };
@@ -807,7 +836,7 @@ function RiskRegister({ d }: { d: any }) {
       <Rail icon="watch" kicker="What could go wrong" />
       <div className="space-y-2.5">{risks.map((r: any, i: number) => (
         <div key={r.name} className="hov -mx-2 grid grid-cols-[130px_1fr_auto] items-center gap-2.5 rounded-md px-2 py-1">
-          <span className={`min-w-0 truncate text-[length:var(--t-body)] ${i === 0 ? "font-medium text-[var(--terra-text)]" : "text-[var(--c-ink2)]"}`}>{label[r.name] ?? r.name}</span>
+          <span className={`min-w-0 truncate text-[length:var(--t-body)] ${i === 0 ? "font-medium text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`}>{label[r.name] ?? r.name}</span>
           <Dots score={r.safe} max={10} />
           <Fig className="w-9 text-right text-[length:var(--t-body)] text-[var(--c-ink)]">{r.safe}/10</Fig>
         </div>))}
@@ -905,8 +934,13 @@ function Neighbours({ d }: { d: any }) {
   // crown goes to the best PEER.
   const peersOnly = raw.filter((r) => !r.home);
   const bestPeer = cols.map((c, i) => { const xs = peersOnly.map((r) => r.vals[i]).filter((v: any) => v != null); return xs.length ? (c.lowGood ? Math.min(...xs) : Math.max(...xs)) : null; });
+  // Crown on the DISPLAYED value, not the raw float: peers that render an identical
+  // figure (e.g. 49.5 and 50.3 both round to "50") must ALL carry the mark or none,
+  // never an arbitrary two-of-three tied best (rulebook v2 §37). Compare the formatted
+  // cell string so the highlight matches exactly what the eye sees.
+  const bestDisplay = bestPeer.map((v, i) => (v == null ? null : cols[i].cell(v as number)));
   const colDefs = cols.map((c) => ({ key: c.key, label: c.label, unit: c.unit }));
-  const tableRows = raw.map((r) => ({ name: r.name, home: r.home, cells: r.vals.map((v: number, i: number) => ({ raw: v ?? null, display: v == null ? "-" : cols[i].cell(v), best: !r.home && v != null && v === bestPeer[i] })) }));
+  const tableRows = raw.map((r) => ({ name: r.name, home: r.home, cells: r.vals.map((v: number, i: number) => ({ raw: v ?? null, display: v == null ? "-" : cols[i].cell(v), best: !r.home && v != null && cols[i].cell(v) === bestDisplay[i] })) }));
   return (
     <Box><Head icon="compare" sample>How it compares, country by country</Head>
       {/* The old auto-verdict sentence ("beats every peer on X, and trails them all on
@@ -1132,7 +1166,7 @@ function EasiestTrades({ d }: { d: any }) {
           <Fig className="text-right text-[length:var(--t-body)] text-[var(--c-ink)]">${Math.round((t.cost_to_open_usd ?? 0) / 1000)}K</Fig>
         </div>))}
       </div>
-      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">A rough cost to open the doors; higher ease means fewer hurdles before trading.</p>
+      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">A rough cost to open the doors.</p>
     </Box>
   );
 }
@@ -1320,16 +1354,17 @@ function Exit({ d }: { d: any }) {
  * verdict: Generous holiday and a low-union, flexible-contract regime for employers.
  * focal: the paid-holiday-days figure (the headline employees feel).
  * width: Even , peer to Closing, equal class.
- * terracotta: the focal holiday figure only.
+ * terracotta: none, the holiday/union pair reads equal, never one among equals (§37).
  */
 function Employment({ d }: { d: any }) {
   const e = d.employment ?? {};
   return (
     <Box><Rail icon="min-wage" kicker="Working here, the rules" />
-      {/* Founder: give the union figure the SAME weight as paid holiday (equal size), a
-          symmetrical pair; holiday keeps the one terracotta accent, the union label sits below. */}
+      {/* A deliberately symmetrical pair, equal significance = equal size (founder). Both
+          stay ink: featuring one of two co-equal figures in terracotta would feature one
+          among equals, and 28 mandated holiday days is a cost, not the good end (§37/§29A). */}
       <div className="focal mb-3 grid grid-cols-2 gap-4 p-4">
-        <Stat value={<>{e.holiday_days}</>} label="Paid holiday days a year" size="focal" accent />
+        <Stat value={<>{e.holiday_days}</>} label="Paid holiday days a year" size="focal" />
         <Stat value={<>{e.union_pct}%</>} label="In a union" size="focal" />
       </div>
       <CatRows rows={[["Working hours", e.hours], ["Sick pay", e.sick_pay], ["Maternity leave", e.maternity], ["Notice period", e.notice], ["Dismissal", e.dismissal]]} />
@@ -1377,7 +1412,6 @@ function Close({ d }: { d: any }) {
   return (
     <Box className="flex flex-col items-start gap-4">
       <Head icon="verdict">Where to go from here</Head>
-      <p className="max-w-[62ch] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">You have the country picture: the tax take, the setup, the costs and the market. The decision gets sharper one level down, in a single city and then a single trade.</p>
       <div className="grid w-full gap-2.5 sm:grid-cols-2">
         {links.map((l, i) => {
           const Tag: any = l.href ? "a" : "div";
@@ -1469,7 +1503,6 @@ function Licensing({ d }: { d: any }) {
   const none = (s: string) => /^none$/i.test((s || "").trim());
   return (
     <Box><Head icon="licence-specific">Licences and permits by trade</Head>
-      <p className="mb-3 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">Most trades open the day the company is registered; a few are gated by a permit. Open a trade for what it needs and how long it takes.</p>
       <div className="space-y-2">{list.map((it: any, i: number) => {
         const needsPermit = !none(it.licence);
         const ic = licenceIcon(it.trade);
@@ -1551,7 +1584,7 @@ function Immigration({ d }: { d: any }) {
         );
       })}
       </div>
-      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">Founder routes only; hire-from-abroad visas are for employees, not owners. Fiscal incentives for locating here are covered under grants and incentives below.</p>
+      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">Founder routes only; hire-from-abroad visas are for employees, not owners.</p>
     </Box>
   );
 }

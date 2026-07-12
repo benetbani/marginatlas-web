@@ -9,9 +9,11 @@
  * unknowable metric, never rendered , and the district x trade ProMatrix built
  * on it is deleted with it (it squared the banned figure).
  *
- * form: a dot plot on one shared, drawn x1..x2.8 domain , the city-average rent
- * is the drawn x1 line at the floor of the axis, labelled once; every inner
- * district here sits above it. Dots, not bars (rulebook v1 §25).
+ * form: a dot plot on one shared, drawn domain, INVERTED per rule 29A so the
+ * lighter (better) rent reads RIGHT and the heavier (worse) rent reads LEFT ,
+ * rent is a cost/burden, so cheaper is the good end and carries terracotta. The
+ * city-average x1 is the drawn reference line at the RIGHT (the cheapest point),
+ * labelled once; every inner district sits to its left. Dots, not bars (§25).
  * focal: the map + the lightest-rent district; terracotta on the leader's dot only.
  * map: ink pins, terra ONLY on the rent-load leader; uniform pin size; label
  * declutter priority follows rent rank (points passed in rank order), so the
@@ -41,7 +43,10 @@ export function WhereToTrade({ d }: { d: any }) {
   // high-spread city never renders a dot past the track (§21, the hardcoded 2.8 clipped).
   const maxRent = Math.max(...rows.map((r) => r.rent_mult), 1.2);
   const DOMAIN: [number, number] = [1, Math.round((maxRent + 0.2) * 10) / 10];
-  const posOf = (v: number) => Math.max(0, Math.min(100, ((v - DOMAIN[0]) / (DOMAIN[1] - DOMAIN[0])) * 100));
+  // INVERTED (rule 29A): rent is a cost/burden, so the cheaper (better) end reads
+  // RIGHT (pos 100) and the heavier (worse) end reads LEFT (pos 0). The city floor
+  // x1 lands at the right, the lightest-rent leader's dot sits just left of it.
+  const posOf = (v: number) => Math.max(0, Math.min(100, ((DOMAIN[1] - v) / (DOMAIN[1] - DOMAIN[0])) * 100));
 
   // map points in RENT-RANK order (declutter keeps labels by array priority, so
   // the lightest-rent districts keep their names and the packed West End trio
@@ -94,11 +99,12 @@ export function WhereToTrade({ d }: { d: any }) {
                   style={on ? { background: "var(--c-soft)" } : undefined}
                 >
                   <div className="flex items-baseline justify-between gap-2">
-                    <span className={`min-w-0 truncate text-[length:var(--t-body)] ${isLead ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink)]"}`}>{r.name}</span>
+                    <span className="min-w-0 truncate text-[length:var(--t-body)] text-[var(--c-ink)]">{r.name}</span>
                     <Fig className={`shrink-0 text-[length:var(--t-body)] ${isLead ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>x{r.rent_mult}</Fig>
                   </div>
-                  {/* dot at the rent multiple on the shared, data-derived track; the city
-                      average is the drawn floor line every district visibly sits above */}
+                  {/* dot at the rent multiple on the shared, INVERTED track (cheaper = right,
+                      rule 29A); the city-average x1 is the drawn line at the right edge, and
+                      every district sits to its LEFT (all pay above the city average) */}
                   <div className="relative mt-1.5 h-2" role="img" aria-label={`${r.name}: rent ${r.rent_mult} times the city-average level`}>
                     <span className="absolute inset-x-0 top-1/2 h-[3px] -translate-y-1/2 rounded-full" style={{ background: "var(--c-border)" }} />
                     <span className="absolute -bottom-[2px] -top-[2px] w-px bg-[var(--c-line-strong)]" style={{ left: `${posOf(1)}%` }} />
@@ -116,8 +122,8 @@ export function WhereToTrade({ d }: { d: any }) {
               it back" footer are DELETED (§15 cross-entity verdict footer; §18): the list
               reads on rent load alone, the founder's D1 metric. */}
           <div aria-hidden className="relative mt-1 h-4 text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">
-            <span className="absolute left-0 whitespace-nowrap">city = x1</span>
-            <Fig className="absolute right-0">x{DOMAIN[1]}</Fig>
+            <Fig className="absolute left-0">x{DOMAIN[1]}</Fig>
+            <span className="absolute right-0 whitespace-nowrap">city = x1</span>
           </div>
         </div>
       </div>

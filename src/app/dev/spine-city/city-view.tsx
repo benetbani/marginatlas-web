@@ -30,7 +30,7 @@
  */
 import * as React from "react";
 import { spineCitySeed } from "@/lib/spine-seeds";
-import { Fig, Stat, Movement, Box, Head, Rail, WideRail, Even, TERRA, TRACK, InfoTip, InlineDisclosure, SpectraTable, SampleTag } from "@/components/spine/kit";
+import { Fig, Stat, Movement, Box, Head, Rail, WideRail, Even, TERRA, TRACK, InfoTip, InlineDisclosure, SpectraTable, SampleTag, Bullets } from "@/components/spine/kit";
 import { CompareTable, type CompareEntity, type CompareRow, LockVeil } from "@/components/spine/kit-index";
 import { AtlasMark } from "@/components/spine/marks";
 import { isReviewBuild } from "@/lib/feature_flags";
@@ -55,7 +55,7 @@ function TierBand({ steps = 4, pos, word, leftPole, rightPole }: { steps?: numbe
           <span key={i} className="h-[7px] rounded-full" style={{ background: i === active ? "var(--c-ink)" : TRACK }} />
         ))}
       </div>
-      <div className="mt-1 flex justify-between text-[length:var(--t-micro)] tracking-wide text-[var(--c-muted)]">
+      <div className="mt-1.5 flex justify-between text-[length:var(--t-body)] tracking-wide text-[var(--c-ink2)]">
         <span>{leftPole}</span><span>{rightPole}</span>
       </div>
     </div>
@@ -123,12 +123,18 @@ function CityLenses({ d }: { d: any }) {
   return (
     <Box>
       <Head icon="scorecard" sample={sample}>Quick reads</Head>
-      <div className="divide-y divide-[var(--c-border)]">
+      {/* 2x2 grid, not four full-width rows: a single 4-step band stretched across the
+          whole card left acres of dead track (rule 17, sparse-but-wide, the founder's
+          most-named reject on this exact "Quick reads" section). Two columns halve each
+          band's width and double the density; the read (word) sits at lead size and the
+          pole labels read at body size, not the micro low-contrast gray he rejected
+          (rule 34, "text too small"). */}
+      <div className="grid gap-x-8 gap-y-5 sm:grid-cols-2">
         {scales.map((s: any) => (
-          <div key={s.key ?? s.label} className="grid grid-cols-[minmax(116px,150px)_1fr] items-center gap-4 py-2.5">
-            <div>
-              <div className="text-[length:var(--t-body)] leading-tight text-[var(--c-ink2)]">{s.label}</div>
-              <div className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{s.word}</div>
+          <div key={s.key ?? s.label}>
+            <div className="mb-2 flex items-baseline justify-between gap-2">
+              <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{s.label}</span>
+              <span className="text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">{s.word}</span>
             </div>
             <TierBand pos={s.pos} word={s.word} leftPole={s.left} rightPole={s.right} />
           </div>
@@ -312,7 +318,7 @@ function LowestBar({ d }: { d: any }) {
     <WideRail>
       {featured}
       <Box>
-        <Head icon="ranking">Next-easiest, and the cost to open</Head>
+        <Head icon="ranking" sample={sample}>Next-easiest, and the cost to open</Head>
         <div className="-mx-2 grid grid-cols-[1fr_64px_64px] items-baseline gap-4 px-2 pb-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
           <span>Trade</span><span className="text-right">Ease /100</span><span className="text-right">To open</span>
         </div>
@@ -325,7 +331,7 @@ function LowestBar({ d }: { d: any }) {
             </a>
           ))}
         </div>
-        <div className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">Ease out of 100, higher is easier; a rough cost to open the doors.</div>
+        <div className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">Ease out of 100, higher is easier.</div>
       </Box>
     </WideRail>
   );
@@ -399,7 +405,7 @@ function CityCharacter({ d }: { d: any }) {
   // read. The kit SpectraTable renders all four at once (the shared country/city idiom).
   return (
     <Box>
-      <Rail icon="ease-of-business" kicker="How business runs here" sample={sample} />
+      <Head icon="ease-of-business" sample={sample}>How business runs here</Head>
       <SpectraTable rows={rows} />
     </Box>
   );
@@ -493,7 +499,7 @@ function Close({ d }: { d: any }) {
       <Head icon="bookmark">The pick, and where to take it</Head>
       <div className="grid gap-4 md:grid-cols-[1.3fr_1fr] md:items-stretch">
         {/* the decision the whole page built toward */}
-        <div className="rounded-[12px] border border-[var(--c-border)] bg-[var(--c-soft)] p-4">
+        <div className="flex flex-col rounded-[12px] border border-[var(--c-border)] bg-[var(--c-soft)] p-4">
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">The {d.meta?.city} pick</span>
             {sample ? <SampleTag /> : null}
@@ -505,21 +511,20 @@ function Close({ d }: { d: any }) {
               {lightest ? <div><Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">x{lightest.rent_mult}</Fig><div className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">the lightest district rent</div></div> : null}
             </div>
           ) : null}
-          {pick ? <a href={pick.href ?? "/dev/spine-cell"} className="mt-4 inline-flex items-center gap-1.5 text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)] transition hover:text-[var(--terra-text)]"><AtlasMark id="alt-business" size={14} className="shrink-0" />See the trade's live economics &#8594;</a> : null}
+          {pick ? <a href={pick.href ?? "/dev/spine-cell"} className="mt-auto inline-flex items-center gap-1.5 pt-4 text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)] transition hover:text-[var(--terra-text)]"><AtlasMark id="alt-business" size={14} className="shrink-0" />See the trade's live economics &#8594;</a> : null}
         </div>
         {/* the Pro / compare hand-off */}
-        <div className="flex flex-col justify-between gap-3">
+        <div className="flex flex-col gap-4">
           <div>
             <div className="text-[length:var(--t-body)] text-[var(--c-ink)]">Set {d.meta?.city} beside up to three cities, side by side.</div>
             <a href="/dev/compare" className="mt-2 inline-flex cursor-pointer rounded-full bg-[var(--c-ink)] px-4 py-2 text-[length:var(--t-body)] font-semibold text-white transition hover:bg-[var(--terra-text)]">Open Compare</a>
           </div>
+          {/* the workbook preview , a tight SCHEMATIC bullet list, not floating prose
+              lines force-spread with min-h/justify-evenly (rule 19 schematic content;
+              rule 17 no crater). Bullets is the sanctioned neutral-dot list form. */}
           {teaser.length > 0 ? (
             <LockVeil unlocked={isReviewBuild()} headline={`The full ${d.meta?.city} workbook`} note="Every district by every trade, the real cost stack, and the owner-runway calculator." cta="Unlock with Pro">
-              <div className="flex min-h-[220px] flex-col justify-evenly py-2">
-                {teaser.map((t: string) => (
-                  <div key={t} className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{t}</div>
-                ))}
-              </div>
+              <div className="py-1"><Bullets items={teaser} /></div>
             </LockVeil>
           ) : null}
         </div>
@@ -611,7 +616,10 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           <Movement index={cn()} eyebrow="Your customers" heading="Who buys, and when" icon="spending-power" />
           <div className="space-y-4">
             <DemandSize d={d} />
-            <Even><IncomeCurve d={d} /><RentAffordability d={d} /></Even>
+            {/* the income chart is the wide leg; the rent-against-income ratio is a
+                schematic KV rail beside it (WideRail, not Even) , the ratio card carried
+                too little to fill an equal column and left a crater (rule 17). */}
+            <WideRail><IncomeCurve d={d} /><RentAffordability d={d} /></WideRail>
           </div>
         </>
       ) : null}

@@ -20,7 +20,7 @@
  * All prose from the seed. Terracotta rationed to one decision figure per Box.
  */
 import * as React from "react";
-import { Box, Head, Rail, Fig, InlineDisclosure, TERRA, TRACK, usd } from "@/components/spine/kit";
+import { Box, Head, Fig, InlineDisclosure, TERRA, usd } from "@/components/spine/kit";
 import { CountFig, useReducedMotion, useInView } from "./motion";
 
 const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
@@ -40,7 +40,10 @@ export function IncomeCurve({ d }: { d: any }) {
   // only the three real figures are known (median/top10/top1); a log-x scale plots
   // them without the top-1% tail crushing the median, but NO curve is drawn between
   // them , the shape of the distribution in between is not data we hold (S11/D1).
-  const W = 320, H = 118, padL = 6, padR = 6, base = H - 20;
+  // H tightened (was 118): the markers only rise 44px off the baseline, so a taller box
+  // left a dead band above the plot (rule 17, one-sided white space). The box now hugs the
+  // marker stems, and the chart is the wide leg of a WideRail beside the rent-ratio rail.
+  const W = 320, H = 84, padL = 6, padR = 6, base = H - 20;
   const xmin = Math.log(med * 0.28), xmax = Math.log(t1 * 1.12), span = xmax - xmin || 1;
   const X = (v: number) => padL + ((Math.log(v) - xmin) / span) * (W - padL - padR);
   // ticks are static; `seen`/`reduced` are reserved for a future reveal but the
@@ -62,8 +65,8 @@ export function IncomeCurve({ d }: { d: any }) {
               const x = X(v);
               return (
                 <g key={label}>
-                  <line x1={x} y1={base - 34} x2={x} y2={base} stroke={accent ? TERRA : "#9a9a9a"} strokeWidth={accent ? 1.6 : 1} strokeDasharray={accent ? undefined : "2 2"} />
-                  <circle cx={x} cy={base - 34} r={accent ? 3.2 : 2.4} fill={accent ? TERRA : "#6f6f6d"} stroke="#fff" strokeWidth={1} />
+                  <line x1={x} y1={base - 44} x2={x} y2={base} stroke={accent ? TERRA : "#9a9a9a"} strokeWidth={accent ? 1.6 : 1} strokeDasharray={accent ? undefined : "2 2"} />
+                  <circle cx={x} cy={base - 44} r={accent ? 3.2 : 2.4} fill={accent ? TERRA : "#6f6f6d"} stroke="#fff" strokeWidth={1} />
                 </g>
               );
             })}
@@ -107,7 +110,7 @@ export function OwnerRunway({ d }: { d: any }) {
   ];
   return (
     <Box>
-      <Rail icon="cost-breakdown" kicker="Your own living costs" sample={sample} />
+      <Head icon="cost-breakdown" sample={sample}>Your own living costs</Head>
       <div className="grid grid-cols-[1fr_auto] items-center gap-4">
         <div>
           <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Savings to reach break-even</div>
@@ -139,22 +142,35 @@ export function RentAffordability({ d }: { d: any }) {
   if (rentMo == null || income == null) return null;
   const sample = d.owner_runway?._meta?.confidence === "placeholder" || d.owner_runway?._meta?.confidence === "modeled" || d.income?._meta?.confidence === "modeled";
   const pct = Math.round(((rentMo * 12) / income) * 100);
-  // Show the monthly rent to one decimal ($2.4K, not a rounded $2K): the end labels must
-  // reconcile with the focal percentage, or the bar reads as mis-scaled (§26 trust).
+  // Show the monthly rent to one decimal ($2.4K, not a rounded $2K) so the two sides
+  // of the ratio reconcile with the focal percentage (§26 trust).
   const rentShown = "$" + (rentMo / 1000).toFixed(1) + "K";
+  // Rent-against-income is a BURDEN, not an answer: the ratio stays INK (rule 37, accent
+  // marks answers only, never a cost) and the terracotta progress bar is DELETED , it read
+  // high = good on a burden (rule 29A), it was the second horizontal bar in this band
+  // (rule 25), and it manufactured a bar from a lone number (rule 26, that corollary is
+  // repealed). The two sides of the ratio render as a schematic breakdown (rule 19) that
+  // fills the card; no glued caption, the figures carry the read.
   return (
     <Box>
-      <Head icon="commercial-rent" sample={sample}>Rent against income</Head>
-      <div className="flex flex-wrap items-baseline gap-x-2">
-        <Fig className="text-3xl text-[var(--terra-text)]">{pct}%</Fig>
-        <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">of the median income, a year of one-bed rent.</span>
-      </div>
-      <div className="mt-3 h-2 overflow-hidden rounded-full" style={{ background: TRACK }}>
-        <div className="h-full rounded-full" style={{ width: `${Math.min(100, pct)}%`, background: TERRA }} />
-      </div>
-      <div className="mt-2 flex justify-between text-[length:var(--t-micro)] text-[var(--c-muted)]">
-        <span>{rentShown}/mo rent</span>
-        <span>{money(income)}/yr median income</span>
+      {/* fill the stretched WideRail height (the chart beside it is taller): the two
+          sides of the ratio anchor to the bottom (mt-auto), so no bottom crater (rule 17). */}
+      <div className="flex h-full flex-col">
+        <Head icon="commercial-rent" sample={sample}>Rent against income</Head>
+        <div className="flex flex-wrap items-baseline gap-x-2">
+          <Fig className="text-3xl text-[var(--c-ink)]">{pct}%</Fig>
+          <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">of a median income goes to a year of one-bed rent.</span>
+        </div>
+        <div className="mt-auto divide-y divide-[var(--c-border)] border-t border-[var(--c-border)] pt-4">
+          <div className="flex items-baseline justify-between gap-3 py-2.5">
+            <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">One-bed rent</span>
+            <span className="whitespace-nowrap"><Fig className="text-[length:var(--t-lead)] text-[var(--c-ink)]">{rentShown}</Fig> <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">a month</span></span>
+          </div>
+          <div className="flex items-baseline justify-between gap-3 py-2.5">
+            <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">Median income</span>
+            <span className="whitespace-nowrap"><Fig className="text-[length:var(--t-lead)] text-[var(--c-ink)]">{money(income)}</Fig> <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">a year</span></span>
+          </div>
+        </div>
       </div>
     </Box>
   );
