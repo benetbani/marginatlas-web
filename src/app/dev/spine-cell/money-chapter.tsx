@@ -243,9 +243,18 @@ export function CostToOpen({ d }: { d: any }) {
         <Rail icon="startup-cost" kicker="What it costs to open one" sample />
         <FormatTag />
       </div>
-      <div className="mb-3 flex flex-wrap items-baseline gap-x-3">
-        <CountFig value={total} fmt={(n) => money(n)} className="text-2xl text-[var(--c-ink)]" />
-        <span className="text-[13px] text-[var(--c-ink2)]">to open the doors{paybackMonths != null ? <>, repaid in about <Fig className="text-[var(--terra-text)]">{paybackLabel(paybackMonths)}</Fig> of the owner&rsquo;s typical take</> : null}.</span>
+      {/* schematic, not a sentence: the total and the payback as two figure+label reads */}
+      <div className="mb-3 flex flex-wrap items-end gap-x-6 gap-y-1">
+        <div>
+          <CountFig value={total} fmt={(n) => money(n)} className="text-2xl text-[var(--c-ink)]" />
+          <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">to open the doors</div>
+        </div>
+        {paybackMonths != null ? (
+          <div>
+            <Fig className="text-2xl text-[var(--terra-text)]">{paybackLabel(paybackMonths)}</Fig>
+            <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">to earn it back</div>
+          </div>
+        ) : null}
       </div>
       {/* the three big lines, visible: lollipops on a shared zero-based track */}
       <div className="space-y-2">

@@ -44,7 +44,7 @@ const HOOD_BG = "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?au
 // The illustrative-route provenance line (dev seed fallback). The real adapter supplies
 // its own honest meta.provenance_line, which then replaces this on the promoted page.
 const DEV_PROVENANCE =
-  "District revenue positions are modeled from commuter, visitor and character multipliers against the city baseline.";
+  "District rent multiples are illustrative, modeled against the city baseline pending live neighborhood data.";
 
 // The closing band's canonical-trade slugs , each maps onto a modeled cell route. The
 // slate is site-wide (fixed slugs); the CITY half of the href is never known here, so it
