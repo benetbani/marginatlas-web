@@ -118,7 +118,6 @@ export function MarginLadder({ gross, operating, net }: { gross: number; operati
           </div>
         ))}
       </div>
-      <div className="mt-2 border-t border-[var(--c-border)] pt-2 text-[11px] leading-snug text-[var(--c-muted)]">Each bar is a share of revenue: gross after food, operating after wages and rent, then the thin slice the owner keeps.</div>
     </div>
   );
 }
