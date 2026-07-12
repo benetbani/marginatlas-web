@@ -29,7 +29,9 @@ import { elevation } from "@/lib/design-tokens";
  *  - Business is NOT narrowed by city (activities are not city-specific in the
  *    data), so the full forgiving activity list stays available.
  *
- * The card chrome (top rule, header strip, footer CTAs, Surprise me) is reused.
+ * The card chrome (header strip, footer sample line, submit CTA) is reused. The vermillion
+ * top rule, the "The Navigator" eyebrow, and the "Surprise me" button were removed in the
+ * 2026-07-12 taste pass (see the inline notes).
  */
 
 /** Client-side gate read. Matches lib/audience.ts on the server. */
@@ -145,18 +147,6 @@ export function NavigatorForm() {
     }
   }
 
-  function surpriseMe() {
-    try {
-      setIsLoading(true);
-      router.push("/random");
-      window.setTimeout(() => setIsLoading(false), 3000);
-    } catch {
-      if (typeof window !== "undefined") {
-        window.location.href = "/random";
-      }
-    }
-  }
-
   // Native-fallback geo (no-JS via /api/go): subdivision carries the city;
   // region carries the curated default when no city is picked, so the native
   // submit still lands on a cell (/api/go prefers subdivision, then region).
@@ -179,19 +169,14 @@ export function NavigatorForm() {
       <input type="hidden" name="subdivision" value={city.toLowerCase()} />
       <input type="hidden" name="industry" value={business ? industryToSlug(business) : ""} />
 
-      {/* Vermillion top rule. */}
-      <div
-        aria-hidden="true"
-        className="h-[3px] w-full rounded-t-2xl bg-gradient-to-r from-atlas-700 via-atlas-500 to-atlas-700"
-      />
-
-      {/* Card header strip. */}
+      {/* Card header strip. The vermillion top rule and the "The Navigator" eyebrow were
+          deleted 2026-07-12: a decorative accent rule carrying no answer (rule 37/38) and a
+          hand-rolled caps eyebrow above the title (rule 11). The title now inherits the
+          shell font (Geist on the spine page) instead of font-display (Newsreader serif),
+          which is off the locked Geist + Space Grotesk system (rule 38). */}
       <div className="flex items-baseline justify-between gap-4 px-5 md:px-8 pt-5 md:pt-7 pb-3 border-b border-ink-200">
         <div>
-          <div className="text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.18em] text-atlas-700">
-            The Navigator
-          </div>
-          <h2 className="mt-1 font-display text-lg md:text-xl text-ink-900 leading-tight">
+          <h2 data-typography="custom" className="font-semibold text-lg md:text-xl text-ink-900 leading-tight">
             Pick a country, a city, and a business.
           </h2>
         </div>
@@ -246,11 +231,11 @@ export function NavigatorForm() {
         </div>
       </div>
 
-      {/* Footer bar: sample line + Surprise me + submit. */}
+      {/* Footer bar: sample line + submit. */}
       <div className="rounded-b-2xl border-t border-ink-200 bg-white px-5 md:px-8 py-4 md:py-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <p className="text-[11px] md:text-xs text-cocoa-700/80 leading-relaxed">
-            <span className="font-semibold uppercase tracking-[0.12em] text-atlas-700 mr-1.5">
+            <span className="font-semibold uppercase tracking-[0.12em] text-ink-500 mr-1.5">
               Try
             </span>
             restaurants in Los Angeles
@@ -259,27 +244,26 @@ export function NavigatorForm() {
             <span aria-hidden="true" className="mx-1.5 text-cocoa-700/40">·</span>
             software in San Francisco
           </p>
-          <div className="flex items-center gap-2 shrink-0">
-            <button
-              type="button"
-              onClick={surpriseMe}
-              disabled={isLoading}
-              aria-busy={isLoading}
-              className="px-4 py-2.5 rounded-full bg-cream-100 hover:bg-cream-200 text-ink-900 text-sm font-medium border border-parchment transition disabled:opacity-70 disabled:cursor-wait"
-            >
-              Surprise me
-            </button>
+          <div className="flex items-center shrink-0">
+            {/* Soft-terracotta submit, the ONE action the card leads to (rule 37). The
+                crimson filled pill (atlas-700) + bold white label were deleted
+                2026-07-12: off-palette accent on chrome + "cheap" heavy fill. This mirrors
+                the reform masthead's ratified soft CTA; because NavigatorForm also renders
+                outside SpineShell on the live legacy homepage (no --terra-* vars), the
+                terracotta comes from Tailwind orange-50/200/700, which map to the spine
+                --terra-soft/border/text values. The "Surprise me" I'm-feeling-lucky button
+                was removed (gimmick device). */}
             <button
               type="submit"
               disabled={isLoading}
               aria-busy={isLoading}
-              className="px-5 py-2.5 rounded-full bg-atlas-700 hover:bg-atlas-800 active:bg-atlas-900 text-cream-50 font-semibold text-sm shadow-sm transition disabled:opacity-70 disabled:cursor-wait inline-flex items-center gap-2"
+              className="px-5 py-2.5 rounded-full border border-orange-200 bg-orange-50 hover:bg-orange-100 text-orange-700 font-semibold text-sm transition disabled:opacity-70 disabled:cursor-wait inline-flex items-center gap-2"
             >
               {isLoading ? (
                 <>
                   <span
                     aria-hidden="true"
-                    className="inline-block w-3.5 h-3.5 border-2 border-cream-50/40 border-t-cream-50 rounded-full animate-spin"
+                    className="inline-block w-3.5 h-3.5 border-2 border-orange-700/30 border-t-orange-700 rounded-full animate-spin"
                   />
                   Loading...
                 </>

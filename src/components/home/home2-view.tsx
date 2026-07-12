@@ -23,15 +23,19 @@
  *     country), each a real link. Always renders; every href is a verified real route.
  *  2. The Margin Index taste band , the top real-keep rows of the restaurants board,
  *     as RankBars, plus a link to the full /margin-index. Self-omits below 3 known rows.
- *  3. The myth / POV band , static editorial copy, no numbers, no place claims.
- *  4. The map, demoted , the existing real country picker (WorldMapClient), small and
+ *  3. The map, demoted , the existing real country picker (WorldMapClient), small and
  *     low-emphasis, NOT SpineMap (no city lat/lng exist here; inventing coordinates would
  *     fabricate data).
- *  5. Free-vs-paid , qualitative only, no price numbers (PRICING.md can drift).
- *  6. The blog strip , only real posts from getAllPosts(), never the old hardcoded
+ *  4. Free-vs-paid , qualitative only, no price numbers (PRICING.md can drift).
+ *  5. The blog strip , only real posts from getAllPosts(), never the old hardcoded
  *     BLOG_FALLBACK slugs. Self-omits below 3 real posts.
- *  7. Close , a CTA back to the recommender. No newsletter form here: the root layout's
+ *  6. Close , a CTA back to the recommender. No newsletter form here: the root layout's
  *     footer bar already owns the #newsletter anchor.
+ *
+ * The former "myth / POV" band (an assume-vs-actual text card) was deleted 2026-07-12:
+ * off-catalog text-box myth (rule 30), zero numbers, and its rows asserted where profit
+ * "actually sits" at street/district granularity , a rule-5 banned unknowable metric with
+ * no home-altitude data to honestly strike on a chart (rule 0 forbids inventing one).
  */
 import {
   Box,
@@ -139,46 +143,7 @@ function MarginTaste({ rows, subject }: { rows: (MarginIndexRow & { keepPct: num
   );
 }
 
-/* ================= CH3 , THE MYTH / POV BAND ================= */
-/* Rulebook v2 S4 fix (was a direct breach: two prose paragraphs, nothing schematic).
- * Still static editorial copy, still no numbers and no named real place (S13 , the
- * pairs below are categories every place on the atlas has, never a city or country
- * name, so the section renders true for Kinshasa or Dhaka same as anywhere else), but
- * now a compact assumed-vs-actual table instead of two sentences: the SAME two points
- * the old paragraphs made (a loud tourist street pays rent for footfall a steady trade
- * never needed; a capital taxes and licenses harder than its own quieter regions),
- * reshaped from prose into rows. No lead conclusion sentence sits above the table
- * (corrections decision f): the contrast IS the finding, read off the two columns,
- * never asserted in a sentence first. */
-type AssumeRow = { assume: string; actual: string };
-const HONEST_READ_ROWS: AssumeRow[] = [
-  { assume: "The busy tourist street", actual: "The quiet street beside it" },
-  { assume: "The capital", actual: "A quieter region" },
-];
-function MythBand() {
-  return (
-    <Narrow>
-      <Box>
-        <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-x-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
-          <span>Founders assume</span>
-          <span aria-hidden="true" />
-          <span>It actually sits</span>
-        </div>
-        <div className="mt-1.5 divide-y divide-[var(--c-border)]">
-          {HONEST_READ_ROWS.map((r) => (
-            <div key={r.assume} className="grid grid-cols-[1fr_auto_1fr] items-center gap-x-2 py-2.5">
-              <span className="min-w-0 text-[13px] leading-snug text-[var(--c-ink2)]">{r.assume}</span>
-              <span aria-hidden="true" className="px-1 text-[13px] text-[var(--c-muted)]">&rarr;</span>
-              <span className="min-w-0 text-[13px] font-semibold leading-snug text-[var(--c-ink)]">{r.actual}</span>
-            </div>
-          ))}
-        </div>
-      </Box>
-    </Narrow>
-  );
-}
-
-/* ================= CH4 , THE MAP, DEMOTED ================= */
+/* ================= CH3 , THE MAP, DEMOTED ================= */
 /* Reuses the existing real country picker (WorldMapClient, "use client", no props) as a
  * plain browse affordance. Deliberately NOT SpineMap: SpineMap needs real lat/lng
  * SpinePoints, and the city lists here carry no coordinates , inventing them would
@@ -191,7 +156,7 @@ function MapBrowse() {
   return (
     <Narrow>
       <Box>
-        <Rail kicker="Start from a place" />
+        <Rail icon="vs-world" kicker="Start from a place" />
         <div className="mx-auto max-w-xl overflow-hidden rounded-[10px] border border-[var(--c-border)]">
           <WorldMapClient />
         </div>
@@ -200,7 +165,7 @@ function MapBrowse() {
   );
 }
 
-/* ================= CH5 , FREE VS PAID ================= */
+/* ================= CH4 , FREE VS PAID ================= */
 /* Qualitative only, no price numbers (PRICING.md is the canonical source and can drift
  * independently of this page). Matches the ratified stance: all reading is free; a paid
  * plan is for going deeper on a decision, not for access to reading. */
@@ -208,7 +173,7 @@ function FreeVsPaid() {
   return (
     <Even>
       <Box>
-        <Head>Free, always</Head>
+        <Head icon="global-spread">Free, always</Head>
         <Bullets
           items={[
             "Every page on the atlas: every business, every place.",
@@ -218,7 +183,7 @@ function FreeVsPaid() {
         />
       </Box>
       <Box>
-        <Head>What a paid plan adds</Head>
+        <Head icon="ranking">What a paid plan adds</Head>
         <Bullets
           items={[
             "The full ranked list behind that number one answer.",
@@ -237,7 +202,7 @@ function FreeVsPaid() {
   );
 }
 
-/* ================= CH6 , THE BLOG STRIP ================= */
+/* ================= CH5 , THE BLOG STRIP ================= */
 /* Real posts only (getAllPosts(), @/lib/blog). Deliberately does NOT use the live
  * homepage's BLOG_FALLBACK: those six placeholder slugs are hardcoded and may 404. The
  * self-omit guard (hasBlogCh in Home2View) already keeps this to >=3 real posts. */
@@ -292,7 +257,7 @@ function BlogStrip({ posts }: { posts: BlogPost[] }) {
   );
 }
 
-/* ================= CH7 , CLOSE ================= */
+/* ================= CH6 , CLOSE ================= */
 /* A Narrow CTA back to the recommender. No newsletter form here and no id="newsletter":
  * the root layout's FooterNewsletterBar already owns that anchor site-wide; a second one
  * here would break its deep links. Mirrors the masthead's own CTA button styling, an
@@ -350,9 +315,6 @@ export function Home2View({
       <Full>
       <Box elevation="lift">
         <div className="text-center">
-          <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--c-muted)]">
-            The #1 atlas of local profit intelligence
-          </div>
           {/* Server-rendered, place-neutral , no client-only word rotation, so a crawler
               sees a real question that holds for every place on the atlas (S13
               universality), never a single country pinned into the crawlable H1. The
@@ -384,8 +346,8 @@ export function Home2View({
             Or let the Atlas pick the place for you
             <span aria-hidden="true">&rarr;</span>
           </a>
-          <span className="text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
-            or search a place and a business directly
+          <span className="text-[13px] text-[var(--c-muted)]">
+            Or search a place and a business directly.
           </span>
         </div>
 
@@ -416,21 +378,17 @@ export function Home2View({
         </>
       ) : null}
 
-      {/* 3. The honest read , static editorial copy, always renders. */}
-      <Movement index={cn()} heading="The honest read" icon="myth-reality" />
-      <MythBand />
-
-      {/* 4. The map, demoted , a browse affordance, always renders. Heading rewritten off
+      {/* 3. The map, demoted , a browse affordance, always renders. Heading rewritten off
           the imperative "Pick a country instead" to a plain, descriptive name for what
           the section is (S16), not an instruction. */}
       <Movement index={cn()} heading="Browse by country" icon="vs-world" />
       <MapBrowse />
 
-      {/* 5. Free vs paid , qualitative only, always renders. */}
+      {/* 4. Free vs paid , qualitative only, always renders. */}
       <Movement index={cn()} heading="Free vs paid" icon="scorecard" />
       <FreeVsPaid />
 
-      {/* 6. The blog strip , self-omits below three real posts. */}
+      {/* 5. The blog strip , self-omits below three real posts. */}
       {hasBlogCh ? (
         <>
           <Movement index={cn()} heading="From the notebook" icon="operator-voices" />
@@ -438,7 +396,7 @@ export function Home2View({
         </>
       ) : null}
 
-      {/* 7. Close , a CTA back to the recommender, always renders. Heading rewritten off
+      {/* 6. Close , a CTA back to the recommender, always renders. Heading rewritten off
           "Let the Atlas pick" , which read the CTA button ("Let the Atlas pick for you")
           almost verbatim two lines below it on one screen , to "Still deciding", distinct
           wording that does not echo the button. */}
