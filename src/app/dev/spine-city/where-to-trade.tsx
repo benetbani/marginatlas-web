@@ -20,7 +20,7 @@
  * disclosure; no cross-district revenue-vs-keep verdict footer (rulebook v1 §15).
  */
 import * as React from "react";
-import { Box, Rail, Fig, InfoTip, InlineDisclosure, TERRA } from "@/components/spine/kit";
+import { Box, Rail, Fig, InfoTip, TERRA } from "@/components/spine/kit";
 import { SpineMap, type SpinePoint } from "@/components/spine/SpineMap";
 
 type District = { name: string; slug: string; character: string; rev_vs_city_pct: number; rent_mult: number; lat: number; lng: number };
@@ -34,12 +34,14 @@ export function WhereToTrade({ d }: { d: any }) {
   // D1 (founder, 2026-07-11): rank by rent load, lightest first. The seed rent
   // multiple is the ranked figure, plainly labelled , nothing derived.
   const rows: District[] = list.slice().sort((a, b) => a.rent_mult - b.rent_mult);
+  const sample = w._meta?.confidence === "placeholder" || w._meta?.confidence === "modeled";
 
-  // dot-plot geometry: one shared drawn domain. x1 is the drawn floor AND the
-  // city-average reference (labelled on the axis, so the non-zero start is
-  // visible, never hidden); x2.8 gives the heaviest district air.
-  const DOMAIN: [number, number] = [1, 2.8];
-  const posOf = (v: number) => ((v - DOMAIN[0]) / (DOMAIN[1] - DOMAIN[0])) * 100;
+  // dot-plot geometry: one shared DATA-DERIVED domain , x1 is the drawn floor AND the
+  // city-average reference; the far end sits just past the heaviest district, so a
+  // high-spread city never renders a dot past the track (§21, the hardcoded 2.8 clipped).
+  const maxRent = Math.max(...rows.map((r) => r.rent_mult), 1.2);
+  const DOMAIN: [number, number] = [1, Math.round((maxRent + 0.2) * 10) / 10];
+  const posOf = (v: number) => Math.max(0, Math.min(100, ((v - DOMAIN[0]) / (DOMAIN[1] - DOMAIN[0])) * 100));
 
   // map points in RENT-RANK order (declutter keeps labels by array priority, so
   // the lightest-rent districts keep their names and the packed West End trio
@@ -64,7 +66,7 @@ export function WhereToTrade({ d }: { d: any }) {
           Movement heading (city-view.tsx) already carries those words, and the same
           words on two labels is the exact defect the rulebook's residue pass exists
           to kill , so the box's own kicker carries different words. */}
-      <Rail icon="best-areas" tone="terra" kicker="By district" />
+      <Rail icon="best-areas" tone="terra" kicker="By district" sample={sample} />
       <div className={hasMap ? "grid gap-4 lg:grid-cols-[1.35fr_1fr] lg:items-stretch" : "grid gap-4"}>
         {/* the map , the highest-craft object, given real height. Omitted with no coords. */}
         {hasMap ? (
@@ -75,8 +77,8 @@ export function WhereToTrade({ d }: { d: any }) {
         {/* the ranked list , a rent-load dot plot against the drawn city = x1 line */}
         <div className="min-w-0">
           <div className="mb-2 flex items-baseline justify-between gap-2">
-            <span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Ranked by rent load, lightest first</span>
-            <span className="text-[10.5px] text-[var(--c-muted)]">rent, x the city level<InfoTip gloss="The district's commercial rent as a multiple of the city-average level; x1 is the city average." /></span>
+            <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Ranked by rent load, lightest first</span>
+            <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">rent, x the city level<InfoTip gloss="The district's commercial rent as a multiple of the city-average level; x1 is the city average." /></span>
           </div>
           <div className="space-y-1">
             {rows.map((r, i) => {
@@ -92,41 +94,31 @@ export function WhereToTrade({ d }: { d: any }) {
                   style={on ? { background: "var(--c-soft)" } : undefined}
                 >
                   <div className="flex items-baseline justify-between gap-2">
-                    <span className={`min-w-0 truncate text-[12.5px] ${isLead ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink)]"}`}>{r.name}</span>
-                    <Fig className={`shrink-0 text-[12.5px] ${isLead ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>x{r.rent_mult}</Fig>
+                    <span className={`min-w-0 truncate text-[length:var(--t-body)] ${isLead ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink)]"}`}>{r.name}</span>
+                    <Fig className={`shrink-0 text-[length:var(--t-body)] ${isLead ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>x{r.rent_mult}</Fig>
                   </div>
-                  {/* dot at the rent multiple on the shared x1..x2.8 track; the city
+                  {/* dot at the rent multiple on the shared, data-derived track; the city
                       average is the drawn floor line every district visibly sits above */}
                   <div className="relative mt-1.5 h-2" role="img" aria-label={`${r.name}: rent ${r.rent_mult} times the city-average level`}>
-                    <span className="absolute inset-x-0 top-1/2 h-[3px] -translate-y-1/2 rounded-full" style={{ background: "#efece9" }} />
+                    <span className="absolute inset-x-0 top-1/2 h-[3px] -translate-y-1/2 rounded-full" style={{ background: "var(--c-border)" }} />
                     <span className="absolute -bottom-[2px] -top-[2px] w-px bg-[var(--c-line-strong)]" style={{ left: `${posOf(1)}%` }} />
-                    <span className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${posOf(r.rent_mult)}%`, background: isLead ? TERRA : "#1b1b1a", boxShadow: "0 0 0 1px #e3e3e3" }} />
+                    <span className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${posOf(r.rent_mult)}%`, background: isLead ? TERRA : "var(--c-ink)", boxShadow: "0 0 0 1px var(--c-border)" }} />
                   </div>
-                  <div className="mt-0.5 text-[10.5px] text-[var(--c-muted)]">
+                  <div className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">
                     <span className="truncate">{r.character}</span>
                   </div>
                 </a>
               );
             })}
           </div>
-          {/* the shared axis, drawn once: the labelled city floor + the far end */}
-          <div aria-hidden className="relative mt-1 h-4 text-[9px] uppercase tracking-wide text-[var(--c-muted)]">
+          {/* the shared axis, drawn once: the labelled city floor + the far end. The
+              revenue-vs-city disclosure and its "loud names take the most, but rent takes
+              it back" footer are DELETED (§15 cross-entity verdict footer; §18): the list
+              reads on rent load alone, the founder's D1 metric. */}
+          <div aria-hidden className="relative mt-1 h-4 text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">
             <span className="absolute left-0 whitespace-nowrap">city = x1</span>
             <Fig className="absolute right-0">x{DOMAIN[1]}</Fig>
           </div>
-          {/* revenue-vs-city deltas moved off every row into one quiet disclosure:
-              the list reads on rent alone, the revenue counterpoint is one tap away. */}
-          <InlineDisclosure name="wtt-rev" summary="See revenue against the city" className="group mt-2 border-t border-[var(--c-border)] pt-2">
-            <div className="mt-2 divide-y divide-[var(--c-border)]">
-              {rows.map((r) => (
-                <div key={r.slug} className="flex items-baseline justify-between gap-3 py-1.5">
-                  <span className="min-w-0 truncate text-[11.5px] text-[var(--c-ink2)]">{r.name}</span>
-                  <Fig className="shrink-0 text-[12px] text-[var(--c-ink)]">{r.rev_vs_city_pct >= 0 ? "+" : ""}{r.rev_vs_city_pct}%</Fig>
-                </div>
-              ))}
-              <div className="pt-1.5 text-[10.5px] text-[var(--c-muted)]">Revenue against the city average. The loud names take the most, but rent takes it back.</div>
-            </div>
-          </InlineDisclosure>
         </div>
       </div>
     </Box>

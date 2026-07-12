@@ -1,6 +1,7 @@
 {
   "meta": {
     "iso2": "GB", "city": "London", "slug": "london", "country_name": "United Kingdom",
+    "country_in_phrase": "the United Kingdom",
     "currency_local": "GBP", "fx_to_usd": 1.32, "as_of": "2026-06",
     "peer_cities": ["paris", "amsterdam", "dublin", "berlin"],
     "schema_version": "0.2", "overall_confidence": "modeled",
@@ -14,23 +15,20 @@
   "headline": {
     "_meta": { "confidence": "modeled", "source": "London market figures, illustrative", "as_of": "2026-06" },
     "self_employment_pct": 17,
+    "focal": { "label": "Consumer spending", "value": "$22K", "sub": "per resident, a year", "confidence": "placeholder" },
     "scorecard": [
-      { "label": "Cost to open", "value": "$45K", "sub": "cheapest trade, to start", "confidence": "modeled" },
-      { "label": "Consumer spend", "value": "$196B", "sub": "a year, metro", "confidence": "placeholder" },
-      { "label": "Survival", "value": "6", "unit": "/10", "sub": "odds of lasting", "confidence": "modeled" },
+      { "label": "Cost to open", "value": "$45K", "sub": "cheapest trade", "confidence": "modeled" },
       { "label": "Customer income", "value": "$47K", "sub": "median earner", "confidence": "modeled" }
     ]
   },
   "lenses": {
     "_meta": { "confidence": "modeled", "source": "derived from the city signals", "as_of": "2026-06" },
     "headline": "Deep demand, no room.",
-    "read": "London gives you customers and talent in abundance and makes you fight for the space to serve them.",
     "scales": [
-      { "key": "demand", "label": "Demand depth", "pos": 90, "word": "Deep", "left": "Thin", "right": "Deep", "sub": "The spending pool is large and still rising." },
-      { "key": "talent", "label": "Talent pool", "pos": 90, "word": "Deep", "left": "Scarce", "right": "Deep", "sub": "Hiring is easy; keeping people is the cost." },
-      { "key": "survival", "label": "Survival odds", "pos": 60, "word": "Fair", "left": "Fragile", "right": "Sturdy", "sub": "Better than the myth, still no free pass." },
-      { "key": "room", "label": "Room to enter", "pos": 35, "word": "Tight", "left": "Tight", "right": "Open", "sub": "Most trades are already well served." },
-      { "key": "rent_relief", "label": "Affordable space", "pos": 18, "word": "Scarce", "left": "Scarce", "right": "Cheap", "sub": "Prime rent runs near the top of Europe." }
+      { "key": "demand", "label": "Demand depth", "pos": 90, "word": "Deep", "left": "Thin", "right": "Deep" },
+      { "key": "talent", "label": "Talent pool", "pos": 90, "word": "Deep", "left": "Scarce", "right": "Deep" },
+      { "key": "survival", "label": "Survival odds", "pos": 60, "word": "Fair", "left": "Fragile", "right": "Sturdy" },
+      { "key": "rent_relief", "label": "Affordable space", "pos": 18, "word": "Scarce", "left": "Scarce", "right": "Cheap" }
     ]
   },
   "income": {
@@ -101,6 +99,11 @@
   "where_to_trade": {
     "_meta": { "confidence": "placeholder", "source": "district rent multiples + revenue-vs-city, illustrative; the derived keep index was retired (rulebook v1, 2026-07-11); wire to neighborhood multipliers on promotion", "as_of": "2026-06" },
     "read": "The loud names pay a multiple of the city rent; a few quieter districts carry a far lighter load.",
+    "pro_teaser": [
+      "Every district scored for your exact trade.",
+      "The full cost stack, line by line.",
+      "The owner-runway calculator, tuned to your budget."
+    ],
     "list": [
       { "name": "Mayfair", "slug": "mayfair", "character": "Luxury and finance", "rev_vs_city_pct": 55, "rent_mult": 2.6, "lat": 51.5096, "lng": -0.1494 },
       { "name": "Covent Garden", "slug": "covent-garden", "character": "Tourism and retail", "rev_vs_city_pct": 48, "rent_mult": 2.3, "lat": 51.5129, "lng": -0.1240 },

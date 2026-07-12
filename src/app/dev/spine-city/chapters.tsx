@@ -15,10 +15,8 @@
  *                       against the median income), placed beside "What customers earn
  *                       here" so both sides of the ratio share one screen (founder C5,
  *                       2026-07-11). Omits without both figures.
- *   MarginKept        , the HONEST kept-vs-spent split for the local margin leader.
- *                       No fabricated rent/staff/stock sub-blocks; the city-level
- *                       trade-margin headline is CUT (rulebook v1 §5), the split bar
- *                       carries the read alone.
+ * (MarginKept , the city-level owner-keeps % split , was DELETED 2026-07-12: §5 banned
+ *  metric + the "fundamentally wrong" horizontal-bar money split, founder C9.)
  * All prose from the seed. Terracotta rationed to one decision figure per Box.
  */
 import * as React from "react";
@@ -34,6 +32,7 @@ const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
 export function IncomeCurve({ d }: { d: any }) {
   const o = d.income ?? {};
   if (o.median_income_usd == null) return null;
+  const sample = o._meta?.confidence === "placeholder" || o._meta?.confidence === "modeled";
   const med = o.median_income_usd ?? 0, t10 = o.top10_income_usd ?? 0, t1 = o.top1_income_usd ?? 0;
   const reduced = useReducedMotion();
   const { ref, seen } = useInView<HTMLDivElement>();
@@ -54,7 +53,7 @@ export function IncomeCurve({ d }: { d: any }) {
 
   return (
     <Box>
-      <Head icon="spending-power">What customers earn here</Head>
+      <Head icon="spending-power" sample={sample}>What customers earn here</Head>
       <div ref={ref} className="grid gap-4">
         <div className="min-w-0">
           <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label="Median, top 10 percent, and top 1 percent income marked on a scale" preserveAspectRatio="none">
@@ -69,14 +68,14 @@ export function IncomeCurve({ d }: { d: any }) {
               );
             })}
           </svg>
-          <div className="mt-1 flex justify-between text-[10px] text-[var(--c-muted)]">
+          {/* direct labels carry the read , no glued verdict paragraph (§14/§26). */}
+          <div className="mt-1 flex justify-between text-[length:var(--t-micro)] text-[var(--c-muted)]">
             {ticks.map(([label, v, accent]) => (
               <span key={label} className="flex flex-col"><span className={accent ? "font-semibold text-[var(--terra-text)]" : ""}>{label}</span><Fig className={accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink2)]"}>{money(v)}</Fig></span>
             ))}
           </div>
         </div>
       </div>
-      {o.read ? <div className="mt-3 text-[12px] leading-snug text-[var(--c-ink2)]">{o.read}</div> : null}
     </Box>
   );
 }
@@ -90,6 +89,7 @@ export function IncomeCurve({ d }: { d: any }) {
 export function OwnerRunway({ d }: { d: any }) {
   const o = d.owner_runway ?? {};
   if (o.rent_1bed_usd_mo == null && o.groceries_usd_mo == null && o.transport_usd_mo == null) return null;
+  const sample = o._meta?.confidence === "placeholder" || o._meta?.confidence === "modeled";
   // IDENTITY (must close): runway = monthly burn x months to break-even.
   // burn = rent + groceries + transport = $3,060; months = round(38wk / 52 x 12) = 9;
   // runway = $3,060 x 9 = $27,540 -> $28K focal, "$3.1K a month for 9 months" subline.
@@ -107,12 +107,12 @@ export function OwnerRunway({ d }: { d: any }) {
   ];
   return (
     <Box>
-      <Rail icon="cost-breakdown" kicker="Your own living costs" />
+      <Rail icon="cost-breakdown" kicker="Your own living costs" sample={sample} />
       <div className="grid grid-cols-[1fr_auto] items-center gap-4">
         <div>
-          <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Savings to reach break-even</div>
+          <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Savings to reach break-even</div>
           <CountFig value={runway} fmt={(n) => money(n)} className="text-[32px] leading-none text-[var(--terra-text)] md:text-[36px]" />
-          <div className="mt-1 text-[12px] text-[var(--c-ink2)]">about <Fig className="text-[var(--c-ink)]">{burnLabel}</Fig> a month for <Fig className="text-[var(--c-ink)]">{months} months</Fig>, from signing to the week the till clears costs.</div>
+          <div className="mt-1 text-[length:var(--t-body)] text-[var(--c-ink2)]">about <Fig className="text-[var(--c-ink)]">{burnLabel}</Fig> a month for <Fig className="text-[var(--c-ink)]">{months} months</Fig>.</div>
         </div>
       </div>
       <InlineDisclosure name="runway" summary="See the monthly burn">
@@ -137,52 +137,30 @@ export function RentAffordability({ d }: { d: any }) {
   const rentMo = d.owner_runway?.rent_1bed_usd_mo;
   const income = d.income?.median_income_usd;
   if (rentMo == null || income == null) return null;
+  const sample = d.owner_runway?._meta?.confidence === "placeholder" || d.owner_runway?._meta?.confidence === "modeled" || d.income?._meta?.confidence === "modeled";
   const pct = Math.round(((rentMo * 12) / income) * 100);
+  // Show the monthly rent to one decimal ($2.4K, not a rounded $2K): the end labels must
+  // reconcile with the focal percentage, or the bar reads as mis-scaled (§26 trust).
+  const rentShown = "$" + (rentMo / 1000).toFixed(1) + "K";
   return (
     <Box>
-      <Head icon="commercial-rent">Rent against income</Head>
+      <Head icon="commercial-rent" sample={sample}>Rent against income</Head>
       <div className="flex flex-wrap items-baseline gap-x-2">
         <Fig className="text-3xl text-[var(--terra-text)]">{pct}%</Fig>
-        <span className="text-[13px] text-[var(--c-ink2)]">of the median income, a year of one-bed rent.</span>
+        <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">of the median income, a year of one-bed rent.</span>
       </div>
       <div className="mt-3 h-2 overflow-hidden rounded-full" style={{ background: TRACK }}>
         <div className="h-full rounded-full" style={{ width: `${Math.min(100, pct)}%`, background: TERRA }} />
       </div>
-      <div className="mt-2 flex justify-between text-[11px] text-[var(--c-muted)]">
-        <span>{money(rentMo)}/mo rent</span>
+      <div className="mt-2 flex justify-between text-[length:var(--t-micro)] text-[var(--c-muted)]">
+        <span>{rentShown}/mo rent</span>
         <span>{money(income)}/yr median income</span>
       </div>
     </Box>
   );
 }
 
-/* ---- margin kept (honest kept vs spent for the local leader) ----
- * The city-level trade-margin HEADLINE is cut (rulebook v1 §5, founder 2026-07-11):
- * the kept-vs-costs split bar carries the read alone, its own in-bar labels the
- * only figures. */
-export function MarginKept({ d }: { d: any }) {
-  const t = d.trades ?? {};
-  const arr: any[] = t.list ?? [];
-  // the margin leader: highest net margin on the slate (all six canonical trades are local).
-  const local = arr.filter((x) => x.local !== false && x.net_margin_pct != null);
-  // Null-guard (real-data promotion): omit when no local trade carries a real margin.
-  if (local.length === 0) return null;
-  const lead = local.slice().sort((a, b) => (b.net_margin_pct ?? 0) - (a.net_margin_pct ?? 0))[0] ?? {};
-  const kept = Math.max(0, Math.min(100, Number(lead.net_margin_pct ?? 0)));
-  return (
-    <Box>
-      <Head icon="margin">Where the money goes, for {String(lead.name ?? "").toLowerCase()}</Head>
-      {/* HONEST split: only the one true figure (kept vs spent). No fabricated cost
-          blocks. Ink labels on both segments (white on the soft terracotta fails AA). */}
-      <div className="flex h-7 overflow-hidden rounded-lg border border-[var(--c-border)]" role="img" aria-label={`Owner keeps ${kept} percent, costs take ${100 - kept} percent`}>
-        <div className="flex h-full items-center pl-2" style={{ width: `${kept}%`, background: TERRA }}><span className="fig text-[11px] font-semibold text-[#1b1b1a]">{kept}%</span></div>
-        <div className="flex h-full items-center justify-end pr-2" style={{ width: `${100 - kept}%`, background: TRACK }}><span className="fig text-[11px] font-medium text-[var(--c-ink2)]">{100 - kept}% costs</span></div>
-      </div>
-      <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-[var(--c-ink2)]">
-        <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm" style={{ background: TERRA }} />Owner keeps</span>
-        <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm" style={{ background: TRACK }} />Rent, staff, stock and the rest</span>
-      </div>
-      <div className="mt-3 text-[11.5px] leading-snug text-[var(--c-muted)]">{t.margin_read}</div>
-    </Box>
-  );
-}
+/* MarginKept (the city-level owner-keeps % split) was DELETED 2026-07-12: it is net
+ * margin by trade within a specific city, a banned unknowable metric (rulebook v1 §5),
+ * and its horizontal-bar money split was the founder's "fundamentally wrong" C9 call.
+ * The "What to open" chapter now carries the ease + cost-to-open read alone (LowestBar). */
