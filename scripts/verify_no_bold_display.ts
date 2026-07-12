@@ -25,7 +25,12 @@ function tsxIn(dir: string): string[] {
     .map((f) => join(dir, f).replace(/\\/g, "/"));
 }
 
-/** The spine + home surface files (same scope as verify_bar_budget). */
+/** The spine + home surface files (same scope as verify_bar_budget).
+ * 2026-07-12 (four-gates task): added src/components/NavigatorForm.tsx ,
+ * the homepage search launcher mounted directly inside home2-view.tsx
+ * (`<NavigatorForm />`), which was outside the spine surface list even
+ * though it renders on the same masthead. home2-view.tsx was already
+ * present; NavigatorForm.tsx was the actual gap. */
 const SURFACE_FILES: string[] = [
   "src/app/dev/spine/page.tsx",
   ...tsxIn("src/app/dev/spine-city"),
@@ -34,6 +39,7 @@ const SURFACE_FILES: string[] = [
   ...tsxIn("src/app/dev/spine-hood"),
   "src/components/spine/NeighborhoodExplorer.tsx",
   "src/components/home/home2-view.tsx",
+  "src/components/NavigatorForm.tsx",
 ];
 
 // `font-bold` as a whole class token (font-boldish would not match)

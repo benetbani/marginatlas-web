@@ -532,7 +532,7 @@ export function CatRows({ rows }: { rows: Array<[string, any]> }) {
  * no-op (the finding lives ON the visual), and no eyebrow returns. `tone` and `verdict`
  * stay in the prop type as tolerated no-ops so existing call sites keep compiling , do not
  * delete either from the type. */
-export function Rail({ icon, kicker, verdict, tone = "ink" }: { icon?: AtlasIconId; kicker: string; verdict?: React.ReactNode; tone?: "ink" | "terra" }) {
+export function Rail({ icon, kicker, verdict, tone = "ink", sample }: { icon?: AtlasIconId; kicker: string; verdict?: React.ReactNode; tone?: "ink" | "terra"; sample?: boolean }) {
   void tone;
   void verdict;
   return (
@@ -540,6 +540,7 @@ export function Rail({ icon, kicker, verdict, tone = "ink" }: { icon?: AtlasIcon
       <div className="mb-1.5 flex items-center gap-2">
         {icon ? <Ico id={icon} /> : null}
         <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{kicker}</span>
+        {sample ? <SampleTag /> : null}
       </div>
     </div>
   );

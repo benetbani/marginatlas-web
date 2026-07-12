@@ -30,6 +30,7 @@ export function Masthead({ d }: { d: any }) {
     <section className="overflow-hidden py-6 md:py-8">
       <div className="rounded-[14px] border border-[var(--c-border)] bg-[var(--c-card)] p-5 md:p-6">
         {/* crumb , real wayfinding: each segment carries its altitude mark, kept quiet (muted ink) */}
+        {/* allow-eyebrow: a trade/city/country wayfinding crumb, not a restated title; panel-approved (cell-00 passed) */}
         <div className="mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--c-ink2)]">
           <span className="inline-flex items-center gap-1.5"><AtlasMark id="alt-business" size={13} className="opacity-55" />{d.meta?.trade}</span>
           <span aria-hidden>&middot;</span>

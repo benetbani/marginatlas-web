@@ -75,6 +75,10 @@ const GATES: Gate[] = [
   { name: "no-bold-display", script: "scripts/verify_no_bold_display.ts" },
   { name: "banned-patterns", script: "scripts/verify_banned_patterns.ts" },
   { name: "registry", script: "scripts/verify_registry.ts" },
+  { name: "no-eyebrow", script: "scripts/verify_no_eyebrow.ts" },
+  { name: "subsection-icons", script: "scripts/verify_subsection_icons.ts" },
+  { name: "trade-set", script: "scripts/verify_trade_set.ts" },
+  { name: "sample-tags", script: "scripts/verify_sample_tags.ts" },
 ];
 
 /** CLI arg parsing. */
