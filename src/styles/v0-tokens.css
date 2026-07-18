@@ -1,0 +1,51 @@
+/**
+ * v0-tokens.css , the exact design tokens named in the v0 brand prompt
+ * (E:/atlas/v0/00-brand-prompt.md). Any component pasted in from v0 that uses
+ * these variables will render on-brand with no restyling.
+ *
+ * Import once in the route/layout that hosts v0 components.
+ */
+:root {
+  /* surface */
+  --v0-paper: #faf8f6;
+  --v0-card: #ffffff;
+  --v0-hairline: #e9e3da;
+  --v0-line: #ddd5c9;
+
+  /* ink */
+  --v0-ink: #191714;
+  --v0-ink-2: #57534d;
+  --v0-muted: #8f8981;
+  --v0-faint: #bdb7ad;
+
+  /* the one accent */
+  --v0-accent: #e8613c;
+  --v0-accent-deep: #c2410c;
+  --v0-accent-soft: #fff2ec;
+  --v0-accent-line: #f4cdbe;
+
+  /* chart neutrals, darkest to lightest (use for non-answer segments) */
+  --v0-n1: #6f6a63;
+  --v0-n2: #8a847b;
+  --v0-n3: #a8a297;
+  --v0-n4: #c0bab0;
+  --v0-n5: #d6d0c6;
+
+  /* form */
+  --v0-radius: 14px;
+  --v0-shadow: 0 1px 2px rgba(60, 40, 28, .04), 0 18px 40px -22px rgba(60, 40, 28, .20);
+}
+
+/* tabular figures, the prompt requires this for every number */
+.v0-fig {
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* the standard card chrome named in the prompt */
+.v0-card {
+  background: var(--v0-card);
+  border: 1px solid var(--v0-hairline);
+  border-radius: var(--v0-radius);
+  box-shadow: var(--v0-shadow);
+}
