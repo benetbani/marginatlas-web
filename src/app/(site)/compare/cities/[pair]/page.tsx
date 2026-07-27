@@ -17,9 +17,9 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import cityListJson from "../../../../../data/cities/city_list_v1.json";
-import comparisonsJson from "../../../../../data/cities/city_comparisons_v1.json";
-import countryFactorsJson from "../../../../../data/economic_indicators/country_factors_v1.json";
+import cityListJson from "../../../../../../data/cities/city_list_v1.json";
+import comparisonsJson from "../../../../../../data/cities/city_comparisons_v1.json";
+import countryFactorsJson from "../../../../../../data/economic_indicators/country_factors_v1.json";
 import countryBaselineJson from "@/lib/cells/country_smb_baseline.json";
 import { getCityHero } from "@/lib/images/city_heroes";
 import { CountryFlag } from "@/components/CountryFlag";

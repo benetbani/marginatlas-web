@@ -92,14 +92,14 @@ mustContain(
 // 2. The /compare grid must suppress the leader mark and the biggest-difference
 //    callout when columns span countries, and show the price caveat.
 mustContain(
-  "src/app/compare/CompareClient.tsx",
+  "src/app/(site)/compare/CompareClient.tsx",
   ["spansCountries", "not adjusted for local prices"],
   "no cross-country leader mark; show the price caveat",
 );
 
 // 3. The city-vs-city page must label its modeled bars and keep the caveat.
 mustContain(
-  "src/app/compare/cities/[pair]/page.tsx",
+  "src/app/(site)/compare/cities/[pair]/page.tsx",
   ["not adjusted for local prices"],
   "the modeled side-by-side bars must carry the local-price caveat",
 );
@@ -112,7 +112,7 @@ mustContain(
   "place rows must carry a like-for-like cohort tag",
 );
 mustContain(
-  "src/app/industries/[industry]/page.tsx",
+  "src/app/(site)/industries/[industry]/page.tsx",
   ["stateRows", "bandSummary"],
   "the revenue band + 'where it earns most' must come from the trusted US-state " +
     "cohort only; the extrapolated country cohort was retired (its per-firm " +

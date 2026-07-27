@@ -42,6 +42,7 @@ import industryMarginsJson from "@/lib/finance/industry_margins.json";
 import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 import { SpineShell } from "@/components/spine/shell";
 import { SpineCityBody } from "@/app/dev/spine-city/city-view";
+import { SiteChrome } from "@/components/SiteChrome";
 
 // Curated, cross-country-stable margin shape per activity (the same table the
 // industry page uses). Read at module scope so the lookup is a plain object
@@ -99,7 +100,7 @@ function cityLabelFromSlug(slug: string): string {
     .join(" ");
 }
 
-export default async function RegionLandingPage({
+async function RegionLandingPageBody({
   params,
 }: {
   params: Promise<Params>;
@@ -341,5 +342,18 @@ export default async function RegionLandingPage({
         </section>
       ) : null}
     </div>
+  );
+}
+
+/* Chrome is opted into, not inherited. The site masthead, <main> and footer
+   moved out of the root layout into <SiteChrome> so that the spine-2 trade
+   page , which carries its own , can render without them. This tree sits
+   outside src/app/(site)/ because it holds both kinds of route, so each page
+   here asks for the chrome explicitly. */
+export default function RegionLandingPage(props: Parameters<typeof RegionLandingPageBody>[0]) {
+  return (
+    <SiteChrome>
+      <RegionLandingPageBody {...props} />
+    </SiteChrome>
   );
 }

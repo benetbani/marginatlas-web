@@ -37,15 +37,15 @@ const PRESENTATION_DIRS = ["src/app", "src/components"];
  */
 const ALLOWLIST = new Set([
   // Pre-audit violations (2026-05-27 architecture audit grandfather list)
-  "src/app/cities/page.tsx",
-  "src/app/cities/[slug]/page.tsx",
-  "src/app/cities/[slug]/neighborhoods/page.tsx",
-  "src/app/cities/[slug]/curiosities/page.tsx",
-  "src/app/countries/page.tsx",
-  "src/app/decide/page.tsx",
-  "src/app/decide/[activity]/[city]/page.tsx",
+  "src/app/(site)/cities/page.tsx",
+  "src/app/(site)/cities/[slug]/page.tsx",
+  "src/app/(site)/cities/[slug]/neighborhoods/page.tsx",
+  "src/app/(site)/cities/[slug]/curiosities/page.tsx",
+  "src/app/(site)/countries/page.tsx",
+  "src/app/(site)/decide/page.tsx",
+  "src/app/(site)/decide/[activity]/[city]/page.tsx",
   "src/app/sitemap.ts",
-  "src/app/compare/cities/[pair]/page.tsx",
+  "src/app/(site)/compare/cities/[pair]/page.tsx",
   "src/components/cities/BusinessFormationCosts.tsx",
   "src/components/cities/CitySignaturePanel.tsx",
   "src/components/countries/CountrySignaturePanel.tsx",

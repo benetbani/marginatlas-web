@@ -35,7 +35,7 @@ const PAGES: PageCheck[] = [
   { level: "cell", file: "src/app/[country]/[geo]/[industry]/page.tsx" },
   { level: "country", file: "src/app/[country]/page.tsx" },
   { level: "region", file: "src/app/[country]/[geo]/page.tsx" },
-  { level: "industry", file: "src/app/industries/[industry]/page.tsx" },
+  { level: "industry", file: "src/app/(site)/industries/[industry]/page.tsx" },
 ];
 
 /**

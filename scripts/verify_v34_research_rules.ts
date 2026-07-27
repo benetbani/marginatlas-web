@@ -238,7 +238,7 @@ function readIfExists(rel: string): string | null {
 // JSX wraps the `$\n{spec.priceAnnualTotal}` across lines so we don't
 // do a single-line regex; we just look for the reference at all.
 {
-  const pricingPage = readIfExists("app/pricing/page.tsx");
+  const pricingPage = readIfExists("app/(site)/pricing/page.tsx");
   const paywallCopy = readIfExists("components/monetization/paywall_copy.ts");
   const refersToAnnualTotal =
     !!pricingPage && pricingPage.includes("priceAnnualTotal");
@@ -248,7 +248,7 @@ function readIfExists(rel: string): string | null {
   if (!refersToAnnualTotal || !mentionsBilledAnnually || !hasTier) {
     record(
       "annual_framing_shows_total",
-      pricingPage ? "src/app/pricing/page.tsx" : "<missing>",
+      pricingPage ? "src/app/(site)/pricing/page.tsx" : "<missing>",
       0,
       "",
       "v34 Part 4.2: annual price must be displayed as monthly-equiv PLUS " +
@@ -261,14 +261,14 @@ function readIfExists(rel: string): string | null {
 // 11. cancellation_copy_present — the cancel-anytime block from
 // paywall_copy.ts must appear on the pricing page render.
 {
-  const pricingPage = readIfExists("app/pricing/page.tsx");
+  const pricingPage = readIfExists("app/(site)/pricing/page.tsx");
   if (
     !pricingPage ||
     !pricingPage.includes("CANCEL_ANYTIME_BLOCK")
   ) {
     record(
       "cancellation_copy_present",
-      "src/app/pricing/page.tsx",
+      "src/app/(site)/pricing/page.tsx",
       0,
       "",
       "v34 Part 3.6: the cancel-anytime block must render on the pricing " +

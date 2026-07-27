@@ -46,11 +46,11 @@ const CANONICAL: Record<string, string[]> = {
 const PAGE_FILE: Record<string, { file: string; constName: string }> = {
   cell: { file: "src/components/cells/CellDecisionStack.tsx", constName: "CELL_SECTIONS" },
   country: { file: "src/app/[country]/page.tsx", constName: "COUNTRY_SECTIONS" },
-  city: { file: "src/app/cities/[slug]/page.tsx", constName: "CITY_SECTIONS" },
-  industry: { file: "src/app/industries/[industry]/page.tsx", constName: "INDUSTRY_SECTIONS" },
+  city: { file: "src/app/(site)/cities/[slug]/page.tsx", constName: "CITY_SECTIONS" },
+  industry: { file: "src/app/(site)/industries/[industry]/page.tsx", constName: "INDUSTRY_SECTIONS" },
   neighbourhood: { file: "src/components/NeighborhoodOverview.tsx", constName: "NEIGHBOURHOOD_SECTIONS" },
-  learn: { file: "src/app/learn/[slug]/page.tsx", constName: "LEARN_SECTIONS" },
-  compare: { file: "src/app/compare/CompareClient.tsx", constName: "COMPARE_SECTIONS" },
+  learn: { file: "src/app/(site)/learn/[slug]/page.tsx", constName: "LEARN_SECTIONS" },
+  compare: { file: "src/app/(site)/compare/CompareClient.tsx", constName: "COMPARE_SECTIONS" },
 };
 
 const failures: string[] = [];

@@ -95,6 +95,7 @@ import {
 import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 import { SpineShell } from "@/components/spine/shell";
 import SpineCountry from "@/app/dev/spine/page";
+import { SiteChrome } from "@/components/SiteChrome";
 
 // Keep section-order constant referenced for type checking.
 void COUNTRY_PAGE_SECTIONS;
@@ -319,7 +320,7 @@ function EngravedSection({
   );
 }
 
-export default async function CountryPage({ params }: { params: Promise<Params> }) {
+async function CountryPageBody({ params }: { params: Promise<Params> }) {
   // Spine reform (flag-gated, default OFF). The spine body renders the bundled
   // GB seed regardless of `params`; that is intentional for this scaffold and
   // never ships live because the flag stays OFF until real-data adapters land.
@@ -1208,5 +1209,18 @@ export default async function CountryPage({ params }: { params: Promise<Params> 
 
       <StickySectionNav sections={nav} />
     </div>
+  );
+}
+
+/* Chrome is opted into, not inherited. The site masthead, <main> and footer
+   moved out of the root layout into <SiteChrome> so that the spine-2 trade
+   page , which carries its own , can render without them. This tree sits
+   outside src/app/(site)/ because it holds both kinds of route, so each page
+   here asks for the chrome explicitly. */
+export default function CountryPage(props: Parameters<typeof CountryPageBody>[0]) {
+  return (
+    <SiteChrome>
+      <CountryPageBody {...props} />
+    </SiteChrome>
   );
 }

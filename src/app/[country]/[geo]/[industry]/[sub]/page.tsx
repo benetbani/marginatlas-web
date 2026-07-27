@@ -62,6 +62,7 @@ import { buildCellView, cellViewNav } from "@/lib/cells/cell_view";
 import { CellDecisionStack } from "@/components/cells/CellDecisionStack";
 import { MakeItYoursPanel } from "@/components/cells/MakeItYoursPanel";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
+import { SiteChrome } from "@/components/SiteChrome";
 
 export const revalidate = 21600;
 export const dynamicParams = true;
@@ -125,7 +126,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   };
 }
 
-export default async function NeighborhoodCellPage({
+async function NeighborhoodCellPageBody({
   params,
 }: {
   params: Promise<Params>;
@@ -552,5 +553,18 @@ export default async function NeighborhoodCellPage({
       </div>
       <StickySectionNav sections={navSections} />
     </div>
+  );
+}
+
+/* Chrome is opted into, not inherited. The site masthead, <main> and footer
+   moved out of the root layout into <SiteChrome> so that the spine-2 trade
+   page , which carries its own , can render without them. This tree sits
+   outside src/app/(site)/ because it holds both kinds of route, so each page
+   here asks for the chrome explicitly. */
+export default function NeighborhoodCellPage(props: Parameters<typeof NeighborhoodCellPageBody>[0]) {
+  return (
+    <SiteChrome>
+      <NeighborhoodCellPageBody {...props} />
+    </SiteChrome>
   );
 }

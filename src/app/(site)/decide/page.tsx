@@ -32,8 +32,8 @@ import {
   isExcludedFromDiscovery,
 } from "@/lib/taxonomy";
 import industryMarginsJson from "@/lib/finance/industry_margins.json";
-import cityListJson from "../../../data/cities/city_list_v1.json";
-import neighborhoodsJson from "../../../data/cities/neighborhoods_v1.json";
+import cityListJson from "../../../../data/cities/city_list_v1.json";
+import neighborhoodsJson from "../../../../data/cities/neighborhoods_v1.json";
 import {
   getNeighborhoodNetMargin,
   hasNeighborhoodIntensity,

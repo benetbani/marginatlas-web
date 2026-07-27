@@ -23,8 +23,8 @@
  */
 import Link from "next/link";
 import type { Metadata } from "next";
-import cityListJson from "../../../data/cities/city_list_v1.json";
-import cityCoordsJson from "../../../data/cities/city_coordinates_v1.json";
+import cityListJson from "../../../../data/cities/city_list_v1.json";
+import cityCoordsJson from "../../../../data/cities/city_coordinates_v1.json";
 import { CountryFlag } from "@/components/CountryFlag";
 import CitiesWorldMap, {
   type CitiesWorldMapCity,

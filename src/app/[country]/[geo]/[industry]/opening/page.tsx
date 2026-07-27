@@ -33,6 +33,7 @@ import { OpeningHero } from "@/components/open/OpeningHero";
 import { OpeningChecklist } from "@/components/open/OpeningChecklist";
 import { OpeningPayback } from "@/components/open/OpeningPayback";
 import { OpeningComparisons } from "@/components/open/OpeningComparisons";
+import { SiteChrome } from "@/components/SiteChrome";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -132,7 +133,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function OpeningRoutePage({
+async function OpeningRoutePageBody({
   params,
 }: {
   params: Promise<Params>;
@@ -152,5 +153,18 @@ export default async function OpeningRoutePage({
       <OpeningChecklist page={page} />
       <OpeningComparisons page={page} />
     </div>
+  );
+}
+
+/* Chrome is opted into, not inherited. The site masthead, <main> and footer
+   moved out of the root layout into <SiteChrome> so that the spine-2 trade
+   page , which carries its own , can render without them. This tree sits
+   outside src/app/(site)/ because it holds both kinds of route, so each page
+   here asks for the chrome explicitly. */
+export default function OpeningRoutePage(props: Parameters<typeof OpeningRoutePageBody>[0]) {
+  return (
+    <SiteChrome>
+      <OpeningRoutePageBody {...props} />
+    </SiteChrome>
   );
 }

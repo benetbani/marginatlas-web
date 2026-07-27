@@ -20,6 +20,7 @@ import { CountryFlag } from "@/components/CountryFlag";
 import { iso2ToName } from "@/lib/countries";
 import { hasRegionalCoverage } from "@/lib/coverage/regional";
 import { getAdmin1Regions } from "@/lib/coverage/admin1";
+import { SiteChrome } from "@/components/SiteChrome";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -62,7 +63,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function RegionIndustriesPage({
+async function RegionIndustriesPageBody({
   params,
 }: {
   params: Promise<Params>;
@@ -142,5 +143,18 @@ export default async function RegionIndustriesPage({
         );
       })}
     </div>
+  );
+}
+
+/* Chrome is opted into, not inherited. The site masthead, <main> and footer
+   moved out of the root layout into <SiteChrome> so that the spine-2 trade
+   page , which carries its own , can render without them. This tree sits
+   outside src/app/(site)/ because it holds both kinds of route, so each page
+   here asks for the chrome explicitly. */
+export default function RegionIndustriesPage(props: Parameters<typeof RegionIndustriesPageBody>[0]) {
+  return (
+    <SiteChrome>
+      <RegionIndustriesPageBody {...props} />
+    </SiteChrome>
   );
 }

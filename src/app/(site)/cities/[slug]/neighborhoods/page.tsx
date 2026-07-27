@@ -13,8 +13,8 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import cityListJson from "../../../../../data/cities/city_list_v1.json";
-import neighborhoodsJson from "../../../../../data/cities/neighborhoods_v1.json";
+import cityListJson from "../../../../../../data/cities/city_list_v1.json";
+import neighborhoodsJson from "../../../../../../data/cities/neighborhoods_v1.json";
 import { CountryFlag } from "@/components/CountryFlag";
 import { COUNTRIES } from "@/lib/taxonomy";
 import { colors } from "@/lib/design-tokens";

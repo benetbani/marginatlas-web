@@ -100,6 +100,7 @@ import { buildSpineCellSeed } from "@/lib/spine/adapt_cell";
 import { loadSpine2Cell } from "@/lib/cells/spine2_loader";
 import { buildCellPage } from "@/lib/cells/spine2_adapter";
 import { CellPage as Spine2CellPage } from "@/components/spine2/page/CellPage";
+import { SiteChrome } from "@/components/SiteChrome";
 /**
  * MEASURED COST OF THE IMPORT ABOVE (2026-07-26, Loop 2 I-8). Do not "optimise" it
  * without reading PROPOSALS.md F2 first; the obvious fix does not work.
@@ -250,7 +251,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function CellPage({
+async function CellPageBody({
   params,
 }: {
   params: Promise<Params>;
@@ -1254,4 +1255,30 @@ function formatMoney(v: number | null | undefined): string {
   if (v >= 1e6) return `$${(v / 1e6).toFixed(1)}M`;
   if (v >= 1e3) return `$${(v / 1e3).toFixed(0)}K`;
   return `$${v.toFixed(0)}`;
+}
+
+/* THE ONE ROUTE THAT SOMETIMES RENDERS WITHOUT CHROME.
+
+   This URL serves three renders chosen at REQUEST TIME by data: the spine-2
+   page when a reconciled cell file exists, a neighborhood overview when the
+   segment names a neighborhood, and the legacy cell page otherwise. App Router
+   layouts are keyed by path, not by data, so no route group can express that
+   split , which is why the chrome is a component and why this decision is made
+   here, in the only file that has the data to make it.
+
+   The spine-2 page carries its own masthead, breadcrumb, footer and chapter
+   nav. Wrapped in the site chrome it produced two brand lockups, two
+   unlabelled navigations, four font families of which two never rendered its
+   content, a skyline that could not be full-bleed, and a watch-tray pill
+   painting over its own chapter pill. So that branch renders bare and every
+   other branch keeps the chrome exactly as before. */
+export default async function CellPage(
+  props: Parameters<typeof CellPageBody>[0],
+) {
+  const { country, geo, industry } = await props.params;
+  const bare =
+    isSpineReformEnabledFor("cell") &&
+    loadSpine2Cell(country, geo, industry) != null;
+  const body = <CellPageBody {...props} />;
+  return bare ? body : <SiteChrome>{body}</SiteChrome>;
 }

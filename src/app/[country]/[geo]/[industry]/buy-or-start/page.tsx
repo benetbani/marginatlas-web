@@ -34,6 +34,7 @@ import { fmtUSD } from "@/components/board/format";
 import { BuyVsStartHero } from "@/components/buy/BuyVsStartHero";
 import { BuyVsStartCompare } from "@/components/buy/BuyVsStartCompare";
 import { BuyVsStartCatches } from "@/components/buy/BuyVsStartCatches";
+import { SiteChrome } from "@/components/SiteChrome";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -134,7 +135,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function BuyOrStartRoutePage({
+async function BuyOrStartRoutePageBody({
   params,
 }: {
   params: Promise<Params>;
@@ -154,5 +155,18 @@ export default async function BuyOrStartRoutePage({
       <BuyVsStartCompare page={page} />
       <BuyVsStartCatches page={page} />
     </div>
+  );
+}
+
+/* Chrome is opted into, not inherited. The site masthead, <main> and footer
+   moved out of the root layout into <SiteChrome> so that the spine-2 trade
+   page , which carries its own , can render without them. This tree sits
+   outside src/app/(site)/ because it holds both kinds of route, so each page
+   here asks for the chrome explicitly. */
+export default function BuyOrStartRoutePage(props: Parameters<typeof BuyOrStartRoutePageBody>[0]) {
+  return (
+    <SiteChrome>
+      <BuyOrStartRoutePageBody {...props} />
+    </SiteChrome>
   );
 }

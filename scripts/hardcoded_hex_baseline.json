@@ -1,7 +1,7 @@
 {
   "src/app/global-error.tsx": 6,
   "src/app/page.tsx": 12,
-  "src/app/check/CheckResult.tsx": 6,
+  "src/app/(site)/check/CheckResult.tsx": 6,
   "src/app/dev/lock-states/page.tsx": 3,
   "src/app/dev/spine/layout.tsx": 15,
   "src/app/dev/spine/NeighboursTable.tsx": 2,

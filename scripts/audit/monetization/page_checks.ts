@@ -235,42 +235,42 @@ export function checkCell(): PageCheckResult {
 }
 
 export function checkIndustry(): PageCheckResult {
-  const src = readIfExists("app/industries/[industry]/page.tsx");
+  const src = readIfExists("app/(site)/industries/[industry]/page.tsx");
   return stub("industry", "/industries/{industry}", src);
 }
 
 export function checkCity(): PageCheckResult {
-  const src = readIfExists("app/cities/[slug]/page.tsx");
+  const src = readIfExists("app/(site)/cities/[slug]/page.tsx");
   return stub("city", "/cities/{slug}", src);
 }
 
 export function checkWorld(): PageCheckResult {
-  const src = readIfExists("app/world/page.tsx");
+  const src = readIfExists("app/(site)/world/page.tsx");
   return stub("world", "/world", src);
 }
 
 export function checkCalculator(): PageCheckResult {
-  const src = readIfExists("app/calculator/page.tsx");
+  const src = readIfExists("app/(site)/calculator/page.tsx");
   return stub("calculator", "/calculator", src);
 }
 
 export function checkCompare(): PageCheckResult {
-  const src = readIfExists("app/compare/page.tsx");
+  const src = readIfExists("app/(site)/compare/page.tsx");
   return stub("compare", "/compare", src);
 }
 
 export function checkPricing(): PageCheckResult {
-  const src = readIfExists("app/pricing/page.tsx");
+  const src = readIfExists("app/(site)/pricing/page.tsx");
   return stub("pricing", "/pricing", src);
 }
 
 export function checkAboutData(): PageCheckResult {
-  const src = readIfExists("app/about-data/page.tsx");
+  const src = readIfExists("app/(site)/about-data/page.tsx");
   return stub("about-data", "/about-data", src);
 }
 
 export function checkBlog(): PageCheckResult {
-  const src = readIfExists("app/blog/[slug]/page.tsx");
+  const src = readIfExists("app/(site)/blog/[slug]/page.tsx");
   return stub("blog", "/blog/{slug}", src);
 }
 

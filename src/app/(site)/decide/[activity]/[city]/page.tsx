@@ -25,8 +25,8 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import neighborhoodsJson from "../../../../../data/cities/neighborhoods_v1.json";
-import cityListJson from "../../../../../data/cities/city_list_v1.json";
+import neighborhoodsJson from "../../../../../../data/cities/neighborhoods_v1.json";
+import cityListJson from "../../../../../../data/cities/city_list_v1.json";
 import industryMarginsJson from "@/lib/finance/industry_margins.json";
 import {
   slugToIndustry,

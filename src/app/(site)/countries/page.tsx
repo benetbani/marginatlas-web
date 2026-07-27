@@ -17,7 +17,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { COUNTRIES } from "@/lib/taxonomy";
 import { CountryFlag } from "@/components/CountryFlag";
-import cityListJson from "../../../data/cities/city_list_v1.json";
+import cityListJson from "../../../../data/cities/city_list_v1.json";
 
 export const revalidate = 86400;
 
