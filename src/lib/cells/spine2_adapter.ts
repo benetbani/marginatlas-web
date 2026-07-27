@@ -1090,8 +1090,41 @@ export function buildCellPage(cellFile: CellFile): CellPageModel {
     a: `Yes, in the revenue line. Be careful with it: platform commission runs near a third, so on a ${keptCents} per cent margin delivery orders can cost you money while looking like growth.`,
   });
 
-  /* ---- 21, where to go next: at launch nothing next carries a figure ---- */
-  const next: CellPageModel["next"] = null;
+  /* ---- 21, where to go next ----------------------------------------------
+     This was hardcoded null, on the reasoning that nothing next carries a
+     figure yet. That was over-cautious and it cost the page its whole outbound
+     lattice: measured on the real route, the `.av2` body emitted ZERO links to
+     another URL. All 27 outbound links came from the site chrome, so the page
+     the lattice thesis exists to prove was contributing nothing to it.
+
+     `figure` is `string | null`, so a tile without one is already legal, and
+     the mockup models exactly this: six tiles of which only TWO are anchors.
+     The other four carry peer figures ("Cafes in London, $25K kept") and are
+     deliberately NOT links, because those pages do not exist. That is the door
+     contract, M1: a door is a link, and the absence of one is a fact.
+
+     So we ship the two doors that genuinely resolve, and no figures, because
+     every figure the mockup shows here describes a page we have not built. A
+     count like "42 trades" would have to be verified before it could be
+     printed, and inventing it to fill a tile is the exact failure the whole
+     provenance system exists to prevent.
+
+     The other four tiles appear on their own when their cell files land. */
+  const nextDoors: NonNullable<CellPageModel["next"]> = [
+    {
+      glyph: "skyline",
+      label: `Every trade in ${cell.meta.city.name}`,
+      figure: null,
+      href: `/${cell.meta.country.slug}/${cell.meta.city.slug}`,
+    },
+    {
+      glyph: "global-spread",
+      label: `${cell.meta.country.name} overall`,
+      figure: null,
+      href: `/${cell.meta.country.slug}`,
+    },
+  ];
+  const next: CellPageModel["next"] = nextDoors.length ? nextDoors : null;
 
   const model: CellPageModel = {
     meta: {
