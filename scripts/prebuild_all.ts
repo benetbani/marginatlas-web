@@ -67,6 +67,11 @@ const GATES: Gate[] = [
      reached the reader from spine2_adapter.ts with 43 gates green. Scoped to the
      spine-2 surface; negative-tested 2026-07-27. */
   { name: "banned-vocabulary", script: "scripts/verify_banned_vocabulary.ts" },
+  /* Placeholder data lifted from the design mockups must never reach a reader.
+     It has the same shape and the same tier fields as real data, so a fixture
+     served publicly would look exactly like a page that cites its own
+     provenance while every number in it was invented. Negative-tested. */
+  { name: "no-fixture-in-routes", script: "scripts/verify_no_fixture_in_routes.ts" },
   { name: "no-hardcoded-hex", script: "scripts/verify_hardcoded_hex.ts" },
   { name: "dead-links", script: "scripts/audit/find_dead_links.ts", args: ["--strict"] },
   { name: "featured-tiles", script: "scripts/verify_featured_tiles.ts" },

@@ -1,0 +1,1023 @@
+{
+  "__fixture": true,
+  "__warning": "PLACEHOLDER DATA. Every number in this file was lifted from the frozen design mockup at design/mockups/city.html. The mockup's own footer calls its figures illustrative. Nothing here has been researched, sourced or reconciled, every figure is tiered thin, and none of it may ever be served to a reader. It exists so the city page contract, the adapter and the components can be built and tested against the exact shape and scale of the design. Real files live in data/cities/ and must be hand-filled with provenance.",
+
+  "meta": {
+    "schema": "city.spine2",
+    "schemaVersion": 1,
+    "id": "gb-london",
+    "country": { "slug": "gb", "name": "United Kingdom" },
+    "city": { "slug": "london", "name": "London" },
+    "urlPath": "/gb/london",
+    "currency": {
+      "display": "USD",
+      "native": "GBP",
+      "usdPerGbp": 1.3315,
+      "rateAsOf": "2026-07-24",
+      "rateBasis": "the design mockup states no exchange rate and prints only USD, so this rate is carried across from the trade file for London restaurants purely to keep the field valid. No figure in this fixture was converted with it and no figure here carries a native-currency value."
+    },
+    "freshness": "design mockup, frozen 2026-07",
+    "reviewedAt": "2026-07",
+    "provenance": {
+      "familyDocs": ["design/mockups/city.html"],
+      "freshnessWatch": [
+        "This file is a fixture. It has no freshness to watch and must be deleted or replaced before any city page ships from it."
+      ]
+    }
+  },
+
+  "hero": {
+    "headline": {
+      "value": 22000,
+      "unit": "USD/yr per resident",
+      "tier": "thin",
+      "basis": "the mockup's headline answer, printed as 22K spent per resident a year; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07",
+      "notes": "Same figure as scorecard.spendPerResident. A real file must render both from one field."
+    },
+    "headlineLabel": "spent per resident a year, the money a high-street trade competes for",
+    "businessClimateRank": {
+      "rank": 8,
+      "of": 40,
+      "unit": "place among ranked cities",
+      "tier": "thin",
+      "basis": "the mockup's hero sub-line, printed as 8th of 40 cities; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07"
+    }
+  },
+
+  "scorecard": {
+    "baselineLabel": "UK city average",
+    "spendPerResident": {
+      "label": "Spend per resident",
+      "sub": "a year",
+      "position": 82,
+      "figure": {
+        "value": 22000,
+        "unit": "USD/yr per resident",
+        "tier": "thin",
+        "basis": "the mockup's scorecard row, printed as 22K; lifted from the design and not researched",
+        "freshness": "design mockup, frozen 2026-07"
+      }
+    },
+    "medianPay": {
+      "label": "Median pay",
+      "sub": "take-home",
+      "position": 64,
+      "figure": {
+        "value": 47000,
+        "unit": "USD/yr",
+        "tier": "thin",
+        "basis": "the mockup's scorecard row, printed as 47K; lifted from the design and not researched",
+        "freshness": "design mockup, frozen 2026-07",
+        "notes": "The mockup labels this take-home here, median earner in the hero, and puts the same 47K on the middle-earner row of the income spread, which is drawn on an axis reaching 350K. Whether the page means pay before or after tax is unresolved in the design."
+      }
+    },
+    "costOfLiving": {
+      "label": "Cost of living",
+      "sub": "vs UK",
+      "position": 78,
+      "figure": {
+        "value": 1.3,
+        "unit": "x the country",
+        "tier": "thin",
+        "basis": "the mockup's scorecard row, printed as 1.3x; lifted from the design and not researched",
+        "freshness": "design mockup, frozen 2026-07"
+      }
+    },
+    "commercialRent": {
+      "label": "Commercial rent",
+      "sub": "vs UK",
+      "position": 92,
+      "figure": {
+        "value": 2.1,
+        "unit": "x the country",
+        "tier": "thin",
+        "basis": "the mockup's scorecard row, printed as 2.1x; lifted from the design and not researched",
+        "freshness": "design mockup, frozen 2026-07",
+        "notes": "Rendered in three places in the mockup: the hero glance, this row, and the closing band."
+      }
+    },
+    "visitors": {
+      "label": "Visitors",
+      "sub": "a year",
+      "position": 86,
+      "figure": {
+        "value": 21000000,
+        "unit": "visitors/yr",
+        "tier": "thin",
+        "basis": "the mockup's scorecard row, printed as 21M; lifted from the design and not researched",
+        "freshness": "design mockup, frozen 2026-07"
+      }
+    },
+    "unemployment": {
+      "label": "Unemployment",
+      "position": 38,
+      "figure": {
+        "value": 4.2,
+        "unit": "%",
+        "tier": "thin",
+        "basis": "the mockup's scorecard row, printed as 4.2 percent; lifted from the design and not researched",
+        "freshness": "design mockup, frozen 2026-07"
+      }
+    },
+    "businessClimate": {
+      "label": "Business climate",
+      "sub": "of 100",
+      "position": 70,
+      "figure": {
+        "value": 72,
+        "unit": "score of 100",
+        "tier": "thin",
+        "basis": "the mockup's scorecard row, printed as 72; lifted from the design and not researched",
+        "freshness": "design mockup, frozen 2026-07"
+      }
+    }
+  },
+
+  "incomeAndWealth": {
+    "topTenthVsMiddle": {
+      "value": 2.8,
+      "unit": "x the middle earner",
+      "tier": "thin",
+      "basis": "the mockup's panel headline; it restates the top-tenth median against the middle-earner median from the spread beside it",
+      "freshness": "design mockup, frozen 2026-07"
+    },
+    "spread": {
+      "rows": [
+        { "label": "Middle earner", "lo": 30000, "median": 47000, "hi": 68000 },
+        { "label": "Top 10%", "lo": 95000, "median": 130000, "hi": 180000 },
+        { "label": "Top 1%", "lo": 240000, "median": 350000, "hi": 400000 }
+      ],
+      "axis": { "lo": 20000, "hi": 400000, "ticks": [20000, 50000, 100000, 400000] },
+      "unit": "USD/yr",
+      "tier": "thin",
+      "basis": "the three dumbbells and the log axis drawn in the mockup; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07"
+    },
+    "paidByCard": {
+      "value": 86,
+      "unit": "% of payments",
+      "tier": "thin",
+      "basis": "the mockup's customer block, printed as 86 percent paid by card; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07"
+    }
+  },
+
+  "visitors": {
+    "monthlyIndex": {
+      "series": [
+        { "x": "Jan", "value": 64 },
+        { "x": "Feb", "value": 66 },
+        { "x": "Mar", "value": 77 },
+        { "x": "Apr", "value": 91 },
+        { "x": "May", "value": 106 },
+        { "x": "Jun", "value": 124 },
+        { "x": "Jul", "value": 143 },
+        { "x": "Aug", "value": 147 },
+        { "x": "Sep", "value": 114 },
+        { "x": "Oct", "value": 91 },
+        { "x": "Nov", "value": 77 },
+        { "x": "Dec", "value": 99 }
+      ],
+      "unit": "index, 100 = the year average",
+      "tier": "thin",
+      "basis": "the twelve bar heights drawn in the mockup; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07",
+      "notes": "The twelve values average 99.9, so the drawn baseline at 100 is the year average as the chart claims."
+    },
+    "count": {
+      "value": 21000000,
+      "unit": "visitors/yr",
+      "tier": "thin",
+      "basis": "the mockup's figure cluster, printed as 21M visitors a year; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07"
+    },
+    "spend": {
+      "value": 53000000000,
+      "unit": "USD/yr",
+      "tier": "thin",
+      "basis": "the mockup's figure cluster, printed as 53B spent here by visitors; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07"
+    },
+    "spendPerVisitor": {
+      "value": 2500,
+      "unit": "USD/visitor",
+      "tier": "thin",
+      "basis": "the mockup's figure cluster; it restates visitor spend over visitor count, which lands at 2,524",
+      "freshness": "design mockup, frozen 2026-07"
+    },
+    "shareOfCitySpend": {
+      "value": 20,
+      "unit": "% of all spend in the city",
+      "tier": "thin",
+      "basis": "the mockup's figure cluster, printed as 20 percent of all spend in the city; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07",
+      "notes": "This reconciles with the rest of the mockup: 9.7M residents at 22K each is 213B, plus 53B of visitor money, and 53B is 20 percent of the 266B total."
+    },
+    "topDistrict": {
+      "districtName": "West End",
+      "shareOfSpend": {
+        "value": null,
+        "reason": "the mockup says only that more than one dollar in two is a visitor's in the West End. That is a threshold, not a value, and no number can be read off the design without inventing one."
+      }
+    }
+  },
+
+  "people": {
+    "residents": {
+      "value": 9700000,
+      "unit": "residents",
+      "tier": "thin",
+      "basis": "the mockup's customer block and trust band, both printed as 9.7M residents; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07"
+    },
+    "wealthBands": {
+      "bands": [
+        { "label": "Struggling", "sharePct": 24, "households": 840000 },
+        { "label": "Getting by", "sharePct": 31, "households": 1090000 },
+        { "label": "Comfortable", "sharePct": 27, "households": 945000 },
+        { "label": "Well off", "sharePct": 12, "households": 420000 },
+        { "label": "Wealthy", "sharePct": 6, "households": 210000 }
+      ],
+      "unit": "% of households, and households",
+      "tier": "thin",
+      "basis": "the five segments of the mockup's wealth spread and its legend; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07",
+      "notes": "The shares sum to 100 and the counts sum to 3.505M households, and each count is that share of the total to within a rounding step, so the two readings agree."
+    },
+    "millionaireHouseholds": {
+      "value": 227000,
+      "unit": "households",
+      "tier": "thin",
+      "basis": "the mockup prints 227K millionaire households in both the customer block and the wealth figure row; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07",
+      "notes": "Sits above the 210,000 households in the mockup's own Wealthy band, so the two are counting different things or one of them is wrong."
+    },
+    "householdsOverThreshold": {
+      "threshold": {
+        "value": 150000,
+        "unit": "USD/yr",
+        "tier": "thin",
+        "basis": "the income line the mockup counts households above, printed as 150K; lifted from the design and not researched",
+        "freshness": "design mockup, frozen 2026-07"
+      },
+      "count": {
+        "value": 630000,
+        "unit": "households",
+        "tier": "thin",
+        "basis": "the mockup's wealth figure row, printed as 630K households over 150K; lifted from the design and not researched",
+        "freshness": "design mockup, frozen 2026-07",
+        "notes": "Exactly the Well off band plus the Wealthy band, 420,000 plus 210,000, so the design's bands and this count agree."
+      }
+    },
+    "belowPovertyLine": {
+      "value": 24,
+      "unit": "% below the poverty line",
+      "tier": "thin",
+      "basis": "the mockup's wealth figure row, printed as 24 percent below the poverty line; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07",
+      "notes": "The design does not say whether this counts people or households, and 24 is also the share of the mockup's Struggling band, so the two labels may be describing one group."
+    },
+    "typicalHouseholdSavings": {
+      "value": 8400,
+      "unit": "USD",
+      "tier": "thin",
+      "basis": "the mockup prints 8.4K as typical household savings in the figure row and again as the middle household on the savings scale; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07"
+    },
+    "topTenthSavings": {
+      "value": 74000,
+      "unit": "USD",
+      "tier": "thin",
+      "basis": "the top-tenth row of the mockup's savings scale, printed as 74K; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07"
+    },
+    "householdsUnderThinCushion": {
+      "threshold": {
+        "value": 1000,
+        "unit": "USD saved",
+        "tier": "thin",
+        "basis": "the savings line the mockup counts households below, printed as under 1,000 dollars; lifted from the design and not researched",
+        "freshness": "design mockup, frozen 2026-07"
+      },
+      "oneInEvery": {
+        "value": 3,
+        "unit": "one in every N households",
+        "tier": "thin",
+        "basis": "the mockup prints this as 1 in 3, and restates it in prose as a third of households; carried as the denominator so the page can print the design's own phrasing",
+        "freshness": "design mockup, frozen 2026-07"
+      }
+    },
+    "discretionary": {
+      "middleHousehold": {
+        "value": 4600,
+        "unit": "USD/yr",
+        "tier": "thin",
+        "basis": "the mockup's what-that-means block, printed as 4.6K of discretionary spend for the middle household; lifted from the design and not researched",
+        "freshness": "design mockup, frozen 2026-07"
+      },
+      "topTenth": {
+        "value": 31000,
+        "unit": "USD/yr",
+        "tier": "thin",
+        "basis": "the mockup's what-that-means block, printed as 31K of discretionary spend for the top tenth; lifted from the design and not researched",
+        "freshness": "design mockup, frozen 2026-07"
+      },
+      "shareOnHighStreet": {
+        "value": 38,
+        "unit": "% of discretionary spend",
+        "tier": "thin",
+        "basis": "the mockup's what-that-means block, printed as 38 percent spent on the high street; lifted from the design and not researched",
+        "freshness": "design mockup, frozen 2026-07"
+      }
+    },
+    "archetypes": {
+      "types": [
+        {
+          "key": "young-renters",
+          "name": "Young renters",
+          "sharePct": 18,
+          "spendingPowerLabel": "Low spare cash",
+          "tone": 2,
+          "incomeAfterTax": 34000,
+          "savings": 1200,
+          "ageRange": "22 to 30",
+          "tenure": "Renting, shared",
+          "buys": ["Coffee", "takeaway", "gyms", "nights out"],
+          "tradesThatIndexHigh": ["Cafes", "bars", "gyms"]
+        },
+        {
+          "key": "young-professionals",
+          "name": "Young professionals",
+          "icon": "hiring",
+          "sharePct": 15,
+          "spendingPowerLabel": "Good spare cash",
+          "tone": 3,
+          "incomeAfterTax": 58000,
+          "savings": 9000,
+          "ageRange": "27 to 38",
+          "tenure": "Renting alone",
+          "buys": ["Eating out", "fitness", "grooming"],
+          "tradesThatIndexHigh": ["Restaurants", "salons", "gyms"]
+        },
+        {
+          "key": "families-with-kids",
+          "name": "Families with kids",
+          "icon": "trade-childcare",
+          "sharePct": 17,
+          "spendingPowerLabel": "Squeezed",
+          "tone": 1,
+          "incomeAfterTax": 62000,
+          "savings": 6000,
+          "ageRange": "30 to 45",
+          "tenure": "Mortgaged",
+          "buys": ["Groceries", "childcare", "repairs"],
+          "tradesThatIndexHigh": ["Grocery", "childcare", "auto"]
+        },
+        {
+          "key": "established-owners",
+          "name": "Established owners",
+          "icon": "wealth-household",
+          "sharePct": 12,
+          "spendingPowerLabel": "High",
+          "tone": 3,
+          "incomeAfterTax": 95000,
+          "savings": 48000,
+          "ageRange": "45 to 60",
+          "tenure": "Owned outright",
+          "buys": ["Dining", "home", "services"],
+          "tradesThatIndexHigh": ["Restaurants", "retail", "dental"]
+        },
+        {
+          "key": "wealthy-households",
+          "name": "Wealthy households",
+          "icon": "bank",
+          "sharePct": 6,
+          "spendingPowerLabel": "Very high",
+          "tone": 4,
+          "accent": true,
+          "incomeAfterTax": 210000,
+          "savings": 180000,
+          "ageRange": "40 to 65",
+          "tenure": "Owned, prime",
+          "buys": ["Fine dining", "premium retail"],
+          "tradesThatIndexHigh": ["Fine dining", "boutiques"]
+        },
+        {
+          "key": "retired-residents",
+          "name": "Retired residents",
+          "sharePct": 11,
+          "spendingPowerLabel": "Fixed",
+          "tone": 1,
+          "incomeAfterTax": 29000,
+          "savings": 32000,
+          "ageRange": "65 plus",
+          "tenure": "Owned outright",
+          "buys": ["Groceries", "pharmacy", "local"],
+          "tradesThatIndexHigh": ["Grocery", "pharmacy", "cafes"]
+        },
+        {
+          "key": "students",
+          "name": "Students",
+          "sharePct": 8,
+          "spendingPowerLabel": "Very low",
+          "tone": 0,
+          "incomeAfterTax": 14000,
+          "savings": 400,
+          "ageRange": "18 to 24",
+          "tenure": "Halls or shared",
+          "buys": ["Cheap food", "phone repair"],
+          "tradesThatIndexHigh": ["Takeaway", "barbers", "repair"]
+        },
+        {
+          "key": "recent-arrivals",
+          "name": "Recent arrivals",
+          "icon": "visa-permit",
+          "sharePct": 9,
+          "spendingPowerLabel": "Building",
+          "tone": 1,
+          "incomeAfterTax": 38000,
+          "savings": 2600,
+          "ageRange": "24 to 40",
+          "tenure": "Renting",
+          "buys": ["Groceries", "remittance", "transport"],
+          "tradesThatIndexHigh": ["Grocery", "barbers", "phone"]
+        },
+        {
+          "key": "shift-and-service",
+          "name": "Shift and service",
+          "icon": "staffing-rota",
+          "sharePct": 4,
+          "spendingPowerLabel": "Low",
+          "tone": 0,
+          "incomeAfterTax": 27000,
+          "savings": 900,
+          "ageRange": "25 to 50",
+          "tenure": "Renting",
+          "buys": ["Convenience", "late hours"],
+          "tradesThatIndexHigh": ["Convenience", "takeaway"]
+        }
+      ],
+      "unit": "% of households, with income and savings in USD",
+      "tier": "thin",
+      "basis": "the nine population types the mockup carries in its own script, with their shares, incomes, savings, ages and tenure; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07",
+      "notes": "The nine shares sum to 100, and the Wealthy households share of 6 matches the Wealthy band in the wealth spread. Tone is the ramp step the mockup paints each type with, carried here rather than re-derived from the label."
+    }
+  },
+
+  "spaceCosts": {
+    "costSplit": {
+      "series": [
+        { "x": "Rent", "value": 44 },
+        { "x": "Business rates", "value": 22 },
+        { "x": "Fit-out, spread", "value": 18 },
+        { "x": "Service charge", "value": 16 }
+      ],
+      "unit": "USD per 100 USD of a unit's yearly cost",
+      "tier": "thin",
+      "basis": "the four segments of the mockup's column split, which sum to 100; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07"
+    },
+    "sizes": {
+      "small": {
+        "label": "Small",
+        "description": "a kiosk",
+        "floorAreaSqm": {
+          "value": 40,
+          "unit": "sqm",
+          "tier": "thin",
+          "basis": "the mockup's small unit row, printed as 40 square metres; lifted from the design and not researched",
+          "freshness": "design mockup, frozen 2026-07"
+        },
+        "annualCost": {
+          "value": 34000,
+          "unit": "USD/yr",
+          "tier": "thin",
+          "basis": "the mockup's small unit row, printed as 34K a year. The design does not say whether this is rent alone or the full cost of standing there.",
+          "freshness": "design mockup, frozen 2026-07"
+        }
+      },
+      "medium": {
+        "label": "Medium",
+        "description": "a shop",
+        "floorAreaSqm": {
+          "value": 90,
+          "unit": "sqm",
+          "tier": "thin",
+          "basis": "the mockup's medium unit row, printed as 90 square metres; lifted from the design and not researched",
+          "freshness": "design mockup, frozen 2026-07"
+        },
+        "annualCost": {
+          "value": 71000,
+          "unit": "USD/yr",
+          "tier": "thin",
+          "basis": "the mockup's medium unit row, printed as 71K a year. The design does not say whether this is rent alone or the full cost of standing there.",
+          "freshness": "design mockup, frozen 2026-07"
+        }
+      },
+      "large": {
+        "label": "Large",
+        "description": "a big room",
+        "floorAreaSqm": {
+          "value": 180,
+          "unit": "sqm",
+          "tier": "thin",
+          "basis": "the mockup's large unit row, printed as 180 square metres; lifted from the design and not researched",
+          "freshness": "design mockup, frozen 2026-07"
+        },
+        "annualCost": {
+          "value": 132000,
+          "unit": "USD/yr",
+          "tier": "thin",
+          "basis": "the mockup's large unit row, printed as 132K a year. The design does not say whether this is rent alone or the full cost of standing there.",
+          "freshness": "design mockup, frozen 2026-07"
+        }
+      }
+    },
+    "anchorTrade": {
+      "tradeSlug": "restaurants",
+      "tradeName": "Restaurant",
+      "floorAreaSqm": {
+        "value": 100,
+        "unit": "sqm",
+        "tier": "thin",
+        "basis": "the mockup's closing sentence, which sends the reader to the restaurant page for a room of about 100 square metres",
+        "freshness": "design mockup, frozen 2026-07",
+        "notes": "Agrees with the modelled room in the trade file for London restaurants, which is 100 square metres."
+      },
+      "demandPerDay": {
+        "value": 52,
+        "unit": "orders/day",
+        "tier": "thin",
+        "basis": "the mockup's closing sentence, printed as a restaurant doing 52 orders a day",
+        "freshness": "design mockup, frozen 2026-07",
+        "notes": "Agrees with the modelled room in the trade file for London restaurants, which assumes 52 orders a day."
+      },
+      "annualSpaceCost": {
+        "value": 80000,
+        "unit": "USD/yr",
+        "tier": "thin",
+        "basis": "the mockup's closing sentence, printed as paying near 80K a year for that room",
+        "freshness": "design mockup, frozen 2026-07",
+        "notes": "Agrees with the trade file for London restaurants, whose modelled room pays 80,414 for rent and rates together. A real city file must read this from that file rather than author it."
+      }
+    },
+    "note": "The quoted rent is the top third of the trade. The rooms that pay their owner mostly signed for less, on a quieter street."
+  },
+
+  "tradeEconomics": {
+    "trades": {
+      "trades": [
+        { "tradeSlug": "auto-repair", "tradeName": "Auto repair", "revenue": 390000, "ownerKeeps": 47000, "costToOpen": 140000 },
+        { "tradeSlug": "restaurants", "tradeName": "Restaurant", "revenue": 620000, "ownerKeeps": 43000, "costToOpen": 197000 },
+        { "tradeSlug": "gyms", "tradeName": "Gym", "revenue": 430000, "ownerKeeps": 39000, "costToOpen": 160000 },
+        { "tradeSlug": "cafes", "tradeName": "Cafe", "revenue": 310000, "ownerKeeps": 25000, "costToOpen": 95000 },
+        { "tradeSlug": "hair-salons", "tradeName": "Hair salon", "revenue": 180000, "ownerKeeps": 25000, "costToOpen": 70000 },
+        { "tradeSlug": "grocery-stores", "tradeName": "Grocery store", "revenue": 780000, "ownerKeeps": 23000, "costToOpen": 250000 }
+      ],
+      "unit": "USD/yr, and USD to open",
+      "tier": "thin",
+      "basis": "the six trades the mockup draws on its slope chart and lists in the table behind it; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07",
+      "notes": "The restaurant row nearly matches the trade file for London restaurants on revenue (618,488) and on what the owner keeps (43,284), but not on what it costs to open: this mockup says 197K, that file says 231,134. A real city file must read every row from the trade's own file. The mockup's slope chart also shortens Grocery store to Grocery."
+    }
+  },
+
+  "districts": {
+    "unitPriced": "a high-street unit. The design mockup does not state its floor area, so what is being priced across districts is not defined; the implied cost at the city rate, about 37K a year, matches no row in the size table in chapter 06.",
+    "list": {
+      "districts": [
+        {
+          "slug": "brixton",
+          "name": "Brixton",
+          "rentMultiple": 1.1,
+          "blurb": "Young, loud, independent. The cheapest way onto a real high street.",
+          "icon": "high-street",
+          "annualUnitCost": {
+            "value": 41000,
+            "unit": "USD/yr",
+            "tier": "thin",
+            "basis": "the lightest row of the mockup's three-district panel, printed as 41K a year; lifted from the design and not researched",
+            "freshness": "design mockup, frozen 2026-07"
+          }
+        },
+        {
+          "slug": "hackney",
+          "name": "Hackney",
+          "rentMultiple": 1.3,
+          "blurb": "Creative money, brunch and salons. Rent rising fast.",
+          "icon": "trade-salon",
+          "annualUnitCost": {
+            "value": null,
+            "reason": "the mockup prices the same unit in only three of its six districts, and Hackney is not one of them"
+          }
+        },
+        {
+          "slug": "shoreditch",
+          "name": "Shoreditch",
+          "rentMultiple": 1.6,
+          "blurb": "Bars and small plates, thin by day, packed by night.",
+          "icon": "trade-bar",
+          "annualUnitCost": {
+            "value": 60000,
+            "unit": "USD/yr",
+            "tier": "thin",
+            "basis": "the middle row of the mockup's three-district panel, printed as 60K a year; lifted from the design and not researched",
+            "freshness": "design mockup, frozen 2026-07"
+          }
+        },
+        {
+          "slug": "canary-wharf",
+          "name": "Canary Wharf",
+          "rentMultiple": 1.9,
+          "blurb": "Weekday lunch money, dead at the weekend.",
+          "icon": "wages",
+          "annualUnitCost": {
+            "value": null,
+            "reason": "the mockup prices the same unit in only three of its six districts, and Canary Wharf is not one of them"
+          }
+        },
+        {
+          "slug": "covent-garden",
+          "name": "Covent Garden",
+          "rentMultiple": 2.2,
+          "blurb": "Tourists all year. Footfall you pay dearly for.",
+          "icon": "tourist",
+          "annualUnitCost": {
+            "value": null,
+            "reason": "the mockup prices the same unit in only three of its six districts, and Covent Garden is not one of them"
+          }
+        },
+        {
+          "slug": "mayfair",
+          "name": "Mayfair",
+          "rentMultiple": 2.6,
+          "blurb": "Wealth and expense accounts. Fine dining or nothing.",
+          "icon": "trade-restaurant",
+          "annualUnitCost": {
+            "value": 97000,
+            "unit": "USD/yr",
+            "tier": "thin",
+            "basis": "the heaviest row of the mockup's three-district panel, printed as 97K a year; lifted from the design and not researched",
+            "freshness": "design mockup, frozen 2026-07"
+          }
+        }
+      ],
+      "unit": "x the city rate, with the priced unit in USD/yr",
+      "tier": "thin",
+      "basis": "the six districts the mockup ranks by rent and describes on cards; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07",
+      "notes": "The mockup renders this one list twice, as a rent scale in chapter 08 and as character cards in chapter 10, with the same six multiples in both. The three priced districts imply a city-rate cost of about 37.3K, which is consistent across all three."
+    }
+  },
+
+  "tradeFit": {
+    "grid": {
+      "rows": [
+        {
+          "tradeSlug": "restaurants",
+          "tradeName": "Restaurant",
+          "fits": [
+            { "districtSlug": "brixton", "level": "weak" },
+            { "districtSlug": "hackney", "level": "good" },
+            { "districtSlug": "shoreditch", "level": "best" },
+            { "districtSlug": "canary-wharf", "level": "good" },
+            { "districtSlug": "covent-garden", "level": "good" },
+            { "districtSlug": "mayfair", "level": "weak" }
+          ]
+        },
+        {
+          "tradeSlug": "cafes",
+          "tradeName": "Cafe",
+          "fits": [
+            { "districtSlug": "brixton", "level": "good" },
+            { "districtSlug": "hackney", "level": "best" },
+            { "districtSlug": "shoreditch", "level": "good" },
+            { "districtSlug": "canary-wharf", "level": "good" },
+            { "districtSlug": "covent-garden", "level": "weak" },
+            { "districtSlug": "mayfair", "level": "weak" }
+          ]
+        },
+        {
+          "tradeSlug": "hair-salons",
+          "tradeName": "Hair salon",
+          "fits": [
+            { "districtSlug": "brixton", "level": "good" },
+            { "districtSlug": "hackney", "level": "best" },
+            { "districtSlug": "shoreditch", "level": "good" },
+            { "districtSlug": "canary-wharf", "level": "weak" },
+            { "districtSlug": "covent-garden", "level": "weak" },
+            { "districtSlug": "mayfair", "level": "good" }
+          ]
+        },
+        {
+          "tradeSlug": "gyms",
+          "tradeName": "Gym",
+          "fits": [
+            { "districtSlug": "brixton", "level": "best" },
+            { "districtSlug": "hackney", "level": "good" },
+            { "districtSlug": "shoreditch", "level": "good" },
+            { "districtSlug": "canary-wharf", "level": "good" },
+            { "districtSlug": "covent-garden", "level": "weak" },
+            { "districtSlug": "mayfair", "level": "weak" }
+          ]
+        },
+        {
+          "tradeSlug": "grocery-stores",
+          "tradeName": "Grocery",
+          "fits": [
+            { "districtSlug": "brixton", "level": "best" },
+            { "districtSlug": "hackney", "level": "good" },
+            { "districtSlug": "shoreditch", "level": "weak" },
+            { "districtSlug": "canary-wharf", "level": "good" },
+            { "districtSlug": "covent-garden", "level": "weak" },
+            { "districtSlug": "mayfair", "level": "weak" }
+          ]
+        },
+        {
+          "tradeSlug": "bars",
+          "tradeName": "Bar",
+          "fits": [
+            { "districtSlug": "brixton", "level": "weak" },
+            { "districtSlug": "hackney", "level": "good" },
+            { "districtSlug": "shoreditch", "level": "best" },
+            { "districtSlug": "canary-wharf", "level": "weak" },
+            { "districtSlug": "covent-garden", "level": "good" },
+            { "districtSlug": "mayfair", "level": "good" }
+          ]
+        }
+      ],
+      "unit": "fit level per trade and district",
+      "tier": "thin",
+      "basis": "the six by six dot grid the mockup draws, read as best for the accent dot, good for the mid dot and weak for the empty dot; the design itself calls this our judgement",
+      "freshness": "design mockup, frozen 2026-07",
+      "notes": "The six trades here are not the six in chapter 07: this grid carries Bar and drops Auto repair. A real file should either reconcile the two sets or state why they differ."
+    }
+  },
+
+  "direction": {
+    "rent": {
+      "label": "Rent",
+      "direction": "up",
+      "caption": "over ten years",
+      "changePct": {
+        "value": 18,
+        "unit": "% over ten years",
+        "tier": "thin",
+        "basis": "the mockup's trend tile, printed as plus 18 percent over ten years; lifted from the design and not researched",
+        "freshness": "design mockup, frozen 2026-07"
+      },
+      "spark": {
+        "value": null,
+        "reason": "the mockup draws this sparkline from hand-placed coordinates rather than from a stated series, so there are no values to lift"
+      }
+    },
+    "footfall": {
+      "label": "Footfall",
+      "direction": "up",
+      "caption": "recovering",
+      "changePct": {
+        "value": 6,
+        "unit": "%",
+        "tier": "thin",
+        "basis": "the mockup's trend tile, printed as plus 6 percent. The design states no horizon for this one, unlike the rent tile.",
+        "freshness": "design mockup, frozen 2026-07"
+      },
+      "spark": {
+        "value": null,
+        "reason": "the mockup draws this sparkline from hand-placed coordinates rather than from a stated series, so there are no values to lift"
+      }
+    },
+    "emptyUnits": {
+      "label": "Empty units",
+      "direction": "down",
+      "caption": "fewer vacancies",
+      "changePct": {
+        "value": -22,
+        "unit": "%",
+        "tier": "thin",
+        "basis": "the mockup's trend tile, printed as minus 22 percent. The design states no horizon for this one, unlike the rent tile.",
+        "freshness": "design mockup, frozen 2026-07"
+      },
+      "spark": {
+        "value": null,
+        "reason": "the mockup draws this sparkline from hand-placed coordinates rather than from a stated series, so there are no values to lift"
+      }
+    },
+    "population": {
+      "label": "Population",
+      "direction": "up",
+      "caption": "still growing",
+      "changePct": {
+        "value": 9,
+        "unit": "%",
+        "tier": "thin",
+        "basis": "the mockup's trend tile, printed as plus 9 percent. The design states no horizon for this one, unlike the rent tile.",
+        "freshness": "design mockup, frozen 2026-07"
+      },
+      "spark": {
+        "value": null,
+        "reason": "the mockup draws this sparkline from hand-placed coordinates rather than from a stated series, so there are no values to lift"
+      }
+    }
+  },
+
+  "myths": {
+    "primary": {
+      "claim": "London is where the money is.",
+      "reality": "It is where the revenue is. A London restaurant takes $620K against Manchester's $380K, and its owner ends up with about the same.",
+      "tier": "thin",
+      "basis": "the claim and the correction the mockup prints side by side; both lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07"
+    },
+    "note": "The extra money crossing the till in London is spent almost entirely on the rent and wages needed to take it. Size of market and size of margin are different questions, and only one of them pays you.",
+    "tradeAgainstPeer": {
+      "tradeSlug": "restaurants",
+      "tradeName": "Restaurant",
+      "here": { "revenue": 620000, "ownerKeeps": 43000 },
+      "peer": { "city": "Manchester", "citySlug": "manchester", "revenue": 380000, "ownerKeeps": 41000 },
+      "unit": "USD/yr",
+      "tier": "thin",
+      "basis": "the six-row comparison block beside the myth; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07",
+      "notes": "The block's last two rows, plus 63 percent of revenue and plus 5 percent kept, are both derived from these four numbers and are not stored. The Manchester pair has no file behind it: the trade file for London restaurants explicitly refuses its own Manchester comparison for want of a source, so this pair is ungrounded in the same way."
+    }
+  },
+
+  "peers": {
+    "rent": {
+      "cities": [
+        { "city": "Manchester", "citySlug": "manchester", "rentVsThisCityPct": -54 },
+        { "city": "Berlin", "citySlug": "berlin", "rentVsThisCityPct": -38 },
+        { "city": "Paris", "citySlug": "paris", "rentVsThisCityPct": -22 },
+        { "city": "Amsterdam", "citySlug": "amsterdam", "rentVsThisCityPct": -18 },
+        { "city": "Dublin", "citySlug": "dublin", "rentVsThisCityPct": -12 },
+        { "city": "London", "citySlug": "london", "rentVsThisCityPct": 0 }
+      ],
+      "unit": "% commercial rent against this city",
+      "tier": "thin",
+      "basis": "the six markers on the mockup's peer strip, where this city sits at zero and prints as level; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07",
+      "notes": "The drawn axis runs from minus 62 to plus 6, which is padding around the markers and is not carried as data."
+    }
+  },
+
+  "watch": {
+    "pressures": {
+      "pressures": [
+        {
+          "label": "Rent reviews",
+          "severity": 100,
+          "change": {
+            "value": 1.4,
+            "unit": "x the previous rent at review",
+            "tier": "thin",
+            "basis": "the mockup's pressure scale, printed as 1.4 times; lifted from the design and not researched",
+            "freshness": "design mockup, frozen 2026-07"
+          }
+        },
+        {
+          "label": "Rates revaluation",
+          "severity": 74,
+          "change": {
+            "value": 9,
+            "unit": "%",
+            "tier": "thin",
+            "basis": "the mockup's pressure scale, printed as plus 9 percent; lifted from the design and not researched",
+            "freshness": "design mockup, frozen 2026-07"
+          }
+        },
+        {
+          "label": "Wage floor",
+          "severity": 68,
+          "change": {
+            "value": 6.7,
+            "unit": "%",
+            "tier": "thin",
+            "basis": "the mockup's pressure scale, printed as plus 6.7 percent; lifted from the design and not researched",
+            "freshness": "design mockup, frozen 2026-07"
+          }
+        },
+        {
+          "label": "Licensing hours",
+          "severity": 44,
+          "wordValue": "tighter",
+          "change": {
+            "value": null,
+            "reason": "the mockup prints the word tighter in this row rather than a number, so the design gives a direction and no magnitude"
+          }
+        }
+      ],
+      "unit": "severity 0 to 100, with each change in its own unit",
+      "tier": "thin",
+      "basis": "the four pressures the mockup ranks by how hard they bite, with the bar lengths read as severity; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07"
+    },
+    "localKnowledge": {
+      "lines": [
+        "The street behind the famous one carries much of the same footfall at a third of the rent.",
+        "A site that churned three tenants in five years is telling you something the rent card is not.",
+        "Weekday lunch never came back. Plan for three office days, not five."
+      ],
+      "tier": "thin",
+      "basis": "the three lines in the mockup's what-locals-know panel; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07"
+    }
+  },
+
+  "voices": {
+    "operators": {
+      "quotes": [
+        {
+          "quote": "I moved one street back from the main road and my rent halved. The customers barely noticed.",
+          "trade": "Cafe",
+          "district": "Hackney",
+          "pull": {
+            "value": -50,
+            "unit": "% change in rent",
+            "tier": "thin",
+            "basis": "the figure the mockup sets beside this quote; the quote itself says the rent halved, so the unit is read from the words",
+            "freshness": "design mockup, frozen 2026-07"
+          }
+        },
+        {
+          "quote": "Tourists kept us alive through the winter, but you cannot build a whole business on a summer.",
+          "trade": "Restaurant",
+          "district": "Covent Garden",
+          "pull": {
+            "value": 55,
+            "unit": "%",
+            "tier": "thin",
+            "basis": "the figure the mockup sets beside this quote. The design prints it as a bare percentage and never says what it is a share of, so only the number and the percent sign can be lifted.",
+            "freshness": "design mockup, frozen 2026-07",
+            "notes": "Unresolved. A real file must state what this measures or drop it."
+          }
+        },
+        {
+          "quote": "The rates revaluation added twelve grand overnight. Nobody budgets for the thing that is not the rent.",
+          "trade": "Retail",
+          "district": "Islington",
+          "pull": {
+            "value": 12000,
+            "unit": "USD/yr",
+            "tier": "thin",
+            "basis": "the figure the mockup sets beside this quote; the quote itself says twelve grand added, so the unit is read from the words",
+            "freshness": "design mockup, frozen 2026-07"
+          }
+        }
+      ],
+      "tier": "thin",
+      "basis": "the three operator quotes the mockup prints, with the trade and district each is attributed to; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07",
+      "notes": "Islington is not one of the six districts in chapter 10, so quote attributions are free text by design."
+    }
+  },
+
+  "verdict": {
+    "text": "London rewards the right ground more than the right trade. A restaurant takes $620K here against Manchester's $380K, and its owner keeps just $2K more. Moving the same unit from Brixton to Mayfair costs another $56K a year, more than that restaurant's owner keeps. The demand is deep; what varies is the price of standing in front of it.",
+    "chips": [
+      "$22K spent per resident",
+      "district rent runs x1.1 to x2.6",
+      "20% of spend is visitors'"
+    ]
+  },
+
+  "methodology": {
+    "rows": [
+      { "figure": "Rent by district", "tier": "measured", "how": "assessed rent, property by property" },
+      { "figure": "Median pay", "tier": "measured", "how": "published pay by role and region" },
+      { "figure": "Visitors and visitor spend", "tier": "measured", "how": "published visitor counts and spend" },
+      { "figure": "Household wealth bands", "tier": "built", "how": "income and wealth distributions, grouped" },
+      { "figure": "Spend per resident", "tier": "built", "how": "consumer spend over resident count" },
+      { "figure": "What owners keep, by trade", "tier": "built", "how": "the cost stack, run per trade" },
+      { "figure": "Population types", "tier": "thin", "how": "grouped archetypes, shares are estimates" },
+      { "figure": "Best area for each trade", "tier": "thin", "how": "rent against passing trade, our judgement" }
+    ]
+  },
+
+  "remember": {
+    "text": "Deep money and deep demand, priced accordingly. In London the lease decides more than the concept does, so pick the street before the menu.",
+    "figure": {
+      "value": 2.1,
+      "unit": "x the country",
+      "tier": "thin",
+      "basis": "the closing band restates the commercial rent multiple printed in the hero and in the scorecard; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07"
+    },
+    "figureLabel": "the UK rent, for the same room",
+    "figureSource": "scorecard.commercialRent"
+  },
+
+  "next": {
+    "tiles": [
+      { "kind": "trade", "slug": "restaurants", "label": "Restaurants in London", "gloss": "$43K kept", "icon": "trade-restaurant", "href": "/gb/london/restaurants" },
+      { "kind": "trade", "slug": "cafes", "label": "Cafes in London", "gloss": "$25K kept", "icon": "trade-cafe" },
+      { "kind": "trade", "slug": "hair-salons", "label": "Salons in London", "gloss": "$25K kept", "icon": "trade-salon" },
+      { "kind": "districts", "slug": "districts", "label": "Every district", "gloss": "6 ranked", "icon": "neighborhood" },
+      { "kind": "city", "slug": "manchester", "label": "Manchester", "gloss": "$15K per head", "icon": "skyline" },
+      { "kind": "country", "slug": "gb", "label": "The UK overall", "gloss": "$36 in every $100", "icon": "vs-world", "href": "/gb" }
+    ]
+  }
+}

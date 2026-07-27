@@ -1,0 +1,1067 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://marginatlas.com/schemas/city.spine2.schema.json",
+  "title": "Margin Atlas spine-2 city data file",
+  "description": "Typed per-city data file behind one city page (hero plus seventeen numbered chapters, a closing band and a trust band). Every figure carries a tier (measured/built/thin), a user-facing-safe basis, freshness, and its native-currency value alongside USD at one pinned rate. A page is always complete: every chapter is required, and a chapter with nothing behind it holds an explicit null figure carrying its reason. City figures describe the ground; trade figures (chapters 06, 07, 12 and 18) must be read from the trade's own cell file.",
+  "type": "object",
+  "required": [
+    "meta",
+    "hero",
+    "scorecard",
+    "incomeAndWealth",
+    "visitors",
+    "people",
+    "spaceCosts",
+    "tradeEconomics",
+    "districts",
+    "tradeFit",
+    "direction",
+    "myths",
+    "peers",
+    "watch",
+    "voices",
+    "verdict",
+    "methodology",
+    "remember",
+    "next"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "tier": { "type": "string", "enum": ["measured", "built", "thin"] },
+    "sourceRef": {
+      "type": "object",
+      "required": ["name", "year"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "dataset": { "type": "string" },
+        "year": { "type": ["integer", "string"] }
+      },
+      "additionalProperties": false
+    },
+    "figureMeta": {
+      "type": "object",
+      "required": ["unit", "tier", "basis", "freshness"],
+      "properties": {
+        "unit": { "type": "string", "minLength": 1 },
+        "tier": { "$ref": "#/definitions/tier" },
+        "basis": { "type": "string", "minLength": 10 },
+        "sources": { "type": "array", "items": { "$ref": "#/definitions/sourceRef" }, "minItems": 1 },
+        "freshness": { "type": "string", "minLength": 1 },
+        "falsifier": { "type": "string" },
+        "fromModel": { "type": "boolean" },
+        "notes": { "type": "string" }
+      }
+    },
+    "proseFigureMeta": {
+      "type": "object",
+      "required": ["tier", "basis", "freshness"],
+      "properties": {
+        "tier": { "$ref": "#/definitions/tier" },
+        "basis": { "type": "string", "minLength": 10 },
+        "sources": { "type": "array", "items": { "$ref": "#/definitions/sourceRef" }, "minItems": 1 },
+        "freshness": { "type": "string", "minLength": 1 },
+        "falsifier": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    },
+    "pointFigure": {
+      "allOf": [
+        { "$ref": "#/definitions/figureMeta" },
+        {
+          "type": "object",
+          "required": ["value"],
+          "properties": {
+            "value": { "type": "number" },
+            "gbp": { "type": "number" }
+          }
+        }
+      ]
+    },
+    "rangeFigure": {
+      "allOf": [
+        { "$ref": "#/definitions/figureMeta" },
+        {
+          "type": "object",
+          "required": ["lo", "hi"],
+          "properties": {
+            "lo": { "type": "number" },
+            "hi": { "type": "number" },
+            "taken": { "type": "number" },
+            "gbp": {
+              "type": "object",
+              "required": ["lo", "hi"],
+              "properties": {
+                "lo": { "type": "number" },
+                "hi": { "type": "number" },
+                "taken": { "type": "number" }
+              },
+              "additionalProperties": false
+            }
+          }
+        }
+      ]
+    },
+    "seriesFigure": {
+      "allOf": [
+        { "$ref": "#/definitions/figureMeta" },
+        {
+          "type": "object",
+          "required": ["series"],
+          "properties": {
+            "series": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": ["x", "value"],
+                "properties": {
+                  "x": { "type": ["number", "string"] },
+                  "value": { "type": "number" }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "claimFigure": {
+      "allOf": [
+        { "$ref": "#/definitions/proseFigureMeta" },
+        {
+          "type": "object",
+          "required": ["claim", "reality"],
+          "properties": {
+            "claim": { "type": "string", "minLength": 1 },
+            "reality": { "type": "string", "minLength": 1 }
+          }
+        }
+      ]
+    },
+    "nullFigure": {
+      "type": "object",
+      "required": ["value", "reason"],
+      "properties": {
+        "value": { "type": "null" },
+        "reason": { "type": "string", "minLength": 10 },
+        "proxy": {
+          "oneOf": [
+            { "$ref": "#/definitions/pointFigure" },
+            { "$ref": "#/definitions/rangeFigure" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "pointOrNull": {
+      "oneOf": [
+        { "$ref": "#/definitions/pointFigure" },
+        { "$ref": "#/definitions/nullFigure" }
+      ]
+    },
+    "seriesOrNull": {
+      "oneOf": [
+        { "$ref": "#/definitions/seriesFigure" },
+        { "$ref": "#/definitions/nullFigure" }
+      ]
+    },
+    "rankFigure": {
+      "allOf": [
+        { "$ref": "#/definitions/figureMeta" },
+        {
+          "type": "object",
+          "required": ["rank", "of"],
+          "properties": {
+            "rank": { "type": "integer", "minimum": 1 },
+            "of": { "type": "integer", "minimum": 2 }
+          }
+        }
+      ]
+    },
+    "scorecardRow": {
+      "type": "object",
+      "required": ["label", "figure", "position"],
+      "properties": {
+        "label": { "type": "string", "minLength": 1 },
+        "sub": { "type": "string" },
+        "figure": { "$ref": "#/definitions/pointOrNull" },
+        "position": { "type": "number", "minimum": 0, "maximum": 100 }
+      },
+      "additionalProperties": false
+    },
+    "incomeBand": {
+      "type": "object",
+      "required": ["label", "lo", "median", "hi"],
+      "properties": {
+        "label": { "type": "string", "minLength": 1 },
+        "lo": { "type": "number" },
+        "median": { "type": "number" },
+        "hi": { "type": "number" }
+      },
+      "additionalProperties": false
+    },
+    "incomeSpreadFigure": {
+      "allOf": [
+        { "$ref": "#/definitions/figureMeta" },
+        {
+          "type": "object",
+          "required": ["rows"],
+          "properties": {
+            "rows": {
+              "type": "array",
+              "minItems": 2,
+              "description": "One dumbbell is not a spread; two rows is the floor.",
+              "items": { "$ref": "#/definitions/incomeBand" }
+            },
+            "axis": {
+              "type": "object",
+              "required": ["lo", "hi", "ticks"],
+              "properties": {
+                "lo": { "type": "number", "exclusiveMinimum": 0 },
+                "hi": { "type": "number", "exclusiveMinimum": 0 },
+                "ticks": { "type": "array", "minItems": 2, "items": { "type": "number" } }
+              },
+              "additionalProperties": false
+            }
+          }
+        }
+      ]
+    },
+    "wealthBand": {
+      "type": "object",
+      "required": ["label", "sharePct", "households"],
+      "properties": {
+        "label": { "type": "string", "minLength": 1 },
+        "sharePct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "households": { "type": "number", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "wealthBandsFigure": {
+      "allOf": [
+        { "$ref": "#/definitions/figureMeta" },
+        {
+          "type": "object",
+          "required": ["bands"],
+          "properties": {
+            "bands": {
+              "type": "array",
+              "minItems": 3,
+              "description": "Fewer than three bands is a split, not a spread.",
+              "items": { "$ref": "#/definitions/wealthBand" }
+            }
+          }
+        }
+      ]
+    },
+    "archetype": {
+      "type": "object",
+      "required": [
+        "key",
+        "name",
+        "sharePct",
+        "spendingPowerLabel",
+        "tone",
+        "incomeAfterTax",
+        "savings",
+        "ageRange",
+        "tenure",
+        "buys",
+        "tradesThatIndexHigh"
+      ],
+      "properties": {
+        "key": { "$ref": "#/definitions/slug" },
+        "name": { "type": "string", "minLength": 1 },
+        "icon": { "type": "string" },
+        "sharePct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "spendingPowerLabel": { "type": "string", "minLength": 1 },
+        "tone": { "type": "integer", "minimum": 0, "maximum": 4 },
+        "accent": { "type": "boolean" },
+        "incomeAfterTax": { "type": "number", "minimum": 0 },
+        "savings": { "type": "number", "minimum": 0 },
+        "ageRange": { "type": "string", "minLength": 1 },
+        "tenure": { "type": "string", "minLength": 1 },
+        "buys": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "tradesThatIndexHigh": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      },
+      "additionalProperties": false
+    },
+    "archetypesFigure": {
+      "allOf": [
+        { "$ref": "#/definitions/figureMeta" },
+        {
+          "type": "object",
+          "required": ["types"],
+          "properties": {
+            "types": {
+              "type": "array",
+              "minItems": 4,
+              "description": "The strip is a mix. Fewer than four types is a caricature of a city, not a mix.",
+              "items": { "$ref": "#/definitions/archetype" }
+            }
+          }
+        }
+      ]
+    },
+    "unitSize": {
+      "type": "object",
+      "required": ["label", "description", "floorAreaSqm", "annualCost"],
+      "properties": {
+        "label": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 },
+        "floorAreaSqm": { "$ref": "#/definitions/pointFigure" },
+        "annualCost": { "$ref": "#/definitions/pointOrNull" }
+      },
+      "additionalProperties": false
+    },
+    "anchorTrade": {
+      "type": "object",
+      "required": ["tradeSlug", "tradeName", "floorAreaSqm", "demandPerDay", "annualSpaceCost"],
+      "properties": {
+        "tradeSlug": { "$ref": "#/definitions/slug" },
+        "tradeName": { "type": "string", "minLength": 1 },
+        "floorAreaSqm": { "$ref": "#/definitions/pointFigure" },
+        "demandPerDay": { "$ref": "#/definitions/pointOrNull" },
+        "annualSpaceCost": { "$ref": "#/definitions/pointFigure" }
+      },
+      "additionalProperties": false
+    },
+    "tradeRow": {
+      "type": "object",
+      "required": ["tradeSlug", "tradeName", "revenue", "ownerKeeps", "costToOpen"],
+      "properties": {
+        "tradeSlug": { "$ref": "#/definitions/slug" },
+        "tradeName": { "type": "string", "minLength": 1 },
+        "revenue": { "type": "number", "minimum": 0 },
+        "ownerKeeps": { "type": "number" },
+        "costToOpen": { "type": ["number", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "tradeEconomicsFigure": {
+      "allOf": [
+        { "$ref": "#/definitions/figureMeta" },
+        {
+          "type": "object",
+          "required": ["trades"],
+          "properties": {
+            "trades": {
+              "type": "array",
+              "minItems": 3,
+              "description": "The slope exists to show lines crossing. Two lines cannot cross meaningfully.",
+              "items": { "$ref": "#/definitions/tradeRow" }
+            }
+          }
+        }
+      ]
+    },
+    "districtRow": {
+      "type": "object",
+      "required": ["slug", "name", "rentMultiple", "blurb", "annualUnitCost"],
+      "properties": {
+        "slug": { "$ref": "#/definitions/slug" },
+        "name": { "type": "string", "minLength": 1 },
+        "rentMultiple": { "type": "number", "exclusiveMinimum": 0 },
+        "blurb": { "type": "string", "minLength": 10 },
+        "icon": { "type": "string" },
+        "annualUnitCost": { "$ref": "#/definitions/pointOrNull" }
+      },
+      "additionalProperties": false
+    },
+    "districtsFigure": {
+      "allOf": [
+        { "$ref": "#/definitions/figureMeta" },
+        {
+          "type": "object",
+          "required": ["districts"],
+          "properties": {
+            "districts": {
+              "type": "array",
+              "minItems": 3,
+              "description": "A rent scale with two rows is a pair, not a scale.",
+              "items": { "$ref": "#/definitions/districtRow" }
+            }
+          }
+        }
+      ]
+    },
+    "tradeFitRow": {
+      "type": "object",
+      "required": ["tradeSlug", "tradeName", "fits"],
+      "properties": {
+        "tradeSlug": { "$ref": "#/definitions/slug" },
+        "tradeName": { "type": "string", "minLength": 1 },
+        "fits": {
+          "type": "array",
+          "minItems": 3,
+          "description": "One entry per district in districts.list, in that order, weak cells included.",
+          "items": {
+            "type": "object",
+            "required": ["districtSlug", "level"],
+            "properties": {
+              "districtSlug": { "$ref": "#/definitions/slug" },
+              "level": { "type": "string", "enum": ["best", "good", "weak"] }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "tradeFitFigure": {
+      "allOf": [
+        { "$ref": "#/definitions/figureMeta" },
+        {
+          "type": "object",
+          "required": ["rows"],
+          "properties": {
+            "rows": {
+              "type": "array",
+              "minItems": 3,
+              "description": "A grid of fewer than three trades reads as a list, not a grid.",
+              "items": { "$ref": "#/definitions/tradeFitRow" }
+            }
+          }
+        }
+      ]
+    },
+    "trend": {
+      "type": "object",
+      "required": ["label", "changePct", "direction", "caption", "spark"],
+      "properties": {
+        "label": { "type": "string", "minLength": 1 },
+        "changePct": { "$ref": "#/definitions/pointOrNull" },
+        "direction": { "type": "string", "enum": ["up", "down"] },
+        "caption": { "type": "string", "minLength": 1 },
+        "spark": { "$ref": "#/definitions/seriesOrNull" }
+      },
+      "additionalProperties": false
+    },
+    "tradeVersusPeerFigure": {
+      "allOf": [
+        { "$ref": "#/definitions/figureMeta" },
+        {
+          "type": "object",
+          "required": ["tradeSlug", "tradeName", "here", "peer"],
+          "properties": {
+            "tradeSlug": { "$ref": "#/definitions/slug" },
+            "tradeName": { "type": "string", "minLength": 1 },
+            "here": {
+              "type": "object",
+              "required": ["revenue", "ownerKeeps"],
+              "properties": {
+                "revenue": { "type": "number", "minimum": 0 },
+                "ownerKeeps": { "type": "number" }
+              },
+              "additionalProperties": false
+            },
+            "peer": {
+              "type": "object",
+              "required": ["city", "citySlug", "revenue", "ownerKeeps"],
+              "properties": {
+                "city": { "type": "string", "minLength": 1 },
+                "citySlug": { "$ref": "#/definitions/slug" },
+                "revenue": { "type": "number", "minimum": 0 },
+                "ownerKeeps": { "type": "number" }
+              },
+              "additionalProperties": false
+            }
+          }
+        }
+      ]
+    },
+    "peerRentRow": {
+      "type": "object",
+      "required": ["city", "citySlug", "rentVsThisCityPct"],
+      "properties": {
+        "city": { "type": "string", "minLength": 1 },
+        "citySlug": { "$ref": "#/definitions/slug" },
+        "rentVsThisCityPct": { "type": "number" }
+      },
+      "additionalProperties": false
+    },
+    "peerRentFigure": {
+      "allOf": [
+        { "$ref": "#/definitions/figureMeta" },
+        {
+          "type": "object",
+          "required": ["cities"],
+          "properties": {
+            "cities": {
+              "type": "array",
+              "minItems": 3,
+              "description": "This city plus at least two peers; one peer is an anecdote.",
+              "items": { "$ref": "#/definitions/peerRentRow" }
+            }
+          }
+        }
+      ]
+    },
+    "pressure": {
+      "type": "object",
+      "required": ["label", "severity", "change"],
+      "properties": {
+        "label": { "type": "string", "minLength": 1 },
+        "severity": { "type": "number", "minimum": 0, "maximum": 100 },
+        "change": { "$ref": "#/definitions/pointOrNull" },
+        "wordValue": {
+          "type": "string",
+          "description": "Printed in place of a number when change is a null figure."
+        }
+      },
+      "additionalProperties": false
+    },
+    "pressuresFigure": {
+      "allOf": [
+        { "$ref": "#/definitions/figureMeta" },
+        {
+          "type": "object",
+          "required": ["pressures"],
+          "properties": {
+            "pressures": {
+              "type": "array",
+              "minItems": 3,
+              "description": "Two pressures do not rank against each other on a scale.",
+              "items": { "$ref": "#/definitions/pressure" }
+            }
+          }
+        }
+      ]
+    },
+    "localKnowledgeFigure": {
+      "allOf": [
+        { "$ref": "#/definitions/proseFigureMeta" },
+        {
+          "type": "object",
+          "required": ["lines"],
+          "properties": {
+            "lines": {
+              "type": "array",
+              "minItems": 2,
+              "description": "The mockup prints three. A list of one is not a list; two is the floor so a thin city can ship without a padded third line.",
+              "items": { "type": "string", "minLength": 10 }
+            }
+          }
+        }
+      ]
+    },
+    "quote": {
+      "type": "object",
+      "required": ["quote", "trade", "district", "pull"],
+      "properties": {
+        "quote": { "type": "string", "minLength": 10 },
+        "trade": { "type": "string", "minLength": 1 },
+        "district": { "type": "string", "minLength": 1 },
+        "pull": { "$ref": "#/definitions/pointOrNull" }
+      },
+      "additionalProperties": false
+    },
+    "voicesFigure": {
+      "allOf": [
+        { "$ref": "#/definitions/proseFigureMeta" },
+        {
+          "type": "object",
+          "required": ["quotes"],
+          "properties": {
+            "quotes": {
+              "type": "array",
+              "minItems": 2,
+              "description": "A single quote reads as a testimonial. Two is the floor.",
+              "items": { "$ref": "#/definitions/quote" }
+            }
+          }
+        }
+      ]
+    },
+    "methodRow": {
+      "type": "object",
+      "required": ["figure", "tier", "how"],
+      "properties": {
+        "figure": { "type": "string", "minLength": 1 },
+        "tier": { "$ref": "#/definitions/tier" },
+        "how": { "type": "string", "minLength": 5 }
+      },
+      "additionalProperties": false
+    },
+    "nextTile": {
+      "type": "object",
+      "required": ["kind", "slug", "label", "gloss"],
+      "properties": {
+        "kind": { "type": "string", "enum": ["trade", "districts", "city", "country"] },
+        "slug": { "$ref": "#/definitions/slug" },
+        "label": { "type": "string", "minLength": 1 },
+        "gloss": { "type": "string", "minLength": 1 },
+        "icon": { "type": "string" },
+        "href": { "type": "string", "pattern": "^/" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "__fixture": {
+      "type": "boolean",
+      "description": "Present and true only on fixtures under fixtures/. A file carrying this must never be served to a reader."
+    },
+    "__warning": { "type": "string" },
+
+    "meta": {
+      "type": "object",
+      "required": ["schema", "schemaVersion", "id", "country", "city", "urlPath", "currency", "freshness", "reviewedAt"],
+      "properties": {
+        "schema": { "const": "city.spine2" },
+        "schemaVersion": { "type": "integer", "minimum": 1 },
+        "id": { "$ref": "#/definitions/slug" },
+        "country": {
+          "type": "object",
+          "required": ["slug", "name"],
+          "properties": {
+            "slug": { "type": "string", "pattern": "^[a-z]{2}$" },
+            "name": { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        },
+        "city": {
+          "type": "object",
+          "required": ["slug", "name"],
+          "properties": {
+            "slug": { "$ref": "#/definitions/slug" },
+            "name": { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        },
+        "urlPath": { "type": "string", "pattern": "^/[a-z]{2}/[a-z0-9-]+$" },
+        "currency": {
+          "type": "object",
+          "required": ["display", "native", "usdPerGbp", "rateAsOf", "rateBasis"],
+          "properties": {
+            "display": { "const": "USD" },
+            "native": { "type": "string", "minLength": 3, "maxLength": 3 },
+            "usdPerGbp": { "type": "number", "exclusiveMinimum": 0 },
+            "rateAsOf": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+            "rateBasis": { "type": "string", "minLength": 10 }
+          },
+          "additionalProperties": false
+        },
+        "freshness": { "type": "string", "minLength": 1 },
+        "reviewedAt": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}(-\\d{2})?$",
+          "description": "Month precision is allowed: the trust band prints a month, not a day."
+        },
+        "provenance": {
+          "type": "object",
+          "properties": {
+            "correctionsLedger": { "type": "string" },
+            "familyDocs": { "type": "array", "items": { "type": "string" } },
+            "correctionsApplied": { "type": "array", "items": { "type": "integer" } },
+            "correctionsOutOfScope": { "type": "object", "additionalProperties": { "type": "string" } },
+            "freshnessWatch": { "type": "array", "items": { "type": "string" } }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "hero": {
+      "type": "object",
+      "required": ["headline", "headlineLabel", "businessClimateRank"],
+      "properties": {
+        "headline": { "$ref": "#/definitions/pointOrNull" },
+        "headlineLabel": { "type": "string", "minLength": 10 },
+        "businessClimateRank": {
+          "oneOf": [
+            { "$ref": "#/definitions/rankFigure" },
+            { "$ref": "#/definitions/nullFigure" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "scorecard": {
+      "type": "object",
+      "required": [
+        "baselineLabel",
+        "spendPerResident",
+        "medianPay",
+        "costOfLiving",
+        "commercialRent",
+        "visitors",
+        "unemployment",
+        "businessClimate"
+      ],
+      "properties": {
+        "baselineLabel": { "type": "string", "minLength": 1 },
+        "spendPerResident": { "$ref": "#/definitions/scorecardRow" },
+        "medianPay": { "$ref": "#/definitions/scorecardRow" },
+        "costOfLiving": { "$ref": "#/definitions/scorecardRow" },
+        "commercialRent": { "$ref": "#/definitions/scorecardRow" },
+        "visitors": { "$ref": "#/definitions/scorecardRow" },
+        "unemployment": { "$ref": "#/definitions/scorecardRow" },
+        "businessClimate": { "$ref": "#/definitions/scorecardRow" }
+      },
+      "additionalProperties": false
+    },
+
+    "incomeAndWealth": {
+      "type": "object",
+      "required": ["topTenthVsMiddle", "spread", "paidByCard"],
+      "properties": {
+        "topTenthVsMiddle": { "$ref": "#/definitions/pointOrNull" },
+        "spread": {
+          "oneOf": [
+            { "$ref": "#/definitions/incomeSpreadFigure" },
+            { "$ref": "#/definitions/nullFigure" }
+          ]
+        },
+        "paidByCard": { "$ref": "#/definitions/pointOrNull" }
+      },
+      "additionalProperties": false
+    },
+
+    "visitors": {
+      "type": "object",
+      "required": ["monthlyIndex", "count", "spend", "spendPerVisitor", "shareOfCitySpend", "topDistrict"],
+      "properties": {
+        "monthlyIndex": {
+          "oneOf": [
+            {
+              "allOf": [
+                { "$ref": "#/definitions/seriesFigure" },
+                { "type": "object", "properties": { "series": { "minItems": 12, "maxItems": 12 } } }
+              ]
+            },
+            { "$ref": "#/definitions/nullFigure" }
+          ]
+        },
+        "count": { "$ref": "#/definitions/pointOrNull" },
+        "spend": { "$ref": "#/definitions/pointOrNull" },
+        "spendPerVisitor": { "$ref": "#/definitions/pointOrNull" },
+        "shareOfCitySpend": { "$ref": "#/definitions/pointOrNull" },
+        "topDistrict": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": ["districtName", "shareOfSpend"],
+              "properties": {
+                "districtName": { "type": "string", "minLength": 1 },
+                "shareOfSpend": { "$ref": "#/definitions/pointOrNull" }
+              },
+              "additionalProperties": false
+            },
+            { "$ref": "#/definitions/nullFigure" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "people": {
+      "type": "object",
+      "required": [
+        "residents",
+        "wealthBands",
+        "millionaireHouseholds",
+        "householdsOverThreshold",
+        "belowPovertyLine",
+        "typicalHouseholdSavings",
+        "topTenthSavings",
+        "householdsUnderThinCushion",
+        "discretionary",
+        "archetypes"
+      ],
+      "properties": {
+        "residents": { "$ref": "#/definitions/pointOrNull" },
+        "wealthBands": {
+          "oneOf": [
+            { "$ref": "#/definitions/wealthBandsFigure" },
+            { "$ref": "#/definitions/nullFigure" }
+          ]
+        },
+        "millionaireHouseholds": { "$ref": "#/definitions/pointOrNull" },
+        "householdsOverThreshold": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": ["threshold", "count"],
+              "properties": {
+                "threshold": { "$ref": "#/definitions/pointFigure" },
+                "count": { "$ref": "#/definitions/pointFigure" }
+              },
+              "additionalProperties": false
+            },
+            { "$ref": "#/definitions/nullFigure" }
+          ]
+        },
+        "belowPovertyLine": { "$ref": "#/definitions/pointOrNull" },
+        "typicalHouseholdSavings": { "$ref": "#/definitions/pointOrNull" },
+        "topTenthSavings": { "$ref": "#/definitions/pointOrNull" },
+        "householdsUnderThinCushion": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": ["threshold", "oneInEvery"],
+              "properties": {
+                "threshold": { "$ref": "#/definitions/pointFigure" },
+                "oneInEvery": { "$ref": "#/definitions/pointFigure" }
+              },
+              "additionalProperties": false
+            },
+            { "$ref": "#/definitions/nullFigure" }
+          ]
+        },
+        "discretionary": {
+          "type": "object",
+          "required": ["middleHousehold", "topTenth", "shareOnHighStreet"],
+          "properties": {
+            "middleHousehold": { "$ref": "#/definitions/pointOrNull" },
+            "topTenth": { "$ref": "#/definitions/pointOrNull" },
+            "shareOnHighStreet": { "$ref": "#/definitions/pointOrNull" }
+          },
+          "additionalProperties": false
+        },
+        "archetypes": {
+          "oneOf": [
+            { "$ref": "#/definitions/archetypesFigure" },
+            { "$ref": "#/definitions/nullFigure" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "spaceCosts": {
+      "type": "object",
+      "required": ["costSplit", "sizes", "anchorTrade"],
+      "properties": {
+        "costSplit": {
+          "oneOf": [
+            {
+              "allOf": [
+                { "$ref": "#/definitions/seriesFigure" },
+                {
+                  "type": "object",
+                  "properties": {
+                    "series": {
+                      "minItems": 3,
+                      "description": "Fewer than three parts is not a split of the cost of standing somewhere."
+                    }
+                  }
+                }
+              ]
+            },
+            { "$ref": "#/definitions/nullFigure" }
+          ]
+        },
+        "sizes": {
+          "type": "object",
+          "required": ["small", "medium", "large"],
+          "properties": {
+            "small": { "$ref": "#/definitions/unitSize" },
+            "medium": { "$ref": "#/definitions/unitSize" },
+            "large": { "$ref": "#/definitions/unitSize" }
+          },
+          "additionalProperties": false
+        },
+        "anchorTrade": {
+          "oneOf": [
+            { "$ref": "#/definitions/anchorTrade" },
+            { "$ref": "#/definitions/nullFigure" }
+          ]
+        },
+        "note": { "type": "string", "minLength": 10 }
+      },
+      "additionalProperties": false
+    },
+
+    "tradeEconomics": {
+      "type": "object",
+      "required": ["trades"],
+      "properties": {
+        "trades": {
+          "oneOf": [
+            { "$ref": "#/definitions/tradeEconomicsFigure" },
+            { "$ref": "#/definitions/nullFigure" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "districts": {
+      "type": "object",
+      "required": ["unitPriced", "list"],
+      "properties": {
+        "unitPriced": { "type": "string", "minLength": 10 },
+        "list": {
+          "oneOf": [
+            { "$ref": "#/definitions/districtsFigure" },
+            { "$ref": "#/definitions/nullFigure" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "tradeFit": {
+      "type": "object",
+      "required": ["grid"],
+      "properties": {
+        "grid": {
+          "oneOf": [
+            { "$ref": "#/definitions/tradeFitFigure" },
+            { "$ref": "#/definitions/nullFigure" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "direction": {
+      "type": "object",
+      "required": ["rent", "footfall", "emptyUnits", "population"],
+      "properties": {
+        "rent": { "$ref": "#/definitions/trend" },
+        "footfall": { "$ref": "#/definitions/trend" },
+        "emptyUnits": { "$ref": "#/definitions/trend" },
+        "population": { "$ref": "#/definitions/trend" }
+      },
+      "additionalProperties": false
+    },
+
+    "myths": {
+      "type": "object",
+      "required": ["primary", "tradeAgainstPeer"],
+      "properties": {
+        "primary": {
+          "oneOf": [
+            { "$ref": "#/definitions/claimFigure" },
+            { "$ref": "#/definitions/nullFigure" }
+          ]
+        },
+        "note": { "type": "string", "minLength": 10 },
+        "tradeAgainstPeer": {
+          "oneOf": [
+            { "$ref": "#/definitions/tradeVersusPeerFigure" },
+            { "$ref": "#/definitions/nullFigure" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "peers": {
+      "type": "object",
+      "required": ["rent"],
+      "properties": {
+        "rent": {
+          "oneOf": [
+            { "$ref": "#/definitions/peerRentFigure" },
+            { "$ref": "#/definitions/nullFigure" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "watch": {
+      "type": "object",
+      "required": ["pressures", "localKnowledge"],
+      "properties": {
+        "pressures": {
+          "oneOf": [
+            { "$ref": "#/definitions/pressuresFigure" },
+            { "$ref": "#/definitions/nullFigure" }
+          ]
+        },
+        "localKnowledge": {
+          "oneOf": [
+            { "$ref": "#/definitions/localKnowledgeFigure" },
+            { "$ref": "#/definitions/nullFigure" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "voices": {
+      "type": "object",
+      "required": ["operators"],
+      "properties": {
+        "operators": {
+          "oneOf": [
+            { "$ref": "#/definitions/voicesFigure" },
+            { "$ref": "#/definitions/nullFigure" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "verdict": {
+      "type": "object",
+      "required": ["text", "chips"],
+      "properties": {
+        "text": { "type": "string", "minLength": 40 },
+        "chips": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 3,
+          "description": "Each chip restates a figure already in this file. The mockup prints three.",
+          "items": { "type": "string", "minLength": 3 }
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "methodology": {
+      "type": "object",
+      "required": ["rows"],
+      "properties": {
+        "rows": {
+          "type": "array",
+          "minItems": 4,
+          "description": "The ledger has to span the page's tiers to mean anything; four rows is the floor.",
+          "items": { "$ref": "#/definitions/methodRow" }
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "remember": {
+      "type": "object",
+      "required": ["text", "figure", "figureLabel", "figureSource"],
+      "properties": {
+        "text": { "type": "string", "minLength": 20 },
+        "figure": { "$ref": "#/definitions/pointOrNull" },
+        "figureLabel": { "type": "string", "minLength": 5 },
+        "figureSource": {
+          "type": "string",
+          "minLength": 3,
+          "description": "Dotted path of the canonical field this band restates, so a checker can prove the two agree."
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "next": {
+      "type": "object",
+      "required": ["tiles"],
+      "properties": {
+        "tiles": {
+          "type": "array",
+          "minItems": 4,
+          "description": "The mockup prints six. Below four the grid breaks its rhythm.",
+          "items": { "$ref": "#/definitions/nextTile" }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
