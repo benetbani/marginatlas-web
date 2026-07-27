@@ -97,6 +97,34 @@ import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 import { SpineShell } from "@/components/spine/shell";
 import { SpineCellBody as SpineCell } from "@/app/dev/spine-cell/cell-view";
 import { buildSpineCellSeed } from "@/lib/spine/adapt_cell";
+import { loadSpine2Cell } from "@/lib/cells/spine2_loader";
+import { buildCellPage } from "@/lib/cells/spine2_adapter";
+import { CellPage as Spine2CellPage } from "@/components/spine2/page/CellPage";
+/**
+ * MEASURED COST OF THE IMPORT ABOVE (2026-07-26, Loop 2 I-8). Do not "optimise" it
+ * without reading PROPOSALS.md F2 first; the obvious fix does not work.
+ *
+ * `CellPage` imports `@/styles/atlas-spine.css`. A CSS import is a build-time
+ * side effect, so it lands in THIS route's stylesheet whether or not the flag
+ * branch below ever runs. Measured on the live route with the flag OFF: the
+ * route CSS chunk is 133KB carrying 1,104 `.av2` rules; without the spine
+ * stylesheet it would be roughly 21KB.
+ *
+ * Nothing renders wrong. The stylesheet is scoped in full (951 selectors, every
+ * one under `.av2`, and no `:root` block at all), so with no `.av2` element on
+ * the page not a single rule matches. The cost is bytes, not pixels.
+ *
+ * It is also not transitional. This route serves every trade page with no
+ * spine-2 file and every neighborhood-overview page, and those fall through to
+ * the render below even when the flag is ON. One slug uses this stylesheet; the
+ * rest carry it, and that ratio worsens as the lattice grows.
+ *
+ * A dynamic `await import()` inside the branch was tried and does NOT fix it:
+ * `experimental.cssChunking` defaults to `true`, which per the Next.js docs
+ * "will try to merge CSS files whenever possible ... to reduce the number of
+ * chunks". The fix is architectural and is the founder's call (PROPOSALS.md F2,
+ * which is the same question as backlog P5).
+ */
 
 type IndustryMarginRow = { gross_margin: number; operating_margin: number; asset_intensity?: number };
 const INDUSTRY_MARGINS = industryMarginsJson as unknown as {
@@ -233,6 +261,67 @@ export default async function CellPage({
   // no cell it returns undefined; we notFound() to match the non-spine page.
   if (isSpineReformEnabledFor("cell")) {
     const { country, geo, industry } = await params;
+    // Spine 2 (the rebuilt trade page) serves only the slugs that have a
+    // hand-filled, reconciled cell file. Everything else falls through to the
+    // render below, unchanged.
+    const spine2Cell = loadSpine2Cell(country, geo, industry);
+    if (spine2Cell) {
+      /* STRUCTURED DATA. This branch returns early, ~500 lines before the
+         legacy page's <CellDataset>, <FAQSchema> and <Breadcrumbs>, so until
+         2026-07-27 the v2 page emitted none of them , only the root layout's
+         Organization. The legacy cell page emits all three. That was a live
+         SEO regression on the one page the redesign exists to prove.
+
+         Everything below comes from the reconciled cell file. Two fields the
+         legacy branch passes are DELIBERATELY OMITTED rather than approximated:
+
+         - revP10 / revP90. The component renders these as "Bottom 10% ... top
+           10%". The spine-2 file carries QUARTILES (p25 / p75), not deciles.
+           Passing quartiles here would state that the 25th percentile is the
+           bottom tenth, which is a fabricated claim in machine-readable form ,
+           the worst place to put one. Both are optional and the sentence
+           self-omits.
+         - qualityScore. Spine 2 grades provenance per figure (measured / built
+           / thin), not as one page-level score. There is no honest number to
+           put here.
+
+         nEmployees, wagePerEmployee and csvExportUrl are omitted for the same
+         reason: the file does not carry a trade-wide employee count or wage,
+         and a CSV export is not proven to exist for a spine-2 slug. */
+      const m = spine2Cell.meta;
+      const pop = spine2Cell.population;
+      const model = buildCellPage(spine2Cell);
+      const origin = "https://www.marginatlas.com";
+      const url = `${origin}${m.urlPath}`;
+      return (
+        <>
+          <CellDataset
+            url={url}
+            industryName={m.trade.name}
+            geoName={m.city.name}
+            country={m.country.slug.toUpperCase()}
+            year={Number(m.freshness.slice(0, 4))}
+            medianRevenue={pop.medianRevenue?.value ?? null}
+            nEnterprises={pop.enterprises?.value ?? null}
+          />
+          <FAQSchema
+            faqs={(model.questions ?? []).map((x) => ({
+              question: x.q,
+              answer: x.a,
+            }))}
+          />
+          <Breadcrumbs
+            items={[
+              { name: "Home", url: `${origin}/` },
+              { name: m.country.name, url: `${origin}/${m.country.slug}` },
+              { name: m.city.name, url: `${origin}/${m.country.slug}/${m.city.slug}` },
+              { name: m.trade.name, url },
+            ]}
+          />
+          <Spine2CellPage model={model} />
+        </>
+      );
+    }
     const spineData = await buildSpineCellSeed(country, geo, industry);
     if (!spineData) notFound();
     return (

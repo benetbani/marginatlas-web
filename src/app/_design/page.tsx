@@ -83,6 +83,12 @@ import { colors, fontFamily, fontSize, radius, elevation, duration, easing, z } 
 import { AtlasIcon, ATLAS_ICONS } from "@/components/brand/icons";
 import { AtlasPictogram, ATLAS_PICTOGRAMS } from "@/components/brand/pictograms";
 
+// Wave 4 spine2 kit (the v2 visual system, scoped under .av2).
+// The story itself lives in ./spine2-story.tsx and is ALSO mounted on the
+// routable /dev/spine2 page, because _design is a Next private folder and
+// never routes (dev_verification gotcha).
+import { Spine2Story } from "./spine2-story";
+
 export const dynamic = "force-dynamic";
 
 export const metadata = {
@@ -120,6 +126,7 @@ export default async function DesignCatalogPage({
         <MotionSection />
         <BrandGlyphsSection />
         <ExistingPrimitivesSection />
+        <Spine2Section />
       </main>
     </div>
   );
@@ -1069,6 +1076,21 @@ function ExistingPrimitivesSection() {
           <Pill variant="outline">small turnover band</Pill>
         </div>
       </SubSection>
+    </Section>
+  );
+}
+
+// =============================================================
+// Wave 4 , the spine2 foundation kit (v2 visual system)
+// =============================================================
+
+function Spine2Section() {
+  return (
+    <Section
+      title="Spine2 foundation (v2 visual system)"
+      description="The Wave 4 kit: scoped stylesheet, atoms (Fig, SwatchLegend, TierPill, Reading, GlyphIcon, fmt) and the RowLattice family (Statblock, Ledger). Scoped under .av2; source of truth is design/mockups/atlas.css via scripts/scope_atlas_css.mjs. Also mounted at /dev/spine2 (this private folder never routes)."
+    >
+      <Spine2Story />
     </Section>
   );
 }

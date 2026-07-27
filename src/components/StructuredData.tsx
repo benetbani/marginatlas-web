@@ -68,11 +68,31 @@ export function CellDataset({
   // (founder R-002 catastrophic-flag). The `year` prop is still accepted for
   // type compatibility with callers, but never rendered into the JSON-LD.
   void year;
+
+  /* The description used to be a fixed string promising "Revenue, employment,
+     and wage benchmarks" regardless of what the caller actually supplied. That
+     was harmless while the only caller passed all three. The spine-2 page
+     supplies revenue and a firm count and no wage, so the fixed string began
+     claiming, in machine-readable form, data the page does not have.
+     Derived from what is genuinely present instead. */
+  const measures = [
+    medianRevenue != null ? "revenue" : null,
+    nEnterprises != null ? "firm counts" : null,
+    wagePerEmployee != null ? "wage" : null,
+  ].filter(Boolean) as string[];
+  const measureList =
+    measures.length === 0
+      ? "Business benchmarks"
+      : measures.length === 1
+        ? `${measures[0][0].toUpperCase()}${measures[0].slice(1)} benchmarks`
+        : `${measures.slice(0, -1).join(", ")} and ${measures[measures.length - 1]} benchmarks`
+            .replace(/^./, (c) => c.toUpperCase());
+
   const data: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "Dataset",
     name: `${industryName} business benchmarks in ${geoName}`,
-    description: `Revenue, employment, and wage benchmarks for ${industryName.toLowerCase()} firms in ${geoName}.`,
+    description: `${measureList} for ${industryName.toLowerCase()} firms in ${geoName}.`,
     url,
     identifier: url,
     keywords: [
