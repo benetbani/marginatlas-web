@@ -64,3 +64,9 @@ data/cities/_pipeline/.lock
 docs/brand/assets/incoming/
 # working scratch (quiz trackers etc.); the synthesized docs in docs/brand/ are the source of truth
 scratch/
+
+# dev-server logs from local verification runs
+.d*.log
+.d*.err
+.dev*.log
+.dev*.err
