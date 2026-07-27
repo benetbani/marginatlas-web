@@ -1,0 +1,1747 @@
+/* =============================================================================
+   GENERATED FILE , DO NOT EDIT.
+   Source:    design/mockups/atlas.css (the frozen visual spec)
+   Generator: scripts/scope_atlas_css.mjs   (re-run to re-sync)
+   Every selector is scoped under .av2 so the v2 system cannot leak into
+   existing pages. The .av2 wrapper must carry the font variables from
+   src/lib/fonts-spine.ts and must never gain a transform or filter.
+============================================================================= */
+/* =============================================================================
+   MARGIN ATLAS , VISUAL SYSTEM v2  (2026-07-20)
+   Rebuilt against the 20-question interview.
+
+   WHAT CHANGED FROM v1
+     1. NEUTRAL PALETTE. No cream, no warm tint. Whites and blacks only, with
+        surfaces and hairlines built from black at low alpha so they sit
+        correctly over any image. Terracotta remains the single accent.
+     2. THE PLACE SITS BEHIND THE WHOLE PAGE. A fixed, heavily quieted map of
+        the city, present the entire scroll. Frosted glass over a flat field
+        does not read as glass; it needs something to refract.
+     3. GLASS IS THE FRAME, SOLID IS THE DATA. Chrome, hero and section
+        wrappers are true translucent glass. Anything carrying a figure sits
+        near-opaque so the image can never cost us a number.
+
+   Glass technique adapted from the Kokonut UI "Liquid Glass" card (MIT).
+   Chart idiom follows Bklit UI: thin axes, direct labels, no chart junk.
+============================================================================= */
+
+/* ---------- TOKENS ---------- */
+.av2{
+  /* neutral only. no cream, no warm greys */
+  --white:#ffffff;
+  --paper:#f7f7f8;
+  --ink:#0d0d0e;
+  --ink-2:#4a4a4d;
+  /* THE QUIET TEXT TONE. One, not two. Between --ink-2 (8.9:1) and the AA
+     floor (~#737373) there is barely a stop and a half of luminance, so two
+     tones down here can only ever be a flat step pretending to be hierarchy.
+     Quiet versus quieter is carried by size and weight instead, which is how
+     .lab (10.5px/600) and .note (13.5px/400) already differ. 6.0:1 on every
+     panel background the pages actually use. */
+  --muted:#5f5f67;
+  /* NON-TEXT ONLY. Decorative marks, never a glyph a reader has to read.
+     Any color:var(--muted) is a legibility bug by definition. */
+  --faint:#8c8c94;
+
+  /* lines are black at low alpha, never a named tint, so they hold over the map */
+  --hair:rgba(0,0,0,.075);
+  --hair-2:rgba(0,0,0,.045);
+  --line:rgba(0,0,0,.15);
+
+  /* THE accent , terracotta, red and deep */
+  --terra:#c23a22;
+  --terra-deep:#9e2e1b;
+  --terra-bright:#d4573c;
+  --terra-soft:rgba(194,58,34,.07);
+  --terra-line:rgba(194,58,34,.30);
+
+  /* chart neutrals, dark to light, strictly neutral */
+  /* n2 was #78787c, which is a dead zone: white lands at 4.40:1 on it and ink
+     at 4.33:1, so NEITHER passes and any bar built on it was unfixable by
+     choosing a text colour. Darkened until white clears, which makes n1 and n2
+     the two fills that can carry white and n3 downward the fills that take ink. */
+  --n1:#57575b; --n2:#6f6f74; --n3:#9a9a9e; --n4:#c0c0c4; --n5:#dededf;
+
+  --sans:var(--font-geist,'Geist'),'Geist','Geist Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --fig:var(--font-grotesk,'Space Grotesk'),'Space Grotesk',ui-monospace,'SF Mono',monospace;
+
+  --r-lg:18px; --r-md:14px; --r-sm:10px;
+  --shadow-panel:0 1px 2px rgba(0,0,0,.04), 0 16px 38px -22px rgba(0,0,0,.20);
+}
+
+/* ---------- RESET + PAGE ---------- */
+.av2, .av2 *{box-sizing:border-box;margin:0;padding:0}
+.av2{background:var(--paper);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.av2{font-family:var(--sans);color:var(--ink);font-size:14px;line-height:1.6;position:relative;overflow-x:hidden}
+
+/* THE PLACE. A fixed layer rather than background-attachment, which is broken
+   on iOS. Quieted hard: desaturated, low contrast, and veiled, so it reads as
+   the ground a page sits on rather than as a picture competing with it. */
+.av2 .place{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.av2 .place img{
+  width:100%;height:100%;object-fit:cover;object-position:50% 42%;
+  filter:grayscale(.55) contrast(.82) brightness(1.06);
+  opacity:.42;
+}
+.av2 .place::after{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(70% 55% at 84% -6%, rgba(194,58,34,.10) 0%, rgba(194,58,34,0) 60%),
+    linear-gradient(180deg, rgba(247,247,248,.62) 0%, rgba(247,247,248,.80) 46%, rgba(247,247,248,.92) 100%);
+}
+/* fine grain so large quiet areas do not look dead */
+.av2::after{
+  content:"";position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.028'/%3E%3C/svg%3E");
+}
+.av2 .wrap{max-width:1060px;margin:0 auto;padding:0 32px;position:relative;z-index:2}
+
+/* ---------- TYPE ---------- */
+.av2 .fig{font-family:var(--fig);font-variant-numeric:tabular-nums lining-nums;font-feature-settings:"tnum" 1;letter-spacing:-.01em}
+.av2 .lab{font-size:10.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.av2 h1,.av2 h2,.av2 h3{font-weight:600;letter-spacing:-.022em;line-height:1.06}
+.av2 h1{font-size:clamp(32px,4.6vw,48px)}
+.av2 h2{font-size:26px}
+.av2 h3{font-size:17px;letter-spacing:-.012em}
+.av2 p{max-width:60ch}
+.av2 .note{font-size:13.5px;line-height:1.62;color:var(--ink-2);max-width:56ch}
+.av2 .note b{color:var(--ink);font-weight:500}
+.av2 a{color:inherit;text-decoration:none}
+
+/* ---------- GLASS (the frame) ---------- */
+.av2 .glass{
+  position:relative;border-radius:var(--r-lg);
+  background:linear-gradient(150deg, rgba(255,255,255,.62), rgba(255,255,255,.40));
+  backdrop-filter:blur(26px) saturate(1.15);
+  -webkit-backdrop-filter:blur(26px) saturate(1.15);
+  border:1px solid rgba(255,255,255,.72);
+  box-shadow:
+    0 0 6px rgba(0,0,0,.02),
+    0 2px 8px rgba(0,0,0,.04),
+    inset 3px 3px .5px -3px rgba(255,255,255,.98),
+    inset -3px -3px .5px -3px rgba(255,255,255,.70),
+    inset 1px 1px 1px -.5px rgba(255,255,255,.72),
+    inset 0 0 8px 8px rgba(255,255,255,.08),
+    0 18px 44px -24px rgba(0,0,0,.26);
+}
+
+/* ---------- SOLID (the data) ---------- */
+/* near-opaque, not flat white: it still refracts a little, but nothing on it
+   can ever drop below reading contrast */
+.av2 .panel{
+  background:rgba(255,255,255,.955);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.9);
+  border-radius:var(--r-md);
+  box-shadow:var(--shadow-panel), inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+/* ---------- MASTHEAD ---------- */
+.av2 .mast{position:sticky;top:0;z-index:20}
+.av2 .mast .in{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  padding:11px 20px;margin-top:14px;border-radius:14px;
+  background:linear-gradient(150deg,rgba(255,255,255,.80),rgba(255,255,255,.62));
+  backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2);
+  border:1px solid rgba(255,255,255,.78);
+  box-shadow:inset 2px 2px .5px -2px rgba(255,255,255,.96), 0 10px 30px -20px rgba(0,0,0,.4)}
+.av2 .mast .brand{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:600;letter-spacing:-.01em}
+.av2 .mast .brand .m{width:15px;height:15px;border-radius:4px;flex:none;
+  background:linear-gradient(150deg,var(--terra-bright),var(--terra-deep));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.av2 .mast .lat{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--muted)}
+.av2 .mast .lat a{padding:4px 10px;border-radius:999px;border:1px solid transparent}
+.av2 .mast .lat a.on{color:var(--terra-deep);font-weight:600;background:var(--terra-soft);border-color:var(--terra-line)}
+.av2 .mast .lat .s{color:var(--muted)}
+@media(max-width:640px){.av2 .mast .lat{font-size:10.5px;gap:4px}.av2 .mast .lat a{padding:3px 7px}}
+
+/* ---------- LAYOUT ---------- */
+.av2 section.ch{padding:58px 0}
+.av2 .chhead{margin-bottom:28px;padding-bottom:16px;position:relative}
+.av2 .chhead .hd{display:flex;align-items:baseline;gap:16px}
+.av2 .chhead::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--hair)}
+.av2 .chhead::before{content:"";position:absolute;left:0;bottom:0;width:44px;height:2px;background:var(--terra);z-index:1}
+.av2 .chnum{font-family:var(--fig);font-size:12.5px;font-weight:600;color:var(--terra);letter-spacing:.06em}
+.av2 .grid{display:grid;gap:24px}
+.av2 .grid>*{min-width:0}
+.av2 .g2{grid-template-columns:1fr 1fr}
+.av2 .g12{grid-template-columns:1.3fr 1fr}
+.av2 .g21{grid-template-columns:1fr 1.3fr}
+@media(max-width:820px){.av2 .g2,.av2 .g12,.av2 .g21{grid-template-columns:1fr}}
+.av2 .pad{padding:26px}
+.av2 .pad-lg{padding:30px}
+
+/* ---------- HERO , THE PAIRING ---------- */
+.av2 .crumb{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:10.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase}
+.av2 .crumb .d{width:3px;height:3px;border-radius:50%;background:var(--faint)}
+.av2 .texture{font-size:15px;color:var(--ink-2);max-width:46ch;line-height:1.55;margin-top:24px}
+.av2 .texture b{font-family:var(--fig);font-weight:600;color:var(--ink)}
+.av2 .answer{margin-top:28px}
+.av2 .answer .num{font-family:var(--fig);font-weight:600;font-size:clamp(56px,8.4vw,86px);line-height:.84;letter-spacing:-.035em;color:var(--terra-deep)}
+.av2 .answer .l{font-size:16px;font-weight:500;color:var(--ink);line-height:1.35;margin-top:14px;max-width:30ch}
+/* the range line: nothing on this site pretends to be exact */
+.av2 .rng{display:inline-flex;align-items:center;gap:8px;margin-top:10px;font-size:11.5px;color:var(--muted)}
+.av2 .rng .bar{position:relative;width:76px;height:3px;border-radius:2px;background:var(--n5)}
+.av2 .rng .bar i{position:absolute;top:0;bottom:0;border-radius:2px;background:var(--n3)}
+.av2 .rng .bar u{position:absolute;top:-2px;width:2px;height:7px;background:var(--terra);border-radius:1px}
+/* the counterweight: what the typical site actually does */
+.av2 .against{margin-top:26px;padding-top:22px;border-top:1px solid var(--hair)}
+.av2 .against .n{font-family:var(--fig);font-size:30px;font-weight:600;line-height:1}
+.av2 .against .k{font-size:13.5px;color:var(--ink-2);margin-top:6px;max-width:34ch}
+
+/* the one input on the page */
+.av2 .setter{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:24px;
+  padding:14px 18px;border-radius:12px;background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.8)}
+.av2 .setter .lab{white-space:nowrap}
+.av2 .setter input[type=range]{-webkit-appearance:none;appearance:none;flex:1;min-width:150px;height:3px;border-radius:2px;
+  background:var(--n4);outline:none}
+.av2 .setter input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;
+  background:var(--terra);border:3px solid var(--white);box-shadow:0 1px 5px rgba(0,0,0,.3);cursor:pointer}
+.av2 .setter input[type=range]::-moz-range-thumb{width:17px;height:17px;border-radius:50%;background:var(--terra);
+  border:3px solid var(--white);box-shadow:0 1px 5px rgba(0,0,0,.3);cursor:pointer;border-color:#fff}
+.av2 .setter .val{font-family:var(--fig);font-size:17px;font-weight:600;color:var(--terra-deep);white-space:nowrap;min-width:64px;text-align:right}
+
+/* ---------- TAGS ---------- */
+.av2 .tag{display:inline-flex;align-items:center;gap:7px;font-size:9.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--muted);border:1px dashed var(--line);border-radius:999px;padding:3px 10px}
+.av2 .chip{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:500;color:var(--ink-2);
+  background:rgba(0,0,0,.035);border:1px solid var(--hair);border-radius:999px;padding:4px 11px}
+.av2 .chip-a{color:var(--terra-deep);background:var(--terra-soft);border-color:var(--terra-line)}
+
+/* ---------- THE SIGNATURE , unit chart ---------- */
+/* one mark per business, sorted, with the good-living line drawn across it.
+   Dots are people. Histograms are statistics. */
+.av2 .units{position:relative;margin:6px 0 0}
+.av2 .units .grid-u{display:grid;grid-template-columns:repeat(20,1fr);gap:4px}
+.av2 .units .u{aspect-ratio:1;border-radius:2px;background:#e6e6e7}
+.av2 .units .u.mid{background:#adadb2}
+.av2 .units .u.over{background:var(--ink)}
+/* the threshold, drawn as a step so it never contradicts the marks it divides */
+.av2 .units .cut{position:absolute;height:2px;background:var(--terra);border-radius:2px;
+  box-shadow:0 0 0 3px rgba(255,255,255,.8)}
+.av2 .units .cutlab{position:absolute;right:-6px;transform:translateY(-100%);margin-top:-9px;
+  font-size:10.5px;font-weight:600;letter-spacing:.02em;color:var(--terra-deep);white-space:nowrap;
+  background:rgba(255,255,255,.92);padding:2px 7px;border-radius:999px;border:1px solid var(--terra-line)}
+.av2 .ukey{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:18px}
+.av2 .ukey .k{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-2)}
+.av2 .ukey .k .sw{width:11px;height:11px;border-radius:3px;flex:none}
+.av2 .ukey .k b{font-family:var(--fig);color:var(--ink);font-weight:600}
+
+/* ---------- MONEY COLUMN ---------- */
+.av2 .col-split{display:flex;flex-direction:column;height:420px;border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-panel)}
+.av2 .col-split .seg{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;
+  padding:11px 15px;color:#fff;min-height:0;overflow:hidden}
+.av2 .col-split .seg .nm{font-size:12px;font-weight:600;white-space:nowrap}
+.av2 .col-split .seg .v{font-family:var(--fig);font-size:15px;font-weight:600;white-space:nowrap}
+.av2 .col-split .seg.thin{padding:0}
+.av2 .col-split .seg.answer{background:linear-gradient(180deg,var(--terra-bright),var(--terra));align-items:center;padding:0 15px}
+.av2 .col-split .seg.answer .nm{font-size:11.5px}
+.av2 .col-legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:14px;align-items:center}
+.av2 .col-legend .li{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--ink-2)}
+.av2 .col-legend .li .sw{width:10px;height:10px;border-radius:3px;flex:none}
+.av2 .col-legend .li b{font-family:var(--fig);color:var(--ink);font-weight:600}
+
+/* ---------- ROWS ---------- */
+.av2 .rows{display:flex;flex-direction:column}
+.av2 .rows .r{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:baseline;padding:13px 0;border-bottom:1px solid var(--hair)}
+.av2 .rows .r:last-child{border-bottom:0}
+.av2 .rows .r .nm{font-size:14px;color:var(--ink)}
+.av2 .rows .r .nm .s{font-size:11.5px;color:var(--muted);margin-top:2px;display:block}
+.av2 .rows .r .v{font-family:var(--fig);font-size:16px;font-weight:600}
+.av2 .rows .r .v.a{color:var(--terra-deep)}
+.av2 .rows .r .v.neg{color:var(--muted)}
+
+/* ---------- TABLE ---------- */
+.av2 table.tb{width:100%;border-collapse:collapse}
+.av2 table.tb th{font-size:9.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);
+  text-align:right;padding:0 0 11px;border-bottom:1px solid var(--line)}
+.av2 table.tb th:first-child{text-align:left}
+.av2 table.tb td{padding:13px 0;border-bottom:1px solid var(--hair);text-align:right;font-family:var(--fig);font-size:15px;font-weight:500}
+.av2 table.tb td:first-child{text-align:left;font-family:var(--sans);font-size:14px;font-weight:500}
+.av2 table.tb td .s{display:block;font-family:var(--sans);font-size:11.5px;font-weight:400;color:var(--muted);margin-top:2px}
+.av2 table.tb tr:last-child td{border-bottom:0}
+.av2 table.tb tr.on td{font-weight:600}
+.av2 table.tb tr.on td:first-child,.av2 table.tb tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--terra);padding-left:13px}
+.av2 table.tb td.k{color:var(--terra-deep);font-weight:600}
+
+/* ---------- RANGE PLOT ---------- */
+.av2 .range{display:flex;flex-direction:column;gap:15px}
+.av2 .range .r{display:grid;grid-template-columns:112px 1fr 58px;gap:14px;align-items:center}
+.av2 .range .r .l{font-size:13px;color:var(--ink-2)}
+.av2 .range .r .rail{position:relative;height:14px}
+.av2 .range .r .rail .b{position:absolute;top:50%;height:2px;background:var(--n4);transform:translateY(-50%);border-radius:2px}
+.av2 .range .r .rail .c{position:absolute;top:50%;width:2px;height:9px;background:var(--n4);transform:translateY(-50%)}
+.av2 .range .r .rail .m{position:absolute;top:50%;width:11px;height:11px;border-radius:50%;background:var(--ink);
+  border:2.5px solid var(--white);transform:translate(-50%,-50%);box-shadow:0 0 0 1px var(--line)}
+.av2 .range .r .v{font-family:var(--fig);font-size:13.5px;text-align:right}
+.av2 .range .r.axis{margin-top:-2px}
+.av2 .range .r.axis .rail{height:auto}
+.av2 .range .r.axis .rail .tk{position:absolute;top:0;transform:translateX(-50%);
+  font-family:var(--fig);font-size:10.5px;color:var(--muted);white-space:nowrap}
+.av2 .range .r.axis .rail .tk:first-child{transform:none}
+.av2 .range .r.axis .rail .tk:last-child{transform:translateX(-100%)}
+.av2 .range .r.axis .rail .tk::before{content:"";position:absolute;left:50%;top:-7px;width:1px;height:4px;background:var(--line)}
+.av2 .range .r.axis .rail .tk:first-child::before{left:0}
+.av2 .range .r.axis .rail .tk:last-child::before{left:auto;right:0}
+
+/* ---------- THREE WORLDS ---------- */
+.av2 .worlds{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--hair);border-radius:var(--r-md);overflow:hidden}
+.av2 .worlds .w{padding:20px 18px;border-right:1px solid var(--hair)}
+.av2 .worlds .w:last-child{border-right:0}
+.av2 .worlds .w.bad{background:rgba(0,0,0,.028)}
+.av2 .worlds .w .t{font-size:10.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.av2 .worlds .w .n{font-family:var(--fig);font-size:26px;font-weight:600;line-height:1;margin-top:10px}
+.av2 .worlds .w.bad .n{color:var(--muted)}
+.av2 .worlds .w.now .n{color:var(--terra-deep)}
+.av2 .worlds .w .s{font-size:12px;color:var(--ink-2);margin-top:8px;line-height:1.5}
+@media(max-width:560px){.av2 .worlds{grid-template-columns:1fr}.av2 .worlds .w{border-right:0;border-bottom:1px solid var(--hair)}}
+
+/* ---------- STRESS TEST ---------- */
+.av2 .stress{display:flex;flex-direction:column}
+.av2 .stress .s{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;padding:15px 0;border-bottom:1px solid var(--hair)}
+.av2 .stress .s:last-child{border-bottom:0}
+.av2 .stress .s .q{font-size:13.5px;color:var(--ink)}
+.av2 .stress .s .q span{display:block;font-size:11.5px;color:var(--muted);margin-top:3px}
+.av2 .stress .s .a{font-size:12.5px;font-weight:600;white-space:nowrap;padding:5px 11px;border-radius:999px;
+  background:rgba(0,0,0,.045);color:var(--ink-2)}
+.av2 .stress .s .a.bite{background:var(--terra-soft);color:var(--terra-deep);border:1px solid var(--terra-line)}
+
+/* ---------- CONTROL / NOT ---------- */
+.av2 .ctl{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--hair);border-radius:var(--r-md);overflow:hidden}
+.av2 .ctl .c{padding:20px}
+.av2 .ctl .c:first-child{border-right:1px solid var(--hair)}
+.av2 .ctl .c.not{background:rgba(0,0,0,.028)}
+.av2 .ctl .c .h{font-size:10.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;margin-bottom:14px}
+.av2 .ctl .c.you .h{color:var(--terra-deep)}
+.av2 .ctl .c.not .h{color:var(--muted)}
+.av2 .ctl .c li{list-style:none;font-size:13.5px;padding:8px 0;border-bottom:1px solid var(--hair-2);color:var(--ink)}
+.av2 .ctl .c li:last-child{border-bottom:0}
+.av2 .ctl .c.not li{color:var(--ink-2)}
+@media(max-width:560px){.av2 .ctl{grid-template-columns:1fr}.av2 .ctl .c:first-child{border-right:0;border-bottom:1px solid var(--hair)}}
+
+/* ---------- LATE , what people find out too late ---------- */
+.av2 .late{display:flex;flex-direction:column;gap:0}
+.av2 .late .l{display:grid;grid-template-columns:26px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--hair)}
+.av2 .late .l:last-child{border-bottom:0}
+.av2 .late .l .i{font-family:var(--fig);font-size:11.5px;font-weight:600;color:var(--terra);padding-top:2px}
+.av2 .late .l .t{font-size:14px;font-weight:500}
+.av2 .late .l .t span{display:block;font-size:13px;font-weight:400;color:var(--ink-2);margin-top:5px;line-height:1.55}
+
+/* ---------- RUNWAY ---------- */
+.av2 .runway{display:flex;flex-direction:column;gap:0;margin-top:4px}
+.av2 .runway .r{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:12px 0;border-bottom:1px solid var(--hair)}
+.av2 .runway .r.total{border-bottom:0;border-top:2px solid var(--ink);margin-top:6px;padding-top:16px}
+.av2 .runway .r .nm{font-size:13.5px}
+.av2 .runway .r .nm span{display:block;font-size:11.5px;color:var(--muted);margin-top:2px}
+.av2 .runway .r .v{font-family:var(--fig);font-size:15px;font-weight:600}
+.av2 .runway .r.total .nm{font-size:15px;font-weight:600}
+.av2 .runway .r.total .v{font-size:24px;color:var(--terra-deep)}
+
+/* ---------- SCALE / SBAR / CHARTS ---------- */
+.av2 .scale{display:flex;flex-direction:column;gap:13px}
+.av2 .scale .r{display:grid;grid-template-columns:118px 1fr 52px;gap:13px;align-items:center}
+.av2 .scale .r .l{font-size:13px;color:var(--ink-2)}
+.av2 .scale .r .t{position:relative;height:5px;border-radius:3px;background:rgba(0,0,0,.05)}
+.av2 .scale .r .t i{position:absolute;inset:0 auto 0 0;background:var(--n3);border-radius:3px}
+.av2 .scale .r.on .t i{background:var(--ink)}
+.av2 .scale .r.hi .t i{background:var(--terra)}
+.av2 .scale .r.hi .l,.av2 .scale .r.hi .v{color:var(--terra-deep);font-weight:600}
+.av2 .scale .r .v{font-family:var(--fig);font-size:13.5px;text-align:right}
+
+.av2 .sbar{display:flex;height:13px;border-radius:7px;overflow:hidden;gap:2px}
+.av2 .sbar i{display:block}
+.av2 .sbar-l{display:flex;justify-content:space-between;margin-top:10px;font-size:11.5px;color:var(--ink-2)}
+.av2 .sbar-l b{font-family:var(--fig);color:var(--ink);font-weight:600}
+
+.av2 .chart svg{width:100%;height:auto;display:block;overflow:visible}
+.av2 .axis{stroke:var(--line);stroke-width:1}
+.av2 .gridline{stroke:var(--hair);stroke-dasharray:3 5;stroke-width:1}
+.av2 .axlbl{font-family:var(--fig);font-size:10.5px;fill:var(--muted)}
+.av2 .ptlbl{font-family:var(--fig);font-size:15px;font-weight:600;fill:var(--ink)}
+.av2 .ptlbl.a{fill:var(--terra-deep)}
+.av2 .serie{fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.av2 .serie-ghost{fill:none;stroke:var(--n4);stroke-width:1.5;stroke-dasharray:5 5}
+.av2 .strike{stroke:var(--terra);stroke-width:1.8;stroke-linecap:round}
+
+/* ---------- SPECTRUM ---------- */
+/* a marker between two named poles. Every row also carries the concrete figure
+   the marker stands for, so the dot is a picture of a number, not a mood. */
+.av2 .spec{display:flex;flex-direction:column;gap:19px}
+.av2 .spec .r .hd{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:9px}
+.av2 .spec .r .hd .nm{font-size:13.5px;color:var(--ink)}
+.av2 .spec .r .hd .v{font-family:var(--fig);font-size:13px;font-weight:600;color:var(--ink-2);white-space:nowrap}
+.av2 .spec .r .hd .v.a{color:var(--terra-deep)}
+.av2 .spec .tk{position:relative;height:5px;border-radius:3px;background:rgba(0,0,0,.05)}
+.av2 .spec .tk .d{position:absolute;top:50%;width:12px;height:12px;border-radius:50%;background:var(--n1);
+  transform:translate(-50%,-50%);border:2.5px solid var(--white);box-shadow:0 0 0 1px var(--line)}
+.av2 .spec .tk .d.a{background:var(--terra);box-shadow:0 0 0 1px var(--terra-line)}
+.av2 .spec .r .po{display:flex;justify-content:space-between;margin-top:8px;font-size:10.5px;color:var(--muted)}
+
+/* ---------- NUMBERED STEPS ---------- */
+.av2 .steps{display:flex;flex-direction:column}
+.av2 .steps .s{display:grid;grid-template-columns:26px 1fr auto;gap:16px;align-items:baseline;
+  padding:14px 0;border-bottom:1px solid var(--hair)}
+.av2 .steps .s:last-child{border-bottom:0}
+.av2 .steps .s .i{font-family:var(--fig);font-size:11.5px;font-weight:600;color:var(--terra)}
+.av2 .steps .s .t{font-size:14px}
+.av2 .steps .s .t span{display:block;font-size:11.5px;color:var(--muted);margin-top:2px}
+.av2 .steps .s .w{font-family:var(--fig);font-size:14px;font-weight:600;white-space:nowrap}
+
+/* ---------- DEVIATION STRIP ---------- */
+/* peers as dots on one axis, captions alternating above and below, so
+   neighbouring sections never collapse into the same shape */
+.av2 .strip{position:relative;height:132px;margin:8px 0 4px}
+.av2 .strip .ax{position:absolute;left:0;right:0;top:66px;height:1px;background:var(--line)}
+.av2 .strip .pt{position:absolute;top:66px;width:9px;height:9px;border-radius:50%;background:var(--n2);
+  transform:translate(-50%,-50%);border:2px solid var(--white);box-shadow:0 0 0 1px var(--n4)}
+.av2 .strip .pt.here{width:13px;height:13px;background:var(--terra);box-shadow:0 0 0 1px var(--terra-line)}
+.av2 .strip .stem{position:absolute;width:1px;background:var(--hair)}
+.av2 .strip .cap{position:absolute;transform:translateX(-50%);text-align:center;white-space:nowrap}
+.av2 .strip .cap .n{display:block;font-size:12px;color:var(--muted);line-height:1.25}
+.av2 .strip .cap .f{display:block;font-family:var(--fig);font-size:14.5px;font-weight:600;color:var(--ink);line-height:1.25}
+.av2 .strip .cap.here .n,.av2 .strip .cap.here .f{color:var(--terra-deep)}
+
+/* ---------- MINI SCALE ---------- */
+/* three stops on one track, placed by VALUE, never at even thirds */
+.av2 .mini{position:relative;height:52px;margin-top:16px}
+.av2 .mini .tr{position:absolute;left:0;right:0;top:6px;height:3px;border-radius:2px;
+  background:linear-gradient(90deg,rgba(194,58,34,.10),rgba(194,58,34,.34))}
+.av2 .mini .st{position:absolute;top:7px;width:11px;height:11px;border-radius:50%;background:var(--n3);
+  transform:translate(-50%,-50%);border:2.5px solid var(--white);box-shadow:0 0 0 1px var(--n4)}
+.av2 .mini .st.a{background:var(--terra);box-shadow:0 0 0 1px var(--terra-line)}
+.av2 .mini .cp{position:absolute;top:22px;transform:translateX(-50%);text-align:center;white-space:nowrap}
+.av2 .mini .cp .f{font-family:var(--fig);font-size:13.5px;font-weight:600;color:var(--ink);line-height:1.25;display:block}
+.av2 .mini .cp .n{font-size:10.5px;color:var(--muted)}
+.av2 .mini .cp.l{transform:none;text-align:left}
+.av2 .mini .cp.r{transform:translateX(-100%);text-align:right}
+
+/* ---------- DOT GRID ---------- */
+.av2 .dots{display:grid;grid-template-columns:repeat(15,1fr);gap:5px}
+.av2 .dots i{aspect-ratio:1;border-radius:3px;background:rgba(0,0,0,.05);display:block}
+.av2 .dots i.on{background:var(--ink)}
+.av2 .dots i.edge{background:var(--terra)}
+
+/* ---------- MYTH ---------- */
+.av2 .myth .claim{font-size:clamp(21px,2.7vw,29px);font-weight:600;letter-spacing:-.02em;line-height:1.22;
+  color:var(--muted);max-width:22ch;text-wrap:balance;
+  text-decoration:line-through;text-decoration-color:var(--terra);text-decoration-thickness:2px}
+.av2 .myth .fix{font-size:clamp(19px,2.4vw,25px);font-weight:600;letter-spacing:-.02em;line-height:1.24;margin-top:20px;max-width:26ch}
+.av2 .myth .fix b{color:var(--terra-deep);font-weight:600}
+
+/* ---------- CLOSE ---------- */
+.av2 .close{display:grid;grid-template-columns:1.15fr 1fr;gap:44px;align-items:center}
+.av2 .close .links{display:flex;flex-direction:column;margin-bottom:22px}
+.av2 .close .links a{display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+  padding:10px 0;border-bottom:1px solid var(--hair);font-size:13.5px;color:var(--ink-2)}
+.av2 .close .links a:last-child{border-bottom:0}
+.av2 .close .links a .g{font-family:var(--fig);font-size:14px;font-weight:600;color:var(--ink)}
+@media(max-width:820px){.av2 .close{grid-template-columns:1fr;gap:26px}}
+
+.av2 .cta{display:inline-flex;align-items:center;gap:9px;background:var(--ink);color:#fff;font-size:13.5px;font-weight:500;
+  padding:13px 22px;border-radius:12px;box-shadow:0 10px 24px -14px rgba(0,0,0,.8)}
+.av2 .cta .ar{color:var(--terra-bright)}
+
+/* ---------- MOTION ---------- */
+@media (prefers-reduced-motion:no-preference){
+  .av2 .rise{opacity:0;transform:translateY(12px);animation:rise .75s cubic-bezier(.2,.7,.2,1) forwards}
+  @keyframes rise{to{opacity:1;transform:none}}
+  .av2 .hoverlift{transition:transform .2s ease}
+  .av2 .hoverlift:hover{transform:translateY(-2px)}
+}
+
+.av2 footer{padding:48px 0 80px;font-size:11.5px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  border-top:1px solid var(--hair);margin-top:26px}
+
+/* ---------- NARROW ---------- */
+@media(max-width:820px){
+  .av2 .wrap{padding:0 18px}
+  .av2 section.ch{padding:42px 0}
+  .av2 .pad{padding:20px}.av2 .pad-lg{padding:22px}
+  .av2 .scroll-x{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -20px;padding:0 20px}
+  .av2 .scroll-x table.tb{min-width:540px}
+  .av2 .range .r{grid-template-columns:92px 1fr 50px;gap:10px}
+  .av2 .range .r .l{font-size:12px}
+  .av2 .col-split{height:340px}
+  .av2 .units .grid-u{grid-template-columns:repeat(14,1fr);gap:3px}
+  /* the strip cannot hold six captions on a phone, so it becomes a list */
+  .av2 .strip{height:auto;display:flex;flex-direction:column}
+  .av2 .strip .ax,.av2 .strip .stem,.av2 .strip .pt{display:none}
+  .av2 .strip .cap{position:static!important;transform:none!important;text-align:left;
+    display:flex;align-items:baseline;justify-content:space-between;gap:14px;
+    padding:11px 0;border-bottom:1px solid var(--hair);white-space:normal}
+  .av2 .strip .cap:last-child{border-bottom:0}
+  .av2 .strip .cap .f{order:2}
+  .av2 .strip .cap .n{order:1;font-size:13px;color:var(--ink)}
+  .av2 .mini .cp{font-size:10px}
+}
+@media(max-width:520px){
+  .av2 h1{font-size:30px}
+  .av2 .answer .num{font-size:52px}
+  .av2 .units .grid-u{grid-template-columns:repeat(10,1fr)}
+}
+
+/* =============================================================================
+   v3 SYSTEM LAYER  (2026-07-20)  , appended so the density overrides win.
+   The founder's four asks: density, icons, expanders, skimmable forms.
+   The look is frozen; everything here binds and tightens what exists.
+============================================================================= */
+
+/* ---------- 1. DENSITY ---------- */
+.av2{
+  --row:32px; --val-col:78px; --ico-rail:24px;
+  --zebra:rgba(0,0,0,.022); --grp-frame:var(--hair); --grp-rule:rgba(0,0,0,.05);
+}
+.av2 section.ch{padding:44px 0}
+.av2 .grid{gap:18px}
+.av2 .chhead{margin-bottom:22px;padding-bottom:13px}
+.av2 .pad{padding:22px} .av2 .pad-lg{padding:26px}
+.av2 .rows .r{padding:8px 0;min-height:var(--row);gap:14px;align-items:center}
+.av2 .rows .r .nm{font-size:13.5px} .av2 .rows .r .v{font-size:15px}
+.av2 .rows .r .nm .s{display:inline;font-size:11px;margin-left:7px;color:var(--muted)}
+/* numeric table columns hug their labels */
+.av2 table.tb th:not(:first-child),.av2 table.tb td:not(:first-child){width:1%;white-space:nowrap;padding-left:22px}
+.av2 table.tb td{padding:8px 0;font-size:14px}
+.av2 table.tb th{padding-bottom:9px}
+.av2 table.tb tbody tr:nth-child(even) td{background:var(--zebra)}
+.av2 .spec{gap:13px} .av2 .scale{gap:9px} .av2 .range{gap:10px}
+.av2 .steps .s{padding:9px 0} .av2 .stress .s{padding:10px 0} .av2 .runway .r{padding:9px 0}
+.av2 .late .l{padding:12px 0} .av2 .worlds .w{padding:17px 16px}
+
+/* ---------- THE STATBLOCK , the binding primitive ---------- */
+.av2 .statblock{border:1px solid var(--grp-frame);border-radius:11px;overflow:hidden;background:rgba(255,255,255,.5)}
+.av2 .statblock+.statblock{margin-top:20px}
+.av2 .statblock>.hd{display:flex;align-items:center;gap:9px;min-height:37px;padding:0 13px;
+  border-bottom:1px solid var(--grp-frame);background:rgba(0,0,0,.018);
+  font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+.av2 .statblock>.hd .gi{color:var(--n2)}
+.av2 .statblock .row{display:grid;grid-template-columns:var(--ico-rail) minmax(0,1fr) var(--val-col);
+  column-gap:9px;align-items:center;min-height:var(--row);padding:0 13px}
+.av2 .statblock.norail .row{grid-template-columns:minmax(0,1fr) var(--val-col)}
+.av2 .statblock .row+.row{box-shadow:inset 0 1px 0 var(--grp-rule)}
+.av2 .statblock .row:nth-of-type(even){background:var(--zebra)}
+.av2 .statblock .row .nm{font-size:13px;color:var(--ink);min-width:0}
+/* a rail row with no icon: its label still belongs in the content column, not the 24px rail */
+.av2 .statblock:not(.norail) .row>.nm:first-child{grid-column:2}
+.av2 .statblock .row .nm .s{font-size:11px;color:var(--muted);margin-left:6px}
+.av2 .statblock .row .v{font-family:var(--fig);font-variant-numeric:tabular-nums;text-align:right;
+  font-size:14.5px;font-weight:600;white-space:nowrap}
+.av2 .statblock .row .v.a{color:var(--terra-deep)}
+.av2 .statblock .row .v.neg{color:var(--muted)}
+.av2 .statblock .row .v .u{font-size:.78em;color:var(--muted);margin-left:1px;font-weight:500}
+.av2 .statblock .row .gi{color:var(--n2)}
+
+/* ---------- 2. ICONS ---------- */
+.av2 .gi{display:inline-block;vertical-align:middle;fill:none;stroke:currentColor;
+  stroke-linecap:round;stroke-linejoin:round;flex:none}
+.av2 .gi .a{stroke:var(--terra)} .av2 .gi .af{fill:var(--terra);stroke:none}
+.av2 .gi-22{width:22px;height:22px;stroke-width:1.9}
+.av2 .gi-16{width:16px;height:16px;stroke-width:2.4}
+.av2 .gi-13{width:13px;height:13px;stroke-width:2.8}
+.av2 .chhead .hd{align-items:center;gap:13px}
+.av2 .itile{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;flex:none;
+  background:rgba(0,0,0,.035);border:1px solid var(--hair);color:var(--ink)}
+.av2 .itile .gi .a{stroke:var(--terra)} .av2 .itile .gi .af{fill:var(--terra)}
+.av2 .chhead .chnum{order:-1}
+
+/* ---------- 3. EXPANDER , "the working" ---------- */
+.av2 .more{border-top:1px solid var(--hair);background:rgba(0,0,0,.015);
+  margin:20px -22px -22px;overflow:clip;border-radius:0 0 var(--r-md) var(--r-md)}
+.av2 .more>summary{display:flex;align-items:center;gap:11px;min-height:44px;padding:0 22px;
+  cursor:pointer;font-size:12.5px;font-weight:500;color:var(--ink-2);list-style:none;user-select:none}
+.av2 .more>summary::-webkit-details-marker{display:none}
+.av2 .more>summary .gi{color:var(--muted)}
+.av2 .more>summary .ct{margin-left:auto;font-family:var(--fig);font-size:11.5px;color:var(--muted)}
+.av2 .more>summary .cv{width:15px;height:15px;color:var(--muted);transition:transform .28s cubic-bezier(.2,.7,.2,1)}
+.av2 .more[open]>summary .cv{transform:rotate(180deg)}
+.av2 .more>summary:hover{color:var(--ink)}
+.av2 .more .body{padding:4px 22px 22px}
+.av2 .more .body .note:first-child{margin-top:0}
+@media print{.av2 .more .body{display:block}}
+@media(prefers-reduced-motion:reduce){.av2 .more>summary .cv{transition:none}}
+
+/* ---------- 4. NEW CELL FORMS ---------- */
+
+/* .take , the honest verdict band */
+.av2 .take{display:flex;flex-direction:column;padding:18px 20px;border-radius:var(--r-md);
+  background:rgba(255,255,255,.62);border:1px solid var(--hair);box-shadow:inset 3px 0 0 var(--terra)}
+.av2 .take .v{font-size:16px;font-weight:500;line-height:1.4;color:var(--ink);max-width:62ch}
+.av2 .take .v b{color:var(--terra-deep);font-weight:600}
+.av2 .take .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
+.av2 .take .chip .gi{color:var(--n2)}
+
+/* .arc , three beats falling down a spine */
+.av2 .arc{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;position:relative}
+.av2 .arc::before{content:"";position:absolute;left:8%;right:8%;top:46px;height:2px;
+  background:linear-gradient(90deg,var(--n4),var(--terra));border-radius:2px}
+.av2 .arc .beat{text-align:center;padding:0 10px;position:relative}
+.av2 .arc .beat .dot{width:15px;height:15px;border-radius:50%;background:var(--n3);margin:39px auto 0;
+  border:3px solid var(--white);box-shadow:0 0 0 1px var(--n4);position:relative;z-index:1}
+.av2 .arc .beat:last-child .dot{background:var(--terra);box-shadow:0 0 0 1px var(--terra-line)}
+.av2 .arc .beat .n{font-family:var(--fig);font-size:30px;font-weight:600;line-height:1;margin-top:16px}
+.av2 .arc .beat:last-child .n{color:var(--terra-deep)}
+.av2 .arc .beat .k{font-size:12px;color:var(--ink-2);margin-top:7px;line-height:1.4}
+
+/* .tangible , three little pictures of one number */
+.av2 .tang{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border:1px solid var(--hair);border-radius:var(--r-md);overflow:hidden}
+.av2 .tang .c{padding:18px 16px;border-right:1px solid var(--hair);text-align:center}
+.av2 .tang .c:last-child{border-right:0}
+.av2 .tang .c .big{font-family:var(--fig);font-size:26px;font-weight:600;line-height:1}
+.av2 .tang .c .lab{margin-top:5px}
+.av2 .tang .c .pic{height:38px;display:grid;place-items:center;margin-top:12px}
+.av2 .tang .fill{width:100%;height:9px;border-radius:5px;background:rgba(0,0,0,.06);overflow:hidden}
+.av2 .tang .fill i{display:block;height:100%;background:var(--ink);border-radius:5px}
+.av2 .tang .disc{width:38px;height:38px;border-radius:50%;
+  background:conic-gradient(var(--terra) 0 var(--p,66%),rgba(0,0,0,.08) 0)}
+.av2 .tang .week{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;width:100%;max-width:120px}
+.av2 .tang .week i{aspect-ratio:1;border-radius:2px;background:rgba(0,0,0,.06)}
+.av2 .tang .week i.on{background:var(--ink)}
+
+/* .mixer , four dials to one answer */
+.av2 .mixer{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1.1fr;gap:0;
+  border:1px solid var(--hair);border-radius:var(--r-md);overflow:hidden;background:rgba(255,255,255,.55)}
+.av2 .mixer .dial{padding:16px 15px;border-right:1px solid var(--hair)}
+.av2 .mixer .dial .lab{margin-bottom:9px}
+.av2 .mixer .dial .cur{font-family:var(--fig);font-size:17px;font-weight:600;margin-bottom:11px}
+.av2 .mixer .dial input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;border-radius:2px;background:var(--n4);outline:none}
+.av2 .mixer .dial input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--ink);border:3px solid var(--white);box-shadow:0 1px 4px rgba(0,0,0,.3);cursor:pointer}
+.av2 .mixer .dial input[type=range]::-moz-range-thumb{width:15px;height:15px;border-radius:50%;background:var(--ink);border:3px solid #fff;cursor:pointer}
+.av2 .mixer .dial .ends{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:6px}
+.av2 .mixer .result{padding:16px 18px;background:linear-gradient(180deg,var(--terra-bright),var(--terra));color:#fff;display:flex;flex-direction:column;justify-content:center}
+.av2 .mixer .result .rl{font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;opacity:.85}
+.av2 .mixer .result .rn{font-family:var(--fig);font-size:34px;font-weight:600;line-height:1;margin-top:6px}
+.av2 .mixer .result .rs{font-size:12px;opacity:.9;margin-top:8px;line-height:1.4}
+@media(max-width:820px){.av2 .mixer{grid-template-columns:1fr 1fr}.av2 .mixer .dial:nth-child(2){border-right:0}.av2 .mixer .result{grid-column:1/-1}}
+
+/* .roster , a horizontal rota band */
+.av2 .roster{display:flex;flex-direction:column;gap:8px}
+.av2 .roster .role{display:grid;grid-template-columns:130px 1fr 62px;gap:12px;align-items:center}
+.av2 .roster .role .nm{font-size:13px;color:var(--ink-2);display:flex;align-items:center;gap:8px}
+.av2 .roster .role .track{position:relative;height:22px;border-radius:5px;background:rgba(0,0,0,.05);overflow:hidden}
+.av2 .roster .role .track i{position:absolute;top:0;bottom:0;background:var(--n3);border-radius:5px;
+  display:flex;align-items:center;padding-left:9px;color:#fff;font-family:var(--fig);font-size:11px;font-weight:600}
+.av2 .roster .role.lead .track i{background:var(--n1)}
+.av2 .roster .role .v{font-family:var(--fig);font-size:13.5px;font-weight:600;text-align:right}
+.av2 .roster .tot{display:grid;grid-template-columns:130px 1fr 62px;gap:12px;margin-top:6px;padding-top:11px;border-top:2px solid var(--ink)}
+.av2 .roster .tot .nm{font-size:13.5px;font-weight:600}
+.av2 .roster .tot .v{font-family:var(--fig);font-size:17px;font-weight:600;color:var(--terra-deep);text-align:right}
+
+/* .cascade , a cost waterfall to one total */
+.av2 .cascade{display:flex;flex-direction:column;gap:7px}
+.av2 .cascade .b{display:grid;grid-template-columns:158px 1fr 60px;gap:12px;align-items:center}
+.av2 .cascade .b .nm{font-size:12.5px;color:var(--ink-2)}
+.av2 .cascade .b .bar{position:relative;height:15px}
+.av2 .cascade .b .bar i{position:absolute;top:0;bottom:0;background:var(--n4);border-radius:3px}
+.av2 .cascade .b.rangeb .bar i{background:linear-gradient(90deg,var(--n5),var(--n3))}
+.av2 .cascade .b .v{font-family:var(--fig);font-size:12.5px;text-align:right}
+.av2 .cascade .b.total .bar i{background:var(--terra)}
+.av2 .cascade .b.total .nm,.av2 .cascade .b.total .v{font-weight:600;color:var(--terra-deep)}
+
+/* .year , stacked seasonality strips */
+.av2 .year{display:flex;flex-direction:column;gap:14px}
+.av2 .year .strip .strip-h{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:6px}
+.av2 .year .bars{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;align-items:end;height:66px}
+.av2 .year .bars .m{background:var(--n4);border-radius:2px 2px 0 0}
+.av2 .year .bars .m.peak{background:var(--terra)}
+.av2 .year .bars .m.low{background:var(--n5)}
+.av2 .year .axis-m{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;margin-top:6px;font-size:10px;color:var(--muted);text-align:center}
+
+/* .voices , human lines with a figure column */
+.av2 .voices{display:flex;flex-direction:column}
+.av2 .voices .q{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:start;padding:13px 0;border-bottom:1px solid var(--hair)}
+.av2 .voices .q:last-child{border-bottom:0}
+.av2 .voices .q .say{font-size:13.5px;line-height:1.5;color:var(--ink);max-width:48ch}
+.av2 .voices .q .say .who{display:block;font-size:11px;color:var(--muted);margin-top:5px;text-transform:uppercase;letter-spacing:.08em}
+.av2 .voices .q .fig{font-family:var(--fig);font-size:18px;font-weight:600;color:var(--terra-deep);text-align:right;white-space:nowrap}
+
+/* .drain , stepped survival funnel */
+.av2 .drain{display:flex;flex-direction:column;gap:0}
+.av2 .drain .step{display:flex;align-items:center;gap:14px;padding:3px 0}
+.av2 .drain .step .bar{height:34px;background:var(--n2);border-radius:4px;display:flex;align-items:center;
+  justify-content:flex-end;padding-right:11px;color:#fff;font-family:var(--fig);font-size:13px;font-weight:600}
+.av2 .drain .step:first-child .bar{background:var(--n1)}
+.av2 .drain .step .yr{width:56px;font-size:11.5px;color:var(--muted);flex:none}
+
+/* tile grid for the close */
+.av2 .tiles{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border:1px solid var(--hair);border-radius:var(--r-md);overflow:hidden}
+.av2 .tiles a{padding:15px 16px;border-right:1px solid var(--hair);border-bottom:1px solid var(--hair);display:flex;flex-direction:column;gap:7px;transition:background .15s}
+.av2 .tiles a:hover{background:rgba(0,0,0,.02)}
+.av2 .tiles a .t{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink)}
+.av2 .tiles a .g{font-family:var(--fig);font-size:15px;font-weight:600;color:var(--terra-deep)}
+@media(max-width:640px){.av2 .tiles{grid-template-columns:1fr 1fr}}
+
+/* a dark signature band, one per page max */
+.av2 .band{background:var(--ink);color:#fff;border-radius:var(--r-lg);padding:30px 32px;position:relative;overflow:hidden}
+.av2 .band .lab{color:rgba(255,255,255,.6)}
+.av2 .band .note{color:rgba(255,255,255,.78)}
+.av2 .band .note b{color:#fff}
+
+@media(max-width:820px){
+  .av2 .arc,.av2 .tang{grid-template-columns:1fr}
+  .av2 .arc::before{display:none}
+  .av2 .arc .beat{padding:14px 0;border-bottom:1px solid var(--hair)}
+  .av2 .arc .beat .dot{display:none}
+  .av2 .tang .c{border-right:0;border-bottom:1px solid var(--hair)}
+  .av2 .roster .role,.av2 .roster .tot,.av2 .cascade .b{grid-template-columns:92px 1fr 54px;gap:8px}
+}
+
+/* =============================================================================
+   v3 PHASE 2/3 FORMS  (city + country)  , 2026-07-21
+   The two named requests first: .eight (the scorecard "big column") and
+   .seasonband (the year-long people variability the city page was missing).
+============================================================================= */
+
+/* ---------- .eight , the scorecard lattice (the "big column") ---------- */
+/* Eight readings, each a figure with a dot showing where it sits against the
+   national line. One object, read top to bottom in two seconds. */
+/* v15. Two founder notes on this component, 2026-07-26: "it is just very wide,
+   it does not need to be this wide" and "the icons need to be bigger". At the
+   full 996px of the wrap, short readings like "Days to start" left a dead gutter
+   between the name and the axis, and an 18px icon in a 26px rail read as lint.
+   Capping the object and enlarging the rail fixes both without touching the
+   encoding: the axis keeps its full span, it just spans less dead air. */
+.av2 .eight{border:1px solid var(--grp-frame);border-radius:12px;overflow:hidden;background:rgba(255,255,255,.55);
+  max-width:880px;margin-right:auto}
+.av2 .eight .e{display:grid;grid-template-columns:32px minmax(0,1fr) 1fr var(--val-col);gap:12px;align-items:center;
+  min-height:52px;padding:0 15px}
+.av2 .eight .e+.e{box-shadow:inset 0 1px 0 var(--grp-rule)}
+.av2 .eight .e:nth-child(even){background:var(--zebra)}
+.av2 .eight .e .gi{color:var(--n2)}
+.av2 .eight .e .nm{font-size:13px;color:var(--ink)}
+.av2 .eight .e .nm .s{display:block;font-size:10.5px;color:var(--muted);margin-top:1px}
+.av2 .eight .e .ax{position:relative;height:22px}
+.av2 .eight .e .ax .base{position:absolute;left:0;right:0;top:50%;height:1px;background:var(--line)}
+.av2 .eight .e .ax .nat{position:absolute;top:calc(50% - 6px);width:1px;height:12px;background:var(--terra);left:50%}
+.av2 .eight .e .ax .dot{position:absolute;top:50%;width:11px;height:11px;border-radius:50%;background:var(--ink);
+  transform:translate(-50%,-50%);border:2.5px solid var(--white);box-shadow:0 0 0 1px var(--line)}
+.av2 .eight .e .ax .dot.hi{background:var(--terra);box-shadow:0 0 0 1px var(--terra-line)}
+.av2 .eight .e .v{font-family:var(--fig);font-variant-numeric:tabular-nums;text-align:right;font-size:15px;font-weight:600;white-space:nowrap}
+.av2 .eight .e .v .u{font-size:.78em;color:var(--muted);margin-left:1px;font-weight:500}
+.av2 .eight .e.lead{box-shadow:inset 3px 0 0 var(--terra)}
+.av2 .eight .cap{display:flex;justify-content:space-between;padding:8px 15px;font-size:10px;color:var(--muted);
+  border-top:1px solid var(--grp-frame);background:rgba(0,0,0,.015)}
+@media(max-width:560px){.av2 .eight .e{grid-template-columns:22px minmax(0,1fr) var(--val-col);gap:9px}.av2 .eight .e .ax{display:none}}
+
+/* ---------- .seasonband , two series through the year (named) ---------- */
+/* Residents as bars, visitors as a line, each to its own mean, so the two
+   peaks in different months are the whole story at a glance. */
+.av2 .seasonband{position:relative}
+.av2 .seasonband .plot{position:relative;height:150px;border-bottom:1px solid var(--line)}
+.av2 .seasonband .bars{position:absolute;inset:0;display:grid;grid-template-columns:repeat(12,1fr);gap:4px;align-items:end}
+.av2 .seasonband .bars .m{background:var(--n4);border-radius:2px 2px 0 0}
+.av2 .seasonband .bars .m.pk{background:var(--n2)}
+.av2 .seasonband svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.av2 .seasonband .vis{fill:none;stroke:var(--terra);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.av2 .seasonband .visdot{fill:var(--terra);stroke:var(--white);stroke-width:2}
+.av2 .seasonband .axis-m{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin-top:6px;font-size:10px;color:var(--muted);text-align:center}
+.av2 .seasonband .key{display:flex;gap:18px;margin-top:14px;font-size:12px;color:var(--ink-2)}
+.av2 .seasonband .key .k{display:inline-flex;align-items:center;gap:7px}
+.av2 .seasonband .key .k .sw{width:12px;height:12px;border-radius:3px;flex:none}
+.av2 .seasonband .key .k .ln{width:14px;height:2px;border-radius:2px;background:var(--terra);flex:none}
+.av2 .seasonband{overflow:hidden}
+.av2 .seasonband .pill{position:absolute;transform:translateX(-50%);top:-6px;font-family:var(--fig);font-size:11px;font-weight:600;
+  background:rgba(255,255,255,.9);padding:1px 7px;border-radius:999px;border:1px solid var(--hair);white-space:nowrap;z-index:2}
+.av2 .seasonband .pill.a{color:var(--terra-deep);border-color:var(--terra-line)}
+
+/* ---------- .slope , two-axis slope (trades keep / neighbours) ---------- */
+.av2 .slope{position:relative;height:220px;margin:8px 0}
+.av2 .slope .col{position:absolute;top:0;bottom:26px;width:1px;background:var(--line)}
+.av2 .slope .col.l{left:26%} .av2 .slope .col.r{right:26%}
+.av2 .slope .colh{position:absolute;top:-4px;font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.av2 .slope .colh.l{left:26%;transform:translateX(-50%)} .av2 .slope .colh.r{right:26%;transform:translateX(50%)}
+.av2 .slope svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.av2 .slope .ln{fill:none;stroke:var(--n4);stroke-width:1.5}
+.av2 .slope .ln.hi{stroke:var(--terra);stroke-width:2.4}
+.av2 .slope .nd{fill:var(--n3)} .av2 .slope .nd.hi{fill:var(--terra)}
+.av2 .slope .lbl{position:absolute;font-size:11.5px;color:var(--ink-2);white-space:nowrap;transform:translateY(-50%)}
+.av2 .slope .lbl.l{right:76%;text-align:right} .av2 .slope .lbl.r{left:76%}
+.av2 .slope .lbl.hi{color:var(--terra-deep);font-weight:600}
+.av2 .slope .lbl b{font-family:var(--fig);font-weight:600}
+
+/* ---------- .termline , the lease timeline ---------- */
+.av2 .termline{position:relative;height:96px;margin:20px 0 8px}
+.av2 .termline .tr{position:absolute;left:0;right:0;top:38px;height:3px;border-radius:2px;background:var(--n5)}
+.av2 .termline .free{position:absolute;top:38px;height:3px;background:var(--n3);border-radius:2px}
+.av2 .termline .yr{position:absolute;top:34px;width:11px;height:11px;border-radius:50%;background:var(--n2);
+  transform:translate(-50%,-9%);border:2.5px solid var(--white);box-shadow:0 0 0 1px var(--n4)}
+.av2 .termline .yr.a{background:var(--terra);box-shadow:0 0 0 1px var(--terra-line)}
+.av2 .termline .cap{position:absolute;transform:translateX(-50%);text-align:center;white-space:nowrap}
+.av2 .termline .cap.up{top:0} .av2 .termline .cap.dn{top:58px}
+.av2 .termline .cap .f{display:block;font-family:var(--fig);font-size:13px;font-weight:600}
+.av2 .termline .cap.a .f{color:var(--terra-deep)}
+.av2 .termline .cap .n{display:block;font-size:10.5px;color:var(--muted)}
+.av2 .termline .scale{position:absolute;left:0;right:0;top:58px;display:flex;justify-content:space-between;font-size:9.5px;color:var(--muted)}
+
+/* ---------- .fitgrid , which area suits which trade ---------- */
+.av2 .fitgrid{overflow-x:auto}
+.av2 .fitgrid table{border-collapse:collapse;width:100%;min-width:440px}
+.av2 .fitgrid th{font-size:10px;font-weight:600;color:var(--muted);padding:6px 4px;text-align:center;vertical-align:bottom}
+.av2 .fitgrid th:first-child{text-align:left}
+.av2 .fitgrid td{text-align:center;padding:0;height:34px;border:1px solid var(--hair-2)}
+.av2 .fitgrid td:first-child{text-align:left;font-size:12px;color:var(--ink);padding:0 10px;white-space:nowrap;border:0}
+.av2 .fitgrid .d{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--n4)}
+.av2 .fitgrid .d.mid{background:var(--n2)}
+.av2 .fitgrid .d.hi{background:var(--terra);width:12px;height:12px}
+.av2 .fitgrid tr:hover td{background:var(--zebra)}
+
+/* ---------- .hoodcards , district rows ---------- */
+.av2 .hoodcards{display:flex;flex-direction:column;border:1px solid var(--grp-frame);border-radius:12px;overflow:hidden}
+.av2 .hoodcards a{display:grid;grid-template-columns:24px minmax(0,1.3fr) 1fr 56px;gap:12px;align-items:center;
+  min-height:54px;padding:0 15px;transition:background .15s}
+.av2 .hoodcards a+a{box-shadow:inset 0 1px 0 var(--grp-rule)}
+.av2 .hoodcards a:hover{background:var(--zebra)}
+.av2 .hoodcards a .gi{color:var(--n2)}
+.av2 .hoodcards a .nm{font-size:14px;font-weight:500;color:var(--ink)}
+.av2 .hoodcards a .nm .s{display:block;font-size:11px;color:var(--muted);font-weight:400;margin-top:1px}
+.av2 .hoodcards a .bar{position:relative;height:6px;border-radius:3px;background:rgba(0,0,0,.06)}
+.av2 .hoodcards a .bar i{position:absolute;inset:0 auto 0 0;border-radius:3px;background:var(--n3)}
+.av2 .hoodcards a .bar i.hi{background:var(--terra)}
+.av2 .hoodcards a .v{font-family:var(--fig);font-size:13.5px;font-weight:600;text-align:right}
+@media(max-width:560px){.av2 .hoodcards a{grid-template-columns:24px minmax(0,1fr) 56px}.av2 .hoodcards a .bar{display:none}}
+
+/* ---------- .trendrow , ten-year small multiples ---------- */
+.av2 .trendrow{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:0;border:1px solid var(--grp-frame);border-radius:12px;overflow:hidden}
+.av2 .trendrow .t{padding:15px 16px;border-right:1px solid var(--grp-frame)}
+.av2 .trendrow .t:last-child{border-right:0}
+.av2 .trendrow .t .h{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--muted);margin-bottom:6px}
+.av2 .trendrow .t .big{font-family:var(--fig);font-size:19px;font-weight:600}
+.av2 .trendrow .t .big.up{color:var(--ink)} .av2 .trendrow .t .big.dn{color:var(--terra-deep)}
+.av2 .trendrow .t svg{width:100%;height:32px;margin-top:8px;overflow:visible}
+.av2 .trendrow .t .spark{fill:none;stroke:var(--n3);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.av2 .trendrow .t .spark.a{stroke:var(--terra)}
+.av2 .trendrow .t .sd{fill:var(--terra)}
+@media(max-width:640px){.av2 .trendrow{grid-template-columns:1fr 1fr}.av2 .trendrow .t:nth-child(2){border-right:0}}
+
+/* ---------- .lensgrid , the nine-lens 3x3 ---------- */
+.av2 .lensgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border:1px solid var(--grp-frame);border-radius:12px;overflow:hidden}
+.av2 .lensgrid .cell{padding:15px 16px;border-right:1px solid var(--grp-frame);border-bottom:1px solid var(--grp-frame)}
+.av2 .lensgrid .cell:nth-child(3n){border-right:0}
+.av2 .lensgrid .cell:nth-last-child(-n+3){border-bottom:0}
+.av2 .lensgrid .cell .h{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink);margin-bottom:9px}
+.av2 .lensgrid .cell .h .gi{color:var(--n2)}
+.av2 .lensgrid .cell .pips{display:flex;gap:4px}
+.av2 .lensgrid .cell .pips i{flex:1;height:5px;border-radius:2px;background:rgba(0,0,0,.08)}
+.av2 .lensgrid .cell .pips i.on{background:var(--n2)}
+.av2 .lensgrid .cell .pips i.key{background:var(--terra)}
+.av2 .lensgrid .cell .vd{font-size:11.5px;color:var(--muted);margin-top:8px}
+.av2 .lensgrid .cell .vd b{color:var(--ink);font-weight:500}
+@media(max-width:560px){.av2 .lensgrid{grid-template-columns:1fr 1fr}.av2 .lensgrid .cell:nth-child(3n){border-right:1px solid var(--grp-frame)}.av2 .lensgrid .cell:nth-child(2n){border-right:0}}
+
+/* ---------- .matrix , the licence grid ---------- */
+.av2 .matrix{overflow-x:auto}
+.av2 .matrix table{border-collapse:collapse;width:100%;min-width:460px;font-size:12.5px}
+/* v14. The grid already scrolled, but said nothing about it. At 390px the
+   licence table is 460px wide inside a ~330px panel, so "Late hours" cut to
+   "Late" and "Special"/"Total" left the screen with no cue that they were
+   still reachable. Content that IS reachable but READS as clipped is the same
+   defect to a reader as content that is genuinely lost. A thin persistent
+   scrollbar plus a right-edge fade says "there is more this way"; both are
+   scoped to the width where the overflow actually occurs, so the desktop
+   render is untouched. */
+@media(max-width:820px){
+  .av2 .matrix{scrollbar-width:thin;scrollbar-color:var(--n4) transparent;
+    -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 22px),transparent);
+            mask-image:linear-gradient(to right,#000 calc(100% - 22px),transparent)}
+  .av2 .matrix::-webkit-scrollbar{height:4px}
+  .av2 .matrix::-webkit-scrollbar-thumb{background:var(--n4);border-radius:2px}
+  .av2 .matrix::-webkit-scrollbar-track{background:transparent}
+}
+.av2 .matrix th{font-size:10px;font-weight:600;color:var(--muted);padding:7px 8px;text-align:center;vertical-align:bottom}
+.av2 .matrix th:first-child{text-align:left}
+.av2 .matrix td{text-align:center;padding:8px;border-top:1px solid var(--hair)}
+.av2 .matrix td:first-child{text-align:left;color:var(--ink)}
+.av2 .matrix tbody tr:nth-child(even){background:var(--zebra)}
+.av2 .matrix .mk{display:inline-block;width:14px;height:14px;line-height:14px;font-family:var(--fig);font-size:11px}
+.av2 .matrix .req{color:var(--terra-deep);font-weight:600}
+.av2 .matrix .no{color:var(--muted)}
+.av2 .matrix .slow{color:var(--n1)}
+.av2 .matrix td.tot{font-family:var(--fig);font-weight:600;color:var(--ink)}
+
+/* ---------- .tline , the opening timeline (multi-lane) ---------- */
+.av2 .tline{display:flex;flex-direction:column;gap:7px;margin:6px 0}
+.av2 .tline .lane{display:grid;grid-template-columns:140px 1fr 58px;gap:12px;align-items:center}
+.av2 .tline .lane .nm{font-size:12.5px;color:var(--ink-2);display:flex;align-items:center;gap:8px}
+.av2 .tline .lane .track{position:relative;height:16px}
+.av2 .tline .lane .track i{position:absolute;top:0;bottom:0;background:var(--n3);border-radius:3px}
+.av2 .tline .lane.slow .track i{background:var(--terra)}
+.av2 .tline .lane .v{font-family:var(--fig);font-size:12.5px;font-weight:600;text-align:right}
+.av2 .tline .scale{display:grid;grid-template-columns:140px 1fr 58px;gap:12px;margin-top:2px}
+.av2 .tline .scale .s{display:flex;justify-content:space-between;font-size:9.5px;color:var(--muted)}
+
+/* ---------- .reach , concentric catchment arcs ---------- */
+.av2 .reachwrap{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
+.av2 .reach{position:relative;aspect-ratio:1;max-width:230px;margin:0 auto}
+.av2 .reach svg{width:100%;height:100%}
+.av2 .reach .ring{fill:none;stroke:var(--n4);stroke-width:1.5}
+.av2 .reach .ring.a{stroke:var(--terra);stroke-width:2}
+.av2 .reach .rl{font-family:var(--fig);font-size:11px;font-weight:600;fill:var(--ink)}
+.av2 .reach .rn{font-size:9px;fill:var(--muted)}
+.av2 .reach .cd{fill:var(--terra)}
+@media(max-width:560px){.av2 .reachwrap{grid-template-columns:1fr}}
+
+/* ---------- .quad , the opportunity scatter ---------- */
+.av2 .quad{position:relative;aspect-ratio:1.5;border:1px solid var(--hair);border-radius:10px;overflow:hidden;background:rgba(255,255,255,.4)}
+.av2 .quad .cross{position:absolute;background:var(--line)}
+.av2 .quad .cross.h{left:0;right:0;top:50%;height:1px} .av2 .quad .cross.v{top:0;bottom:0;left:50%;width:1px}
+.av2 .quad .zone{position:absolute;left:50%;right:0;top:0;bottom:50%;background:var(--terra-soft)}
+.av2 .quad .pt{position:absolute;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;
+  transform:translate(-50%,-50%);background:var(--white);border:1px solid var(--hair);box-shadow:var(--shadow-panel)}
+.av2 .quad .pt.hi{border-color:var(--terra-line)}
+.av2 .quad .pt .gi{color:var(--n1)} .av2 .quad .pt.hi .gi{color:var(--terra)}
+.av2 .quad .axl{position:absolute;font-size:10px;color:var(--muted)}
+
+/* ---------- .zonecard , self-omitting one-liner ---------- */
+.av2 .zonecard{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:var(--r-md);
+  background:rgba(0,0,0,.02);border:1px dashed var(--line)}
+.av2 .zonecard .gi{color:var(--muted);flex:none}
+.av2 .zonecard .t{font-size:13.5px;color:var(--ink-2)}
+.av2 .zonecard .t b{color:var(--ink);font-weight:500}
+
+/* =============================================================================
+   v4 UPGRADE LAYER (2026-07-21) , answers the founder's round-3 feedback.
+   Appended last so it wins by source order. The look is ratified; this raises
+   the readability floor, fixes the chrome, and adds the new mechanics.
+============================================================================= */
+
+.av2{
+  --data-fill:rgba(255,255,255,.965);
+  --halo:0 0 1px rgba(247,247,248,.72), 0 1px 10px rgba(247,247,248,.92);
+  --w-read:640px; --w-col:780px;
+  --ico-rail:26px;
+}
+
+/* ---------- 1. DATA SURFACES ARE NEAR-OPAQUE (glass stays on the frame) ---------- */
+.av2 .panel,.av2 .statblock,.av2 .eight,.av2 .mixer,.av2 .take,.av2 .tang,.av2 .calc,.av2 .wealth,.av2 .archetypes,.av2 .hoodcards,.av2 .trendrow,.av2 .lensgrid,.av2 .tiles,.av2 .worlds,.av2 .ctl{background:var(--data-fill)}
+.av2 .eight,.av2 .mixer,.av2 .take,.av2 .tang,.av2 .calc{backdrop-filter:blur(8px) saturate(1.05);-webkit-backdrop-filter:blur(8px) saturate(1.05)}
+.av2 .band{background:var(--ink)}
+
+/* ---------- 2. TEXT CANNOT SPILL ITS FRAME ---------- */
+.av2 .grid>*,.av2 .statblock .row>*,.av2 .eight .e>*,.av2 .calc .var>*{min-width:0}
+.av2 p,.av2 .note,.av2 .texture,.av2 .eight .e .nm,.av2 .statblock .row .nm,.av2 .voices .q .say,.av2 .hoodcards a .nm,.av2 .late .l .t,.av2 .lensgrid .cell .vd{overflow-wrap:anywhere}
+.av2 .slope,.av2 .seasonband,.av2 .strip,.av2 .touryear,.av2 .quad,.av2 .reach{overflow:hidden}
+.av2 .col-split .seg .nm{white-space:normal;line-height:1.2}
+
+/* ---------- 3. THE PLUS EXPANDER (was an invisible chevron) ---------- */
+.av2 .more>summary{display:flex;align-items:center;gap:13px;min-height:52px;padding:0 22px;cursor:pointer}
+.av2 .more>summary .cv{display:none}
+.av2 .exp{flex:none;width:27px;height:27px;border-radius:8px;position:relative;
+  background:var(--terra-soft);border:1px solid var(--terra-line);transition:background .2s}
+.av2 .exp i::before,.av2 .exp i::after{content:"";position:absolute;top:50%;left:50%;width:13px;height:2px;
+  border-radius:1px;background:var(--terra-deep);transform:translate(-50%,-50%);transition:transform .28s,background .2s}
+.av2 .exp i::after{transform:translate(-50%,-50%) rotate(90deg)}
+.av2 .more[open] .exp{background:var(--terra);border-color:var(--terra)}
+.av2 .more[open] .exp i{transform:rotate(45deg)}
+.av2 .more[open] .exp i::before,.av2 .more[open] .exp i::after{background:#fff}
+.av2 .more>summary:hover .exp{background:var(--terra);border-color:var(--terra)}
+.av2 .more>summary:hover .exp i::before,.av2 .more>summary:hover .exp i::after{background:#fff}
+@media(prefers-reduced-motion:reduce){.av2 .exp,.av2 .exp i,.av2 .exp i::before,.av2 .exp i::after{transition:none}}
+
+/* ---------- 6/7/8. CHROME: number, head icon, row glyphs ---------- */
+.av2 .chnum{order:-1;font-family:var(--fig);font-size:26px;font-weight:600;line-height:1;
+  letter-spacing:-.01em;color:var(--terra);font-variant-numeric:tabular-nums}
+.av2 .itile{width:40px;height:40px;border-radius:11px}
+.av2 .gi-24{width:24px;height:24px;stroke-width:1.85}
+.av2 .gi-18{width:18px;height:18px;stroke-width:2.2}
+.av2 .chhead .hd{gap:14px}
+
+/* ---------- 4. WIDTH DISCIPLINE ---------- */
+.av2 section.ch>.eight,.av2 section.ch>.hoodcards,.av2 section.ch>.scale,.av2 section.ch>.strip,.av2 section.ch>.zonecard,.av2 section.ch>.readcol{max-width:var(--w-col)}
+.av2 section.ch>.rows,.av2 section.ch>.voices,.av2 section.ch>.late,.av2 section.ch>.statblock,.av2 section.ch>.take{max-width:var(--w-read)}
+.av2 .full{max-width:none!important;width:100%}
+@media(max-width:820px){.av2 section.ch>*{max-width:none}}
+
+/* ---------- THE SKYLINE BAND (scoped to the hero, then paper) ---------- */
+/* A fixed full-page layer can never fade on scroll, because every section
+   passes the top of the viewport where a fixed veil is lightest. So the photo
+   is anchored to the top of the document and genuinely ends below the hero. */
+.av2 .place{display:none}
+.av2 .skyline{position:absolute;top:0;left:0;right:0;height:640px;z-index:0;pointer-events:none;
+  overflow:hidden}
+.av2 .skyline::before{content:"";position:absolute;inset:0;
+  /* london.jpeg is the FALLBACK layer, and it is a decorative band rendered at
+     opacity .5 under grayscale(.6) contrast(.82) and a paper veil, so it is
+     encoded for what is actually shown: grayscale, 1100px, q52 = 110KB against
+     the 3.0MB source PNG. 97% lighter, visually identical through the veil.
+     The real photograph (_skyline.jpeg) still takes over the moment it lands
+     and will need its own pass. */
+  background-image:url(/spine/_skyline.jpeg),url(/spine/london.jpeg);
+  background-size:cover,cover;background-position:center 38%,center top;background-repeat:no-repeat,no-repeat;
+  filter:grayscale(.6) contrast(.82);opacity:.5}
+.av2 .skyline::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,
+    rgba(247,247,248,.34) 0%, rgba(247,247,248,.70) 52%, var(--paper) 100%)}
+
+/* ---------- 22. THE EIGHT, WITH A READABLE RULER ---------- */
+/* Must track .eight .e exactly, or the header labels drift off their columns. */
+.av2 .eight .rulerhd{display:grid;grid-template-columns:32px minmax(0,1fr) 1fr var(--val-col);gap:12px;
+  padding:9px 15px;border-bottom:1px solid var(--grp-frame);background:rgba(0,0,0,.02)}
+.av2 .eight .rulerhd .sc{display:flex;justify-content:space-between;font-size:9.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted)}
+.av2 .eight .rulerhd .sc b{color:var(--terra-deep);font-weight:600}
+.av2 .eight .e .ax .base{background:var(--n5);height:2px;border-radius:2px}
+.av2 .eight .e .ax .nat{width:2px;height:16px;top:calc(50% - 8px);background:var(--terra);opacity:.55}
+.av2 .eight .e .ax .stub{position:absolute;top:50%;height:2px;background:var(--n3);transform:translateY(-50%);border-radius:2px}
+.av2 .eight .e .ax .dot{width:12px;height:12px;background:var(--n1);box-shadow:0 0 0 1px var(--n4)}
+.av2 .eight .e .ax .dot.hi{background:var(--terra);box-shadow:0 0 0 1px var(--terra-line)}
+.av2 .eight .e.lead{box-shadow:none}
+
+/* ---------- 27. TWELVE READINGS AS ONE SORTED COLUMN ---------- */
+.av2 .readcol{border:1px solid var(--grp-frame);border-radius:12px;overflow:hidden;background:var(--data-fill)}
+.av2 .readcol .rhd{display:grid;grid-template-columns:26px minmax(0,1fr) 1.15fr 92px;gap:12px;padding:9px 15px;
+  border-bottom:1px solid var(--grp-frame);background:rgba(0,0,0,.02);
+  font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.av2 .readcol .rhd .sc{display:flex;justify-content:space-between}
+.av2 .readcol .rr{display:grid;grid-template-columns:26px minmax(0,1fr) 1.15fr 92px;gap:12px;align-items:center;
+  min-height:38px;padding:0 15px}
+.av2 .readcol .rr+.rr{box-shadow:inset 0 1px 0 var(--grp-rule)}
+/* v16. Zebra was `nth-child(even)`, which counted every child. Once group
+   headers were interleaved the stripes drifted and restarted arbitrarily, so
+   the JS now marks alternate READINGS explicitly and the stripe follows the
+   data instead of the DOM position. */
+.av2 .readcol .rr.alt{background:var(--zebra)}
+/* The group label. Says which question the readings under it answer, so
+   "Paying by card" no longer sits beside "Borrowing to expand" with nothing
+   between them. Quiet by design: it is a signpost, not a finding. */
+.av2 .readcol .rgrp{font-size:9.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--muted);padding:14px 15px 6px;background:transparent}
+.av2 .readcol .rgrp+.rr{box-shadow:none}
+.av2 .readcol .rr .gi{color:var(--n2)}
+.av2 .readcol .rr .nm{font-size:13px}
+.av2 .readcol .rr .tk{position:relative;height:6px;border-radius:3px;background:rgba(0,0,0,.055)}
+.av2 .readcol .rr .tk i{position:absolute;top:0;bottom:0;left:0;border-radius:3px;background:var(--n3)}
+.av2 .readcol .rr.hard .tk i{background:var(--terra)}
+.av2 .readcol .rr .v{font-family:var(--fig);font-size:13.5px;font-weight:600;text-align:right;white-space:nowrap}
+.av2 .readcol .rr.hard .v{color:var(--terra-deep)}
+
+/* ---------- 26. THE HEXAGON (6 qualities, all axes one direction) ---------- */
+.av2 .hexwrap{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:center}
+.av2 .hexlens{position:relative;max-width:340px;margin:0 auto;width:100%}
+.av2 .hexlens svg{width:100%;height:auto;overflow:visible}
+.av2 .hexlens .web{fill:none;stroke:var(--hair);stroke-width:1}
+.av2 .hexlens .spoke{stroke:var(--hair);stroke-width:1}
+.av2 .hexlens .shape{fill:rgba(194,58,34,.13);stroke:var(--terra);stroke-width:2.2;stroke-linejoin:round}
+.av2 .hexlens .nd{fill:var(--terra)}
+.av2 .hexlens .axl{font-family:var(--sans);font-size:11px;font-weight:500;fill:var(--ink-2)}
+.av2 .hexlens .axv{font-family:var(--fig);font-size:11px;font-weight:600;fill:var(--ink)}
+@media(max-width:820px){.av2 .hexwrap{grid-template-columns:1fr}}
+
+/* ---------- 23. TOURISTS THROUGH THE YEAR (half width, slim bars) ---------- */
+.av2 .touryear{position:relative}
+.av2 .touryear .plot{position:relative;height:132px;border-bottom:1px solid var(--line)}
+.av2 .touryear .bars{position:absolute;inset:0;display:grid;grid-template-columns:repeat(12,1fr);
+  gap:9px;align-items:end;padding:0 4px}
+.av2 .touryear .bars .m{background:var(--n4);border-radius:2px 2px 0 0}
+.av2 .touryear .bars .m.pk{background:var(--terra)}
+.av2 .touryear .avg{position:absolute;left:0;right:0;height:1px;background:var(--ink);opacity:.55}
+.av2 .touryear .avg::after{content:"100 , the year average";position:absolute;right:0;top:-15px;
+  font-family:var(--fig);font-size:10px;color:var(--ink-2);background:var(--data-fill);padding:0 5px}
+.av2 .touryear .axis-m{display:grid;grid-template-columns:repeat(12,1fr);gap:9px;margin-top:6px;padding:0 4px;
+  font-size:10px;color:var(--muted);text-align:center}
+.av2 .statcluster{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--grp-frame);
+  border-radius:11px;overflow:hidden}
+.av2 .statcluster .s{padding:13px 15px;border-right:1px solid var(--grp-frame);border-bottom:1px solid var(--grp-frame)}
+.av2 .statcluster .s:nth-child(2n){border-right:0}
+.av2 .statcluster .s:nth-last-child(-n+2){border-bottom:0}
+.av2 .statcluster .s .n{font-family:var(--fig);font-size:20px;font-weight:600;line-height:1}
+.av2 .statcluster .s .k{font-size:11px;color:var(--muted);margin-top:5px;display:flex;align-items:center;gap:6px}
+
+/* ---------- 12. THE DWINDLE (money visibly shrinking) ---------- */
+.av2 .dwindle{display:flex;flex-direction:column;gap:10px}
+.av2 .dwindle .d{display:grid;grid-template-columns:150px 1fr;gap:14px;align-items:center}
+.av2 .dwindle .d .lb{font-size:12.5px;color:var(--ink-2)}
+.av2 .dwindle .d .lb b{display:block;font-family:var(--fig);font-size:15px;font-weight:600;color:var(--ink)}
+.av2 .dwindle .d .bar{height:34px;border-radius:5px;background:var(--n2);display:flex;align-items:center;
+  justify-content:flex-end;padding-right:12px;color:#fff;font-family:var(--fig);font-size:14px;font-weight:600}
+.av2 .dwindle .d:nth-child(2) .bar{background:var(--n3)}
+.av2 .dwindle .d.keep .bar{background:var(--terra)}
+.av2 .dwindle .d.keep .lb b{color:var(--terra-deep)}
+.av2 .dwindle .note-in{font-size:12px;color:var(--muted);margin-top:2px}
+
+/* ---------- 24. PERSONAS , WEALTH SPREAD + SAVINGS ---------- */
+.av2 .wealth{border:1px solid var(--grp-frame);border-radius:12px;overflow:hidden}
+.av2 .wealth .top{padding:18px}
+.av2 .wealth .spread{display:flex;height:34px;border-radius:6px;overflow:hidden;gap:2px}
+.av2 .wealth .spread i{display:flex;align-items:center;justify-content:center;color:#fff;
+  font-family:var(--fig);font-size:11px;font-weight:600}
+.av2 .wealth .lgd{display:flex;flex-wrap:wrap;gap:7px 16px;margin-top:13px}
+.av2 .wealth .lgd .k{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--ink-2)}
+.av2 .wealth .lgd .k .sw{width:11px;height:11px;border-radius:3px;flex:none}
+.av2 .wealth .lgd .k b{font-family:var(--fig);color:var(--ink);font-weight:600}
+.av2 .wealth .figs{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--grp-frame)}
+.av2 .wealth .figs .f{padding:14px 16px;border-right:1px solid var(--grp-frame)}
+.av2 .wealth .figs .f:last-child{border-right:0}
+.av2 .wealth .figs .f .n{font-family:var(--fig);font-size:20px;font-weight:600;line-height:1}
+.av2 .wealth .figs .f.a .n{color:var(--terra-deep)}
+.av2 .wealth .figs .f .k{font-size:11px;color:var(--muted);margin-top:5px;display:flex;align-items:center;gap:6px}
+@media(max-width:640px){.av2 .wealth .figs{grid-template-columns:1fr 1fr}}
+
+/* ---------- 24b. ARCHETYPE MIX ---------- */
+.av2 .archetypes{border:1px solid var(--grp-frame);border-radius:12px;overflow:hidden}
+.av2 .archetypes .mixbar{display:flex;height:26px;gap:2px;padding:14px 16px 0}
+.av2 .archetypes .mixbar i{border-radius:3px;cursor:pointer;transition:opacity .15s}
+.av2 .archetypes .mixbar i:hover{opacity:.75}
+.av2 .archetypes .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:14px;
+  border-top:1px solid var(--grp-frame)}
+.av2 .archetypes .pc{padding:13px 15px;border-right:1px solid var(--grp-frame);border-bottom:1px solid var(--grp-frame);
+  cursor:pointer;transition:background .15s;text-align:left;background:none;border-top:0;border-left:0;font:inherit}
+.av2 .archetypes .pc:nth-child(3n){border-right:0}
+.av2 .archetypes .pc:hover,.av2 .archetypes .pc.on{background:var(--zebra)}
+.av2 .archetypes .pc.on{box-shadow:inset 3px 0 0 var(--terra)}
+.av2 .archetypes .pc .hd2{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--ink)}
+.av2 .archetypes .pc .hd2 .gi{color:var(--n2)}
+.av2 .archetypes .pc .sh{display:block;font-family:var(--fig);font-size:15px;font-weight:600;margin-top:6px}
+.av2 .archetypes .pc .sp{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+.av2 .archetypes .detail{padding:18px;border-top:1px solid var(--grp-frame);background:rgba(0,0,0,.018)}
+.av2 .archetypes .detail .dh{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600}
+.av2 .archetypes .detail .dg{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:14px;
+  border:1px solid var(--grp-frame);border-radius:9px;overflow:hidden;background:var(--white)}
+.av2 .archetypes .detail .dg .c{padding:11px 13px;border-right:1px solid var(--grp-frame)}
+.av2 .archetypes .detail .dg .c:last-child{border-right:0}
+.av2 .archetypes .detail .dg .c .n{font-family:var(--fig);font-size:16px;font-weight:600;line-height:1}
+.av2 .archetypes .detail .dg .c .k{font-size:10.5px;color:var(--muted);margin-top:4px}
+@media(max-width:820px){.av2 .archetypes .cards{grid-template-columns:1fr 1fr}.av2 .archetypes .pc:nth-child(3n){border-right:1px solid var(--grp-frame)}.av2 .archetypes .pc:nth-child(2n){border-right:0}.av2 .archetypes .detail .dg{grid-template-columns:1fr 1fr}}
+
+/* ---------- 9/15. THE CALCULATOR (merged, contextual, with leverage) ---------- */
+.av2 .calc{border:1px solid var(--grp-frame);border-radius:14px;overflow:hidden}
+.av2 .calc .chd{display:flex;align-items:center;gap:11px;padding:13px 18px;border-bottom:1px solid var(--grp-frame);
+  background:rgba(0,0,0,.02)}
+.av2 .calc .chd .t{font-size:14px;font-weight:600;display:flex;align-items:center;gap:9px}
+.av2 .calc .chd .hint{margin-left:auto;display:inline-flex;align-items:center;gap:7px;font-size:11.5px;color:var(--terra-deep);
+  background:var(--terra-soft);border:1px solid var(--terra-line);border-radius:999px;padding:4px 11px}
+.av2 .calc .chd .rst{margin-left:10px;font-size:11.5px;color:var(--muted);background:none;border:1px solid var(--hair);
+  border-radius:999px;padding:4px 11px;cursor:pointer;font-family:inherit}
+.av2 .calc .chd .rst:hover{color:var(--ink);border-color:var(--line)}
+.av2 .calc .body2{display:grid;grid-template-columns:1.25fr .95fr;gap:0}
+.av2 .calc .vars{padding:6px 18px 16px;border-right:1px solid var(--grp-frame)}
+.av2 .calc .var{padding:12px 0;border-bottom:1px solid var(--grp-rule)}
+.av2 .calc .var:last-child{border-bottom:0}
+.av2 .calc .var .vh{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:9px}
+.av2 .calc .var .vh .nm{font-size:12.5px;color:var(--ink-2);display:flex;align-items:center;gap:8px}
+.av2 .calc .var .vh .cur{font-family:var(--fig);font-size:15px;font-weight:600}
+/* a slider that visibly reads as draggable */
+.av2 .calc input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:4px;
+  background:var(--n5);outline:none;cursor:grab}
+.av2 .calc input[type=range]:active{cursor:grabbing}
+.av2 .calc input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;
+  background:var(--white);border:2px solid var(--terra);cursor:grab;
+  box-shadow:0 1px 5px rgba(0,0,0,.24);
+  background-image:linear-gradient(var(--terra),var(--terra)),linear-gradient(var(--terra),var(--terra)),linear-gradient(var(--terra),var(--terra));
+  background-size:2px 8px;background-position:8px 7px,10.5px 7px,13px 7px;background-repeat:no-repeat}
+.av2 .calc input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;
+  border:2px solid var(--terra);cursor:grab;box-shadow:0 1px 5px rgba(0,0,0,.24)}
+.av2 .calc .var .ends{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:6px}
+.av2 .calc .out{display:flex;flex-direction:column}
+.av2 .calc .out .res{padding:20px 18px;background:linear-gradient(180deg,var(--terra-bright),var(--terra));color:#fff}
+.av2 .calc .out .res.neg{background:linear-gradient(180deg,#57575b,var(--ink))}
+.av2 .calc .out .res .rl{font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;opacity:.85}
+.av2 .calc .out .res .rn{font-family:var(--fig);font-size:38px;font-weight:600;line-height:1;margin-top:7px}
+.av2 .calc .out .res .rs{font-size:12px;opacity:.92;margin-top:8px;line-height:1.45}
+.av2 .calc .lev{padding:15px 18px}
+.av2 .calc .lev .lh{font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin-bottom:11px}
+.av2 .calc .lev .lr{display:grid;grid-template-columns:minmax(0,1fr) 1.1fr 62px;gap:10px;align-items:center;padding:6px 0}
+.av2 .calc .lev .lr .nm{font-size:12px;color:var(--ink-2)}
+.av2 .calc .lev .lr .bar{height:7px;border-radius:4px;background:rgba(0,0,0,.05);position:relative}
+.av2 .calc .lev .lr .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:4px;background:var(--n3)}
+.av2 .calc .lev .lr:first-of-type .bar i{background:var(--n1)}
+.av2 .calc .lev .lr .v{font-family:var(--fig);font-size:12.5px;font-weight:600;text-align:right}
+@media(max-width:820px){.av2 .calc .body2{grid-template-columns:1fr}.av2 .calc .vars{border-right:0;border-bottom:1px solid var(--grp-frame)}}
+
+/* ---------- 18. COST TO OPEN , left-anchored ranked bars ---------- */
+.av2 .ranked{display:flex;flex-direction:column;gap:9px}
+.av2 .ranked .rb{display:grid;grid-template-columns:158px 1fr 74px;gap:13px;align-items:center}
+.av2 .ranked .rb .nm{font-size:12.5px;color:var(--ink-2)}
+.av2 .ranked .rb .bar{height:20px;border-radius:4px;background:rgba(0,0,0,.045);position:relative;overflow:hidden}
+.av2 .ranked .rb .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:4px;background:var(--n3)}
+.av2 .ranked .rb.rng .bar i{background:linear-gradient(90deg,var(--n5),var(--n2))}
+.av2 .ranked .rb .v{font-family:var(--fig);font-size:13px;font-weight:600;text-align:right;white-space:nowrap}
+.av2 .ranked .tot{display:grid;grid-template-columns:158px 1fr 74px;gap:13px;align-items:center;
+  margin-top:6px;padding-top:12px;border-top:2px solid var(--ink)}
+.av2 .ranked .tot .nm{font-size:13.5px;font-weight:600}
+.av2 .ranked .tot .bar{height:20px;border-radius:4px;position:relative;overflow:hidden;background:rgba(0,0,0,.045)}
+.av2 .ranked .tot .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:4px;background:var(--terra)}
+.av2 .ranked .tot .v{font-family:var(--fig);font-size:17px;font-weight:600;color:var(--terra-deep);text-align:right}
+@media(max-width:820px){.av2 .ranked .rb,.av2 .ranked .tot{grid-template-columns:98px 1fr 64px;gap:9px}}
+
+/* ---------- 16. BREAK-EVEN WITH AN HONEST RANGE ---------- */
+.av2 .mini .band-rng{position:absolute;top:5px;height:7px;border-radius:4px;background:rgba(0,0,0,.10)}
+.av2 .mini .cp .n2{display:block;font-size:9.5px;color:var(--muted)}
+
+/* ---------- low-confidence chip ---------- */
+.av2 .lowconf{display:inline-flex;align-items:center;gap:7px;font-size:10.5px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted);background:rgba(0,0,0,.035);border:1px solid var(--hair);
+  border-radius:999px;padding:4px 11px}
+
+/* =============================================================================
+   v5 , the professional layer + the last critique fixes (2026-07-21)
+============================================================================= */
+
+/* ---------- 10. THE OWNERS-KEEP CHART, REWORKED ----------
+   The old form was 200 marks with a stepped line cutting through them, which
+   the founder could not read. This is 100 marks in three contiguous labelled
+   blocks: "27 in 100" is legible without a legend or a line. */
+.av2 .hundred{display:flex;flex-direction:column;gap:16px}
+.av2 .hundred .grp{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center}
+.av2 .hundred .grp .marks{display:grid;grid-template-columns:repeat(20,1fr);gap:4px;flex:1}
+.av2 .hundred .grp .marks i{aspect-ratio:1;border-radius:2px;display:block}
+.av2 .hundred .grp .lb{width:190px;flex:none}
+.av2 .hundred .grp .lb .n{display:block;font-family:var(--fig);font-size:24px;font-weight:600;line-height:1}
+.av2 .hundred .grp .lb .k{display:block;font-size:12px;color:var(--ink-2);margin-top:4px;line-height:1.35}
+.av2 .hundred .grp.over .lb .n{color:var(--terra-deep)}
+.av2 .hundred .grp.over .marks i{background:var(--terra)}
+.av2 .hundred .grp.mid  .marks i{background:var(--n3)}
+.av2 .hundred .grp.none .marks i{background:#e0e0e2}
+.av2 .hundred .cap{font-size:11.5px;color:var(--muted);border-top:1px solid var(--hair);padding-top:12px}
+@media(max-width:640px){.av2 .hundred .grp{grid-template-columns:1fr}.av2 .hundred .grp .lb{width:auto}}
+
+/* ---------- THE CONFIDENCE LEDGER ---------- */
+.av2 .ledger{border:1px solid var(--grp-frame);border-radius:12px;overflow:hidden;background:var(--data-fill)}
+.av2 .ledger .lh{display:grid;grid-template-columns:minmax(0,1.4fr) 96px 1fr;gap:14px;padding:9px 15px;
+  border-bottom:1px solid var(--grp-frame);background:rgba(0,0,0,.02);
+  font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.av2 .ledger .lr{display:grid;grid-template-columns:minmax(0,1.4fr) 96px 1fr;gap:14px;align-items:center;
+  min-height:38px;padding:8px 15px}
+.av2 .ledger .lr+.lr{box-shadow:inset 0 1px 0 var(--grp-rule)}
+.av2 .ledger .lr:nth-child(even){background:var(--zebra)}
+.av2 .ledger .lr .nm{font-size:13px}
+.av2 .ledger .lr .how{font-size:12px;color:var(--ink-2)}
+.av2 .tier{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:600;letter-spacing:.04em;
+  padding:3px 9px;border-radius:999px;white-space:nowrap}
+.av2 .tier::before{content:"";width:6px;height:6px;border-radius:50%;flex:none}
+.av2 .tier.measured{background:rgba(0,0,0,.055);color:var(--ink)}
+.av2 .tier.measured::before{background:var(--ink)}
+.av2 .tier.built{background:var(--terra-soft);color:var(--terra-deep);border:1px solid var(--terra-line)}
+.av2 .tier.built::before{background:var(--terra)}
+.av2 .tier.thin{background:rgba(0,0,0,.03);color:var(--muted);border:1px dashed var(--line)}
+.av2 .tier.thin::before{background:var(--n4)}
+@media(max-width:640px){.av2 .ledger .lh,.av2 .ledger .lr{grid-template-columns:minmax(0,1fr) 92px}.av2 .ledger .lh span:last-child,.av2 .ledger .lr .how{display:none}}
+
+/* ---------- THE METHOD: the arithmetic, shown ---------- */
+.av2 .method{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--grp-frame);
+  border-radius:12px;overflow:hidden;background:var(--data-fill)}
+.av2 .method .m{padding:18px;border-right:1px solid var(--grp-frame)}
+.av2 .method .m:last-child{border-right:0}
+.av2 .method .m .h{display:flex;align-items:center;gap:9px;font-size:12.5px;font-weight:600;margin-bottom:12px}
+.av2 .method .m .h .gi{color:var(--n2)}
+.av2 .sum{display:flex;flex-direction:column;gap:0;font-family:var(--fig);font-size:13.5px}
+.av2 .sum .l{display:flex;justify-content:space-between;gap:14px;padding:7px 0;border-bottom:1px solid var(--grp-rule)}
+.av2 .sum .l:last-child{border-bottom:0}
+.av2 .sum .l .t{font-family:var(--sans);font-size:12.5px;color:var(--ink-2)}
+.av2 .sum .l.sub .t{padding-left:14px;color:var(--muted)}
+.av2 .sum .l.sub .v{color:var(--muted)}
+.av2 .sum .l.res{border-top:2px solid var(--ink);border-bottom:0;margin-top:5px;padding-top:11px;font-weight:600}
+.av2 .sum .l.res .t{font-family:var(--sans);font-size:13.5px;font-weight:600;color:var(--ink)}
+.av2 .sum .l.res .v{color:var(--terra-deep);font-size:16px}
+@media(max-width:820px){.av2 .method{grid-template-columns:1fr}.av2 .method .m{border-right:0;border-bottom:1px solid var(--grp-frame)}}
+
+/* ---------- DEFINITIONS ---------- */
+.av2 .defs{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--grp-frame);
+  border-radius:12px;overflow:hidden;background:var(--data-fill)}
+.av2 .defs .d{padding:14px 16px;border-right:1px solid var(--grp-frame);border-bottom:1px solid var(--grp-frame)}
+.av2 .defs .d:nth-child(2n){border-right:0}
+.av2 .defs .d .w{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600}
+.av2 .defs .d .w .gi{color:var(--n2)}
+.av2 .defs .d .x{font-size:12.5px;color:var(--ink-2);margin-top:5px;line-height:1.5}
+@media(max-width:640px){.av2 .defs{grid-template-columns:1fr}.av2 .defs .d{border-right:0}}
+
+/* ---------- QUESTIONS ---------- */
+.av2 .qa{border:1px solid var(--grp-frame);border-radius:12px;overflow:hidden;background:var(--data-fill)}
+.av2 .qa details{border-bottom:1px solid var(--grp-rule)}
+.av2 .qa details:last-child{border-bottom:0}
+.av2 .qa summary{display:flex;align-items:center;gap:12px;min-height:50px;padding:0 16px;cursor:pointer;
+  font-size:13.5px;font-weight:500;list-style:none}
+.av2 .qa summary::-webkit-details-marker{display:none}
+.av2 .qa summary:hover{background:var(--zebra)}
+.av2 .qa summary .q{flex:1;min-width:0}
+.av2 .qa .ans{padding:2px 16px 16px 50px}
+.av2 .qa .ans .note{margin:0}
+
+/* ---------- THE TRUST STRIP ---------- */
+.av2 .trust{display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding:14px 18px;
+  border:1px solid var(--grp-frame);border-radius:12px;background:var(--data-fill)}
+.av2 .trust .t{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-2)}
+.av2 .trust .t .gi{color:var(--n2)}
+.av2 .trust .t b{font-family:var(--fig);color:var(--ink);font-weight:600}
+.av2 .trust .flag{margin-left:auto;font-size:12px;color:var(--terra-deep);display:inline-flex;align-items:center;gap:7px}
+
+/* =============================================================================
+   v6 , the audit fixes (2026-07-21). Systemic first: each block here repairs
+   several sections at once. Appended last so it wins by source order.
+============================================================================= */
+
+/* A2. the money column: padding was inflating small bands, so the stated
+   proportions were false. Move padding onto the labels so flex-basis is 0
+   and the heights become exactly the numbers. */
+.av2 .col-split .seg{padding:0 15px}
+.av2 .col-split .seg .nm,.av2 .col-split .seg .v{padding:11px 0}
+.av2 .col-split .seg.answer{margin-top:0;padding:0 15px}
+/* white text fails on n3 and lighter; those bands take ink */
+.av2 .col-split .seg.lt,.av2 .col-split .seg.lt .nm,.av2 .col-split .seg.lt .v{color:var(--ink)}
+
+/* A3. the voices canyon: the figure was pushed to the far right, leaving
+   ~480px of white between a quote and its own number. */
+.av2 .voices .q{grid-template-columns:minmax(0,1fr) 150px;column-gap:24px}
+.av2 .voices .q .say{max-width:none}
+.av2 .voices .q .fig{border-left:1px solid var(--hair);padding-left:16px;text-align:left;color:var(--ink)}
+.av2 .voices .q .fig.a{color:var(--terra-deep)}
+
+/* A4. terracotta had become a component default, so a reader met a dozen
+   accents and no answer. It marks the answer only. */
+.av2 .tiles a .g{color:var(--ink)}
+.av2 .tiles a:hover .g{color:var(--terra-deep)}
+.av2 .late .l .i{color:var(--muted)}
+
+/* A5. <i> as a bar fill inherits italic, so every in-bar figure was italic
+   against upright tabular figures everywhere else. */
+.av2 .roster .role .track i,.av2 .wealth .spread i,.av2 .hundred .grp .marks i,.av2 .scale .r .t i,.av2 .ranked .rb .bar i,.av2 .readcol .rr .tk i,.av2 .hoodcards a .bar i,.av2 .tline .lane .track i,.av2 .sbar i,.av2 .dots i,.av2 .mini .st,.av2 .year .bars .m,.av2 .touryear .bars .m
+{font-style:normal;font-variant-numeric:tabular-nums}
+
+/* A6. the open state was scoped to .more, so the FAQ plus never turned. */
+.av2 details[open]>summary .exp{background:var(--terra);border-color:var(--terra)}
+.av2 details[open]>summary .exp i{transform:rotate(45deg)}
+.av2 details[open]>summary .exp i::before,.av2 details[open]>summary .exp i::after{background:#fff}
+
+/* A7. a card inside an identical card: same fill, two frames, a 22px moat. */
+.av2 .panel.pad>.statblock,.av2 .panel.pad-lg>.statblock{border:0;border-radius:0;background:transparent;box-shadow:none}
+.av2 .panel.pad>.statblock>.hd,.av2 .panel.pad-lg>.statblock>.hd{padding-left:0;padding-right:0;background:transparent}
+.av2 .panel.pad>.statblock .row,.av2 .panel.pad-lg>.statblock .row{padding-left:0;padding-right:0}
+
+/* A8. the provenance ramp was inverted: Built, the weaker tier, shouted
+   louder than Measured. */
+.av2 .tier.built{background:rgba(0,0,0,.03);color:var(--ink-2);border:1px solid var(--hair)}
+.av2 .tier.built::before{background:var(--n2)}
+
+/* A9. negatives were drawn palest, so the scariest number on the page was
+   the faintest. The minus sign is the signal. */
+.av2 .statblock .row .v.neg,.av2 .rows .r .v.neg{color:var(--ink)}
+
+/* A10. scoped names, so global components stop leaking into local ones. */
+.av2 .ranked .rb.wide .bar i{background:linear-gradient(90deg,var(--n5),var(--n2))}
+.av2 .trendrow .t>svg{width:100%;height:32px;margin-top:8px;overflow:visible}
+.av2 .trendrow .t .h svg{width:auto;height:auto;margin:0}
+
+/* B6. the survival bars needed a full-width track to scale against, or 74%
+   drew as "everything survived" and the closed share had no pixels. */
+.av2 .drain .step .track{flex:1;background:rgba(0,0,0,.045);border-radius:4px}
+.av2 .drain .step .bar{border-radius:4px}
+
+/* B7. a floor, or the smallest opening cost resolves under a pixel and vanishes */
+.av2 .ranked .rb .bar i{min-width:2px}
+
+/* B13. the reference tick and the extreme marker were both terracotta, so a
+   reader could not tell the reference from the reading. */
+.av2 .eight .e .ax .nat{background:var(--n2);opacity:1}
+.av2 .eight .rulerhd .sc b{color:var(--muted)}
+
+/* B14. the average-line label sat on top of the line it names */
+.av2 .touryear .avg::after{content:"the year average";top:-18px}
+
+/* the dwindle gained a fourth beat, so the tone ramp has to step with it */
+.av2 .dwindle .d:nth-of-type(1) .bar{background:var(--n2)}
+.av2 .dwindle .d:nth-of-type(2) .bar{background:var(--n3)}
+.av2 .dwindle .d:nth-of-type(3) .bar{background:var(--n4);color:var(--ink)}
+.av2 .dwindle .d.keep .bar{background:var(--terra);color:#fff}
+
+/* B8. the year chart now shows deviation from the average, so the bars grow
+   away from a drawn midline instead of from a suppressed zero. */
+.av2 .year .bars{align-items:center;position:relative}
+.av2 .year .bars::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:var(--line)}
+.av2 .year .bars .m{align-self:flex-end;margin-bottom:50%}
+.av2 .year .bars .m.below{align-self:flex-start;margin-bottom:0;margin-top:50%;
+  border-radius:0 0 2px 2px;background:var(--n3)}
+.av2 .year .bars .m.peak{background:var(--terra)}
+.av2 .year .axis-m{position:relative}
+.av2 .year .strip{position:relative}
+.av2 .year .strip .midlab{position:absolute;right:0;top:calc(50% - 26px);font-family:var(--fig);
+  font-size:9.5px;color:var(--muted);background:var(--data-fill);padding:0 5px}
+
+/* the deviation chart needed a visible axis and a label that does not sit on
+   top of the tallest bar */
+.av2 .year .bars{height:96px}
+.av2 .year .bars::before{background:var(--ink);opacity:.28;z-index:1}
+.av2 .year .bars .m{min-height:2px;border-radius:2px 2px 0 0}
+.av2 .year .strip .midlab{left:0;right:auto;top:calc(50% - 30px);background:transparent;padding:0;
+  font-size:9.5px;color:var(--muted);letter-spacing:.02em}
+
+/* the deviation chart, rebuilt: each month is its own column and the bar is
+   positioned from a drawn midline, growing up when above average and down when
+   below. Flex alignment could not hold both directions reliably. */
+.av2 .year .bars{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;height:104px;
+  align-items:stretch;position:relative;padding:0}
+.av2 .year .bars::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;
+  background:var(--ink);opacity:.3;z-index:2}
+.av2 .year .bars .col{position:relative}
+.av2 .year .bars .col i{position:absolute;left:0;right:0;border-radius:2px;background:var(--n3);display:block}
+.av2 .year .bars .col.up i{bottom:50%;border-radius:2px 2px 0 0}
+.av2 .year .bars .col.dn i{top:50%;border-radius:0 0 2px 2px;background:var(--n4)}
+.av2 .year .bars .col.peak i{background:var(--terra)}
+.av2 .year .axis-m{margin-top:8px}
+.av2 .year .strip .midlab{position:static;display:block;margin-bottom:6px;color:var(--muted);font-size:9.5px}
+
+/* B13. the reference tick and the extreme marker were both terracotta inside
+   one row, so a reader could not tell the reference from the reading. */
+.av2 .eight .e .ax .nat{background:var(--n2);opacity:1}
+.av2 .eight .cap{justify-content:space-between}
+
+/* =============================================================================
+   THE HOVER CONTRACT (2026-07-21)
+   Before this there were twelve unrelated hover rules, no touch guard (so every
+   state stuck after a tap on a phone) and no keyboard focus state anywhere.
+
+   Hover has exactly THREE jobs here:
+     1. DOOR   , this thing navigates. The row lifts a shade and its figure
+                 turns terracotta, because the figure is what you came for.
+     2. CONTROL, this thing does something. The affordance sharpens.
+     3. READ   , this mark holds a number. Hovering names it, via a title, so it
+                 costs no pixels and works for assistive tech.
+
+   NEVER on hover: move a data mark, resize a bar, fade a value, recolour a
+   chart series, animate anything a reader is trying to read, or introduce a
+   second accent. Terracotta on hover is only ever the figure inside a door.
+============================================================================= */
+
+/* everything below is guarded, so a tap on a touch screen does not leave a
+   sticky hover state behind */
+@media (hover:hover) and (pointer:fine){
+
+  /* 1. DOORS */
+  .av2 .tiles a:hover{background:rgba(0,0,0,.022)}
+  .av2 .tiles a:hover .g{color:var(--terra-deep)}
+  .av2 .hoodcards a:hover{background:rgba(0,0,0,.022)}
+  .av2 .hoodcards a:hover .v{color:var(--terra-deep)}
+  .av2 .close .links a:hover{color:var(--ink)}
+  .av2 .close .links a:hover .g{color:var(--terra-deep)}
+  .av2 .mast .lat a:hover{color:var(--ink)}
+
+  /* 2. CONTROLS */
+  .av2 .more>summary:hover{color:var(--ink)}
+  .av2 .more>summary:hover .exp{background:var(--terra);border-color:var(--terra)}
+  .av2 .more>summary:hover .exp i::before,.av2 .more>summary:hover .exp i::after{background:#fff}
+  .av2 .qa summary:hover{background:var(--zebra)}
+  .av2 .qa summary:hover .exp{background:var(--terra);border-color:var(--terra)}
+  .av2 .qa summary:hover .exp i::before,.av2 .qa summary:hover .exp i::after{background:#fff}
+  .av2 .calc .chd .rst:hover{color:var(--ink);border-color:var(--line)}
+  .av2 .archetypes .pc:hover{background:var(--zebra)}
+
+  /* 3. READING AIDS , a row of figures is easier to track with a quiet band */
+  .av2 .fitgrid tbody tr:hover td{background:var(--zebra)}
+  .av2 table.tb tbody tr:hover td{background:rgba(0,0,0,.028)}
+  .av2 .statblock .row:hover{background:rgba(0,0,0,.028)}
+  .av2 .ledger .lr:hover{background:rgba(0,0,0,.028)}
+  .av2 .readcol .rr:hover{background:rgba(0,0,0,.028)}
+  .av2 .eight .e:hover{background:rgba(0,0,0,.028)}
+}
+
+/* the mix bar used to fade a data mark on hover, which dims the very thing it
+   encodes. It is a door, so it behaves like one. */
+.av2 .archetypes .mixbar i{opacity:1;cursor:pointer}
+@media (hover:hover) and (pointer:fine){
+  .av2 .archetypes .mixbar i:hover{box-shadow:inset 0 0 0 2px rgba(0,0,0,.35)}
+}
+
+/* KEYBOARD. There was no focus state in the entire stylesheet. */
+.av2 :where(a,button,summary,input[type=range],.archetypes .pc,.archetypes .mixbar i):focus-visible{
+  outline:2px solid var(--terra);outline-offset:3px;border-radius:6px}
+.av2 .calc input[type=range]:focus-visible{outline-offset:6px}
+
+/* one timing scale for chrome, and nothing that carries data is ever animated */
+.av2 .tiles a,.av2 .hoodcards a,.av2 .more>summary,.av2 .qa summary,.av2 .calc .chd .rst,.av2 .archetypes .pc,.av2 .mast .lat a,.av2 .close .links a{transition:background .09s ease-out, color .09s ease-out}
+.av2 .exp,.av2 .exp i::before,.av2 .exp i::after{transition:background .09s ease-out, transform .15s cubic-bezier(.2,.7,.2,1)}
+@media (prefers-reduced-motion:reduce){
+  .av2 .tiles a,.av2 .hoodcards a,.av2 .more>summary,.av2 .qa summary,.av2 .calc .chd .rst,.av2 .archetypes .pc,.av2 .mast .lat a,.av2 .close .links a,.av2 .exp,.av2 .exp i::before,.av2 .exp i::after{transition:none}
+}
+
+/* .hoverlift was defined and never used on any page */
+.av2 .hoverlift{transition:none}
+.av2 .hoverlift:hover{transform:none}
+
+/* =============================================================================
+   v7 , THE DOOR CONTRACT (2026-07-22)
+   Only what exists is linked. The lattice is the product, so promising a page
+   that is not there is the one failure it cannot afford, and a "coming soon"
+   stub is banned outright.
+
+   A reading whose page does not exist yet KEEPS ITS FIGURE, because the figure
+   is real and useful on its own, and LOSES ITS AFFORDANCE, because a door that
+   opens onto nothing is worse than a fact.
+
+   A chevron marks a door. Its absence marks a fact. Nothing explains this in
+   copy: the mark is consistent on every page, which is what makes it learnable,
+   and prose apologising for an absence is worse than the absence.
+
+   Both states are present in these mockups on purpose. The port needs to see
+   the mechanic, because at launch only one trade in one city exists and almost
+   every reading on every page will render as a fact.
+============================================================================= */
+
+/* ---- tiles: door and fact share the cell, only the affordance differs ---- */
+.av2 .tiles>*{padding:15px 16px;border-right:1px solid var(--hair);border-bottom:1px solid var(--hair);
+  display:flex;flex-direction:column;gap:7px}
+.av2 .tiles>* .t{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink)}
+.av2 .tiles>* .g{font-family:var(--fig);font-size:15px;font-weight:600;color:var(--ink)}
+.av2 .tiles>span{cursor:default}
+.av2 .tiles>span .t{color:var(--ink-2)}
+.av2 .tiles>a .t::after{content:"›";margin-left:auto;color:var(--faint);font-size:17px;line-height:.85}
+
+/* ---- hoodcards: the same contract in a grid ---- */
+.av2 .hoodcards>*{display:grid;grid-template-columns:24px minmax(0,1.3fr) 1fr 56px;gap:12px;
+  align-items:center;min-height:54px;padding:0 15px}
+.av2 .hoodcards>*+*{box-shadow:inset 0 1px 0 var(--grp-rule)}
+.av2 .hoodcards>* .gi{color:var(--n2)}
+.av2 .hoodcards>* .nm{font-size:14px;font-weight:500;color:var(--ink)}
+.av2 .hoodcards>* .nm .s{display:block;font-size:11px;color:var(--muted);font-weight:400;margin-top:1px}
+.av2 .hoodcards>* .bar{position:relative;height:6px;border-radius:3px;background:rgba(0,0,0,.06)}
+.av2 .hoodcards>* .bar i{position:absolute;inset:0 auto 0 0;border-radius:3px;background:var(--n3)}
+.av2 .hoodcards>* .bar i.hi{background:var(--terra)}
+.av2 .hoodcards>* .v{font-family:var(--fig);font-size:13.5px;font-weight:600;text-align:right}
+.av2 .hoodcards>span{cursor:default}
+.av2 .hoodcards>span .nm{color:var(--ink-2)}
+.av2 .hoodcards>a .nm::after{content:"›";margin-left:8px;color:var(--faint);font-weight:400}
+@media(max-width:560px){.av2 .hoodcards>*{grid-template-columns:24px minmax(0,1fr) 56px}
+  .av2 .hoodcards>* .bar{display:none}}
+
+/* ---- the flag is an ACTION, not a destination, so it is a button ---- */
+.av2 .trust button.flag{margin-left:auto;font:inherit;font-size:12px;color:var(--terra-deep);
+  display:inline-flex;align-items:center;gap:7px;background:none;border:0;padding:0;cursor:pointer}
+.av2 .trust button.flag .gi{color:var(--terra-deep)}
+
+/* ---- the wordmark has nowhere to go in a three page mockup. In the product it
+   is a link to the lattice root; here it is the mark it draws. ---- */
+.av2 .mast span.brand{cursor:default}
+
+@media (hover:hover) and (pointer:fine){
+  .av2 .tiles>a:hover .t::after,.av2 .hoodcards>a:hover .nm::after{color:var(--ink)}
+  .av2 .trust button.flag:hover{color:var(--terra)}
+}
+
+/* =============================================================================
+   v8 , THE TEXT-ON-FILL CONTRACT (2026-07-22)
+   Bars carry figures inside them all over these pages, and the tone under the
+   figure was chosen for the chart's ramp, never for the text sitting on it.
+
+   Measured against the neutral ramp:
+     --n1  white 7.1:1   , white only
+     --n2  white 5.0:1   , white only          (after the token move above)
+     --n3  ink   6.8:1   , ink only, white is 2.8:1 and unreadable
+     --n4  ink   9.9:1   , ink only
+     --n5  ink  14.1:1   , ink only
+
+   THE RULE: a fill of n1 or n2 carries WHITE. A fill of n3 or lighter carries
+   INK. There is no third option, and no fill may be chosen for its place in the
+   ramp without checking which side of that line it lands on.
+============================================================================= */
+
+/* The roster's in-bar wage sat on n3. Ink on n3 passes, but rendered it made the
+   lead bar (white on n1) and the rest (ink on n3) read as two different kinds of
+   object, which the tone difference alone never intended. Moving the fill to n2
+   keeps every in-bar figure white and consistent, and lead versus rest is still
+   carried by tone plus length. Verified in cell-mock/08. */
+.av2 .roster .role .track i{background:var(--n2);color:#fff}
+.av2 .roster .role.lead .track i{background:var(--n1);color:#fff}
+
+/* the dwindle's second beat is n3 */
+.av2 .dwindle .d:nth-of-type(2) .bar{color:var(--ink)}
+
+/* survival bars: n1 and n2, both white-safe, stated so the pair cannot drift */
+.av2 .drain .step .bar{background:var(--n2);color:#fff}
+.av2 .drain .step:first-child .bar{background:var(--n1);color:#fff}
+
+/* =============================================================================
+   v9 , COUNTRY AUDIT, chapters 02 to 06 (2026-07-22)
+============================================================================= */
+
+/* The licence matrix had the accent exactly inverted. Terracotta was painted on
+   every "req", which includes a Premises column required by 8 trades out of 8,
+   so the loudest marks on the card were the ones carrying no information. The
+   section's own note says the story is that alcohol and late hours are SLOW,
+   and "slow" was drawn as the quietest mark in the table.
+   Terracotta marks the thing that costs you time. */
+.av2 .matrix .req{color:var(--ink-2);font-weight:500}
+.av2 .matrix .slow{color:var(--terra-deep);font-weight:600}
+
+/* The eight's ruler header needs its middle label sitting over the reference
+   tick, which is drawn at 50%. */
+.av2 .eight .rulerhd .sc{justify-content:space-between}
+
+/* the scatter's points name themselves. Anything past the horizontal middle
+   flips its label inward so nothing runs off the plot. */
+.av2 .quad .pt .lb{position:absolute;top:50%;transform:translateY(-50%);white-space:nowrap;
+  font-size:10.5px;color:var(--ink-2);left:32px}
+.av2 .quad .pt.flip .lb{left:auto;right:32px}
+.av2 .quad .pt.hi .lb{color:var(--terra-deep);font-weight:600}
+
+/* =============================================================================
+   v10 , COUNTRY AUDIT, chapters 17 to 20 (2026-07-22)
+============================================================================= */
+
+/* Chapter 17 had a real percentage and four mood words sharing one track: "9%"
+   was drawn on the same scale as "rule of law is strong". The bar is a position
+   against the world median, so the value column now reads as a plain word on
+   every row and the actual figures live in the panel beside it, which is what
+   that panel is for. Left card = the shape of the ground. Right card = what it
+   costs you, in numbers.
+
+   Two labels also wrapped to two lines while three did not, so the rows had no
+   rhythm. The label column now fits the longest of them. */
+.av2 .scale .r,.av2 .scale .r.axis{grid-template-columns:150px 1fr 52px}
+/* the row already carries the accent on its bar and its value; colouring the
+   label too made one row shout three times */
+.av2 .scale .r.hi .l{color:var(--ink);font-weight:600}
+
+/* Chapter 18, and the same defect on city 12. The myth was set at 29px/600 and
+   its correction at 25px/600, so THE FALSEHOOD WAS THE BIGGEST TYPE IN THE CARD
+   and the truth came second. The strike was terracotta as well, while the key
+   phrase inside the correction is also terracotta, so the accent meant "wrong"
+   and "important" in one object.
+   The claim is now quiet and struck in neutral; the correction dominates and
+   keeps the only accent. Fix-list B18. */
+.av2 .myth .claim{font-size:clamp(17px,1.9vw,20px);font-weight:500;max-width:30ch;
+  text-decoration-color:var(--n3);text-decoration-thickness:1.5px}
+
+/* Country 04 marked every hard row TWICE, on its bar and on its value, so four
+   readings produced eight accent marks and the chapter read as terracotta
+   wallpaper. The bar carries the mark; the value goes back to ink. Fix-list
+   sibling of A4, "terracotta as a component default". */
+.av2 .readcol .rr.hard .v{color:var(--ink)}
+
+/* =============================================================================
+   v11 , THE CHAPTER JUMP (2026-07-25) , backlog E-4
+   The measured problem: country is 11,034px tall at desktop and 15,656px at
+   390px; cell is 17,919px at 390px. Nineteen to twenty-one chapters and no way
+   to know where you are or to move. Depth is the product; ORIENTATION was the
+   missing half, so this layer adds chrome, never content.
+
+   Two presentations of ONE control, both driven by the same #ch-NN anchors, so
+   the jump itself needs no script at all:
+
+     THE RAIL  , at 1180px and up, with a real pointer. A slim glass spine of
+                 chapter numbers in the right gutter: the wrap is 1060px, so at
+                 1180px there are 60px of true margin and the resting rail
+                 covers no content. Hovering or keyboard-focusing the rail
+                 widens it into a table of contents. Numbers are the page's own
+                 chapter grammar (.chnum), so the rail reads as a book's thumb
+                 index, not as app furniture.
+
+     THE SHEET , everything narrower, and ANY touch screen regardless of width,
+                 because a hover-expanded rail cannot be operated by a thumb.
+                 One collapsed chip at the bottom right, inside thumb reach,
+                 opening upward into a scrollable chapter list. Built on
+                 <details>, so open and close are native, keyboard-correct and
+                 script-free, and the list scrolls inside itself
+                 (overscroll-behavior) instead of trapping the page.
+
+   GLASS, NOT SOLID. This is chrome in the .mast family, so it takes the mast's
+   exact glass recipe. Near-opaque surfaces stay reserved for data.
+
+   TERRACOTTA: none at rest. The accent means "the answer"; "where you are" is
+   a state, not an answer, and a permanently fixed terracotta mark would sit on
+   screen through the entire scroll and fight every chapter's single accent.
+   The current chapter is carried by ink weight and a quiet band instead. The
+   one appearance of the accent is on hover, and that is not an exception: rail
+   and sheet rows are DOORS, and the door contract (M1) already says a door's
+   figure turns terracotta under a fine pointer.
+============================================================================= */
+
+/* ---------- landing: a jump must not bury its heading under the mast ---------- */
+.av2 section[id^="ch-"]{scroll-margin-top:78px}
+@media(max-width:820px){.av2 section[id^="ch-"]{scroll-margin-top:92px}}
+@media(prefers-reduced-motion:no-preference){html:has(.av2){scroll-behavior:smooth}}
+
+/* ---------- one presentation at a time ---------- */
+/* sheet by default; the rail only where the gutter holds it AND hover exists.
+   A 1366px iPad gets the sheet, because the rail's labels live behind hover. */
+.av2 .jumprail{display:none}
+@media(min-width:1180px) and (hover:hover) and (pointer:fine){
+  .av2 .jumprail{display:block}
+  .av2 .jumpsheet{display:none}
+}
+@media print{.av2 .jump{display:none}}
+
+/* ---------- THE RAIL ---------- */
+/* z 15: over the page, always under the sticky mast (z 20). Fixed and
+   vertically centred so it never scrolls away, which is the whole point. */
+.av2 .jumprail{position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:15;
+  width:46px;max-height:calc(100vh - 150px);overflow-y:auto;overflow-x:hidden;
+  list-style:none;margin:0;padding:8px 0;border-radius:14px;
+  background:linear-gradient(150deg,rgba(255,255,255,.80),rgba(255,255,255,.62));
+  backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2);
+  border:1px solid rgba(255,255,255,.78);
+  box-shadow:inset 2px 2px .5px -2px rgba(255,255,255,.96),0 10px 30px -20px rgba(0,0,0,.4)}
+/* the rail grows leftward into a table of contents; focus-within keeps the
+   expansion reachable from the keyboard, not only the pointer */
+.av2 .jumprail:hover,.av2 .jumprail:focus-within{width:292px}
+.av2 .jumprail a{display:flex;align-items:center;gap:11px;min-height:22px;padding:0 15px;white-space:nowrap}
+.av2 .jumprail a .n{font-family:var(--fig);font-variant-numeric:tabular-nums;font-size:10.5px;
+  font-weight:500;color:var(--muted);width:17px;text-align:right;flex:none}
+.av2 .jumprail a .t{font-size:12px;color:var(--ink-2);opacity:0;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.av2 .jumprail:hover a .t,.av2 .jumprail:focus-within a .t{opacity:1}
+/* current chapter: ink and a quiet band, no accent at rest (header note) */
+.av2 .jumprail a[aria-current="true"]{background:rgba(0,0,0,.045)}
+.av2 .jumprail a[aria-current="true"] .n{color:var(--ink);font-weight:600}
+.av2 .jumprail a[aria-current="true"] .t{color:var(--ink);font-weight:500}
+
+/* ---------- THE SHEET ---------- */
+.av2 .jumpsheet{position:fixed;right:14px;bottom:14px;z-index:15}
+.av2 .jumpsheet>summary{list-style:none;cursor:pointer;user-select:none;
+  display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;
+  background:linear-gradient(150deg,rgba(255,255,255,.80),rgba(255,255,255,.62));
+  backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2);
+  border:1px solid rgba(255,255,255,.78);
+  box-shadow:inset 2px 2px .5px -2px rgba(255,255,255,.96),0 10px 30px -20px rgba(0,0,0,.4)}
+.av2 .jumpsheet>summary::-webkit-details-marker{display:none}
+.av2 .jumpsheet>summary .jc-n{font-family:var(--fig);font-variant-numeric:tabular-nums;
+  font-size:12.5px;font-weight:600;color:var(--ink)}
+.av2 .jumpsheet>summary .jc-t{font-size:11px;font-weight:500;color:var(--muted);letter-spacing:.02em}
+.av2 .jumpsheet[open]>summary{border-color:rgba(255,255,255,.95)}
+.av2 .jumpsheet[open]>summary .jc-t{color:var(--ink)}
+/* the panel opens upward, scrolls inside itself, and never chains that scroll
+   to the page behind it */
+.av2 .jumpsheet .jlist{position:absolute;right:0;bottom:calc(100% + 10px);
+  width:min(304px,calc(100vw - 28px));max-height:min(62vh,470px);
+  overflow-y:auto;overscroll-behavior:contain;
+  list-style:none;margin:0;padding:7px;border-radius:16px;
+  background:linear-gradient(150deg,rgba(255,255,255,.86),rgba(255,255,255,.70));
+  backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2);
+  border:1px solid rgba(255,255,255,.78);
+  box-shadow:inset 2px 2px .5px -2px rgba(255,255,255,.96),0 18px 44px -24px rgba(0,0,0,.26)}
+/* 40px rows: a thumb target, not a pointer target */
+.av2 .jumpsheet .jlist a{display:flex;align-items:center;gap:12px;min-height:40px;padding:0 11px;border-radius:9px}
+.av2 .jumpsheet .jlist a .n{font-family:var(--fig);font-variant-numeric:tabular-nums;font-size:11px;
+  font-weight:500;color:var(--muted);width:18px;text-align:right;flex:none}
+.av2 .jumpsheet .jlist a .t{font-size:12.5px;color:var(--ink-2);min-width:0;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.av2 .jumpsheet .jlist a[aria-current="true"]{background:rgba(0,0,0,.045)}
+.av2 .jumpsheet .jlist a[aria-current="true"] .n{color:var(--ink);font-weight:600}
+.av2 .jumpsheet .jlist a[aria-current="true"] .t{color:var(--ink);font-weight:500}
+
+/* ---------- hover, per the contract: doors and a control, guarded ---------- */
+@media (hover:hover) and (pointer:fine){
+  .av2 .jumprail a:hover{background:rgba(0,0,0,.028)}
+  .av2 .jumprail a:hover .n{color:var(--terra-deep)}
+  .av2 .jumprail a:hover .t{color:var(--ink)}
+  .av2 .jumpsheet>summary:hover .jc-t{color:var(--ink)}
+  .av2 .jumpsheet .jlist a:hover{background:rgba(0,0,0,.028)}
+  .av2 .jumpsheet .jlist a:hover .n{color:var(--terra-deep)}
+  .av2 .jumpsheet .jlist a:hover .t{color:var(--ink)}
+}
+
+/* ---------- motion, guarded; chrome only, nothing carrying data ---------- */
+@media(prefers-reduced-motion:no-preference){
+  .av2 .jumprail{transition:width .22s cubic-bezier(.2,.7,.2,1)}
+  .av2 .jumprail a .t{transition:opacity .14s ease-out}
+  .av2 .jumpsheet[open] .jlist{animation:jlist .18s cubic-bezier(.2,.7,.2,1)}
+  @keyframes jlist{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+}
+
+/* v12 , C37: the fitgrid's trade column takes row glyphs (2026-07-25) */
+.av2 .fitgrid td:first-child{display:flex;align-items:center;gap:9px;height:34px}
+.av2 .fitgrid td:first-child .gi{color:var(--n2)}
+
+/* =============================================================================
+   v13 , THE FIGURE RESET (2026-07-26)
+   The React kit wraps a chart and its finding-note in <figure>/<figcaption> so
+   the note becomes the chart's programmatic description (W3C WAI complex-images
+   pattern; semantic HTML before ARIA). <figure> carries a browser default
+   margin, so it is reset here to render pixel-identically to the wrapper it
+   replaces. The mockups do not use <figure>: this rule is inert in them and the
+   frozen visual contract is untouched.
+============================================================================= */
+.av2 .chartfig{margin:0}
+

@@ -1,0 +1,836 @@
+{
+  "meta": {
+    "schema": "cell.spine2",
+    "schemaVersion": 1,
+    "id": "gb-london-restaurants",
+    "country": { "slug": "gb", "name": "United Kingdom" },
+    "city": { "slug": "london", "name": "London" },
+    "trade": { "slug": "restaurants", "name": "Restaurants", "noun": "restaurant" },
+    "urlPath": "/gb/london/restaurants",
+    "currency": {
+      "display": "USD",
+      "native": "GBP",
+      "usdPerGbp": 1.3315,
+      "rateAsOf": "2026-07-24",
+      "rateBasis": "spot close, one pinned rate for every figure in this file; every USD figure re-derives from its GBP native at this rate"
+    },
+    "freshness": "2026-07",
+    "reviewedAt": "2026-07-25",
+    "provenance": {
+      "correctionsLedger": "E:/atlas/design/loop/data/CORRECTIONS.md, 2026-07-25",
+      "familyDocs": ["3A-REVENUE", "3B-STAFF", "3C-RENT", "3D-SURVIVAL", "3E-FITOUT"],
+      "correctionsApplied": [1, 4, 5, 6, 7, 8, 10, 11, 12, 13],
+      "correctionsOutOfScope": {
+        "2": "country page set-up total, lands in the country file",
+        "3": "country page year-one rates, lands in the country file; this file carries the honest modelled-room rates bill",
+        "9": "country page UK business count, lands in the country file"
+      },
+      "freshnessWatch": [
+        "Upward-only rent review ban: Royal Assent 2026-04-29, in force around 2027; the review-cycle copy has a shelf life",
+        "Business rates regime changed 2026-04-01: permanent hospitality multipliers replaced the 40 percent relief",
+        "Company registration fee doubled 2026-02-01"
+      ]
+    }
+  },
+
+  "population": {
+    "sites": {
+      "value": 16765,
+      "unit": "sites",
+      "tier": "measured",
+      "basis": "licensed plus unlicensed restaurant and cafe premises on the business register, counted as sites; takeaways and pubs sit outside this net",
+      "sources": [{ "name": "ONS UK Business Counts", "dataset": "local units NM_141_1, SIC 56101+56102, London", "year": 2025 }],
+      "freshness": "register snapshot March 2025, published autumn 2025",
+      "falsifier": "the March 2026 register snapshot showing a materially different site count for the same codes and region",
+      "notes": "9,150 licensed + 7,615 unlicensed sites. Say about 17,000 on the page; the old 18,000 matches no definition. Including takeaways: 24,015 sites."
+    },
+    "enterprises": {
+      "value": 13645,
+      "unit": "businesses",
+      "tier": "measured",
+      "basis": "the same register counted as registered businesses rather than sites; a chain is one business",
+      "sources": [{ "name": "ONS UK Business Counts", "dataset": "enterprises NM_142_1, SIC 56101+56102, London", "year": 2025 }],
+      "freshness": "register snapshot March 2025",
+      "notes": "London restaurants run about 1.19 sites per business, so for the independent operator the two are nearly the same thing."
+    },
+    "sitesIncludingTakeaways": {
+      "value": 24015,
+      "unit": "sites",
+      "tier": "measured",
+      "basis": "the wider net: restaurant, cafe and takeaway premises counted as sites",
+      "sources": [{ "name": "ONS UK Business Counts", "dataset": "local units, SIC 561, London", "year": 2025 }],
+      "freshness": "register snapshot March 2025"
+    },
+    "medianRevenue": {
+      "value": 414000,
+      "unit": "USD/yr",
+      "gbp": 311000,
+      "tier": "built",
+      "basis": "band-interpolated median from the business register's turnover-band counts for licensed restaurants in London; turnover excludes VAT",
+      "sources": [
+        { "name": "ONS UK Business Counts", "dataset": "enterprises by turnover size band NM_199_1, SIC 56101, London, N=7,465", "year": 2025 },
+        { "name": "ONS Annual Business Survey", "dataset": "Section I, SIC 56.1", "year": 2024 }
+      ],
+      "freshness": "money figures 2024, band distribution March 2025",
+      "falsifier": "publication of true per-business turnover percentiles for licensed London restaurants landing outside roughly 280,000 to 340,000 pounds",
+      "notes": "Half of London licensed restaurants turn over less than this. Restaurants and cafes combined: about 289,000 dollars. National trade mean 703,000 dollars, dragged up by chains."
+    },
+    "medianRevenueRestaurantsAndCafes": {
+      "value": 289000,
+      "unit": "USD/yr",
+      "gbp": 217000,
+      "tier": "built",
+      "basis": "the same band-interpolated median across licensed and unlicensed restaurants and cafes together",
+      "sources": [{ "name": "ONS UK Business Counts", "dataset": "turnover bands, SIC 56101+56102, London, N=13,645", "year": 2025 }],
+      "freshness": "March 2025"
+    },
+    "quartiles": {
+      "p25": {
+        "value": 189000,
+        "unit": "USD/yr",
+        "gbp": 142000,
+        "tier": "built",
+        "basis": "lower quartile of licensed-restaurant turnover in London, interpolated within the register's published bands",
+        "sources": [{ "name": "ONS UK Business Counts", "dataset": "turnover bands, SIC 56101, London", "year": 2025 }],
+        "freshness": "March 2025"
+      },
+      "p50": {
+        "value": 414000,
+        "unit": "USD/yr",
+        "gbp": 311000,
+        "tier": "built",
+        "basis": "the median of the same distribution",
+        "sources": [{ "name": "ONS UK Business Counts", "dataset": "turnover bands, SIC 56101, London", "year": 2025 }],
+        "freshness": "March 2025"
+      },
+      "p75": {
+        "value": 1101000,
+        "unit": "USD/yr",
+        "gbp": 827000,
+        "tier": "built",
+        "basis": "upper quartile of the same distribution; the spread is the story, chains and prime-site rooms at the top, cafes at the bottom",
+        "sources": [{ "name": "ONS UK Business Counts", "dataset": "turnover bands, SIC 56101, London", "year": 2025 }],
+        "freshness": "March 2025",
+        "notes": "Strongly right-skewed: mean is about 1.7x the median. Multi-site businesses inflate the top bands, so per-site spread is somewhat narrower."
+      }
+    },
+    "turnoverBands": {
+      "series": [
+        { "x": "under 50K GBP", "value": 560 },
+        { "x": "50-99K", "value": 705 },
+        { "x": "100-249K", "value": 2125 },
+        { "x": "250-499K", "value": 1405 },
+        { "x": "500-999K", "value": 1225 },
+        { "x": "1-2M", "value": 730 },
+        { "x": "2-5M", "value": 465 },
+        { "x": "5-10M", "value": 130 },
+        { "x": "10-50M", "value": 90 },
+        { "x": "50M+", "value": 30 }
+      ],
+      "unit": "businesses per band",
+      "tier": "measured",
+      "basis": "the register's published turnover-band counts for licensed restaurants in London; anyone can recompute the quartiles from these",
+      "sources": [{ "name": "ONS UK Business Counts", "dataset": "turnover bands, SIC 56101, London, N=7,465", "year": 2025 }],
+      "freshness": "March 2025"
+    },
+    "survival": {
+      "series": [
+        { "x": 1, "value": 94.0 },
+        { "x": 2, "value": 77.1 },
+        { "x": 3, "value": 63.6 },
+        { "x": 4, "value": 50.5 },
+        { "x": 5, "value": 39.1 }
+      ],
+      "unit": "% still trading",
+      "tier": "measured",
+      "basis": "official business demography for the restaurant trade, annual cohorts of registered businesses; year one from the latest cohort, the full five-year track from the 2019 cohort. Survival is measured on the business, not the room: a restaurant that moves or is sold survives",
+      "sources": [{ "name": "ONS Business Demography", "dataset": "Tables 5.2a and 5.2e, SIC 561, UK", "year": 2024 }],
+      "freshness": "reference year 2024, published November 2025; next release around November 2026",
+      "falsifier": "the 2020 cohort's five-year figure lands next release; its four-year is already 45.6 percent",
+      "notes": "Year 1 is the SAFEST year in the whole series: minus 6.4 points, versus minus 16.6 in year 2 and minus 13.5 in year 3. Restaurant survival is almost identical to the whole economy at every horizon."
+    },
+    "survivalLondonCross": {
+      "value": null,
+      "reason": "the region-by-industry survival cross is not published; London's all-industry curve sits within a point of the national curve at every horizon, so the national restaurant curve is shown with a note and no London adjustment"
+    },
+    "myth": {
+      "claim": "Nine in ten restaurants fail in the first year.",
+      "reality": "More than nine in ten are still trading a year in. The thinning comes later, and quietly: about four in ten are left at year five.",
+      "tier": "measured",
+      "basis": "the failure claim traces to a 1990s television advertisement with no study behind it; the survival figures are official business demography for the restaurant trade",
+      "sources": [
+        { "name": "Parsa et al., Cornell Hotel & Restaurant Administration Quarterly", "dataset": "Why Restaurants Fail", "year": 2005 },
+        { "name": "Bloomberg BusinessWeek", "dataset": "The Restaurant-Failure Myth", "year": 2007 },
+        { "name": "ONS Business Demography", "dataset": "SIC 561 cohorts", "year": 2024 }
+      ],
+      "freshness": "provenance settled; UK rates published November 2025",
+      "notes": "The measured US year-1 failure rate is about 26 percent (Parsa 2005). The page's earlier correction, nearer three in four a year in, was the two-year figure wearing a one-year label."
+    },
+    "ownerPaidProperly": {
+      "value": 25,
+      "unit": "% of rooms",
+      "tier": "built",
+      "fromModel": true,
+      "basis": "model output: the share of modeled rooms whose owner draw clears about twice the London average wage; no public register measures owner pay at this grain, and nothing published contradicts it",
+      "freshness": "moves with the revenue distribution, the cost stack, and the threshold",
+      "falsifier": "publication of profit or owner-income distributions for the restaurant trade; or the model rerun after any cost-stack correction",
+      "notes": "Must carry the model tag everywhere it appears, including the closing band. It must never sit in the same visual register as the measured survival bars without a tier marker."
+    },
+    "ordersPerDayAtMedian": {
+      "value": 35,
+      "unit": "orders/day",
+      "tier": "thin",
+      "fromModel": true,
+      "basis": "the median room's revenue at the model's spend-per-head and open-day assumptions; presentation, not data",
+      "freshness": "derived, moves with its inputs",
+      "notes": "The model room's 52 a day only reconciles with the model room's higher revenue."
+    }
+  },
+
+  "modelRoom": {
+    "description": "The explicit modeled scenario the calculator, the cost stack and the daily floor describe: a 100 square metre licensed room on an upper-middle Greater-London high street. It is not the typical room; it sits near the 62nd percentile of the trade.",
+    "floorAreaSqm": {
+      "value": 100,
+      "unit": "sqm",
+      "tier": "built",
+      "fromModel": true,
+      "basis": "the modeled room's stated size; the rent, rates, roster and fit-out lines all price this room",
+      "freshness": "model constant"
+    },
+    "percentileOfPopulation": {
+      "value": 62,
+      "unit": "percentile of licensed-restaurant turnover",
+      "tier": "built",
+      "basis": "the modeled room's revenue placed on the licensed-restaurant turnover distribution; about 38 percent of London licensed restaurants turn over more",
+      "sources": [{ "name": "ONS UK Business Counts", "dataset": "turnover bands, SIC 56101, London", "year": 2025 }],
+      "freshness": "March 2025 distribution",
+      "notes": "This is the honest bridge between the model room and the measured population: the page must say the model describes the top third, not the typical."
+    },
+    "assumptions": {
+      "ordersPerDay": {
+        "value": 52,
+        "unit": "orders/day",
+        "tier": "thin",
+        "fromModel": true,
+        "basis": "model input for the 100 square metre room; with the spend and open-day assumptions it reproduces the modeled revenue. The median London room derives to about 35 a day",
+        "freshness": "model constant",
+        "falsifier": "booking or till-platform data showing typical daily covers for London independents materially outside 25 to 55"
+      },
+      "spendPerHead": {
+        "value": 38,
+        "unit": "USD/head",
+        "gbp": 28.5,
+        "tier": "thin",
+        "basis": "stated model input; London sit-down benchmarks put a head at 25 to 45 pounds and this sits inside the band. Per head, not per bill",
+        "sources": [
+          { "name": "eating-out panel", "dataset": "all-channel average spend per visit", "year": "Q1 2026" },
+          { "name": "payments-company London dining survey", "dataset": "Censuswide n=1,005", "year": 2025 }
+        ],
+        "freshness": "benchmarks Q1 2026 and March 2025",
+        "falsifier": "a published London per-head average from card or booking data outside 25 to 45 pounds for sit-down rooms"
+      },
+      "openDaysPerYear": {
+        "value": 313,
+        "unit": "days",
+        "tier": "thin",
+        "basis": "assumes six trading days a week; no official statistic exists and commentary puts independents at 250 to 315, with five-day weeks now common",
+        "freshness": "commentary 2023 to 2026",
+        "falsifier": "an operator survey with published methodology giving mean trading days for London independents outside 250 to 315",
+        "notes": "Every derived figure, orders a day and the daily floor, shifts about 17 percent between five-day and six-day trading."
+      }
+    },
+    "revenue": {
+      "value": 618488,
+      "unit": "USD/yr",
+      "gbp": 464505,
+      "tier": "built",
+      "fromModel": true,
+      "basis": "52 orders at 38 dollars a head over 313 open days; an explicit scenario, internally exact, describing a room near the 62nd percentile of the trade",
+      "freshness": "model, inputs dated 2026-07",
+      "notes": "The measured population median is 414,000 dollars; both figures belong on the page, typed distinctly."
+    },
+    "food": {
+      "pct": {
+        "value": 31,
+        "unit": "% of revenue",
+        "tier": "thin",
+        "basis": "trade benchmark band for food and drink is 28 to 35 percent and this sits inside it; the buildable public figure, 52 percent, covers all purchases including services and is recorded separately",
+        "freshness": "benchmark band 2022 to 2026",
+        "falsifier": "an official split of trade purchases into food inputs versus services showing food and drink outside 28 to 35 percent"
+      },
+      "cost": {
+        "value": 191731,
+        "unit": "USD/yr",
+        "gbp": 143996,
+        "tier": "built",
+        "fromModel": true,
+        "basis": "31 percent of the modeled revenue",
+        "freshness": "model"
+      },
+      "allPurchasesPct": {
+        "value": 52.2,
+        "unit": "% of turnover",
+        "tier": "built",
+        "basis": "total purchases of goods, materials and services over turnover for the UK restaurant trade; includes energy, platform commissions and card fees, so it is NOT food cost and must never be labelled as such",
+        "sources": [{ "name": "ONS Annual Business Survey", "dataset": "purchases q600 over turnover q550, SIC 56.1", "year": 2024 }],
+        "freshness": "reference year 2024, released May 2026"
+      }
+    },
+    "staff": {
+      "line": {
+        "value": 210286,
+        "unit": "USD/yr",
+        "gbp": 157932,
+        "tier": "built",
+        "fromModel": true,
+        "basis": "34 percent of the modeled revenue; the trade's measured employment-cost share is 33.7 percent, and an independently built role-by-role roster lands within 2 percent",
+        "sources": [{ "name": "ONS Annual Business Survey", "dataset": "employment costs over turnover, SIC 56.1", "year": 2024 }],
+        "freshness": "share measured 2024; predates the April 2025 employer-contribution rise, so today's true share is a shade higher"
+      },
+      "sharePct": {
+        "value": 33.7,
+        "unit": "% of revenue",
+        "tier": "measured",
+        "basis": "total employment costs over total turnover for the restaurant trade, both terms from one official survey; excludes the owner's own unpaid hours",
+        "sources": [{ "name": "ONS Annual Business Survey", "dataset": "Section I, SIC 56.1: 18,756M over 55,617M GBP", "year": 2024 }],
+        "freshness": "reference year 2024, released May 2026",
+        "falsifier": "the next survey edition printing a ratio outside 31 to 37 percent"
+      },
+      "roster": [
+        {
+          "role": "Head chef",
+          "employment": "full time",
+          "count": 1,
+          "wage": {
+            "value": 53260,
+            "unit": "USD/yr",
+            "gbp": 40000,
+            "tier": "built",
+            "basis": "between the measured all-chefs London median and the trade head-chef median; a genuine head chef, not an executive chef",
+            "sources": [
+              { "name": "ONS ASHE", "dataset": "Table 15(4).7a, SOC 5434, London full-time", "year": 2025 },
+              { "name": "trade pay benchmark", "dataset": "London head chef median 46,500 GBP", "year": 2026 }
+            ],
+            "freshness": "pay period April 2025, provisional"
+          }
+        },
+        {
+          "role": "Manager, part time 25h",
+          "employment": "part time",
+          "count": 1,
+          "wage": {
+            "value": 24631,
+            "unit": "USD/yr",
+            "gbp": 18499,
+            "tier": "built",
+            "basis": "the measured London part-time hourly median for restaurant managers at 25 hours a week",
+            "sources": [{ "name": "ONS ASHE", "dataset": "SOC 1222 London PT hourly 14.23 GBP", "year": 2025 }],
+            "freshness": "April 2025"
+          }
+        },
+        {
+          "role": "Line cook",
+          "employment": "full time",
+          "count": 1,
+          "wage": {
+            "value": 32157,
+            "unit": "USD/yr",
+            "gbp": 24151,
+            "tier": "measured",
+            "basis": "the London full-time median for cooks from the national pay survey",
+            "sources": [{ "name": "ONS ASHE", "dataset": "SOC 5435 London FT median", "year": 2025 }],
+            "freshness": "April 2025"
+          }
+        },
+        {
+          "role": "Waitstaff x2",
+          "employment": "full time",
+          "count": 2,
+          "wage": {
+            "value": 71065,
+            "unit": "USD/yr",
+            "gbp": 53372,
+            "tier": "measured",
+            "basis": "two at the London full-time median for waiting staff; payroll-routed tips included, cash tips not",
+            "sources": [{ "name": "ONS ASHE", "dataset": "SOC 9264 London FT median 26,686 GBP each", "year": 2025 }],
+            "freshness": "April 2025"
+          }
+        },
+        {
+          "role": "Kitchen porter, part time 20h",
+          "employment": "part time",
+          "count": 1,
+          "wage": {
+            "value": 17669,
+            "unit": "USD/yr",
+            "gbp": 13270,
+            "tier": "built",
+            "basis": "the measured London part-time hourly median for kitchen assistants at 20 hours a week",
+            "sources": [{ "name": "ONS ASHE", "dataset": "SOC 9263 London PT hourly 12.76 GBP", "year": 2025 }],
+            "freshness": "April 2025"
+          }
+        }
+      ],
+      "rosterWages": {
+        "value": 198782,
+        "unit": "USD/yr",
+        "gbp": 149292,
+        "tier": "built",
+        "basis": "the five roster lines summed, before employer contributions",
+        "freshness": "April 2025 pay data"
+      },
+      "rosterAllIn": {
+        "value": 213096,
+        "unit": "USD/yr",
+        "gbp": 160042,
+        "tier": "built",
+        "basis": "roster wages plus statutory employer contributions and the pension minimum, after the annual employment allowance a single-site operator qualifies for",
+        "freshness": "2026-27 statutory rates",
+        "notes": "Reconciles with the 34-percent staff line at plus 2.1 percent in GBP, from fully independent sides. Without the allowance: 227,300 dollars."
+      },
+      "headcount": {
+        "lo": 5,
+        "hi": 5.5,
+        "unit": "people",
+        "tier": "built",
+        "basis": "two independent builds converge: the sector cost share over an all-in cost per head, and the bottom-up roster; about 4.9 full-time-equivalent",
+        "freshness": "inherits April 2025 pay and 2024 sector data",
+        "falsifier": "official employment-per-site for the trade implying fewer than 4 or more than 8 heads at this revenue"
+      },
+      "oncostsMarginalPct": {
+        "lo": 14,
+        "hi": 15,
+        "unit": "% of wages",
+        "tier": "built",
+        "basis": "statutory employer contributions, 15 percent above a 5,000 pound threshold, plus the 3 percent pension minimum, for the 2026-27 year",
+        "freshness": "2026-27 tax year, confirmed unchanged after the autumn 2025 budget",
+        "falsifier": "official rate tables showing different employer rates or thresholds for 2026-27"
+      },
+      "oncostsEffectivePct": {
+        "value": 7.2,
+        "unit": "% of wages",
+        "tier": "built",
+        "basis": "after the 10,500 pound annual employment allowance, which a single-site restaurant qualifies for, the effective uplift on this roster is about 7 percent; almost nobody says this and it is genuinely useful",
+        "freshness": "2026-27 tax year"
+      },
+      "wageFloor": {
+        "value": 33001,
+        "unit": "USD/yr",
+        "gbp": 24785,
+        "tier": "measured",
+        "basis": "the statutory wage floor from April 2026, 12.71 pounds an hour, annualized at 37.5 hours a week",
+        "freshness": "in force since 1 April 2026, next change April 2027",
+        "falsifier": "the official rate page showing any other 2026-27 floor",
+        "notes": "The voluntary London living wage, 14.80 pounds an hour, is the floor most London kitchens actually have to pay to hire at all."
+      },
+      "churnPctPerYear": {
+        "lo": 35,
+        "hi": 70,
+        "taken": 40,
+        "unit": "%/yr",
+        "tier": "thin",
+        "basis": "no official series; private surveys put restaurants and cafes near 40 percent a year, with hourly front-of-house churning more and salaried kitchen roles less",
+        "freshness": "survey vintages 2023 to 2025",
+        "falsifier": "an official labour-flows series for the trade contradicting the 35 to 70 band",
+        "notes": "The old 32 percent sat below every published figure found."
+      },
+      "churnCostPerYear": {
+        "lo": 5326,
+        "hi": 13315,
+        "unit": "USD/yr",
+        "gbp": { "lo": 4000, "hi": 10000 },
+        "tier": "thin",
+        "basis": "about two leavers a year at this headcount, replacement cost blended across kitchen and front-of-house routes, plus lost productivity in the first weeks",
+        "freshness": "inputs 2025 to 2026"
+      },
+      "recruitChefDirect": {
+        "lo": 1332,
+        "hi": 2663,
+        "unit": "USD",
+        "gbp": { "lo": 1000, "hi": 2000 },
+        "tier": "thin",
+        "basis": "the direct route: job-board advertising plus management time",
+        "freshness": "2025 to 2026"
+      },
+      "recruitChefAgency": {
+        "lo": 6815,
+        "hi": 13629,
+        "unit": "USD",
+        "gbp": { "lo": 5118, "hi": 10236 },
+        "tier": "thin",
+        "basis": "the agency route: the hospitality-standard placement fee of 15 to 30 percent of first-year salary on the London chefs median",
+        "freshness": "fee bands 2025 to 2026",
+        "notes": "The two routes differ by 5x; show both rather than one blended number."
+      },
+      "weeksToFillChefRole": {
+        "value": null,
+        "reason": "no published vacancy-duration statistic exists for hospitality or for chefs; the vacancy survey counts open roles but not how long they stay open",
+        "proxy": {
+          "value": 6,
+          "unit": "weeks",
+          "tier": "thin",
+          "basis": "the national all-role average time to fill; chefs are a persistent shortage occupation, so this is a floor, not a midpoint",
+          "freshness": "2025 survey"
+        }
+      }
+    },
+    "rentAndRates": {
+      "total": {
+        "value": 80414,
+        "unit": "USD/yr",
+        "gbp": 60393,
+        "tier": "built",
+        "basis": "assessed open-market rent for a 100 square metre upper-middle high-street room plus business rates at the 2026-27 hospitality small-business multiplier; rebuilds from public inputs to within 0.1 percent of the published anchor",
+        "sources": [
+          { "name": "VOA 2026 rating list", "dataset": "restaurant rateable-value ranges via trade rates reports", "year": 2026 },
+          { "name": "gov.uk multiplier notification", "dataset": "2/2026 non-domestic rating multipliers", "year": 2026 }
+        ],
+        "freshness": "rent as at the April 2024 valuation date; multipliers current April 2026 to March 2027",
+        "falsifier": "thirty live restaurant lettings across Greater London putting the median unit rent for about 1,000 square feet outside 30,000 to 60,000 pounds a year"
+      },
+      "rent": {
+        "value": 58187,
+        "unit": "USD/yr",
+        "gbp": 43700,
+        "tier": "built",
+        "basis": "437 pounds per square metre, an upper-middle Greater-London high-street rate triangulated from assessed-rent ranges; central prime is a different market, 3 to 20 times this",
+        "sources": [{ "name": "VOA 2026 rating list", "dataset": "Outer London 25-60K, Central 50-120K GBP restaurant RV ranges", "year": 2026 }],
+        "freshness": "valuation date April 2024",
+        "notes": "13 percent of the modeled revenue is rent AND rates together; rent alone is 9.4 percent. The room is not Soho and the page should not imply it."
+      },
+      "rates": {
+        "value": 22227,
+        "unit": "USD/yr",
+        "gbp": 16693,
+        "tier": "built",
+        "basis": "rateable value at the assessed rent times the 38.2 pence hospitality small-business multiplier for 2026-27",
+        "freshness": "2026-27 rating year",
+        "falsifier": "any real 100 square metre London restaurant on the public valuation service with a rateable value far from 35,000 to 55,000 pounds"
+      },
+      "reviewCycleYears": {
+        "value": 5,
+        "unit": "years",
+        "tier": "measured",
+        "basis": "standard commercial practice: reviews land about every five years and have historically only moved rent up. Upward-only clauses were abolished for new leases in April 2026, expected in force around 2027",
+        "freshness": "ban has Royal Assent April 2026, commencement awaited; copy has a shelf life",
+        "falsifier": "the commencement regulations, when made, set the exact scope"
+      },
+      "reviewStressPct": {
+        "value": 25,
+        "unit": "% rent uplift at review",
+        "tier": "thin",
+        "fromModel": true,
+        "basis": "a stress scenario, not a statistic; the 2026 revaluation repriced hospitality rents by 19 to 30 percent over three years, which brackets it",
+        "freshness": "revaluation April 2026",
+        "falsifier": "a licensed lease-events dataset giving a real distribution of review uplifts"
+      },
+      "shareOfRevenueQuartileSpread": {
+        "lo": 9,
+        "hi": 18,
+        "unit": "% of revenue",
+        "tier": "thin",
+        "basis": "the plausible spread of rent share between top-quarter and bottom-quarter rooms; no published quartile split exists, so this is a range and says so",
+        "freshness": "assembled 2026-07",
+        "falsifier": "assessed-rent dispersion over modeled revenue would make this buildable"
+      },
+      "depositAndFirstRent": {
+        "lo": 19396,
+        "hi": 29093,
+        "taken": 29093,
+        "unit": "USD",
+        "gbp": { "lo": 14567, "hi": 21850, "taken": 21850 },
+        "tier": "built",
+        "basis": "three months' deposit plus a quarter's rent in advance at the modeled rent, the typical ask for a new operator; the floor is a deposit plus one month",
+        "freshness": "practice notes 2024 to 2026",
+        "falsifier": "heads-of-terms for London restaurant lettings agreeing deposits at one to two months",
+        "notes": "If the landlord charges VAT the typical ask rises to about 34,900 dollars, recoverable later but day-one cash. The old 16,000 dollar line backed out to 2.5 months and was low."
+      }
+    },
+    "running": {
+      "pct": {
+        "value": 15,
+        "unit": "% of revenue",
+        "tier": "built",
+        "fromModel": true,
+        "basis": "the residual that closes the model at the published 7 percent keep once rent and rates are pinned at their rebuilt value; covers energy, insurance, cards, marketing and upkeep",
+        "freshness": "model",
+        "notes": "With rent and rates at 80,000 dollars, running costs must be 15 percent for the 7 percent keep to survive; at 11 percent the keep is 11 percent. The page's own method block already says 15."
+      },
+      "total": {
+        "value": 92773,
+        "unit": "USD/yr",
+        "gbp": 69676,
+        "tier": "built",
+        "fromModel": true,
+        "basis": "15 percent of the modeled revenue",
+        "freshness": "model"
+      },
+      "energyPerKwh": {
+        "value": 0.383,
+        "unit": "USD/kWh",
+        "gbp": 0.2876,
+        "tier": "measured",
+        "basis": "official quarterly non-domestic electricity price, small-consumption band, first quarter 2026, levies included; a restaurant sits in this band, not the all-business average",
+        "sources": [{ "name": "DESNZ Quarterly Energy Prices", "dataset": "table 3.4.2, Small band, Q1 2026", "year": 2026 }],
+        "freshness": "Q1 2026 actuals, published 30 June 2026; next release September 2026",
+        "falsifier": "the next quarterly release moves the number",
+        "notes": "The old 0.31 dollar figure was the all-business average, not a small-business price."
+      }
+    },
+    "ownerKeeps": {
+      "lo": 43284,
+      "hi": 68023,
+      "taken": 43284,
+      "unit": "USD/yr",
+      "gbp": { "lo": 32508, "hi": 51087, "taken": 32508 },
+      "tier": "built",
+      "fromModel": true,
+      "basis": "the residual of the five model lines, with the working on screen; the conservative point takes running costs at 15 percent, the top of the range takes them at 11",
+      "freshness": "model",
+      "notes": "7.0 percent of the modeled revenue at the conservative point. This is the modeled room's keep, not the typical room's: the measured median room turns over a third less."
+    },
+    "distribution": {
+      "unit": "USD/yr owner take-home by rank",
+      "tier": "thin",
+      "fromModel": true,
+      "basis": "the shape of owner take-home across the trade, pinned to two figures this file already carries: the modeled room's keep at its own percentile, and the share of rooms that pay their owner properly. Nobody publishes owner-income percentiles for the trade, so this is a fitted shape and the page must say so wherever it is drawn",
+      "freshness": "derived, moves with the cost stack, the percentile and the properly-paid share",
+      "falsifier": "publication of owner-income or profit distributions for the restaurant trade at city grain",
+      "floor": -35000,
+      "properlyPaidThreshold": 95000,
+      "sampleSize": 200,
+      "notes": "floor is the model's worst room, a loss of about 35,000 dollars a year before it closes; the properly-paid threshold is about twice the London average wage, which is what most people mean by doing well. The curve exponent and span are DERIVED from these two anchors plus percentileOfPopulation and ownerPaidProperly, never stored, so the fit cannot drift from the figures it is pinned to."
+    },
+    "dailyFloor": {
+      "committedCostPerOpenDay": {
+        "value": 1225,
+        "unit": "USD/day",
+        "gbp": 920,
+        "tier": "built",
+        "fromModel": true,
+        "basis": "staff, rent and running costs over 313 open days; committed before a plate is sold",
+        "freshness": "model"
+      },
+      "breakevenTakings": {
+        "value": 1776,
+        "unit": "USD/day",
+        "gbp": 1334,
+        "tier": "built",
+        "fromModel": true,
+        "basis": "the committed cost grossed up for the 31 cents of food in every dollar of takings",
+        "freshness": "model"
+      },
+      "paysTarget95kTakings": {
+        "value": 2215,
+        "unit": "USD/day",
+        "gbp": 1664,
+        "tier": "built",
+        "fromModel": true,
+        "basis": "daily takings at which the room pays its owner 95,000 dollars a year, the page's default target",
+        "freshness": "model"
+      }
+    }
+  },
+
+  "opening": {
+    "fitout": {
+      "lo": 93000,
+      "hi": 353000,
+      "taken": 186000,
+      "unit": "USD",
+      "gbp": { "lo": 70000, "hi": 265000, "taken": 140000 },
+      "tier": "thin",
+      "basis": "no register exists, so this is a range. The top is a strip-out to bare brick at the top of the published per-square-metre band; the middle is squarely inside the casual-dining band; the low is a light refresh of a room that already traded as a restaurant, part estimate",
+      "sources": [
+        { "name": "trade fit-out cost guides", "dataset": "1,000 to 3,000 GBP per sqm full fit-out band", "year": 2026 },
+        { "name": "catering-equipment supplier guides", "dataset": "kitchen install size-class totals", "year": 2026 }
+      ],
+      "freshness": "guides current 2024 to early 2026",
+      "falsifier": "a London quantity-surveyor benchmark putting casual-dining fit-out below about 900 or above about 3,500 pounds per square metre",
+      "notes": "The fully-cited floor is the band floor, 133,000 dollars; the 93,000 low keeps the real ex-restaurant bargain case but its front-of-house half is reasoned, not sourced. Excluded: planning change of use if the unit was not a restaurant, and key money on desirable units."
+    },
+    "fitoutBandFloor": {
+      "value": 133150,
+      "unit": "USD",
+      "gbp": 100000,
+      "tier": "built",
+      "basis": "the floor of the published per-square-metre full fit-out band across 100 square metres; the fully-cited alternative low bound",
+      "freshness": "band current early 2026"
+    },
+    "kitchenPackage": {
+      "lo": 29293,
+      "hi": 78559,
+      "unit": "USD",
+      "gbp": { "lo": 22000, "hi": 59000 },
+      "tier": "built",
+      "basis": "five supplier-published equipment category ranges summed: cooking, refrigeration, dishwashing, prep and stainless, extraction and ventilation; installed, new",
+      "sources": [{ "name": "catering-equipment supplier guides", "dataset": "category ranges and install classes", "year": 2026 }],
+      "freshness": "2024 to 2026 guides",
+      "falsifier": "a current dealer basket pricing a comparable package materially outside 20,000 to 70,000 pounds installed",
+      "notes": "The itemizable Built core of the Thin fit-out family; used or refurbished equipment cuts 30 to 50 percent but voids the new basis."
+    },
+    "depositAndFirstRent": {
+      "lo": 19396,
+      "hi": 29093,
+      "taken": 29093,
+      "unit": "USD",
+      "gbp": { "lo": 14567, "hi": 21850, "taken": 21850 },
+      "tier": "built",
+      "basis": "three months' deposit plus a quarter's rent in advance at the modeled rent; the floor is a deposit plus one month",
+      "freshness": "practice notes 2024 to 2026"
+    },
+    "openingStock": {
+      "lo": 7374,
+      "hi": 14748,
+      "taken": 12000,
+      "unit": "USD",
+      "gbp": { "lo": 5538, "hi": 11076, "taken": 9012 },
+      "tier": "built",
+      "fromModel": true,
+      "basis": "about three weeks of the model's food-cost run rate; two weeks tight and fresh-led, four weeks with a drink-heavy cellar",
+      "freshness": "moves with the revenue and food-share figures automatically",
+      "falsifier": "published opening-stock guidance contradicting two to four weeks of cover"
+    },
+    "companyRegistration": {
+      "value": 133,
+      "unit": "USD",
+      "gbp": 100,
+      "tier": "measured",
+      "basis": "the statutory company registration fee, doubled in February 2026; usually registered within 24 hours. Sole traders register free",
+      "freshness": "fee current from 1 February 2026",
+      "falsifier": "the official fee page showing anything other than 100 pounds online"
+    },
+    "foodBusinessRegistration": {
+      "value": 0,
+      "unit": "USD",
+      "gbp": 0,
+      "tier": "measured",
+      "basis": "food business registration is free and must be filed with the local authority at least 28 days before trading; it cannot be refused",
+      "freshness": "stable statutory position"
+    },
+    "licence": {
+      "lo": 766,
+      "hi": 1591,
+      "taken": 1178,
+      "unit": "USD",
+      "gbp": { "lo": 575, "hi": 1195, "taken": 885 },
+      "tier": "built",
+      "basis": "statutory alcohol premises application and personal-licence fees for a room of this rateable value, plus the required public notice, which varies by paper",
+      "freshness": "statutory fees unchanged since 2005; a fee uplift has been consulted on for years, not enacted",
+      "falsifier": "enactment of the consulted licensing-fee uplift",
+      "notes": "Annual fee thereafter about 400 dollars, a running cost, not part of this cascade. Late-hours trading is covered by the same licence."
+    },
+    "insuranceYear1": {
+      "lo": 1997,
+      "hi": 3462,
+      "taken": 2730,
+      "unit": "USD/yr",
+      "gbp": { "lo": 1500, "hi": 2600, "taken": 2050 },
+      "tier": "thin",
+      "basis": "broker guide tiers interpolated at this room's turnover, public and employer liability packaged; employer liability is a legal requirement with staff",
+      "freshness": "2026 guides, upward pressure from wage-driven rating",
+      "falsifier": "three broker quotes for a comparable London room materially outside 1,200 to 4,000 pounds"
+    },
+    "total": {
+      "value": 231134,
+      "unit": "USD",
+      "gbp": 173589,
+      "tier": "built",
+      "fromModel": true,
+      "basis": "the opening lines summed: fit-out taken near the middle of its range, the deposit at the typical ask, stock at three weeks, plus registration, licence and first-year insurance",
+      "freshness": "components dated individually",
+      "notes": "The mockup's 212,000 dollars rises to about 231,000 under the pinned rate and the corrected deposit; the deposit correction is the driver."
+    }
+  },
+
+  "seasonality": {
+    "monthlyIndex": {
+      "series": [
+        { "x": "Jan", "value": 80 },
+        { "x": "Feb", "value": 78 },
+        { "x": "Mar", "value": 92 },
+        { "x": "Apr", "value": 98 },
+        { "x": "May", "value": 100 },
+        { "x": "Jun", "value": 104 },
+        { "x": "Jul", "value": 102 },
+        { "x": "Aug", "value": 96 },
+        { "x": "Sep", "value": 106 },
+        { "x": "Oct", "value": 110 },
+        { "x": "Nov", "value": 116 },
+        { "x": "Dec", "value": 132 }
+      ],
+      "unit": "revenue index, year average = 100",
+      "tier": "thin",
+      "fromModel": true,
+      "basis": "a trade seasonal shape for a city-centre dining room, indexed to the year average; no measured monthly revenue series for London restaurants is published, so this is a pattern, not a forecast",
+      "freshness": "shape assembled 2026-07",
+      "falsifier": "a published monthly revenue index for London restaurants with a materially different shape",
+      "notes": "None of the five research families grounds this array; it ships only under the thin tag with the pattern-not-forecast label, or the founder nulls the section."
+    }
+  },
+
+  "year1": {
+    "openingCosts": {
+      "value": 231134,
+      "unit": "USD",
+      "gbp": 173589,
+      "tier": "built",
+      "fromModel": true,
+      "basis": "the opening cost stack, detailed in the opening section",
+      "freshness": "components dated individually"
+    },
+    "tradeBuildLosses": {
+      "value": 129000,
+      "unit": "USD",
+      "gbp": 96883,
+      "tier": "built",
+      "fromModel": true,
+      "basis": "model output: cumulative operating losses while trade builds to steady state; the ramp is the model's free parameter",
+      "freshness": "model",
+      "falsifier": "a cohort study publishing months-to-positive-cashflow for new UK restaurants; none exists, survival is tracked, profitability is not"
+    },
+    "cashBeforeOpen": {
+      "value": 360134,
+      "unit": "USD",
+      "gbp": 270472,
+      "tier": "built",
+      "fromModel": true,
+      "basis": "opening costs plus the modeled trading losses while trade builds; most people budget the fit-out and nothing else",
+      "freshness": "model",
+      "notes": "The mockup's 341,000 dollars becomes about 360,000 under the corrected deposit and pinned rate. The deepest point of the cash curve equals this figure."
+    },
+    "deepestHoleMonth": {
+      "value": 5,
+      "unit": "month",
+      "tier": "built",
+      "fromModel": true,
+      "basis": "model output: the cash curve bottoms around month five, consistent with trade guidance that traffic stabilises three to six months after opening",
+      "freshness": "model"
+    },
+    "breakevenMonth": {
+      "value": 16,
+      "unit": "month",
+      "tier": "built",
+      "fromModel": true,
+      "basis": "model output: the month the room stops losing money; trade guidance clusters operating breakeven at 6 to 18 months and this sits inside every published cluster. No register measures this",
+      "freshness": "model, corroboration 2024 to 2026",
+      "falsifier": "any cohort dataset publishing months-to-breakeven for new UK restaurants"
+    },
+    "paybackYears": {
+      "value": 4.4,
+      "unit": "years",
+      "tier": "built",
+      "fromModel": true,
+      "basis": "sunk opening costs, the deposit and stock come back, earned back at the modeled keep; startup payback is commonly quoted at 3 to 7 years and this sits mid-band",
+      "freshness": "model",
+      "notes": "Sunk stack of about 190,000 dollars over the 43,000 dollar keep. The mockup's 4.5 survives within rounding."
+    }
+  },
+
+  "comparisons": {
+    "cities": {
+      "value": null,
+      "reason": "no source grounds the peer-city revenue and owner-keeps figures in the mockup (Manchester, Edinburgh, Birmingham); they ship only when their own cell files exist, built the same way as this one"
+    }
+  }
+}

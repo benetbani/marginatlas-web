@@ -1,0 +1,418 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://marginatlas.com/schemas/cell.spine2.schema.json",
+  "title": "Margin Atlas spine-2 cell data file",
+  "description": "Typed per-cell data file. Every figure carries a tier (measured/built/thin), a user-facing-safe basis, freshness, and its GBP native alongside USD at one pinned rate. modelRoom is the explicit modeled scenario; population is what the trade measurably does. Nulls are explicit objects with a reason.",
+  "type": "object",
+  "required": ["meta", "population", "modelRoom", "opening", "seasonality", "year1", "comparisons"],
+  "additionalProperties": false,
+  "definitions": {
+    "tier": { "type": "string", "enum": ["measured", "built", "thin"] },
+    "sourceRef": {
+      "type": "object",
+      "required": ["name", "year"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "dataset": { "type": "string" },
+        "year": { "type": ["integer", "string"] }
+      },
+      "additionalProperties": false
+    },
+    "figureMeta": {
+      "type": "object",
+      "required": ["unit", "tier", "basis", "freshness"],
+      "properties": {
+        "unit": { "type": "string", "minLength": 1 },
+        "tier": { "$ref": "#/definitions/tier" },
+        "basis": { "type": "string", "minLength": 10 },
+        "sources": { "type": "array", "items": { "$ref": "#/definitions/sourceRef" }, "minItems": 1 },
+        "freshness": { "type": "string", "minLength": 1 },
+        "falsifier": { "type": "string" },
+        "fromModel": { "type": "boolean" },
+        "notes": { "type": "string" }
+      }
+    },
+    "pointFigure": {
+      "allOf": [
+        { "$ref": "#/definitions/figureMeta" },
+        {
+          "type": "object",
+          "required": ["value"],
+          "properties": {
+            "value": { "type": "number" },
+            "gbp": { "type": "number" }
+          }
+        }
+      ]
+    },
+    "rangeFigure": {
+      "allOf": [
+        { "$ref": "#/definitions/figureMeta" },
+        {
+          "type": "object",
+          "required": ["lo", "hi"],
+          "properties": {
+            "lo": { "type": "number" },
+            "hi": { "type": "number" },
+            "taken": { "type": "number" },
+            "gbp": {
+              "type": "object",
+              "required": ["lo", "hi"],
+              "properties": {
+                "lo": { "type": "number" },
+                "hi": { "type": "number" },
+                "taken": { "type": "number" }
+              },
+              "additionalProperties": false
+            }
+          }
+        }
+      ]
+    },
+    "seriesFigure": {
+      "allOf": [
+        { "$ref": "#/definitions/figureMeta" },
+        {
+          "type": "object",
+          "required": ["series"],
+          "properties": {
+            "series": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": ["x", "value"],
+                "properties": {
+                  "x": { "type": ["number", "string"] },
+                  "value": { "type": "number" }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "claimFigure": {
+      "type": "object",
+      "required": ["claim", "reality", "tier", "basis", "freshness"],
+      "properties": {
+        "claim": { "type": "string", "minLength": 1 },
+        "reality": { "type": "string", "minLength": 1 },
+        "tier": { "$ref": "#/definitions/tier" },
+        "basis": { "type": "string", "minLength": 10 },
+        "sources": { "type": "array", "items": { "$ref": "#/definitions/sourceRef" } },
+        "freshness": { "type": "string" },
+        "falsifier": { "type": "string" },
+        "notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "nullFigure": {
+      "type": "object",
+      "required": ["value", "reason"],
+      "properties": {
+        "value": { "type": "null" },
+        "reason": { "type": "string", "minLength": 10 },
+        "proxy": {
+          "oneOf": [
+            { "$ref": "#/definitions/pointFigure" },
+            { "$ref": "#/definitions/rangeFigure" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "rosterRole": {
+      "type": "object",
+      "required": ["role", "employment", "count", "wage"],
+      "properties": {
+        "role": { "type": "string", "minLength": 1 },
+        "employment": { "type": "string", "enum": ["full time", "part time"] },
+        "count": { "type": "integer", "minimum": 1 },
+        "wage": { "$ref": "#/definitions/pointFigure" }
+      },
+      "additionalProperties": false
+    },
+    "cityPeerRow": {
+      "type": "object",
+      "required": ["city", "citySlug", "revenue", "ownerKeeps", "per10kPeople", "breakIn"],
+      "properties": {
+        "city": { "type": "string", "minLength": 1 },
+        "citySlug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+        "revenue": { "type": "number" },
+        "ownerKeeps": { "type": "number" },
+        "per10kPeople": { "type": "number" },
+        "breakIn": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "cityComparisonFigure": {
+      "allOf": [
+        { "$ref": "#/definitions/figureMeta" },
+        {
+          "type": "object",
+          "required": ["cities"],
+          "properties": {
+            "cities": {
+              "type": "array",
+              "minItems": 2,
+              "items": { "$ref": "#/definitions/cityPeerRow" }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["schema", "schemaVersion", "id", "country", "city", "trade", "urlPath", "currency", "freshness", "reviewedAt"],
+      "properties": {
+        "schema": { "const": "cell.spine2" },
+        "schemaVersion": { "type": "integer", "minimum": 1 },
+        "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+        "country": {
+          "type": "object",
+          "required": ["slug", "name"],
+          "properties": {
+            "slug": { "type": "string", "pattern": "^[a-z]{2}$" },
+            "name": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        "city": {
+          "type": "object",
+          "required": ["slug", "name"],
+          "properties": {
+            "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+            "name": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        "trade": {
+          "type": "object",
+          "required": ["slug", "name", "noun"],
+          "properties": {
+            "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+            "name": { "type": "string" },
+            "noun": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        "urlPath": { "type": "string", "pattern": "^/[a-z]{2}/[a-z0-9-]+/[a-z0-9-]+$" },
+        "currency": {
+          "type": "object",
+          "required": ["display", "native", "usdPerGbp", "rateAsOf", "rateBasis"],
+          "properties": {
+            "display": { "const": "USD" },
+            "native": { "type": "string", "minLength": 3, "maxLength": 3 },
+            "usdPerGbp": { "type": "number", "exclusiveMinimum": 0 },
+            "rateAsOf": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+            "rateBasis": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        "freshness": { "type": "string" },
+        "reviewedAt": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+        "provenance": {
+          "type": "object",
+          "properties": {
+            "correctionsLedger": { "type": "string" },
+            "familyDocs": { "type": "array", "items": { "type": "string" } },
+            "correctionsApplied": { "type": "array", "items": { "type": "integer" } },
+            "correctionsOutOfScope": { "type": "object", "additionalProperties": { "type": "string" } },
+            "freshnessWatch": { "type": "array", "items": { "type": "string" } }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "population": {
+      "type": "object",
+      "required": ["sites", "enterprises", "medianRevenue", "quartiles", "survival", "myth", "ownerPaidProperly"],
+      "properties": {
+        "sites": { "$ref": "#/definitions/pointFigure" },
+        "enterprises": { "$ref": "#/definitions/pointFigure" },
+        "sitesIncludingTakeaways": { "$ref": "#/definitions/pointFigure" },
+        "medianRevenue": { "$ref": "#/definitions/pointFigure" },
+        "medianRevenueRestaurantsAndCafes": { "$ref": "#/definitions/pointFigure" },
+        "quartiles": {
+          "type": "object",
+          "required": ["p25", "p50", "p75"],
+          "properties": {
+            "p25": { "$ref": "#/definitions/pointFigure" },
+            "p50": { "$ref": "#/definitions/pointFigure" },
+            "p75": { "$ref": "#/definitions/pointFigure" }
+          },
+          "additionalProperties": false
+        },
+        "turnoverBands": { "$ref": "#/definitions/seriesFigure" },
+        "survival": { "$ref": "#/definitions/seriesFigure" },
+        "survivalLondonCross": { "$ref": "#/definitions/nullFigure" },
+        "myth": { "$ref": "#/definitions/claimFigure" },
+        "ownerPaidProperly": { "$ref": "#/definitions/pointFigure" },
+        "ordersPerDayAtMedian": { "$ref": "#/definitions/pointFigure" }
+      },
+      "additionalProperties": false
+    },
+    "modelRoom": {
+      "type": "object",
+      "required": ["description", "floorAreaSqm", "percentileOfPopulation", "assumptions", "revenue", "food", "staff", "rentAndRates", "running", "ownerKeeps", "dailyFloor"],
+      "properties": {
+        "description": { "type": "string", "minLength": 10 },
+        "floorAreaSqm": { "$ref": "#/definitions/pointFigure" },
+        "percentileOfPopulation": { "$ref": "#/definitions/pointFigure" },
+        "assumptions": {
+          "type": "object",
+          "required": ["ordersPerDay", "spendPerHead", "openDaysPerYear"],
+          "properties": {
+            "ordersPerDay": { "$ref": "#/definitions/pointFigure" },
+            "spendPerHead": { "$ref": "#/definitions/pointFigure" },
+            "openDaysPerYear": { "$ref": "#/definitions/pointFigure" }
+          },
+          "additionalProperties": false
+        },
+        "distribution": {
+          "allOf": [
+            { "$ref": "#/definitions/figureMeta" },
+            {
+              "type": "object",
+              "required": ["floor", "properlyPaidThreshold", "sampleSize"],
+              "properties": {
+                "floor": { "type": "number" },
+                "properlyPaidThreshold": { "type": "number", "exclusiveMinimum": 0 },
+                "sampleSize": { "type": "integer", "minimum": 20 }
+              }
+            }
+          ]
+        },
+        "revenue": { "$ref": "#/definitions/pointFigure" },
+        "food": {
+          "type": "object",
+          "required": ["pct", "cost", "allPurchasesPct"],
+          "properties": {
+            "pct": { "$ref": "#/definitions/pointFigure" },
+            "cost": { "$ref": "#/definitions/pointFigure" },
+            "allPurchasesPct": { "$ref": "#/definitions/pointFigure" }
+          },
+          "additionalProperties": false
+        },
+        "staff": {
+          "type": "object",
+          "required": ["line", "sharePct", "roster", "rosterWages", "rosterAllIn", "headcount", "oncostsMarginalPct", "oncostsEffectivePct", "wageFloor", "churnPctPerYear", "churnCostPerYear", "recruitChefDirect", "recruitChefAgency", "weeksToFillChefRole"],
+          "properties": {
+            "line": { "$ref": "#/definitions/pointFigure" },
+            "sharePct": { "$ref": "#/definitions/pointFigure" },
+            "roster": { "type": "array", "minItems": 1, "items": { "$ref": "#/definitions/rosterRole" } },
+            "rosterWages": { "$ref": "#/definitions/pointFigure" },
+            "rosterAllIn": { "$ref": "#/definitions/pointFigure" },
+            "headcount": { "$ref": "#/definitions/rangeFigure" },
+            "oncostsMarginalPct": { "$ref": "#/definitions/rangeFigure" },
+            "oncostsEffectivePct": { "$ref": "#/definitions/pointFigure" },
+            "wageFloor": { "$ref": "#/definitions/pointFigure" },
+            "churnPctPerYear": { "$ref": "#/definitions/rangeFigure" },
+            "churnCostPerYear": { "$ref": "#/definitions/rangeFigure" },
+            "recruitChefDirect": { "$ref": "#/definitions/rangeFigure" },
+            "recruitChefAgency": { "$ref": "#/definitions/rangeFigure" },
+            "weeksToFillChefRole": { "$ref": "#/definitions/nullFigure" }
+          },
+          "additionalProperties": false
+        },
+        "rentAndRates": {
+          "type": "object",
+          "required": ["total", "rent", "rates", "reviewCycleYears", "reviewStressPct", "shareOfRevenueQuartileSpread", "depositAndFirstRent"],
+          "properties": {
+            "total": { "$ref": "#/definitions/pointFigure" },
+            "rent": { "$ref": "#/definitions/pointFigure" },
+            "rates": { "$ref": "#/definitions/pointFigure" },
+            "reviewCycleYears": { "$ref": "#/definitions/pointFigure" },
+            "reviewStressPct": { "$ref": "#/definitions/pointFigure" },
+            "shareOfRevenueQuartileSpread": { "$ref": "#/definitions/rangeFigure" },
+            "depositAndFirstRent": { "$ref": "#/definitions/rangeFigure" }
+          },
+          "additionalProperties": false
+        },
+        "running": {
+          "type": "object",
+          "required": ["pct", "total", "energyPerKwh"],
+          "properties": {
+            "pct": { "$ref": "#/definitions/pointFigure" },
+            "total": { "$ref": "#/definitions/pointFigure" },
+            "energyPerKwh": { "$ref": "#/definitions/pointFigure" }
+          },
+          "additionalProperties": false
+        },
+        "ownerKeeps": { "$ref": "#/definitions/rangeFigure" },
+        "dailyFloor": {
+          "type": "object",
+          "required": ["committedCostPerOpenDay", "breakevenTakings", "paysTarget95kTakings"],
+          "properties": {
+            "committedCostPerOpenDay": { "$ref": "#/definitions/pointFigure" },
+            "breakevenTakings": { "$ref": "#/definitions/pointFigure" },
+            "paysTarget95kTakings": { "$ref": "#/definitions/pointFigure" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "opening": {
+      "type": "object",
+      "required": ["fitout", "kitchenPackage", "depositAndFirstRent", "openingStock", "companyRegistration", "foodBusinessRegistration", "licence", "insuranceYear1", "total"],
+      "properties": {
+        "fitout": { "$ref": "#/definitions/rangeFigure" },
+        "fitoutBandFloor": { "$ref": "#/definitions/pointFigure" },
+        "kitchenPackage": { "$ref": "#/definitions/rangeFigure" },
+        "depositAndFirstRent": { "$ref": "#/definitions/rangeFigure" },
+        "openingStock": { "$ref": "#/definitions/rangeFigure" },
+        "companyRegistration": { "$ref": "#/definitions/pointFigure" },
+        "foodBusinessRegistration": { "$ref": "#/definitions/pointFigure" },
+        "licence": { "$ref": "#/definitions/rangeFigure" },
+        "insuranceYear1": { "$ref": "#/definitions/rangeFigure" },
+        "total": { "$ref": "#/definitions/pointFigure" }
+      },
+      "additionalProperties": false
+    },
+    "seasonality": {
+      "type": "object",
+      "required": ["monthlyIndex"],
+      "properties": {
+        "monthlyIndex": {
+          "oneOf": [
+            { "$ref": "#/definitions/seriesFigure" },
+            { "$ref": "#/definitions/nullFigure" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "year1": {
+      "type": "object",
+      "required": ["openingCosts", "tradeBuildLosses", "cashBeforeOpen", "deepestHoleMonth", "breakevenMonth", "paybackYears"],
+      "properties": {
+        "openingCosts": { "$ref": "#/definitions/pointFigure" },
+        "tradeBuildLosses": { "$ref": "#/definitions/pointFigure" },
+        "cashBeforeOpen": { "$ref": "#/definitions/pointFigure" },
+        "deepestHoleMonth": { "$ref": "#/definitions/pointFigure" },
+        "breakevenMonth": { "$ref": "#/definitions/pointFigure" },
+        "paybackYears": { "$ref": "#/definitions/pointFigure" }
+      },
+      "additionalProperties": false
+    },
+    "comparisons": {
+      "type": "object",
+      "required": ["cities"],
+      "properties": {
+        "cities": {
+          "oneOf": [
+            { "$ref": "#/definitions/cityComparisonFigure" },
+            { "$ref": "#/definitions/nullFigure" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
