@@ -41,7 +41,12 @@
     "verify:turnover-bands": "npx tsx scripts/verify_turnover_bands.ts",
     "verify:wage-source": "npx tsx scripts/verify_wage_source_consistency.ts",
     "verify:city-wage": "npx tsx scripts/verify_city_wage_premiums.ts",
-    "postbuild": "npx tsx scripts/verify_edge_function_sizes.ts"
+    "postbuild": "npx tsx scripts/verify_edge_function_sizes.ts",
+    "verify:cell-data": "node scripts/verify_cell_data.mjs",
+    "verify:cell-lattice": "node scripts/verify_cell_lattice.mjs",
+    "verify:accents": "node scripts/verify_derived_accents.mjs",
+    "verify:rendered": "node scripts/verify_rendered_design.mjs",
+    "verify:overflow": "node scripts/audit_overflow.mjs country city cell --width 390"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

@@ -43,6 +43,30 @@ const GATES: Gate[] = [
   { name: "taxonomy", script: "scripts/verify_taxonomy.ts" },
   { name: "no-em-dashes", script: "scripts/verify_no_em_dashes.ts" },
   { name: "no-source-agencies", script: "scripts/verify_no_source_agencies.ts" },
+  /* The spine2 invariants (PORT-CONTRACT M1-M9). Both are fast and browser-free.
+     The rendered-design linter is deliberately NOT here: it drives a real
+     browser, so it runs as `npm run verify:rendered` before a ship, not on
+     every build. Registered 2026-07-26 after each was negative-tested. */
+  { name: "cell-lattice", script: "scripts/verify_cell_lattice.mjs" },
+  { name: "derived-accents", script: "scripts/verify_derived_accents.mjs" },
+  /* FRESHNESS of the two artifacts generated out of design/mockups/. Both are
+     valid files when stale, so nothing else can notice: a stale stylesheet
+     still compiles and a stale glyph module still typechecks. This actually
+     happened on 2026-07-26 , six edits to the mockup stylesheet sat
+     unpropagated for eleven hours while the React kit rendered the old design.
+     Both checks were negative-tested against a real induced drift. */
+  { name: "spine-css-fresh", script: "scripts/scope_atlas_css.mjs", args: ["--check"] },
+  { name: "glyphs-fresh", script: "scripts/sync_glyphs.mjs", args: ["--check"] },
+  /* The reconciliation check on the ONLY hand-filled data file the product has.
+     It existed and was runnable but was never registered, so the arithmetic
+     behind every headline figure was verified only when somebody remembered to
+     run it by hand. Registered 2026-07-27. */
+  { name: "cell-data", script: "scripts/verify_cell_data.mjs" },
+  /* The founder's banned vocabulary, on the REACT source. It was enforced only
+     against the three mockup HTML files by verify_lattice.mjs, so "turnover"
+     reached the reader from spine2_adapter.ts with 43 gates green. Scoped to the
+     spine-2 surface; negative-tested 2026-07-27. */
+  { name: "banned-vocabulary", script: "scripts/verify_banned_vocabulary.ts" },
   { name: "no-hardcoded-hex", script: "scripts/verify_hardcoded_hex.ts" },
   { name: "dead-links", script: "scripts/audit/find_dead_links.ts", args: ["--strict"] },
   { name: "featured-tiles", script: "scripts/verify_featured_tiles.ts" },

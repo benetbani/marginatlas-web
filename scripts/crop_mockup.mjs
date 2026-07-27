@@ -63,6 +63,11 @@ tab.on("pageerror", (e) => consoleErrors.push("pageerror: " + e.message));
 await tab.goto(SRC, { waitUntil: "load", timeout: 60000 });
 await tab.waitForTimeout(1200); // glyph hydration + webfont settle
 
+// The chapter jump (nav.jump) is FIXED chrome: in full-page clips the browser
+// paints it once at its fixed position, smearing over whichever chapter that
+// lands on. Hide it for crop passes; it is judged from live screenshots instead.
+await tab.addStyleTag({ content: ".jump{display:none !important}" });
+
 /* ---------- diagnostics: the things markup review cannot see ---------- */
 const diag = await tab.evaluate(() => {
   const doc = document.documentElement;
