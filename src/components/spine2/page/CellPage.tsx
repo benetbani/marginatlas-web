@@ -31,6 +31,7 @@ import { Band } from "@/components/spine2/Band";
 import type { CellPageModel, ChapterId } from "@/lib/cells/spine2_adapter";
 
 import { ChapterSection, type Chapter } from "./ChapterHead";
+import { ChapterGap } from "./ChapterGap";
 import { CellStoreProvider } from "./store";
 import { Ch01Hero } from "./Ch01Hero";
 import { Ch02Calculator } from "./Ch02Calculator";
@@ -114,96 +115,172 @@ export function CellPage({ model }: { model: CellPageModel }) {
             <Ch01Hero hero={model.hero} methodAnchor={methodChapter?.anchor ?? null} />
           ) : null}
 
-          {model.calculator != null && at("calculator") != null ? (
+          {at("calculator") != null ? (
             <ChapterSection chapter={at("calculator") as Chapter}>
-              <Ch02Calculator calculator={model.calculator} />
+              {model.calculator != null ? (
+                <Ch02Calculator calculator={model.calculator} />
+              ) : (
+                <ChapterGap />
+              )}
             </ChapterSection>
           ) : null}
 
-          {model.keep != null && at("keep") != null ? (
+          {at("keep") != null ? (
             <ChapterSection chapter={at("keep") as Chapter}>
-              <Ch03Keep
-                keep={model.keep}
-                noun={model.meta.trade.noun}
-                city={model.meta.city.name}
-              />
+              {model.keep != null ? (
+                <Ch03Keep
+                  keep={model.keep}
+                  noun={model.meta.trade.noun}
+                  city={model.meta.city.name}
+                />
+              ) : (
+                <ChapterGap />
+              )}
             </ChapterSection>
           ) : null}
 
-          {model.bill != null && at("bill") != null ? (
+          {at("bill") != null ? (
             <ChapterSection chapter={at("bill") as Chapter}>
-              <Ch04Bill bill={model.bill} />
+              {model.bill != null ? (
+                <Ch04Bill bill={model.bill} />
+              ) : (
+                <ChapterGap />
+              )}
             </ChapterSection>
           ) : null}
 
-          {model.day != null && at("day") != null ? (
+          {at("day") != null ? (
             <ChapterSection chapter={at("day") as Chapter}>
-              <Ch05Day day={model.day} />
+              {model.day != null ? (
+                <Ch05Day day={model.day} />
+              ) : (
+                <ChapterGap />
+              )}
             </ChapterSection>
           ) : null}
 
-          {model.money != null && at("money") != null ? (
+          {at("money") != null ? (
             <ChapterSection chapter={at("money") as Chapter}>
-              <Ch06Money money={model.money} />
+              {model.money != null ? (
+                <Ch06Money money={model.money} />
+              ) : (
+                <ChapterGap />
+              )}
             </ChapterSection>
           ) : null}
 
-          {model.floor != null && at("floor") != null ? (
+          {at("floor") != null ? (
             <ChapterSection chapter={at("floor") as Chapter}>
-              <Ch07Floor floor={model.floor} />
+              {model.floor != null ? (
+                <Ch07Floor floor={model.floor} />
+              ) : (
+                <ChapterGap />
+              )}
             </ChapterSection>
           ) : null}
 
-          {model.team != null && at("team") != null ? (
+          {at("team") != null ? (
             <ChapterSection chapter={at("team") as Chapter}>
-              <Ch08Team team={model.team} />
+              {model.team != null ? (
+                <Ch08Team team={model.team} />
+              ) : (
+                <ChapterGap />
+              )}
             </ChapterSection>
           ) : null}
 
-          {model.opening != null && at("opening") != null ? (
+          {at("opening") != null ? (
             <ChapterSection chapter={at("opening") as Chapter}>
-              <Ch09Opening opening={model.opening} />
+              {model.opening != null ? (
+                <Ch09Opening opening={model.opening} />
+              ) : (
+                <ChapterGap />
+              )}
             </ChapterSection>
           ) : null}
 
-          {model.year != null && at("year") != null ? (
+          {at("year") != null ? (
             <ChapterSection chapter={at("year") as Chapter}>
-              <Ch10Year year={model.year} />
+              {model.year != null ? (
+                <Ch10Year year={model.year} />
+              ) : (
+                <ChapterGap />
+              )}
             </ChapterSection>
           ) : null}
 
-          {model.firstYear != null && at("firstYear") != null ? (
+          {at("firstYear") != null ? (
             <ChapterSection chapter={at("firstYear") as Chapter}>
-              <Ch11FirstYear firstYear={model.firstYear} />
+              {model.firstYear != null ? (
+                <Ch11FirstYear firstYear={model.firstYear} />
+              ) : (
+                <ChapterGap />
+              )}
             </ChapterSection>
           ) : null}
 
-          {model.survival != null && at("survival") != null ? (
+          {at("survival") != null ? (
             <ChapterSection chapter={at("survival") as Chapter}>
-              <Ch12Survival survival={model.survival} />
+              {model.survival != null ? (
+                <Ch12Survival survival={model.survival} />
+              ) : (
+                <ChapterGap />
+              )}
             </ChapterSection>
           ) : null}
 
-          {model.cities != null && at("cities") != null ? (
+          {at("cities") != null ? (
             <ChapterSection chapter={at("cities") as Chapter}>
-              <Ch13Cities cities={model.cities} />
+              {model.cities != null ? (
+                <Ch13Cities cities={model.cities} />
+              ) : (
+                <ChapterGap />
+              )}
             </ChapterSection>
           ) : null}
 
-          {model.watch != null && at("watch") != null ? (
+          {/* 14, operator voices. `Voices.tsx` is built but there is no schema
+              slot for sourced quotes yet, so this chapter has no model and
+              always renders its gap. It is wired anyway, because the whole
+              point of the completeness rule is that chapter 14 is chapter 14 in
+              every city. When the slot exists this becomes an ordinary gate. */}
+          {at("voices") != null ? (
+            <ChapterSection chapter={at("voices") as Chapter}>
+              <ChapterGap subject="what operators say" />
+            </ChapterSection>
+          ) : null}
+
+          {at("watch") != null ? (
             <ChapterSection chapter={at("watch") as Chapter}>
-              <Ch15Watch watch={model.watch} />
+              {model.watch != null ? (
+                <Ch15Watch watch={model.watch} />
+              ) : (
+                <ChapterGap />
+              )}
             </ChapterSection>
           ) : null}
 
-          {model.verdict != null && at("verdict") != null ? (
+          {/* 16, versus the world. No component and no schema slot: the
+              comparison it would draw has not been decided on. Same reasoning
+              as 14 , the chapter exists so the page's shape does not move. */}
+          {at("world") != null ? (
+            <ChapterSection chapter={at("world") as Chapter}>
+              <ChapterGap subject="how this trade compares worldwide" />
+            </ChapterSection>
+          ) : null}
+
+          {at("verdict") != null ? (
             <ChapterSection chapter={at("verdict") as Chapter}>
-              <Ch17Verdict
-                verdict={model.verdict}
-                figures={model.figures}
-                city={model.meta.city.name}
-                noun={model.meta.trade.noun}
-              />
+              {model.verdict != null ? (
+                <Ch17Verdict
+                  verdict={model.verdict}
+                  figures={model.figures}
+                  city={model.meta.city.name}
+                  noun={model.meta.trade.noun}
+                />
+              ) : (
+                <ChapterGap />
+              )}
             </ChapterSection>
           ) : null}
 
@@ -213,15 +290,23 @@ export function CellPage({ model }: { model: CellPageModel }) {
             </ChapterSection>
           ) : null}
 
-          {model.words != null && at("words") != null ? (
+          {at("words") != null ? (
             <ChapterSection chapter={at("words") as Chapter}>
-              <Ch19Words words={model.words} />
+              {model.words != null ? (
+                <Ch19Words words={model.words} />
+              ) : (
+                <ChapterGap />
+              )}
             </ChapterSection>
           ) : null}
 
-          {model.questions != null && at("questions") != null ? (
+          {at("questions") != null ? (
             <ChapterSection chapter={at("questions") as Chapter}>
-              <Ch20Questions questions={model.questions} />
+              {model.questions != null ? (
+                <Ch20Questions questions={model.questions} />
+              ) : (
+                <ChapterGap />
+              )}
             </ChapterSection>
           ) : null}
 
@@ -235,9 +320,13 @@ export function CellPage({ model }: { model: CellPageModel }) {
             />
           </section>
 
-          {model.next != null && at("next") != null ? (
+          {at("next") != null ? (
             <ChapterSection chapter={at("next") as Chapter}>
-              <Ch21Next next={model.next} />
+              {model.next != null ? (
+                <Ch21Next next={model.next} />
+              ) : (
+                <ChapterGap />
+              )}
             </ChapterSection>
           ) : null}
         </CellStoreProvider>

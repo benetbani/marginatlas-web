@@ -1644,10 +1644,27 @@ function buildCities(cell: CellFile): CitiesModel | null {
   return { rows };
 }
 
-/** The spine, filtered to what renders, renumbered so there are no holes. */
+/**
+ * The spine. Every chapter, always, numbered in order.
+ *
+ * This used to read `SPINE.filter((s) => model[s.id] != null)` and renumber
+ * what was left, so a place with four unfilled sections rendered 17 chapters
+ * numbered 01 to 17 and the reader had no way to know four were missing.
+ *
+ * The founder overruled it on 2026-07-27: a page is always complete and its
+ * shape never varies by place. Across hundreds of places a shifting shape
+ * teaches a reader that some places are second class, and a silent omission
+ * reads as "this site does not cover that" rather than the true and weaker
+ * "we have not published this figure here".
+ *
+ * So the numbering is now a property of the SPINE, not of the data. Chapter 13
+ * is chapter 13 in every city. What changes per place is whether a chapter
+ * renders its figures or renders a ChapterGap, and that decision belongs to the
+ * page, not to this function.
+ */
 function numberChapters(model: CellPageModel): CellPageModel["chapters"] {
-  const present = SPINE.filter((s) => model[s.id] != null);
-  return present.map((s, i) => ({
+  void model;
+  return SPINE.map((s, i) => ({
     id: s.id,
     num: String(i + 1).padStart(2, "0"),
     title: s.title,
