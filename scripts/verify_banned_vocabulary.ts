@@ -51,6 +51,14 @@ import { resolve, relative } from "node:path";
 const SCOPE = [
   "src/components/spine2",
   "src/lib/cells",
+  /* Added 2026-07-29 with the trust pages. They are pure user-facing copy on
+     the routes a suspicious reader checks first, and the gate had no scope over
+     them at all , the ban held for the data pages and not for the pages that
+     defend them. */
+  "src/app/(site)/privacy",
+  "src/app/(site)/terms",
+  "src/app/(site)/cookies",
+  "src/components/LegalPage.tsx",
 ];
 
 const BANNED: Array<{ re: RegExp; word: string; say: string }> = [
@@ -103,34 +111,87 @@ function literals(line: string): string[] {
 }
 
 const files: string[] = [];
-for (const dir of SCOPE) {
-  const abs = resolve(process.cwd(), dir);
+for (const entry of SCOPE) {
+  const abs = resolve(process.cwd(), entry);
   if (!existsSync(abs)) {
-    console.error(`x verify_banned_vocabulary: scope dir missing: ${dir}. A gate with nothing to read has not passed.`);
+    console.error(`x verify_banned_vocabulary: scope entry missing: ${entry}. A gate with nothing to read has not passed.`);
     process.exit(1);
   }
-  walk(abs, files);
+  // SCOPE holds directories and single files; LegalPage.tsx is one of the latter.
+  if (statSync(abs).isDirectory()) walk(abs, files);
+  else files.push(abs);
 }
+
+/**
+ * JSX TEXT , the prose between tags.
+ *
+ * Added 2026-07-29 after a real miss. The trust pages carry every user-facing
+ * sentence as bare JSX text (`<p>We do not sell data.</p>`), not as a string
+ * literal. The literal-only scan read those files and reported PASS without
+ * having examined one sentence of the copy it exists to police.
+ *
+ * A gate that gives false confidence is worse than one that is absent, because
+ * nobody goes looking behind a green check.
+ */
+/**
+ * MUST run over the WHOLE FILE, not line by line.
+ *
+ * The first version of this matched `>text<` within a single line and its
+ * negative test passed while a banned phrase sat in the copy. Real JSX prose is
+ * wrapped by the formatter:
+ *
+ *     <p>
+ *       You can read every page on this site without an account.
+ *     </p>
+ *
+ * Not one of those words sits between a `>` and a `<` on its own line, so a
+ * line-scoped regex reads nothing and reports PASS. The gate was giving exactly
+ * the false confidence its own comment warns about.
+ */
+function jsxProse(content: string): Array<{ text: string; offset: number }> {
+  const out: Array<{ text: string; offset: number }> = [];
+  const re = />([^<>{}]+)</g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(content)) !== null) {
+    const text = m[1].replace(/\s+/g, " ").trim();
+    if (text) out.push({ text, offset: m.index });
+  }
+  return out;
+}
+
+/** Strip comments so prose ABOUT the ban is never mistaken for the ban. */
+function stripComments(src: string): string {
+  return src.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
+            .replace(/(^|[^:])\/\/[^\n]*/g, (m, p1) => p1 + " ".repeat(m.length - p1.length));
+}
+
+const lineOf = (content: string, offset: number) =>
+  content.slice(0, offset).split("\n").length;
 
 const failures: string[] = [];
 for (const file of files) {
   const rel = relative(process.cwd(), file).replace(/\\/g, "/");
   if (ALLOWLIST.has(rel)) continue;
-  const lines = readFileSync(file, "utf8").split("\n");
-  lines.forEach((line, i) => {
-    // Skip whole-line comments outright; the ban is on copy, not on prose about copy.
-    const t = line.trim();
-    if (t.startsWith("//") || t.startsWith("*") || t.startsWith("/*")) return;
-    for (const lit of literals(line)) {
-      for (const b of BANNED) {
-        if (b.re.test(lit)) {
-          failures.push(
-            `${rel}:${i + 1}  "${b.word}" in user-facing copy , ${b.say}\n      ${lit.slice(0, 90)}`,
-          );
-        }
+  const raw = readFileSync(file, "utf8");
+  const content = stripComments(raw);
+
+  const candidates: Array<{ text: string; offset: number }> = [
+    ...jsxProse(content),
+  ];
+  content.split("\n").forEach((line, i) => {
+    const offset = content.split("\n").slice(0, i).join("\n").length + i;
+    for (const lit of literals(line)) candidates.push({ text: lit, offset });
+  });
+
+  for (const c of candidates) {
+    for (const b of BANNED) {
+      if (b.re.test(c.text)) {
+        failures.push(
+          `${rel}:${lineOf(content, c.offset)}  "${b.word}" in user-facing copy , ${b.say}\n      ${c.text.slice(0, 90)}`,
+        );
       }
     }
-  });
+  }
 }
 
 if (failures.length) {
@@ -142,4 +203,4 @@ if (failures.length) {
   );
   process.exit(1);
 }
-console.log(`verify_banned_vocabulary: PASS. ${files.length} files in the spine-2 surface, no banned vocabulary.`);
+console.log(`verify_banned_vocabulary: PASS. ${files.length} files scanned (string literals and JSX prose), no banned vocabulary.`);

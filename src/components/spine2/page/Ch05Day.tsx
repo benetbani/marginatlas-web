@@ -41,7 +41,7 @@ export function Ch05Day({ day }: { day: DayModel }) {
           <GlyphIcon id="confidence" size={13} />
           Stated inputs
         </span>
-        Nobody publishes covers, spend a head or trading days for independent
+        Nobody publishes orders, spend a head or trading days for independent
         rooms. These three are the model&apos;s own inputs, and the two
         pictures behind them are each drawn against the top of the range the
         calculator lets you move them through.

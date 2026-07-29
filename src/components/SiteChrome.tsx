@@ -155,6 +155,12 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
                   <li><a href="/pricing" className="hover:text-atlas-500">Pricing</a></li>
                   <li><a href="/status" className="hover:text-atlas-500">Status</a></li>
                   <li><a href="/api" className="hover:text-atlas-500">API</a></li>
+                  {/* A trust page nobody can reach is not a trust page. These
+                      sit in the footer because that is the first place a
+                      suspicious reader looks for them. */}
+                  <li><a href="/privacy" className="hover:text-atlas-500">Privacy</a></li>
+                  <li><a href="/terms" className="hover:text-atlas-500">Terms</a></li>
+                  <li><a href="/cookies" className="hover:text-atlas-500">Cookies</a></li>
                   <li className="text-white/55">v1.18.0</li>
                 </ul>
               </div>
