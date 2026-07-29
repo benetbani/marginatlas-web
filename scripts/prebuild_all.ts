@@ -72,6 +72,10 @@ const GATES: Gate[] = [
      served publicly would look exactly like a page that cites its own
      provenance while every number in it was invented. Negative-tested. */
   { name: "no-fixture-in-routes", script: "scripts/verify_no_fixture_in_routes.ts" },
+  /* The other half of the dead-link check. find_dead_links strips the fragment
+     before validating, so six footer anchors pointed at sections that do not
+     exist, on every page, under a green gate. Negative-tested. */
+  { name: "dead-anchors", script: "scripts/verify_dead_anchors.ts" },
   { name: "no-hardcoded-hex", script: "scripts/verify_hardcoded_hex.ts" },
   { name: "dead-links", script: "scripts/audit/find_dead_links.ts", args: ["--strict"] },
   { name: "featured-tiles", script: "scripts/verify_featured_tiles.ts" },

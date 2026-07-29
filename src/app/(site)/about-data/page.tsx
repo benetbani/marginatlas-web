@@ -47,7 +47,10 @@ export default function AboutDataPage() {
       </section>
 
       <section className="mt-10">
-        <h2 className="text-xl font-semibold text-ink-900">Quality ratings</h2>
+        {/* The footer has linked to #quality on every page since it was
+            written, and this heading never carried the id, so the link landed
+            silently at the top. Four sibling anchors were dead the same way. */}
+        <h2 id="quality" className="text-xl font-semibold text-ink-900">Quality ratings</h2>
         <p className="mt-3 text-ink-800">
           Every benchmark shows a 5-star quality rating:
         </p>

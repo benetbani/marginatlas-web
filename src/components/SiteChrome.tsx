@@ -127,7 +127,11 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
                 <ul className="space-y-2 text-xs">
                   <li><a href="/calculator" className="hover:text-atlas-500">Where do I sit?</a></li>
                   <li><a href="/compare" className="hover:text-atlas-500">Compare snapshots</a></li>
-                  <li><a href="/#ask-atlas" className="hover:text-atlas-500">Ask Atlas</a></li>
+                  {/* "Ask Atlas" pointed at /#ask-atlas. The home page defines
+                      #pick-a-country and #newsletter and nothing else, so this
+                      was a SIXTH dead anchor , found by the new gate on its
+                      first run, not by me. Removed rather than left promising a
+                      feature that has no section. */}
                   <li><a href="/#newsletter" className="hover:text-atlas-500">Newsletter</a></li>
                 </ul>
               </div>
@@ -135,18 +139,32 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
                 <div className="font-semibold text-white mb-3 text-xs uppercase tracking-wide">Learn</div>
                 <ul className="space-y-2 text-xs">
                   <li><a href="/about-data" className="hover:text-atlas-500">About the data</a></li>
+                  <li><a href="/methodology/key-benchmarks" className="hover:text-atlas-500">How a figure is built</a></li>
                   <li><a href="/blog" className="hover:text-atlas-500">Blog</a></li>
-                  <li><a href="/about-data#tax" className="hover:text-atlas-500">Tax overlay guide</a></li>
-                  <li><a href="/about-data#glossary" className="hover:text-atlas-500">Glossary</a></li>
+                  {/* "Tax overlay guide" and "Glossary" pointed at #tax and
+                      #glossary on about-data. Neither section exists, so both
+                      links landed at the top of a page that never mentions
+                      either subject. Removed rather than left promising
+                      content; writing them is real work, tracked as W12. */}
                 </ul>
               </div>
               <div>
                 <div className="font-semibold text-white mb-3 text-xs uppercase tracking-wide">Trust</div>
                 <ul className="space-y-2 text-xs">
+                  {/* All five about-data anchors in this footer were DEAD: the
+                      page defines #estimated, #measured, #modeled and #regional
+                      only, so #quality, #sources, #glossary, #tax and #contact
+                      landed silently at the top, on every page. The dead-links
+                      gate is green because it validates routes, not fragments.
+
+                      #quality now has its id. #sources points at the section
+                      that actually carries it. #glossary, #tax and #contact are
+                      gone rather than pointing at nothing , the site has no
+                      glossary, no tax page and no contact route. Tracked as W10
+                      and W12; the contact address is the founder's to supply. */}
                   <li><a href="/about-data#quality" className="hover:text-atlas-500">Quality methodology</a></li>
-                  <li><a href="/about-data#sources" className="hover:text-atlas-500">Sources</a></li>
+                  <li><a href="/methodology/key-benchmarks" className="hover:text-atlas-500">Where the numbers come from</a></li>
                   <li><a href="/coverage" className="hover:text-atlas-500">Coverage report</a></li>
-                  <li><a href="/about-data#contact" className="hover:text-atlas-500">Contact</a></li>
                 </ul>
               </div>
               <div>
