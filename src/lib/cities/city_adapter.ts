@@ -1,0 +1,311 @@
+/**
+ * src/lib/cities/city_adapter.ts
+ *
+ * `CityFile` to a page model, the same shape `spine2_adapter.ts` gives the trade
+ * page. One model per chapter, a SPINE constant, and numbering that is a
+ * property of the SPINE rather than of the data.
+ *
+ * THAT LAST POINT IS THE WHOLE DESIGN. The trade adapter originally filtered its
+ * spine to chapters that had data and renumbered what was left, so a place with
+ * four unfilled sections rendered seventeen chapters numbered 01 to 17 and a
+ * reader had no way to know four were missing. The founder overruled it on
+ * 2026-07-27: a page is always complete and its shape never varies by place.
+ *
+ * So chapter 13 is chapter 13 in London and in the two hundredth city. What
+ * varies is whether a chapter renders its figures or renders a stated gap, and
+ * that decision belongs to the page, not to this file.
+ */
+import type {
+  CityRankFigure,
+  CityFile,
+  CityScorecardRow,
+  Figure,
+  NullFigure,
+  PointFigure,
+} from "./city_spine2_types";
+import { isNullFigure } from "./city_spine2_types";
+
+/* ------------------------------ the spine -------------------------------- */
+
+export type CityChapterId =
+  | "hero"
+  | "scorecard"
+  | "incomeAndWealth"
+  | "visitors"
+  | "people"
+  | "spaceCosts"
+  | "tradeEconomics"
+  | "districtRent"
+  | "tradeFit"
+  | "districts"
+  | "direction"
+  | "myths"
+  | "peers"
+  | "watch"
+  | "voices"
+  | "verdict"
+  | "methodology"
+  | "next";
+
+/**
+ * The eighteen chapters, in order, with the titles and icons the mockup uses.
+ * Chapters 08 and 10 both render the district list; the mockup does this
+ * deliberately (rent by district, then the districts themselves) and the
+ * contract holds ONE list so the two cannot disagree.
+ */
+export const CITY_SPINE: Array<{ id: CityChapterId; title: string; icon: string }> = [
+  { id: "hero", title: "The answer", icon: "skyline" },
+  { id: "scorecard", title: "The city in seven numbers", icon: "scorecard" },
+  { id: "incomeAndWealth", title: "Household income and wealth", icon: "bank" },
+  { id: "visitors", title: "Visitors through the year", icon: "tourist" },
+  { id: "people", title: "Who lives here, and what they can spend", icon: "spending-power" },
+  { id: "spaceCosts", title: "What space costs", icon: "commercial-rent" },
+  { id: "tradeEconomics", title: "What owners keep", icon: "owner-keeps" },
+  { id: "districtRent", title: "Rent by district", icon: "neighborhood" },
+  { id: "tradeFit", title: "Best area for each trade", icon: "best-areas" },
+  { id: "districts", title: "The districts", icon: "district-mix" },
+  { id: "direction", title: "Where the city is heading", icon: "trend" },
+  { id: "myths", title: "Common myths", icon: "myth-reality" },
+  { id: "peers", title: "Against peer cities", icon: "benchmark" },
+  { id: "watch", title: "What to watch", icon: "watch" },
+  { id: "voices", title: "What operators say", icon: "operator-voices" },
+  { id: "verdict", title: "The verdict", icon: "honest-take" },
+  { id: "methodology", title: "How we work this out", icon: "methodology" },
+  { id: "next", title: "Where to go next", icon: "where-it-pays" },
+];
+
+export type CityChapter = {
+  id: CityChapterId;
+  num: string;
+  title: string;
+  icon: string;
+  anchor: string;
+};
+
+/** Every chapter, always, numbered in order. Never filtered by data. */
+export function numberCityChapters(): CityChapter[] {
+  return CITY_SPINE.map((s, i) => ({
+    id: s.id,
+    num: String(i + 1).padStart(2, "0"),
+    title: s.title,
+    icon: s.icon,
+    anchor: `ch-${String(i + 1).padStart(2, "0")}`,
+  }));
+}
+
+/* ------------------------------ formatting ------------------------------- */
+
+/**
+ * Money, in the page's own register: `$22K`, `$1.1M`, `$620`.
+ * Lifted in spirit from the trade adapter so the two page types round and
+ * abbreviate identically. A city page that says $22K beside a trade page that
+ * says $22,000 for the same quantity reads as two products.
+ */
+function money(v: number): string {
+  const a = Math.abs(v);
+  if (a >= 1_000_000) return `$${(v / 1_000_000).toFixed(a >= 10_000_000 ? 0 : 1)}M`;
+  if (a >= 1_000) return `$${Math.round(v / 1_000)}K`;
+  return `$${Math.round(v)}`;
+}
+
+/**
+ * A plain count: `21M`, `640K`, `9,700`.
+ * Visitor counts run to eight digits and an unformatted one is unreadable at a
+ * glance, which is the whole job of this column.
+ */
+function count(v: number): string {
+  const a = Math.abs(v);
+  if (a >= 1_000_000) {
+    const m = v / 1_000_000;
+    return `${a >= 10_000_000 ? Math.round(m) : m.toFixed(1)}M`;
+  }
+  if (a >= 10_000) return `${Math.round(v / 1_000)}K`;
+  return v.toLocaleString("en-GB");
+}
+
+/**
+ * Render a figure for display, or null when it is a hole.
+ *
+ * MATCHED AGAINST THE UNITS THE CONTRACT ACTUALLY USES, not against a guess.
+ * The first version tested `unit === "x"` and the fixture says
+ * `"x the country"`, so two multiples rendered as bare `2.1` and `1.3`, and a
+ * visitor count rendered as `21000000`. None of that is visible in the markup;
+ * it took looking at the page. The unit strings are prose by design (they are
+ * shown to readers elsewhere), so this matches on their SHAPE.
+ */
+function display(f: Figure | undefined, unitOverride?: string): string | null {
+  if (!f || isNullFigure(f)) return null;
+  const p = f as PointFigure;
+  if (typeof p.value !== "number") return null;
+  const unit = (unitOverride ?? p.unit ?? "").trim();
+
+  if (/^USD/i.test(unit)) return money(p.value);
+  if (unit === "%" || /^percent/i.test(unit)) return `${p.value}%`;
+  // "x the country", "x the UK", "x" , a multiple of some baseline.
+  if (/^x\b/i.test(unit)) return `${p.value}x`;
+  // "score of 100", "of 100" , the denominator is the column header's job.
+  if (/^score\b|^of \d/i.test(unit)) return String(p.value);
+  // Anything counted: "visitors/yr", "residents", "households".
+  if (Number.isInteger(p.value) && Math.abs(p.value) >= 10_000) return count(p.value);
+  return String(p.value);
+}
+
+/* -------------------------------- models --------------------------------- */
+
+export type CityHeroModel = {
+  city: string;
+  country: string;
+  headline: string;
+  headlineLabel: string;
+  /** The four glance rows. Each may be null; the row then states its gap. */
+  glance: Array<{ label: string; sub?: string; value: string | null }>;
+};
+
+export type CityScorecardRowModel = {
+  label: string;
+  sub?: string;
+  value: string | null;
+  position: number;
+};
+
+export type CityScorecardModel = {
+  baselineLabel: string;
+  rows: CityScorecardRowModel[];
+};
+
+export type CityPageModel = {
+  meta: {
+    city: string;
+    citySlug: string;
+    country: string;
+    countrySlug: string;
+    urlPath: string;
+  };
+  chapters: CityChapter[];
+  hero: CityHeroModel | null;
+  scorecard: CityScorecardModel | null;
+  /** Chapters not yet ported. Present so the assembly can be written against
+   *  the full spine today and filled in without touching it again. */
+  incomeAndWealth: null;
+  visitors: null;
+  people: null;
+  spaceCosts: null;
+  tradeEconomics: null;
+  districtRent: null;
+  tradeFit: null;
+  districts: null;
+  direction: null;
+  myths: null;
+  peers: null;
+  watch: null;
+  voices: null;
+  verdict: null;
+  methodology: null;
+  next: null;
+};
+
+/**
+ * "8th of 40 cities" , the qualifier beside the business-climate reading.
+ *
+ * Typed against `CityRankFigure` rather than cast through unknown shapes: the
+ * rank and its denominator are a pair, and a rank printed without the size of
+ * the field it ranks in is close to meaningless. Returns undefined when the
+ * city has no rank, and the row then prints without a qualifier rather than
+ * with an empty one.
+ */
+function rankSub(f: CityRankFigure | NullFigure): string | undefined {
+  if (isNullFigure(f as Figure)) return undefined;
+  const r = f as CityRankFigure;
+  if (typeof r.rank !== "number" || typeof r.of !== "number") return undefined;
+  return `${ordinal(r.rank)} of ${r.of}`;
+}
+
+/** 1 -> 1st, 2 -> 2nd, 11 -> 11th. The teens are the reason this is a function. */
+function ordinal(n: number): string {
+  const rem100 = n % 100;
+  if (rem100 >= 11 && rem100 <= 13) return `${n}th`;
+  const rem10 = n % 10;
+  return `${n}${rem10 === 1 ? "st" : rem10 === 2 ? "nd" : rem10 === 3 ? "rd" : "th"}`;
+}
+
+const row = (r: CityScorecardRow): CityScorecardRowModel => ({
+  label: r.label,
+  sub: r.sub,
+  value: display(r.figure),
+  position: r.position,
+});
+
+export function buildCityPage(file: CityFile): CityPageModel {
+  const m = file.meta;
+
+  /* The hero's headline is the same quantity as the scorecard's spend row. The
+     contract says so explicitly and says the hero slot exists only for cities
+     whose answer is a different number, so we prefer the hero's own figure and
+     fall back to the scorecard rather than printing two different values for
+     one fact. */
+  const headline =
+    display(file.hero.headline) ?? display(file.scorecard.spendPerResident.figure);
+
+  const hero: CityHeroModel | null = headline
+    ? {
+        city: m.city.name,
+        country: m.country.name,
+        headline,
+        headlineLabel: file.hero.headlineLabel,
+        glance: [
+          {
+            label: "Business climate",
+            sub: rankSub(file.hero.businessClimateRank),
+            value: display(file.scorecard.businessClimate.figure),
+          },
+          { label: "Commercial rent", value: display(file.scorecard.commercialRent.figure) },
+          { label: "Median pay", value: display(file.scorecard.medianPay.figure) },
+          { label: "Visitors", value: display(file.scorecard.visitors.figure) },
+        ],
+      }
+    : null;
+
+  const scorecard: CityScorecardModel = {
+    baselineLabel: file.scorecard.baselineLabel,
+    rows: [
+      row(file.scorecard.spendPerResident),
+      row(file.scorecard.medianPay),
+      row(file.scorecard.costOfLiving),
+      row(file.scorecard.commercialRent),
+      row(file.scorecard.visitors),
+      row(file.scorecard.unemployment),
+      row(file.scorecard.businessClimate),
+    ],
+  };
+
+  return {
+    meta: {
+      city: m.city.name,
+      citySlug: m.city.slug,
+      country: m.country.name,
+      countrySlug: m.country.slug,
+      urlPath: m.urlPath,
+    },
+    chapters: numberCityChapters(),
+    hero,
+    scorecard,
+    incomeAndWealth: null,
+    visitors: null,
+    people: null,
+    spaceCosts: null,
+    tradeEconomics: null,
+    districtRent: null,
+    tradeFit: null,
+    districts: null,
+    direction: null,
+    myths: null,
+    peers: null,
+    watch: null,
+    voices: null,
+    verdict: null,
+    methodology: null,
+    next: null,
+  };
+}
+
+export type { NullFigure };
