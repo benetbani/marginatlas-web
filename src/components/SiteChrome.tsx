@@ -172,7 +172,14 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
                 <ul className="space-y-2 text-xs">
                   <li><a href="/pricing" className="hover:text-atlas-500">Pricing</a></li>
                   <li><a href="/status" className="hover:text-atlas-500">Status</a></li>
-                  <li><a href="/api" className="hover:text-atlas-500">API</a></li>
+                  {/* "API" pointed at /api, which is not a page. Only route
+                      handlers live under src/app/api, so the link fell through
+                      to the [country] wildcard and rendered "Country not found"
+                      at HTTP 200, a soft 404 linked from every page on the
+                      site. Removed rather than repointed: there is no developer
+                      API and no page describing the one export that does exist.
+                      The decision and the argument are in
+                      design/loop3/api/DECISION.md; the page is tracked as A3. */}
                   {/* A trust page nobody can reach is not a trust page. These
                       sit in the footer because that is the first place a
                       suspicious reader looks for them. */}

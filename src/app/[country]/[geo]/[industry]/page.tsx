@@ -841,7 +841,15 @@ async function CellPageBody({
         revP10={cell.rev_p10}
         revP90={cell.rev_p90}
         qualityScore={cell.quality_score}
-        csvExportUrl={`https://www.marginatlas.com/api/export-csv?country=${country}&geo=${geo}&industry=${industry}`}
+        /* The parameter is `region`, not `geo`. Written as `geo` this URL
+           arrived with an empty region, failed the slug test and returned 400,
+           while the human-facing download button in CellActions used `region`
+           and worked. It goes into schema.org Dataset > distribution >
+           contentUrl, which is the field a dataset crawler follows, so every
+           trade page has been telling machines the data is downloadable at a
+           URL that answered 400. Verified against production both ways on
+           2026-07-30: geo= gave 400, region= gave 200. */
+        csvExportUrl={`https://www.marginatlas.com/api/export-csv?country=${country}&region=${geo}&industry=${industry}`}
       />
       {/* Plan v14 Phase C.4: FAQPage JSON-LD. Five data-backed Q&As per cell,
          no visible DOM. Targets AI Overviews + Google People Also Ask. */}

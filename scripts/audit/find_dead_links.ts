@@ -94,6 +94,50 @@ function pathExists(path: string, patterns: RegExp[]): boolean {
   return false;
 }
 
+/**
+ * THE SINGLE-SEGMENT HOLE. Found 2026-07-30, closed here.
+ *
+ * `src/app/[country]/page.tsx` yields the pattern `^/([^/]+)$`, and that
+ * matches EVERY top-level path in existence. So `pathExists("/api")` returned
+ * true, and so would `/anything`. For as long as the country route has existed
+ * this gate has been structurally unable to detect a dead top-level link, and
+ * it reported PASS the whole time.
+ *
+ * It was not hypothetical. Two were live: `/api`, in the footer of every page,
+ * and `/about`, on the benchmarks download page. Both render "Country not
+ * found" and both answer 200 rather than 404, so they are soft 404s linked from
+ * real pages.
+ *
+ * The fix: a LITERAL single-segment href must match a STATIC route. A link
+ * written out by hand as `/api` is a site section, not a country; country links
+ * are built from data and this gate already skips template literals. The set
+ * below is the escape hatch for the rare hand-written link to a real dynamic
+ * value, and it is deliberately tiny so that adding to it is a decision.
+ */
+function buildStaticTopLevel(): Set<string> {
+  const segs = new Set<string>();
+  for (const dir of walkDirs(APP)) {
+    const rel = relative(APP, dir).replace(/\\/g, "/");
+    // Route groups do not appear in the URL, so `(site)/pricing` is top level.
+    const parts = rel.split("/").filter((p) => !(p.startsWith("(") && p.endsWith(")")));
+    if (parts.length !== 1) continue;
+    const name = parts[0];
+    if (name.startsWith("[") || name.startsWith("_") || name.startsWith("@")) continue;
+    const hasRoute =
+      existsSync(join(dir, "page.tsx")) ||
+      existsSync(join(dir, "page.ts")) ||
+      existsSync(join(dir, "route.ts")) ||
+      existsSync(join(dir, "route.tsx"));
+    if (hasRoute) segs.add(name);
+  }
+  return segs;
+}
+
+/** Hand-written links to a real value of a dynamic segment. Keep this small. */
+const KNOWN_DYNAMIC_LITERALS = new Set([
+  "/ke", // Kenya, used as a worked example on the /dev/cell scratch route.
+]);
+
 // /account left this set 2026-06-08: Milestone 1 makes it a real route (server
 // wrapper + saved cells), so links to it are valid. The rest stay blocked until
 // their routes are built.
@@ -107,6 +151,7 @@ const KNOWN_DEFERRED = new Set([
 
 function findDeadLinks(): Dead[] {
   const patterns = buildRoutePatterns();
+  const staticTop = buildStaticTopLevel();
   const dead: Dead[] = [];
   const files = walkFiles(SRC).filter((f) => !f.includes(`${join("scripts", "audit")}`));
   const re = /href=["'](\/[^"']*)["']/g;
@@ -123,8 +168,16 @@ function findDeadLinks(): Dead[] {
         if (href.startsWith("/_next") || href.startsWith("/static") || href.startsWith("//")) continue;
         // Reject pure fragments / queries (no path)
         if (href === "/" || href.startsWith("/#") || href.startsWith("/?")) continue;
-        const reason = KNOWN_DEFERRED.has(href.split(/[?#]/)[0])
+        const bare = href.split(/[?#]/)[0];
+        const segs = bare.split("/").filter(Boolean);
+        // Must be tested BEFORE pathExists, which the [country] wildcard
+        // makes return true for every single-segment path.
+        const swallowedByWildcard =
+          segs.length === 1 && !staticTop.has(segs[0]) && !KNOWN_DYNAMIC_LITERALS.has(bare);
+        const reason = KNOWN_DEFERRED.has(bare)
           ? "deferred-route (auth not built)"
+          : swallowedByWildcard
+          ? "single-segment link with no static route; only the [country] wildcard matched it, so it renders 'Country not found' at 200"
           : pathExists(href, patterns)
           ? ""
           : "no matching route in src/app/";

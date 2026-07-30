@@ -131,7 +131,11 @@ export default function LeadMagnetPage() {
       <section className="bg-cream-50">
         <div className="mx-auto max-w-6xl px-6 py-10 flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm">
           <a href="/pricing"     className="font-semibold text-atlas-700 hover:underline">Pricing</a>
-          <a href="/about"       className="font-semibold text-atlas-700 hover:underline">About Atlas</a>
+          {/* This pointed at the bare /about path, which is not a route. It
+              fell through to the [country] wildcard and rendered "Country not
+              found" at HTTP 200. The nearest page that exists is About the
+              data. A product about-page is real work, tracked as W7. */}
+          <a href="/about-data"  className="font-semibold text-atlas-700 hover:underline">About the data</a>
           <a href="/methodology" className="font-semibold text-atlas-700 hover:underline">Methodology</a>
         </div>
       </section>
