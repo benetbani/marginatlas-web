@@ -121,7 +121,12 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   const { country } = await params;
   const iso2 = country.toUpperCase();
   const c = COUNTRIES.find((c) => c.code === iso2);
-  if (!c) return { title: "Country not found | Margin Atlas" };
+  // notFound() here, not a title. The page component calls notFound() too, but
+  // by then src/app/loading.tsx has flushed the shell and the 200 is already on
+  // the wire, so every wrong URL was a soft 404. Measured on production: the
+  // skeleton lands at byte 8547 and the 404 content at 28567. generateMetadata
+  // runs before the flush, so this is where the status can still be set.
+  if (!c) notFound();
   return {
     title: `${c.name}: small-business benchmarks | Margin Atlas`,
     description: `Typical revenue, employment, and wages for small businesses in ${c.name}.`,
