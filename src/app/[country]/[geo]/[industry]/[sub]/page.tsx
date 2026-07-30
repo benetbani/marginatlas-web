@@ -453,7 +453,10 @@ async function NeighborhoodCellPageBody({
               city: cityCellHref,
               neighbourhood: neighbourhoodHref,
             }}
-            className="min-w-0 flex-1"
+            /* Same squeeze as the trade page, and worse here: this ladder
+               carries three zoom levels rather than two, so it clips more.
+               See the note on that page for the measurement. */
+            className="min-w-0 basis-full grow-0 sm:basis-0 sm:grow"
           />
           <AddToWatch
             item={{

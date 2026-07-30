@@ -995,7 +995,16 @@ async function CellPageBody({
             country: countryZoomHref,
             business: watchHref,
           }}
-          className="min-w-0 flex-1"
+          /* basis-full on a phone, not flex-1. The parent declares flex-wrap,
+             but flex-1 sets flex-basis:0, so this never reached its wrap width.
+             It just shrank to share the row with the watch chip and grew its own
+             scrollbar. Measured on production at 375px: the zoom ladder was
+             boxed to 217px holding 310px and 315px of content, clipping 93px and
+             98px, including the "This trade here" marker that says where you
+             are. Given the full row it needs 327px of 327px available, so both
+             scrollbars disappear. Costs 25px of height, because the watch chip
+             takes its own row below. Restored to the old behaviour at sm. */
+          className="min-w-0 basis-full grow-0 sm:basis-0 sm:grow"
         />
         <AddToWatch
           item={{
