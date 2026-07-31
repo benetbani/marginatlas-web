@@ -542,12 +542,76 @@ export type CityDistrictsFigure = FigureMeta & {
   districts: CityDistrictRow[];
 };
 
+/**
+ * HOW RICH OR POOR A DISTRICT IS, AS A BAND. NEVER AS AN INDEX NUMBER.
+ *
+ * Ratified 2026-07-31, decision 1, and the reason is evidence rather than
+ * taste. Commissioned research found:
+ *
+ *   - roughly 84% of household income variance sits WITHIN a small area rather
+ *     than between areas, so a district figure describes a minority of what
+ *     people there actually earn, before any estimation error at all;
+ *   - where district boundaries do not nest inside official ones, interpolated
+ *     median household income is wrong by more than 10% in about 44% of cases;
+ *   - simple areal weighting puts 16.8% of zones off by a factor of two;
+ *   - UK small-area guidance holds that differences under 5 to 10% between two
+ *     small areas are not defensible at all.
+ *
+ * So "Shoreditch 118" claims a precision that does not exist, while "well above
+ * the city average" survives every one of those findings. **Do not add an index
+ * number beside the band.** That was foreclosed by name.
+ *
+ * THE BANDS ARE RELATIVE TO THIS CITY ONLY. "Well above" in London and "well
+ * above" in Lagos are not the same money and must never be compared, ranked or
+ * put in one table. This is the founder's standing rule against ranking across
+ * geographies, applied to a scale that invites exactly that misreading.
+ */
+export type CityDistrictWealthBand =
+  | "well-above"
+  | "above"
+  | "around"
+  | "below"
+  | "well-below";
+
+export const CITY_DISTRICT_WEALTH_BANDS = [
+  "well-above",
+  "above",
+  "around",
+  "below",
+  "well-below",
+] as const;
+
+/**
+ * One district's two wealth reads, which are genuinely different questions.
+ *
+ * `resident` is who sleeps here. `daytime` is who is here during the working
+ * day. A financial district is poor residentially and rich commercially, and a
+ * lunch counter and an evening restaurant want opposite answers, so collapsing
+ * these into one number would mislead half the readers who use it.
+ */
+export type CityDistrictWealthRow = {
+  districtSlug: string;
+  resident: CityDistrictWealthBand;
+  daytime: CityDistrictWealthBand;
+};
+
+export type CityDistrictWealthFigure = FigureMeta & {
+  /** One row per district in `CityDistricts.list`, in that list's order. A
+   * district missing from this list would leave a hole in a grid the reader
+   * scans, so a filled file states every district. */
+  rows: CityDistrictWealthRow[];
+};
+
 export type CityDistricts = {
   /** Which unit the `annualUnitCost` figures price, in plain words. REQUIRED,
    * because "the same unit, three districts" is meaningless until the page
    * says what the unit is, and the mockup does not. */
   unitPriced: string;
   list: CityDistrictsFigure | NullFigure;
+  /** Ratified 2026-07-31. Most cities will carry this as `estimated` for years
+   * and that is the intended state, not a failure: the founder ruled that a
+   * tagged estimate beats a blank. A city with nothing holds a NullFigure. */
+  wealth: CityDistrictWealthFigure | NullFigure;
 };
 
 /* ---------------------- 09 best area for each trade ---------------------- */

@@ -1,13 +1,18 @@
 {
   "__fixture": true,
   "__warning": "PLACEHOLDER DATA. Every number in this file was lifted from the frozen design mockup at design/mockups/city.html. The mockup's own footer calls its figures illustrative. Nothing here has been researched, sourced or reconciled, every figure is tiered thin, and none of it may ever be served to a reader. It exists so the city page contract, the adapter and the components can be built and tested against the exact shape and scale of the design. Real files live in data/cities/ and must be hand-filled with provenance.",
-
   "meta": {
     "schema": "city.spine2",
     "schemaVersion": 1,
     "id": "gb-london",
-    "country": { "slug": "gb", "name": "United Kingdom" },
-    "city": { "slug": "london", "name": "London" },
+    "country": {
+      "slug": "gb",
+      "name": "United Kingdom"
+    },
+    "city": {
+      "slug": "london",
+      "name": "London"
+    },
     "urlPath": "/gb/london",
     "currency": {
       "display": "USD",
@@ -19,13 +24,14 @@
     "freshness": "design mockup, frozen 2026-07",
     "reviewedAt": "2026-07",
     "provenance": {
-      "familyDocs": ["design/mockups/city.html"],
+      "familyDocs": [
+        "design/mockups/city.html"
+      ],
       "freshnessWatch": [
         "This file is a fixture. It has no freshness to watch and must be deleted or replaced before any city page ships from it."
       ]
     }
   },
-
   "hero": {
     "headline": {
       "value": 22000,
@@ -45,7 +51,6 @@
       "freshness": "design mockup, frozen 2026-07"
     }
   },
-
   "scorecard": {
     "baselineLabel": "UK city average",
     "spendPerResident": {
@@ -134,7 +139,6 @@
       }
     }
   },
-
   "incomeAndWealth": {
     "topTenthVsMiddle": {
       "value": 2.8,
@@ -145,11 +149,35 @@
     },
     "spread": {
       "rows": [
-        { "label": "Middle earner", "lo": 30000, "median": 47000, "hi": 68000 },
-        { "label": "Top 10%", "lo": 95000, "median": 130000, "hi": 180000 },
-        { "label": "Top 1%", "lo": 240000, "median": 350000, "hi": 400000 }
+        {
+          "label": "Middle earner",
+          "lo": 30000,
+          "median": 47000,
+          "hi": 68000
+        },
+        {
+          "label": "Top 10%",
+          "lo": 95000,
+          "median": 130000,
+          "hi": 180000
+        },
+        {
+          "label": "Top 1%",
+          "lo": 240000,
+          "median": 350000,
+          "hi": 400000
+        }
       ],
-      "axis": { "lo": 20000, "hi": 400000, "ticks": [20000, 50000, 100000, 400000] },
+      "axis": {
+        "lo": 20000,
+        "hi": 400000,
+        "ticks": [
+          20000,
+          50000,
+          100000,
+          400000
+        ]
+      },
       "unit": "USD/yr",
       "tier": "thin",
       "basis": "the three dumbbells and the log axis drawn in the mockup; lifted from the design and not researched",
@@ -163,22 +191,57 @@
       "freshness": "design mockup, frozen 2026-07"
     }
   },
-
   "visitors": {
     "monthlyIndex": {
       "series": [
-        { "x": "Jan", "value": 64 },
-        { "x": "Feb", "value": 66 },
-        { "x": "Mar", "value": 77 },
-        { "x": "Apr", "value": 91 },
-        { "x": "May", "value": 106 },
-        { "x": "Jun", "value": 124 },
-        { "x": "Jul", "value": 143 },
-        { "x": "Aug", "value": 147 },
-        { "x": "Sep", "value": 114 },
-        { "x": "Oct", "value": 91 },
-        { "x": "Nov", "value": 77 },
-        { "x": "Dec", "value": 99 }
+        {
+          "x": "Jan",
+          "value": 64
+        },
+        {
+          "x": "Feb",
+          "value": 66
+        },
+        {
+          "x": "Mar",
+          "value": 77
+        },
+        {
+          "x": "Apr",
+          "value": 91
+        },
+        {
+          "x": "May",
+          "value": 106
+        },
+        {
+          "x": "Jun",
+          "value": 124
+        },
+        {
+          "x": "Jul",
+          "value": 143
+        },
+        {
+          "x": "Aug",
+          "value": 147
+        },
+        {
+          "x": "Sep",
+          "value": 114
+        },
+        {
+          "x": "Oct",
+          "value": 91
+        },
+        {
+          "x": "Nov",
+          "value": 77
+        },
+        {
+          "x": "Dec",
+          "value": 99
+        }
       ],
       "unit": "index, 100 = the year average",
       "tier": "thin",
@@ -223,7 +286,6 @@
       }
     }
   },
-
   "people": {
     "residents": {
       "value": 9700000,
@@ -234,11 +296,31 @@
     },
     "wealthBands": {
       "bands": [
-        { "label": "Struggling", "sharePct": 24, "households": 840000 },
-        { "label": "Getting by", "sharePct": 31, "households": 1090000 },
-        { "label": "Comfortable", "sharePct": 27, "households": 945000 },
-        { "label": "Well off", "sharePct": 12, "households": 420000 },
-        { "label": "Wealthy", "sharePct": 6, "households": 210000 }
+        {
+          "label": "Struggling",
+          "sharePct": 24,
+          "households": 840000
+        },
+        {
+          "label": "Getting by",
+          "sharePct": 31,
+          "households": 1090000
+        },
+        {
+          "label": "Comfortable",
+          "sharePct": 27,
+          "households": 945000
+        },
+        {
+          "label": "Well off",
+          "sharePct": 12,
+          "households": 420000
+        },
+        {
+          "label": "Wealthy",
+          "sharePct": 6,
+          "households": 210000
+        }
       ],
       "unit": "% of households, and households",
       "tier": "thin",
@@ -344,8 +426,17 @@
           "savings": 1200,
           "ageRange": "22 to 30",
           "tenure": "Renting, shared",
-          "buys": ["Coffee", "takeaway", "gyms", "nights out"],
-          "tradesThatIndexHigh": ["Cafes", "bars", "gyms"]
+          "buys": [
+            "Coffee",
+            "takeaway",
+            "gyms",
+            "nights out"
+          ],
+          "tradesThatIndexHigh": [
+            "Cafes",
+            "bars",
+            "gyms"
+          ]
         },
         {
           "key": "young-professionals",
@@ -358,8 +449,16 @@
           "savings": 9000,
           "ageRange": "27 to 38",
           "tenure": "Renting alone",
-          "buys": ["Eating out", "fitness", "grooming"],
-          "tradesThatIndexHigh": ["Restaurants", "salons", "gyms"]
+          "buys": [
+            "Eating out",
+            "fitness",
+            "grooming"
+          ],
+          "tradesThatIndexHigh": [
+            "Restaurants",
+            "salons",
+            "gyms"
+          ]
         },
         {
           "key": "families-with-kids",
@@ -372,8 +471,16 @@
           "savings": 6000,
           "ageRange": "30 to 45",
           "tenure": "Mortgaged",
-          "buys": ["Groceries", "childcare", "repairs"],
-          "tradesThatIndexHigh": ["Grocery", "childcare", "auto"]
+          "buys": [
+            "Groceries",
+            "childcare",
+            "repairs"
+          ],
+          "tradesThatIndexHigh": [
+            "Grocery",
+            "childcare",
+            "auto"
+          ]
         },
         {
           "key": "established-owners",
@@ -386,8 +493,16 @@
           "savings": 48000,
           "ageRange": "45 to 60",
           "tenure": "Owned outright",
-          "buys": ["Dining", "home", "services"],
-          "tradesThatIndexHigh": ["Restaurants", "retail", "dental"]
+          "buys": [
+            "Dining",
+            "home",
+            "services"
+          ],
+          "tradesThatIndexHigh": [
+            "Restaurants",
+            "retail",
+            "dental"
+          ]
         },
         {
           "key": "wealthy-households",
@@ -401,8 +516,14 @@
           "savings": 180000,
           "ageRange": "40 to 65",
           "tenure": "Owned, prime",
-          "buys": ["Fine dining", "premium retail"],
-          "tradesThatIndexHigh": ["Fine dining", "boutiques"]
+          "buys": [
+            "Fine dining",
+            "premium retail"
+          ],
+          "tradesThatIndexHigh": [
+            "Fine dining",
+            "boutiques"
+          ]
         },
         {
           "key": "retired-residents",
@@ -414,8 +535,16 @@
           "savings": 32000,
           "ageRange": "65 plus",
           "tenure": "Owned outright",
-          "buys": ["Groceries", "pharmacy", "local"],
-          "tradesThatIndexHigh": ["Grocery", "pharmacy", "cafes"]
+          "buys": [
+            "Groceries",
+            "pharmacy",
+            "local"
+          ],
+          "tradesThatIndexHigh": [
+            "Grocery",
+            "pharmacy",
+            "cafes"
+          ]
         },
         {
           "key": "students",
@@ -427,8 +556,15 @@
           "savings": 400,
           "ageRange": "18 to 24",
           "tenure": "Halls or shared",
-          "buys": ["Cheap food", "phone repair"],
-          "tradesThatIndexHigh": ["Takeaway", "barbers", "repair"]
+          "buys": [
+            "Cheap food",
+            "phone repair"
+          ],
+          "tradesThatIndexHigh": [
+            "Takeaway",
+            "barbers",
+            "repair"
+          ]
         },
         {
           "key": "recent-arrivals",
@@ -441,8 +577,16 @@
           "savings": 2600,
           "ageRange": "24 to 40",
           "tenure": "Renting",
-          "buys": ["Groceries", "remittance", "transport"],
-          "tradesThatIndexHigh": ["Grocery", "barbers", "phone"]
+          "buys": [
+            "Groceries",
+            "remittance",
+            "transport"
+          ],
+          "tradesThatIndexHigh": [
+            "Grocery",
+            "barbers",
+            "phone"
+          ]
         },
         {
           "key": "shift-and-service",
@@ -455,8 +599,14 @@
           "savings": 900,
           "ageRange": "25 to 50",
           "tenure": "Renting",
-          "buys": ["Convenience", "late hours"],
-          "tradesThatIndexHigh": ["Convenience", "takeaway"]
+          "buys": [
+            "Convenience",
+            "late hours"
+          ],
+          "tradesThatIndexHigh": [
+            "Convenience",
+            "takeaway"
+          ]
         }
       ],
       "unit": "% of households, with income and savings in USD",
@@ -466,14 +616,25 @@
       "notes": "The nine shares sum to 100, and the Wealthy households share of 6 matches the Wealthy band in the wealth spread. Tone is the ramp step the mockup paints each type with, carried here rather than re-derived from the label."
     }
   },
-
   "spaceCosts": {
     "costSplit": {
       "series": [
-        { "x": "Rent", "value": 44 },
-        { "x": "Business rates", "value": 22 },
-        { "x": "Fit-out, spread", "value": 18 },
-        { "x": "Service charge", "value": 16 }
+        {
+          "x": "Rent",
+          "value": 44
+        },
+        {
+          "x": "Business rates",
+          "value": 22
+        },
+        {
+          "x": "Fit-out, spread",
+          "value": 18
+        },
+        {
+          "x": "Service charge",
+          "value": 16
+        }
       ],
       "unit": "USD per 100 USD of a unit's yearly cost",
       "tier": "thin",
@@ -566,16 +727,51 @@
     },
     "note": "The quoted rent is the top third of the trade. The rooms that pay their owner mostly signed for less, on a quieter street."
   },
-
   "tradeEconomics": {
     "trades": {
       "trades": [
-        { "tradeSlug": "auto-repair", "tradeName": "Auto repair", "revenue": 390000, "ownerKeeps": 47000, "costToOpen": 140000 },
-        { "tradeSlug": "restaurants", "tradeName": "Restaurant", "revenue": 620000, "ownerKeeps": 43000, "costToOpen": 197000 },
-        { "tradeSlug": "gyms", "tradeName": "Gym", "revenue": 430000, "ownerKeeps": 39000, "costToOpen": 160000 },
-        { "tradeSlug": "cafes", "tradeName": "Cafe", "revenue": 310000, "ownerKeeps": 25000, "costToOpen": 95000 },
-        { "tradeSlug": "hair-salons", "tradeName": "Hair salon", "revenue": 180000, "ownerKeeps": 25000, "costToOpen": 70000 },
-        { "tradeSlug": "grocery-stores", "tradeName": "Grocery store", "revenue": 780000, "ownerKeeps": 23000, "costToOpen": 250000 }
+        {
+          "tradeSlug": "auto-repair",
+          "tradeName": "Auto repair",
+          "revenue": 390000,
+          "ownerKeeps": 47000,
+          "costToOpen": 140000
+        },
+        {
+          "tradeSlug": "restaurants",
+          "tradeName": "Restaurant",
+          "revenue": 620000,
+          "ownerKeeps": 43000,
+          "costToOpen": 197000
+        },
+        {
+          "tradeSlug": "gyms",
+          "tradeName": "Gym",
+          "revenue": 430000,
+          "ownerKeeps": 39000,
+          "costToOpen": 160000
+        },
+        {
+          "tradeSlug": "cafes",
+          "tradeName": "Cafe",
+          "revenue": 310000,
+          "ownerKeeps": 25000,
+          "costToOpen": 95000
+        },
+        {
+          "tradeSlug": "hair-salons",
+          "tradeName": "Hair salon",
+          "revenue": 180000,
+          "ownerKeeps": 25000,
+          "costToOpen": 70000
+        },
+        {
+          "tradeSlug": "grocery-stores",
+          "tradeName": "Grocery store",
+          "revenue": 780000,
+          "ownerKeeps": 23000,
+          "costToOpen": 250000
+        }
       ],
       "unit": "USD/yr, and USD to open",
       "tier": "thin",
@@ -584,7 +780,6 @@
       "notes": "The restaurant row nearly matches the trade file for London restaurants on revenue (618,488) and on what the owner keeps (43,284), but not on what it costs to open: this mockup says 197K, that file says 231,134. A real city file must read every row from the trade's own file. The mockup's slope chart also shortens Grocery store to Grocery."
     }
   },
-
   "districts": {
     "unitPriced": "a high-street unit. The design mockup does not state its floor area, so what is being priced across districts is not defined; the implied cost at the city rate, about 37K a year, matches no row in the size table in chapter 06.",
     "list": {
@@ -670,9 +865,47 @@
       "basis": "the six districts the mockup ranks by rent and describes on cards; lifted from the design and not researched",
       "freshness": "design mockup, frozen 2026-07",
       "notes": "The mockup renders this one list twice, as a rent scale in chapter 08 and as character cards in chapter 10, with the same six multiples in both. The three priced districts imply a city-rate cost of about 37.3K, which is consistent across all three."
+    },
+    "wealth": {
+      "rows": [
+        {
+          "districtSlug": "brixton",
+          "resident": "below",
+          "daytime": "around"
+        },
+        {
+          "districtSlug": "hackney",
+          "resident": "around",
+          "daytime": "around"
+        },
+        {
+          "districtSlug": "shoreditch",
+          "resident": "around",
+          "daytime": "above"
+        },
+        {
+          "districtSlug": "canary-wharf",
+          "resident": "above",
+          "daytime": "well-above"
+        },
+        {
+          "districtSlug": "covent-garden",
+          "resident": "above",
+          "daytime": "well-above"
+        },
+        {
+          "districtSlug": "mayfair",
+          "resident": "well-above",
+          "daytime": "well-above"
+        }
+      ],
+      "unit": "band against this city average",
+      "tier": "thin",
+      "basis": "authored for the design fixture to exercise the two reads, not researched. Canary Wharf and Covent Garden are set apart deliberately: both are far busier by day than the people living there would suggest",
+      "freshness": "design fixture, 2026-07-31",
+      "notes": "FIXTURE DATA. Bands are relative to London only and must never be compared with another city."
     }
   },
-
   "tradeFit": {
     "grid": {
       "rows": [
@@ -680,72 +913,180 @@
           "tradeSlug": "restaurants",
           "tradeName": "Restaurant",
           "fits": [
-            { "districtSlug": "brixton", "level": "weak" },
-            { "districtSlug": "hackney", "level": "good" },
-            { "districtSlug": "shoreditch", "level": "best" },
-            { "districtSlug": "canary-wharf", "level": "good" },
-            { "districtSlug": "covent-garden", "level": "good" },
-            { "districtSlug": "mayfair", "level": "weak" }
+            {
+              "districtSlug": "brixton",
+              "level": "weak"
+            },
+            {
+              "districtSlug": "hackney",
+              "level": "good"
+            },
+            {
+              "districtSlug": "shoreditch",
+              "level": "best"
+            },
+            {
+              "districtSlug": "canary-wharf",
+              "level": "good"
+            },
+            {
+              "districtSlug": "covent-garden",
+              "level": "good"
+            },
+            {
+              "districtSlug": "mayfair",
+              "level": "weak"
+            }
           ]
         },
         {
           "tradeSlug": "cafes",
           "tradeName": "Cafe",
           "fits": [
-            { "districtSlug": "brixton", "level": "good" },
-            { "districtSlug": "hackney", "level": "best" },
-            { "districtSlug": "shoreditch", "level": "good" },
-            { "districtSlug": "canary-wharf", "level": "good" },
-            { "districtSlug": "covent-garden", "level": "weak" },
-            { "districtSlug": "mayfair", "level": "weak" }
+            {
+              "districtSlug": "brixton",
+              "level": "good"
+            },
+            {
+              "districtSlug": "hackney",
+              "level": "best"
+            },
+            {
+              "districtSlug": "shoreditch",
+              "level": "good"
+            },
+            {
+              "districtSlug": "canary-wharf",
+              "level": "good"
+            },
+            {
+              "districtSlug": "covent-garden",
+              "level": "weak"
+            },
+            {
+              "districtSlug": "mayfair",
+              "level": "weak"
+            }
           ]
         },
         {
           "tradeSlug": "hair-salons",
           "tradeName": "Hair salon",
           "fits": [
-            { "districtSlug": "brixton", "level": "good" },
-            { "districtSlug": "hackney", "level": "best" },
-            { "districtSlug": "shoreditch", "level": "good" },
-            { "districtSlug": "canary-wharf", "level": "weak" },
-            { "districtSlug": "covent-garden", "level": "weak" },
-            { "districtSlug": "mayfair", "level": "good" }
+            {
+              "districtSlug": "brixton",
+              "level": "good"
+            },
+            {
+              "districtSlug": "hackney",
+              "level": "best"
+            },
+            {
+              "districtSlug": "shoreditch",
+              "level": "good"
+            },
+            {
+              "districtSlug": "canary-wharf",
+              "level": "weak"
+            },
+            {
+              "districtSlug": "covent-garden",
+              "level": "weak"
+            },
+            {
+              "districtSlug": "mayfair",
+              "level": "good"
+            }
           ]
         },
         {
           "tradeSlug": "gyms",
           "tradeName": "Gym",
           "fits": [
-            { "districtSlug": "brixton", "level": "best" },
-            { "districtSlug": "hackney", "level": "good" },
-            { "districtSlug": "shoreditch", "level": "good" },
-            { "districtSlug": "canary-wharf", "level": "good" },
-            { "districtSlug": "covent-garden", "level": "weak" },
-            { "districtSlug": "mayfair", "level": "weak" }
+            {
+              "districtSlug": "brixton",
+              "level": "best"
+            },
+            {
+              "districtSlug": "hackney",
+              "level": "good"
+            },
+            {
+              "districtSlug": "shoreditch",
+              "level": "good"
+            },
+            {
+              "districtSlug": "canary-wharf",
+              "level": "good"
+            },
+            {
+              "districtSlug": "covent-garden",
+              "level": "weak"
+            },
+            {
+              "districtSlug": "mayfair",
+              "level": "weak"
+            }
           ]
         },
         {
           "tradeSlug": "grocery-stores",
           "tradeName": "Grocery",
           "fits": [
-            { "districtSlug": "brixton", "level": "best" },
-            { "districtSlug": "hackney", "level": "good" },
-            { "districtSlug": "shoreditch", "level": "weak" },
-            { "districtSlug": "canary-wharf", "level": "good" },
-            { "districtSlug": "covent-garden", "level": "weak" },
-            { "districtSlug": "mayfair", "level": "weak" }
+            {
+              "districtSlug": "brixton",
+              "level": "best"
+            },
+            {
+              "districtSlug": "hackney",
+              "level": "good"
+            },
+            {
+              "districtSlug": "shoreditch",
+              "level": "weak"
+            },
+            {
+              "districtSlug": "canary-wharf",
+              "level": "good"
+            },
+            {
+              "districtSlug": "covent-garden",
+              "level": "weak"
+            },
+            {
+              "districtSlug": "mayfair",
+              "level": "weak"
+            }
           ]
         },
         {
           "tradeSlug": "bars",
           "tradeName": "Bar",
           "fits": [
-            { "districtSlug": "brixton", "level": "weak" },
-            { "districtSlug": "hackney", "level": "good" },
-            { "districtSlug": "shoreditch", "level": "best" },
-            { "districtSlug": "canary-wharf", "level": "weak" },
-            { "districtSlug": "covent-garden", "level": "good" },
-            { "districtSlug": "mayfair", "level": "good" }
+            {
+              "districtSlug": "brixton",
+              "level": "weak"
+            },
+            {
+              "districtSlug": "hackney",
+              "level": "good"
+            },
+            {
+              "districtSlug": "shoreditch",
+              "level": "best"
+            },
+            {
+              "districtSlug": "canary-wharf",
+              "level": "weak"
+            },
+            {
+              "districtSlug": "covent-garden",
+              "level": "good"
+            },
+            {
+              "districtSlug": "mayfair",
+              "level": "good"
+            }
           ]
         }
       ],
@@ -756,7 +1097,6 @@
       "notes": "The six trades here are not the six in chapter 07: this grid carries Bar and drops Auto repair. A real file should either reconcile the two sets or state why they differ."
     }
   },
-
   "direction": {
     "rent": {
       "label": "Rent",
@@ -823,7 +1163,6 @@
       }
     }
   },
-
   "myths": {
     "primary": {
       "claim": "London is where the money is.",
@@ -836,8 +1175,16 @@
     "tradeAgainstPeer": {
       "tradeSlug": "restaurants",
       "tradeName": "Restaurant",
-      "here": { "revenue": 620000, "ownerKeeps": 43000 },
-      "peer": { "city": "Manchester", "citySlug": "manchester", "revenue": 380000, "ownerKeeps": 41000 },
+      "here": {
+        "revenue": 620000,
+        "ownerKeeps": 43000
+      },
+      "peer": {
+        "city": "Manchester",
+        "citySlug": "manchester",
+        "revenue": 380000,
+        "ownerKeeps": 41000
+      },
       "unit": "USD/yr",
       "tier": "thin",
       "basis": "the six-row comparison block beside the myth; lifted from the design and not researched",
@@ -845,16 +1192,39 @@
       "notes": "The block's last two rows, plus 63 percent of revenue and plus 5 percent kept, are both derived from these four numbers and are not stored. The Manchester pair has no file behind it: the trade file for London restaurants explicitly refuses its own Manchester comparison for want of a source, so this pair is ungrounded in the same way."
     }
   },
-
   "peers": {
     "rent": {
       "cities": [
-        { "city": "Manchester", "citySlug": "manchester", "rentVsThisCityPct": -54 },
-        { "city": "Berlin", "citySlug": "berlin", "rentVsThisCityPct": -38 },
-        { "city": "Paris", "citySlug": "paris", "rentVsThisCityPct": -22 },
-        { "city": "Amsterdam", "citySlug": "amsterdam", "rentVsThisCityPct": -18 },
-        { "city": "Dublin", "citySlug": "dublin", "rentVsThisCityPct": -12 },
-        { "city": "London", "citySlug": "london", "rentVsThisCityPct": 0 }
+        {
+          "city": "Manchester",
+          "citySlug": "manchester",
+          "rentVsThisCityPct": -54
+        },
+        {
+          "city": "Berlin",
+          "citySlug": "berlin",
+          "rentVsThisCityPct": -38
+        },
+        {
+          "city": "Paris",
+          "citySlug": "paris",
+          "rentVsThisCityPct": -22
+        },
+        {
+          "city": "Amsterdam",
+          "citySlug": "amsterdam",
+          "rentVsThisCityPct": -18
+        },
+        {
+          "city": "Dublin",
+          "citySlug": "dublin",
+          "rentVsThisCityPct": -12
+        },
+        {
+          "city": "London",
+          "citySlug": "london",
+          "rentVsThisCityPct": 0
+        }
       ],
       "unit": "% commercial rent against this city",
       "tier": "thin",
@@ -863,7 +1233,6 @@
       "notes": "The drawn axis runs from minus 62 to plus 6, which is padding around the markers and is not carried as data."
     }
   },
-
   "watch": {
     "pressures": {
       "pressures": [
@@ -926,7 +1295,6 @@
       "freshness": "design mockup, frozen 2026-07"
     }
   },
-
   "voices": {
     "operators": {
       "quotes": [
@@ -974,7 +1342,6 @@
       "notes": "Islington is not one of the six districts in chapter 10, so quote attributions are free text by design."
     }
   },
-
   "verdict": {
     "text": "London rewards the right ground more than the right trade. A restaurant takes $620K here against Manchester's $380K, and its owner keeps just $2K more. Moving the same unit from Brixton to Mayfair costs another $56K a year, more than that restaurant's owner keeps. The demand is deep; what varies is the price of standing in front of it.",
     "chips": [
@@ -983,20 +1350,50 @@
       "20% of spend is visitors'"
     ]
   },
-
   "methodology": {
     "rows": [
-      { "figure": "Rent by district", "tier": "measured", "how": "assessed rent, property by property" },
-      { "figure": "Median pay", "tier": "measured", "how": "published pay by role and region" },
-      { "figure": "Visitors and visitor spend", "tier": "measured", "how": "published visitor counts and spend" },
-      { "figure": "Household wealth bands", "tier": "built", "how": "income and wealth distributions, grouped" },
-      { "figure": "Spend per resident", "tier": "built", "how": "consumer spend over resident count" },
-      { "figure": "What owners keep, by trade", "tier": "built", "how": "the cost stack, run per trade" },
-      { "figure": "Population types", "tier": "thin", "how": "grouped archetypes, shares are estimates" },
-      { "figure": "Best area for each trade", "tier": "thin", "how": "rent against passing trade, our judgement" }
+      {
+        "figure": "Rent by district",
+        "tier": "measured",
+        "how": "assessed rent, property by property"
+      },
+      {
+        "figure": "Median pay",
+        "tier": "measured",
+        "how": "published pay by role and region"
+      },
+      {
+        "figure": "Visitors and visitor spend",
+        "tier": "measured",
+        "how": "published visitor counts and spend"
+      },
+      {
+        "figure": "Household wealth bands",
+        "tier": "built",
+        "how": "income and wealth distributions, grouped"
+      },
+      {
+        "figure": "Spend per resident",
+        "tier": "built",
+        "how": "consumer spend over resident count"
+      },
+      {
+        "figure": "What owners keep, by trade",
+        "tier": "built",
+        "how": "the cost stack, run per trade"
+      },
+      {
+        "figure": "Population types",
+        "tier": "thin",
+        "how": "grouped archetypes, shares are estimates"
+      },
+      {
+        "figure": "Best area for each trade",
+        "tier": "thin",
+        "how": "rent against passing trade, our judgement"
+      }
     ]
   },
-
   "remember": {
     "text": "Deep money and deep demand, priced accordingly. In London the lease decides more than the concept does, so pick the street before the menu.",
     "figure": {
@@ -1009,15 +1406,52 @@
     "figureLabel": "the UK rent, for the same room",
     "figureSource": "scorecard.commercialRent"
   },
-
   "next": {
     "tiles": [
-      { "kind": "trade", "slug": "restaurants", "label": "Restaurants in London", "gloss": "$43K kept", "icon": "trade-restaurant", "href": "/gb/london/restaurants" },
-      { "kind": "trade", "slug": "cafes", "label": "Cafes in London", "gloss": "$25K kept", "icon": "trade-cafe" },
-      { "kind": "trade", "slug": "hair-salons", "label": "Salons in London", "gloss": "$25K kept", "icon": "trade-salon" },
-      { "kind": "districts", "slug": "districts", "label": "Every district", "gloss": "6 ranked", "icon": "neighborhood" },
-      { "kind": "city", "slug": "manchester", "label": "Manchester", "gloss": "$15K per head", "icon": "skyline" },
-      { "kind": "country", "slug": "gb", "label": "The UK overall", "gloss": "$36 in every $100", "icon": "vs-world", "href": "/gb" }
+      {
+        "kind": "trade",
+        "slug": "restaurants",
+        "label": "Restaurants in London",
+        "gloss": "$43K kept",
+        "icon": "trade-restaurant",
+        "href": "/gb/london/restaurants"
+      },
+      {
+        "kind": "trade",
+        "slug": "cafes",
+        "label": "Cafes in London",
+        "gloss": "$25K kept",
+        "icon": "trade-cafe"
+      },
+      {
+        "kind": "trade",
+        "slug": "hair-salons",
+        "label": "Salons in London",
+        "gloss": "$25K kept",
+        "icon": "trade-salon"
+      },
+      {
+        "kind": "districts",
+        "slug": "districts",
+        "label": "Every district",
+        "gloss": "6 ranked",
+        "icon": "neighborhood"
+      },
+      {
+        "kind": "city",
+        "slug": "manchester",
+        "label": "Manchester",
+        "gloss": "$15K per head",
+        "icon": "skyline"
+      },
+      {
+        "kind": "country",
+        "slug": "gb",
+        "label": "The UK overall",
+        "gloss": "$36 in every $100",
+        "icon": "vs-world",
+        "href": "/gb"
+      }
     ]
   }
 }

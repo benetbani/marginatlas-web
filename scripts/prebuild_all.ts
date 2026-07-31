@@ -90,6 +90,14 @@ const GATES: Gate[] = [
      Negative-tested against an off-vocabulary key, a mix summing to 88, and a
      second accent. Registered 2026-07-31. */
   { name: "population-mix", script: "scripts/verify_population_mix.ts" },
+  /* District wealth ships as one of five bands and never as an index number,
+     ratified 2026-07-31 on the evidence that ~84% of income variance sits
+     inside a small area and that interpolated district income is wrong by
+     >10% in ~44% of cases. A number sorts and colours a map, so the pressure
+     to add one back is real; this makes it argue with a failing build.
+     Negative-tested against a smuggled index, an invented band and an
+     uncovered district. Registered 2026-07-31. */
+  { name: "district-wealth", script: "scripts/verify_district_wealth.ts" },
   { name: "no-hardcoded-hex", script: "scripts/verify_hardcoded_hex.ts" },
   { name: "dead-links", script: "scripts/audit/find_dead_links.ts", args: ["--strict"] },
   { name: "featured-tiles", script: "scripts/verify_featured_tiles.ts" },
