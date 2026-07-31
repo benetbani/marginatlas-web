@@ -98,6 +98,12 @@ const GATES: Gate[] = [
      Negative-tested against a smuggled index, an invented band and an
      uncovered district. Registered 2026-07-31. */
   { name: "district-wealth", script: "scripts/verify_district_wealth.ts" },
+  /* The district population mix: capped vocabulary, at most five types, ordered
+     largest first (the renderer and the favoured-trades derivation both assume
+     it and neither fails visibly if it is wrong), scarce never overlapping top,
+     and every district covered. Negative-tested against five induced defects.
+     Registered 2026-07-31. */
+  { name: "district-mix", script: "scripts/verify_district_mix.ts" },
   { name: "no-hardcoded-hex", script: "scripts/verify_hardcoded_hex.ts" },
   { name: "dead-links", script: "scripts/audit/find_dead_links.ts", args: ["--strict"] },
   { name: "featured-tiles", script: "scripts/verify_featured_tiles.ts" },

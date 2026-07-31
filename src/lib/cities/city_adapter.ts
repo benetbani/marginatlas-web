@@ -16,6 +16,8 @@
  * that decision belongs to the page, not to this file.
  */
 import type {
+  CityArchetype,
+  CityDistrictMixRow,
   CityRankFigure,
   CityFile,
   CityScorecardRow,
@@ -24,6 +26,86 @@ import type {
   PointFigure,
 } from "./city_spine2_types";
 import { isNullFigure } from "./city_spine2_types";
+
+/* ------------------- the trades a district favours ----------------------- */
+
+/**
+ * Which trades suit a district, DERIVED from who is there.
+ *
+ * Ratified 2026-07-31, decision 6: the page should not stop at "heavy on
+ * students", it should say "which favours cafes, bars and gyms". The founder
+ * wanted the conclusion drawn, because a first-time owner often cannot make
+ * that leap from a population chart.
+ *
+ * IT IS DERIVED, NOT AUTHORED, and that is the load-bearing choice. Every
+ * archetype already declares its `tradesThatIndexHigh` once, at city level.
+ * Reading a district's favoured trades from its own top types means the two can
+ * never disagree. Authoring them per district would create a second home for
+ * the same claim, and a district could then recommend cafes while the
+ * population strip beside it says nobody there buys coffee. The trade page
+ * audit found several defects of exactly that shape.
+ *
+ * IT SCORES WHAT IS DISTINCTIVE, NOT WHAT IS COMMON, and this was learned by
+ * looking at the output rather than reasoning about it. The obvious version
+ * sums each type's raw share. Run against the London fixture it returned "gyms"
+ * for five districts out of six, because young professionals and young renters
+ * dominate most of London and both favour gyms. A mechanism that says the same
+ * thing about every district cannot help anyone choose between them, which is
+ * the entire job.
+ *
+ * So a type only contributes where the district is ABOVE the city on it, and it
+ * contributes the DIFFERENCE. A district that is 30% students in a city that is
+ * 8% students surfaces student trades hard; a district that is average on
+ * everything surfaces little, which is itself the honest answer about a place
+ * with no particular character.
+ *
+ * Still no formula in the sense the founder ruled out: it is one subtraction.
+ *
+ * Returns [] when the district has no mix or no type stands out, which the
+ * renderer prints as a stated gap rather than inventing a recommendation.
+ */
+/**
+ * How far above the city a district must sit, in accumulated points of share,
+ * before we will name a trade for it. Below this the district is ordinary and
+ * the honest output is nothing at all.
+ *
+ * A KNOWN LIMIT, recorded rather than tuned away. Each archetype declares only
+ * about three favoured trades and the lists overlap heavily: the two commonest
+ * London types both name gyms. So this discriminates well at the extremes,
+ * where Mayfair returns boutiques and fine dining while Brixton returns barbers
+ * and groceries, and poorly between four similar inner-city districts, which
+ * all return some ordering of gyms, restaurants and salons. That is a thinness
+ * in the archetype-to-trade vocabulary, not in the scoring, and no amount of
+ * reweighting fixes it. Enriching those lists is the real work.
+ */
+const FAVOURED_TRADE_FLOOR = 5;
+
+export function favouredTrades(
+  row: CityDistrictMixRow,
+  archetypes: CityArchetype[],
+  limit = 3,
+): string[] {
+  const byKey = new Map(archetypes.map((a) => [a.key, a]));
+  /** The city baseline this district is measured against. */
+  const cityShare = new Map(archetypes.map((a) => [a.key, a.sharePct]));
+  const score = new Map<string, number>();
+
+  for (const t of row.top) {
+    const arch = byKey.get(t.key);
+    if (!arch) continue; // a type absent from the city strip contributes nothing
+    const lift = t.sharePct - (cityShare.get(t.key) ?? 0);
+    if (lift <= 0) continue; // at or below the city average says nothing about this place
+    for (const trade of arch.tradesThatIndexHigh) {
+      score.set(trade, (score.get(trade) ?? 0) + lift);
+    }
+  }
+
+  return [...score.entries()]
+    .filter(([, lift]) => lift >= FAVOURED_TRADE_FLOOR)
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, limit)
+    .map(([trade]) => trade);
+}
 
 /* ------------------------------ the spine -------------------------------- */
 

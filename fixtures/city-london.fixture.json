@@ -904,6 +904,189 @@
       "basis": "authored for the design fixture to exercise the two reads, not researched. Canary Wharf and Covent Garden are set apart deliberately: both are far busier by day than the people living there would suggest",
       "freshness": "design fixture, 2026-07-31",
       "notes": "FIXTURE DATA. Bands are relative to London only and must never be compared with another city."
+    },
+    "mix": {
+      "rows": [
+        {
+          "districtSlug": "brixton",
+          "top": [
+            {
+              "key": "young-renters",
+              "sharePct": 26
+            },
+            {
+              "key": "recent-arrivals",
+              "sharePct": 18
+            },
+            {
+              "key": "young-professionals",
+              "sharePct": 16
+            },
+            {
+              "key": "families-with-kids",
+              "sharePct": 14
+            },
+            {
+              "key": "shift-and-service",
+              "sharePct": 12
+            }
+          ],
+          "scarce": [
+            "wealthy-households",
+            "retired-residents"
+          ]
+        },
+        {
+          "districtSlug": "hackney",
+          "top": [
+            {
+              "key": "young-professionals",
+              "sharePct": 24
+            },
+            {
+              "key": "young-renters",
+              "sharePct": 22
+            },
+            {
+              "key": "families-with-kids",
+              "sharePct": 16
+            },
+            {
+              "key": "recent-arrivals",
+              "sharePct": 14
+            },
+            {
+              "key": "students",
+              "sharePct": 10
+            }
+          ],
+          "scarce": [
+            "retired-residents",
+            "established-owners"
+          ]
+        },
+        {
+          "districtSlug": "shoreditch",
+          "top": [
+            {
+              "key": "young-professionals",
+              "sharePct": 30
+            },
+            {
+              "key": "young-renters",
+              "sharePct": 26
+            },
+            {
+              "key": "students",
+              "sharePct": 12
+            },
+            {
+              "key": "recent-arrivals",
+              "sharePct": 11
+            },
+            {
+              "key": "shift-and-service",
+              "sharePct": 9
+            }
+          ],
+          "scarce": [
+            "families-with-kids",
+            "retired-residents"
+          ]
+        },
+        {
+          "districtSlug": "canary-wharf",
+          "top": [
+            {
+              "key": "young-professionals",
+              "sharePct": 34
+            },
+            {
+              "key": "established-owners",
+              "sharePct": 18
+            },
+            {
+              "key": "wealthy-households",
+              "sharePct": 14
+            },
+            {
+              "key": "young-renters",
+              "sharePct": 13
+            },
+            {
+              "key": "recent-arrivals",
+              "sharePct": 8
+            }
+          ],
+          "scarce": [
+            "students",
+            "shift-and-service"
+          ]
+        },
+        {
+          "districtSlug": "covent-garden",
+          "top": [
+            {
+              "key": "young-professionals",
+              "sharePct": 26
+            },
+            {
+              "key": "young-renters",
+              "sharePct": 20
+            },
+            {
+              "key": "wealthy-households",
+              "sharePct": 14
+            },
+            {
+              "key": "students",
+              "sharePct": 12
+            },
+            {
+              "key": "shift-and-service",
+              "sharePct": 11
+            }
+          ],
+          "scarce": [
+            "families-with-kids",
+            "retired-residents"
+          ]
+        },
+        {
+          "districtSlug": "mayfair",
+          "top": [
+            {
+              "key": "wealthy-households",
+              "sharePct": 32
+            },
+            {
+              "key": "established-owners",
+              "sharePct": 24
+            },
+            {
+              "key": "young-professionals",
+              "sharePct": 15
+            },
+            {
+              "key": "retired-residents",
+              "sharePct": 12
+            },
+            {
+              "key": "recent-arrivals",
+              "sharePct": 7
+            }
+          ],
+          "scarce": [
+            "students",
+            "shift-and-service"
+          ]
+        }
+      ],
+      "unit": "% of this district, top five of nine types",
+      "tier": "thin",
+      "basis": "authored for the design fixture to exercise the mechanism, not researched. The five shown are the largest of the nine; the remainder sit in the four types not listed",
+      "freshness": "design fixture, 2026-07-31",
+      "notes": "FIXTURE DATA. The trades a district favours are derived at render from these types, never authored here."
     }
   },
   "tradeFit": {

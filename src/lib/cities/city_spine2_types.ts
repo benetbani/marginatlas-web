@@ -612,6 +612,48 @@ export type CityDistricts = {
    * and that is the intended state, not a failure: the founder ruled that a
    * tagged estimate beats a blank. A city with nothing holds a NullFigure. */
   wealth: CityDistrictWealthFigure | NullFigure;
+  /** Ratified 2026-07-31, decisions 5 and 6. See CityDistrictMixFigure. */
+  mix: CityDistrictMixFigure | NullFigure;
+};
+
+/**
+ * WHO IS IN THIS DISTRICT, AS A SHORT LIST AND AN ABSENCE.
+ *
+ * Ratified 2026-07-31, decision 5. POPs already exists at city altitude: the
+ * nine capped archetypes in chapter 05 carry a share, a spending-power read and
+ * the trades each type indexes high. What was missing is ALTITUDE. "Where do
+ * the rich people live" is a district question, and the ratified POPs spec put
+ * this layer on city AND neighbourhood pages from the start.
+ *
+ * FIVE, NOT NINE. The founder set the number. A nine-way breakdown across
+ * twenty districts is a spreadsheet nobody reads on a phone; the five largest
+ * carry the character of a place.
+ *
+ * THE ABSENCE IS HALF THE POINT. "Almost no families" changes what you open as
+ * much as "heavy on students" does, so `scarce` is carried explicitly rather
+ * than left for the reader to infer from a list that does not mention them.
+ *
+ * THE TRADES A DISTRICT FAVOURS ARE DERIVED, NEVER AUTHORED HERE. Decision 6
+ * says the page should name them. Each archetype already declares its
+ * `tradesThatIndexHigh` at city level, so a district's favoured trades are read
+ * from its own top types at render time. Authoring them per district would
+ * create a second home for the same claim, which is how the cell page ended up
+ * disagreeing with itself, and it would let a district recommend cafes while
+ * its own population strip says nobody there buys coffee.
+ */
+export type CityDistrictMixRow = {
+  districtSlug: string;
+  /** The largest population types here, largest share first. At most five, from
+   * the capped vocabulary. Shares are of this district, so they do not sum to
+   * 100: these are the top five of nine. */
+  top: Array<{ key: CityArchetypeKey; sharePct: number }>;
+  /** Types notably thin or absent here. Never overlaps `top`. */
+  scarce: CityArchetypeKey[];
+};
+
+export type CityDistrictMixFigure = FigureMeta & {
+  /** One row per district in `CityDistricts.list`, in that list's order. */
+  rows: CityDistrictMixRow[];
 };
 
 /* ---------------------- 09 best area for each trade ---------------------- */
