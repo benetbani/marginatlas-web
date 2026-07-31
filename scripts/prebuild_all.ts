@@ -104,6 +104,12 @@ const GATES: Gate[] = [
      and every district covered. Negative-tested against five induced defects.
      Registered 2026-07-31. */
   { name: "district-mix", script: "scripts/verify_district_mix.ts" },
+  /* Business subtypes: at most ten per trade, all five facts stated as a figure
+     or an honest null, and repeat frequency banded rather than counted, because
+     a visit count is a claim about a specific business we have never observed.
+     Also catches a count smuggled in under another field name. Negative-tested
+     against seven induced defects. Registered 2026-07-31. */
+  { name: "subtypes", script: "scripts/verify_subtypes.ts" },
   { name: "no-hardcoded-hex", script: "scripts/verify_hardcoded_hex.ts" },
   { name: "dead-links", script: "scripts/audit/find_dead_links.ts", args: ["--strict"] },
   { name: "featured-tiles", script: "scripts/verify_featured_tiles.ts" },

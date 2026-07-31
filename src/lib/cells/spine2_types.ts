@@ -268,6 +268,89 @@ export type CellComparisons = {
 
 /* ------------------------------- the file ------------------------------- */
 
+/* ------------------------------- subtypes -------------------------------- */
+
+/**
+ * HOW OFTEN A REGULAR COMES BACK. A BAND, PER SUBTYPE, NEVER A NUMBER AND
+ * NEVER ABOUT A SPECIFIC BUSINESS.
+ *
+ * Ratified 2026-07-31, decision 12. The founder raised this mechanism and
+ * flagged its own contradiction in the same breath: repeat frequency is partly
+ * a property of the kind of business and partly of the individual one, and only
+ * the first is publishable. "A fast-food counter sees a regular several times a
+ * month" is true of the type and unfalsifiable by any single shop. "This
+ * restaurant's customers return 18 times a year" is a claim about a business we
+ * have never observed.
+ *
+ * So it is banded, like district wealth, and for the same reason: the ordering
+ * is real and the decimal is not.
+ */
+export type RepeatBand =
+  | "weekly-or-more"
+  | "monthly"
+  | "few-times-a-year"
+  | "rarely";
+
+export const REPEAT_BANDS = [
+  "weekly-or-more",
+  "monthly",
+  "few-times-a-year",
+  "rarely",
+] as const;
+
+/**
+ * One kind of business within a trade, in one city.
+ *
+ * THE PROBLEM THIS EXISTS TO SOLVE, in the founder's words: "for a person
+ * opening a Middle Eastern fast food in London, giving him the average of
+ * restaurants is not that smart." Every figure on a trade page is an average
+ * across subtypes that behave nothing alike. Averaging a kebab counter with a
+ * tasting menu produces a number that describes neither, and the subtype is the
+ * unit the operator actually is.
+ *
+ * THE LIST IS PER CITY, and that is deliberate: Istanbul and Oslo do not have
+ * the same ten kinds of restaurant. A global list would name sushi in a city
+ * with none and miss what the city actually has.
+ *
+ * THE FIVE FACTS were chosen by the founder, four offered and one he added.
+ * `fitOut` is his: what it costs to furnish, equip and stock the place before
+ * opening. It is the number that separates a kebab counter from a tasting room
+ * more sharply than anything else here, and it is the one an owner most often
+ * discovers too late.
+ */
+export type CellSubtype = {
+  slug: string;
+  name: string;
+  /** How many people it takes to run one, typical. */
+  staff: PointFigure | NullFigure;
+  /** What one customer spends per visit, typical. */
+  orderValue: PointFigure | NullFigure;
+  /** How often a regular returns. Banded; see RepeatBand. */
+  repeat: RepeatBand;
+  /** Floor area a typical one occupies. Combined with district rent this gives
+   * a real standing cost rather than a generic one. */
+  space: PointFigure | NullFigure;
+  /** Furniture, equipment and opening stock, before the doors open. The
+   * founder's addition. */
+  fitOut: PointFigure | NullFigure;
+};
+
+/**
+ * Chapter placement is NOT decided here. The founder ruled that the trade
+ * average stays the headline and subtypes sit right below it (decision 11), but
+ * inserting a chapter at position two would renumber every anchor below it, and
+ * the ratified mockups carry the same `ch-NN` scheme. The mockups and the React
+ * kit are two artifacts and desynchronising them has cost this project twice.
+ * So the mechanism lands here, in the data layer, and where it renders is a
+ * review artifact.
+ */
+export type CellSubtypesFigure = FigureMeta & {
+  /** At most ten, and fewer for trades that genuinely have fewer. The founder
+   * set the cap and refused a fixed number: "depending on the trade, not more
+   * than 10". */
+  rows: CellSubtype[];
+};
+
 export type CellFile = {
   meta: CellMeta;
   population: CellPopulation;
@@ -276,6 +359,10 @@ export type CellFile = {
   seasonality: CellSeasonality;
   year1: CellYear1;
   comparisons: CellComparisons;
+  /** Ratified 2026-07-31, decisions 9 to 12. Most cells will hold a NullFigure
+   * for a long time, which is the intended state: the page still renders the
+   * section and states that this city's subtypes are not filled yet. */
+  subtypes: CellSubtypesFigure | NullFigure;
 };
 
 /* ------------------------------ type guards ------------------------------ */
