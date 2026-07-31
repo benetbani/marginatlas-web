@@ -255,6 +255,103 @@ export type CityScorecardModel = {
   rows: CityScorecardRowModel[];
 };
 
+/**
+ * Chapter 10, the districts, assembled from three separate figures that the
+ * contract keeps apart on purpose: the district list (rent, character), the
+ * wealth reading and the population mix. They are joined here rather than in
+ * the file because each carries its own tier: rent is often measured where
+ * wealth is only estimated, and a reader is owed that difference.
+ *
+ * `favours` is DERIVED from the mix, never authored. See favouredTrades.
+ */
+export type CityDistrictRowModel = {
+  slug: string;
+  name: string;
+  blurb: string;
+  icon: string | null;
+  /** Rent against the city rate, e.g. "1.4x". Null when unpriced. */
+  rent: string | null;
+  /** Five plain steps against this city's own average. Never an index number,
+   * and never comparable with another city. */
+  resident: string | null;
+  daytime: string | null;
+  /** Top five population types, largest first, display names. */
+  mix: Array<{ name: string; sharePct: number }>;
+  /** Types notably thin here. The absence is half the point. */
+  scarce: string[];
+  /** Trades this district's population tilts towards. Empty when nothing
+   * stands out, which is the honest answer for an ordinary district. */
+  favours: string[];
+};
+
+export type CityDistrictsModel = {
+  rows: CityDistrictRowModel[];
+  /** The one quiet line the founder asked for (decision 4), or null when every
+   * reading behind the section is measured. */
+  note: string | null;
+};
+
+/** The five bands, in plain words. Ratified 2026-07-31 decision 1: bands, never
+ * an index, because ~84% of income variance sits inside a small area and a
+ * number would claim a precision that does not exist. */
+const WEALTH_LABEL: Record<string, string> = {
+  "well-above": "Well above average",
+  above: "Above average",
+  around: "Around average",
+  below: "Below average",
+  "well-below": "Well below average",
+};
+
+/**
+ * Chapter 10. Joins the district list with the wealth reading, the population
+ * mix and the derived favoured trades. Each of the three is optional and
+ * independently tiered, so a city with rents but no wealth reading still
+ * renders every district and simply says less about each.
+ */
+function buildDistricts(file: CityFile): CityDistrictsModel | null {
+  const d = file.districts;
+  if (d == null || isNullFigure(d.list)) return null;
+
+  const wealthRows = isNullFigure(d.wealth) ? [] : d.wealth.rows;
+  const mixRows = isNullFigure(d.mix) ? [] : d.mix.rows;
+  const archetypes = isNullFigure(file.people.archetypes) ? [] : file.people.archetypes.types;
+  const archName = new Map(archetypes.map((a) => [a.key, a.name]));
+
+  const wealthBy = new Map(wealthRows.map((r) => [r.districtSlug, r]));
+  const mixBy = new Map(mixRows.map((r) => [r.districtSlug, r]));
+
+  const rows: CityDistrictRowModel[] = d.list.districts.map((row) => {
+    const w = wealthBy.get(row.slug);
+    const m = mixBy.get(row.slug);
+    return {
+      slug: row.slug,
+      name: row.name,
+      blurb: row.blurb,
+      icon: row.icon ?? null,
+      rent: Number.isFinite(row.rentMultiple) ? `${row.rentMultiple.toFixed(1)}x` : null,
+      resident: w ? (WEALTH_LABEL[w.resident] ?? null) : null,
+      daytime: w ? (WEALTH_LABEL[w.daytime] ?? null) : null,
+      mix: m ? m.top.map((t) => ({ name: archName.get(t.key) ?? t.key, sharePct: t.sharePct })) : [],
+      scarce: m ? m.scarce.map((k) => archName.get(k) ?? k) : [],
+      favours: m && archetypes.length ? favouredTrades(m, archetypes) : [],
+    };
+  });
+
+  /* Decision 4: one quiet line, once, where it matters. It appears only when
+     something behind the section is not a measurement, so a city with real
+     readings is not made to apologise for them. */
+  const approximate =
+    (!isNullFigure(d.wealth) && d.wealth.tier !== "measured") ||
+    (!isNullFigure(d.mix) && d.mix.tier !== "measured");
+
+  return {
+    rows,
+    note: approximate
+      ? "Wealth and population readings here are approximate. They place a district against its own city, and cannot be compared with a district in another city."
+      : null,
+  };
+}
+
 export type CityPageModel = {
   meta: {
     city: string;
@@ -275,7 +372,7 @@ export type CityPageModel = {
   tradeEconomics: null;
   districtRent: null;
   tradeFit: null;
-  districts: null;
+  districts: CityDistrictsModel | null;
   direction: null;
   myths: null;
   peers: null;
@@ -378,7 +475,7 @@ export function buildCityPage(file: CityFile): CityPageModel {
     tradeEconomics: null,
     districtRent: null,
     tradeFit: null,
-    districts: null,
+    districts: buildDistricts(file),
     direction: null,
     myths: null,
     peers: null,

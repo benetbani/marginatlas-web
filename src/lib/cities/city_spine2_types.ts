@@ -126,6 +126,8 @@ export type Figure =
   | CityArchetypesFigure
   | CityTradeEconomicsFigure
   | CityDistrictsFigure
+  | CityDistrictWealthFigure
+  | CityDistrictMixFigure
   | CityTradeFitFigure
   | CityTradeVersusPeerFigure
   | CityPeerRentFigure

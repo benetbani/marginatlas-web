@@ -148,7 +148,66 @@ export function CityPage({ model }: { model: CityPageModel }) {
         {gap("tradeEconomics", "what owners keep by trade")}
         {gap("districtRent", "rent by district")}
         {gap("tradeFit", "the best area for each trade")}
-        {gap("districts", "the districts")}
+        {/* 10 , the districts. Three figures joined: rent, the wealth band and
+            the population mix, with the favoured trades derived from the mix.
+            Plain on purpose: the founder's bar for now is that every section
+            exists everywhere, not that it is beautiful. */}
+        {at("districts") != null ? (
+          <ChapterSection chapter={at("districts") as Chapter}>
+            {model.districts != null ? (
+              <>
+                {model.districts.rows.map((d) => (
+                  <div key={d.slug} className="panel rise" style={{ marginBottom: 10 }}>
+                    <div className="pad">
+                      <div className="row">
+                        <span className="nm">
+                          {d.icon ? <GlyphIcon id={d.icon as GlyphId} size={16} /> : null}
+                          {d.name}
+                        </span>
+                        <span className="v">{d.rent ?? "rent not priced"}</span>
+                      </div>
+                      <p className="k" style={{ margin: "6px 0 10px" }}>
+                        {d.blurb}
+                      </p>
+                      <div className="row">
+                        <span className="nm">Who lives here</span>
+                        <span className="v">{d.resident ?? "not read yet"}</span>
+                      </div>
+                      <div className="row">
+                        <span className="nm">Here during the working day</span>
+                        <span className="v">{d.daytime ?? "not read yet"}</span>
+                      </div>
+                      {d.mix.length ? (
+                        <p className="k" style={{ margin: "10px 0 0" }}>
+                          Mostly {d.mix.map((m) => `${m.name.toLowerCase()} ${m.sharePct}%`).join(", ")}.
+                          {d.scarce.length
+                            ? ` Few ${d.scarce.map((s) => s.toLowerCase()).join(" or ")}.`
+                            : ""}
+                        </p>
+                      ) : (
+                        <p className="k" style={{ margin: "10px 0 0" }}>
+                          Who lives here is not filled in for this district yet.
+                        </p>
+                      )}
+                      {d.favours.length ? (
+                        <p className="k" style={{ margin: "6px 0 0" }}>
+                          That mix tilts towards {d.favours.join(", ")}.
+                        </p>
+                      ) : null}
+                    </div>
+                  </div>
+                ))}
+                {model.districts.note ? (
+                  <p className="k" style={{ margin: "12px 0 0" }}>
+                    {model.districts.note}
+                  </p>
+                ) : null}
+              </>
+            ) : (
+              <ChapterGap subject="the districts" />
+            )}
+          </ChapterSection>
+        ) : null}
         {gap("direction", "where the city is heading")}
         {gap("myths", "the common myths")}
         {gap("peers", "how this city compares with its peers")}
