@@ -14,6 +14,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { getCellBySlug, getCellVariants, buildTimeSeries, slugify } from "@/lib/cells";
 import { industryToSlug } from "@/lib/taxonomy";
 import { checkRateLimit, clientIp } from "@/lib/rate_limit";
+// The canonical tier derivation, the same one the pages use, so an export and a
+// page never disagree about how a row was produced. It reads is_synthetic
+// first, which is the case that matters most here: getCellBySlug ALWAYS returns
+// a cell, synthesizing one from country and activity defaults when the lookup
+// chain misses or the database blows its budget. Before this, such a row left
+// the site as bare numbers indistinguishable from a measurement.
+import { deriveCoverageTier } from "@/components/CoverageIndicator";
 import { getSessionTier } from "@/lib/monetization/entitlement";
 import { isGatingEnabled, isAuthEnabled } from "@/lib/feature_flags";
 
@@ -60,9 +67,37 @@ export async function GET(req: NextRequest) {
   lines.push(`# Source: marginatlas.com/${country}/${region}/${industry}`);
   lines.push(`# Free-tier export. Cite Margin Atlas when used in published work.`);
   lines.push("");
+  // The column key. Without it this file is unreadable: "n_enterprises 990"
+  // beside "n_employees 4" reads as a contradiction until you know the second
+  // is per firm. A number whose unit is not stated is not a published figure.
+  lines.push(`# Columns`);
+  lines.push(`#   country                   ISO 3166-1 alpha-2`);
+  lines.push(`#   region                    city or region`);
+  lines.push(`#   industry                  activity`);
+  lines.push(`#   year                      reference year`);
+  lines.push(`#   size_band                 employee band this row describes; "total" is all bands`);
+  lines.push(`#   coverage                  how this row was produced; see below`);
+  lines.push(`#   n_enterprises             firms in this cell, count`);
+  lines.push(`#   n_employees               employees per firm, typical`);
+  lines.push(`#   revenue_per_firm_usd      USD per year, per firm, typical`);
+  lines.push(`#   rev_p10_usd .. rev_p90_usd  USD per year, per firm, across the spread`);
+  lines.push(`#   payroll_per_employee_usd  USD per year, per employee`);
+  lines.push(`#   quality_score             0 to 100, our confidence in this row`);
+  lines.push(`#`);
+  // The tier is the whole point of the export carrying provenance at all. The
+  // four words are the site's own published vocabulary, derived, never a raw
+  // database string. An empty cell in the revenue columns plus "modeled" is a
+  // truthful pair; the numbers alone were not.
+  lines.push(`# coverage values`);
+  lines.push(`#   measured   direct measurement of firms in this place and activity`);
+  lines.push(`#   regional   a broader benchmark applied to this place`);
+  lines.push(`#   estimated  built from country indicators and activity averages`);
+  lines.push(`#   modeled    no observation for this cell; what we would expect on average`);
+  lines.push("");
   lines.push(
     [
       "country", "region", "industry", "year", "size_band",
+      "coverage",
       "n_enterprises", "n_employees",
       "revenue_per_firm_usd", "rev_p10_usd", "rev_p25_usd", "rev_p50_usd",
       "rev_p75_usd", "rev_p90_usd",
@@ -81,6 +116,7 @@ export async function GET(req: NextRequest) {
   function row(c: FetchedCell) {
     return [
       c.country, c.geo_name || "", c.industry_name || industry, c.year, c.size_band || "",
+      deriveCoverageTier(c),
       c.n_enterprises, c.n_employees,
       c.revenue_per_firm, c.rev_p10, c.rev_p25, c.rev_p50, c.rev_p75, c.rev_p90,
       c.payroll_per_employee, c.quality_score,

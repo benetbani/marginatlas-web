@@ -76,6 +76,13 @@ const GATES: Gate[] = [
      before validating, so six footer anchors pointed at sections that do not
      exist, on every page, under a green gate. Negative-tested. */
   { name: "dead-anchors", script: "scripts/verify_dead_anchors.ts" },
+  /* The public CSV export is unauthenticated, so its column list is a
+     publishing decision. It may emit only allowlisted columns, and never a raw
+     provenance string: `coverage_source` falls back to a database value nobody
+     here has vetted for source-agency names, which the copy gate cannot see
+     because it reads components, not route handlers. Negative-tested against
+     both an unlisted column and a forbidden field. Registered 2026-07-31. */
+  { name: "export-columns", script: "scripts/verify_export_columns.ts" },
   { name: "no-hardcoded-hex", script: "scripts/verify_hardcoded_hex.ts" },
   { name: "dead-links", script: "scripts/audit/find_dead_links.ts", args: ["--strict"] },
   { name: "featured-tiles", script: "scripts/verify_featured_tiles.ts" },
