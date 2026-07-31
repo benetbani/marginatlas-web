@@ -523,11 +523,37 @@ export type CityTradeEconomics = {
  * The bar lengths in both chapters are `rentMultiple` against the largest
  * `rentMultiple` in the list, derived at render time.
  */
+/**
+ * Where a district sits, as a single point.
+ *
+ * THE POINT IS THE HONEST PLACEHOLDER, and it is what the ratified map spec
+ * (2026-06-23) asks for: "a filled polygon of the real district shape where we
+ * hold a trustworthy boundary, a small styled point as an honest placeholder
+ * where we do not yet". We hold no boundaries, so every district is a point,
+ * and the map must not draw an area it cannot defend. A blob of the wrong shape
+ * is a claim about where a neighbourhood ends, and those edges are contested in
+ * every city on earth.
+ *
+ * IT IS THE COMMERCIAL CORE, NOT THE GEOGRAPHIC CENTROID. A district is
+ * included because it has a high street; the point belongs on that high street.
+ * The centroid of an oddly shaped district can easily land in a park or a rail
+ * yard, which would put the marker somewhere no business could open.
+ *
+ * Not a provenanced figure: a location is not a claim about the economy, so it
+ * carries no tier. Its correctness is held by a gate instead.
+ */
+export type CityDistrictPoint = {
+  lat: number;
+  lng: number;
+};
+
 export type CityDistrictRow = {
   slug: string;
   name: string;
   /** Rent as a multiple of the city rate. 1.0 is the city rate itself. */
   rentMultiple: number;
+  /** The commercial core, for the map. See CityDistrictPoint. */
+  centre: CityDistrictPoint;
   /** One sentence of character, printed on the chapter 10 card. */
   blurb: string;
   /** Optional glyph key from the shared icon set. Presentational. */

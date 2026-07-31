@@ -796,6 +796,10 @@
             "tier": "thin",
             "basis": "the lightest row of the mockup's three-district panel, printed as 41K a year; lifted from the design and not researched",
             "freshness": "design mockup, frozen 2026-07"
+          },
+          "centre": {
+            "lat": 51.4613,
+            "lng": -0.1156
           }
         },
         {
@@ -807,6 +811,10 @@
           "annualUnitCost": {
             "value": null,
             "reason": "the mockup prices the same unit in only three of its six districts, and Hackney is not one of them"
+          },
+          "centre": {
+            "lat": 51.545,
+            "lng": -0.0553
           }
         },
         {
@@ -821,6 +829,10 @@
             "tier": "thin",
             "basis": "the middle row of the mockup's three-district panel, printed as 60K a year; lifted from the design and not researched",
             "freshness": "design mockup, frozen 2026-07"
+          },
+          "centre": {
+            "lat": 51.5265,
+            "lng": -0.0784
           }
         },
         {
@@ -832,6 +844,10 @@
           "annualUnitCost": {
             "value": null,
             "reason": "the mockup prices the same unit in only three of its six districts, and Canary Wharf is not one of them"
+          },
+          "centre": {
+            "lat": 51.5054,
+            "lng": -0.0235
           }
         },
         {
@@ -843,6 +859,10 @@
           "annualUnitCost": {
             "value": null,
             "reason": "the mockup prices the same unit in only three of its six districts, and Covent Garden is not one of them"
+          },
+          "centre": {
+            "lat": 51.5117,
+            "lng": -0.124
           }
         },
         {
@@ -857,6 +877,10 @@
             "tier": "thin",
             "basis": "the heaviest row of the mockup's three-district panel, printed as 97K a year; lifted from the design and not researched",
             "freshness": "design mockup, frozen 2026-07"
+          },
+          "centre": {
+            "lat": 51.5095,
+            "lng": -0.1476
           }
         }
       ],

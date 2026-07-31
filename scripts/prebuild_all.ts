@@ -110,6 +110,14 @@ const GATES: Gate[] = [
      Also catches a count smuggled in under another field name. Negative-tested
      against seven induced defects. Registered 2026-07-31. */
   { name: "subtypes", script: "scripts/verify_subtypes.ts" },
+  /* District coordinates. Every other kind of bad data here announces itself; a
+     wrong coordinate does not. The page renders, the map draws a marker, and it
+     sits in the North Sea. Checks relative position rather than absolute, since
+     districts of one city are near each other by construction, which catches a
+     flipped longitude sign without needing to know where any city is.
+     Negative-tested against a 2747km displacement, a duplicate point, 0,0 and a
+     missing centre. Registered 2026-08-01. */
+  { name: "district-geometry", script: "scripts/verify_district_geometry.ts" },
   { name: "no-hardcoded-hex", script: "scripts/verify_hardcoded_hex.ts" },
   { name: "dead-links", script: "scripts/audit/find_dead_links.ts", args: ["--strict"] },
   { name: "featured-tiles", script: "scripts/verify_featured_tiles.ts" },
