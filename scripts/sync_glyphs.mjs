@@ -30,7 +30,7 @@
  *   node scripts/sync_glyphs.mjs           write, refusing on any violation
  *   node scripts/sync_glyphs.mjs --check   exit 1 if out of date, write nothing
  */
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -44,6 +44,35 @@ const CHECK = process.argv.includes("--check");
    more entry in programmatically (wealth-household); a regex over the object
    literal alone would silently drop it, which is precisely the class of bug
    this script exists to prevent. */
+/**
+ * THE SOURCE LIVES IN A DIFFERENT REPOSITORY, AND ON A DEPLOY IT IS NOT THERE.
+ *
+ * The mockups are at E:/atlas/design/mockups, one level ABOVE this project, in
+ * the parent repository. That is fine on a developer machine and impossible on
+ * a build server, which clones only this repo. Vercel put it exactly:
+ *
+ *   Error: ENOENT: no such file or directory, open '/vercel/design/mockups/glyphs.js'
+ *
+ * That single line broke every deployment of this branch for two days, in about
+ * eight seconds each, identically, on commits whose only content was deleting
+ * an unused file. It passed locally every time because the parent directory is
+ * right there.
+ *
+ * A freshness check compares a generated artifact against its source. With no
+ * source there is nothing to compare, and the artifact itself is committed, so
+ * there is nothing at risk either. Saying so and stopping is honest. Failing
+ * the build is not, and neither is passing silently, so it says it out loud.
+ */
+if (!existsSync(SRC)) {
+  console.log(
+    `sync_glyphs: SKIPPED. The mockup source is not in this repository\n` +
+      `  (${SRC})\n` +
+      `  It lives in the parent project, so a build server never has it. Nothing to\n` +
+      `  verify here; the generated module is committed. This is not a pass.`,
+  );
+  process.exit(0);
+}
+
 const source = readFileSync(SRC, "utf8");
 const win = { GLYPHS: null, ico: null };
 const doc = { addEventListener() {}, querySelectorAll: () => [] };

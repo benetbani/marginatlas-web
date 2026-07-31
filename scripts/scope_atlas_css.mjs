@@ -49,6 +49,21 @@ const SRC = resolve(here, "../../design/mockups/atlas.css");
 const OUT = resolve(here, "../src/styles/atlas-spine.css");
 const SCOPE = ".av2";
 
+/* Same trap as sync_glyphs, same cause, and it would have surfaced the moment
+   the glyph one was fixed: this reads ../../design/mockups/atlas.css, which
+   lives in the PARENT repository and is never present on a build server. See
+   the long note in scripts/sync_glyphs.mjs. A freshness check with no source
+   cannot verify anything, and the generated stylesheet is committed. */
+if (!existsSync(SRC)) {
+  console.log(
+    `scope_atlas_css: SKIPPED. The mockup stylesheet is not in this repository\n` +
+      `  (${SRC})\n` +
+      `  It lives in the parent project, so a build server never has it. Nothing to\n` +
+      `  verify here; the scoped stylesheet is committed. This is not a pass.`,
+  );
+  process.exit(0);
+}
+
 const input = readFileSync(SRC, "utf8");
 const root = postcss.parse(input, { from: SRC });
 
