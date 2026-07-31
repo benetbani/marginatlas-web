@@ -433,7 +433,7 @@
             "nights out"
           ],
           "tradesThatIndexHigh": [
-            "Cafes",
+            "cafes",
             "bars",
             "gyms"
           ]
@@ -455,7 +455,7 @@
             "grooming"
           ],
           "tradesThatIndexHigh": [
-            "Restaurants",
+            "restaurants",
             "salons",
             "gyms"
           ]
@@ -477,7 +477,7 @@
             "repairs"
           ],
           "tradesThatIndexHigh": [
-            "Grocery",
+            "grocery",
             "childcare",
             "auto"
           ]
@@ -499,7 +499,7 @@
             "services"
           ],
           "tradesThatIndexHigh": [
-            "Restaurants",
+            "restaurants",
             "retail",
             "dental"
           ]
@@ -521,7 +521,7 @@
             "premium retail"
           ],
           "tradesThatIndexHigh": [
-            "Fine dining",
+            "fine dining",
             "boutiques"
           ]
         },
@@ -541,7 +541,7 @@
             "local"
           ],
           "tradesThatIndexHigh": [
-            "Grocery",
+            "grocery",
             "pharmacy",
             "cafes"
           ]
@@ -561,7 +561,7 @@
             "phone repair"
           ],
           "tradesThatIndexHigh": [
-            "Takeaway",
+            "takeaway",
             "barbers",
             "repair"
           ]
@@ -583,7 +583,7 @@
             "transport"
           ],
           "tradesThatIndexHigh": [
-            "Grocery",
+            "grocery",
             "barbers",
             "phone"
           ]
@@ -604,7 +604,7 @@
             "late hours"
           ],
           "tradesThatIndexHigh": [
-            "Convenience",
+            "convenience",
             "takeaway"
           ]
         }

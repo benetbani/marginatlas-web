@@ -97,6 +97,29 @@ for (const file of cityFiles()) {
     if (t.accent === true) accents++;
   }
 
+  /* The trade strings are not decoration: a district's favoured trades are
+     DERIVED by summing shares per trade string, so two spellings of one trade
+     are two trades. The London file really did carry "Cafes" and "cafes", and
+     "Takeaway" and "takeaway", which split each of those scores in half and
+     could put the same trade in a district's list twice. Casing also shows: the
+     strings are rendered mid-sentence, where "gyms, Grocery, bars" reads as a
+     mistake. One lowercase spelling per trade fixes both at once. */
+  for (const t of types) {
+    for (const trade of (t.tradesThatIndexHigh as string[]) ?? []) {
+      if (trade !== trade.trim().toLowerCase()) {
+        failures.push(
+          `${rel}: archetype "${t.key}" lists the trade "${trade}". Trade strings must be\n` +
+            `      lowercase and untrimmed of spaces, because they are summed by exact match\n` +
+            `      to derive a district's favoured trades, and they render mid-sentence.`,
+        );
+      }
+    }
+    const tset = new Set((t.tradesThatIndexHigh as string[]) ?? []);
+    if (tset.size !== ((t.tradesThatIndexHigh as string[]) ?? []).length) {
+      failures.push(`${rel}: archetype "${t.key}" lists the same trade more than once.`);
+    }
+  }
+
   if (Math.abs(sum - 100) > 0.5) {
     failures.push(
       `${rel}: the population mix sums to ${sum}, not 100.\n` +
