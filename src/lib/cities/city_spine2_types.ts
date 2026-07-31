@@ -334,9 +334,38 @@ export type CityWealthBandsFigure = FigureMeta & {
  * unrecognised label to the top of the ramp. `accent` marks the single type the
  * page paints in the accent colour, at most one per file.
  */
+/**
+ * THE CAPPED POPULATION VOCABULARY.
+ *
+ * The ratified POPs spec (PRODUCT-DIRECTION.md §3, 2026-06-22) says "8 to 10
+ * CAPPED archetypes". The cap is the whole mechanism, not a tidiness rule: a
+ * composition mix only means something if every place is describing itself in
+ * the same words. The moment one city invents a tenth type, "students 15" in
+ * London and "students 15" in Lisbon stop being the same claim, and the layer
+ * that was supposed to make places comparable quietly stops doing it.
+ *
+ * These nine are the ones the London file already uses. Adding a tenth is a
+ * founder decision, not an authoring convenience, which is why this is a closed
+ * union and a gate rather than a comment.
+ */
+export const CITY_ARCHETYPE_KEYS = [
+  "young-renters",
+  "young-professionals",
+  "families-with-kids",
+  "established-owners",
+  "wealthy-households",
+  "retired-residents",
+  "students",
+  "recent-arrivals",
+  "shift-and-service",
+] as const;
+
+export type CityArchetypeKey = (typeof CITY_ARCHETYPE_KEYS)[number];
+
 export type CityArchetype = {
-  /** Stable key for the type, used for selection state and deep links. */
-  key: string;
+  /** Stable key for the type, used for selection state and deep links.
+   * Closed: see CITY_ARCHETYPE_KEYS. */
+  key: CityArchetypeKey;
   name: string;
   /** Optional glyph key from the shared icon set. Presentational, and absent
    * means the card renders without one; the mockup leaves three of nine bare. */

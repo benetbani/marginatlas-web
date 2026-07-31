@@ -83,6 +83,13 @@ const GATES: Gate[] = [
      because it reads components, not route handlers. Negative-tested against
      both an unlisted column and a forbidden field. Registered 2026-07-31. */
   { name: "export-columns", script: "scripts/verify_export_columns.ts" },
+  /* The POPs vocabulary cap. A composition mix only makes places comparable if
+     every place describes itself in the same closed set of words, and the way
+     that breaks is silent: a second city reaches for a better word, nothing
+     errors, and the layer stops meaning anything. Also holds the mix to 100.
+     Negative-tested against an off-vocabulary key, a mix summing to 88, and a
+     second accent. Registered 2026-07-31. */
+  { name: "population-mix", script: "scripts/verify_population_mix.ts" },
   { name: "no-hardcoded-hex", script: "scripts/verify_hardcoded_hex.ts" },
   { name: "dead-links", script: "scripts/audit/find_dead_links.ts", args: ["--strict"] },
   { name: "featured-tiles", script: "scripts/verify_featured_tiles.ts" },
