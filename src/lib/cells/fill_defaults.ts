@@ -498,6 +498,16 @@ export function fillMissingFields(cell: Cell): Cell {
   // so the rest of the page renders. This is the data-layer half of the
   // coupling the board also enforces (null median -> null range + omitted bar).
   if (!out._revenueSuppressed) {
+    // Whether the headline was READ off the row or SUPPLIED here, decided before
+    // the assignment below overwrites the evidence. When it is supplied, the
+    // figure comes from pickTypicalRevenue, which is a per-(industry, country)
+    // anchor and, for the industries and countries with no entry of their own, a
+    // constant shared with every other country that falls through. That is a
+    // legitimate figure to publish and it is not touched here. What it is not is
+    // an observation of this place, so the marker below stops it inheriting the
+    // row's provenance label; deriveCoverageTier reads _revenueFilled and will
+    // not return "measured" for such a cell.
+    const headlineWasRead = out.revenue_per_firm != null;
     const typical = out.revenue_per_firm || pickTypicalRevenue(industryId, iso2);
     if (out.revenue_per_firm == null) out.revenue_per_firm = typical;
     if (out.rev_p50 == null) out.rev_p50 = typical;
@@ -505,6 +515,10 @@ export function fillMissingFields(cell: Cell): Cell {
     if (out.rev_p25 == null) out.rev_p25 = typical * PCT_MULTIPLIERS.p25;
     if (out.rev_p75 == null) out.rev_p75 = typical * PCT_MULTIPLIERS.p75;
     if (out.rev_p90 == null) out.rev_p90 = typical * PCT_MULTIPLIERS.p90;
+    // Only the headline carries the marker. A row whose own revenue_per_firm was
+    // read but whose percentile spread was filled around it still publishes a
+    // measured headline, and that is the figure the label is about.
+    if (!headlineWasRead) out._revenueFilled = true;
   }
   if (out.payroll_per_employee == null)
     out.payroll_per_employee = country.payroll_per_employee_usd;

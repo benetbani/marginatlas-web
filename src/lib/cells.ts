@@ -153,6 +153,18 @@ export type Cell = {
   // dash instead of a fabricated number. Never persisted (cells are read-only
   // at this layer).
   _revenueSuppressed?: boolean;
+  // Transient render-layer marker, sibling of _revenueSuppressed above. Set true
+  // by fillMissingFields when the HEADLINE revenue was supplied by it rather
+  // than read off the row: the row arrived with revenue_per_firm null and the
+  // published figure came from the per-industry / per-country anchor
+  // (pickTypicalRevenue). Two thirds of the rows behind place pages are in that
+  // condition, and until this existed the fill cost nothing in confidence:
+  // coverage_tier and quality_score describe where the ROW came from, the fill
+  // never touched them, and so an anchor figure inherited the strongest label on
+  // the site. deriveCoverageTier reads this and refuses "measured" for such a
+  // cell. The figure itself is untouched, which is the whole point: keep the
+  // figure, drop the label. Never persisted (cells are read-only at this layer).
+  _revenueFilled?: boolean;
 };
 
 /**

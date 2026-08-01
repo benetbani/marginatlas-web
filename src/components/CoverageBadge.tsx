@@ -32,6 +32,11 @@ type CoverageInput = {
   quality_score?: number | null;
   is_synthetic?: boolean | null;
   is_substituted?: boolean | null;
+  /** Set by fillMissingFields when the headline revenue was supplied rather than
+   *  read off the row. Declared here so a caller that builds a narrow object
+   *  literal, rather than passing a whole Cell, cannot silently drop the one
+   *  field that keeps a filled headline from wearing the "Measured" word. */
+  _revenueFilled?: boolean | null;
 };
 
 export interface CoverageBadgeProps {

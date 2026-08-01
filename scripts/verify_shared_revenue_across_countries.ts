@@ -49,21 +49,26 @@
  *     are GR and EL, and both pairs appear in the data. A code duplicate must
  *     not be able to fake a violation.
  *
- * STATE. This gate does not pass today. The defect is live on production and
- * the repair is a decision with tradeoffs, not a patch to apply unattended, so
- * the gate runs as a RATCHET: it records the known count in
- * scripts/shared_revenue_baseline.json and fails when the count grows. Pass
- * --strict to demand zero, which is the mode to register once the repair lands.
- * The count here is (country, industry) combinations, which is smaller than the
- * page count. See design/loop4/reviews/2026-08-01-X1-shared-revenue.md.
+ * STATE. REPAIRED, and this is now a plain gate that demands zero. It ran as a
+ * RATCHET from 2026-08-01 at a recorded 7281 colliding combinations while the
+ * defect was live and the repair was still a founder decision. The repair that
+ * landed is the third of the three the note above anticipated: the fill is
+ * marked where it happens (fillMissingFields sets _revenueFilled on a cell whose
+ * HEADLINE it supplied rather than read) and deriveCoverageTier refuses
+ * "measured" for such a cell. No figure moved; the claim about the figure did.
+ * The count fell to zero on the same probe, which is the whole reason the tier
+ * is read off the OUTPUT. See design/loop4/reviews/2026-08-01-X1-shared-revenue.md.
  *
- * Run:     npx tsx scripts/verify_shared_revenue_across_countries.ts
- * Strict:  npx tsx scripts/verify_shared_revenue_across_countries.ts --strict
- * Reseed:  npx tsx scripts/verify_shared_revenue_across_countries.ts --update-baseline
- *          (only after a repair genuinely lowers the count; never to silence a
- *           new collision)
+ * Because it is repaired, there is no baseline file any more and no reseed path.
+ * A reseed on a repaired gate is only ever a way to make a returning defect look
+ * normal. Any collision fails the run, in every mode.
+ *
+ * Run:    npx tsx scripts/verify_shared_revenue_across_countries.ts
+ * Strict: npx tsx scripts/verify_shared_revenue_across_countries.ts --strict
+ *         (identical behaviour; the flag is kept because the prebuild
+ *          registration passes it and it says out loud what the gate demands)
  */
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fillMissingFields, enforceSanity } from "../src/lib/cells/fill_defaults";
 import { deriveCoverageTier } from "../src/components/CoverageIndicator";
@@ -71,7 +76,6 @@ import { deriveCoverageTier } from "../src/components/CoverageIndicator";
 const ROOT = process.cwd();
 const COVERAGE_PATH = resolve(ROOT, "data/coverage/regional_coverage_v1.json");
 const TAXONOMY_PATH = resolve(ROOT, "src/lib/taxonomy/industries.json");
-const BASELINE_PATH = resolve(ROOT, "scripts/shared_revenue_baseline.json");
 
 /**
  * Below this, exact equality between two places can be an honest coincidence,
@@ -89,8 +93,9 @@ const COUNTRY_ALIASES: Record<string, string> = { UK: "GB", EL: "GR" };
 const canon = (iso: string) => COUNTRY_ALIASES[iso.toUpperCase()] ?? iso.toUpperCase();
 
 /**
- * The provenance shapes that actually occur on revenue-less place rows, and
- * what each derives today. Both are measured-class, which is the point.
+ * The provenance shapes that actually occur on revenue-less place rows. Before
+ * the repair both derived measured-class, which was the point. Both now derive
+ * "estimated", because the fill that supplied their headline says so.
  */
 const PROVENANCE_SHAPES: Array<{ coverage_tier: string; quality_score: number }> = [
   { coverage_tier: "P", quality_score: 90 },
@@ -211,62 +216,18 @@ if (clusters.length) {
   show(clusters.slice(0, 8));
 }
 
-const STRICT = process.argv.includes("--strict");
-
-if (process.argv.includes("--update-baseline")) {
-  writeFileSync(
-    BASELINE_PATH,
-    JSON.stringify(
-      {
-        combinations: totalCombinations,
-        clusters: clusters.length,
-        recorded: new Date().toISOString().slice(0, 10),
-        why:
-          "Known live defect: revenue-less place rows are filled from a shared per-industry anchor while keeping a measured-class provenance label. Ratchet only. Lower this when a repair lands; never raise it.",
-      },
-      null,
-      2,
-    ) + "\n",
-  );
-  console.log(`\n  Baseline written: ${totalCombinations} combinations, ${clusters.length} clusters.`);
-  process.exit(0);
-}
-
-if (STRICT) {
-  if (totalCombinations > 0) {
-    console.error(
-      `\nx verify_shared_revenue_across_countries: ${totalCombinations} combination(s) publish a figure that is\n` +
-        `   also published for a different country, under a label that asserts a direct observation.\n` +
-        `   Repair the fill, dash the figure, or stop calling a filled cell measured.`,
-    );
-    process.exit(1);
-  }
-  console.log("\n  GATE: PASS (strict, no cross-country collisions).");
-  process.exit(0);
-}
-
-const baseline: { combinations: number; clusters: number } = existsSync(BASELINE_PATH)
-  ? JSON.parse(readFileSync(BASELINE_PATH, "utf-8"))
-  : { combinations: 0, clusters: 0 };
-
-if (totalCombinations > baseline.combinations) {
+// Zero, in every mode. The ratchet and its baseline file were removed when the
+// repair landed: a tolerated count is only useful while a defect is knowingly
+// live, and leaving one behind on a repaired gate is how a returning defect
+// gets to look normal.
+if (totalCombinations > 0) {
   console.error(
-    `\nx verify_shared_revenue_across_countries: ${totalCombinations} colliding combinations, up from a\n` +
-      `   recorded ${baseline.combinations}. Something new now publishes one country's figure for another.\n` +
-      `   Do not reseed the baseline to clear this.`,
+    `\nx verify_shared_revenue_across_countries: ${totalCombinations} combination(s) publish a figure that is\n` +
+      `   also published for a different country, under a label that asserts a direct observation.\n` +
+      `   Repair the fill, dash the figure, or stop calling a filled cell measured.\n` +
+      `   Do not relax this gate. It was at 7281 once and reached zero without any figure moving.`,
   );
   process.exit(1);
 }
 
-if (totalCombinations < baseline.combinations) {
-  console.log(
-    `\n  IMPROVED: ${totalCombinations} colliding combinations, down from ${baseline.combinations}.\n` +
-      `  Lower the baseline: npx tsx scripts/verify_shared_revenue_across_countries.ts --update-baseline`,
-  );
-}
-
-console.log(
-  `\n  GATE: KNOWN DEFECT, NOT REPAIRED. ${totalCombinations} colliding combinations at the recorded\n` +
-    `  baseline of ${baseline.combinations}. This is a ratchet, not a pass. It fails if the number grows.\n` +
-    `  Register with --strict once the repair lands.`,
-);
+console.log("\n  GATE: PASS. No figure is published for two countries under a measured-class label.");

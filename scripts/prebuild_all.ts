@@ -155,17 +155,18 @@ const GATES: Gate[] = [
   { name: "trade-set", script: "scripts/verify_trade_set.ts" },
   { name: "sample-tags", script: "scripts/verify_sample_tags.ts" },
   /* One number cannot be the answer for seven cities. Two thirds of the rows
-     behind place pages carry no revenue of their own, and the read path fills
+     behind place pages carry no revenue of their own, and the read path filled
      the headline from a shared per-industry anchor while leaving the row's
-     provenance label untouched, so a constant gets published as an observation
-     in a named place. Registered 2026-08-01 as a RATCHET, not a pass: the
-     defect is live on production and the repair is a founder decision, so the
-     gate records the known count and fails when it grows. Negative-tested three
-     ways: one removed country median pushed the count from 7281 to 7282 and it
-     exited 1; one added country figure dropped it to 7280 and it said so; and
-     with the label repaired it reported zero and passed under --strict. Flip
-     this registration to args ["--strict"] the moment the repair lands. */
-  { name: "shared-revenue (KNOWN DEFECT)", script: "scripts/verify_shared_revenue_across_countries.ts" },
+     provenance label untouched, so a constant was published as an observation in
+     a named place: 7281 colliding (country, industry) combinations behind 76,948
+     live pages. Registered 2026-08-01 as a RATCHET while the repair was still a
+     founder decision; REPAIRED and flipped to --strict the same day. The repair
+     kept every figure and dropped the label: fillMissingFields marks the cell
+     whose headline it supplied, and deriveCoverageTier will not call such a cell
+     measured. 951 real cells resolved through getCellBySlug before and after,
+     21,873 fields compared, zero changed. The gate reads the tier off its own
+     output, so it reached zero on its own rather than being adjusted to. */
+  { name: "shared-revenue", script: "scripts/verify_shared_revenue_across_countries.ts", args: ["--strict"] },
   /* A URL assembled from parts is not a URL that resolves. Seven live link
      defects were found and repaired in four iterations on 2026-08-01 and every
      one was the same move, and every one passed the dead-link gate, which
