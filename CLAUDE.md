@@ -79,7 +79,14 @@ website/
 
 ## Latest handoff
 
-- **`docs/handoff/2026-06-23-session-handoff.md` is THE current handoff , READ IT FIRST.** It covers the commercial product direction, the full ratified spec ledger (`PRODUCT-DIRECTION.md` sections 12 to 16: map, 40 design/monetization decisions, POPs v1, system architecture, POPs v2), the 9-phase master plan (`docs/superpowers/plans/2026-06-23-master-plan.md`), the approved visual language + the HARD palette rule (terracotta + neutral grays only, no green, no brown), the design mockups in `E:\atlas\`, every file's role, gotchas, purchases, and a paste-in bootstrap prompt. Branch `reform-v2/r6-forward`; Phase 0 (design + spec) is done, next is three section rebuilds.
+- **`docs/handoff/HANDOFF-marginatlas-2026-08-01.md` IS THE CURRENT HANDOFF , READ IT FIRST.**
+  Covers the Loop 3 site work, the founder's 2026-07-31 redirect (build mechanisms,
+  stop hunting defects), the twenty ratified decisions, the three mechanisms built
+  (district wealth as bands, POPs at district level, business subtypes), the 53-gate
+  chain, and the deployment failure that froze production on a June 15 commit. It
+  carries a reading order, the dead-ends list, and a re-hydration prompt.
+- `docs/handoff/2026-06-23-session-handoff.md` is the PRIOR handoff, still useful for
+  the commercial product direction and the ratified spec ledger. It covers the commercial product direction, the full ratified spec ledger (`PRODUCT-DIRECTION.md` sections 12 to 16: map, 40 design/monetization decisions, POPs v1, system architecture, POPs v2), the 9-phase master plan (`docs/superpowers/plans/2026-06-23-master-plan.md`), the approved visual language + the HARD palette rule (terracotta + neutral grays only, no green, no brown), the design mockups in `E:\atlas\`, every file's role, gotchas, purchases, and a paste-in bootstrap prompt. Branch `reform-v2/r6-forward`; Phase 0 (design + spec) is done, next is three section rebuilds.
 - **`docs/handoff/2026-06-16-session-handoff.md`** is the PRIOR handoff , still valid for the "founder designs each page, AI PORTS it 1:1, never invents visuals" reformation framing (a week of AI-invented design was rejected as slop). Foundation F1-F5 is built on `reform-v2/r6-forward`.
 - `docs/handoff/2026-06-14-session-handoff.md` (R6.5 live + the held engraved direction) and `2026-06-12` are older handoffs, superseded.
 
