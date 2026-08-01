@@ -167,6 +167,11 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
                       supply, and that was never true: a form posts to our own
                       endpoint and needs no address at all. The link below goes
                       to a real page carrying a real form. */}
+                  {/* First in the column because it is the plainest door into
+                      the same material: a reader who is deciding whether to
+                      believe any of this asks a question before they read a
+                      methodology note. */}
+                  <li><a href="/faq" className="hover:text-atlas-500">Common questions</a></li>
                   <li><a href="/about-data#quality" className="hover:text-atlas-500">Quality methodology</a></li>
                   <li><a href="/methodology/key-benchmarks" className="hover:text-atlas-500">Where the numbers come from</a></li>
                   <li><a href="/coverage" className="hover:text-atlas-500">Coverage report</a></li>

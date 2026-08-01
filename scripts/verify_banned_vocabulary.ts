@@ -59,6 +59,11 @@ const SCOPE = [
   "src/app/(site)/terms",
   "src/app/(site)/cookies",
   "src/components/LegalPage.tsx",
+  /* Added 2026-08-01 with the questions page. Same argument as the three
+     above, and one more: its prose is copied verbatim into FAQPage structured
+     data, so a banned word here does not just reach a reader, it reaches an
+     answer engine in a form built to be quoted. */
+  "src/app/(site)/faq",
 ];
 
 const BANNED: Array<{ re: RegExp; word: string; say: string }> = [

@@ -63,6 +63,11 @@ async function staticAndContainersSitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/coverage`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
     { url: `${BASE_URL}/pricing`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/about-data`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
+    // Listed with about-data rather than with privacy and terms, which are
+    // absent from this file on purpose: those are documents a reader goes
+    // looking for, whereas this one answers questions people type into a search
+    // box, and it is the page carrying the site's FAQPage structured data.
+    { url: `${BASE_URL}/faq`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE_URL}/blog`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.5 },
     { url: `${BASE_URL}/you`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE_URL}/status`, lastModified: new Date(), changeFrequency: "daily", priority: 0.4 },
