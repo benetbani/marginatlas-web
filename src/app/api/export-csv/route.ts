@@ -21,6 +21,9 @@ import { checkRateLimit, clientIp } from "@/lib/rate_limit";
 // chain misses or the database blows its budget. Before this, such a row left
 // the site as bare numbers indistinguishable from a measurement.
 import { deriveCoverageTier } from "@/components/CoverageIndicator";
+// What each tier MEANS, shared with the social card at /og/cell so the two
+// cannot drift. They already did once, on the card's `estimated` gloss.
+import { COVERAGE_TIER_COPY } from "@/lib/coverage_tier_copy";
 import { getSessionTier } from "@/lib/monetization/entitlement";
 import { isGatingEnabled, isAuthEnabled } from "@/lib/feature_flags";
 
@@ -89,10 +92,12 @@ export async function GET(req: NextRequest) {
   // database string. An empty cell in the revenue columns plus "modeled" is a
   // truthful pair; the numbers alone were not.
   lines.push(`# coverage values`);
-  lines.push(`#   measured   direct measurement of firms in this place and activity`);
-  lines.push(`#   regional   a broader benchmark applied to this place`);
-  lines.push(`#   estimated  built from country indicators and activity averages`);
-  lines.push(`#   modeled    no observation for this cell; what we would expect on average`);
+  // Generated from the shared map, not retyped here. Byte-identical to the
+  // hand-written block it replaces (the tier name is padded to a column of 11
+  // exactly as before); the point is that the wording now has one owner.
+  for (const [tier, copy] of Object.entries(COVERAGE_TIER_COPY)) {
+    lines.push(`#   ${tier.padEnd(11)}${copy.long}`);
+  }
   lines.push("");
   lines.push(
     [

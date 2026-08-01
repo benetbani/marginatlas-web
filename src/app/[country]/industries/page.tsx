@@ -44,7 +44,16 @@ export async function generateMetadata({
     title,
     description,
     alternates: { canonical: `/${country.toLowerCase()}/industries` },
-    openGraph: { title, description },
+    // images is repeated here rather than inherited. Next resolves metadata
+    // per KEY by replacement, not by deep merge, so declaring openGraph at all
+    // discards the root layout's openGraph including its images. Without this
+    // line these ~195 country hubs emitted twitter:image but no og:image, and
+    // og:image is what Facebook, LinkedIn, Slack and WhatsApp read.
+    openGraph: {
+      title,
+      description,
+      images: [{ url: "/og/default", width: 1200, height: 630 }],
+    },
   };
 }
 

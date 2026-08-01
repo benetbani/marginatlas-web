@@ -59,6 +59,33 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  // The sitewide social card. Before this, openGraph declared no image and
+  // twitter declared card: "summary_large_image" with no image to put in it,
+  // so every route that does not set its own picture, the home page included,
+  // told each platform to reserve a large image slot and then handed it
+  // nothing.
+  //
+  // THE RULE THIS FILE CANNOT ENFORCE, and the one a future reader needs:
+  // a route that declares its own `openGraph` MUST supply its own `images`.
+  // Next resolves metadata per KEY by REPLACEMENT, not by deep merge
+  // (node_modules/next/dist/lib/metadata/resolve-metadata.js, the openGraph
+  // case assigns rather than merges), so a page that sets openGraph for a
+  // title alone silently discards everything below, images included. The same
+  // holds for `twitter`. This is not inheritance with overrides; it is
+  // wholesale substitution, and it fails silently.
+  //
+  // That is exactly how the two /industries hubs shipped with a twitter:image
+  // and no og:image at all, which is the tag every non-X platform reads.
+  //
+  // The path is relative because metadataBase above resolves it to an
+  // absolute URL in the emitted tags, which is the convention every existing
+  // OG image on the site already follows (see the three
+  // src/app/[country]/[geo]/[industry] pages, which pass a relative
+  // /og/cell?... path the same way).
+  //
+  // /og/default carries no figures on purpose. A default card cannot know
+  // which page was pasted, so any number on it would be a number that does
+  // not say what it measures.
   openGraph: {
     title: "Margin Atlas: Small-business benchmarks worldwide",
     description:
@@ -66,12 +93,14 @@ export const metadata: Metadata = {
     url: "https://www.marginatlas.com",
     siteName: "Margin Atlas",
     type: "website",
+    images: [{ url: "/og/default", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Margin Atlas: Small-business benchmarks worldwide",
     description:
       "Small-business revenue, payroll, and owner take-home, by industry, city, and size.",
+    images: ["/og/default"],
   },
 };
 

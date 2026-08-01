@@ -59,7 +59,14 @@ export async function generateMetadata({
     title,
     description,
     alternates: { canonical: `/${country.toLowerCase()}/${geo.toLowerCase()}/industries` },
-    openGraph: { title, description },
+    // See the note on the country-level hub: declaring openGraph replaces the
+    // root layout's openGraph wholesale, so a route that declares the key must
+    // supply its own images or it ships with no og:image at all.
+    openGraph: {
+      title,
+      description,
+      images: [{ url: "/og/default", width: 1200, height: 630 }],
+    },
   };
 }
 
