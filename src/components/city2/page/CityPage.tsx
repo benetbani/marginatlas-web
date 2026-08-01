@@ -143,7 +143,65 @@ export function CityPage({ model }: { model: CityPageModel }) {
 
         {gap("incomeAndWealth", "household income and wealth")}
         {gap("visitors", "visitor numbers through the year")}
-        {gap("people", "who lives here and what they can spend")}
+        {/* 05 , POPs. Ratified 2026-06-22, filled in the contract and the file
+            since the city page was built, and rendering as a stated gap until
+            now. The spending read is the part an operator needs: who is here
+            matters only once you know what they can spend. */}
+        {at("people") != null ? (
+          <ChapterSection chapter={at("people") as Chapter}>
+            {model.people != null ? (
+              <>
+                {model.people.residents ? (
+                  <div className="row">
+                    <span className="nm">People living here</span>
+                    <span className="v">{model.people.residents}</span>
+                  </div>
+                ) : null}
+
+                {model.people.bands.length ? (
+                  <div className="panel rise" style={{ margin: "10px 0" }}>
+                    <div className="pad">
+                      {model.people.bands.map((b) => (
+                        <div className="row" key={b.label}>
+                          <span className="nm">{b.label}</span>
+                          <span className="v">{b.sharePct}% of households</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+
+                {model.people.types.map((t) => (
+                  <div key={t.key} className="panel rise" style={{ marginBottom: 10 }}>
+                    <div className="pad">
+                      <div className="row">
+                        <span className="nm">
+                          {t.icon ? <GlyphIcon id={t.icon as GlyphId} size={16} /> : null}
+                          {t.name}
+                        </span>
+                        <span className="v">{t.sharePct}%</span>
+                      </div>
+                      <div className="row">
+                        <span className="nm">What they can spend</span>
+                        <span className="v">
+                          {t.spendingPower}
+                          {t.income ? ` , ${t.income} after tax` : ""}
+                        </span>
+                      </div>
+                      <p className="k" style={{ margin: "8px 0 0" }}>
+                        {t.ageRange}. {t.tenure}.
+                        {t.buys.length ? ` Spends on ${t.buys.map((b) => b.toLowerCase()).join(", ")}.` : ""}
+                        {t.favours.length ? ` Good for ${t.favours.join(", ")}.` : ""}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </>
+            ) : (
+              <ChapterGap subject="who lives here and what they can spend" />
+            )}
+          </ChapterSection>
+        ) : null}
         {gap("spaceCosts", "what space costs")}
         {gap("tradeEconomics", "what owners keep by trade")}
         {gap("districtRent", "rent by district")}

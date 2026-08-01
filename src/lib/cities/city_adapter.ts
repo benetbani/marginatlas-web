@@ -302,6 +302,38 @@ const WEALTH_LABEL: Record<string, string> = {
   "well-below": "Well below average",
 };
 
+/** Chapter 05. See CityPeopleModel for why one figure in the file is skipped. */
+function buildPeople(file: CityFile): CityPeopleModel | null {
+  const p = file.people;
+  if (p == null) return null;
+
+  const bands = isNullFigure(p.wealthBands)
+    ? []
+    : p.wealthBands.bands.map((b) => ({ label: b.label, sharePct: b.sharePct }));
+
+  const types = isNullFigure(p.archetypes)
+    ? []
+    : [...p.archetypes.types]
+        .sort((a, b) => b.sharePct - a.sharePct)
+        .map((a) => ({
+          key: a.key,
+          name: a.name,
+          icon: a.icon ?? null,
+          sharePct: a.sharePct,
+          spendingPower: a.spendingPowerLabel,
+          income: Number.isFinite(a.incomeAfterTax) ? money(a.incomeAfterTax) : null,
+          ageRange: a.ageRange,
+          tenure: a.tenure,
+          buys: a.buys,
+          favours: a.tradesThatIndexHigh,
+          accent: a.accent === true,
+        }));
+
+  if (!bands.length && !types.length && isNullFigure(p.residents)) return null;
+
+  return { residents: display(p.residents), bands, types };
+}
+
 /**
  * Chapter 10. Joins the district list with the wealth reading, the population
  * mix and the derived favoured trades. Each of the three is optional and
@@ -352,6 +384,42 @@ function buildDistricts(file: CityFile): CityDistrictsModel | null {
   };
 }
 
+/**
+ * Chapter 05, the population types. This is POPs, ratified 2026-06-22 and named
+ * by the founder as one of the most important upgrades the site has.
+ *
+ * It was already fully described in the contract and fully filled in the
+ * fixture, and it still rendered as a stated gap, which is the worst of both:
+ * the work was done and nobody could see it.
+ *
+ * `millionaireHouseholds` is deliberately NOT surfaced. The founder cut it by
+ * name: it is evasive next to the other figures, and a count of millionaires
+ * tells someone opening a cafe nothing they can act on. It stays in the file
+ * because the file describes the city; the page decides what is worth printing.
+ */
+export type CityArchetypeModel = {
+  key: string;
+  name: string;
+  icon: string | null;
+  sharePct: number;
+  spendingPower: string;
+  /** After tax, per year. Null when unpriced. */
+  income: string | null;
+  ageRange: string;
+  tenure: string;
+  buys: string[];
+  favours: string[];
+  accent: boolean;
+};
+
+export type CityPeopleModel = {
+  residents: string | null;
+  /** The wealth spread, in the file's own order, poorest first. */
+  bands: Array<{ label: string; sharePct: number }>;
+  /** Population types, largest share first. */
+  types: CityArchetypeModel[];
+};
+
 export type CityPageModel = {
   meta: {
     city: string;
@@ -367,7 +435,7 @@ export type CityPageModel = {
    *  the full spine today and filled in without touching it again. */
   incomeAndWealth: null;
   visitors: null;
-  people: null;
+  people: CityPeopleModel | null;
   spaceCosts: null;
   tradeEconomics: null;
   districtRent: null;
@@ -470,7 +538,7 @@ export function buildCityPage(file: CityFile): CityPageModel {
     scorecard,
     incomeAndWealth: null,
     visitors: null,
-    people: null,
+    people: buildPeople(file),
     spaceCosts: null,
     tradeEconomics: null,
     districtRent: null,
