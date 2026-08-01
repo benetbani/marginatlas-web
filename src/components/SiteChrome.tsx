@@ -158,13 +158,19 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
                       gate is green because it validates routes, not fragments.
 
                       #quality now has its id. #sources points at the section
-                      that actually carries it. #glossary, #tax and #contact are
-                      gone rather than pointing at nothing , the site has no
-                      glossary, no tax page and no contact route. Tracked as W10
-                      and W12; the contact address is the founder's to supply. */}
+                      that actually carries it. #glossary and #tax are gone
+                      rather than pointing at nothing , the site has no glossary
+                      and no tax page. Tracked as W10 and W12.
+
+                      The contact link is the one that came back, 2026-08-01. It
+                      was recorded as blocked on an address the founder had to
+                      supply, and that was never true: a form posts to our own
+                      endpoint and needs no address at all. The link below goes
+                      to a real page carrying a real form. */}
                   <li><a href="/about-data#quality" className="hover:text-atlas-500">Quality methodology</a></li>
                   <li><a href="/methodology/key-benchmarks" className="hover:text-atlas-500">Where the numbers come from</a></li>
                   <li><a href="/coverage" className="hover:text-atlas-500">Coverage report</a></li>
+                  <li><a href="/contact" className="hover:text-atlas-500">Contact</a></li>
                 </ul>
               </div>
               <div>

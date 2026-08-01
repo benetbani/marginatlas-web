@@ -23,20 +23,56 @@ import * as React from "react";
 
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 
+/**
+ * The closing note. It is the default because it is true of privacy, terms and
+ * cookies: each was written from a survey of the code and none has been near a
+ * lawyer. "Ask us" used to point at nothing, which was the one soft spot in a
+ * set of pages whose whole argument is that they do not bluff. It now points at
+ * the contact page, which exists.
+ */
+const DEFAULT_NOTICE = (
+  <>
+    This page describes what Margin Atlas actually does, checked against the code
+    that runs the site. It has not been reviewed by a lawyer. If you need a
+    formal assurance for a particular jurisdiction,{" "}
+    <a href="/contact" className="underline underline-offset-2 hover:text-atlas-600">
+      ask us
+    </a>{" "}
+    and we will say plainly what we can and cannot confirm.
+  </>
+);
+
 export interface LegalPageProps {
   title: string;
   /** One sentence under the title. What this page is for, in the reader's terms. */
   standfirst: string;
   /** ISO date, rendered plainly. Readers of these pages check this first. */
   updated: string;
+  /**
+   * The small label above the title. Defaults to "Legal", which is right for a
+   * document and wrong for a page that is a form.
+   */
+  eyebrow?: string;
+  /**
+   * The closing note under the rule. Defaults to the lawyer-review notice.
+   * Pass `null` on a page where that notice would not be true.
+   */
+  notice?: React.ReactNode;
   children: React.ReactNode;
 }
 
-export function LegalPage({ title, standfirst, updated, children }: LegalPageProps) {
+export function LegalPage({
+  title,
+  standfirst,
+  updated,
+  eyebrow = "Legal",
+  notice,
+  children,
+}: LegalPageProps) {
   return (
     <article className="max-w-2xl pb-16">
       <SectionEyebrow size="md" className="mb-3">
-        Legal
+        {eyebrow}
       </SectionEyebrow>
       <h1 className="text-4xl font-semibold tracking-tight text-ink-900">{title}</h1>
       <p className="mt-4 text-lg text-ink-800 leading-relaxed">{standfirst}</p>
@@ -44,12 +80,11 @@ export function LegalPage({ title, standfirst, updated, children }: LegalPagePro
 
       <div className="mt-10 space-y-8 text-ink-800 leading-relaxed">{children}</div>
 
-      <p className="mt-12 border-t border-parchment pt-6 text-sm text-ink-600 leading-relaxed">
-        This page describes what Margin Atlas actually does, checked against the
-        code that runs the site. It has not been reviewed by a lawyer. If you
-        need a formal assurance for a particular jurisdiction, ask us and we will
-        say plainly what we can and cannot confirm.
-      </p>
+      {notice === null ? null : (
+        <p className="mt-12 border-t border-parchment pt-6 text-sm text-ink-600 leading-relaxed">
+          {notice ?? DEFAULT_NOTICE}
+        </p>
+      )}
     </article>
   );
 }

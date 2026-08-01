@@ -120,15 +120,22 @@ export default function PrivacyPage() {
           payment. Unsubscribing from the newsletter is a link in every email and
           needs no explanation.
         </p>
-        {/* This deliberately points at the ONE channel that verifiably exists:
-            the correction link on any data page, which posts to /api/correction.
-            The site has no contact address anywhere , the only addresses in the
-            codebase are placeholders in examples , so promising "write to us"
-            would be promising a route that does not exist. Backlog W4 carries
-            the contact page, and it needs an address only the founder can give. */}
+        {/* Both channels named here verifiably exist and neither is an address.
+            The contact page (built 2026-08-01) is a form posting to our own
+            endpoint; the correction link on any data page posts to
+            /api/correction. This page must never promise a route that does not
+            exist, and must never imply a reply, which is why the sentence below
+            stops at "read" and does not go on to "and we will get back to you". */}
         <p>
-          Use the correction link on any data page and it reaches us. We read
-          everything that comes through it.
+          The{" "}
+          <a
+            href="/contact"
+            className="underline underline-offset-2 hover:text-atlas-600"
+          >
+            contact page
+          </a>{" "}
+          is how you ask, and the correction link on any data page reaches the
+          same place. Both are forms. We read everything that comes through them.
         </p>
       </LegalSection>
 

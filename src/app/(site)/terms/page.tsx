@@ -66,18 +66,30 @@ export default function TermsPage() {
 
       <LegalSection heading="When we are wrong">
         <p>
-          We will be, sometimes. When you find it, tell us. We correct figures
-          rather than defending them, and we keep a record of what changed and
-          why, because a number that quietly changes is worse than one that was
-          wrong out loud.
+          We will be, sometimes. When you find it,{" "}
+          <a
+            href="/contact"
+            className="underline underline-offset-2 hover:text-atlas-600"
+          >
+            tell us
+          </a>
+          . We correct figures rather than defending them, and we keep a record
+          of what changed and why, because a number that quietly changes is
+          worse than one that was wrong out loud.
         </p>
       </LegalSection>
 
       <LegalSection heading="Accounts">
         <p>
-          Keep your sign-in to yourself. Tell us if you think someone else is
-          using it. We may close an account that is being used to attack the site
-          or to strip it, and we will say why.
+          Keep your sign-in to yourself.{" "}
+          <a
+            href="/contact"
+            className="underline underline-offset-2 hover:text-atlas-600"
+          >
+            Tell us
+          </a>{" "}
+          if you think someone else is using it. We may close an account that is
+          being used to attack the site or to strip it, and we will say why.
         </p>
       </LegalSection>
 
