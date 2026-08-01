@@ -302,11 +302,21 @@ async function CellPageBody({
          and a CSV export is not proven to exist for a spine-2 slug. */
       const m = spine2Cell.meta;
       const pop = spine2Cell.population;
-      const model = buildCellPage(spine2Cell);
-      const origin = "https://www.marginatlas.com";
-      const url = `${origin}${m.urlPath}`;
+      /* The wider place and the country are resolved ONCE, here, and the same
+         two answers feed the BreadcrumbList below and the page's own onward
+         doors. That is the point of resolving them before the model is built
+         rather than beside it: the trail and the door cannot come to different
+         conclusions about which pages exist, because there is only one
+         conclusion. Either may be null, and null means no destination is
+         offered anywhere on the page. */
       const spine2GeoPage = resolveGeoPage(m.country.slug, m.city.slug);
       const spine2CountryPage = countryPagePath(m.country.slug);
+      const model = buildCellPage(spine2Cell, {
+        geoPage: spine2GeoPage,
+        countryPage: spine2CountryPage,
+      });
+      const origin = "https://www.marginatlas.com";
+      const url = `${origin}${m.urlPath}`;
       return (
         <>
           <CellDataset

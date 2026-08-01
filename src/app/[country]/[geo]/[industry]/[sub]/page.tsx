@@ -566,13 +566,28 @@ async function NeighborhoodCellPageBody({
             >
               Back to {nb.name}
             </a>
-            <span aria-hidden>·</span>
-            <a
-              href={`/${country.toLowerCase()}/${city.toLowerCase()}`}
-              className="transition-colors hover:text-atlas-700"
-            >
-              All of {cityName}
-            </a>
+            {/* The city step, resolved rather than assembled, and DROPPED
+                outright when nothing resolves. Same defect as the trail above,
+                and the same resolver closes it: this route's middle segment is
+                always a city, the two-segment form is served by the region
+                route, and a city is in no region list. Dropped rather than
+                rendered as plain text because a crumb is a position in a trail
+                and has to stay whether or not it can be opened, while this is a
+                row of onward moves and a move you cannot make is not one.
+                Note the wrongness this closes is not only a 404: a city and a
+                region can share a slug, so on a New York neighbourhood page the
+                assembled form answered 200 with the STATE's page. */}
+            {cityPage ? (
+              <>
+                <span aria-hidden>·</span>
+                <a
+                  href={cityPage.href}
+                  className="transition-colors hover:text-atlas-700"
+                >
+                  All of {cityName}
+                </a>
+              </>
+            ) : null}
             <span aria-hidden>·</span>
             <a
               href={`/industries/${industryToSlug(ind.id)}`}

@@ -435,7 +435,39 @@ const SPINE: Array<{ id: ChapterId; title: string; icon: string }> = [
 /* the build                                                           */
 /* ------------------------------------------------------------------ */
 
-export function buildCellPage(cellFile: CellFile): CellPageModel {
+/**
+ * THE TWO WIDER PAGES THIS CELL CAN OPEN, ALREADY RESOLVED.
+ *
+ * Required, not optional, and passed in rather than worked out here. Both
+ * halves of that are deliberate.
+ *
+ * Passed IN because deciding whether a place has a page means reading the
+ * site's route tables, and the module that owns that decision reaches the
+ * database. This adapter is a pure CellFile-to-props transformer that server
+ * components import for their types and for `money`, so dragging a data client
+ * into its graph to answer a routing question would be paying a large
+ * structural cost for a lookup the route has already performed.
+ *
+ * REQUIRED because the alternative fails open. An optional argument lets a
+ * future caller build this page without resolving anything, and the failure
+ * mode of that is not a missing door, it is a WRONG one: the slug the cell
+ * file carries for a city is often also the slug of a region, so the assembled
+ * two-segment form frequently answers 200 with a different place's data. Made
+ * required, a caller that has not resolved the doors does not compile.
+ *
+ * Null on either field is a real answer and means the tile is not built.
+ */
+export type CellPageDoors = {
+  /** This city's own page, or null when none is published. */
+  geoPage: { href: string } | null;
+  /** This country's page, or null when its statistical code has no route. */
+  countryPage: { href: string } | null;
+};
+
+export function buildCellPage(
+  cellFile: CellFile,
+  doors: CellPageDoors,
+): CellPageModel {
   const cell = cellFile as CellFileWithDistribution;
   const M = cell.modelRoom;
   const P = cell.population;
@@ -1097,33 +1129,50 @@ export function buildCellPage(cellFile: CellFile): CellPageModel {
      another URL. All 27 outbound links came from the site chrome, so the page
      the lattice thesis exists to prove was contributing nothing to it.
 
-     `figure` is `string | null`, so a tile without one is already legal, and
-     the mockup models exactly this: six tiles of which only TWO are anchors.
-     The other four carry peer figures ("Cafes in London, $25K kept") and are
-     deliberately NOT links, because those pages do not exist. That is the door
-     contract, M1: a door is a link, and the absence of one is a fact.
+     Two doors are offered, no figures, because every figure the mockup shows
+     here describes a page we have not built. A count like "42 trades" would
+     have to be verified before it could be printed, and inventing it to fill a
+     tile is the exact failure the whole provenance system exists to prevent.
 
-     So we ship the two doors that genuinely resolve, and no figures, because
-     every figure the mockup shows here describes a page we have not built. A
-     count like "42 trades" would have to be verified before it could be
-     printed, and inventing it to fill a tile is the exact failure the whole
-     provenance system exists to prevent.
+     BOTH DESTINATIONS ARE RESOLVED BY THE CALLER AND NEITHER IS ASSEMBLED.
+     Until 2026-08-01 they were built from the slug pattern, and the city one
+     was not merely dead, it was WRONG. The two-segment form of a trade URL is
+     served by the region route, which lists US states and a country's admin1
+     entities. A city slug is in none of those, so on the one filled cell the
+     door pointed at a page that 404s. Worse, a city and a region can carry the
+     SAME slug: the US region list and the city list both hold new-york, one
+     meaning the state and one meaning the city. So a New York cell would have
+     offered a door reading "Every trade in New York" that answered 200 with the
+     STATE's page, handing the reader a different place's figures with no sign
+     anything had gone wrong. That is the failure this site's whole argument
+     cannot survive, and it is why the resolver is now the only way in.
+
+     A door with no destination is not built at all. It is tempting to keep the
+     tile and drop only its link, because the M1 grammar does have a linkless
+     form, but that form is a FACT: a reading that keeps its FIGURE and loses
+     its affordance, which is how a peer reading states a number for a page that
+     does not exist yet. These two readings carry no figure. Their whole content
+     is the door. With nothing to open they have nothing to say, and the atom
+     agrees: a reading with a null figure renders nothing whatever its href.
 
      The other four tiles appear on their own when their cell files land. */
-  const nextDoors: NonNullable<CellPageModel["next"]> = [
-    {
+  const nextDoors: NonNullable<CellPageModel["next"]> = [];
+  if (doors.geoPage) {
+    nextDoors.push({
       glyph: "skyline",
       label: `Every trade in ${cell.meta.city.name}`,
       figure: null,
-      href: `/${cell.meta.country.slug}/${cell.meta.city.slug}`,
-    },
-    {
+      href: doors.geoPage.href,
+    });
+  }
+  if (doors.countryPage) {
+    nextDoors.push({
       glyph: "global-spread",
       label: `${cell.meta.country.name} overall`,
       figure: null,
-      href: `/${cell.meta.country.slug}`,
-    },
-  ];
+      href: doors.countryPage.href,
+    });
+  }
   const next: CellPageModel["next"] = nextDoors.length ? nextDoors : null;
 
   const model: CellPageModel = {
