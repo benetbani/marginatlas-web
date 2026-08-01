@@ -1,0 +1,6 @@
+{
+  "combinations": 7281,
+  "clusters": 202,
+  "recorded": "2026-08-01",
+  "why": "Known live defect: revenue-less place rows are filled from a shared per-industry anchor while keeping a measured-class provenance label. Ratchet only. Lower this when a repair lands; never raise it."
+}
