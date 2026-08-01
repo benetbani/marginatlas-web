@@ -22,6 +22,8 @@
 
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import { COUNTRIES } from "@/lib/taxonomy";
+import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
 
 const AI_CRAWLER_PATTERNS = [
   /gptbot/i,
@@ -99,6 +101,98 @@ function rateLimit(ip: string): { allowed: boolean; remaining: number } {
   }
   b.count++;
   return { allowed: b.count <= PAGE_LIMIT, remaining: Math.max(0, PAGE_LIMIT - b.count) };
+}
+
+/* ---------------------------------------------------------------------------
+ * Places this site does not hold: a real 404 instead of a soft one.
+ *
+ * The country and region pages both call notFound() for a slug they cannot
+ * resolve, and both were answering 200 anyway. The reason is the streaming
+ * shell: a loading skeleton sits above those pages, so React finishes the
+ * shell and the response headers go out on the wire before the page body has
+ * even run. By the time notFound() throws, the status is already sent, and
+ * every wrong URL reads as a live page to a crawler. Moving the call into
+ * generateMetadata does not help either: Next rethrows that error at the page
+ * position inside the same boundary (see the MetadataOutlet in
+ * next/dist/server/app-render/create-component-tree.js).
+ *
+ * Middleware is the one place that runs BEFORE any of that. It cannot render
+ * the not-found page itself, but it can rewrite the request back onto the very
+ * same path while pinning the status to 404. The page then renders exactly as
+ * it does today, calls its own notFound(), and shows the same not-found screen.
+ * Nothing about what the reader sees changes. Only the status code does.
+ *
+ * Scope is deliberately narrow, and the narrowness is the whole safety story.
+ * Middleware runs before routing, so it cannot ask Next whether a path belongs
+ * to a real page or to the country wildcard. It must not guess. Two rules it
+ * can be sure of:
+ *
+ *   One segment, two letters, not a country. Every entry in COUNTRIES is two
+ *   letters, so a two-letter slug that is missing from it can never resolve.
+ *   The only two-letter route folder on this site holds children and nothing at
+ *   its own root, so no real page lives at a bare two-letter path.
+ *
+ *   Two segments, a KNOWN country first. Once the first segment is a country we
+ *   hold, the path is certainly inside the country tree, so the second segment
+ *   is judged against that country's own region list.
+ *
+ * Everything else is left alone, on purpose. A first segment that is not two
+ * letters could be any static page, and an UNKNOWN two-letter first segment
+ * with a child could be a route namespace rather than a country. Both keep
+ * their soft 404 rather than risk a real page answering 404.
+ *
+ * The two lists below are the same two the routes themselves check. Nothing new
+ * is invented here, and a place that gains coverage stops 404ing on its own.
+ * ------------------------------------------------------------------------- */
+const COUNTRY_NAME_BY_SLUG = new Map<string, string>(
+  COUNTRIES.map((c) => [c.code.toLowerCase(), c.name]),
+);
+
+/** Region slugs per country, resolved once per country per runtime instance. */
+const REGION_SLUGS = new Map<string, Set<string>>();
+function regionSlugsFor(countrySlug: string, countryName: string): Set<string> {
+  let slugs = REGION_SLUGS.get(countrySlug);
+  if (!slugs) {
+    slugs = new Set(
+      getRegionsForCountry(countrySlug.toUpperCase(), countryName).map(
+        (r) => r.value,
+      ),
+    );
+    REGION_SLUGS.set(countrySlug, slugs);
+  }
+  return slugs;
+}
+
+/**
+ * True when the path names a country or a region this site does not hold, and
+ * the page it routes to would therefore call notFound() anyway.
+ *
+ * Expects an already-canonical path: lowercase, no trailing slash. The
+ * canonicalization redirect above guarantees that by the time this runs.
+ */
+function isPlaceWeDoNotHold(path: string): boolean {
+  const segments = path.split("/").filter(Boolean);
+  if (segments.length === 0 || segments.length > 2) return false;
+
+  const [countrySlug, geoSlug] = segments;
+  if (!/^[a-z]{2}$/.test(countrySlug)) return false;
+
+  const countryName = COUNTRY_NAME_BY_SLUG.get(countrySlug);
+
+  // A two-letter slug on its own. Held countries pass; anything else cannot be
+  // a country and no page sits at a bare two-letter path.
+  if (geoSlug === undefined) return countryName === undefined;
+
+  // Deeper than one segment, so the first segment has to be a country we hold
+  // before this is allowed to judge the second. An unknown two-letter first
+  // segment here may be a route namespace, and guessing would 404 a real page.
+  if (countryName === undefined) return false;
+
+  // The one static child of the country segment. It is a real page, not a
+  // region, so it must never be judged against the region list.
+  if (geoSlug === "industries") return false;
+
+  return !regionSlugsFor(countrySlug, countryName).has(geoSlug);
 }
 
 function clientIp(req: NextRequest): string {
@@ -222,6 +316,18 @@ export function middleware(req: NextRequest) {
         },
       });
     }
+    // 3b. A country or region we do not hold. Rewritten onto itself so the
+    // page renders and shows its own not-found screen, with the status pinned
+    // before the streaming shell can flush a 200. Returned here, above the
+    // edge-cache header below, so a wrong URL is never held at the CDN for six
+    // hours; the moment coverage lands, the next request resolves normally.
+    if (isPlaceWeDoNotHold(path)) {
+      return NextResponse.rewrite(req.nextUrl, {
+        status: 404,
+        request: { headers: withPathname(req, path) },
+      });
+    }
+
     const res = NextResponse.next({ request: { headers: withPathname(req, path) } });
     res.headers.set("X-RateLimit-Limit", String(PAGE_LIMIT));
     res.headers.set("X-RateLimit-Remaining", String(remaining));
