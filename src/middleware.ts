@@ -25,6 +25,23 @@ import { NextResponse } from "next/server";
 import { COUNTRIES } from "@/lib/taxonomy";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
 
+/**
+ * TRAINING harvesters, blocked at the door with a 451.
+ *
+ * Split from the answering agents on 2026-08-01, the founder's call, reversing
+ * a blanket block. A harvester crawls broadly to build a corpus and nothing
+ * comes back. An answering agent fetches one page because a person has just
+ * asked about it, and the answer cites the source. Blocking the second kind
+ * does not protect the work, it only removes this site from the answer.
+ *
+ * `chatgpt-user`, `perplexitybot` and `oai-searchbot` were removed from this
+ * list for that reason and are now served normally. robots.ts carries the same
+ * split, and both must be changed together or a crawler is told one thing and
+ * handed another.
+ *
+ * The test for adding a pattern here: does a human wait on the other end of the
+ * request. If yes it does not belong in this list.
+ */
 const AI_CRAWLER_PATTERNS = [
   /gptbot/i,
   /claudebot/i,
@@ -32,8 +49,6 @@ const AI_CRAWLER_PATTERNS = [
   /google-extended/i,
   /ccbot/i,
   /bytespider/i,
-  /chatgpt-user/i,
-  /perplexitybot/i,
   /cohere-ai/i,
   /facebookbot/i,
   /meta-externalagent/i,

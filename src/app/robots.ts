@@ -1,12 +1,28 @@
 import type { MetadataRoute } from "next";
 
 /**
- * robots.txt policy:
+ * robots.txt policy.
  *
  * - Major search engines (Google, Bing, DuckDuckGo) are allowed.
- * - AI training crawlers are explicitly blocked. We don't want our work
- *   feeding competitors' models for free.
+ * - AI TRAINING crawlers are blocked. We don't want our work feeding
+ *   competitors' models for free.
+ * - AI ANSWERING agents are allowed. See below.
  * - API and internal routes disallowed for everyone.
+ *
+ * THE SPLIT, ratified by the founder 2026-08-01, reversing a blanket block.
+ *
+ * The old list treated two different things as one. A harvester like GPTBot or
+ * CCBot crawls broadly to build a training corpus, and nothing comes back. A
+ * fetcher like ChatGPT-User or PerplexityBot requests one page because a person
+ * has just asked a question about it, and the answer cites the source.
+ *
+ * Blocking the second kind does not protect the work, it only removes us from
+ * the answer. This site exists to answer "what does a cafe in Lisbon actually
+ * earn", and that question is increasingly typed into an assistant rather than a
+ * search box. Blocked, we are not the source it reads; someone less careful is.
+ *
+ * So: harvesters stay blocked, fetchers are let in. The line is whether a human
+ * is waiting on the other end of the request.
  */
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -17,7 +33,15 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
         disallow: ["/api/", "/_next/", "/admin"],
       },
-      // Block known AI training crawlers
+      // Answering agents: a person asked a question and one page is being
+      // fetched to answer it. Same access as a search engine, and the same
+      // internals withheld.
+      {
+        userAgent: ["ChatGPT-User", "PerplexityBot", "OAI-SearchBot"],
+        allow: "/",
+        disallow: ["/api/", "/_next/", "/admin"],
+      },
+      // Training harvesters: broad crawls that feed a corpus and cite nothing.
       {
         userAgent: [
           "GPTBot",
@@ -26,8 +50,6 @@ export default function robots(): MetadataRoute.Robots {
           "Google-Extended",
           "CCBot",
           "Bytespider",
-          "ChatGPT-User",
-          "PerplexityBot",
           "cohere-ai",
           "FacebookBot",
           "Meta-ExternalAgent",
