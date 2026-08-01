@@ -30,7 +30,16 @@ import { SmartImage } from "@/components/SmartImage";
 import { AudienceCaveat } from "@/components/AudienceCaveat";
 import { SECTOR_BY_ID, INDUSTRY_BY_ID, slugToIndustry, resolveToMeasuredIndustry } from "@/lib/taxonomy";
 import { CellDataset, Breadcrumbs } from "@/components/StructuredData";
-import { RelatedIndustriesStrip } from "@/components/RelatedIndustriesStrip";
+// RelatedIndustriesStrip was unmounted here on 2026-08-01: it built up to eight
+// trade-page URLs straight from the taxonomy without checking that any of them
+// held a row, which on a site that answers 200 for a wrong URL is a link that
+// can never be seen to be dead. The verified equivalent is the "other trades in
+// this place" category of the related tail below.
+import {
+  buildCellRelatedLinks,
+  fetchCellSiblings,
+} from "@/lib/cells/related_links";
+import { CellRelatedLinks } from "@/components/cells/CellRelatedLinks";
 import { getToneClass } from "@/lib/page-layout/section-order";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { CellWarningChips } from "@/components/CellWarningChips";
@@ -381,9 +390,20 @@ async function CellPageBody({
   // dropped because AcrossCountriesStrip no longer renders. Within-US
   // state comparison stays (same currency, same wage scale, real
   // Census coverage). Comparable-cells stays (peer-city ribbon).
-  const [comparables, acrossStates, nudge] = await Promise.all([
+  const [comparables, acrossStates, nudge, cellSiblings] = await Promise.all([
     withBudget(
-      getComparableCells(cell.geo_name || "", cell.naics_6 || undefined, 6),
+      // Fetch 200, render at most 6, and the gap between those two numbers is
+      // the point. This used to ask for exactly the 6 it rendered. The related
+      // tail now drops any trade excluded from discovery (solo-professional and
+      // corporate-only activities), any whose slug does not name it back, and
+      // any repeat, and a state's rows repeat heavily: one per year, size band
+      // and grain, led by the broad roll-ups that carry no activity at all.
+      // MEASURED on California, Montana and Ohio: a fetch of 24 yielded one or
+      // two usable trades, 120 yielded four, 200 yields six to nine. 200 is
+      // also exactly the row budget the across-states read on this same page
+      // already runs against this same table, so it is a known-tolerable size
+      // rather than a new one.
+      getComparableCells(cell.geo_name || "", cell.naics_6 || undefined, 200),
       [],
       4_000,
       "getComparableCells",
@@ -397,6 +417,12 @@ async function CellPageBody({
         )
       : Promise.resolve([]),
     withBudget(getNudgeNeighbor(cell), null, 4_000, "getNudgeNeighbor"),
+    // The lattice siblings for the related tail: same trade elsewhere, other
+    // trades here. Depends on nothing else in this fan-out, and budgets each of
+    // its own two reads, so a slow one costs links rather than the page. Runs
+    // no query at all on a US state page, whose siblings the two reads above
+    // already carry.
+    fetchCellSiblings(country, geo, industry),
   ]);
 
   // Build region + industry option lists for switcher
@@ -777,49 +803,35 @@ async function CellPageBody({
         : undefined;
 
   // The related-pages tail (content-map section 14), passed into the decision
-  // stack so it renders at its content-map position (and the section is never an
-  // empty placeholder when we DO have links). Other industries in this place +
-  // the sibling-sector strip. Null when neither exists, so the stack shows the
-  // honest placeholder instead.
-  const hasRelated = comparables.length > 0 || !!measuredIndustry?.sector_id;
-  const relatedTail = hasRelated ? (
-    <div className="space-y-5">
-      {comparables.length > 0 ? (
-        <div>
-          <SectionEyebrow size="md" className="mb-2">Compare</SectionEyebrow>
-          <h3 className="font-display text-lg md:text-xl font-semibold tracking-tight text-ink-900">
-            Other industries in {cell.geo_name || iso2ToName(country) || country.toUpperCase()}
-          </h3>
-          <p className="text-sm text-cocoa-700/70 mt-1.5">
-            How this compares to other businesses in the same place.
-          </p>
-          <div className="mt-4 grid md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {comparables.map((c) => (
-              <a
-                key={`${c.geo_id}-${c.naics_6}-${c.year}`}
-                href={cellUrl(c)}
-                className="block px-4 py-3 rounded-md border border-parchment bg-white hover:shadow-lift hover:border-cream-400 hover:-translate-y-px transition"
-              >
-                <div className="text-sm font-medium text-ink-900 line-clamp-1">
-                  {c.industry_name || c.industry_description || c.naics_6}
-                </div>
-                <div className="text-xs text-cocoa-700/70 mt-1">
-                  {formatMoney(c.revenue_per_firm)} typical revenue
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
-      ) : null}
-      {measuredIndustry?.sector_id ? (
-        <RelatedIndustriesStrip
-          country={country}
-          geo={geo}
-          currentIndustryId={measuredIndustry.id}
-          sectorId={measuredIndustry.sector_id}
-        />
-      ) : null}
-    </div>
+  // stack so it renders at its content-map position. It is now the LATTICE tail:
+  // the same trade in other places, other trades in this place, this place's own
+  // page, and this country. Four onward moves where the page body previously
+  // offered one.
+  //
+  // Every link is resolved from a row that exists and then round-tripped through
+  // the destination route's own resolver before it is emitted, because this site
+  // answers 200 for a wrong URL and so a dead internal link would never announce
+  // itself. The whole gate lives in src/lib/cells/related_links.ts.
+  //
+  // What this REPLACED, and why. The old tail was a six-card grid of other
+  // industries (US states only, since getComparableCells resolves a state by
+  // name) plus RelatedIndustriesStrip, which built up to eight URLs straight
+  // from the taxonomy with no check that any of them held data. Both are
+  // subsumed here by the verified equivalents, and the unverified generator is
+  // no longer mounted.
+  const relatedLinks = buildCellRelatedLinks({
+    cell,
+    countrySlug: country,
+    geoSlug: geo,
+    industrySlug: industry,
+    tradeName,
+    placeName,
+    siblings: cellSiblings,
+    usSameTradeRows: acrossStates,
+    usOtherTradeRows: comparables,
+  });
+  const relatedTail = relatedLinks.any ? (
+    <CellRelatedLinks model={relatedLinks} />
   ) : null;
 
   const url = `https://www.marginatlas.com/${country}/${geo}/${industry}`;
