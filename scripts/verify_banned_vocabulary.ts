@@ -64,6 +64,13 @@ const SCOPE = [
      data, so a banned word here does not just reach a reader, it reaches an
      answer engine in a form built to be quoted. */
   "src/app/(site)/faq",
+  /* Added 2026-08-01, and it is the sharpest case in this list. `src/lib/seo`
+     writes prose straight into structured data, so a banned word here never
+     appears on a page a human can check and goes directly to an answer engine
+     built to quote it. It escaped for exactly that reason: the gate watched what
+     readers see, and this is copy no reader sees. A word nobody can catch is
+     worse than a word on a page, not better. */
+  "src/lib/seo",
 ];
 
 const BANNED: Array<{ re: RegExp; word: string; say: string }> = [

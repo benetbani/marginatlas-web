@@ -60,14 +60,23 @@ export function generateFAQs(
     const netPct = (clampMargin(margins.net_margin, "net") * 100).toFixed(1);
     faqs.push({
       question: `What's the typical profit margin for ${ind} in ${loc}?`,
-      answer: `${ind.charAt(0).toUpperCase() + ind.slice(1)} in ${loc} typically operate at around ${netPct}% net margin after taxes and interest.`,
+      answer: `${ind.charAt(0).toUpperCase() + ind.slice(1)} in ${loc} typically keep around ${netPct}% of what they take, after tax and interest.`,
     });
   }
 
   if (cell.rev_p90 && cell.rev_p10) {
     faqs.push({
+      /* This answered "Yes, generally", and then argued it from what the TOP
+         TENTH earns. That establishes nothing about the median owner, which is
+         the person asking. It was also the site making an unconditional promise
+         about someone's livelihood, in a machine-readable field an answer engine
+         quotes verbatim and a reader never sees, so nobody could judge it.
+
+         The honest answer to this question is the spread, and the fact that
+         revenue is not what an owner keeps. That is the argument the whole site
+         exists to make. */
       question: `Is owning ${article} ${indSingular} profitable in ${loc}?`,
-      answer: `Yes, generally. Top-performing ${ind} in ${loc} earn over ${fmt(cell.rev_p90)} annually, several times more than the bottom quintile. Profitability depends heavily on location quality, operator experience, and cost discipline.`,
+      answer: `It varies more than one figure can carry. The strongest ${ind} in ${loc} take over ${fmt(cell.rev_p90)} a year and the weakest fifth take under ${fmt(cell.rev_p10)}, and what an owner keeps out of either depends on rent, staffing and the site itself. Revenue is not profit.`,
     });
   }
 
