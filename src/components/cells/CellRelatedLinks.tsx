@@ -14,14 +14,69 @@
  * promise of later. On a thin cell this block is short, or absent, and that is
  * the honest state rather than a failure.
  *
- * WHY THE LINKS CARRY NO FIGURES. A gloss beside a link ("keeps about $43K")
- * is what makes it worth clicking, and it is deliberately held back for one
- * release. Filled figures are currently published under a measured label across
- * a large part of the site, and the repair for that is the founder's call, not
- * this block's. Every gloss here would inherit exactly that defect and multiply
- * it by twelve links a page. Once the provenance label is honest, the gloss is a
- * one-line addition: put the figure in a second line under the label inside
- * LinkPill below, and pass it through on RelatedLink.
+ * WHY THE LINKS CARRY NO FIGURES. THIS IS NOW A DECISION, NOT A DEFERRAL.
+ *
+ * A gloss beside a link ("keeps about $43K") is what would make it worth
+ * clicking. It was held back once for a stated reason: filled figures were
+ * published under a measured label across a large part of the site, so every
+ * gloss would have inherited that false claim. This note used to promise the
+ * gloss as a one-line addition the moment the label became honest.
+ *
+ * The label WAS repaired on 2026-08-01. A figure the fill supplied rather than
+ * read now derives "estimated". The precondition named here has been met, and
+ * the gloss was then measured against real data and does not survive it. It is
+ * not a decoration this block is missing. It is a claim this block cannot make.
+ *
+ * WHAT WAS MEASURED. Every related link on a spread of real pages was resolved
+ * through the destination route's own lookup, and the figure that destination
+ * publishes was read off the resolved cell rather than guessed at:
+ *
+ *   90.2% of 265 link destinations derive "estimated", not "measured".
+ *   38 of 49 lists publish ONE identical figure across every link in them.
+ *   27.6% of the rows behind these pages carry a revenue of their own, and for
+ *     Spain, Germany, France, Italy, Brazil, Poland and the Netherlands that
+ *     share is zero.
+ *
+ * The repair kept every figure and dropped the label, which is all it claimed
+ * to do. The shared FIGURES remain: most activities have no revenue envelope of
+ * their own and most countries share a scale factor, so the fill hands the same
+ * anchor to every place. On a page that prints ONE figure that is a defensible
+ * estimate wearing an honest label. This block prints TWELVE side by side, and
+ * side by side the same number under six different place names stops reading as
+ * an estimate and starts reading as a finding that six places are identical. No
+ * qualifier repairs that, because a reader compares the numbers before reading
+ * the words next to them.
+ *
+ * The concrete case. On the London trade page all six "same trade somewhere
+ * else" links would read $433,169: the figure the page itself carries, and the
+ * figure Manchester, Leeds, Camden, Westminster and Sheffield each carry. The
+ * myths chapter further up that page exists to say a London restaurant takes
+ * far more money than a Manchester one while the two owners keep about the
+ * same. The gloss would refute the page's own argument in the page's own foot.
+ *
+ * WHY NOT GLOSS ONLY THE MEASURED ONES. That rule is honest, and the
+ * shared-revenue gate backs it: no measured-class figure is published for two
+ * countries. It was costed and rejected on what it buys, not on principle. The
+ * row this module holds is NOT the row the destination resolves (the sibling
+ * read orders by firm count, the destination orders by year first, and the
+ * published figure is rolled forward on top), so an honest figure needs a full
+ * destination lookup per link, twelve a page. That buys a figure on about one
+ * link in ten, nearly all of them US state pages, so the whole non-US site pays
+ * the lookups and gains nothing. A list where one link in six carries a figure
+ * also reads as though the other five were unknown, when each of them publishes
+ * a figure on its own page.
+ *
+ * The firm count was tested too, as the one figure the sibling read already
+ * selects. It varies honestly per place and per trade, but the count held here
+ * disagreed with the count the destination publishes on 31 of 78 links, for the
+ * same row-selection reason. It is also the wrong question: this site argues
+ * that take-home is the number that matters, not how many rivals there are.
+ *
+ * WHAT WOULD CHANGE THIS. Not a label, not a treatment, not a qualifier.
+ * Per-place revenue. The day a place's figure is read in that place instead of
+ * handed to it, the six links stop agreeing and the gloss starts earning its
+ * space. Until then a bare link that works beats a decorated one that misleads.
+ * Re-run the measurement before building it; do not take this note's word.
  *
  * Tokens and existing classes only; no raw color, no em-dashes.
  */
