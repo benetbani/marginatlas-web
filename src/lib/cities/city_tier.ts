@@ -18,6 +18,8 @@ import cityListJson from "../../../data/cities/city_list_v1.json";
 
 type CityEntry = {
   slug: string;
+  name?: string;
+  iso2?: string;
   tier?: number;
   pop_m?: number;
   cost_of_living_index?: number;
@@ -45,6 +47,18 @@ const POP_BY_SLUG: Map<string, number> = (() => {
     if (typeof c.pop_m === "number" && Number.isFinite(c.pop_m) && c.pop_m > 0) {
       m.set(c.slug.toLowerCase(), c.pop_m * 1_000_000);
     }
+  }
+  return m;
+})();
+
+// Display name + country code by city slug. Only entries carrying both are
+// indexed: a half-named city would put a bare slug or a bare code on a surface
+// that has no other context to fall back on.
+const IDENTITY_BY_SLUG: Map<string, { name: string; iso2: string }> = (() => {
+  const m = new Map<string, { name: string; iso2: string }>();
+  for (const c of CITIES) {
+    if (!c.slug || !c.name || !c.iso2) continue;
+    m.set(c.slug.toLowerCase(), { name: c.name, iso2: c.iso2 });
   }
   return m;
 })();
@@ -101,4 +115,28 @@ export function getCityCostOfLivingIndex(
 ): number | null {
   if (!geoSlug) return null;
   return COL_BY_SLUG.get(geoSlug.toLowerCase()) ?? null;
+}
+
+/**
+ * How a city is NAMED: its display name and its country code.
+ *
+ * Every other accessor in this file answers a question about a city's size or
+ * cost. This one answers "what do we call it", which is what a surface with no
+ * page context needs: /og/city receives a slug and nothing else, and a social
+ * card that said "london" instead of "London, United Kingdom" would be worse
+ * than no card.
+ *
+ * It exists as an accessor rather than a JSON import at the call site because
+ * verify_layering forbids a route reaching into data/ directly, and rightly:
+ * the city page's own JSON import is on the grandfathered allowlist and the
+ * standing rule is to migrate those when touched, never to add another.
+ *
+ * Null when the slug is not a known city (a state or region slug), which the
+ * caller must read as "not a city" and not as a blank name.
+ */
+export function getCityIdentity(
+  geoSlug: string | null | undefined,
+): { name: string; iso2: string } | null {
+  if (!geoSlug) return null;
+  return IDENTITY_BY_SLUG.get(geoSlug.toLowerCase()) ?? null;
 }

@@ -127,10 +127,31 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   // skeleton lands at byte 8547 and the 404 content at 28567. generateMetadata
   // runs before the flush, so this is where the status can still be set.
   if (!c) notFound();
+  const title = `${c.name}: small-business benchmarks | Margin Atlas`;
+  const description = `Typical revenue, employment, and wages for small businesses in ${c.name}.`;
+  const canonical = `/${country.toLowerCase()}`;
+  const ogPath = `/og/country?country=${encodeURIComponent(country.toLowerCase())}`;
   return {
-    title: `${c.name}: small-business benchmarks | Margin Atlas`,
-    description: `Typical revenue, employment, and wages for small businesses in ${c.name}.`,
-    alternates: { canonical: `/${country.toLowerCase()}` },
+    title,
+    description,
+    alternates: { canonical },
+    // title, description and images are all repeated below rather than
+    // inherited. Next resolves metadata per KEY by replacement, not by deep
+    // merge, so declaring openGraph at all discards the root layout's
+    // openGraph, images included. Same for twitter. See the note in
+    // src/app/layout.tsx.
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      images: [{ url: ogPath, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogPath],
+    },
   };
 }
 

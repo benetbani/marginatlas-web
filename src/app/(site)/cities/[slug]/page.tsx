@@ -182,9 +182,28 @@ export async function generateMetadata({
   const { slug } = await params;
   const city = CITIES_BY_SLUG.get(slug);
   if (!city) return { title: "City not found | Margin Atlas" };
+  const title = `${city.name} small business benchmarks | Margin Atlas`;
+  const description = `Revenue, employment, and wage benchmarks for small businesses in ${city.name}. Neighborhoods, comparable cities, and industry deep-dives.`;
+  const ogPath = `/og/city?slug=${encodeURIComponent(city.slug)}`;
   return {
-    title: `${city.name} small business benchmarks | Margin Atlas`,
-    description: `Revenue, employment, and wage benchmarks for small businesses in ${city.name}. Neighborhoods, comparable cities, and industry deep-dives.`,
+    title,
+    description,
+    // title, description and images are all repeated below rather than
+    // inherited. Next resolves metadata per KEY by replacement, not by deep
+    // merge, so declaring openGraph at all discards the root layout's
+    // openGraph, images included. Same for twitter. See the note in
+    // src/app/layout.tsx.
+    openGraph: {
+      title,
+      description,
+      images: [{ url: ogPath, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogPath],
+    },
   };
 }
 

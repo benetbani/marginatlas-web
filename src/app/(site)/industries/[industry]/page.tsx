@@ -52,13 +52,19 @@ import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import {
   getSameIndustryAcrossCountries,
   getSameIndustryAcrossStates,
-  cellUrl,
   withBudget,
-  type Cell,
 } from "@/lib/cells";
-import { iso2ToName } from "@/lib/countries";
-import { estimateNetProfit } from "@/lib/finance/net_profit";
-import { clampMargin } from "@/lib/finance/margin_floor";
+// activityPlaceFromCell used to be defined at the bottom of this file, which
+// made this page the only place in the codebase that could compute the
+// masthead's revenue figure. The social card at /og/industry has to print the
+// same number, so the mapper moved to a module both can import. The data flow
+// below is unchanged; only where the function lives changed.
+import {
+  activityPlaceFromCell,
+  US_STATE_SLATE_EXCLUDE,
+  US_STATE_SLATE_LIMIT,
+  US_STATE_SLATE_BUDGET_MS,
+} from "@/lib/industries/headline_band";
 import { ActivityPlacePicker } from "@/components/industries/ActivityPlacePicker";
 import { fmtPct } from "@/components/board/format";
 import { TakeHomeValue } from "@/components/monetization/TakeHomeValue";
@@ -138,10 +144,35 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
       ? raw
       : resolveToMeasuredIndustry(raw) || raw;
   if (!ind) return { title: "Activity not found | Margin Atlas" };
+  const title = `${ind.name}: small-business benchmarks | Margin Atlas`;
+  const description = `Margin structure and cost stack for ${ind.name.toLowerCase()}. Pick a country for revenue benchmarks.`;
+  const canonical = `/industries/${industry.toLowerCase()}`;
+  // The card is handed the RESOLVED activity slug, not the raw route param, so
+  // it shows the trade this page actually rendered. A request for hair-salons
+  // that resolves to a parent must not produce a card titled with the parent
+  // while the page is titled with the child, or the reverse.
+  const ogPath = `/og/industry?industry=${encodeURIComponent(industryToSlug(ind.id))}`;
   return {
-    title: `${ind.name}: small-business benchmarks | Margin Atlas`,
-    description: `Margin structure and cost stack for ${ind.name.toLowerCase()}. Pick a country for revenue benchmarks.`,
-    alternates: { canonical: `/industries/${industry.toLowerCase()}` },
+    title,
+    description,
+    alternates: { canonical },
+    // title, description and images are all repeated below rather than
+    // inherited. Next resolves metadata per KEY by replacement, not by deep
+    // merge, so declaring openGraph at all discards the root layout's
+    // openGraph, images included. Same for twitter. See the note in
+    // src/app/layout.tsx.
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      images: [{ url: ogPath, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogPath],
+    },
   };
 }
 
@@ -200,10 +231,17 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
       4_000,
       "activityAcrossCountries",
     ),
+    // The slate constants are named in @/lib/industries/headline_band so this
+    // page and /og/industry ask the same question of the same rows. A literal
+    // here and a literal there is how the page and its card come to disagree.
     withBudget(
-      getSameIndustryAcrossStates(activitySlug, "US-00", 24),
+      getSameIndustryAcrossStates(
+        activitySlug,
+        US_STATE_SLATE_EXCLUDE,
+        US_STATE_SLATE_LIMIT,
+      ),
       [],
-      4_000,
+      US_STATE_SLATE_BUDGET_MS,
       "activityAcrossStates",
     ),
   ]);
@@ -787,49 +825,7 @@ function signalToneClass(tone: "good" | "flat" | "bad"): string {
   return "text-atlas-700";
 }
 
-/**
- * Turn one cross-place Cell into a place row for the activity board's range +
- * "where it works" table, or null when the place has no usable typical revenue
- * (those are dropped rather than guessed).
- *
- * Owner take-home is the modeled after-tax net profit from the same tax-aware
- * estimator the cell page uses, so the worldwide table and the per-place cell
- * page agree on the method. The net margin is floored defensively (clampMargin)
- * exactly as on the cell page, so no sub-3% net leaks into the table. The href
- * points at that place's cell page for this activity via the shared cellUrl
- * shape, so every row resolves to a real benchmark.
- */
-function activityPlaceFromCell(
-  cell: Cell,
-  industryId: string | null,
-  cohort: "us-state" | "country",
-): ActivityPlaceInput | null {
-  const typicalRevenue = cell.revenue_per_firm ?? cell.rev_p50 ?? null;
-  if (typicalRevenue == null || !(typicalRevenue > 0)) return null;
-
-  const net = estimateNetProfit({
-    iso2: cell.country.toUpperCase(),
-    geoId: cell.geo_id || null,
-    industryId: industryId,
-    sectorId: cell.sector_id || null,
-    grossRevenue: typicalRevenue,
-    payroll: null,
-  });
-  const netMarginPct =
-    net.net_margin != null
-      ? clampMargin(net.net_margin, "net", industryId) * 100
-      : null;
-  const takeHome = net.net_profit ?? null;
-
-  const name =
-    cell.geo_name || iso2ToName(cell.country) || cell.country.toUpperCase();
-
-  return {
-    name,
-    href: cellUrl(cell),
-    typicalRevenue,
-    takeHome: takeHome != null && takeHome > 0 ? takeHome : null,
-    netMarginPct,
-    cohort,
-  };
-}
+// activityPlaceFromCell lived here. It now lives in
+// @/lib/industries/headline_band, imported at the top of this file, because
+// /og/industry has to build the masthead figure from the same mapper this page
+// does. Nothing about it changed in the move.

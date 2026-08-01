@@ -22,6 +22,20 @@
  * bundle-size history that forced the switch.
  */
 import { ImageResponse } from "next/og";
+// The frame, the brand lockup and the footer, shared with the four data cards
+// so the family stays ONE design. The palette lives there too; see that file's
+// header for why these are raw literals and not token reads. The hero block
+// below stays local: it is the only card that leads with a claim rather than a
+// title, and it hangs off the bottom on a terracotta rule.
+import {
+  CARD_SIZE,
+  INK,
+  MUTED,
+  TERRACOTTA,
+  OgFrame,
+  OgBrand,
+  OgFooter,
+} from "../_card";
 
 export const runtime = "nodejs";
 // The output is byte-identical on every request: no params, no data, no clock.
@@ -29,49 +43,11 @@ export const runtime = "nodejs";
 // cannot do this because its output depends on query parameters.
 export const dynamic = "force-static";
 
-/**
- * Palette. Terracotta plus cool neutrals, per the palette law in
- * docs/superpowers/plans/2026-06-16-visual-upgrade/EXECUTION-CONSTITUTION.md
- * section 1. Literals rather than reads from src/lib/design-tokens.ts for the
- * same reason given in /og/cell/route.tsx: that file's neutral ramps are the
- * warm brown-black ladder from the Warm Atlas reformation and hold no
- * cool-neutral family, so a token read here would paint the brown the law
- * bans. src/app/og/ is excluded from verify_hardcoded_hex because image
- * routes carry raw colour by nature.
- */
-const INK = "#0e1116"; // grey-900, primary text
-const MUTED = "#6b7785"; // grey-500, secondary text
-const TERRACOTTA = "#c11c00"; // atlas-600, the only accent
-
 export async function GET() {
   return new ImageResponse(
     (
-      <div
-        style={{
-          height: "100%",
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          background: "linear-gradient(135deg, #ffffff 0%, #f7f6f4 100%)",
-          padding: "72px",
-          fontFamily: "sans-serif",
-          color: INK,
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <div
-            style={{
-              display: "flex",
-              width: 36,
-              height: 36,
-              background: TERRACOTTA,
-              borderRadius: 6,
-            }}
-          />
-          <div style={{ fontSize: 28, fontWeight: 600, letterSpacing: -0.5 }}>
-            Margin Atlas
-          </div>
-        </div>
+      <OgFrame>
+        <OgBrand />
 
         <div
           style={{
@@ -118,24 +94,10 @@ export async function GET() {
           </div>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginTop: 40,
-            color: MUTED,
-            fontSize: 20,
-          }}
-        >
-          <span>marginatlas.com</span>
-          <span>Small businesses worldwide</span>
-        </div>
-      </div>
+        {/* 20, not the data cards' 18: this footer sits under a wider hero. */}
+        <OgFooter marginTop={40} fontSize={20} />
+      </OgFrame>
     ),
-    {
-      width: 1200,
-      height: 630,
-    }
+    CARD_SIZE
   );
 }

@@ -37,26 +37,20 @@ import { deriveCoverageTier } from "@/components/CoverageIndicator";
 // `estimated` as "country and activity averages", dropping "indicators" and
 // quietly weakening the claim. See the module header.
 import { COVERAGE_TIER_COPY } from "@/lib/coverage_tier_copy";
+// The frame, the brand lockup, the title block, the figure block and the
+// footer, shared with the other four cards so the family stays ONE design.
+// The palette lives there too; see that file's header for why these are raw
+// literals and not token reads.
+import {
+  CARD_SIZE,
+  OgFrame,
+  OgBrand,
+  OgTitle,
+  OgFigure,
+  OgFooter,
+} from "../_card";
 
 export const runtime = "nodejs";
-
-/**
- * Palette. Terracotta plus cool neutrals, per the palette law in
- * docs/superpowers/plans/2026-06-16-visual-upgrade/EXECUTION-CONSTITUTION.md
- * section 1. This card previously painted its text in #2A1810 and #5C453A,
- * both browns, which that law bans.
- *
- * These are literals rather than reads from src/lib/design-tokens.ts because
- * that file holds no cool-neutral family. Its ink and cocoa ramps are the warm
- * brown-black ladder from the 2026-06-04 Warm Atlas reformation (ink-900 is
- * #211810), so importing a token here would swap one brown for another and
- * leave the violation in place. The greys below are the constitution's own
- * ramp. src/app/og/ is excluded from verify_hardcoded_hex precisely because
- * image routes carry raw colour; see scripts/verify_hardcoded_hex.ts.
- */
-const INK = "#0e1116"; // grey-900, primary text
-const MUTED = "#6b7785"; // grey-500, secondary text and captions
-const TERRACOTTA = "#c11c00"; // atlas-600, the only accent, unchanged
 
 function formatMoney(v: number | null | undefined): string {
   if (v == null) return "-";
@@ -125,131 +119,20 @@ export async function GET(request: Request) {
 
   return new ImageResponse(
     (
-      <div
-        style={{
-          height: "100%",
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          background: "linear-gradient(135deg, #ffffff 0%, #f7f6f4 100%)",
-          padding: "72px",
-          fontFamily: "sans-serif",
-          color: INK,
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <div
-            style={{
-              display: "flex",
-              width: 36,
-              height: 36,
-              background: TERRACOTTA,
-              borderRadius: 6,
-            }}
-          />
-          <div style={{ fontSize: 28, fontWeight: 600, letterSpacing: -0.5 }}>
-            Margin Atlas
-          </div>
-        </div>
-
-        <div style={{ display: "flex", marginTop: 60, flexDirection: "column" }}>
-          <div
-            style={{
-              fontSize: 62,
-              fontWeight: 700,
-              lineHeight: 1.05,
-              letterSpacing: -1.5,
-              color: INK,
-            }}
-          >
-            {title}
-          </div>
-          <div
-            style={{
-              fontSize: 26,
-              marginTop: 16,
-              color: MUTED,
-              lineHeight: 1.3,
-            }}
-          >
-            {subtitle}
-          </div>
-        </div>
-
+      <OgFrame>
+        <OgBrand />
+        <OgTitle title={title} subtitle={subtitle} />
         {median ? (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              marginTop: "auto",
-              padding: "20px 28px",
-              background: "rgba(255,255,255,0.7)",
-              borderRadius: 16,
-              borderLeft: `6px solid ${TERRACOTTA}`,
-              alignSelf: "flex-start",
-            }}
-          >
-            <div style={{ fontSize: 20, color: MUTED }}>
-              Typical revenue
-            </div>
-            <div
-              style={{
-                fontSize: 60,
-                fontWeight: 700,
-                color: TERRACOTTA,
-                lineHeight: 1.1,
-                marginTop: 4,
-              }}
-            >
-              {median}
-            </div>
-            {/* Provenance, directly under the figure it qualifies. Placed
-                above the range so the first thing read after the number is
-                how the number was produced. */}
-            {provenance ? (
-              <div
-                style={{
-                  fontSize: 22,
-                  fontWeight: 500,
-                  color: MUTED,
-                  marginTop: 8,
-                }}
-              >
-                {provenance}
-              </div>
-            ) : null}
-            {detail ? (
-              <div style={{ fontSize: 20, color: MUTED, marginTop: 4 }}>
-                {detail}
-              </div>
-            ) : null}
-          </div>
+          <OgFigure
+            label="Typical revenue"
+            value={median}
+            provenance={provenance}
+            detail={detail}
+          />
         ) : null}
-
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            // The figure block above carries marginTop:auto, so when it renders
-            // it absorbs the free space and this footer just trails it by 32.
-            // When revenue is withheld that block is absent, nothing absorbs
-            // the space, and the footer rode up under the subtitle leaving the
-            // bottom third of the card empty. In that state the footer takes
-            // the auto itself.
-            marginTop: median ? 32 : "auto",
-            color: MUTED,
-            fontSize: 18,
-          }}
-        >
-          <span>marginatlas.com</span>
-          <span>Small businesses worldwide</span>
-        </div>
-      </div>
+        <OgFooter marginTop={median ? 32 : "auto"} />
+      </OgFrame>
     ),
-    {
-      width: 1200,
-      height: 630,
-    }
+    CARD_SIZE
   );
 }
