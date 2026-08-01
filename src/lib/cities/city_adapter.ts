@@ -26,6 +26,11 @@ import type {
   PointFigure,
 } from "./city_spine2_types";
 import { isNullFigure } from "./city_spine2_types";
+/* Chapter 07 reads the reconciled cell files directly. The contract requires
+   it: a trade row authored in the city file drifts from the trade page, and
+   already had. Domain to domain, both under src/lib, so the layering holds. */
+import { loadSpine2Cell } from "@/lib/cells/spine2_loader";
+import { isNullFigure as isNullCellFigure } from "@/lib/cells/spine2_types";
 
 /* ------------------- the trades a district favours ----------------------- */
 
@@ -302,6 +307,64 @@ const WEALTH_LABEL: Record<string, string> = {
   "well-below": "Well below average",
 };
 
+/**
+ * Chapter 07, what owners keep by trade.
+ *
+ * THE ROWS ARE READ FROM THE CELL FILES, NOT FROM THE CITY FILE, wherever a
+ * reconciled cell exists. This contract said so from its first commit: "Each
+ * row must be read from that trade's own cell file, never authored here, or the
+ * two pages will drift apart."
+ *
+ * They had already drifted. The London city file authored a cost to open of
+ * $197,000 for restaurants while the reconciled cell file computes $231,134 by
+ * summing its own opening lines, a gap of 17%. Rendering the authored value
+ * would have put two different answers to one question on two pages of the same
+ * site, which is the founder's oldest complaint about this project and one of
+ * the four contradictions he has been asked to settle.
+ *
+ * It does not need settling. The cell file wins by construction: it is the one
+ * that shows its arithmetic and carries a tier per line, and it is what the
+ * trade page prints. The city figure was lifted from a mockup. So this reads
+ * the cell where there is one and falls back to the authored row only where
+ * there is not, marking which is which so the page can be honest about it.
+ */
+function buildTradeEconomics(file: CityFile): CityTradeEconomicsModel | null {
+  const te = file.tradeEconomics;
+  if (te == null || isNullFigure(te.trades)) return null;
+
+  const citySlug = file.meta.city.slug;
+  const countrySlug = file.meta.country.slug;
+
+  const rows = te.trades.trades.map((t) => {
+    const cell = loadSpine2Cell(countrySlug, citySlug, t.tradeSlug);
+    /* isNullCellFigure, not the city one: these are cell figures and the two
+       unions are different types. Using the wrong guard compiles into a silent
+       non-narrowing, which is how a null reaches a formatter. */
+    const openingTotal =
+      cell && !isNullCellFigure(cell.opening.total) ? cell.opening.total.value : null;
+    const keeps =
+      cell && !isNullCellFigure(cell.modelRoom.ownerKeeps)
+        ? (cell.modelRoom.ownerKeeps.taken ?? null)
+        : null;
+
+    const keepsValue = keeps ?? t.ownerKeeps;
+    const openValue = openingTotal ?? t.costToOpen;
+
+    return {
+      tradeSlug: t.tradeSlug,
+      tradeName: t.tradeName,
+      revenue: Number.isFinite(t.revenue) ? money(t.revenue) : "not published",
+      ownerKeeps: Number.isFinite(keepsValue) ? money(keepsValue as number) : "not published",
+      costToOpen: Number.isFinite(openValue) ? money(openValue as number) : "not published",
+      /** True when this row came from a reconciled cell file rather than the
+       * city file, which is the only row a reader can click through and check. */
+      fromCell: cell != null,
+    };
+  });
+
+  return { rows, reconciled: rows.filter((r) => r.fromCell).length };
+}
+
 /** Chapter 05. See CityPeopleModel for why one figure in the file is skipped. */
 function buildPeople(file: CityFile): CityPeopleModel | null {
   const p = file.people;
@@ -412,6 +475,19 @@ export type CityArchetypeModel = {
   accent: boolean;
 };
 
+export type CityTradeEconomicsModel = {
+  rows: Array<{
+    tradeSlug: string;
+    tradeName: string;
+    revenue: string;
+    ownerKeeps: string;
+    costToOpen: string;
+    fromCell: boolean;
+  }>;
+  /** How many rows came from a reconciled cell file. */
+  reconciled: number;
+};
+
 export type CityPeopleModel = {
   residents: string | null;
   /** The wealth spread, in the file's own order, poorest first. */
@@ -437,7 +513,7 @@ export type CityPageModel = {
   visitors: null;
   people: CityPeopleModel | null;
   spaceCosts: null;
-  tradeEconomics: null;
+  tradeEconomics: CityTradeEconomicsModel | null;
   districtRent: null;
   tradeFit: null;
   districts: CityDistrictsModel | null;
@@ -540,7 +616,7 @@ export function buildCityPage(file: CityFile): CityPageModel {
     visitors: null,
     people: buildPeople(file),
     spaceCosts: null,
-    tradeEconomics: null,
+    tradeEconomics: buildTradeEconomics(file),
     districtRent: null,
     tradeFit: null,
     districts: buildDistricts(file),

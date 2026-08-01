@@ -203,7 +203,42 @@ export function CityPage({ model }: { model: CityPageModel }) {
           </ChapterSection>
         ) : null}
         {gap("spaceCosts", "what space costs")}
-        {gap("tradeEconomics", "what owners keep by trade")}
+        {/* 07 , what owners keep, across trades. Rows come from the reconciled
+            cell files where one exists; see buildTradeEconomics for why that
+            matters and what it already fixed. */}
+        {at("tradeEconomics") != null ? (
+          <ChapterSection chapter={at("tradeEconomics") as Chapter}>
+            {model.tradeEconomics != null ? (
+              <>
+                {model.tradeEconomics.rows.map((r) => (
+                  <div key={r.tradeSlug} className="panel rise" style={{ marginBottom: 8 }}>
+                    <div className="pad">
+                      <div className="row">
+                        <span className="nm">{r.tradeName}</span>
+                        <span className="v">{r.ownerKeeps} kept</span>
+                      </div>
+                      <div className="row">
+                        <span className="nm">Revenue</span>
+                        <span className="v">{r.revenue}</span>
+                      </div>
+                      <div className="row">
+                        <span className="nm">Cost to open</span>
+                        <span className="v">{r.costToOpen}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                <p className="k" style={{ margin: "10px 0 0" }}>
+                  {model.tradeEconomics.reconciled} of {model.tradeEconomics.rows.length} of these
+                  trades has a page of its own where the arithmetic is shown line by line. The rest
+                  are the city&rsquo;s own figures and are not yet reconciled against a trade.
+                </p>
+              </>
+            ) : (
+              <ChapterGap subject="what owners keep by trade" />
+            )}
+          </ChapterSection>
+        ) : null}
         {gap("districtRent", "rent by district")}
         {gap("tradeFit", "the best area for each trade")}
         {/* 10 , the districts. Three figures joined: rent, the wealth band and
