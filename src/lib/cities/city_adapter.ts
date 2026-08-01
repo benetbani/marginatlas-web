@@ -188,10 +188,26 @@ export function numberCityChapters(): CityChapter[] {
  * abbreviate identically. A city page that says $22K beside a trade page that
  * says $22,000 for the same quantity reads as two products.
  */
+/** Drop a trailing `.0`, so 1.0 prints as 1 and 2.5 survives. */
+function trim(s: string): string {
+  return s.endsWith(".0") ? s.slice(0, -2) : s;
+}
+
 function money(v: number): string {
   const a = Math.abs(v);
-  if (a >= 1_000_000) return `$${(v / 1_000_000).toFixed(a >= 10_000_000 ? 0 : 1)}M`;
-  if (a >= 1_000) return `$${Math.round(v / 1_000)}K`;
+  /* BILLIONS. Without this branch, visitor spend of 53,000,000,000 printed as
+     "$53000M", which is not a number anyone reads. City-scale totals reach this
+     range and trade-scale ones never do, which is why it went unnoticed while
+     only the trade page used this register. */
+  if (a >= 1_000_000_000) return `$${trim((v / 1_000_000_000).toFixed(a >= 10_000_000_000 ? 0 : 1))}B`;
+  if (a >= 1_000_000) return `$${trim((v / 1_000_000).toFixed(a >= 10_000_000 ? 0 : 1))}M`;
+  if (a >= 10_000) return `$${Math.round(v / 1_000)}K`;
+  /* ONE DECIMAL UNDER 10K, for the same reason the M branch has one. Rounding
+     to whole thousands here costs up to 500 on a figure of 2,500, a fifth of it:
+     spend per visitor printed as "$3K" when the number is 2,524. Verified before
+     changing it that no figure rendered today falls in this window, so nothing
+     already on the page moves. */
+  if (a >= 1_000) return `$${trim((v / 1_000).toFixed(1))}K`;
   return `$${Math.round(v)}`;
 }
 
@@ -227,7 +243,17 @@ function display(f: Figure | undefined, unitOverride?: string): string | null {
   const unit = (unitOverride ?? p.unit ?? "").trim();
 
   if (/^USD/i.test(unit)) return money(p.value);
-  if (unit === "%" || /^percent/i.test(unit)) return `${p.value}%`;
+  /* ANY unit that OPENS with a percent sign, not just the bare one. The fixture
+     carries seven: "%", "% of payments", "% of all spend in the city",
+     "% below the poverty line", "% of discretionary spend", "% change in rent",
+     "% over ten years". The original test was `unit === "%"`, so six of the
+     seven rendered as a bare number and the reader had no way to know 86 meant
+     86 percent. Enumerated against the fixture rather than guessed, which is the
+     same mistake this function's own header records. */
+  if (/^%/.test(unit) || /^percent/i.test(unit)) return `${p.value}%`;
+  /* Floor area is printed with its unit because the label beside it says what
+     the room is for, not how it is measured. */
+  if (unit === "sqm") return `${p.value} sqm`;
   // "x the country", "x the UK", "x" , a multiple of some baseline.
   if (/^x\b/i.test(unit)) return `${p.value}x`;
   // "score of 100", "of 100" , the denominator is the column header's job.
@@ -363,6 +389,247 @@ function buildTradeEconomics(file: CityFile): CityTradeEconomicsModel | null {
   });
 
   return { rows, reconciled: rows.filter((r) => r.fromCell).length };
+}
+
+/* --------------------- 03 household income and wealth -------------------- */
+
+export type CityIncomeAndWealthModel = {
+  /** The top tenth against the middle earner, e.g. "2.8x". */
+  topTenthVsMiddle: string | null;
+  /** The income spread, in the file's own order. */
+  spread: Array<{ label: string; median: string; lo: string; hi: string }>;
+  paidByCard: string | null;
+};
+
+/**
+ * Chapter 03.
+ *
+ * `topTenthVsMiddle` is RENDERED AS AUTHORED, and that is a compromise worth
+ * naming. The contract says it "restates the ratio of two rows of `spread`, and
+ * a filled file should re-derive it rather than author a second opinion", which
+ * is the right rule. It cannot be applied here: `CityIncomeBand` carries a free
+ * `label` and no stable key, so there is no way to tell which row is the top
+ * tenth and which is the middle earner except by matching prose or by trusting
+ * row order, and both of those are how a page starts printing the wrong number
+ * in the two hundredth city. The fixture's authored 2.8 does agree with its own
+ * spread (130,000 over 47,000 is 2.77), so nothing disagrees today.
+ *
+ * Recorded as a contract gap rather than papered over: giving `CityIncomeBand` a
+ * closed key would let this derive, which is the same fix the archetype
+ * vocabulary already got.
+ */
+function buildIncomeAndWealth(file: CityFile): CityIncomeAndWealthModel | null {
+  const iw = file.incomeAndWealth;
+  if (iw == null) return null;
+
+  const spread = isNullFigure(iw.spread)
+    ? []
+    : iw.spread.rows.map((r) => ({
+        label: r.label,
+        median: money(r.median),
+        lo: money(r.lo),
+        hi: money(r.hi),
+      }));
+
+  const topTenth = display(iw.topTenthVsMiddle);
+  const card = display(iw.paidByCard);
+  if (!spread.length && topTenth == null && card == null) return null;
+
+  return { topTenthVsMiddle: topTenth, spread, paidByCard: card };
+}
+
+/* ---------------------- 04 visitors through the year --------------------- */
+
+export type CityVisitorsModel = {
+  count: string | null;
+  spend: string | null;
+  spendPerVisitor: string | null;
+  shareOfCitySpend: string | null;
+  /** Derived from the twelve-month index. Null when no series is published. */
+  peak: { month: string; index: number } | null;
+  trough: { month: string; index: number } | null;
+  topDistrict: { name: string; share: string | null } | null;
+};
+
+/**
+ * Chapter 04.
+ *
+ * TWO FIGURES ARE DERIVED HERE BECAUSE THE CONTRACT SAYS TO DERIVE THEM.
+ *
+ * The peak and trough months are read off `monthlyIndex` rather than authored,
+ * which is what makes the chapter's sentence true in a city whose season runs
+ * the other way round. Southern-hemisphere cities peak in December and January,
+ * and an authored "busiest in August" would have been copied into two hundred
+ * files before anyone noticed.
+ *
+ * `spendPerVisitor` is re-derived from spend over count wherever both exist, per
+ * the contract: "a filled file should re-derive rather than author a second
+ * opinion". The fixture authors 2,500 and the division gives 2,524; both print
+ * as $2.5K, so the two agree today, and where they ever stop agreeing the
+ * arithmetic wins over the copied number.
+ */
+function buildVisitors(file: CityFile): CityVisitorsModel | null {
+  const v = file.visitors;
+  if (v == null) return null;
+
+  let peak: { month: string; index: number } | null = null;
+  let trough: { month: string; index: number } | null = null;
+  if (!isNullFigure(v.monthlyIndex) && v.monthlyIndex.series.length > 0) {
+    const pts = v.monthlyIndex.series;
+    const hi = pts.reduce((b, p) => (p.value > b.value ? p : b));
+    const lo = pts.reduce((b, p) => (p.value < b.value ? p : b));
+    peak = { month: String(hi.x), index: hi.value };
+    trough = { month: String(lo.x), index: lo.value };
+  }
+
+  const countValue = isNullFigure(v.count) ? null : v.count.value;
+  const spendValue = isNullFigure(v.spend) ? null : v.spend.value;
+  const perVisitor =
+    countValue != null && spendValue != null && countValue > 0
+      ? money(spendValue / countValue)
+      : display(v.spendPerVisitor);
+
+  const td = v.topDistrict;
+  const topDistrict = isNullFigure(td as Figure)
+    ? null
+    : {
+        name: (td as { districtName: string }).districtName,
+        share: display((td as { shareOfSpend: Figure }).shareOfSpend),
+      };
+
+  const anything =
+    display(v.count) != null || display(v.spend) != null || peak != null || topDistrict != null;
+  if (!anything) return null;
+
+  return {
+    count: display(v.count),
+    spend: display(v.spend),
+    spendPerVisitor: perVisitor,
+    shareOfCitySpend: display(v.shareOfCitySpend),
+    peak,
+    trough,
+    topDistrict,
+  };
+}
+
+/* -------------------------- 06 what space costs -------------------------- */
+
+export type CitySpaceCostsModel = {
+  /** Of every 100 spent standing somewhere, where it goes. */
+  costSplit: Array<{ label: string; value: number }>;
+  sizes: Array<{
+    label: string;
+    description: string;
+    area: string | null;
+    annualCost: string | null;
+  }>;
+  anchorTrade: {
+    tradeSlug: string;
+    tradeName: string;
+    area: string | null;
+    demandPerDay: string | null;
+    annualSpaceCost: string | null;
+  } | null;
+  note: string | null;
+};
+
+/**
+ * Chapter 06.
+ *
+ * `anchorTrade` is a worked example belonging to ONE trade, and the contract is
+ * blunt about it: "EVERY FIGURE HERE BELONGS TO THAT TRADE'S CELL FILE and must
+ * be read from it at build time." It is not read from the cell file yet, and it
+ * renders as authored, so this is the same drift chapter 07 already had and had
+ * to have fixed. The fixture's own notes say all three figures agree with the
+ * London restaurant file today, so nothing disagrees; what is missing is the
+ * mechanism that keeps it that way. Recorded rather than shipped as if
+ * reconciled.
+ */
+function buildSpaceCosts(file: CityFile): CitySpaceCostsModel | null {
+  const s = file.spaceCosts;
+  if (s == null) return null;
+
+  const costSplit = isNullFigure(s.costSplit)
+    ? []
+    : s.costSplit.series.map((p) => ({ label: String(p.x), value: p.value }));
+
+  const sizes = s.sizes
+    ? [s.sizes.small, s.sizes.medium, s.sizes.large].filter(Boolean).map((u) => ({
+        label: u.label,
+        description: u.description,
+        area: display(u.floorAreaSqm),
+        annualCost: display(u.annualCost),
+      }))
+    : [];
+
+  const at = s.anchorTrade;
+  const anchorTrade =
+    at == null || isNullFigure(at as Figure)
+      ? null
+      : {
+          tradeSlug: (at as { tradeSlug: string }).tradeSlug,
+          tradeName: (at as { tradeName: string }).tradeName,
+          area: display((at as { floorAreaSqm: Figure }).floorAreaSqm),
+          demandPerDay: (() => {
+            const d = (at as { demandPerDay: Figure }).demandPerDay;
+            if (isNullFigure(d)) return null;
+            const p = d as PointFigure;
+            /* "52 orders/day" reads as a file path. The unit strings are prose
+               by design, so the slash goes back to being a word. */
+            return `${p.value} ${String(p.unit ?? "").replace("/day", " a day")}`.trim();
+          })(),
+          annualSpaceCost: display((at as { annualSpaceCost: Figure }).annualSpaceCost),
+        };
+
+  if (!costSplit.length && !sizes.length && anchorTrade == null) return null;
+  return { costSplit, sizes, anchorTrade, note: s.note ?? null };
+}
+
+/* --------------------------- 08 rent by district ------------------------- */
+
+export type CityDistrictRentModel = {
+  /** What the per-district cost figures price, in plain words. */
+  unitPriced: string;
+  rows: Array<{
+    slug: string;
+    name: string;
+    /** Rent against the city rate, e.g. "1.4x". */
+    rent: string | null;
+    annualUnitCost: string | null;
+  }>;
+  /** How many districts carry a price for that unit. */
+  priced: number;
+};
+
+/**
+ * Chapter 08, THE SAME LIST chapter 10 renders.
+ *
+ * One field drives both, which is the point: the contract keeps a single
+ * district list "precisely so they cannot print different multiples for the same
+ * place". Chapter 08 reads it as a rent scale, chapter 10 as character cards.
+ *
+ * A district with no priced unit prints "not priced here" rather than dropping
+ * out of the scale, so a reader can see that three of six are missing instead of
+ * reading a shorter list as a complete one. The NullFigure's `reason` is NOT
+ * rendered: those reasons are written for us and talk about our own mockups,
+ * which is not a sentence a reader should ever meet.
+ */
+function buildDistrictRent(file: CityFile): CityDistrictRentModel | null {
+  const d = file.districts;
+  if (d == null || isNullFigure(d.list)) return null;
+
+  const rows = d.list.districts.map((row) => ({
+    slug: row.slug,
+    name: row.name,
+    rent: Number.isFinite(row.rentMultiple) ? `${row.rentMultiple.toFixed(1)}x` : null,
+    annualUnitCost: display(row.annualUnitCost),
+  }));
+
+  return {
+    unitPriced: d.unitPriced,
+    rows,
+    priced: rows.filter((r) => r.annualUnitCost != null).length,
+  };
 }
 
 /** Chapter 05. See CityPeopleModel for why one figure in the file is skipped. */
@@ -507,14 +774,14 @@ export type CityPageModel = {
   chapters: CityChapter[];
   hero: CityHeroModel | null;
   scorecard: CityScorecardModel | null;
+  incomeAndWealth: CityIncomeAndWealthModel | null;
+  visitors: CityVisitorsModel | null;
+  people: CityPeopleModel | null;
+  spaceCosts: CitySpaceCostsModel | null;
+  tradeEconomics: CityTradeEconomicsModel | null;
+  districtRent: CityDistrictRentModel | null;
   /** Chapters not yet ported. Present so the assembly can be written against
    *  the full spine today and filled in without touching it again. */
-  incomeAndWealth: null;
-  visitors: null;
-  people: CityPeopleModel | null;
-  spaceCosts: null;
-  tradeEconomics: CityTradeEconomicsModel | null;
-  districtRent: null;
   tradeFit: null;
   districts: CityDistrictsModel | null;
   direction: null;
@@ -612,12 +879,12 @@ export function buildCityPage(file: CityFile): CityPageModel {
     chapters: numberCityChapters(),
     hero,
     scorecard,
-    incomeAndWealth: null,
-    visitors: null,
+    incomeAndWealth: buildIncomeAndWealth(file),
+    visitors: buildVisitors(file),
     people: buildPeople(file),
-    spaceCosts: null,
+    spaceCosts: buildSpaceCosts(file),
     tradeEconomics: buildTradeEconomics(file),
-    districtRent: null,
+    districtRent: buildDistrictRent(file),
     tradeFit: null,
     districts: buildDistricts(file),
     direction: null,

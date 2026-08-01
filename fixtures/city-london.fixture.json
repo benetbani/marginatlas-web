@@ -781,7 +781,7 @@
     }
   },
   "districts": {
-    "unitPriced": "a high-street unit. The design mockup does not state its floor area, so what is being priced across districts is not defined; the implied cost at the city rate, about 37K a year, matches no row in the size table in chapter 06.",
+    "unitPriced": "a high-street unit, floor area not stated",
     "list": {
       "districts": [
         {

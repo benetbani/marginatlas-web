@@ -141,8 +141,104 @@ export function CityPage({ model }: { model: CityPageModel }) {
           </ChapterSection>
         ) : null}
 
-        {gap("incomeAndWealth", "household income and wealth")}
-        {gap("visitors", "visitor numbers through the year")}
+        {/* 03 , the income spread. Three dumbbells, printed as a range with the
+            median called out, because the middle of a spread is the number an
+            operator prices against and the ends are what tells them how wide
+            the market is. */}
+        {at("incomeAndWealth") != null ? (
+          <ChapterSection chapter={at("incomeAndWealth") as Chapter}>
+            {model.incomeAndWealth != null ? (
+              <>
+                {model.incomeAndWealth.spread.length ? (
+                  <div className="panel rise" style={{ marginBottom: 10 }}>
+                    <div className="pad">
+                      {model.incomeAndWealth.spread.map((r) => (
+                        <div className="row" key={r.label}>
+                          <span className="nm">{r.label}</span>
+                          <span className="v">
+                            {r.median} <span className="s">{r.lo} to {r.hi}</span>
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+                <div className="panel rise">
+                  <div className="pad">
+                    <div className="row">
+                      <span className="nm">The top tenth against the middle earner</span>
+                      <span className="v">
+                        {model.incomeAndWealth.topTenthVsMiddle ?? "not published"}
+                      </span>
+                    </div>
+                    <div className="row">
+                      <span className="nm">Paid by card</span>
+                      <span className="v">{model.incomeAndWealth.paidByCard ?? "not published"}</span>
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <ChapterGap subject="household income and wealth" />
+            )}
+          </ChapterSection>
+        ) : null}
+
+        {/* 04 , visitors. The busiest and quietest months are DERIVED from the
+            twelve-month index, never authored, so a city whose season runs the
+            other way round reads correctly without anyone remembering to say
+            so. */}
+        {at("visitors") != null ? (
+          <ChapterSection chapter={at("visitors") as Chapter}>
+            {model.visitors != null ? (
+              <>
+                <div className="panel rise" style={{ marginBottom: 10 }}>
+                  <div className="pad">
+                    <div className="row">
+                      <span className="nm">Visitors a year</span>
+                      <span className="v">{model.visitors.count ?? "not published"}</span>
+                    </div>
+                    <div className="row">
+                      <span className="nm">What they spend here</span>
+                      <span className="v">{model.visitors.spend ?? "not published"}</span>
+                    </div>
+                    <div className="row">
+                      <span className="nm">Each, on average</span>
+                      <span className="v">{model.visitors.spendPerVisitor ?? "not published"}</span>
+                    </div>
+                    <div className="row">
+                      <span className="nm">Share of all spend in the city</span>
+                      <span className="v">{model.visitors.shareOfCitySpend ?? "not published"}</span>
+                    </div>
+                  </div>
+                </div>
+                {model.visitors.peak && model.visitors.trough ? (
+                  <p className="k" style={{ margin: "0 0 6px" }}>
+                    Busiest in {model.visitors.peak.month}, at {model.visitors.peak.index} against a
+                    year of 100. Quietest in {model.visitors.trough.month}, at{" "}
+                    {model.visitors.trough.index}.
+                  </p>
+                ) : (
+                  <p className="k" style={{ margin: "0 0 6px" }}>
+                    No month-by-month visitor count is published for this city, so the busy and
+                    quiet parts of the year are not stated here.
+                  </p>
+                )}
+                {model.visitors.topDistrict ? (
+                  <p className="k" style={{ margin: 0 }}>
+                    Visitor money lands hardest in {model.visitors.topDistrict.name}
+                    {model.visitors.topDistrict.share
+                      ? `, at ${model.visitors.topDistrict.share} of what is spent there`
+                      : ", though no share is published for it"}
+                    .
+                  </p>
+                ) : null}
+              </>
+            ) : (
+              <ChapterGap subject="visitor numbers through the year" />
+            )}
+          </ChapterSection>
+        ) : null}
         {/* 05 , POPs. Ratified 2026-06-22, filled in the contract and the file
             since the city page was built, and rendering as a stated gap until
             now. The spending read is the part an operator needs: who is here
@@ -202,7 +298,73 @@ export function CityPage({ model }: { model: CityPageModel }) {
             )}
           </ChapterSection>
         ) : null}
-        {gap("spaceCosts", "what space costs")}
+        {/* 06 , what space costs. Three sizes with what each one costs, the
+            split of where that money goes, and one worked example in a named
+            trade so the reader can attach the abstraction to a room. */}
+        {at("spaceCosts") != null ? (
+          <ChapterSection chapter={at("spaceCosts") as Chapter}>
+            {model.spaceCosts != null ? (
+              <>
+                {model.spaceCosts.sizes.length ? (
+                  <div className="panel rise" style={{ marginBottom: 10 }}>
+                    <div className="pad">
+                      {model.spaceCosts.sizes.map((u) => (
+                        <div className="row" key={u.label}>
+                          <span className="nm">
+                            {u.label}
+                            <span className="s">{u.description}</span>
+                          </span>
+                          <span className="v">
+                            {u.area ?? "size not stated"}
+                            {u.annualCost ? `, ${u.annualCost} a year` : ", not priced"}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+
+                {model.spaceCosts.costSplit.length ? (
+                  <div className="panel rise" style={{ marginBottom: 10 }}>
+                    <div className="pad">
+                      {model.spaceCosts.costSplit.map((c) => (
+                        <div className="row" key={c.label}>
+                          <span className="nm">{c.label}</span>
+                          <span className="v">{c.value}</span>
+                        </div>
+                      ))}
+                      <p className="k" style={{ margin: "8px 0 0" }}>
+                        Where every 100 of a unit&rsquo;s yearly cost goes.
+                      </p>
+                    </div>
+                  </div>
+                ) : null}
+
+                {model.spaceCosts.anchorTrade ? (
+                  <p className="k" style={{ margin: "0 0 6px" }}>
+                    A {model.spaceCosts.anchorTrade.tradeName.toLowerCase()} here takes about{" "}
+                    {model.spaceCosts.anchorTrade.area ?? "an unstated amount of space"}
+                    {model.spaceCosts.anchorTrade.demandPerDay
+                      ? `, does ${model.spaceCosts.anchorTrade.demandPerDay}`
+                      : ""}
+                    {model.spaceCosts.anchorTrade.annualSpaceCost
+                      ? `, and pays ${model.spaceCosts.anchorTrade.annualSpaceCost} a year to stand there`
+                      : ""}
+                    .
+                  </p>
+                ) : null}
+
+                {model.spaceCosts.note ? (
+                  <p className="k" style={{ margin: 0 }}>
+                    {model.spaceCosts.note}
+                  </p>
+                ) : null}
+              </>
+            ) : (
+              <ChapterGap subject="what space costs" />
+            )}
+          </ChapterSection>
+        ) : null}
         {/* 07 , what owners keep, across trades. Rows come from the reconciled
             cell files where one exists; see buildTradeEconomics for why that
             matters and what it already fixed. */}
@@ -239,7 +401,43 @@ export function CityPage({ model }: { model: CityPageModel }) {
             )}
           </ChapterSection>
         ) : null}
-        {gap("districtRent", "rent by district")}
+        {/* 08 , rent by district. The SAME list chapter 10 renders, read as a
+            scale rather than as cards, so the two can never print different
+            multiples for one place. A district with no priced unit says so
+            instead of dropping out, or three of six missing would read as a
+            complete list. */}
+        {at("districtRent") != null ? (
+          <ChapterSection chapter={at("districtRent") as Chapter}>
+            {model.districtRent != null ? (
+              <>
+                <div className="panel rise">
+                  <div className="pad">
+                    {model.districtRent.rows.map((r) => (
+                      <div className="row" key={r.slug}>
+                        <span className="nm">{r.name}</span>
+                        <span className="v">
+                          {r.rent ?? "not priced"}
+                          {r.annualUnitCost ? (
+                            <span className="s">{r.annualUnitCost} a year</span>
+                          ) : (
+                            <span className="s">not priced here</span>
+                          )}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <p className="k" style={{ margin: "10px 0 0" }}>
+                  Rent against the city rate, where 1.0 is the city rate itself. The yearly figure
+                  prices {model.districtRent.unitPriced}, and {model.districtRent.priced} of{" "}
+                  {model.districtRent.rows.length} districts carry a price for it.
+                </p>
+              </>
+            ) : (
+              <ChapterGap subject="rent by district" />
+            )}
+          </ChapterSection>
+        ) : null}
         {gap("tradeFit", "the best area for each trade")}
         {/* 10 , the districts. Three figures joined: rent, the wealth band and
             the population mix, with the favoured trades derived from the mix.
