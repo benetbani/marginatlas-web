@@ -166,6 +166,22 @@ const GATES: Gate[] = [
      with the label repaired it reported zero and passed under --strict. Flip
      this registration to args ["--strict"] the moment the repair lands. */
   { name: "shared-revenue (KNOWN DEFECT)", script: "scripts/verify_shared_revenue_across_countries.ts" },
+  /* A URL assembled from parts is not a URL that resolves. Seven live link
+     defects were found and repaired in four iterations on 2026-08-01 and every
+     one was the same move, and every one passed the dead-link gate, which
+     matches only quoted literals and checks route shape rather than whether a
+     segment names the place the link claims. The two routes that refuse a
+     segment outside a closed list are the country page and the region page, and
+     resolveGeoPage and countryPagePath in src/lib/cells/related_links.ts are the
+     sanctioned way to ask. This gate fails when someone writes the construction
+     without them, and separately pins the slugs that name a city on one route
+     and a region on another, which is how "All of New York" opened the state.
+     Registered 2026-08-01 as a RATCHET on the construction set and the collision
+     set, because live constructions remain and this iteration built the
+     instrument rather than repairing them. Negative-tested twice with different
+     defect shapes: a new two-segment construction in a component, and a new
+     colliding city slug. Flip to args ["--strict"] once the repairs land. */
+  { name: "geo-link-construction (KNOWN DEFECT)", script: "scripts/verify_geo_link_construction.ts" },
 ];
 
 /** CLI arg parsing. */
