@@ -38,6 +38,7 @@ import { CellDataset, Breadcrumbs } from "@/components/StructuredData";
 import {
   buildCellRelatedLinks,
   fetchCellSiblings,
+  resolveGeoPage,
 } from "@/lib/cells/related_links";
 import { CellRelatedLinks } from "@/components/cells/CellRelatedLinks";
 import { getToneClass } from "@/lib/page-layout/section-order";
@@ -303,6 +304,7 @@ async function CellPageBody({
       const model = buildCellPage(spine2Cell);
       const origin = "https://www.marginatlas.com";
       const url = `${origin}${m.urlPath}`;
+      const spine2GeoPage = resolveGeoPage(m.country.slug, m.city.slug);
       return (
         <>
           <CellDataset
@@ -320,11 +322,19 @@ async function CellPageBody({
               answer: x.a,
             }))}
           />
+          {/* The place step is resolved, not assembled, for the reason spelled
+             out at the legacy branch's breadcrumb below: the two-segment form of
+             a trade URL serves regions, so a city segment there is a 404. The
+             item is omitted outright when nothing resolves, and BreadcrumbList
+             positions renumber because the component numbers what it is
+             handed. */}
           <Breadcrumbs
             items={[
               { name: "Home", url: `${origin}/` },
               { name: m.country.name, url: `${origin}/${m.country.slug}` },
-              { name: m.city.name, url: `${origin}/${m.country.slug}/${m.city.slug}` },
+              ...(spine2GeoPage
+                ? [{ name: m.city.name, url: `${origin}${spine2GeoPage.href}` }]
+                : []),
               { name: m.trade.name, url },
             ]}
           />
@@ -834,6 +844,11 @@ async function CellPageBody({
     <CellRelatedLinks model={relatedLinks} />
   ) : null;
 
+  // The page that owns this cell's PLACE, when one exists. Read from the same
+  // module the related tail reads it from, so the tail's place link and the two
+  // breadcrumbs below cannot disagree about whether the place has a page.
+  const geoPage = resolveGeoPage(country, geo);
+
   const url = `https://www.marginatlas.com/${country}/${geo}/${industry}`;
   return (
     // Wider gap between content and right TOC.
@@ -866,11 +881,34 @@ async function CellPageBody({
       {/* Plan v14 Phase C.4: FAQPage JSON-LD. Five data-backed Q&As per cell,
          no visible DOM. Targets AI Overviews + Google People Also Ask. */}
       <FAQSchema faqs={faqs} />
+      {/* THE PLACE STEP. Both trails below get their destination from
+         resolveGeoPage, the same resolver the related tail uses, and both accept
+         that it can answer nothing.
+
+         Until 2026-08-01 both trails assembled the two-segment form of this
+         URL instead. That route serves REGIONS: US states, admin1 entities where
+         a manifest exists, otherwise one synthesized country slug. A CITY is in
+         none of those, so the step 404d on every trade page whose geo is a city,
+         which is the page type search traffic lands on. The JSON-LD carried the
+         same URL, so the site was also telling crawlers its canonical trail runs
+         through a dead end.
+
+         Where nothing resolves the visible step drops its destination and the
+         BreadcrumbList drops the ITEM. Positions stay contiguous because the
+         component numbers what it is handed, so a dropped step renumbers rather
+         than leaving a hole. */}
       <Breadcrumbs
         items={[
           { name: "Home", url: "https://www.marginatlas.com/" },
           { name: country.toUpperCase(), url: `https://www.marginatlas.com/${country}` },
-          { name: cell.geo_name || geo, url: `https://www.marginatlas.com/${country}/${geo}` },
+          ...(geoPage
+            ? [
+                {
+                  name: cell.geo_name || geo,
+                  url: `https://www.marginatlas.com${geoPage.href}`,
+                },
+              ]
+            : []),
           { name: cell.industry_name || industry, url },
         ]}
       />
@@ -887,7 +925,7 @@ async function CellPageBody({
           },
           {
             label: cell.geo_name || geo,
-            href: `/${country.toLowerCase()}/${geo}`,
+            href: geoPage?.href,
           },
           { label: cell.industry_name || industry },
         ]}

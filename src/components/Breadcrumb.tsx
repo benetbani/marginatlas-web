@@ -10,10 +10,19 @@ import { CountryFlag } from "@/components/CountryFlag";
 
 export type Crumb = {
   label: string;
+  /**
+   * Where this step goes. OPTIONAL, and omitting it is a supported state rather
+   * than an oversight: some places the trail passes through have no page of
+   * their own (a UK local authority is a trade-page geo but is neither a city
+   * page nor one of the four admin1 nations). A step with no destination renders
+   * as trail text. Never point a step at a URL that answers 404 to keep it
+   * clickable: a dead step spends the reader's click and the crawler's budget,
+   * and a non-clickable step costs neither.
+   */
   href?: string;
   /** Emoji or character glyph rendered before the label. */
   glyph?: string;
-  /** ISO-2 country code — when set, renders the SVG <CountryFlag> instead of an emoji. */
+  /** ISO-2 country code: when set, renders the SVG <CountryFlag> instead of an emoji. */
   iso2?: string;
 };
 
@@ -40,6 +49,20 @@ export function Breadcrumb({ items, maxVisible = 4 }: Props) {
       {visible.map((crumb, i) => {
         const isLast = i === visible.length - 1;
         const showCollapsedMarker = collapsed && i === 1;
+        // Built once so the linked and unlinked branches below cannot drift
+        // apart in what a step actually shows.
+        const face = (
+          <>
+            {crumb.iso2 ? (
+              <CountryFlag iso2={crumb.iso2} label={crumb.label} className="w-4" />
+            ) : crumb.glyph ? (
+              <span className="text-base leading-none flag" aria-hidden>
+                {crumb.glyph}
+              </span>
+            ) : null}
+            <span>{crumb.label}</span>
+          </>
+        );
         return (
           <span key={`${crumb.label}-${i}`} className="flex items-center gap-1">
             {showCollapsedMarker ? (
@@ -57,25 +80,22 @@ export function Breadcrumb({ items, maxVisible = 4 }: Props) {
                 href={crumb.href}
                 className="text-atlas-700 hover:text-atlas-700 transition-colors inline-flex items-center gap-1 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50"
               >
-                {crumb.iso2 ? (
-                  <CountryFlag iso2={crumb.iso2} label={crumb.label} className="w-4" />
-                ) : crumb.glyph ? (
-                  <span className="text-base leading-none flag" aria-hidden>
-                    {crumb.glyph}
-                  </span>
-                ) : null}
-                <span>{crumb.label}</span>
+                {face}
               </Link>
             ) : (
-              <span className="text-ink-900 font-medium inline-flex items-center gap-1">
-                {crumb.iso2 ? (
-                  <CountryFlag iso2={crumb.iso2} label={crumb.label} className="w-4" />
-                ) : crumb.glyph ? (
-                  <span className="text-base leading-none flag" aria-hidden>
-                    {crumb.glyph}
-                  </span>
-                ) : null}
-                <span>{crumb.label}</span>
+              /* Emphasis follows POSITION, not linkability. The last step is
+                 the page you are on and reads dark; an earlier step with no
+                 destination is still trail, so it keeps the trail's weight
+                 rather than borrowing the "you are here" treatment and
+                 pretending the page has two current steps. */
+              <span
+                className={
+                  isLast
+                    ? "text-ink-900 font-medium inline-flex items-center gap-1"
+                    : "text-ink-700 inline-flex items-center gap-1"
+                }
+              >
+                {face}
               </span>
             )}
             {!isLast ? (

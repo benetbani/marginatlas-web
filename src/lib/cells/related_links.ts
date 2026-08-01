@@ -345,20 +345,49 @@ function verifiedTradePath(args: {
   return path;
 }
 
-/** This place's own page: the city page when there is one, else the region page. */
-function placePagePath(
+/** A place page that provably exists, for whoever needs to point at one. */
+export type GeoPageTarget = {
+  /** Site-relative path. Resolved, never assembled and hoped over. */
+  href: string;
+  /** What the destination page calls this place. */
+  name: string;
+  /** Which of the two routes answers it. */
+  kind: "city" | "region";
+};
+
+/**
+ * THIS PLACE'S OWN PAGE, OR NOTHING.
+ *
+ * The middle segment of a trade URL is a PLACE, and the route that owns the
+ * two-segment form serves REGIONS only: US states, a country's admin1 entities
+ * where a manifest exists, and otherwise the single "All of {country}" slug it
+ * synthesizes. getRegionsForCountry is that entire list and the region route
+ * calls notFound() for anything outside it, so a CITY segment names a page that
+ * does not exist. The city page is the honest destination wherever one is
+ * published, and the city route tests a slug against the same city list before
+ * its own notFound(), so membership in that list is the whole test.
+ *
+ * Null is a real answer, not a failure. A UK local authority such as
+ * GB-E06000043 is a cell geo, is not one of the four GB admin1 nations, and has
+ * no city page. Nothing resolves, and a caller that gets null has to render the
+ * place with no destination rather than invent one: a trail step without a
+ * destination is ordinary, a trail step pointing at a 404 is a lie.
+ *
+ * This is the ONE resolution of the question. The related-links tail, the
+ * visible breadcrumb and the BreadcrumbList structured data all read it, so the
+ * three can never disagree about which places have a page.
+ */
+export function resolveGeoPage(
   countrySlug: string,
   geoSlug: string,
-): RelatedLink | null {
+): GeoPageTarget | null {
   const iso2 = countrySlug.toUpperCase();
   const meta = COUNTRIES.find((c) => c.code === iso2);
   if (!meta) return null;
   const slug = geoSlug.toLowerCase();
 
-  // /cities/[slug] resolves against the city list and notFound()s otherwise, so
-  // membership in that list is the whole test. A trade page reached by the geo
-  // id form of the URL gets the same city page as the same place reached by its
-  // friendly name, via the reverse alias table.
+  // A trade page reached by the geo id form of the URL gets the same city page
+  // as the same place reached by its friendly name, via the reverse alias table.
   const aliasSlug = FRIENDLY_SLUG_BY_GEO_ID.get(
     `${iso2}|${regionalSlugToGeoId(iso2, slug).toUpperCase()}`,
   );
@@ -366,22 +395,33 @@ function placePagePath(
     if (!candidate) continue;
     const city = CITY_BY_SLUG.get(candidate);
     if (city && city.iso2.toUpperCase() === iso2) {
-      return { label: `All trades in ${city.name}`, href: `/cities/${candidate}` };
+      return { href: `/cities/${candidate}`, name: city.name, kind: "city" };
     }
   }
 
-  // /[country]/[geo] resolves against the same region list, and 404s for a city
-  // slug, which is why a city has to be tried first.
+  // The region route 404s for a city slug, which is why a city has to be tried
+  // first.
   const region = getRegionsForCountry(iso2, meta.name).find(
     (r) => r.value === slug,
   );
   if (region) {
     return {
-      label: `All trades in ${region.label}`,
       href: `/${iso2.toLowerCase()}/${slug}`,
+      name: region.label,
+      kind: "region",
     };
   }
   return null;
+}
+
+/** This place's own page as an onward move, when one resolves. */
+function placePagePath(
+  countrySlug: string,
+  geoSlug: string,
+): RelatedLink | null {
+  const target = resolveGeoPage(countrySlug, geoSlug);
+  if (!target) return null;
+  return { label: `All trades in ${target.name}`, href: target.href };
 }
 
 /**
