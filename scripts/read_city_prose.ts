@@ -125,9 +125,74 @@ for (const ch of m.chapters) {
       if (d.note) say(`   ${d.note}`);
       break;
     }
+    case "tradeFit": {
+      const t = m.tradeFit!;
+      for (const r of t.rows) {
+        const works = r.levels.filter((l) => l.level === "good").map((l) => l.district);
+        say(`   - ${r.tradeName}: best in ${r.best ?? "nowhere in particular"}; also ${works.join(" / ") || "nowhere else"}`);
+      }
+      break;
+    }
+    case "direction": {
+      for (const t of m.direction!.tiles) {
+        say(`   - ${t.label} (${t.caption}): ${t.change ?? (t.direction === "up" ? "rising" : "falling")}`);
+      }
+      break;
+    }
+    case "myths": {
+      const y = m.myths!;
+      say(`   claim: ${y.claim ?? "(none)"}`);
+      say(`   reality: ${y.reality ?? "(none)"}`);
+      if (y.comparison) {
+        const c = y.comparison;
+        say(`   ${c.tradeName}: ${c.hereCity} ${c.hereRevenue} revenue keeping ${c.hereKeeps}; ${c.peerCity} ${c.peerRevenue} keeping ${c.peerKeeps}`);
+        say(`   derived: ${c.revenueGapPct}% more revenue, ${c.keepsGapPct}% more kept`);
+      }
+      if (y.note) say(`   ${y.note}`);
+      break;
+    }
+    case "peers": {
+      for (const r of m.peers!.rows) say(`   - ${r.city}: ${r.value}${r.isThisCity ? "  [this city]" : ""}`);
+      break;
+    }
+    case "watch": {
+      const w = m.watch!;
+      for (const p of w.pressures) say(`   - ${p.label}: ${p.value}  [severity ${p.severity}]`);
+      for (const l of w.localKnowledge) say(`   . ${l}`);
+      break;
+    }
+    case "voices": {
+      for (const q of m.voices!.quotes) {
+        say(`   "${q.quote}"`);
+        say(`     ${q.trade}, ${q.district}${q.pull ? ` , ${q.pull}${q.pullNote ? ` ${q.pullNote}` : ""}` : "  [no figure printed]"}`);
+      }
+      break;
+    }
+    case "verdict": {
+      say(`   ${m.verdict!.text}`);
+      say(`   chips: ${m.verdict!.chips.join(" / ")}`);
+      break;
+    }
+    case "methodology": {
+      const md = m.methodology!;
+      for (const r of md.rows) say(`   - ${r.figure} [${r.tier}]: ${r.how}`);
+      say(`   derived counts: ${md.counts.measured} measured, ${md.counts.built} built, ${md.counts.thin} thin`);
+      break;
+    }
+    case "next": {
+      for (const t of m.next!.tiles) say(`   - ${t.label}: ${t.gloss}${t.href ? `  -> ${t.href}` : "  [no page yet]"}`);
+      break;
+    }
     default:
       say(`   (rendered, no prose printer)`);
   }
+  say();
+}
+
+if (m.remember != null) {
+  say(`## the closing band`);
+  say(`   ${m.remember.text}`);
+  say(`   ${m.remember.figure ?? "?"}   ${m.remember.figureLabel}`);
   say();
 }
 

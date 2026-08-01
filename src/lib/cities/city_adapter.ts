@@ -21,6 +21,7 @@ import type {
   CityRankFigure,
   CityFile,
   CityScorecardRow,
+  CityTradeFitLevel,
   Figure,
   NullFigure,
   PointFigure,
@@ -632,6 +633,403 @@ function buildDistrictRent(file: CityFile): CityDistrictRentModel | null {
   };
 }
 
+/* --------------------- 09 best area for each trade ----------------------- */
+
+export type CityTradeFitModel = {
+  /** Column headers, in the district list's own order. */
+  districts: string[];
+  rows: Array<{
+    tradeSlug: string;
+    tradeName: string;
+    levels: Array<{ district: string; level: CityTradeFitLevel }>;
+    /** DERIVED from the `best` cell. Null where no district is marked best. */
+    best: string | null;
+  }>;
+};
+
+/**
+ * Chapter 09.
+ *
+ * The best district per trade is DERIVED from the `best` cell rather than
+ * authored twice, which is the same discipline as the chapter-07 slope: an
+ * authored "best" boolean beside a grid of levels is two homes for one claim,
+ * and one of them eventually goes stale.
+ *
+ * District names are joined from the district list, because the grid carries
+ * slugs. A fit naming a district that is not in the list is dropped rather than
+ * printed as a raw slug: `covent-garden` in a column header is the same class of
+ * defect as the truncated trade labels this page type already shipped once.
+ */
+function buildTradeFit(file: CityFile): CityTradeFitModel | null {
+  const tf = file.tradeFit;
+  if (tf == null || isNullFigure(tf.grid)) return null;
+
+  const list = isNullFigure(file.districts.list) ? [] : file.districts.list.districts;
+  const nameBy = new Map(list.map((d) => [d.slug, d.name]));
+  if (list.length === 0) return null;
+
+  const rows = tf.grid.rows.map((r) => {
+    const levels = r.fits
+      .filter((f) => nameBy.has(f.districtSlug))
+      .map((f) => ({ district: nameBy.get(f.districtSlug) as string, level: f.level }));
+    const best = r.fits.find((f) => f.level === "best");
+    return {
+      tradeSlug: r.tradeSlug,
+      tradeName: r.tradeName,
+      levels,
+      best: best ? (nameBy.get(best.districtSlug) ?? null) : null,
+    };
+  });
+
+  if (!rows.length) return null;
+  return { districts: list.map((d) => d.name), rows };
+}
+
+/* ------------------------ 11 where the city heads ------------------------ */
+
+export type CityDirectionModel = {
+  tiles: Array<{
+    label: string;
+    /** The measured change, sign included. Null where none is published. */
+    change: string | null;
+    /** "up" or "down". Printed only when there is no measured change. */
+    direction: "up" | "down";
+    caption: string;
+  }>;
+};
+
+/**
+ * Chapter 11.
+ *
+ * `direction` is printed ONLY when `change` is a hole. The contract carries the
+ * field precisely because "a tile whose change is a NullFigure still knows which
+ * way the thing is moving", and where a number exists its own sign already says
+ * so. Printing both gives "down -22%", which is either a double negative or a
+ * typo depending on how carefully the reader is looking.
+ */
+function buildDirection(file: CityFile): CityDirectionModel | null {
+  const d = file.direction;
+  if (d == null) return null;
+  const tiles = [d.rent, d.footfall, d.emptyUnits, d.population].filter(Boolean).map((t) => {
+    const shown = display(t.changePct);
+    /* A RISE IS SIGNED. "Footfall 6%" reads as a share of something; "+6%"
+       reads as the change it is. A fall already carries its own minus, so
+       signing it twice would print "+-22%". */
+    const change =
+      shown != null && t.direction === "up" && /^\d/.test(shown) ? `+${shown}` : shown;
+    return { label: t.label, change, direction: t.direction, caption: t.caption };
+  });
+  return tiles.length ? { tiles } : null;
+}
+
+/* ------------------------------ 12 the myths ----------------------------- */
+
+export type CityMythsModel = {
+  claim: string | null;
+  reality: string | null;
+  note: string | null;
+  comparison: {
+    tradeName: string;
+    hereCity: string;
+    peerCity: string;
+    hereRevenue: string;
+    peerRevenue: string;
+    hereKeeps: string;
+    peerKeeps: string;
+    /** DERIVED. How much more revenue crosses the till here, as a percentage. */
+    revenueGapPct: number | null;
+    /** DERIVED. How much more the owner actually keeps. */
+    keepsGapPct: number | null;
+  } | null;
+};
+
+/**
+ * Chapter 12.
+ *
+ * THE TWO GAPS ARE DERIVED AND THAT IS THE ENTIRE POINT OF THE CHAPTER. The
+ * contract says they "are derived from these four numbers and have no fields",
+ * and the myth only lands because the two percentages are so far apart: 63% more
+ * revenue, 5% more kept. Authoring them would let a file state a gap its own
+ * four numbers contradict, which is the myth telling a lie about itself.
+ */
+function buildMyths(file: CityFile): CityMythsModel | null {
+  const m = file.myths;
+  if (m == null) return null;
+
+  const primary = isNullFigure(m.primary) ? null : m.primary;
+  const tp = isNullFigure(m.tradeAgainstPeer) ? null : m.tradeAgainstPeer;
+
+  const pct = (here: number, peer: number): number | null =>
+    Number.isFinite(here) && Number.isFinite(peer) && peer !== 0
+      ? Math.round(((here - peer) / peer) * 100)
+      : null;
+
+  const comparison = tp
+    ? {
+        tradeName: tp.tradeName,
+        hereCity: file.meta.city.name,
+        peerCity: tp.peer.city,
+        hereRevenue: money(tp.here.revenue),
+        peerRevenue: money(tp.peer.revenue),
+        hereKeeps: money(tp.here.ownerKeeps),
+        peerKeeps: money(tp.peer.ownerKeeps),
+        revenueGapPct: pct(tp.here.revenue, tp.peer.revenue),
+        keepsGapPct: pct(tp.here.ownerKeeps, tp.peer.ownerKeeps),
+      }
+    : null;
+
+  if (primary == null && comparison == null) return null;
+  return {
+    claim: primary?.claim ?? null,
+    reality: primary?.reality ?? null,
+    note: m.note ?? null,
+    comparison,
+  };
+}
+
+/* ------------------------- 13 versus peer cities ------------------------- */
+
+export type CityPeersModel = {
+  rows: Array<{ city: string; value: string; isThisCity: boolean }>;
+};
+
+/**
+ * Chapter 13.
+ *
+ * This city's own row is found BY SLUG, never by an authored flag, and it prints
+ * "level" rather than "0%", because a city is not zero percent of itself. The
+ * contract makes the same point about `citySlug` being an identifier rather than
+ * an accent flag: an authored boolean can mark the wrong row and a slug match
+ * cannot.
+ */
+function buildPeers(file: CityFile): CityPeersModel | null {
+  const p = file.peers;
+  if (p == null || isNullFigure(p.rent)) return null;
+  const here = file.meta.city.slug;
+
+  const rows = p.rent.cities.map((c) => {
+    const isThisCity = c.citySlug === here;
+    return {
+      city: c.city,
+      value: isThisCity ? "level" : `${c.rentVsThisCityPct > 0 ? "+" : ""}${c.rentVsThisCityPct}%`,
+      isThisCity,
+    };
+  });
+  return rows.length ? { rows } : null;
+}
+
+/* ---------------------------- 14 what to watch --------------------------- */
+
+export type CityWatchModel = {
+  pressures: Array<{ label: string; value: string; severity: number }>;
+  localKnowledge: string[];
+};
+
+/**
+ * Chapter 14.
+ *
+ * A pressure whose magnitude nobody publishes prints its WORD. The contract
+ * carries `wordValue` for exactly this: licensing hours are getting "tighter",
+ * which is a real and actionable direction, and inventing a percentage for it
+ * would be the cleanest possible way to publish a number that does not exist.
+ */
+function buildWatch(file: CityFile): CityWatchModel | null {
+  const w = file.watch;
+  if (w == null) return null;
+
+  const pressures = isNullFigure(w.pressures)
+    ? []
+    : w.pressures.pressures.map((p) => ({
+        label: p.label,
+        value: display(p.change) ?? p.wordValue ?? "no size published",
+        severity: p.severity,
+      }));
+
+  const localKnowledge = isNullFigure(w.localKnowledge) ? [] : w.localKnowledge.lines;
+  if (!pressures.length && !localKnowledge.length) return null;
+  return { pressures, localKnowledge };
+}
+
+/* ------------------------- 15 what operators say ------------------------- */
+
+export type CityVoicesModel = {
+  quotes: Array<{
+    quote: string;
+    trade: string;
+    district: string;
+    /** The number beside the quote, or null where it cannot be labelled. */
+    pull: string | null;
+    /** What that number measures, in the file's own words. */
+    pullNote: string | null;
+  }>;
+};
+
+/**
+ * What a pull number MEASURES, read from its unit.
+ *
+ * A UNIT OF BARE "%" RETURNS NULL AND THE NUMBER IS THEN NOT PRINTED AT ALL.
+ * That is not tidiness. The London file carries a pull of 55 whose unit is "%"
+ * and whose own note says the design "never says what it is a share of, so only
+ * the number and the percent sign can be lifted". A bare 55% beside a quote
+ * about tourists is a number a reader will attach to whatever the quote was
+ * about, and they will be guessing. It is one of the unclassifiable figures
+ * already sitting on the founder's desk, and the honest render of an unlabelled
+ * number is no number.
+ */
+function pullNote(unit: string): string | null {
+  const u = (unit ?? "").trim();
+  if (u === "%" || u === "") return null;
+  if (/^%\s+/.test(u)) return u.replace(/^%\s+/, "");
+  if (/^USD\/yr$/i.test(u)) return "a year";
+  if (/^USD/i.test(u)) return null; // the quote itself carries the context
+  return u;
+}
+
+/** Chapter 15. */
+function buildVoices(file: CityFile): CityVoicesModel | null {
+  const v = file.voices;
+  if (v == null || isNullFigure(v.operators)) return null;
+
+  const quotes = v.operators.quotes.map((q) => {
+    const note = isNullFigure(q.pull) ? null : pullNote((q.pull as PointFigure).unit);
+    const unlabelled = !isNullFigure(q.pull) && note == null && /^%?$/.test(((q.pull as PointFigure).unit ?? "").trim());
+    return {
+      quote: q.quote,
+      trade: q.trade,
+      district: q.district,
+      pull: unlabelled ? null : display(q.pull),
+      pullNote: note,
+    };
+  });
+  return quotes.length ? { quotes } : null;
+}
+
+/* ------------------------------ 16 the verdict --------------------------- */
+
+export type CityVerdictModel = { text: string; chips: string[] };
+
+/** Chapter 16. */
+function buildVerdict(file: CityFile): CityVerdictModel | null {
+  const v = file.verdict;
+  if (v == null || !v.text) return null;
+  return { text: v.text, chips: v.chips ?? [] };
+}
+
+/* -------------------------- 17 how we work it out ------------------------ */
+
+export type CityMethodologyModel = {
+  rows: Array<{ figure: string; tier: string; how: string }>;
+  /** DERIVED counts for the trust band. */
+  counts: { measured: number; built: number; thin: number };
+};
+
+/**
+ * Chapter 17.
+ *
+ * The tier counts are COUNTED FROM THE ROWS, never authored. The contract says
+ * so: "the trust band's tier counts (3 measured, 3 built, 2 thin) are counted
+ * from these rows and have no fields of their own". A page that claims three
+ * measured figures while listing two is the exact claim a reader is most
+ * entitled to check, and the cheapest one to get wrong by hand.
+ */
+function buildMethodology(file: CityFile): CityMethodologyModel | null {
+  const m = file.methodology;
+  if (m == null || !m.rows?.length) return null;
+  const counts = { measured: 0, built: 0, thin: 0 };
+  for (const r of m.rows) {
+    if (r.tier === "measured") counts.measured += 1;
+    else if (r.tier === "built") counts.built += 1;
+    else if (r.tier === "thin") counts.thin += 1;
+  }
+  return { rows: m.rows.map((r) => ({ figure: r.figure, tier: r.tier, how: r.how })), counts };
+}
+
+/* ----------------------- the closing "remember" band --------------------- */
+
+export type CityRememberModel = {
+  text: string;
+  figure: string | null;
+  figureLabel: string;
+};
+
+/**
+ * Resolve a dotted path to the figure it names, e.g. "scorecard.commercialRent".
+ *
+ * A scorecard row is not itself a figure, it WRAPS one, so a path landing on a
+ * row descends into `.figure`. Returns undefined rather than throwing on a path
+ * that does not resolve, because a broken pointer must degrade to the authored
+ * value rather than take the page down.
+ */
+function figureAt(file: CityFile, path: string): Figure | undefined {
+  let node: unknown = file;
+  for (const key of path.split(".")) {
+    if (node == null || typeof node !== "object") return undefined;
+    node = (node as Record<string, unknown>)[key];
+  }
+  if (node != null && typeof node === "object" && "figure" in (node as object)) {
+    node = (node as { figure: unknown }).figure;
+  }
+  return node as Figure | undefined;
+}
+
+/**
+ * The closing band, between chapters 17 and 18.
+ *
+ * IT RESTATES A FIGURE PRINTED EARLIER AND MUST READ IT FROM THERE. The contract
+ * is explicit: "the value must be copied from that field, never re-derived
+ * independently", and `figureSource` names the field so a checker can prove the
+ * two agree. Resolving the pointer is strictly better than checking it, because
+ * then they cannot disagree in the first place. The authored value is the
+ * fallback for a file whose pointer does not resolve.
+ */
+function buildRemember(file: CityFile): CityRememberModel | null {
+  const r = file.remember;
+  if (r == null || !r.text) return null;
+  const pointed = r.figureSource ? figureAt(file, r.figureSource) : undefined;
+  return {
+    text: r.text,
+    figure: display(pointed) ?? display(r.figure),
+    figureLabel: r.figureLabel,
+  };
+}
+
+/* ------------------------- 18 where to go next --------------------------- */
+
+export type CityNextModel = {
+  tiles: Array<{
+    label: string;
+    gloss: string;
+    icon: string | null;
+    /** Absent where the target page does not exist yet. */
+    href: string | null;
+  }>;
+};
+
+/**
+ * Chapter 18.
+ *
+ * `gloss` BELONGS TO THE LINKED PAGE, not to this city, which is why the
+ * contract carries it as an already-formatted string: it is read from another
+ * file and this one has no authority over its unit or its tier. It is passed
+ * through untouched rather than reformatted, because reformatting it here would
+ * be this page asserting something about a figure it does not own.
+ *
+ * A tile with no href renders flat, which is what the mockup does for pages not
+ * yet built. Inventing the URL would manufacture a dead link on 615 pages.
+ */
+function buildNext(file: CityFile): CityNextModel | null {
+  const n = file.next;
+  if (n == null || !n.tiles?.length) return null;
+  return {
+    tiles: n.tiles.map((t) => ({
+      label: t.label,
+      gloss: t.gloss,
+      icon: t.icon ?? null,
+      href: t.href ?? null,
+    })),
+  };
+}
+
 /** Chapter 05. See CityPeopleModel for why one figure in the file is skipped. */
 function buildPeople(file: CityFile): CityPeopleModel | null {
   const p = file.people;
@@ -780,18 +1178,19 @@ export type CityPageModel = {
   spaceCosts: CitySpaceCostsModel | null;
   tradeEconomics: CityTradeEconomicsModel | null;
   districtRent: CityDistrictRentModel | null;
-  /** Chapters not yet ported. Present so the assembly can be written against
-   *  the full spine today and filled in without touching it again. */
-  tradeFit: null;
+  tradeFit: CityTradeFitModel | null;
   districts: CityDistrictsModel | null;
-  direction: null;
-  myths: null;
-  peers: null;
-  watch: null;
-  voices: null;
-  verdict: null;
-  methodology: null;
-  next: null;
+  direction: CityDirectionModel | null;
+  myths: CityMythsModel | null;
+  peers: CityPeersModel | null;
+  watch: CityWatchModel | null;
+  voices: CityVoicesModel | null;
+  verdict: CityVerdictModel | null;
+  methodology: CityMethodologyModel | null;
+  next: CityNextModel | null;
+  /** The unnumbered closing band, between chapters 17 and 18. Not a chapter, so
+   *  it has no entry in the spine and no number. */
+  remember: CityRememberModel | null;
 };
 
 /**
@@ -885,16 +1284,17 @@ export function buildCityPage(file: CityFile): CityPageModel {
     spaceCosts: buildSpaceCosts(file),
     tradeEconomics: buildTradeEconomics(file),
     districtRent: buildDistrictRent(file),
-    tradeFit: null,
+    tradeFit: buildTradeFit(file),
     districts: buildDistricts(file),
-    direction: null,
-    myths: null,
-    peers: null,
-    watch: null,
-    voices: null,
-    verdict: null,
-    methodology: null,
-    next: null,
+    direction: buildDirection(file),
+    myths: buildMyths(file),
+    peers: buildPeers(file),
+    watch: buildWatch(file),
+    voices: buildVoices(file),
+    verdict: buildVerdict(file),
+    methodology: buildMethodology(file),
+    next: buildNext(file),
+    remember: buildRemember(file),
   };
 }
 

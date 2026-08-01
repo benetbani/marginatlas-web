@@ -438,7 +438,42 @@ export function CityPage({ model }: { model: CityPageModel }) {
             )}
           </ChapterSection>
         ) : null}
-        {gap("tradeFit", "the best area for each trade")}
+        {/* 09 , which district suits which trade. The best district per row is
+            DERIVED from the `best` cell, never authored twice. */}
+        {at("tradeFit") != null ? (
+          <ChapterSection chapter={at("tradeFit") as Chapter}>
+            {model.tradeFit != null ? (
+              <>
+                {model.tradeFit.rows.map((r) => (
+                  <div key={r.tradeSlug} className="panel rise" style={{ marginBottom: 8 }}>
+                    <div className="pad">
+                      <div className="row">
+                        <span className="nm">{r.tradeName}</span>
+                        <span className="v">{r.best ? `Best in ${r.best}` : "no clear best area"}</span>
+                      </div>
+                      {/* "good" only. Including "best" here printed the top
+                          district twice, once above and once in this list. */}
+                      <p className="k" style={{ margin: "6px 0 0" }}>
+                        {r.levels.some((l) => l.level === "good")
+                          ? `Also works in ${r.levels
+                              .filter((l) => l.level === "good")
+                              .map((l) => l.district)
+                              .join(", ")}.`
+                          : "Nowhere else here suits it particularly."}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+                <p className="k" style={{ margin: "10px 0 0" }}>
+                  Judged across {model.tradeFit.districts.length} districts: rent against the trade
+                  each one passes. Our reading, not a measurement.
+                </p>
+              </>
+            ) : (
+              <ChapterGap subject="the best area for each trade" />
+            )}
+          </ChapterSection>
+        ) : null}
         {/* 10 , the districts. Three figures joined: rent, the wealth band and
             the population mix, with the favoured trades derived from the mix.
             Plain on purpose: the founder's bar for now is that every section
@@ -499,14 +534,307 @@ export function CityPage({ model }: { model: CityPageModel }) {
             )}
           </ChapterSection>
         ) : null}
-        {gap("direction", "where the city is heading")}
-        {gap("myths", "the common myths")}
-        {gap("peers", "how this city compares with its peers")}
-        {gap("watch", "what to watch")}
-        {gap("voices", "what operators say")}
-        {gap("verdict", "the verdict")}
-        {gap("methodology", "how we work this out")}
-        {gap("next", "where to go next")}
+        {/* 11 , four readings and which way each is moving. The direction word
+            prints only where no measured change exists; where one does, its own
+            sign already says which way. */}
+        {at("direction") != null ? (
+          <ChapterSection chapter={at("direction") as Chapter}>
+            {model.direction != null ? (
+              <div className="panel rise">
+                <div className="pad">
+                  {model.direction.tiles.map((t) => (
+                    <div className="row" key={t.label}>
+                      <span className="nm">
+                        {t.label}
+                        <span className="s">{t.caption}</span>
+                      </span>
+                      <span className="v">{t.change ?? (t.direction === "up" ? "rising" : "falling")}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <ChapterGap subject="where the city is heading" />
+            )}
+          </ChapterSection>
+        ) : null}
+
+        {/* 12 , the myth. The two gaps at the bottom are DERIVED from the four
+            numbers above them, and the whole chapter lands only because they are
+            so far apart. */}
+        {at("myths") != null ? (
+          <ChapterSection chapter={at("myths") as Chapter}>
+            {model.myths != null ? (
+              <>
+                {model.myths.claim ? (
+                  <div className="panel rise" style={{ marginBottom: 10 }}>
+                    <div className="pad">
+                      <div className="row">
+                        <span className="nm">The claim</span>
+                        <span className="v">{model.myths.claim}</span>
+                      </div>
+                      <div className="row">
+                        <span className="nm">What is actually true</span>
+                        <span className="v">{model.myths.reality}</span>
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
+                {model.myths.comparison ? (
+                  <div className="panel rise">
+                    <div className="pad">
+                      <div className="row">
+                        <span className="nm">
+                          {model.myths.comparison.tradeName} revenue
+                          <span className="s">{model.myths.comparison.hereCity}</span>
+                        </span>
+                        <span className="v">{model.myths.comparison.hereRevenue}</span>
+                      </div>
+                      <div className="row">
+                        <span className="nm">
+                          The same, in {model.myths.comparison.peerCity}
+                        </span>
+                        <span className="v">{model.myths.comparison.peerRevenue}</span>
+                      </div>
+                      <div className="row">
+                        <span className="nm">What the owner keeps here</span>
+                        <span className="v">{model.myths.comparison.hereKeeps}</span>
+                      </div>
+                      <div className="row">
+                        <span className="nm">
+                          What they keep in {model.myths.comparison.peerCity}
+                        </span>
+                        <span className="v">{model.myths.comparison.peerKeeps}</span>
+                      </div>
+                      {model.myths.comparison.revenueGapPct != null &&
+                      model.myths.comparison.keepsGapPct != null ? (
+                        <p className="k" style={{ margin: "8px 0 0" }}>
+                          {model.myths.comparison.revenueGapPct}% more crosses the till here, and
+                          the owner keeps {model.myths.comparison.keepsGapPct}% more.
+                        </p>
+                      ) : null}
+                    </div>
+                  </div>
+                ) : null}
+                {model.myths.note ? (
+                  <p className="k" style={{ margin: "10px 0 0" }}>
+                    {model.myths.note}
+                  </p>
+                ) : null}
+              </>
+            ) : (
+              <ChapterGap subject="the common myths" />
+            )}
+          </ChapterSection>
+        ) : null}
+
+        {/* 13 , peer cities. This city's own row is found by slug and prints
+            "level", because a city is not zero percent of itself. */}
+        {at("peers") != null ? (
+          <ChapterSection chapter={at("peers") as Chapter}>
+            {model.peers != null ? (
+              <>
+                <div className="panel rise">
+                  <div className="pad">
+                    {model.peers.rows.map((r) => (
+                      <div className="row" key={r.city}>
+                        <span className="nm">
+                          {r.city}
+                          {r.isThisCity ? <span className="s">this city</span> : null}
+                        </span>
+                        <span className="v">{r.value}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <p className="k" style={{ margin: "10px 0 0" }}>
+                  Commercial rent against {model.meta.city}, for the same room.
+                </p>
+              </>
+            ) : (
+              <ChapterGap subject="how this city compares with its peers" />
+            )}
+          </ChapterSection>
+        ) : null}
+
+        {/* 14 , what to watch. A pressure with a known direction and no
+            published magnitude prints its word, not an invented number. */}
+        {at("watch") != null ? (
+          <ChapterSection chapter={at("watch") as Chapter}>
+            {model.watch != null ? (
+              <>
+                {model.watch.pressures.length ? (
+                  <div className="panel rise" style={{ marginBottom: 10 }}>
+                    <div className="pad">
+                      {model.watch.pressures.map((p) => (
+                        <div className="row" key={p.label}>
+                          <span className="nm">{p.label}</span>
+                          <span className="v">{p.value}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+                {model.watch.localKnowledge.length ? (
+                  <div className="panel rise">
+                    <div className="pad">
+                      <div className="hd">
+                        <GlyphIcon id={"watch" as GlyphId} size={18} />
+                        What people trading here know
+                      </div>
+                      {model.watch.localKnowledge.map((line) => (
+                        <p className="k" style={{ margin: "6px 0 0" }} key={line}>
+                          {line}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+              </>
+            ) : (
+              <ChapterGap subject="what to watch" />
+            )}
+          </ChapterSection>
+        ) : null}
+
+        {/* 15 , operators. A number beside a quote prints only when the file
+            says what it measures. One in the London file does not, and it is
+            not printed. */}
+        {at("voices") != null ? (
+          <ChapterSection chapter={at("voices") as Chapter}>
+            {model.voices != null ? (
+              <>
+                {model.voices.quotes.map((q) => (
+                  <div className="panel rise" style={{ marginBottom: 8 }} key={q.quote}>
+                    <div className="pad">
+                      <p className="k" style={{ margin: 0 }}>
+                        &ldquo;{q.quote}&rdquo;
+                      </p>
+                      <div className="row" style={{ marginTop: 8 }}>
+                        <span className="nm">
+                          {q.trade}
+                          <span className="s">{q.district}</span>
+                        </span>
+                        {q.pull ? (
+                          <span className="v">
+                            {q.pull}
+                            {q.pullNote ? <span className="s">{q.pullNote}</span> : null}
+                          </span>
+                        ) : null}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </>
+            ) : (
+              <ChapterGap subject="what operators say" />
+            )}
+          </ChapterSection>
+        ) : null}
+
+        {/* 16 , the verdict. The chips restate figures printed above; none of
+            them introduces a number that appears nowhere else. */}
+        {at("verdict") != null ? (
+          <ChapterSection chapter={at("verdict") as Chapter}>
+            {model.verdict != null ? (
+              <div className="panel rise">
+                <div className="pad">
+                  <p className="k" style={{ margin: 0 }}>
+                    {model.verdict.text}
+                  </p>
+                  {model.verdict.chips.length ? (
+                    <div style={{ marginTop: 10 }}>
+                      {model.verdict.chips.map((c) => (
+                        <span className="tag" key={c} style={{ marginRight: 8 }}>
+                          {c}
+                        </span>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            ) : (
+              <ChapterGap subject="the verdict" />
+            )}
+          </ChapterSection>
+        ) : null}
+
+        {/* 17 , the method ledger. The tier counts are COUNTED from the rows,
+            never authored, because that claim is the one a reader is most
+            entitled to check. */}
+        {at("methodology") != null ? (
+          <ChapterSection chapter={at("methodology") as Chapter}>
+            {model.methodology != null ? (
+              <>
+                <div className="panel rise">
+                  <div className="pad">
+                    {model.methodology.rows.map((r) => (
+                      <div className="row" key={r.figure}>
+                        <span className="nm">
+                          {r.figure}
+                          <span className="s">{r.how}</span>
+                        </span>
+                        <span className="v">{r.tier}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <p className="k" style={{ margin: "10px 0 0" }}>
+                  {model.methodology.counts.measured} of these are measured,{" "}
+                  {model.methodology.counts.built} are built from published inputs, and{" "}
+                  {model.methodology.counts.thin} are the thinnest kind, where nobody publishes the
+                  figure and we say so.
+                </p>
+              </>
+            ) : (
+              <ChapterGap subject="how we work this out" />
+            )}
+          </ChapterSection>
+        ) : null}
+
+        {/* The closing band. Unnumbered, so it has no chapter head. Its figure
+            is RESOLVED from the field it restates, so the band and the chapter
+            it quotes cannot disagree. */}
+        {model.remember != null ? (
+          <section className="glass rise" style={{ padding: "28px 30px", margin: "18px 0" }}>
+            <p className="k" style={{ margin: 0, maxWidth: "52ch" }}>
+              {model.remember.text}
+            </p>
+            {model.remember.figure ? (
+              <div className="answer" style={{ marginTop: 16 }}>
+                <div className="num fig" style={{ fontSize: "clamp(30px,4vw,44px)" }}>
+                  {model.remember.figure}
+                </div>
+                <div className="l">{model.remember.figureLabel}</div>
+              </div>
+            ) : null}
+          </section>
+        ) : null}
+
+        {/* 18 , where to go next. A tile with no href renders flat, which is
+            what the mockup does for pages not built yet. Inventing the URL
+            would manufacture a dead link. */}
+        {at("next") != null ? (
+          <ChapterSection chapter={at("next") as Chapter}>
+            {model.next != null ? (
+              <div className="panel rise">
+                <div className="pad">
+                  {model.next.tiles.map((t) => (
+                    <div className="row" key={t.label}>
+                      <span className="nm">
+                        {t.icon ? <GlyphIcon id={t.icon as GlyphId} size={16} /> : null}
+                        {t.href ? <a href={t.href}>{t.label}</a> : t.label}
+                      </span>
+                      <span className="v">{t.gloss}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <ChapterGap subject="where to go next" />
+            )}
+          </ChapterSection>
+        ) : null}
 
         <footer style={{ padding: "40px 0 24px" }}>
           <span className="tag">Margin Atlas</span>
