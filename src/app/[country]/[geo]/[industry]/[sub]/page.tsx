@@ -43,6 +43,7 @@ import {
   tagLabel,
 } from "@/lib/economics/neighborhood_multipliers";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { countryPagePath, resolveGeoPage } from "@/lib/cells/related_links";
 import { CountryFlag } from "@/components/CountryFlag";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
@@ -161,15 +162,43 @@ async function NeighborhoodCellPageBody({
       .map((s) => s[0].toUpperCase() + s.slice(1))
       .join(" ");
 
+  /* THE COUNTRY STEP AND THE CITY STEP, resolved rather than assembled.
+     Both are read from the related-links module, the one place on the site that
+     decides whether a country or a place has a page of its own, so this trail,
+     the trade page's trail and the related tail can never disagree.
+
+     Until 2026-08-01 both steps here were built from the slug pattern and hoped
+     over, and both were wrong on the pages this route mostly serves:
+
+       the city step   the two-segment form of a trade URL is served by the
+                       REGION route, which lists US states and a country's
+                       admin1 entities and calls notFound() for anything else.
+                       A city is in none of those, and this route's middle
+                       segment is ALWAYS a city, so the step was dead on every
+                       neighbourhood cell page: the US list holds 51 entries and
+                       none is a city, the UK list holds its four nations. The
+                       city page is the honest destination and resolveGeoPage
+                       finds it where one is published.
+       the country     the first segment is whatever code the statistics carry,
+                       which is not always the ISO-2 code the country route
+                       serves. Greek cells are stored under EL; COUNTRIES holds
+                       Greece as GR.
+
+     A null from either is a real answer and renders as trail text. This route
+     emits no BreadcrumbList, so there is no structured-data twin to renumber;
+     the visible trail is the whole surface. */
+  const countryPage = countryPagePath(country);
+  const cityPage = resolveGeoPage(country, city);
+
   const breadcrumbs = [
     { label: "Home", href: "/" },
     {
       label: iso2ToName(country) || country.toUpperCase(),
-      href: `/${country.toLowerCase()}`,
+      href: countryPage?.href,
     },
     {
       label: cityName,
-      href: `/${country.toLowerCase()}/${city.toLowerCase()}`,
+      href: cityPage?.href,
     },
     {
       label: nb.name,

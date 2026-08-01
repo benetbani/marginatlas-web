@@ -37,6 +37,7 @@ import { CellDataset, Breadcrumbs } from "@/components/StructuredData";
 // this place" category of the related tail below.
 import {
   buildCellRelatedLinks,
+  countryPagePath,
   fetchCellSiblings,
   resolveGeoPage,
 } from "@/lib/cells/related_links";
@@ -305,6 +306,7 @@ async function CellPageBody({
       const origin = "https://www.marginatlas.com";
       const url = `${origin}${m.urlPath}`;
       const spine2GeoPage = resolveGeoPage(m.country.slug, m.city.slug);
+      const spine2CountryPage = countryPagePath(m.country.slug);
       return (
         <>
           <CellDataset
@@ -322,16 +324,19 @@ async function CellPageBody({
               answer: x.a,
             }))}
           />
-          {/* The place step is resolved, not assembled, for the reason spelled
-             out at the legacy branch's breadcrumb below: the two-segment form of
-             a trade URL serves regions, so a city segment there is a 404. The
-             item is omitted outright when nothing resolves, and BreadcrumbList
-             positions renumber because the component numbers what it is
-             handed. */}
+          {/* The country and place steps are resolved, not assembled, for the
+             reasons spelled out at the legacy branch's breadcrumb below: the
+             two-segment form of a trade URL serves regions, so a city segment
+             there is a 404, and a first segment carrying a statistical code the
+             country route does not serve is a 404 too. Each item is omitted
+             outright when nothing resolves, and BreadcrumbList positions
+             renumber because the component numbers what it is handed. */}
           <Breadcrumbs
             items={[
               { name: "Home", url: `${origin}/` },
-              { name: m.country.name, url: `${origin}/${m.country.slug}` },
+              ...(spine2CountryPage
+                ? [{ name: m.country.name, url: `${origin}${spine2CountryPage.href}` }]
+                : []),
               ...(spine2GeoPage
                 ? [{ name: m.city.name, url: `${origin}${spine2GeoPage.href}` }]
                 : []),
@@ -844,10 +849,13 @@ async function CellPageBody({
     <CellRelatedLinks model={relatedLinks} />
   ) : null;
 
-  // The page that owns this cell's PLACE, when one exists. Read from the same
-  // module the related tail reads it from, so the tail's place link and the two
-  // breadcrumbs below cannot disagree about whether the place has a page.
+  // The pages that own this cell's PLACE and its COUNTRY, when they exist. Read
+  // from the same module the related tail reads them from, so the tail's links
+  // and the two breadcrumbs below cannot disagree about which of the two have a
+  // page. Either can answer null, and null is rendered as a step with no
+  // destination rather than as a step pointing nowhere.
   const geoPage = resolveGeoPage(country, geo);
+  const countryPage = countryPagePath(country);
 
   const url = `https://www.marginatlas.com/${country}/${geo}/${industry}`;
   return (
@@ -881,9 +889,16 @@ async function CellPageBody({
       {/* Plan v14 Phase C.4: FAQPage JSON-LD. Five data-backed Q&As per cell,
          no visible DOM. Targets AI Overviews + Google People Also Ask. */}
       <FAQSchema faqs={faqs} />
-      {/* THE PLACE STEP. Both trails below get their destination from
-         resolveGeoPage, the same resolver the related tail uses, and both accept
-         that it can answer nothing.
+      {/* THE COUNTRY STEP AND THE PLACE STEP. Both trails below get both
+         destinations from the related-links module, the same resolvers the
+         related tail uses, and both accept that either can answer nothing.
+
+         THE COUNTRY STEP was unguarded until 2026-08-01. The first segment of a
+         trade URL is whatever code the statistics carry, which is not always the
+         ISO-2 code the country route serves: Greek cells are stored under EL and
+         COUNTRIES holds Greece as GR, so the country route notFounds and every
+         Greek trade page offered a first step into it, in the visible trail and
+         in the BreadcrumbList both.
 
          Until 2026-08-01 both trails assembled the two-segment form of this
          URL instead. That route serves REGIONS: US states, admin1 entities where
@@ -900,7 +915,14 @@ async function CellPageBody({
       <Breadcrumbs
         items={[
           { name: "Home", url: "https://www.marginatlas.com/" },
-          { name: country.toUpperCase(), url: `https://www.marginatlas.com/${country}` },
+          ...(countryPage
+            ? [
+                {
+                  name: country.toUpperCase(),
+                  url: `https://www.marginatlas.com${countryPage.href}`,
+                },
+              ]
+            : []),
           ...(geoPage
             ? [
                 {
@@ -920,7 +942,7 @@ async function CellPageBody({
           { label: "Home", href: "/" },
           {
             label: country.toUpperCase(),
-            href: `/${country.toLowerCase()}`,
+            href: countryPage?.href,
             iso2: country.toUpperCase(),
           },
           {

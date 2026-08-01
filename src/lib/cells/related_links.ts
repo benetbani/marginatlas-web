@@ -425,12 +425,29 @@ function placePagePath(
 }
 
 /**
- * This country's page. The label is the bare country name: a sentence around it
- * would need an article ("the United Kingdom", "the Netherlands", "Spain"), and
- * getting that right for 195 names is a vocabulary table this block does not
- * need. The heading above the link supplies the rest of the sentence.
+ * THIS COUNTRY'S PAGE, OR NOTHING.
+ *
+ * The label is the bare country name: a sentence around it would need an
+ * article ("the United Kingdom", "the Netherlands", "Spain"), and getting that
+ * right for 195 names is a vocabulary table this block does not need. The
+ * heading above the link supplies the rest of the sentence.
+ *
+ * Null is a real answer here too, and for a reason that is easy to miss: the
+ * FIRST segment of a trade URL is whatever code the underlying statistics
+ * carry, and that is not always the ISO-2 code the country route serves.
+ * Greece is the live case. Its cells are stored under the code EL, the country
+ * route tests its segment against COUNTRIES before calling notFound(), and
+ * COUNTRIES holds Greece as GR. So every Greek trade page had a first step
+ * pointing at a page that does not exist, in the visible trail and in the
+ * BreadcrumbList both, until 2026-08-01.
+ *
+ * Whether Greece should have a country page under a second code is a DATA
+ * question, not a link question. The honest answer while it is open is to not
+ * offer a destination, which is what null means. Exported for the same reason
+ * resolveGeoPage is: the related tail and both breadcrumb surfaces must never
+ * disagree about which countries have a page.
  */
-function countryPagePath(countrySlug: string): RelatedLink | null {
+export function countryPagePath(countrySlug: string): RelatedLink | null {
   const iso2 = countrySlug.toUpperCase();
   const meta = COUNTRIES.find((c) => c.code === iso2);
   if (!meta) return null;
