@@ -30,6 +30,22 @@
   /* neutral only. no cream, no warm greys */
   --white:#ffffff;
   --paper:#f7f7f8;
+
+  /* THE TWO SURFACE LEVELS, and there are exactly two. Founder's rule,
+     2026-08-01, replacing what had drifted to fourteen distinct white alphas:
+     "Text should always be in some form of card, stronger white. When no card
+     we have a lighter version of white which makes the same image in the
+     background more visible. That's it."
+     --card is the .panel value the pages already shipped, promoted to the one
+     card fill. --air is the lightest fill already in use (the map tile), now
+     the one non-card fill. Every background white on a surface is one of these
+     two. Borders, inset highlights and glyph marks are edge effects, not
+     surfaces, and stay as they are. A gradient of white is a range of levels,
+     which is why the old glass and rail gradients are gone: the glass TEXTURE
+     (blur, border, inset lights, shadow) carries the look, the fill carries
+     the level. */
+  --card:rgba(255,255,255,.955);
+  --air:rgba(255,255,255,.40);
   --ink:#0d0d0e;
   --ink-2:#4a4a4d;
   /* THE QUIET TEXT TONE. One, not two. Between --ink-2 (8.9:1) and the AA
@@ -111,7 +127,11 @@
 /* ---------- GLASS (the frame) ---------- */
 .av2 .glass{
   position:relative;border-radius:var(--r-lg);
-  background:linear-gradient(150deg, rgba(255,255,255,.62), rgba(255,255,255,.40));
+  /* Holds the hero headline and the answer figure, so it is a CARD and takes
+     the card fill. The gradient that used to sit here was a third and fourth
+     level in one rule. The glassness survives in the blur, the border and the
+     inset lights below. */
+  background:var(--card);
   backdrop-filter:blur(26px) saturate(1.15);
   -webkit-backdrop-filter:blur(26px) saturate(1.15);
   border:1px solid rgba(255,255,255,.72);
@@ -129,7 +149,7 @@
 /* near-opaque, not flat white: it still refracts a little, but nothing on it
    can ever drop below reading contrast */
 .av2 .panel{
-  background:rgba(255,255,255,.955);
+  background:var(--card);
   backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   border:1px solid rgba(255,255,255,.9);
   border-radius:var(--r-md);
@@ -140,7 +160,7 @@
 .av2 .mast{position:sticky;top:0;z-index:20}
 .av2 .mast .in{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
   padding:11px 20px;margin-top:14px;border-radius:14px;
-  background:linear-gradient(150deg,rgba(255,255,255,.80),rgba(255,255,255,.62));
+  background:var(--card);
   backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2);
   border:1px solid rgba(255,255,255,.78);
   box-shadow:inset 2px 2px .5px -2px rgba(255,255,255,.96), 0 10px 30px -20px rgba(0,0,0,.4)}
@@ -190,7 +210,7 @@
 
 /* the one input on the page */
 .av2 .setter{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:24px;
-  padding:14px 18px;border-radius:12px;background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.8)}
+  padding:14px 18px;border-radius:12px;background:var(--card);border:1px solid rgba(255,255,255,.8)}
 .av2 .setter .lab{white-space:nowrap}
 .av2 .setter input[type=range]{-webkit-appearance:none;appearance:none;flex:1;min-width:150px;height:3px;border-radius:2px;
   background:var(--n4);outline:none}
@@ -220,7 +240,7 @@
   box-shadow:0 0 0 3px rgba(255,255,255,.8)}
 .av2 .units .cutlab{position:absolute;right:-6px;transform:translateY(-100%);margin-top:-9px;
   font-size:10.5px;font-weight:600;letter-spacing:.02em;color:var(--terra-deep);white-space:nowrap;
-  background:rgba(255,255,255,.92);padding:2px 7px;border-radius:999px;border:1px solid var(--terra-line)}
+  background:var(--card);padding:2px 7px;border-radius:999px;border:1px solid var(--terra-line)}
 .av2 .ukey{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:18px}
 .av2 .ukey .k{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-2)}
 .av2 .ukey .k .sw{width:11px;height:11px;border-radius:3px;flex:none}
@@ -507,7 +527,7 @@
 .av2 .late .l{padding:12px 0} .av2 .worlds .w{padding:17px 16px}
 
 /* ---------- THE STATBLOCK , the binding primitive ---------- */
-.av2 .statblock{border:1px solid var(--grp-frame);border-radius:11px;overflow:hidden;background:rgba(255,255,255,.5)}
+.av2 .statblock{border:1px solid var(--grp-frame);border-radius:11px;overflow:hidden;background:var(--card)}
 .av2 .statblock+.statblock{margin-top:20px}
 .av2 .statblock>.hd{display:flex;align-items:center;gap:9px;min-height:37px;padding:0 13px;
   border-bottom:1px solid var(--grp-frame);background:rgba(0,0,0,.018);
@@ -562,7 +582,7 @@
 
 /* .take , the honest verdict band */
 .av2 .take{display:flex;flex-direction:column;padding:18px 20px;border-radius:var(--r-md);
-  background:rgba(255,255,255,.62);border:1px solid var(--hair);box-shadow:inset 3px 0 0 var(--terra)}
+  background:var(--card);border:1px solid var(--hair);box-shadow:inset 3px 0 0 var(--terra)}
 .av2 .take .v{font-size:16px;font-weight:500;line-height:1.4;color:var(--ink);max-width:62ch}
 .av2 .take .v b{color:var(--terra-deep);font-weight:600}
 .av2 .take .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
@@ -597,7 +617,7 @@
 
 /* .mixer , four dials to one answer */
 .av2 .mixer{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1.1fr;gap:0;
-  border:1px solid var(--hair);border-radius:var(--r-md);overflow:hidden;background:rgba(255,255,255,.55)}
+  border:1px solid var(--hair);border-radius:var(--r-md);overflow:hidden;background:var(--card)}
 .av2 .mixer .dial{padding:16px 15px;border-right:1px solid var(--hair)}
 .av2 .mixer .dial .lab{margin-bottom:9px}
 .av2 .mixer .dial .cur{font-family:var(--fig);font-size:17px;font-weight:600;margin-bottom:11px}
@@ -698,7 +718,7 @@
    between the name and the axis, and an 18px icon in a 26px rail read as lint.
    Capping the object and enlarging the rail fixes both without touching the
    encoding: the axis keeps its full span, it just spans less dead air. */
-.av2 .eight{border:1px solid var(--grp-frame);border-radius:12px;overflow:hidden;background:rgba(255,255,255,.55);
+.av2 .eight{border:1px solid var(--grp-frame);border-radius:12px;overflow:hidden;background:var(--card);
   max-width:880px;margin-right:auto}
 .av2 .eight .e{display:grid;grid-template-columns:32px minmax(0,1fr) 1fr var(--val-col);gap:12px;align-items:center;
   min-height:52px;padding:0 15px}
@@ -738,7 +758,7 @@
 .av2 .seasonband .key .k .ln{width:14px;height:2px;border-radius:2px;background:var(--terra);flex:none}
 .av2 .seasonband{overflow:hidden}
 .av2 .seasonband .pill{position:absolute;transform:translateX(-50%);top:-6px;font-family:var(--fig);font-size:11px;font-weight:600;
-  background:rgba(255,255,255,.9);padding:1px 7px;border-radius:999px;border:1px solid var(--hair);white-space:nowrap;z-index:2}
+  background:var(--card);padding:1px 7px;border-radius:999px;border:1px solid var(--hair);white-space:nowrap;z-index:2}
 .av2 .seasonband .pill.a{color:var(--terra-deep);border-color:var(--terra-line)}
 
 /* ---------- .slope , two-axis slope (trades keep / neighbours) ---------- */
@@ -878,7 +898,7 @@
 @media(max-width:560px){.av2 .reachwrap{grid-template-columns:1fr}}
 
 /* ---------- .quad , the opportunity scatter ---------- */
-.av2 .quad{position:relative;aspect-ratio:1.5;border:1px solid var(--hair);border-radius:10px;overflow:hidden;background:rgba(255,255,255,.4)}
+.av2 .quad{position:relative;aspect-ratio:1.5;border:1px solid var(--hair);border-radius:10px;overflow:hidden;background:var(--air)}
 .av2 .quad .cross{position:absolute;background:var(--line)}
 .av2 .quad .cross.h{left:0;right:0;top:50%;height:1px} .av2 .quad .cross.v{top:0;bottom:0;left:50%;width:1px}
 .av2 .quad .zone{position:absolute;left:50%;right:0;top:0;bottom:50%;background:var(--terra-soft)}
@@ -1660,7 +1680,7 @@
 .av2 .jumprail{position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:15;
   width:46px;max-height:calc(100vh - 150px);overflow-y:auto;overflow-x:hidden;
   list-style:none;margin:0;padding:8px 0;border-radius:14px;
-  background:linear-gradient(150deg,rgba(255,255,255,.80),rgba(255,255,255,.62));
+  background:var(--card);
   backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2);
   border:1px solid rgba(255,255,255,.78);
   box-shadow:inset 2px 2px .5px -2px rgba(255,255,255,.96),0 10px 30px -20px rgba(0,0,0,.4)}
@@ -1681,7 +1701,7 @@
 .av2 .jumpsheet{position:fixed;right:14px;bottom:14px;z-index:15}
 .av2 .jumpsheet>summary{list-style:none;cursor:pointer;user-select:none;
   display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;
-  background:linear-gradient(150deg,rgba(255,255,255,.80),rgba(255,255,255,.62));
+  background:var(--card);
   backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2);
   border:1px solid rgba(255,255,255,.78);
   box-shadow:inset 2px 2px .5px -2px rgba(255,255,255,.96),0 10px 30px -20px rgba(0,0,0,.4)}
@@ -1697,7 +1717,7 @@
   width:min(304px,calc(100vw - 28px));max-height:min(62vh,470px);
   overflow-y:auto;overscroll-behavior:contain;
   list-style:none;margin:0;padding:7px;border-radius:16px;
-  background:linear-gradient(150deg,rgba(255,255,255,.86),rgba(255,255,255,.70));
+  background:var(--card);
   backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2);
   border:1px solid rgba(255,255,255,.78);
   box-shadow:inset 2px 2px .5px -2px rgba(255,255,255,.96),0 18px 44px -24px rgba(0,0,0,.26)}

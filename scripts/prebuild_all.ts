@@ -154,6 +154,7 @@ const GATES: Gate[] = [
   { name: "subsection-icons", script: "scripts/verify_subsection_icons.ts" },
   { name: "trade-set", script: "scripts/verify_trade_set.ts" },
   { name: "sample-tags", script: "scripts/verify_sample_tags.ts" },
+  { name: "two-surface-levels", script: "scripts/verify_two_surface_levels.ts" },
   /* One number cannot be the answer for seven cities. Two thirds of the rows
      behind place pages carry no revenue of their own, and the read path filled
      the headline from a shared per-industry anchor while leaving the row's
