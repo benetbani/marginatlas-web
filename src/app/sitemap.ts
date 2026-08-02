@@ -8,8 +8,22 @@
  * Buckets:
  *   id=0 → static + 195 country pages + coverage/world/status
  *          + Plan v14 C.7: 195 /[country]/industries hubs
- *   id=1 → top 5,000 US cells_master entries
- *   id=2 → top 20,000 regional_cells entries (filtered to quality_10 >= 4)
+ *   id=1 → top 500 US cells_master entries
+ *   id=2 → top 300 regional_cells entries (filtered to quality_10 >= 4)
+ *
+ *   THOSE TWO NUMBERS WERE WRONG IN THIS COMMENT UNTIL 2026-08-02. It claimed
+ *   5,000 and 20,000 while the code has called getTopCells(500) and
+ *   getTopRegionalCells(300). Twenty-five times the truth, in the one place a
+ *   reader looks to find out how much of the lattice is crawlable, and it is
+ *   almost certainly a leftover from the caps being cut to survive a build that
+ *   was running out of memory.
+ *
+ *   The caps themselves are still an open question and are NOT changed here.
+ *   Nobody has established whether that memory ceiling was the development
+ *   laptop, which has under 2GB free and cannot complete a production build, or
+ *   the deploy environment, which has more. If it was the laptop, the site is
+ *   advertising 800 URLs of a much larger lattice for no reason, and one build
+ *   log settles it.
  *   id=3 → 195 /coverage/[iso2] scorecard pages
  *   id=4 → Plan v14 C.7: /[country]/[geo]/industries hubs across the ~36
  *          countries with regional coverage × their admin1 regions

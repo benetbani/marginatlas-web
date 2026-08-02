@@ -23,6 +23,7 @@ import { ChapterGap } from "@/components/spine2/page/ChapterGap";
 import { GlyphIcon } from "@/components/spine2/GlyphIcon";
 import type { GlyphId } from "@/components/spine2/glyphs";
 import { RulerColumn, type RulerReading } from "@/components/spine2/RulerColumn";
+import { CityDistrictMap } from "@/components/city2/CityDistrictMap";
 import type { CityPageModel, CityChapterId } from "@/lib/cities/city_adapter";
 
 import "@/styles/atlas-spine.css";
@@ -482,6 +483,26 @@ export function CityPage({ model }: { model: CityPageModel }) {
           <ChapterSection chapter={at("districts") as Chapter}>
             {model.districts != null ? (
               <>
+                {/* Decision 17, map v1: one measure, tap for detail. It sits
+                    above the list rather than replacing it, because the list
+                    carries every fact the map does and works with no
+                    JavaScript, no WebGL and no network. Districts with no
+                    point are simply absent from the map and still in the
+                    list. */}
+                <CityDistrictMap
+                  cityName={model.meta.city}
+                  pins={model.districts.rows
+                    .filter((d) => d.centre != null)
+                    .map((d) => ({
+                      slug: d.slug,
+                      name: d.name,
+                      lat: (d.centre as { lat: number }).lat,
+                      lng: (d.centre as { lng: number }).lng,
+                      band: d.residentBand,
+                      bandLabel: d.resident,
+                      rent: d.rent,
+                    }))}
+                />
                 {model.districts.rows.map((d) => (
                   <div key={d.slug} className="panel rise" style={{ marginBottom: 10 }}>
                     <div className="pad">

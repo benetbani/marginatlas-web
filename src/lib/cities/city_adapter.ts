@@ -21,6 +21,7 @@ import type {
   CityRankFigure,
   CityFile,
   CityScorecardRow,
+  CityDistrictWealthBand,
   CityTradeFitLevel,
   Figure,
   NullFigure,
@@ -307,6 +308,14 @@ export type CityDistrictRowModel = {
    * and never comparable with another city. */
   resident: string | null;
   daytime: string | null;
+  /** The raw band behind `resident`, for the map's colour ramp. The label is
+   * what a reader reads; a renderer that needs to sort or colour by it must not
+   * parse the prose back into a level. Null where no wealth reading exists. */
+  residentBand: CityDistrictWealthBand | null;
+  /** The commercial core, for the map. Null where the file gives no point, so
+   * a district with no location is simply absent from the map rather than
+   * placed at the equator. */
+  centre: { lat: number; lng: number } | null;
   /** Top five population types, largest first, display names. */
   mix: Array<{ name: string; sharePct: number }>;
   /** Types notably thin here. The absence is half the point. */
@@ -1090,6 +1099,11 @@ function buildDistricts(file: CityFile): CityDistrictsModel | null {
       icon: row.icon ?? null,
       rent: Number.isFinite(row.rentMultiple) ? `${row.rentMultiple.toFixed(1)}x` : null,
       resident: w ? (WEALTH_LABEL[w.resident] ?? null) : null,
+      residentBand: w ? w.resident : null,
+      centre:
+        row.centre && Number.isFinite(row.centre.lat) && Number.isFinite(row.centre.lng)
+          ? { lat: row.centre.lat, lng: row.centre.lng }
+          : null,
       daytime: w ? (WEALTH_LABEL[w.daytime] ?? null) : null,
       mix: m ? m.top.map((t) => ({ name: archName.get(t.key) ?? t.key, sharePct: t.sharePct })) : [],
       scarce: m ? m.scarce.map((k) => archName.get(k) ?? k) : [],
