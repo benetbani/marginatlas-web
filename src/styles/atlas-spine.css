@@ -46,6 +46,29 @@
      the level. */
   --card:rgba(255,255,255,.955);
   --air:rgba(255,255,255,.40);
+
+  /* THE SPACING SCALE, derived rather than invented.
+     Measured 2026-08-02: 39 distinct non-zero spacing values across 418
+     declarations in this file, a continuous run from 1 to 20 with no gaps.
+     That is not a scale, it is a continuum, and it is how a 15 ends up next to
+     a 16 for no reason either of them could state.
+
+     These steps are the peaks that were already there, not an ideal ladder
+     imposed on them: 8 (38 uses), 16 (32), 14 (29), 6 (25), 15 (25), 7 (23),
+     12 (23). The design's real vocabulary is 2px-granular in the small range
+     and jumps above 22, so the scale says that rather than pretending the file
+     wanted a 4-based ladder.
+
+     DELIBERATELY NOT RETROFITTED. Snapping the existing 418 values onto these
+     steps would move a ratified design by up to 3px in tight components, where
+     an odd value is often an optical correction rather than a drift. The founder
+     designs; the loop standardises what it can prove is safe. New work uses the
+     scale, the React kit is on it, and the retrofit is a proposal in
+     design/loop4/reviews/ with crops, not a codemod run at dawn. */
+  --s-2:2px;   --s-4:4px;   --s-6:6px;   --s-8:8px;
+  --s-10:10px; --s-12:12px; --s-14:14px; --s-16:16px;
+  --s-18:18px; --s-20:20px; --s-22:22px; --s-26:26px;
+  --s-32:32px; --s-40:40px;
   --ink:#0d0d0e;
   --ink-2:#4a4a4d;
   /* THE QUIET TEXT TONE. One, not two. Between --ink-2 (8.9:1) and the AA

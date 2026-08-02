@@ -61,7 +61,7 @@ export function CityPage({ model }: { model: CityPageModel }) {
         {at("hero") != null ? (
           <ChapterSection chapter={at("hero") as Chapter}>
             {model.hero != null ? (
-              <div className="glass rise" style={{ padding: "32px 34px" }}>
+              <div className="glass rise" style={{ padding: "32px 32px" }}>
                 <div className="grid g12" style={{ gap: 40, alignItems: "center" }}>
                   <div>
                     <div className="crumb">
@@ -796,7 +796,7 @@ export function CityPage({ model }: { model: CityPageModel }) {
             is RESOLVED from the field it restates, so the band and the chapter
             it quotes cannot disagree. */}
         {model.remember != null ? (
-          <section className="glass rise" style={{ padding: "28px 30px", margin: "18px 0" }}>
+          <section className="glass rise" style={{ padding: "26px 32px", margin: "18px 0" }}>
             <p className="k" style={{ margin: 0, maxWidth: "52ch" }}>
               {model.remember.text}
             </p>
@@ -836,7 +836,7 @@ export function CityPage({ model }: { model: CityPageModel }) {
           </ChapterSection>
         ) : null}
 
-        <footer style={{ padding: "40px 0 24px" }}>
+        <footer style={{ padding: "40px 0 22px" }}>
           <span className="tag">Margin Atlas</span>
         </footer>
       </div>
