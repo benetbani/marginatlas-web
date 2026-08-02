@@ -16,7 +16,26 @@
 ============================================================================= */
 import fs from 'node:fs';
 
-const DIR = 'E:/atlas/design/mockups';
+/* Resolved from this file, not hardcoded. It read 'E:/atlas/design/mockups',
+   which is one person's disk: anyone else cloning the repo got a throw, and so
+   would any machine that is not this one. This gate is local-only (it runs from
+   loop_gate.mjs, never from prebuild) so it was never a deploy risk, but the
+   absolute path was one keystroke away from being pasted into something that
+   is. The mockups live in the PARENT repository, which a build server never
+   clones, so a missing directory is a skip and not a failure. */
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const DIR = resolve(dirname(fileURLToPath(import.meta.url)), '../../design/mockups');
+if (!fs.existsSync(DIR)) {
+  console.log(
+    `verify_lattice: SKIPPED. The mockups are not in this repository\n` +
+      `  (${DIR})\n` +
+      `  They live in the parent project, so a build server never has them.\n` +
+      `  This is not a pass.`,
+  );
+  process.exit(0);
+}
 const read = f => fs.readFileSync(`${DIR}/${f}`, 'utf8');
 const PAGES = { cell: read('cell.html'), city: read('city.html'), country: read('country.html') };
 const CSS = read('atlas.css');
