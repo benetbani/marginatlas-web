@@ -99,6 +99,23 @@ export type FrontPageFigures = {
   places: Array<{ slug: string; name: string }>;
 };
 
+/**
+ * How many cities each country has a page for, keyed by ISO2.
+ *
+ * Same file, same array, same reason as everything else here: the country index
+ * needs to say what sits beneath a country, and deriving that from a second
+ * source is how two pages start disagreeing about the size of the site.
+ */
+export function citiesByCountry(): Record<string, number> {
+  const rows = (cityListJson as { cities: CityEntry[] }).cities;
+  const out: Record<string, number> = {};
+  for (const c of rows) {
+    if (!c.iso2) continue;
+    out[c.iso2] = (out[c.iso2] ?? 0) + 1;
+  }
+  return out;
+}
+
 export function frontPageFigures(): FrontPageFigures {
   const C = cellJson as unknown as CellShape;
   const rows = (cityListJson as { cities: CityEntry[] }).cities;
