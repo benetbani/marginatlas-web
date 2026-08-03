@@ -35,7 +35,7 @@
 import cellJson from "../../../data/cells/restaurants-in-london.json";
 import cityListJson from "../../../data/cities/city_list_v1.json";
 
-type CityEntry = { slug?: string; iso2?: string };
+type CityEntry = { slug?: string; name?: string; iso2?: string; tier?: number };
 
 /** A figure as the cell files carry it: a value, and the route it came down. */
 type Figure = { value?: number; tier?: string };
@@ -95,6 +95,8 @@ export type FrontPageFigures = {
   cities: number;
   /** Places whose figures have been reconciled line by line. */
   reconciled: number;
+  /** A scannable handful of real cities, each one a route that exists. */
+  places: Array<{ slug: string; name: string }>;
 };
 
 export function frontPageFigures(): FrontPageFigures {
@@ -128,5 +130,12 @@ export function frontPageFigures(): FrontPageFigures {
        So this is maintained by hand, and the day a second cell is reconciled
        whoever does it updates this line. */
     reconciled: 1,
+    /* The tier-1 cities, alphabetical, straight from the same file that builds
+       /cities/[slug]. Not a curated list: curating it would mean deciding which
+       cities matter, and the atlas's whole posture is that it covers what it
+       covers and says where it is thin. */
+    places: rows
+      .filter((c) => c.tier === 1 && c.slug && c.name)
+      .map((c) => ({ slug: c.slug as string, name: c.name as string })),
   };
 }

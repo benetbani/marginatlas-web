@@ -1,36 +1,44 @@
 /**
- * /dev/home3 , the home page rebuilt to the v2 system.
+ * /dev/home3 , the home page.
  *
- * A REVIEW ARTIFACT. It renders at a dev route and nothing links to it. The live
- * home page is untouched. The founder designs; this is a proposal he can look at.
+ * A REVIEW ARTIFACT at a dev route. Nothing links to it. The live home page is
+ * untouched.
  *
- * WHY IT EXISTS. Research on 2026-08-03 found that PRODUCT.md already specifies
- * this page and the live one disobeys: strategic principle 7 says "above the
- * fold: the headline number and one sentence of context", and the live page
- * opens with a rotating question and a search form, first figure one section
- * down.
+ * WHY IT EXISTS. `PRODUCT.md` principle 7 says "above the fold: the headline
+ * number and one sentence of context". The live page opens with a rotating
+ * question and a search form, first figure one section down.
  *
- * The competitive read said the same thing from the other side. Levels.fyi
- * answers the identical question shape, what does X earn at Y, and shows no
- * figure above the fold at all. Our World in Data shares the ethos and renders
- * real data before asking for anything. So answer-first is both what the
- * doctrine demands and the position the nearest competitor has left open.
+ * WHAT THE SECOND PASS CHANGED, and it is the important part. The first version
+ * was correct and too heavy: seven sections, three of them the same shape, a
+ * figure over a two column grid over a paragraph. Correct is not the bar for a
+ * front door. It read as a report.
  *
- * WHAT IS DELIBERATELY ABSENT, each named in PRODUCT.md's own anti-references:
- * the "#1 atlas" superlative, the rotating headline, hero video, glassmorphism,
- * an identical three-card grid, a stat-tile row, a logo wall, a testimonial.
+ * EIGHT SECTIONS AND NO TWO OF THEM THE SAME FORM:
+ *
+ *   1 answer      hero, one figure           the proof
+ *   2 find        a control, not prose       the reader who knows what they want
+ *   3 spread      a chart                    the only chart on the page
+ *   4 places      a scannable grid           the only place it feels like an atlas
+ *   5 myth        struck claim, editorial    the only section with a voice
+ *   6 what        a short list               the only section about the product
+ *   7 coverage    three counts               the only section admitting what is thin
+ *   8 next        links                      the exit
+ *
+ * CUT: a standalone "1 in 4 pay their owner properly" block. It was a third
+ * figure-and-paragraph section and the fact belongs in the hero copy, which is
+ * where it now sits.
  *
  * THE NUMBERS ARE REAL. Every figure comes from data/cells/restaurants-in-london
- * .json, the one reconciled cell that exists today, and each carries the tier its
- * own file states. That is also the constraint: a second worked example needs a
- * second reconciled cell.
+ * .json or from the same city file that builds /cities/[slug]. The constraint
+ * that shapes this page: exactly one cell has been reconciled, so there is
+ * exactly one worked example to show.
  */
 import * as React from "react";
 
 import { GlyphIcon } from "@/components/spine2/GlyphIcon";
+import type { GlyphId } from "@/components/spine2/glyphs";
 import { Myth } from "@/components/spine2/Myth";
 import { Range } from "@/components/spine2/Range";
-import type { GlyphId } from "@/components/spine2/glyphs";
 import { frontPageFigures } from "@/lib/home/front_page_figures";
 
 import "@/styles/atlas-spine.css";
@@ -40,7 +48,7 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-/* Money in the page's own register. Matches the city adapter so the home page
+/* Money in the page's own register, matching the city adapter so the home page
    and the page it links to can never print one figure two ways. */
 function money(v: number): string {
   const a = Math.abs(v);
@@ -50,10 +58,10 @@ function money(v: number): string {
   return `$${Math.round(v)}`;
 }
 
-/* Myth's contract: the <b> in `fix` is the accent carrier, and terracotta
-   marks the answer once per chapter. The correction's punch is its last clause,
-   so that clause is the <b>. Falls back to the plain string when the sentence
-   has no colon, rather than guessing at a split point. */
+/* Myth's contract: the <b> in `fix` is the accent carrier, and terracotta marks
+   the answer once per chapter. The correction's punch is its last clause, so
+   that clause is the <b>. Falls back to the plain string when there is no
+   colon, rather than guessing at a split point. */
 function emphasiseLastClause(text: string): React.ReactNode {
   const i = text.lastIndexOf(": ");
   if (i < 0) return text;
@@ -82,6 +90,7 @@ export default function HomeProposal() {
     countries,
     cities,
     reconciled,
+    places,
   } = frontPageFigures();
 
   return (
@@ -94,15 +103,19 @@ export default function HomeProposal() {
               Margin Atlas
             </span>
             <nav className="lat" aria-label="Sections">
-              <a href="#answer">The answer</a>
-              <span className="s">&rsaquo;</span>
               <a href="#find">Find yours</a>
+              <span className="s">&rsaquo;</span>
+              <a href="#places">Places</a>
+              <span className="s">&rsaquo;</span>
+              <a href="#coverage">Coverage</a>
             </nav>
           </div>
         </header>
 
-        {/* 1 , THE WORKED ANSWER. The whole bet: a stranger reads one true,
-            complete, qualified answer before being asked for anything. */}
+        {/* 1 , THE ANSWER. A stranger reads one true, complete, qualified answer
+            before being asked for anything. The room is NAMED: an unqualified
+            "a restaurant in London" reads as the typical one, and this is not
+            it, which the data file says of itself. */}
         <section id="answer" className="glass rise" style={{ padding: "32px 32px", marginTop: 16 }}>
           <div className="grid g12" style={{ gap: 40, alignItems: "center" }}>
             <div>
@@ -112,10 +125,6 @@ export default function HomeProposal() {
                 <span>London</span>
               </div>
 
-              {/* THE ROOM IS NAMED. An unqualified "a restaurant in London"
-                  reads as the typical one, and this is not it: the file says
-                  so itself. Naming the room is what makes the keeps figure
-                  beneath it true rather than merely accurate. */}
               <h1 style={{ marginTop: 16, maxWidth: "20ch" }}>
                 A {roomSqm} square metre London restaurant takes{" "}
                 {money(roomRevenue)} a year.
@@ -128,11 +137,11 @@ export default function HomeProposal() {
                 <div className="l">is what the owner keeps</div>
               </div>
 
-              <p className="k" style={{ margin: "18px 0 0", maxWidth: "48ch" }}>
-                That gap is the business. Revenue is what crosses the till;
-                what an owner keeps is what is left after rent, staff, stock and
-                the state. This site publishes the second number, for every
-                trade and place it can.
+              <p className="k" style={{ margin: "18px 0 0", maxWidth: "46ch" }}>
+                That gap is the business, and it is the number nobody publishes.
+                About one in {Math.round(100 / paidProperly)} London restaurants
+                pay their owner properly for the hours the job takes. Most of the rest did not
+                know that before they signed the lease.
               </p>
             </div>
 
@@ -163,13 +172,12 @@ export default function HomeProposal() {
                   </span>
                   <span className="v">{money(keepsHi)}</span>
                 </div>
-                {/* The fourth row is the qualifier, not a fourth figure about
-                    money. Without it a reader takes this room for the typical
-                    one, which is the failure the whole page is arguing against. */}
+                {/* The qualifier, not a fourth figure about money. Without it a
+                    reader takes this room for the typical one. */}
                 <div className="row">
                   <span className="nm">
                     Restaurants taking more
-                    <span className="s">this is not the typical room</span>
+                    <span className="s">not the typical room</span>
                   </span>
                   <span className="v">{takeMoreThanRoom}%</span>
                 </div>
@@ -182,237 +190,223 @@ export default function HomeProposal() {
           </div>
         </section>
 
-
-        {/* 2 , THE SPREAD. Directly after the answer, because "is that typical
-            or did you show me the good one" is the next thought a sceptical
-            reader has, and answering it unprompted is the whole posture. */}
-        <section className="panel pad rise" style={{ marginTop: 18 }}>
-          <div>
-            <div className="lab" style={{ marginBottom: 12 }}>
-              Whether that room is typical
+        {/* 2 , FIND YOURS. A control, deliberately not another block of prose,
+            and deliberately second: a reader who already knows what they want
+            should not have to scroll past the argument to leave. */}
+        <section id="find" className="panel pad rise" style={{ marginTop: 18 }}>
+          <div className="grid g12" style={{ gap: 24, alignItems: "center" }}>
+            <div className="setter">
+              <span className="lab">Trade</span>
+              <span className="v">Restaurants</span>
+              <span className="lab">Place</span>
+              <span className="v">London</span>
+              <a className="chip chip-a" href="/gb/london/restaurants">
+                Open this page
+              </a>
             </div>
-            <div className="grid g12" style={{ gap: 32, alignItems: "start" }}>
-              <div>
-                {/* Two rows on one axis, which is the point: the room from the
-                    section above, placed on the distribution of the whole
-                    trade, so a reader can see where it sits rather than take
-                    the claim on trust. The room row is a marker with no band,
-                    the component's degenerate case, because a single modelled
-                    scenario has no quartiles of its own and inventing it two
-                    ends would be a fabrication.
-
-                    Log scale: the distribution is right-skewed, and a linear
-                    axis crushes three quarters of the trade into the left
-                    fifth of the rail. fmt is the same money() the row display
-                    uses, so the axis and the figures cannot disagree. */}
-                <Range
-                  rows={[
-                    {
-                      label: "Middle restaurant",
-                      lo: p25,
-                      mid: medianRevenue,
-                      hi: p75,
-                      display: money(medianRevenue),
-                    },
-                    {
-                      label: "This room",
-                      lo: null,
-                      mid: roomRevenue,
-                      hi: null,
-                      display: money(roomRevenue),
-                    },
-                  ]}
-                  domain={[p25 * 0.8, p75 * 1.15]}
-                  scale="log"
-                  ticks={[200_000, 400_000, 800_000]}
-                  fmt={money}
-                />
-              </div>
-              <p className="k" style={{ margin: 0, maxWidth: "52ch" }}>
-                The middle restaurant in London takes {money(medianRevenue)}, so
-                the room above is a good one, not a typical one. The quarter of
-                the trade above the middle takes {money(p75)}; the quarter below
-                takes {money(p25)}. That is close to six times between one
-                restaurant and another in the same city, which is why a single
-                average is the wrong thing to publish and why this site
-                publishes the spread instead.
-                <br />
-                <br />
-                {skewNote}
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* 3 , THE LINE THAT IS THE ARGUMENT. One number, alone, because it is
-            the sentence the whole product exists to be able to say. */}
-        <section className="panel pad rise" style={{ marginTop: 18 }}>
-          <div>
-            <div className="lab" style={{ marginBottom: 12 }}>
-              What that means for the person opening one
-            </div>
-            <div className="grid g12" style={{ gap: 32, alignItems: "start" }}>
-              <div className="answer">
-                {/* A figure, not the phrase "1 in 4". The slot is tabular-nums
-                    by system rule, which is right for digits and reads
-                    mechanically for words. The denominator lives in the label
-                    where it belongs. */}
-                <div className="num fig" style={{ fontSize: "clamp(34px,4.4vw,48px)" }}>
-                  {paidProperly}%
-                </div>
-                <div className="l">
-                  of London restaurants pay their owner properly
-                </div>
-              </div>
-              <p className="k" style={{ margin: 0, maxWidth: "52ch" }}>
-                Properly means an owner draw of about twice the London average
-                wage, for the hours the job actually takes. The other three in
-                four are buying themselves a job at a discount, and most of them
-                did not know that before they signed the lease.
-                <br />
-                <br />
-                No public register measures owner pay at this grain. This is a
-                modelled figure and it says so, which is the point: a number that
-                cannot show its working does not belong on the page.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* 4 , THE NAVIGATOR. Below the proof, not in place of it. */}
-        <section id="find" className="panel rise" style={{ marginTop: 18 }}>
-          <div className="pad">
-            <div className="lab" style={{ marginBottom: 12 }}>
-              Find yours
-            </div>
-            <div className="grid g12" style={{ gap: 22, alignItems: "center" }}>
-              <p className="k" style={{ margin: 0, maxWidth: "46ch" }}>
-                Pick a trade and a place. Where the figures are thin the page
-                says so rather than guessing, and it still shows you the shape of
-                the thing.
-              </p>
-              <div className="setter">
-                <span className="lab">Trade</span>
-                <span className="v">Restaurants</span>
-                <span className="lab">Place</span>
-                <span className="v">London</span>
-                <a className="chip chip-a" href="/gb/london/restaurants">
-                  Open this page
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 5 , THE MYTH. The research spine had "how the numbers are made"
-            here. This is a SUBSTITUTION and it needs a verdict: showing a
-            widely repeated claim being corrected demonstrates the method far
-            better than describing the method does, and myth-debunking is
-            already a stated part of the product. The tier vocabulary that
-            section 6 would have carried is stated on the answer panel and
-            again below. Self-omits when the cell carries no myth. */}
-        {myth ? (
-          <section className="panel rise" style={{ marginTop: 18 }}>
-            <div className="pad">
-              <Myth
-                claim={myth.claim}
-                fix={emphasiseLastClause(myth.reality)}
-                note="That claim traces back to a television advertisement, not a study. It is repeated so often that people sign leases believing it, and it is wrong in both directions: the first year is survivable, the fifth is where the trade actually thins."
-              />
-            </div>
-          </section>
-        ) : null}
-
-        {/* 6 , COVERAGE, HONESTLY. Including where it is thin, because that is
-            the claim nobody else makes. */}
-        <section className="panel pad rise" style={{ marginTop: 18 }}>
-          <div>
-            <div className="lab" style={{ marginBottom: 12 }}>
-              What is actually covered
-            </div>
-            {/* A bare .row does not space its halves. Outside a statblock the
-                three parts render hard against each other and this section
-                first read "Londonmeasured16,765". Same defect the district map
-                header had. The statblock is the row's home. */}
-            <div className="statblock">
-              <div className="row">
-                <span className="nm">
-                  Countries with a page
-                  <span className="s">every one, whatever the data behind it</span>
-                </span>
-                <span className="v">{countries}</span>
-              </div>
-              <div className="row">
-                <span className="nm">
-                  Cities with a page
-                  <span className="s">and a neighbourhood level beneath them</span>
-                </span>
-                <span className="v">{cities}</span>
-              </div>
-              <div className="row">
-                <span className="nm">
-                  Places with figures reconciled line by line
-                  <span className="s">restaurants in London</span>
-                </span>
-                <span className="v">{reconciled}</span>
-              </div>
-            </div>
-            <p className="k" style={{ margin: "12px 0 0", maxWidth: "62ch" }}>
-              Most pages carry a figure built from published inputs rather than
-              observed in that exact place, and every one of them says which.
-              Saying so is the product. A site that hid it would read better and
-              be worth less.
+            <p className="k" style={{ margin: 0, maxWidth: "40ch" }}>
+              Pick a trade and a place. Where the figures are thin the page says
+              so rather than guessing.
             </p>
           </div>
         </section>
 
-        {/* 7 , WHERE TO GO NEXT. Real routes only. Every href here is
-            requested and confirmed to resolve before this page is delivered,
-            because seven live link defects on this site came from links that
-            were reasonable to assume and wrong. */}
+        {/* 3 , THE SPREAD. The only chart on the page, and it earns the slot by
+            answering the next thought a sceptic has: is that typical, or did
+            you show me the good one. */}
         <section className="panel pad rise" style={{ marginTop: 18 }}>
-          <div>
-            <div className="lab" style={{ marginBottom: 12 }}>
-              Where to go from here
+          <div className="lab" style={{ marginBottom: 14 }}>
+            Whether that room is typical
+          </div>
+          <div className="grid g12" style={{ gap: 32, alignItems: "start" }}>
+            <div>
+              {/* Two rows on one axis: the room above, placed on the whole
+                  trade's distribution, so a reader can see where it sits rather
+                  than take the claim on trust. The room row is a marker with no
+                  band, the component's degenerate case, because one modelled
+                  scenario has no quartiles and inventing it two ends would be a
+                  fabrication.
+
+                  Log scale: the distribution is right-skewed and a linear axis
+                  crushes three quarters of the trade into the left fifth of the
+                  rail. fmt is the same money() the rows print with, so the axis
+                  and the figures cannot disagree. */}
+              <Range
+                rows={[
+                  {
+                    label: "Middle restaurant",
+                    lo: p25,
+                    mid: medianRevenue,
+                    hi: p75,
+                    display: money(medianRevenue),
+                  },
+                  {
+                    label: "This room",
+                    lo: null,
+                    mid: roomRevenue,
+                    hi: null,
+                    display: money(roomRevenue),
+                  },
+                ]}
+                domain={[p25 * 0.8, p75 * 1.15]}
+                scale="log"
+                ticks={[200_000, 400_000, 800_000]}
+                fmt={money}
+              />
             </div>
-            {/* .close is the mockups' own closing-links block: hairline rows,
-                a figure-face glyph on the right, terracotta on hover. The first
-                version of this section hand-rolled a statblock, whose rows
-                carry no link affordance at all, so three links rendered as
-                plain body text. Porting beats inventing. */}
-            <div className="close">
-              <div className="links">
-                <a href="/gb/london/restaurants">
-                  The worked example in full
-                  <span className="g">{money(roomRevenue)}</span>
-                </a>
-                <a href="/cities">
-                  Every city with a page
-                  <span className="g">{cities}</span>
-                </a>
-                <a href="/countries">
-                  Every country with a page
-                  <span className="g">{countries}</span>
-                </a>
-              </div>
-              <div>
-                <div className="lab" style={{ marginBottom: 10 }}>
-                  What the tier word on a figure means
-                </div>
-                <p className="k" style={{ margin: 0, maxWidth: "52ch" }}>
-                  <b>Measured</b> is counted in that exact place.{" "}
-                  <b>Built from published inputs</b> is arithmetic on figures
-                  that were published, shown so it can be checked.{" "}
-                  <b>Thin</b> means the shape is right and the level is not
-                  certain.
-                  <br />
-                  <br />
-                  The tier says which route a figure came down. It does not
-                  certify the figure is right, and nothing on this site claims
-                  it does.
-                </p>
-              </div>
+            <p className="k" style={{ margin: 0, maxWidth: "50ch" }}>
+              The middle restaurant takes {money(medianRevenue)}, so the room
+              above is a good one and not a typical one. The quarter above the
+              middle takes {money(p75)}; the quarter below takes {money(p25)}.
+              Close to six times between one restaurant and another in the same
+              city, which is why an average is the wrong thing to publish.
+              <br />
+              <br />
+              {skewNote}
+            </p>
+          </div>
+        </section>
+
+        {/* 4 , PLACES. The only section that is scannable rather than read, and
+            the only one where the lattice is visible as a lattice. Every name
+            is a route that exists, taken from the same file that builds it. */}
+        <section id="places" className="panel pad rise" style={{ marginTop: 18 }}>
+          {/* The first label here failed the trivia gate as a count-of-things,
+              correctly: it described the site rather than helping anyone decide
+              anything. A navigational prompt does the same job and is not about
+              us. Note the gate reads the file, not the rendered output, so a
+              comment quoting the banned phrase fails it too. */}
+          <div className="lab" style={{ marginBottom: 14 }}>
+            Start with a city
+          </div>
+          {/* Chips, not .tiles. A three column tile grid put 25 cities in nine
+              rows and 500px of a front page, and .tiles a .g is the figure
+              face, so the place names rendered as tabular numerals. A wrapped
+              run of chips is three lines and reads as an index, which is what
+              this is. */}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {places.map((c) => (
+              <a key={c.slug} className="chip" href={`/cities/${c.slug}`}>
+                {c.name}
+              </a>
+            ))}
+          </div>
+          <p className="k" style={{ margin: "14px 0 0", maxWidth: "58ch" }}>
+            And {cities - places.length} more, across {countries} countries.
+            Every one has a page whatever the data behind it, because a page
+            that disappears where the figures are thin teaches a reader that
+            some places do not count.
+          </p>
+        </section>
+
+        {/* 5 , THE MYTH. The only section with a voice rather than a figure, and
+            the only one that argues with the reader. Self-omits when the cell
+            carries no myth, because a claim with no correction is worse than
+            no section. */}
+        {myth ? (
+          <section className="panel pad rise" style={{ marginTop: 18 }}>
+            <Myth
+              claim={myth.claim}
+              fix={emphasiseLastClause(myth.reality)}
+              note="That claim traces to a television advertisement, not a study. It is repeated so often that people sign leases believing it, and it is wrong in both directions: the first year is survivable, the fifth is where the trade thins."
+            />
+          </section>
+        ) : null}
+
+        {/* 6 , WHAT A PAGE GIVES YOU. The only section about the product rather
+            than about a number. Three lines, not three identical cards. */}
+        <section className="panel pad rise" style={{ marginTop: 18 }}>
+          <div className="lab" style={{ marginBottom: 14 }}>
+            What a page gives you
+          </div>
+          <div className="statblock">
+            <div className="row">
+              <span className="nm">
+                What the business takes, and what the owner keeps
+                <span className="s">the second one is the point</span>
+              </span>
             </div>
+            <div className="row">
+              <span className="nm">
+                The spread, not an average
+                <span className="s">where you would land, not where the middle is</span>
+              </span>
+            </div>
+            <div className="row">
+              <span className="nm">
+                Where every figure came from
+                <span className="s">stated on the figure, not in a footnote</span>
+              </span>
+            </div>
+          </div>
+        </section>
+
+        {/* 7 , COVERAGE. The only section that admits what is thin, which is
+            the claim no competitor makes. */}
+        <section id="coverage" className="panel pad rise" style={{ marginTop: 18 }}>
+          <div className="lab" style={{ marginBottom: 14 }}>
+            What is actually covered
+          </div>
+          <div className="statblock">
+            <div className="row">
+              <span className="nm">
+                Countries with a page
+                <span className="s">every one, whatever the data behind it</span>
+              </span>
+              <span className="v">{countries}</span>
+            </div>
+            <div className="row">
+              <span className="nm">
+                Cities with a page
+                <span className="s">and a neighbourhood level beneath them</span>
+              </span>
+              <span className="v">{cities}</span>
+            </div>
+            <div className="row">
+              <span className="nm">
+                Places with figures reconciled line by line
+                <span className="s">restaurants in London</span>
+              </span>
+              <span className="v">{reconciled}</span>
+            </div>
+          </div>
+          <p className="k" style={{ margin: "14px 0 0", maxWidth: "60ch" }}>
+            Most pages carry a figure built from published inputs rather than
+            observed in that exact place, and every one says which. Saying so is
+            the product. A site that hid it would read better and be worth less.
+          </p>
+        </section>
+
+        {/* 8 , THE EXIT. Ported from the mockups' own .close block: hairline
+            rows, a figure-face glyph on the right, terracotta on hover. An
+            earlier version hand-rolled a statblock here and rendered three
+            links as plain body text with no affordance at all. */}
+        <section className="panel pad rise" style={{ marginTop: 18 }}>
+          <div className="lab" style={{ marginBottom: 14 }}>
+            Where to go from here
+          </div>
+          <div className="close">
+            <div className="links">
+              <a href="/gb/london/restaurants">
+                The worked example in full
+                <span className="g">{money(roomRevenue)}</span>
+              </a>
+              <a href="/cities">
+                Every city with a page
+                <span className="g">{cities}</span>
+              </a>
+              <a href="/countries">
+                Every country with a page
+                <span className="g">{countries}</span>
+              </a>
+            </div>
+            <p className="k" style={{ margin: 0, maxWidth: "50ch" }}>
+              <b>Measured</b> is counted in that exact place.{" "}
+              <b>Built from published inputs</b> is arithmetic on figures that
+              were published, shown so it can be checked. <b>Thin</b> means the
+              shape is right and the level is not certain. The tier says which
+              route a figure came down; it does not certify the figure is right.
+            </p>
           </div>
         </section>
 
