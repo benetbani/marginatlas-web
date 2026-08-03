@@ -62,6 +62,53 @@ page can use two at once. **The home page is the worst case: it renders inside
 `text-atlas-700` (generation three).** Two palettes, one page, neither of them
 the ratified one.
 
+## 0.1 The number that actually matters: v2 ships on nothing
+
+Measured 2026-08-03 by `node scripts/audit_generation_seam.mjs`, which
+classifies each route by what it renders, following one level of local import
+because a route file is usually a thin wrapper over the component that carries
+the generation.
+
+```
+97 routes under src/app
+49 a reader can reach, 48 internal (dev, admin, _design)
+
+48 shipping routes are not yet v2
+ 0 shipping routes are v2 and nothing else
+ 1 shipping route carries any v2 at all
+12 internal routes carry v2, which is where the work has gone
+```
+
+**Read the third line twice.** The route counts in the table above are easy to
+misread as "the new system is partly live". It is not live anywhere. Every v2
+page built so far sits behind `/dev`, reachable by nobody. The one shipping
+route that touches v2 is `/[country]/[geo]/[industry]`, the cell page, and it
+carries **all three generations at once**.
+
+**What this means for planning.** Building another v2 page at a dev route does
+not reduce the seam; it adds to the pile waiting behind it. The bottleneck is
+promotion, which is the founder's call and nobody else's: flags, and what he
+rules on. Anyone picking up design work should know that before choosing what to
+build.
+
+**The eight mixed routes, worst first**, since a single page carrying two
+accents is the seam at its most visible:
+
+| route | generations |
+|---|---|
+| `/[country]/[geo]/[industry]` | **v2 + spineshell + legacy** |
+| `/` | spineshell + legacy |
+| `/[country]` | spineshell + legacy |
+| `/[country]/[geo]` | spineshell + legacy |
+| `/cities/[slug]` | spineshell + legacy |
+| `/cities/[slug]/neighborhoods` | spineshell + legacy |
+| `/industries/[industry]` | spineshell + legacy |
+| `/_design` | v2 + legacy (internal) |
+
+Run the script for the full queue. It is **not a gate**: the seam is a migration
+to be worked down, and a gate failing on it would fail every build until the
+last page moved.
+
 **Which to use.** Anything new, or any page being rebuilt: **v2**. Touch the
 older tokens only for a surgical fix to a page that has not migrated.
 
