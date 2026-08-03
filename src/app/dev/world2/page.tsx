@@ -29,6 +29,8 @@
  */
 import { GlyphIcon } from "@/components/spine2/GlyphIcon";
 import type { GlyphId } from "@/components/spine2/glyphs";
+import * as React from "react";
+import { CountryFlag } from "@/components/CountryFlag";
 import { COUNTRIES } from "@/lib/taxonomy";
 import { getCoverageReport } from "@/lib/quality/coverage-report";
 import { buildWorldAtlas } from "@/lib/scores/world_atlas";
@@ -67,7 +69,8 @@ function CountryDoor({ iso2, name }: { iso2: string; name: string }) {
   const target = countryPageTarget(iso2);
   if (!target) return <>{name}</>;
   return (
-    <a href={target.href}>
+    <a href={target.href} style={{ display: "inline-flex", alignItems: "center", gap: 9 }}>
+      <CountryFlag iso2={iso2} className="w-[18px]" />
       {name}
       <span aria-hidden="true" style={{ color: "var(--faint)", marginLeft: 6 }}>
         &rsaquo;
@@ -76,14 +79,39 @@ function CountryDoor({ iso2, name }: { iso2: string; name: string }) {
   );
 }
 
-/** The same resolution, in the index. A country with no page is plain text,
- *  never a link that 404s. */
+/**
+ * One country in the index: its flag, then its name.
+ *
+ * Founder asked for flags and was told there was no asset set. That was wrong.
+ * `CountryFlag` has been in this repository the whole time and is already live
+ * on the compare page; the search that "proved" its absence was truncated at
+ * six lines and the component sat below the cut. Flat SVGs from flagcdn at a
+ * canonical 3:2, so ninety-nine of them are ninety-nine cached requests and no
+ * bytes in the bundle.
+ *
+ * The flag is what makes a list of ninety-nine names scannable rather than a
+ * wall: the eye finds a country by its colours long before it reads the word.
+ *
+ * A country with no page is plain text, never a link that 404s.
+ */
 function CountryLink({ iso2, name }: { iso2: string; name: string }) {
   const target = countryPageTarget(iso2);
-  if (!target) return <span style={{ fontSize: 13, color: "var(--muted)" }}>{name}</span>;
+  const inner = (
+    <>
+      <CountryFlag iso2={iso2} className="w-[18px]" />
+      <span>{name}</span>
+    </>
+  );
+  const style: React.CSSProperties = {
+    fontSize: 13,
+    display: "flex",
+    alignItems: "center",
+    gap: 9,
+  };
+  if (!target) return <span style={{ ...style, color: "var(--muted)" }}>{inner}</span>;
   return (
-    <a href={target.href} style={{ fontSize: 13, color: "var(--ink-2)" }}>
-      {name}
+    <a href={target.href} style={{ ...style, color: "var(--ink-2)" }}>
+      {inner}
     </a>
   );
 }
