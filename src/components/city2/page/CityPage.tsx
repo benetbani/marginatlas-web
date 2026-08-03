@@ -24,6 +24,7 @@ import { GlyphIcon } from "@/components/spine2/GlyphIcon";
 import type { GlyphId } from "@/components/spine2/glyphs";
 import { RulerColumn, type RulerReading } from "@/components/spine2/RulerColumn";
 import { Myth } from "@/components/spine2/Myth";
+import { Place } from "@/components/spine2/Place";
 import { CityDistrictMap } from "@/components/city2/CityDistrictMap";
 import type { CityPageModel, CityChapterId } from "@/lib/cities/city_adapter";
 
@@ -43,7 +44,8 @@ export function CityPage({ model }: { model: CityPageModel }) {
     ) : null;
 
   return (
-    <div className="av2">
+    <div className="av2" style={{ position: "relative" }}>
+      <Place />
       <div className="wrap">
         <header className="mast">
           <div className="in">

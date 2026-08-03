@@ -104,7 +104,7 @@
   --sans:var(--font-geist,'Geist'),'Geist','Geist Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
   --fig:var(--font-grotesk,'Space Grotesk'),'Space Grotesk',ui-monospace,'SF Mono',monospace;
 
-  --r-lg:18px; --r-md:14px; --r-sm:10px;
+  --r-lg:10px; --r-md:8px; --r-sm:6px; --r-xs:4px;
   --shadow-panel:0 1px 2px rgba(0,0,0,.04), 0 16px 38px -22px rgba(0,0,0,.20);
 }
 
@@ -114,8 +114,13 @@
 .av2{font-family:var(--sans);color:var(--ink);font-size:14px;line-height:1.6;position:relative;overflow-x:hidden}
 
 /* THE PLACE. A fixed layer rather than background-attachment, which is broken
-   on iOS. Quieted hard: desaturated, low contrast, and veiled, so it reads as
-   the ground a page sits on rather than as a picture competing with it. */
+   on iOS. Desaturated, low contrast and veiled, so it reads as the ground a
+   page sits on rather than as a picture competing with it.
+
+   SUPERSEDED. `.place{display:none}` further down this file turns this off, and
+   `.skyline` replaced it: a fixed layer can never fade on scroll, because every
+   section passes the top of the viewport where a fixed veil is lightest. Kept
+   for the reasoning, not for use. USE .skyline. */
 .av2 .place{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .av2 .place img{
   width:100%;height:100%;object-fit:cover;object-position:50% 42%;
@@ -182,13 +187,13 @@
 /* ---------- MASTHEAD ---------- */
 .av2 .mast{position:sticky;top:0;z-index:20}
 .av2 .mast .in{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
-  padding:11px 20px;margin-top:14px;border-radius:14px;
+  padding:11px 20px;margin-top:14px;border-radius:var(--r-md);
   background:var(--card);
   backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2);
   border:1px solid rgba(255,255,255,.78);
   box-shadow:inset 2px 2px .5px -2px rgba(255,255,255,.96), 0 10px 30px -20px rgba(0,0,0,.4)}
 .av2 .mast .brand{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:600;letter-spacing:-.01em}
-.av2 .mast .brand .m{width:15px;height:15px;border-radius:4px;flex:none;
+.av2 .mast .brand .m{width:15px;height:15px;border-radius:var(--r-xs);flex:none;
   background:linear-gradient(150deg,var(--terra-bright),var(--terra-deep));
   box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
 .av2 .mast .lat{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--muted)}
@@ -233,7 +238,7 @@
 
 /* the one input on the page */
 .av2 .setter{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:24px;
-  padding:14px 18px;border-radius:12px;background:var(--card);border:1px solid rgba(255,255,255,.8)}
+  padding:14px 18px;border-radius:var(--r-md);background:var(--card);border:1px solid rgba(255,255,255,.8)}
 .av2 .setter .lab{white-space:nowrap}
 .av2 .setter input[type=range]{-webkit-appearance:none;appearance:none;flex:1;min-width:150px;height:3px;border-radius:2px;
   background:var(--n4);outline:none}
@@ -249,6 +254,14 @@
 .av2 .chip{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:500;color:var(--ink-2);
   background:rgba(0,0,0,.035);border:1px solid var(--hair);border-radius:999px;padding:4px 11px}
 .av2 .chip-a{color:var(--terra-deep);background:var(--terra-soft);border-color:var(--terra-line)}
+/* A PLACE, NOT A CONTROL. Solid terracotta, white text, no border to fight it,
+   and squared onto the same scale as everything else. A 999px pill beside an
+   8px panel is two rounding systems on one screen, which is the thing the
+   founder asked to end: "we should use the same rounding techniques all over
+   the site". Pills stay pills where they are controls; a place is not one. */
+.av2 .chip-place{color:#fff;background:var(--terra);border-color:var(--terra);font-weight:500;
+  border-radius:var(--r-xs);padding:5px 12px}
+.av2 .chip-place:hover{background:var(--terra-deep);border-color:var(--terra-deep)}
 
 /* ---------- THE SIGNATURE , unit chart ---------- */
 /* one mark per business, sorted, with the good-living line drawn across it.
@@ -390,7 +403,7 @@
 .av2 .scale .r.hi .l,.av2 .scale .r.hi .v{color:var(--terra-deep);font-weight:600}
 .av2 .scale .r .v{font-family:var(--fig);font-size:13.5px;text-align:right}
 
-.av2 .sbar{display:flex;height:13px;border-radius:7px;overflow:hidden;gap:2px}
+.av2 .sbar{display:flex;height:13px;border-radius:var(--r-sm);overflow:hidden;gap:2px}
 .av2 .sbar i{display:block}
 .av2 .sbar-l{display:flex;justify-content:space-between;margin-top:10px;font-size:11.5px;color:var(--ink-2)}
 .av2 .sbar-l b{font-family:var(--fig);color:var(--ink);font-weight:600}
@@ -480,7 +493,7 @@
 @media(max-width:820px){.av2 .close{grid-template-columns:1fr;gap:26px}}
 
 .av2 .cta{display:inline-flex;align-items:center;gap:9px;background:var(--ink);color:#fff;font-size:13.5px;font-weight:500;
-  padding:13px 22px;border-radius:12px;box-shadow:0 10px 24px -14px rgba(0,0,0,.8)}
+  padding:13px 22px;border-radius:var(--r-md);box-shadow:0 10px 24px -14px rgba(0,0,0,.8)}
 .av2 .cta .ar{color:var(--terra-bright)}
 
 /* ---------- MOTION ---------- */
@@ -550,7 +563,7 @@
 .av2 .late .l{padding:12px 0} .av2 .worlds .w{padding:17px 16px}
 
 /* ---------- THE STATBLOCK , the binding primitive ---------- */
-.av2 .statblock{border:1px solid var(--grp-frame);border-radius:11px;overflow:hidden;background:var(--card)}
+.av2 .statblock{border:1px solid var(--grp-frame);border-radius:var(--r-md);overflow:hidden;background:var(--card)}
 .av2 .statblock+.statblock{margin-top:20px}
 .av2 .statblock>.hd{display:flex;align-items:center;gap:9px;min-height:37px;padding:0 13px;
   border-bottom:1px solid var(--grp-frame);background:rgba(0,0,0,.018);
@@ -580,7 +593,7 @@
 .av2 .gi-16{width:16px;height:16px;stroke-width:2.4}
 .av2 .gi-13{width:13px;height:13px;stroke-width:2.8}
 .av2 .chhead .hd{align-items:center;gap:13px}
-.av2 .itile{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;flex:none;
+.av2 .itile{width:34px;height:34px;border-radius:var(--r-sm);display:grid;place-items:center;flex:none;
   background:rgba(0,0,0,.035);border:1px solid var(--hair);color:var(--ink)}
 .av2 .itile .gi .a{stroke:var(--terra)} .av2 .itile .gi .af{fill:var(--terra)}
 .av2 .chhead .chnum{order:-1}
@@ -630,8 +643,8 @@
 .av2 .tang .c .big{font-family:var(--fig);font-size:26px;font-weight:600;line-height:1}
 .av2 .tang .c .lab{margin-top:5px}
 .av2 .tang .c .pic{height:38px;display:grid;place-items:center;margin-top:12px}
-.av2 .tang .fill{width:100%;height:9px;border-radius:5px;background:rgba(0,0,0,.06);overflow:hidden}
-.av2 .tang .fill i{display:block;height:100%;background:var(--ink);border-radius:5px}
+.av2 .tang .fill{width:100%;height:9px;border-radius:var(--r-xs);background:rgba(0,0,0,.06);overflow:hidden}
+.av2 .tang .fill i{display:block;height:100%;background:var(--ink);border-radius:var(--r-xs)}
 .av2 .tang .disc{width:38px;height:38px;border-radius:50%;
   background:conic-gradient(var(--terra) 0 var(--p,66%),rgba(0,0,0,.08) 0)}
 .av2 .tang .week{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;width:100%;max-width:120px}
@@ -658,8 +671,8 @@
 .av2 .roster{display:flex;flex-direction:column;gap:8px}
 .av2 .roster .role{display:grid;grid-template-columns:130px 1fr 62px;gap:12px;align-items:center}
 .av2 .roster .role .nm{font-size:13px;color:var(--ink-2);display:flex;align-items:center;gap:8px}
-.av2 .roster .role .track{position:relative;height:22px;border-radius:5px;background:rgba(0,0,0,.05);overflow:hidden}
-.av2 .roster .role .track i{position:absolute;top:0;bottom:0;background:var(--n3);border-radius:5px;
+.av2 .roster .role .track{position:relative;height:22px;border-radius:var(--r-xs);background:rgba(0,0,0,.05);overflow:hidden}
+.av2 .roster .role .track i{position:absolute;top:0;bottom:0;background:var(--n3);border-radius:var(--r-xs);
   display:flex;align-items:center;padding-left:9px;color:#fff;font-family:var(--fig);font-size:11px;font-weight:600}
 .av2 .roster .role.lead .track i{background:var(--n1)}
 .av2 .roster .role .v{font-family:var(--fig);font-size:13.5px;font-weight:600;text-align:right}
@@ -698,7 +711,7 @@
 /* .drain , stepped survival funnel */
 .av2 .drain{display:flex;flex-direction:column;gap:0}
 .av2 .drain .step{display:flex;align-items:center;gap:14px;padding:3px 0}
-.av2 .drain .step .bar{height:34px;background:var(--n2);border-radius:4px;display:flex;align-items:center;
+.av2 .drain .step .bar{height:34px;background:var(--n2);border-radius:var(--r-xs);display:flex;align-items:center;
   justify-content:flex-end;padding-right:11px;color:#fff;font-family:var(--fig);font-size:13px;font-weight:600}
 .av2 .drain .step:first-child .bar{background:var(--n1)}
 .av2 .drain .step .yr{width:56px;font-size:11.5px;color:var(--muted);flex:none}
@@ -741,7 +754,7 @@
    between the name and the axis, and an 18px icon in a 26px rail read as lint.
    Capping the object and enlarging the rail fixes both without touching the
    encoding: the axis keeps its full span, it just spans less dead air. */
-.av2 .eight{border:1px solid var(--grp-frame);border-radius:12px;overflow:hidden;background:var(--card);
+.av2 .eight{border:1px solid var(--grp-frame);border-radius:var(--r-md);overflow:hidden;background:var(--card);
   max-width:880px;margin-right:auto}
 .av2 .eight .e{display:grid;grid-template-columns:32px minmax(0,1fr) 1fr var(--val-col);gap:12px;align-items:center;
   min-height:52px;padding:0 15px}
@@ -826,7 +839,7 @@
 .av2 .fitgrid tr:hover td{background:var(--zebra)}
 
 /* ---------- .hoodcards , district rows ---------- */
-.av2 .hoodcards{display:flex;flex-direction:column;border:1px solid var(--grp-frame);border-radius:12px;overflow:hidden;background:var(--card)}
+.av2 .hoodcards{display:flex;flex-direction:column;border:1px solid var(--grp-frame);border-radius:var(--r-md);overflow:hidden;background:var(--card)}
 .av2 .hoodcards a{display:grid;grid-template-columns:24px minmax(0,1.3fr) 1fr 56px;gap:12px;align-items:center;
   min-height:54px;padding:0 15px;transition:background .15s}
 .av2 .hoodcards a+a{box-shadow:inset 0 1px 0 var(--grp-rule)}
@@ -841,7 +854,7 @@
 @media(max-width:560px){.av2 .hoodcards a{grid-template-columns:24px minmax(0,1fr) 56px}.av2 .hoodcards a .bar{display:none}}
 
 /* ---------- .trendrow , ten-year small multiples ---------- */
-.av2 .trendrow{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:0;border:1px solid var(--grp-frame);border-radius:12px;overflow:hidden;background:var(--card)}
+.av2 .trendrow{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:0;border:1px solid var(--grp-frame);border-radius:var(--r-md);overflow:hidden;background:var(--card)}
 .av2 .trendrow .t{padding:15px 16px;border-right:1px solid var(--grp-frame)}
 .av2 .trendrow .t:last-child{border-right:0}
 .av2 .trendrow .t .h{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--muted);margin-bottom:6px}
@@ -854,7 +867,7 @@
 @media(max-width:640px){.av2 .trendrow{grid-template-columns:1fr 1fr}.av2 .trendrow .t:nth-child(2){border-right:0}}
 
 /* ---------- .lensgrid , the nine-lens 3x3 ---------- */
-.av2 .lensgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border:1px solid var(--grp-frame);border-radius:12px;overflow:hidden;background:var(--card)}
+.av2 .lensgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border:1px solid var(--grp-frame);border-radius:var(--r-md);overflow:hidden;background:var(--card)}
 .av2 .lensgrid .cell{padding:15px 16px;border-right:1px solid var(--grp-frame);border-bottom:1px solid var(--grp-frame)}
 .av2 .lensgrid .cell:nth-child(3n){border-right:0}
 .av2 .lensgrid .cell:nth-last-child(-n+3){border-bottom:0}
@@ -921,11 +934,11 @@
 @media(max-width:560px){.av2 .reachwrap{grid-template-columns:1fr}}
 
 /* ---------- .quad , the opportunity scatter ---------- */
-.av2 .quad{position:relative;aspect-ratio:1.5;border:1px solid var(--hair);border-radius:10px;overflow:hidden;background:var(--air)}
+.av2 .quad{position:relative;aspect-ratio:1.5;border:1px solid var(--hair);border-radius:var(--r-sm);overflow:hidden;background:var(--air)}
 .av2 .quad .cross{position:absolute;background:var(--line)}
 .av2 .quad .cross.h{left:0;right:0;top:50%;height:1px} .av2 .quad .cross.v{top:0;bottom:0;left:50%;width:1px}
 .av2 .quad .zone{position:absolute;left:50%;right:0;top:0;bottom:50%;background:var(--terra-soft)}
-.av2 .quad .pt{position:absolute;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;
+.av2 .quad .pt{position:absolute;width:26px;height:26px;border-radius:var(--r-sm);display:grid;place-items:center;
   transform:translate(-50%,-50%);background:var(--white);border:1px solid var(--hair);box-shadow:var(--shadow-panel)}
 .av2 .quad .pt.hi{border-color:var(--terra-line)}
 .av2 .quad .pt .gi{color:var(--n1)} .av2 .quad .pt.hi .gi{color:var(--terra)}
@@ -965,7 +978,7 @@
 /* ---------- 3. THE PLUS EXPANDER (was an invisible chevron) ---------- */
 .av2 .more>summary{display:flex;align-items:center;gap:13px;min-height:52px;padding:0 22px;cursor:pointer}
 .av2 .more>summary .cv{display:none}
-.av2 .exp{flex:none;width:27px;height:27px;border-radius:8px;position:relative;
+.av2 .exp{flex:none;width:27px;height:27px;border-radius:var(--r-sm);position:relative;
   background:var(--terra-soft);border:1px solid var(--terra-line);transition:background .2s}
 .av2 .exp i::before,.av2 .exp i::after{content:"";position:absolute;top:50%;left:50%;width:13px;height:2px;
   border-radius:1px;background:var(--terra-deep);transform:translate(-50%,-50%);transition:transform .28s,background .2s}
@@ -980,7 +993,7 @@
 /* ---------- 6/7/8. CHROME: number, head icon, row glyphs ---------- */
 .av2 .chnum{order:-1;font-family:var(--fig);font-size:26px;font-weight:600;line-height:1;
   letter-spacing:-.01em;color:var(--terra);font-variant-numeric:tabular-nums}
-.av2 .itile{width:40px;height:40px;border-radius:11px}
+.av2 .itile{width:40px;height:40px;border-radius:var(--r-md)}
 .av2 .gi-24{width:24px;height:24px;stroke-width:1.85}
 .av2 .gi-18{width:18px;height:18px;stroke-width:2.2}
 .av2 .chhead .hd{gap:14px}
@@ -1027,7 +1040,7 @@
 .av2 .eight .e.lead{box-shadow:none}
 
 /* ---------- 27. TWELVE READINGS AS ONE SORTED COLUMN ---------- */
-.av2 .readcol{border:1px solid var(--grp-frame);border-radius:12px;overflow:hidden;background:var(--data-fill)}
+.av2 .readcol{border:1px solid var(--grp-frame);border-radius:var(--r-md);overflow:hidden;background:var(--data-fill)}
 .av2 .readcol .rhd{display:grid;grid-template-columns:26px minmax(0,1fr) 1.15fr 92px;gap:12px;padding:9px 15px;
   border-bottom:1px solid var(--grp-frame);background:rgba(0,0,0,.02);
   font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
@@ -1079,7 +1092,7 @@
 .av2 .touryear .axis-m{display:grid;grid-template-columns:repeat(12,1fr);gap:9px;margin-top:6px;padding:0 4px;
   font-size:10px;color:var(--muted);text-align:center}
 .av2 .statcluster{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--grp-frame);
-  border-radius:11px;overflow:hidden;background:var(--card)}
+  border-radius:var(--r-md);overflow:hidden;background:var(--card)}
 .av2 .statcluster .s{padding:13px 15px;border-right:1px solid var(--grp-frame);border-bottom:1px solid var(--grp-frame)}
 .av2 .statcluster .s:nth-child(2n){border-right:0}
 .av2 .statcluster .s:nth-last-child(-n+2){border-bottom:0}
@@ -1091,7 +1104,7 @@
 .av2 .dwindle .d{display:grid;grid-template-columns:150px 1fr;gap:14px;align-items:center}
 .av2 .dwindle .d .lb{font-size:12.5px;color:var(--ink-2)}
 .av2 .dwindle .d .lb b{display:block;font-family:var(--fig);font-size:15px;font-weight:600;color:var(--ink)}
-.av2 .dwindle .d .bar{height:34px;border-radius:5px;background:var(--n2);display:flex;align-items:center;
+.av2 .dwindle .d .bar{height:34px;border-radius:var(--r-xs);background:var(--n2);display:flex;align-items:center;
   justify-content:flex-end;padding-right:12px;color:#fff;font-family:var(--fig);font-size:14px;font-weight:600}
 .av2 .dwindle .d:nth-child(2) .bar{background:var(--n3)}
 .av2 .dwindle .d.keep .bar{background:var(--terra)}
@@ -1099,9 +1112,9 @@
 .av2 .dwindle .note-in{font-size:12px;color:var(--muted);margin-top:2px}
 
 /* ---------- 24. PERSONAS , WEALTH SPREAD + SAVINGS ---------- */
-.av2 .wealth{border:1px solid var(--grp-frame);border-radius:12px;overflow:hidden;background:var(--card)}
+.av2 .wealth{border:1px solid var(--grp-frame);border-radius:var(--r-md);overflow:hidden;background:var(--card)}
 .av2 .wealth .top{padding:18px}
-.av2 .wealth .spread{display:flex;height:34px;border-radius:6px;overflow:hidden;gap:2px}
+.av2 .wealth .spread{display:flex;height:34px;border-radius:var(--r-sm);overflow:hidden;gap:2px}
 .av2 .wealth .spread i{display:flex;align-items:center;justify-content:center;color:#fff;
   font-family:var(--fig);font-size:11px;font-weight:600}
 .av2 .wealth .lgd{display:flex;flex-wrap:wrap;gap:7px 16px;margin-top:13px}
@@ -1117,7 +1130,7 @@
 @media(max-width:640px){.av2 .wealth .figs{grid-template-columns:1fr 1fr}}
 
 /* ---------- 24b. ARCHETYPE MIX ---------- */
-.av2 .archetypes{border:1px solid var(--grp-frame);border-radius:12px;overflow:hidden;background:var(--card)}
+.av2 .archetypes{border:1px solid var(--grp-frame);border-radius:var(--r-md);overflow:hidden;background:var(--card)}
 .av2 .archetypes .mixbar{display:flex;height:26px;gap:2px;padding:14px 16px 0}
 .av2 .archetypes .mixbar i{border-radius:3px;cursor:pointer;transition:opacity .15s}
 .av2 .archetypes .mixbar i:hover{opacity:.75}
@@ -1135,7 +1148,7 @@
 .av2 .archetypes .detail{padding:18px;border-top:1px solid var(--grp-frame);background:rgba(0,0,0,.018)}
 .av2 .archetypes .detail .dh{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600}
 .av2 .archetypes .detail .dg{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:14px;
-  border:1px solid var(--grp-frame);border-radius:9px;overflow:hidden;background:var(--white)}
+  border:1px solid var(--grp-frame);border-radius:var(--r-sm);overflow:hidden;background:var(--white)}
 .av2 .archetypes .detail .dg .c{padding:11px 13px;border-right:1px solid var(--grp-frame)}
 .av2 .archetypes .detail .dg .c:last-child{border-right:0}
 .av2 .archetypes .detail .dg .c .n{font-family:var(--fig);font-size:16px;font-weight:600;line-height:1}
@@ -1143,7 +1156,7 @@
 @media(max-width:820px){.av2 .archetypes .cards{grid-template-columns:1fr 1fr}.av2 .archetypes .pc:nth-child(3n){border-right:1px solid var(--grp-frame)}.av2 .archetypes .pc:nth-child(2n){border-right:0}.av2 .archetypes .detail .dg{grid-template-columns:1fr 1fr}}
 
 /* ---------- 9/15. THE CALCULATOR (merged, contextual, with leverage) ---------- */
-.av2 .calc{border:1px solid var(--grp-frame);border-radius:14px;overflow:hidden;background:var(--card)}
+.av2 .calc{border:1px solid var(--grp-frame);border-radius:var(--r-md);overflow:hidden;background:var(--card)}
 .av2 .calc .chd{display:flex;align-items:center;gap:11px;padding:13px 18px;border-bottom:1px solid var(--grp-frame);
   background:rgba(0,0,0,.02)}
 .av2 .calc .chd .t{font-size:14px;font-weight:600;display:flex;align-items:center;gap:9px}
@@ -1160,7 +1173,7 @@
 .av2 .calc .var .vh .nm{font-size:12.5px;color:var(--ink-2);display:flex;align-items:center;gap:8px}
 .av2 .calc .var .vh .cur{font-family:var(--fig);font-size:15px;font-weight:600}
 /* a slider that visibly reads as draggable */
-.av2 .calc input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:4px;
+.av2 .calc input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:var(--r-xs);
   background:var(--n5);outline:none;cursor:grab}
 .av2 .calc input[type=range]:active{cursor:grabbing}
 .av2 .calc input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;
@@ -1181,8 +1194,8 @@
 .av2 .calc .lev .lh{font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin-bottom:11px}
 .av2 .calc .lev .lr{display:grid;grid-template-columns:minmax(0,1fr) 1.1fr 62px;gap:10px;align-items:center;padding:6px 0}
 .av2 .calc .lev .lr .nm{font-size:12px;color:var(--ink-2)}
-.av2 .calc .lev .lr .bar{height:7px;border-radius:4px;background:rgba(0,0,0,.05);position:relative}
-.av2 .calc .lev .lr .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:4px;background:var(--n3)}
+.av2 .calc .lev .lr .bar{height:7px;border-radius:var(--r-xs);background:rgba(0,0,0,.05);position:relative}
+.av2 .calc .lev .lr .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:var(--r-xs);background:var(--n3)}
 .av2 .calc .lev .lr:first-of-type .bar i{background:var(--n1)}
 .av2 .calc .lev .lr .v{font-family:var(--fig);font-size:12.5px;font-weight:600;text-align:right}
 @media(max-width:820px){.av2 .calc .body2{grid-template-columns:1fr}.av2 .calc .vars{border-right:0;border-bottom:1px solid var(--grp-frame)}}
@@ -1191,20 +1204,20 @@
 .av2 .ranked{display:flex;flex-direction:column;gap:9px}
 .av2 .ranked .rb{display:grid;grid-template-columns:158px 1fr 74px;gap:13px;align-items:center}
 .av2 .ranked .rb .nm{font-size:12.5px;color:var(--ink-2)}
-.av2 .ranked .rb .bar{height:20px;border-radius:4px;background:rgba(0,0,0,.045);position:relative;overflow:hidden}
-.av2 .ranked .rb .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:4px;background:var(--n3)}
+.av2 .ranked .rb .bar{height:20px;border-radius:var(--r-xs);background:rgba(0,0,0,.045);position:relative;overflow:hidden}
+.av2 .ranked .rb .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:var(--r-xs);background:var(--n3)}
 .av2 .ranked .rb.rng .bar i{background:linear-gradient(90deg,var(--n5),var(--n2))}
 .av2 .ranked .rb .v{font-family:var(--fig);font-size:13px;font-weight:600;text-align:right;white-space:nowrap}
 .av2 .ranked .tot{display:grid;grid-template-columns:158px 1fr 74px;gap:13px;align-items:center;
   margin-top:6px;padding-top:12px;border-top:2px solid var(--ink)}
 .av2 .ranked .tot .nm{font-size:13.5px;font-weight:600}
-.av2 .ranked .tot .bar{height:20px;border-radius:4px;position:relative;overflow:hidden;background:rgba(0,0,0,.045)}
-.av2 .ranked .tot .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:4px;background:var(--terra)}
+.av2 .ranked .tot .bar{height:20px;border-radius:var(--r-xs);position:relative;overflow:hidden;background:rgba(0,0,0,.045)}
+.av2 .ranked .tot .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:var(--r-xs);background:var(--terra)}
 .av2 .ranked .tot .v{font-family:var(--fig);font-size:17px;font-weight:600;color:var(--terra-deep);text-align:right}
 @media(max-width:820px){.av2 .ranked .rb,.av2 .ranked .tot{grid-template-columns:98px 1fr 64px;gap:9px}}
 
 /* ---------- 16. BREAK-EVEN WITH AN HONEST RANGE ---------- */
-.av2 .mini .band-rng{position:absolute;top:5px;height:7px;border-radius:4px;background:rgba(0,0,0,.10)}
+.av2 .mini .band-rng{position:absolute;top:5px;height:7px;border-radius:var(--r-xs);background:rgba(0,0,0,.10)}
 .av2 .mini .cp .n2{display:block;font-size:9.5px;color:var(--muted)}
 
 /* ---------- low-confidence chip ---------- */
@@ -1235,7 +1248,7 @@
 @media(max-width:640px){.av2 .hundred .grp{grid-template-columns:1fr}.av2 .hundred .grp .lb{width:auto}}
 
 /* ---------- THE CONFIDENCE LEDGER ---------- */
-.av2 .ledger{border:1px solid var(--grp-frame);border-radius:12px;overflow:hidden;background:var(--data-fill)}
+.av2 .ledger{border:1px solid var(--grp-frame);border-radius:var(--r-md);overflow:hidden;background:var(--data-fill)}
 .av2 .ledger .lh{display:grid;grid-template-columns:minmax(0,1.4fr) 96px 1fr;gap:14px;padding:9px 15px;
   border-bottom:1px solid var(--grp-frame);background:rgba(0,0,0,.02);
   font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
@@ -1258,7 +1271,7 @@
 
 /* ---------- THE METHOD: the arithmetic, shown ---------- */
 .av2 .method{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--grp-frame);
-  border-radius:12px;overflow:hidden;background:var(--data-fill)}
+  border-radius:var(--r-md);overflow:hidden;background:var(--data-fill)}
 .av2 .method .m{padding:18px;border-right:1px solid var(--grp-frame)}
 .av2 .method .m:last-child{border-right:0}
 .av2 .method .m .h{display:flex;align-items:center;gap:9px;font-size:12.5px;font-weight:600;margin-bottom:12px}
@@ -1276,7 +1289,7 @@
 
 /* ---------- DEFINITIONS ---------- */
 .av2 .defs{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--grp-frame);
-  border-radius:12px;overflow:hidden;background:var(--data-fill)}
+  border-radius:var(--r-md);overflow:hidden;background:var(--data-fill)}
 .av2 .defs .d{padding:14px 16px;border-right:1px solid var(--grp-frame);border-bottom:1px solid var(--grp-frame)}
 .av2 .defs .d:nth-child(2n){border-right:0}
 .av2 .defs .d .w{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600}
@@ -1285,7 +1298,7 @@
 @media(max-width:640px){.av2 .defs{grid-template-columns:1fr}.av2 .defs .d{border-right:0}}
 
 /* ---------- QUESTIONS ---------- */
-.av2 .qa{border:1px solid var(--grp-frame);border-radius:12px;overflow:hidden;background:var(--data-fill)}
+.av2 .qa{border:1px solid var(--grp-frame);border-radius:var(--r-md);overflow:hidden;background:var(--data-fill)}
 .av2 .qa details{border-bottom:1px solid var(--grp-rule)}
 .av2 .qa details:last-child{border-bottom:0}
 .av2 .qa summary{display:flex;align-items:center;gap:12px;min-height:50px;padding:0 16px;cursor:pointer;
@@ -1298,7 +1311,7 @@
 
 /* ---------- THE TRUST STRIP ---------- */
 .av2 .trust{display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding:14px 18px;
-  border:1px solid var(--grp-frame);border-radius:12px;background:var(--data-fill)}
+  border:1px solid var(--grp-frame);border-radius:var(--r-md);background:var(--data-fill)}
 .av2 .trust .t{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-2)}
 .av2 .trust .t .gi{color:var(--n2)}
 .av2 .trust .t b{font-family:var(--fig);color:var(--ink);font-weight:600}
@@ -1362,8 +1375,8 @@
 
 /* B6. the survival bars needed a full-width track to scale against, or 74%
    drew as "everything survived" and the closed share had no pixels. */
-.av2 .drain .step .track{flex:1;background:rgba(0,0,0,.045);border-radius:4px}
-.av2 .drain .step .bar{border-radius:4px}
+.av2 .drain .step .track{flex:1;background:rgba(0,0,0,.045);border-radius:var(--r-xs)}
+.av2 .drain .step .bar{border-radius:var(--r-xs)}
 
 /* B7. a floor, or the smallest opening cost resolves under a pixel and vanishes */
 .av2 .ranked .rb .bar i{min-width:2px}
@@ -1481,7 +1494,7 @@
 
 /* KEYBOARD. There was no focus state in the entire stylesheet. */
 .av2 :where(a,button,summary,input[type=range],.archetypes .pc,.archetypes .mixbar i):focus-visible{
-  outline:2px solid var(--terra);outline-offset:3px;border-radius:6px}
+  outline:2px solid var(--terra);outline-offset:3px;border-radius:var(--r-sm)}
 .av2 .calc input[type=range]:focus-visible{outline-offset:6px}
 
 /* one timing scale for chrome, and nothing that carries data is ever animated */
@@ -1702,7 +1715,7 @@
    vertically centred so it never scrolls away, which is the whole point. */
 .av2 .jumprail{position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:15;
   width:46px;max-height:calc(100vh - 150px);overflow-y:auto;overflow-x:hidden;
-  list-style:none;margin:0;padding:8px 0;border-radius:14px;
+  list-style:none;margin:0;padding:8px 0;border-radius:var(--r-md);
   background:var(--card);
   backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2);
   border:1px solid rgba(255,255,255,.78);
@@ -1739,13 +1752,13 @@
 .av2 .jumpsheet .jlist{position:absolute;right:0;bottom:calc(100% + 10px);
   width:min(304px,calc(100vw - 28px));max-height:min(62vh,470px);
   overflow-y:auto;overscroll-behavior:contain;
-  list-style:none;margin:0;padding:7px;border-radius:16px;
+  list-style:none;margin:0;padding:7px;border-radius:var(--r-lg);
   background:var(--card);
   backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2);
   border:1px solid rgba(255,255,255,.78);
   box-shadow:inset 2px 2px .5px -2px rgba(255,255,255,.96),0 18px 44px -24px rgba(0,0,0,.26)}
 /* 40px rows: a thumb target, not a pointer target */
-.av2 .jumpsheet .jlist a{display:flex;align-items:center;gap:12px;min-height:40px;padding:0 11px;border-radius:9px}
+.av2 .jumpsheet .jlist a{display:flex;align-items:center;gap:12px;min-height:40px;padding:0 11px;border-radius:var(--r-sm)}
 .av2 .jumpsheet .jlist a .n{font-family:var(--fig);font-variant-numeric:tabular-nums;font-size:11px;
   font-weight:500;color:var(--muted);width:18px;text-align:right;flex:none}
 .av2 .jumpsheet .jlist a .t{font-size:12.5px;color:var(--ink-2);min-width:0;overflow:hidden;
@@ -1803,7 +1816,7 @@
 .av2 .dmkey{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:12px}
 .av2 .dmk{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:var(--muted)}
 .av2 .dmk i{width:10px;height:10px;border-radius:50%;flex:none}
-.av2 .maplibregl-popup.dmpop .maplibregl-popup-content{border-radius:10px;padding:10px 12px;
+.av2 .maplibregl-popup.dmpop .maplibregl-popup-content{border-radius:var(--r-sm);padding:10px 12px;
   font-size:12.5px;line-height:1.4;color:var(--ink);background:var(--card);
   border:1px solid var(--hair);box-shadow:0 10px 30px -20px rgba(0,0,0,.4)}
 /* Legend swatches take the same five tokens the markers read at runtime, so the

@@ -27,9 +27,12 @@
  *   list becomes useful.
  * - **Search.** 105 names is a page you scan, not one you query. Ctrl-F exists.
  */
+import { GlyphIcon } from "@/components/spine2/GlyphIcon";
+import type { GlyphId } from "@/components/spine2/glyphs";
 import { COUNTRIES } from "@/lib/taxonomy";
 import { getCoverageReport } from "@/lib/quality/coverage-report";
 import { buildWorldAtlas } from "@/lib/scores/world_atlas";
+import { Place } from "@/components/spine2/Place";
 import { citiesByCountry } from "@/lib/home/front_page_figures";
 import { countryPageTarget } from "@/lib/geo/page_targets";
 
@@ -73,12 +76,13 @@ function CountryDoor({ iso2, name }: { iso2: string; name: string }) {
   );
 }
 
-/** The same resolution, in the index. A country with no page is not a chip. */
-function CountryChip({ iso2, name }: { iso2: string; name: string }) {
+/** The same resolution, in the index. A country with no page is plain text,
+ *  never a link that 404s. */
+function CountryLink({ iso2, name }: { iso2: string; name: string }) {
   const target = countryPageTarget(iso2);
-  if (!target) return null;
+  if (!target) return <span style={{ fontSize: 13, color: "var(--muted)" }}>{name}</span>;
   return (
-    <a className="chip" href={target.href}>
+    <a href={target.href} style={{ fontSize: 13, color: "var(--ink-2)" }}>
       {name}
     </a>
   );
@@ -103,7 +107,8 @@ export default async function WorldProposal() {
   const hasData = atlas.countriesCovered > 0;
 
   return (
-    <div className="av2">
+    <div className="av2" style={{ position: "relative" }}>
+      <Place />
       <div className="wrap">
         <header className="mast">
           <div className="in">
@@ -119,52 +124,63 @@ export default async function WorldProposal() {
           </div>
         </header>
 
-        {/* 1 , WHAT THIS IS. Short on purpose. An index page that opens with
-            three paragraphs about itself has failed at being an index. */}
+        {/* 1 , THE OPENING. A title card is not a page opening. This states
+            what the page is for, and carries the figure that makes the list
+            below worth scrolling: most of the map is not filled, and the
+            honest version of that is the first thing said rather than the
+            last. */}
         <section className="glass rise" style={{ padding: "30px 32px", marginTop: 16 }}>
-          <div className="crumb">
-            <span>Every country</span>
+          <div className="grid g12" style={{ gap: 40, alignItems: "center" }}>
+            <div>
+              <div className="crumb">
+                <span>The atlas</span>
+              </div>
+              <h1 style={{ marginTop: 14, maxWidth: "17ch" }}>
+                Every country, and how much of it is filled in.
+              </h1>
+              <p className="k" style={{ margin: "16px 0 0", maxWidth: "44ch" }}>
+                Pick a country to see what a business there takes, what its
+                owner keeps, and what the state takes in between. Where the
+                figures are thin the page says so on the figure.
+              </p>
+            </div>
+
+            {hasData ? (
+              <div className="panel pad">
+                <div className="statblock">
+                  <div className="hd">
+                    <GlyphIcon id={"global-spread" as GlyphId} size={18} />
+                    How far the map goes
+                  </div>
+                  <div className="row">
+                    <span className="nm">
+                      Countries with figures
+                      <span className="s">every one has a page</span>
+                    </span>
+                    <span className="v">{atlas.countriesCovered}</span>
+                  </div>
+                  <div className="row">
+                    <span className="nm">
+                      Trades mapped across them
+                      <span className="s">not every trade in every country</span>
+                    </span>
+                    <span className="v">{atlas.activitiesMapped}</span>
+                  </div>
+                  <div className="row">
+                    <span className="nm">
+                      Reconciled line by line
+                      <span className="s">restaurants in London, so far</span>
+                    </span>
+                    <span className="v">1</span>
+                  </div>
+                </div>
+              </div>
+            ) : null}
           </div>
-          <h1 style={{ marginTop: 14, maxWidth: "22ch" }}>
-            Where a small business actually pays.
-          </h1>
-          <p className="k" style={{ margin: "16px 0 0", maxWidth: "56ch" }}>
-            Every country here has a page. What differs is how much of it is
-            filled, and each page says so on the figure rather than in a
-            footnote.
-          </p>
         </section>
 
         {hasData ? (
           <>
-            {/* 2 , THE COUNTS. Three real totals, and the third is the one
-                nobody else prints. */}
-            <section className="panel pad rise" style={{ marginTop: 18 }}>
-              <div className="statblock">
-                <div className="row">
-                  <span className="nm">
-                    Countries with figures
-                    <span className="s">the ones listed below</span>
-                  </span>
-                  <span className="v">{atlas.countriesCovered}</span>
-                </div>
-                <div className="row">
-                  <span className="nm">
-                    Trades mapped across them
-                    <span className="s">not every trade in every country</span>
-                  </span>
-                  <span className="v">{atlas.activitiesMapped}</span>
-                </div>
-                <div className="row">
-                  <span className="nm">
-                    Reconciled line by line
-                    <span className="s">restaurants in London, so far</span>
-                  </span>
-                  <span className="v">1</span>
-                </div>
-              </div>
-            </section>
-
             {/* 3 , START HERE. The guided entry: a reader begins where the data
                 goes furthest rather than at the top of an alphabet. */}
             {atlas.deepest.length ? (
@@ -201,22 +217,58 @@ export default async function WorldProposal() {
               </section>
             ) : null}
 
-            {/* 4 , EVERY COUNTRY, BY REGION. The index proper. Chips rather than
-                tiles: a tile grid of 105 countries is twenty rows of a page
-                nobody scrolls, and the tile's figure face renders place names
-                as tabular numerals. */}
-            {atlas.regions.map((region) => (
-              <section className="panel pad rise" style={{ marginTop: 18 }} key={region.name}>
-                <div className="lab" style={{ marginBottom: 14 }}>
-                  {region.name}
-                </div>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-                  {region.countries.map((c) => (
-                    <CountryChip iso2={c.iso2} name={c.name} key={c.iso2} />
-                  ))}
-                </div>
-              </section>
-            ))}
+            {/* 3 , EVERY COUNTRY. ONE PANEL, NOT SEVEN.
+                Founder 2026-08-03: "all those repeated country ribbons are just
+                ugly", "we should not slap so many repeated pieces in such a
+                short part".
+
+                The first version was seven full-width panels, each holding a
+                run of pills. Seven cards and ninety-nine pills is ninety-nine
+                identical objects and seven identical frames, in one scroll.
+                One panel, regions as columns, names as plain links: the same
+                information, two frames instead of seven, and no pill chrome
+                repeating under the eye.
+
+                FLAGS ARE NOT HERE AND THAT IS NOT A CHOICE. He asked for them
+                and they are the right answer. There is no flag asset set in the
+                repository and there is no honest way to draw ninety-nine
+                national flags by hand. It needs an asset decision. */}
+            <section className="panel pad rise" style={{ marginTop: 18 }}>
+              <div className="lab" style={{ marginBottom: 16 }}>
+                Every country with a page
+              </div>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))",
+                  gap: "26px 32px",
+                }}
+              >
+                {atlas.regions.map((region) => (
+                  <div key={region.name}>
+                    <div
+                      style={{
+                        fontSize: 12,
+                        fontWeight: 600,
+                        color: "var(--ink)",
+                        paddingBottom: 8,
+                        marginBottom: 8,
+                        borderBottom: "1px solid var(--hair)",
+                      }}
+                    >
+                      {region.name}
+                    </div>
+                    <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
+                      {region.countries.map((c) => (
+                        <li key={c.iso2} style={{ padding: "3px 0" }}>
+                          <CountryLink iso2={c.iso2} name={c.name} />
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </section>
 
             {/* 5 , THE EXIT. */}
             <section className="panel pad rise" style={{ marginTop: 18 }}>

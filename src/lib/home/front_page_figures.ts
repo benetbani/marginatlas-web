@@ -97,6 +97,9 @@ export type FrontPageFigures = {
   reconciled: number;
   /** A scannable handful of real cities, each one a route that exists. */
   places: Array<{ slug: string; name: string }>;
+  /** Still trading after year 1 and after year 5, as percentages. The myth in
+   *  two figures instead of two sentences. */
+  survival: { year1: number; year5: number } | null;
 };
 
 /**
@@ -151,6 +154,14 @@ export function frontPageFigures(): FrontPageFigures {
        /cities/[slug]. Not a curated list: curating it would mean deciding which
        cities matter, and the atlas's whole posture is that it covers what it
        covers and says where it is thin. */
+    survival: (() => {
+      const series = (C.population.survival as unknown as { series?: Array<{ x: number; value: number }> })?.series;
+      if (!series?.length) return null;
+      const at = (x: number) => series.find((p) => p.x === x)?.value;
+      const y1 = at(1);
+      const y5 = at(5);
+      return y1 != null && y5 != null ? { year1: y1, year5: y5 } : null;
+    })(),
     places: rows
       .filter((c) => c.tier === 1 && c.slug && c.name)
       .map((c) => ({ slug: c.slug as string, name: c.name as string })),

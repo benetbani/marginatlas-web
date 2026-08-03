@@ -39,6 +39,7 @@
 import * as React from "react";
 
 import { ChapterSection, type Chapter } from "@/components/spine2/page/ChapterHead";
+import { Place } from "@/components/spine2/Place";
 import { ChapterGap } from "@/components/spine2/page/ChapterGap";
 import { GlyphIcon } from "@/components/spine2/GlyphIcon";
 import type { GlyphId } from "@/components/spine2/glyphs";
@@ -70,7 +71,8 @@ export function CountryPage({ model }: { model: CountryPageModel }) {
   );
 
   return (
-    <div className="av2">
+    <div className="av2" style={{ position: "relative" }}>
+      <Place />
       <div className="wrap">
         <header className="mast">
           <div className="in">

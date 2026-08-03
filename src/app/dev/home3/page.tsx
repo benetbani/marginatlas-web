@@ -37,7 +37,7 @@ import * as React from "react";
 
 import { GlyphIcon } from "@/components/spine2/GlyphIcon";
 import type { GlyphId } from "@/components/spine2/glyphs";
-import { Myth } from "@/components/spine2/Myth";
+import { Place } from "@/components/spine2/Place";
 import { Range } from "@/components/spine2/Range";
 import { frontPageFigures } from "@/lib/home/front_page_figures";
 
@@ -58,21 +58,6 @@ function money(v: number): string {
   return `$${Math.round(v)}`;
 }
 
-/* Myth's contract: the <b> in `fix` is the accent carrier, and terracotta marks
-   the answer once per chapter. The correction's punch is its last clause, so
-   that clause is the <b>. Falls back to the plain string when there is no
-   colon, rather than guessing at a split point. */
-function emphasiseLastClause(text: string): React.ReactNode {
-  const i = text.lastIndexOf(": ");
-  if (i < 0) return text;
-  return (
-    <>
-      {text.slice(0, i + 2)}
-      <b>{text.slice(i + 2)}</b>
-    </>
-  );
-}
-
 export default function HomeProposal() {
   const {
     roomRevenue,
@@ -91,10 +76,12 @@ export default function HomeProposal() {
     cities,
     reconciled,
     places,
+    survival,
   } = frontPageFigures();
 
   return (
-    <div className="av2">
+    <div className="av2" style={{ position: "relative" }}>
+      <Place />
       <div className="wrap">
         <header className="mast">
           <div className="in">
@@ -286,7 +273,7 @@ export default function HomeProposal() {
               this is. */}
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
             {places.map((c) => (
-              <a key={c.slug} className="chip" href={`/cities/${c.slug}`}>
+              <a key={c.slug} className="chip chip-place" href={`/cities/${c.slug}`}>
                 {c.name}
               </a>
             ))}
@@ -303,13 +290,53 @@ export default function HomeProposal() {
             the only one that argues with the reader. Self-omits when the cell
             carries no myth, because a claim with no correction is worse than
             no section. */}
-        {myth ? (
+        {myth && survival ? (
           <section className="panel pad rise" style={{ marginTop: 18 }}>
-            <Myth
-              claim={myth.claim}
-              fix={emphasiseLastClause(myth.reality)}
-              note="That claim traces to a television advertisement, not a study. It is repeated so often that people sign leases believing it, and it is wrong in both directions: the first year is survivable, the fifth is where the trade thins."
-            />
+            <div className="lab" style={{ marginBottom: 12 }}>
+              What everyone says
+            </div>
+            <p
+              className="claim"
+              style={{
+                fontSize: "clamp(20px,2.5vw,27px)",
+                fontWeight: 600,
+                letterSpacing: "-.02em",
+                lineHeight: 1.2,
+                color: "var(--muted)",
+                margin: 0,
+                maxWidth: "24ch",
+                textDecoration: "line-through",
+                textDecorationColor: "var(--terra)",
+                textDecorationThickness: 2,
+              }}
+            >
+              {myth.claim}
+            </p>
+
+            {/* The correction as two figures, not two sentences. A reader takes
+                "94 still trading at one year, 39 at five" in a glance and would
+                not have read the paragraph it replaced. */}
+            <div
+              style={{ display: "flex", gap: 48, flexWrap: "wrap", margin: "26px 0 0" }}
+            >
+              <div className="answer">
+                <div className="num fig" style={{ fontSize: "clamp(34px,4.2vw,46px)" }}>
+                  {Math.round(survival.year1)}%
+                </div>
+                <div className="l">still trading after a year</div>
+              </div>
+              <div className="answer">
+                <div className="num fig" style={{ fontSize: "clamp(34px,4.2vw,46px)", color: "var(--n1)" }}>
+                  {Math.round(survival.year5)}%
+                </div>
+                <div className="l">still trading after five</div>
+              </div>
+            </div>
+
+            <p className="k" style={{ margin: "20px 0 0", maxWidth: "50ch" }}>
+              The first year is survivable. The fifth is where the trade thins,
+              and that is the part nobody warns anyone about.
+            </p>
           </section>
         ) : null}
 
