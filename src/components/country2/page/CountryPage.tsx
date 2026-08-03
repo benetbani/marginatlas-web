@@ -61,9 +61,12 @@ export function CountryPage({ model }: { model: CountryPageModel }) {
   const at = (id: CountryChapterId): Chapter | null =>
     (byId.get(id) as unknown as Chapter) ?? null;
 
-  /** A chapter whose data is not filled for this country. */
+  /** A chapter whose data is not filled for this country. The reason comes
+   *  from the file when it states one, which it usually does, and it is a
+   *  better sentence than any generic line: "this comparison needs five other
+   *  country files built the same way as this one, and none exists yet". */
   const gap = (id: CountryChapterId, subject: string) => (
-    <ChapterGap subject={subject} key={id} />
+    <ChapterGap subject={subject} reason={model.gapReasons[id] ?? null} key={id} />
   );
 
   return (
@@ -160,7 +163,7 @@ export function CountryPage({ model }: { model: CountryPageModel }) {
                 </div>
               </div>
             ) : (
-              gap("hero", "what the state takes here")
+              gap("hero", "what the state takes")
             )}
           </ChapterSection>
         ) : null}
@@ -268,7 +271,7 @@ export function CountryPage({ model }: { model: CountryPageModel }) {
                 valueLabel="where it lands"
               />
             ) : (
-              gap("rules", "what the rules are like here")
+              gap("rules", "what the rules are like")
             )}
           </ChapterSection>
         ) : null}
@@ -325,7 +328,7 @@ export function CountryPage({ model }: { model: CountryPageModel }) {
                 ) : null}
               </>
             ) : (
-              gap("opening", "how long it takes to open here")
+              gap("opening", "how long it takes to open")
             )}
           </ChapterSection>
         ) : null}
@@ -408,7 +411,7 @@ export function CountryPage({ model }: { model: CountryPageModel }) {
                 </div>
               </div>
             ) : (
-              gap("marginStack", "where the margin goes here")
+              gap("marginStack", "where the margin goes")
             )}
           </ChapterSection>
         ) : null}
@@ -468,7 +471,7 @@ export function CountryPage({ model }: { model: CountryPageModel }) {
                 ) : null}
               </>
             ) : (
-              gap("staffCost", "what staff cost here")
+              gap("staffCost", "what staff cost")
             )}
           </ChapterSection>
         ) : null}
@@ -506,7 +509,7 @@ export function CountryPage({ model }: { model: CountryPageModel }) {
                 ) : null}
               </>
             ) : (
-              gap("staffSupply", "whether you can find and keep staff here")
+              gap("staffSupply", "whether you can find and keep staff")
             )}
           </ChapterSection>
         ) : null}
@@ -542,7 +545,7 @@ export function CountryPage({ model }: { model: CountryPageModel }) {
                 />
               </>
             ) : (
-              gap("households", "who has money to spend here")
+              gap("households", "who has money to spend")
             )}
           </ChapterSection>
         ) : null}
@@ -563,7 +566,7 @@ export function CountryPage({ model }: { model: CountryPageModel }) {
                 )}
               />
             ) : (
-              gap("reach", "how many people a site here reaches")
+              gap("reach", "how many people a site reaches")
             )}
           </ChapterSection>
         ) : null}
@@ -594,7 +597,7 @@ export function CountryPage({ model }: { model: CountryPageModel }) {
                 ) : null}
               </>
             ) : (
-              gap("tradeTakeHome", "what owners keep by trade here")
+              gap("tradeTakeHome", "what owners keep by trade")
             )}
           </ChapterSection>
         ) : null}
@@ -669,7 +672,7 @@ export function CountryPage({ model }: { model: CountryPageModel }) {
                 ) : null}
               </>
             ) : (
-              gap("underServed", "which trades are under-served here")
+              gap("underServed", "which trades are under-served")
             )}
           </ChapterSection>
         ) : null}
@@ -759,7 +762,7 @@ export function CountryPage({ model }: { model: CountryPageModel }) {
                 ) : null}
               </>
             ) : (
-              gap("zones", "the zones and special structures here")
+              gap("zones", "the zones and special structures")
             )}
           </ChapterSection>
         ) : null}
@@ -803,7 +806,7 @@ export function CountryPage({ model }: { model: CountryPageModel }) {
                 ) : null}
               </>
             ) : (
-              gap("stability", "how stable the ground under a lease is here")
+              gap("stability", "how stable the ground under a lease is")
             )}
           </ChapterSection>
         ) : null}

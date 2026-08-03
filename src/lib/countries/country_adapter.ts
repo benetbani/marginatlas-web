@@ -456,6 +456,48 @@ export type CountryShapeModel = {
  * the country's strengths before its costs and the list cannot be hand-ordered
  * into a flattering shape.
  */
+/**
+ * Why each empty chapter is empty, taken from the file rather than authored.
+ *
+ * The files already answer this. Every null slot carries a `reason`, and they
+ * are the most interesting sentences in the whole document: "this comparison
+ * needs five other country files built the same way as this one, and none
+ * exists yet" says something true about the project that no generic line can.
+ *
+ * `ChapterGap` has accepted a `reason` prop since it was written and its own
+ * docstring says the files carry one. Nothing ever passed it, so eleven
+ * chapters of this page rendered the same generic sentence eleven times.
+ *
+ * The walk is depth-first and stops at the FIRST null figure with a reason,
+ * because a chapter is one subject and its first stated absence is the reason
+ * the chapter is empty. Where several slots are null they say the same thing
+ * in different words, and printing all of them would be worse than printing
+ * one.
+ */
+function buildGapReasons(file: CountryFile): Partial<Record<CountryChapterId, string>> {
+  const out: Partial<Record<CountryChapterId, string>> = {};
+  const src = file as unknown as Record<string, unknown>;
+
+  const firstReason = (node: unknown, depth = 0): string | null => {
+    if (depth > 4 || node == null || typeof node !== "object") return null;
+    const o = node as Record<string, unknown>;
+    if ("value" in o && o.value === null && typeof o.reason === "string" && o.reason) {
+      return o.reason;
+    }
+    for (const v of Object.values(o)) {
+      const hit = firstReason(v, depth + 1);
+      if (hit) return hit;
+    }
+    return null;
+  };
+
+  for (const c of COUNTRY_SPINE) {
+    const reason = firstReason(src[c.id]);
+    if (reason) out[c.id] = reason;
+  }
+  return out;
+}
+
 function buildShape(file: CountryFile): CountryShapeModel | null {
   const q = file.shape?.qualities;
   if (q == null || isNullFigure(q as Figure)) return null;
@@ -1385,6 +1427,9 @@ export type CountryPageModel = {
   chapters: CountryChapter[];
   hero: CountryHeroModel | null;
   scorecard: CountryScorecardModel | null;
+  /** Why a chapter is empty, in the data file's own words, keyed by chapter.
+   *  Only present for chapters that are actually empty. */
+  gapReasons: Partial<Record<CountryChapterId, string>>;
   shape: CountryShapeModel | null;
   rules: CountryRulesModel | null;
   opening: CountryOpeningModel | null;
@@ -1446,6 +1491,7 @@ export function buildCountryPage(file: CountryFile): CountryPageModel {
     verdict: buildVerdict(file),
     methodology,
     next: buildNext(file),
+    gapReasons: buildGapReasons(file),
     remember: buildRemember(file),
     trust: buildTrust(file, methodology),
   };

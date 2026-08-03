@@ -46,12 +46,24 @@ export interface ChapterGapProps {
 }
 
 export function ChapterGap({ reason, subject }: ChapterGapProps) {
-  const what = subject ? `We have not published ${subject} for this place yet.` : "We have not published this for this place yet.";
+  const what = subject
+    ? `We have not published ${subject} for this place yet.`
+    : "We have not published this for this place yet.";
+
+  /* The data files write their reasons as sentence fragments, lowercase and
+     without a stop, because they were authored to be read inside a JSON field.
+     Appended raw they run straight on from the sentence above and read as one
+     long broken sentence. This is the only place that knows they are about to
+     become prose, so this is where they become prose. */
+  const said = reason
+    ? `${reason[0].toUpperCase()}${reason.slice(1)}${/[.!?]$/.test(reason) ? "" : "."}`
+    : null;
+
   return (
     <div className="panel pad">
       <p className="note" style={{ maxWidth: "62ch", margin: 0 }}>
         {what}
-        {reason ? ` ${reason}` : null}
+        {said ? ` ${said}` : null}
       </p>
     </div>
   );
