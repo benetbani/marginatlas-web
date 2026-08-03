@@ -23,6 +23,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { SpineShell } from "@/components/spine/shell";
 import { AtlasIndex, type IndexRow, type IndexSignalDef, type IndexFacet } from "@/components/spine/atlas-index";
+import { SPINE_COUNTRIES } from "@/lib/spine-seeds";
 
 export const dynamic = "force-static";
 
@@ -47,18 +48,13 @@ type Seed = {
 const num = (x: unknown): number | null => (typeof x === "number" && Number.isFinite(x) ? x : null);
 const round = (x: number) => Math.round(x);
 
+/* Bundled seeds, not the parent repo. These routes used fs to read
+   "../page-data/countries", which resolves outside the Vercel deploy root, so
+   the build died collecting page data. src/lib/spine-seeds bundles a snapshot
+   for exactly this reason. Same fail-soft posture as before: a missing seed
+   yields an empty list, never a fabricated row. */
 function loadSeeds(): Seed[] {
-  const dir = path.resolve(process.cwd(), "../page-data/countries");
-  const files = fs.readdirSync(dir).filter((f) => f.endsWith(".json"));
-  const out: Seed[] = [];
-  for (const f of files) {
-    try {
-      out.push(JSON.parse(fs.readFileSync(path.join(dir, f), "utf8")) as Seed);
-    } catch {
-      // skip an unreadable seed rather than fabricate a row
-    }
-  }
-  return out;
+  return Object.values(SPINE_COUNTRIES) as Seed[];
 }
 
 /* Cost of living, lower = cheaper. Prefer the filed headline index; otherwise derive

@@ -154,6 +154,7 @@ const GATES: Gate[] = [
   { name: "subsection-icons", script: "scripts/verify_subsection_icons.ts" },
   { name: "trade-set", script: "scripts/verify_trade_set.ts" },
   { name: "sample-tags", script: "scripts/verify_sample_tags.ts" },
+  { name: "no-parent-repo-reads", script: "scripts/verify_no_parent_repo_reads.ts" },
   { name: "two-surface-levels", script: "scripts/verify_two_surface_levels.ts" },
   { name: "spacing-scale", script: "scripts/verify_spacing_scale.ts" },
   /* One number cannot be the answer for seven cities. Two thirds of the rows

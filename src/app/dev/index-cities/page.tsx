@@ -25,6 +25,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { SpineShell } from "@/components/spine/shell";
 import { AtlasIndex, type IndexRow, type IndexSignalDef } from "@/components/spine/atlas-index";
+import { spineCountrySeed } from "@/lib/spine-seeds";
 
 export const dynamic = "force-static";
 
@@ -44,14 +45,11 @@ type Seed = { cities?: { list?: City[] } };
 const num = (x: unknown): number | null => (typeof x === "number" && Number.isFinite(x) ? x : null);
 
 function loadCities(): City[] {
-  const file = path.resolve(process.cwd(), "../page-data/countries/GB.json");
-  try {
-    const seed = JSON.parse(fs.readFileSync(file, "utf8")) as Seed;
-    return Array.isArray(seed.cities?.list) ? (seed.cities!.list as City[]) : [];
-  } catch {
-    // a missing / unreadable seed yields an empty list, never a fabricated one.
-    return [];
-  }
+  /* Bundled seed, not the parent repo. fs on "../page-data/..." resolves
+     outside the Vercel deploy root and killed the build. Fail-soft unchanged:
+     an empty list, never a fabricated one. */
+  const seed = spineCountrySeed as Seed;
+  return Array.isArray(seed.cities?.list) ? (seed.cities!.list as City[]) : [];
 }
 
 /* Rent pressure , SAMPLE proxy. There is no filed rent figure on the seed, so this is

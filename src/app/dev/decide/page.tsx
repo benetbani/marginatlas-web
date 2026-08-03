@@ -25,12 +25,19 @@ import path from "node:path";
 import { SpineShell } from "@/components/spine/shell";
 import { keepIndex } from "@/components/spine/keep";
 import { DecideClient, type DistrictRow } from "./decide-client";
+import { spineHoodSeed } from "@/lib/spine-seeds";
 
 export const dynamic = "force-static";
 
-const N: any = JSON.parse(
-  fs.readFileSync(path.resolve(process.cwd(), "../page-data/cities/GB-london-neighborhoods.json"), "utf8"),
-);
+/* Read from the BUNDLED seed, not the parent repo. This route used
+   fs.readFileSync on "../page-data/...", which resolves outside the Vercel
+   deploy root, so every build died here with ENOENT on
+   /vercel/page-data/cities/GB-london-neighborhoods.json while collecting page
+   data. src/lib/spine-seeds exists for exactly this reason and its own header
+   says so: the seeds' canonical home is the parent repo, which the pages
+   cannot reach at build time, so a snapshot is bundled and exposed through one
+   lib module. */
+const N: any = spineHoodSeed;
 
 // A London street motif for the atmosphere (opacity-only, set in SpineShell).
 const BG = "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?auto=format&fit=crop&w=1920&q=60";

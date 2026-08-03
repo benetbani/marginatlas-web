@@ -24,6 +24,7 @@ import { SpineShell } from "@/components/spine/shell";
 import { Movement, Box, Ico } from "@/components/spine/kit";
 import { RankBars, type RankDatum } from "@/components/spine/kit-index";
 import { AtlasIcon, type AtlasIconId } from "@/components/brand/icons";
+import { SPINE_COUNTRIES } from "@/lib/spine-seeds";
 
 export const dynamic = "force-static";
 
@@ -52,22 +53,11 @@ const num = (x: unknown): number | null => (typeof x === "number" && Number.isFi
 const round = (x: number) => Math.round(x);
 
 function loadSeeds(): Seed[] {
-  const dir = path.resolve(process.cwd(), "../page-data/countries");
-  let files: string[] = [];
-  try {
-    files = fs.readdirSync(dir).filter((f) => f.endsWith(".json"));
-  } catch {
-    return [];
-  }
-  const out: Seed[] = [];
-  for (const f of files) {
-    try {
-      out.push(JSON.parse(fs.readFileSync(path.join(dir, f), "utf8")) as Seed);
-    } catch {
-      // skip an unreadable seed rather than fabricate a row
-    }
-  }
-  return out;
+/* Bundled seeds, not the parent repo. Reading "../page-data/countries" with
+   fs resolves outside the Vercel deploy root and killed the build while
+   collecting page data. Same fail-soft posture: no seed means no row, never a
+   fabricated one. */
+  return Object.values(SPINE_COUNTRIES) as Seed[];
 }
 
 /* Cost of living, lower = cheaper. Prefer the filed headline index; otherwise derive

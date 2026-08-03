@@ -28,10 +28,15 @@ type CoverageReport = {
 };
 
 function loadReport(): CoverageReport | null {
+  /* In-repo paths only. The third candidate used to climb to
+     "../delivery/quality/", which is the parent repository and is never
+     present on a build server. It was harmless here because the first
+     candidate resolves and the chain is wrapped in try/catch, but a dead
+     path that reaches outside the repo is a template someone copies. The
+     same shape, unguarded, has cost 49 deploys. */
   const candidates = [
     path.resolve(process.cwd(), "data/quality/coverage_v2.json"),
     path.resolve(process.cwd(), "delivery/quality/coverage_v2.json"),
-    path.resolve(process.cwd(), "../delivery/quality/coverage_v2.json"),
   ];
   for (const p of candidates) {
     try {
