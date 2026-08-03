@@ -219,6 +219,145 @@ repeatedly. Nobody perceives 12px against 12.5px.
 Proposal and before/after renders:
 `design/loop4/reviews/2026-08-02-type-radius-scale-PROPOSAL.md`.
 
+## 5.1 Motion , DEFINED ALREADY, and the plan was wrong about it
+
+The Loop 4 plan listed motion as undefined, "durations and easings currently
+per-component". **It is not.** One block near the end of `atlas.css` owns every
+transition in the system, with a `prefers-reduced-motion` twin beside it, under
+a stated rule:
+
+> one timing scale for chrome, and **nothing that carries data is ever
+> animated**
+
+That rule is the important half and it is already obeyed. What moves is
+chrome: a hover background, a summary marker, an expander's chevron. **No chart,
+figure, bar or rail animates**, which is what makes "nothing that moves is
+required to read the page" true rather than aspirational.
+
+**Measured 2026-08-03: 8 durations across 17 uses.**
+
+```
+  3  90ms      5  150ms     3  200ms     2  280ms
+  1  140ms     1  180ms     1  220ms     1  750ms
+```
+
+**The peaks are 90, 150 and 200.** The strays sit within 20ms of a peak, and
+20ms is well under what anyone perceives: 140 is 150, 180 and 220 are 200.
+
+**Proposed scale: 90 / 150 / 200 / 280.** 90 for colour and background, 150 for
+transform, 200 for a width or a rail, 280 for the one deliberately slower move.
+`750ms` is a single use and needs a reason or a home.
+
+**Easings: 2, and that is already right.** `ease-out` for the fast chrome
+transitions, `cubic-bezier(.2,.7,.2,1)` for transform. No bounce, no elastic,
+nothing that overshoots.
+
+## 5.2 Focus , DEFINED ALREADY
+
+Also listed as missing, also present:
+
+```css
+:where(a,button,summary,input[type=range],.archetypes .pc,.archetypes .mixbar i):focus-visible{
+  outline:2px solid var(--terra);outline-offset:3px;border-radius:6px}
+```
+
+**The three `outline:none` declarations are not a defect.** Each sits on a range
+slider, where the browser's default outline lands on the track and reads as a
+box around a line. The `:where()` rule above puts the outline back on every one
+of them, so the removal is paired with a replacement rather than being a hole.
+Its own comment records why it exists: *"There was no focus state in the entire
+stylesheet."*
+
+## 5.3 Elevation , THE ACTUAL GAP. Measured, proposed, not applied.
+
+**Measured 2026-08-03: 10 distinct drop shadows across 13 uses.** Nearly every
+shadow in the system is unique, which is drift by definition.
+
+They fall into two families and nothing sits between them:
+
+| family | values found | uses |
+|---|---|---|
+| **a hairline lift** | `0 1px 5px rgba(0,0,0,.3)`, `0 1px 5px rgba(0,0,0,.24)`, `0 1px 4px rgba(0,0,0,.3)`, `0 1px 4px rgba(0,0,0,.35)` | 6 |
+| **a panel lift** | `0 10px 30px -20px`, `0 10px 24px -14px`, `0 18px 44px -24px`, `0 2px 8px` | 7 |
+
+**Proposal: two levels, because there are two surfaces.** A card lifts, air does
+not, and there is no third. Four values within a 1px blur and 0.11 alpha of each
+other are one value that drifted; the same holds at the panel end.
+
+**Not applied.** Same discipline as type and radius: these sit in a ratified
+mockup, and a shadow tuned by eye against a specific background is exactly where
+an odd value is an optical correction rather than drift. **The founder rules.**
+
+### box-shadow used as a border is deliberate, do not "fix" it
+
+34 further uses are **not elevation at all**: `0 0 0 1px var(--terra-line)`,
+`inset 0 1px 0 var(--grp-rule)`, and similar. A 1px ring drawn with `box-shadow`
+costs no layout box, which a `border` does. **They are correct and they are not
+part of the elevation scale.** Any future audit that collapses "all box-shadows"
+will destroy 34 working borders.
+
+**One observation, not a change:** `inset 3px 0 0 var(--terra)`, a 3px
+terracotta left stripe, appears on 4 selectors. General frontend guidance treats
+a coloured side stripe as a reflex to avoid. **It is in the founder's ratified
+mockup, so it stays.** Recorded here so nobody removes it as a lint.
+
+## 5.4 Icon sizing , two sizes, and 4 stray uses
+
+**Measured 2026-08-03: 18px (23), 13px (12), 16px (3), 24px (2).**
+
+**The scale is 18 and 13.** 18 for a section or chapter header, 13 for a glyph
+inline in a row.
+
+**APPLIED, not merely proposed**, because unlike type and radius these values
+are loop-authored rather than ratified: the three 16px uses in
+`city2/page/CityPage.tsx` all sat inline in a `.row .nm`, which is the 13 case,
+and are now 13. **Now 18px (24) and 13px (15), carrying 39 of 41 uses.**
+
+The remaining two 24px uses are on card tiles, where a larger glyph may be
+deliberate. Left alone rather than snapped, and named here so the next audit
+does not have to rediscover them.
+
+## 5.5 The row, and the two defects it hides
+
+**Every rule for `.row` is scoped `.statblock .row`. There is no bare `.row`
+rule.** A row without a `.statblock` ancestor gets no grid, no columns and no
+separation: its spans render fused, and the page reads *"Young
+professionals15%"* or *"Londonmeasured16,765"*.
+
+**It looks like ordinary prose.** Nothing is missing, the words are just joined.
+Measured 2026-08-03: **125 of the city page's 129 rows**, on a page that had
+been delivered as complete. TypeScript cannot see it and no gate can.
+
+**A run of rows belongs in:**
+
+```jsx
+<div className="panel pad rise">   {/* BOTH classes on ONE element */}
+  <div className="statblock">
+```
+
+`.panel.pad > .statblock` is the rule that strips the inner border so a card
+does not render inside a card. **`<div className="panel"><div className="pad">`
+does not match that selector**, which is exactly what the city page had.
+
+**Never fix this by adding a bare `.row` rule.** The stylesheet is the founder's
+design; the call site is the loop's, so the call site moves.
+
+### The value slot is a 78px figure column
+
+`--val-col` is `78px`, tuned for `$414K`. **A longer string is clipped silently,
+mid-word, with no ellipsis:** *"24% of hou"*, *"Low spare"*, *"Best in Shore"*.
+51 values across the three v2 pages were clipped; one was a whole paragraph
+needing 1036px.
+
+**The rule: the value slot takes the figure. The qualifier goes in the name's
+`.s`,** which has room. Where the value is genuinely a short phrase rather than
+a figure, widen `--val-col` on that row, which is what the variable is for.
+**Widening it to hold prose is the same mistake as putting prose there.**
+
+**Tool:** `node scripts/audit_row_layout.mjs`. Not a prebuild gate: both defects
+are invisible in source and need a laid-out page, so it wants a running dev
+server.
+
 ## 6. Stacking and non-overlap
 
 | layer | z-index |
