@@ -41,22 +41,29 @@ grays."** The v2 system is **cool neutrals plus terracotta**. Those are direct
 opposites, so any agent reading the old version would confidently build in the
 superseded generation.
 
-**Counted 2026-08-03: 260 files use the legacy palette, 17 use v2.**
+**There are THREE, not two.** The first version of this correction said two, and
+that was wrong within the hour. Counted 2026-08-03 by route:
 
-So v2 is not "the system". It is **the destination**. The five spine page types
-went first; the rest of the site has not moved. Both are live, and knowing which
-one you are standing in is the first question of any design task.
+| | **v2 spine** | **SpineShell** | **legacy warm** |
+|---|---|---|---|
+| Routes | **10** | **23** | **69** |
+| Accent | `--terra` **`#c23a22`** | `--terra` **`#fb8469`** | `atlas-600` **`#C2410C`** |
+| Neutrals | cool (`#57575b`…) | its own warm-grey set | cream, parchment, cocoa |
+| Defined in | `src/styles/atlas-spine.css`, generated | **inline `<style>` in `src/components/spine/shell.tsx`** | `src/app/globals.css` |
+| Status | **ratified, the target** | previous generation | oldest, deprecated |
 
-| | v2 spine | legacy |
-|---|---|---|
-| Where | `.av2` scoped, `src/styles/atlas-spine.css` | `src/app/globals.css` |
-| Palette | cool neutrals + terracotta | cream, parchment, cocoa, amber |
-| Routes | cell, city, country, industry, neighbourhood | home page, browse, compare, world, decide, pricing, blog, admin, the rest |
-| Source of truth | `design/mockups/atlas.css` in the PARENT repo | hand-written CSS + Tailwind |
-| Status | **ratified, and the target** | **deprecated, migrating page by page** |
+**Three different terracottas.** `#c23a22` is the ratified one. `#fb8469` is a
+light coral that only exists inside a template literal in one component file,
+which is why no palette audit ever found it.
 
-**Which to use.** Anything new, or any page being rebuilt: **v2**. Touch legacy
-tokens only for a surgical fix to a page that has not migrated yet.
+**Routes mix generations.** The counts sum past the route total because a single
+page can use two at once. **The home page is the worst case: it renders inside
+`SpineShell` (generation two) while styling its own content with `parchment` and
+`text-atlas-700` (generation three).** Two palettes, one page, neither of them
+the ratified one.
+
+**Which to use.** Anything new, or any page being rebuilt: **v2**. Touch the
+older tokens only for a surgical fix to a page that has not migrated.
 
 ---
 
