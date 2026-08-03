@@ -1,0 +1,468 @@
+{
+  "__fixture": true,
+  "__warning": "PLACEHOLDER DATA. Every number in this file was lifted from the frozen design mockup at design/mockups/country.html. The mockup's own footer calls its figures illustrative. Nothing here has been researched, sourced or reconciled, every figure is tiered thin, and none of it may ever be served to a reader. It exists so the country page contract, the adapter and the components can be built and tested against the exact shape and scale of the design. Real files live in data/countries/ and must be hand-filled with provenance.",
+  "meta": {
+    "schema": "country.spine2",
+    "schemaVersion": 1,
+    "id": "gb",
+    "country": {
+      "slug": "gb",
+      "name": "United Kingdom",
+      "shortName": "the UK",
+      "informalName": "Britain",
+      "takesArticle": true
+    },
+    "region": "Europe",
+    "urlPath": "/gb",
+    "currency": {
+      "display": "USD",
+      "native": "GBP",
+      "usdPerNative": 1.3315,
+      "rateAsOf": "2026-07-24",
+      "rateBasis": "the design mockup states no exchange rate and prints only USD, so this rate is carried across from the London city fixture purely to keep the field valid. No figure in this fixture was converted with it and no figure here carries a native-currency value.",
+      "__note": "rateBasis is metadata about the file, not a rendered basis string."
+    },
+    "freshness": "design mockup, frozen 2026-07",
+    "reviewedAt": "2026-07",
+    "provenance": {
+      "familyDocs": [
+        "design/mockups/country.html"
+      ],
+      "freshnessWatch": [
+        "This file is a fixture. It has no freshness to watch and must be deleted or replaced before any country page ships from it."
+      ]
+    }
+  },
+
+  "hero": {
+    "stateTake": {
+      "sharePct": 36,
+      "parts": [
+        { "label": "Profit tax", "sharePct": 25 },
+        { "label": "Contributions", "sharePct": 6 },
+        { "label": "Rates", "sharePct": 5 }
+      ],
+      "unit": "% of profit",
+      "tier": "thin",
+      "basis": "the three published rates a trading company meets, added on one stated firm; lifted from the design mockup and not researched",
+      "freshness": "design mockup, frozen 2026-07",
+      "falsifier": "a change to any of the three headline rates, or a worked example on a real set of accounts that lands outside 34 to 38",
+      "notes": "The parts sum to 36, which the renderer checks. Rendered in five places: the hero headline, chapter 02's first reading, chapter 04's What the state takes, the verdict's first chip and the closing band. One field, so those five cannot disagree."
+    },
+    "headlineLabel": "of profit goes to the state, in tax, contributions and property rates combined",
+    "texture": {
+      "businesses": {
+        "value": 5600000,
+        "unit": "businesses",
+        "tier": "thin",
+        "basis": "the count the mockup opens on, printed as 5.6M; lifted from the design and not researched",
+        "freshness": "design mockup, frozen 2026-07",
+        "notes": "Rendered twice: the hero texture line and the trust band."
+      },
+      "line": "businesses trade here, nearly all of them small. Before rent, before wages, this is what the state takes first."
+    }
+  },
+
+  "scorecard": {
+    "baselineLabel": "world median",
+    "stateTake": {
+      "label": "What the state takes",
+      "sub": "of profit",
+      "position": 68
+    },
+    "averageWage": {
+      "label": "Average wage",
+      "sub": "a year",
+      "position": 60,
+      "figure": {
+        "value": 47000,
+        "unit": "USD/yr",
+        "tier": "thin",
+        "basis": "the mockup's scorecard row, printed as 47K; lifted from the design and not researched",
+        "freshness": "design mockup, frozen 2026-07"
+      }
+    },
+    "netWealthPerAdult": {
+      "label": "Net wealth per adult",
+      "position": 74,
+      "figure": {
+        "value": 180000,
+        "unit": "USD",
+        "tier": "thin",
+        "basis": "the mockup's scorecard row, printed as 180K; lifted from the design and not researched",
+        "freshness": "design mockup, frozen 2026-07"
+      }
+    },
+    "daysToStart": {
+      "label": "Days to start",
+      "position": 6
+    },
+    "easeOfBusiness": {
+      "label": "Ease of doing business",
+      "sub": "of 100",
+      "position": 80,
+      "figure": {
+        "value": 83,
+        "unit": "score of 100",
+        "tier": "thin",
+        "basis": "the mockup's scorecard row, printed as 83 of 100; lifted from the design and not researched",
+        "freshness": "design mockup, frozen 2026-07",
+        "notes": "The design does not say what the 100 is scored against, which a real file must state before this renders to a reader."
+      }
+    },
+    "minimumWage": {
+      "label": "Minimum wage",
+      "sub": "full time",
+      "position": 72
+    },
+    "population": {
+      "label": "Population",
+      "position": 64,
+      "figure": {
+        "value": 68000000,
+        "unit": "people",
+        "tier": "thin",
+        "basis": "the mockup's scorecard row, printed as 68M; lifted from the design and not researched",
+        "freshness": "design mockup, frozen 2026-07",
+        "notes": "Carried because the ratified mockup carries it, and framed by the design's own market-size icon as the size of the market rather than as demography."
+      }
+    },
+    "costOfLiving": {
+      "label": "Cost of living",
+      "sub": "world = 100",
+      "position": 86,
+      "figure": {
+        "value": 142,
+        "unit": "score of 100",
+        "tier": "thin",
+        "basis": "the mockup's scorecard row, printed as 142 where the world is 100; lifted from the design and not researched",
+        "freshness": "design mockup, frozen 2026-07"
+      }
+    }
+  },
+
+  "shape": {
+    "qualities": {
+      "value": null,
+      "reason": "the six qualities are a reading of the measures on the rest of the page, and this file holds too few of those measures to take one honestly. The mockup's own method ledger tiers this thin."
+    }
+  },
+
+  "rules": {
+    "readings": {
+      "readings": [
+        { "icon": "operator-voices", "label": "Trading in English", "group": "Getting in", "position": 4, "value": "no barrier" },
+        { "icon": "register-cost", "label": "Registering a company", "group": "Getting in", "position": 8, "value": "1 day" },
+        { "icon": "visa-permit", "label": "A visa route for founders", "group": "Getting in", "position": 34, "value": "open" },
+        { "icon": "bank", "label": "Opening a business account", "group": "Getting in", "position": 64, "value": "3 to 6 weeks" },
+        { "icon": "payments", "label": "Paying by card", "group": "Trading here", "position": 9, "value": "86% of sales" },
+        { "icon": "red-tape", "label": "Letting someone go", "group": "Trading here", "position": 26, "value": "2 years" },
+        { "icon": "methodology", "label": "Filing once you trade", "group": "Trading here", "position": 44, "value": "4 a year" },
+        { "icon": "raise-money", "label": "Borrowing to expand", "group": "What it costs", "position": 58, "value": "9% a year" },
+        { "icon": "taxes", "label": "What the state takes", "group": "What it costs", "position": 72, "value": "36% of profit" },
+        { "icon": "commercial-rent", "label": "Property rates", "group": "What it costs", "position": 81, "value": "$5.9K a year" },
+        { "icon": "global-spread", "label": "Foreign-owned businesses", "group": "The market", "position": 16, "value": "1 in 6" },
+        { "icon": "contrarian", "label": "Room for independents", "group": "The market", "position": 22, "value": "strong" }
+      ],
+      "unit": "0 easy for an owner to 100 hard",
+      "tier": "thin",
+      "basis": "twelve readings placed on one shared scale, easiest first inside each group; the placements are the design's own judgement and are not measurements",
+      "freshness": "design mockup, frozen 2026-07",
+      "notes": "Four of these restate figures that live elsewhere in this file and are printed here as words rather than as numbers: Registering a company restates opening.daysToRegister, Opening a business account restates the range on the bank step of opening.steps, What the state takes restates hero.stateTake, Paying by card restates households.paidByCardPct, Borrowing to expand restates stability.costToBorrowPct, and Property rates restates myth.propertyRatesYearOne. A real file should render those six from their canonical fields rather than carrying a second string."
+    }
+  },
+
+  "opening": {
+    "daysToRegister": {
+      "value": 1,
+      "unit": "days",
+      "tier": "thin",
+      "basis": "the day a company legally exists once the registration is filed; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07",
+      "notes": "Canonical. Rendered in the hero glance, chapter 02, chapter 04, chapter 05 and chapter 18."
+    },
+    "weeksToTakeMoney": {
+      "value": 5,
+      "unit": "weeks",
+      "tier": "thin",
+      "basis": "the point at which a business can actually accept payment, which the design sets by the bank account rather than by the registration; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07",
+      "notes": "Canonical. Rendered twice in chapter 05, in chapter 18 and in the verdict's second chip."
+    },
+    "cashToSetUp": {
+      "value": 240,
+      "unit": "USD",
+      "tier": "thin",
+      "basis": "the registration fee, the licence fee and the two free registrations, added; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07",
+      "notes": "The step costs below sum to exactly this, so the adapter re-derives it and this value is the fallback."
+    },
+    "steps": {
+      "steps": [
+        {
+          "label": "Register the company",
+          "icon": "register-cost",
+          "cost": {
+            "value": 60,
+            "unit": "USD",
+            "tier": "thin",
+            "basis": "the filing fee the design prints beside this step",
+            "freshness": "design mockup, frozen 2026-07"
+          },
+          "takesWeeks": { "value": null, "reason": "the design draws this lane from a hand-placed width rather than from a stated duration" },
+          "startsAfterWeeks": { "value": null, "reason": "the design draws this lane from a hand-placed position rather than from a stated wait" }
+        },
+        {
+          "label": "Register for tax",
+          "cost": {
+            "value": 0,
+            "unit": "USD",
+            "tier": "thin",
+            "basis": "the design prints this step as free, which is a measurement and not an absence",
+            "freshness": "design mockup, frozen 2026-07"
+          },
+          "takesWeeks": { "value": null, "reason": "the design draws this lane from a hand-placed width rather than from a stated duration" },
+          "startsAfterWeeks": { "value": null, "reason": "the design draws this lane from a hand-placed position rather than from a stated wait" }
+        },
+        {
+          "label": "Open a bank account",
+          "icon": "bank",
+          "bottleneck": true,
+          "cost": { "value": null, "reason": "the design prints no fee for this step and an account fee varies by bank, so nothing can be lifted" },
+          "takesWeeks": {
+            "lo": 3,
+            "hi": 6,
+            "taken": 5,
+            "unit": "weeks",
+            "tier": "thin",
+            "basis": "the range chapter 04 prints for opening an account, with the point chapter 05 takes; both lifted from the design and not researched",
+            "freshness": "design mockup, frozen 2026-07",
+            "notes": "One figure serving two chapters. The design printed 3 to 6 weeks in chapter 04 and 5 weeks in chapter 05 with nothing to connect them."
+          },
+          "startsAfterWeeks": { "value": null, "reason": "the design draws this lane from a hand-placed position rather than from a stated wait" }
+        },
+        {
+          "label": "Licence, if needed",
+          "icon": "licence-specific",
+          "cost": {
+            "value": 180,
+            "unit": "USD",
+            "tier": "thin",
+            "basis": "the licence fee the design prints beside this step",
+            "freshness": "design mockup, frozen 2026-07"
+          },
+          "takesWeeks": { "value": null, "reason": "the design draws this lane from a hand-placed width rather than from a stated duration" },
+          "startsAfterWeeks": { "value": null, "reason": "the design draws this lane from a hand-placed position rather than from a stated wait" }
+        },
+        {
+          "label": "Register for sales tax",
+          "cost": {
+            "value": 0,
+            "unit": "USD",
+            "tier": "thin",
+            "basis": "the design prints this step as free, which is a measurement and not an absence",
+            "freshness": "design mockup, frozen 2026-07"
+          },
+          "takesWeeks": { "value": null, "reason": "the design draws this lane from a hand-placed width rather than from a stated duration" },
+          "startsAfterWeeks": { "value": null, "reason": "the design draws this lane from a hand-placed position rather than from a stated wait" }
+        }
+      ],
+      "unit": "steps from decision to first sale",
+      "tier": "thin",
+      "basis": "the five steps the design lays out between deciding to trade and taking the first payment",
+      "freshness": "design mockup, frozen 2026-07",
+      "notes": "No lane geometry is carried. The design positions every lane by hand and those positions are drawn, not measured."
+    },
+    "note": "The company is quick and nearly free. The account is the slow part, and it is slower again for a founder with no local credit history."
+  },
+
+  "licences": {
+    "matrix": {
+      "value": null,
+      "reason": "the eight by five matrix in the design is a judgement about which permissions each trade needs and which of them are slow, and no file behind it has been filled yet."
+    }
+  },
+
+  "marginStack": {
+    "stack": {
+      "parts": [
+        { "label": "Staff and contributions", "sharePct": 34, "tone": 0, "decides": true },
+        { "label": "Stock", "sharePct": 31, "tone": 1, "decides": true },
+        { "label": "Rent and rates", "sharePct": 13, "tone": 2, "decides": true },
+        { "label": "Running costs", "sharePct": 15, "tone": 3 },
+        { "label": "Owner keeps", "sharePct": 7, "tone": 4, "kept": true }
+      ],
+      "subject": "an everyday trade",
+      "unit": "% of revenue",
+      "tier": "thin",
+      "basis": "the five-part split of every 100 that crosses the till in an everyday trade; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07",
+      "falsifier": "a set of real accounts for the same kind of trade whose owner line lands outside 5 to 9",
+      "notes": "The parts sum to 100, which the renderer checks. Rendered twice in chapter 07 and again as chapter 15's own side of the abroad comparison. The design's chapter 15 calls the same stack a restaurant while chapter 12 gives restaurants 9 percent rather than 7, which is a contradiction inside the design and is recorded here rather than resolved."
+    },
+    "decidedByLabel": "The three that decide it"
+  },
+
+  "staffCost": {
+    "wageFloor": {
+      "value": 24000,
+      "unit": "USD/yr",
+      "tier": "thin",
+      "basis": "the statutory floor for a full-time adult, at a full year; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07",
+      "notes": "Canonical. Rendered in the hero glance, chapter 02, this chapter's sentence and the last row of this chapter's pay scale."
+    },
+    "employerOnCostPct": {
+      "value": 15,
+      "unit": "% on top of every wage",
+      "tier": "thin",
+      "basis": "what an employer adds to a wage in contributions before anyone is paid; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07"
+    },
+    "workedExampleWage": {
+      "value": 30000,
+      "unit": "USD/yr",
+      "tier": "thin",
+      "basis": "the wage the design works its example from, chosen because it is a little above the floor and a little below the average",
+      "freshness": "design mockup, frozen 2026-07",
+      "notes": "What that hire really costs is derived from this and the on-cost, never authored, so the example cannot contradict the percentage printed above it."
+    },
+    "overtimeMultiple": {
+      "value": 1.5,
+      "unit": "x the hourly wage",
+      "tier": "thin",
+      "basis": "the multiplier above the stated weekly hours; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07"
+    },
+    "overtimeAfterHours": {
+      "value": 48,
+      "unit": "hours a week",
+      "tier": "thin",
+      "basis": "the weekly hours above which the multiplier applies; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07"
+    },
+    "payScale": {
+      "rows": [
+        { "label": "Manager", "lo": 34000, "typical": 44000, "hi": 58000 },
+        { "label": "Skilled trade", "lo": 30000, "typical": 38000, "hi": 50000 },
+        { "label": "Supervisor", "lo": 27000, "typical": 33000, "hi": 41000 },
+        { "label": "Shop floor", "lo": 24000, "typical": 27000, "hi": 32000 }
+      ],
+      "axis": { "lo": 20000, "hi": 80000, "ticks": [20000, 40000, 60000, 80000] },
+      "unit": "USD/yr",
+      "tier": "thin",
+      "basis": "typical pay and its usual range for four roles an everyday trade hires; lifted from the design and not researched",
+      "freshness": "design mockup, frozen 2026-07",
+      "notes": "The wage floor is deliberately not a row here. The design draws it as a fifth row whose three numbers are equal, and the renderer appends it from the canonical figure so the two cannot disagree."
+    },
+    "note": "The floor has risen faster than prices for several years, so a rota costed on last year's numbers is already wrong.",
+    "__unheld": "The design also prints a rota of six adding $27K, which this contract has no field for. Recorded rather than dropped silently: it needs either a rota size and a derivation, or its own figure."
+  },
+
+  "staffSupply": {
+    "skilledInHundred": { "value": null, "reason": "no count of the working-age population by qualification has been filled for this country yet" },
+    "weeksToFillSkilledRole": { "value": null, "reason": "nobody publishes a time to fill by role, and the design's own figure is a reading rather than a measurement" },
+    "churn": { "value": null, "reason": "staff turning over in a year is published for some trades and not others, and none of it has been filled for this country yet" },
+    "noticePeriodMonths": { "value": null, "reason": "not filled for this country yet" },
+    "secondLanguagePct": { "value": null, "reason": "not filled for this country yet" },
+    "shortages": { "value": null, "reason": "which roles are short is a judgement about a labour market and no list has been filled for this country yet" }
+  },
+
+  "households": {
+    "split": { "value": null, "reason": "how a household spends its money is published as a basket rather than as the five lines the design draws, and no mapping between the two has been filled yet" },
+    "medianAfterTax": { "value": null, "reason": "not filled for this country yet" },
+    "discretionary": { "value": null, "reason": "what is left after the necessary lines cannot be taken until the household split above is filled" },
+    "millionaireHouseholds": { "value": null, "reason": "not filled for this country yet" },
+    "paidByCardPct": { "value": null, "reason": "not filled for this country yet" }
+  },
+
+  "reach": {
+    "catchment": { "value": null, "reason": "the rings are drawn from a city site the design never names, and a catchment with no stated origin is a claim about nowhere" }
+  },
+
+  "tradeTakeHome": {
+    "trades": {
+      "value": null,
+      "reason": "every row here must be read from that trade's own national figures rather than authored on this page, and no national trade files have been reconciled yet. Authoring them is how the country page and the trade page end up quoting different answers to one question."
+    },
+    "__note": "The design's own table gives salons 16 percent and restaurants 9 percent, while its closing tiles say salons 14 and restaurants 7, and its chapter 07 stack keeps 7 on what chapter 15 calls a restaurant. Three of those four cannot be true at once. Recorded here so that whoever fills this chapter resolves it rather than inheriting it."
+  },
+
+  "neighbours": {
+    "comparison": { "value": null, "reason": "this comparison needs five other country files built the same way as this one, and none exists yet" }
+  },
+
+  "underServed": {
+    "scatter": { "value": null, "reason": "placing a trade on this chart needs a count of how many operate against the local spend around them, and neither side has been filled for this country yet" }
+  },
+
+  "abroad": {
+    "comparison": { "value": null, "reason": "the other side of this comparison must be read from that country's own file, and no second country file exists yet" }
+  },
+
+  "zones": {
+    "relevant": false,
+    "verdict": "Nothing here moves the needle for a high-street trade. The freeports and enterprise zones matter for warehousing and manufacturing, not a shop or a restaurant. If that changes for your trade, this section will say so.",
+    "zones": { "value": null, "reason": "no zone in this country changes the arithmetic for a high-street trade, so there is no list to print rather than a list we have not filled" }
+  },
+
+  "stability": {
+    "ground": { "value": null, "reason": "the five readings are a placing against a world median, and the world set behind that median has not been filled yet" },
+    "costToBorrowPct": { "value": null, "reason": "not filled for this country yet" },
+    "inflationPct": { "value": null, "reason": "not filled for this country yet" },
+    "energyPerKwh": { "value": null, "reason": "not filled for this country yet" }
+  },
+
+  "myth": {
+    "primary": { "value": null, "reason": "the correction leans on figures from chapters that are not filled yet, and a myth that cannot show its working is just an opinion" },
+    "propertyRatesYearOne": { "value": null, "reason": "not filled for this country yet" }
+  },
+
+  "verdict": {
+    "text": "In the United Kingdom, the state and the landlord are paid before the owner is. A company exists in a day for $60, and then the bank, the rates and the rent arrive. What separates the trades that pay their owner from the ones that do not is almost never the demand; it is what they signed for the room.",
+    "chips": [
+      { "icon": "taxes", "text": "$36 in every $100 to the state" },
+      { "icon": "register-cost", "text": "5 weeks to take money" },
+      { "icon": "commercial-rent", "text": "rent among the dearest in Europe" }
+    ]
+  },
+
+  "methodology": {
+    "rows": [
+      { "figure": "Tax, contributions, rates", "tier": "measured", "how": "set in statute, published rates" },
+      { "figure": "Wage floor and pay", "tier": "measured", "how": "statutory floor, published pay by role" },
+      { "figure": "Days to register a company", "tier": "measured", "how": "the official registration process" },
+      { "figure": "Business survival", "tier": "measured", "how": "recorded openings and closures" },
+      { "figure": "The all-in load on profit", "tier": "built", "how": "the three published rates, on a stated firm" },
+      { "figure": "Owner take-home by trade", "tier": "built", "how": "the cost stack, run per trade" },
+      { "figure": "The six qualities", "tier": "thin", "how": "our reading of the measures above" },
+      { "figure": "Which trades are under-served", "tier": "thin", "how": "business counts against local spend" }
+    ]
+  },
+
+  "remember": {
+    "text": "Easy to start, expensive to hold. The United Kingdom asks little to let you begin and a great deal to let you stay on a good street.",
+    "figure": {
+      "value": 36,
+      "unit": "% of profit",
+      "tier": "thin",
+      "basis": "the same all-in load the page opens on, restated at the close",
+      "freshness": "design mockup, frozen 2026-07",
+      "notes": "Never rendered. figureSource resolves hero.stateTake instead, so the band and the hero cannot disagree. This value is the fallback for a file whose pointer does not resolve."
+    },
+    "figureLabel": "of profit, to the state",
+    "figureSource": "hero.stateTake"
+  },
+
+  "next": {
+    "tiles": [
+      { "kind": "city", "slug": "london", "label": "London", "gloss": "$22K per head", "icon": "skyline" },
+      { "kind": "city", "slug": "manchester", "label": "Manchester", "gloss": "$15K per head", "icon": "skyline" },
+      { "kind": "trade", "slug": "restaurants", "label": "Restaurants", "gloss": "7% kept", "icon": "trade-restaurant" },
+      { "kind": "trade", "slug": "salons", "label": "Salons", "gloss": "14% kept", "icon": "trade-salon" },
+      { "kind": "trades", "slug": "all", "label": "Every trade", "gloss": "42 ranked", "icon": "owner-keeps" },
+      { "kind": "countries", "slug": "all", "label": "Compare countries", "gloss": "5 peers", "icon": "vs-world" }
+    ],
+    "__note": "No tile carries an href. Every one of these pages is either not built or not flipped on, and inventing the URL would manufacture a dead link. Each gloss belongs to the page it points at and is carried as an already-formatted string, so this file asserts nothing about its unit or its tier."
+  }
+}

@@ -31,7 +31,18 @@ import { join, extname, relative } from "node:path";
 /** The steps, derived from the design's own dominant values. */
 const SCALE = new Set([2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 26, 32, 40]);
 
-const ROOTS = ["src/components/city2", "src/components/spine2"];
+/**
+ * `src/components/country2` joined on 2026-08-03, on the day it was created and
+ * before it had a single value in it. That is the point: the continuum reformed
+ * last time because a kit was written first and audited afterwards, and by then
+ * every off-scale value had a reason. A new kit costs nothing to hold on the
+ * scale from birth and is expensive to retrofit.
+ */
+const ROOTS = [
+  "src/components/city2",
+  "src/components/country2",
+  "src/components/spine2",
+];
 
 /**
  * GRANDFATHERED, and not silently. Eleven values in the spine-2 kit sit off the

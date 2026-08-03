@@ -55,6 +55,20 @@ export type RulerReading = {
   pos: number | null;
   /** Printed figure; null/missing row never renders. */
   value: string | null;
+  /**
+   * Optional band heading this row sits under (`.rgrp`).
+   *
+   * Added for the country page's twelve readings, which the mockup grouped on
+   * 2026-07-26 with a stated reason: twelve rows on one shared scale ran as a
+   * single undifferentiated list, so "Paying by card" sat next to "Borrowing to
+   * expand" with nothing to say they answer different questions. Groups print in
+   * FIRST-APPEARANCE order and `sort` applies INSIDE each, so the one-scale
+   * promise a caption makes still holds.
+   *
+   * Strictly additive: readings with no group render exactly as before, which is
+   * every reading the cell and city pages pass today.
+   */
+  group?: string;
 };
 
 export type RulerAccent =
@@ -120,13 +134,23 @@ const RulerColumn = React.forwardRef<HTMLDivElement, RulerColumnProps>(
     );
     if (renderable.length < 3) return null;
 
-    const rows =
-      sort === "asc"
-        ? [...renderable].sort(
-            (a, b) => (a.pos ?? Infinity) - (b.pos ?? Infinity),
-          )
-        : renderable;
+    const bySort = (a: RulerReading, b: RulerReading) =>
+      (a.pos ?? Infinity) - (b.pos ?? Infinity);
 
+    /* Groups in first-appearance order, sorted inside. A reading with no group
+       joins the leading unnamed band, so a partly grouped set never silently
+       loses rows. */
+    const groupNames: Array<string | undefined> = [];
+    for (const r of renderable) {
+      if (!groupNames.includes(r.group)) groupNames.push(r.group);
+    }
+
+    const bands = groupNames.map((name) => {
+      const inBand = renderable.filter((r) => r.group === name);
+      return { name, rows: sort === "asc" ? [...inBand].sort(bySort) : inBand };
+    });
+
+    const rows = bands.flatMap((b) => b.rows);
     const accented = rows.filter((r) => isAccented(r, accent));
 
     const headerBand = (
@@ -156,42 +180,56 @@ const RulerColumn = React.forwardRef<HTMLDivElement, RulerColumnProps>(
         style={mergedStyle}
         {...props}
       >
-        {rows.map((r, i) => {
-          const hi = isAccented(r, accent);
-          return mark === "dot" ? (
-            <div className="e" key={i}>
-              {r.glyph ? <GlyphIcon id={r.glyph} size={18} /> : <span />}
-              <span className="nm">
-                {r.label}
-                {r.sub ? <span className="s">{r.sub}</span> : null}
-              </span>
-              <span className="ax">
-                <span className="base" />
-                {r.pos != null ? (
-                  <>
-                    <span className="nat" />
-                    <span
-                      className={cn("dot", hi && "hi")}
-                      style={{ left: `${r.pos}%` }}
-                    />
-                  </>
-                ) : null}
-              </span>
-              <span className="v fig">{r.value}</span>
-            </div>
-          ) : (
-            <div className={cn("rr", hi && "hard")} key={i}>
-              {r.glyph ? <GlyphIcon id={r.glyph} size={18} /> : <span />}
-              <span className="nm">
-                {r.label}
-                {r.sub ? <span className="s">{r.sub}</span> : null}
-              </span>
-              <span className="tk">
-                <i style={{ width: `${r.pos}%` }} />
-              </span>
-              <span className="v fig">{r.value}</span>
-            </div>
-          );
+        {bands.flatMap((band, bi) => {
+          const heading =
+            band.name != null ? (
+              <div className="rgrp" key={`g${bi}`}>
+                {band.name}
+              </div>
+            ) : null;
+          const bandRows = band.rows.map((r, i) => {
+            const hi = isAccented(r, accent);
+            return mark === "dot" ? (
+              <div className="e" key={`${bi}-${i}`}>
+                {r.glyph ? <GlyphIcon id={r.glyph} size={18} /> : <span />}
+                <span className="nm">
+                  {r.label}
+                  {r.sub ? <span className="s">{r.sub}</span> : null}
+                </span>
+                <span className="ax">
+                  <span className="base" />
+                  {r.pos != null ? (
+                    <>
+                      <span className="nat" />
+                      <span
+                        className={cn("dot", hi && "hi")}
+                        style={{ left: `${r.pos}%` }}
+                      />
+                    </>
+                  ) : null}
+                </span>
+                <span className="v fig">{r.value}</span>
+              </div>
+            ) : (
+              /* The zebra is marked on the DATA, not on the DOM position. The
+                 stylesheet's own note records why: `nth-child(even)` counted
+                 every child, so once group headings were interleaved the
+                 stripes drifted and restarted arbitrarily. Alternating inside
+                 each band is what the mockup does. */
+              <div className={cn("rr", hi && "hard", i % 2 === 1 && "alt")} key={`${bi}-${i}`}>
+                {r.glyph ? <GlyphIcon id={r.glyph} size={18} /> : <span />}
+                <span className="nm">
+                  {r.label}
+                  {r.sub ? <span className="s">{r.sub}</span> : null}
+                </span>
+                <span className="tk">
+                  <i style={{ width: `${r.pos}%` }} />
+                </span>
+                <span className="v fig">{r.value}</span>
+              </div>
+            );
+          });
+          return heading ? [heading, ...bandRows] : bandRows;
         })}
         {mark === "dot" && caption ? (
           <div className="cap">

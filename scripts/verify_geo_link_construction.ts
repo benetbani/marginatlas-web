@@ -127,6 +127,26 @@ const RESOLVER_MODULE = "src/lib/cells/related_links.ts";
  */
 const SANCTIONED: Array<{ file: string; path: string; guard: string; why: string }> = [
   {
+    file: "src/lib/geo/page_targets.ts",
+    path: "/*",
+    guard: "COUNTRIES.find((c) => c.code === iso2)",
+    why:
+      "THIS IS THE RESOLVER. It is the one place allowed to build a country URL, " +
+      "because it only does so after checking membership in COUNTRIES, which is " +
+      "the same list the /[country] route gates on. Greece is why that check " +
+      "exists: the country is held as GR, so every /el link ever emitted was dead.",
+  },
+  {
+    file: "src/lib/geo/page_targets.ts",
+    path: "/*/*",
+    guard: "getRegionsForCountry(iso2, meta.name).find",
+    why:
+      "THIS IS THE RESOLVER. The two-segment form is built only after the slug " +
+      "is found in that country's own region list, which is the list the region " +
+      "route itself checks. A city is tried first and returns the /cities/ form, " +
+      "because the region route 404s for a city slug.",
+  },
+  {
     file: "src/app/(site)/saved/SavedClient.tsx",
     path: "/*",
     guard: "${c.country}/${c.geo}/${c.industry}",
