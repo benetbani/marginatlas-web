@@ -77,6 +77,7 @@ export default function HomeProposal() {
     reconciled,
     places,
     survival,
+    costStack,
   } = frontPageFigures();
 
   return (
@@ -106,7 +107,15 @@ export default function HomeProposal() {
         <section id="answer" className="glass rise" style={{ padding: "32px 32px", marginTop: 16 }}>
           <div className="grid g12" style={{ gap: 40, alignItems: "center" }}>
             <div>
-              <div className="crumb">
+              <p
+                className="k"
+                style={{ margin: 0, maxWidth: "42ch", color: "var(--ink-2)", fontSize: 15 }}
+              >
+                What a small business earns, and what its owner actually keeps,
+                trade by trade and place by place.
+              </p>
+
+              <div className="crumb" style={{ marginTop: 18 }}>
                 <span>Restaurants</span>
                 <span className="d" />
                 <span>London</span>
@@ -177,7 +186,92 @@ export default function HomeProposal() {
           </div>
         </section>
 
-        {/* 2 , FIND YOURS. A control, deliberately not another block of prose,
+        {/* 2 , WHY THAT NUMBER IS THAT NUMBER. THE SECTION THAT WAS MISSING.
+            A figure alone is a statistic. A figure with a reason attached is a
+            finding, and PRODUCT.md's brand voice is nothing but reasons:
+            "coffee shops in Lisbon work BECAUSE rent is unusually forgiving",
+            "the real squeeze is staff turnover, not food cost". The homepage
+            had seven figures and not one because.
+
+            The form is deliberately inverted from every statblock on the page:
+            figure first, label after. Same information, different object, so
+            the eye does not read it as another table. */}
+        {costStack.length ? (
+          <section className="panel pad rise" style={{ marginTop: 18 }}>
+            <div className="lab" style={{ marginBottom: 14 }}>
+              Why it is only {money(keeps)}
+            </div>
+            <div className="grid g12" style={{ gap: 40, alignItems: "start" }}>
+              <div>
+                <p
+                  style={{
+                    fontSize: "clamp(19px,2.3vw,25px)",
+                    fontWeight: 600,
+                    letterSpacing: "-.02em",
+                    lineHeight: 1.28,
+                    margin: 0,
+                    maxWidth: "22ch",
+                  }}
+                >
+                  Everyone blames the rent. Rent is the{" "}
+                  <span style={{ color: "var(--terra-deep)" }}>third</span>{" "}
+                  biggest line.
+                </p>
+                <p className="k" style={{ margin: "16px 0 0", maxWidth: "44ch" }}>
+                  Staff takes more than twice what the landlord does. That is
+                  the structural fact behind the keep, and it is why two rooms
+                  on the same street with the same rent can end the year in
+                  different places.
+                </p>
+              </div>
+
+              <div>
+                {costStack.map((line) => {
+                  const isKeep = line.label.startsWith("What the owner");
+                  return (
+                    <div
+                      key={line.label}
+                      style={{
+                        display: "flex",
+                        alignItems: "baseline",
+                        gap: 14,
+                        padding: "9px 0",
+                        borderTop: "1px solid var(--hair)",
+                      }}
+                    >
+                      <span
+                        className="fig"
+                        style={{
+                          fontSize: 21,
+                          fontWeight: 600,
+                          minWidth: 52,
+                          color: isKeep
+                            ? "var(--terra-deep)"
+                            : line.label === "Staff"
+                              ? "var(--ink)"
+                              : "var(--n1)",
+                        }}
+                      >
+                        {line.pct}%
+                      </span>
+                      <span
+                        style={{
+                          fontSize: 13,
+                          color: isKeep ? "var(--ink)" : "var(--ink-2)",
+                          fontWeight: isKeep ? 500 : 400,
+                        }}
+                      >
+                        {line.label}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+        ) : null}
+
+        {/* 3 , FIND YOURS. A control, deliberately not another block of prose,
             and deliberately second: a reader who already knows what they want
             should not have to scroll past the argument to leave. */}
         <section id="find" className="panel pad rise" style={{ marginTop: 18 }}>
@@ -198,7 +292,7 @@ export default function HomeProposal() {
           </div>
         </section>
 
-        {/* 3 , THE SPREAD. The only chart on the page, and it earns the slot by
+        {/* 4 , THE SPREAD. The only chart on the page, and it earns the slot by
             answering the next thought a sceptic has: is that typical, or did
             you show me the good one. */}
         <section className="panel pad rise" style={{ marginTop: 18 }}>
@@ -368,71 +462,42 @@ export default function HomeProposal() {
           </div>
         </section>
 
-        {/* 7 , COVERAGE. The only section that admits what is thin, which is
-            the claim no competitor makes. */}
+        {/* 8 , COVERAGE AND THE EXIT, MERGED. They were two sections and the
+            second one restated the first: three counts, then three links to
+            the same three things, then a paragraph about tiers. One section,
+            the counts carrying the links, and the page stops repeating itself
+            at the end. */}
         <section id="coverage" className="panel pad rise" style={{ marginTop: 18 }}>
           <div className="lab" style={{ marginBottom: 14 }}>
             What is actually covered
           </div>
-          <div className="statblock">
-            <div className="row">
-              <span className="nm">
-                Countries with a page
-                <span className="s">every one, whatever the data behind it</span>
-              </span>
-              <span className="v">{countries}</span>
+          <div className="grid g12" style={{ gap: 36, alignItems: "start" }}>
+            <div className="close">
+              <div className="links">
+                <a href="/countries">
+                  Countries with a page
+                  <span className="g">{countries}</span>
+                </a>
+                <a href="/cities">
+                  Cities with a page
+                  <span className="g">{cities}</span>
+                </a>
+                <a href="/gb/london/restaurants">
+                  Reconciled line by line
+                  <span className="g">{reconciled}</span>
+                </a>
+              </div>
             </div>
-            <div className="row">
-              <span className="nm">
-                Cities with a page
-                <span className="s">and a neighbourhood level beneath them</span>
-              </span>
-              <span className="v">{cities}</span>
-            </div>
-            <div className="row">
-              <span className="nm">
-                Places with figures reconciled line by line
-                <span className="s">restaurants in London</span>
-              </span>
-              <span className="v">{reconciled}</span>
-            </div>
-          </div>
-          <p className="k" style={{ margin: "14px 0 0", maxWidth: "60ch" }}>
-            Most pages carry a figure built from published inputs rather than
-            observed in that exact place, and every one says which. Saying so is
-            the product. A site that hid it would read better and be worth less.
-          </p>
-        </section>
-
-        {/* 8 , THE EXIT. Ported from the mockups' own .close block: hairline
-            rows, a figure-face glyph on the right, terracotta on hover. An
-            earlier version hand-rolled a statblock here and rendered three
-            links as plain body text with no affordance at all. */}
-        <section className="panel pad rise" style={{ marginTop: 18 }}>
-          <div className="lab" style={{ marginBottom: 14 }}>
-            Where to go from here
-          </div>
-          <div className="close">
-            <div className="links">
-              <a href="/gb/london/restaurants">
-                The worked example in full
-                <span className="g">{money(roomRevenue)}</span>
-              </a>
-              <a href="/cities">
-                Every city with a page
-                <span className="g">{cities}</span>
-              </a>
-              <a href="/countries">
-                Every country with a page
-                <span className="g">{countries}</span>
-              </a>
-            </div>
-            <p className="k" style={{ margin: 0, maxWidth: "50ch" }}>
-              <b>Measured</b> is counted in that exact place.{" "}
-              <b>Built from published inputs</b> is arithmetic on figures that
-              were published, shown so it can be checked. <b>Thin</b> means the
-              shape is right and the level is not certain. The tier says which
-              route a figure came down; it does not certify the figure is right.
+            <p className="k" style={{ margin: 0, maxWidth: "46ch" }}>
+              Most pages carry a figure built from published inputs rather than
+              observed in that exact place, and every one says which.{" "}
+              <b>Measured</b> is counted there. <b>Built from published inputs</b>{" "}
+              is arithmetic shown so it can be checked. <b>Thin</b> means the
+              shape is right and the level is not.
+              <br />
+              <br />
+              Saying so is the product. A site that hid it would read better and
+              be worth less.
             </p>
           </div>
         </section>

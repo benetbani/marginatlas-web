@@ -100,6 +100,13 @@ export type FrontPageFigures = {
   /** Still trading after year 1 and after year 5, as percentages. The myth in
    *  two figures instead of two sentences. */
   survival: { year1: number; year5: number } | null;
+  /**
+   * Where the room's revenue actually goes, as shares of revenue, biggest
+   * first. This is the WHY behind the headline figure, and it is the section
+   * a stranger needs: rent takes 13 and staff takes 34, so the landlord
+   * everyone blames is the third biggest line.
+   */
+  costStack: Array<{ label: string; pct: number }>;
 };
 
 /**
@@ -161,6 +168,31 @@ export function frontPageFigures(): FrontPageFigures {
       const y1 = at(1);
       const y5 = at(5);
       return y1 != null && y5 != null ? { year1: y1, year5: y5 } : null;
+    })(),
+    /* DERIVED from the model room, never authored. Two of these lines are
+       published as percentages and two as money, so the money ones are divided
+       by the same room's revenue rather than by anything else: a share of a
+       different denominator would be the exact defect this file's header
+       warns about. */
+    costStack: (() => {
+      const rev = C.modelRoom.revenue?.value ?? 0;
+      if (!rev) return [];
+      const pctOf = (v?: number) => (v == null ? null : Math.round((v / rev) * 100));
+      const M = C.modelRoom as unknown as {
+        food?: { pct?: { value?: number } };
+        staff?: { line?: { value?: number } };
+        rentAndRates?: { total?: { value?: number } };
+        running?: { pct?: { value?: number } };
+        ownerKeeps?: { taken?: number };
+      };
+      const rows = [
+        { label: "Staff", pct: pctOf(M.staff?.line?.value) },
+        { label: "Food and drink", pct: M.food?.pct?.value ?? null },
+        { label: "Running costs", pct: M.running?.pct?.value ?? null },
+        { label: "Rent and rates", pct: pctOf(M.rentAndRates?.total?.value) },
+        { label: "What the owner keeps", pct: pctOf(M.ownerKeeps?.taken) },
+      ];
+      return rows.filter((r): r is { label: string; pct: number } => r.pct != null);
     })(),
     places: rows
       .filter((c) => c.tier === 1 && c.slug && c.name)
