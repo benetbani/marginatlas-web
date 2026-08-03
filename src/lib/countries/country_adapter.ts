@@ -696,7 +696,11 @@ export type CountryStaffCostModel = {
   employerOnCost: string | null;
   /** The worked example, DERIVED. Null where either input is missing. */
   workedExample: { wage: string; reallyCosts: string } | null;
+  /** The multiplier alone, because the value slot is a figure column. */
   overtime: string | null;
+  /** The threshold it applies above. Belongs beside the label, not the figure:
+   *  "1.5x above 48 hours a week" needs 204px in a 78px column and clips. */
+  overtimeAfter: string | null;
   /** `floor` marks the statutory floor row, which the design draws as a row
    *  whose three numbers are equal. Flagged rather than left to the renderer to
    *  spot, because "$24K, $24K to $24K" is a range that says nothing. */
@@ -769,12 +773,11 @@ function buildStaffCost(file: CountryFile): CountryStaffCostModel | null {
             reallyCosts: money(exampleWage * (1 + onCost / 100)),
           }
         : null,
-    overtime:
+    overtime: multiple != null ? `${multiple}x` : null,
+    overtimeAfter:
       multiple != null && afterHours != null
-        ? `${multiple}x above ${afterHours} hours a week`
-        : multiple != null
-          ? `${multiple}x`
-          : null,
+        ? `above ${afterHours} hours a week`
+        : null,
     payScale: scale,
     note: s.note ?? null,
   };

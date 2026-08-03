@@ -23,6 +23,7 @@ import { ChapterGap } from "@/components/spine2/page/ChapterGap";
 import { GlyphIcon } from "@/components/spine2/GlyphIcon";
 import type { GlyphId } from "@/components/spine2/glyphs";
 import { RulerColumn, type RulerReading } from "@/components/spine2/RulerColumn";
+import { Myth } from "@/components/spine2/Myth";
 import { CityDistrictMap } from "@/components/city2/CityDistrictMap";
 import type { CityPageModel, CityChapterId } from "@/lib/cities/city_adapter";
 
@@ -151,21 +152,22 @@ export function CityPage({ model }: { model: CityPageModel }) {
             {model.incomeAndWealth != null ? (
               <>
                 {model.incomeAndWealth.spread.length ? (
-                  <div className="panel rise" style={{ marginBottom: 10 }}>
-                    <div className="pad">
+                  <div className="panel pad rise" style={{ marginBottom: 10 }}>
+                    <div className="statblock">
                       {model.incomeAndWealth.spread.map((r) => (
                         <div className="row" key={r.label}>
-                          <span className="nm">{r.label}</span>
-                          <span className="v">
-                            {r.median} <span className="s">{r.lo} to {r.hi}</span>
+                          <span className="nm">
+                            {r.label}
+                            <span className="s">{r.lo} to {r.hi}</span>
                           </span>
+                          <span className="v">{r.median}</span>
                         </div>
                       ))}
                     </div>
                   </div>
                 ) : null}
-                <div className="panel rise">
-                  <div className="pad">
+                <div className="panel pad rise">
+                  <div className="statblock">
                     <div className="row">
                       <span className="nm">The top tenth against the middle earner</span>
                       <span className="v">
@@ -193,8 +195,8 @@ export function CityPage({ model }: { model: CityPageModel }) {
           <ChapterSection chapter={at("visitors") as Chapter}>
             {model.visitors != null ? (
               <>
-                <div className="panel rise" style={{ marginBottom: 10 }}>
-                  <div className="pad">
+                <div className="panel pad rise" style={{ marginBottom: 10 }}>
+                  <div className="statblock">
                     <div className="row">
                       <span className="nm">Visitors a year</span>
                       <span className="v">{model.visitors.count ?? "not published"}</span>
@@ -249,19 +251,26 @@ export function CityPage({ model }: { model: CityPageModel }) {
             {model.people != null ? (
               <>
                 {model.people.residents ? (
-                  <div className="row">
-                    <span className="nm">People living here</span>
-                    <span className="v">{model.people.residents}</span>
+                  <div className="panel pad rise" style={{ marginBottom: 10 }}>
+                    <div className="statblock">
+                      <div className="row">
+                        <span className="nm">People living here</span>
+                        <span className="v">{model.people.residents}</span>
+                      </div>
+                    </div>
                   </div>
                 ) : null}
 
                 {model.people.bands.length ? (
-                  <div className="panel rise" style={{ margin: "10px 0" }}>
-                    <div className="pad">
+                  <div className="panel pad rise" style={{ margin: "10px 0" }}>
+                    <div className="statblock">
                       {model.people.bands.map((b) => (
                         <div className="row" key={b.label}>
-                          <span className="nm">{b.label}</span>
-                          <span className="v">{b.sharePct}% of households</span>
+                          <span className="nm">
+                            {b.label}
+                            <span className="s">of households</span>
+                          </span>
+                          <span className="v">{b.sharePct}%</span>
                         </div>
                       ))}
                     </div>
@@ -269,21 +278,24 @@ export function CityPage({ model }: { model: CityPageModel }) {
                 ) : null}
 
                 {model.people.types.map((t) => (
-                  <div key={t.key} className="panel rise" style={{ marginBottom: 10 }}>
-                    <div className="pad">
+                  <div key={t.key} className="panel pad rise" style={{ marginBottom: 10 }}>
+                    <div className="statblock">
                       <div className="row">
                         <span className="nm">
-                          {t.icon ? <GlyphIcon id={t.icon as GlyphId} size={16} /> : null}
+                          {t.icon ? <GlyphIcon id={t.icon as GlyphId} size={13} /> : null}
                           {t.name}
                         </span>
                         <span className="v">{t.sharePct}%</span>
                       </div>
                       <div className="row">
-                        <span className="nm">What they can spend</span>
-                        <span className="v">
-                          {t.spendingPower}
-                          {t.income ? ` , ${t.income} after tax` : ""}
+                        <span className="nm">
+                          What they can spend
+                          <span className="s">
+                            {t.spendingPower}
+                            {t.income ? ", after tax" : ""}
+                          </span>
                         </span>
+                        <span className="v">{t.income ?? "not published"}</span>
                       </div>
                       <p className="k" style={{ margin: "8px 0 0" }}>
                         {t.ageRange}. {t.tenure}.
@@ -307,18 +319,19 @@ export function CityPage({ model }: { model: CityPageModel }) {
             {model.spaceCosts != null ? (
               <>
                 {model.spaceCosts.sizes.length ? (
-                  <div className="panel rise" style={{ marginBottom: 10 }}>
-                    <div className="pad">
+                  <div className="panel pad rise" style={{ marginBottom: 10 }}>
+                    <div className="statblock">
                       {model.spaceCosts.sizes.map((u) => (
                         <div className="row" key={u.label}>
                           <span className="nm">
                             {u.label}
-                            <span className="s">{u.description}</span>
+                            <span className="s">
+                              {u.description}
+                              {u.area ? `, ${u.area}` : ", size not stated"}
+                              {u.annualCost ? ", a year" : ""}
+                            </span>
                           </span>
-                          <span className="v">
-                            {u.area ?? "size not stated"}
-                            {u.annualCost ? `, ${u.annualCost} a year` : ", not priced"}
-                          </span>
+                          <span className="v">{u.annualCost ?? "not priced"}</span>
                         </div>
                       ))}
                     </div>
@@ -326,8 +339,8 @@ export function CityPage({ model }: { model: CityPageModel }) {
                 ) : null}
 
                 {model.spaceCosts.costSplit.length ? (
-                  <div className="panel rise" style={{ marginBottom: 10 }}>
-                    <div className="pad">
+                  <div className="panel pad rise" style={{ marginBottom: 10 }}>
+                    <div className="statblock">
                       {model.spaceCosts.costSplit.map((c) => (
                         <div className="row" key={c.label}>
                           <span className="nm">{c.label}</span>
@@ -374,8 +387,8 @@ export function CityPage({ model }: { model: CityPageModel }) {
             {model.tradeEconomics != null ? (
               <>
                 {model.tradeEconomics.rows.map((r) => (
-                  <div key={r.tradeSlug} className="panel rise" style={{ marginBottom: 8 }}>
-                    <div className="pad">
+                  <div key={r.tradeSlug} className="panel pad rise" style={{ marginBottom: 8 }}>
+                    <div className="statblock">
                       <div className="row">
                         <span className="nm">{r.tradeName}</span>
                         <span className="v">{r.ownerKeeps} kept</span>
@@ -411,19 +424,17 @@ export function CityPage({ model }: { model: CityPageModel }) {
           <ChapterSection chapter={at("districtRent") as Chapter}>
             {model.districtRent != null ? (
               <>
-                <div className="panel rise">
-                  <div className="pad">
+                <div className="panel pad rise">
+                  <div className="statblock">
                     {model.districtRent.rows.map((r) => (
                       <div className="row" key={r.slug}>
-                        <span className="nm">{r.name}</span>
-                        <span className="v">
-                          {r.rent ?? "not priced"}
-                          {r.annualUnitCost ? (
-                            <span className="s">{r.annualUnitCost} a year</span>
-                          ) : (
-                            <span className="s">not priced here</span>
-                          )}
+                        <span className="nm">
+                          {r.name}
+                          <span className="s">
+                            {r.annualUnitCost ? `${r.annualUnitCost} a year` : "not priced here"}
+                          </span>
                         </span>
+                        <span className="v">{r.rent ?? "not priced"}</span>
                       </div>
                     ))}
                   </div>
@@ -446,11 +457,15 @@ export function CityPage({ model }: { model: CityPageModel }) {
             {model.tradeFit != null ? (
               <>
                 {model.tradeFit.rows.map((r) => (
-                  <div key={r.tradeSlug} className="panel rise" style={{ marginBottom: 8 }}>
-                    <div className="pad">
+                  <div key={r.tradeSlug} className="panel pad rise" style={{ marginBottom: 8 }}>
+                    <div className="statblock">
                       <div className="row">
-                        <span className="nm">{r.tradeName}</span>
-                        <span className="v">{r.best ? `Best in ${r.best}` : "no clear best area"}</span>
+                        <span className="nm">
+                          {r.tradeName}
+                          <span className="s">
+                            {r.best ? `best in ${r.best}` : "no clear best area"}
+                          </span>
+                        </span>
                       </div>
                       {/* "good" only. Including "best" here printed the top
                           district twice, once above and once in this list. */}
@@ -504,11 +519,11 @@ export function CityPage({ model }: { model: CityPageModel }) {
                     }))}
                 />
                 {model.districts.rows.map((d) => (
-                  <div key={d.slug} className="panel rise" style={{ marginBottom: 10 }}>
-                    <div className="pad">
+                  <div key={d.slug} className="panel pad rise" style={{ marginBottom: 10 }}>
+                    <div className="statblock">
                       <div className="row">
                         <span className="nm">
-                          {d.icon ? <GlyphIcon id={d.icon as GlyphId} size={16} /> : null}
+                          {d.icon ? <GlyphIcon id={d.icon as GlyphId} size={13} /> : null}
                           {d.name}
                         </span>
                         <span className="v">{d.rent ?? "rent not priced"}</span>
@@ -516,11 +531,11 @@ export function CityPage({ model }: { model: CityPageModel }) {
                       <p className="k" style={{ margin: "6px 0 10px" }}>
                         {d.blurb}
                       </p>
-                      <div className="row">
+                      <div className="row" style={{ "--val-col": "150px" } as React.CSSProperties}>
                         <span className="nm">Who lives here</span>
                         <span className="v">{d.resident ?? "not read yet"}</span>
                       </div>
-                      <div className="row">
+                      <div className="row" style={{ "--val-col": "150px" } as React.CSSProperties}>
                         <span className="nm">Here during the working day</span>
                         <span className="v">{d.daytime ?? "not read yet"}</span>
                       </div>
@@ -561,8 +576,8 @@ export function CityPage({ model }: { model: CityPageModel }) {
         {at("direction") != null ? (
           <ChapterSection chapter={at("direction") as Chapter}>
             {model.direction != null ? (
-              <div className="panel rise">
-                <div className="pad">
+              <div className="panel pad rise">
+                <div className="statblock">
                   {model.direction.tiles.map((t) => (
                     <div className="row" key={t.label}>
                       <span className="nm">
@@ -588,22 +603,13 @@ export function CityPage({ model }: { model: CityPageModel }) {
             {model.myths != null ? (
               <>
                 {model.myths.claim ? (
-                  <div className="panel rise" style={{ marginBottom: 10 }}>
-                    <div className="pad">
-                      <div className="row">
-                        <span className="nm">The claim</span>
-                        <span className="v">{model.myths.claim}</span>
-                      </div>
-                      <div className="row">
-                        <span className="nm">What is actually true</span>
-                        <span className="v">{model.myths.reality}</span>
-                      </div>
-                    </div>
+                  <div className="panel pad rise" style={{ marginBottom: 10 }}>
+                    <Myth claim={model.myths.claim} fix={model.myths.reality} />
                   </div>
                 ) : null}
                 {model.myths.comparison ? (
-                  <div className="panel rise">
-                    <div className="pad">
+                  <div className="panel pad rise">
+                    <div className="statblock">
                       <div className="row">
                         <span className="nm">
                           {model.myths.comparison.tradeName} revenue
@@ -655,8 +661,8 @@ export function CityPage({ model }: { model: CityPageModel }) {
           <ChapterSection chapter={at("peers") as Chapter}>
             {model.peers != null ? (
               <>
-                <div className="panel rise">
-                  <div className="pad">
+                <div className="panel pad rise">
+                  <div className="statblock">
                     {model.peers.rows.map((r) => (
                       <div className="row" key={r.city}>
                         <span className="nm">
@@ -685,8 +691,8 @@ export function CityPage({ model }: { model: CityPageModel }) {
             {model.watch != null ? (
               <>
                 {model.watch.pressures.length ? (
-                  <div className="panel rise" style={{ marginBottom: 10 }}>
-                    <div className="pad">
+                  <div className="panel pad rise" style={{ marginBottom: 10 }}>
+                    <div className="statblock">
                       {model.watch.pressures.map((p) => (
                         <div className="row" key={p.label}>
                           <span className="nm">{p.label}</span>
@@ -726,22 +732,20 @@ export function CityPage({ model }: { model: CityPageModel }) {
             {model.voices != null ? (
               <>
                 {model.voices.quotes.map((q) => (
-                  <div className="panel rise" style={{ marginBottom: 8 }} key={q.quote}>
-                    <div className="pad">
+                  <div className="panel pad rise" style={{ marginBottom: 8 }} key={q.quote}>
+                    <div className="statblock">
                       <p className="k" style={{ margin: 0 }}>
                         &ldquo;{q.quote}&rdquo;
                       </p>
                       <div className="row" style={{ marginTop: 8 }}>
                         <span className="nm">
                           {q.trade}
-                          <span className="s">{q.district}</span>
-                        </span>
-                        {q.pull ? (
-                          <span className="v">
-                            {q.pull}
-                            {q.pullNote ? <span className="s">{q.pullNote}</span> : null}
+                          <span className="s">
+                            {q.district}
+                            {q.pullNote ? `, ${q.pullNote}` : ""}
                           </span>
-                        ) : null}
+                        </span>
+                        {q.pull ? <span className="v">{q.pull}</span> : null}
                       </div>
                     </div>
                   </div>
@@ -787,8 +791,8 @@ export function CityPage({ model }: { model: CityPageModel }) {
           <ChapterSection chapter={at("methodology") as Chapter}>
             {model.methodology != null ? (
               <>
-                <div className="panel rise">
-                  <div className="pad">
+                <div className="panel pad rise">
+                  <div className="statblock">
                     {model.methodology.rows.map((r) => (
                       <div className="row" key={r.figure}>
                         <span className="nm">
@@ -838,15 +842,15 @@ export function CityPage({ model }: { model: CityPageModel }) {
         {at("next") != null ? (
           <ChapterSection chapter={at("next") as Chapter}>
             {model.next != null ? (
-              <div className="panel rise">
-                <div className="pad">
+              <div className="panel pad rise">
+                <div className="statblock">
                   {model.next.tiles.map((t) => (
                     <div className="row" key={t.label}>
                       <span className="nm">
-                        {t.icon ? <GlyphIcon id={t.icon as GlyphId} size={16} /> : null}
+                        {t.icon ? <GlyphIcon id={t.icon as GlyphId} size={13} /> : null}
                         {t.href ? <a href={t.href}>{t.label}</a> : t.label}
+                        {t.gloss ? <span className="s">{t.gloss}</span> : null}
                       </span>
-                      <span className="v">{t.gloss}</span>
                     </div>
                   ))}
                 </div>

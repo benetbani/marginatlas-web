@@ -453,7 +453,12 @@ export function CountryPage({ model }: { model: CountryPageModel }) {
                           answer: true,
                         }
                       : { label: "A worked hire", value: null },
-                    { label: "Overtime", value: model.staffCost.overtime },
+                    {
+                      label: model.staffCost.overtimeAfter
+                        ? `Overtime, ${model.staffCost.overtimeAfter}`
+                        : "Overtime",
+                      value: model.staffCost.overtime,
+                    },
                   ]}
                 />
                 {model.staffCost.note ? (

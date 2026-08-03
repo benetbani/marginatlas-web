@@ -186,8 +186,8 @@ export default function HomeProposal() {
         {/* 2 , THE SPREAD. Directly after the answer, because "is that typical
             or did you show me the good one" is the next thought a sceptical
             reader has, and answering it unprompted is the whole posture. */}
-        <section className="panel rise" style={{ marginTop: 18 }}>
-          <div className="pad">
+        <section className="panel pad rise" style={{ marginTop: 18 }}>
+          <div>
             <div className="lab" style={{ marginBottom: 12 }}>
               Whether that room is typical
             </div>
@@ -246,8 +246,8 @@ export default function HomeProposal() {
 
         {/* 3 , THE LINE THAT IS THE ARGUMENT. One number, alone, because it is
             the sentence the whole product exists to be able to say. */}
-        <section className="panel rise" style={{ marginTop: 18 }}>
-          <div className="pad">
+        <section className="panel pad rise" style={{ marginTop: 18 }}>
+          <div>
             <div className="lab" style={{ marginBottom: 12 }}>
               What that means for the person opening one
             </div>
@@ -325,8 +325,8 @@ export default function HomeProposal() {
 
         {/* 6 , COVERAGE, HONESTLY. Including where it is thin, because that is
             the claim nobody else makes. */}
-        <section className="panel rise" style={{ marginTop: 18 }}>
-          <div className="pad">
+        <section className="panel pad rise" style={{ marginTop: 18 }}>
+          <div>
             <div className="lab" style={{ marginBottom: 12 }}>
               What is actually covered
             </div>
@@ -370,8 +370,8 @@ export default function HomeProposal() {
             requested and confirmed to resolve before this page is delivered,
             because seven live link defects on this site came from links that
             were reasonable to assume and wrong. */}
-        <section className="panel rise" style={{ marginTop: 18 }}>
-          <div className="pad">
+        <section className="panel pad rise" style={{ marginTop: 18 }}>
+          <div>
             <div className="lab" style={{ marginBottom: 12 }}>
               Where to go from here
             </div>
