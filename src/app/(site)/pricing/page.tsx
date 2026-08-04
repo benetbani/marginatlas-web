@@ -36,6 +36,17 @@ import {
 } from "@/components/monetization";
 import { CheckoutButton } from "@/components/monetization/CheckoutButton";
 import { isAuthEnabled } from "@/lib/feature_flags";
+/* The matrix, the Free description and the anti-Trading-Economics callout moved
+   to src/lib/pricing/matrix.ts when a second pricing surface was built. Two
+   copies of a price list is how a site ends up quoting different features on
+   different pages, which is the drift this file's own header warns about.
+   Values were verified byte-identical across the move. */
+import {
+  MATRIX,
+  FREE_DESCRIPTION,
+  ANTI_TE_CALLOUT,
+  type MatrixCellValue,
+} from "@/lib/pricing/matrix";
 
 export const metadata = {
   title: "Pricing - Margin Atlas",
@@ -44,60 +55,6 @@ export const metadata = {
     "quartiles, year-over-year change, and saved cells. Premium $77/mo " +
     "adds comparison, export, alerts, and confidence bands. Cancel any time.",
 };
-
-// The Free row needs its own metadata since paywall_copy.ts only
-// describes the paid tiers.
-const FREE_DESCRIPTION =
-  "Median, top decile, and bottom decile for every cell. The character " +
-  "of every place we cover. No account required.";
-
-// v34 Part 3.7 - anti-Trading-Economics callout (verbatim).
-const ANTI_TE_CALLOUT =
-  "What we will never do: no auto-trial, no card-required-to-preview, " +
-  "no friction to cancel, no surprise renewal-price hikes. The price " +
-  "you sign up at is the price you pay until you decide otherwise.";
-
-type MatrixCellValue = boolean | string;
-type MatrixRow = {
-  group: string;
-  label: string;
-  values: [MatrixCellValue, MatrixCellValue, MatrixCellValue]; // free / basic / premium
-};
-
-// v34 Part 4.1 feature matrix, exact.
-const MATRIX: MatrixRow[] = [
-  // Browsing
-  { group: "Browsing", label: "Cell pages (read)",        values: [true, true, true] },
-  { group: "Browsing", label: "Median (p50)",             values: [true, true, true] },
-  { group: "Browsing", label: "Top decile (p90)",         values: [true, true, true] },
-  { group: "Browsing", label: "Bottom decile (p10)",      values: [true, true, true] },
-  { group: "Browsing", label: "Headline cost line",       values: [true, true, true] },
-  { group: "Browsing", label: "Grand setup-cost total",   values: [true, true, true] },
-  { group: "Browsing", label: "City character",           values: [true, true, true] },
-  { group: "Browsing", label: "Failure modes",            values: [true, true, true] },
-  { group: "Browsing", label: "Tangible units",           values: [true, true, true] },
-  { group: "Browsing", label: "If you opened today",      values: [true, true, true] },
-  { group: "Browsing", label: "Narrative paragraph",      values: [true, true, true] },
-
-  // Depth (Basic unlocks)
-  { group: "Depth",    label: "Lower-mid quartile (p25)", values: [false, true, true] },
-  { group: "Depth",    label: "Upper-mid quartile (p75)", values: [false, true, true] },
-  { group: "Depth",    label: "Year-over-year deltas",    values: [false, true, true] },
-  { group: "Depth",    label: "Source citation per line", values: [false, true, true] },
-
-  // Personal workspace (Basic unlocks)
-  { group: "Workspace", label: "Saved cells (watchlist)", values: [false, "25 max", "Unlimited"] },
-  { group: "Workspace", label: "Saved searches",          values: [false, true, true] },
-
-  // Power (Premium unlocks)
-  { group: "Power",     label: "Cell comparison (side by side)", values: [false, false, true] },
-  { group: "Power",     label: "CSV export",                values: [false, false, true] },
-  { group: "Power",     label: "Email alerts on cell updates", values: [false, false, true] },
-  { group: "Power",     label: "Confidence intervals",      values: [false, false, true] },
-  { group: "Power",     label: "Seasonality calendar",      values: [false, false, true] },
-  { group: "Power",     label: "Public-company peers panel",values: [false, false, true] },
-  { group: "Power",     label: "Equipment shopping list",   values: [false, false, true] },
-];
 
 export default function PricingPage() {
   return (
