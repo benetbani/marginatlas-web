@@ -160,10 +160,7 @@ export default async function WorldProposal() {
         <section className="glass rise" style={{ padding: "30px 32px", marginTop: 16 }}>
           <div className="grid g12" style={{ gap: 40, alignItems: "center" }}>
             <div>
-              <div className="crumb">
-                <span>The atlas</span>
-              </div>
-              <h1 style={{ marginTop: 14, maxWidth: "17ch" }}>
+              <h1 style={{ maxWidth: "17ch" }}>
                 Every country, and how much of it is filled in.
               </h1>
               <p className="k" style={{ margin: "16px 0 0", maxWidth: "44ch" }}>

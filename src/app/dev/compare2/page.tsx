@@ -91,10 +91,7 @@ export default function ComparePropos() {
             three row table cannot: it says what kind of difference this is
             before any figure is read. */}
         <section className="glass rise" style={{ padding: "30px 32px", marginTop: 16 }}>
-          <div className="crumb">
-            <span>Two cities</span>
-          </div>
-          <h1 style={{ marginTop: 14, maxWidth: "20ch" }}>
+          <h1 style={{ maxWidth: "20ch" }}>
             {pair.left.name} against {pair.right.name}.
           </h1>
           {pair.hook ? (

@@ -27,6 +27,8 @@
  */
 import * as React from "react";
 
+import { Check, Minus } from "@phosphor-icons/react/dist/ssr";
+
 import { GlyphIcon } from "@/components/spine2/GlyphIcon";
 import type { GlyphId } from "@/components/spine2/glyphs";
 import { Place } from "@/components/spine2/Place";
@@ -62,22 +64,21 @@ const COLS = ["Free", TIERS.basic.name, TIERS.premium.name] as const;
  * the column that carries it, and the paid columns are ink.
  */
 function Cell({ value, accent }: { value: MatrixCellValue; accent: boolean }) {
+  /* Drawn icons, not unicode. A typed check mark and an en dash are two
+     different faces at two different weights standing in for an icon system;
+     the live pricing page already uses these two, so this is the set. */
   if (value === true) {
     return (
-      <span
+      <Check
+        weight="bold"
+        size={14}
         aria-label="included"
-        style={{ color: accent ? "var(--terra-deep)" : "var(--n1)", fontSize: 15 }}
-      >
-        &#10003;
-      </span>
+        style={{ color: accent ? "var(--terra-deep)" : "var(--n1)" }}
+      />
     );
   }
   if (value === false) {
-    return (
-      <span aria-label="not included" style={{ color: "var(--n4)", fontSize: 15 }}>
-        &ndash;
-      </span>
-    );
+    return <Minus size={14} aria-label="not included" style={{ color: "var(--n4)" }} />;
   }
   return <span style={{ fontSize: 12, color: "var(--ink-2)" }}>{value}</span>;
 }
@@ -141,10 +142,7 @@ export default function PricingProposal() {
         {/* 1 , WHAT IS FREE. The claim first, because it is the true one and it
             is the one nobody else in this category makes. */}
         <section className="glass rise" style={{ padding: "30px 32px", marginTop: 16 }}>
-          <div className="crumb">
-            <span>Pricing</span>
-          </div>
-          <h1 style={{ marginTop: 14, maxWidth: "19ch" }}>
+          <h1 style={{ maxWidth: "19ch" }}>
             Reading the atlas is free, and stays free.
           </h1>
           <p className="k" style={{ margin: "16px 0 0", maxWidth: "52ch", fontSize: 15 }}>
