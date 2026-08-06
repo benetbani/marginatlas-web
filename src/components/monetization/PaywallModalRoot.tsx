@@ -112,7 +112,20 @@ export function PaywallModalRoot() {
       data-v34-paywall="root"
       data-v34-entry={state.entry}
       role="dialog"
-      aria-modal="true"
+      /* NO aria-modal. It was here and it was a false promise.
+         `aria-modal="true"` tells assistive technology that everything outside
+         this element is inert. Nothing in this component contains focus, which
+         this file's own header admits at line 22: "(No modal-trap.)". So a
+         keyboard user tabbed straight out into content a screen reader had been
+         told did not exist, on the surface that takes money.
+         The attribute is removed rather than the trap added, because adding
+         containment to this markup is a behaviour change on a live paid
+         surface and that is the founder's call. The native <dialog> route,
+         where the browser supplies containment, Escape and an inert
+         background, is written up in
+         design/loop4/research/2026-08-04-codefronts.md. Until one of those
+         lands, the accessibility tree tells the truth: a dialog that does not
+         contain focus is not a modal. */
       aria-labelledby="v34-paywall-headline"
       className="fixed inset-0 z-50"
     >

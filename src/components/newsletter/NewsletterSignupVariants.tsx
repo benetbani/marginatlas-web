@@ -224,7 +224,9 @@ export function ExitIntentModal({
       />
       <div
         role="dialog"
-        aria-modal="true"
+        /* NO aria-modal. See PaywallModalRoot.tsx for the full reasoning: the
+           attribute promises assistive technology that the rest of the page is
+           inert, and nothing here contains focus, so the promise was false. */
         aria-labelledby="atlas-exit-h"
         className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-[92vw] max-w-md rounded-2xl p-6 sm:p-7 bg-cream-50 border border-parchment shadow-[0_1px_2px_rgba(26,26,26,0.05),_0_24px_60px_rgba(26,26,26,0.18)]"
       >
