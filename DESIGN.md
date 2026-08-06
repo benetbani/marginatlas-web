@@ -219,7 +219,24 @@ repeatedly. Nobody perceives 12px against 12.5px.
 Proposal and before/after renders:
 `design/loop4/reviews/2026-08-02-type-radius-scale-PROPOSAL.md`.
 
-## 5.1 Motion , DEFINED ALREADY, and the plan was wrong about it
+## 5.1 Motion , APPLIED 2026-08-04. Three tokens.
+
+```
+--t-fast  90ms   colour and background
+--t-move  150ms  transform
+--t-slow  200ms  a width or a rail
+```
+
+Fourteen raw durations replaced. 140 snapped to 150; 180 and 220 to 200. Every
+move is under 20ms and imperceptible.
+
+**Two are deliberately left raw and are not drift.** `280ms` on two selectors,
+and `750ms` on `.rise`, which is the page entrance. **Changing an entrance is a
+design decision, not a tidy-up**, and it is the founder's.
+
+The rest of this section is the measurement that produced those three tokens.
+
+## 5.1b How the motion scale was arrived at
 
 The Loop 4 plan listed motion as undefined, "durations and easings currently
 per-component". **It is not.** One block near the end of `atlas.css` owns every
@@ -268,7 +285,46 @@ of them, so the removal is paired with a replacement rather than being a hole.
 Its own comment records why it exists: *"There was no focus state in the entire
 stylesheet."*
 
-## 5.3 Elevation , THE ACTUAL GAP. Measured, proposed, not applied.
+## 5.3 Elevation , APPLIED 2026-08-04, and this section was wrong
+
+**What this section used to say was wrong, and reading the selectors is what
+showed it.** It claimed 10 drop shadows falling into "a hairline lift" family
+and "a panel lift" family, and proposed collapsing them to two levels matching
+the two surfaces.
+
+There is no hairline card family. **All six of those shadows are on slider
+thumbs and map pins**, at `atlas.css` 238, 240, 653, 1176, 1180 and 1810. Every
+one is a small round control that has to read as liftable against a 3px track.
+Collapsing them into a card-elevation token would have been a category error,
+and the previous version of this file would have caused it.
+
+**What was applied:** one token, `--lift-control: 0 1px 5px rgba(0,0,0,.3)`,
+replacing four values that sat within 1px of blur and 0.11 of alpha of each
+other. The modal value, not their average. It is for small controls and **must
+never be used as a card elevation.**
+
+**What was deliberately not touched:**
+
+- **The composite glass treatments.** `inset 2px 2px .5px -2px
+  rgba(255,255,255,.96), 0 10px 30px -20px rgba(0,0,0,.4)` and its siblings are
+  edge highlight plus drop, tuned together. They are the glass look, not a
+  shadow scale, and pulling the drop out of one destroys it.
+- **The 34 border and rule shadows.** Unchanged, and see below.
+
+### box-shadow used as a border is deliberate, do not "fix" it
+
+34 uses are **not elevation at all**: `0 0 0 1px var(--terra-line)`, `inset 0
+1px 0 var(--grp-rule)`, and similar. A 1px ring drawn with `box-shadow` costs no
+layout box, which a `border` does. **They are correct and they are not part of
+any elevation scale.** Any future audit that collapses "all box-shadows" will
+destroy 34 working borders.
+
+**One observation, not a change:** `inset 3px 0 0 var(--terra)`, a 3px
+terracotta left stripe, appears on 4 selectors. General frontend guidance treats
+a coloured side stripe as a reflex to avoid. **It is in the founder's ratified
+mockup, so it stays.** Recorded here so nobody removes it as a lint.
+
+## 5.3b The old proposal, kept for the reasoning
 
 **Measured 2026-08-03: 10 distinct drop shadows across 13 uses.** Nearly every
 shadow in the system is unique, which is drift by definition.

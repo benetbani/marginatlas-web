@@ -105,6 +105,18 @@
   --fig:var(--font-grotesk,'Space Grotesk'),'Space Grotesk',ui-monospace,'SF Mono',monospace;
 
   --r-lg:10px; --r-md:8px; --r-sm:6px; --r-xs:4px;
+  /* The small-control lift. Slider thumbs and map pins only: a round object a
+     few pixels across that has to read as liftable against a 3px track. It is
+     NOT a card elevation and must never be used as one. Collapsed 2026-08-04
+     from four values that sat within 1px of blur and 0.11 of alpha of each
+     other, taking the modal value rather than their average. */
+  --lift-control:0 1px 5px rgba(0,0,0,.3);
+  /* One timing scale. Measured 2026-08-04: 8 durations across 17 uses, peaking
+     at 90, 150 and 200. 140 was snapped to 150, and 180 and 220 to 200; every
+     move is under 20ms and imperceptible. 280 and 750 are left alone and named
+     in DESIGN.md: 750 is the .rise entrance, and changing an entrance is a
+     design decision, not a tidy-up. */
+  --t-fast:90ms; --t-move:150ms; --t-slow:200ms;
   --shadow-panel:0 1px 2px rgba(0,0,0,.04), 0 16px 38px -22px rgba(0,0,0,.20);
 }
 
@@ -243,9 +255,9 @@
 .av2 .setter input[type=range]{-webkit-appearance:none;appearance:none;flex:1;min-width:150px;height:3px;border-radius:2px;
   background:var(--n4);outline:none}
 .av2 .setter input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;
-  background:var(--terra);border:3px solid var(--white);box-shadow:0 1px 5px rgba(0,0,0,.3);cursor:pointer}
+  background:var(--terra);border:3px solid var(--white);box-shadow:var(--lift-control);cursor:pointer}
 .av2 .setter input[type=range]::-moz-range-thumb{width:17px;height:17px;border-radius:50%;background:var(--terra);
-  border:3px solid var(--white);box-shadow:0 1px 5px rgba(0,0,0,.3);cursor:pointer;border-color:#fff}
+  border:3px solid var(--white);box-shadow:var(--lift-control);cursor:pointer;border-color:#fff}
 .av2 .setter .val{font-family:var(--fig);font-size:17px;font-weight:600;color:var(--terra-deep);white-space:nowrap;min-width:64px;text-align:right}
 
 /* ---------- TAGS ---------- */
@@ -500,7 +512,7 @@
 @media (prefers-reduced-motion:no-preference){
   .av2 .rise{opacity:0;transform:translateY(12px);animation:rise .75s cubic-bezier(.2,.7,.2,1) forwards}
   @keyframes rise{to{opacity:1;transform:none}}
-  .av2 .hoverlift{transition:transform .2s ease}
+  .av2 .hoverlift{transition:transform var(--t-slow) ease}
   .av2 .hoverlift:hover{transform:translateY(-2px)}
 }
 
@@ -658,7 +670,7 @@
 .av2 .mixer .dial .lab{margin-bottom:9px}
 .av2 .mixer .dial .cur{font-family:var(--fig);font-size:17px;font-weight:600;margin-bottom:11px}
 .av2 .mixer .dial input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;border-radius:2px;background:var(--n4);outline:none}
-.av2 .mixer .dial input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--ink);border:3px solid var(--white);box-shadow:0 1px 4px rgba(0,0,0,.3);cursor:pointer}
+.av2 .mixer .dial input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--ink);border:3px solid var(--white);box-shadow:var(--lift-control);cursor:pointer}
 .av2 .mixer .dial input[type=range]::-moz-range-thumb{width:15px;height:15px;border-radius:50%;background:var(--ink);border:3px solid #fff;cursor:pointer}
 .av2 .mixer .dial .ends{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:6px}
 .av2 .mixer .result{padding:16px 18px;background:linear-gradient(180deg,var(--terra-bright),var(--terra));color:#fff;display:flex;flex-direction:column;justify-content:center}
@@ -718,7 +730,7 @@
 
 /* tile grid for the close */
 .av2 .tiles{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border:1px solid var(--hair);border-radius:var(--r-md);overflow:hidden;background:var(--card)}
-.av2 .tiles a{padding:15px 16px;border-right:1px solid var(--hair);border-bottom:1px solid var(--hair);display:flex;flex-direction:column;gap:7px;transition:background .15s}
+.av2 .tiles a{padding:15px 16px;border-right:1px solid var(--hair);border-bottom:1px solid var(--hair);display:flex;flex-direction:column;gap:7px;transition:background var(--t-move)}
 .av2 .tiles a:hover{background:rgba(0,0,0,.02)}
 .av2 .tiles a .t{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink)}
 .av2 .tiles a .g{font-family:var(--fig);font-size:15px;font-weight:600;color:var(--terra-deep)}
@@ -841,7 +853,7 @@
 /* ---------- .hoodcards , district rows ---------- */
 .av2 .hoodcards{display:flex;flex-direction:column;border:1px solid var(--grp-frame);border-radius:var(--r-md);overflow:hidden;background:var(--card)}
 .av2 .hoodcards a{display:grid;grid-template-columns:24px minmax(0,1.3fr) 1fr 56px;gap:12px;align-items:center;
-  min-height:54px;padding:0 15px;transition:background .15s}
+  min-height:54px;padding:0 15px;transition:background var(--t-move)}
 .av2 .hoodcards a+a{box-shadow:inset 0 1px 0 var(--grp-rule)}
 .av2 .hoodcards a:hover{background:var(--zebra)}
 .av2 .hoodcards a .gi{color:var(--n2)}
@@ -979,9 +991,9 @@
 .av2 .more>summary{display:flex;align-items:center;gap:13px;min-height:52px;padding:0 22px;cursor:pointer}
 .av2 .more>summary .cv{display:none}
 .av2 .exp{flex:none;width:27px;height:27px;border-radius:var(--r-sm);position:relative;
-  background:var(--terra-soft);border:1px solid var(--terra-line);transition:background .2s}
+  background:var(--terra-soft);border:1px solid var(--terra-line);transition:background var(--t-slow)}
 .av2 .exp i::before,.av2 .exp i::after{content:"";position:absolute;top:50%;left:50%;width:13px;height:2px;
-  border-radius:1px;background:var(--terra-deep);transform:translate(-50%,-50%);transition:transform .28s,background .2s}
+  border-radius:1px;background:var(--terra-deep);transform:translate(-50%,-50%);transition:transform .28s,background var(--t-slow)}
 .av2 .exp i::after{transform:translate(-50%,-50%) rotate(90deg)}
 .av2 .more[open] .exp{background:var(--terra);border-color:var(--terra)}
 .av2 .more[open] .exp i{transform:rotate(45deg)}
@@ -1132,12 +1144,12 @@
 /* ---------- 24b. ARCHETYPE MIX ---------- */
 .av2 .archetypes{border:1px solid var(--grp-frame);border-radius:var(--r-md);overflow:hidden;background:var(--card)}
 .av2 .archetypes .mixbar{display:flex;height:26px;gap:2px;padding:14px 16px 0}
-.av2 .archetypes .mixbar i{border-radius:3px;cursor:pointer;transition:opacity .15s}
+.av2 .archetypes .mixbar i{border-radius:3px;cursor:pointer;transition:opacity var(--t-move)}
 .av2 .archetypes .mixbar i:hover{opacity:.75}
 .av2 .archetypes .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:14px;
   border-top:1px solid var(--grp-frame)}
 .av2 .archetypes .pc{padding:13px 15px;border-right:1px solid var(--grp-frame);border-bottom:1px solid var(--grp-frame);
-  cursor:pointer;transition:background .15s;text-align:left;background:none;border-top:0;border-left:0;font:inherit}
+  cursor:pointer;transition:background var(--t-move);text-align:left;background:none;border-top:0;border-left:0;font:inherit}
 .av2 .archetypes .pc:nth-child(3n){border-right:0}
 .av2 .archetypes .pc:hover,.av2 .archetypes .pc.on{background:var(--zebra)}
 .av2 .archetypes .pc.on{box-shadow:inset 3px 0 0 var(--terra)}
@@ -1178,11 +1190,11 @@
 .av2 .calc input[type=range]:active{cursor:grabbing}
 .av2 .calc input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;
   background:var(--white);border:2px solid var(--terra);cursor:grab;
-  box-shadow:0 1px 5px rgba(0,0,0,.24);
+  box-shadow:var(--lift-control);
   background-image:linear-gradient(var(--terra),var(--terra)),linear-gradient(var(--terra),var(--terra)),linear-gradient(var(--terra),var(--terra));
   background-size:2px 8px;background-position:8px 7px,10.5px 7px,13px 7px;background-repeat:no-repeat}
 .av2 .calc input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;
-  border:2px solid var(--terra);cursor:grab;box-shadow:0 1px 5px rgba(0,0,0,.24)}
+  border:2px solid var(--terra);cursor:grab;box-shadow:var(--lift-control)}
 .av2 .calc .var .ends{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:6px}
 .av2 .calc .out{display:flex;flex-direction:column}
 .av2 .calc .out .res{padding:20px 18px;background:linear-gradient(180deg,var(--terra-bright),var(--terra));color:#fff}
@@ -1498,8 +1510,8 @@
 .av2 .calc input[type=range]:focus-visible{outline-offset:6px}
 
 /* one timing scale for chrome, and nothing that carries data is ever animated */
-.av2 .tiles a,.av2 .hoodcards a,.av2 .more>summary,.av2 .qa summary,.av2 .calc .chd .rst,.av2 .archetypes .pc,.av2 .mast .lat a,.av2 .close .links a{transition:background .09s ease-out, color .09s ease-out}
-.av2 .exp,.av2 .exp i::before,.av2 .exp i::after{transition:background .09s ease-out, transform .15s cubic-bezier(.2,.7,.2,1)}
+.av2 .tiles a,.av2 .hoodcards a,.av2 .more>summary,.av2 .qa summary,.av2 .calc .chd .rst,.av2 .archetypes .pc,.av2 .mast .lat a,.av2 .close .links a{transition:background var(--t-fast) ease-out, color var(--t-fast) ease-out}
+.av2 .exp,.av2 .exp i::before,.av2 .exp i::after{transition:background var(--t-fast) ease-out, transform var(--t-move) cubic-bezier(.2,.7,.2,1)}
 @media (prefers-reduced-motion:reduce){
   .av2 .tiles a,.av2 .hoodcards a,.av2 .more>summary,.av2 .qa summary,.av2 .calc .chd .rst,.av2 .archetypes .pc,.av2 .mast .lat a,.av2 .close .links a,.av2 .exp,.av2 .exp i::before,.av2 .exp i::after{transition:none}
 }
@@ -1780,9 +1792,9 @@
 
 /* ---------- motion, guarded; chrome only, nothing carrying data ---------- */
 @media(prefers-reduced-motion:no-preference){
-  .av2 .jumprail{transition:width .22s cubic-bezier(.2,.7,.2,1)}
-  .av2 .jumprail a .t{transition:opacity .14s ease-out}
-  .av2 .jumpsheet[open] .jlist{animation:jlist .18s cubic-bezier(.2,.7,.2,1)}
+  .av2 .jumprail{transition:width .var(--t-slow) cubic-bezier(.2,.7,.2,1)}
+  .av2 .jumprail a .t{transition:opacity var(--t-move) ease-out}
+  .av2 .jumpsheet[open] .jlist{animation:jlist var(--t-slow) cubic-bezier(.2,.7,.2,1)}
   @keyframes jlist{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 }
 
@@ -1808,7 +1820,7 @@
 .av2 .dmap{height:360px;border-radius:var(--r-md);overflow:hidden;border:1px solid var(--hair);
   background:var(--air)}
 .av2 .dmpin{width:14px;height:14px;border-radius:50%;border:2px solid #fff;padding:0;cursor:pointer;
-  box-shadow:0 1px 4px rgba(0,0,0,.35);position:relative;display:block}
+  box-shadow:var(--lift-control);position:relative;display:block}
 .av2 .dmpin:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
 .av2 .dmlab{position:absolute;left:18px;top:50%;transform:translateY(-50%);white-space:nowrap;
   font-size:11.5px;font-weight:500;color:var(--ink);pointer-events:none;
