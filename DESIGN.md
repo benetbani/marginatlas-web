@@ -357,21 +357,29 @@ terracotta left stripe, appears on 4 selectors. General frontend guidance treats
 a coloured side stripe as a reflex to avoid. **It is in the founder's ratified
 mockup, so it stays.** Recorded here so nobody removes it as a lint.
 
-## 5.4 Icon sizing , two sizes, and 4 stray uses
+## 5.4 Icon sizing , FIVE sizes, and this section said two
 
-**Measured 2026-08-03: 18px (23), 13px (12), 16px (3), 24px (2).**
+**It said two, 18 and 13, with everything else listed as a stray.** Measured
+across the current v2 surface on 2026-08-04, all five are considered choices on
+different objects:
 
-**The scale is 18 and 13.** 18 for a section or chapter header, 13 for a glyph
-inline in a row.
+| px | uses | what it is on |
+|---|---|---|
+| **18** | 33 | a section or chapter head. The workhorse. |
+| **13** | 16 | a glyph inline in a row |
+| **24** | 3 | a chapter number tile, and card tiles, where a bigger mark is the point |
+| **14** | 2 | the pricing matrix tick, which sits in a 74px column and crowds it at 18 |
+| **16** | 1 | the footer social icon, specified at 16 in BRAND.md with 12px of padding round it to clear the 40px tap floor |
 
-**APPLIED, not merely proposed**, because unlike type and radius these values
-are loop-authored rather than ratified: the three 16px uses in
-`city2/page/CityPage.tsx` all sat inline in a `.row .nm`, which is the 13 case,
-and are now 13. **Now 18px (24) and 13px (15), carrying 39 of 41 uses.**
+**A gate asserting two would have failed six correct uses.** That is the same
+cries-wolf failure the stated-totals gate was narrowed to avoid, and it is worth
+stating twice: a rule measured from a summary rather than from the code will
+fail the code.
 
-The remaining two 24px uses are on card tiles, where a larger glyph may be
-deliberate. Left alone rather than snapped, and named here so the next audit
-does not have to rediscover them.
+**Gate:** `verify_v2_scales`, which also holds the radius tokens. **Scoped to
+the current v2 surface only**, because `spine/`, `spine2-*`, `brand-glyphs` and
+`spine-kit` are previous-generation workbenches carrying 32px, 26px, 20px and
+15px glyphs that were right for the generation they belong to.
 
 ## 5.5 The row, and the two defects it hides
 

@@ -182,6 +182,29 @@ const GATES: Gate[] = [
      route hard-coding canonical "/" (caught by the second check).
      Registered 2026-08-06. */
   { name: "canonical-urls", script: "scripts/verify_canonical_urls.ts" },
+  /* A count stated beside the array it counts. city_list_v1.json said
+     totals.total 200 and a continent_split summing to 200 while its cities
+     array held 252, using region codes (NA, EU, MENA) that appear nowhere in
+     the data. Both were dormant, which is the only reason a wrong number was
+     never published. Deleted rather than recomputed: a recomputed total goes
+     stale the next time the array grows, and array.length cannot. Deliberately
+     NARROW, and that narrowness is the design: the obvious version compared
+     every totals-shaped object to every array and produced sixteen hits of
+     which fifteen were false, because every data/quality report states a
+     POPULATION beside a SAMPLE. A gate that cries wolf fifteen times in sixteen
+     gets switched off. Registered 2026-08-04. */
+  { name: "stated-totals", script: "scripts/verify_stated_totals.mjs" },
+  /* The icon and radius scales, on the CURRENT v2 surface only. Both were
+     decided in DESIGN.md and enforced nowhere, so both would drift back.
+     Scope is narrow for the same reason as above: spine/, spine2-*,
+     brand-glyphs and spine-kit are previous-generation workbenches carrying
+     32px, 26px, 20px and 15px glyphs that were right for their generation.
+     The icon scale is FIVE, not the two DESIGN.md claimed: 18 for a section
+     head (33 uses), 13 inline (16), 24 on chapter and card tiles (3), 14 for
+     the pricing matrix tick in a 74px column (2), 16 for the footer social
+     icon per BRAND.md (1). A gate asserting two would have failed six correct
+     uses. Registered 2026-08-04. */
+  { name: "v2-scales", script: "scripts/verify_v2_scales.ts" },
   { name: "spacing-scale", script: "scripts/verify_spacing_scale.ts" },
   /* One number cannot be the answer for seven cities. Two thirds of the rows
      behind place pages carry no revenue of their own, and the read path filled
