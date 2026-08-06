@@ -197,7 +197,7 @@ export function CountryPage({ model }: { model: CountryPageModel }) {
                 }}
                 accent={{ rule: "extreme", hi: 90, lo: 10 }}
                 caption={() => "a terracotta dot is the top or bottom tenth worldwide"}
-                captionSecondary="against every country we hold"
+                captionSecondary="against every country covered"
                 readingLabel="reading"
                 valueLabel="value"
               />
@@ -660,7 +660,7 @@ export function CountryPage({ model }: { model: CountryPageModel }) {
                       answer: model.underServed.opportunity.length > 0,
                     },
                     {
-                      label: "Everything else we judged",
+                      label: "Everything else judged",
                       value: model.underServed.rest.length
                         ? model.underServed.rest.map((o) => o.tradeName).join(", ")
                         : "nothing else",
@@ -877,7 +877,7 @@ export function CountryPage({ model }: { model: CountryPageModel }) {
                 ) : null}
               </div>
             ) : (
-              gap("verdict", "our verdict on this country")
+              gap("verdict", "the verdict on this country")
             )}
           </ChapterSection>
         ) : null}
@@ -899,9 +899,9 @@ export function CountryPage({ model }: { model: CountryPageModel }) {
                 />
                 <p className="note" style={{ marginTop: 14, maxWidth: "78ch" }}>
                   {model.methodology.counts.measured} of these come from a published
-                  record, {model.methodology.counts.built} we compute from published
+                  record, {model.methodology.counts.built} are computed from published
                   records, and {model.methodology.counts.thin} are the thinnest kind,
-                  where nobody publishes the figure and we say so rather than inventing
+                  where nobody publishes the figure, and the page says so rather than inventing
                   precision.
                 </p>
               </>

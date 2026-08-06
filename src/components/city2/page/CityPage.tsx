@@ -484,7 +484,7 @@ export function CityPage({ model }: { model: CityPageModel }) {
                 ))}
                 <p className="k" style={{ margin: "10px 0 0" }}>
                   Judged across {model.tradeFit.districts.length} districts: rent against the trade
-                  each one passes. Our reading, not a measurement.
+                  each one passes. A reading, not a measurement.
                 </p>
               </>
             ) : (
@@ -810,11 +810,11 @@ export function CityPage({ model }: { model: CityPageModel }) {
                   {model.methodology.counts.measured} of these are measured,{" "}
                   {model.methodology.counts.built} are built from published inputs, and{" "}
                   {model.methodology.counts.thin} are the thinnest kind, where nobody publishes the
-                  figure and we say so.
+                  figure, and the page says so.
                 </p>
               </>
             ) : (
-              <ChapterGap subject="how we work this out" />
+              <ChapterGap subject="how this is worked out" />
             )}
           </ChapterSection>
         ) : null}

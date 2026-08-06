@@ -46,9 +46,18 @@ export interface ChapterGapProps {
 }
 
 export function ChapterGap({ reason, subject }: ChapterGapProps) {
+  /* NO FIRST PERSON. This read "We have not published ..." and PRODUCT.md
+     forbids first person outright: "No 'we,' 'us,' 'our,' 'I.' The site is a
+     thing, not a personality."
+
+     It mattered more here than anywhere else. This is the absence marker, the
+     single most repeated sentence on the site, and it renders on every empty
+     chapter of every page. The most disciplined signature in the product was
+     the one breaking the voice rule, and wiring it to eleven more country
+     chapters earlier tonight multiplied it. */
   const what = subject
-    ? `We have not published ${subject} for this place yet.`
-    : "We have not published this for this place yet.";
+    ? `Nothing has been published on ${subject} for this place yet.`
+    : "Nothing has been published on this for this place yet.";
 
   /* The data files write their reasons as sentence fragments, lowercase and
      without a stop, because they were authored to be read inside a JSON field.
