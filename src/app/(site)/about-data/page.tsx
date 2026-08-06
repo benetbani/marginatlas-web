@@ -5,6 +5,7 @@ export const revalidate = 86400;
 export const metadata = {
   title: "About the data | Margin Atlas",
   description: "What Margin Atlas covers and how to read it.",
+  alternates: { canonical: "/about-data" },
 };
 
 export default function AboutDataPage() {

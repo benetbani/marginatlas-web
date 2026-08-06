@@ -28,6 +28,10 @@ import { CountryFlag } from "@/components/CountryFlag";
 import { CITIES_BY_STATE } from "@/lib/cities/city_aliases_generated";
 import { iso2ToName } from "@/lib/countries";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
+// The resolver for "does a page exist for this place", pure and database-free.
+// generateMetadata below asks it for this route's canonical rather than pasting
+// one together from the two params; see the note there.
+import { geoPageTarget } from "@/lib/geo/page_targets";
 import { getNeighborhoodsForCity } from "@/lib/cities/neighborhoods";
 // City character. Renders only when this geo has
 // a hand-curated entry in src/lib/places/city_character.ts. Self-suppresses
@@ -87,9 +91,32 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   const regions = getRegionsForCountry(iso2, countryName);
   const regionEntry = regions.find((r) => r.value === geo.toLowerCase());
   const regionLabel = regionEntry?.label || geo;
+  // THE CANONICAL IS RESOLVED, NEVER ASSEMBLED. Without an `alternates` of its
+  // own this route inherited the root layout's `canonical: "/"`, so every region
+  // page told a crawler it was the home page. The obvious repair, pasting the
+  // two params back together, is the exact move verify_geo_link_construction
+  // exists to stop: of 290 real country and place pairs, 248 resolve to no page
+  // at all, and a canonical is a claim that a URL exists.
+  //
+  // WHY THE `kind` CHECK IS LOAD-BEARING. geoPageTarget tries CITY FIRST, which
+  // is right for a link (it wants the page that actually holds the place) and
+  // wrong for a canonical here, because this route serves REGIONS. `us/new-york`
+  // is the collision the gate documents: the slug names a city in one list and a
+  // state in another, this URL renders New York STATE, and the resolver hands
+  // back /cities/new-york. Taking that href would tell a crawler the state page
+  // is really the city page, which is the same defect the gate was written for,
+  // moved into a different tag.
+  //
+  // So a region target is taken as-is, and anything else (a city collision, or a
+  // slug that resolves to nothing and will 404 below) nominates NOTHING. A null
+  // canonical resolves to no tag, which is honest silence; an invented one is a
+  // wrong answer stated confidently.
+  const target = geoPageTarget(country, geo);
+  const canonical = target?.kind === "region" ? target.href : null;
   return {
     title: `${regionLabel}: small-business benchmarks | Margin Atlas`,
     description: `Typical revenue, employment, and wages for small businesses in ${regionLabel}, ${countryName}.`,
+    alternates: { canonical },
   };
 }
 

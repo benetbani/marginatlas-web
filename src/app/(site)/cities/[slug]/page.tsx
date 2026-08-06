@@ -185,9 +185,15 @@ export async function generateMetadata({
   const title = `${city.name} small business benchmarks | Margin Atlas`;
   const description = `Revenue, employment, and wage benchmarks for small businesses in ${city.name}. Neighborhoods, comparable cities, and industry deep-dives.`;
   const ogPath = `/og/city?slug=${encodeURIComponent(city.slug)}`;
+  // Built from the RESOLVED city, not the raw param, so the canonical is the
+  // slug this page actually rendered. Without an `alternates` of its own this
+  // route inherited the root layout's `canonical: "/"` and all 252 city pages
+  // told a crawler they were the home page.
+  const canonical = `/cities/${city.slug}`;
   return {
     title,
     description,
+    alternates: { canonical },
     // title, description and images are all repeated below rather than
     // inherited. Next resolves metadata per KEY by replacement, not by deep
     // merge, so declaring openGraph at all discards the root layout's

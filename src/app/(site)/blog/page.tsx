@@ -25,6 +25,7 @@ export const revalidate = 86400;
 export const metadata = {
   title: "Blog | Margin Atlas",
   description: "Notes and deep-dives on small-business benchmarking.",
+  alternates: { canonical: "/blog" },
 };
 
 /** Long-format date for a post, e.g. "May 14, 2026". */

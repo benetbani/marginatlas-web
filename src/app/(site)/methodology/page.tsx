@@ -27,6 +27,7 @@ export const metadata = {
   title: "Methodology | Margin Atlas",
   description:
     "How Margin Atlas builds its small-business numbers: official data where it exists, triangulated where it does not, modeled where needed, and a confidence label on every figure.",
+  alternates: { canonical: "/methodology" },
 };
 
 type Tier = {

@@ -32,6 +32,7 @@ export const revalidate = 86400;
 export const metadata: Metadata = {
   title: "Knowledge base | Margin Atlas",
   description: "Plain answers about small business revenue, margins, and how benchmarks work. A calm reference for operators, founders, and analysts.",
+  alternates: { canonical: "/learn" },
 };
 
 type Article = ReturnType<typeof LEARN_BY_FAMILY>[number];

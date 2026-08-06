@@ -15,9 +15,15 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   const { slug } = await params;
   const post = await getPost(slug);
   if (!post) return { title: "Post not found" };
+  // Built from the RESOLVED post, not the raw param, so the canonical is the
+  // slug the library actually loaded. Without an `alternates` of its own this
+  // route inherited the root layout's `canonical: "/"` and every post told a
+  // crawler it was the home page.
+  const canonical = `/blog/${post.slug}`;
   return {
     title: `${post.title} | Margin Atlas`,
     description: post.excerpt,
+    alternates: { canonical },
   };
 }
 

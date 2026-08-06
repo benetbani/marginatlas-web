@@ -54,6 +54,7 @@ export const metadata = {
     "Free to browse every benchmark. Basic $37/mo unlocks deeper " +
     "quartiles, year-over-year change, and saved cells. Premium $77/mo " +
     "adds comparison, export, alerts, and confidence bands. Cancel any time.",
+  alternates: { canonical: "/pricing" },
 };
 
 export default function PricingPage() {

@@ -71,9 +71,13 @@ export async function generateMetadata({
   const { slug } = await params;
   const a = LEARN_BY_SLUG.get(slug);
   if (!a) return { title: "Not found | Margin Atlas" };
+  // Built from the RESOLVED article, not the raw param, so the canonical is the
+  // slug the registry actually keys. Without an `alternates` of its own this
+  // route inherited the root layout's `canonical: "/"`.
   return {
     title: `${a.title} | Margin Atlas`,
     description: a.oneLineAnswer,
+    alternates: { canonical: `/learn/${a.slug}` },
   };
 }
 

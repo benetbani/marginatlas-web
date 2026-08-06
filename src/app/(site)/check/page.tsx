@@ -16,6 +16,7 @@ export const metadata = {
   title: "Compare your business | Margin Atlas",
   description:
     "Type your numbers, see where you sit. Per-ratio benchmark verdict against typical operators in your industry and revenue band.",
+  alternates: { canonical: "/check" },
 };
 
 export default function CheckPage() {

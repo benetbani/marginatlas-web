@@ -25,6 +25,7 @@ export const metadata: Metadata = {
   title: "All countries | Margin Atlas",
   description:
     "Every country covered by Margin Atlas, grouped by continent. Open a country to see the small-business benchmark, regions, and cities inside.",
+  alternates: { canonical: "/countries" },
 };
 
 type CityListEntry = { slug: string; iso2: string; continent: string };

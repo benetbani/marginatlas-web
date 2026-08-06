@@ -17,6 +17,7 @@ export const metadata = {
   title: "Cookies and browser storage | Margin Atlas",
   description:
     "What Margin Atlas stores in your browser, what it is for, and how to remove it.",
+  alternates: { canonical: "/cookies" },
 };
 
 export default function CookiesPage() {

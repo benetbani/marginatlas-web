@@ -12,6 +12,7 @@ export const metadata = {
   title: "The one ratio to watch | Margin Atlas methodology",
   description:
     "How Margin Atlas picks the single most-predictive ratio per industry, the cost stack we render against revenue, and how revenue bands segment operator comparisons.",
+  alternates: { canonical: "/methodology/key-benchmarks" },
 };
 
 export default function KeyBenchmarksMethodologyPage() {

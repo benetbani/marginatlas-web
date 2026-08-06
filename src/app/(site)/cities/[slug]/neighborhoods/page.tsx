@@ -74,9 +74,13 @@ export async function generateMetadata({
   const { slug } = await params;
   const city = CITIES_BY_SLUG.get(slug);
   if (!city) return { title: "City not found | Margin Atlas" };
+  // Built from the RESOLVED city, not the raw param, so the canonical is the
+  // slug this page actually rendered. Without an `alternates` of its own this
+  // route inherited the root layout's `canonical: "/"`.
   return {
     title: `${city.name} neighborhoods | Margin Atlas`,
     description: `Every neighborhood in ${city.name} with its headline small-business industry.`,
+    alternates: { canonical: `/cities/${city.slug}/neighborhoods` },
   };
 }
 

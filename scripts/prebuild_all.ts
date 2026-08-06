@@ -166,6 +166,22 @@ const GATES: Gate[] = [
      (caught), the same route under /dev (exempt), and a route declaring
      robots index false (exempt). Registered 2026-08-04. */
   { name: "page-metadata", script: "scripts/verify_page_metadata.ts" },
+  /* The other half of the same defect, and the worse half. Next merges metadata
+     down the tree per top-level KEY by replacement, so a route that declares a
+     title but never mentions `alternates` inherits the root layout's
+     `canonical: "/"` and emits a tag saying it IS the home page. Measured on
+     rendered output from the dev server, not inferred: /cities/london and
+     /pricing both served their own title beside a canonical of
+     https://www.marginatlas.com. 29 of 49 shipping routes did this, including
+     every dynamic route that generates the long tail (cities/[slug],
+     [country]/[geo], compare/cities/[pair], decide/[activity]/[city],
+     blog/[slug], learn/[slug], coverage/[iso2]). All 29 were repaired in the
+     same change, so the allowlist ships EMPTY and a new route without
+     `alternates` simply fails. Negative-tested against a new route declaring a
+     title and no alternates (caught), the same route under /dev (exempt), and a
+     route hard-coding canonical "/" (caught by the second check).
+     Registered 2026-08-06. */
+  { name: "canonical-urls", script: "scripts/verify_canonical_urls.ts" },
   { name: "spacing-scale", script: "scripts/verify_spacing_scale.ts" },
   /* One number cannot be the answer for seven cities. Two thirds of the rows
      behind place pages carry no revenue of their own, and the read path filled

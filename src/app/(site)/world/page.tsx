@@ -35,6 +35,7 @@ export const revalidate = 21600; // 6 hours
 export const metadata = {
   title: "World map: Margin Atlas",
   description: "Every country in Margin Atlas.",
+  alternates: { canonical: "/world" },
 };
 
 function countryName(iso2: string): string {

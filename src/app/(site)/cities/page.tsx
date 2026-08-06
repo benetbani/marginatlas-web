@@ -53,6 +53,7 @@ export const revalidate = 86400;
 export const metadata: Metadata = {
   title: "All cities | Margin Atlas",
   description: "Two hundred cities of the world with small business benchmarks, neighborhood breakdowns, and side-by-side comparisons.",
+  alternates: { canonical: "/cities" },
 };
 
 type City = DirectoryCityInput & {

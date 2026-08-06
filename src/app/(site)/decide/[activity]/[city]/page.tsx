@@ -95,9 +95,17 @@ export async function generateMetadata({
   const ind = slugToIndustry(activity);
   const cityRow = CITIES_BY_SLUG.get(city);
   if (!ind || !cityRow) return { title: "Decision not found | Margin Atlas" };
+  // The city half comes from the RESOLVED row (an exact map lookup, so it is the
+  // slug this page rendered). The activity half keeps the requested slug
+  // lowercased rather than the resolved trade id, matching /industries/[industry]:
+  // an alias slug resolves to a parent trade for CONTENT, but the canonical must
+  // still name a URL this route serves. Without an `alternates` of its own this
+  // route inherited the root layout's `canonical: "/"`.
+  const canonical = `/decide/${activity.toLowerCase()}/${cityRow.slug}`;
   return {
     title: `Where to open a ${ind.name.toLowerCase()} in ${cityRow.name} | Margin Atlas`,
     description: `Top neighborhoods ranked by expected net margin for a ${ind.name.toLowerCase()} in ${cityRow.name}.`,
+    alternates: { canonical },
   };
 }
 

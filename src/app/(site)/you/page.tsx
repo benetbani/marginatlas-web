@@ -1,11 +1,37 @@
+import type { Metadata } from "next";
 import { CompareToMeClient } from "./CompareToMeClient";
 import { YouDashboard } from "./YouDashboard";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 
-export const metadata = {
+/**
+ * A private surface, so it says so rather than competing for a search result.
+ *
+ * This page declared a title and a description but no `alternates`, and Next
+ * resolves metadata down the segment tree per top-level KEY, so it inherited the
+ * root layout's `alternates: { canonical: "/" }` whole and told every crawler it
+ * WAS the home page. The honest correction is not a self-canonical. Everything
+ * on this page is read from the reader's own browser storage, so what a crawler
+ * fetches is an empty shell of somebody else's shortlist. It should not be
+ * listed at all.
+ *
+ * Two details of how Next resolves this, both load-bearing, and the same two
+ * that govern /account and /signin:
+ *
+ *   `robots` replaces the root's key wholesale rather than deep-merging, so the
+ *   root's `googleBot: { index: true }` does not survive alongside this. One
+ *   noindex is enough.
+ *
+ *   `canonical: null` clears the inherited "/" instead of replacing it with
+ *   "/you". A page that has said do not list me should not also be nominating a
+ *   canonical URL; the two are conflicting instructions. Null resolves to no tag
+ *   at all, which is the unambiguous answer.
+ */
+export const metadata: Metadata = {
   title: "Your Atlas | Margin Atlas",
   description:
     "Your shortlist, your standing context, and the comparisons you looked at, in one calm place. Everything stays on your device.",
+  robots: { index: false, follow: false },
+  alternates: { canonical: null },
 };
 
 export const revalidate = 86400;

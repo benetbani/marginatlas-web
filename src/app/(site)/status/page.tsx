@@ -128,6 +128,7 @@ function labelFor(result: Check["result"]): string {
 export const metadata = {
   title: "Status: Margin Atlas",
   description: "Live uptime of Margin Atlas dependencies.",
+  alternates: { canonical: "/status" },
 };
 
 export default async function StatusPage() {

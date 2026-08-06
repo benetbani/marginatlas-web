@@ -8,6 +8,7 @@ export const metadata = {
   title: "Compare snapshots | Margin Atlas",
   description:
     "Put the same small business in up to three cities side by side: typical revenue, net margin, owner take-home, rent and labor pressure, and the spread.",
+  alternates: { canonical: "/compare" },
 };
 
 // Render per request: the default matchup is resolved server-side via live cell

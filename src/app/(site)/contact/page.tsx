@@ -34,6 +34,7 @@ export const metadata = {
   title: "Contact | Margin Atlas",
   description:
     "Tell us a figure is wrong, or ask a question. One form, read by us, with no promise of a reply.",
+  alternates: { canonical: "/contact" },
 };
 
 /** The closed set of codes /api/contact can redirect back with. */

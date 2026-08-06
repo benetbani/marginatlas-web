@@ -63,9 +63,15 @@ export async function generateMetadata({
   const { iso2 } = await params;
   const upper = iso2.toUpperCase();
   const c = COUNTRIES.find((c) => c.code === upper);
+  // Built from the RESOLVED country code so a request in any casing settles on
+  // the one lowercase URL generateStaticParams emits and CoverageHubV2 links to.
+  // Without an `alternates` of its own this route inherited the root layout's
+  // `canonical: "/"` and every scorecard told a crawler it was the home page.
+  const canonical = `/coverage/${(c?.code || iso2).toLowerCase()}`;
   return {
     title: `${c?.name || iso2} coverage: Margin Atlas`,
     description: `Per-country data quality scorecard for ${c?.name || iso2}.`,
+    alternates: { canonical },
   };
 }
 

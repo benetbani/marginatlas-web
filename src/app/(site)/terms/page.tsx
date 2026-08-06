@@ -20,6 +20,7 @@ export const metadata = {
   title: "Terms | Margin Atlas",
   description:
     "The terms for using Margin Atlas: what you may do with the figures, what we promise, and what we do not.",
+  alternates: { canonical: "/terms" },
 };
 
 export default function TermsPage() {

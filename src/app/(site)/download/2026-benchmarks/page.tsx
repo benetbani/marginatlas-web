@@ -11,6 +11,7 @@ export const metadata = {
   title: "Get the 2026 small business benchmarks PDF · Margin Atlas",
   description:
     "Median revenue, margin, and wages for 24 industries across 12 economies, with methodology and sourcing.",
+  alternates: { canonical: "/download/2026-benchmarks" },
 };
 
 const SAMPLE_TESTIMONIAL = {

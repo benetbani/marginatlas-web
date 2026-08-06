@@ -16,6 +16,7 @@ export const metadata = {
   title: "Privacy | Margin Atlas",
   description:
     "What Margin Atlas collects, why, who it goes to, and what it never does.",
+  alternates: { canonical: "/privacy" },
 };
 
 export default function PrivacyPage() {

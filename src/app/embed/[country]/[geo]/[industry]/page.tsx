@@ -15,13 +15,49 @@ export const dynamicParams = true;
 
 type Params = { country: string; geo: string; industry: string };
 
+/**
+ * THE EMBED EMITS NO CANONICAL AT ALL, and that is the decision, not an omission.
+ *
+ * This route declared `robots` but no `alternates`, and Next resolves metadata
+ * down the segment tree per top-level KEY rather than by deep merge, so it
+ * inherited the root layout's `alternates: { canonical: "/" }` whole. Every
+ * embed URL was therefore a noindex page nominating the HOME PAGE as its
+ * canonical: the two most contradictory instructions available, aimed at the
+ * most valuable URL on the domain.
+ *
+ * The obvious repair is a canonical pointing at the real page this embeds,
+ * /{country}/{geo}/{industry}, since that page is genuinely where this content
+ * lives. It is refused, because noindex and rel=canonical are conflicting
+ * signals by construction: one says do not list this URL, the other says treat
+ * this URL and that one as the same thing. A crawler resolving the pair can
+ * carry the noindex across to the canonical target, and the target here is a
+ * cell page. Cell pages ARE the long tail, hundreds of thousands of them, and
+ * they are the whole reason the site is a search surface. No consolidation
+ * benefit is worth putting a noindex anywhere near them.
+ *
+ * Nothing is lost by staying silent. An embed is dropped into an iframe on
+ * somebody else's page; it accrues no links of its own to consolidate, and the
+ * attribution link in the footer below already sends a reader (and any equity)
+ * to the full page. `canonical: null` clears the inherited "/" and resolves to
+ * no tag, which leaves exactly one instruction standing: do not list this.
+ *
+ * Same answer, same reasoning, as /account, /signin, /saved and /you.
+ */
 export async function generateMetadata({ params }: { params: Promise<Params> }) {
   const { country, geo, industry } = await params;
   const cell = await getCellBySlug(country, geo, industry);
-  if (!cell) return { title: "Not found" };
+  // The miss branch inherited the same "/" canonical, so it clears it too.
+  if (!cell) {
+    return {
+      title: "Not found",
+      robots: { index: false, follow: false },
+      alternates: { canonical: null },
+    };
+  }
   return {
     title: `${cell.industry_name} in ${cell.geo_name} | Margin Atlas`,
     robots: { index: false, follow: false },
+    alternates: { canonical: null },
   };
 }
 

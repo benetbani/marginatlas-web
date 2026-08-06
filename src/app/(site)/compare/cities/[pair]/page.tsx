@@ -77,9 +77,16 @@ export async function generateMetadata({
   const a = CITIES_BY_SLUG.get(p.left);
   const b = CITIES_BY_SLUG.get(p.right);
   if (!a || !b) return { title: "Comparison not found | Margin Atlas" };
+  // Rebuilt from the RESOLVED pair rather than echoing the raw param, so the
+  // canonical always carries the one ordering this route serves. A comparison
+  // reads both ways round in a reader's head but only one way in a URL, and
+  // pairSlug is what generateStaticParams emits. Without an `alternates` of its
+  // own this route inherited the root layout's `canonical: "/"`.
+  const canonical = `/compare/cities/${pairSlug(p.left, p.right)}`;
   return {
     title: `${a.name} vs ${b.name} | Margin Atlas`,
     description: `Side-by-side small-business benchmarks for ${a.name} and ${b.name}: revenue, wages, industry mix.`,
+    alternates: { canonical },
   };
 }
 

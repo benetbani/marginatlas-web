@@ -54,6 +54,7 @@ export const metadata: Metadata = {
   title: "Where should you open a business? | Margin Atlas",
   description:
     "Pick an activity and a city. Margin Atlas ranks every neighborhood by expected net margin, accounting for commuter density, tourism, and rent drag.",
+  alternates: { canonical: "/decide" },
 };
 
 type City = { slug: string; name: string; iso2: string; tier: number };
