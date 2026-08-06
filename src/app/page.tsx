@@ -21,6 +21,36 @@ import { SpineShell } from "@/components/spine/shell";
 import { Home2View } from "@/components/home/home2-view";
 import { rankPlacesForTrade, slugToIndustry } from "@/lib/scores/recommend";
 import { toMarginIndexBoard, deriveHomeInsight } from "@/lib/scores/margin_index";
+import type { Metadata } from "next";
+
+/**
+ * The home page states its own title, description, and canonical URL.
+ *
+ * Until now it declared none of the three. Next resolves metadata down the
+ * segment tree and replaces it per TOP-LEVEL KEY, so a page with no `metadata`
+ * export does not render untitled: it takes the root layout's, and the root
+ * layout in src/app/layout.tsx sets `alternates: { canonical: "/" }`. That is
+ * harmless for this route, whose canonical genuinely is "/", and it was quietly
+ * wrong for every other route that inherited it, which is the defect this pass
+ * closes. Declaring it here makes the front door's canonical a fact stated by
+ * the page rather than a fallback it happened to land on.
+ *
+ * The description is the site's own one-sentence answer to "what is this",
+ * recorded in BRAND.md and spoken on the page itself. BRAND.md's instruction is
+ * to keep the two in step: if the homepage opening line changes, this changes
+ * with it.
+ *
+ * `openGraph` and `twitter` are deliberately absent. Both are declared on the
+ * root layout with an image, and because resolution is by replacement rather
+ * than deep merge, restating either one here for a title alone would discard
+ * the social card image along with it.
+ */
+export const metadata: Metadata = {
+  title: "Margin Atlas: what a small business earns, and what its owner keeps",
+  description:
+    "What a small business earns, and what its owner actually keeps, trade by trade and place by place.",
+  alternates: { canonical: "/" },
+};
 
 /**
  * Full-bleed tone wrapper for homepage sections. The inner

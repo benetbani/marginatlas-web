@@ -9,10 +9,39 @@
  */
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { isAuthEnabled } from "@/lib/feature_flags";
 import { getSessionUser } from "@/lib/auth/session";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { AccountPreview } from "./AccountPreview";
+
+/**
+ * A private surface, so it says so rather than competing for a search result.
+ *
+ * With no `metadata` of its own this page inherited the root layout's whole
+ * set, `alternates: { canonical: "/" }` included, and told a crawler it was the
+ * home page. The honest correction is not a better description. Nothing here is
+ * a search answer: signed out it is a preview, signed in it is one reader's
+ * saved cells. It should not be listed at all.
+ *
+ * Two details of how Next resolves this, both load-bearing:
+ *
+ *   `robots` replaces the root's key wholesale rather than deep-merging, so the
+ *   root's `googleBot: { index: true }` does not survive alongside this. One
+ *   noindex is enough, and a googleBot block restating it would be noise.
+ *
+ *   `canonical: null` clears the inherited "/" instead of replacing it with
+ *   "/account". A page that has said do not list me should not also be
+ *   nominating a canonical URL; the two are conflicting instructions. Null
+ *   resolves to no tag at all, which is the unambiguous answer.
+ */
+export const metadata: Metadata = {
+  title: "Your account | Margin Atlas",
+  description:
+    "The signed-in home for a Margin Atlas account: saved cells and the settings attached to them.",
+  robots: { index: false, follow: false },
+  alternates: { canonical: null },
+};
 
 type SavedRow = { country: string; geo: string; industry: string; label: string | null };
 

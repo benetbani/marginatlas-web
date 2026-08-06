@@ -50,19 +50,22 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const APP_DIR = resolve(ROOT, "src/app");
 
 /**
- * Routes that declared no metadata on the day this gate was written. They are
- * carried so the chain stays green while they are repaired one at a time, and
- * every one of them is a real defect rather than an accepted exception.
+ * Routes that declared no metadata on the day this gate was written. They were
+ * carried so the chain stayed green while they were repaired one at a time, and
+ * every one of them was a real defect rather than an accepted exception.
  *
- * Allowlisted 2026-08-04. This list shrinks and never grows. A new route may
- * not be added here.
+ * EMPTY as of 2026-08-06. All four are repaired: "/" and "/browse" state a
+ * title, a description, and their own canonical ("/browse" points at /world,
+ * where its 308 lands); "/account" and "/signin" are private surfaces and take
+ * `robots: { index: false }` with the inherited canonical cleared, which is the
+ * correct answer for a page that is not a search result at all. /signin needed
+ * a server component to hold the export, since a "use client" module may not
+ * declare metadata.
+ *
+ * This list shrinks and never grows. A new route may not be added here. Now
+ * that it is empty, a route arriving without metadata is simply a fail.
  */
-const ALLOWLIST = new Set([
-  "/",
-  "/account",
-  "/browse",
-  "/signin",
-]);
+const ALLOWLIST = new Set<string>([]);
 
 /** Route prefixes that are not search surfaces. Matched on whole segments, so
  *  /dev covers /dev/spine but never a route named /development. */
