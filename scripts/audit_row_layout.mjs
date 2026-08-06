@@ -38,18 +38,30 @@
  *
  * Usage:
  *   node scripts/audit_row_layout.mjs [baseUrl] [route ...]
- *   node scripts/audit_row_layout.mjs http://localhost:3999 /dev/city2
+ *   node scripts/audit_row_layout.mjs http://localhost:3210 /dev/city2
  *
  * Exit 1 if either defect is found, so it can be wired into a manual check.
  */
 import { chromium } from "playwright";
 
 const args = process.argv.slice(2);
-const base = args.find((a) => a.startsWith("http")) ?? "http://localhost:3999";
+const base = args.find((a) => a.startsWith("http")) ?? "http://localhost:3210";
 const routes = args.filter((a) => a.startsWith("/"));
+/* The v2 routes that actually exist, verified against src/app/dev on
+   2026-08-04. The previous default listed /dev/cell2, /dev/hood2 and
+   /dev/industry2, none of which has ever had a route file. They answered 200
+   and this tool called them clean. */
 const ROUTES = routes.length
   ? routes
-  : ["/dev/home3", "/dev/city2", "/dev/country2", "/dev/cell2", "/dev/hood2", "/dev/industry2"];
+  : [
+      "/dev/home3",
+      "/dev/world2",
+      "/dev/compare2",
+      "/dev/pricing2",
+      "/dev/industries2",
+      "/dev/city2",
+      "/dev/country2",
+    ];
 
 const browser = await chromium.launch();
 let failures = 0;
@@ -59,7 +71,10 @@ for (const route of ROUTES) {
   try {
     const res = await page.goto(base + route, { waitUntil: "networkidle", timeout: 90000 });
     if (!res || res.status() !== 200) {
-      console.log(`  ${route}  skipped, status ${res ? res.status() : "no response"}`);
+      /* Not a skip. A route that will not answer is a failure: "skipped" is how
+         a broken route stays green forever. */
+      failures += 1;
+      console.log(`  FAIL  ${route}  status ${res ? res.status() : "no response"}`);
       await page.close();
       continue;
     }
@@ -68,6 +83,14 @@ for (const route of ROUTES) {
       const rows = [...document.querySelectorAll(".row")];
       const text = (el) => (el.textContent || "").replace(/\s+/g, " ").trim();
       return {
+        /* A route with no `.av2` root is not a v2 page. Next.js answers 200 for
+           an unmatched path under a layout, rendering the chrome and nothing
+           else, so status alone cannot tell a built page from a missing one.
+           This tool reported "ok, 0 unstyled, 0 clipped" for /dev/cell2,
+           /dev/hood2 and /dev/industry2 for days. None of those routes has ever
+           existed. A green result for a page that is not there is worse than a
+           red one, because nobody looks again. */
+        missing: !document.querySelector(".av2"),
         total: rows.length,
         orphans: rows
           .filter((el) => !el.closest(".statblock"))
@@ -83,6 +106,16 @@ for (const route of ROUTES) {
       };
     });
 
+    if (found.missing) {
+      failures += 1;
+      console.log(
+        `  FAIL  ${route}  NOT A V2 PAGE: answered 200 with no .av2 root.` +
+          ` The route file probably does not exist.`,
+      );
+      await page.close();
+      continue;
+    }
+
     const bad = found.orphans.length + found.clipped.length;
     if (bad) failures += bad;
     console.log(
@@ -96,7 +129,11 @@ for (const route of ROUTES) {
     }
     if (found.clipped.length > 8) console.log(`          ... and ${found.clipped.length - 8} more`);
   } catch (e) {
-    console.log(`  ERROR ${route}: ${String(e.message).slice(0, 90)}`);
+    /* An unreachable route is a failure, not a skip. This printed ERROR for
+       every route and still exited 0 with "GATE: PASS", which is how a dead
+       dev server reads as a clean run. */
+    failures += 1;
+    console.log(`  FAIL  ${route}: ${String(e.message).slice(0, 80)}`);
   }
   await page.close();
 }
