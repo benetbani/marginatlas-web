@@ -35,6 +35,7 @@ import { COUNTRIES } from "@/lib/taxonomy";
 import { getCoverageReport } from "@/lib/quality/coverage-report";
 import { buildWorldAtlas } from "@/lib/scores/world_atlas";
 import { Place } from "@/components/spine2/Place";
+import { SiteFooter } from "@/components/spine2/SiteFooter";
 import { citiesByCountry } from "@/lib/home/front_page_figures";
 import { countryPageTarget } from "@/lib/geo/page_targets";
 
@@ -334,9 +335,7 @@ export default async function WorldProposal() {
           </section>
         )}
 
-        <footer style={{ padding: "40px 0 24px" }}>
-          <span className="tag">Margin Atlas</span>
-        </footer>
+        <SiteFooter />
       </div>
     </div>
   );

@@ -29,6 +29,7 @@ import { CountryFlag } from "@/components/CountryFlag";
 import { GlyphIcon } from "@/components/spine2/GlyphIcon";
 import type { GlyphId } from "@/components/spine2/glyphs";
 import { Place } from "@/components/spine2/Place";
+import { SiteFooter } from "@/components/spine2/SiteFooter";
 import { cityPair, seededPairs, cityName, cityIso2 } from "@/lib/compare/city_pair";
 
 import "@/styles/atlas-spine.css";
@@ -215,9 +216,7 @@ export default function ComparePropos() {
           </div>
         </section>
 
-        <footer style={{ padding: "40px 0 24px" }}>
-          <span className="tag">Margin Atlas</span>
-        </footer>
+        <SiteFooter />
       </div>
     </div>
   );

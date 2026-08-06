@@ -25,6 +25,7 @@ import * as React from "react";
 import { GlyphIcon } from "@/components/spine2/GlyphIcon";
 import type { GlyphId } from "@/components/spine2/glyphs";
 import { Place } from "@/components/spine2/Place";
+import { SiteFooter } from "@/components/spine2/SiteFooter";
 import { sectorGroups, visibleTradeCount, notableNotes } from "@/lib/trades/trade_index";
 
 import "@/styles/atlas-spine.css";
@@ -194,9 +195,7 @@ export default function IndustriesProposal() {
           </div>
         </section>
 
-        <footer style={{ padding: "40px 0 24px" }}>
-          <span className="tag">Margin Atlas</span>
-        </footer>
+        <SiteFooter />
       </div>
     </div>
   );

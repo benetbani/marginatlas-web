@@ -38,6 +38,7 @@ import * as React from "react";
 import { GlyphIcon } from "@/components/spine2/GlyphIcon";
 import type { GlyphId } from "@/components/spine2/glyphs";
 import { Place } from "@/components/spine2/Place";
+import { SiteFooter } from "@/components/spine2/SiteFooter";
 import { Range } from "@/components/spine2/Range";
 import { frontPageFigures } from "@/lib/home/front_page_figures";
 
@@ -502,9 +503,7 @@ export default function HomeProposal() {
           </div>
         </section>
 
-        <footer style={{ padding: "40px 0 24px" }}>
-          <span className="tag">Margin Atlas</span>
-        </footer>
+        <SiteFooter />
       </div>
     </div>
   );

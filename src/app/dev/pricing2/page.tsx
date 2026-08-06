@@ -32,6 +32,7 @@ import { Check, Minus } from "@phosphor-icons/react/dist/ssr";
 import { GlyphIcon } from "@/components/spine2/GlyphIcon";
 import type { GlyphId } from "@/components/spine2/glyphs";
 import { Place } from "@/components/spine2/Place";
+import { SiteFooter } from "@/components/spine2/SiteFooter";
 import {
   TIERS,
   CANCEL_ANYTIME_BLOCK,
@@ -267,9 +268,7 @@ export default function PricingProposal() {
           </p>
         </section>
 
-        <footer style={{ padding: "40px 0 24px" }}>
-          <span className="tag">Margin Atlas</span>
-        </footer>
+        <SiteFooter />
       </div>
     </div>
   );
