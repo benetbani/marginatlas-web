@@ -2,21 +2,6 @@
   "version": "1.0.0",
   "anchor": "Plan v26 Phase B.1 — top-200 cities for Margin Atlas neighborhood expansion. Balanced across continents per founder direction: ~30 NA, ~50 EU, ~60 Asia, ~20 SA, ~15 Africa, ~10 Oceania, ~15 MENA. Tier 1 = top 20 mega-metros (deepest neighborhood breakdown). Tier 2 = next 50 major metros (neighborhood breakdown). Tier 3 = remaining 130 (city-level only). Includes wealth-concentrated micros (Monaco, Vaduz) but excludes pure tax-haven shells with no real local economy (Bermuda, Cayman, BVI).",
   "convention": "slug = URL slug. iso2 = ISO-3166-1 alpha-2 country code. continent ∈ {NA, EU, Asia, SA, Africa, Oceania, MENA}. tier ∈ {1, 2, 3}. pop_m = approximate metro population (millions). gdp_b = approximate metro GDP (billions USD, 2024). wealth_z = z-score of metro GDP per capita vs global median (rough). Source: cross-reference of public city statistics; not authoritative but consistent.",
-  "totals": {
-    "tier_1": 20,
-    "tier_2": 50,
-    "tier_3": 130,
-    "total": 200
-  },
-  "continent_split": {
-    "NA": 30,
-    "EU": 50,
-    "Asia": 60,
-    "SA": 20,
-    "Africa": 15,
-    "Oceania": 10,
-    "MENA": 15
-  },
   "cities": [
     {
       "slug": "abidjan",
@@ -6006,5 +5991,6 @@
       "unemployment_pct": 2,
       "tourist_arrivals_m": 2.4
     }
-  ]
+  ],
+  "_counts_note": "Counts are derived from the cities array, never stated here. A stated total is a second home for a number and both fossilised: totals.total said 200 and continent_split summed to 200 using region codes (NA, EU, MENA) that appear nowhere in the data, while the array held 252 across six continents. Removed 2026-08-04."
 }
