@@ -156,6 +156,16 @@ const GATES: Gate[] = [
   { name: "sample-tags", script: "scripts/verify_sample_tags.ts" },
   { name: "no-parent-repo-reads", script: "scripts/verify_no_parent_repo_reads.ts" },
   { name: "two-surface-levels", script: "scripts/verify_two_surface_levels.ts" },
+  /* A route with no metadata export has no title of its own. 101 page.tsx
+     routes exist and 73 declare metadata, a gap nothing had ever measured, so
+     it grew back after every cleanup. 24 of the 28 misses are dev, admin and
+     _design workbenches, which SHOULD be untitled; four are shipping pages,
+     and one of them is the home page. Those four are carried on a dated
+     allowlist so the chain stays green while they are repaired, and a route
+     outside it fails the build. Negative-tested against a new untitled route
+     (caught), the same route under /dev (exempt), and a route declaring
+     robots index false (exempt). Registered 2026-08-04. */
+  { name: "page-metadata", script: "scripts/verify_page_metadata.ts" },
   { name: "spacing-scale", script: "scripts/verify_spacing_scale.ts" },
   /* One number cannot be the answer for seven cities. Two thirds of the rows
      behind place pages carry no revenue of their own, and the read path filled
