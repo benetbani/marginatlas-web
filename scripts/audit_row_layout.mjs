@@ -84,6 +84,7 @@ const ROUTES = routes.length
       "/dev/home3",
       "/dev/cell2",
       "/dev/industry2",
+      "/dev/hood2",
       "/dev/compare2",
       "/dev/pricing2",
       "/dev/city2",
