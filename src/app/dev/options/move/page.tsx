@@ -90,7 +90,14 @@ function OptionA() {
   const sorted = [...MOVES].sort((a, b) => b.worth - a.worth);
   const max = sorted[0].worth;
   return (
-    <div>
+    /* 60% OF THE COLUMN, RATIFIED 2026-08-08. His second width complaint, after
+       "through the year" was called far too wide for what it says.
+       A bar chart stretched to a full column does not become more readable, it
+       becomes harder: the eye has to travel further to pair a label with its
+       bar, and the longest bar stops meaning "big" because everything is long.
+       Width should be set by what the drawing needs, not by what the container
+       offers, and the leftover space is where a caption or a second block sits. */
+    <div style={{ maxWidth: "60%" }}>
       {sorted.map((m, i) => (
         <div key={m.say} style={{ display: "grid", gridTemplateColumns: "28px minmax(0,1fr)", gap: 12, alignItems: "center", marginBottom: 13 }}>
           <GlyphIcon id={m.icon as GlyphId} size={24} />
