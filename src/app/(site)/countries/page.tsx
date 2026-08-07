@@ -142,11 +142,11 @@ export default function CountriesHub() {
             Atlas coverage
           </div>
           <h1 className="font-display text-4xl md:text-5xl font-medium tracking-tight text-ink-900 mb-3">
-            Every country we cover
+            Every country with a page
           </h1>
           <p className="max-w-2xl text-base md:text-lg text-cocoa-700/85 leading-relaxed">
             Open any country for its small-business benchmark, the regions
-            inside, and the cities we cover. Grouped by continent.
+            inside, and the cities beneath it. Grouped by continent.
           </p>
           <div className="mt-6 flex flex-wrap gap-x-9 gap-y-2">
             <Stat value={totalCountries} label="countries" />
