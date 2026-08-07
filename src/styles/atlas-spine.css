@@ -1021,7 +1021,11 @@
    passes the top of the viewport where a fixed veil is lightest. So the photo
    is anchored to the top of the document and genuinely ends below the hero. */
 .av2 .place{display:none}
-.av2 .skyline{position:absolute;top:0;left:0;right:0;height:640px;z-index:0;pointer-events:none;
+/* 640px was the height of a decorative strip. The founder supplied a real
+   photograph on 2026-08-07 and asked for it as the background of the site, so
+   the band is now a screen and a half: tall enough to read as a place the page
+   is standing in, still finite so it ends rather than following the scroll. */
+.av2 .skyline{position:absolute;top:0;left:0;right:0;height:1200px;z-index:0;pointer-events:none;
   overflow:hidden}
 .av2 .skyline::before{content:"";position:absolute;inset:0;
   /* london.jpeg is the FALLBACK layer, and it is a decorative band rendered at
@@ -1031,11 +1035,21 @@
      The real photograph (_skyline.jpeg) still takes over the moment it lands
      and will need its own pass. */
   background-image:url(/spine/_skyline.jpeg),url(/spine/london.jpeg);
-  background-size:cover,cover;background-position:center 38%,center top;background-repeat:no-repeat,no-repeat;
-  filter:grayscale(.6) contrast(.82);opacity:.5}
+  background-size:cover,cover;background-position:center 42%,center top;background-repeat:no-repeat,no-repeat;
+  /* TUNED FOR A REAL PHOTOGRAPH, 2026-08-07. The old values, grayscale(.6)
+     contrast(.82) opacity(.5), were encoded for a grey decorative band and they
+     buried the supplied photo almost completely.
+     The colour can carry this much because of the two-surface rule: every word
+     on the site sits on --card at .955 alpha, so legibility is a property of
+     the card and not of the backdrop. The backdrop only ever shows through
+     --air, which holds no text. */
+  filter:grayscale(.12) contrast(.94) saturate(1.05);opacity:.92}
 .av2 .skyline::after{content:"";position:absolute;inset:0;
+  /* The veil starts almost clear so the photograph is genuinely visible at the
+     top of the page, then closes to paper so the content below it is never
+     read against a picture. */
   background:linear-gradient(180deg,
-    rgba(247,247,248,.34) 0%, rgba(247,247,248,.70) 52%, var(--paper) 100%)}
+    rgba(247,247,248,.10) 0%, rgba(247,247,248,.42) 38%, rgba(247,247,248,.86) 70%, var(--paper) 100%)}
 
 /* ---------- 22. THE EIGHT, WITH A READABLE RULER ---------- */
 /* Must track .eight .e exactly, or the header labels drift off their columns. */
