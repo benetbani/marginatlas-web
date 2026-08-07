@@ -254,9 +254,24 @@ export function SiteFooter() {
                 aria-labelledby={`sitefoot-${col.id}`}
                 style={{ listStyle: "none", margin: 0, padding: 0 }}
               >
+                {/* The anchor carries the 40px floor, not the li. This
+                    component already states the principle for its social
+                    glyphs, "16px is the glyph; the 12px padding around it is
+                    what makes the target", and then did not apply it to the 22
+                    text links beside them, which measured 16px tall at 390px.
+                    Padding on the li would grow the row without growing the
+                    thing a thumb has to hit. */}
                 {col.links.map((l) => (
-                  <li key={l.href} style={{ padding: "4px 0" }}>
-                    <a href={l.href} style={{ fontSize: 12.5 }}>
+                  <li key={l.href}>
+                    <a
+                      href={l.href}
+                      style={{
+                        fontSize: 12.5,
+                        display: "flex",
+                        alignItems: "center",
+                        minHeight: 40,
+                      }}
+                    >
                       {l.label}
                     </a>
                   </li>

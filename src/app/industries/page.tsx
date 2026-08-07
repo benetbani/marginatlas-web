@@ -193,12 +193,30 @@ export default function IndustriesIndex() {
                 >
                   {g.name}
                 </div>
+                {/* `minHeight: 40` IS THE TAP TARGET. DESIGN.md sets a 40px
+                    floor and a 13px link in a bare list measures 17px, which
+                    `scripts/loop/mobile.mjs` found 224 times on this page at
+                    390x844. The page this replaced used a padded grid that
+                    cleared the floor by accident; a plain list does not.
+
+                    On every width rather than only on touch, because an inline
+                    style cannot carry a media query and the alternative is a
+                    rule in the generated stylesheet, which is the founder's
+                    design. The cost is a longer list on a desktop screen, and
+                    that trade is written up in
+                    design/loop5/reviews/E2-tap-targets.md. */}
                 <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
                   {g.trades.map((t) => (
-                    <li key={t.id} style={{ padding: "3px 0" }}>
+                    <li key={t.id}>
                       <a
                         href={`/industries/${t.slug}`}
-                        style={{ fontSize: 13, color: "var(--ink-2)" }}
+                        style={{
+                          fontSize: 13,
+                          color: "var(--ink-2)",
+                          display: "flex",
+                          alignItems: "center",
+                          minHeight: 40,
+                        }}
                       >
                         {t.name}
                       </a>

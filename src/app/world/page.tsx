@@ -102,11 +102,28 @@ function CountryLink({ iso2, name }: { iso2: string; name: string }) {
       <span>{name}</span>
     </>
   );
+  /**
+   * `minHeight` IS THE TAP TARGET, and it is here because this page regressed
+   * one on 2026-08-07.
+   *
+   * DESIGN.md sets a 40px floor. The page this replaced rendered each country
+   * as a bordered tile with 12px of padding and two lines of text, roughly
+   * 58px, so it cleared the floor by accident. A 13px link in a bare list is
+   * 21px, and 99 of them at 21px is a page a thumb cannot use. Measured at
+   * 390x844 by `scripts/loop/mobile.mjs`.
+   *
+   * 40px on every width, not just touch, because an inline style cannot carry
+   * a media query and the alternative is a rule in the generated stylesheet,
+   * which is the founder's design and not the loop's to edit. The cost is a
+   * longer list on a desktop screen. That trade is written up in
+   * `design/loop5/reviews/E2-tap-targets.md` and is one number to reverse.
+   */
   const style: React.CSSProperties = {
     fontSize: 13,
     display: "flex",
     alignItems: "center",
     gap: 9,
+    minHeight: 40,
   };
   if (!target) return <span style={{ ...style, color: "var(--muted)" }}>{inner}</span>;
   return (
@@ -279,8 +296,11 @@ export default async function WorldPage() {
                       {region.name}
                     </div>
                     <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
+                      {/* No padding on the li: the anchor carries its own 40px
+                          minimum, and padding on the parent would push the row
+                          past it without making the target any bigger. */}
                       {region.countries.map((c) => (
-                        <li key={c.iso2} style={{ padding: "3px 0" }}>
+                        <li key={c.iso2}>
                           <CountryLink iso2={c.iso2} name={c.name} />
                         </li>
                       ))}
