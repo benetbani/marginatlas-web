@@ -70,3 +70,6 @@ scratch/
 .d*.err
 .dev*.log
 .dev*.err
+
+# Output of scripts/loop/gate.mjs. A run result, not source.
+data/loop/
