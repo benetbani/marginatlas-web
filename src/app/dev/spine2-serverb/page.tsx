@@ -220,7 +220,7 @@ export default function Spine2ServerBPage() {
 
         {/* ============ cell 18 , Method (Sum + embedded Ledger) ============ */}
         <section className="ch">
-          <Chhead ico="methodology" num="18" title="How we work this out" />
+          <Chhead ico="methodology" num="18" title="How these figures are built" />
           <Method
             arithmetic={[
               { kind: "start", label: "Revenue", detail: "52 orders × $38 × 313 days", value: 618_488 },

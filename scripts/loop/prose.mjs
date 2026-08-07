@@ -73,6 +73,15 @@ function toProse(html) {
     .replace(/<script[\s\S]*?<\/script>/gi, " ")
     .replace(/<style[\s\S]*?<\/style>/gi, " ")
     .replace(/<svg[\s\S]*?<\/svg>/gi, " ")
+    /* React's EMPTY comment is a text-node separator, not content. Server
+       rendering emits `restaurant<!-- -->s` wherever `{noun}s` puts a dynamic
+       value next to a literal. Replacing it with a space invents a word break
+       that no reader ever sees: this tool reported "Of every 100 restaurant s
+       in London" as a defect on the best page in the repository, and reported
+       the same artifact as five separate clipped values.
+       It gets replaced with NOTHING, because that is what it is. Any other
+       comment is authored content and still becomes a space. */
+    .replace(/<!--\s*-->/g, "")
     .replace(/<!--[\s\S]*?-->/g, " ")
     .replace(/<[^>]+>/g, " ")
     .replace(/&nbsp;/g, " ")

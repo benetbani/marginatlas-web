@@ -159,7 +159,7 @@ export const CITY_SPINE: Array<{ id: CityChapterId; title: string; icon: string 
   { id: "watch", title: "What to watch", icon: "watch" },
   { id: "voices", title: "What operators say", icon: "operator-voices" },
   { id: "verdict", title: "The verdict", icon: "honest-take" },
-  { id: "methodology", title: "How we work this out", icon: "methodology" },
+  { id: "methodology", title: "How these figures are built", icon: "methodology" },
   { id: "next", title: "Where to go next", icon: "where-it-pays" },
 ];
 

@@ -1,7 +1,7 @@
 /**
  * src/components/spine2/Method.tsx
  *
- * How we work this out (cell 18): a two-panel card whose left half is the
+ * How these figures are built (cell 18): a two-panel card whose left half is the
  * arithmetic in full (the Sum component, the five-line working to the
  * published take-home) and whose right half is the per-line provenance,
  * which is literally the EXISTING Ledger in its bare/embedded variant, the

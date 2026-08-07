@@ -101,7 +101,7 @@ export const COUNTRY_SPINE: Array<{ id: CountryChapterId; title: string; icon: s
   { id: "stability", title: "Stability and safety", icon: "safety" },
   { id: "myth", title: "The biggest myth about {informal}", icon: "myth-reality" },
   { id: "verdict", title: "The verdict", icon: "honest-take" },
-  { id: "methodology", title: "How we work this out", icon: "methodology" },
+  { id: "methodology", title: "How these figures are built", icon: "methodology" },
   { id: "next", title: "Where to go next", icon: "global-spread" },
 ];
 

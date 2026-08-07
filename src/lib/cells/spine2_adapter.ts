@@ -425,7 +425,11 @@ const SPINE: Array<{ id: ChapterId; title: string; icon: string }> = [
   { id: "watch", title: "What to watch", icon: "watch" },
   { id: "world", title: "Versus the world", icon: "vs-world" },
   { id: "verdict", title: "The verdict", icon: "honest-take" },
-  { id: "method", title: "How we work this out", icon: "methodology" },
+  /* Not "How we work this out". First person is banned outright and this is a
+     chapter TITLE on the money page, which is the loudest place on the site to
+     break the rule. "Built" converges with the same phrase on /about-data and
+     with the tier vocabulary, "Built from published inputs". */
+  { id: "method", title: "How these figures are built", icon: "methodology" },
   { id: "words", title: "What these words mean", icon: "search" },
   { id: "questions", title: "Questions people ask", icon: "who-for" },
   { id: "next", title: "Where to go next", icon: "where-it-pays" },

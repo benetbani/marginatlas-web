@@ -20,13 +20,19 @@ export const TIER_COPY: Record<Tier, { label: string; means: string }> = {
     label: "Measured",
     means: "it comes from a published record.",
   },
+  /* No first person in either of these, and that is not a style preference.
+     BRAND.md calls the tier vocabulary "the most repeated thing on the site"
+     and the site's spine, and two of the three definitions were saying "we".
+     The wording below is BRAND.md's own: "arithmetic on published figures,
+     shown so it can be checked" and "the shape is right, the level is not
+     certain". A synonym here breaks a reader's ability to compare two pages. */
   built: {
     label: "Built",
-    means: "we compute it from published records and show the arithmetic.",
+    means: "it is arithmetic on published figures, shown so it can be checked.",
   },
   thin: {
     label: "Thin",
     means:
-      "nobody publishes it, so we give a range and say so rather than inventing a number.",
+      "nobody publishes it, so the page gives a range and says so rather than inventing a number.",
   },
 };
