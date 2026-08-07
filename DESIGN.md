@@ -479,7 +479,13 @@ Product rules, not visual ones. They survive any repaint.
 - **Every figure carries its provenance**, derived and never authored. The tier
   says which route a figure came down; it does not certify the figure is right.
 - **No em dashes.** Commas, colons, semicolons, periods, parentheses. Not `--`.
-- **No first person**, anywhere, including FAQ answers.
+- **No first person**, anywhere, including FAQ answers. **One exception,
+  ratified 2026-08-07: `privacy`, `terms` and `cookies` keep theirs.** A privacy
+  policy speaking as a party is a legal convention rather than a voice slip, and
+  "We do not sell your data" is a commitment by someone. Rewriting it to "Your
+  data is never sold" loses who is promising, which is the part that matters in
+  a document a reader may one day need to hold the site to. 53 instances, and
+  they stay.
 - **No source-agency names** in anything a reader sees.
 - **Banned vocabulary:** "turnover", "covers", "pp", "percentage points", "net
   margin".
@@ -488,6 +494,29 @@ Product rules, not visual ones. They survive any repaint.
   Image routes are exempt because a canvas cannot read a custom property, and
   even there the map reads its ramp from the stylesheet at runtime rather than
   copying it.
-- **Answer first, controls below.** Ratified decision 13.
-- **Tap targets 40px minimum.**
+- **Answer first, controls below.** Ratified decision 13. **Except where the
+  control IS an exit**, ratified 2026-08-07: a reader who already knows what
+  they want should not have to scroll past the argument to leave. That is why
+  the home page's trade-and-place picker sits above the distribution chart and
+  not below it. The exception is narrow and it is about leaving, not about
+  convenience: a filter that refines what is already on screen is still a
+  control and still goes below.
+- **Tap targets 40px minimum**, enforced on touch devices by a
+  `@media (pointer: coarse)` block at the end of `design/mockups/atlas.css`,
+  ratified 2026-08-07.
+
+  **This rule and `--row: 32px` contradicted each other** and the contradiction
+  was real: a statblock row containing a link is a tap target, and 32px cannot
+  clear 40px. Measured at 390x844, 131 targets were under the floor on `/world`
+  and 224 on `/industries`.
+
+  `pointer: coarse` is the condition the floor was always really about, because
+  it asks whether the input device is a finger. **A mouse keeps the design
+  exactly as drawn, to the pixel**, verified: `--row` still computes to 32px at
+  1440 and the masthead link is still 28px tall. A thumb gets 40.
+
+  **Growing the row is only half of it.** A door inside a row is an inline
+  anchor and stays 21px inside a 40px row, so the same block stretches
+  `.statblock .row .nm a` to the row height. The row is the space; the anchor
+  has to take it.
 - **Nothing that moves is required to read the page.**

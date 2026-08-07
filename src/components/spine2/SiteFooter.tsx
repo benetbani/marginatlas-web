@@ -295,8 +295,16 @@ export function SiteFooter() {
           }}
         >
           <div style={{ display: "flex", flexWrap: "wrap", gap: 16 }}>
+            {/* The legal strip was missed when the 22 column links were given
+                their 40px minimum, and it renders at 18px. Three links nobody
+                clicks often are still three links, and "Privacy" is one a
+                reader goes looking for deliberately. */}
             {FINE_PRINT.map((l) => (
-              <a key={l.href} href={l.href}>
+              <a
+                key={l.href}
+                href={l.href}
+                style={{ display: "inline-flex", alignItems: "center", minHeight: 40 }}
+              >
                 {l.label}
               </a>
             ))}

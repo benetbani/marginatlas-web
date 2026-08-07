@@ -1839,3 +1839,43 @@
 .av2 .dmk-above i,.av2 .dmk i.dmk-above{background:var(--terra-bright)}
 .av2 .dmk-well-above i,.av2 .dmk i.dmk-well-above{background:var(--terra)}
 
+/* ============================================================================
+   TOUCH TARGETS , ratified 2026-08-07, option B.
+
+   TWO RULES OF THIS DESIGN CONTRADICTED EACH OTHER and this block is the ruling.
+
+   DESIGN.md sets a 40px minimum tap target. `--row` is 32px, a deliberate
+   rhythm the whole statblock kit reads off. A row containing a link is a tap
+   target, so a row with a door in it could not satisfy both, and neither could
+   the masthead nav at 25px. Measured at 390x844 by `scripts/loop/mobile.mjs`:
+   131 targets under the floor on /world, 224 on /industries.
+
+   The other three options each picked a winner. Raising --row everywhere
+   changes the density of every ratified page on every screen. Leaving it and
+   writing an exception gives phones nothing. Moving links out of rows solves
+   nothing and loses the country doors.
+
+   `pointer: coarse` is the condition the 40px floor was always really about:
+   it asks whether the input device is a finger. A mouse keeps the design
+   exactly as drawn, to the pixel. A thumb gets something it can hit.
+
+   NOTHING HERE APPLIES ON A DESKTOP SCREEN. That is the whole point of the
+   option that was chosen.
+
+   THE SELECTOR IS `:root`, NOT `.av2`. `scope_atlas_css.mjs` rewrites `:root`
+   to `.av2` and prefixes everything else with it, so writing `.av2` here
+   generates `.av2 .av2`, a descendant selector that can never match itself.
+   The token override silently did nothing until it was read back out of the
+   generated file. */
+@media (pointer: coarse) {
+  .av2 { --row: 40px }
+  .av2 .mast .lat a { min-height: 40px; display: inline-flex; align-items: center }
+  /* Growing the ROW is not enough on its own, and this is the half that is easy
+     to miss. A door inside a row is an inline anchor wrapping a flag and a
+     name: it stays 21px tall inside a 40px row and a thumb still cannot hit it.
+     The row is the space; the anchor has to take it. Measured before this line
+     existed: eight country doors on /world at 122x21 inside rows that were
+     already 40px. */
+  .av2 .statblock .row .nm a { min-height: var(--row); display: inline-flex; align-items: center }
+}
+
