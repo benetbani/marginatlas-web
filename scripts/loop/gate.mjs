@@ -134,10 +134,21 @@ function runOnce(gate) {
 
     /* A LOWER heap ceiling, not a higher one. The failures here are the OS
        refusing a reservation, so asking for less is what helps. Raising it is
-       the reflex and it is backwards on this box. */
+       the reflex and it is backwards on this box.
+
+       SHELL ONLY FOR npx, AND THIS IS NOT A STYLE CHOICE. `npx` on Windows is
+       `npx.cmd` and will not spawn without a shell. `process.execPath` is
+       `C:\Program Files\nodejs\node.exe`, and handing THAT to a shell
+       unquoted splits it at the space: the first run of this tool reported six
+       gates as FAIL with `'C:\Program' is not recognized`, all six of which
+       pass when run by hand.
+
+       That is precisely the cry-wolf failure this file was written to prevent,
+       produced by the file itself. Node is a real executable and needs no
+       shell, so it does not get one. */
     const child = spawn(cmd, args, {
       cwd: ROOT,
-      shell: process.platform === "win32",
+      shell: isTs && process.platform === "win32",
       env: { ...process.env, NODE_OPTIONS: `--max-old-space-size=${HEAP_MB}` },
     });
 

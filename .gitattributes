@@ -1,0 +1,26 @@
+# .gitattributes
+#
+# WHY THIS FILE EXISTS, and it is narrower than it looks.
+#
+# Two gates, `spine-css-fresh` and `glyphs-fresh`, decide whether a generated
+# file is current by comparing it BYTE FOR BYTE against the string the
+# generator would write:
+#
+#     if (current !== next) { ...STALE... }
+#
+# The generators write LF. On Windows, git's autocrlf rewrites the working tree
+# to CRLF the next time it touches the file. The content is then identical and
+# the bytes are not, so the gate reports the React kit is rendering an older
+# design than the mockups show, when it is rendering exactly the same design.
+#
+# That happened on 2026-08-07. Both files were regenerated and `git diff` came
+# back completely empty, which is the proof: nothing was stale, the comparison
+# was.
+#
+# Pinning these two to LF makes the byte comparison mean what it says. It is
+# not a repo-wide line-ending policy and it deliberately does not touch any
+# other file: the rest of the tree can keep whatever git decides, because
+# nothing else in it is verified by byte equality against a generator.
+
+src/styles/atlas-spine.css      text eol=lf
+src/components/spine2/glyphs.ts text eol=lf
