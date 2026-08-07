@@ -20,6 +20,7 @@ import * as React from "react";
 
 import { ChapterSection, type Chapter } from "@/components/spine2/page/ChapterHead";
 import { ChapterGap } from "@/components/spine2/page/ChapterGap";
+import { CityYearStrip } from "./CityYearStrip";
 import { GlyphIcon } from "@/components/spine2/GlyphIcon";
 import type { GlyphId } from "@/components/spine2/glyphs";
 import { RulerColumn, type RulerReading } from "@/components/spine2/RulerColumn";
@@ -197,38 +198,44 @@ export function CityPage({ model }: { model: CityPageModel }) {
           <ChapterSection chapter={at("visitors") as Chapter}>
             {model.visitors != null ? (
               <>
-                <div className="panel pad rise" style={{ marginBottom: 10 }}>
+                {/* THE TWELVE-BAR STRIP, ratified 2026-08-08 for this chapter.
+                    It replaces a four-row label-value list and two paragraphs
+                    of prose. The data was always here, as `monthlyIndex`; the
+                    page could say "busiest in August" in a sentence and had no
+                    way to SHOW the year.
+                    Deviation from the year average, above and below a baseline,
+                    at 60% width per the same ruling. Height carries the value;
+                    width carries nothing, so width is small. */}
+                <CityYearStrip
+                  months={model.visitors.months}
+                  peak={model.visitors.peak}
+                  trough={model.visitors.trough}
+                />
+                <div className="panel pad rise" style={{ margin: "10px 0" }}>
                   <div className="statblock">
                     <div className="row">
-                      <span className="nm">Visitors a year</span>
+                      <span className="nm">
+                        Visitors a year
+                        <span className="s">counted arrivals</span>
+                      </span>
                       <span className="v">{model.visitors.count ?? "not published"}</span>
                     </div>
                     <div className="row">
-                      <span className="nm">What they spend here</span>
-                      <span className="v">{model.visitors.spend ?? "not published"}</span>
-                    </div>
-                    <div className="row">
-                      <span className="nm">Each, on average</span>
+                      <span className="nm">
+                        Each, on average
+                        <span className="s">across the whole stay</span>
+                      </span>
                       <span className="v">{model.visitors.spendPerVisitor ?? "not published"}</span>
                     </div>
                     <div className="row">
-                      <span className="nm">Share of all spend in the city</span>
+                      <span className="nm">
+                        Share of all spend in the city
+                        <span className="s">visitors against residents</span>
+                      </span>
                       <span className="v">{model.visitors.shareOfCitySpend ?? "not published"}</span>
                     </div>
                   </div>
                 </div>
-                {model.visitors.peak && model.visitors.trough ? (
-                  <p className="k" style={{ margin: "0 0 6px" }}>
-                    Busiest in {model.visitors.peak.month}, at {model.visitors.peak.index} against a
-                    year of 100. Quietest in {model.visitors.trough.month}, at{" "}
-                    {model.visitors.trough.index}.
-                  </p>
-                ) : (
-                  <p className="k" style={{ margin: "0 0 6px" }}>
-                    No month-by-month visitor count is published for this city, so the busy and
-                    quiet parts of the year are not stated here.
-                  </p>
-                )}
                 {model.visitors.topDistrict ? (
                   <p className="k" style={{ margin: 0 }}>
                     Visitor money lands hardest in {model.visitors.topDistrict.name}

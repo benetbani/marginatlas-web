@@ -458,6 +458,12 @@ export type CityVisitorsModel = {
   /** Derived from the twelve-month index. Null when no series is published. */
   peak: { month: string; index: number } | null;
   trough: { month: string; index: number } | null;
+  /* THE TWELVE POINTS THEMSELVES, added 2026-08-08.
+     The model exposed only the peak and the trough, so the page could say
+     "busiest in August" in prose and had no way to DRAW the year. The founder
+     ratified the twelve-bar strip for exactly this chapter. An index where 100
+     is the year average; empty when the city has no measured seasonality. */
+  months: Array<{ month: string; index: number }>;
   topDistrict: { name: string; share: string | null } | null;
 };
 
@@ -484,12 +490,14 @@ function buildVisitors(file: CityFile): CityVisitorsModel | null {
 
   let peak: { month: string; index: number } | null = null;
   let trough: { month: string; index: number } | null = null;
+  let months: Array<{ month: string; index: number }> = [];
   if (!isNullFigure(v.monthlyIndex) && v.monthlyIndex.series.length > 0) {
     const pts = v.monthlyIndex.series;
     const hi = pts.reduce((b, p) => (p.value > b.value ? p : b));
     const lo = pts.reduce((b, p) => (p.value < b.value ? p : b));
     peak = { month: String(hi.x), index: hi.value };
     trough = { month: String(lo.x), index: lo.value };
+    months = pts.map((p) => ({ month: String(p.x), index: p.value }));
   }
 
   const countValue = isNullFigure(v.count) ? null : v.count.value;
@@ -518,6 +526,7 @@ function buildVisitors(file: CityFile): CityVisitorsModel | null {
     shareOfCitySpend: display(v.shareOfCitySpend),
     peak,
     trough,
+    months,
     topDistrict,
   };
 }
