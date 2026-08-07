@@ -36,7 +36,26 @@ export function Ch08Team({ team }: { team: TeamModel }) {
         className="panel pad rise"
         style={{ animationDelay: ".08s", display: "flex", flexDirection: "column" }}
       >
-        <Statblock header={{ label: "What hiring actually costs", icon: "hiring" }} rows={rows} />
+        {/* --val-col WIDENED FOR THIS BLOCK ONLY, and widened for the BLOCK
+            rather than the two rows that need it.
+
+            Two of these figures are ranges: "6.8 to 13.6K" needs 83px and
+            "$5.3 to 13.3K" needs 91px against the 78px default, so both were
+            being cut mid-figure with no ellipsis. DESIGN.md sanctions exactly
+            this: "where the value is genuinely a short phrase rather than a
+            figure, widen --val-col on that row, which is what the variable is
+            for." A range is a figure, not prose, so it belongs in .v and the
+            column moves to fit it.
+
+            BLOCK, NOT ROW, because every number in this kit is tabular-nums so
+            that figures line up down a column. Widening two rows out of six
+            would fix the clipping and break the alignment that makes the block
+            readable, which is trading a visible defect for a subtler one. */}
+        <Statblock
+          header={{ label: "What hiring actually costs", icon: "hiring" }}
+          rows={rows}
+          style={{ ["--val-col" as string]: "96px" }}
+        />
         <p className="note" style={{ marginTop: "auto", paddingTop: 16 }}>
           {team.lineCookWage != null && team.lineCookAllIn != null ? (
             <>

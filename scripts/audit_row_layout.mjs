@@ -46,19 +46,45 @@ import { chromium } from "playwright";
 
 const args = process.argv.slice(2);
 const base = args.find((a) => a.startsWith("http")) ?? "http://localhost:3210";
-const routes = args.filter((a) => a.startsWith("/"));
-/* The v2 routes that actually exist, verified against src/app/dev on
-   2026-08-04. The previous default listed /dev/cell2, /dev/hood2 and
-   /dev/industry2, none of which has ever had a route file. They answered 200
-   and this tool called them clean. */
+
+/* Git Bash rewrites any argument beginning with a slash into a path under its
+   own install directory, so `/dev/cell2` arrives as
+   `C:/Program Files/Git/dev/cell2`. It then matches neither the `http` test nor
+   the `/` test, `routes` comes back EMPTY, and this tool silently audits the
+   full default list instead of the one route asked for. Nothing errors and the
+   output looks correct, which is the worst version of this bug: a filter that
+   quietly does not filter. Observed 2026-08-07. */
+const unmangle = (a) => {
+  const m = a.match(/^[A-Za-z]:[\\/](?:Program Files[\\/])?Git[\\/](.*)$/i);
+  return m ? "/" + m[1].replace(/\\/g, "/") : a;
+};
+const routes = args.map(unmangle).filter((a) => a.startsWith("/"));
+/* The v2 routes that actually exist, verified against src/app on 2026-08-07.
+   Two ways this list has gone wrong, and it has now gone wrong both ways.
+
+   FIRST, it named routes that did not exist. /dev/cell2, /dev/hood2 and
+   /dev/industry2 had no route file, answered 200 with the bare layout, and this
+   tool called all three clean for days.
+
+   SECOND, and this is the 2026-08-07 correction: it went stale in the opposite
+   direction. /world and /industries were promoted out of /dev to shipping URLs,
+   and the list kept auditing the dev copies. The two pages a reader can actually
+   reach were the two nobody was checking, which is the more dangerous shape of
+   the same mistake.
+
+   THE RULE THIS LIST NOW FOLLOWS: audit the route a READER reaches, and keep a
+   dev route in the list only while no shipping route renders that page. */
 const ROUTES = routes.length
   ? routes
   : [
+      /* Shipping. Promoted 2026-08-07; these are what a reader gets. */
+      "/world",
+      "/industries",
+      /* Dev only. No shipping route serves these yet. */
       "/dev/home3",
-      "/dev/world2",
+      "/dev/cell2",
       "/dev/compare2",
       "/dev/pricing2",
-      "/dev/industries2",
       "/dev/city2",
       "/dev/country2",
     ];

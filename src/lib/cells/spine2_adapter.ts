@@ -109,9 +109,23 @@ export function moneyFineParts(
 }
 
 /** "93 to 353" with a shared K suffix, the mockup's range grammar. */
+/**
+ * A money range in thousands, WITH its currency mark.
+ *
+ * The mark used to be the caller's problem and the callers disagreed. All four
+ * uses are money and only one of them, churn cost, prefixed a `$`. So chapter
+ * 08 rendered "6.8 to 13.6K" directly above "$5.3 to 13.3K", and chapter 09
+ * put an unmarked "X to YK" in a list whose every other row came from
+ * `moneyFine` and therefore carried the mark.
+ *
+ * A currency mark that appears on some figures and not others does not read as
+ * a formatting slip. It reads as though the unmarked ones are a different kind
+ * of quantity, which on a page whose whole argument is that every figure says
+ * what it is, is the wrong thing to imply. The formatter owns it now.
+ */
 function rangeK(lo: number, hi: number): { value: string; unit: string } {
   const f = (v: number) => (v >= 2e4 ? String(Math.round(v / 1e3)) : trim((v / 1e3).toFixed(1)));
-  return { value: `${f(lo)} to ${f(hi)}`, unit: "K" };
+  return { value: `$${f(lo)} to ${f(hi)}`, unit: "K" };
 }
 
 function trim(s: string): string {
@@ -1561,7 +1575,9 @@ function teamRows(
       icon: "wages",
       label: "Churn cost, a year",
       sub: "rehiring and retraining",
-      value: `$${r.value}`,
+      /* No `$` prefix here any more: rangeK carries the mark, so adding one
+         would render "$$5.3 to 13.3K". */
+      value: r.value,
       unit: r.unit,
     });
   }

@@ -52,7 +52,16 @@ export function Ch09Opening({ opening }: { opening: OpeningModel }) {
         className="panel pad rise"
         style={{ animationDelay: ".08s", display: "flex", flexDirection: "column" }}
       >
-        <Statblock header={{ label: "Fixed, versus up to you", icon: "spread" }} rows={sideRows} />
+        {/* --val-col widened for the block, same reason as chapter 08: the
+            fit-out row is a range, "$93 to 353K", and a range is a figure that
+            belongs in .v. At the 78px default it was cut mid-figure with no
+            ellipsis. Widened for the whole block rather than the one row so the
+            column of tabular figures still lines up. */}
+        <Statblock
+          header={{ label: "Fixed, versus up to you", icon: "spread" }}
+          rows={sideRows}
+          style={{ ["--val-col" as string]: "96px" }}
+        />
         <p className="note" style={{ marginTop: "auto", paddingTop: 16 }}>
           Three of these four are fixed by the law and the market. The fourth is
           a choice, and it swings by a quarter of a million.
