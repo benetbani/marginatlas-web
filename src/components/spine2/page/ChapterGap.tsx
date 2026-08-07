@@ -43,9 +43,25 @@ export interface ChapterGapProps {
   reason?: string | null;
   /** What is missing, named as a reader would name it ("peer cities"). */
   subject?: string | null;
+  /**
+   * What the absence is scoped to, as a reader would say it. Defaults to
+   * "this place", which is right for the cell, city, country and neighbourhood
+   * pages and WRONG for the trade page, where there is no place at all.
+   *
+   * That defect only surfaced on 2026-08-07, when `/dev/industry2` became the
+   * first page type this component had ever served that is not about a
+   * somewhere. It rendered "Nothing has been published on this for this place
+   * yet" on a page about restaurants everywhere.
+   *
+   * Added as an option rather than changed at the default on purpose. This is
+   * the most repeated sentence on the site and it renders on every empty
+   * chapter of every page; a silent rewording here would ripple into all of
+   * them at once.
+   */
+  scope?: string | null;
 }
 
-export function ChapterGap({ reason, subject }: ChapterGapProps) {
+export function ChapterGap({ reason, subject, scope }: ChapterGapProps) {
   /* NO FIRST PERSON. This read "We have not published ..." and PRODUCT.md
      forbids first person outright: "No 'we,' 'us,' 'our,' 'I.' The site is a
      thing, not a personality."
@@ -55,9 +71,10 @@ export function ChapterGap({ reason, subject }: ChapterGapProps) {
      chapter of every page. The most disciplined signature in the product was
      the one breaking the voice rule, and wiring it to eleven more country
      chapters earlier tonight multiplied it. */
+  const where = scope && scope.trim() ? scope.trim() : "this place";
   const what = subject
-    ? `Nothing has been published on ${subject} for this place yet.`
-    : "Nothing has been published on this for this place yet.";
+    ? `Nothing has been published on ${subject} for ${where} yet.`
+    : `Nothing has been published on this for ${where} yet.`;
 
   /* The data files write their reasons as sentence fragments, lowercase and
      without a stop, because they were authored to be read inside a JSON field.

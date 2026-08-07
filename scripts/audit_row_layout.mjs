@@ -83,6 +83,7 @@ const ROUTES = routes.length
       /* Dev only. No shipping route serves these yet. */
       "/dev/home3",
       "/dev/cell2",
+      "/dev/industry2",
       "/dev/compare2",
       "/dev/pricing2",
       "/dev/city2",
@@ -117,6 +118,16 @@ for (const route of ROUTES) {
            existed. A green result for a page that is not there is worse than a
            red one, because nobody looks again. */
         missing: !document.querySelector(".av2"),
+        /* HOW MUCH OF A PAGE IS ACTUALLY THERE. Without this, an `.av2` query
+           that returns null cannot tell "this route does not exist" from "this
+           route did not finish rendering", and the tool asserts the first with
+           total confidence. That happened to /dev/country2 on 2026-08-07: the
+           served HTML contained class="av2" and 436KB of content, and this
+           check still called it a route that probably does not exist. It is the
+           same false-phantom failure the comment above describes, inverted, and
+           a wrong diagnosis stated confidently is what sent the last run
+           chasing three routes that were fine. */
+        bodyChars: (document.body?.innerText || "").replace(/\s+/g, " ").trim().length,
         total: rows.length,
         orphans: rows
           .filter((el) => !el.closest(".statblock"))
@@ -134,9 +145,18 @@ for (const route of ROUTES) {
 
     if (found.missing) {
       failures += 1;
+      /* Two different failures, and saying which one costs nothing. A route
+         that does not exist renders the bare layout, a few hundred characters
+         of chrome. A route that exists and did not finish is a page with real
+         text in it and no `.av2` yet. Telling a reader the first when it is the
+         second sends them looking for a file that is right there. */
       console.log(
-        `  FAIL  ${route}  NOT A V2 PAGE: answered 200 with no .av2 root.` +
-          ` The route file probably does not exist.`,
+        found.bodyChars > 800
+          ? `  FAIL  ${route}  NO .av2 ROOT, but the page rendered ${found.bodyChars} characters of text.` +
+              ` The route EXISTS. Either it is not a v2 page, or it had not finished rendering when this ran.` +
+              ` Re-run this route alone before believing it.`
+          : `  FAIL  ${route}  NOT A V2 PAGE: answered 200 with only ${found.bodyChars} characters of text.` +
+              ` The route file probably does not exist.`,
       );
       await page.close();
       continue;
