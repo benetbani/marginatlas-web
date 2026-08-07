@@ -293,7 +293,7 @@ function Alerts() {
           { label: "Weekly digest email",         desc: "Monday morning, summary of moves in your watchlist." },
           { label: "Cell refresh emails",         desc: "Send when any saved cell is refreshed." },
           { label: "Threshold breach emails",     desc: "Send when a watched metric crosses a threshold you set." },
-          { label: "Methodology updates",          desc: "Quarterly, when we publish a sourcing or method change." },
+          { label: "Methodology updates",          desc: "Quarterly, when a sourcing or method change is published." },
         ].map((row, i) => (
           <div key={row.label} className={`flex items-center justify-between gap-4 ${i > 0 ? "border-t border-parchment pt-4" : ""}`}>
             <div>

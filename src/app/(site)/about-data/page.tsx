@@ -62,7 +62,7 @@ export default function AboutDataPage() {
           <li><span className="text-atlas-500">★★</span><span className="text-ink-300">☆☆☆</span>. Extrapolated from regional patterns.</li>
         </ul>
         <p className="mt-3 text-sm text-ink-700">
-          Every benchmark page carries a "How we know this" link beside the headline number so the source and method are one click away.
+          Every benchmark page carries a "How this figure was built" link beside the headline number so the source and method are one click away.
         </p>
       </section>
 
@@ -115,7 +115,7 @@ export default function AboutDataPage() {
           <p className="text-ink-800 text-sm leading-relaxed">
             A transparent model output combining global industry averages
             with country-level scaling factors. No underlying observation
-            for this cell; the number is what we'd expect on average.
+            for this cell; the number is what the model expects on average.
           </p>
         </div>
       </section>
@@ -146,7 +146,7 @@ export default function AboutDataPage() {
       <section className="mt-10">
         <h2 className="text-xl font-semibold text-ink-900">Citing Atlas</h2>
         <p className="mt-3 text-ink-800">
-          You're welcome to cite Atlas in articles, reports, or presentations. We ask only that you link back to the benchmark page you're citing.
+          Atlas may be cited in articles, reports, or presentations. The only request is a link back to the benchmark page being cited.
         </p>
       </section>
     </article>

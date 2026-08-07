@@ -165,7 +165,7 @@ export default function BlogIndex() {
             What a typical small business in a place actually keeps after rent,
             wages, and tax. Why two firms with the same revenue end up nothing
             alike. And the honest part: where the numbers are solid, and where
-            they are a directional guess we would not bet the lease on.
+            they are a directional guess nobody should bet a lease on.
           </span>{" "}
           No easy money, no league tables of dream businesses. Just the read,
           and what can kill it.

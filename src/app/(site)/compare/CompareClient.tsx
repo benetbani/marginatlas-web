@@ -1118,8 +1118,8 @@ export function CompareClient({
               The same business in each city
             </h2>
             <p className="mt-2 max-w-2xl text-base leading-relaxed text-graphite">
-              Each row is a decisive figure, each column a city. A dash means we
-              do not hold that figure for that place. Revenue is a typical
+              Each row is a decisive figure, each column a city. A dash means
+              that figure is not held for that place. Revenue is a typical
               firm&apos;s yearly sales, not what an owner keeps.
             </p>
           </div>
@@ -1161,7 +1161,7 @@ export function CompareClient({
               dollars and is not adjusted for local prices or cost of living, so
               a bigger number does not mean a better business. Read the shape,
               margins, survival, and the revenue spread, rather than the raw
-              totals, and we do not crown a winner here.
+              totals. No winner is crowned here, and that is deliberate.
             </p>
           </div>
         ) : null}
@@ -1269,7 +1269,7 @@ function personalVerdictLine(
     if (spansCountries && anyWeightAtAll) {
       return {
         headline: "Your weights are all on money figures",
-        note: "Across countries we leave the money measures out, since they are not adjusted for local prices. Add weight to margin, break-in ease, or rent to get a like-for-like pick.",
+        note: "Across countries the money measures are left out, since they are not adjusted for local prices. Add weight to margin, break-in ease, or rent to get a like-for-like pick.",
       };
     }
     return {
@@ -1374,7 +1374,7 @@ function WeightingPanel({
             Make it yours
           </span>
           <span className="mt-0.5 block text-sm leading-snug text-cocoa-700">
-            Weight what matters to you, and we re-rank the pick.
+            Weight what matters, and the ranking follows.
           </span>
         </span>
         <svg
