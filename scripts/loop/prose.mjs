@@ -42,7 +42,25 @@ const flag = (n, d) => {
 const PORT = flag("port", "3210");
 const CHARS = Number(flag("chars", 3000));
 const QUIET = argv.includes("--quiet");
-const targets = argv.filter((a) => !a.startsWith("--") && !/^\d+$/.test(a));
+/**
+ * UNDO GIT BASH'S PATH MANGLING BEFORE IT LOOKS LIKE A 404.
+ *
+ * Git Bash on Windows rewrites any argument beginning with `/` into a Windows
+ * path rooted at its own install directory, so `/dev/home3` arrives here as
+ * `C:/Program Files/Git/dev/home3`. This tool then fetched that, got the 404
+ * page, and reported "very likely a route that does not exist" , which is the
+ * single most misleading thing it can say, because it is the exact signature of
+ * the three phantom dev routes that hid for days.
+ *
+ * The landmine was already written down in the plan. Reading it did not stop it.
+ * So the defence goes in the tool, where it cannot be forgotten.
+ */
+function unmangle(a) {
+  const m = a.match(/^[A-Za-z]:[\\/](?:Program Files[\\/])?Git[\\/](.*)$/i);
+  return m ? "/" + m[1].replace(/\\/g, "/") : a;
+}
+
+const targets = argv.filter((a) => !a.startsWith("--") && !/^\d+$/.test(a)).map(unmangle);
 
 if (!targets.length) {
   console.error("usage: node scripts/loop/prose.mjs <path-or-url> [more...] [--port 3210] [--chars 3000]");
