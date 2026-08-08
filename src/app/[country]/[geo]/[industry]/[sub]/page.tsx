@@ -141,6 +141,18 @@ async function NeighborhoodCellPageBody({
   // Resolve the industry. Unknown industry 404s.
   const rawInd = slugToIndustry(industry);
   if (!rawInd) notFound();
+  /* `ind` rolls UP to the nearest industry that has measured data: cafes,
+     bars and bakeries all resolve to their parent, restaurants. That roll-up
+     is right for every DATA lookup below, and it was also being used for the
+     page's own name.
+     The result, live on 25,320 neighbourhood pages until 2026-08-08: every one
+     of them carried the same <h1>, "What a restaurant in <district> really
+     earns", whatever trade the reader had asked for, while generateMetadata
+     above used `slugToIndustry` and titled the same page "How much do cafes &
+     coffee shops earn". The tab and the headline named different trades.
+     `rawInd` is what the reader asked for and what the URL and the title
+     already say, so display follows it and data keeps following `ind`.
+     Note: `2026-08-08-seo-lattice.md`. */
   const ind = resolveToMeasuredIndustry(rawInd) || rawInd;
 
   // Get the city-level cell (always returns something via the synthesis
@@ -204,7 +216,9 @@ async function NeighborhoodCellPageBody({
       label: nb.name,
       href: `/${country.toLowerCase()}/${city.toLowerCase()}/${neighborhood.toLowerCase()}`,
     },
-    { label: ind.name },
+    /* rawInd: the breadcrumb's last crumb is this page, and this page is the
+       trade in the URL, not the parent its data rolls up to. */
+    { label: rawInd.name },
   ];
 
   // The neighborhood-vs-city revenue adjustment for this trade, when the
@@ -287,7 +301,9 @@ async function NeighborhoodCellPageBody({
   // Avoid a doubled place name when the district label already carries the city
   // (e.g. "City of London" beside "London" read as "City of London, London").
   const placeName = nb.name.includes(cityName) ? nb.name : `${nb.name}, ${cityName}`;
-  const tradeName = ind.name;
+  /* rawInd, not ind: the reader asked for this trade, the URL says it and the
+     <title> says it. See the roll-up note where `ind` is derived. */
+  const tradeName = rawInd.name;
   const tradeNoun = tradeName.toLowerCase().replace(/s$/, "");
   const viewRevenue = Le?.revenue ?? cell.revenue_per_firm ?? cell.rev_p50 ?? null;
   const viewNetMarginPct = Le
