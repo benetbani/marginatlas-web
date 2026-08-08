@@ -74,7 +74,7 @@ export function HoodMasthead({ d }: { d: any }) {
         <AtlasMark id="alt-district" size={16} className="opacity-60" />
       </div>
       <p className="mt-2 max-w-2xl text-[13.5px] leading-snug text-[var(--c-ink2)]">
-        Money moves street to street: each district ranked by rent load, the multiple of the city rate its leases run, lightest first, across <Fig className="text-[var(--c-ink)]">{districts.length}</Fig> districts.
+        Money moves street to street: each district ranked by rent load, the multiple its leases run against a district with no premium, lightest first, across <Fig className="text-[var(--c-ink)]">{districts.length}</Fig> districts.
       </p>
 
       {/* ONE dominant answer: the district where rent runs lightest (the single

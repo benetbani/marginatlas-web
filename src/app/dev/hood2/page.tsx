@@ -132,7 +132,7 @@ export default async function HoodV2Proposal() {
               </h1>
               <p className="k" style={{ margin: "16px 0 0", maxWidth: "46ch" }}>
                 {meta.hero_note ??
-                  "Rent against the city rate, district by district. Takings are not what stays."}
+                  "Rent as a multiple, district by district. Takings are not what stays."}
               </p>
             </div>
 
@@ -184,15 +184,15 @@ export default async function HoodV2Proposal() {
           {rentRows.some((r) => r.value != null) ? (
             <>
               <Statblock
-                header={{ label: "What the lease costs, against the city rate", icon: "commercial-rent" as GlyphId }}
+                header={{ label: "What the lease costs, as a multiple", icon: "commercial-rent" as GlyphId }}
                 rows={rentRows}
               />
               <p className="k" style={{ margin: "12px 0 0", maxWidth: "64ch" }}>
                 Lightest lease first. That is a measurement and not a
                 recommendation: a light lease in a quiet district and a heavy
-                one on a busy street can end the year in the same place. Every
-                district here sits above the city rate, so the multiple is worth
-                reading against the others rather than against the number one.
+                one on a busy street can end the year in the same place. The
+                baseline of 1.0 is a district with no premium, so read these
+                against each other rather than against the number one.
               </p>
             </>
           ) : (

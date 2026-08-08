@@ -108,6 +108,15 @@ function proseWords(inner) {
   return t ? t.split(/\s+/).filter(Boolean).length : 0;
 }
 
+/** Short stable digest of a paragraph, normalised so whitespace and indentation
+ *  changes do not count as a different paragraph. */
+function hash(inner) {
+  const t = inner.replace(/\s+/g, " ").trim();
+  let h = 0x811c9dc5;
+  for (let i = 0; i < t.length; i++) { h ^= t.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
+  return h.toString(36).padStart(7, "0");
+}
+
 const findings = [];
 for (const r of ROOTS) {
   for (const file of walk(r)) {
@@ -123,14 +132,22 @@ for (const r of ROOTS) {
       if (EXEMPT_NEAR.test(before)) continue;
       const line = src.slice(0, m.index).split("\n").length;
       const snippet = m[1].replace(/\s+/g, " ").trim().slice(0, 54);
-      findings.push({ key: `${rel}:${line}`, words: n, snippet });
+      /* THE KEY IS CONTENT, NOT POSITION, AND THE FIRST VERSION GOT THIS WRONG.
+         Keyed on `file:line`, the baseline broke the moment anything above a
+         paragraph changed: adding a six-line comment to CityPage pushed an
+         existing 29-word block from 816 to 822 and the gate reported it as new.
+         A ratchet that fires on unrelated edits is a ratchet nobody keeps.
+         Hashing the normalised text means moving a paragraph is free, editing
+         one to stay over budget keeps its place in the baseline, and only text
+         that is genuinely new can trip it. */
+      findings.push({ key: `${rel}#${hash(m[1])}`, words: n, line, snippet });
     }
   }
 }
 findings.sort((a, b) => b.words - a.words);
 
 if (LIST) {
-  for (const f of findings) console.log(String(f.words).padStart(4) + "w  " + f.key + "  " + f.snippet);
+  for (const f of findings) console.log(String(f.words).padStart(4) + "w  " + f.key.split("#")[0] + ":" + f.line + "  " + f.snippet);
   console.log(`\n${findings.length} paragraph(s) over ${BUDGET} words on the v2 surface.`);
   process.exit(0);
 }

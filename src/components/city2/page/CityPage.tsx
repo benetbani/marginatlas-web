@@ -449,7 +449,13 @@ export function CityPage({ model }: { model: CityPageModel }) {
                   </div>
                 </div>
                 <p className="k" style={{ margin: "10px 0 0" }}>
-                  Rent against the city rate, where 1.0 is the city rate itself. The yearly figure
+                  {/* NOT "1.0 is the city rate". It is not.
+                      `rentMultiplier` returns 1.0 only when a district carries NO
+                      rent-affecting tags, and of the 14 tags defined 13 sit above
+                      1.0, so every real district lands above the baseline. The old
+                      sentence told a reader that every London district is above the
+                      London average, which the data does not say. */}
+                  Rent as a multiple, where 1.0 is a district with no premium. The yearly figure
                   prices {model.districtRent.unitPriced}, and {model.districtRent.priced} of{" "}
                   {model.districtRent.rows.length} districts carry a price for it.
                 </p>

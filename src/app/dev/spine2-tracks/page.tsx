@@ -166,7 +166,7 @@ export default function Spine2TracksPage() {
             <div className="lab" style={{ marginBottom: 16 }}>
               Rent by district{" "}
               <span style={{ textTransform: "none", letterSpacing: 0, color: "var(--muted)", fontWeight: 400 }}>
-                multiple of the city rate, lightest first
+                multiple against a district with no premium, lightest first
               </span>
             </div>
             <Scale

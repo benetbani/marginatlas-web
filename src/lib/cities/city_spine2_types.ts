@@ -552,7 +552,13 @@ export type CityDistrictPoint = {
 export type CityDistrictRow = {
   slug: string;
   name: string;
-  /** Rent as a multiple of the city rate. 1.0 is the city rate itself. */
+  /** Rent as a multiple. 1.0 is a district carrying NO rent-affecting tags,
+   *  NOT the city average: of the 14 tags defined, 13 sit above 1.0, so every
+   *  real district lands above the baseline. This comment previously said "1.0
+   *  is the city rate itself" and that sentence propagated onto two pages, where
+   *  it told a reader every London district is above the London average. The
+   *  multiple is sound for ranking districts against EACH OTHER, which is all
+   *  any page uses it for. */
   rentMultiple: number;
   /** The commercial core, for the map. See CityDistrictPoint. */
   centre: CityDistrictPoint;
