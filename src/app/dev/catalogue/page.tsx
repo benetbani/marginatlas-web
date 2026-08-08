@@ -37,6 +37,7 @@ import { Fig } from "@/components/spine2/Fig";
 import { Hundred } from "@/components/spine2/Hundred";
 import { UnitGrid } from "@/components/spine2/UnitGrid";
 import { SBar } from "@/components/spine2/SBar";
+import { ShrinkBars } from "@/components/spine2/ShrinkBars";
 import { Range } from "@/components/spine2/Range";
 import { MonthDeviation } from "@/components/spine2/MonthDeviation";
 import { RankBarsV2 } from "@/components/spine2/RankBarsV2";
@@ -182,7 +183,21 @@ export default function CataloguePage() {
           </div>
         </section>
 
-        {/* 01 , the one he already approved. It leads because it is the bar. */}
+        {/* 01 , the one he already approved. It leads because it is the bar.
+            IT WAS DRAWN WITH THE WRONG COMPONENT AND RENDERED NOTHING. SBar is a
+            one-line PARTITION and it self-omits when the segments do not sum to
+            the stated whole. These numbers are not a partition, they are the
+            remainder after each stage: 38, 13, 7.60, 2.66 sum to 61.26 against a
+            stated 38, a drift of 23 past a tolerance of 2, so SBar correctly drew
+            nothing. Verified blank in production on 2026-08-08: zero occurrences
+            of "A guest spends" or "$2.66" in the served HTML.
+            ShrinkBars variant ramp is the component built for this exact drawing,
+            "a bill shrinking through cost stages", width = remaining/start from a
+            common baseline and the figure printed INSIDE each bar. That is also
+            the perceptually stronger form: position on a common scale, which
+            Cleveland and McGill rank first, with the label on the thing it
+            describes rather than in a legend.
+            Note: `2026-08-08-how-others-draw-a-cost-breakdown.md`. */}
         <Shape
           n={1}
           name="Spend walk"
@@ -190,25 +205,27 @@ export default function CataloguePage() {
           where="where a bill goes"
           note="You approved this one on the cell page. It is the bar the other nine are held to: the drawing carries the meaning, each number sits on the thing it describes, and it needs no paragraph."
           usd={
-            <SBar
-              segments={[
-                { label: "A guest spends", value: 38, display: USD.unit, tone: "n5" },
-                { label: "After food and staff", value: 13, display: "$13", tone: "n3" },
-                { label: "After running costs", value: 7.6, display: "$7.60", tone: "n2" },
-                { label: "Yours", value: 2.66, display: "$2.66", tone: "terra" },
+            <ShrinkBars
+              start={38}
+              stages={[
+                { label: "A guest spends", remaining: 38 },
+                { label: "After food and staff", remaining: 13 },
+                { label: "After running costs", remaining: 7.6 },
+                { label: "Yours", remaining: 2.66 },
               ]}
-              total={38}
+              inBarFmt={(v) => (Number.isInteger(v) ? `$${v}` : `$${v.toFixed(2)}`)}
             />
           }
           idr={
-            <SBar
-              segments={[
-                { label: "A guest spends", value: 38, display: IDR.unit, tone: "n5" },
-                { label: "After food and staff", value: 13, display: "Rp 198.000", tone: "n3" },
-                { label: "After running costs", value: 7.6, display: "Rp 116.000", tone: "n2" },
-                { label: "Yours", value: 2.66, display: "Rp 40.600", tone: "terra" },
+            <ShrinkBars
+              start={580000}
+              stages={[
+                { label: "A guest spends", remaining: 580000 },
+                { label: "After food and staff", remaining: 198000 },
+                { label: "After running costs", remaining: 116000 },
+                { label: "Yours", remaining: 40600 },
               ]}
-              total={38}
+              inBarFmt={(v) => `Rp ${v.toLocaleString("de-DE")}`}
             />
           }
         />
