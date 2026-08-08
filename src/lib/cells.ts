@@ -338,7 +338,7 @@ export async function getRegionalCellVariants(
     .order("year", { ascending: false, nullsFirst: false })
     .order("n_enterprises", { ascending: false, nullsFirst: false })
     .limit(50);
-  if (error || !data) return [];
+  if (dbFailed("getRegionalCellVariants", error) || !data) return [];
   const popularName = getPopularPlaceName(c, geoSlug);
   const manualLabel = MANUAL_DISPLAY_LABEL[c]?.[geoSlug.toLowerCase()];
   const friendlyLabel =
@@ -488,6 +488,31 @@ async function withTimeout<T>(p: Promise<T>, ms: number): Promise<T | null> {
  * a caller-supplied default value on timeout (NOT null) so the caller
  * can keep its return type. Logs a single warn so a chronically slow
  * query is visible in production logs. */
+/**
+ * Log a database error before falling back, then let the caller fall back.
+ *
+ * WHY THIS EXISTS, AND IT COST THREE MONTHS. Every reader in this file used to
+ * end `if (error || !data) return []`, which makes a REJECTED QUERY and an
+ * EMPTY TABLE the same thing to the caller. On 2026-08-08 the Supabase
+ * service-role key turned out to have been rotated some time around May: every
+ * one of these reads had been failing, every page had been quietly falling back
+ * to synthesised figures, the sitemap's cell shards had been shipping 110
+ * bytes, and nothing anywhere said a word.
+ *
+ * `withBudget` logs when it TIMES OUT, which is why the timeout was the first
+ * suspect and stayed the suspect through three rounds of diagnosis. A query
+ * that fails FAST returns a perfectly good empty array and logs nothing.
+ *
+ * The fail-soft is deliberate and stays: a slow or broken table must never take
+ * a page down. Only the silence goes.
+ */
+export function dbFailed(where: string, error: { message?: string } | null | undefined): boolean {
+  if (!error) return false;
+  // eslint-disable-next-line no-console
+  console.warn(`[cells] ${where} failed, falling back: ${error.message ?? "unknown error"}`);
+  return true;
+}
+
 export async function withBudget<T>(
   p: Promise<T>,
   defaultValue: T,
@@ -720,7 +745,7 @@ export async function getCellVariants(
     .order("year", { ascending: false, nullsFirst: false })
     .order("n", { ascending: false, nullsFirst: false })
     .limit(1000);
-  if (error || !data) return [];
+  if (dbFailed("getCellVariants", error) || !data) return [];
   // Variants must be the SAME industry as the canonical pick, not the whole
   // NAICS-3 group (foundation fix 2026-06-12: the group mixes siblings, so
   // unvalidated variants let a legal page switch into software size bands).
@@ -785,7 +810,7 @@ export async function getTopIndustriesForCountry(
       .not("naics_6", "is", null)
       .order("n", { ascending: false, nullsFirst: false })
       .limit(1500);
-    if (error || !data) return [];
+    if (dbFailed("getTopIndustriesForCountry", error) || !data) return [];
     const byIndustry = new Map<string, { n: number; rev: number; count: number }>();
     for (const r of data) {
       const naics = (r.naics_6 as string) || "";
@@ -827,7 +852,7 @@ export async function getTopIndustriesForCountry(
     .eq("country_iso3", iso3)
     .order("quality_score", { ascending: false, nullsFirst: false })
     .limit(500);
-  if (error || !data) return [];
+  if (dbFailed("getTopIndustriesForCountry", error) || !data) return [];
   // Fold legacy DB ids to their taxonomy equivalents BEFORE aggregation, so
   // legacy-tagged rows (metal_products_mfg, etc.) are not silently dropped by
   // the aggregator's INDUSTRY_BY_ID lookup and don't show as duplicate labels.
@@ -935,7 +960,7 @@ export async function getSameIndustryAcrossCountries(
     .limit(limit * 5);
   if (excludeIso3) q = q.neq("country_iso3", excludeIso3);
   const { data, error } = await q;
-  if (error || !data) return [];
+  if (dbFailed("getSameIndustryAcrossCountries", error) || !data) return [];
 
   // Apply SMB-physical bounds — drop rows whose predicted revenue is
   // outside the conservative per-industry envelope. This is the same
@@ -994,7 +1019,7 @@ export async function getExtrapolatedVariants(
     .in("industry_id", candidates)
     .order("year", { ascending: false, nullsFirst: false })
     .limit(50);
-  if (error || !data) return [];
+  if (dbFailed("getExtrapolatedVariants", error) || !data) return [];
   return data.map((r) => {
     const predRev = (r.predicted_rev_per_firm as number) ?? null;
     const cell: Cell = {
@@ -1287,7 +1312,7 @@ export async function getSameIndustryAcrossStates(
         (Number(b.year) || 0) - (Number(a.year) || 0),
     )
     .slice(0, 200);
-  if (error) return [];
+  if (dbFailed("getSameIndustryAcrossStates", error)) return [];
 
   const rows = data.map((r) => normalizeRow(r as Record<string, unknown>));
   // Collapse to one row per state, keep highest-n
@@ -1321,7 +1346,7 @@ export async function getIndustryRankInState(
     .not("naics_6", "is", null)
     .order("n", { ascending: false, nullsFirst: false })
     .limit(2000);
-  if (error || !data) return null;
+  if (dbFailed("getIndustryRankInState", error) || !data) return null;
   // Collapse to one row per NAICS-6 (largest n)
   const byNaics = new Map<string, number>();
   for (const r of data) {
@@ -1432,7 +1457,7 @@ export async function getComparableCells(
   if (excludeNaics6) q = q.neq("naics_6", excludeNaics6);
 
   const { data, error } = await q;
-  if (error || !data) return [];
+  if (dbFailed("getComparableCells", error) || !data) return [];
   return data.map((r) => normalizeRow(r as Record<string, unknown>));
 }
 

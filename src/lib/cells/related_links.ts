@@ -54,7 +54,7 @@
  *
  * Constraint-safe: no em-dashes, no source-agency names, USD-only figures.
  */
-import { withBudget } from "@/lib/cells";
+import { withBudget, dbFailed } from "@/lib/cells";
 import { supabaseAdmin } from "@/lib/supabase";
 import {
   SLUG_TO_GEO_ID,
@@ -197,7 +197,7 @@ export async function fetchCellSiblings(
           .neq("geo_id", geoId)
           .order("n_enterprises", { ascending: false, nullsFirst: false })
           .limit(FETCH_WIDTH);
-        if (error || !data) return [];
+        if (dbFailed("fetchCellSiblings", error) || !data) return [];
         // Rank the way getRegionalCell ranks: a place that holds the exact
         // activity comes before one that only holds the measured parent, and
         // within each, the busier place first. Sort is stable, so the firm-count
@@ -223,7 +223,7 @@ export async function fetchCellSiblings(
           .eq("geo_id", geoId)
           .order("n_enterprises", { ascending: false, nullsFirst: false })
           .limit(FETCH_WIDTH);
-        if (error || !data) return [];
+        if (dbFailed("fetchCellSiblings", error) || !data) return [];
         return (data as unknown as SiblingRow[]).filter(
           (r) => r.industry_id != null && !candidates.includes(r.industry_id),
         );
