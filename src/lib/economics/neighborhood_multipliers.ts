@@ -513,6 +513,22 @@ export type NeighborhoodMultiplierBreakdown = {
   sourceQuality: "A" | "B" | "C" | "default";
   /** Indicator: is this row hand-curated, or did we fall back to defaults? */
   isCurated: boolean;
+  /**
+   * Did the final clip bite? A figure sitting on a bound is not a measurement,
+   * it is the bound, and a reader cannot tell the difference from the number.
+   *
+   * Measured on production 2026-08-08: FIVE of seven sampled districts printed
+   * an identical "+200%", which is exactly the 3.0 ceiling. City of London,
+   * West End and South Bank, as FOUND.md recorded, and also Manhattan FiDi and
+   * Manhattan Midtown, which it did not. All five are ABOVE 3.0 and the clip is
+   * hiding by how much, so three of them reading the same is an artifact of the
+   * bound rather than a tie in the data.
+   *
+   * The ceiling itself is load bearing across every city and activity and is
+   * NOT changed here. The display is the defect; this flag lets the display
+   * say so.
+   */
+  clipped: boolean;
 };
 
 /**
@@ -533,7 +549,8 @@ export function getNeighborhoodMultiplier(
     // (which clip at 0.5-2.0) so a clear premium neighborhood can land
     // at ~2.5x and a depressed one at ~0.6x. Manhattan-vs-Bronx for
     // pharmacies should be ~2.5x in this model, matching reality.
-    const final = clip(cm * tm * gm, 0.4, 3.0);
+    const raw = cm * tm * gm;
+    const final = clip(raw, 0.4, 3.0);
     return {
       final,
       commuter: cm,
@@ -544,6 +561,7 @@ export function getNeighborhoodMultiplier(
       tourismIntensity: row.tourism_intensity,
       sourceQuality: row.source_quality,
       isCurated: true,
+      clipped: raw !== final,
     };
   }
 
@@ -552,7 +570,9 @@ export function getNeighborhoodMultiplier(
     FILE.city_defaults[citySlug] || FILE.city_defaults["default"];
   const cm = commuterMultiplier(activityId, cityDef.commuter_intensity);
   const tm = tourismMultiplier(activityId, cityDef.tourism_intensity);
-  const final = clip(cm * tm, 0.5, 2.0);
+  /* The fallback path clips tighter, 0.5 to 2.0, and can sit on its bound too. */
+  const rawDefault = cm * tm;
+  const final = clip(rawDefault, 0.5, 2.0);
   return {
     final,
     commuter: cm,
@@ -563,6 +583,7 @@ export function getNeighborhoodMultiplier(
     tourismIntensity: cityDef.tourism_intensity,
     sourceQuality: "default",
     isCurated: false,
+    clipped: rawDefault !== final,
   };
 }
 

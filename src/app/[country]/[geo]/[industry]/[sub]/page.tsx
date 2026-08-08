@@ -427,8 +427,16 @@ async function NeighborhoodCellPageBody({
                 <SectionEyebrow className="mb-1.5">
                   Versus the {cityName} baseline
                 </SectionEyebrow>
+                {/* A figure sitting on the model's clip is not a measurement,
+                    it is the bound. Five of seven sampled districts printed an
+                    identical "+200%" on 2026-08-08, which is exactly the 3.0
+                    ceiling, so three of them reading the same was an artifact
+                    rather than a tie. "at least" is the honest word for it, and
+                    "runs about" is wrong once the value is bounded.
+                    Note: `2026-08-08-seo-lattice.md` measurement, FOUND.md item. */}
                 <p className="font-display text-lg font-medium leading-snug text-balance text-ink-900 md:text-xl">
-                  A {tradeNoun} in {nb.name} runs about{" "}
+                  A {tradeNoun} in {nb.name} runs{" "}
+                  {fwMult.clipped ? "at least" : "about"}{" "}
                   <span
                     className={
                       fwPct > 0 ? "text-moss-700" : "text-atlas-700"
