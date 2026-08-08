@@ -32,8 +32,27 @@ const ROOT = process.cwd();
 const JSON_PATH = path.resolve(ROOT, "data/economics/median_monthly_wage_usd_v1.json");
 
 const MIN_COUNTRY_COUNT = 180;
-const MIN_MONTHLY_USD = 80;
-const MAX_MONTHLY_USD = 20000;
+
+/* THE BOUNDS THE DATA DECLARES FOR ITSELF, intersected with this gate's own, so
+ * a declared bound can only ever tighten and never loosen. See the longer note
+ * in verify_city_wage_premiums.ts; the short version is that
+ * median_monthly_wage_usd_v1.json declares [$50, $15000] while this gate said
+ * [$80, $20000], and no gate in the chain read a `quality_checks` block at all.
+ *
+ * The intersection is [$80, $15000], and the direction differs at each end:
+ * the file is LOOSER at the floor, so the gate's $80 stands, and TIGHTER at the
+ * ceiling, so the file's $15000 wins. A blanket "adopt the declared bounds"
+ * would have quietly dropped the floor by $30.
+ *
+ * Measured before switching: 0 of 200 countries under $80, 0 over $15000.
+ * Note: `2026-08-08-data-we-hold-and-never-enforce.md`.
+ */
+const RAW = JSON.parse(fs.readFileSync(JSON_PATH, "utf-8")) as {
+  quality_checks?: { min_wage_usd_monthly?: number; max_wage_usd_monthly?: number };
+};
+const WQC = RAW.quality_checks ?? {};
+const MIN_MONTHLY_USD = Math.max(80, WQC.min_wage_usd_monthly ?? 0);
+const MAX_MONTHLY_USD = Math.min(20000, WQC.max_wage_usd_monthly ?? Infinity);
 const VALID_QUALITIES = new Set(["A", "B", "C"]);
 
 type CountryWage = {
