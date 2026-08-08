@@ -137,6 +137,11 @@ const GATES: Gate[] = [
   { name: "comparative-voice", script: "scripts/verify_comparative_voice.ts" },
   { name: "turnover-bands", script: "scripts/verify_turnover_bands.ts" },
   { name: "wage-source", script: "scripts/verify_wage_source_consistency.ts" },
+  /* The gate fx.ts has promised in a comment since it was written. Checks the
+     DISPLAY rates in src/lib/currency.ts only; fx.ts is pinned at parse time on
+     purpose and must not be refreshed. Warns at 92 days, fails at 183.
+     Negative-tested at all three bands on 2026-08-08. */
+  { name: "fx-freshness", script: "scripts/verify_fx_freshness.mjs" },
   { name: "city-wages", script: "scripts/verify_city_wage_premiums.ts" },
   { name: "industry-medians", script: "scripts/verify_industry_medians.ts" },
   { name: "econ-profile-integrity", script: "scripts/verify_economic_profile_integrity.ts" },
