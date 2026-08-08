@@ -230,23 +230,28 @@ async function neighborhoodSitemap(): Promise<MetadataRoute.Sitemap> {
     neighborhoodsJson as { cities: Record<string, CityScheme> }
   ).cities;
 
-  const out: MetadataRoute.Sitemap = [];
-  for (const [citySlug, scheme] of Object.entries(nbCities)) {
-    const cityEntry = cities.find((c) => c.slug === citySlug);
-    if (!cityEntry) continue;
-    const country = cityEntry.iso2.toLowerCase();
-    for (const nb of scheme.neighborhoods) {
-      for (const industrySlug of TOP_INDUSTRIES) {
-        out.push({
-          url: `${BASE_URL}/${country}/${citySlug}/${nb.slug}/${industrySlug}`,
-          lastModified: new Date(),
-          changeFrequency: "weekly" as const,
-          priority: 0.55,
-        });
-      }
-    }
-  }
-  return out;
+  /* WITHDRAWN 2026-08-08, ON THE FOUNDER'S INSTRUCTION, AND THE MEASUREMENT
+     BEHIND IT.
+     This shard declared 25,320 URLs, 90% of everything the site advertised.
+     Measured on production: three trades in the same district share 95% of
+     their body text (5-gram Jaccard 0.96 / 0.95 / 0.95, chrome stripped). They
+     are one city figure multiplied by a district character score, so the
+     numbers differ but the page does not.
+     Google's own crawl-budget guidance names this as the first remedy for a
+     site whose URLs sit in "Discovered, currently not indexed", which is ours:
+     "eliminate duplicate content to focus crawling on unique content rather
+     than unique URLs". 2,266 of 28,167 discovered is 8%.
+     The district content is not being deleted. It moves into a section on the
+     city page, one district selected by default, which is the founder's call
+     and the next build. Until that lands the routes still RESOLVE, so nothing
+     already linked breaks; they simply stop being advertised, and the pages
+     themselves carry a noindex (see the [sub] route's generateMetadata).
+     TOP_INDUSTRIES is kept below because the city-page section will need the
+     same list. Note: `2026-08-08-seo-lattice.md`. */
+  void cities;
+  void nbCities;
+  void TOP_INDUSTRIES;
+  return [];
 }
 
 

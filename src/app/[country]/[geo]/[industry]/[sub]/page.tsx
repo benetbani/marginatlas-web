@@ -122,6 +122,21 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   return {
     title,
     description: desc,
+    /* NOINDEX, 2026-08-08, founder's instruction, and the reason is measured.
+       These 25,320 pages share 95% of their body text with their siblings: a
+       trade in a district is the city figure times a district character score,
+       so the number moves and the page does not. Google's own remedy for a
+       site sitting in "Discovered, currently not indexed" is to eliminate
+       duplicate content rather than duplicate URLs, and 8% of ours was
+       getting discovered.
+       The route still RESOLVES so nothing already linked 404s, and the content
+       is not lost: it moves to a district section on the city page. When that
+       ships these should 301 there instead, which is the correct end state and
+       needs the destination to exist first.
+       The canonical stays self-referential deliberately. Pointing it at the
+       city page while the page still renders district-specific figures would
+       claim the two are the same document, which they are not yet. */
+    robots: { index: false, follow: true },
     alternates: {
       canonical: `/${country.toLowerCase()}/${city.toLowerCase()}/${neighborhood.toLowerCase()}/${industry.toLowerCase()}`,
     },
