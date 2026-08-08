@@ -119,6 +119,13 @@ const GATES: Gate[] = [
      missing centre. Registered 2026-08-01. */
   { name: "district-geometry", script: "scripts/verify_district_geometry.ts" },
   { name: "no-hardcoded-hex", script: "scripts/verify_hardcoded_hex.ts" },
+  /* WCAG AA on every token that carries text. The colour tokens are edited by
+     eye in the founder's design file, where a shade nudged lighter still
+     compiles and still typechecks. Measured clean before it was written, 247 of
+     251 declarations AA or better, so it is a hard gate rather than a ratchet.
+     Negative-tested 2026-08-08 by lightening --muted, which it caught across
+     all 81 of its declarations. */
+  { name: "token-contrast", script: "scripts/verify_token_contrast.mjs" },
   { name: "dead-links", script: "scripts/audit/find_dead_links.ts", args: ["--strict"] },
   { name: "featured-tiles", script: "scripts/verify_featured_tiles.ts" },
   { name: "render-guards", script: "scripts/verify_render_guards.ts" },
