@@ -28,7 +28,7 @@ import { CellPageNav } from "@/components/CellPageNav";
 // word instead, and the cell page no longer renders an AtlasScore strip.
 import { SmartImage } from "@/components/SmartImage";
 import { AudienceCaveat } from "@/components/AudienceCaveat";
-import { SECTOR_BY_ID, INDUSTRY_BY_ID, slugToIndustry, resolveToMeasuredIndustry } from "@/lib/taxonomy";
+import { SECTOR_BY_ID, INDUSTRY_BY_ID, slugToIndustry, resolveToMeasuredIndustry, tradeNounFor } from "@/lib/taxonomy";
 import { CellDataset, Breadcrumbs } from "@/components/StructuredData";
 // RelatedIndustriesStrip was unmounted here on 2026-08-01: it built up to eight
 // trade-page URLs straight from the taxonomy without checking that any of them
@@ -716,7 +716,7 @@ async function CellPageBody({
   const placeName =
     cell.geo_name || iso2ToName(country) || country.toUpperCase();
   const tradeName = cell.industry_name || industry.replace(/-/g, " ");
-  const tradeNoun = tradeName.toLowerCase().replace(/s$/, "");
+  const tradeNoun = tradeNounFor(tradeName);
   const viewRevenue = Le?.revenue ?? cell.revenue_per_firm ?? cell.rev_p50 ?? null;
   const viewNetMarginPct = Le
     ? Le.net_margin_pct

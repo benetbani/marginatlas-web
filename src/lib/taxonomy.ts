@@ -863,3 +863,49 @@ export function searchIndustries(query: string, sectorFilter?: string): Industry
     return false;
   });
 }
+
+/**
+ * The singular noun for one business of this trade, for copy like
+ * "What a {noun} in Camden really earns".
+ *
+ * WHY THIS IS NOT `name.replace(/s$/, "")`. That is what five call sites did,
+ * and it was invisible for as long as every neighbourhood page said
+ * "restaurant" whatever the trade. The moment that bug was fixed on 2026-08-08
+ * the pages read "What a cafés & coffee shop in Manhattan, FiDi really earns"
+ * and "What a bars & nightclub", because chopping one letter off the end of a
+ * COMPOUND PLURAL PHRASE singularises the wrong half of it.
+ *
+ * TAKE THE HEAD PHRASE ONLY WHEN THE HEAD IS ITSELF PLURAL. A first attempt
+ * always took the part before the "&", and that is wrong half the time:
+ * "Cafés & coffee shops" has a plural noun at the head and gives "café", but
+ * "Clothing & shoe stores" has a mass noun there and gives "a clothing", which
+ * is worse than the naive rule's "a clothing & shoe store". A trailing "s" on
+ * the head is the test for whether it names a countable thing.
+ *
+ * So: singularise the head if the head is plural, otherwise singularise the
+ * whole name, which is the old behaviour and correct for those.
+ *
+ * Names with no plural anywhere ("Software development", "Accounting & tax")
+ * come back unchanged and still read oddly after "a". That predates this and
+ * is a copy question, not a grammar one, so it is left alone.
+ */
+function singularise(s: string): string {
+  if (/[^aeiou]ies$/.test(s)) return s.replace(/ies$/, "y");
+  if (/(?:ss|sh|ch|x|z)es$/.test(s)) return s.replace(/es$/, "");
+  if (/ss$/.test(s)) return s;
+  return s.replace(/s$/, "");
+}
+
+export function tradeNounFor(name: string): string {
+  const whole = String(name || "")
+    .replace(/\s*\([^)]*\)\s*/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+  if (!whole) return "";
+  const head = whole.split(/\s*[&,]\s*/)[0].trim();
+  if (head && head !== whole && /s$/.test(head) && !/ss$/.test(head)) {
+    return singularise(head);
+  }
+  return singularise(whole);
+}

@@ -32,6 +32,7 @@ import {
   industryToSlug,
   slugToIndustry,
   resolveToMeasuredIndustry,
+  tradeNounFor,
 } from "@/lib/taxonomy";
 import {
   getNeighborhood,
@@ -304,7 +305,7 @@ async function NeighborhoodCellPageBody({
   /* rawInd, not ind: the reader asked for this trade, the URL says it and the
      <title> says it. See the roll-up note where `ind` is derived. */
   const tradeName = rawInd.name;
-  const tradeNoun = tradeName.toLowerCase().replace(/s$/, "");
+  const tradeNoun = tradeNounFor(tradeName);
   const viewRevenue = Le?.revenue ?? cell.revenue_per_firm ?? cell.rev_p50 ?? null;
   const viewNetMarginPct = Le
     ? Le.net_margin_pct

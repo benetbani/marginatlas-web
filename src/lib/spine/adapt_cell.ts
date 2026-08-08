@@ -49,7 +49,7 @@ import {
 import { buildCellBoard, getLondonEntry } from "@/lib/scores/cell_board";
 import { buildCellView } from "@/lib/cells/cell_view";
 import type { CellView } from "@/lib/cells/cell_view";
-import { slugToIndustry } from "@/lib/taxonomy";
+import { slugToIndustry, tradeNounFor } from "@/lib/taxonomy";
 
 type IndustryMarginRow = { gross_margin: number; operating_margin: number; asset_intensity?: number };
 const INDUSTRY_MARGINS = industryMarginsJson as unknown as {
@@ -188,7 +188,7 @@ export async function loadCellView(
   const trustedLocalCell = isTrustedLocalCell(cell, expectedIndustryId);
   const placeName = cell.geo_name || iso2ToName(country) || country.toUpperCase();
   const tradeName = cell.industry_name || industry.replace(/-/g, " ");
-  const tradeNoun = tradeName.toLowerCase().replace(/s$/, "");
+  const tradeNoun = tradeNounFor(tradeName);
 
   const viewRevenue = Le?.revenue ?? cell.revenue_per_firm ?? cell.rev_p50 ?? null;
   const viewNetMarginPct = Le
