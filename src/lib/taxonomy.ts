@@ -137,6 +137,17 @@ export const INDUSTRY_SLUG_ALIASES: Record<string, string> = {
   "pharmaceuticals-mfg": "pharmaceuticals_mfg",
   "plastics-rubber-mfg": "plastics_rubber_mfg",
   "wood-paper-mfg": "wood_paper_mfg",
+  /* THE ONE SLUG OUR OWN SITEMAP DECLARES THAT RESOLVED TO THE WRONG TRADE.
+     `bars-pubs-clubs` is not canonical, so it fell through to the fuzzy
+     fallback, which matched the token "bars" against "Tea houses & matcha
+     bars" and returned `tea_houses`. Live on roughly a twentieth of the 25,320
+     neighbourhood pages: URL says bars, pubs and clubs; the title said tea
+     houses. Of the twenty trade slugs in the neighbourhood sitemap this was the
+     only wrong one, checked one by one.
+     `bars_nightclubs` over `pubs_taverns` because it carries two of the slug's
+     three head words. The slug itself is NOT renamed: existing URLs are load
+     bearing for search. Note: `2026-08-08-seo-lattice.md`. */
+  "bars-pubs-clubs": "bars_nightclubs",
   // Preserve old broken-accent slug for back-compat
   "caf-s-coffee-shops": "cafes_coffee",
   "cafes-coffee": "cafes_coffee",
