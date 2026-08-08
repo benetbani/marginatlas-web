@@ -9,21 +9,38 @@
  * 60-word block beside two empty ones averages fine and reads terribly. The
  * founder's complaint was never about totals, it was that a reader cannot skim.
  *
- * Firing 2 measured why, against Our World in Data as the reference, with the
- * same extraction run on both:
+ * FIRING 2'S MEASUREMENT WAS WRONG AND IT WAS WRONG BACKWARDS. Corrected in
+ * firing 15 against SEVEN OWID pages instead of one, counting every text block
+ * a reader stops on rather than only <p>.
  *
- *   OWID           94 paragraphs, median 18 words, 22 of them under 8 words
- *   /dev/cell2     33 paragraphs, median 33 words,  0 of them under 8 words
+ * The original claim was "OWID median 18 words, 22 under 8; ours median 33, 0
+ * under 8". Both halves fail. OWID's median across seven pages is 28 to 41, not
+ * 18; the single page behind that 18 was an outlier. And our short text is not
+ * missing, it is simply not in a <p>: it lives in .note, .lab and .s elements
+ * that the original extraction never looked at.
  *
- * We are NOT writing more than the reference. Our cell page is 2,854 words
- * against OWID's 3,705 and is denser in figures than it. We are writing in
- * blocks twice as long, and we have no captions at all. An 18-word caption is
- * skipped in a glance; a 33-word block has to be entered before it can be
- * judged, and there are thirty-three of them.
+ * Counting PROSE blocks of any tag, excluding figure-dominated ones:
  *
- * Held to 20 words our median falls to under 20, landing almost exactly on
- * OWID's 18. That is two independent routes to the same number: one from the
- * section the founder liked (a drawing plus 16 words), one from the reference.
+ *                        blocks   prose words   words/block   under 8w
+ *   /dev/cell2              203         1,528           7.5        158
+ *   OWID co2-emissions      193         3,080          16.0         66
+ *   OWID life-expectancy    205         3,184          15.5         73
+ *   OWID famines            234         3,922          16.8         96
+ *
+ * So the true picture is the inverse of the recorded one. Our cell page offers
+ * as many places to start reading as an OWID page twice its length, and each
+ * one holds HALF as much: 7.5 words against a reference that sits at 15.5 to
+ * 16.8 across three unrelated pages. 78% of our prose blocks are under eight
+ * words, against 34 to 41% at OWID.
+ *
+ * THE PAGE IS NOT OVER-WRITTEN. IT IS OVER-FRAGMENTED, and that is a better
+ * description of "not skimmable" than word count ever was.
+ *
+ * The 20-word budget SURVIVES the correction, but on different grounds: it is
+ * the founder's own ratified rule, "one drawing, 20 words of prose maximum". It
+ * caps the long tail. It was never the thing that would fix skimmability, and
+ * the remedy text below no longer suggests splitting, because splitting is how
+ * a page gets to 203 blocks and 7.5 words apiece.
  *
  * IT IS A RATCHET, NOT A PASS, AND THAT IS DELIBERATE.
  *
@@ -186,9 +203,12 @@ if (added.length) {
   for (const f of added) console.error(`   ${String(f.words).padStart(4)}w  ${f.key}\n        ${f.snippet}`);
   console.error(
     `\n  The unit is the PARAGRAPH, not the section: one long block beside two\n` +
-      `  empty ones averages fine and reads badly. Reference is Our World in Data\n` +
-      `  at a median of 18 words a paragraph; ours was 33.\n` +
-      `  Split it, cut it, or move the figure onto the drawing it describes.\n`,
+      `  empty ones averages fine and reads badly. The budget is the founder's\n` +
+      `  ratified rule, one drawing and 20 words of prose.\n` +
+      `  CUT it, or move the figure onto the drawing it describes.\n` +
+      `  Do NOT split it. The cell page already runs 203 prose blocks at 7.5\n` +
+      `  words each against a reference that sits near 16, so another block is\n` +
+      `  the defect, not the fix.\n`,
   );
   process.exit(1);
 }
