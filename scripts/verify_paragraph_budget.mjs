@@ -19,28 +19,39 @@
  * missing, it is simply not in a <p>: it lives in .note, .lab and .s elements
  * that the original extraction never looked at.
  *
- * Counting PROSE blocks of any tag, excluding figure-dominated ones:
+ * Firing 15 then over-corrected, claiming the page was "over-fragmented" at 7.5
+ * words per text block against a reference near 16. Firing 16 withdrew that
+ * too: the measure counted DATA-TABLE CELLS as prose fragments, and a
+ * benchmarks site has many. The worst-scoring chapter by that metric, Ch15
+ * "What to watch", turned out to be a shock table plus a two-column list, and
+ * "merging" it would have destroyed a real structure.
  *
- *                        blocks   prose words   words/block   under 8w
- *   /dev/cell2              203         1,528           7.5        158
- *   OWID co2-emissions      193         3,080          16.0         66
- *   OWID life-expectancy    205         3,184          15.5         73
- *   OWID famines            234         3,922          16.8         96
+ * WHAT SURVIVES THREE MEASUREMENTS, chrome stripped, paragraphs only:
  *
- * So the true picture is the inverse of the recorded one. Our cell page offers
- * as many places to start reading as an OWID page twice its length, and each
- * one holds HALF as much: 7.5 words against a reference that sits at 15.5 to
- * 16.8 across three unrelated pages. 78% of our prose blocks are under eight
- * words, against 34 to 41% at OWID.
+ *                        paras   words   median   mean   under 8w
+ *   /dev/cell2              33   1,073       33   32.5          0
+ *   /dev/hood2              14     485       39   34.6          0
+ *   /dev/industry2          14     366       24   26.1          0
+ *   OWID co2-emissions      72   3,211       41   44.6          1
+ *   OWID life-expectancy    92   1,804       18   19.6         22
+ *   OWID famines           113   4,804       32   42.5          7
  *
- * THE PAGE IS NOT OVER-WRITTEN. IT IS OVER-FRAGMENTED, and that is a better
- * description of "not skimmable" than word count ever was.
+ * Two things, and only two:
  *
- * The 20-word budget SURVIVES the correction, but on different grounds: it is
- * the founder's own ratified rule, "one drawing, 20 words of prose maximum". It
- * caps the long tail. It was never the thing that would fix skimmability, and
- * the remedy text below no longer suggests splitting, because splitting is how
- * a page gets to 203 blocks and 7.5 words apiece.
+ *   1. OUR PARAGRAPHS ARE INSIDE THE REFERENCE RANGE, 21 to 39 against 18 to
+ *      41. We are not writing longer than the reference, and we write fewer
+ *      total words than it.
+ *   2. WE NEVER WRITE A VERY SHORT PARAGRAPH. Zero under eight words on every
+ *      page measured; OWID's life-expectancy page has 22.
+ *
+ * And OWID has NO SINGLE NORM: median 18, 32 and 41 on three pages. So "match
+ * the reference" is not a usable target, and the budget below does not rest on
+ * one. It rests on the founder's own ratified rule, "one drawing, 20 words of
+ * prose maximum", which is a design decision rather than a derived number.
+ *
+ * The remedy text still says do not SPLIT. Not because of a fragmentation
+ * score, but because splitting a paragraph to satisfy a word budget produces
+ * two half-thoughts and satisfies nothing.
  *
  * IT IS A RATCHET, NOT A PASS, AND THAT IS DELIBERATE.
  *
@@ -206,9 +217,7 @@ if (added.length) {
       `  empty ones averages fine and reads badly. The budget is the founder's\n` +
       `  ratified rule, one drawing and 20 words of prose.\n` +
       `  CUT it, or move the figure onto the drawing it describes.\n` +
-      `  Do NOT split it. The cell page already runs 203 prose blocks at 7.5\n` +
-      `  words each against a reference that sits near 16, so another block is\n` +
-      `  the defect, not the fix.\n`,
+      `  Do NOT split it: two half-thoughts satisfy the budget and nothing else.\n`,
   );
   process.exit(1);
 }
