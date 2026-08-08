@@ -1307,7 +1307,20 @@ export async function getTopCells(limit = 100): Promise<Cell[]> {
     .eq("country", "US")
     .gte("year", 2020)
     .limit(Math.ceil(limit * 1.2));
-  if (error || !data) return [];
+  /* SWALLOWING THIS ERROR COST A DAY. The sitemap's US cell shard reads through
+     here and ships whatever comes back, so an errored query and an empty table
+     are the same thing to the caller: a 110-byte shard declaring that the site
+     has no cell pages. `withBudget` logs when it TIMES OUT, but a query that
+     fails fast returns a perfectly good empty array and it logs nothing at all,
+     which is exactly the case that happened.
+     The fail-soft return stays. Only the silence goes.
+     Note: `2026-08-08-seo-lattice.md`. */
+  if (error) {
+    // eslint-disable-next-line no-console
+    console.warn(`[cells] getTopCells failed, returning none: ${error.message}`);
+    return [];
+  }
+  if (!data) return [];
   return data
     .filter((r) => (r as Record<string, unknown>).industry_description != null)
     .slice(0, limit)
@@ -1329,7 +1342,14 @@ export async function getTopRegionalCells(limit = 1000): Promise<Cell[]> {
     .select("country, geo_id, geo_level, geo_name, industry_id, year, size_band, n_enterprises, quality_score, coverage_tier, coverage_source")
     .gte("n_enterprises", 5)
     .limit(limit);
-  if (error || !data) return [];
+  /* Same silence as getTopCells above, and the same consequence: this feeds the
+     regional cell shard, which also ships at 110 bytes. */
+  if (error) {
+    // eslint-disable-next-line no-console
+    console.warn(`[cells] getTopRegionalCells failed, returning none: ${error.message}`);
+    return [];
+  }
+  if (!data) return [];
   return data.map((r) => normalizeRegionalRow(r as Record<string, unknown>));
 }
 
