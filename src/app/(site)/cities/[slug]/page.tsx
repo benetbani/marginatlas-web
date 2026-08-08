@@ -41,6 +41,13 @@ import type { BreakInBand } from "@/lib/scores/break_in_rating";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import { getNeighborhoodEconomics } from "@/lib/economics/neighborhood_economics";
 import { NeighborhoodCover } from "@/components/cities/NeighborhoodCover";
+import { CityDistrictPicker, type DistrictSummary } from "@/components/cities/CityDistrictPicker";
+import {
+  getNeighborhoodMultiplier,
+  hasNeighborhoodIntensity,
+  tagLabel,
+} from "@/lib/economics/neighborhood_multipliers";
+import { getNeighborhoodFlavor } from "@/lib/cities/neighborhood_flavor";
 import {
   AnswerFirstMasthead,
   BeatCard,
@@ -239,6 +246,7 @@ export default async function CityPage({
 
   const countryName = COUNTRIES.find((c) => c.code === city.iso2)?.name || city.iso2;
   const scheme = NEIGHBORHOODS[city.slug];
+  let allDistricts: DistrictSummary[] = [];
 
   // Up to four featured neighborhoods (founder 2026-06-08): flagship cities curate
   // which four lead, any other city falls back to the first four in its scheme.
@@ -249,6 +257,30 @@ export default async function CityPage({
       .map((s) => bySlug.get(s))
       .filter((n): n is Neighborhood => Boolean(n));
     shownNeighborhoods = (featured.length > 0 ? featured : scheme.neighborhoods).slice(0, 4);
+
+    /* EVERY district, for the picker section. The four above are a visual
+       entry point with cover art; this is the complete set, and it is where
+       the 25,320 district-by-trade pages moved to on 2026-08-08. Computed on
+       the server so the client component fetches nothing. */
+    allDistricts = scheme.neighborhoods.map((n) => {
+      const mult = getNeighborhoodMultiplier(city.slug, n.slug, "restaurants");
+      const flavor = getNeighborhoodFlavor(city.slug, n.slug);
+      return {
+        slug: n.slug,
+        name: n.name,
+        character: n.character,
+        blurb: flavor?.character_paragraph ?? n.description ?? null,
+        pct: Math.round((mult.final - 1) * 100),
+        clipped: mult.clipped,
+        commuter: mult.commuter,
+        tourism: mult.tourism,
+        tags: mult.tags,
+        tagLabels: hasNeighborhoodIntensity(city.slug, n.slug)
+          ? mult.appliedTags.filter((t) => t !== "residential_only").map(tagLabel)
+          : [],
+        href: `/${city.iso2.toLowerCase()}/${city.slug}/${n.slug}`,
+      } satisfies DistrictSummary;
+    });
   }
 
   // Country economics snapshot for the country the city sits in. Drives the
@@ -757,6 +789,11 @@ export default async function CityPage({
                 place={city.name}
               />
             )}
+
+            {/* The complete district set, one open at a time. This is where the
+               25,320 district-by-trade URLs went: they were 90% of the sitemap
+               and shared 95% of their text with each other. */}
+            <CityDistrictPicker cityName={city.name} districts={allDistricts} />
 
             {/* How the city is changing: a real direction, or an honest
                self-omit. The London exemplar fills it; every other city stays
