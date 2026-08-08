@@ -94,14 +94,47 @@ vocabulary. That is the whole point: the failure was not using it.
 A rule that is not a gate decays. That is root cause 4 and it is not repeated
 here.
 
-### 4.1 Text budget , `verify_subsection_text`
+### 4.1 Text budget , `verify_paragraph_budget`, BUILT 2026-08-08
 
-**One drawing plus at most 20 words of prose per subsection.**
+**One drawing plus at most 20 words of prose. The unit is the PARAGRAPH, not the
+subsection.**
 
-- Counted over `<p>` text inside a `section`, which is prose. Figures, labels,
-  axis text and the caption on a drawing are not prose and do not count.
-- **One exemption:** the method chapter, which exists to be read.
-- Current state: **25 of 38 sections fail.** That is the work.
+**The unit changed, and the measurement is why.** Counting per subsection lets
+one 60-word block sit beside two empty ones and average fine, which reads
+terribly. Firing 2 measured the real defect against Our World in Data, same
+extraction on both:
+
+| | paragraphs | median words | under 8 words |
+|---|---|---|---|
+| OWID, life expectancy | 94 | **18** | **22** |
+| `/dev/cell2` | 33 | **33** | **0** |
+
+**We are not writing more than the reference.** Our cell page is 2,854 words
+against OWID's 3,705 and is denser in figures than it. We write in blocks twice
+as long and we have **no captions at all**. Held to 20, our median falls to
+under 20, landing almost exactly on OWID's 18: two independent routes to the
+same number, the other being the section the founder liked, a drawing plus 16
+words.
+
+- Counted over `<p>` only. Headings, labels, axis text and figures are not prose.
+- A JSX expression counts as one word. Expanding it to zero would let a
+  paragraph of pure interpolation pass a budget it plainly breaks.
+- **Exempt:** the method chapter, which exists to be read; `/dev/options` and
+  `/dev/catalogue`, which argue a case to the founder in prose on purpose; and
+  everything outside the v2 surface, which is not held to a rule it predates.
+
+**IT IS A RATCHET.** 43 paragraphs are over budget today and the gate fails only
+when that set **grows**. A hard fail would red every page at once, and the
+stated-totals sweep already taught this codebase what happens to a gate that
+cries wolf. The baseline can be lowered and refuses to be raised without
+`--force`, which is the safeguard the geo-link ratchet lacked.
+
+**The work list is those 43**, `node scripts/verify_paragraph_budget.mjs --list`.
+
+**And captions are a missing FORM, not a shorter paragraph.** OWID has 22 blocks
+under eight words; we have zero on any page. A drawing with a four-word caption
+under it is a shape the kit does not currently have, and it is the cheapest
+thing that moves the median.
 
 ### 4.2 Icon scale , raise it and widen it
 

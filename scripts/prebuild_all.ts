@@ -194,6 +194,10 @@ const GATES: Gate[] = [
      POPULATION beside a SAMPLE. A gate that cries wolf fifteen times in sixteen
      gets switched off. Registered 2026-08-04. */
   { name: "stated-totals", script: "scripts/verify_stated_totals.mjs" },
+  /* A RATCHET, not a pass. 43 paragraphs on the v2 surface run past the ratified
+     20-word budget today; it fails only when that set GROWS. A hard fail would
+     red every page at once, and this codebase already knows what happens then. */
+  { name: "paragraph-budget", script: "scripts/verify_paragraph_budget.mjs" },
   /* The icon and radius scales, on the CURRENT v2 surface only. Both were
      decided in DESIGN.md and enforced nowhere, so both would drift back.
      Scope is narrow for the same reason as above: spine/, spine2-*,
