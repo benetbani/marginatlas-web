@@ -144,6 +144,15 @@ const GATES: Gate[] = [
   { name: "comparative-voice", script: "scripts/verify_comparative_voice.ts" },
   { name: "turnover-bands", script: "scripts/verify_turnover_bands.ts" },
   { name: "wage-source", script: "scripts/verify_wage_source_consistency.ts" },
+  /* The check that would have caught a three-month outage. The service-role key
+     was rotated and Vercel kept the old value; every supabaseAdmin read failed,
+     every page fell back to synthesised figures, and nothing said a word.
+     A REJECTED key fails the build; an unreachable host does not, because
+     trading a silent quarter-long outage for a deploy blocked by a network blip
+     is the wrong way round. No key set at all is a skip, so a bare local
+     prebuild is unaffected. Negative-tested on 2026-08-08 against a wrong key
+     and a garbage key, both exit 1. */
+  { name: "db-credential", script: "scripts/verify_db_credential.mjs" },
   /* The gate fx.ts has promised in a comment since it was written. Checks the
      DISPLAY rates in src/lib/currency.ts only; fx.ts is pinned at parse time on
      purpose and must not be refreshed. Warns at 92 days, fails at 183.
