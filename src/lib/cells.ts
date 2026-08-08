@@ -859,15 +859,40 @@ export async function getNudgeNeighbor(
   if (!ind) return null;
   const naics3 = ind.naics_3 || [];
   if (naics3.length === 0) return null;
-  const orClauses = naics3.map((p) => `naics_6.like.${p}%`).join(",");
-  const { data, error } = await supabaseAdmin
-    .from("cells_master")
-    .select("geo_id, n, rev_p50")
-    .eq("country", "US")
-    .or(orClauses)
-    .order("n", { ascending: false, nullsFirst: false })
-    .limit(5);
-  if (error || !data || data.length === 0) return null;
+  /* ONE QUERY PER PREFIX, NOT AN OR OF THEM, AND THE REASON IS MEASURED.
+     This was `.or(naics_6.like.722%,naics_6.like.445%,...)` with an
+     `.order("n")` on top. Postgres serves each LIKE-prefix from
+     idx_cells_master_country_naics_n, but an OR of several forces a BitmapOr,
+     which throws away the index ordering, so the whole match set is sorted
+     before the LIMIT can bite.
+     Benchmarked against production on 2026-08-08, three prefixes:
+       OR of LIKEs + order(n)        2846ms
+       one query per prefix, merged   786ms      <- 3.6x, identical rows
+       OR of LIKEs, no order          239ms      <- fastest and WRONG, it
+                                                    returns arbitrary rows
+     The budget is 4000ms. The old shape had almost no headroom and duly blew
+     through it about thirty times under build concurrency; this one has five
+     times over. The codebase already learned this on regional_cells, where the
+     note reads "ANY .order() clause times out, no index supports it".
+     naics_3 is one to three prefixes in practice, so this is a handful of fast
+     indexed reads rather than one slow sort. */
+  const perPrefix = await Promise.all(
+    naics3.map((p) =>
+      supabaseAdmin
+        .from("cells_master")
+        .select("geo_id, n, rev_p50")
+        .eq("country", "US")
+        .like("naics_6", `${p}%`)
+        .order("n", { ascending: false, nullsFirst: false })
+        .limit(5),
+    ),
+  );
+  const error = perPrefix.find((r) => r.error)?.error;
+  const data = perPrefix
+    .flatMap((r) => r.data ?? [])
+    .sort((a, b) => (Number(b.n) || 0) - (Number(a.n) || 0))
+    .slice(0, 5);
+  if (error || data.length === 0) return null;
   const top = data[0];
   const geoId = (top.geo_id as string) || "";
   if (!geoId.startsWith("US-") || geoId === current.geo_id) return null;
@@ -1224,7 +1249,6 @@ export async function getSameIndustryAcrossStates(
   const ind = slugToIndustry(industrySlug);
   if (!ind || !(ind.naics_3 || []).length) return [];
   const naics3Prefixes = (ind.naics_3 || []).map((n) => `${n}%`);
-  const orClauses = naics3Prefixes.map((p) => `naics_6.like.${p}`).join(",");
 
   // Trimmed limit (800 → 200). There are 50 US states; we cap returned
   // rows at `limit` after a client-side per-state collapse, so 200
@@ -1234,16 +1258,36 @@ export async function getSameIndustryAcrossStates(
   // so the highest-firm-count rows land in the slate even when a
   // recent year has scattered low-count entries that would otherwise
   // dominate a year-first sort.
-  const { data, error } = await supabaseAdmin
-    .from("cells_master")
-    .select("*")
-    .eq("country", "US")
-    .neq("geo_id", excludeGeoId)
-    .or(orClauses)
-    .order("n", { ascending: false, nullsFirst: false })
-    .order("year", { ascending: false, nullsFirst: false })
-    .limit(200);
-  if (error || !data) return [];
+  /* One query per prefix rather than an OR of them. Same reasoning and the same
+     measurement as getNudgeNeighbor above: an OR of LIKE-prefixes forces a
+     BitmapOr, which discards the index ordering, so the whole match set is
+     sorted before LIMIT applies. Benchmarked at 2846ms against 786ms for this
+     shape on a 4000ms budget. Each sub-query keeps the full 200 so the merged
+     slate is at least as good as before, then the same two-key sort and cap
+     run in JS. */
+  const perPrefix = await Promise.all(
+    naics3Prefixes.map((p) =>
+      supabaseAdmin
+        .from("cells_master")
+        .select("*")
+        .eq("country", "US")
+        .neq("geo_id", excludeGeoId)
+        .like("naics_6", p)
+        .order("n", { ascending: false, nullsFirst: false })
+        .order("year", { ascending: false, nullsFirst: false })
+        .limit(200),
+    ),
+  );
+  const error = perPrefix.find((r) => r.error)?.error;
+  const data = perPrefix
+    .flatMap((r) => r.data ?? [])
+    .sort(
+      (a, b) =>
+        (Number(b.n) || 0) - (Number(a.n) || 0) ||
+        (Number(b.year) || 0) - (Number(a.year) || 0),
+    )
+    .slice(0, 200);
+  if (error) return [];
 
   const rows = data.map((r) => normalizeRow(r as Record<string, unknown>));
   // Collapse to one row per state, keep highest-n
