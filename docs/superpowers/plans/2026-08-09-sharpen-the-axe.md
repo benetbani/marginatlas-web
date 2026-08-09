@@ -46,7 +46,41 @@ so every rule about "shipping pages" either misses it or has to special-case it.
 **Task 1.3 is therefore replaced by Task 1.3a below.** Retirement cannot be
 assessed until production code is out of the workshop.
 
-### Task 1.3a: Move the three production view modules out of `/dev`
+### Task 1.3a: DONE 2026-08-09, and it was five page types, not three
+
+**Corrected while doing it.** I had grepped for `spine-hood|spine-city|spine-industry`,
+so I never looked for `spine-cell` or `spine`. The gate written in step 4 found
+the two I missed, which is the argument for writing the gate before trusting the
+survey:
+
+```
+src/app/[country]/[geo]/[industry]/page.tsx  <- @/app/dev/spine-cell/cell-view   THE CELL PAGE
+src/app/[country]/page.tsx                   <- @/app/dev/spine/page             a whole route
+```
+
+**20 modules moved** to `src/components/spine/{hood,city,industry,cell}/`,
+filenames intact, four commits. `/gb/london/restaurants`, the one live v2 page,
+had been rendering from the workshop.
+
+**One leak remains, named in the gate with an exit condition.**
+`[country]/page.tsx` mounts a 112KB dev *route* as a component. That is a
+rewrite, not a move, and it sits behind a flag whose own comment says it can
+never be enabled. The gate fails if the allowance ever stops being needed.
+
+**Two gates broke and both were right to.** `verify_sample_tags` resolves a seed
+to its render group by folder and correctly reported the emptied folders as
+having no `SampleTag`; it now checks both locations.
+`verify_hardcoded_hex` is a ratchet keyed on file path, so 7 moved files read as
+new files with 78 hexes against a baseline of 0. **`--update-baseline` was NOT
+run** , it absorbs genuinely new hex along with the moved kind. The keys were
+renamed under an assertion that the entry count and hex total came out
+identical: 28 and 294, before and after.
+
+**Full chain 81/81. The KEEP/RETIRE sheet is now safe to produce.**
+
+<details><summary>The original task text, kept for the trail</summary>
+
+#### Move the three production view modules out of `/dev`
 
 **Files:**
 - Move: `src/app/dev/spine-hood/hood-view.tsx` → `src/components/spine/hood-view.tsx`
@@ -59,6 +93,8 @@ assessed until production code is out of the workshop.
 - [ ] **Step 3: Repeat for the second and third.**
 - [ ] **Step 4: Add a gate**: nothing outside `src/app/dev/` may import from `src/app/dev/`. Hard gate once the three are moved.
 - [ ] **Step 5: Only then** produce the KEEP/RETIRE sheet, which is now safe to reason about.
+
+</details>
 
 ### Also found, not acted on
 
