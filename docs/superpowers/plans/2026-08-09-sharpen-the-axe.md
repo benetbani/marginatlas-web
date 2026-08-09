@@ -96,6 +96,50 @@ identical: 28 and 294, before and after.
 
 </details>
 
+### THE JUNK-URL RULE, MEASURED CLEAN. Needs his nod because it is a 404.
+
+Found by deleting the 15 superseded prototypes: those paths did not start
+404ing, they fell through to `/[country]/[geo]` and rendered a synthesised
+region page. A control proves it is not about `/dev` at all:
+
+```
+/dev/totally-made-up-xyz   200  fresh   "totally-made-up-xyz: small-business benchmarks"
+/zz/qq                     200  fresh   "qq: small-business benchmarks"
+```
+
+**Every two-segment path on the site returns a plausible page for a place that
+does not exist.** Pre-existing, not caused by the deletions. Contained for now:
+those pages carry `noindex`, and `/dev/` is disallowed in robots since today.
+
+**The handoff rejected two rules after measuring them.** "Industry must resolve"
+would 404 **269 of 800** real cell URLs, because a third use raw NAICS
+descriptions. "Country + geo must resolve" does not discriminate, because
+`geoResolves("us","nowhere")` is `true`.
+
+**Nobody tested the country segment ON ITS OWN. It comes out clean.**
+
+| tested against | result |
+|---|---|
+| 800 real cell URLs (shards 1, 2) | 2 distinct first segments: `us`, `gb`. **0 false positives** |
+| **all 2,847 declared URLs** | 2,061 sit under a 2-letter code (195 distinct, all real countries); the other 786 sit under 13 named static prefixes (`cities`, `coverage`, `learn`, `compare`, `browse`, `world`, `pricing`, `about-data`, `faq`, `blog`, `you`, `status`, root) , **every one a real static route, which out-ranks `[country]` in the router anyway. 0 false positives.** |
+
+**The rule: the `[country]` segment must be a member of `COUNTRIES`, else
+`notFound()`.** One check, provably zero false positives across every URL the
+site declares.
+
+**Not shipped. It is a 404, which is outward-facing and hard to reverse**, and
+the standing guidance is that a wrong `noindex` is recoverable where a wrong 404
+is not. Two shapes to choose from:
+
+- **404** , correct end state, and the measurement supports it.
+- **`noindex` first** , recoverable, then promote to 404 after a few weeks of
+  Search Console showing nothing real got caught.
+
+**Residual risk either way, stated plainly:** the test covers URLs the sitemap
+declares. A legitimate inbound link to a country-tree URL that is NOT declared
+would still be caught. Nothing measured suggests one exists, and nothing
+measured rules it out.
+
 ### Also found, not acted on
 
 **A stale git worktree, 79MB**, at `.claude/worktrees/reverent-noether-12586a`,
