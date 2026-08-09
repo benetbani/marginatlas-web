@@ -4,7 +4,7 @@
  * src/app/cities/[slug]/neighborhoods/page.tsx can render the same body with REAL data.
  * This route renders the illustrative bundled seed (SpineHoodBody's default).
  */
-import { SpineHoodBody } from "./hood-view";
+import { SpineHoodBody } from "@/components/spine/hood/hood-view";
 
 export const dynamic = "force-static";
 

@@ -25,7 +25,7 @@ import {
   tagLabel,
 } from "@/lib/economics/neighborhood_multipliers";
 import { isSpineReformEnabledFor } from "@/lib/feature_flags";
-import { SpineHoodBody } from "@/app/dev/spine-hood/hood-view";
+import { SpineHoodBody } from "@/components/spine/hood/hood-view";
 import { buildSpineHoodSeed } from "@/lib/spine/adapt_hood";
 
 export const revalidate = 43200;
