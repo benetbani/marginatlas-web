@@ -491,10 +491,20 @@
      category-neutral (the per-page tint is the hero wash's job, not the
      gutters'). The atlas-placephoto hook (last layer) is where real curated
      photography drops in later by overriding background-image. */
+  /* THE GREEN AT THE BOTTOM OF EVERY PAGE, REMOVED 2026-08-09.
+     The third stop was rgba(74, 96, 24, .10), which is moss-700 #4a6018,
+     positioned at 50% 120%: the foot of the page, on every route, since this
+     layer is fixed behind the whole site. The founder: "in some cases, at the
+     bottom of the home page, I see a shade of orange that is not accepted as a
+     brand color." This is the most likely thing he was looking at, and it sat
+     in a stylesheet rather than a component, which is why the component-level
+     palette gate never saw it. That gate now reads CSS too.
+     Replaced with the ink ladder, keeping the three-lobe composition and the
+     opacities exactly as they were: only the hues change. */
   background:
     radial-gradient(60% 75% at 0% 18%, rgba(83, 66, 49, 0.16), rgba(83, 66, 49, 0) 60%),
-    radial-gradient(60% 75% at 100% 12%, rgba(120, 72, 40, 0.14), rgba(120, 72, 40, 0) 60%),
-    radial-gradient(80% 60% at 50% 120%, rgba(74, 96, 24, 0.10), rgba(74, 96, 24, 0) 55%),
+    radial-gradient(60% 75% at 100% 12%, rgba(230, 34, 0, 0.10), rgba(230, 34, 0, 0) 60%),
+    radial-gradient(80% 60% at 50% 120%, rgba(70, 55, 38, 0.10), rgba(70, 55, 38, 0) 55%),
     var(--atlas-surface-paper);
 }
 
@@ -528,14 +538,35 @@
   );
 }
 
-/* The photo hook: empty by default (the wash above carries the look until real
-   imagery is curated). Curated photography drops in later by setting
-   background-image on this layer; it is masked to the gutters by the veil. */
+/* THE PHOTOGRAPH, FINALLY WIRED, 2026-08-09.
+   This hook has said "curated photography drops in later" since it was written,
+   and later never came: it rendered an empty div and the gutters showed a flat
+   wash. Meanwhile the founder's supplied photograph has been sitting in
+   public/spine/_skyline.jpeg since 7 August, used by the v2 cell page and
+   nowhere else. The 2026-08-07 note recording it as BLOCKED, "pasted into chat
+   and I cannot write it to disk", was true when written and was never updated
+   once the file landed.
+
+   His instruction, 2026-08-09: "the home page should have the same picture ...
+   and it should also have those left and right parts with that same effect.
+   This is a unique global effect that we're going to keep in our page, except
+   privacy policy and pages that get very few visits."
+
+   So it is the SAME file the v2 page uses, not a second copy to drift from.
+   london.jpeg stays as the fallback layer exactly as it does there.
+
+   Treatment differs from the v2 skyline on purpose. That one is a hero band a
+   reader looks AT, so it runs at opacity .92. This is a fixed margin layer a
+   reader reads PAST for the whole scroll, and the veil already carves the
+   centre column to paper, so it sits quieter: strong enough to read as a place,
+   never loud enough to compete with a column of figures beside it. */
 .atlas-frame-gutters .atlas-placephoto {
   position: absolute;
   inset: 0;
-  background-position: center;
-  background-size: cover;
+  background-image: url("/spine/_skyline.jpeg"), url("/spine/london.jpeg");
+  background-position: center 38%, center top;
+  background-size: cover, cover;
+  background-repeat: no-repeat, no-repeat;
   opacity: 0.5;
   filter: saturate(0.82);
 }

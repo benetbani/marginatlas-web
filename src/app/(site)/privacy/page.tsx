@@ -9,6 +9,7 @@
  * worth reading.
  */
 import { LegalPage, LegalSection } from "@/components/LegalPage";
+import { NoPlacePhoto } from "@/components/kit/frame/NoPlacePhoto";
 
 export const revalidate = 86400;
 
@@ -21,6 +22,13 @@ export const metadata = {
 
 export default function PrivacyPage() {
   return (
+    <>
+    {/* Founder, 2026-08-09: the place photography is global "except privacy
+        policy and pages that get very few visits because they are hugely
+        technical." Set on privacy, terms and cookies only. NOT on /faq or
+        /contact, which share this component but are pages a reader arrives at
+        from a search box rather than pages they were sent to. */}
+    <NoPlacePhoto />
     <LegalPage
       title="Privacy"
       standfirst="What we collect, why we collect it, and who else sees it. Short, because we do not do much."
@@ -155,5 +163,6 @@ export default function PrivacyPage() {
         </p>
       </LegalSection>
     </LegalPage>
+    </>
   );
 }

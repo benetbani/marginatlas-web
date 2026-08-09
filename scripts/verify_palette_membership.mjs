@@ -72,7 +72,16 @@ import fs from "node:fs";
 import path from "node:path";
 
 const BASELINE = "scripts/palette_baseline.json";
-const ROOTS = ["src/components", "src/app"];
+/* STYLESHEETS ARE SCANNED TOO, ADDED 2026-08-09, AND THE FIRST VERSION MISSING
+   THEM IS WHY. The gutters behind every page on the site painted
+   rgba(74, 96, 24, .10) at "50% 120%" , moss-700 #4a6018, the banned green, at
+   the foot of every route. It was in globals.css rather than a component, so a
+   scan of src/components and src/app/**.tsx could not see it, and it is the
+   most likely thing the founder was actually looking at when he said "at the
+   bottom of the home page I see a shade of orange that is not accepted as a
+   brand color." A palette gate that only reads components cannot enforce a
+   palette. */
+const ROOTS = ["src/components", "src/app", "src/styles"];
 
 /** Hue bands the ratified palette allows, in HSL degrees. */
 const ALLOWED = [
@@ -109,7 +118,14 @@ function hexToHsl(hex) {
 export function isPaletteLegal(hex) {
   const { h, s, l } = hexToHsl(hex);
   if (s <= NEUTRAL_S_MAX) return true;      // any neutral
-  if (l >= 97 || l <= 4) return true;       // effectively white or black
+  /* PAPER TONES ARE NOT COLOURS. Above ~93% lightness a tint reads as warm or
+     cool white whatever its hue: #fff7e6 is 95% and is the cream this site is
+     printed on. The first threshold here was 97%, which rejected it and two
+     siblings, and tuning a rule until it passes is how a gate stops meaning
+     anything , so this is set on what a reader perceives, not on what made the
+     scan quiet. Below 93 the hue is visible and is judged: #fde9cc at 90% is a
+     peach and stays caught. */
+  if (l >= 93 || l <= 4) return true;
   return ALLOWED.some((b) => h >= b.hMin && h < b.hMax && (b.sMax == null || s <= b.sMax));
 }
 
@@ -121,7 +137,18 @@ function walk(d, out = []) {
   for (const e of fs.readdirSync(d, { withFileTypes: true })) {
     const p = path.join(d, e.name).replace(/\\/g, "/");
     if (e.isDirectory()) walk(p, out);
-    else if (/\.tsx?$/.test(e.name)) out.push(p);
+    else if (/\.(tsx?|css)$/.test(e.name)) out.push(p);
+  }
+  return out;
+}
+
+/** rgb()/rgba() written as numbers, which no hex scan can see. */
+function rgbLiteralsToHex(src) {
+  const out = [];
+  for (const m of src.matchAll(/rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})/g)) {
+    const [r, g, b] = [m[1], m[2], m[3]].map(Number);
+    if (r > 255 || g > 255 || b > 255) continue;
+    out.push("#" + [r, g, b].map((n) => n.toString(16).padStart(2, "0")).join(""));
   }
   return out;
 }
@@ -148,8 +175,11 @@ for (const root of ROOTS) {
       .replace(/\/\*[\s\S]*?\*\//g, "")
       .replace(/(^|[^:'"\\])\/\/.*$/gm, "$1");
     let n = (src.match(BANNED_TOKENS) || []).length;
-    // Raw hex in a component, judged by hue rather than by name.
+    // Raw hex, judged by hue rather than by name.
     for (const m of src.match(/#[0-9a-fA-F]{6}\b/g) || []) if (!isPaletteLegal(m)) n++;
+    // ...and the same judgement on rgb()/rgba(), which is how the green in the
+    // gutters hid from a hex-only scan for months.
+    for (const m of rgbLiteralsToHex(src)) if (!isPaletteLegal(m)) n++;
     if (n > 0) found[f] = n;
   }
 }

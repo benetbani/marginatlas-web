@@ -10,6 +10,7 @@
  * carries it.
  */
 import { LegalPage, LegalSection } from "@/components/LegalPage";
+import { NoPlacePhoto } from "@/components/kit/frame/NoPlacePhoto";
 
 export const revalidate = 86400;
 
@@ -22,6 +23,10 @@ export const metadata = {
 
 export default function CookiesPage() {
   return (
+    <>
+    {/* See the note on /privacy: the place photography is global except here,
+        privacy and terms. */}
+    <NoPlacePhoto />
     <LegalPage
       title="Cookies and browser storage"
       standfirst="What gets stored in your browser, what each thing is for, and how to get rid of it."
@@ -90,5 +95,6 @@ export default function CookiesPage() {
         </p>
       </LegalSection>
     </LegalPage>
+    </>
   );
 }
