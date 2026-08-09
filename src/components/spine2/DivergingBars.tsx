@@ -90,7 +90,7 @@ export function DivergingBars({
         /* Half the track each side of centre; the bar grows out from 50%. */
         const halfPct = (Math.abs(d.pct) / max) * 50;
         return (
-          <div key={d.label} style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 7 }}>
+          <div key={d.label} style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
             <span
               style={{
                 width: labelWidth, flex: "none", fontSize: 12.5, textAlign: "right",
@@ -100,7 +100,7 @@ export function DivergingBars({
               {d.label}
             </span>
 
-            <span style={{ flex: 1, height: 24, background: "var(--n1)", borderRadius: 2, position: "relative" }}>
+            <span style={{ flex: 1, height: 24, background: "var(--n1)", borderRadius: "var(--r-xs)", position: "relative" }}>
               {/* The centre: the average itself, drawn as a hairline so it reads
                   as the thing every bar is measured against. */}
               <span style={{ position: "absolute", left: "50%", top: -2, bottom: -2, width: 1, background: "var(--n4)" }} />
@@ -110,7 +110,7 @@ export function DivergingBars({
                   left: positive ? "50%" : `${50 - halfPct}%`,
                   width: `${halfPct}%`,
                   background: positive ? "var(--terra)" : "var(--n4)",
-                  borderRadius: 2,
+                  borderRadius: "var(--r-xs)",
                 }}
               />
               {/* The figure sits just outside its own bar, so it never fights

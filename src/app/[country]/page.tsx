@@ -764,35 +764,68 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
 
   /* --------------------------- the character -------------------------- */
   // From country_signature: culture + government spectrums + the people stats.
+  /* TWO SECTIONS OF SIX, RESTORED 2026-08-09 ON HIS INSTRUCTION.
+     "There were two sections that should be close to each other: one related to
+      the government, with five horizontal bars, and one related to the culture,
+      again with five horizontal bars. That was either deleted, either
+      fundamentally changed. I want those two sections back because they have
+      great value."
+
+     He is right, and what happened is worse than a redesign. country_signature
+     holds SIX culture spectra and SIX government spectra. This block rendered
+     four of the culture six and TWO of the government six, and pushed both into
+     one flat array, so two sections of six became one undifferentiated list of
+     six and half the data was silently dropped:
+
+       culture     dropped corruption_rejection, ambition_chest_beating
+       government  dropped task_efficiency, time_efficiency,
+                   judicial_impartiality, innovation_capacity
+
+     Nothing recorded the drop. That is exactly the failure his 2026-06-18
+     ruling names: "NEVER drop or butcher agreed sections", and the country
+     character is the section it names.
+
+     Six each, not five. He said five; the data holds six and the original spec
+     was two six-spectra tables. Six is kept and flagged here rather than
+     trimmed to match a number said from memory. */
   const sig = getCountrySignature(iso2);
-  const charSpectra: CharacterSpectrum[] = [];
+  const norm10 = (v: number | undefined) => (isNum(v) ? clamp01(v / 10) : null);
+  const norm1to10 = (v: number | undefined) => (isNum(v) ? clamp01((v - 1) / 9) : null);
+
+  const cultureSpectra: CharacterSpectrum[] = [];
   if (sig?.culture) {
     const cu = sig.culture;
-    const norm = (v: number | undefined) => (isNum(v) ? clamp01((v - 1) / 9) : null);
-    const pushSpec = (
-      v: number | undefined,
-      label: string,
-      low: string,
-      high: string,
-    ) => {
-      const n = norm(v);
-      if (n != null) charSpectra.push({ label, value: n, low, high });
+    const push = (v: number | undefined, label: string, low: string, high: string) => {
+      const n = norm1to10(v);
+      if (n != null) cultureSpectra.push({ label, value: n, low, high });
     };
-    pushSpec(cu.openness_to_foreigners, "Openness", "Insular", "Welcoming");
-    pushSpec(cu.innovation, "Innovation", "Tradition-bound", "Embraces the new");
-    pushSpec(cu.communication_directness, "Directness", "Indirect", "Direct");
-    pushSpec(cu.punctuality, "Time", "Loose", "Strict");
+    push(cu.openness_to_foreigners, "Openness", "Insular", "Welcoming");
+    push(cu.innovation, "Innovation", "Tradition-bound", "Embraces the new");
+    push(cu.communication_directness, "Directness", "Indirect", "Direct");
+    push(cu.punctuality, "Time", "Loose", "Strict");
+    push(cu.corruption_rejection, "Straight dealing", "Tolerated", "Rejected");
+    push(cu.ambition_chest_beating, "Ambition", "Understated", "Loud");
   }
+
+  const governmentSpectra: CharacterSpectrum[] = [];
   if (sig?.government) {
     const gov = sig.government;
-    const norm10 = (v: number | undefined) => (isNum(v) ? clamp01(v / 10) : null);
-    const pushGov = (v: number | undefined, label: string, low: string, high: string) => {
+    const push = (v: number | undefined, label: string, low: string, high: string) => {
       const n = norm10(v);
-      if (n != null) charSpectra.push({ label, value: n, low, high });
+      if (n != null) governmentSpectra.push({ label, value: n, low, high });
     };
-    pushGov(gov.tax_predictability, "Tax predictability", "Erratic", "Predictable");
-    pushGov(gov.low_bribery, "Clean dealing", "Greased", "Clean");
+    push(gov.tax_predictability, "Tax predictability", "Erratic", "Predictable");
+    push(gov.low_bribery, "Clean dealing", "Greased", "Clean");
+    push(gov.task_efficiency, "Getting things done", "Slow", "Efficient");
+    push(gov.time_efficiency, "Waiting time", "Long", "Short");
+    push(gov.judicial_impartiality, "Courts", "Partial", "Impartial");
+    push(gov.innovation_capacity, "Openness to the new", "Resistant", "Receptive");
   }
+
+  /* Kept for the callers below that still take one list. The two sections above
+     are what renders; this is the union, in a stable order, never a substitute
+     for them. */
+  const charSpectra: CharacterSpectrum[] = [...governmentSpectra, ...cultureSpectra];
   const charStats: CharacterStat[] = [];
   if (isNum(sig?.foreign_born_pct)) charStats.push({ k: "Born abroad", v: `${sig!.foreign_born_pct}`, u: "%" });
   if (isNum(sig?.foreign_owned_pct)) charStats.push({ k: "Foreign-owned firms", v: `${sig!.foreign_owned_pct}`, u: "%" });
@@ -1130,11 +1163,38 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
             heading={`What makes ${countryName} distinct`}
             card
           >
-            <CharacterPanel
-              spectra={hasCharacter ? charSpectra : null}
-              stats={charStats.length > 0 ? charStats : null}
-              sample={!hasCharacter}
-            />
+            {/* TWO BLOCKS, ADJACENT, RESTORED 2026-08-09. His words: "there
+                were two sections that should be close to each other, one
+                related to the government and one related to the culture ...
+                I want those two sections back because they have great value."
+
+                They sit inside the one #character section rather than becoming
+                two top-level sections, because that id is required by the
+                section-order gate and by the page's own jumpsheet. Adjacent and
+                separately headed is what he described; a second top-level id
+                would be a new section, which is a thing this project does not
+                add without him. */}
+            {hasCharacter ? (
+              <div className="grid gap-8 md:grid-cols-2">
+                <div>
+                  <h3 className="text-sm font-semibold uppercase tracking-wider text-cocoa-700 mb-4">
+                    Dealing with the state
+                  </h3>
+                  <CharacterPanel spectra={governmentSpectra} />
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold uppercase tracking-wider text-cocoa-700 mb-4">
+                    Dealing with people
+                  </h3>
+                  <CharacterPanel
+                    spectra={cultureSpectra}
+                    stats={charStats.length > 0 ? charStats : null}
+                  />
+                </div>
+              </div>
+            ) : (
+              <CharacterPanel spectra={null} sample />
+            )}
           </EngravedSection>
 
           {/* 17. What locals know: exemplar where curated, else the sample. */}
