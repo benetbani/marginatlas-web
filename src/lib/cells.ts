@@ -274,7 +274,7 @@ export async function getRegionalCell(
   if (selector.year) q = q.eq("year", selector.year);
 
   const { data, error } = await q;
-  if (error || !data || data.length === 0) return null;
+  if (dbFailed("getRegionalCell", error) || !data || data.length === 0) return null;
   // Prefer the highest-priority candidate that returned data (exact id before
   // parent fallback). Array.sort is stable, so the SQL year/n ordering holds
   // within each candidate group.
@@ -670,7 +670,12 @@ async function getCellBySlugRaw(
     const orClauses = naics3Prefixes.map((p) => `naics_6.like.${p}`).join(",");
     q = q.or(orClauses);
     const { data, error } = await q;
-    if (!error && data && data.length > 0) {
+    /* A rejected query here silently became "try the fuzzy path below", which is
+       the same ambiguity that hid the outage: the caller cannot tell a broken
+       exact-match query from a genuinely absent row, and the fallback masks it.
+       dbFailed returns true exactly when error is truthy, so `!dbFailed(...)`
+       is `!error` with a log attached. Control flow is unchanged. */
+    if (!dbFailed("getCellBySlugRaw:exact", error) && data && data.length > 0) {
       const picked = pickMatchingRow(
         data as Array<Record<string, unknown>>,
         rawInd,
@@ -696,7 +701,7 @@ async function getCellBySlugRaw(
   if (selector.sizeBand) q2 = q2.eq("size_band", selector.sizeBand);
   if (selector.year) q2 = q2.eq("year", selector.year);
   const { data, error } = await q2;
-  if (error || !data || data.length === 0) return null;
+  if (dbFailed("getCellBySlugRaw", error) || !data || data.length === 0) return null;
   if (rawInd) {
     const picked = pickMatchingRow(
       data as Array<Record<string, unknown>>,
@@ -917,7 +922,7 @@ export async function getNudgeNeighbor(
     .flatMap((r) => r.data ?? [])
     .sort((a, b) => (Number(b.n) || 0) - (Number(a.n) || 0))
     .slice(0, 5);
-  if (error || data.length === 0) return null;
+  if (dbFailed("getNudgeNeighbor", error) || data.length === 0) return null;
   const top = data[0];
   const geoId = (top.geo_id as string) || "";
   if (!geoId.startsWith("US-") || geoId === current.geo_id) return null;
@@ -1082,7 +1087,7 @@ export async function getExtrapolatedCell(
   if (selector.year) q = q.eq("year", selector.year);
 
   const { data, error } = await q;
-  if (error || !data || data.length === 0) return null;
+  if (dbFailed("getExtrapolatedCell", error) || !data || data.length === 0) return null;
   const candRank = (id: string) => {
     const i = candidates.indexOf(id);
     return i === -1 ? candidates.length : i;
@@ -1218,7 +1223,7 @@ export async function getSectorFallbackCell(
   if (selector.year) q = q.eq("year", selector.year);
 
   const { data, error } = await q;
-  if (error || !data || data.length === 0) return null;
+  if (dbFailed("getSectorFallbackCell", error) || !data || data.length === 0) return null;
   const r = data[0] as Record<string, unknown>;
   const predRev = (r.predicted_rev_per_firm as number) ?? null;
   const p10 = predRev != null ? predRev * 0.4 : null;

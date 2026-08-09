@@ -61,6 +61,20 @@ website/
 - Application (pages, sections) imports from Domain (`src/lib/`); Domain imports from System (`src/components/ui/`); System imports from Tokens (`src/lib/design-tokens.ts`).
 - Upward only. `scripts/verify_layering.ts` enforces app-to-data; 14 grandfathered violations in the allowlist — migrate when touched, do not add new entries.
 
+## Working method (founder-mandated 2026-08-09: "sharpen the axe")
+
+Four rules. Not aspirations, and each one exists because breaking it cost real time.
+
+1. **Read the module that produces a number before acting on the number.** Six measurement artifacts have been caught in this project and every one died to this single step. A check that cannot observe the thing it is checking reports the thing absent, confidently, with a figure attached.
+2. **State the instrument's blind spot before quoting it.** Write the sentence "this measurement cannot distinguish X from Y." If you cannot write it, the measurement is not ready to act on. `withBudget` logs on TIMEOUT only, so a fast-failing query is silent: that distinction cost three firings and hid a three-month outage.
+3. **One change, one verification, before the next change.** Do not stack a fix behind a fix. When two land together and the result is wrong, neither is falsifiable.
+4. **A ratified rule becomes a gate in the same session, or it is written down as not machine-checkable with the reason.** Four founder rulings came back a second time purely because they lived in a conversation instead of in something that runs.
+
+**Corollaries this repo has already paid for:**
+- The prebuild chain must never need the network or a secret. A gate that can fail on a blip is a gate that gets switched off.
+- Never raise a ratchet baseline to make it pass.
+- A test file that nothing runs is not coverage. Wire it or delete it.
+
 ## Hard constraints (enforced by gates or user)
 
 - **No em-dashes** in user-visible source (period/comma/colon). Gate: `verify_no_em_dashes`. Override: `// allow-em-dash` on the line.

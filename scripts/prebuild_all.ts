@@ -136,6 +136,36 @@ const GATES: Gate[] = [
   { name: "top-industries-plausibility", script: "tests/cells/top_industries_plausibility.test.ts" },
   { name: "all-sizes-blend", script: "tests/cells/extrapolated_all_sizes_blend.test.ts" },
   { name: "geo-region-name", script: "tests/cells/geo_region_name.test.ts" },
+  /* ELEVEN TEST FILES THAT PASSED AND NEVER RAN, wired 2026-08-09.
+     tests/ held 16 files. Four were in this list. The other twelve were written,
+     committed, and executed by nothing: no test runner is installed and the
+     idiom here is a bare tsx script that exits 1, so a file not named in this
+     array is inert. They read as coverage from the outside and were not.
+     Eleven of the twelve were run and pass; they are registered below, so from
+     now on they defend what they were written to defend.
+     The twelfth, tests/scores/recommend_demand.test.ts, is deliberately NOT
+     here. It transitively imports src/lib/supabase.ts, which throws at module
+     load without credentials, so it would make the prebuild chain depend on a
+     secret. That is the one thing this chain must never do. Run it by hand:
+       npx tsx tests/scores/recommend_demand.test.ts
+     Rule that follows: a test file nothing runs is not coverage. Wire it or
+     delete it, and check this list when you add one. */
+  { name: "industry-resolution", script: "tests/cells/industry_resolution.test.ts" },
+  { name: "search-cascade", script: "tests/home/search_cascade.test.ts" },
+  { name: "research-drop-schema", script: "tests/ingest/research_drop_schema.test.ts" },
+  { name: "break-in-for-cell", script: "tests/scores/break_in_for_cell.test.ts" },
+  { name: "composite", script: "tests/scores/composite.test.ts" },
+  { name: "country-board", script: "tests/scores/country_board.test.ts" },
+  { name: "margin-index", script: "tests/scores/margin_index.test.ts" },
+  { name: "recommend-core", script: "tests/scores/recommend_core.test.ts" },
+  { name: "recommender-flag", script: "tests/scores/recommender_flag.test.ts" },
+  { name: "scores", script: "tests/scores/scores.test.ts" },
+  { name: "wave2-flags", script: "tests/scores/wave2_flags.test.ts" },
+  /* Three checks added 2026-08-09 under "sharpen the axe", each pinning a class
+     of failure that had already happened once and that nothing could see. */
+  { name: "robots", script: "tests/app/robots.test.ts" },
+  { name: "route-chrome-contract", script: "tests/app/route_chrome_contract.test.ts" },
+  { name: "no-silent-db-errors", script: "scripts/verify_no_silent_db_errors.mjs" },
   { name: "useless-tiles", script: "scripts/audit/find_useless_tiles.ts" },
   { name: "typography", script: "scripts/verify_typography_consistency.ts" },
   { name: "signature-quality", script: "scripts/verify_signature_quality.ts" },
