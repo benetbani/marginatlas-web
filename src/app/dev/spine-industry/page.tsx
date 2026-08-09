@@ -7,7 +7,7 @@
  * body is imported and rendered with its default (the bundled illustrative seed),
  * keeping this dev surface byte-identical to the pre-split page.
  */
-import { SpineIndustryBody } from "./industry-view";
+import { SpineIndustryBody } from "@/components/spine/industry/industry-view";
 
 export const dynamic = "force-static";
 

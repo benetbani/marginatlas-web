@@ -5,7 +5,7 @@
  * imports directly and feeds real adapter data. This route renders the body with
  * the full bundled illustrative seed (the default).
  */
-import { SpineCellBody } from "./cell-view";
+import { SpineCellBody } from "@/components/spine/cell/cell-view";
 
 export const dynamic = "force-static";
 

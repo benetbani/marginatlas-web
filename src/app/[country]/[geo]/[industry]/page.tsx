@@ -106,7 +106,7 @@ import {
 } from "@/components/NeighborhoodOverview";
 import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 import { SpineShell } from "@/components/spine/shell";
-import { SpineCellBody as SpineCell } from "@/app/dev/spine-cell/cell-view";
+import { SpineCellBody as SpineCell } from "@/components/spine/cell/cell-view";
 import { buildSpineCellSeed } from "@/lib/spine/adapt_cell";
 import { loadSpine2Cell } from "@/lib/cells/spine2_loader";
 import { buildCellPage } from "@/lib/cells/spine2_adapter";

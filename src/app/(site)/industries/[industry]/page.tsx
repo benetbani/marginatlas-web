@@ -95,7 +95,7 @@ import {
 } from "@/lib/scores/activity_board";
 import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 import { SpineShell } from "@/components/spine/shell";
-import { SpineIndustryBody } from "@/app/dev/spine-industry/industry-view";
+import { SpineIndustryBody } from "@/components/spine/industry/industry-view";
 import { buildSpineIndustrySeed } from "@/lib/spine/adapt_industry";
 
 void INDUSTRY_PAGE_SECTIONS;

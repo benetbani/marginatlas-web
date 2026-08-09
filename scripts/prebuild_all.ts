@@ -166,6 +166,7 @@ const GATES: Gate[] = [
   { name: "robots", script: "tests/app/robots.test.ts" },
   { name: "route-chrome-contract", script: "tests/app/route_chrome_contract.test.ts" },
   { name: "no-silent-db-errors", script: "scripts/verify_no_silent_db_errors.mjs" },
+  { name: "dev-routes-sealed", script: "scripts/verify_dev_routes_sealed.mjs" },
   { name: "useless-tiles", script: "scripts/audit/find_useless_tiles.ts" },
   { name: "typography", script: "scripts/verify_typography_consistency.ts" },
   { name: "signature-quality", script: "scripts/verify_signature_quality.ts" },

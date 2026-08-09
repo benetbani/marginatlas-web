@@ -63,20 +63,39 @@ function tsxIn(dir: string): string[] {
  * seed-file directory -> its render group. Filename-sensitive for the
  * cities/ directory, which holds both the city seed and the (differently
  * rendered) neighborhoods seed.
+ *
+ * THE GROUPS MOVED ON 2026-08-09 AND THIS GATE CAUGHT IT, correctly, by
+ * failing. Four page bodies (cell, city, hood, industry) lived under
+ * src/app/dev/ and were imported from there by live routes. They moved to
+ * src/components/spine/<type>/ with their filenames intact. This resolver still
+ * pointed at the old folders, which by then held only a layout.tsx and a
+ * four-line page.tsx, so it correctly reported that nothing in the group
+ * mentions SampleTag: the group it was looking at no longer rendered anything.
+ *
+ * BOTH LOCATIONS ARE LISTED rather than swapping one for the other. The dev
+ * preview routes still exist and still render these page types for founder
+ * review, and a group is "every file that could put this seed on a screen".
+ * tsxIn() returns [] for a directory that does not exist, so a folder retiring
+ * later costs nothing here.
  */
 function resolveRenderGroup(seedRelPath: string): { label: string; files: string[] } | null {
   const parts = seedRelPath.split("/");
   const dir = parts[parts.length - 2];
   const base = parts[parts.length - 1];
-  if (dir === "cells") return { label: "spine-cell", files: tsxIn("src/app/dev/spine-cell") };
+  const group = (name: string, extra: string[] = []) => [
+    ...tsxIn(`src/components/spine/${name}`),
+    ...tsxIn(`src/app/dev/spine-${name}`),
+    ...extra,
+  ];
+  if (dir === "cells") return { label: "spine-cell", files: group("cell") };
   if (dir === "cities" && base.includes("neighborhoods")) {
     return {
       label: "spine-hood",
-      files: [...tsxIn("src/app/dev/spine-hood"), "src/components/spine/NeighborhoodExplorer.tsx"],
+      files: group("hood", ["src/components/spine/NeighborhoodExplorer.tsx"]),
     };
   }
-  if (dir === "cities") return { label: "spine-city", files: tsxIn("src/app/dev/spine-city") };
-  if (dir === "industries") return { label: "spine-industry", files: tsxIn("src/app/dev/spine-industry") };
+  if (dir === "cities") return { label: "spine-city", files: group("city") };
+  if (dir === "industries") return { label: "spine-industry", files: group("industry") };
   if (dir === "countries") return { label: "spine (country)", files: ["src/app/dev/spine/page.tsx"] };
   return null;
 }
