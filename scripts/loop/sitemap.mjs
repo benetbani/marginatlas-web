@@ -35,8 +35,24 @@
  *   node scripts/loop/sitemap.mjs
  *   node scripts/loop/sitemap.mjs --base https://staging.example.com
  *
- * Exit 1 if any shard declares zero URLs.
+ * Exit 1 if any shard declares zero URLs, EXCEPT the ones withdrawn on purpose
+ * (see WITHDRAWN below).
  */
+
+/* SHARDS THAT ARE EMPTY BECAUSE SOMEONE DECIDED THEY SHOULD BE.
+   Without this the tool exits 1 on every run for a shard nobody intends to
+   refill, and a tool that is always red is a tool that gets ignored, which is
+   the exact failure this repository has already paid for twice with gates.
+   The distinction it has to keep making: a shard that WAS populated and is now
+   empty is the outage this file was written to catch; a shard emptied by a
+   ruling is not. Only a named entry with a reason gets the exemption. */
+const WITHDRAWN = new Map([
+  [
+    5,
+    "neighbourhood pages, withdrawn from the index 2026-08-08 on the founder's " +
+      "instruction; the districts now live in a section on the city page",
+  ],
+]);
 const argv = process.argv.slice(2);
 const baseArg = argv.indexOf("--base");
 const BASE = baseArg > -1 ? argv[baseArg + 1] : "https://www.marginatlas.com";
@@ -99,12 +115,25 @@ for (const r of live) {
     continue;
   }
   total += r.locs;
-  const flag = r.locs === 0 ? "  <-- DECLARES NOTHING" : "";
+  const withdrawn = WITHDRAWN.has(r.i);
+  const flag =
+    r.locs > 0 ? "" : withdrawn ? "  <-- empty on purpose" : "  <-- DECLARES NOTHING";
   console.log(
     `  shard ${String(r.i).padEnd(2)} ${String(r.locs).padStart(7)} urls  ` +
       `${String(r.bytes).padStart(9)} bytes  age ${String(r.age).padStart(7)}s${flag}`,
   );
-  if (r.locs === 0) empty.push(r.i);
+  if (r.locs === 0 && !withdrawn) empty.push(r.i);
+}
+for (const [id, why] of WITHDRAWN) {
+  const r = live.find((x) => x.i === id);
+  if (!r) continue;
+  /* Report it either way. An intentionally empty shard that starts declaring
+     URLs again is also news, and the same line covers both directions. */
+  console.log(
+    r.locs === 0
+      ? `  shard ${id} is empty by decision: ${why}`
+      : `  NOTE: shard ${id} declares ${r.locs} URLs but is recorded as withdrawn (${why}).`,
+  );
 }
 console.log(
   `  ${live.length} registered shard(s), ${total} URL(s) declared. ` +
@@ -124,5 +153,12 @@ if (empty.length) {
   process.exit(1);
 }
 
-console.log("\n  All shards declare at least one URL.");
+/* Not "all shards declare at least one URL": with a withdrawn shard on the list
+   that sentence is false, and a false reassurance in a tool built to catch a
+   silent failure is the worst place to put one. */
+console.log(
+  WITHDRAWN.size
+    ? `\n  Every shard declares URLs except the ${WITHDRAWN.size} withdrawn above.`
+    : "\n  All shards declare at least one URL.",
+);
 process.exit(0);

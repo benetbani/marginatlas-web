@@ -1,10 +1,30 @@
 # HANDOFF — Margin Atlas, the 26-firing research loop and the outage it uncovered
 
+> ## CORRECTIONS, 2026-08-09, applied by the next session before any work
+>
+> **This dossier was wrong on both of its headline claims. The code was right.**
+> Read this box before anything below it; the corrected facts are folded into
+> §3 and §8 as well.
+>
+> 1. **The three commits were already pushed.** `origin/main` = `feca5af6`,
+>    pushed 02:08:48 , the push swept in the handoff commit that calls itself
+>    unpushed. Verified live: the sitemap declares **2,847 URLs**, shards 1 and 2
+>    carry **500 and 300**, `/cities/london` serves the district picker. The
+>    district collapse and the sitemap collapse are both **live**.
+> 2. **The v2 flag took effect.** The detector was pointed at a URL that can
+>    never serve the spine. `src/lib/cells/spine2_loader.ts` registers exactly
+>    one route, `gb/london/restaurants`; everything else falls through to legacy
+>    by design. `/gb/london/restaurants` serves `av2` ×2, `chnum` ×40,
+>    `statblock` ×15, `panel pad` ×42. **Nothing is wrong with the rollout.**
+> 3. **The 30 → 1 build-fallback verification failed.** See §8 item 3. The
+>    rewrite's own build logged 30, unchanged; the count fell only on a redeploy
+>    of the identical commit. **Do not report the perf fix as confirmed.**
+
 *Status, 2026-08-09: the site is materially healthier than 24 hours ago. A
 three-month silent database outage was found and closed, four live content
 defects were fixed and deployed, and the sitemap was cut from 28,167 URLs to
-~2,847. **Three commits are written, gated and NOT PUSHED.** The v2 design
-rollout is mid-flight and unconfirmed.*
+~2,847. All commits are pushed and live. The v2 design is serving on the one
+route that has a cell file.*
 
 > **How to use this document.** Read top to bottom once. Then read the files in
 > §7 in the order given. Do not start work until you can answer §13. The
@@ -32,9 +52,10 @@ figure presented as a measurement), stale FX rates, and five new prebuild gates.
 On the founder's instruction the 25,320 near-identical neighbourhood pages were
 de-indexed and their content moved into a district picker on the city page.
 
-**The single most important thing to know: three commits are unpushed, so the
-district picker and the sitemap collapse are not live.** Recommended next action
-is §8 item 1.
+~~**The single most important thing to know: three commits are unpushed, so the
+district picker and the sitemap collapse are not live.**~~ **WRONG WHEN WRITTEN.**
+They were pushed at 02:08:48 and both are live. See the corrections box at the
+top. The next real change is §8 item 4.
 
 ---
 
@@ -74,22 +95,30 @@ hide for months.
 | Supabase | **Fixed 2026-08-08** | service-role key was dead ~3 months; founder rotated it |
 | Sitemap | **~2,847 URLs** (was 28,167) | cell shards refilled to 500 + 300 after the key fix |
 | Cell pages | Real data again | the "Estimated" fallback label is gone |
-| **3 commits** | **WRITTEN, GATED, NOT PUSHED** | district picker, sitemap collapse, 11 log fixes |
-| v2 design rollout | **In flight, UNCONFIRMED** | see the honest note below |
+| **3 commits** | **PUSHED AND LIVE** | pushed 02:08:48; district picker + sitemap collapse both confirmed on production |
+| v2 design rollout | **LIVE on `/gb/london/restaurants`** | the only route with a spine-2 cell file; every other triple falls through to legacy by design |
 | Prebuild gates | **66, all green** | 5 added in the last 3 days |
-| Build-time DB fallbacks | ~30 → expected ~1 | **unverified**, needs the next build log |
+| Build-time DB fallbacks | 30 → 4, **not attributable to the fix** | the rewrite's own build still logged 30; see §8 item 3 |
 | Junk URLs | **Still return 200** | `/us/nowhere/nothing` → full indexable page. Refused to fix, see §6 |
 | Parent repo git | **`gc` fails** | 6,760 loose objects, 4.5GB. Commits work. Not fixable under the loop's memory ceiling |
 
-**The v2 design rollout, stated honestly.** The founder added
-`NEXT_PUBLIC_SPINE_REFORM_CELL` and redeployed. Measured after:
-`/us/california/restaurants` changed from 142,601 to 106,741 bytes, so the flag
-had *some* effect. But the served HTML contains **no `av2` string and none of the
-spine markup** (`chnum`, `statblock`, `panel pad`, `sbar`, `chapters`). The
-`--terra` and `font-grotesk` tokens present are site-wide, not spine-specific, so
-they prove nothing. **Whether the intended v2 design is what a reader now sees is
-not established.** A successor should look at the page before assuming either
-way. Do not report this as done.
+**The v2 design rollout, RESOLVED 2026-08-09.** The founder added
+`NEXT_PUBLIC_SPINE_REFORM_CELL` and redeployed, and it worked. The paragraph
+that stood here concluded "not established" from a measurement of
+`/us/california/restaurants`, **which can never serve the spine**:
+`src/lib/cells/spine2_loader.ts` registers exactly one route,
+`gb/london/restaurants`, and states so in its header , every other triple returns
+null and falls through to the legacy render on purpose. That is the launch
+state, one cell at a time, not a broken flag.
+
+Measured on production:
+
+  /gb/london/restaurants      av2 ×2, chnum ×40, statblock ×15, panel pad ×42, chapters ×2
+  /us/california/restaurants  zero spine markers, and correctly so
+
+**The `.av2` detector was right; the URL was wrong.** One consequence: the
+142,601 → 106,741 byte change on the California page was **not** the flag, since
+the flag cannot reach it. That drop is unattributed and stays that way.
 
 ---
 
@@ -223,29 +252,47 @@ decided; do not reopen.
 
 ## 8. Open threads & next steps
 
-### Committed next step (pre-authorized)
+### Done 2026-08-09, kept for the trail
 
-**1. Push the three commits.** They are written, typechecked and gated, and
-nothing is live until they are.
-`cd E:\atlas\website && git push`
-*Verify:* `node scripts/loop/sitemap.mjs` shows ~2,847 total, and
-`/cities/london` contains "district by district".
+**1. ~~Push the three commits.~~ DONE, and they were already pushed when this
+dossier was written.** Verified live: 2,847 URLs, shards 1/2 at 500/300,
+`/cities/london` serves the picker.
+
+**2. ~~Confirm what the v2 flag actually did.~~ DONE. It works.** See the
+corrected §3. The check was aimed at a URL with no spine-2 cell file.
+
+**3. ~~Read the next build log for `exceeded 4000ms`.~~ READ, AND IT DOES NOT
+SETTLE THE QUESTION.** Five builds, by commit and label:
+
+  18:30Z  4289c6e   **268**   20 nudge, ~224 across:*, ~18 extremes/opening
+  19:19Z  652f43e    **30**   20 nudge, 5 activityAcrossStates, 4 getSameIndustryAcrossStates
+  19:49Z  a165593    **30**   20 nudge, 6, 4          <- the rewrite's OWN build
+  23:55Z  a165593     **2**   0 nudge, 1, 1           <- same commit, redeployed
+  00:08Z  feca5af     **4**   0 nudge, 4, 0
+
+Firing 25's *attribution* holds exactly: 29 of the 30 are the two functions it
+named. **Its conclusion does not.** The build of the commit that rewrote them
+logged 30, unchanged from the build before it; the count fell to 2 only on a
+redeploy of the identical commit four hours later, with zero lines different.
+**A per-build fallback count cannot separate the code change from build-time
+database load, so "read the next build log" was the wrong test.** The direct
+benchmark (2846ms → 786ms on identical rows) is the better evidence and stands.
+**Do not report the rewrite as confirmed, and do not revert it.** The compute
+tier question is neither reopened nor closed.
+
+Also new, visible only because the swallow was removed:
+`getTopIndustriesForCountry failed: canceling statement due to statement
+timeout` , a **server-side** timeout, a different failure from the client-side
+budget, one occurrence.
 
 ### High priority
 
-**2. Confirm what the v2 flag actually did.** §3 explains why this is unresolved.
-Look at `/us/california/restaurants` in a browser. If it is the old design, check
-whether `NEXT_PUBLIC_SPINE_REFORM_CELL` saved and whether the redeploy postdated
-it. If it is the new design, the `.av2` detector is simply wrong and should be
-corrected in these notes.
-
-**3. Read the next build log for `exceeded 4000ms`.** The query rewrite should
-drop ~30 fallbacks to ~1. **Unverified.** If it did not drop, the benchmark
-measured the wrong thing and the compute tier question reopens.
-
 **4. Redirect the 25,320 district URLs to the city page.** Correct end state,
 now that the destination exists. They are currently `noindex, follow` and still
-resolve. A 301 to `/cities/<city>#districts` is the right shape.
+resolve. A 301 to `/cities/<city>#districts` is the right shape. **Unanswered
+before it ships:** those URLs carry an INDUSTRY that `/cities/<city>#districts`
+does not, so a flat 301 discards a dimension. Outward-facing and hard to
+reverse; wants a nod first.
 
 ### Medium
 
@@ -379,10 +426,13 @@ You are oriented when you can answer these:
    content go?
 4. Name two rules for 404-ing junk URLs that were measured and rejected, and why
    each failed.
-5. What is currently unpushed, and what is not live as a result?
-6. What is unverified about the v2 design rollout right now?
-7. What is the founder's stated preference for how you communicate?
-8. Which file is off-limits for edits without explicit instruction?
+5. Which two headline claims did this dossier get wrong, and what is the actual
+   state of each? (Corrections box, top.)
+6. Why can `/us/california/restaurants` never show the v2 design, and which URL
+   does?
+7. Why does the build log not settle whether the query rewrite worked?
+8. What is the founder's stated preference for how you communicate?
+9. Which file is off-limits for edits without explicit instruction?
 
 ---
 
@@ -411,11 +461,12 @@ Follow these steps exactly:
 4. Then prove you are oriented: answer the "Successor verification checklist" in section 13
    of the dossier in 5-10 lines. Keep it tight; this is a checkpoint, not an essay.
 5. Flag any contradiction between the dossier and the actual files. The dossier is a
-   point-in-time snapshot; the code and the live site are ground truth. In particular,
-   re-check whether the three unpushed commits are still unpushed and whether the v2
-   design flag took effect.
-6. Then stop and wait for my go, EXCEPT for the one pre-authorized step in section 8:
-   pushing the three pending commits. State what you are about to do, then do it.
+   point-in-time snapshot; the code and the live site are ground truth. It has already
+   been wrong twice in exactly this way (see the corrections box at the top), so verify
+   rather than believe: check git against origin, and check a claim about the live site
+   against the live site.
+6. Then stop and wait for my go. Nothing is pre-authorized: everything in section 8
+   item 1 is already done and pushed.
 
 Honor the operator preferences in section 9 as if given to you directly: short responses,
 paste-ready commands with full absolute paths, act in the background, never push unasked
