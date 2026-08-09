@@ -6,7 +6,67 @@
 
 **Architecture:** Four independent phases, each shipping working software on its own. Phase 0 is a working method and costs no code. Phase 1 removes the parasitic half of the route surface. Phase 2 collapses four styling sources into one. Phase 3 puts behaviour tests under the five things that have actually broken. Nothing here rewrites working product code.
 
-**Tech Stack:** Next.js 15.5 App Router, React 19.2, TypeScript 5, Tailwind 3.4, Vitest, Supabase, Vercel.
+**Tech Stack:** Next.js 15.5 App Router, React 19.2, TypeScript 5, Tailwind 3.4, Supabase, Vercel.
+
+---
+
+## CORRECTIONS TO THIS PLAN, made while executing it
+
+Three things in the audit above were wrong or incomplete. They are corrected in
+place below; the originals are struck rather than deleted, because a plan that
+quietly rewrites its own premises teaches nothing.
+
+**1. "24 tests" was 16, and the real number is 4.** My `find` swept a stale git
+worktree at `.claude/worktrees/reverent-noether-12586a` (79MB, detached HEAD),
+which contributed 8. Of the 16 real files, **only 4 were wired into anything.**
+No test runner is installed; the idiom is a bare `tsx` script that exits 1, so a
+file not named in `prebuild_all.ts` never runs. **Twelve test files were written,
+committed, and executed by nothing.** DONE: 11 now registered, the 12th excluded
+because it needs a secret.
+
+**2. Phase 3 does not need Vitest.** The plan specified it; the codebase already
+has a working idiom and adding a framework would mean a dependency, a config and
+a 16-file migration to gain nothing. All new tests follow the existing shape.
+
+**3. `/dev` IS NOT THE WORKSHOP. It is load-bearing production code.** Three
+shipping routes import their page bodies out of it:
+
+```
+src/app/(site)/cities/[slug]/neighborhoods/page.tsx  <- @/app/dev/spine-hood/hood-view
+src/app/(site)/cities/[slug]/page.tsx                <- @/app/dev/spine-city/city-view
+src/app/(site)/industries/[industry]/page.tsx        <- @/app/dev/spine-industry/industry-view
+```
+
+**This is the single most important architectural finding in the audit and it
+rewrites Task 1.3.** Deleting from `/dev` is not housekeeping; three live page
+types render from there. It also explains a large share of the "it clashes a
+lot" feeling: production code sits in a directory everyone treats as disposable,
+so every rule about "shipping pages" either misses it or has to special-case it.
+
+**Task 1.3 is therefore replaced by Task 1.3a below.** Retirement cannot be
+assessed until production code is out of the workshop.
+
+### Task 1.3a: Move the three production view modules out of `/dev`
+
+**Files:**
+- Move: `src/app/dev/spine-hood/hood-view.tsx` → `src/components/spine/hood-view.tsx`
+- Move: `src/app/dev/spine-city/city-view.tsx` → `src/components/spine/city-view.tsx`
+- Move: `src/app/dev/spine-industry/industry-view.tsx` → `src/components/spine/industry-view.tsx`
+- Modify: the three importing routes above, plus the `/dev` preview routes that also render them
+
+- [ ] **Step 1: Confirm the full import graph of each of the three before moving anything.** A view may have siblings in its `/dev` folder that move with it.
+- [ ] **Step 2: Move one module, update every importer, `npx tsc --noEmit`, commit.** One module per commit, so any single move is revertable.
+- [ ] **Step 3: Repeat for the second and third.**
+- [ ] **Step 4: Add a gate**: nothing outside `src/app/dev/` may import from `src/app/dev/`. Hard gate once the three are moved.
+- [ ] **Step 5: Only then** produce the KEEP/RETIRE sheet, which is now safe to reason about.
+
+### Also found, not acted on
+
+**A stale git worktree, 79MB**, at `.claude/worktrees/reverent-noether-12586a`,
+detached at `381bb3ab`. It is a real parasitic artifact: it inflates every
+repository-wide `find` and it is what corrupted the test count above. Removing it
+is `git worktree remove`, but it is not mine to discard without checking whether
+anything in it is unmerged.
 
 ---
 
