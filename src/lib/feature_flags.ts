@@ -99,15 +99,16 @@ export function isWarmFrameEnabled(): boolean {
   return parseFlag(process.env.NEXT_PUBLIC_WARM_FRAME, true);
 }
 
-/**
- * The new recommender for the /decide route. Default OFF so live /decide stays
- * the old page until the founder flips NEXT_PUBLIC_RECOMMENDER after eyeballing
- * the dev route. This mirrors the per-page spine gate: each page type has its own
- * adapter before flipping live.
- */
-export function isRecommenderEnabled(): boolean {
-  return parseFlag(process.env.NEXT_PUBLIC_RECOMMENDER, false);
-}
+/* REMOVED 2026-08-09: isRecommenderEnabled / NEXT_PUBLIC_RECOMMENDER.
+   It read "Default OFF so live /decide stays the old page until the founder
+   flips NEXT_PUBLIC_RECOMMENDER after eyeballing the dev route." Nothing ever
+   imported it. /decide does not consult it and never did, so the flag was not
+   holding the new recommender back: whatever /decide serves today, it serves
+   unconditionally, and setting the variable in Vercel would have changed
+   nothing while reading as though it might.
+   A switch wired to nothing is worse than no switch, because someone eventually
+   trusts it. If the recommender needs gating later, add the flag then, with a
+   consumer in the same commit. */
 
 /**
  * The margin-index page (/margin-index). Default OFF so live site stays the
@@ -208,28 +209,15 @@ function resolveSpinePage(perPageValue: string | undefined, masterEnables: boole
   return masterEnables ? isSpineReformEnabled() : false;
 }
 
-/**
- * Snapshot of every flag's current value. Useful for `/status` and
- * for the audit / debug surfaces.
- */
-export function snapshotFlags(): Record<string, boolean> {
-  return {
-    NEXT_PUBLIC_AU_PRIMARY_DATA: isAuPrimaryDataEnabled(),
-    NEXT_PUBLIC_ACCOUNT_PREVIEW: isAccountPreviewEnabled(),
-    NEXT_PUBLIC_AUTH_ENABLED: isAuthEnabled(),
-    NEXT_PUBLIC_GATING_ENABLED: isGatingEnabled(),
-    NEXT_PUBLIC_WARM_FRAME: isWarmFrameEnabled(),
-    NEXT_PUBLIC_RECOMMENDER: isRecommenderEnabled(),
-    NEXT_PUBLIC_MARGIN_INDEX: isMarginIndexEnabled(),
-    NEXT_PUBLIC_HOME_REFORM: isHomeReformEnabled(),
-    NEXT_PUBLIC_SPINE_REFORM: isSpineReformEnabled(),
-    NEXT_PUBLIC_REVIEW_UNVEIL: isReviewBuild(),
-    // The resolved per-page spine gates (master + per-page var), what each route sees.
-    "spine.cell": isSpineReformEnabledFor("cell"),
-    "spine.industry": isSpineReformEnabledFor("industry"),
-    "spine.city": isSpineReformEnabledFor("city"),
-    "spine.hood": isSpineReformEnabledFor("hood"),
-    "spine.region": isSpineReformEnabledFor("region"),
-    "spine.country": isSpineReformEnabledFor("country"),
-  };
-}
+/* REMOVED 2026-08-09: snapshotFlags().
+   Its doc said "Useful for /status and for the audit / debug surfaces." Nothing
+   imported it, and /status does not render it , checked on production, not
+   assumed. So the one place a reader could have asked "what is flagged on in
+   this deploy?" did not exist, while a function claiming to answer that sat
+   here looking maintained.
+   It also had to be edited every time a flag was added, and it was: it still
+   listed NEXT_PUBLIC_RECOMMENDER, a flag nothing consumed. A list nobody reads
+   that everybody must update is pure cost.
+   If a flag readout is wanted on /status, write it there against
+   isSpineReformEnabledFor and friends directly, and it will be one place
+   instead of two that can disagree. */

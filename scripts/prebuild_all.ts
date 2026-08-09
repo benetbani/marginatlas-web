@@ -158,7 +158,12 @@ const GATES: Gate[] = [
   { name: "country-board", script: "tests/scores/country_board.test.ts" },
   { name: "margin-index", script: "tests/scores/margin_index.test.ts" },
   { name: "recommend-core", script: "tests/scores/recommend_core.test.ts" },
-  { name: "recommender-flag", script: "tests/scores/recommender_flag.test.ts" },
+  /* recommender-flag removed 2026-08-09 with the flag it tested. It asserted
+     that NEXT_PUBLIC_RECOMMENDER parses to false when unset, which tests the
+     parser, not a gate: nothing ever consumed that flag. Wiring the orphan
+     tests into this chain an hour earlier is what surfaced it , the build broke
+     the moment the dead flag went, which is a test earning its keep by dying
+     with its subject. */
   { name: "scores", script: "tests/scores/scores.test.ts" },
   { name: "wave2-flags", script: "tests/scores/wave2_flags.test.ts" },
   /* Three checks added 2026-08-09 under "sharpen the axe", each pinning a class
