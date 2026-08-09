@@ -72,16 +72,35 @@ export type CountryShapeProps = {
 /* Canonical lens order + the glyph each lens reads with.              */
 /* ------------------------------------------------------------------ */
 
+/* SIX, AND IT IS A HEXAGON. Ratified by the founder 2026-08-09, option A of
+   /dev/options/hexagon: "we only go with a hexagon, only six parameters. That
+   became quickly disgusting."
+
+   It drew NINE. Three went, each for its own reason:
+
+     momentum, path   Not data. Both were pushed at a hardcoded 0.5 with
+                      sample:true because no trend data is held. Honest, and
+                      still two sides of a polygon carrying no information.
+
+     edge             Its source does not measure its label. It was
+                      1 - selfEmploymentPct / 60, and high self-employment
+                      mostly means INFORMAL work rather than an empty market,
+                      running near 90% in low-income countries. So it scored
+                      highest where an economy is poorest. This project already
+                      rejected a rule with exactly that confound: firing 12
+                      killed the wage-to-GDP band because a median wage
+                      describes wage earners while GDP divides across everyone.
+                      Same trap, different file.
+
+   The keys stay in the type so an old caller fails loudly at the type level
+   rather than silently plotting nothing. */
 const LENS_ORDER: readonly LensKey[] = [
   "reward",
   "cost",
   "entry",
   "people",
   "demand",
-  "edge",
   "risk",
-  "momentum",
-  "path",
 ];
 
 const LENS_GLYPH: Record<LensKey, GlyphName> = {

@@ -130,9 +130,9 @@ export default function HexagonOptionsPage() {
 
         <Frame
           letter="A"
-          name="Drop Edge"
-          cut="Reward, Cost, Entry, People, Demand, Risk. Nothing merges."
-          axes={["Reward", "Cost", "Entry", "People", "Demand", "Risk"]}
+          name="Drop Edge , RATIFIED, and shipped with his renames"
+          cut="Reward, Cost, Ease of entry, Talent, Purchasing power, Risk. Nothing merges."
+          axes={["Reward", "Cost", "Ease of entry", "Talent", "Purchasing power", "Risk"]}
           why="Edge is one minus self-employment share over sixty. High self-employment mostly means informal work, not an empty market: it runs near ninety per cent in low-income countries. So the lens reads highest where an economy is poorest, which is the opposite of the thing it claims to measure. This project already rejected a rule with exactly that confound, the wage-to-GDP band, on exactly this reasoning. Every surviving lens keeps its own source and none is diluted by an average."
         />
 
@@ -155,12 +155,11 @@ export default function HexagonOptionsPage() {
 
         <section className="panel pad" style={{ marginTop: 18 }}>
           <p style={{ fontSize: 13, color: INK, lineHeight: 1.65, maxWidth: 660 }}>
-            My argument is for A. Edge is the only one of the seven whose source
-            does not measure what its label claims, and a shape is read as six
-            equal judgements, so one weak axis discredits the other five. B is
-            the better answer if you would rather lose no signal at all, and its
-            double-count is real. C keeps the weakest lens and is the one I would
-            argue against.
+            <strong>Ruled: A, and it is live.</strong> He also renamed four axes
+            so each says what it reads: People became Talent, Entry became Ease
+            of entry, Demand became Purchasing power. Cost, Risk and Reward were
+            already right and are unchanged. B and C stay on this page as the
+            record of what was weighed, not as live choices.
           </p>
         </section>
       </main>

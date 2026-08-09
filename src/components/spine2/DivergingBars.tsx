@@ -1,41 +1,54 @@
 /**
  * DivergingBars , how far each row sits from the average, either side of centre.
  *
- * RATIFIED BY THE FOUNDER, 2026-08-09, correcting option C of
- * /dev/options/scale. His words:
+ * RATIFIED 2026-08-09 after two rounds of his corrections. Both rounds are
+ * recorded because the second one caught five separate mistakes of mine.
  *
- *   "you should put the average on the center, and then from the average you
- *    should just say, like, how far you'd lie on the right side, for example,
- *    plus fifty percent, eighty percent, whatever. And on the left side, minus
- *    that. So it should be a chart of how different each neighborhood is to the
- *    average. That's the actual difference."
+ * ROUND ONE, replacing my option C: "you should put the average on the center,
+ * and then from the average say how far you'd lie on the right side ... and on
+ * the left side, minus that. That's the actual difference."
  *
- *   "the more expensive side should be on terracotta, and the cheaper side
- *    should be on that sort of medium gray. So one row can only have two
- *    colours. The row should be on that light gray, but the part where the
- *    outline is should be either terracotta positive, either the medium grey
- *    negative."
+ * ROUND TWO, on the drawing itself, and every point was right:
  *
- * So: light track, one fill per row, terracotta right, neutral left. Two
- * colours in a row and never three. It replaces the traffic light on the score
- * gauges, which used green / amber / red and is banned by the palette rule.
+ *   1. "the bars should be in light gray. You have made them in dark gray,
+ *       which is very wrong." , THE NEUTRAL RAMP RUNS DARK TO LIGHT, --n1
+ *      darkest through --n5 lightest, and I had it backwards: --n1 on the TRACK
+ *      and --n4 on the negative fill. Track is now --n5 and the negative fill
+ *      is --n1, which is what he asked for and the opposite of what I shipped.
  *
- * WHY IT BEATS WHAT IT REPLACES, and this is the founder's point restated: a
- * colour band asserts a verdict and hides the reasoning. Nothing on the page
- * ever said why 66 is bad and 65 is not. A distance from the average states the
- * actual difference and lets the reader judge it.
+ *   2. "you have pushed the at least forty three percent to the absolute
+ *       maximum, which is not true." , the scale was normalised to the largest
+ *      deviation in the set, so the biggest row always filled its half whatever
+ *      it actually was. A 43% difference drawn as a full bar is a lie about the
+ *      size of the difference.
  *
- * THE CENTRE IS THE AVERAGE OF THE ROWS SHOWN, NOT AN EXTERNAL BASELINE, and
- * that was measured rather than assumed. Centring on the city rate produces a
- * one-sided chart: every London district is above it (7 of 7), as is every
- * district in Paris and Tokyo, because 13 of the 14 rent tags push above 1.0.
- * Against the average of the set, London splits 3 right and 4 left, which is
- * the drawing he described.
+ *   3. "if the terracotta goes to the absolute limit of the bar, it means that
+ *       it should be one hundred percent plus. The limit is never reached
+ *       almost." , THE SCALE IS ABSOLUTE. Half the track is 100%. A +43% row
+ *      fills 43% of its half and no more. Reaching the end means doubling the
+ *      average, which is the point: the end has a meaning now.
  *
- * BOUNDS STAY MARKED. A row whose underlying value sat on the model's clip is
- * a floor, not a reading, so it renders "at least". Three London districts sit
- * on the 3.0 ceiling and reading them as a genuine tie is the defect the
- * 2026-08-08 clamp work fixed; this must not reintroduce it.
+ *   4. "the length of the bar should be proportional to their percentage."
+ *      Follows from 3, and is why no normalisation is left anywhere.
+ *
+ *   5. "the percentage points should be inside the bar, not written on the
+ *       other side." , the figure sits in the bar it belongs to.
+ *
+ *   And the ends are named for a reader rather than for me: cheap on the left,
+ *   average at the centre, expensive on the right.
+ *
+ * SO THE COLOUR RULE, in his words: "The background is in light gray. The
+ * negative part is in dark gray, and the positive part is in terracotta."
+ * One fill per row, never three colours in a row.
+ *
+ * WHY IT BEATS THE TRAFFIC LIGHT IT REPLACES: green/amber/red asserts a verdict
+ * and hides the reasoning, and nothing ever said why 66 was bad and 65 was not.
+ * A distance from the average states the difference and lets the reader judge.
+ *
+ * BOUNDS STAY MARKED. A row whose underlying value sits on a model clip is a
+ * floor, not a reading, so it renders "at least". Three London districts sit on
+ * the 3.0 ceiling and reading them as a genuine tie is the defect the 2026-08-08
+ * clamp work fixed; this must not reintroduce it.
  */
 
 export type DivergingRow = {
@@ -46,7 +59,10 @@ export type DivergingRow = {
   clipped?: boolean;
 };
 
-/** Rows, sorted dearest first, each carrying its signed distance from the mean. */
+/** Half the track equals this much deviation. Reaching the end means doubling. */
+const FULL_SCALE_PCT = 100;
+
+/** Rows, dearest first, each carrying its signed percentage from the mean. */
 export function toDeviations(rows: DivergingRow[]): Array<DivergingRow & { pct: number }> {
   if (rows.length === 0) return [];
   const mean = rows.reduce((s, r) => s + r.value, 0) / rows.length;
@@ -58,37 +74,39 @@ export function toDeviations(rows: DivergingRow[]): Array<DivergingRow & { pct: 
 
 export function DivergingBars({
   rows,
-  dearerLabel = "dearer than average",
-  cheaperLabel = "cheaper than average",
+  cheapLabel = "cheap",
+  averageLabel = "average",
+  expensiveLabel = "expensive",
   labelWidth = 132,
 }: {
   rows: DivergingRow[];
-  dearerLabel?: string;
-  cheaperLabel?: string;
+  cheapLabel?: string;
+  averageLabel?: string;
+  expensiveLabel?: string;
   labelWidth?: number;
 }) {
   const data = toDeviations(rows);
   if (data.length === 0) return null;
 
-  /* Symmetric scale so the centre is genuinely the middle and a +40 bar and a
-     -40 bar are the same length. Scaling each side independently would make
-     the drawing lie about which deviation is larger. */
-  const max = Math.max(...data.map((d) => Math.abs(d.pct)), 1);
-
   return (
     <div style={{ maxWidth: "60%" }}>
+      {/* The three words that make the drawing readable without a caption. */}
       <div style={{ display: "flex", gap: 12, marginBottom: 8 }}>
         <span style={{ width: labelWidth, flex: "none" }} />
-        <span style={{ flex: 1, display: "flex", justifyContent: "space-between", fontSize: 11.5, color: "var(--muted)" }}>
-          <span>{cheaperLabel}</span>
-          <span>{dearerLabel}</span>
+        <span style={{ flex: 1, position: "relative", fontSize: 11.5, color: "var(--muted)", height: 16 }}>
+          <span style={{ position: "absolute", left: 0 }}>{cheapLabel}</span>
+          <span style={{ position: "absolute", left: "50%", transform: "translateX(-50%)" }}>{averageLabel}</span>
+          <span style={{ position: "absolute", right: 0 }}>{expensiveLabel}</span>
         </span>
       </div>
 
       {data.map((d) => {
         const positive = d.pct >= 0;
-        /* Half the track each side of centre; the bar grows out from 50%. */
-        const halfPct = (Math.abs(d.pct) / max) * 50;
+        /* ABSOLUTE, not normalised. Half the track is FULL_SCALE_PCT, so a bar's
+           length is its own percentage and nothing else. Clamped only so a row
+           past the full scale cannot overrun the track. */
+        const halfPct = (Math.min(Math.abs(d.pct), FULL_SCALE_PCT) / FULL_SCALE_PCT) * 50;
+        const text = `${d.clipped ? "at least " : ""}${positive ? "+" : ""}${d.pct}%`;
         return (
           <div key={d.label} style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
             <span
@@ -100,33 +118,35 @@ export function DivergingBars({
               {d.label}
             </span>
 
-            <span style={{ flex: 1, height: 24, background: "var(--n1)", borderRadius: "var(--r-xs)", position: "relative" }}>
-              {/* The centre: the average itself, drawn as a hairline so it reads
-                  as the thing every bar is measured against. */}
-              <span style={{ position: "absolute", left: "50%", top: -2, bottom: -2, width: 1, background: "var(--n4)" }} />
+            {/* Background: the LIGHTEST neutral. */}
+            <span style={{ flex: 1, height: 24, background: "var(--n5)", borderRadius: "var(--r-xs)", position: "relative" }}>
+              {/* The centre: the average every bar is measured against. */}
+              <span style={{ position: "absolute", left: "50%", top: -2, bottom: -2, width: 1, background: "var(--n3)" }} />
               <span
                 style={{
                   position: "absolute", top: 0, bottom: 0,
                   left: positive ? "50%" : `${50 - halfPct}%`,
                   width: `${halfPct}%`,
-                  background: positive ? "var(--terra)" : "var(--n4)",
+                  /* Terracotta above the average, dark grey below it. */
+                  background: positive ? "var(--terra)" : "var(--n1)",
                   borderRadius: "var(--r-xs)",
+                  display: "flex", alignItems: "center",
+                  justifyContent: positive ? "flex-end" : "flex-start",
+                  paddingLeft: 6, paddingRight: 6,
+                  overflow: "hidden",
                 }}
-              />
-              {/* The figure sits just outside its own bar, so it never fights
-                  the fill for contrast and never needs a second colour. */}
-              <span
-                className="fig"
-                style={{
-                  position: "absolute", top: "50%", transform: "translateY(-50%)",
-                  [positive ? "left" : "right"]: `calc(${50 + halfPct}% + 7px)`,
-                  fontSize: 12, fontWeight: 600, color: "var(--ink)",
-                  fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap",
-                } as React.CSSProperties}
               >
-                {d.clipped ? "at least " : ""}
-                {positive ? "+" : ""}
-                {d.pct}%
+                {/* Inside its own bar. Paper on terracotta and on --n1 both
+                    clear AA at this weight. */}
+                <span
+                  className="fig"
+                  style={{
+                    fontSize: 12, fontWeight: 600, color: "var(--paper)",
+                    fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap",
+                  }}
+                >
+                  {text}
+                </span>
               </span>
             </span>
           </div>

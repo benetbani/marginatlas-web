@@ -593,23 +593,30 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
   const entryParts = [daysScore, easeScore].filter((s): s is number => s != null);
   if (entryParts.length > 0) {
     const entry = entryParts.reduce((a, b) => a + b, 0) / entryParts.length;
-    lenses.push({ key: "entry", label: "Entry", score: entry, read: wordFromScore(entry) });
+    lenses.push({ key: "entry", label: "Ease of entry", score: entry, read: wordFromScore(entry) });
   }
   // People: can you afford a team, from the wage level (higher wages read as a
   // deeper, more capable labour pool but a costlier hire; here we read capability).
-  if (salaryScore != null) lenses.push({ key: "people", label: "People", score: salaryScore, read: wordFromScore(salaryScore) });
-  // Demand: is there money here, from GDP per capita + net wealth.
+  // "Talent", not "People": he renamed it 2026-08-09 so the axis says what it
+  // reads. Same for the two below.
+  if (salaryScore != null) lenses.push({ key: "people", label: "Talent", score: salaryScore, read: wordFromScore(salaryScore) });
+  // Purchasing power: is there money here, from GDP per capita + net wealth.
   const demandParts = [gdpScore, wealthScore].filter((s): s is number => s != null);
   if (demandParts.length > 0) {
     const demand = demandParts.reduce((a, b) => a + b, 0) / demandParts.length;
-    lenses.push({ key: "demand", label: "Demand", score: demand, read: wordFromScore(demand) });
+    lenses.push({ key: "demand", label: "Purchasing power", score: demand, read: wordFromScore(demand) });
   }
-  // Edge: a simple read. A less-crowded market (lower self-employment density)
-  // leaves more room; built from the held self-employment share where present.
-  if (isNum(snapshot.selfEmploymentPct)) {
-    const edge = clamp01(1 - snapshot.selfEmploymentPct / 60);
-    lenses.push({ key: "edge", label: "Edge", score: edge, read: wordFromScore(edge) });
-  }
+  /* EDGE IS GONE, ratified 2026-08-09 (option A of /dev/options/hexagon).
+     It was clamp01(1 - selfEmploymentPct / 60), sold as "a less-crowded market
+     leaves more room". It does not read that. High self-employment mostly means
+     INFORMAL work, not an empty market, and it runs near 90% in low-income
+     countries, so the lens scored highest where an economy is poorest , the
+     opposite of the thing it claimed to measure.
+     This project had already rejected a rule with the identical confound:
+     firing 12 killed the wage-to-GDP band because a median wage describes wage
+     earners while GDP divides across everyone. Nobody connected the two.
+     selfEmploymentPct is still held and still used elsewhere; only this
+     derivation goes. */
   // Risk: will the ground hold, from corruption perception + ease of business.
   const riskParts: number[] = [];
   if (isNum(corruptionIndex)) riskParts.push(clamp01(corruptionIndex / 100));
@@ -618,10 +625,15 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
     const risk = riskParts.reduce((a, b) => a + b, 0) / riskParts.length;
     lenses.push({ key: "risk", label: "Risk", score: risk, read: wordFromScore(risk) });
   }
-  // Momentum + path: not held as trend data yet, so they ride a tagged sample
-  // mid-scale read rather than implying a measured value.
-  lenses.push({ key: "momentum", label: "Momentum", score: 0.5, read: "Steady", sample: true });
-  lenses.push({ key: "path", label: "Path", score: 0.5, read: "Open", sample: true });
+  /* MOMENTUM AND PATH ARE GONE, same ruling. Both were pushed at a hardcoded
+     0.5 with sample:true because no trend data is held. The sample tag made
+     them honest and did not make them informative: they were two sides of a
+     polygon that moved for no country. When trend data lands they come back
+     with a source, not with a placeholder. */
+  /* No lens carries sample:true any more , the two that did were the ones
+     removed , so this is now a plain count of real lenses. Kept at 3 of 6:
+     a shape drawn from fewer than half its axes is a shape about nothing, and
+     the honest sample state is better than a lopsided hexagon. */
   const hasShape = lenses.filter((l) => l.sample !== true).length >= 3;
 
   /* -------------------------- the setup read --------------------------- */
