@@ -168,6 +168,12 @@ const GATES: Gate[] = [
   { name: "no-silent-db-errors", script: "scripts/verify_no_silent_db_errors.mjs" },
   { name: "dev-routes-sealed", script: "scripts/verify_dev_routes_sealed.mjs" },
   { name: "palette-membership", script: "scripts/verify_palette_membership.mjs" },
+  /* These two travel together. The list bounds the country wildcard so
+     middleware can 404 a made-up first segment; the test proves the rule
+     catches nothing the site publishes. If the list rots, middleware 404s a
+     real page, so the gate fails in BOTH directions. */
+  { name: "top-level-segments", script: "scripts/verify_top_level_segments.mjs" },
+  { name: "junk-url-rule", script: "tests/routing/junk_url_rule.test.ts" },
   { name: "useless-tiles", script: "scripts/audit/find_useless_tiles.ts" },
   { name: "typography", script: "scripts/verify_typography_consistency.ts" },
   { name: "signature-quality", script: "scripts/verify_signature_quality.ts" },

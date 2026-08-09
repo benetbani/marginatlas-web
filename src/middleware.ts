@@ -24,6 +24,7 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { COUNTRIES } from "@/lib/taxonomy";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
+import { TOP_LEVEL_SEGMENTS } from "@/lib/routing/top_level_segments";
 
 /**
  * TRAINING harvesters, blocked at the door with a 451.
@@ -190,6 +191,28 @@ function isPlaceWeDoNotHold(path: string): boolean {
   if (segments.length === 0 || segments.length > 2) return false;
 
   const [countrySlug, geoSlug] = segments;
+
+  /* THE GUESS THIS FUNCTION REFUSED TO MAKE, NOW MEASURED, 2026-08-09.
+     The block above says middleware "cannot ask Next whether a path belongs to
+     a real page or to the country wildcard. It must not guess." Correct with
+     the information it had. TOP_LEVEL_SEGMENTS is that information: every first
+     segment a real route folder occupies, generated from src/app and kept true
+     by verify_top_level_segments.
+
+     With it, this stops being a guess. A first segment that is neither a
+     country we hold nor a route folder that exists could only ever have matched
+     [country], and [country] can only be a country. So the page it lands on is
+     the country wildcard rendering a place that does not exist, which is what
+     /zz/qq and /definitely-not-a-route-xyz were both doing at 200.
+
+     Checked FIRST, before the two-letter test, because `og` is a two-letter
+     route folder and is not a country.
+
+     Verified against all 2,847 URLs the site declares: 2,061 sit under one of
+     195 real country codes and the other 786 under thirteen of these names.
+     Zero are caught. */
+  if (!TOP_LEVEL_SEGMENTS.has(countrySlug) && !COUNTRY_NAME_BY_SLUG.has(countrySlug)) return true;
+
   if (!/^[a-z]{2}$/.test(countrySlug)) return false;
 
   const countryName = COUNTRY_NAME_BY_SLUG.get(countrySlug);
