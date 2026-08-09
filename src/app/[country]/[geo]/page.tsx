@@ -45,7 +45,7 @@ import { GeoViabilityLede } from "@/components/geo/GeoViabilityLede";
 import industryMarginsJson from "@/lib/finance/industry_margins.json";
 import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 import { SpineShell } from "@/components/spine/shell";
-import { SpineCityBody } from "@/app/dev/spine-city/city-view";
+import { SpineCityBody } from "@/components/spine/city/city-view";
 import { SiteChrome } from "@/components/SiteChrome";
 
 // Curated, cross-country-stable margin shape per activity (the same table the

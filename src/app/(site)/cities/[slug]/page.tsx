@@ -77,7 +77,7 @@ import {
 } from "@/lib/cities/city_view";
 import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 import { SpineShell } from "@/components/spine/shell";
-import { SpineCityBody } from "@/app/dev/spine-city/city-view";
+import { SpineCityBody } from "@/components/spine/city/city-view";
 import { buildSpineCitySeed } from "@/lib/spine/adapt_city";
 
 export const revalidate = 43200; // 12 hours

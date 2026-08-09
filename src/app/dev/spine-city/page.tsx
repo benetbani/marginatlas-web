@@ -7,7 +7,7 @@
  * so the body is imported and rendered with its default (the bundled illustrative London
  * seed), keeping this dev surface byte-identical to the pre-split page.
  */
-import { SpineCityBody } from "./city-view";
+import { SpineCityBody } from "@/components/spine/city/city-view";
 
 export const dynamic = "force-static";
 
