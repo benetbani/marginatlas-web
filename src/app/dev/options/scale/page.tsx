@@ -39,6 +39,7 @@
  */
 import { Place } from "@/components/spine2/Place";
 import { SiteFooter } from "@/components/spine2/SiteFooter";
+import { DivergingBars, type DivergingRow } from "@/components/spine2/DivergingBars";
 
 import "@/styles/atlas-spine.css";
 
@@ -59,9 +60,26 @@ const D = [
   { name: "Shoreditch", mult: 1.612, clipped: false },
   { name: "Soho", mult: 1.551, clipped: false },
 ];
-/* The boundary option C names. Above this the lease takes more than the owner's
-   wage: it is the ratio at which rent overtakes take-home in the London cell. */
+/* The boundary the FIRST version of option C named, kept only because A still
+   refers to a threshold. It is not used by the ruled drawing. */
 const BOUNDARY = 1.8;
+
+/* ALL SEVEN London districts, read out of getNeighborhoodMultiplier on
+   2026-08-09 rather than transcribed: 3.00 / 3.00 / 3.00 / 1.54 / 1.45 / 1.43 /
+   1.29. The first three sit on the model's 3.0 ceiling and are floors, which is
+   why they carry `clipped` and render "at least".
+   The five-district set above is the one the earlier options used; this is the
+   full scheme, because a chart about distance from the average needs the whole
+   set or the average is not the average. */
+const DISTRICTS: DivergingRow[] = [
+  { label: "City of London", value: 3.0, clipped: true },
+  { label: "West End", value: 3.0, clipped: true },
+  { label: "South Bank", value: 3.0, clipped: true },
+  { label: "West London", value: 1.54 },
+  { label: "North London", value: 1.45 },
+  { label: "East London", value: 1.43 },
+  { label: "South London", value: 1.29 },
+];
 
 function Frame({
   letter,
@@ -179,51 +197,31 @@ function OptionB() {
 
 /* ------------------------------------------------------------------ C */
 /**
- * THE STATED BOUNDARY. The line is drawn AND named, so bad has a reason.
+ * DISTANCE FROM THE AVERAGE. RULED 2026-08-09, and this is the corrected C.
  *
- * Same bars, plus one marked threshold carrying the sentence that justifies it:
- * above this ratio the lease takes more than the owner's wage. That is the
- * thing the traffic light was asserting and never said out loud, and nothing on
- * the page ever explained who chose 33 and 66.
+ * His verdict on the first version: "closer to version C, but you have made a
+ * mistake, this C is not very smart. You should put the average on the center,
+ * and then from the average say how far you'd lie on the right side ... and on
+ * the left side, minus that. That's the actual difference."
  *
- * This is the site's characteristic move, from BRAND.md: name the thing that
- * decides the outcome rather than implying it. It is also the only one of the
- * three that survives a reader asking "says who?".
+ * He is right and the first version was weaker than I argued. It drew a
+ * boundary I had chosen and measured every district against MY line. This
+ * measures them against EACH OTHER, so the drawing carries a fact rather than
+ * my opinion of where bad starts, and it needs no threshold to defend.
+ *
+ * ONE CORRECTION THE DATA FORCED, and it is why the centre is the average of
+ * the districts rather than the city rate. Measured across four cities: every
+ * London district is above the city rate, 7 of 7, as is every district in Paris
+ * and Tokyo, because 13 of the 14 rent tags push above 1.0. Centred there, every
+ * bar would be terracotta and the grey side would never appear. Against the
+ * average of the set, London splits 3 right and 4 left.
  */
 function OptionC() {
-  const max = 3.2;
-  const boundaryPct = (BOUNDARY / max) * 100;
   return (
-    <div style={{ maxWidth: "60%" }}>
-      <div style={{ position: "relative" }}>
-        <div style={{
-          position: "absolute", left: `calc(116px + 12px + ${boundaryPct}% * 0.72)`, top: -6, bottom: 26,
-          borderLeft: `2px dashed ${TERRA}`, pointerEvents: "none",
-        }} />
-        {D.map((d) => {
-          const over = d.mult >= BOUNDARY;
-          return (
-            <div key={d.name} style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 9 }}>
-              <span style={{ width: 116, fontSize: 12.5, color: over ? INK : "var(--muted)", fontWeight: over ? 600 : 400, flex: "none" }}>
-                {d.name}
-              </span>
-              <span style={{ flex: 1, height: 22, background: "var(--n1)", borderRadius: 2, position: "relative" }}>
-                <span style={{
-                  position: "absolute", inset: 0, width: `${(d.mult / max) * 100}%`,
-                  background: over ? "var(--n5)" : "var(--n3)", borderRadius: 2,
-                  display: "flex", alignItems: "center", justifyContent: "flex-end", paddingRight: 7,
-                }}>
-                  <span className="fig" style={{ fontSize: 12, fontWeight: 600, color: "var(--paper)", fontVariantNumeric: "tabular-nums" }}>
-                    {d.clipped ? "at least 3.0x" : `${d.mult.toFixed(1)}x`}
-                  </span>
-                </span>
-              </span>
-            </div>
-          );
-        })}
-      </div>
+    <div>
+      <DivergingBars rows={DISTRICTS} />
       <p style={{ fontSize: 13, color: INK, marginTop: 16 }}>
-        Past the line, the lease takes more than the owner takes home.
+        Three districts cost double what the other four do.
       </p>
     </div>
   );
