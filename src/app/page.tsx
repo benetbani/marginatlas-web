@@ -15,7 +15,7 @@ import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { NeighborhoodCards } from "@/components/home/NeighborhoodCards";
 import { loadNeighborhoodCards } from "@/lib/home/neighborhood_cards";
 // Wave 2 Task 7 , the rebuilt-homepage gate (NEXT_PUBLIC_HOME_REFORM, default OFF).
-// Mirrors the dev route's (src/app/dev/home2/page.tsx) data-loading exactly.
+// Mirrors src/components/home/home2-view.tsx, which holds the rebuilt body.
 import { isHomeReformEnabled } from "@/lib/feature_flags";
 import { SiteChrome } from "@/components/SiteChrome";
 import { SpineShell } from "@/components/spine/shell";
@@ -163,7 +163,7 @@ function formatPostDate(iso: string): string {
 
 export default async function HomePage() {
   // Wave 2 Task 7: gate the rebuilt homepage behind NEXT_PUBLIC_HOME_REFORM (default
-  // OFF, see src/lib/feature_flags.ts). Mirrors src/app/dev/home2/page.tsx's
+  // OFF, see src/lib/feature_flags.ts). Renders src/components/home/home2-view.tsx's
   // data-loading exactly (the same Margin Index resolver run , slugToIndustry ->
   // rankPlacesForTrade -> toMarginIndexBoard , and the same keep-guarded insight
   // derivation), so the live route never re-derives it differently. The live route

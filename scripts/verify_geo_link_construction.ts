@@ -196,15 +196,13 @@ const SANCTIONED: Array<{ file: string; path: string; guard: string; why: string
     guard: "id: c.code",
     why: "The pushed value is the code field of a COUNTRIES row, carried through the result object built in this file.",
   },
-  {
-    file: "src/app/dev/country/page.tsx",
-    path: "/ke/*",
-    guard: "getAdmin1Regions",
-    why:
-      "The second segment is an admin1 slug read at runtime from the same manifest " +
-      "getRegionsForCountry maps for a country that has one, which is the list the " +
-      "region route checks.",
-  },
+  /* REMOVED 2026-08-09: src/app/dev/country/page.tsx was binned as a superseded
+     prototype (country2 replaced it). A sanction naming a file that no longer
+     exists is a licence nobody revoked, and the next file to land on that path
+     would have inherited it silently. This gate has already been bitten by the
+     same shape once: on 2026-08-08 it flipped to FAIL because six hand-built geo
+     links DISAPPEARED with a deleted file, and the baseline was counting links
+     in a file that was gone. Prune the entry when you delete the file. */
 ];
 
 /* ------------------------------------------------------------------ scanning */

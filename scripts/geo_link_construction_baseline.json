@@ -3,7 +3,6 @@
     "src/app/(site)/cities/[slug]/page.tsx /*",
     "src/app/[country]/[geo]/industries/page.tsx /*/*",
     "src/app/api/go/route.ts /*",
-    "src/app/dev/home/page.tsx /*",
     "src/components/city2/page/CityPage.tsx /*",
     "src/components/home/WorldMapClient.tsx /*",
     "src/components/spine2/page/CellPage.tsx /*",
@@ -92,6 +91,6 @@
     "VN/hanoi",
     "XK/pristina"
   ],
-  "recorded": "2026-08-08",
-  "why": "Known live constructions and known slug collisions, recorded so the set can only shrink. A construction here is not approved, only known: it assembles a path into the country tree without asking a resolver whether that page exists. Lower this when a repair lands; never raise it to silence a new one."
+  "recorded": "2026-08-09",
+  "why": "Known live constructions and known slug collisions, recorded so the set can only shrink. A construction here is not approved, only known: it assembles a path into the country tree without asking a resolver whether that page exists. Lower this when a repair lands; never raise it to silence a new one. Lowered 2026-08-09: src/app/dev/home/page.tsx was binned as a superseded prototype, so its construction went with it. One entry removed by name, nothing else touched, collisions untouched at 81."
 }
