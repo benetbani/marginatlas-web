@@ -17,6 +17,7 @@ import { loadNeighborhoodCards } from "@/lib/home/neighborhood_cards";
 // Wave 2 Task 7 , the rebuilt-homepage gate (NEXT_PUBLIC_HOME_REFORM, default OFF).
 // Mirrors the dev route's (src/app/dev/home2/page.tsx) data-loading exactly.
 import { isHomeReformEnabled } from "@/lib/feature_flags";
+import { SiteChrome } from "@/components/SiteChrome";
 import { SpineShell } from "@/components/spine/shell";
 import { Home2View } from "@/components/home/home2-view";
 import { rankPlacesForTrade, slugToIndustry } from "@/lib/scores/recommend";
@@ -77,12 +78,14 @@ export const revalidate = 86400; // 1 day
 function placeholderImage(slug: string): BlogPost["image"] {
   // Token-anchored ramps, mirroring GRADIENT_PALETTE in src/lib/blog.ts
   // (conformed 2026-06-12; the navy pair retired for the sanctioned teal).
+  // 2026-08-09: the moss and amber ramps replaced in place. See the note on
+  // GRADIENT_PALETTE in src/lib/blog.ts , these two lists must stay identical.
   const palette = [
     "linear-gradient(135deg, #991600 0%, #f24e2f 100%)",
-    "linear-gradient(135deg, #4a6018 0%, #96b448 100%)",
+    "linear-gradient(135deg, #211810 0%, #534231 100%)",
     "linear-gradient(135deg, #463726 0%, #7d6c58 100%)",
     "linear-gradient(135deg, #534231 0%, #c3b39c 100%)",
-    "linear-gradient(135deg, #8a510a 0%, #eda12f 100%)",
+    "linear-gradient(135deg, #e62200 0%, #f24e2f 100%)",
     "linear-gradient(135deg, #345a47 0%, #4d7c64 100%)",
   ];
   let h = 0;
@@ -209,7 +212,27 @@ export default async function HomePage() {
   // nothing resolves, which drops the section rather than showing fabricated rows.
   const stateComparisons = await loadStateComparisons();
   const exampleTiles = await loadExampleTiles();
+  /* THE MASTHEAD, PUT BACK. The founder, 2026-08-09: "the page at this moment
+     has no header. You have removed the header of the page, which is a massive
+     mistake."
+
+     It was never deleted. The masthead used to sit in the ROOT layout and wrap
+     every route; it moved into <SiteChrome> because one URL,
+     /[country]/[geo]/[industry], serves three different renders chosen at
+     REQUEST TIME by data, and App Router layouts are keyed by path, not data.
+     Routes that want chrome live under src/app/(site)/ or opt in per page. This
+     file sits at the app root, in neither, so it was the one route that got
+     neither , verified on production: zero <header>, zero role="banner".
+
+     Do NOT "fix" this by moving the masthead back into the root layout. That
+     re-breaks the cell route the move was made to protect.
+
+     And it is a restoration, not a new choice: ToneBand's own comment forty
+     lines up says its content "lives inside the layout's max-w-7xl mx-auto px-6
+     constraint" and escapes it for the background only. This page was authored
+     expecting the chrome's <main> and has been rendering without it. */
   return (
+    <SiteChrome>
     <div>
       {/*
         Hero (Reformation v2): the rotating question is the headline again
@@ -410,5 +433,6 @@ export default async function HomePage() {
          anchor (linked from the footer) now points the user to the bar
          via the existing #newsletter id on the bar element. */}
     </div>
+    </SiteChrome>
   );
 }

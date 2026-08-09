@@ -26,12 +26,19 @@ export type BlogImage =
 
 // Cover gradients anchored to the live token ramps (conformed 2026-06-12;
 // the old navy pair was off-palette blue, replaced by the sanctioned teal).
+/* NO GREEN AND NO AMBER, AND THE SLOTS STAY WHERE THEY ARE.
+   Slot 2 was moss-700 → moss-400 and slot 5 was amber-700 → amber-400. The
+   founder, 2026-08-09: "at the bottom of the home page I see a shade of orange
+   that is not accepted as a brand color." amber-400 #eda12f IS that orange, on
+   a blog cover, and the ratified palette bans amber and green by name.
+   Replaced IN PLACE rather than reordered: gradientFor() hashes the slug to an
+   index, so moving a slot silently reassigns covers on every existing post. */
 const GRADIENT_PALETTE = [
   "linear-gradient(135deg, #991600 0%, #f24e2f 100%)",  // atlas-700 → atlas-400
-  "linear-gradient(135deg, #4a6018 0%, #96b448 100%)",  // moss-700 → moss-400
+  "linear-gradient(135deg, #211810 0%, #534231 100%)",  // ink-900 → cocoa-700
   "linear-gradient(135deg, #463726 0%, #7d6c58 100%)",  // ink-700 → ink-500
   "linear-gradient(135deg, #534231 0%, #c3b39c 100%)",  // cocoa-700 → cocoa-300
-  "linear-gradient(135deg, #8a510a 0%, #eda12f 100%)",  // amber-700 → amber-400
+  "linear-gradient(135deg, #e62200 0%, #f24e2f 100%)",  // atlas-500 → atlas-400
   "linear-gradient(135deg, #345a47 0%, #4d7c64 100%)",  // teal-700 → teal-500
 ];
 

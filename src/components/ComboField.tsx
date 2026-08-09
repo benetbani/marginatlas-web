@@ -19,9 +19,17 @@ type Props = {
   onChange: (value: string) => void;
   onFocus?: () => void; // fired when the field gains focus (homepage uses it to freeze the prefill rotation)
   disabled?: boolean;
-  tooltip?: string; // ? icon explanation
   required?: boolean;
 };
+
+/* NO `tooltip` PROP, AND IT IS NOT COMING BACK BY ACCIDENT.
+   It rendered a small circular "?" badge beside the label. The founder ruled on
+   2026-08-09, on the two fields that used it: "you have set two question marks
+   at the country and at the city, which is like a massive mistake."
+   The prop is deleted rather than merely unused at the call sites, because a
+   loaded prop with no consumers is how this comes back in six weeks. A label
+   that needs a "?" to be understood is a label that failed; fix the label, or
+   put the sentence in the field, and do not add a badge. */
 
 /**
  * ComboField — a single field that's a dropdown AND a search-as-you-type filter.
@@ -38,7 +46,6 @@ export function ComboField({
   onChange,
   onFocus,
   disabled = false,
-  tooltip,
   required = false,
 }: Props) {
   const [open, setOpen] = useState(false);
@@ -122,15 +129,6 @@ export function ComboField({
       >
         {label}
         {required && <span className="text-atlas-600 ml-0.5">*</span>}
-        {tooltip && (
-          <span
-            title={tooltip}
-            className="ml-1.5 inline-flex items-center justify-center w-4 h-4 rounded-full bg-cream-200 text-cocoa-700 text-[10px] cursor-help normal-case font-normal"
-            aria-label={tooltip}
-          >
-            ?
-          </span>
-        )}
       </label>
       <div
         className={`flex items-center px-3.5 py-3 rounded-xl border transition-all ${
