@@ -264,10 +264,21 @@ export function CostToOpen({ d }: { d: any }) {
           return (
             <div key={it.name} className="grid grid-cols-[110px_1fr_52px] items-center gap-3">
               <span className="min-w-0 truncate text-[12px] text-[var(--c-ink2)]">{it.name}</span>
+              {/* THE STACK, ratified 2026-08-09 (option A of /dev/options/opening).
+                  Was three lollipops: a dot on a rule, where the dot carried the
+                  value and the length carried it a second time. His grammar is a
+                  bar , lightest neutral behind, one fill, largest line in
+                  terracotta and the rest on the neutral ramp, which is
+                  emphasis-not-categorical. The dominant line here is the fit-out
+                  at roughly four fifths of the total, and the point of the
+                  drawing is that it dwarfs everything under it. */}
               <span className="relative block h-4" role="img" aria-label={`${it.name} about ${money(v)}`}>
-                <span aria-hidden className="absolute top-1/2 h-[3px] w-full -translate-y-1/2 rounded-full" style={{ background: TRACK }} />
-                <span aria-hidden className="absolute top-1/2 h-[3px] -translate-y-1/2 rounded-full" style={{ width: `${p}%`, background: "#9a9a98" }} />
-                <span aria-hidden className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${p}%`, background: "#1b1b1a", boxShadow: "0 0 0 1px #e3e3e3" }} />
+                <span aria-hidden className="absolute inset-y-0 w-full rounded-[2px]" style={{ background: "var(--n5)" }} />
+                <span
+                  aria-hidden
+                  className="absolute inset-y-0 left-0 rounded-[2px]"
+                  style={{ width: `${p}%`, background: it === topItems[0] ? "var(--terra)" : "var(--n3)" }}
+                />
               </span>
               <Fig className="text-right text-[12.5px] text-[var(--c-ink)]">{money(v)}</Fig>
             </div>

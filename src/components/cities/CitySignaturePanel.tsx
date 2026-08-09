@@ -214,9 +214,20 @@ function SpectrumBar({
 function ScoreBar({ value, label }: { value: number; label: string }) {
   const v = Math.max(0, Math.min(10, value));
   const pct = (v / 10) * 100;
-  // Brand-token tone by value: positive (moss) / caution (amber) / poor (clay).
-  const tone =
-    v >= 7 ? "bg-moss-600" : v >= 4 ? "bg-amber-500" : "bg-clay-500";
+  /* THE TRAFFIC LIGHT IS GONE, 2026-08-09, on the ratified palette: terracotta
+     plus cool neutrals, no green, no amber.
+
+     It read `v >= 7 ? moss : v >= 4 ? amber : clay`, which did two things and
+     only one of them was wanted. The bar's LENGTH already carries the value.
+     The hue on top of it asserted a verdict, and nothing on the page ever said
+     who decided that 7 is good and 6.9 is caution , the founder's own objection
+     to the score gauges. Two bars one point apart looked like different kinds
+     of thing.
+
+     Terracotta as the data fill is his ratified grammar, not a new choice: the
+     diverging bars he ruled on the same day fill every above-average row in
+     terracotta. The value is the length; the colour is just the ink. */
+  const tone = "bg-atlas-500";
   return (
     <div>
       {/* Same label type as the culture column so the two columns share a
