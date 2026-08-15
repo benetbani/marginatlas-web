@@ -97,6 +97,10 @@ export function SpineHoodBody({ data = spineHoodSeed }: { data?: any }) {
         <Movement index="01" icon="best-areas" heading="What rent takes, district by district" />
         <NeighborhoodExplorer
           districts={districts}
+          /* The city this page is about, so the "what works here" trade links
+             land here rather than in London. cityIso2 and citySlug are the
+             same pair the trade band below already resolves from d.meta. */
+          placePrefix={cityIso2 && citySlug ? `/${cityIso2}/${citySlug}` : null}
           defaultSlug={d.meta?.default_slug}
           rail={d.meta?.rail}
           mapNote={d.meta?.map_note}

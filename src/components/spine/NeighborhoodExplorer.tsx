@@ -537,19 +537,32 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
  * unmapped trades stay plain text.
  * ========================================================================== */
 
-/* trade wording -> modeled London cell route. Keyword match, no new taxonomy; a miss
- * simply renders no link. */
+/* Trade wording -> a TRADE SLUG. Keyword match, no new taxonomy; a miss simply
+ * renders no link.
+ *
+ * These were whole hardcoded paths, "/gb/london/dental-practices" and five
+ * more, described by their own comment as "modeled London cell route". This
+ * component renders on every city's neighbourhood page, so a reader looking at
+ * the districts of Madrid or Osaka was told what works there and handed
+ * London. The place arrives as a prop now, from the datum the page was built
+ * from, and a card with no place does not link at all.
+ *
+ * cafes-coffee was an alias too; cafes-coffee-shops is the canonical slug. */
 const TRADE_ROUTES: Array<[RegExp, string]> = [
-  [/dental/i, "/gb/london/dental-practices"],
-  [/gym|fitness/i, "/gb/london/sports-fitness"],
-  [/grocer/i, "/gb/london/grocery-stores"],
-  [/restaurant/i, "/gb/london/restaurants"],
-  [/\bbar\b|nightclub/i, "/gb/london/bars-nightclubs"],
-  [/cafe|coffee/i, "/gb/london/cafes-coffee"],
+  [/dental/i, "dental-practices"],
+  [/gym|fitness/i, "sports-fitness"],
+  [/grocer/i, "grocery-stores"],
+  [/restaurant/i, "restaurants"],
+  [/\bbar\b|nightclub/i, "bars-nightclubs"],
+  [/cafe|coffee/i, "cafes-coffee-shops"],
 ];
-const tradeHref = (name: string) => TRADE_ROUTES.find(([re]) => re.test(name))?.[1];
+const tradeHref = (name: string, placePrefix?: string | null) => {
+  if (!placePrefix) return undefined;
+  const slug = TRADE_ROUTES.find(([re]) => re.test(name))?.[1];
+  return slug ? `${placePrefix}/${slug}` : undefined;
+};
 
-function UnderMapCard({ d }: { d: District }) {
+function UnderMapCard({ d, placePrefix }: { d: District; placePrefix?: string | null }) {
   const trades = d.best_trades ?? [];
   const streets = d.prime_streets ?? [];
   const demos = d.demographics ?? [];
@@ -563,7 +576,7 @@ function UnderMapCard({ d }: { d: District }) {
           <SectionLabel>What works in {d.name}</SectionLabel>
           <ol className="space-y-2">
             {trades.map((t, i) => {
-              const href = tradeHref(t.name);
+              const href = tradeHref(t.name, placePrefix);
               const body = (
                 <div className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">
                   {t.name}
@@ -613,7 +626,7 @@ function UnderMapCard({ d }: { d: District }) {
  * (hero), the real map + under-map district card (orientation that earns its
  * pixels), and the disciplined panel. Two selectors only: strip rows + map pins.
  * ========================================================================== */
-export function NeighborhoodExplorer({ districts, defaultSlug, rail, mapNote }: { districts: District[]; defaultSlug?: string; rail?: Rail2; mapNote?: string }) {
+export function NeighborhoodExplorer({ districts, defaultSlug, rail, mapNote, placePrefix }: { districts: District[]; defaultSlug?: string; rail?: Rail2; mapNote?: string; placePrefix?: string | null }) {
   const reduced = usePrefersReducedMotion();
   // ONE order page-wide: rent load ascending, lightest first (the strip's ranking, D1).
   const ranked = React.useMemo(() => [...districts].sort((a, b) => a.rent_mult - b.rent_mult), [districts]);
@@ -665,7 +678,7 @@ export function NeighborhoodExplorer({ districts, defaultSlug, rail, mapNote }: 
             />
           </div>
           {mapNote ? <p className="px-1 pt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{mapNote}</p> : null}
-          <UnderMapCard d={current} />
+          <UnderMapCard d={current} placePrefix={placePrefix} />
         </div>
         <DetailPanel d={current} reduced={reduced} />
       </div>

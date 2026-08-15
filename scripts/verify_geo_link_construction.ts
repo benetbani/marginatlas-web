@@ -147,6 +147,19 @@ const SANCTIONED: Array<{ file: string; path: string; guard: string; why: string
       "because the region route 404s for a city slug.",
   },
   {
+    file: "src/components/spine/hood/hood-view.tsx",
+    path: "/*/*",
+    guard: "cityIso2 && citySlug",
+    why:
+      "The page's own city, passed down to NeighborhoodExplorer so its 'what " +
+      "works here' trade links land in the city being read rather than in " +
+      "London, which is where all six of them were hardcoded. cityIso2 and " +
+      "citySlug come from d.meta, set by the adapter from the route this page " +
+      "resolved on, and the same pair already builds the depth-3 trade band " +
+      "twenty lines above. Null when either is missing, and the card then " +
+      "renders no link at all rather than a link to somewhere else.",
+  },
+  {
     file: "src/components/spine/cell/cell-view.tsx",
     path: "/*/*",
     guard: "d.meta?.iso2",

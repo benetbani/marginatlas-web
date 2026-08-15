@@ -433,6 +433,15 @@ function Related({ d }: { d: any }) {
 function Close({ d }: { d: any }) {
   const rel: any[] = d.related ?? [];
   const city = d.meta?.city ?? "this market";
+  /* The same hardcoded London as Related above, in the same file, one function
+     down. This one is louder: the row it builds reads "Look at X in {city}
+     instead", so the label named the reader's own city while the href went to
+     London. Derived from the datum, and null when the datum cannot say, in
+     which case the row renders without a link rather than with a wrong one. */
+  const iso2: string | undefined = d.meta?.iso2;
+  const geo: string | undefined = d.meta?.geo;
+  const placePrefix =
+    iso2 && geo ? `/${String(iso2).toLowerCase()}/${String(geo).toLowerCase()}` : null;
   const trade = (d.meta?.trade ?? "this trade").toLowerCase();
   const hasSubtypes = Array.isArray(d.subtypes?.items) && d.subtypes.items.length > 0;
   // Every link carries a REAL destination or renders as a plain span with no arrow
@@ -443,7 +452,7 @@ function Close({ d }: { d: any }) {
   const links: Array<{ t: string; href?: string }> = [
     { t: `Compare ${trade} across nearby markets`, href: "/industries" },
     ...(rel[0]
-      ? [{ t: `Look at ${rel[0].name.toLowerCase()} in ${city} instead`, href: rel[0].slug ? `/gb/london/${rel[0].slug}` : undefined }]
+      ? [{ t: `Look at ${rel[0].name.toLowerCase()} in ${city} instead`, href: rel[0].slug && placePrefix ? `${placePrefix}/${rel[0].slug}` : undefined }]
       : []),
     ...(hasSubtypes ? [{ t: "See what an owner keeps, format by format" }] : []),
   ];
