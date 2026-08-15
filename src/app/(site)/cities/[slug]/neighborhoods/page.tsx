@@ -51,15 +51,47 @@ const CITIES = (cityListJson as { cities: City[] }).cities;
 const CITIES_BY_SLUG = new Map(CITIES.map((c) => [c.slug, c]));
 const NEIGHBORHOODS = (neighborhoodsJson as { cities: Record<string, NeighborhoodScheme> }).cities;
 
-const CHARACTER_HEADLINE: Record<string, { industry: string; name: string }> = {
-  "central-business": { industry: "law-offices", name: "Law offices" },
-  "affluent-residential": { industry: "specialty-retail", name: "Specialty retail" },
+/**
+ * The trade that tends to fit a district's character.
+ *
+ * SEVEN OF THESE EIGHT SLUGS NAMED NO INDUSTRY. law-offices, specialty-retail,
+ * auto-repair, construction-residential, hotels, coffee-shops and bookstores
+ * are not slugs this taxonomy has ever produced; only "restaurants" resolved.
+ * They are the hyphenated twins of the invented ids that were found in the
+ * /learn article tags, which suggests both lists were written from memory
+ * rather than from the taxonomy.
+ *
+ * Nothing broke, because `industry` is never used: only `name` is rendered.
+ * That is the whole risk. The row ends in an arrow, which is an invitation to
+ * link it, and the day someone accepts it seven districts in eight would have
+ * gone to a 404.
+ *
+ * The slugs are now the real ones, verified against industryToSlug. Two
+ * characters had no honest match and carry `industry: null`:
+ *
+ *   affluent-residential  "specialty retail" is a category, not a trade. The
+ *                         nearest entries are specialty FOOD, grocers and
+ *                         sporting goods, which are three different shops.
+ *   central-business      the only law entry is sole-practitioner law firms,
+ *                         which is not default-visible, so it has no page.
+ *
+ * NOT LINKED YET, deliberately. For 209 of the 252 cities the character these
+ * map from is template-assigned rather than observed, so linking would turn an
+ * invented premise into a recommendation with a destination. The arrow is gone
+ * until the district data is settled; the names still read.
+ */
+const CHARACTER_HEADLINE: Record<
+  string,
+  { industry: string | null; name: string }
+> = {
+  "central-business": { industry: null, name: "Law offices" },
+  "affluent-residential": { industry: null, name: "Specialty retail" },
   "mid-residential": { industry: "restaurants", name: "Restaurants" },
-  "working-residential": { industry: "auto-repair", name: "Auto repair" },
-  "industrial": { industry: "construction-residential", name: "Construction" },
-  "tourist": { industry: "hotels", name: "Hotels" },
-  "mixed-urban": { industry: "coffee-shops", name: "Coffee shops" },
-  "academic": { industry: "bookstores", name: "Bookstores" },
+  "working-residential": { industry: "auto-repair-shops", name: "Auto repair" },
+  "industrial": { industry: "residential-construction", name: "Construction" },
+  "tourist": { industry: "hotels-lodging", name: "Hotels" },
+  "mixed-urban": { industry: "cafes-coffee-shops", name: "Coffee shops" },
+  "academic": { industry: "indie-bookstores", name: "Bookstores" },
 };
 
 export async function generateStaticParams() {
@@ -214,8 +246,10 @@ export default async function NeighborhoodHub({
                     <div className="text-[10px] uppercase tracking-wide text-cocoa-700/60 font-semibold mb-1">
                       Headline
                     </div>
+                    {/* No arrow. It is not a link, and a trailing arrow is a
+                        promise of somewhere to go. */}
                     <div className="text-sm font-medium text-atlas-700">
-                      {headline.name} →
+                      {headline.name}
                     </div>
                   </div>
                 </div>
