@@ -230,7 +230,17 @@ async function NeighborhoodCellPageBody({
     },
     {
       label: nb.name,
-      href: `/${country.toLowerCase()}/${city.toLowerCase()}/${neighborhood.toLowerCase()}`,
+      /* Was the assembled /{country}/{city}/{district}, which is the TRADE
+         route with a district slug in the industry position: 191 of the 194
+         district slugs 404 there and three serve a trade page at 200. The
+         comment on the onward-nav city link below calls this "the same defect
+         as the trail above"; the trail is this array, and it was still
+         carrying it.
+         It matters twice here. A breadcrumb stays in place whether or not it
+         opens, so the crumb was always going to render, and this array is also
+         what the BreadcrumbList JSON-LD is built from, so the wrong URL was
+         being published to machines as well as offered to readers. */
+      href: `/cities/${city.toLowerCase()}/neighborhoods`,
     },
     /* rawInd: the breadcrumb's last crumb is this page, and this page is the
        trade in the URL, not the parent its data rolls up to. */
@@ -600,8 +610,24 @@ async function NeighborhoodCellPageBody({
         <section className="mt-6 text-sm text-cocoa-700/80">
           <div className="flex flex-wrap items-center gap-3">
             <CountryFlag iso2={country.toUpperCase()} className="w-4" />
+            {/* THE SAME DEFECT THE COMMENT BELOW DESCRIBES, one link earlier.
+                This assembled /{country}/{city}/{district}, and there is no
+                district route: three segments is the TRADE route, so the
+                district slug arrived where an industry belongs.
+
+                Measured across all 194 district slugs: 191 answered 404, and
+                three answered 200 with a trade page, which is the worse half.
+                "Back to Garden District" opened building and garden supply
+                stores. Business Bay opened office and business support.
+                Short North opened short-term rental management. A reader is
+                returned to a business they never asked about, on a page that
+                renders perfectly.
+
+                The districts of a city live on its neighborhoods hub, and this
+                page only exists because that scheme holds this district, so
+                the link is safe by construction. */}
             <a
-              href={`/${country.toLowerCase()}/${city.toLowerCase()}/${neighborhood.toLowerCase()}`}
+              href={`/cities/${city.toLowerCase()}/neighborhoods`}
               className="transition-colors hover:text-atlas-700"
             >
               Back to {nb.name}
