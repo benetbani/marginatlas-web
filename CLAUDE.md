@@ -74,6 +74,9 @@ Four rules. Not aspirations, and each one exists because breaking it cost real t
 - The prebuild chain must never need the network or a secret. A gate that can fail on a blip is a gate that gets switched off.
 - Never raise a ratchet baseline to make it pass.
 - A test file that nothing runs is not coverage. Wire it or delete it.
+- **A stored total counts what was ALLOCATED. Evidence is what carries a tier, a source, a provenance envelope.** `regional_cells + extrapolated_cells` looked like a benchmark count at three call sites and was a slot count at all three: 169 rows of the coverage report are an empty 44x6 grid. Gated by `verify_no_slot_counting`.
+- **A gate that skips directories by bare name will eventually skip real source.** Skip by path from the root. `verify_no_internal_notes` skipped anything named `coverage`, meaning the vitest report it never reached and three directories of live pages it should have read, and it reported PASS for months about files it had not opened. When a gate's scan set is knowable independently, check it: that gate now compares its walk against a separate enumeration of every App Router page.
+- **Comment detection: use `scripts/lib/strip_comments`.** `line.trim().startsWith("//")` understands the first line of a block comment and none of the rest, so every continuation line gets scanned as code. Two gates hit this in one session, the second one written minutes after the first was fixed.
 
 ## Hard constraints (enforced by gates or user)
 
