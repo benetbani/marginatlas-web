@@ -187,8 +187,17 @@ export function buildWorldAtlas(
       .map((c) => [c.iso2, c]),
   );
 
+  /* Covered means CLASSIFIED cells, not allocated ones.
+     regional_cells + extrapolated_cells counts slots. 169 rows in the report
+     are an empty 44-industry x 6-band grid: 264 cells, no tier, no quality, no
+     year, zero geographies. Six of them are valid ISO-2 codes and survive the
+     validIso2 filter above, so this test was calling Andorra, Armenia, Bahrain,
+     Kuwait, Montenegro and Paraguay covered, and crediting each with the 44
+     activities the empty grid was shaped for.
+
+     A tier is the evidence that a cell holds something. */
   const isCovered = (row: CoverageCountry): boolean =>
-    row.regional_cells + row.extrapolated_cells > 0;
+    Object.values(row.tiers || {}).reduce((a, b) => a + (b || 0), 0) > 0;
 
   const toAtlas = (iso2: string): AtlasCountry => ({
     iso2,

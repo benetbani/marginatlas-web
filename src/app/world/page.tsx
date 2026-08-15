@@ -36,6 +36,7 @@ import * as React from "react";
 import { CountryFlag } from "@/components/CountryFlag";
 import { COUNTRIES } from "@/lib/taxonomy";
 import { getCoverageReport } from "@/lib/quality/coverage-report";
+import { getCoverageRows } from "@/lib/coverage/report";
 import { buildWorldAtlas } from "@/lib/scores/world_atlas";
 import { Place } from "@/components/spine2/Place";
 import { SiteFooter } from "@/components/spine2/SiteFooter";
@@ -141,8 +142,18 @@ export default async function WorldPage() {
      keeps them out by construction rather than by filtering after the fact. */
   const validIso2 = new Set(COUNTRIES.map((c) => c.code));
 
+  /* Countries come from lib/coverage/report, the same reader the coverage hub,
+     the scorecards and the sitemap use, so the world map cannot disagree with
+     them about which countries exist.
+
+     Reading the raw rows here cost Greece. Its 1,733 classified cells are keyed
+     "EL", a statistical-agency spelling, and the validity set above correctly
+     refused it, so a country covered at 7.6/10 was simply absent from the world
+     map. The shared reader canonicalises the code instead of discarding it.
+     Totals still come from the raw report; they are file-level sums, not
+     per-country claims. */
   const atlas = buildWorldAtlas(
-    report,
+    { ...report, countries: getCoverageRows() },
     validIso2,
     countryName,
     report?.totals?.industries_covered ?? 0,

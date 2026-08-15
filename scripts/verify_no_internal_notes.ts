@@ -19,6 +19,8 @@
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { resolve, join } from "node:path";
 
+import { newCommentState, stripComments } from "./lib/strip_comments";
+
 const PROJECT_ROOT = process.cwd();
 const SCAN_DIRS = ["src", "data"].map((d) => resolve(PROJECT_ROOT, d));
 
@@ -96,49 +98,6 @@ function walk(dir: string, acc: string[] = []): string[] {
   return acc;
 }
 
-/**
- * Strip comments from one line, carrying block state across lines.
- *
- * WHY THIS REPLACED A startsWith() TEST. The old check asked whether a line
- * BEGAN with a comment marker, so it understood the first line of a block
- * comment and none of the rest. This repo writes long multi-line comments
- * almost exclusively, which meant every continuation line was scanned as if it
- * were rendered text. The moment the gate could finally see the coverage page,
- * it reported four leaks and all four were prose inside the comment that
- * documented the real leak.
- *
- * A false positive there is not cosmetic. The next person's cheapest way out is
- * // allow-internal-note on the line, and a gate people routinely silence stops
- * being a gate.
- *
- * Returns the CODE half of the line, so an inline `// note` and a `/* ... *\/`
- * span both disappear while real JSX text on the same line survives.
- */
-function stripComments(line: string, state: { inBlock: boolean }): string {
-  let out = "";
-  let i = 0;
-  while (i < line.length) {
-    if (state.inBlock) {
-      const end = line.indexOf("*/", i);
-      if (end === -1) return out;
-      state.inBlock = false;
-      i = end + 2;
-      continue;
-    }
-    const lineComment = line.indexOf("//", i);
-    const blockOpen = line.indexOf("/*", i);
-    if (blockOpen !== -1 && (lineComment === -1 || blockOpen < lineComment)) {
-      out += line.slice(i, blockOpen);
-      state.inBlock = true;
-      i = blockOpen + 2;
-      continue;
-    }
-    if (lineComment !== -1) return out + line.slice(i, lineComment);
-    return out + line.slice(i);
-  }
-  return out;
-}
-
 function isAllowed(line: string): boolean {
   return line.includes("allow-internal-note");
 }
@@ -208,7 +167,7 @@ for (const dir of SCAN_DIRS) {
     const lines = src.split("\n");
     const isSource = file.endsWith(".ts") || file.endsWith(".tsx");
     // Block-comment state runs the length of the FILE, not the line.
-    const state = { inBlock: false };
+    const state = newCommentState();
     for (let i = 0; i < lines.length; i++) {
       const raw = lines[i];
       // Advance the comment state even on skipped lines, or an opt-out inside
