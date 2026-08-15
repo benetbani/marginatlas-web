@@ -246,10 +246,24 @@ export default async function NeighborhoodHub({
                       <div className="text-[10px] uppercase tracking-wide text-cocoa-700/60 font-semibold mb-1">
                         Restaurant revenue vs city
                       </div>
+                      {/* "at least" when the figure is the model's bound rather
+                          than a reading. getNeighborhoodMultiplier clips at 3.0,
+                          and 43 of the 1,266 districts land exactly there,
+                          including Manhattan FiDi, Midtown, SoHo/Tribeca, the
+                          City of London and the West End. So the most-looked-at
+                          districts were the ones printing a bare +200%, which
+                          reads as a measurement and is a ceiling.
+
+                          The convention is not invented here: CityDistrictPicker
+                          and DivergingBars both already prefix "at least " on
+                          the same flag, and the city page passes `clipped`
+                          through for exactly this. This page computed the same
+                          multiplier and dropped the qualifier. */}
                       <div
                         className="font-display text-xl font-semibold tabular-nums leading-none"
                         style={{ color: multColor }}
                       >
+                        {mult.clipped ? "at least " : ""}
                         {multPct >= 0 ? "+" : ""}
                         {multPct}%
                       </div>
