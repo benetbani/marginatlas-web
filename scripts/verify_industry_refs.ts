@@ -51,6 +51,10 @@ const EXEMPT: Array<[string, string]> = [
     "src/lib/learn/articles.ts",
     "relatedIndustryIds are keys into REP_BY_TAG in learn_view, a curated table of 24 tags mapped to a real industry and a representative city. resolveTag consults it first, so these strings are that table's vocabulary, not taxonomy ids",
   ],
+  [
+    "src/components/NeighborhoodOverview.tsx",
+    "REP_ACTIVITIES ids are keys into ACTIVITY_COMMUTER_BETA and the tourism and tag tables in neighborhood_multipliers, which key on these exact strings and carry different coefficients per key. Canonicalising them sent one lookup to a default of 0 and pointed another at a different trade's numbers. The URL is built by resolveActivityCellSlug, which converts an id to the canonical slug or to null first, so no raw id ever reaches an href",
+  ],
 ];
 
 /** Tokens too generic to carry meaning on their own. */

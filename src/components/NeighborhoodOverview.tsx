@@ -116,18 +116,34 @@ export function listSiblingNeighborhoods(
 // differ and are aliased below.
 // ---------------------------------------------------------------------------
 
+/* THESE IDS ARE KEYS INTO THE MULTIPLIER TABLES, NOT TAXONOMY REFERENCES, and
+   I learned that by breaking it. I "canonicalised" pharmacies_drug_stores to
+   health_beauty_stores and fitness_gyms to sports_fitness, which looked like
+   the same tidy-up applied elsewhere. It is not.
+
+   `a.id` is passed to getNeighborhoodMultiplier, and ACTIVITY_COMMUTER_BETA,
+   the tourism betas and the tag table all key on these exact strings:
+
+     pharmacies_drug_stores  commuter 0.3, tourism 0.4, a tag weight of 2.2
+     fitness_gyms            commuter 0.2, tourism -0.1
+     sports_fitness          commuter 0.1, a DIFFERENT trade in that table
+
+   So the rename sent one lookup to `?? 0`, flattening its multiplier to 1.0,
+   and pointed the other at another trade's coefficients. Live numbers on
+   neighbourhood pages, changed silently, by a commit whose whole point was
+   correctness.
+
+   The URL is not built from these. resolveActivityCellSlug below converts an
+   id to the canonical slug, or to null, before any href exists, which is why
+   the raw id can safely stay in the vocabulary these tables use. */
 const REP_ACTIVITIES: Array<{ id: string; name: string }> = [
   { id: "restaurants", name: "Restaurants" },
   { id: "cafes_coffee", name: "Cafes" },
   { id: "bars_nightclubs", name: "Bars and nightlife" },
   { id: "hotels_lodging", name: "Hotels" },
-  // health_beauty_stores is the taxonomy id; "pharmacies_drug_stores" only
-  // reached it through the fuzzy fallback, which resolves by luck rather than
-  // by contract. The reader-facing name is unchanged.
-  { id: "health_beauty_stores", name: "Pharmacies" },
+  { id: "pharmacies_drug_stores", name: "Pharmacies" },
   { id: "grocery_stores", name: "Grocery" },
-  // Same: sports_fitness is the id, "fitness_gyms" was a fuzzy hit.
-  { id: "sports_fitness", name: "Gyms" },
+  { id: "fitness_gyms", name: "Gyms" },
   { id: "hair_salons_full", name: "Hair salons" },
   { id: "legal_services", name: "Legal services" },
   { id: "accounting_tax", name: "Accounting" },
