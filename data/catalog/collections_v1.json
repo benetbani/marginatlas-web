@@ -1,0 +1,67 @@
+{
+  "generated_from": "derived/atlas_facts.csv",
+  "collections": [
+    {
+      "id": "cheap-and-light",
+      "title": "Cheap to run, light to tax",
+      "claim": "Below the world median on what the state takes and on what staff cost",
+      "unit": "countries",
+      "measured": 194,
+      "qualifying": 39,
+      "rule": "tax below 33.9% and labour cost below $11,500",
+      "members": [
+        "TL",
+        "SD",
+        "VU",
+        "IR",
+        "KH"
+      ],
+      "href": "/countries"
+    },
+    {
+      "id": "growing",
+      "title": "Growing fastest",
+      "claim": "Where customers are arriving quicker than anywhere else",
+      "unit": "cities",
+      "measured": 252,
+      "qualifying": 26,
+      "rule": "top tenth of year-on-year demand growth",
+      "members": [
+        "Abuja",
+        "Ahmedabad",
+        "Surat",
+        "Hanoi",
+        "Bangalore"
+      ],
+      "href": "/cities"
+    },
+    {
+      "id": "declining",
+      "title": "Districts on the way down",
+      "claim": "Famous addresses whose trade is thinning, and what that does to rent",
+      "unit": "districts",
+      "measured": 0,
+      "qualifying": 0,
+      "rule": "no decline metric is held yet",
+      "members": [],
+      "href": "/cities"
+    },
+    {
+      "id": "high-margin",
+      "title": "What the trade itself keeps",
+      "claim": "Trades whose margin survives before a single decision about place",
+      "unit": "trades",
+      "measured": 243,
+      "qualifying": 30,
+      "rule": "top tenth of net margin",
+      "members": [
+        "Mental Health Practice",
+        "Nutritionist",
+        "Sole Accounting",
+        "Sole Law Firms",
+        "Chiropractic"
+      ],
+      "href": "/industries"
+    }
+  ]
+}

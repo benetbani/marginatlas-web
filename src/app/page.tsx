@@ -1,5 +1,6 @@
 import { NavigatorForm } from "@/components/NavigatorForm";
 import { WorldMapSection } from "@/components/home/WorldMapSection";
+import { CatalogPlates } from "@/components/home/CatalogPlates";
 import { ExampleTiles } from "@/components/home/ExampleTiles";
 import { loadExampleTiles } from "@/lib/home/example_tiles";
 import { StateComparison } from "@/components/home/StateComparison";
@@ -292,6 +293,21 @@ export default async function HomePage() {
           Replaces the old pointed-question list. Self-omits below three. */}
       <ToneBand tone="home-featured">
         <ExampleTiles tiles={exampleTiles} />
+      </ToneBand>
+
+      {/* THE CATALOG, ratified 2026-08-09 (option A of /dev/options/catalog).
+          His brief: four collections, and "this catalog concept should not be
+          slammed like a list of elements". Each is a PLATE, one mark per
+          measured entity with the qualifying set lit, so the collection reads as
+          a field rather than as its members stacked up.
+
+          It sits ABOVE the map deliberately. His other instruction in the same
+          message was that the map "should be smaller", and the reason it reads
+          as oversized is that it was the only thing on the page carrying visual
+          weight. Giving the weight to something that states what the site is
+          for is the first half of that fix; the map's own size is the second. */}
+      <ToneBand tone="home-featured">
+        <CatalogPlates />
       </ToneBand>
 
       {/* Plan v30 hotfix v3 - world map moved to the absolute top of
