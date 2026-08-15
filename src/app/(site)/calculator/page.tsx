@@ -12,6 +12,7 @@
  */
 import Link from "next/link";
 import { COUNTRIES, INDUSTRIES, industryToSlug, isDefaultVisible } from "@/lib/taxonomy";
+import { getCoverageRows } from "@/lib/coverage/report";
 import { CalculatorForm } from "@/components/CalculatorForm";
 import { PageShell, ContentColumn } from "@/components/ui/page-shell";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
@@ -26,7 +27,12 @@ export const metadata = {
 };
 
 export default function CalculatorPage() {
-  const countries = [...COUNTRIES].sort((a, b) => a.name.localeCompare(b.name));
+  /* Which countries hold a benchmark at all, so the country select can group
+     them rather than making a reader discover it four inputs later. */
+  const measured = new Set(getCoverageRows().map((r) => r.iso2));
+  const countries = [...COUNTRIES]
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map((c) => ({ ...c, measured: measured.has(c.code) }));
   const industries = [...INDUSTRIES]
     .filter(isDefaultVisible)
     .map((i) => ({ id: i.id, name: i.name, slug: industryToSlug(i.id) }))
@@ -61,7 +67,11 @@ export default function CalculatorPage() {
 
         <div className="mt-9">
           <CalculatorForm
-            countries={countries.map((c) => ({ code: c.code, name: c.name }))}
+            countries={countries.map((c) => ({
+              code: c.code,
+              name: c.name,
+              measured: c.measured,
+            }))}
             industries={industries}
           />
         </div>

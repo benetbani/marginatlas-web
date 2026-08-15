@@ -23,7 +23,8 @@ import { computeBreakeven, type BreakevenBreakdown } from "@/lib/economics/break
 import { PercentileStrip } from "@/components/charts/PercentileStrip";
 
 type Props = {
-  countries: { code: string; name: string }[];
+  /** `measured` marks a country that holds benchmarks at all. */
+  countries: { code: string; name: string; measured?: boolean }[];
   industries: { id: string; name: string; slug: string }[];
 };
 
@@ -210,11 +211,40 @@ export function CalculatorForm({ countries, industries }: Props) {
               onChange={(e) => setCountry(e.target.value)}
               className={fieldCls}
             >
-              {countries.map((c) => (
-                <option key={c.code} value={c.code}>
-                  {c.name}
-                </option>
-              ))}
+              {/* Split into what holds benchmarks and what does not.
+                  101 of the 195 countries carry none, and a flat list sent a
+                  reader through country, region, industry and revenue before
+                  the form could tell them so. The split says it at the first
+                  input instead of the fifth.
+
+                  Both groups stay selectable, and deliberately: break-even is
+                  modelled from the trade's cost structure, not from the
+                  country, so that half of the tool answers anywhere. Only the
+                  comparison against comparable firms needs a cell, and the
+                  group label is scoped to the country because a country with
+                  benchmarks can still be missing one specific region and trade,
+                  which the form already says when it happens. */}
+              <optgroup label="With benchmarks">
+                {countries
+                  .filter((c) => c.measured)
+                  .map((c) => (
+                    <option key={c.code} value={c.code}>
+                      {c.name}
+                    </option>
+                  ))}
+              </optgroup>
+              {/* "No benchmarks yet", not "not measured yet". The gate on
+                  provenance vocabulary in labels is right: how a figure was
+                  produced is our word, what a reader can get from it is theirs. */}
+              <optgroup label="No benchmarks yet">
+                {countries
+                  .filter((c) => !c.measured)
+                  .map((c) => (
+                    <option key={c.code} value={c.code}>
+                      {c.name}
+                    </option>
+                  ))}
+              </optgroup>
             </select>
           </label>
           <label className="block">

@@ -16,6 +16,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { COUNTRIES } from "@/lib/taxonomy";
+import { getCoverageRows } from "@/lib/coverage/report";
 import { CountryFlag } from "@/components/CountryFlag";
 import cityListJson from "../../../../data/cities/city_list_v1.json";
 
@@ -121,10 +122,20 @@ export default function CountriesHub() {
     grouped.get(continent)!.push(c);
   }
 
+  /* Benchmarks per country, from the one coverage reader.
+     This header said "Atlas coverage" over the figure 195, which is how many
+     countries have a PAGE. 94 of them hold a benchmark, so the headline claim
+     of the page overstated its own coverage twofold, and every card in the grid
+     below looked equally covered. Both numbers are shown now, because both are
+     true and only one of them was being said. */
+  const benchmarksByIso2 = new Map(
+    getCoverageRows().map((r) => [r.iso2, r.cellCount]),
+  );
+
   const totalCountries = COUNTRIES.length;
   const totalCities = CITY_LIST.length;
-  const continentCount = CONTINENT_ORDER.filter(
-    (c) => (grouped.get(c)?.length ?? 0) > 0,
+  const measuredCountries = COUNTRIES.filter((c) =>
+    benchmarksByIso2.has(c.code),
   ).length;
 
   return (
@@ -148,10 +159,14 @@ export default function CountriesHub() {
             Open any country for its small-business benchmark, the regions
             inside, and the cities beneath it. Grouped by continent.
           </p>
+          {/* The continent count stood in the third slot and told a reader
+              nothing: the continents are the headings of the page directly
+              below, and six was never a fact anyone needed. It gave up its
+              place to the number this page exists to report. */}
           <div className="mt-6 flex flex-wrap gap-x-9 gap-y-2">
+            <Stat value={measuredCountries} label="with benchmarks" />
             <Stat value={totalCountries} label="countries" />
             <Stat value={totalCities} label="cities" />
-            <Stat value={continentCount} label="continents" />
           </div>
         </div>
       </header>
@@ -178,6 +193,13 @@ export default function CountriesHub() {
               <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
                 {sorted.map((country) => {
                   const cityCount = CITY_COUNT_BY_ISO2.get(country.code) || 0;
+                  /* Benchmarks first, cities second, because the benchmark is
+                     what this site is for and a reader scanning 195 identical
+                     cards had no way to tell which ones hold one. A card with
+                     neither line still links: the country page carries tax
+                     rates, formation costs and cities regardless, so a missing
+                     line means no benchmarks, not an empty page. */
+                  const benchmarks = benchmarksByIso2.get(country.code) || 0;
                   return (
                     <Link
                       key={country.code}
@@ -192,7 +214,11 @@ export default function CountriesHub() {
                         <span className="block truncate text-sm font-semibold text-ink-900 group-hover:text-atlas-700">
                           {country.name}
                         </span>
-                        {cityCount > 0 ? (
+                        {benchmarks > 0 ? (
+                          <span className="block text-[11px] text-atlas-700/80 tabular-nums">
+                            {benchmarks.toLocaleString()} benchmarks
+                          </span>
+                        ) : cityCount > 0 ? (
                           <span className="block text-[11px] text-cocoa-700/60 tabular-nums">
                             {cityCount} {cityCount === 1 ? "city" : "cities"}
                           </span>
