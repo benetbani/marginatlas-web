@@ -184,12 +184,27 @@ export default function MethodologyPage() {
           ))}
         </div>
 
+        {/* "each benchmark carries a five-star quality rating" stood at the
+            front of this sentence, and no benchmark does. The rating was
+            deleted from the product deliberately, for the reason recorded in
+            the cell page's own source: the 10/10 score and the stars "exposed
+            engineering provenance the founder explicitly said never to
+            display."
+
+            It was the second copy of that claim. /about-data taught the same
+            scale, and this paragraph sent readers there for "the fuller
+            breakdown of ratings", so the two pages propped each other up: the
+            cross-reference made the claim look sourced. Removing it from one
+            page only would have left the other pointing at a section that no
+            longer exists.
+
+            The rest of the sentence is exact and stays. "How we know this" is
+            HowWeKnowThis's real default label. */}
         <p className="mt-6 text-base leading-relaxed text-graphite">
-          Alongside the tier, each benchmark carries a five-star quality rating
-          for the underlying reading, and a quiet{" "}
+          Alongside the tier, a quiet{" "}
           <span className="font-medium text-ink-900">How we know this</span> link
           sits next to the headline number so the route and method are one click
-          away. The fuller breakdown of ratings, definitions, and the words we
+          away. The fuller breakdown of the definitions and the words we
           use lives on the{" "}
           <Link
             href="/about-data"
