@@ -451,6 +451,36 @@ async function main() {
   console.log(`  Passed: ${results.length - fails.length}`);
   console.log(`  Failed: ${fails.length}`);
 
+  /* DEFERRED CHECKS, surfaced at the summary.
+
+     verify_cell_lattice runs 11 checks and defers 3, and says so plainly in
+     its own output: "CHECKS THAT COULD NOT RUN , 3. These are NOT passes."
+     One of them is that a city's keep-share is never compared against its
+     country's, because no country file exists to compare against.
+
+     That gate is honest. This runner was not. Gate stdout is captured but only
+     printed on FAILURE, so a deferral appeared as one green tick among many,
+     and the line everybody actually reads, "Passed: 95, Failed: 0", had no way
+     to express "and some checks could not run at all".
+
+     A check that did not run is not a check that passed. The summary says so
+     now, and the convention is one a gate opts into by printing "N deferred". */
+  const deferred = results
+    .map((r) => {
+      const m = /(\d+)\s+deferred/.exec(r.stdoutTail);
+      return m ? { name: r.name, count: Number(m[1]) } : null;
+    })
+    .filter((x): x is { name: string; count: number } => x !== null);
+
+  if (deferred.length > 0) {
+    const total = deferred.reduce((n, d) => n + d.count, 0);
+    console.log(
+      `  Deferred: ${total} check(s) could not run (` +
+        deferred.map((d) => `${d.name}:${d.count}`).join(", ") +
+        `). These are NOT passes; run the gate directly for the conditions.`,
+    );
+  }
+
   if (fails.length > 0) {
     console.log("");
     console.log("=== Failures ===");
