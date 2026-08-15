@@ -147,6 +147,21 @@ const SANCTIONED: Array<{ file: string; path: string; guard: string; why: string
       "because the region route 404s for a city slug.",
   },
   {
+    file: "src/components/spine/cell/cell-view.tsx",
+    path: "/*/*",
+    guard: "d.meta?.iso2",
+    why:
+      "Not another place's URL. iso2 and geo are THIS page's own identity, set " +
+      "by adapt_cell from the route params it was called with, and the route " +
+      "only got here by resolving a real cell for exactly that country and geo. " +
+      "So the prefix is the page's own address rather than a slug guessed for " +
+      "somewhere else, which is the failure this gate exists to catch. It " +
+      "replaced a hardcoded /gb/london, under a heading reading 'Related trades " +
+      "in this place', which would have sent every non-London reader to London " +
+      "the day adapt_cell starts populating `related`. When meta is absent the " +
+      "href is undefined and the row renders as text, never as a wrong place.",
+  },
+  {
     file: "src/app/(site)/saved/SavedClient.tsx",
     path: "/*",
     guard: "${c.country}/${c.geo}/${c.industry}",

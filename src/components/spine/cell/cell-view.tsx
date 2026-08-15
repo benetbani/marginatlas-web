@@ -380,6 +380,26 @@ function SurvivalSlope({ points }: { points: Array<[string, number]> }) {
 function Related({ d }: { d: any }) {
   const arr: any[] = d.related ?? [];
   if (arr.length === 0) return null; // omitted on promotion: no sibling-cell links
+  /* THE PLACE COMES FROM THE DATUM. Every row here was hardcoded to
+     `/gb/london/${r.slug}` under a heading that reads "Related trades in this
+     place", so the heading and the href disagreed for every place that is not
+     London.
+
+     It has never reached a reader: adapt_cell leaves `related` undefined on the
+     public route ("keep-% column has no honest per-sibling source"), so the
+     guard above returns null and these links render only in the /dev sandbox,
+     where the London seed makes them correct by accident.
+
+     That accident is the problem. The day anyone gives `related` a source, this
+     section starts sending readers from Madrid and Sydney to London, and the
+     heading tells them they are still in their own city. Deriving the prefix
+     from d.meta is identical for the seed (GB + london) and correct for
+     everything else. No meta means no href, so a row renders as text rather
+     than as somewhere else's page. */
+  const iso2: string | undefined = d.meta?.iso2;
+  const geo: string | undefined = d.meta?.geo;
+  const placePrefix =
+    iso2 && geo ? `/${String(iso2).toLowerCase()}/${String(geo).toLowerCase()}` : null;
   return (
     <Box className="md:flex-[3]">
       {/* same section-opener treatment as sibling cards (Rail kicker, not a bold Head) */}
@@ -392,7 +412,7 @@ function Related({ d }: { d: any }) {
       </div>
       <div className="space-y-1">
         {arr.map((r) => (
-          <a key={r.slug} href={`/gb/london/${r.slug}`} className="hov -mx-2 flex items-baseline justify-between gap-3 rounded-md px-2 py-1.5">
+          <a key={r.slug} href={placePrefix ? `${placePrefix}/${r.slug}` : undefined} className="hov -mx-2 flex items-baseline justify-between gap-3 rounded-md px-2 py-1.5">
             <span className="min-w-0 truncate text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">{r.name} &#8594;</span>
             {typeof r.cost_to_open_usd === "number" ? (
               <Fig className="shrink-0 text-right text-[length:var(--t-body)] text-[var(--c-ink)]">{money(r.cost_to_open_usd)}</Fig>
