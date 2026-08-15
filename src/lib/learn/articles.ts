@@ -61,7 +61,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "Cost of goods runs lighter than restaurants (typically 18-25%) but labor is heavier - a coffee shop is a service business that lives or dies on barista quality. Rent matters more than for almost any other small business because foot traffic is everything.",
       "A coffee shop crosses into healthy territory above roughly $550K. Below that, owners are usually subsidizing the business with their own time.",
     ],
-    relatedIndustryIds: ["coffee_shops"],
+    relatedIndustryIds: ["cafes_coffee"],
     relatedSlugs: ["how-much-does-a-restaurant-make", "how-much-does-a-bakery-make", "coffee-shop-profit-margin"],
   },
   {
@@ -106,7 +106,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "Cost of goods is negligible (under 5%). Labor is the line that matters - most barbershops run on a booth-rental model where stylists are independent contractors paying $200-400/week for a chair. That keeps the owner's revenue lean but the model stable.",
       "Barbershops are one of the highest-margin small businesses by category, with a clean owner take-home percentage when the chair-rental model is used.",
     ],
-    relatedIndustryIds: ["hair_salons"],
+    relatedIndustryIds: ["barbershops"],
     relatedSlugs: ["how-much-does-a-hair-salon-make", "how-much-does-a-nail-salon-make"],
   },
   {
@@ -121,7 +121,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "Retail product sales matter more here than in any other personal-services category. A salon that runs a tight retail program (15-25% of revenue from shampoo, conditioner, and tools) is meaningfully healthier than one that doesn't.",
       "Tier-1 cities run materially higher because color services charge a city-level premium that the underlying cost base doesn't fully absorb.",
     ],
-    relatedIndustryIds: ["hair_salons"],
+    relatedIndustryIds: ["hair_salons_full"],
     relatedSlugs: ["how-much-does-a-barbershop-make", "how-much-does-a-nail-salon-make", "how-much-does-a-spa-make"],
   },
   {
@@ -136,7 +136,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "The category is competitive - densely-packed in urban areas, with prices held down by tight margins. Salons that succeed usually differentiate on either a premium experience (luxury upgrades, dedicated rooms) or speed (express manicure formats).",
       "Owner take-home tends to be lower than barbershops because labor is the full-time payroll model, not chair rental.",
     ],
-    relatedIndustryIds: ["hair_salons"],
+    relatedIndustryIds: ["nail_salons"],
     relatedSlugs: ["how-much-does-a-hair-salon-make", "how-much-does-a-spa-make"],
   },
   {
@@ -151,7 +151,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "Labor is the dominant cost - typically 38-48% of revenue - because spa services don't scale: one therapist serves one client at a time. Real estate matters less than for cafés because clients book ahead.",
       "Spas paired with a medical aesthetics arm (injectables, laser) can run materially higher revenue, but those are a different category with different licensing requirements.",
     ],
-    relatedIndustryIds: ["hair_salons"],
+    relatedIndustryIds: ["day_spas"],
     relatedSlugs: ["how-much-does-a-hair-salon-make", "how-much-does-a-nail-salon-make"],
   },
   {
@@ -166,7 +166,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "Cost of goods is essentially zero - legal services don't have a material input cost. The cost structure is people: lawyers, paralegals, and support staff, typically 55-65% of revenue.",
       "Owner partners take home a much larger share of revenue than in most service businesses because the leverage on knowledge-work output is high.",
     ],
-    relatedIndustryIds: ["law_offices"],
+    relatedIndustryIds: ["sole_law_firms"],
     relatedSlugs: ["how-much-does-an-accounting-firm-make", "professional-services-margin"],
   },
   {
@@ -181,7 +181,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "The economics improve substantially when a firm has a recurring monthly book - bookkeeping, fractional CFO work, or multi-year tax engagements. Project-only firms run on tax-season peaks and quieter middle months.",
       "Most small firms are owner-operated; the partner draw is roughly 35-50% of revenue.",
     ],
-    relatedIndustryIds: ["accounting_services"],
+    relatedIndustryIds: ["accounting_tax"],
     relatedSlugs: ["how-much-does-a-law-firm-make", "professional-services-margin"],
   },
   {
@@ -196,7 +196,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "Add a hygienist and a second operatory and revenue scales materially without doubling cost. Multi-doctor practices often clear $2-4M.",
       "Owner take-home varies more than in other professional services because insurance reimbursement rates compress what a practice can charge. Specialties (orthodontics, oral surgery) clear higher than general dentistry.",
     ],
-    relatedIndustryIds: ["dental_offices"],
+    relatedIndustryIds: ["dental_practices"],
     relatedSlugs: ["how-much-does-a-medical-practice-make"],
   },
   {
@@ -211,7 +211,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "The cost structure is dominated by staff (medical assistants, billers, front desk) and electronic-health-record systems. Insurance reimbursement is the binding constraint on revenue - the practice can't simply raise prices.",
       "Owner take-home depends heavily on payer mix. Practices weighted toward Medicare and Medicaid earn less per visit than those with strong commercial insurance.",
     ],
-    relatedIndustryIds: ["medical_offices"],
+    relatedIndustryIds: ["doctors_clinics"],
     relatedSlugs: ["how-much-does-a-dental-practice-make"],
   },
   {
@@ -226,7 +226,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "Real estate is the largest fixed cost (often 15-25% of revenue) and is the line that kills underperforming gyms. The healthiest model is a higher-priced boutique format (CrossFit, Pilates, yoga) where the per-member revenue is double a traditional gym and the space requirement is smaller.",
       "Personal training and retail are usually material profit centers even when they're a small share of revenue, because they carry much higher margins than the membership base.",
     ],
-    relatedIndustryIds: ["fitness_centers"],
+    relatedIndustryIds: ["sports_fitness"],
     relatedSlugs: ["how-much-does-a-yoga-studio-make"],
   },
   {
@@ -241,7 +241,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "Teacher pay is the dominant cost. Most studios pay teachers per-class plus per-head, which keeps the cost variable but limits the upside on a packed class.",
       "Workshops, teacher training, and retail are the lines that turn a marginally profitable studio into a healthy one. Pure class-only studios have a tough math.",
     ],
-    relatedIndustryIds: ["fitness_centers"],
+    relatedIndustryIds: ["sports_fitness"],
     relatedSlugs: ["how-much-does-a-gym-make"],
   },
   {
@@ -256,7 +256,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "Sideline products (cards, journals, gifts, café) often run double the margin of books and are what makes the difference between a bookstore that pays the rent and one that doesn't.",
       "The healthiest independent bookstores combine three things: a strong curation reputation, a regular event program that builds community, and a meaningful non-book retail line.",
     ],
-    relatedIndustryIds: ["specialty_retail"],
+    relatedIndustryIds: ["bookstores_indie"],
     relatedSlugs: ["how-much-does-a-vintage-clothing-store-make", "retail-margin"],
   },
   {
@@ -271,7 +271,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "Margins are healthier than mainstream apparel retail because the cost of goods is often below 20%. The constraint is sourcing time, not margin.",
       "Online sales (Etsy, Depop, Instagram) are now a meaningful share of revenue for most stores - typically 20-40% of total - and have a different cost structure than the storefront.",
     ],
-    relatedIndustryIds: ["specialty_retail"],
+    relatedIndustryIds: ["vintage_consignment"],
     relatedSlugs: ["how-much-does-a-bookstore-make", "retail-margin"],
   },
   {
@@ -301,7 +301,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "Service work (calls, repairs) carries higher margins than new-construction installation. The healthiest plumbing businesses are heavy on service and use installation as a secondary revenue line.",
       "Owner take-home in trades is among the strongest of any SMB category - well-run plumbing businesses often clear 25-35% net margin.",
     ],
-    relatedIndustryIds: ["plumbing_hvac"],
+    relatedIndustryIds: ["plumbers"],
     relatedSlugs: ["how-much-does-an-electrician-make", "how-much-does-an-hvac-business-make"],
   },
   {
@@ -316,7 +316,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "Solar, EV-charger installation, and smart-home work have all opened higher-margin specialties in the past five years. Electricians with these specialties run materially higher revenue per truck than purely traditional shops.",
       "The category is supply-constrained - fewer licensed electricians are coming up than retiring. Pricing power has shifted toward existing operators.",
     ],
-    relatedIndustryIds: ["plumbing_hvac"],
+    relatedIndustryIds: ["electricians"],
     relatedSlugs: ["how-much-does-a-plumber-make", "how-much-does-an-hvac-business-make"],
   },
   {
@@ -331,7 +331,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "Maintenance contracts (typically $200-500/year per home) are the strategic asset. They smooth seasonal cash flow and generate the service calls that lead to higher-ticket installation work.",
       "The seasonality is more extreme than plumbing or electrical: summer cooling and winter heating spikes, with the shoulder seasons being lean. Healthy HVAC businesses use the shoulders for maintenance contract work.",
     ],
-    relatedIndustryIds: ["plumbing_hvac"],
+    relatedIndustryIds: ["hvac_services"],
     relatedSlugs: ["how-much-does-a-plumber-make", "how-much-does-an-electrician-make"],
   },
 
@@ -363,7 +363,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "A coffee shop clearing 8% on $600K of revenue earns the owner $48K. A coffee shop clearing 12% on the same revenue earns $72K - the difference is usually in retail attachment (beans, gear, baked goods) and pricing discipline.",
       "Multi-location coffee operators run leaner per-shop margins (typically 5-8%) because they carry overhead the single-shop doesn't, but they make it up on volume.",
     ],
-    relatedIndustryIds: ["coffee_shops"],
+    relatedIndustryIds: ["cafes_coffee"],
     relatedSlugs: ["how-much-does-a-coffee-shop-make", "restaurant-profit-margin"],
   },
   {
@@ -378,7 +378,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "The hidden killer is paid traffic. A business that pays $40 to acquire a customer who buys $80 worth of goods is gross-margin-positive but probably net-negative once shipping, returns, and fixed costs land.",
       "The healthiest e-commerce businesses have a meaningful percentage of repeat purchase or subscription revenue, which collapses customer-acquisition cost over the customer's lifetime.",
     ],
-    relatedIndustryIds: ["ecommerce_retail", "specialty_retail"],
+    relatedIndustryIds: ["ecommerce_mail_order", "specialty_retail"],
     relatedSlugs: ["retail-margin", "what-is-a-revenue-benchmark"],
   },
   {
@@ -393,7 +393,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "Below 70% gross margin, a SaaS business has a structural problem: either too much manual service per customer (so it's actually a services business pretending to be software) or hosting costs eating too much (typically a sign the unit economics need rework).",
       "Above 85% is exceptional and usually only sustained by businesses that have negligible support costs because the product is self-serve.",
     ],
-    relatedIndustryIds: ["software_dev_services"],
+    relatedIndustryIds: ["software_development"],
     relatedSlugs: ["professional-services-margin", "how-saas-revenue-scales"],
   },
   {
@@ -408,7 +408,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "Above 25% is rare and usually means an agency has a high billable-utilization rate (over 75%) or a project-pricing model that captures value rather than billing hours.",
       "Below 15% is usually a sign of underpricing or low utilization. The fix is almost always raising rates rather than cutting costs - agencies that try to grow into profitability rarely make it.",
     ],
-    relatedIndustryIds: ["marketing_agencies", "creative_design"],
+    relatedIndustryIds: ["marketing_design", "marketing_design"],
     relatedSlugs: ["professional-services-margin", "what-is-a-revenue-benchmark"],
   },
   {
@@ -423,7 +423,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "An 8-15% net margin on full project revenue (including pass-through materials) is healthy. Some businesses run the math on labor margin instead - that band is typically 25-40%, which is what most operators benchmark against internally.",
       "The killer in construction is bid pricing under uncertainty. Healthy businesses build in a 5-10% contingency on materials and timeline and refuse to bid below that band.",
     ],
-    relatedIndustryIds: ["construction_residential"],
+    relatedIndustryIds: ["residential_construction"],
     relatedSlugs: ["how-much-does-a-plumber-make", "trade-business-margins"],
   },
   {
@@ -453,7 +453,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "The cleaner way to read these businesses is on owner-comp-plus-net-margin combined. A well-run small firm where the partner draws a market salary AND retains 15-20% as net margin is doing very well.",
       "Underperforming firms usually have a labor utilization problem: too many people for the billable hours, or the wrong mix of senior-to-junior staff.",
     ],
-    relatedIndustryIds: ["law_offices", "accounting_services"],
+    relatedIndustryIds: ["sole_law_firms", "accounting_tax"],
     relatedSlugs: ["agency-profit-margin", "saas-gross-margin"],
   },
   {
@@ -468,7 +468,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "The math: labor is the dominant cost (typically 35-45% of revenue), then materials (15-25%), then trucks, insurance, and overhead. Net margin in the 15-25% band is achievable for well-run shops.",
       "The drivers of high-margin trade businesses are: a meaningful percentage of service work (vs new-construction installation), recurring maintenance contracts, and tight scheduling discipline that keeps trucks utilized.",
     ],
-    relatedIndustryIds: ["plumbing_hvac"],
+    relatedIndustryIds: ["plumbers", "electricians", "hvac_services"],
     relatedSlugs: ["how-much-does-a-plumber-make", "construction-margin"],
   },
   {
@@ -483,7 +483,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "The 10-20% net margin band is achievable when membership pricing reflects the local market and the gym runs a meaningful personal-training program (which carries materially higher margins than the base membership).",
       "Below 10% usually means underpricing - gym owners often anchor on the big-box gym chain price ($20-30/month) when the boutique format supports $80-180/month.",
     ],
-    relatedIndustryIds: ["fitness_centers"],
+    relatedIndustryIds: ["sports_fitness"],
     relatedSlugs: ["how-much-does-a-gym-make", "how-much-does-a-yoga-studio-make"],
   },
   {
@@ -498,7 +498,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "On that brokerage-share basis, healthy operations run 12-22% net margin. The cost lines are office space, broker-of-record liability, MLS and tech fees, and marketing.",
       "Brokerages with a productive agent base (high deals-per-agent) clear well above this band. Brokerages with a passive roster of agents who don't transact much struggle.",
     ],
-    relatedIndustryIds: ["real_estate_brokerage"],
+    relatedIndustryIds: ["real_estate_agencies"],
     relatedSlugs: ["agency-profit-margin", "professional-services-margin"],
   },
   {
@@ -513,7 +513,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "Net margins in the 12-22% band are healthy for an owner-operated shop. The biggest variance is whether the shop has a specialty (European cars, diesel, hybrids) that supports higher labor rates.",
       "Shops that build a meaningful repeat-customer base usually run materially higher margins because they don't pay for new-customer acquisition every month.",
     ],
-    relatedIndustryIds: ["auto_repair"],
+    relatedIndustryIds: ["auto_repair_shops"],
     relatedSlugs: ["how-much-does-a-plumber-make", "trade-business-margins"],
   },
   {
@@ -543,7 +543,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "A single-doctor practice typically clears $700K-1.2M in revenue with a 12-20% net margin. Multi-doctor practices and those with surgical specialties run higher revenue per doctor.",
       "Inventory (food, medications, retail) is a meaningful profit center for healthy practices - typically 15-25% of revenue, with retail margins much better than at a human pharmacy.",
     ],
-    relatedIndustryIds: ["veterinary_clinics"],
+    relatedIndustryIds: ["veterinary_pet_care"],
     relatedSlugs: ["how-much-does-a-medical-practice-make", "professional-services-margin"],
   },
   {
@@ -573,7 +573,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "The healthiest tutoring businesses are specialty-focused (SAT/ACT, MCAT, AP exams) where pricing power is highest. General academic tutoring runs lower margins because parents anchor on a lower per-hour expectation.",
       "Group classes (small-group SAT prep, math enrichment) materially expand margin per tutor-hour and are how tutoring businesses scale beyond the founder's calendar.",
     ],
-    relatedIndustryIds: ["tutoring_services"],
+    relatedIndustryIds: ["tutoring_centers"],
     relatedSlugs: ["agency-profit-margin", "professional-services-margin"],
   },
   {
@@ -588,7 +588,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "Wedding photography runs higher per-project revenue ($3-8K typically) but is highly seasonal. Commercial photography (product, real estate, editorial) runs more steady throughout the year at lower per-project rates.",
       "The healthiest photography businesses have either a tight specialty (specific style or category) that commands premium pricing or a high-volume model (real estate photography with 5-10 shoots per day).",
     ],
-    relatedIndustryIds: ["photography_services"],
+    relatedIndustryIds: ["photography_studios"],
     relatedSlugs: ["agency-profit-margin", "videography-margin"],
   },
   {
@@ -618,7 +618,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "A freelancer billing 25 hours a week year-round at $100/hour clears around $130K. Billing 35 hours/week clears $180K. The difference is not pricing - it's sales pipeline and discipline.",
       "The healthiest freelance developer businesses transition from time-and-materials billing to fixed-bid or retainer engagements as they get senior, which decouples revenue from hours.",
     ],
-    relatedIndustryIds: ["software_dev_services"],
+    relatedIndustryIds: ["software_development"],
     relatedSlugs: ["saas-gross-margin", "professional-services-margin"],
   },
 
@@ -760,7 +760,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       "Atlas separates SaaS from traditional software services for this reason. A SaaS benchmark page will show ARR (annual recurring revenue) instead of project revenue, and the percentile spread is much wider than for service businesses.",
       "If you're benchmarking a SaaS business, look at the ARR figure plus the implied gross margin (typically 70-85% - see the SaaS gross margin page). If you're benchmarking a services business that calls itself SaaS, look at the service business benchmark instead.",
     ],
-    relatedIndustryIds: ["software_dev_services"],
+    relatedIndustryIds: ["software_development"],
     relatedSlugs: ["saas-gross-margin", "freelance-developer-margin"],
   },
   {
