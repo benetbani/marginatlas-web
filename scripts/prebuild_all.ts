@@ -160,6 +160,10 @@ const GATES: Gate[] = [
      useSearchParams with no Suspense boundary, which opts the WHOLE route into
      client rendering while still reporting as prerendered. Negative-tested. */
   { name: "search-params-suspense", script: "scripts/verify_search_params_suspense.mjs" },
+  /* /browse was declared in the sitemap at priority 0.8 while being a
+     permanentRedirect to /world whose own canonical named /world. A sitemap is
+     a list of pages you want indexed. Negative-tested. */
+  { name: "sitemap-no-redirects", script: "scripts/verify_sitemap_no_redirects.mjs" },
   { name: "break-in-for-cell", script: "tests/scores/break_in_for_cell.test.ts" },
   { name: "composite", script: "tests/scores/composite.test.ts" },
   { name: "country-board", script: "tests/scores/country_board.test.ts" },

@@ -71,7 +71,14 @@ export default async function sitemap({
 async function staticAndContainersSitemap(): Promise<MetadataRoute.Sitemap> {
   const staticUrls: MetadataRoute.Sitemap = [
     { url: `${BASE_URL}/`, lastModified: new Date(), changeFrequency: "daily", priority: 1.0 },
-    { url: `${BASE_URL}/browse`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
+    /* /browse REMOVED 2026-08-09. It is a permanentRedirect to /world and its
+       own canonical tag names /world, so declaring it asked a crawler to fetch a
+       URL that immediately disowns itself, at priority 0.8, the joint-highest on
+       this shard. A sitemap states the pages you want indexed; a redirect is not
+       one of them, and /world was already declared two lines below.
+       The ROUTE stays. Existing links to /browse keep working, which is what the
+       redirect is for. Only the advertisement goes.
+       Checked across all 11 non-country URLs in this shard: it was the only one. */
     { url: `${BASE_URL}/compare`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/world`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE_URL}/coverage`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
