@@ -51,18 +51,34 @@ export default function AboutDataPage() {
         {/* The footer has linked to #quality on every page since it was
             written, and this heading never carried the id, so the link landed
             silently at the top. Four sibling anchors were dead the same way. */}
-        <h2 id="quality" className="text-xl font-semibold text-ink-900">Quality ratings</h2>
+        <h2 id="quality" className="text-xl font-semibold text-ink-900">How quality is shown</h2>
+        {/* THIS SECTION TAUGHT A RATING THE PRODUCT DELETED ON PURPOSE. It
+            opened "Every benchmark shows a 5-star quality rating" and listed
+            four star grades. No benchmark shows one. The cell page records why
+            in its own source: "Data Quality section removed. The 10/10
+            confidence score and ★★★★★ rating exposed engineering provenance the
+            founder explicitly said never to display."
+
+            So the one page a reader opens to learn how to read the numbers was
+            teaching a banned scale, immediately above the section describing
+            the real one ("Four tiers, one vocabulary").
+
+            The heading keeps its id. SiteChrome links /about-data#quality from
+            the footer of every page, and that anchor was already dead once
+            before, which is what the comment above records.
+
+            The link label is corrected too: it reads "How we know this", which
+            is HowWeKnowThis's default, not "How this figure was built". */}
         <p className="mt-3 text-ink-800">
-          Every benchmark shows a 5-star quality rating:
+          A benchmark does not carry a grade. It carries a coverage word, and
+          the four words below are the whole vocabulary. Where coverage is thin
+          there is no word at all, only the neutral meter, so nothing reads as a
+          verdict the measurement cannot support.
         </p>
-        <ul className="mt-3 space-y-2 text-sm text-ink-800">
-          <li><span className="text-atlas-500">★★★★★</span>. Direct primary measurement, highest confidence.</li>
-          <li><span className="text-atlas-500">★★★★</span><span className="text-ink-300">☆</span>. Modeled from primary sources, high confidence.</li>
-          <li><span className="text-atlas-500">★★★</span><span className="text-ink-300">☆☆</span>. Derived or estimated, moderate confidence.</li>
-          <li><span className="text-atlas-500">★★</span><span className="text-ink-300">☆☆☆</span>. Extrapolated from regional patterns.</li>
-        </ul>
         <p className="mt-3 text-sm text-ink-700">
-          Every benchmark page carries a "How this figure was built" link beside the headline number so the source and method are one click away.
+          Beside the headline number on every benchmark page there is a quiet
+          &ldquo;How we know this&rdquo; link, so the source and the method are
+          one click away.
         </p>
       </section>
 
