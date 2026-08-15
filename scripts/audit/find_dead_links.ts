@@ -199,11 +199,46 @@ function findDeadLinks(): Dead[] {
   const dead: Dead[] = [];
   const files = walkFiles(SRC).filter((f) => !f.includes(`${join("scripts", "audit")}`));
   const re = /href=["'](\/[^"']*)["']/g;
+  /* Template-literal hrefs, which the quoted matcher above never sees at all.
+     Its character class excludes backticks, so href={`/a/${b}`} was invisible
+     rather than deliberately skipped.
+
+     Only the STATIC PREFIX can be judged here: the interpolated part is a
+     runtime value. But the prefix carries the section name, and that is exactly
+     what went wrong on /billing/invoices/${i.id}, three dead links on the
+     account page whose first segment names a section this app does not have.
+
+     Same head test as the literal case: the first complete segment must be a
+     real directory under src/app or a country code. A prefix with no complete
+     segment, href={`/${country}/${geo}`}, is skipped, because there is nothing
+     static to check. */
+  const tmpl = /href=\{`(\/[^`]*)`\}/g;
   for (const file of files) {
     const src = readFileSync(file, "utf-8");
     const lines = src.split("\n");
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
+      tmpl.lastIndex = 0;
+      let tm: RegExpExecArray | null;
+      while ((tm = tmpl.exec(line)) !== null) {
+        const raw = tm[1];
+        const prefix = raw.split("${")[0];
+        const pSegs = prefix.split("/").filter(Boolean);
+        // A trailing partial segment is not a segment: "/gb/lon" from
+        // `/gb/lon${x}` must not be read as a place named "lon".
+        const complete = prefix.endsWith("/") ? pSegs : pSegs.slice(0, -1);
+        if (complete.length === 0) continue;
+        const h = complete[0].toLowerCase();
+        if (appTopLevelDirs.has(h) || COUNTRY_SEGMENTS.has(h)) continue;
+        if (KNOWN_DYNAMIC_LITERALS.has(`/${h}`)) continue;
+        dead.push({
+          file: relative(ROOT, file).replace(/\\/g, "/"),
+          line: i + 1,
+          href: raw,
+          reason: `assembled path: no /${h} section in src/app and "${h}" is not a country code`,
+        });
+      }
+
       re.lastIndex = 0;
       let m: RegExpExecArray | null;
       while ((m = re.exec(line)) !== null) {
