@@ -74,21 +74,26 @@ const BASELINES = countryBaselineJson as unknown as { default_fallback: CountryB
  * founder's and is unchanged; only the destinations are.
  */
 const HEADLINE_INDUSTRIES: Array<{
-  id: string;
+  /* A REACT KEY, NOT A TRADE. It was called `id` and was interpolated into
+     cell URLs, which is how "fitness-centers" came to open garden centres.
+     `slug` below is the trade reference now; this only has to be unique and
+     stable. Renamed so nothing reads it as a taxonomy id again, and so the
+     industry-reference gate stops treating these strings as trades. */
+  key: string;
   slug: string | null;
   label: string;
   base: number;
 }> = [
-  { id: "restaurants", slug: "restaurants", label: "Restaurants", base: 1.0 },
-  { id: "coffee-shops", slug: "cafes-coffee-shops", label: "Coffee", base: 0.6 },
-  { id: "law-offices", slug: null, label: "Law", base: 2.0 },
-  { id: "hair-salons", slug: "hairdressers-beauty", label: "Hair", base: 0.4 },
-  { id: "construction-residential", slug: "residential-construction", label: "Construction", base: 1.4 },
-  { id: "software-dev-services", slug: "software-development", label: "Software", base: 2.4 },
-  { id: "fitness-centers", slug: "sports-fitness", label: "Fitness", base: 0.7 },
-  { id: "specialty-retail", slug: null, label: "Retail", base: 0.8 },
-  { id: "auto-repair", slug: "auto-repair-shops", label: "Auto repair", base: 0.5 },
-  { id: "real-estate-brokerage", slug: "real-estate-agencies", label: "Real estate", base: 1.6 },
+  { key: "restaurants", slug: "restaurants", label: "Restaurants", base: 1.0 },
+  { key: "coffee-shops", slug: "cafes-coffee-shops", label: "Coffee", base: 0.6 },
+  { key: "law-offices", slug: null, label: "Law", base: 2.0 },
+  { key: "hair-salons", slug: "hairdressers-beauty", label: "Hair", base: 0.4 },
+  { key: "construction-residential", slug: "residential-construction", label: "Construction", base: 1.4 },
+  { key: "software-dev-services", slug: "software-development", label: "Software", base: 2.4 },
+  { key: "fitness-centers", slug: "sports-fitness", label: "Fitness", base: 0.7 },
+  { key: "specialty-retail", slug: null, label: "Retail", base: 0.8 },
+  { key: "auto-repair", slug: "auto-repair-shops", label: "Auto repair", base: 0.5 },
+  { key: "real-estate-brokerage", slug: "real-estate-agencies", label: "Real estate", base: 1.6 },
 ];
 
 function pairSlug(left: string, right: string): string {
@@ -263,7 +268,7 @@ export default async function ComparisonPage({
               const aPct = (ind.aVal / maxAcross) * 100;
               const bPct = (ind.bVal / maxAcross) * 100;
               return (
-                <div key={ind.id} className="grid grid-cols-[1fr,140px,1fr] items-center gap-2 md:gap-3">
+                <div key={ind.key} className="grid grid-cols-[1fr,140px,1fr] items-center gap-2 md:gap-3">
                   <div className="flex items-center justify-end gap-2">
                     <span className="text-[11px] md:text-xs text-cocoa-700/70 tabular-nums">
                       {fmt(ind.aVal)}
@@ -308,7 +313,7 @@ export default async function ComparisonPage({
                   .filter((ind) => ind.slug !== null)
                   .map((ind) => (
                   <Link
-                    key={ind.id}
+                    key={ind.key}
                     href={`/${city.iso2.toLowerCase()}/${city.slug}/${ind.slug}`}
                     className="text-sm text-atlas-700 hover:text-atlas-900 underline decoration-atlas-200 hover:decoration-atlas-700 underline-offset-2"
                   >

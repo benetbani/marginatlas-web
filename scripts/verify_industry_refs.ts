@@ -92,10 +92,46 @@ function walk(dir: string, acc: string[] = []): string[] {
   return acc;
 }
 
-/** The field shapes the real defects were written in. */
+/**
+ * The field shapes the real defects were written in.
+ *
+ * THE SECOND PATTERN EXISTS BECAUSE THE FIRST ONE MISSED A LIVE DEFECT.
+ * /compare/cities/[pair] holds its rows as
+ *
+ *   const HEADLINE_INDUSTRIES = [{ id: "fitness-centers", label: "Fitness", ... }]
+ *
+ * and interpolates `id` straight into a cell URL. The field is called `id`, not
+ * `industry`, so this gate walked straight past a link that opened garden
+ * centres when a reader clicked Fitness.
+ *
+ * A bare `id:` or `slug:` anywhere would be far too broad, so the second
+ * pattern is scoped: the enclosing declaration has to NAME itself a trade list
+ * (INDUSTRIES, TRADES, ACTIVITIES). That is what HEADLINE_INDUSTRIES,
+ * CANONICAL_TRADES and REP_ACTIVITIES all do, and it is the only signal
+ * available without parsing types.
+ */
 const PATTERNS: RegExp[] = [
   /\bindustry(?:_id|Id|Slug)?\s*:\s*["']([a-z0-9][a-z0-9_-]{2,})["']/g,
 ];
+
+/**
+ * The NAME of a declaration that holds trades.
+ *
+ * Deliberately just the name, not the whole `NAME = [`. The list that prompted
+ * this widening is written as
+ *
+ *   const HEADLINE_INDUSTRIES: Array<{
+ *     id: string; slug: string | null; ...
+ *   }> = [
+ *
+ * so the name and the opening bracket are four lines apart, and a single-line
+ * pattern matched neither. The first version of this widening missed the exact
+ * defect it was written for, which the negative test caught.
+ */
+const TRADE_LIST_NAME =
+  /\b(?:const|let|var)\s+[A-Z][A-Z_]*(?:INDUSTR|TRADE|ACTIVIT)[A-Z_]*\b/;
+/** Inside such a list, these fields carry a trade reference. */
+const LIST_FIELD = /\b(?:id|slug)\s*:\s*["']([a-z0-9][a-z0-9_-]{2,})["']/g;
 
 const norm = (s: string) =>
   s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
@@ -121,10 +157,31 @@ for (const file of walk(SRC)) {
   }
   const state = newCommentState();
   const lines = src.split("\n");
+  /* Whether we are inside a declaration that names itself a trade list. It
+     opens on the declaration and closes on the line holding its closing
+     bracket, which is enough for the flat literals these lists are written as. */
+  let inTradeList = false;
+  // Name seen, opening bracket not yet. Cleared if neither arrives promptly.
+  let pending = 0;
   for (let i = 0; i < lines.length; i++) {
     const code = stripComments(lines[i], state);
+    if (TRADE_LIST_NAME.test(code)) pending = 14;
+    if (pending > 0 && /=\s*\[|^\s*\[/.test(code)) {
+      inTradeList = true;
+      pending = 0;
+    } else if (pending > 0 && code.trim()) {
+      /* Only CODE lines consume the window. A comment between the name and the
+         bracket is stripped to an empty string, and letting those count is how
+         the first version of this lost the very list it was written for: the
+         explanatory comment I added inside the type literal pushed `}> = [`
+         past the limit, and the negative test went quiet. */
+      pending--;
+    }
+    if (inTradeList && /^\s*\]/.test(code)) inTradeList = false;
     if (lines[i].includes("allow-industry-ref")) continue;
-    for (const re of PATTERNS) {
+
+    const active = inTradeList ? [...PATTERNS, LIST_FIELD] : PATTERNS;
+    for (const re of active) {
       re.lastIndex = 0;
       let m: RegExpExecArray | null;
       while ((m = re.exec(code)) !== null) {

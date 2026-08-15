@@ -50,7 +50,11 @@ const DEV_PROVENANCE =
 // slate is site-wide (fixed slugs); the CITY half of the href is never known here, so it
 // is resolved per-page below from d.meta, never baked in as a constant.
 const CANONICAL_TRADES: Array<{ icon: AtlasIconId; name: string; slug: string }> = [
-  { icon: "trade-cafe", name: "Cafes and coffee", slug: "cafes-coffee" },
+  // "cafes-coffee" is an ALIAS; the canonical slug is below. The route resolves
+  // either, but a cell page builds its canonical tag from the segment it was
+  // handed, so linking the alias creates a second URL for one cell, each
+  // claiming to be the original.
+  { icon: "trade-cafe", name: "Cafes and coffee", slug: "cafes-coffee-shops" },
   { icon: "trade-restaurant", name: "Restaurants", slug: "restaurants" },
   { icon: "trade-bar", name: "Bars and nightclubs", slug: "bars-nightclubs" },
   { icon: "trade-grocery", name: "Grocery stores", slug: "grocery-stores" },

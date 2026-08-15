@@ -121,9 +121,13 @@ const REP_ACTIVITIES: Array<{ id: string; name: string }> = [
   { id: "cafes_coffee", name: "Cafes" },
   { id: "bars_nightclubs", name: "Bars and nightlife" },
   { id: "hotels_lodging", name: "Hotels" },
-  { id: "pharmacies_drug_stores", name: "Pharmacies" },
+  // health_beauty_stores is the taxonomy id; "pharmacies_drug_stores" only
+  // reached it through the fuzzy fallback, which resolves by luck rather than
+  // by contract. The reader-facing name is unchanged.
+  { id: "health_beauty_stores", name: "Pharmacies" },
   { id: "grocery_stores", name: "Grocery" },
-  { id: "fitness_gyms", name: "Gyms" },
+  // Same: sports_fitness is the id, "fitness_gyms" was a fuzzy hit.
+  { id: "sports_fitness", name: "Gyms" },
   { id: "hair_salons_full", name: "Hair salons" },
   { id: "legal_services", name: "Legal services" },
   { id: "accounting_tax", name: "Accounting" },
