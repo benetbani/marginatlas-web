@@ -8,7 +8,16 @@
 import { useState } from "react";
 import { ArrowRight, CircleNotch } from "@phosphor-icons/react/dist/ssr";
 
-const PRIVACY_LINE = "No spam, no shilling. Unsubscribe with one click.";
+/* "Unsubscribe with one click" was not true and could not be. One-click
+   unsubscribe means a link in an email, and this project has no email provider
+   at all, so no message is ever sent and there is no link to click. There is
+   also no unsubscribe route, handler or token anywhere in the app.
+
+   It matters more than the other unbacked promises on this site because it is
+   the assurance directly under the input, offered in exchange for the address,
+   and addresses really are stored now. /contact is a working route that lands
+   in Supabase for review, so asking is a real path. */
+const PRIVACY_LINE = "No spam, no shilling. Ask and you are off the list.";
 
 /* THE DEFAULT ENDPOINT DID NOT EXIST. It was
    /api/lead-magnet/2026-benchmarks, and there is no lead-magnet route in this

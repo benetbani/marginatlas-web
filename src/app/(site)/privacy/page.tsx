@@ -116,7 +116,12 @@ export default function PrivacyPage() {
         <p>
           Account and payment records are kept while your account exists and for
           as long afterwards as we need them for tax and accounting. Newsletter
-          addresses are kept until you unsubscribe. Corrections are kept
+          addresses are kept until you ask for yours to be removed, which you
+          can do from the{" "}
+          <a href="/contact" className="underline">
+            contact page
+          </a>
+          . Corrections are kept
           indefinitely, because the reason a figure changed is part of the
           record.
         </p>
