@@ -17,6 +17,7 @@
  */
 import { readFileSync, readdirSync, statSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import { resolve, join, relative } from "node:path";
+import { COUNTRIES } from "../../src/lib/taxonomy";
 
 const ROOT = process.cwd();
 const SRC = resolve(ROOT, "src");
@@ -59,8 +60,18 @@ function buildRoutePatterns(): RegExp[] {
   const patterns: RegExp[] = [];
   patterns.push(/^\/$/); // root
   for (const dir of walkDirs(APP)) {
-    // Skip routes hidden behind a parenthesis group (Next route groups)
-    if (dir.split(/[\\/]/).some((seg) => seg.startsWith("(") && seg.endsWith(")"))) continue;
+    /* Route groups are STRIPPED, not skipped. This used to `continue` on any
+       directory inside a (group), which threw away a pattern for every single
+       route under src/app/(site): /pricing, /faq, /compare, /methodology and
+       the rest contributed nothing to this list.
+
+       Nothing looked broken, because the [country] and [country]/[geo]
+       wildcards match any one- or two-segment path, so those routes still
+       "existed" as far as pathExists was concerned. They were being validated
+       by the wildcard rather than by themselves, which is the same reason a
+       genuinely dead two-segment link could never be detected.
+
+       buildStaticTopLevel below already strips groups. The two disagreed. */
     const hasPage =
       existsSync(join(dir, "page.tsx")) ||
       existsSync(join(dir, "page.ts")) ||
@@ -69,7 +80,11 @@ function buildRoutePatterns(): RegExp[] {
     if (!hasPage) continue;
     const relDir = relative(APP, dir).replace(/\\/g, "/");
     if (!relDir) continue;
-    const parts = relDir.split("/").map((seg) => {
+    const parts = relDir
+      .split("/")
+      // A (group) is organisational and never appears in the URL.
+      .filter((seg) => !(seg.startsWith("(") && seg.endsWith(")")))
+      .map((seg) => {
       if (seg.startsWith("[") && seg.endsWith("]")) {
         // Catch-all
         if (seg.startsWith("[...")) return "(.+)";
@@ -133,6 +148,34 @@ function buildStaticTopLevel(): Set<string> {
   return segs;
 }
 
+/**
+ * Every top-level directory name under src/app, route groups flattened,
+ * whether or not it has a page of its own.
+ *
+ * Deliberately laxer than buildStaticTopLevel: this only asks "is /<seg> a real
+ * section of this app", so /dev/spine-city is recognised even though src/app/dev
+ * has no page.tsx. Whether the specific deeper path exists is then pathExists's
+ * job, which is where /dev/compare gets caught.
+ */
+function buildAppTopLevelDirs(): Set<string> {
+  const out = new Set<string>();
+  for (const dir of walkDirs(APP)) {
+    const rel = relative(APP, dir).replace(/\\/g, "/");
+    const parts = rel.split("/").filter((p) => !(p.startsWith("(") && p.endsWith(")")));
+    if (parts.length !== 1) continue;
+    const name = parts[0];
+    if (name.startsWith("[") || name.startsWith("@")) continue;
+    out.add(name.toLowerCase());
+  }
+  return out;
+}
+
+/**
+ * Lowercased country codes, the legitimate first segment of a hand-written
+ * /gb/london/restaurants. Read from the taxonomy so it can never drift.
+ */
+const COUNTRY_SEGMENTS = new Set(COUNTRIES.map((c) => c.code.toLowerCase()));
+
 /** Hand-written links to a real value of a dynamic segment. Keep this small. */
 const KNOWN_DYNAMIC_LITERALS = new Set([
   "/ke", // Kenya, used as a worked example on the /dev/cell scratch route.
@@ -152,6 +195,7 @@ const KNOWN_DEFERRED = new Set([
 function findDeadLinks(): Dead[] {
   const patterns = buildRoutePatterns();
   const staticTop = buildStaticTopLevel();
+  const appTopLevelDirs = buildAppTopLevelDirs();
   const dead: Dead[] = [];
   const files = walkFiles(SRC).filter((f) => !f.includes(`${join("scripts", "audit")}`));
   const re = /href=["'](\/[^"']*)["']/g;
@@ -174,10 +218,36 @@ function findDeadLinks(): Dead[] {
         // makes return true for every single-segment path.
         const swallowedByWildcard =
           segs.length === 1 && !staticTop.has(segs[0]) && !KNOWN_DYNAMIC_LITERALS.has(bare);
+        /* THE SAME HOLE AT DEPTH TWO AND THREE, closed 2026-08-09.
+           The comment above says the single-segment hole was found and fixed.
+           It was, at depth one only, and the identical hole sat open one level
+           down for exactly as long. `[country]/[geo]` yields ^/([^/]+)/([^/]+)$
+           and matches EVERY two-segment path, so a literal like /billing/invoices
+           resolved and this gate reported PASS. Verified by injecting
+           /definitely/not-a-route and /definitely/not/a-route: both passed.
+
+           Two live ones were sitting behind it, /billing/card and
+           /billing/invoices, on the account page.
+
+           What separates a real link from a swallowed one is the FIRST segment.
+           /gb/london/restaurants is a hand-written country path and legitimate.
+           /billing/invoices names a site section that does not exist. So a deep
+           literal is dead when its first segment is neither a real directory in
+           src/app nor a country code. Both lists are derived, so neither needs
+           maintaining. */
+        const head = segs[0]?.toLowerCase() ?? "";
+        const deepSwallowed =
+          segs.length >= 2 &&
+          segs.length <= 3 &&
+          !appTopLevelDirs.has(head) &&
+          !COUNTRY_SEGMENTS.has(head) &&
+          !KNOWN_DYNAMIC_LITERALS.has(bare);
         const reason = KNOWN_DEFERRED.has(bare)
           ? "deferred-route (auth not built)"
           : swallowedByWildcard
           ? "single-segment link with no static route; only the [country] wildcard matched it, so it renders 'Country not found' at 200"
+          : deepSwallowed
+          ? `no /${head} section in src/app and "${head}" is not a country code; only the [country]/[geo] wildcard matched it`
           : pathExists(href, patterns)
           ? ""
           : "no matching route in src/app/";

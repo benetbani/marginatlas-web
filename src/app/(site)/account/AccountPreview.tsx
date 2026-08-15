@@ -325,14 +325,27 @@ function Billing({ account }: { account: Account }) {
           <p className="text-[11px] uppercase tracking-[0.16em] font-semibold text-cocoa-700/70">Payment method</p>
           <p className="font-mono mt-1 tabular-nums text-ink-900">•••• 4242</p>
           <p className="text-sm mt-1 text-cocoa-700">Visa ending 4242 · expires 09/27</p>
-          <Link href="/billing/card" className="inline-block mt-3 text-sm font-semibold text-atlas-700">Update card</Link>
+          <span className="inline-block mt-3 text-sm font-semibold text-cocoa-700/50">Update card</span>
         </div>
       </div>
 
+      {/* THE BILLING TAB IS A MOCKUP AND ITS CONTROLS NOW LOOK LIKE ONE.
+          "Update card", "Download all" and the per-row "PDF" were <Link>s to
+          /billing/card and /billing/invoices/<id>. There is no /billing route
+          at all, so every one of them was a dead link dressed as an action, and
+          the invoice rows below are hardcoded: three dates, three IDs and three
+          $19.00 charges nobody was ever billed.
+
+          They are spans now, in muted ink, so the layout the founder designed
+          survives while nothing in it offers to do something it cannot.
+
+          This whole component only renders when NEXT_PUBLIC_ACCOUNT_PREVIEW is
+          set, which it is not by default, so none of it has been public. It is
+          cleared because the flag exists to be flipped. */}
       <div className="mt-5 rounded-lg bg-cream-50 border border-parchment">
         <div className="px-5 py-3 flex items-center justify-between border-b border-parchment">
           <p className="font-semibold text-ink-900">Invoices</p>
-          <Link href="/billing/invoices" className="text-sm font-semibold text-atlas-700">Download all</Link>
+          <span className="text-sm font-semibold text-cocoa-700/50">Download all</span>
         </div>
         <ul>
           {[
@@ -347,7 +360,7 @@ function Billing({ account }: { account: Account }) {
               </div>
               <div className="flex items-center gap-4">
                 <span className="text-sm tabular-nums text-ink-900">{i.amount}</span>
-                <Link href={`/billing/invoices/${i.id}`} className="text-sm font-semibold text-atlas-700">PDF</Link>
+                <span className="text-sm font-semibold text-cocoa-700/50">PDF</span>
               </div>
             </li>
           ))}
