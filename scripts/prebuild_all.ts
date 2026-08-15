@@ -155,6 +155,7 @@ const GATES: Gate[] = [
   { name: "research-drop-schema", script: "tests/ingest/research_drop_schema.test.ts" },
   { name: "facts-store", script: "tests/facts/store.test.ts" },
   { name: "facts-shard", script: "tests/facts/shard.test.ts" },
+  { name: "facts-confidence", script: "tests/facts/confidence.test.ts" },
   { name: "break-in-for-cell", script: "tests/scores/break_in_for_cell.test.ts" },
   { name: "composite", script: "tests/scores/composite.test.ts" },
   { name: "country-board", script: "tests/scores/country_board.test.ts" },
