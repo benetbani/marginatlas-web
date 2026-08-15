@@ -168,8 +168,12 @@ export async function buildSpineHoodSeed(citySlug: string): Promise<any> {
       verdict,
       best_trades: best_trades.length ? best_trades : undefined,
       demographics: flavor?.demographic_skew ? [flavor.demographic_skew] : undefined,
-      // real destination for the CTA + back link (the district overview page).
-      cell_href: `/${city.iso2.toLowerCase()}/${citySlug}/${n.slug}`,
+      /* The comment used to call this "the district overview page". There is
+         no district overview page: /{country}/{city}/{district} is the TRADE
+         route with a district in the industry slot, so 191 of the 194 district
+         slugs 404 there and three open somebody else's trade. Seventh and last
+         copy of that shape. The hub entry is the page that holds the district. */
+      cell_href: `/cities/${citySlug}/neighborhoods#${n.slug}`,
       // OMITTED (no honest source): footfall, locals_know, prime_streets, walk_score,
       // cell_count, headline_trade, xy. Left undefined so the body renders nothing there.
     };

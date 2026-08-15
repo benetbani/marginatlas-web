@@ -726,7 +726,10 @@ export function NeighborhoodOverview({
               {siblings.map((n) => (
                 <Link
                   key={n.slug}
-                  href={`/${cc}/${city.slug}/${n.slug}`}
+                  /* Sixth copy of /{country}/{city}/{district}, the TRADE
+                     route with a district in the industry slot. The sibling
+                     district's entry on the hub is the page that holds it. */
+                  href={`/cities/${city.slug}/neighborhoods#${n.slug}`}
                   className="group block rounded-lg border border-parchment bg-cream-100 p-3 transition-colors hover:border-atlas-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-300"
                 >
                   <div className="text-sm font-medium leading-tight text-ink-900 transition-colors group-hover:text-atlas-700">
